@@ -246,6 +246,42 @@ type ProjectsTopicsSubscriptionsService struct {
 	s *Service
 }
 
+// AIInference: Configuration for making inference requests against Vertex AI
+// models.
+type AIInference struct {
+	// Endpoint: Required. An endpoint to a Vertex AI model of the form
+	// `projects/{project}/locations/{location}/endpoints/{endpoint}` or
+	// `projects/{project}/locations/{location}/publishers/{publisher}/models/{model
+	// }`. Vertex AI API requests will be sent to this endpoint.
+	Endpoint string `json:"endpoint,omitempty"`
+	// ServiceAccountEmail: Optional. The service account to use to make prediction
+	// requests against endpoints. The resource creator or updater that specifies
+	// this field must have `iam.serviceAccounts.actAs` permission on the service
+	// account. If not specified, the Pub/Sub service agent
+	// ({$universe.dns_names.final_documentation_domain}/iam/docs/service-agents),
+	// service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com, is used.
+	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
+	// UnstructuredInference: Optional. Requests and responses can be any arbitrary
+	// JSON object.
+	UnstructuredInference *UnstructuredInference `json:"unstructuredInference,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Endpoint") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Endpoint") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AIInference) MarshalJSON() ([]byte, error) {
+	type NoMethod AIInference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AcknowledgeRequest: Request for the Acknowledge method.
 type AcknowledgeRequest struct {
 	// AckIds: Required. The acknowledgment ID for the messages being acknowledged
@@ -893,13 +929,13 @@ type CreateSnapshotRequest struct {
 	// Labels: Optional. See Creating and managing labels
 	// (https://cloud.google.com/pubsub/docs/labels).
 	Labels map[string]string `json:"labels,omitempty"`
-	// Subscription: Required. Identifier. The subscription whose backlog the
-	// snapshot retains. Specifically, the created snapshot is guaranteed to
-	// retain: (a) The existing backlog on the subscription. More precisely, this
-	// is defined as the messages in the subscription's backlog that are
-	// unacknowledged upon the successful completion of the `CreateSnapshot`
-	// request; as well as: (b) Any messages published to the subscription's topic
-	// following the successful completion of the CreateSnapshot request. Format is
+	// Subscription: Required. The subscription whose backlog the snapshot retains.
+	// Specifically, the created snapshot is guaranteed to retain: (a) The existing
+	// backlog on the subscription. More precisely, this is defined as the messages
+	// in the subscription's backlog that are unacknowledged upon the successful
+	// completion of the `CreateSnapshot` request; as well as: (b) Any messages
+	// published to the subscription's topic following the successful completion of
+	// the CreateSnapshot request. Format is
 	// `projects/{project}/subscriptions/{sub}`.
 	Subscription string `json:"subscription,omitempty"`
 	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
@@ -1367,6 +1403,10 @@ func (s MessageStoragePolicy) MarshalJSON() ([]byte, error) {
 
 // MessageTransform: All supported message transforms types.
 type MessageTransform struct {
+	// AiInference: Optional. AI Inference. Specifies the Vertex AI endpoint that
+	// inference requests built from the Pub/Sub message data and provided
+	// parameters will be sent to.
+	AiInference *AIInference `json:"aiInference,omitempty"`
 	// Disabled: Optional. If true, the transform is disabled and will not be
 	// applied to messages. Defaults to `false`.
 	Disabled bool `json:"disabled,omitempty"`
@@ -1377,13 +1417,13 @@ type MessageTransform struct {
 	// JavaScriptUDF's are specified on a resource, each must have a unique
 	// `function_name`.
 	JavascriptUdf *JavaScriptUDF `json:"javascriptUdf,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Disabled") to
+	// ForceSendFields is a list of field names (e.g. "AiInference") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Disabled") to include in API
+	// NullFields is a list of field names (e.g. "AiInference") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2272,10 +2312,9 @@ type Subscription struct {
 	// this resource. For example: "123/environment": "production",
 	// "123/costCenter": "marketing"
 	Tags map[string]string `json:"tags,omitempty"`
-	// Topic: Required. Identifier. The name of the topic from which this
-	// subscription is receiving messages. Format is
-	// `projects/{project}/topics/{topic}`. The value of this field will be
-	// `_deleted-topic_` if the topic has been deleted.
+	// Topic: Required. The name of the topic from which this subscription is
+	// receiving messages. Format is `projects/{project}/topics/{topic}`. The value
+	// of this field will be `_deleted-topic_` if the topic has been deleted.
 	Topic string `json:"topic,omitempty"`
 	// TopicMessageRetentionDuration: Output only. Indicates the minimum duration
 	// for which a message is retained after it is published to the subscription's
@@ -2460,6 +2499,31 @@ type Topic struct {
 
 func (s Topic) MarshalJSON() ([]byte, error) {
 	type NoMethod Topic
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UnstructuredInference: Configuration for making inferences using arbitrary
+// JSON payloads.
+type UnstructuredInference struct {
+	// Parameters: Optional. A parameters object to be included in each inference
+	// request. The parameters object is combined with the data field of the
+	// Pub/Sub message to form the inference request.
+	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Parameters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Parameters") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UnstructuredInference) MarshalJSON() ([]byte, error) {
+	type NoMethod UnstructuredInference
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4173,10 +4237,10 @@ type ProjectsSnapshotsCreateCall struct {
 // generated name is populated in the returned Snapshot object. Note that for
 // REST API requests, you must specify a name in the request.
 //
-//   - name: Identifier. User-provided name for this snapshot. If the name is not
-//     provided in the request, the server will assign a random name for this
-//     snapshot on the same project as the subscription. Note that for REST API
-//     requests, you must specify a name. See the resource name rules
+//   - name: User-provided name for this snapshot. If the name is not provided in
+//     the request, the server will assign a random name for this snapshot on the
+//     same project as the subscription. Note that for REST API requests, you
+//     must specify a name. See the resource name rules
 //     (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).
 //     Format is `projects/{project}/snapshots/{snap}`.
 func (r *ProjectsSnapshotsService) Create(name string, createsnapshotrequest *CreateSnapshotRequest) *ProjectsSnapshotsCreateCall {
@@ -4288,7 +4352,7 @@ type ProjectsSnapshotsDeleteCall struct {
 // association with the old snapshot or its subscription, unless the same
 // subscription is specified.
 //
-//   - snapshot: Identifier. The name of the snapshot to delete. Format is
+//   - snapshot: The name of the snapshot to delete. Format is
 //     `projects/{project}/snapshots/{snap}`.
 func (r *ProjectsSnapshotsService) Delete(snapshot string) *ProjectsSnapshotsDeleteCall {
 	c := &ProjectsSnapshotsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4391,7 +4455,7 @@ type ProjectsSnapshotsGetCall struct {
 // set the acknowledgment state of messages in an existing subscription to the
 // state captured by a snapshot.
 //
-//   - snapshot: Identifier. The name of the snapshot to get. Format is
+//   - snapshot: The name of the snapshot to get. Format is
 //     `projects/{project}/snapshots/{snap}`.
 func (r *ProjectsSnapshotsService) Get(snapshot string) *ProjectsSnapshotsGetCall {
 	c := &ProjectsSnapshotsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4634,8 +4698,8 @@ type ProjectsSnapshotsListCall struct {
 // the acknowledgment state of messages in an existing subscription to the
 // state captured by a snapshot.
 //
-//   - project: Identifier. The name of the project in which to list snapshots.
-//     Format is `projects/{project-id}`.
+//   - project: The name of the project in which to list snapshots. Format is
+//     `projects/{project-id}`.
 func (r *ProjectsSnapshotsService) List(project string) *ProjectsSnapshotsListCall {
 	c := &ProjectsSnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5336,7 +5400,7 @@ type ProjectsSubscriptionsDeleteCall struct {
 // created with the same name, but the new one has no association with the old
 // subscription or its topic unless the same topic is specified.
 //
-//   - subscription: Identifier. The subscription to delete. Format is
+//   - subscription: The subscription to delete. Format is
 //     `projects/{project}/subscriptions/{sub}`.
 func (r *ProjectsSubscriptionsService) Delete(subscription string) *ProjectsSubscriptionsDeleteCall {
 	c := &ProjectsSubscriptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5537,7 +5601,7 @@ type ProjectsSubscriptionsGetCall struct {
 
 // Get: Gets the configuration details of a subscription.
 //
-//   - subscription: Identifier. The name of the subscription to get. Format is
+//   - subscription: The name of the subscription to get. Format is
 //     `projects/{project}/subscriptions/{sub}`.
 func (r *ProjectsSubscriptionsService) Get(subscription string) *ProjectsSubscriptionsGetCall {
 	c := &ProjectsSubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5776,8 +5840,8 @@ type ProjectsSubscriptionsListCall struct {
 
 // List: Lists matching subscriptions.
 //
-//   - project: Identifier. The name of the project in which to list
-//     subscriptions. Format is `projects/{project-id}`.
+//   - project: The name of the project in which to list subscriptions. Format is
+//     `projects/{project-id}`.
 func (r *ProjectsSubscriptionsService) List(project string) *ProjectsSubscriptionsListCall {
 	c := &ProjectsSubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6793,7 +6857,7 @@ type ProjectsTopicsDeleteCall struct {
 // configuration or subscriptions. Existing subscriptions to this topic are not
 // deleted, but their `topic` field is set to `_deleted-topic_`.
 //
-//   - topic: Identifier. Name of the topic to delete. Format is
+//   - topic: Name of the topic to delete. Format is
 //     `projects/{project}/topics/{topic}`.
 func (r *ProjectsTopicsService) Delete(topic string) *ProjectsTopicsDeleteCall {
 	c := &ProjectsTopicsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6892,7 +6956,7 @@ type ProjectsTopicsGetCall struct {
 
 // Get: Gets the configuration of a topic.
 //
-//   - topic: Identifier. The name of the topic to get. Format is
+//   - topic: The name of the topic to get. Format is
 //     `projects/{project}/topics/{topic}`.
 func (r *ProjectsTopicsService) Get(topic string) *ProjectsTopicsGetCall {
 	c := &ProjectsTopicsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7131,8 +7195,8 @@ type ProjectsTopicsListCall struct {
 
 // List: Lists matching topics.
 //
-//   - project: Identifier. The name of the project in which to list topics.
-//     Format is `projects/{project-id}`.
+//   - project: The name of the project in which to list topics. Format is
+//     `projects/{project-id}`.
 func (r *ProjectsTopicsService) List(project string) *ProjectsTopicsListCall {
 	c := &ProjectsTopicsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7388,8 +7452,8 @@ type ProjectsTopicsPublishCall struct {
 // Publish: Adds one or more messages to the topic. Returns `NOT_FOUND` if the
 // topic does not exist.
 //
-//   - topic: Identifier. The messages in the request will be published on this
-//     topic. Format is `projects/{project}/topics/{topic}`.
+//   - topic: The messages in the request will be published on this topic. Format
+//     is `projects/{project}/topics/{topic}`.
 func (r *ProjectsTopicsService) Publish(topic string, publishrequest *PublishRequest) *ProjectsTopicsPublishCall {
 	c := &ProjectsTopicsPublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic

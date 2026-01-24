@@ -323,7 +323,14 @@ type AbortInfo struct {
 	//   "PERMISSION_DENIED_NO_CLOUD_ROUTER_CONFIGS" - Aborted because user lacks
 	// permission to access Cloud Router configs required to run the test.
 	//   "NO_SOURCE_LOCATION" - Aborted because no valid source or destination
-	// endpoint is derived from the input test request.
+	// endpoint can be derived from the test request.
+	//   "NO_SOURCE_GCP_NETWORK_LOCATION" - Aborted because the source IP address
+	// is not contained within the subnet ranges of the provided VPC network.
+	//   "NO_SOURCE_NON_GCP_NETWORK_LOCATION" - Aborted because the source IP
+	// address is not contained within the destination ranges of the routes towards
+	// non-GCP networks in the provided VPC network.
+	//   "NO_SOURCE_INTERNET_LOCATION" - Aborted because the source IP address
+	// can't be resolved as an Internet IP address.
 	//   "INVALID_ARGUMENT" - Aborted because the source or destination endpoint
 	// specified in the request is invalid. Some examples: - The request might
 	// contain malformed resource URI, project ID, or IP address. - The request
@@ -357,6 +364,9 @@ type AbortInfo struct {
 	// satisfy test input).
 	//   "SOURCE_PSC_CLOUD_SQL_UNSUPPORTED" - Aborted because tests with a
 	// PSC-based Cloud SQL instance as a source are not supported.
+	//   "SOURCE_EXTERNAL_CLOUD_SQL_UNSUPPORTED" - Aborted because tests with the
+	// external database as a source are not supported. In such replication
+	// scenarios, the connection is initiated by the Cloud SQL replica instance.
 	//   "SOURCE_REDIS_CLUSTER_UNSUPPORTED" - Aborted because tests with a Redis
 	// Cluster as a source are not supported.
 	//   "SOURCE_REDIS_INSTANCE_UNSUPPORTED" - Aborted because tests with a Redis
@@ -1506,30 +1516,34 @@ type Endpoint struct {
 	// Network load balancer.
 	//   "TCP_UDP_INTERNAL_LOAD_BALANCER" - Internal TCP/UDP load balancer.
 	LoadBalancerType string `json:"loadBalancerType,omitempty"`
-	// Network: A VPC network URI.
+	// Network: A VPC network URI. Used according to the `network_type`. Relevant
+	// only for the source endpoints.
 	Network string `json:"network,omitempty"`
-	// NetworkType: Type of the network where the endpoint is located. Applicable
-	// only to source endpoint, as destination network type can be inferred from
-	// the source.
+	// NetworkType: Type of the network where the endpoint is located. Relevant
+	// only for the source endpoints.
 	//
 	// Possible values:
-	//   "NETWORK_TYPE_UNSPECIFIED" - Default type if unspecified.
-	//   "GCP_NETWORK" - A network hosted within Google Cloud. To receive more
-	// detailed output, specify the URI for the source or destination network.
-	//   "NON_GCP_NETWORK" - A network hosted outside of Google Cloud. This can be
-	// an on-premises network, an internet resource or a network hosted by another
-	// cloud provider.
+	//   "NETWORK_TYPE_UNSPECIFIED" - Unspecified. The `project_id` field should be
+	// set to the project where the GCP endpoint is located, or where the non-GCP
+	// endpoint should be reachable from (via routes to non-GCP networks). The test
+	// will analyze all possible IP address locations. This might take longer and
+	// produce inaccurate or ambiguous results, so prefer specifying an explicit
+	// network type.
+	//   "GCP_NETWORK" - A VPC network. The `network` field should be set to the
+	// URI of this network. Only endpoints within this network will be considered.
+	//   "NON_GCP_NETWORK" - A non-GCP network (for example, an on-premises network
+	// or network in another Cloud). The `network` field should be set to the URI
+	// of the VPC network containing a corresponding VPN tunnel, Interconnect
+	// attachment, or router appliance instance. Only endpoints reachable from the
+	// provided VPC network via the routes to non-GCP networks will be considered.
+	//   "INTERNET" - Internet. Only endpoints reachable over public Internet and
+	// endpoints within Google API and service ranges will be considered.
 	NetworkType string `json:"networkType,omitempty"`
 	// Port: The IP protocol port of the endpoint. Only applicable when protocol is
 	// TCP or UDP.
 	Port int64 `json:"port,omitempty"`
-	// ProjectId: Project ID where the endpoint is located. The project ID can be
-	// derived from the URI if you provide a endpoint or network URI. The following
-	// are two cases where you may need to provide the project ID: 1. Only the IP
-	// address is specified, and the IP address is within a Google Cloud project.
-	// 2. When you are using Shared VPC and the IP address that you provide is from
-	// the service project. In this case, the network that the IP address resides
-	// in is defined in the host project.
+	// ProjectId: Endpoint project ID. Used according to the `network_type`.
+	// Relevant only for the source endpoints.
 	ProjectId string `json:"projectId,omitempty"`
 	// RedisCluster: A Redis Cluster
 	// (https://cloud.google.com/memorystore/docs/cluster) URI. Applicable only to

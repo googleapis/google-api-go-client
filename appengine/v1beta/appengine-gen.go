@@ -2667,6 +2667,11 @@ type ProjectsMetadata struct {
 	// GceTag: The GCE tags associated with the consumer project and those
 	// inherited due to their ancestry, if any. Not supported by CCFE.
 	GceTag []*GceTag `json:"gceTag,omitempty"`
+	// IsGceProjectDeprovisioning: DEPRECATED: Indicates whether the GCE project is
+	// in the DEPROVISIONING state. This field is a temporary workaround (see
+	// b/475310865) to allow GCE extensions to bypass certain checks during
+	// deprovisioning. It will be replaced by a permanent solution in the future.
+	IsGceProjectDeprovisioning bool `json:"isGceProjectDeprovisioning,omitempty"`
 	// P4ServiceAccount: The service account authorized to operate on the consumer
 	// project. Note: CCFE only propagates P4SA with default tag to CLH.
 	P4ServiceAccount string `json:"p4ServiceAccount,omitempty"`

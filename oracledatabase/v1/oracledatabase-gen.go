@@ -496,23 +496,24 @@ func (s AllConnectionStrings) MarshalJSON() ([]byte, error) {
 // AutonomousDatabase: Details of the Autonomous Database resource.
 // https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/AutonomousDatabase/
 type AutonomousDatabase struct {
-	// AdminPassword: Optional. The password for the default ADMIN user.
+	// AdminPassword: Optional. Immutable. The password for the default ADMIN user.
 	AdminPassword string `json:"adminPassword,omitempty"`
-	// Cidr: Optional. The subnet CIDR range for the Autonomous Database.
+	// Cidr: Optional. Immutable. The subnet CIDR range for the Autonomous
+	// Database.
 	Cidr string `json:"cidr,omitempty"`
 	// CreateTime: Output only. The date and time that the Autonomous Database was
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Database: Optional. The name of the Autonomous Database. The database name
-	// must be unique in the project. The name must begin with a letter and can
-	// contain a maximum of 30 alphanumeric characters.
+	// Database: Optional. Immutable. The name of the Autonomous Database. The
+	// database name must be unique in the project. The name must begin with a
+	// letter and can contain a maximum of 30 alphanumeric characters.
 	Database string `json:"database,omitempty"`
 	// DisasterRecoverySupportedLocations: Output only. List of supported GCP
 	// region to clone the Autonomous Database for disaster recovery. Format:
 	// `project/{project}/locations/{location}`.
 	DisasterRecoverySupportedLocations []string `json:"disasterRecoverySupportedLocations,omitempty"`
-	// DisplayName: Optional. The display name for the Autonomous Database. The
-	// name does not have to be unique within your project.
+	// DisplayName: Optional. Immutable. The display name for the Autonomous
+	// Database. The name does not have to be unique within your project.
 	DisplayName string `json:"displayName,omitempty"`
 	// EntitlementId: Output only. The ID of the subscription entitlement
 	// associated with the Autonomous Database.
@@ -525,18 +526,18 @@ type AutonomousDatabase struct {
 	// projects/{project}/locations/{region}/autonomousDatabases/{autonomous_databas
 	// e}
 	Name string `json:"name,omitempty"`
-	// Network: Optional. The name of the VPC network used by the Autonomous
-	// Database in the following format:
+	// Network: Optional. Immutable. The name of the VPC network used by the
+	// Autonomous Database in the following format:
 	// projects/{project}/global/networks/{network}
 	Network string `json:"network,omitempty"`
-	// OdbNetwork: Optional. The name of the OdbNetwork associated with the
-	// Autonomous Database. Format:
+	// OdbNetwork: Optional. Immutable. The name of the OdbNetwork associated with
+	// the Autonomous Database. Format:
 	// projects/{project}/locations/{location}/odbNetworks/{odb_network} It is
 	// optional but if specified, this should match the parent ODBNetwork of the
 	// OdbSubnet.
 	OdbNetwork string `json:"odbNetwork,omitempty"`
-	// OdbSubnet: Optional. The name of the OdbSubnet associated with the
-	// Autonomous Database. Format:
+	// OdbSubnet: Optional. Immutable. The name of the OdbSubnet associated with
+	// the Autonomous Database. Format:
 	// projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/
 	// {odb_subnet}
 	OdbSubnet string `json:"odbSubnet,omitempty"`
@@ -545,10 +546,10 @@ type AutonomousDatabase struct {
 	PeerAutonomousDatabases []string `json:"peerAutonomousDatabases,omitempty"`
 	// Properties: Optional. The properties of the Autonomous Database.
 	Properties *AutonomousDatabaseProperties `json:"properties,omitempty"`
-	// SourceConfig: Optional. The source Autonomous Database configuration for the
-	// standby Autonomous Database. The source Autonomous Database is configured
-	// while creating the Peer Autonomous Database and can't be updated after
-	// creation.
+	// SourceConfig: Optional. Immutable. The source Autonomous Database
+	// configuration for the standby Autonomous Database. The source Autonomous
+	// Database is configured while creating the Peer Autonomous Database and can't
+	// be updated after creation.
 	SourceConfig *SourceConfig `json:"sourceConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -872,8 +873,8 @@ type AutonomousDatabaseProperties struct {
 	// AllocatedStorageSizeTb: Output only. The amount of storage currently
 	// allocated for the database tables and billed for, rounded up in terabytes.
 	AllocatedStorageSizeTb float64 `json:"allocatedStorageSizeTb,omitempty"`
-	// AllowlistedIps: Optional. The list of allowlisted IP addresses for the
-	// Autonomous Database.
+	// AllowlistedIps: Optional. Immutable. The list of allowlisted IP addresses
+	// for the Autonomous Database.
 	AllowlistedIps []string `json:"allowlistedIps,omitempty"`
 	// ApexDetails: Output only. The details for the Oracle APEX Application
 	// Development.
@@ -893,15 +894,15 @@ type AutonomousDatabaseProperties struct {
 	// AvailableUpgradeVersions: Output only. The list of available Oracle Database
 	// upgrade versions for an Autonomous Database.
 	AvailableUpgradeVersions []string `json:"availableUpgradeVersions,omitempty"`
-	// BackupRetentionPeriodDays: Optional. The retention period for the Autonomous
-	// Database. This field is specified in days, can range from 1 day to 60 days,
-	// and has a default value of 60 days.
+	// BackupRetentionPeriodDays: Optional. Immutable. The retention period for the
+	// Autonomous Database. This field is specified in days, can range from 1 day
+	// to 60 days, and has a default value of 60 days.
 	BackupRetentionPeriodDays int64 `json:"backupRetentionPeriodDays,omitempty"`
-	// CharacterSet: Optional. The character set for the Autonomous Database. The
-	// default is AL32UTF8.
+	// CharacterSet: Optional. Immutable. The character set for the Autonomous
+	// Database. The default is AL32UTF8.
 	CharacterSet string `json:"characterSet,omitempty"`
-	// ComputeCount: Optional. The number of compute servers for the Autonomous
-	// Database.
+	// ComputeCount: Optional. Immutable. The number of compute servers for the
+	// Autonomous Database.
 	ComputeCount float64 `json:"computeCount,omitempty"`
 	// ConnectionStrings: Output only. The connection strings used to connect to an
 	// Autonomous Database.
@@ -909,10 +910,10 @@ type AutonomousDatabaseProperties struct {
 	// ConnectionUrls: Output only. The Oracle Connection URLs for an Autonomous
 	// Database.
 	ConnectionUrls *AutonomousDatabaseConnectionUrls `json:"connectionUrls,omitempty"`
-	// CpuCoreCount: Optional. The number of CPU cores to be made available to the
-	// database.
+	// CpuCoreCount: Optional. Immutable. The number of CPU cores to be made
+	// available to the database.
 	CpuCoreCount int64 `json:"cpuCoreCount,omitempty"`
-	// CustomerContacts: Optional. The list of customer contacts.
+	// CustomerContacts: Optional. Immutable. The list of customer contacts.
 	CustomerContacts []*CustomerContact `json:"customerContacts,omitempty"`
 	// DataGuardRoleChangedTime: Output only. The date and time the Autonomous Data
 	// Guard role was changed for the standby Autonomous Database.
@@ -928,11 +929,11 @@ type AutonomousDatabaseProperties struct {
 	//   "NOT_REGISTERED" - Not registered data safe state.
 	//   "FAILED" - Failed data safe state.
 	DataSafeState string `json:"dataSafeState,omitempty"`
-	// DataStorageSizeGb: Optional. The size of the data stored in the database, in
-	// gigabytes.
+	// DataStorageSizeGb: Optional. Immutable. The size of the data stored in the
+	// database, in gigabytes.
 	DataStorageSizeGb int64 `json:"dataStorageSizeGb,omitempty"`
-	// DataStorageSizeTb: Optional. The size of the data stored in the database, in
-	// terabytes.
+	// DataStorageSizeTb: Optional. Immutable. The size of the data stored in the
+	// database, in terabytes.
 	DataStorageSizeTb int64 `json:"dataStorageSizeTb,omitempty"`
 	// DatabaseManagementState: Output only. The current state of database
 	// management for the Autonomous Database.
@@ -946,17 +947,18 @@ type AutonomousDatabaseProperties struct {
 	//   "FAILED_ENABLING" - Failed enabling Database Management state
 	//   "FAILED_DISABLING" - Failed disabling Database Management state
 	DatabaseManagementState string `json:"databaseManagementState,omitempty"`
-	// DbEdition: Optional. The edition of the Autonomous Databases.
+	// DbEdition: Optional. Immutable. The edition of the Autonomous Databases.
 	//
 	// Possible values:
 	//   "DATABASE_EDITION_UNSPECIFIED" - Default unspecified value.
 	//   "STANDARD_EDITION" - Standard Database Edition
 	//   "ENTERPRISE_EDITION" - Enterprise Database Edition
 	DbEdition string `json:"dbEdition,omitempty"`
-	// DbVersion: Optional. The Oracle Database version for the Autonomous
-	// Database.
+	// DbVersion: Optional. Immutable. The Oracle Database version for the
+	// Autonomous Database.
 	DbVersion string `json:"dbVersion,omitempty"`
-	// DbWorkload: Required. The workload type of the Autonomous Database.
+	// DbWorkload: Required. Immutable. The workload type of the Autonomous
+	// Database.
 	//
 	// Possible values:
 	//   "DB_WORKLOAD_UNSPECIFIED" - Default unspecified value.
@@ -979,16 +981,17 @@ type AutonomousDatabaseProperties struct {
 	// FailedDataRecoveryDuration: Output only. This field indicates the number of
 	// seconds of data loss during a Data Guard failover.
 	FailedDataRecoveryDuration string `json:"failedDataRecoveryDuration,omitempty"`
-	// IsAutoScalingEnabled: Optional. This field indicates if auto scaling is
-	// enabled for the Autonomous Database CPU core count.
+	// IsAutoScalingEnabled: Optional. Immutable. This field indicates if auto
+	// scaling is enabled for the Autonomous Database CPU core count.
 	IsAutoScalingEnabled bool `json:"isAutoScalingEnabled,omitempty"`
 	// IsLocalDataGuardEnabled: Output only. This field indicates whether the
 	// Autonomous Database has local (in-region) Data Guard enabled.
 	IsLocalDataGuardEnabled bool `json:"isLocalDataGuardEnabled,omitempty"`
-	// IsStorageAutoScalingEnabled: Optional. This field indicates if auto scaling
-	// is enabled for the Autonomous Database storage.
+	// IsStorageAutoScalingEnabled: Optional. Immutable. This field indicates if
+	// auto scaling is enabled for the Autonomous Database storage.
 	IsStorageAutoScalingEnabled bool `json:"isStorageAutoScalingEnabled,omitempty"`
-	// LicenseType: Required. The license type used for the Autonomous Database.
+	// LicenseType: Required. Immutable. The license type used for the Autonomous
+	// Database.
 	//
 	// Possible values:
 	//   "LICENSE_TYPE_UNSPECIFIED" - Unspecified
@@ -1018,8 +1021,8 @@ type AutonomousDatabaseProperties struct {
 	// MaintenanceEndTime: Output only. The date and time when maintenance will
 	// end.
 	MaintenanceEndTime string `json:"maintenanceEndTime,omitempty"`
-	// MaintenanceScheduleType: Optional. The maintenance schedule of the
-	// Autonomous Database.
+	// MaintenanceScheduleType: Optional. Immutable. The maintenance schedule of
+	// the Autonomous Database.
 	//
 	// Possible values:
 	//   "MAINTENANCE_SCHEDULE_TYPE_UNSPECIFIED" - Default unspecified value.
@@ -1034,11 +1037,11 @@ type AutonomousDatabaseProperties struct {
 	// MemoryTableGbs: Output only. The memory assigned to in-memory tables in an
 	// Autonomous Database.
 	MemoryTableGbs int64 `json:"memoryTableGbs,omitempty"`
-	// MtlsConnectionRequired: Optional. This field specifies if the Autonomous
-	// Database requires mTLS connections.
+	// MtlsConnectionRequired: Optional. Immutable. This field specifies if the
+	// Autonomous Database requires mTLS connections.
 	MtlsConnectionRequired bool `json:"mtlsConnectionRequired,omitempty"`
-	// NCharacterSet: Optional. The national character set for the Autonomous
-	// Database. The default is AL16UTF16.
+	// NCharacterSet: Optional. Immutable. The national character set for the
+	// Autonomous Database. The default is AL16UTF16.
 	NCharacterSet string `json:"nCharacterSet,omitempty"`
 	// NextLongTermBackupTime: Output only. The long term backup schedule of the
 	// Autonomous Database.
@@ -1084,11 +1087,11 @@ type AutonomousDatabaseProperties struct {
 	// PrivateEndpoint: Output only. The private endpoint for the Autonomous
 	// Database.
 	PrivateEndpoint string `json:"privateEndpoint,omitempty"`
-	// PrivateEndpointIp: Optional. The private endpoint IP address for the
-	// Autonomous Database.
+	// PrivateEndpointIp: Optional. Immutable. The private endpoint IP address for
+	// the Autonomous Database.
 	PrivateEndpointIp string `json:"privateEndpointIp,omitempty"`
-	// PrivateEndpointLabel: Optional. The private endpoint label for the
-	// Autonomous Database.
+	// PrivateEndpointLabel: Optional. Immutable. The private endpoint label for
+	// the Autonomous Database.
 	PrivateEndpointLabel string `json:"privateEndpointLabel,omitempty"`
 	// RefreshableMode: Output only. The refresh mode of the cloned Autonomous
 	// Database.
@@ -1120,7 +1123,8 @@ type AutonomousDatabaseProperties struct {
 	// ScheduledOperationDetails: Output only. The list and details of the
 	// scheduled operations of the Autonomous Database.
 	ScheduledOperationDetails []*ScheduledOperationDetails `json:"scheduledOperationDetails,omitempty"`
-	// SecretId: Optional. The ID of the Oracle Cloud Infrastructure vault secret.
+	// SecretId: Optional. Immutable. The ID of the Oracle Cloud Infrastructure
+	// vault secret.
 	SecretId string `json:"secretId,omitempty"`
 	// ServiceAgentEmail: Output only. An Oracle-managed Google Cloud service
 	// account on which customers can grant roles to access resources in the
@@ -1180,7 +1184,8 @@ type AutonomousDatabaseProperties struct {
 	// UsedDataStorageSizeTbs: Output only. The storage space used by Autonomous
 	// Database, in gigabytes.
 	UsedDataStorageSizeTbs int64 `json:"usedDataStorageSizeTbs,omitempty"`
-	// VaultId: Optional. The ID of the Oracle Cloud Infrastructure vault.
+	// VaultId: Optional. Immutable. The ID of the Oracle Cloud Infrastructure
+	// vault.
 	VaultId string `json:"vaultId,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "ActualUsedDataStorageSizeTb") to unconditionally include in API requests.
@@ -3264,7 +3269,9 @@ func (s ExascaleDbStorageVaultProperties) MarshalJSON() ([]byte, error) {
 // FailoverAutonomousDatabaseRequest: The request for
 // `OracleDatabase.FailoverAutonomousDatabase`.
 type FailoverAutonomousDatabaseRequest struct {
-	// PeerAutonomousDatabase: Required. The peer database name to fail over to.
+	// PeerAutonomousDatabase: Optional. The peer database name to fail over to.
+	// Required for cross-region standby, and must be omitted for in-region Data
+	// Guard.
 	PeerAutonomousDatabase string `json:"peerAutonomousDatabase,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PeerAutonomousDatabase") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4862,7 +4869,9 @@ func (s StorageSizeDetails) MarshalJSON() ([]byte, error) {
 // SwitchoverAutonomousDatabaseRequest: The request for
 // `OracleDatabase.SwitchoverAutonomousDatabase`.
 type SwitchoverAutonomousDatabaseRequest struct {
-	// PeerAutonomousDatabase: Required. The peer database name to switch over to.
+	// PeerAutonomousDatabase: Optional. The peer database name to switch over to.
+	// Required for cross-region standby, and must be omitted for in-region Data
+	// Guard.
 	PeerAutonomousDatabase string `json:"peerAutonomousDatabase,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PeerAutonomousDatabase") to
 	// unconditionally include in API requests. By default, fields with empty or

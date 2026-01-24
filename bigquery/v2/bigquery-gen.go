@@ -4101,20 +4101,23 @@ func (s *HparamTuningTrial) UnmarshalJSON(data []byte) error {
 // IncrementalResultStats: Statistics related to Incremental Query Results.
 // Populated as part of JobStatistics2. This feature is not yet available.
 type IncrementalResultStats struct {
-	// DisabledReason: Reason why incremental query results are/were not written by
-	// the query.
+	// DisabledReason: Output only. Reason why incremental query results are/were
+	// not written by the query.
 	//
 	// Possible values:
 	//   "DISABLED_REASON_UNSPECIFIED" - Disabled reason not specified.
-	//   "OTHER" - Some other reason.
+	//   "OTHER" - Incremental results are/were disabled for reasons not covered by
+	// the other enum values, e.g. runtime issues.
+	//   "UNSUPPORTED_OPERATOR" - Query includes an operation that is not
+	// supported.
 	DisabledReason string `json:"disabledReason,omitempty"`
-	// ResultSetLastModifyTime: The time at which the result table's contents were
-	// modified. May be absent if no results have been written or the query has
-	// completed.
-	ResultSetLastModifyTime string `json:"resultSetLastModifyTime,omitempty"`
-	// ResultSetLastReplaceTime: The time at which the result table's contents were
-	// completely replaced. May be absent if no results have been written or the
+	// ResultSetLastModifyTime: Output only. The time at which the result table's
+	// contents were modified. May be absent if no results have been written or the
 	// query has completed.
+	ResultSetLastModifyTime string `json:"resultSetLastModifyTime,omitempty"`
+	// ResultSetLastReplaceTime: Output only. The time at which the result table's
+	// contents were completely replaced. May be absent if no results have been
+	// written or the query has completed.
 	ResultSetLastReplaceTime string `json:"resultSetLastReplaceTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisabledReason") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5112,10 +5115,10 @@ type JobConfigurationQuery struct {
 	TimePartitioning *TimePartitioning `json:"timePartitioning,omitempty"`
 	// UseLegacySql: Optional. Specifies whether to use BigQuery's legacy SQL
 	// dialect for this query. The default value is true. If set to false, the
-	// query will use BigQuery's GoogleSQL:
-	// https://cloud.google.com/bigquery/sql-reference/ When useLegacySql is set to
-	// false, the value of flattenResults is ignored; query will be run as if
-	// flattenResults is false.
+	// query uses BigQuery's GoogleSQL
+	// (https://docs.cloud.google.com/bigquery/docs/introduction-sql). When
+	// useLegacySql is set to false, the value of flattenResults is ignored; query
+	// will be run as if flattenResults is false.
 	//
 	// Default: true
 	UseLegacySql *bool `json:"useLegacySql,omitempty"`
@@ -7419,8 +7422,9 @@ type QueryRequest struct {
 	// response is true.
 	TimeoutMs int64 `json:"timeoutMs,omitempty"`
 	// UseLegacySql: Specifies whether to use BigQuery's legacy SQL dialect for
-	// this query. The default value is true. If set to false, the query will use
-	// BigQuery's GoogleSQL: https://cloud.google.com/bigquery/sql-reference/ When
+	// this query. The default value is true. If set to false, the query uses
+	// BigQuery's GoogleSQL
+	// (https://docs.cloud.google.com/bigquery/docs/introduction-sql). When
 	// useLegacySql is set to false, the value of flattenResults is ignored; query
 	// will be run as if flattenResults is false.
 	//
@@ -10987,10 +10991,10 @@ type ViewDefinition struct {
 	// set for GoogleSQL views.
 	UseExplicitColumnNames bool `json:"useExplicitColumnNames,omitempty"`
 	// UseLegacySql: Specifies whether to use BigQuery's legacy SQL for this view.
-	// The default value is true. If set to false, the view will use BigQuery's
-	// GoogleSQL: https://cloud.google.com/bigquery/sql-reference/ Queries and
-	// views that reference this view must use the same flag value. A wrapper is
-	// used here because the default value is True.
+	// The default value is true. If set to false, the view uses BigQuery's
+	// GoogleSQL (https://docs.cloud.google.com/bigquery/docs/introduction-sql).
+	// Queries and views that reference this view must use the same flag value. A
+	// wrapper is used here because the default value is True.
 	UseLegacySql bool `json:"useLegacySql,omitempty"`
 	// UserDefinedFunctionResources: Describes user-defined function resources used
 	// in the query.

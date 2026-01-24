@@ -7981,6 +7981,10 @@ func (s StopLostModeUserAttemptEvent) MarshalJSON() ([]byte, error) {
 // (https://developer.android.com/work/dpc/system-updates#mainline) for further
 // details.
 type SystemUpdate struct {
+	// AllowedDaysWithoutUpdate: If this is greater than zero, then this is the
+	// number of days after a pending update becoming available that a device can
+	// remain compliant, without taking the update. Has no effect otherwise.
+	AllowedDaysWithoutUpdate int64 `json:"allowedDaysWithoutUpdate,omitempty"`
 	// EndMinutes: If the type is WINDOWED, the end of the maintenance window,
 	// measured as the number of minutes after midnight in device's local time.
 	// This value must be between 0 and 1439, inclusive. If this value is less than
@@ -8013,15 +8017,15 @@ type SystemUpdate struct {
 	//   "POSTPONE" - Postpone automatic install up to a maximum of 30 days. This
 	// policy does not affect security updates (e.g. monthly security patches).
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EndMinutes") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AllowedDaysWithoutUpdate")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EndMinutes") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AllowedDaysWithoutUpdate") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

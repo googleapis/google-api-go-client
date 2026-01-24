@@ -5078,6 +5078,10 @@ type GoogleCloudDocumentaiV1DocumentSchema struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: Display name to show to users.
 	DisplayName string `json:"displayName,omitempty"`
+	// DocumentPrompt: Optional. Document level prompt provided by the user. This
+	// custom text is injected into the AI model's prompt to provide extra,
+	// document-wide guidance for processing.
+	DocumentPrompt string `json:"documentPrompt,omitempty"`
 	// EntityTypes: Entity types of the schema.
 	EntityTypes []*GoogleCloudDocumentaiV1DocumentSchemaEntityType `json:"entityTypes,omitempty"`
 	// Metadata: Metadata of the schema.
@@ -8066,6 +8070,10 @@ type GoogleCloudDocumentaiV1beta3DocumentSchema struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: Display name to show to users.
 	DisplayName string `json:"displayName,omitempty"`
+	// DocumentPrompt: Optional. Document level prompt provided by the user. This
+	// custom text is injected into the AI model's prompt to provide extra,
+	// document-wide guidance for processing.
+	DocumentPrompt string `json:"documentPrompt,omitempty"`
 	// EntityTypes: Entity types of the schema.
 	EntityTypes []*GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType `json:"entityTypes,omitempty"`
 	// Metadata: Metadata of the schema.

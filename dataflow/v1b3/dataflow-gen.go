@@ -6289,6 +6289,9 @@ type StreamingConfigTask struct {
 	OperationalLimits *StreamingOperationalLimits `json:"operationalLimits,omitempty"`
 	// StreamingComputationConfigs: Set of computation configuration information.
 	StreamingComputationConfigs []*StreamingComputationConfig `json:"streamingComputationConfigs,omitempty"`
+	// StreamingEngineStateTagEncodingVersion: Optional. The state tag encoding
+	// format version for streaming engine jobs.
+	StreamingEngineStateTagEncodingVersion int64 `json:"streamingEngineStateTagEncodingVersion,omitempty"`
 	// UserStepToStateFamilyNameMap: Map from user step names to state families.
 	UserStepToStateFamilyNameMap map[string]string `json:"userStepToStateFamilyNameMap,omitempty"`
 	// UserWorkerRunnerV1Settings: Binary encoded proto to control runtime behavior

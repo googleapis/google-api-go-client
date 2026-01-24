@@ -3843,7 +3843,13 @@ type Service struct {
 	Documentation *Documentation `json:"documentation,omitempty"`
 	// Endpoints: Configuration for network endpoints. If this is empty, then an
 	// endpoint with the same name as the service is automatically generated to
-	// service all defined APIs.
+	// service all defined APIs. WARNING: Defining any entries in the `endpoints`
+	// list disables the automatic generation of default endpoint variations (e.g.,
+	// `{service}.clients6.google.com`, `content-{service}.googleapis.com`, and
+	// mTLS variants like `{service}.mtls.googleapis.com`). To retain these default
+	// variations, you are required to explicitly include your main service
+	// endpoint (e.g., `myservice.googleapis.com`) in this list alongside any other
+	// custom endpoints (like REP, GFE, etc.).
 	Endpoints []*Endpoint `json:"endpoints,omitempty"`
 	// Enums: A list of all enum types included in this API service. Enums
 	// referenced directly or indirectly by the `apis` are automatically included.
@@ -3865,7 +3871,7 @@ type Service struct {
 	// Metrics: Defines the metrics used by this service.
 	Metrics []*MetricDescriptor `json:"metrics,omitempty"`
 	// MonitoredResources: Defines the monitored resources used by this service.
-	// This is required by the Service.monitoring and Service.logging
+	// This is required by the `Service.monitoring` and `Service.logging`
 	// configurations.
 	MonitoredResources []*MonitoredResourceDescriptor `json:"monitoredResources,omitempty"`
 	// Monitoring: Monitoring configuration.

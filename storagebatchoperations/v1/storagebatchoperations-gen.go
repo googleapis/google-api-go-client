@@ -183,10 +183,22 @@ type ProjectsLocationsService struct {
 
 func NewProjectsLocationsJobsService(s *Service) *ProjectsLocationsJobsService {
 	rs := &ProjectsLocationsJobsService{s: s}
+	rs.BucketOperations = NewProjectsLocationsJobsBucketOperationsService(s)
 	return rs
 }
 
 type ProjectsLocationsJobsService struct {
+	s *Service
+
+	BucketOperations *ProjectsLocationsJobsBucketOperationsService
+}
+
+func NewProjectsLocationsJobsBucketOperationsService(s *Service) *ProjectsLocationsJobsBucketOperationsService {
+	rs := &ProjectsLocationsJobsBucketOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsJobsBucketOperationsService struct {
 	s *Service
 }
 
@@ -247,6 +259,74 @@ type BucketList struct {
 
 func (s BucketList) MarshalJSON() ([]byte, error) {
 	type NoMethod BucketList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BucketOperation: BucketOperation represents a bucket-level breakdown of a
+// Job.
+type BucketOperation struct {
+	// BucketName: The bucket name of the objects to be transformed in the
+	// BucketOperation.
+	BucketName string `json:"bucketName,omitempty"`
+	// CompleteTime: Output only. The time that the BucketOperation was completed.
+	CompleteTime string `json:"completeTime,omitempty"`
+	// Counters: Output only. Information about the progress of the bucket
+	// operation.
+	Counters *Counters `json:"counters,omitempty"`
+	// CreateTime: Output only. The time that the BucketOperation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DeleteObject: Delete objects.
+	DeleteObject *DeleteObject `json:"deleteObject,omitempty"`
+	// ErrorSummaries: Output only. Summarizes errors encountered with sample error
+	// log entries.
+	ErrorSummaries []*ErrorSummary `json:"errorSummaries,omitempty"`
+	// Manifest: Specifies objects in a manifest file.
+	Manifest *Manifest `json:"manifest,omitempty"`
+	// Name: Identifier. The resource name of the BucketOperation. This is defined
+	// by the service. Format:
+	// projects/{project}/locations/global/jobs/{job_id}/bucketOperations/{bucket_op
+	// eration}.
+	Name string `json:"name,omitempty"`
+	// PrefixList: Specifies objects matching a prefix set.
+	PrefixList *PrefixList `json:"prefixList,omitempty"`
+	// PutMetadata: Updates object metadata. Allows updating fixed-key and custom
+	// metadata and fixed-key metadata i.e. Cache-Control, Content-Disposition,
+	// Content-Encoding, Content-Language, Content-Type, Custom-Time.
+	PutMetadata *PutMetadata `json:"putMetadata,omitempty"`
+	// PutObjectHold: Changes object hold status.
+	PutObjectHold *PutObjectHold `json:"putObjectHold,omitempty"`
+	// RewriteObject: Rewrite the object and updates metadata like KMS key.
+	RewriteObject *RewriteObject `json:"rewriteObject,omitempty"`
+	// StartTime: Output only. The time that the BucketOperation was started.
+	StartTime string `json:"startTime,omitempty"`
+	// State: Output only. State of the BucketOperation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "QUEUED" - Created but not yet started.
+	//   "RUNNING" - In progress.
+	//   "SUCCEEDED" - Completed successfully.
+	//   "CANCELED" - Cancelled by the user.
+	//   "FAILED" - Terminated due to an unrecoverable failure.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BucketName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BucketName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BucketOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod BucketOperation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -554,6 +634,36 @@ type Job struct {
 
 func (s Job) MarshalJSON() ([]byte, error) {
 	type NoMethod Job
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListBucketOperationsResponse: Message for response to listing
+// BucketOperations
+type ListBucketOperationsResponse struct {
+	// BucketOperations: A list of storage batch bucket operations.
+	BucketOperations []*BucketOperation `json:"bucketOperations,omitempty"`
+	// NextPageToken: A token identifying a page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BucketOperations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BucketOperations") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListBucketOperationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListBucketOperationsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1579,6 +1689,16 @@ func (r *ProjectsLocationsJobsService) Delete(name string) *ProjectsLocationsJob
 	return c
 }
 
+// Force sets the optional parameter "force": If set to true, any child bucket
+// operations of the job will also be deleted. Highly recommended to be set to
+// true by all clients. Users cannot mutate bucket operations directly, so only
+// the jobs.delete permission is required to delete a job (and its child bucket
+// operations).
+func (c *ProjectsLocationsJobsDeleteCall) Force(force bool) *ProjectsLocationsJobsDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID in case you need to retry
 // your request. Requests with same `request_id` will be ignored for at least
@@ -1921,6 +2041,276 @@ func (c *ProjectsLocationsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJ
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsJobsListCall) Pages(ctx context.Context, f func(*ListJobsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsJobsBucketOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a BucketOperation.
+//
+//   - name: `name` of the bucket operation to retrieve. Format:
+//     projects/{project_id}/locations/global/jobs/{job_id}/bucketOperations/{buck
+//     et_operation_id}.
+func (r *ProjectsLocationsJobsBucketOperationsService) Get(name string) *ProjectsLocationsJobsBucketOperationsGetCall {
+	c := &ProjectsLocationsJobsBucketOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsJobsBucketOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobsBucketOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsJobsBucketOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsJobsBucketOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsJobsBucketOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsJobsBucketOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsJobsBucketOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobsBucketOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "storagebatchoperations.projects.locations.jobs.bucketOperations.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "storagebatchoperations.projects.locations.jobs.bucketOperations.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BucketOperation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsJobsBucketOperationsGetCall) Do(opts ...googleapi.CallOption) (*BucketOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BucketOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "storagebatchoperations.projects.locations.jobs.bucketOperations.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsJobsBucketOperationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists BucketOperations in a given project and job.
+//
+// - parent: Format: projects/{project_id}/locations/global/jobs/{job_id}.
+func (r *ProjectsLocationsJobsBucketOperationsService) List(parent string) *ProjectsLocationsJobsBucketOperationsListCall {
+	c := &ProjectsLocationsJobsBucketOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filters results as defined by
+// https://google.aip.dev/160.
+func (c *ProjectsLocationsJobsBucketOperationsListCall) Filter(filter string) *ProjectsLocationsJobsBucketOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field to sort by. Supported
+// fields are name, create_time.
+func (c *ProjectsLocationsJobsBucketOperationsListCall) OrderBy(orderBy string) *ProjectsLocationsJobsBucketOperationsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The list page size. Default
+// page size is 100.
+func (c *ProjectsLocationsJobsBucketOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsJobsBucketOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The list page token.
+func (c *ProjectsLocationsJobsBucketOperationsListCall) PageToken(pageToken string) *ProjectsLocationsJobsBucketOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsJobsBucketOperationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobsBucketOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsJobsBucketOperationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsJobsBucketOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsJobsBucketOperationsListCall) Context(ctx context.Context) *ProjectsLocationsJobsBucketOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsJobsBucketOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobsBucketOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/bucketOperations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "storagebatchoperations.projects.locations.jobs.bucketOperations.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "storagebatchoperations.projects.locations.jobs.bucketOperations.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListBucketOperationsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsJobsBucketOperationsListCall) Do(opts ...googleapi.CallOption) (*ListBucketOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListBucketOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "storagebatchoperations.projects.locations.jobs.bucketOperations.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsJobsBucketOperationsListCall) Pages(ctx context.Context, f func(*ListBucketOperationsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

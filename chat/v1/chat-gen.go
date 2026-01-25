@@ -1933,6 +1933,36 @@ func (s FormAction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ForwardedMetadata: Metadata about the source space from which a message was
+// forwarded.
+type ForwardedMetadata struct {
+	// Space: Output only. The resource name of the source space. Format:
+	// spaces/{space}
+	Space string `json:"space,omitempty"`
+	// SpaceDisplayName: Output only. The display name of the source space or DM at
+	// the time of forwarding. For `SPACE`, this is the space name. For
+	// `DIRECT_MESSAGE`, this is the other participant's name (e.g., "User A"). For
+	// `GROUP_CHAT`, this is a generated name based on members' first names,
+	// limited to 5 including the creator (e.g., "User A, User B").
+	SpaceDisplayName string `json:"spaceDisplayName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Space") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Space") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ForwardedMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod ForwardedMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAppsCardV1Action: An action that describes the behavior when the form
 // is submitted. For example, you can invoke an Apps Script script to handle
 // the form. If the action is triggered, the form values are sent to the
@@ -5511,6 +5541,9 @@ func (s PermissionSettings) MarshalJSON() ([]byte, error) {
 // can remove it. For example usage, see Quote another message
 // (https://developers.google.com/workspace/chat/create-messages#quote-a-message).
 type QuotedMessageMetadata struct {
+	// ForwardedMetadata: Output only. Metadata about the source space of the
+	// quoted message. Populated only for FORWARD quote type.
+	ForwardedMetadata *ForwardedMetadata `json:"forwardedMetadata,omitempty"`
 	// LastUpdateTime: Required. The timestamp when the quoted message was created
 	// or when the quoted message was last updated. If the message was edited, use
 	// this field, `last_update_time`. If the message was never edited, use
@@ -5520,13 +5553,26 @@ type QuotedMessageMetadata struct {
 	// Name: Required. Resource name of the message that is quoted. Format:
 	// `spaces/{space}/messages/{message}`
 	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "LastUpdateTime") to
+	// QuoteType: Optional. Specifies the quote type. If not set, defaults to REPLY
+	// in the message read/write path for backward compatibility.
+	//
+	// Possible values:
+	//   "QUOTE_TYPE_UNSPECIFIED" - Reserved. This value is unused.
+	//   "REPLY" - If quote_type is `REPLY`, you can do the following: * If you're
+	// replying in a thread, you can quote another message in that thread. * If
+	// you're creating a root message, you can quote another root message in that
+	// space. You can't quote a message reply from a different thread.
+	QuoteType string `json:"quoteType,omitempty"`
+	// QuotedMessageSnapshot: Output only. A snapshot of the quoted message's
+	// content.
+	QuotedMessageSnapshot *QuotedMessageSnapshot `json:"quotedMessageSnapshot,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ForwardedMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "LastUpdateTime") to include in
+	// NullFields is a list of field names (e.g. "ForwardedMetadata") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -5535,6 +5581,43 @@ type QuotedMessageMetadata struct {
 
 func (s QuotedMessageMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod QuotedMessageMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// QuotedMessageSnapshot: Provides a snapshot of the content of the quoted
+// message at the time of quoting or forwarding
+type QuotedMessageSnapshot struct {
+	// Annotations: Output only. Annotations parsed from the text body of the
+	// quoted message. Populated only for FORWARD quote type.
+	Annotations []*Annotation `json:"annotations,omitempty"`
+	// Attachments: Output only. Attachments that were part of the quoted message.
+	// These are copies of the quoted message's attachment metadata. Populated only
+	// for FORWARD quote type.
+	Attachments []*Attachment `json:"attachments,omitempty"`
+	// FormattedText: Output only. Contains the quoted message `text` with markups
+	// added to support rich formatting like hyperlinks,custom emojis, markup, etc.
+	// Populated only for FORWARD quote type.
+	FormattedText string `json:"formattedText,omitempty"`
+	// Sender: Output only. The quoted message's author name. Populated for both
+	// REPLY & FORWARD quote types.
+	Sender string `json:"sender,omitempty"`
+	// Text: Output only. Snapshot of the quoted message's text content.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s QuotedMessageSnapshot) MarshalJSON() ([]byte, error) {
+	type NoMethod QuotedMessageSnapshot
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

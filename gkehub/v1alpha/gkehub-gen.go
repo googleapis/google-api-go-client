@@ -721,8 +721,8 @@ func (s CloudBuildMembershipSpec) MarshalJSON() ([]byte, error) {
 
 // ClusterSelector: Selector for clusters.
 type ClusterSelector struct {
-	// LabelSelector: The label selector must be a valid CEL (go/cel) expression
-	// which evaluates resource.labels.
+	// LabelSelector: Optional. A valid CEL (Common Expression Language) expression
+	// which evaluates `resource.labels`.
 	LabelSelector string `json:"labelSelector,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LabelSelector") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2052,7 +2052,8 @@ type ConfigManagementMembershipSpec struct {
 	// configmanagement feature is no longer recommended. Use
 	// https://github.com/kubernetes-sigs/hierarchical-namespaces instead.
 	HierarchyController *ConfigManagementHierarchyControllerConfig `json:"hierarchyController,omitempty"`
-	// Management: Optional. Enables automatic Feature management.
+	// Management: Optional. Deprecated: From version 1.21.0, automatic Feature
+	// management is unavailable, and Config Sync only supports manual upgrades.
 	//
 	// Possible values:
 	//   "MANAGEMENT_UNSPECIFIED" - Unspecified
@@ -6011,12 +6012,10 @@ type Rollout struct {
 	// RolloutSequence: Optional. Immutable. The full, unique resource name of the
 	// rollout sequence that initiatied this Rollout. In the format of
 	// `projects/{project}/locations/global/rolloutSequences/{rollout_sequence}`.
-	// Empty for user initiated rollouts.
 	RolloutSequence string `json:"rolloutSequence,omitempty"`
 	// Schedule: Output only. The schedule of the Rollout.
 	Schedule *Schedule `json:"schedule,omitempty"`
-	// Stages: Output only. The stages of the Rollout. Note: this is only populated
-	// for google-initiated rollouts.
+	// Stages: Output only. The stages of the Rollout.
 	Stages []*RolloutStage `json:"stages,omitempty"`
 	// State: Output only. State specifies various states of the Rollout.
 	//
@@ -6038,8 +6037,7 @@ type Rollout struct {
 	// UpdateTime: Output only. The timestamp at which the Rollout was last
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// VersionUpgrade: Optional. Config for version upgrade of clusters. Note:
-	// Currently for GDCE clusters only.
+	// VersionUpgrade: Optional. Config for version upgrade of clusters.
 	VersionUpgrade *VersionUpgrade `json:"versionUpgrade,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -6184,14 +6182,13 @@ func (s RolloutStage) MarshalJSON() ([]byte, error) {
 type RolloutTarget struct {
 	// Cluster: Optional. Output only. The resource link of the Cluster resource
 	// upgraded in this Rollout. It is formatted as:
-	// ///projects//locations//clusters/. I.e. for GKE clusters, it is formatted
-	// as: //container.googleapis.com/projects//locations//clusters/. For GDCE, it
-	// is formatted as:
-	// //edgecontainer.googleapis.com/projects//locations//clusters/.
+	// `//{api_service}/projects/{project_number}/locations/{location}/clusters/{clu
+	// ster_name}`. .
 	Cluster string `json:"cluster,omitempty"`
 	// NodePool: Optional. Output only. The resource link of the NodePool resource
 	// upgraded in this Rollout. It is formatted as:
-	// ///projects//locations//clusters//nodePools/.
+	// `//{api_service}/projects/{project_number}/locations/{location}/clusters/{clu
+	// ster_name}/nodePools/{node_pool_name}`.
 	NodePool string `json:"nodePool,omitempty"`
 	// Operation: Optional. Output only. The operation resource name performing the
 	// mutation.

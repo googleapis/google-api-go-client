@@ -741,6 +741,161 @@ func (s GooglePrivacyDlpV2ActionDetails) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2ActivateJobTriggerRequest struct {
 }
 
+// GooglePrivacyDlpV2AdjustByImageFindings: AdjustmentRule condition for image
+// findings. This rule is silently ignored if the content being inspected is
+// not an image.
+type GooglePrivacyDlpV2AdjustByImageFindings struct {
+	// ImageContainmentType: Specifies the required spatial relationship between
+	// the bounding boxes of the target finding and the context infoType findings.
+	ImageContainmentType *GooglePrivacyDlpV2ImageContainmentType `json:"imageContainmentType,omitempty"`
+	// InfoTypes: A list of image-supported infoTypes—excluding document
+	// infoTypes
+	// (https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference#documents)—to
+	// be used as context for the adjustment rule. Sensitive Data Protection
+	// adjusts the likelihood of an image finding if its bounding box has the
+	// specified spatial relationship (defined by `image_containment_type`) with a
+	// finding of an infoType in this list. For example, you can create a rule to
+	// adjust the likelihood of a `US_PASSPORT` finding if it is enclosed by a
+	// finding of `OBJECT_TYPE/PERSON/PASSPORT`. To configure this, set
+	// `US_PASSPORT` in `InspectionRuleSet.info_types`. Add an `adjustment_rule`
+	// with an `adjust_by_image_findings.info_types` that contains
+	// `OBJECT_TYPE/PERSON/PASSPORT` and `image_containment_type` set to
+	// `encloses`. In this case, the likelihood of the `US_PASSPORT` finding is
+	// adjusted, but the likelihood of the `OBJECT_TYPE/PERSON/PASSPORT` finding is
+	// not.
+	InfoTypes []*GooglePrivacyDlpV2InfoType `json:"infoTypes,omitempty"`
+	// MinLikelihood: Required. Minimum likelihood of the
+	// `adjust_by_image_findings.info_types` finding. If the likelihood is lower
+	// than this value, Sensitive Data Protection doesn't adjust the likelihood of
+	// the `InspectionRuleSet.info_types` finding.
+	//
+	// Possible values:
+	//   "LIKELIHOOD_UNSPECIFIED" - Default value; same as POSSIBLE.
+	//   "VERY_UNLIKELY" - Highest chance of a false positive.
+	//   "UNLIKELY" - High chance of a false positive.
+	//   "POSSIBLE" - Some matching signals. The default value.
+	//   "LIKELY" - Low chance of a false positive.
+	//   "VERY_LIKELY" - Confidence level is high. Lowest chance of a false
+	// positive.
+	MinLikelihood string `json:"minLikelihood,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ImageContainmentType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ImageContainmentType") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2AdjustByImageFindings) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2AdjustByImageFindings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2AdjustByMatchingInfoTypes: AdjustmentRule condition for
+// matching infoTypes.
+type GooglePrivacyDlpV2AdjustByMatchingInfoTypes struct {
+	// InfoTypes: Sensitive Data Protection adjusts the likelihood of a finding if
+	// that finding also matches one of these infoTypes. For example, you can
+	// create a rule to adjust the likelihood of a `PHONE_NUMBER` finding if the
+	// string is found within a document that is classified as
+	// `DOCUMENT_TYPE/HR/RESUME`. To configure this, set `PHONE_NUMBER` in
+	// `InspectionRuleSet.info_types`. Add an `adjustment_rule` with an
+	// `adjust_by_matching_info_types.info_types` that contains
+	// `DOCUMENT_TYPE/HR/RESUME`. In this case, the likelihood of the
+	// `PHONE_NUMBER` finding is adjusted, but the likelihood of the
+	// `DOCUMENT_TYPE/HR/RESUME` finding is not.
+	InfoTypes []*GooglePrivacyDlpV2InfoType `json:"infoTypes,omitempty"`
+	// MatchingType: How the adjustment rule is applied. Only
+	// MATCHING_TYPE_PARTIAL_MATCH is supported: - Partial match: adjusts the
+	// findings of infoTypes specified in the inspection rule when they have a
+	// nonempty intersection with a finding of an infoType specified in this
+	// adjustment rule.
+	//
+	// Possible values:
+	//   "MATCHING_TYPE_UNSPECIFIED" - Invalid.
+	//   "MATCHING_TYPE_FULL_MATCH" - Full match. - Dictionary: join of Dictionary
+	// results matched the complete finding quote - Regex: all regex matches fill a
+	// finding quote from start to end - Exclude infoType: completely inside
+	// affecting infoTypes findings
+	//   "MATCHING_TYPE_PARTIAL_MATCH" - Partial match. - Dictionary: at least one
+	// of the tokens in the finding matches - Regex: substring of the finding
+	// matches - Exclude infoType: intersects with affecting infoTypes findings
+	//   "MATCHING_TYPE_INVERSE_MATCH" - Inverse match. - Dictionary: no tokens in
+	// the finding match the dictionary - Regex: finding doesn't match the regex -
+	// Exclude infoType: no intersection with affecting infoTypes findings
+	//   "MATCHING_TYPE_RULE_SPECIFIC" - Rule-specific match. The matching logic is
+	// based on the specific rule being used. This is required for rules where the
+	// matching behavior is not a simple string comparison (e.g., image
+	// containment). This matching type can only be used with the
+	// `ExcludeByImageFindings` rule. - Exclude by image findings: The matching
+	// logic is defined within `ExcludeByImageFindings` based on spatial
+	// relationships between bounding boxes.
+	MatchingType string `json:"matchingType,omitempty"`
+	// MinLikelihood: Required. Minimum likelihood of the
+	// `adjust_by_matching_info_types.info_types` finding. If the likelihood is
+	// lower than this value, Sensitive Data Protection doesn't adjust the
+	// likelihood of the `InspectionRuleSet.info_types` finding.
+	//
+	// Possible values:
+	//   "LIKELIHOOD_UNSPECIFIED" - Default value; same as POSSIBLE.
+	//   "VERY_UNLIKELY" - Highest chance of a false positive.
+	//   "UNLIKELY" - High chance of a false positive.
+	//   "POSSIBLE" - Some matching signals. The default value.
+	//   "LIKELY" - Low chance of a false positive.
+	//   "VERY_LIKELY" - Confidence level is high. Lowest chance of a false
+	// positive.
+	MinLikelihood string `json:"minLikelihood,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InfoTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InfoTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2AdjustByMatchingInfoTypes) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2AdjustByMatchingInfoTypes
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2AdjustmentRule: Rule that specifies conditions when a
+// certain infoType's finding details should be adjusted.
+type GooglePrivacyDlpV2AdjustmentRule struct {
+	// AdjustByImageFindings: AdjustmentRule condition for image findings.
+	AdjustByImageFindings *GooglePrivacyDlpV2AdjustByImageFindings `json:"adjustByImageFindings,omitempty"`
+	// AdjustByMatchingInfoTypes: Set of infoTypes for which findings would affect
+	// this rule.
+	AdjustByMatchingInfoTypes *GooglePrivacyDlpV2AdjustByMatchingInfoTypes `json:"adjustByMatchingInfoTypes,omitempty"`
+	// LikelihoodAdjustment: Likelihood adjustment to apply to the infoType.
+	LikelihoodAdjustment *GooglePrivacyDlpV2LikelihoodAdjustment `json:"likelihoodAdjustment,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdjustByImageFindings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdjustByImageFindings") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2AdjustmentRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2AdjustmentRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2AllInfoTypes: Apply transformation to all findings.
 type GooglePrivacyDlpV2AllInfoTypes struct {
 }
@@ -5128,6 +5283,11 @@ func (s GooglePrivacyDlpV2Domain) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2Encloses: Defines a condition where one bounding box
+// encloses another.
+type GooglePrivacyDlpV2Encloses struct {
+}
+
 // GooglePrivacyDlpV2EntityId: An entity in a dataset is a field or set of
 // fields that correspond to a single person. For example, in medical records
 // the `EntityId` might be a patient identifier, or for financial records it
@@ -5222,6 +5382,45 @@ func (s GooglePrivacyDlpV2ExcludeByHotword) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2ExcludeByImageFindings: The rule to exclude image findings
+// based on spatial relationships with other image findings. For example,
+// exclude an image finding if it overlaps with another image finding. This
+// rule is silently ignored if the content being inspected is not an image.
+type GooglePrivacyDlpV2ExcludeByImageFindings struct {
+	// ImageContainmentType: Specifies the required spatial relationship between
+	// the bounding boxes of the target finding and the context infoType findings.
+	ImageContainmentType *GooglePrivacyDlpV2ImageContainmentType `json:"imageContainmentType,omitempty"`
+	// InfoTypes: A list of image-supported infoTypes—excluding document
+	// infoTypes
+	// (https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference#documents)—to
+	// be used as context for the exclusion rule. A finding is excluded if its
+	// bounding box has the specified spatial relationship (defined by
+	// `image_containment_type`) with a finding of an infoType in this list. For
+	// example, if `InspectionRuleSet.info_types` includes `OBJECT_TYPE/PERSON` and
+	// this `exclusion_rule` specifies `info_types` as
+	// `OBJECT_TYPE/PERSON/PASSPORT` with `image_containment_type` set to
+	// `encloses`, then `OBJECT_TYPE/PERSON` findings will be excluded if they are
+	// fully contained within the bounding box of an `OBJECT_TYPE/PERSON/PASSPORT`
+	// finding.
+	InfoTypes []*GooglePrivacyDlpV2InfoType `json:"infoTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ImageContainmentType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ImageContainmentType") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2ExcludeByImageFindings) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2ExcludeByImageFindings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2ExcludeInfoTypes: List of excluded infoTypes.
 type GooglePrivacyDlpV2ExcludeInfoTypes struct {
 	// InfoTypes: InfoType list in ExclusionRule rule drops a finding when it
@@ -5259,6 +5458,10 @@ type GooglePrivacyDlpV2ExclusionRule struct {
 	// ExcludeByHotword: Drop if the hotword rule is contained in the proximate
 	// context. For tabular data, the context includes the column name.
 	ExcludeByHotword *GooglePrivacyDlpV2ExcludeByHotword `json:"excludeByHotword,omitempty"`
+	// ExcludeByImageFindings: Exclude findings based on image containment rules.
+	// For example, exclude an image finding if it overlaps with another image
+	// finding.
+	ExcludeByImageFindings *GooglePrivacyDlpV2ExcludeByImageFindings `json:"excludeByImageFindings,omitempty"`
 	// ExcludeInfoTypes: Set of infoTypes for which findings would affect this
 	// rule.
 	ExcludeInfoTypes *GooglePrivacyDlpV2ExcludeInfoTypes `json:"excludeInfoTypes,omitempty"`
@@ -5277,6 +5480,13 @@ type GooglePrivacyDlpV2ExclusionRule struct {
 	//   "MATCHING_TYPE_INVERSE_MATCH" - Inverse match. - Dictionary: no tokens in
 	// the finding match the dictionary - Regex: finding doesn't match the regex -
 	// Exclude infoType: no intersection with affecting infoTypes findings
+	//   "MATCHING_TYPE_RULE_SPECIFIC" - Rule-specific match. The matching logic is
+	// based on the specific rule being used. This is required for rules where the
+	// matching behavior is not a simple string comparison (e.g., image
+	// containment). This matching type can only be used with the
+	// `ExcludeByImageFindings` rule. - Exclude by image findings: The matching
+	// logic is defined within `ExcludeByImageFindings` based on spatial
+	// relationships between bounding boxes.
 	MatchingType string `json:"matchingType,omitempty"`
 	// Regex: Regular expression which defines the rule.
 	Regex *GooglePrivacyDlpV2Regex `json:"regex,omitempty"`
@@ -5978,6 +6188,11 @@ func (s *GooglePrivacyDlpV2FixedSizeBucketingConfig) UnmarshalJSON(data []byte) 
 	return nil
 }
 
+// GooglePrivacyDlpV2FullyInside: Defines a condition where one bounding box is
+// fully inside another.
+type GooglePrivacyDlpV2FullyInside struct {
+}
+
 // GooglePrivacyDlpV2GlobalProcessing: Processing occurs in the global region.
 type GooglePrivacyDlpV2GlobalProcessing struct {
 }
@@ -6219,6 +6434,36 @@ type GooglePrivacyDlpV2HybridOptions struct {
 
 func (s GooglePrivacyDlpV2HybridOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2HybridOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2ImageContainmentType: Specifies the relationship between
+// bounding boxes for image findings.
+type GooglePrivacyDlpV2ImageContainmentType struct {
+	// Encloses: The context finding's bounding box must fully contain the target
+	// finding's bounding box.
+	Encloses *GooglePrivacyDlpV2Encloses `json:"encloses,omitempty"`
+	// FullyInside: The context finding's bounding box must be fully inside the
+	// target finding's bounding box.
+	FullyInside *GooglePrivacyDlpV2FullyInside `json:"fullyInside,omitempty"`
+	// Overlaps: The context finding's bounding box and the target finding's
+	// bounding box must have a non-zero intersection.
+	Overlaps *GooglePrivacyDlpV2Overlap `json:"overlaps,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Encloses") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Encloses") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2ImageContainmentType) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2ImageContainmentType
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7004,19 +7249,21 @@ func (s GooglePrivacyDlpV2InspectTemplate) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2InspectionRule: A single inspection rule to be applied to
 // infoTypes, specified in `InspectionRuleSet`.
 type GooglePrivacyDlpV2InspectionRule struct {
+	// AdjustmentRule: Adjustment rule.
+	AdjustmentRule *GooglePrivacyDlpV2AdjustmentRule `json:"adjustmentRule,omitempty"`
 	// ExclusionRule: Exclusion rule.
 	ExclusionRule *GooglePrivacyDlpV2ExclusionRule `json:"exclusionRule,omitempty"`
 	// HotwordRule: Hotword-based detection rule.
 	HotwordRule *GooglePrivacyDlpV2HotwordRule `json:"hotwordRule,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExclusionRule") to
+	// ForceSendFields is a list of field names (e.g. "AdjustmentRule") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExclusionRule") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdjustmentRule") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -8490,6 +8737,11 @@ type GooglePrivacyDlpV2OutputStorageConfig struct {
 func (s GooglePrivacyDlpV2OutputStorageConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2OutputStorageConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2Overlap: Defines a condition for overlapping bounding
+// boxes.
+type GooglePrivacyDlpV2Overlap struct {
 }
 
 // GooglePrivacyDlpV2PartitionId: Datastore partition ID. A partition ID

@@ -1416,7 +1416,8 @@ type ConfigManagementSpec struct {
 	// configmanagement feature is no longer recommended. Use
 	// https://github.com/kubernetes-sigs/hierarchical-namespaces instead.
 	HierarchyController *ConfigManagementHierarchyControllerConfig `json:"hierarchyController,omitempty"`
-	// Management: Optional. Enables automatic Feature management.
+	// Management: Optional. Deprecated: From version 1.21.0, automatic Feature
+	// management is unavailable, and Config Sync only supports manual upgrades.
 	//
 	// Possible values:
 	//   "MANAGEMENT_UNSPECIFIED" - Unspecified

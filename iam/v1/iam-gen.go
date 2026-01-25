@@ -3828,12 +3828,12 @@ type WorkforcePoolProvider struct {
 	// referenced in IAM bindings. * `google.posix_username`: The Linux username
 	// used by OS Login. This is an optional field and the mapped POSIX username
 	// cannot exceed 32 characters. The key must match the regex
-	// "^a-zA-Z0-9._{0,31}$". This attribute cannot be referenced in IAM bindings.
+	// `^a-zA-Z0-9._{0,31}$`. This attribute cannot be referenced in IAM bindings.
 	// You can also provide custom attributes by specifying
 	// `attribute.{custom_attribute}`, where {custom_attribute} is the name of the
 	// custom attribute to be mapped. You can define a maximum of 50 custom
 	// attributes. The maximum length of a mapped attribute key is 100 characters,
-	// and the key may only contain the characters [a-z0-9_]. You can reference
+	// and the key may only contain the characters `[a-z0-9_]`. You can reference
 	// these attributes in IAM policies to define fine-grained access for a
 	// workforce pool to Google Cloud resources. For example: * `google.subject`:
 	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool}/subjec
@@ -5844,7 +5844,7 @@ func (r *LocationsWorkforcePoolsProvidersService) Create(parent string, workforc
 // WorkforcePoolProviderId sets the optional parameter
 // "workforcePoolProviderId": Required. The ID for the provider, which becomes
 // the final component of the resource name. This value must be 4-32
-// characters, and may contain the characters [a-z0-9-]. The prefix `gcp-` is
+// characters, and may contain the characters `[a-z0-9-]`. The prefix `gcp-` is
 // reserved for use by Google, and may not be specified.
 func (c *LocationsWorkforcePoolsProvidersCreateCall) WorkforcePoolProviderId(workforcePoolProviderId string) *LocationsWorkforcePoolsProvidersCreateCall {
 	c.urlParams_.Set("workforcePoolProviderId", workforcePoolProviderId)
@@ -6546,7 +6546,7 @@ func (r *LocationsWorkforcePoolsProvidersKeysService) Create(parent string, work
 // WorkforcePoolProviderKeyId sets the optional parameter
 // "workforcePoolProviderKeyId": Required. The ID to use for the key, which
 // becomes the final component of the resource name. This value must be 4-32
-// characters, and may contain the characters [a-z0-9-].
+// characters, and may contain the characters `[a-z0-9-]`.
 func (c *LocationsWorkforcePoolsProvidersKeysCreateCall) WorkforcePoolProviderKeyId(workforcePoolProviderKeyId string) *LocationsWorkforcePoolsProvidersKeysCreateCall {
 	c.urlParams_.Set("workforcePoolProviderKeyId", workforcePoolProviderKeyId)
 	return c
@@ -7354,7 +7354,7 @@ func (r *LocationsWorkforcePoolsProvidersScimTenantsService) Create(parent strin
 // "workforcePoolProviderScimTenantId": Required. Gemini Enterprise only. The
 // ID to use for the SCIM tenant, which becomes the final component of the
 // resource name. This value should be 4-32 characters, containing the
-// characters [a-z0-9-].
+// characters `[a-z0-9-]`.
 func (c *LocationsWorkforcePoolsProvidersScimTenantsCreateCall) WorkforcePoolProviderScimTenantId(workforcePoolProviderScimTenantId string) *LocationsWorkforcePoolsProvidersScimTenantsCreateCall {
 	c.urlParams_.Set("workforcePoolProviderScimTenantId", workforcePoolProviderScimTenantId)
 	return c
@@ -8078,8 +8078,8 @@ func (r *LocationsWorkforcePoolsProvidersScimTenantsTokensService) Create(parent
 // WorkforcePoolProviderScimTokenId sets the optional parameter
 // "workforcePoolProviderScimTokenId": Required. Gemini Enterprise only. The ID
 // to use for the SCIM token, which becomes the final component of the resource
-// name. This value should be 4-32 characters and follow the pattern: "(a-z
-// ([a-z0-9\\-]{2,30}[a-z0-9]))"
+// name. This value should be 4-32 characters and follow the pattern: `(a-z
+// ([a-z0-9\\-]{2,30}[a-z0-9]))`
 func (c *LocationsWorkforcePoolsProvidersScimTenantsTokensCreateCall) WorkforcePoolProviderScimTokenId(workforcePoolProviderScimTokenId string) *LocationsWorkforcePoolsProvidersScimTenantsTokensCreateCall {
 	c.urlParams_.Set("workforcePoolProviderScimTokenId", workforcePoolProviderScimTokenId)
 	return c

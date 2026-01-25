@@ -2957,6 +2957,7 @@ type GoogleChromeManagementV1RiskAssessmentEntry struct {
 	//   "RISK_ASSESSMENT_PROVIDER_CRXCAVATOR" - CRXcavator.
 	//   "RISK_ASSESSMENT_PROVIDER_SPIN_AI" - Spin.Ai.
 	//   "RISK_ASSESSMENT_PROVIDER_LAYERX" - LayerX Security.
+	//   "RISK_ASSESSMENT_PROVIDER_SPIN_AI_V2" - Spin.AI V2.
 	Provider string `json:"provider,omitempty"`
 	// RiskAssessment: Output only. The details of the provider's risk assessment.
 	RiskAssessment *GoogleChromeManagementV1RiskAssessment `json:"riskAssessment,omitempty"`

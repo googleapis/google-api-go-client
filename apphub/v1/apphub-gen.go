@@ -538,7 +538,7 @@ type Boundary struct {
 	// CreateTime: Output only. Create time.
 	CreateTime string `json:"createTime,omitempty"`
 	// CrmNode: Optional. The resource name of the CRM node being attached to the
-	// boundary. Format: `projects/{project-number}`
+	// boundary. Format: `projects/{project-number}` or `projects/{project-id}`
 	CrmNode string `json:"crmNode,omitempty"`
 	// Name: Identifier. The resource name of the boundary. Format:
 	// "projects/{project}/locations/{location}/boundary"
@@ -2209,7 +2209,7 @@ type ProjectsLocationsGetBoundaryCall struct {
 // GetBoundary: Gets a Boundary.
 //
 //   - name: The name of the boundary to retrieve. Format:
-//     projects/{project}/locations/{location}/boundary.
+//     `projects/{project}/locations/{location}/boundary`.
 func (r *ProjectsLocationsService) GetBoundary(name string) *ProjectsLocationsGetBoundaryCall {
 	c := &ProjectsLocationsGetBoundaryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5812,9 +5812,10 @@ type ProjectsLocationsExtendedMetadataSchemasGetCall struct {
 
 // Get: Gets an Extended Metadata Schema.
 //
-//   - name: Schema resource name Format:
-//     projects//locations//extendedMetadataSchemas/ could be
-//     "apphub.googleapis.com/Name".
+//   - name: Schema resource name. Format:
+//     `projects/{project}/locations/{location}/extendedMetadataSchemas/{extended_
+//     metadata_schema}`. `{extended_metadata_schema}` has the format
+//     "apphub.googleapis.com/{SchemaName}".
 func (r *ProjectsLocationsExtendedMetadataSchemasService) Get(name string) *ProjectsLocationsExtendedMetadataSchemasGetCall {
 	c := &ProjectsLocationsExtendedMetadataSchemasGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

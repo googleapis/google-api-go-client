@@ -383,6 +383,153 @@ func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BDRBackupPlanJobLog: Log entry for BDRBackupPlanJobLog for resources using
+// BackupPlan based protection.
+type BDRBackupPlanJobLog struct {
+	// BackupPlanName: Canonical resource name for Backup Plan Plan of the job.
+	BackupPlanName string `json:"backupPlanName,omitempty"`
+	// EndTime: End time of the job.
+	EndTime string `json:"endTime,omitempty"`
+	// ErrorCode: The error code. Only populated in error scenarios.
+	ErrorCode int64 `json:"errorCode,omitempty"`
+	// ErrorMessage: The user readable error message. Only populated in error
+	// scenarios.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+	// ErrorType: The name of the error type eg. PERMISSION_DENIED. Only populated
+	// in error scenarios.
+	ErrorType string `json:"errorType,omitempty"`
+	// JobCategory: The category field displays the category of the job. Can be one
+	// of [UPDATE_BACKUP_PLAN].
+	JobCategory string `json:"jobCategory,omitempty"`
+	// JobId: The job_id field displays the identifier of the job being reported.
+	JobId string `json:"jobId,omitempty"`
+	// JobStatus: The status field displays the status of the job. Can be one of
+	// [RUNNING,SUCCESSFUL, FAILED].
+	JobStatus string `json:"jobStatus,omitempty"`
+	// NewBackupPlanRevisionId: User friendly revision id e.g. v0, v1 etc.
+	NewBackupPlanRevisionId string `json:"newBackupPlanRevisionId,omitempty"`
+	// NewBackupPlanRevisionName: Full resource name for new backup plan revision
+	NewBackupPlanRevisionName string `json:"newBackupPlanRevisionName,omitempty"`
+	// PreviousBackupPlanRevisionId: User friendly revision id e.g. v0, v1 etc.
+	PreviousBackupPlanRevisionId string `json:"previousBackupPlanRevisionId,omitempty"`
+	// PreviousBackupPlanRevisionName: Full resource name for previous backup plan
+	// revision
+	PreviousBackupPlanRevisionName string `json:"previousBackupPlanRevisionName,omitempty"`
+	// PreviousBackupRules: Previous Backup Plan rules.
+	PreviousBackupRules []*BackupRuleDetail `json:"previousBackupRules,omitempty"`
+	// ResourceType: The resource_type field displays the type of the protected
+	// resource.
+	ResourceType string `json:"resourceType,omitempty"`
+	// RevisedBackupRules: Revised Backup Plan rules.
+	RevisedBackupRules []*BackupRuleDetail `json:"revisedBackupRules,omitempty"`
+	// StartTime: Start time of the job.
+	StartTime string `json:"startTime,omitempty"`
+	// WorkloadsAffectedCount: The total number of workloads affected by the job.
+	WorkloadsAffectedCount int64 `json:"workloadsAffectedCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupPlanName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupPlanName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BDRBackupPlanJobLog) MarshalJSON() ([]byte, error) {
+	type NoMethod BDRBackupPlanJobLog
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BDRBackupRestoreJobLog: Log entry for Backup and Restore Job for resources
+// using BackupPlan based protection. Next Id: 23
+type BDRBackupRestoreJobLog struct {
+	// BackupConsistencyTime: Backup consistency time.
+	BackupConsistencyTime string `json:"backupConsistencyTime,omitempty"`
+	// BackupName: Full resource name of the backup created in backup jobs and used
+	// in restore jobs.
+	BackupName string `json:"backupName,omitempty"`
+	// BackupPlanName: Full resource name for Backup Plan of the job. Only
+	// populated for Scheduled Backup and Adhoc Backup.
+	BackupPlanName string `json:"backupPlanName,omitempty"`
+	// BackupRetentionDays: Backup retention in days.
+	BackupRetentionDays int64 `json:"backupRetentionDays,omitempty"`
+	// BackupRule: Name of the backup rule. Only populated for Scheduled Backup and
+	// Adhoc Backup.
+	BackupRule string `json:"backupRule,omitempty"`
+	// BackupVaultName: Full resource name backup vault name
+	BackupVaultName string `json:"backupVaultName,omitempty"`
+	// EndTime: End time of the job.
+	EndTime string `json:"endTime,omitempty"`
+	// ErrorCode: The error code. Only populated in error scenarios.
+	ErrorCode int64 `json:"errorCode,omitempty"`
+	// ErrorMessage: The user readable error message. Only populated in error
+	// scenarios.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+	// ErrorType: The name of the error type eg. PERMISSION_DENIED. Only populated
+	// in error scenarios.
+	ErrorType string `json:"errorType,omitempty"`
+	// IncrementalBackupSizeGib: The amount of incremental backup data copied.
+	IncrementalBackupSizeGib float64 `json:"incrementalBackupSizeGib,omitempty"`
+	// JobCategory: The category field displays the category of the job.
+	JobCategory string `json:"jobCategory,omitempty"`
+	// JobId: The job_id field displays the identifier of the job being logged.
+	JobId string `json:"jobId,omitempty"`
+	// JobStatus: The status field displays the status of the job.
+	JobStatus string `json:"jobStatus,omitempty"`
+	// RecoveryPointTime: Recovery point time.
+	RecoveryPointTime string `json:"recoveryPointTime,omitempty"`
+	// ResourceType: The resource_type field displays the type of the protected
+	// resource.
+	ResourceType string `json:"resourceType,omitempty"`
+	// RestoreResourceLocation: Restore resource location.
+	RestoreResourceLocation string `json:"restoreResourceLocation,omitempty"`
+	// RestoreResourceName: Full resource name of the restore resource. Only
+	// populated in restore jobs.
+	RestoreResourceName string `json:"restoreResourceName,omitempty"`
+	// SourceResourceId: The source resource ID.
+	SourceResourceId string `json:"sourceResourceId,omitempty"`
+	// SourceResourceLocation: Source resource location.
+	SourceResourceLocation string `json:"sourceResourceLocation,omitempty"`
+	// SourceResourceName: Full resource name of the protected resource.
+	SourceResourceName string `json:"sourceResourceName,omitempty"`
+	// StartTime: Start time of the job.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupConsistencyTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupConsistencyTime") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BDRBackupRestoreJobLog) MarshalJSON() ([]byte, error) {
+	type NoMethod BDRBackupRestoreJobLog
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *BDRBackupRestoreJobLog) UnmarshalJSON(data []byte) error {
+	type NoMethod BDRBackupRestoreJobLog
+	var s1 struct {
+		IncrementalBackupSizeGib gensupport.JSONFloat64 `json:"incrementalBackupSizeGib"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.IncrementalBackupSizeGib = float64(s1.IncrementalBackupSizeGib)
+	return nil
+}
+
 // Backup: Represents a request to perform a single point-in-time capture of
 // some portion of the state of a GKE cluster, the record of the backup
 // operation itself, and an anchor for the underlying artifacts that comprise
@@ -900,6 +1047,40 @@ type BackupPlanDetails struct {
 
 func (s BackupPlanDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod BackupPlanDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type BackupRuleDetail struct {
+	// BackupWindow: Backup Window For Eg. “00:00 to 06:00”
+	BackupWindow string `json:"backupWindow,omitempty"`
+	// BackupWindowTimezone: Backup Window Timezone in IANA format. For Eg.
+	// “America/Los_Angeles”
+	BackupWindowTimezone string `json:"backupWindowTimezone,omitempty"`
+	// Recurrence: Recurrence Type. For Eg. “Weekly”,” Monthly” or
+	// “Daily”.
+	Recurrence string `json:"recurrence,omitempty"`
+	// RecurrenceSchedule: Recurrence Repeat Schedule. For Eg. “1st and 25th day
+	// of the month.”
+	RecurrenceSchedule string `json:"recurrenceSchedule,omitempty"`
+	// RetentionDays: Backup Retention in Days.
+	RetentionDays int64 `json:"retentionDays,omitempty"`
+	// RuleName: Backup Rule Name.
+	RuleName string `json:"ruleName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupWindow") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupWindow") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupRuleDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupRuleDetail
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

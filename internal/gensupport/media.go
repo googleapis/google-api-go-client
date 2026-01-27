@@ -198,8 +198,7 @@ func (mi *MediaInfo) UploadType() string {
 	return "resumable"
 }
 
-// ChecksumEnabled returns true if both buffering is used and
-// enableAutoChecksum flag is set to true.
+// ChecksumEnabled returns if auto checksum is enabled in buffer.
 func (mi *MediaInfo) ChecksumEnabled() bool {
 	return mi.buffer != nil && mi.buffer.enableAutoChecksum
 }

@@ -2283,7 +2283,10 @@ func (meth *Method) generateCode() {
 	if meth.supportsMediaUpload() && meth.api.Name == "storage" {
 		comment = "Set auto checksum in case of a single chunk upload if enabled."
 		p("%s", asComment("", comment))
-		pn("if c.mediaInfo_ != nil {")
+		pn("if c.object != nil &&")
+		pn("	c.mediaInfo_ != nil &&")
+		pn("	c.mediaInfo_.ChecksumEnabled() &&")
+		pn(`	c.mediaInfo_.UploadType() == "multipart" {`)
 		pn("	c.object.Crc32c = c.mediaInfo_.GetAutoChecksum()")
 		pn("}")
 	}

@@ -13693,8 +13693,8 @@ type ProjectsLocationsSingleTenantHsmInstancesProposalsListCall struct {
 
 // List: Lists SingleTenantHsmInstanceProposals.
 //
-//   - parent: The resource name of the location associated with the
-//     SingleTenantHsmInstanceProposals to list, in the format
+//   - parent: The resource name of the single tenant HSM instance associated
+//     with the SingleTenantHsmInstanceProposals to list, in the format
 //     `projects/*/locations/*/singleTenantHsmInstances/*`.
 func (r *ProjectsLocationsSingleTenantHsmInstancesProposalsService) List(parent string) *ProjectsLocationsSingleTenantHsmInstancesProposalsListCall {
 	c := &ProjectsLocationsSingleTenantHsmInstancesProposalsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}

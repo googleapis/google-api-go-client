@@ -169,6 +169,7 @@ type ProjectsService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Assets = NewProjectsLocationsAssetsService(s)
+	rs.AssetsExportJobs = NewProjectsLocationsAssetsExportJobsService(s)
 	rs.DiscoveryClients = NewProjectsLocationsDiscoveryClientsService(s)
 	rs.Groups = NewProjectsLocationsGroupsService(s)
 	rs.ImportJobs = NewProjectsLocationsImportJobsService(s)
@@ -184,6 +185,8 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	Assets *ProjectsLocationsAssetsService
+
+	AssetsExportJobs *ProjectsLocationsAssetsExportJobsService
 
 	DiscoveryClients *ProjectsLocationsDiscoveryClientsService
 
@@ -208,6 +211,15 @@ func NewProjectsLocationsAssetsService(s *Service) *ProjectsLocationsAssetsServi
 }
 
 type ProjectsLocationsAssetsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsAssetsExportJobsService(s *Service) *ProjectsLocationsAssetsExportJobsService {
+	rs := &ProjectsLocationsAssetsExportJobsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAssetsExportJobsService struct {
 	s *Service
 }
 
@@ -834,6 +846,175 @@ func (s AssetPerformanceData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AssetsExportJob: Assets export job message.
+type AssetsExportJob struct {
+	// Condition: Optional. Conditions for selecting assets to export.
+	Condition *AssetsExportJobExportCondition `json:"condition,omitempty"`
+	// CreateTime: Output only. Resource creation time.
+	CreateTime string `json:"createTime,omitempty"`
+	// Inventory: Export asset inventory details.
+	Inventory *AssetsExportJobInventory `json:"inventory,omitempty"`
+	// Labels: Optional. Labels as key value pairs. Labels must meet the following
+	// constraints: * Keys and values can contain only lowercase letters, numeric
+	// characters, underscores, and dashes. * All characters must use UTF-8
+	// encoding, and international characters are allowed. * Keys must start with a
+	// lowercase letter or international character. * Each resource is limited to a
+	// maximum of 64 labels. Both keys and values are additionally constrained to
+	// be <= 128 bytes.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Output only. Identifier. Resource name.
+	Name string `json:"name,omitempty"`
+	// NetworkDependencies: Export data regarding asset network dependencies.
+	NetworkDependencies *AssetsExportJobNetworkDependencies `json:"networkDependencies,omitempty"`
+	// PerformanceData: Export asset with performance data.
+	PerformanceData *AssetsExportJobPerformanceData `json:"performanceData,omitempty"`
+	// RecentExecutions: Output only. Recent non expired executions of the job.
+	RecentExecutions []*AssetsExportJobExecution `json:"recentExecutions,omitempty"`
+	// ShowHidden: Optional. When this value is set to 'true' the response will
+	// include all assets, including those that are hidden.
+	ShowHidden bool `json:"showHidden,omitempty"`
+	// SignedUriDestination: Export to Cloud Storage files downloadable using
+	// signed URIs.
+	SignedUriDestination *SignedUriDestination `json:"signedUriDestination,omitempty"`
+	// UpdateTime: Output only. Resource update time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Condition") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Condition") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AssetsExportJob) MarshalJSON() ([]byte, error) {
+	type NoMethod AssetsExportJob
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AssetsExportJobExecution: Execution status of assets export job.
+type AssetsExportJobExecution struct {
+	// EndTime: Output only. Completion time of the export.
+	EndTime string `json:"endTime,omitempty"`
+	// ExecutionId: Output only. Globally unique identifier of the execution.
+	ExecutionId string `json:"executionId,omitempty"`
+	// ExpireTime: Output only. Expiration time for the export and artifacts.
+	ExpireTime string `json:"expireTime,omitempty"`
+	// RequestedAssetCount: Output only. Number of assets requested for export
+	// after resolving the requested filters.
+	RequestedAssetCount int64 `json:"requestedAssetCount,omitempty"`
+	// Result: Output only. Result of the export execution.
+	Result *AssetsExportJobExecutionResult `json:"result,omitempty"`
+	// StartTime: Output only. Execution timestamp.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AssetsExportJobExecution) MarshalJSON() ([]byte, error) {
+	type NoMethod AssetsExportJobExecution
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AssetsExportJobExecutionResult: Contains the result of the assets export.
+type AssetsExportJobExecutionResult struct {
+	// Error: Output only. Error encountered during export.
+	Error *Status `json:"error,omitempty"`
+	// OutputFiles: Output only. List of output files.
+	OutputFiles *OutputFileList `json:"outputFiles,omitempty"`
+	// SignedUris: Output only. Signed URLs for downloading export artifacts.
+	SignedUris *SignedUris `json:"signedUris,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AssetsExportJobExecutionResult) MarshalJSON() ([]byte, error) {
+	type NoMethod AssetsExportJobExecutionResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AssetsExportJobExportCondition: Conditions for selecting assets to export.
+type AssetsExportJobExportCondition struct {
+	// Filter: Optional. Assets filter, supports the same syntax as asset listing.
+	Filter string `json:"filter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AssetsExportJobExportCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod AssetsExportJobExportCondition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AssetsExportJobInventory: Configuration for asset inventory details exports.
+type AssetsExportJobInventory struct {
+}
+
+// AssetsExportJobNetworkDependencies: Configuration for network dependencies
+// exports.
+type AssetsExportJobNetworkDependencies struct {
+}
+
+// AssetsExportJobPerformanceData: Configuration for performance data exports.
+type AssetsExportJobPerformanceData struct {
+	// MaxDays: Optional. When this value is set to a positive integer, performance
+	// data will be returned for the most recent days for which data is available.
+	// When this value is unset (or set to zero), all available data is returned.
+	// The maximum value is 420; values above 420 will be coerced to 420. If unset
+	// (0 value) a default value of 40 will be used.
+	MaxDays int64 `json:"maxDays,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxDays") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxDays") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AssetsExportJobPerformanceData) MarshalJSON() ([]byte, error) {
+	type NoMethod AssetsExportJobPerformanceData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AwsEc2PlatformDetails: AWS EC2 specific details.
 type AwsEc2PlatformDetails struct {
 	// Hyperthreading: Optional. Whether the machine is hyperthreaded.
@@ -1216,6 +1397,32 @@ func (s *CpuUsageSample) UnmarshalJSON(data []byte) error {
 	}
 	s.UtilizedPercentage = float64(s1.UtilizedPercentage)
 	return nil
+}
+
+// CsvOutputFile: Contains a single output file of type CSV.
+type CsvOutputFile struct {
+	// ColumnsCount: Output only. Number of columns in the file.
+	ColumnsCount int64 `json:"columnsCount,omitempty"`
+	// RowCount: Output only. Number of rows in the file.
+	RowCount int64 `json:"rowCount,omitempty"`
+	// SignedUri: Output only. Signed URI destination.
+	SignedUri *SignedUri `json:"signedUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ColumnsCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ColumnsCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CsvOutputFile) MarshalJSON() ([]byte, error) {
+	type NoMethod CsvOutputFile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DailyResourceUsageAggregation: Usage data aggregation for a single day.
@@ -2827,6 +3034,35 @@ func (s InsightList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListAssetsExportJobsResponse: Response message for listing assets export
+// jobs.
+type ListAssetsExportJobsResponse struct {
+	// AssetsExportJobs: Output only. The list of assets export jobs.
+	AssetsExportJobs []*AssetsExportJob `json:"assetsExportJobs,omitempty"`
+	// NextPageToken: Output only. A token identifying a page of results the server
+	// should return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AssetsExportJobs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssetsExportJobs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListAssetsExportJobsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAssetsExportJobsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListAssetsResponse: Response message for listing assets.
 type ListAssetsResponse struct {
 	// Assets: A list of assets.
@@ -4128,6 +4364,54 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// OutputFile: Contains a single output file.
+type OutputFile struct {
+	// CsvOutputFile: Output only. CSV output file.
+	CsvOutputFile *CsvOutputFile `json:"csvOutputFile,omitempty"`
+	// FileSizeBytes: Output only. File size in bytes.
+	FileSizeBytes int64 `json:"fileSizeBytes,omitempty,string"`
+	// XlsxOutputFile: Output only. XLSX output file.
+	XlsxOutputFile *XlsxOutputFile `json:"xlsxOutputFile,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CsvOutputFile") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CsvOutputFile") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OutputFile) MarshalJSON() ([]byte, error) {
+	type NoMethod OutputFile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OutputFileList: Contains a list of output files.
+type OutputFileList struct {
+	// Entries: Output only. List of output files.
+	Entries []*OutputFile `json:"entries,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Entries") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Entries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OutputFileList) MarshalJSON() ([]byte, error) {
+	type NoMethod OutputFileList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PerformanceSample: Performance data sample.
 type PerformanceSample struct {
 	// Cpu: CPU usage sample.
@@ -5122,6 +5406,62 @@ func (s ReportSummaryVmwareNodeAllocation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RunAssetsExportJobRequest: A request to run an assets export job.
+type RunAssetsExportJobRequest struct {
+	// RequestId: Optional. An optional request ID to identify requests. Specify a
+	// unique request ID so that if you must retry your request, the server will
+	// know to ignore the request if it has already been completed. The server will
+	// guarantee that for at least 60 minutes after the first request. For example,
+	// consider a situation where you make an initial request and the request times
+	// out. If you make the request again with the same request ID, the server can
+	// check if original operation with the same request ID was received, and if
+	// so, will ignore the second request. This prevents clients from accidentally
+	// creating duplicate commitments. The request ID must be a valid UUID with the
+	// exception that zero UUID is not supported
+	// (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequestId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RunAssetsExportJobRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RunAssetsExportJobRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RunAssetsExportJobResponse: Response message for running an assets export
+// job.
+type RunAssetsExportJobResponse struct {
+	// AssetsExportJobExecution: Output only. Execution status of the assets export
+	// operation.
+	AssetsExportJobExecution *AssetsExportJobExecution `json:"assetsExportJobExecution,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AssetsExportJobExecution")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssetsExportJobExecution") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RunAssetsExportJobResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RunAssetsExportJobResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RunImportJobRequest: A request to run an import job.
 type RunImportJobRequest struct {
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
@@ -5352,6 +5692,80 @@ type Settings struct {
 
 func (s Settings) MarshalJSON() ([]byte, error) {
 	type NoMethod Settings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SignedUri: Contains a signed URI.
+type SignedUri struct {
+	// File: Output only. Name of the file the Signed URI references.
+	File string `json:"file,omitempty"`
+	// Uri: Output only. Download URI for the file.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "File") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "File") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SignedUri) MarshalJSON() ([]byte, error) {
+	type NoMethod SignedUri
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SignedUriDestination: Signed URI destination configuration.
+type SignedUriDestination struct {
+	// FileFormat: Required. The file format to export.
+	//
+	// Possible values:
+	//   "FILE_FORMAT_UNSPECIFIED" - Unspecified file format will be treated as
+	// CSV.
+	//   "CSV" - CSV file format.
+	//   "XLSX" - XLSX file format which used in Excel.
+	FileFormat string `json:"fileFormat,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FileFormat") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileFormat") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SignedUriDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod SignedUriDestination
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SignedUris: Contains a list of Signed URIs.
+type SignedUris struct {
+	// SignedUris: Output only. List of signed URIs.
+	SignedUris []*SignedUri `json:"signedUris,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SignedUris") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SignedUris") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SignedUris) MarshalJSON() ([]byte, error) {
+	type NoMethod SignedUris
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6031,6 +6445,28 @@ type VmwarePlatformDetails struct {
 
 func (s VmwarePlatformDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwarePlatformDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// XlsxOutputFile: Contains a single output file of type XLSX.
+type XlsxOutputFile struct {
+	// SignedUri: Output only. Signed URI destination.
+	SignedUri *SignedUri `json:"signedUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SignedUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SignedUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s XlsxOutputFile) MarshalJSON() ([]byte, error) {
+	type NoMethod XlsxOutputFile
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7537,6 +7973,588 @@ func (c *ProjectsLocationsAssetsReportAssetFramesCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "migrationcenter.projects.locations.assets.reportAssetFrames", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAssetsExportJobsCreateCall struct {
+	s               *Service
+	parent          string
+	assetsexportjob *AssetsExportJob
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Create: Creates a new assets export job.
+//
+// - parent: The parent resource where the assts export job will be created.
+func (r *ProjectsLocationsAssetsExportJobsService) Create(parent string, assetsexportjob *AssetsExportJob) *ProjectsLocationsAssetsExportJobsCreateCall {
+	c := &ProjectsLocationsAssetsExportJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.assetsexportjob = assetsexportjob
+	return c
+}
+
+// AssetsExportJobId sets the optional parameter "assetsExportJobId": Required.
+// The ID to use for the asset export job.
+func (c *ProjectsLocationsAssetsExportJobsCreateCall) AssetsExportJobId(assetsExportJobId string) *ProjectsLocationsAssetsExportJobsCreateCall {
+	c.urlParams_.Set("assetsExportJobId", assetsExportJobId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes after
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsAssetsExportJobsCreateCall) RequestId(requestId string) *ProjectsLocationsAssetsExportJobsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAssetsExportJobsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsAssetsExportJobsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAssetsExportJobsCreateCall) Context(ctx context.Context) *ProjectsLocationsAssetsExportJobsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAssetsExportJobsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAssetsExportJobsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.assetsexportjob)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/assetsExportJobs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "migrationcenter.projects.locations.assetsExportJobs.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "migrationcenter.projects.locations.assetsExportJobs.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAssetsExportJobsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "migrationcenter.projects.locations.assetsExportJobs.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAssetsExportJobsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an assets export job.
+//
+// - name: The name of the assets export job to delete.
+func (r *ProjectsLocationsAssetsExportJobsService) Delete(name string) *ProjectsLocationsAssetsExportJobsDeleteCall {
+	c := &ProjectsLocationsAssetsExportJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAssetsExportJobsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsAssetsExportJobsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAssetsExportJobsDeleteCall) Context(ctx context.Context) *ProjectsLocationsAssetsExportJobsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAssetsExportJobsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAssetsExportJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "migrationcenter.projects.locations.assetsExportJobs.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "migrationcenter.projects.locations.assetsExportJobs.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAssetsExportJobsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "migrationcenter.projects.locations.assetsExportJobs.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAssetsExportJobsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the details of an assets export job.
+//
+// - name: Name of the resource.
+func (r *ProjectsLocationsAssetsExportJobsService) Get(name string) *ProjectsLocationsAssetsExportJobsGetCall {
+	c := &ProjectsLocationsAssetsExportJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAssetsExportJobsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAssetsExportJobsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAssetsExportJobsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAssetsExportJobsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAssetsExportJobsGetCall) Context(ctx context.Context) *ProjectsLocationsAssetsExportJobsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAssetsExportJobsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAssetsExportJobsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "migrationcenter.projects.locations.assetsExportJobs.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "migrationcenter.projects.locations.assetsExportJobs.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AssetsExportJob.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAssetsExportJobsGetCall) Do(opts ...googleapi.CallOption) (*AssetsExportJob, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AssetsExportJob{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "migrationcenter.projects.locations.assetsExportJobs.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAssetsExportJobsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the assets export jobs in a given project and location.
+//
+// - parent: Parent resource.
+func (r *ProjectsLocationsAssetsExportJobsService) List(parent string) *ProjectsLocationsAssetsExportJobsListCall {
+	c := &ProjectsLocationsAssetsExportJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. The
+// server may return fewer items than requested. If unspecified, the server
+// will pick an appropriate default value.
+func (c *ProjectsLocationsAssetsExportJobsListCall) PageSize(pageSize int64) *ProjectsLocationsAssetsExportJobsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results that the server should return.
+func (c *ProjectsLocationsAssetsExportJobsListCall) PageToken(pageToken string) *ProjectsLocationsAssetsExportJobsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAssetsExportJobsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAssetsExportJobsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAssetsExportJobsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAssetsExportJobsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAssetsExportJobsListCall) Context(ctx context.Context) *ProjectsLocationsAssetsExportJobsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAssetsExportJobsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAssetsExportJobsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/assetsExportJobs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "migrationcenter.projects.locations.assetsExportJobs.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "migrationcenter.projects.locations.assetsExportJobs.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAssetsExportJobsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAssetsExportJobsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsExportJobsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAssetsExportJobsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "migrationcenter.projects.locations.assetsExportJobs.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAssetsExportJobsListCall) Pages(ctx context.Context, f func(*ListAssetsExportJobsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsAssetsExportJobsRunCall struct {
+	s                         *Service
+	name                      string
+	runassetsexportjobrequest *RunAssetsExportJobRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Run: Runs an assets export job, returning an AssetsExportJobExecution.
+//
+// - name: Name of the resource.
+func (r *ProjectsLocationsAssetsExportJobsService) Run(name string, runassetsexportjobrequest *RunAssetsExportJobRequest) *ProjectsLocationsAssetsExportJobsRunCall {
+	c := &ProjectsLocationsAssetsExportJobsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.runassetsexportjobrequest = runassetsexportjobrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAssetsExportJobsRunCall) Fields(s ...googleapi.Field) *ProjectsLocationsAssetsExportJobsRunCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAssetsExportJobsRunCall) Context(ctx context.Context) *ProjectsLocationsAssetsExportJobsRunCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAssetsExportJobsRunCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAssetsExportJobsRunCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.runassetsexportjobrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:run")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "migrationcenter.projects.locations.assetsExportJobs.run", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "migrationcenter.projects.locations.assetsExportJobs.run" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAssetsExportJobsRunCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "migrationcenter.projects.locations.assetsExportJobs.run", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

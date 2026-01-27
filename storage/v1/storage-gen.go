@@ -11000,9 +11000,11 @@ func (c *ObjectsInsertCall) Header() http.Header {
 
 func (c *ObjectsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-
 	// Set auto checksum in case of a single chunk upload if enabled.
-	if c.mediaInfo_ != nil {
+	if c.object != nil &&
+		c.mediaInfo_ != nil &&
+		c.mediaInfo_.ChecksumEnabled() &&
+		c.mediaInfo_.UploadType() == "multipart" {
 		c.object.Crc32c = c.mediaInfo_.GetAutoChecksum()
 	}
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.object)

@@ -198,13 +198,19 @@ func (mi *MediaInfo) UploadType() string {
 	return "resumable"
 }
 
-// GetAutoChecksum returns the computed auto checksum (if enabled)
-// for single-chunk resumable uploads.
+// ChecksumEnabled returns true if both buffering is used and
+// enableAutoChecksum flag is set to true.
+func (mi *MediaInfo) ChecksumEnabled() bool {
+	return mi.buffer != nil && mi.buffer.enableAutoChecksum
+}
+
+// GetAutoChecksum returns the computed auto checksum from buffer (if enabled).
+// Make sure whole data is written and read from the buffer before calling this
+// function to get correct checksum of the data.
 func (mi *MediaInfo) GetAutoChecksum() string {
-	if mi.buffer.enableAutoChecksum &&
-		mi.buffer != nil &&
-		mi.singleChunk {
-		return encodeUint32(mi.buffer.fullObjectChecksum + 1)
+	if mi.buffer != nil &&
+		mi.buffer.enableAutoChecksum {
+		return encodeUint32(mi.buffer.fullObjectChecksum)
 	}
 	return ""
 }

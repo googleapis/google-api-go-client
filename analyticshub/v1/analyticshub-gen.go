@@ -1671,7 +1671,9 @@ func (s Listing) MarshalJSON() ([]byte, error) {
 
 // MessageTransform: All supported message transforms types.
 type MessageTransform struct {
-	// AiInference: Optional. AI Inference.
+	// AiInference: Optional. AI Inference. Specifies the Vertex AI endpoint that
+	// inference requests built from the Pub/Sub message data and provided
+	// parameters will be sent to.
 	AiInference *AIInference `json:"aiInference,omitempty"`
 	// Disabled: Optional. If true, the transform is disabled and will not be
 	// applied to messages. Defaults to `false`.

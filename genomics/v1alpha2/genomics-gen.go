@@ -1072,8 +1072,7 @@ func (s *Pipeline) MarshalJSON() ([]byte, error) {
 // must be set otherwise. The pipeline runner should add a key/value
 // pair to either the inputs or outputs map. The indicated data copies
 // will be carried out before/after pipeline execution, just as if the
-// corresponding arguments were provided to `gsutil cp`. For example:
-// Given the following `PipelineParameter`, specified in the
+// corresponding arguments were provided to `gcloud storage cp`. For example:// Given the following `PipelineParameter`, specified in the
 // `inputParameters` list: ``` {name: "input_file", localCopy: {path:
 // "file.txt", disk: "pd1"}} ``` where `disk` is defined in the
 // `PipelineResources` object as: ``` {name: "pd1", mountPoint:
@@ -1081,13 +1080,11 @@ func (s *Pipeline) MarshalJSON() ([]byte, error) {
 // VM, and map `/mnt/pd1` to `/mnt/disk` in the docker container. At
 // runtime, an entry for `input_file` would be required in the inputs
 // map, such as: ``` inputs["input_file"] = "gs://my-bucket/bar.txt" ```
-// This would generate the following gsutil call: ``` gsutil cp
-// gs://my-bucket/bar.txt /mnt/pd1/file.txt ``` The file
+// This would generate the following gcloud storage call: ``` gcloud storage cp// gs://my-bucket/bar.txt /mnt/pd1/file.txt ``` The file
 // `/mnt/pd1/file.txt` maps to `/mnt/disk/file.txt` in the Docker
 // container. Acceptable paths are: Google Cloud storage pathLocal path
 // file file glob directory For outputs, the direction of the copy is
-// reversed: ``` gsutil cp /mnt/disk/file.txt gs://my-bucket/bar.txt ```
-// Acceptable paths are: Local pathGoogle Cloud Storage path file file
+// reversed: ``` gcloud storage cp /mnt/disk/file.txt gs://my-bucket/bar.txt ```// Acceptable paths are: Local pathGoogle Cloud Storage path file file
 // file directory - directory must already exist glob directory -
 // directory will be created if it doesn't exist One restriction due to
 // docker limitations, is that for outputs that are found on the boot

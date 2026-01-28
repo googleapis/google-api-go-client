@@ -4438,8 +4438,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets ListOperationsRequest.return_partial_success and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5499,7 +5499,8 @@ func (s ProvisioningModelMix) MarshalJSON() ([]byte, error) {
 
 // PyPiRepositoryConfig: Configuration for PyPi repository
 type PyPiRepositoryConfig struct {
-	// PypiRepository: Optional. PyPi repository address
+	// PypiRepository: Optional. The PyPi repository address. Note: This field is
+	// not available for batch workloads.
 	PypiRepository string `json:"pypiRepository,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PypiRepository") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6122,7 +6123,7 @@ type RuntimeConfig struct {
 	// AutotuningConfig: Optional. Autotuning configuration of the workload.
 	AutotuningConfig *AutotuningConfig `json:"autotuningConfig,omitempty"`
 	// Cohort: Optional. Cohort identifier. Identifies families of the workloads
-	// having the same shape, e.g. daily ETL jobs.
+	// that have the same shape, for example, daily ETL jobs.
 	Cohort string `json:"cohort,omitempty"`
 	// ContainerImage: Optional. Optional custom container image for the job
 	// runtime environment. If not specified, a default container image will be
@@ -7337,6 +7338,96 @@ func (s SparkBatch) MarshalJSON() ([]byte, error) {
 type SparkConnectConfig struct {
 }
 
+// SparkConnectExecutionInfo: Represents the lifecycle and details of an
+// Execution via Spark Connect
+type SparkConnectExecutionInfo struct {
+	// CloseTimestamp: Timestamp when the execution was closed.
+	CloseTimestamp int64 `json:"closeTimestamp,omitempty,string"`
+	// Detail: Detailed information about the execution.
+	Detail string `json:"detail,omitempty"`
+	// FinishTimestamp: Timestamp when the execution finished.
+	FinishTimestamp int64 `json:"finishTimestamp,omitempty,string"`
+	// JobIds: Optional. List of job ids associated with the execution.
+	JobIds []string `json:"jobIds,omitempty"`
+	// JobTag: Required. Job tag of the execution.
+	JobTag string `json:"jobTag,omitempty"`
+	// OperationId: Unique identifier for the operation.
+	OperationId string `json:"operationId,omitempty"`
+	// SessionId: Required. Session ID, ties the execution to a specific Spark
+	// Connect session.
+	SessionId string `json:"sessionId,omitempty"`
+	// SparkSessionTags: Optional. Tags associated with the Spark session.
+	SparkSessionTags []string `json:"sparkSessionTags,omitempty"`
+	// SqlExecIds: Optional. List of sql execution ids associated with the
+	// execution.
+	SqlExecIds []string `json:"sqlExecIds,omitempty"`
+	// StartTimestamp: Timestamp when the execution started.
+	StartTimestamp int64 `json:"startTimestamp,omitempty,string"`
+	// State: Output only. Current state of the execution.
+	//
+	// Possible values:
+	//   "EXECUTION_STATE_UNKNOWN" - Execution state is unknown.
+	//   "EXECUTION_STATE_STARTED" - Execution state is started.
+	//   "EXECUTION_STATE_COMPILED" - Execution state is compiled.
+	//   "EXECUTION_STATE_READY" - Execution state is ready.
+	//   "EXECUTION_STATE_CANCELED" - Execution state is canceled.
+	//   "EXECUTION_STATE_FAILED" - Execution state is failed.
+	//   "EXECUTION_STATE_FINISHED" - Execution state is finished.
+	//   "EXECUTION_STATE_CLOSED" - Execution state is closed.
+	State string `json:"state,omitempty"`
+	// Statement: statement of the execution.
+	Statement string `json:"statement,omitempty"`
+	// UserId: User ID of the user who started the execution.
+	UserId string `json:"userId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloseTimestamp") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloseTimestamp") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SparkConnectExecutionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod SparkConnectExecutionInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SparkConnectSessionInfo: Represents session-level information for Spark
+// Connect
+type SparkConnectSessionInfo struct {
+	// FinishTimestamp: Timestamp when the session finished.
+	FinishTimestamp int64 `json:"finishTimestamp,omitempty,string"`
+	// SessionId: Required. Session ID of the session.
+	SessionId string `json:"sessionId,omitempty"`
+	// StartTimestamp: Timestamp when the session started.
+	StartTimestamp int64 `json:"startTimestamp,omitempty,string"`
+	// TotalExecution: Optional. Total number of executions in the session.
+	TotalExecution int64 `json:"totalExecution,omitempty,string"`
+	// UserId: User ID of the user who started the session.
+	UserId string `json:"userId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FinishTimestamp") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FinishTimestamp") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SparkConnectSessionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod SparkConnectSessionInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SparkHistoryServerConfig: Spark History Server configuration for the
 // workload.
 type SparkHistoryServerConfig struct {
@@ -7792,14 +7883,18 @@ type SparkWrapperObject struct {
 	RddOperationGraph        *RddOperationGraph        `json:"rddOperationGraph,omitempty"`
 	RddStorageInfo           *RddStorageInfo           `json:"rddStorageInfo,omitempty"`
 	ResourceProfileInfo      *ResourceProfileInfo      `json:"resourceProfileInfo,omitempty"`
-	SparkPlanGraph           *SparkPlanGraph           `json:"sparkPlanGraph,omitempty"`
-	SpeculationStageSummary  *SpeculationStageSummary  `json:"speculationStageSummary,omitempty"`
-	SqlExecutionUiData       *SqlExecutionUiData       `json:"sqlExecutionUiData,omitempty"`
-	StageData                *StageData                `json:"stageData,omitempty"`
-	StreamBlockData          *StreamBlockData          `json:"streamBlockData,omitempty"`
-	StreamingQueryData       *StreamingQueryData       `json:"streamingQueryData,omitempty"`
-	StreamingQueryProgress   *StreamingQueryProgress   `json:"streamingQueryProgress,omitempty"`
-	TaskData                 *TaskData                 `json:"taskData,omitempty"`
+	// SparkConnectExecutionInfo: Spark Connect Execution Info
+	SparkConnectExecutionInfo *SparkConnectExecutionInfo `json:"sparkConnectExecutionInfo,omitempty"`
+	// SparkConnectSessionInfo: Spark Connect Session Info
+	SparkConnectSessionInfo *SparkConnectSessionInfo `json:"sparkConnectSessionInfo,omitempty"`
+	SparkPlanGraph          *SparkPlanGraph          `json:"sparkPlanGraph,omitempty"`
+	SpeculationStageSummary *SpeculationStageSummary `json:"speculationStageSummary,omitempty"`
+	SqlExecutionUiData      *SqlExecutionUiData      `json:"sqlExecutionUiData,omitempty"`
+	StageData               *StageData               `json:"stageData,omitempty"`
+	StreamBlockData         *StreamBlockData         `json:"streamBlockData,omitempty"`
+	StreamingQueryData      *StreamingQueryData      `json:"streamingQueryData,omitempty"`
+	StreamingQueryProgress  *StreamingQueryProgress  `json:"streamingQueryProgress,omitempty"`
+	TaskData                *TaskData                `json:"taskData,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppSummary") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -14404,8 +14499,8 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // When set to true, operations that are reachable are returned as normal, and
 // those that are unreachable are returned in the
 // ListOperationsResponse.unreachable field.This can only be true when reading
-// across collections e.g. when parent is set to
-// "projects/example/locations/-".This field is not by default supported and
+// across collections. For example, when parent is set to
+// "projects/example/locations/-".This field is not supported by default and
 // will result in an UNIMPLEMENTED error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
@@ -24535,8 +24630,8 @@ func (c *ProjectsRegionsOperationsListCall) PageToken(pageToken string) *Project
 // When set to true, operations that are reachable are returned as normal, and
 // those that are unreachable are returned in the
 // ListOperationsResponse.unreachable field.This can only be true when reading
-// across collections e.g. when parent is set to
-// "projects/example/locations/-".This field is not by default supported and
+// across collections. For example, when parent is set to
+// "projects/example/locations/-".This field is not supported by default and
 // will result in an UNIMPLEMENTED error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsRegionsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsRegionsOperationsListCall {

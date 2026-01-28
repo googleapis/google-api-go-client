@@ -5772,9 +5772,24 @@ type GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus struct {
 	// threshold in queries per minute. This is the threshold against which QPM
 	// usage is compared for overage calculations.
 	EffectiveSearchQpmThreshold int64 `json:"effectiveSearchQpmThreshold,omitempty,string"`
+	// IndexingCoreThresholdNextUpdateTime: Output only. The earliest next update
+	// time for the indexing core subscription threshold. This is based on the
+	// next_update_time returned by the underlying Cloud Billing Subscription V3
+	// API. This field is populated only if an update indexing core subscription
+	// threshold request is succeeded.
+	IndexingCoreThresholdNextUpdateTime string `json:"indexingCoreThresholdNextUpdateTime,omitempty"`
+	// SearchQpmThresholdNextUpdateTime: Output only. The earliest next update time
+	// for the search QPM subscription threshold. This is based on the
+	// next_update_time returned by the underlying Cloud Billing Subscription V3
+	// API. This field is populated only if an update QPM subscription threshold
+	// request is succeeded.
+	SearchQpmThresholdNextUpdateTime string `json:"searchQpmThresholdNextUpdateTime,omitempty"`
 	// StartTime: Optional. The start time of the currently active billing
 	// subscription.
 	StartTime string `json:"startTime,omitempty"`
+	// TerminateTime: Output only. The latest terminate effective time of search
+	// qpm and indexing core subscriptions.
+	TerminateTime string `json:"terminateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "EffectiveIndexingCoreThreshold") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from
@@ -7539,7 +7554,7 @@ func (s GoogleCloudDiscoveryengineV1alphaAdvancedCompleteQueryRequest) MarshalJS
 }
 
 // GoogleCloudDiscoveryengineV1alphaAdvancedCompleteQueryRequestBoostSpec:
-// Specification to boost suggestions based on the condtion of the suggestion.
+// Specification to boost suggestions based on the condition of the suggestion.
 type GoogleCloudDiscoveryengineV1alphaAdvancedCompleteQueryRequestBoostSpec struct {
 	// ConditionBoostSpecs: Condition boost specifications. If a suggestion matches
 	// multiple conditions in the specifications, boost values from these
@@ -8160,8 +8175,6 @@ type GoogleCloudDiscoveryengineV1alphaAgentView struct {
 	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
 	// gine}/assistants/{assistant}/agents/{agent}`
 	Name string `json:"name,omitempty"`
-	// OwnerDisplayName: Output only. The display name of the agent owner.
-	OwnerDisplayName string `json:"ownerDisplayName,omitempty"`
 	// RejectionReason: The reason why the agent was rejected. Only set if the
 	// state is PRIVATE, and got there via rejection.
 	RejectionReason string `json:"rejectionReason,omitempty"`
@@ -8434,6 +8447,36 @@ type GoogleCloudDiscoveryengineV1alphaAlloyDbSource struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaAlloyDbSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaAlloyDbSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAnalyticsConfig: The customer controllable
+// config for Analytics.
+type GoogleCloudDiscoveryengineV1alphaAnalyticsConfig struct {
+	// Name: Required. The resource name of the analytics customer config. Format:
+	// `projects/{project}/locations/{location}/collections/{collection_id}/engines/
+	// {engine_id}/analytics/config`
+	Name string `json:"name,omitempty"`
+	// UserLevelMetricsEnabled: Whether user-level metrics are enabled.
+	UserLevelMetricsEnabled bool `json:"userLevelMetricsEnabled,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAnalyticsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAnalyticsConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -20112,9 +20155,24 @@ type GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus struct {
 	// threshold in queries per minute. This is the threshold against which QPM
 	// usage is compared for overage calculations.
 	EffectiveSearchQpmThreshold int64 `json:"effectiveSearchQpmThreshold,omitempty,string"`
+	// IndexingCoreThresholdNextUpdateTime: Output only. The earliest next update
+	// time for the indexing core subscription threshold. This is based on the
+	// next_update_time returned by the underlying Cloud Billing Subscription V3
+	// API. This field is populated only if an update indexing core subscription
+	// threshold request is succeeded.
+	IndexingCoreThresholdNextUpdateTime string `json:"indexingCoreThresholdNextUpdateTime,omitempty"`
+	// SearchQpmThresholdNextUpdateTime: Output only. The earliest next update time
+	// for the search QPM subscription threshold. This is based on the
+	// next_update_time returned by the underlying Cloud Billing Subscription V3
+	// API. This field is populated only if an update QPM subscription threshold
+	// request is succeeded.
+	SearchQpmThresholdNextUpdateTime string `json:"searchQpmThresholdNextUpdateTime,omitempty"`
 	// StartTime: Optional. The start time of the currently active billing
 	// subscription.
 	StartTime string `json:"startTime,omitempty"`
+	// TerminateTime: Output only. The latest terminate effective time of search
+	// qpm and indexing core subscriptions.
+	TerminateTime string `json:"terminateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "EffectiveIndexingCoreThreshold") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from
@@ -27010,6 +27068,8 @@ type GoogleCloudDiscoveryengineV1alphaWidgetConfig struct {
 	// es/{data_store_id}/widgetConfigs/{widget_config_id}`. This field must be a
 	// UTF-8 encoded string with a length limit of 1024 characters.
 	Name string `json:"name,omitempty"`
+	// Nodes: Output only. The nodes associated with the Widget Config.
+	Nodes []*GoogleCloudDiscoveryengineV1alphaWidgetConfigNode `json:"nodes,omitempty"`
 	// ResultDisplayType: The type of snippet to display in UCS widget. -
 	// RESULT_DISPLAY_TYPE_UNSPECIFIED for existing users. - SNIPPET for new
 	// non-enterprise search users. - EXTRACTIVE_ANSWER for new enterprise search
@@ -27432,6 +27492,52 @@ type GoogleCloudDiscoveryengineV1alphaWidgetConfigImage struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaWidgetConfigImage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaWidgetConfigImage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaWidgetConfigNode: Represents a single
+// reusable computational or logical unit.
+type GoogleCloudDiscoveryengineV1alphaWidgetConfigNode struct {
+	// Description: Output only. A detailed description of what the node does.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Output only. A human readable name for the node.
+	DisplayName string `json:"displayName,omitempty"`
+	// IconUrl: Output only. An identifier or URL pointing to an icon representing
+	// this node type.
+	IconUrl string `json:"iconUrl,omitempty"`
+	// OutputSchema: Output only. The output schema of the tool. This schema is
+	// expected to conform to the OpenAPI Schema standard (see
+	// https://spec.openapis.org/oas/v3.0.3.html/ and AIP-146). It describes the
+	// structure of the output produced by this node.
+	OutputSchema googleapi.RawMessage `json:"outputSchema,omitempty"`
+	// ParameterSchema: Output only. The parameter schema of the tool. This schema
+	// is expected to conform to the OpenAPI Schema standard (see
+	// https://spec.openapis.org/oas/v3.0.3.html and AIP-146). It describes the
+	// expected structure of the parameters that this node accepts.
+	ParameterSchema googleapi.RawMessage `json:"parameterSchema,omitempty"`
+	// Type: Output only. The type of the node.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified type.
+	//   "TRIGGER" - Trigger type.
+	//   "FLOW" - Flow type.
+	//   "CONNECTOR" - Connector type.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaWidgetConfigNode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaWidgetConfigNode
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -30688,9 +30794,24 @@ type GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus struct {
 	// threshold in queries per minute. This is the threshold against which QPM
 	// usage is compared for overage calculations.
 	EffectiveSearchQpmThreshold int64 `json:"effectiveSearchQpmThreshold,omitempty,string"`
+	// IndexingCoreThresholdNextUpdateTime: Output only. The earliest next update
+	// time for the indexing core subscription threshold. This is based on the
+	// next_update_time returned by the underlying Cloud Billing Subscription V3
+	// API. This field is populated only if an update indexing core subscription
+	// threshold request is succeeded.
+	IndexingCoreThresholdNextUpdateTime string `json:"indexingCoreThresholdNextUpdateTime,omitempty"`
+	// SearchQpmThresholdNextUpdateTime: Output only. The earliest next update time
+	// for the search QPM subscription threshold. This is based on the
+	// next_update_time returned by the underlying Cloud Billing Subscription V3
+	// API. This field is populated only if an update QPM subscription threshold
+	// request is succeeded.
+	SearchQpmThresholdNextUpdateTime string `json:"searchQpmThresholdNextUpdateTime,omitempty"`
 	// StartTime: Optional. The start time of the currently active billing
 	// subscription.
 	StartTime string `json:"startTime,omitempty"`
+	// TerminateTime: Output only. The latest terminate effective time of search
+	// qpm and indexing core subscriptions.
+	TerminateTime string `json:"terminateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "EffectiveIndexingCoreThreshold") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from
@@ -33657,8 +33778,12 @@ type GoogleCloudNotebooklmV1alphaFailureReason struct {
 	GoogleDriveError *GoogleCloudNotebooklmV1alphaFailureReasonGoogleDriveError `json:"googleDriveError,omitempty"`
 	// IngestionError: Indicates an error occurred while ingesting the source.
 	IngestionError *GoogleCloudNotebooklmV1alphaFailureReasonIngestionError `json:"ingestionError,omitempty"`
+	// MimeTypeBlocked: Indicates that the source MIME type is blocked.
+	MimeTypeBlocked *GoogleCloudNotebooklmV1alphaFailureReasonMimeTypeBlocked `json:"mimeTypeBlocked,omitempty"`
 	// PaywallError: Indicates that the source is paywalled and cannot be ingested.
 	PaywallError *GoogleCloudNotebooklmV1alphaFailureReasonPaywallError `json:"paywallError,omitempty"`
+	// PolicyCheckFailed: Indicates that the policy check failed.
+	PolicyCheckFailed *GoogleCloudNotebooklmV1alphaFailureReasonPolicyCheckFailed `json:"policyCheckFailed,omitempty"`
 	// SourceEmpty: Indicates that the source is empty.
 	SourceEmpty *GoogleCloudNotebooklmV1alphaFailureReasonSourceEmpty `json:"sourceEmpty,omitempty"`
 	// SourceLimitExceeded: Error if the user tries to update beyond their limits.
@@ -33766,9 +33891,19 @@ type GoogleCloudNotebooklmV1alphaFailureReasonGoogleDriveErrorDownloadPrevented 
 type GoogleCloudNotebooklmV1alphaFailureReasonIngestionError struct {
 }
 
+// GoogleCloudNotebooklmV1alphaFailureReasonMimeTypeBlocked: Indicates that the
+// source MIME type is blocked.
+type GoogleCloudNotebooklmV1alphaFailureReasonMimeTypeBlocked struct {
+}
+
 // GoogleCloudNotebooklmV1alphaFailureReasonPaywallError: Indicates that the
 // source is paywalled and cannot be ingested.
 type GoogleCloudNotebooklmV1alphaFailureReasonPaywallError struct {
+}
+
+// GoogleCloudNotebooklmV1alphaFailureReasonPolicyCheckFailed: Indicates that
+// the policy check failed.
+type GoogleCloudNotebooklmV1alphaFailureReasonPolicyCheckFailed struct {
 }
 
 // GoogleCloudNotebooklmV1alphaFailureReasonSourceEmpty: Indicates that the
@@ -53239,6 +53374,232 @@ func (c *ProjectsLocationsCollectionsEnginesAnalyticsExportMetricsCall) Do(opts 
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.analytics.exportMetrics", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsEnginesAnalyticsGetConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetConfig: Gets the AnalyticsConfig.
+//
+//   - name: The resource name of the analytics customer config. Format:
+//     `projects/{project}/locations/{location}/collections/{collection_id}/engine
+//     s/{engine_id}/analytics/config`.
+func (r *ProjectsLocationsCollectionsEnginesAnalyticsService) GetConfig(name string) *ProjectsLocationsCollectionsEnginesAnalyticsGetConfigCall {
+	c := &ProjectsLocationsCollectionsEnginesAnalyticsGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesAnalyticsGetConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAnalyticsGetConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCollectionsEnginesAnalyticsGetConfigCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesAnalyticsGetConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesAnalyticsGetConfigCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAnalyticsGetConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesAnalyticsGetConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesAnalyticsGetConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.analytics.getConfig", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.analytics.getConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaAnalyticsConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesAnalyticsGetConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaAnalyticsConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaAnalyticsConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.analytics.getConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsEnginesAnalyticsUpdateConfigCall struct {
+	s                                                *Service
+	name                                             string
+	googleclouddiscoveryenginev1alphaanalyticsconfig *GoogleCloudDiscoveryengineV1alphaAnalyticsConfig
+	urlParams_                                       gensupport.URLParams
+	ctx_                                             context.Context
+	header_                                          http.Header
+}
+
+// UpdateConfig: Updates the AnalyticsConfig for analytics.
+//
+//   - name: The resource name of the analytics customer config. Format:
+//     `projects/{project}/locations/{location}/collections/{collection_id}/engine
+//     s/{engine_id}/analytics/config`.
+func (r *ProjectsLocationsCollectionsEnginesAnalyticsService) UpdateConfig(name string, googleclouddiscoveryenginev1alphaanalyticsconfig *GoogleCloudDiscoveryengineV1alphaAnalyticsConfig) *ProjectsLocationsCollectionsEnginesAnalyticsUpdateConfigCall {
+	c := &ProjectsLocationsCollectionsEnginesAnalyticsUpdateConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1alphaanalyticsconfig = googleclouddiscoveryenginev1alphaanalyticsconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields of
+// AnalyticsConfig to update. If not specified, the method will perform a full
+// replacement.
+func (c *ProjectsLocationsCollectionsEnginesAnalyticsUpdateConfigCall) UpdateMask(updateMask string) *ProjectsLocationsCollectionsEnginesAnalyticsUpdateConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesAnalyticsUpdateConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAnalyticsUpdateConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesAnalyticsUpdateConfigCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAnalyticsUpdateConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesAnalyticsUpdateConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesAnalyticsUpdateConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1alphaanalyticsconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.analytics.updateConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.analytics.updateConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaAnalyticsConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesAnalyticsUpdateConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaAnalyticsConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaAnalyticsConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.analytics.updateConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -4085,7 +4085,7 @@ type GoogleCloudRetailV2betaConversationalSearchRequestSearchParams struct {
 	// of the filter string is the same as SearchRequest.filter.
 	Filter string `json:"filter,omitempty"`
 	// SortBy: Optional. The sort string to specify the sorting of search results.
-	// The syntax of the sort string is the same as SearchRequest.sort.
+	// The syntax of the sort string is the same as SearchRequest.order_by.
 	SortBy string `json:"sortBy,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BoostSpec") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4112,7 +4112,7 @@ func (s GoogleCloudRetailV2betaConversationalSearchRequestSearchParams) MarshalJ
 type GoogleCloudRetailV2betaConversationalSearchRequestUserAnswer struct {
 	// SelectedAnswer: Optional. This field specifies the selected answer during
 	// the conversational search. This should be a subset of
-	// ConversationalSearchResponse.followup_question.suggested_answers.
+	// ConversationalSearchResponse.FollowupQuestion.SuggestedAnswer.
 	SelectedAnswer *GoogleCloudRetailV2betaConversationalSearchRequestUserAnswerSelectedAnswer `json:"selectedAnswer,omitempty"`
 	// TextAnswer: This field specifies the incremental input text from the user
 	// during the conversational search.
@@ -4221,7 +4221,7 @@ func (s GoogleCloudRetailV2betaConversationalSearchResponse) MarshalJSON() ([]by
 type GoogleCloudRetailV2betaConversationalSearchResponseConversationalFilteringResult struct {
 	// AdditionalFilter: This is the incremental additional filters implied from
 	// the current user answer. User should add the suggested addition filters to
-	// the previous ConversationalSearchRequest.search_params.filter and
+	// the previous ConversationalSearchRequest.SearchParams.filter and
 	// SearchRequest.filter, and use the merged filter in the follow up requests.
 	AdditionalFilter *GoogleCloudRetailV2betaConversationalSearchResponseConversationalFilteringResultAdditionalFilter `json:"additionalFilter,omitempty"`
 	// FollowupQuestion: The conversational filtering question.
@@ -4551,7 +4551,9 @@ type GoogleCloudRetailV2betaExportAnalyticsMetricsRequest struct {
 	// < "2012-04-23T18:30:43.511Z" * Example 2: `timestamp >
 	// "2012-04-23T18:25:43.511Z"
 	Filter string `json:"filter,omitempty"`
-	// OutputConfig: Required. The output location of the data.
+	// OutputConfig: Required. The output location of the data. Only
+	// `bigquery_destination` is supported, and `bigquery_destination.table_type`
+	// must be set to `view`.
 	OutputConfig *GoogleCloudRetailV2betaOutputConfig `json:"outputConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4659,7 +4661,9 @@ type GoogleCloudRetailV2betaExportProductsRequest struct {
 	// Filter: Deprecated: This field is deprecated. Any filter provided will be
 	// ignored.
 	Filter string `json:"filter,omitempty"`
-	// OutputConfig: Required. The output location of the data.
+	// OutputConfig: Required. The output location of the data. Only
+	// `bigquery_destination` is supported, and `bigquery_destination.table_type`
+	// must be set to `view`.
 	OutputConfig *GoogleCloudRetailV2betaOutputConfig `json:"outputConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4714,7 +4718,9 @@ type GoogleCloudRetailV2betaExportUserEventsRequest struct {
 	// Filter: Deprecated: This field is deprecated. Any filter provided will be
 	// ignored.
 	Filter string `json:"filter,omitempty"`
-	// OutputConfig: Required. The output location of the data.
+	// OutputConfig: Required. The output location of the data. Only
+	// `bigquery_destination` is supported, and `bigquery_destination.table_type`
+	// must be set to `view`.
 	OutputConfig *GoogleCloudRetailV2betaOutputConfig `json:"outputConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -8301,8 +8307,9 @@ func (s *GoogleCloudRetailV2betaSearchRequestBoostSpecConditionBoostSpec) Unmars
 type GoogleCloudRetailV2betaSearchRequestConversationalSearchSpec struct {
 	// ConversationId: This field specifies the conversation id, which maintains
 	// the state of the conversation between client side and server side. Use the
-	// value from the previous ConversationalSearchResult.conversation_id. For the
-	// initial request, this should be empty.
+	// value from the previous
+	// SearchResponse.ConversationalSearchResult.conversation_id. For the initial
+	// request, this should be empty.
 	ConversationId string `json:"conversationId,omitempty"`
 	// FollowupConversationRequested: This field specifies whether the customer
 	// would like to do conversational search. If this field is set to true,
@@ -8338,7 +8345,7 @@ func (s GoogleCloudRetailV2betaSearchRequestConversationalSearchSpec) MarshalJSO
 type GoogleCloudRetailV2betaSearchRequestConversationalSearchSpecUserAnswer struct {
 	// SelectedAnswer: This field specifies the selected attributes during the
 	// conversational search. This should be a subset of
-	// ConversationalSearchResult.suggested_answers.
+	// SearchResponse.ConversationalSearchResult.suggested_answers.
 	SelectedAnswer *GoogleCloudRetailV2betaSearchRequestConversationalSearchSpecUserAnswerSelectedAnswer `json:"selectedAnswer,omitempty"`
 	// TextAnswer: This field specifies the incremental input text from the user
 	// during the conversational search.

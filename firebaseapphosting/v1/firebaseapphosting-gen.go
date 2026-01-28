@@ -436,6 +436,7 @@ type Build struct {
 	// not be serving traffic - see `Backend.traffic` for the current state, or
 	// `Backend.traffic_statuses` for the desired state.
 	//   "FAILED" - The build has failed.
+	//   "SKIPPED" - The build was skipped.
 	State string `json:"state,omitempty"`
 	// Uid: Output only. System-assigned, unique identifier.
 	Uid string `json:"uid,omitempty"`
@@ -1589,6 +1590,38 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Path: A file path pattern to match against.
+type Path struct {
+	// Pattern: Optional. The pattern to match against.
+	Pattern string `json:"pattern,omitempty"`
+	// Type: Optional. The type of pattern to match against.
+	//
+	// Possible values:
+	//   "PATTERN_TYPE_UNSPECIFIED" - The pattern type is unspecified - this is an
+	// invalid value.
+	//   "RE2" - RE2 - regular expression
+	// (https://github.com/google/re2/wiki/Syntax).
+	//   "GLOB" - The pattern is a glob.
+	//   "PREFIX" - The pattern is a prefix.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Pattern") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Pattern") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Path) MarshalJSON() ([]byte, error) {
+	type NoMethod Path
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Redirect: Specifies redirect behavior for a domain.
 type Redirect struct {
 	// Status: Optional. The status code to use in a redirect response. Must be a
@@ -1662,6 +1695,7 @@ type Rollout struct {
 	//   "SUCCEEDED" - The rollout has completed.
 	//   "FAILED" - The rollout has failed. See error for more information.
 	//   "CANCELLED" - The rollout has been cancelled.
+	//   "SKIPPED" - The rollout has been skipped.
 	State string `json:"state,omitempty"`
 	// Uid: Output only. System-assigned, unique identifier.
 	Uid string `json:"uid,omitempty"`
@@ -1700,6 +1734,18 @@ type RolloutPolicy struct {
 	// DisabledTime: Output only. If `disabled` is set, the time at which the
 	// automatic rollouts were disabled.
 	DisabledTime string `json:"disabledTime,omitempty"`
+	// IgnoredPaths: Optional. A list of file paths patterns to exclude from
+	// triggering a rollout. Patterns in this list take precedence over
+	// required_paths. **Note**: All paths must be in the ignored_paths in order
+	// for the rollout to be skipped. Limited to 100 paths. Example: ignored_paths:
+	// { pattern: "foo/bar/excluded/*” type: GLOB }
+	IgnoredPaths []*Path `json:"ignoredPaths,omitempty"`
+	// RequiredPaths: Optional. A list of file paths patterns that trigger a build
+	// and rollout if at least one of the changed files in the commit are present
+	// in this list. This field is optional; the rollout policy will default to
+	// triggering on all paths if not populated. Limited to 100 paths. Example:
+	// “required_paths: { pattern: "foo/bar/*” type: GLOB }
+	RequiredPaths []*Path `json:"requiredPaths,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CodebaseBranch") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

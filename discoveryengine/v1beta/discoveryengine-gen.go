@@ -5520,9 +5520,24 @@ type GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus struct {
 	// threshold in queries per minute. This is the threshold against which QPM
 	// usage is compared for overage calculations.
 	EffectiveSearchQpmThreshold int64 `json:"effectiveSearchQpmThreshold,omitempty,string"`
+	// IndexingCoreThresholdNextUpdateTime: Output only. The earliest next update
+	// time for the indexing core subscription threshold. This is based on the
+	// next_update_time returned by the underlying Cloud Billing Subscription V3
+	// API. This field is populated only if an update indexing core subscription
+	// threshold request is succeeded.
+	IndexingCoreThresholdNextUpdateTime string `json:"indexingCoreThresholdNextUpdateTime,omitempty"`
+	// SearchQpmThresholdNextUpdateTime: Output only. The earliest next update time
+	// for the search QPM subscription threshold. This is based on the
+	// next_update_time returned by the underlying Cloud Billing Subscription V3
+	// API. This field is populated only if an update QPM subscription threshold
+	// request is succeeded.
+	SearchQpmThresholdNextUpdateTime string `json:"searchQpmThresholdNextUpdateTime,omitempty"`
 	// StartTime: Optional. The start time of the currently active billing
 	// subscription.
 	StartTime string `json:"startTime,omitempty"`
+	// TerminateTime: Output only. The latest terminate effective time of search
+	// qpm and indexing core subscriptions.
+	TerminateTime string `json:"terminateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "EffectiveIndexingCoreThreshold") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from
@@ -12910,9 +12925,24 @@ type GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus struct {
 	// threshold in queries per minute. This is the threshold against which QPM
 	// usage is compared for overage calculations.
 	EffectiveSearchQpmThreshold int64 `json:"effectiveSearchQpmThreshold,omitempty,string"`
+	// IndexingCoreThresholdNextUpdateTime: Output only. The earliest next update
+	// time for the indexing core subscription threshold. This is based on the
+	// next_update_time returned by the underlying Cloud Billing Subscription V3
+	// API. This field is populated only if an update indexing core subscription
+	// threshold request is succeeded.
+	IndexingCoreThresholdNextUpdateTime string `json:"indexingCoreThresholdNextUpdateTime,omitempty"`
+	// SearchQpmThresholdNextUpdateTime: Output only. The earliest next update time
+	// for the search QPM subscription threshold. This is based on the
+	// next_update_time returned by the underlying Cloud Billing Subscription V3
+	// API. This field is populated only if an update QPM subscription threshold
+	// request is succeeded.
+	SearchQpmThresholdNextUpdateTime string `json:"searchQpmThresholdNextUpdateTime,omitempty"`
 	// StartTime: Optional. The start time of the currently active billing
 	// subscription.
 	StartTime string `json:"startTime,omitempty"`
+	// TerminateTime: Output only. The latest terminate effective time of search
+	// qpm and indexing core subscriptions.
+	TerminateTime string `json:"terminateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "EffectiveIndexingCoreThreshold") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from
@@ -16303,7 +16333,7 @@ func (s GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequest) MarshalJSO
 }
 
 // GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequestBoostSpec:
-// Specification to boost suggestions based on the condtion of the suggestion.
+// Specification to boost suggestions based on the condition of the suggestion.
 type GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequestBoostSpec struct {
 	// ConditionBoostSpecs: Condition boost specifications. If a suggestion matches
 	// multiple conditions in the specifications, boost values from these
@@ -25441,9 +25471,24 @@ type GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus struct {
 	// threshold in queries per minute. This is the threshold against which QPM
 	// usage is compared for overage calculations.
 	EffectiveSearchQpmThreshold int64 `json:"effectiveSearchQpmThreshold,omitempty,string"`
+	// IndexingCoreThresholdNextUpdateTime: Output only. The earliest next update
+	// time for the indexing core subscription threshold. This is based on the
+	// next_update_time returned by the underlying Cloud Billing Subscription V3
+	// API. This field is populated only if an update indexing core subscription
+	// threshold request is succeeded.
+	IndexingCoreThresholdNextUpdateTime string `json:"indexingCoreThresholdNextUpdateTime,omitempty"`
+	// SearchQpmThresholdNextUpdateTime: Output only. The earliest next update time
+	// for the search QPM subscription threshold. This is based on the
+	// next_update_time returned by the underlying Cloud Billing Subscription V3
+	// API. This field is populated only if an update QPM subscription threshold
+	// request is succeeded.
+	SearchQpmThresholdNextUpdateTime string `json:"searchQpmThresholdNextUpdateTime,omitempty"`
 	// StartTime: Optional. The start time of the currently active billing
 	// subscription.
 	StartTime string `json:"startTime,omitempty"`
+	// TerminateTime: Output only. The latest terminate effective time of search
+	// qpm and indexing core subscriptions.
+	TerminateTime string `json:"terminateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "EffectiveIndexingCoreThreshold") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from

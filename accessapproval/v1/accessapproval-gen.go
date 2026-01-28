@@ -268,6 +268,9 @@ type AccessApprovalSettings struct {
 	// active_key_version (this field will always be unset for the organization
 	// since organizations do not have ancestors).
 	AncestorHasActiveKeyVersion bool `json:"ancestorHasActiveKeyVersion,omitempty"`
+	// AncestorsEnrolledServices: Output only. Field to differentiate ancestor
+	// enrolled services from locally enrolled services.
+	AncestorsEnrolledServices []*EnrolledService `json:"ancestorsEnrolledServices,omitempty"`
 	// ApprovalPolicy: Optional. Policy configuration for Access Approval that sets
 	// the operating mode. The available policies are Transparency, Streamlined
 	// Support, and Approval Required.

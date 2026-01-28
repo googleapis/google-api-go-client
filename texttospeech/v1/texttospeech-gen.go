@@ -227,6 +227,9 @@ type VoicesService struct {
 
 // AdvancedVoiceOptions: Used for advanced voice options.
 type AdvancedVoiceOptions struct {
+	// EnableTextnorm: Optional. If true, textnorm will be applied to text input.
+	// This feature is enabled by default. Only applies for Gemini TTS.
+	EnableTextnorm bool `json:"enableTextnorm,omitempty"`
 	// LowLatencyJourneySynthesis: Only for Journey voices. If false, the synthesis
 	// is context aware and has a higher latency.
 	LowLatencyJourneySynthesis bool `json:"lowLatencyJourneySynthesis,omitempty"`
@@ -235,15 +238,15 @@ type AdvancedVoiceOptions struct {
 	// Cloud billing accounts. Otherwise, will return result
 	// google.rpc.Code.INVALID_ARGUMENT.
 	RelaxSafetyFilters bool `json:"relaxSafetyFilters,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "LowLatencyJourneySynthesis")
-	// to unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "EnableTextnorm") to
+	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "LowLatencyJourneySynthesis") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "EnableTextnorm") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -848,7 +851,7 @@ func (s SynthesizeLongAudioRequest) MarshalJSON() ([]byte, error) {
 // SynthesizeSpeechRequest: The top-level message sent by the client for the
 // `SynthesizeSpeech` method.
 type SynthesizeSpeechRequest struct {
-	// AdvancedVoiceOptions: Advanced voice options.
+	// AdvancedVoiceOptions: Optional. Advanced voice options.
 	AdvancedVoiceOptions *AdvancedVoiceOptions `json:"advancedVoiceOptions,omitempty"`
 	// AudioConfig: Required. The configuration of the synthesized audio.
 	AudioConfig *AudioConfig `json:"audioConfig,omitempty"`

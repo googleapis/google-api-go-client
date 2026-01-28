@@ -701,9 +701,9 @@ type InternalRange struct {
 	// when auto-allocation is selected by not setting ip_cidr_range (and setting
 	// prefix_length).
 	AllocationOptions *AllocationOptions `json:"allocationOptions,omitempty"`
-	// CreateTime: Time when the internal range was created.
+	// CreateTime: Output only. Time when the internal range was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: A description of this resource.
+	// Description: Optional. A description of this resource.
 	Description string `json:"description,omitempty"`
 	// ExcludeCidrRanges: Optional. ExcludeCidrRanges flag. Specifies a set of CIDR
 	// blocks that allows exclusion of particular CIDR ranges from the
@@ -712,21 +712,21 @@ type InternalRange struct {
 	// Immutable: Optional. Immutable ranges cannot have their fields modified,
 	// except for labels and description.
 	Immutable bool `json:"immutable,omitempty"`
-	// IpCidrRange: IP range that this internal range defines. NOTE: IPv6 ranges
-	// are limited to usage=EXTERNAL_TO_VPC and peering=FOR_SELF. NOTE: For IPv6
-	// Ranges this field is compulsory, i.e. the address range must be specified
-	// explicitly.
+	// IpCidrRange: Optional. IP range that this internal range defines. NOTE: IPv6
+	// ranges are limited to usage=EXTERNAL_TO_VPC and peering=FOR_SELF. NOTE: For
+	// IPv6 Ranges this field is compulsory, i.e. the address range must be
+	// specified explicitly.
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
-	// Labels: User-defined labels.
+	// Labels: Optional. User-defined labels.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Migration: Optional. Must be present if usage is set to FOR_MIGRATION.
 	Migration *Migration `json:"migration,omitempty"`
-	// Name: Immutable. The name of an internal range. Format:
+	// Name: Identifier. The name of an internal range. Format:
 	// projects/{project}/locations/{location}/internalRanges/{internal_range} See:
 	// https://google.aip.dev/122#fields-representing-resource-names
 	Name string `json:"name,omitempty"`
-	// Network: The URL or resource ID of the network in which to reserve the
-	// internal range. The network cannot be deleted if there are any reserved
+	// Network: Optional. The URL or resource ID of the network in which to reserve
+	// the internal range. The network cannot be deleted if there are any reserved
 	// internal ranges referring to it. Legacy networks are not supported. For
 	// example:
 	// https://www.googleapis.com/compute/v1/projects/{project}/locations/global/networks/{network}
@@ -742,7 +742,7 @@ type InternalRange struct {
 	//   "OVERLAP_EXISTING_SUBNET_RANGE" - Allow creation of internal ranges that
 	// overlap with existing subnets.
 	Overlaps []string `json:"overlaps,omitempty"`
-	// Peering: The type of peering set for this internal range.
+	// Peering: Optional. The type of peering set for this internal range.
 	//
 	// Possible values:
 	//   "PEERING_UNSPECIFIED" - If Peering is left unspecified in
@@ -764,10 +764,10 @@ type InternalRange struct {
 	// peers cannot use this range in a way that is visible to this VPC, but can
 	// re-use this range as long as it is NOT_SHARED from the peer VPC, too.
 	Peering string `json:"peering,omitempty"`
-	// PrefixLength: An alternative to ip_cidr_range. Can be set when trying to
-	// create an IPv4 reservation that automatically finds a free range of the
-	// given size. If both ip_cidr_range and prefix_length are set, there is an
-	// error if the range sizes do not match. Can also be used during updates to
+	// PrefixLength: Optional. An alternative to ip_cidr_range. Can be set when
+	// trying to create an IPv4 reservation that automatically finds a free range
+	// of the given size. If both ip_cidr_range and prefix_length are set, there is
+	// an error if the range sizes do not match. Can also be used during updates to
 	// change the range size. NOTE: For IPv6 this field only works if ip_cidr_range
 	// is set as well, and both fields must match. In other words, with IPv6 this
 	// field only works as a redundant parameter.
@@ -780,9 +780,9 @@ type InternalRange struct {
 	// "172.16.0.0/12" and "192.168.0.0/16" or non-rfc-1918 address spaces used in
 	// the VPC.
 	TargetCidrRange []string `json:"targetCidrRange,omitempty"`
-	// UpdateTime: Time when the internal range was updated.
+	// UpdateTime: Output only. Time when the internal range was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// Usage: The type of usage set for this internal range.
+	// Usage: Optional. The type of usage set for this internal range.
 	//
 	// Possible values:
 	//   "USAGE_UNSPECIFIED" - Unspecified usage is allowed in calls which identify
@@ -3226,7 +3226,7 @@ type ProjectsLocationsInternalRangesPatchCall struct {
 
 // Patch: Updates the parameters of a single internal range.
 //
-//   - name: Immutable. The name of an internal range. Format:
+//   - name: Identifier. The name of an internal range. Format:
 //     projects/{project}/locations/{location}/internalRanges/{internal_range}
 //     See: https://google.aip.dev/122#fields-representing-resource-names.
 func (r *ProjectsLocationsInternalRangesService) Patch(name string, internalrange *InternalRange) *ProjectsLocationsInternalRangesPatchCall {

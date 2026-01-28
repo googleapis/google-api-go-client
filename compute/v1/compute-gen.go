@@ -9618,6 +9618,30 @@ func (s BulkZoneSetLabelsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type BundledLocalSsds struct {
+	// DefaultInterface: The default disk interface if the interface is not
+	// specified.
+	DefaultInterface string `json:"defaultInterface,omitempty"`
+	// PartitionCount: The number of partitions.
+	PartitionCount int64 `json:"partitionCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DefaultInterface") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefaultInterface") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BundledLocalSsds) MarshalJSON() ([]byte, error) {
+	type NoMethod BundledLocalSsds
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type CacheInvalidationRule struct {
 	// CacheTags: A list of cache tags used to identify cached objects.
 	//
@@ -10055,6 +10079,7 @@ type Commitment struct {
 	//   "GENERAL_PURPOSE_N2"
 	//   "GENERAL_PURPOSE_N2D"
 	//   "GENERAL_PURPOSE_N4"
+	//   "GENERAL_PURPOSE_N4A"
 	//   "GENERAL_PURPOSE_N4D"
 	//   "GENERAL_PURPOSE_T2D"
 	//   "GRAPHICS_OPTIMIZED"
@@ -15758,11 +15783,8 @@ func (s FixedOrPercent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// FlexibleTimeRange: A flexible specification of a time range that has 3
-// points of
-// flexibility: (1) a flexible start time, (2) a flexible end time, (3)
-// a
-// flexible duration.
+// FlexibleTimeRange: Specifies a flexible time range with flexible start time
+// and duration.
 //
 // It is possible to specify a contradictory time range that cannot be
 // matched
@@ -28309,6 +28331,8 @@ func (s InstancesReportHostAsFaultyRequest) MarshalJSON() ([]byte, error) {
 type InstancesReportHostAsFaultyRequestFaultReason struct {
 	// Possible values:
 	//   "BEHAVIOR_UNSPECIFIED" - Public reportable behaviors
+	//   "CHIP_ERROR" - Any GPU or TPU errors or faults where the accelerator
+	// becomes unusable
 	//   "PERFORMANCE"
 	//   "SILENT_DATA_CORRUPTION"
 	//   "UNRECOVERABLE_GPU_ERROR" - Unrecoverable GPU error identified by an XID
@@ -35064,6 +35088,10 @@ type MachineImage struct {
 	// cannot
 	// be a dash.
 	Name string `json:"name,omitempty"`
+	// Params: Input only. [Input Only] Additional parameters that are passed in
+	// the request, but are
+	// not persisted in the resource.
+	Params *MachineImageParams `json:"params,omitempty"`
 	// SatisfiesPzi: Output only. Reserved for future use.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. [Output Only] Reserved for future use.
@@ -35316,6 +35344,37 @@ func (s MachineImageListWarningData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MachineImageParams: Machine Image parameters
+type MachineImageParams struct {
+	// ResourceManagerTags: Input only. Resource manager tags to be bound to the
+	// machine image. Tag keys and values
+	// have the same definition as resource
+	// manager tags. Keys and values can be either in numeric format,
+	// such as `tagKeys/{tag_key_id}` and `tagValues/{tag_value_id}` or
+	// in
+	// namespaced format such as `{org_id|project_id}/{tag_key_short_name}`
+	// and
+	// `{tag_value_short_name}`. The field is ignored (both PUT &
+	// PATCH) when empty.
+	ResourceManagerTags map[string]string `json:"resourceManagerTags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ResourceManagerTags") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ResourceManagerTags") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MachineImageParams) MarshalJSON() ([]byte, error) {
+	type NoMethod MachineImageParams
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // MachineType: Represents a Machine Type resource.
 //
 // You can use specific machine types for your VM instances based on
@@ -35334,6 +35393,9 @@ type MachineType struct {
 	//   "ARM64" - Machines with architecture ARM64
 	//   "X86_64" - Machines with architecture X86_64
 	Architecture string `json:"architecture,omitempty"`
+	// BundledLocalSsds: [Output Only] The configuration of bundled local SSD for
+	// the machine type.
+	BundledLocalSsds *BundledLocalSsds `json:"bundledLocalSsds,omitempty"`
 	// CreationTimestamp: [Output Only] Creation timestamp inRFC3339
 	// text format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
@@ -39725,11 +39787,7 @@ type NetworkPeering struct {
 	// be
 	// exchanged, even if the matching peering is IPV4_IPV6.
 	StackType string `json:"stackType,omitempty"`
-	// State: Output only. [Output Only] State for the peering, either `ACTIVE` or
-	// `INACTIVE`. The
-	// peering is `ACTIVE` when there's a matching configuration in the
-	// peer
-	// network.
+	// State: Output only. [Output Only] State for the peering.
 	//
 	// Possible values:
 	//   "ACTIVE" - Matching configuration exists on the peer.
@@ -53223,6 +53281,17 @@ type ResourcePolicyDiskConsistencyGroupPolicy struct {
 // resource placement configuration.
 // It specifies the failure bucket separation
 type ResourcePolicyGroupPlacementPolicy struct {
+	// AcceleratorTopologyMode: Specifies the connection mode for the accelerator
+	// topology. If not
+	// specified, the default is AUTO_CONNECT.
+	//
+	// Possible values:
+	//   "AUTO_CONNECT" - The interconnected chips are pre-configured at the time
+	// of VM creation.
+	//   "PROVISION_ONLY" - The interconnected chips are connected on demand. At
+	// the time of VM
+	// creation, the chips are not connected.
+	AcceleratorTopologyMode string `json:"acceleratorTopologyMode,omitempty"`
 	// AvailabilityDomainCount: The number of availability domains to spread
 	// instances across. If two
 	// instances are in different availability domain, they are not in the same
@@ -53243,13 +53312,13 @@ type ResourcePolicyGroupPlacementPolicy struct {
 	// use this field unless you use a compact policy and you want your policy
 	// to work only if it contains this exact number of VMs.
 	VmCount int64 `json:"vmCount,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AvailabilityDomainCount") to
+	// ForceSendFields is a list of field names (e.g. "AcceleratorTopologyMode") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AvailabilityDomainCount") to
+	// NullFields is a list of field names (e.g. "AcceleratorTopologyMode") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -63453,14 +63522,14 @@ func (s StoragePoolDisk) MarshalJSON() ([]byte, error) {
 // StoragePoolExapoolProvisionedCapacityGb: Exapool provisioned capacities for
 // each SKU type
 type StoragePoolExapoolProvisionedCapacityGb struct {
-	// CapacityOptimized: Output only. Size, in GiB, of provisioned
-	// capacity-optimized capacity for this Exapool
+	// CapacityOptimized: Size, in GiB, of provisioned capacity-optimized capacity
+	// for this Exapool
 	CapacityOptimized int64 `json:"capacityOptimized,omitempty,string"`
-	// ReadOptimized: Output only. Size, in GiB, of provisioned read-optimized
-	// capacity for this Exapool
+	// ReadOptimized: Size, in GiB, of provisioned read-optimized capacity for this
+	// Exapool
 	ReadOptimized int64 `json:"readOptimized,omitempty,string"`
-	// WriteOptimized: Output only. Size, in GiB, of provisioned write-optimized
-	// capacity for this Exapool
+	// WriteOptimized: Size, in GiB, of provisioned write-optimized capacity for
+	// this Exapool
 	WriteOptimized int64 `json:"writeOptimized,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "CapacityOptimized") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -64734,10 +64803,10 @@ func (s StoragePoolsScopedListWarningData) MarshalJSON() ([]byte, error) {
 // Virtual Private Cloud (VPC) Network.
 type Subnetwork struct {
 	// AllowSubnetCidrRoutesOverlap: Whether this subnetwork's ranges can conflict
-	// with existing static routes.
+	// with existing custom routes.
 	// Setting this to true allows this subnetwork's primary and secondary
 	// ranges
-	// to overlap with (and contain) static routes that have already
+	// to overlap with (and contain) custom routes that have already
 	// been
 	// configured on the corresponding network.
 	//
@@ -64759,8 +64828,6 @@ type Subnetwork struct {
 	// The default value is false and applies to all existing subnetworks
 	// and
 	// automatically created subnetworks.
-	//
-	// This field cannot be set to true at resource creation time.
 	AllowSubnetCidrRoutesOverlap bool `json:"allowSubnetCidrRoutesOverlap,omitempty"`
 	// CreationTimestamp: Output only. [Output Only] Creation timestamp
 	// inRFC3339
@@ -64945,6 +65012,13 @@ type Subnetwork struct {
 	Region string `json:"region,omitempty"`
 	// ReservedInternalRange: The URL of the reserved internal range.
 	ReservedInternalRange string `json:"reservedInternalRange,omitempty"`
+	// ResolveSubnetMask: Configures subnet mask resolution for this subnetwork.
+	//
+	// Possible values:
+	//   "ARP_ALL_RANGES" - All ranges assigned to the VM NIC will respond to ARP.
+	//   "ARP_PRIMARY_RANGE" - Only the primary range of the VM NIC will respond to
+	// ARP.
+	ResolveSubnetMask string `json:"resolveSubnetMask,omitempty"`
 	// Role: The role of subnetwork. Currently, this field is only used
 	// when
 	// purpose is set to GLOBAL_MANAGED_PROXY orREGIONAL_MANAGED_PROXY. The value
@@ -64966,6 +65040,7 @@ type Subnetwork struct {
 	// primary ipCidrRange of the subnetwork. The alias IPs may belong to
 	// either
 	// primary or secondary ranges. This field can be updated with apatch request.
+	// Supports both IPv4 and IPv6 ranges.
 	SecondaryIpRanges []*SubnetworkSecondaryRange `json:"secondaryIpRanges,omitempty"`
 	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -65521,17 +65596,34 @@ type SubnetworkSecondaryRange struct {
 	// secondary range.
 	// Provide this property when you create the subnetwork. Ranges must be
 	// unique and non-overlapping with all primary and secondary IP ranges
-	// within a network. Only IPv4 is supported. The range can be any range
-	// listed in theValid
+	// within a network. Both IPv4 and IPv6 ranges are supported. For IPv4,
+	// the range can be any range listed in theValid
 	// ranges list.
+	//
+	// For IPv6:
+	// The range must have a /64 prefix length.
+	// The range must be omitted, for auto-allocation from Google-defined ULA
+	// IPv6 range.
+	// For BYOGUA internal IPv6 secondary range, the range may be specified
+	// along with the `ipCollection` field.
+	// If an `ipCollection` is specified, the requested ip_cidr_range must
+	// lie
+	// within the range of the PDP referenced by the `ipCollection` field
+	// for
+	// allocation.
+	// If `ipCollection` field is specified, but ip_cidr_range is not,
+	// the range is auto-allocated from the PDP referenced by the
+	// `ipCollection`
+	// field.
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
 	// RangeName: The name associated with this subnetwork secondary range, used
 	// when adding
-	// an alias IP range to a VM instance.
+	// an alias IP/IPv6 range to a VM instance.
 	// The name must be 1-63 characters long, and comply withRFC1035.
 	// The name must be unique within the subnetwork.
 	RangeName string `json:"rangeName,omitempty"`
-	// ReservedInternalRange: The URL of the reserved internal range.
+	// ReservedInternalRange: The URL of the reserved internal range. Only IPv4 is
+	// supported.
 	ReservedInternalRange string `json:"reservedInternalRange,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IpCidrRange") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -72344,6 +72436,7 @@ func (s UsableSubnetwork) MarshalJSON() ([]byte, error) {
 type UsableSubnetworkSecondaryRange struct {
 	// IpCidrRange: The range of IP addresses belonging to this subnetwork
 	// secondary range.
+	// Can be Ipv4 or Ipv6 range.
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
 	// RangeName: The name associated with this subnetwork secondary range, used
 	// when adding

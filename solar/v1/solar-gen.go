@@ -1228,7 +1228,12 @@ func (c *BuildingInsightsFindClosestCall) ExactQualityRequired(exactQualityRequi
 }
 
 // Experiments sets the optional parameter "experiments": Specifies the pre-GA
-// features to enable.
+// experiments to enable. Requests using this field are classified as a pre-GA
+// offering under the Google Maps Platform Service Specific Terms
+// (https://cloud.google.com/maps-platform/terms/maps-service-terms). See
+// launch stage descriptions
+// (https://cloud.google.com/maps-platform/terms/launch-stages) for more
+// details.
 //
 // Possible values:
 //
@@ -1402,7 +1407,12 @@ func (c *DataLayersGetCall) ExactQualityRequired(exactQualityRequired bool) *Dat
 }
 
 // Experiments sets the optional parameter "experiments": Specifies the pre-GA
-// experiments to enable.
+// experiments to enable. Requests using this field are classified as a pre-GA
+// offering under the Google Maps Platform Service Specific Terms
+// (https://cloud.google.com/maps-platform/terms/maps-service-terms). See
+// launch stage descriptions (
+// https://cloud.google.com/maps-platform/terms/launch-stages) for more
+// details.
 //
 // Possible values:
 //

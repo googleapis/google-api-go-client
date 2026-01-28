@@ -1323,7 +1323,8 @@ type ApplicationPolicy struct {
 	// field of the ManagedProperty. The field value must be compatible with the
 	// type of the ManagedProperty: *type* *JSON value* BOOL true or false STRING
 	// string INTEGER number CHOICE string MULTISELECT array of strings HIDDEN
-	// string BUNDLE_ARRAY array of objects
+	// string BUNDLE_ARRAY array of objects Note: string values cannot be longer
+	// than 65535 characters.
 	ManagedConfiguration googleapi.RawMessage `json:"managedConfiguration,omitempty"`
 	// ManagedConfigurationTemplate: The managed configurations template for the
 	// app, saved from the managed configurations iframe. This field is ignored if

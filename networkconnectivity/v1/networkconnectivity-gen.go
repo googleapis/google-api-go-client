@@ -168,6 +168,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.AutomatedDnsRecords = NewProjectsLocationsAutomatedDnsRecordsService(s)
 	rs.Global = NewProjectsLocationsGlobalService(s)
 	rs.InternalRanges = NewProjectsLocationsInternalRangesService(s)
 	rs.MulticloudDataTransferConfigs = NewProjectsLocationsMulticloudDataTransferConfigsService(s)
@@ -184,6 +185,8 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 
 type ProjectsLocationsService struct {
 	s *Service
+
+	AutomatedDnsRecords *ProjectsLocationsAutomatedDnsRecordsService
 
 	Global *ProjectsLocationsGlobalService
 
@@ -206,6 +209,15 @@ type ProjectsLocationsService struct {
 	ServiceConnectionTokens *ProjectsLocationsServiceConnectionTokensService
 
 	Spokes *ProjectsLocationsSpokesService
+}
+
+func NewProjectsLocationsAutomatedDnsRecordsService(s *Service) *ProjectsLocationsAutomatedDnsRecordsService {
+	rs := &ProjectsLocationsAutomatedDnsRecordsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAutomatedDnsRecordsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsGlobalService(s *Service) *ProjectsLocationsGlobalService {
@@ -628,6 +640,10 @@ func (s AutoAccept) MarshalJSON() ([]byte, error) {
 // AutoCreatedSubnetworkInfo: Information for the automatically created
 // subnetwork and its associated IR.
 type AutoCreatedSubnetworkInfo struct {
+	// Delinked: Output only. Indicates whether the subnetwork is delinked from the
+	// Service Connection Policy. Only set if the subnetwork mode is AUTO_CREATED
+	// during creation.
+	Delinked bool `json:"delinked,omitempty"`
 	// InternalRange: Output only. URI of the automatically created Internal Range.
 	// Only set if the subnetwork mode is AUTO_CREATED during creation.
 	InternalRange string `json:"internalRange,omitempty"`
@@ -641,13 +657,13 @@ type AutoCreatedSubnetworkInfo struct {
 	// SubnetworkRef: Output only. URI of the automatically created subnetwork
 	// reference. Only set if the subnetwork mode is AUTO_CREATED during creation.
 	SubnetworkRef string `json:"subnetworkRef,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "InternalRange") to
+	// ForceSendFields is a list of field names (e.g. "Delinked") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "InternalRange") to include in API
+	// NullFields is a list of field names (e.g. "Delinked") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -690,6 +706,127 @@ type AutomatedDnsCreationSpec struct {
 
 func (s AutomatedDnsCreationSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod AutomatedDnsCreationSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AutomatedDnsRecord: Represents a DNS record managed by the
+// AutomatedDnsRecord API.
+type AutomatedDnsRecord struct {
+	// ConsumerNetwork: Required. Immutable. The full resource path of the consumer
+	// network this AutomatedDnsRecord is visible to. Example:
+	// "projects/{projectNumOrId}/global/networks/{networkName}".
+	ConsumerNetwork string `json:"consumerNetwork,omitempty"`
+	// CreateTime: Output only. The timestamp of when the record was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// CreationMode: Required. Immutable. The creation mode of the
+	// AutomatedDnsRecord. This field is immutable.
+	//
+	// Possible values:
+	//   "CREATION_MODE_UNSPECIFIED" - Default value. This value is unused.
+	//   "CONSUMER_API" - The record was created through the AutomatedDnsRecord
+	// CCFE consumer API.
+	//   "SERVICE_CONNECTION_MAP" - The record was created by a
+	// ServiceConnectionMap. Its lifecycle is managed by that ServiceConnectionMap.
+	CreationMode string `json:"creationMode,omitempty"`
+	// CurrentConfig: Output only. The current settings for this record as
+	// identified by (`hostname`, `dns_suffix`, `type`) in Cloud DNS. The
+	// `current_config` field reflects the actual settings of the DNS record in
+	// Cloud DNS based on the `hostname`, `dns_suffix`, and `type`. * **Absence:**
+	// If `current_config` is unset, it means a DNS record with the specified
+	// `hostname`, `dns_suffix`, and `type` does not currently exist in Cloud DNS.
+	// This could be because the `AutomatedDnsRecord` has never been successfully
+	// programmed, has been deleted, or there was an error during provisioning. *
+	// **Presence:** If `current_config` is present: * It can be different from the
+	// `original_config`. This can happen due to several reasons: * Out-of-band
+	// changes: A consumer might have directly modified the DNS record in Cloud
+	// DNS. * `OVERWRITE` operations from other `AutomatedDnsRecord` resources:
+	// Another `AutomatedDnsRecord` with the same identifying attributes
+	// (`hostname`, `dns_suffix`, `type`) but a different configuration might have
+	// overwritten the record using `insert_mode: OVERWRITE`. Therefore, the
+	// presence of `current_config` indicates that a corresponding DNS record
+	// exists, but its values (TTL and RRData) might not always align with the
+	// `original_config` of the AutomatedDnsRecord.
+	CurrentConfig *Config `json:"currentConfig,omitempty"`
+	// Description: A human-readable description of the record.
+	Description string `json:"description,omitempty"`
+	// DnsSuffix: Required. Immutable. The dns suffix for this record to use in
+	// longest-suffix matching. Requires a trailing dot. Example: "example.com."
+	DnsSuffix string `json:"dnsSuffix,omitempty"`
+	// DnsZone: Output only. DnsZone is the DNS zone managed by automation. Format:
+	// projects/{project}/managedZones/{managedZone}
+	DnsZone string `json:"dnsZone,omitempty"`
+	// Etag: Optional. The etag is computed by the server, and may be sent on
+	// update and delete requests to ensure the client has an up-to-date value
+	// before proceeding.
+	Etag string `json:"etag,omitempty"`
+	// Fqdn: Output only. The FQDN created by combining the hostname and dns
+	// suffix. Should include a trailing dot.
+	Fqdn string `json:"fqdn,omitempty"`
+	// Hostname: Required. Immutable. The hostname for the DNS record. This value
+	// will be prepended to the `dns_suffix` to create the full domain name (FQDN)
+	// for the record. For example, if `hostname` is "corp.db" and `dns_suffix` is
+	// "example.com.", the resulting record will be "corp.db.example.com.". Should
+	// not include a trailing dot.
+	Hostname string `json:"hostname,omitempty"`
+	// Labels: Optional. User-defined labels.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Immutable. Identifier. The name of an AutomatedDnsRecord. Format:
+	// projects/{project}/locations/{location}/automatedDnsRecords/{automated_dns_re
+	// cord} See: https://google.aip.dev/122#fields-representing-resource-names
+	Name string `json:"name,omitempty"`
+	// OriginalConfig: Required. Immutable. The configuration settings used to
+	// create this DNS record. These settings define the desired state of the
+	// record as specified by the producer.
+	OriginalConfig *Config `json:"originalConfig,omitempty"`
+	// RecordType: Required. Immutable. The identifier of a supported record type.
+	//
+	// Possible values:
+	//   "RECORD_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "A" - Represents an A record.
+	//   "AAAA" - Represents an AAAA record.
+	//   "TXT" - Represents a TXT record.
+	//   "CNAME" - Represents a CNAME record.
+	RecordType string `json:"recordType,omitempty"`
+	// ServiceClass: Required. Immutable. The service class identifier which
+	// authorizes this AutomatedDnsRecord. Any API calls targeting this
+	// AutomatedDnsRecord must have `networkconnectivity.serviceclasses.use` IAM
+	// permission for the provided service class.
+	ServiceClass string `json:"serviceClass,omitempty"`
+	// State: Output only. The current operational state of this AutomatedDnsRecord
+	// as managed by Service Connectivity Automation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "PROGRAMMED" - The AutomatedDnsRecord has been successfully programmed.
+	//   "FAILED_DEPROGRAMMING" - A non-recoverable error occurred while attempting
+	// to deprogram the DNS record from Cloud DNS during deletion.
+	//   "CREATING" - The AutomatedDnsRecord is being created.
+	//   "DELETING" - The AutomatedDnsRecord is being deleted.
+	State string `json:"state,omitempty"`
+	// StateDetails: Output only. A human-readable message providing more context
+	// about the current state, such as an error description if the state is
+	// `FAILED_DEPROGRAMMING`.
+	StateDetails string `json:"stateDetails,omitempty"`
+	// UpdateTime: Output only. The timestamp of when the record was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ConsumerNetwork") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConsumerNetwork") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutomatedDnsRecord) MarshalJSON() ([]byte, error) {
+	type NoMethod AutomatedDnsRecord
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -869,6 +1006,38 @@ type CheckConsumerConfigResponse struct {
 
 func (s CheckConsumerConfigResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CheckConsumerConfigResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Config: Defines the configuration of a DNS record.
+type Config struct {
+	// Rrdatas: Required. The list of resource record data strings. The content and
+	// format of these strings depend on the AutomatedDnsRecord.type. For many
+	// common record types, this list may contain multiple strings. As defined in
+	// RFC 1035 (section 5) and RFC 1034 (section 3.6.1) -- see examples. Examples:
+	// A record: ["192.0.2.1"] or ["192.0.2.1", "192.0.2.2"] TXT record: ["This is
+	// a text record"] CNAME record: ["target.example.com."] AAAA record: ["::1"]
+	// or ["2001:0db8:85a3:0000:0000:8a2e:0370:7334",
+	// "2001:0db8:85a3:0000:0000:8a2e:0370:7335"]
+	Rrdatas []string `json:"rrdatas,omitempty"`
+	// Ttl: Required. Number of seconds that this DNS record can be cached by
+	// resolvers.
+	Ttl string `json:"ttl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Rrdatas") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Rrdatas") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Config) MarshalJSON() ([]byte, error) {
+	type NoMethod Config
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1667,7 +1836,7 @@ type InternalRange struct {
 	// when auto-allocation is selected by not setting ip_cidr_range (and setting
 	// prefix_length).
 	AllocationOptions *AllocationOptions `json:"allocationOptions,omitempty"`
-	// CreateTime: Time when the internal range was created.
+	// CreateTime: Output only. Time when the internal range was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. A description of this resource.
 	Description string `json:"description,omitempty"`
@@ -1746,7 +1915,7 @@ type InternalRange struct {
 	// "172.16.0.0/12" and "192.168.0.0/16" or non-rfc-1918 address spaces used in
 	// the VPC.
 	TargetCidrRange []string `json:"targetCidrRange,omitempty"`
-	// UpdateTime: Time when the internal range was updated.
+	// UpdateTime: Output only. Time when the internal range was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// Usage: Optional. The type of usage set for this InternalRange.
 	//
@@ -1847,10 +2016,10 @@ type LinkedProducerVpcNetwork struct {
 	// ProducerNetwork: Output only. The URI of the Producer VPC.
 	ProducerNetwork string `json:"producerNetwork,omitempty"`
 	// ProposedExcludeExportRanges: Output only. The proposed exclude export IP
-	// ranges waiting for hub administration's approval.
+	// ranges waiting for hub administrator's approval.
 	ProposedExcludeExportRanges []string `json:"proposedExcludeExportRanges,omitempty"`
 	// ProposedIncludeExportRanges: Output only. The proposed include export IP
-	// ranges waiting for hub administration's approval.
+	// ranges waiting for hub administrator's approval.
 	ProposedIncludeExportRanges []string `json:"proposedIncludeExportRanges,omitempty"`
 	// ServiceConsumerVpcSpoke: Output only. The Service Consumer Network spoke.
 	ServiceConsumerVpcSpoke string `json:"serviceConsumerVpcSpoke,omitempty"`
@@ -1925,10 +2094,10 @@ type LinkedVpcNetwork struct {
 	// VPC spokes are connected to the NCC Hub.
 	ProducerVpcSpokes []string `json:"producerVpcSpokes,omitempty"`
 	// ProposedExcludeExportRanges: Output only. The proposed exclude export IP
-	// ranges waiting for hub administration's approval.
+	// ranges waiting for hub administrator's approval.
 	ProposedExcludeExportRanges []string `json:"proposedExcludeExportRanges,omitempty"`
 	// ProposedIncludeExportRanges: Output only. The proposed include export IP
-	// ranges waiting for hub administration's approval.
+	// ranges waiting for hub administrator's approval.
 	ProposedIncludeExportRanges []string `json:"proposedIncludeExportRanges,omitempty"`
 	// Uri: Required. The URI of the VPC network resource.
 	Uri string `json:"uri,omitempty"`
@@ -1983,6 +2152,37 @@ type LinkedVpnTunnels struct {
 
 func (s LinkedVpnTunnels) MarshalJSON() ([]byte, error) {
 	type NoMethod LinkedVpnTunnels
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListAutomatedDnsRecordsResponse: Response for ListAutomatedDnsRecords.
+type ListAutomatedDnsRecordsResponse struct {
+	// AutomatedDnsRecords: AutomatedDnsRecords to be returned.
+	AutomatedDnsRecords []*AutomatedDnsRecord `json:"automatedDnsRecords,omitempty"`
+	// NextPageToken: The next pagination token in the List response. It should be
+	// used as page_token for the following request. An empty value means no more
+	// result.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AutomatedDnsRecords") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AutomatedDnsRecords") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListAutomatedDnsRecordsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAutomatedDnsRecordsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3994,7 +4194,7 @@ type Spoke struct {
 	// client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 	// FieldPathsPendingUpdate: Optional. The list of fields waiting for hub
-	// administration's approval.
+	// administrator's approval.
 	FieldPathsPendingUpdate []string `json:"fieldPathsPendingUpdate,omitempty"`
 	// Group: Optional. The name of the group that this spoke is associated with.
 	Group string `json:"group,omitempty"`
@@ -4261,7 +4461,7 @@ func (s StateMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StateReason: The reason a spoke is inactive.
+// StateReason: The reason for the current state of the spoke.
 type StateReason struct {
 	// Code: The code associated with this reason.
 	//
@@ -4808,6 +5008,560 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsAutomatedDnsRecordsCreateCall struct {
+	s                  *Service
+	parent             string
+	automateddnsrecord *AutomatedDnsRecord
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Create: Creates a new AutomatedDnsRecord in a given project and location.
+//
+//   - parent: The parent resource's name of the AutomatedDnsRecord. ex.
+//     projects/123/locations/us-east1.
+func (r *ProjectsLocationsAutomatedDnsRecordsService) Create(parent string, automateddnsrecord *AutomatedDnsRecord) *ProjectsLocationsAutomatedDnsRecordsCreateCall {
+	c := &ProjectsLocationsAutomatedDnsRecordsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.automateddnsrecord = automateddnsrecord
+	return c
+}
+
+// AutomatedDnsRecordId sets the optional parameter "automatedDnsRecordId":
+// Resource ID (i.e. 'foo' in
+// '[...]/projects/p/locations/l/automatedDnsRecords/foo') See
+// https://google.aip.dev/122#resource-id-segments Unique per location. If one
+// is not provided, one will be generated.
+func (c *ProjectsLocationsAutomatedDnsRecordsCreateCall) AutomatedDnsRecordId(automatedDnsRecordId string) *ProjectsLocationsAutomatedDnsRecordsCreateCall {
+	c.urlParams_.Set("automatedDnsRecordId", automatedDnsRecordId)
+	return c
+}
+
+// InsertMode sets the optional parameter "insertMode": The insert mode when
+// creating AutomatedDnsRecord.
+//
+// Possible values:
+//
+//	"INSERT_MODE_UNSPECIFIED" - An invalid insert mode as the default case.
+//	"FAIL_IF_EXISTS" - Fail the request if the record already exists in cloud
+//
+// DNS.
+//
+//	"OVERWRITE" - Overwrite the existing record in cloud DNS.
+func (c *ProjectsLocationsAutomatedDnsRecordsCreateCall) InsertMode(insertMode string) *ProjectsLocationsAutomatedDnsRecordsCreateCall {
+	c.urlParams_.Set("insertMode", insertMode)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsAutomatedDnsRecordsCreateCall) RequestId(requestId string) *ProjectsLocationsAutomatedDnsRecordsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutomatedDnsRecordsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutomatedDnsRecordsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutomatedDnsRecordsCreateCall) Context(ctx context.Context) *ProjectsLocationsAutomatedDnsRecordsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutomatedDnsRecordsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutomatedDnsRecordsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.automateddnsrecord)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/automatedDnsRecords")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.automatedDnsRecords.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.automatedDnsRecords.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutomatedDnsRecordsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.automatedDnsRecords.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAutomatedDnsRecordsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single AutomatedDnsRecord.
+//
+// - name: The name of the AutomatedDnsRecord to delete.
+func (r *ProjectsLocationsAutomatedDnsRecordsService) Delete(name string) *ProjectsLocationsAutomatedDnsRecordsDeleteCall {
+	c := &ProjectsLocationsAutomatedDnsRecordsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// DeleteMode sets the optional parameter "deleteMode": Delete mode when
+// deleting AutomatedDnsRecord. If set to DEPROGRAM, the record will be
+// deprogrammed in Cloud DNS. If set to SKIP_DEPROGRAMMING, the record will not
+// be deprogrammed in Cloud DNS.
+//
+// Possible values:
+//
+//	"DELETE_MODE_UNSPECIFIED" - An invalid delete mode as the default case.
+//	"DEPROGRAM" - Deprogram the record in Cloud DNS.
+//	"SKIP_DEPROGRAMMING" - Skip deprogramming the record in Cloud DNS.
+func (c *ProjectsLocationsAutomatedDnsRecordsDeleteCall) DeleteMode(deleteMode string) *ProjectsLocationsAutomatedDnsRecordsDeleteCall {
+	c.urlParams_.Set("deleteMode", deleteMode)
+	return c
+}
+
+// Etag sets the optional parameter "etag": The etag is computed by the server,
+// and may be sent on update and delete requests to ensure the client has an
+// up-to-date value before proceeding.
+func (c *ProjectsLocationsAutomatedDnsRecordsDeleteCall) Etag(etag string) *ProjectsLocationsAutomatedDnsRecordsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes after
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsAutomatedDnsRecordsDeleteCall) RequestId(requestId string) *ProjectsLocationsAutomatedDnsRecordsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutomatedDnsRecordsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutomatedDnsRecordsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutomatedDnsRecordsDeleteCall) Context(ctx context.Context) *ProjectsLocationsAutomatedDnsRecordsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutomatedDnsRecordsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutomatedDnsRecordsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.automatedDnsRecords.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.automatedDnsRecords.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutomatedDnsRecordsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.automatedDnsRecords.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAutomatedDnsRecordsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single AutomatedDnsRecord.
+//
+//   - name: Name of the AutomatedDnsRecord to get. Format:
+//     projects/{project}/locations/{location}/automatedDnsRecords/{automated_dns_
+//     record}.
+func (r *ProjectsLocationsAutomatedDnsRecordsService) Get(name string) *ProjectsLocationsAutomatedDnsRecordsGetCall {
+	c := &ProjectsLocationsAutomatedDnsRecordsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutomatedDnsRecordsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutomatedDnsRecordsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAutomatedDnsRecordsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAutomatedDnsRecordsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutomatedDnsRecordsGetCall) Context(ctx context.Context) *ProjectsLocationsAutomatedDnsRecordsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutomatedDnsRecordsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutomatedDnsRecordsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.automatedDnsRecords.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.automatedDnsRecords.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AutomatedDnsRecord.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAutomatedDnsRecordsGetCall) Do(opts ...googleapi.CallOption) (*AutomatedDnsRecord, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AutomatedDnsRecord{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.automatedDnsRecords.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAutomatedDnsRecordsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists AutomatedDnsRecords in a given project and location.
+//
+// - parent: The parent resource's name. ex. projects/123/locations/us-east1.
+func (r *ProjectsLocationsAutomatedDnsRecordsService) List(parent string) *ProjectsLocationsAutomatedDnsRecordsListCall {
+	c := &ProjectsLocationsAutomatedDnsRecordsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters the results listed in the response.
+func (c *ProjectsLocationsAutomatedDnsRecordsListCall) Filter(filter string) *ProjectsLocationsAutomatedDnsRecordsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sort the results by a certain
+// order.
+func (c *ProjectsLocationsAutomatedDnsRecordsListCall) OrderBy(orderBy string) *ProjectsLocationsAutomatedDnsRecordsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// results per page that should be returned.
+func (c *ProjectsLocationsAutomatedDnsRecordsListCall) PageSize(pageSize int64) *ProjectsLocationsAutomatedDnsRecordsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The page token.
+func (c *ProjectsLocationsAutomatedDnsRecordsListCall) PageToken(pageToken string) *ProjectsLocationsAutomatedDnsRecordsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutomatedDnsRecordsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutomatedDnsRecordsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAutomatedDnsRecordsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAutomatedDnsRecordsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutomatedDnsRecordsListCall) Context(ctx context.Context) *ProjectsLocationsAutomatedDnsRecordsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutomatedDnsRecordsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutomatedDnsRecordsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/automatedDnsRecords")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.automatedDnsRecords.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.automatedDnsRecords.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAutomatedDnsRecordsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutomatedDnsRecordsListCall) Do(opts ...googleapi.CallOption) (*ListAutomatedDnsRecordsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAutomatedDnsRecordsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.automatedDnsRecords.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAutomatedDnsRecordsListCall) Pages(ctx context.Context, f func(*ListAutomatedDnsRecordsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

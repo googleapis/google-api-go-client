@@ -407,6 +407,12 @@ type DataMaskingPolicy struct {
 	// 00:00:00 UTC Truncation occurs according to the UTC time zone. To change
 	// this, adjust the default time zone using the `time_zone` system variable.
 	// For more information, see the System variables reference.
+	//   "RANDOM_HASH" - A masking expression that uses hashing to mask column
+	// data. It differs from SHA-256 in that a unique random value is generated for
+	// each query and is added to the hash input, resulting in a different masked
+	// result for each query. Creating and updating a data policy with a
+	// `RANDOM_HASH` masking expression is only supported for the Data Policy v2
+	// API.
 	PredefinedExpression string `json:"predefinedExpression,omitempty"`
 	// Routine: The name of the BigQuery routine that contains the custom masking
 	// routine, in the format of

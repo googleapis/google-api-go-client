@@ -254,6 +254,11 @@ func (s BucketReference) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
+// CheckClusterHealth: When set in OperationStep, indicates that cluster health
+// check should be performed.
+type CheckClusterHealth struct {
+}
+
 // Cluster: A collection of virtual machines and connected resources forming a
 // high-performance computing cluster capable of running large-scale, tightly
 // coupled workloads. A cluster combines a set a compute resources that perform
@@ -431,6 +436,318 @@ type ComputeResourceConfig struct {
 
 func (s ComputeResourceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ComputeResourceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CreateFilestoreInstance: When set in OperationStep, indicates that a new
+// filestore instance should be created.
+type CreateFilestoreInstance struct {
+	// Filestore: Output only. Name of the Filestore instance, in the format
+	// `projects/{project}/locations/{location}/instances/{instance}`
+	Filestore string `json:"filestore,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Filestore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Filestore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateFilestoreInstance) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateFilestoreInstance
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CreateLoginNode: When set in OperationStep, indicates that a login node
+// should be created.
+type CreateLoginNode struct {
+}
+
+// CreateLustreInstance: When set in OperationStep, indicates that a new lustre
+// instance should be created.
+type CreateLustreInstance struct {
+	// Lustre: Output only. Name of the Managed Lustre instance, in the format
+	// `projects/{project}/locations/{location}/instances/{instance}`
+	Lustre string `json:"lustre,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Lustre") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Lustre") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateLustreInstance) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateLustreInstance
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CreateNetwork: When set in OperationStep, indicates that a new network
+// should be created.
+type CreateNetwork struct {
+	// Network: Output only. Name of the network to create, in the format
+	// `projects/{project}/global/networks/{network}`.
+	Network string `json:"network,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Network") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Network") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateNetwork) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateNetwork
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CreateNodeset: When set in OperationStep, indicates that a nodeset should be
+// created.
+type CreateNodeset struct {
+	// Nodesets: Output only. Name of the nodeset to create
+	Nodesets []string `json:"nodesets,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Nodesets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Nodesets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateNodeset) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateNodeset
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CreateOrchestrator: When set in OperationStep, indicates that an
+// orchestrator should be created.
+type CreateOrchestrator struct {
+}
+
+// CreatePartition: When set in OperationStep, indicates that a partition
+// should be created.
+type CreatePartition struct {
+	// Partitions: Output only. Name of the partition to create
+	Partitions []string `json:"partitions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Partitions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Partitions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreatePartition) MarshalJSON() ([]byte, error) {
+	type NoMethod CreatePartition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CreatePrivateServiceAccess: When set in OperationStep, indicates that a new
+// private service access should be created.
+type CreatePrivateServiceAccess struct {
+}
+
+// CreateStorageBucket: When set in OperationStep, indicates that a new storage
+// bucket should be created.
+type CreateStorageBucket struct {
+	// Bucket: Output only. Name of the bucket.
+	Bucket string `json:"bucket,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateStorageBucket) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateStorageBucket
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeleteFilestoreInstance: When set in OperationStep, indicates that a
+// Filestore instance should be deleted.
+type DeleteFilestoreInstance struct {
+	// Filestore: Output only. Name of the Filestore instance, in the format
+	// `projects/{project}/locations/{location}/instances/{instance}`
+	Filestore string `json:"filestore,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Filestore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Filestore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeleteFilestoreInstance) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteFilestoreInstance
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeleteLoginNode: When set in OperationStep, indicates that a login node
+// should be deleted.
+type DeleteLoginNode struct {
+}
+
+// DeleteLustreInstance: When set in OperationStep, indicates that a Lustre
+// instance should be deleted.
+type DeleteLustreInstance struct {
+	// Lustre: Output only. Name of the Managed Lustre instance, in the format
+	// `projects/{project}/locations/{location}/instances/{instance}`
+	Lustre string `json:"lustre,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Lustre") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Lustre") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeleteLustreInstance) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteLustreInstance
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeleteNetwork: When set in OperationStep, indicates network deletion step
+// with the resource name.
+type DeleteNetwork struct {
+	// Network: Output only. Name of the network to delete, in the format
+	// `projects/{project}/global/networks/{network}`.
+	Network string `json:"network,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Network") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Network") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeleteNetwork) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteNetwork
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeleteNodeset: When set in OperationStep, indicates that a nodeset should be
+// deleted.
+type DeleteNodeset struct {
+	// Nodesets: Output only. Name of the nodeset to delete
+	Nodesets []string `json:"nodesets,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Nodesets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Nodesets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeleteNodeset) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteNodeset
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeleteOrchestrator: When set in OperationStep, indicates that an
+// orchestrator should be deleted.
+type DeleteOrchestrator struct {
+}
+
+// DeletePartition: When set in OperationStep, indicates that a partition
+// should be deleted.
+type DeletePartition struct {
+	// Partitions: Output only. Name of the partition to delete
+	Partitions []string `json:"partitions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Partitions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Partitions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeletePartition) MarshalJSON() ([]byte, error) {
+	type NoMethod DeletePartition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeletePrivateServiceAccess: When set in OperationStep, indicates private
+// service access deletion step.
+type DeletePrivateServiceAccess struct {
+}
+
+// DeleteStorageBucket: When set in OperationStep, indicates that Cloud Storage
+// bucket should be deleted.
+type DeleteStorageBucket struct {
+	// Bucket: Output only. Name of the bucket.
+	Bucket string `json:"bucket,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeleteStorageBucket) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteStorageBucket
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1218,6 +1535,8 @@ type OperationMetadata struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// EndTime: Output only. The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
+	// Progress: Output only. Progress of the operation.
+	Progress *OperationProgress `json:"progress,omitempty"`
 	// RequestedCancellation: Output only. Identifies whether the user has
 	// requested cancellation of the operation. Operations that have been cancelled
 	// successfully have google.longrunning.Operation.error value with a
@@ -1243,6 +1562,127 @@ type OperationMetadata struct {
 
 func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OperationProgress: Message describing the progress of a cluster mutation
+// long-running operation. operation.
+type OperationProgress struct {
+	// Steps: Output only. Steps and status of the operation.
+	Steps []*OperationStep `json:"steps,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Steps") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Steps") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OperationProgress) MarshalJSON() ([]byte, error) {
+	type NoMethod OperationProgress
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OperationStep: Message describing the status of a single step in a cluster
+// mutation long-running operation.
+type OperationStep struct {
+	// CheckClusterHealth: Output only. If set, indicates that cluster health check
+	// is part of the operation.
+	CheckClusterHealth *CheckClusterHealth `json:"checkClusterHealth,omitempty"`
+	// CreateFilestoreInstance: Output only. If set, indicates that new Filestore
+	// instance creation is part of the operation.
+	CreateFilestoreInstance *CreateFilestoreInstance `json:"createFilestoreInstance,omitempty"`
+	// CreateLoginNode: Output only. If set, indicates that new login node creation
+	// is part of the operation.
+	CreateLoginNode *CreateLoginNode `json:"createLoginNode,omitempty"`
+	// CreateLustreInstance: Output only. If set, indicates that new Lustre
+	// instance creation is part of the operation.
+	CreateLustreInstance *CreateLustreInstance `json:"createLustreInstance,omitempty"`
+	// CreateNetwork: Output only. If set, indicates that new network creation is
+	// part of the operation.
+	CreateNetwork *CreateNetwork `json:"createNetwork,omitempty"`
+	// CreateNodeset: Output only. If set, indicates that new nodeset creation is
+	// part of the operation.
+	CreateNodeset *CreateNodeset `json:"createNodeset,omitempty"`
+	// CreateOrchestrator: Output only. If set, indicates that orchestrator
+	// creation is part of the operation.
+	CreateOrchestrator *CreateOrchestrator `json:"createOrchestrator,omitempty"`
+	// CreatePartition: Output only. If set, indicates that new partition creation
+	// is part of the operation.
+	CreatePartition *CreatePartition `json:"createPartition,omitempty"`
+	// CreatePrivateServiceAccess: Output only. If set, indicates that new private
+	// service access creation is part of the operation.
+	CreatePrivateServiceAccess *CreatePrivateServiceAccess `json:"createPrivateServiceAccess,omitempty"`
+	// CreateStorageBucket: Output only. If set, indicates that new Cloud Storage
+	// bucket creation is part of the operation.
+	CreateStorageBucket *CreateStorageBucket `json:"createStorageBucket,omitempty"`
+	// DeleteFilestoreInstance: Output only. If set, indicates that Filestore
+	// instance deletion is part of the operation.
+	DeleteFilestoreInstance *DeleteFilestoreInstance `json:"deleteFilestoreInstance,omitempty"`
+	// DeleteLoginNode: Output only. If set, indicates that login node deletion is
+	// part of the operation.
+	DeleteLoginNode *DeleteLoginNode `json:"deleteLoginNode,omitempty"`
+	// DeleteLustreInstance: Output only. If set, indicates that Lustre instance
+	// deletion is part of the operation.
+	DeleteLustreInstance *DeleteLustreInstance `json:"deleteLustreInstance,omitempty"`
+	// DeleteNetwork: Output only. If set, indicates that network deletion is part
+	// of the operation.
+	DeleteNetwork *DeleteNetwork `json:"deleteNetwork,omitempty"`
+	// DeleteNodeset: Output only. If set, indicates that nodeset deletion is part
+	// of the operation.
+	DeleteNodeset *DeleteNodeset `json:"deleteNodeset,omitempty"`
+	// DeleteOrchestrator: Output only. If set, indicates that orchestrator
+	// deletion is part of the operation.
+	DeleteOrchestrator *DeleteOrchestrator `json:"deleteOrchestrator,omitempty"`
+	// DeletePartition: Output only. If set, indicates that partition deletion is
+	// part of the operation.
+	DeletePartition *DeletePartition `json:"deletePartition,omitempty"`
+	// DeletePrivateServiceAccess: Output only. If set, indicates that private
+	// service access deletion is part of the operation.
+	DeletePrivateServiceAccess *DeletePrivateServiceAccess `json:"deletePrivateServiceAccess,omitempty"`
+	// DeleteStorageBucket: Output only. If set, indicates that Cloud Storage
+	// bucket deletion is part of the operation.
+	DeleteStorageBucket *DeleteStorageBucket `json:"deleteStorageBucket,omitempty"`
+	// State: Output only. State of the operation step.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "WAITING" - Initial state before step execution starts.
+	//   "IN_PROGRESS" - Step execution is running in progress.
+	//   "DONE" - Step execution is completed.
+	State string `json:"state,omitempty"`
+	// UpdateLoginNode: Output only. If set, indicates that login node update is
+	// part of the operation.
+	UpdateLoginNode *UpdateLoginNode `json:"updateLoginNode,omitempty"`
+	// UpdateNodeset: Output only. If set, indicates that nodeset update is part of
+	// the operation.
+	UpdateNodeset *UpdateNodeset `json:"updateNodeset,omitempty"`
+	// UpdateOrchestrator: Output only. If set, indicates that an orchestrator
+	// update is part of the operation.
+	UpdateOrchestrator *UpdateOrchestrator `json:"updateOrchestrator,omitempty"`
+	// UpdatePartition: Output only. If set, indicates that partition update is
+	// part of the operation.
+	UpdatePartition *UpdatePartition `json:"updatePartition,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CheckClusterHealth") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CheckClusterHealth") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OperationStep) MarshalJSON() ([]byte, error) {
+	type NoMethod OperationStep
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1588,6 +2028,62 @@ type StorageResourceConfig struct {
 
 func (s StorageResourceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageResourceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpdateLoginNode: When set in OperationStep, indicates that a login node
+// should be updated.
+type UpdateLoginNode struct {
+}
+
+// UpdateNodeset: When set in OperationStep, indicates that a nodeset should be
+// updated.
+type UpdateNodeset struct {
+	// Nodesets: Output only. Name of the nodeset to update
+	Nodesets []string `json:"nodesets,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Nodesets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Nodesets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateNodeset) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateNodeset
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpdateOrchestrator: When set in OperationStep, indicates that an
+// orchestrator should be updated.
+type UpdateOrchestrator struct {
+}
+
+// UpdatePartition: When set in OperationStep, indicates that a partition
+// should be updated.
+type UpdatePartition struct {
+	// Partitions: Output only. Name of the partition to update
+	Partitions []string `json:"partitions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Partitions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Partitions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdatePartition) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdatePartition
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

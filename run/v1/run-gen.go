@@ -5227,7 +5227,7 @@ type Service struct {
 	// 'run.googleapis.com/' and 'autoscaling.knative.dev' are restricted, and the
 	// accepted annotations will be different depending on the resource type. The
 	// following Cloud Run-specific annotations are accepted in
-	// Service.metadata.annotations. *
+	// Service.metadata.annotations. * `run.googleapis.com/base-images` *
 	// `run.googleapis.com/binary-authorization-breakglass` *
 	// `run.googleapis.com/binary-authorization` * `run.googleapis.com/client-name`
 	// * `run.googleapis.com/custom-audiences` *

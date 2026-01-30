@@ -3345,6 +3345,9 @@ type Discovered struct {
 	Files []*File `json:"files,omitempty"`
 	// LastScanTime: The last time this resource was scanned.
 	LastScanTime string `json:"lastScanTime,omitempty"`
+	// LastVulnerabilityUpdateTime: Optional. The last time vulnerability scan
+	// results changed.
+	LastVulnerabilityUpdateTime string `json:"lastVulnerabilityUpdateTime,omitempty"`
 	// Operation: Output only. An operation that indicates the status of the
 	// current scan. This field is deprecated, do not use.
 	Operation *Operation `json:"operation,omitempty"`

@@ -592,6 +592,82 @@ func (s *AdaptiveProtection) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// AdcApplication: Represents an ADC application associated with the finding.
+type AdcApplication struct {
+	// Attributes: Consumer provided attributes for the AppHub application.
+	Attributes *GoogleCloudSecuritycenterV1ResourceApplicationAttributes `json:"attributes,omitempty"`
+	// Name: The resource name of an ADC Application. Format:
+	// projects/{project}/locations/{location}/spaces/{space}/applications/{applicat
+	// ion}
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Attributes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdcApplication) MarshalJSON() ([]byte, error) {
+	type NoMethod AdcApplication
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdcApplicationTemplateRevision: Represents an ADC template associated with
+// the finding.
+type AdcApplicationTemplateRevision struct {
+	// Name: The resource name of an ADC Application Template Revision. Format:
+	// projects/{project}/locations/{location}/spaces/{space}/applicationTemplates/{
+	// application_template}/revisions/{revision}
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdcApplicationTemplateRevision) MarshalJSON() ([]byte, error) {
+	type NoMethod AdcApplicationTemplateRevision
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdcSharedTemplateRevision: Represents an ADC shared template associated with
+// the finding.
+type AdcSharedTemplateRevision struct {
+	// Name: The resource name of an ADC Shared Template Revision. Format:
+	// projects/{project}/locations/{location}/spaces/{space}/applicationTemplates/{
+	// application_template}/revisions/{revision}
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdcSharedTemplateRevision) MarshalJSON() ([]byte, error) {
+	type NoMethod AdcSharedTemplateRevision
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AffectedResources: Details about resources affected by this finding.
 type AffectedResources struct {
 	// Count: The count of resources affected by the finding.
@@ -3444,6 +3520,12 @@ func (s GoogleCloudSecuritycenterV1Property) MarshalJSON() ([]byte, error) {
 // GoogleCloudSecuritycenterV1Resource: Information related to the Google Cloud
 // resource.
 type GoogleCloudSecuritycenterV1Resource struct {
+	// AdcApplication: The ADC application associated with the finding.
+	AdcApplication *AdcApplication `json:"adcApplication,omitempty"`
+	// AdcApplicationTemplate: The ADC template associated with the finding.
+	AdcApplicationTemplate *AdcApplicationTemplateRevision `json:"adcApplicationTemplate,omitempty"`
+	// AdcSharedTemplate: The ADC shared template associated with the finding.
+	AdcSharedTemplate *AdcSharedTemplateRevision `json:"adcSharedTemplate,omitempty"`
 	// Application: The App Hub application this resource belongs to.
 	Application *GoogleCloudSecuritycenterV1ResourceApplication `json:"application,omitempty"`
 	// AwsMetadata: The AWS metadata associated with the finding.
@@ -3500,15 +3582,15 @@ type GoogleCloudSecuritycenterV1Resource struct {
 	Service string `json:"service,omitempty"`
 	// Type: The full resource type of the resource.
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Application") to
+	// ForceSendFields is a list of field names (e.g. "AdcApplication") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Application") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdcApplication") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4351,6 +4433,83 @@ func (s *GoogleCloudSecuritycenterV2AdaptiveProtection) UnmarshalJSON(data []byt
 	}
 	s.Confidence = float64(s1.Confidence)
 	return nil
+}
+
+// GoogleCloudSecuritycenterV2AdcApplication: Represents an ADC application
+// associated with the finding.
+type GoogleCloudSecuritycenterV2AdcApplication struct {
+	// Attributes: Consumer provided attributes for the AppHub application.
+	Attributes *GoogleCloudSecuritycenterV2ResourceApplicationAttributes `json:"attributes,omitempty"`
+	// Name: The resource name of an ADC Application. Format:
+	// projects/{project}/locations/{location}/spaces/{space}/applications/{applicat
+	// ion}
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Attributes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2AdcApplication) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2AdcApplication
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2AdcApplicationTemplateRevision: Represents an ADC
+// template associated with the finding.
+type GoogleCloudSecuritycenterV2AdcApplicationTemplateRevision struct {
+	// Name: The resource name of an ADC Application Template Revision. Format:
+	// projects/{project}/locations/{location}/spaces/{space}/applicationTemplates/{
+	// application_template}/revisions/{revision}
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2AdcApplicationTemplateRevision) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2AdcApplicationTemplateRevision
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2AdcSharedTemplateRevision: Represents an ADC
+// shared template associated with the finding.
+type GoogleCloudSecuritycenterV2AdcSharedTemplateRevision struct {
+	// Name: The resource name of an ADC Shared Template Revision. Format:
+	// projects/{project}/locations/{location}/spaces/{space}/applicationTemplates/{
+	// application_template}/revisions/{revision}
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2AdcSharedTemplateRevision) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2AdcSharedTemplateRevision
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2AffectedResources: Details about resources
@@ -7124,6 +7283,12 @@ func (s GoogleCloudSecuritycenterV2IssueMute) MarshalJSON() ([]byte, error) {
 // GoogleCloudSecuritycenterV2IssueResource: A resource associated with the an
 // issue.
 type GoogleCloudSecuritycenterV2IssueResource struct {
+	// AdcApplication: The ADC application associated with the finding.
+	AdcApplication *GoogleCloudSecuritycenterV2IssueResourceAdcApplication `json:"adcApplication,omitempty"`
+	// AdcApplicationTemplate: The ADC template associated with the finding.
+	AdcApplicationTemplate *GoogleCloudSecuritycenterV2IssueResourceAdcApplicationTemplateRevision `json:"adcApplicationTemplate,omitempty"`
+	// AdcSharedTemplate: The ADC shared template associated with the finding.
+	AdcSharedTemplate *GoogleCloudSecuritycenterV2IssueResourceAdcSharedTemplateRevision `json:"adcSharedTemplate,omitempty"`
 	// Application: The AppHub application associated with the resource, if any.
 	// Only populated for the primary resource.
 	Application *GoogleCloudSecuritycenterV2IssueResourceApplication `json:"application,omitempty"`
@@ -7151,21 +7316,98 @@ type GoogleCloudSecuritycenterV2IssueResource struct {
 	Name string `json:"name,omitempty"`
 	// Type: The type of the resource associated with the issue.
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Application") to
+	// ForceSendFields is a list of field names (e.g. "AdcApplication") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Application") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdcApplication") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudSecuritycenterV2IssueResource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2IssueResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2IssueResourceAdcApplication: Represents an ADC
+// application associated with the finding.
+type GoogleCloudSecuritycenterV2IssueResourceAdcApplication struct {
+	// Attributes: Consumer provided attributes for the AppHub application.
+	Attributes *GoogleCloudSecuritycenterV2IssueResourceApplicationAttributes `json:"attributes,omitempty"`
+	// Name: The resource name of an ADC Application. Format:
+	// projects/{project}/locations/{location}/spaces/{space}/applications/{applicat
+	// ion}
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Attributes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2IssueResourceAdcApplication) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2IssueResourceAdcApplication
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2IssueResourceAdcApplicationTemplateRevision:
+// Represents an ADC template associated with the finding.
+type GoogleCloudSecuritycenterV2IssueResourceAdcApplicationTemplateRevision struct {
+	// Name: The resource name of an ADC Application Template Revision. Format:
+	// projects/{project}/locations/{location}/spaces/{space}/applicationTemplates/{
+	// application_template}/revisions/{revision}
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2IssueResourceAdcApplicationTemplateRevision) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2IssueResourceAdcApplicationTemplateRevision
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2IssueResourceAdcSharedTemplateRevision:
+// Represents an ADC shared template associated with the finding.
+type GoogleCloudSecuritycenterV2IssueResourceAdcSharedTemplateRevision struct {
+	// Name: The resource name of an ADC Shared Template Revision. Format:
+	// projects/{project}/locations/{location}/spaces/{space}/applicationTemplates/{
+	// application_template}/revisions/{revision}
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2IssueResourceAdcSharedTemplateRevision) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2IssueResourceAdcSharedTemplateRevision
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8688,6 +8930,12 @@ func (s *GoogleCloudSecuritycenterV2Requests) UnmarshalJSON(data []byte) error {
 // GoogleCloudSecuritycenterV2Resource: Information related to the Google Cloud
 // resource.
 type GoogleCloudSecuritycenterV2Resource struct {
+	// AdcApplication: The ADC application associated with the finding.
+	AdcApplication *GoogleCloudSecuritycenterV2AdcApplication `json:"adcApplication,omitempty"`
+	// AdcApplicationTemplate: The ADC template associated with the finding.
+	AdcApplicationTemplate *GoogleCloudSecuritycenterV2AdcApplicationTemplateRevision `json:"adcApplicationTemplate,omitempty"`
+	// AdcSharedTemplate: The ADC shared template associated with the finding.
+	AdcSharedTemplate *GoogleCloudSecuritycenterV2AdcSharedTemplateRevision `json:"adcSharedTemplate,omitempty"`
 	// Application: The App Hub application this resource belongs to.
 	Application *GoogleCloudSecuritycenterV2ResourceApplication `json:"application,omitempty"`
 	// AwsMetadata: The AWS metadata associated with the finding.
@@ -8730,15 +8978,15 @@ type GoogleCloudSecuritycenterV2Resource struct {
 	Service string `json:"service,omitempty"`
 	// Type: The full resource type of the resource.
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Application") to
+	// ForceSendFields is a list of field names (e.g. "AdcApplication") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Application") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdcApplication") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

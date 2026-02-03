@@ -909,8 +909,9 @@ func (s Consumer) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CustomRegionConfig: Custom configuration used to specify regions that the
-// metastore service runs in. Currently only supported in the us multi-region.
+// CustomRegionConfig: Deprecated: Use a single region service instead. Custom
+// configuration used to specify regions that the metastore service runs in.
+// Currently only supported in the us multi-region.
 type CustomRegionConfig struct {
 	// ReadOnlyRegions: Optional. The list of read-only regions where the metastore
 	// service runs in. These regions should be part (or subset) of the
@@ -938,9 +939,9 @@ func (s CustomRegionConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CustomRegionMetadata: Metadata about a custom region. This is only populated
-// if the region is a custom region. For single/multi regions, it will be
-// empty.
+// CustomRegionMetadata: Deprecated: Use a single region service instead.
+// Metadata about a custom region. This is only populated if the region is a
+// custom region. For single/multi regions, it will be empty.
 type CustomRegionMetadata struct {
 	// OptionalReadOnlyRegions: The read-only regions for this custom region.
 	OptionalReadOnlyRegions []string `json:"optionalReadOnlyRegions,omitempty"`
@@ -1741,11 +1742,11 @@ func (s Location) MarshalJSON() ([]byte, error) {
 
 // LocationMetadata: Metadata about the service in a location.
 type LocationMetadata struct {
-	// CustomRegionMetadata: Possible configurations supported if the current
-	// region is a custom region.
+	// CustomRegionMetadata: Deprecated: Use a single region service instead.
+	// Possible configurations supported if the current region is a custom region.
 	CustomRegionMetadata []*CustomRegionMetadata `json:"customRegionMetadata,omitempty"`
-	// MultiRegionMetadata: The multi-region metadata if the current region is a
-	// multi-region.
+	// MultiRegionMetadata: Deprecated: Use a single region service instead. The
+	// multi-region metadata if the current region is a multi-region.
 	MultiRegionMetadata *MultiRegionMetadata `json:"multiRegionMetadata,omitempty"`
 	// SupportedHiveMetastoreVersions: The versions of Hive Metastore that can be
 	// used when creating a new metastore service in this location. The server
@@ -2061,13 +2062,16 @@ func (s MoveTableToDatabaseRequest) MarshalJSON() ([]byte, error) {
 type MoveTableToDatabaseResponse struct {
 }
 
-// MultiRegionConfig: The multi-region config for the Dataproc Metastore
-// service.
+// MultiRegionConfig: Deprecated: Use a single region service instead. The
+// multi-region config for the Dataproc Metastore service.
 type MultiRegionConfig struct {
-	// Certificates: Output only. The list of root CA certificates that a gRPC
-	// client uses to connect to a multi-regional Dataproc Metastore service.
-	Certificates       []*RootCACertificate `json:"certificates,omitempty"`
-	CustomRegionConfig *CustomRegionConfig  `json:"customRegionConfig,omitempty"`
+	// Certificates: Output only. Deprecated: Use a single region service instead.
+	// The list of root CA certificates that a gRPC client uses to connect to a
+	// multi-regional Dataproc Metastore service.
+	Certificates []*RootCACertificate `json:"certificates,omitempty"`
+	// CustomRegionConfig: Immutable. Deprecated: Use a single region service
+	// instead.
+	CustomRegionConfig *CustomRegionConfig `json:"customRegionConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Certificates") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2086,9 +2090,10 @@ func (s MultiRegionConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MultiRegionMetadata: The metadata for the multi-region that includes the
-// constituent regions. The metadata is only populated if the region is
-// multi-region. For single region or custom dual region, it will be empty.
+// MultiRegionMetadata: Deprecated: Use a single region service instead. The
+// metadata for the multi-region that includes the constituent regions. The
+// metadata is only populated if the region is multi-region. For single region
+// or custom dual region, it will be empty.
 type MultiRegionMetadata struct {
 	// ConstituentRegions: The regions constituting the multi-region.
 	ConstituentRegions []string `json:"constituentRegions,omitempty"`
@@ -2512,13 +2517,15 @@ func (s RestoreServiceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RootCACertificate: A gRPC client must install all root CA certificates to
-// connect to a multi-regional Dataproc Metastore service and achieve failover.
+// RootCACertificate: Deprecated: Use a single region service instead. A gRPC
+// client must install all root CA certificates to connect to a multi-regional
+// Dataproc Metastore service and achieve failover.
 type RootCACertificate struct {
-	// Certificate: The root CA certificate in PEM format. The maximum length is
-	// 65536 bytes.
+	// Certificate: Deprecated: Use a single region service instead. The root CA
+	// certificate in PEM format. The maximum length is 65536 bytes.
 	Certificate string `json:"certificate,omitempty"`
-	// ExpirationTime: The certificate expiration time in timestamp format.
+	// ExpirationTime: Deprecated: Use a single region service instead. The
+	// certificate expiration time in timestamp format.
 	ExpirationTime string `json:"expirationTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Certificate") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2696,8 +2703,9 @@ type Service struct {
 	// MetadataManagementActivity: Output only. The metadata management activities
 	// of the metastore service.
 	MetadataManagementActivity *MetadataManagementActivity `json:"metadataManagementActivity,omitempty"`
-	// MultiRegionConfig: Optional. Specifies the multi-region configuration
-	// information for the Hive metastore service.
+	// MultiRegionConfig: Optional. Deprecated: Use a single region service
+	// instead. Specifies the multi-region configuration information for the Hive
+	// metastore service.
 	MultiRegionConfig *MultiRegionConfig `json:"multiRegionConfig,omitempty"`
 	// Name: Immutable. Identifier. The relative resource name of the metastore
 	// service, in the following

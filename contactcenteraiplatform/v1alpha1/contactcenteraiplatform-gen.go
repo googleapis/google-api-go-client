@@ -275,10 +275,16 @@ type ContactCenter struct {
 	// CustomerDomainPrefix: Required. Immutable. At least 2 and max 16 char long,
 	// must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt).
 	CustomerDomainPrefix string `json:"customerDomainPrefix,omitempty"`
+	// DeleteTime: Output only. Timestamp in UTC of when this resource was
+	// soft-deleted.
+	DeleteTime string `json:"deleteTime,omitempty"`
 	// DisplayName: Required. A user friendly name for the ContactCenter.
 	DisplayName string `json:"displayName,omitempty"`
 	// Early: Optional. Early release channel.
 	Early *Early `json:"early,omitempty"`
+	// ExpireTime: Output only. Timestamp in UTC of when this resource is
+	// considered expired.
+	ExpireTime string `json:"expireTime,omitempty"`
 	// FeatureConfig: Optional. Feature configuration to populate the feature
 	// flags.
 	FeatureConfig *FeatureConfig `json:"featureConfig,omitempty"`
@@ -298,6 +304,9 @@ type ContactCenter struct {
 	PrivateAccess *PrivateAccess `json:"privateAccess,omitempty"`
 	// PrivateComponents: Output only. TODO(b/283407860) Deprecate this field.
 	PrivateComponents []string `json:"privateComponents,omitempty"`
+	// PurgeTime: Output only. Timestamp in UTC of when this resource is going to
+	// be hard-deleted.
+	PurgeTime string `json:"purgeTime,omitempty"`
 	// ReleaseVersion: Output only. UJET release version, unique for each new
 	// release.
 	ReleaseVersion string `json:"releaseVersion,omitempty"`
@@ -313,7 +322,8 @@ type ContactCenter struct {
 	//   "STATE_TERMINATING" - State TERMINATING
 	//   "STATE_FAILED" - State FAILED
 	//   "STATE_TERMINATING_FAILED" - State TERMINATING_FAILED
-	//   "STATE_TERMINATED" - State TERMINATED
+	//   "STATE_TERMINATED" - Reused for soft-deleted state because semantically
+	// equivalent to `DELETED` as implied by go/aip/164.
 	//   "STATE_IN_GRACE_PERIOD" - State IN_GRACE_PERIOD
 	//   "STATE_FAILING_OVER" - State in STATE_FAILING_OVER. This State must ONLY
 	// be used by Multiregional Instances when a failover was triggered. Customers
@@ -644,7 +654,7 @@ type GenerateShiftsRequest struct {
 	// generating shifts. A shift template can be used for generating multiple
 	// shifts.
 	ShiftTemplates []*ShiftTemplate `json:"shiftTemplates,omitempty"`
-	// SolverConfig: Optional. Parameters for the solver.
+	// SolverConfig: Required. Parameters for the solver.
 	SolverConfig *SolverConfig `json:"solverConfig,omitempty"`
 	// WorkforceDemands: Required. All the workforce demands that the generated
 	// shifts need to cover. The planning horizon is defined between the earliest
@@ -1810,7 +1820,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

@@ -856,9 +856,9 @@ func (s Consumer) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CustomRegionMetadata: Metadata about a custom region. This is only populated
-// if the region is a custom region. For single/multi regions, it will be
-// empty.
+// CustomRegionMetadata: Deprecated: Use a single region service instead.
+// Metadata about a custom region. This is only populated if the region is a
+// custom region. For single/multi regions, it will be empty.
 type CustomRegionMetadata struct {
 	// OptionalReadOnlyRegions: The read-only regions for this custom region.
 	OptionalReadOnlyRegions []string `json:"optionalReadOnlyRegions,omitempty"`
@@ -1606,11 +1606,11 @@ func (s Location) MarshalJSON() ([]byte, error) {
 
 // LocationMetadata: Metadata about the service in a location.
 type LocationMetadata struct {
-	// CustomRegionMetadata: Possible configurations supported if the current
-	// region is a custom region.
+	// CustomRegionMetadata: Deprecated: Use a single region service instead.
+	// Possible configurations supported if the current region is a custom region.
 	CustomRegionMetadata []*CustomRegionMetadata `json:"customRegionMetadata,omitempty"`
-	// MultiRegionMetadata: The multi-region metadata if the current region is a
-	// multi-region.
+	// MultiRegionMetadata: Deprecated: Use a single region service instead. The
+	// multi-region metadata if the current region is a multi-region.
 	MultiRegionMetadata *MultiRegionMetadata `json:"multiRegionMetadata,omitempty"`
 	// SupportedHiveMetastoreVersions: The versions of Hive Metastore that can be
 	// used when creating a new metastore service in this location. The server
@@ -1924,9 +1924,10 @@ func (s MoveTableToDatabaseRequest) MarshalJSON() ([]byte, error) {
 type MoveTableToDatabaseResponse struct {
 }
 
-// MultiRegionMetadata: The metadata for the multi-region that includes the
-// constituent regions. The metadata is only populated if the region is
-// multi-region. For single region or custom dual region, it will be empty.
+// MultiRegionMetadata: Deprecated: Use a single region service instead. The
+// metadata for the multi-region that includes the constituent regions. The
+// metadata is only populated if the region is multi-region. For single region
+// or custom dual region, it will be empty.
 type MultiRegionMetadata struct {
 	// ConstituentRegions: The regions constituting the multi-region.
 	ConstituentRegions []string `json:"constituentRegions,omitempty"`

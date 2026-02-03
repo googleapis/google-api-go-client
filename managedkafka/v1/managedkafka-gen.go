@@ -852,6 +852,7 @@ type Cluster struct {
 	//   "CREATING" - The cluster is being created.
 	//   "ACTIVE" - The cluster is active.
 	//   "DELETING" - The cluster is being deleted.
+	//   "UPDATING" - The cluster is being updated.
 	State string `json:"state,omitempty"`
 	// TlsConfig: Optional. TLS configuration for the Kafka cluster.
 	TlsConfig *TlsConfig `json:"tlsConfig,omitempty"`

@@ -6,7 +6,7 @@
 
 // Package threatintelligence provides access to the Threat Intelligence API.
 //
-// For product documentation, see: https://www.google.com
+// For product documentation, see: https://cloud.google.com/threatintelligence/docs/reference/rest
 //
 // # Library status
 //
@@ -2556,7 +2556,7 @@ func (s SuspiciousDomainWhoIsDetails) MarshalJSON() ([]byte, error) {
 // TargetTechnologyAlertDetail: Contains details for a technology watchlist
 // alert.
 type TargetTechnologyAlertDetail struct {
-	// VulnerabilityMatch: Output only. The vulnerability match details.
+	// VulnerabilityMatch: Optional. The vulnerability match details.
 	VulnerabilityMatch *VulnerabilityMatch `json:"vulnerabilityMatch,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "VulnerabilityMatch") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2579,7 +2579,7 @@ func (s TargetTechnologyAlertDetail) MarshalJSON() ([]byte, error) {
 // TargetTechnologyFindingDetail: Contains details for a technology watchlist
 // finding.
 type TargetTechnologyFindingDetail struct {
-	// VulnerabilityMatch: Output only. The vulnerability match details.
+	// VulnerabilityMatch: Optional. The vulnerability match details.
 	VulnerabilityMatch *VulnerabilityMatch `json:"vulnerabilityMatch,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "VulnerabilityMatch") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2721,18 +2721,17 @@ type VulnerabilityMatch struct {
 	// embedded as a snapshot because the details of the association at the time of
 	// the vulnerability match are important for context and reporting.
 	Associations []*Association `json:"associations,omitempty"`
-	// CollectionId: Output only. The collection ID of the vulnerability. Ex:
+	// CollectionId: Required. The collection ID of the vulnerability. Ex:
 	// "vulnerability--cve-2025-9876".
 	CollectionId string `json:"collectionId,omitempty"`
-	// CveId: Output only. The CVE ID of the vulnerability. Ex: "CVE-2025-9876".
-	// See https://www.cve.org/ for more information.
+	// CveId: Required. The CVE ID of the vulnerability. Ex: "CVE-2025-9876". See
+	// https://www.cve.org/ for more information.
 	CveId string `json:"cveId,omitempty"`
-	// Cvss3Score: Output only. The CVSS v3 score of the vulnerability. Example:
-	// 6.4.
+	// Cvss3Score: Required. The CVSS v3 score of the vulnerability. Example: 6.4.
 	Cvss3Score float64 `json:"cvss3Score,omitempty"`
-	// Description: Output only. A description of the vulnerability.
+	// Description: Required. A description of the vulnerability.
 	Description string `json:"description,omitempty"`
-	// ExploitationState: Output only. The exploitation state of the vulnerability.
+	// ExploitationState: Required. The exploitation state of the vulnerability.
 	//
 	// Possible values:
 	//   "EXPLOITATION_STATE_UNSPECIFIED" - Unspecified exploitation state.
@@ -2742,7 +2741,7 @@ type VulnerabilityMatch struct {
 	//   "EXPLOITATION_STATE_CONFIRMED" - Exploitation is confirmed.
 	//   "EXPLOITATION_STATE_WIDESPREAD" - Widespread exploitation.
 	ExploitationState string `json:"exploitationState,omitempty"`
-	// RiskRating: Output only. The risk rating of the vulnerability.
+	// RiskRating: Required. The risk rating of the vulnerability.
 	//
 	// Possible values:
 	//   "RISK_RATING_UNSPECIFIED" - Unspecified risk rating. This is the default
@@ -2754,7 +2753,7 @@ type VulnerabilityMatch struct {
 	//   "UNRATED" - The vulnerability has been assessed, but a specific risk
 	// rating could not be determined or assigned.
 	RiskRating string `json:"riskRating,omitempty"`
-	// Technologies: Output only. The affected technologies. Ex: "Apache Struts".
+	// Technologies: Required. The affected technologies. Ex: "Apache Struts".
 	Technologies []string `json:"technologies,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Associations") to
 	// unconditionally include in API requests. By default, fields with empty or

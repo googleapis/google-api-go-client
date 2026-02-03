@@ -1017,7 +1017,9 @@ type DropInfo struct {
 	// forwarding rule type is invalid (it's not a forwarding rule of the internal
 	// passthrough load balancer).
 	//   "NO_ROUTE_FROM_INTERNET_TO_PRIVATE_IPV6_ADDRESS" - Packet is sent from the
-	// Internet or Google service to the private IPv6 address.
+	// Internet to the private IPv6 address.
+	//   "NO_ROUTE_FROM_INTERNET_TO_PRIVATE_IPV4_ADDRESS" - Packet is sent from the
+	// Internet to the private IPv4 address.
 	//   "NO_ROUTE_FROM_EXTERNAL_IPV6_SOURCE_TO_PRIVATE_IPV6_ADDRESS" - Packet is
 	// sent from the external IPv6 source address of an instance to the private
 	// IPv6 address of an instance.
@@ -1516,11 +1518,13 @@ type Endpoint struct {
 	// Network load balancer.
 	//   "TCP_UDP_INTERNAL_LOAD_BALANCER" - Internal TCP/UDP load balancer.
 	LoadBalancerType string `json:"loadBalancerType,omitempty"`
-	// Network: A VPC network URI. Used according to the `network_type`. Relevant
-	// only for the source endpoints.
+	// Network: A VPC network URI. For source endpoints, used according to the
+	// `network_type`. For destination endpoints, used only when the source is an
+	// external IP address endpoint, and the destination is an internal IP address
+	// endpoint.
 	Network string `json:"network,omitempty"`
-	// NetworkType: Type of the network where the endpoint is located. Relevant
-	// only for the source endpoints.
+	// NetworkType: For source endpoints, type of the network where the endpoint is
+	// located. Not relevant for destination endpoints.
 	//
 	// Possible values:
 	//   "NETWORK_TYPE_UNSPECIFIED" - Unspecified. The `project_id` field should be
@@ -1542,8 +1546,8 @@ type Endpoint struct {
 	// Port: The IP protocol port of the endpoint. Only applicable when protocol is
 	// TCP or UDP.
 	Port int64 `json:"port,omitempty"`
-	// ProjectId: Endpoint project ID. Used according to the `network_type`.
-	// Relevant only for the source endpoints.
+	// ProjectId: For source endpoints, endpoint project ID. Used according to the
+	// `network_type`. Not relevant for destination endpoints.
 	ProjectId string `json:"projectId,omitempty"`
 	// RedisCluster: A Redis Cluster
 	// (https://cloud.google.com/memorystore/docs/cluster) URI. Applicable only to

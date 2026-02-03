@@ -5786,6 +5786,40 @@ func (s SqlInstancesRescheduleMaintenanceRequestBody) MarshalJSON() ([]byte, err
 type SqlInstancesResetReplicaSizeRequest struct {
 }
 
+// SqlInstancesRestoreBackupMcpRequest: Instance restore backup request for
+// MCP.
+type SqlInstancesRestoreBackupMcpRequest struct {
+	// BackupId: Required. The identifier of the backup to restore. This will be
+	// one of the following: 1. An int64 containing a backup_run_id. 2. A backup
+	// name of the format 'projects/{project}/backups/{backup-uid}'. 3. A backupDR
+	// name of the format
+	// 'projects/{project}/locations/{location}/backupVaults/{backupvault}/dataSourc
+	// es/{datasource}/backups/{backup-uid}'.
+	BackupId string `json:"backupId,omitempty"`
+	// SourceInstance: Optional. The Cloud SQL instance ID of the source instance
+	// containing the backup. Only necessary if the backup_id is a backup_run_id.
+	SourceInstance string `json:"sourceInstance,omitempty"`
+	// SourceProject: Required. The project ID of the source instance containing
+	// the backup.
+	SourceProject string `json:"sourceProject,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlInstancesRestoreBackupMcpRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlInstancesRestoreBackupMcpRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SqlInstancesStartExternalSyncRequest: Instance start external sync request.
 type SqlInstancesStartExternalSyncRequest struct {
 	// MigrationType: Optional. MigrationType configures the migration to use
@@ -12030,6 +12064,115 @@ func (c *InstancesRestoreBackupCall) Do(opts ...googleapi.CallOption) (*Operatio
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.restoreBackup", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type InstancesRestoreBackupMcpCall struct {
+	s                                   *Service
+	targetProject                       string
+	targetInstance                      string
+	sqlinstancesrestorebackupmcprequest *SqlInstancesRestoreBackupMcpRequest
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// RestoreBackupMcp: Restores a backup of a Cloud SQL instance for Model
+// Context Protocol (MCP) server.
+//
+//   - targetInstance: Cloud SQL instance ID of the target. This does not include
+//     the project ID.
+//   - targetProject: Project ID of the target project.
+func (r *InstancesService) RestoreBackupMcp(targetProject string, targetInstance string, sqlinstancesrestorebackupmcprequest *SqlInstancesRestoreBackupMcpRequest) *InstancesRestoreBackupMcpCall {
+	c := &InstancesRestoreBackupMcpCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.targetProject = targetProject
+	c.targetInstance = targetInstance
+	c.sqlinstancesrestorebackupmcprequest = sqlinstancesrestorebackupmcprequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *InstancesRestoreBackupMcpCall) Fields(s ...googleapi.Field) *InstancesRestoreBackupMcpCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *InstancesRestoreBackupMcpCall) Context(ctx context.Context) *InstancesRestoreBackupMcpCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *InstancesRestoreBackupMcpCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InstancesRestoreBackupMcpCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.sqlinstancesrestorebackupmcprequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{targetProject}/instances/{targetInstance}:restoreBackupMcp")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"targetProject":  c.targetProject,
+		"targetInstance": c.targetInstance,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.restoreBackupMcp", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "sql.instances.restoreBackupMcp" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *InstancesRestoreBackupMcpCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.restoreBackupMcp", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

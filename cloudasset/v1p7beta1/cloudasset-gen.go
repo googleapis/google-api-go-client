@@ -646,7 +646,8 @@ func (s GoogleCloudAssetV1p7beta1ExportAssetsRequest) MarshalJSON() ([]byte, err
 // GoogleCloudAssetV1p7beta1GcsDestination: A Cloud Storage location.
 type GoogleCloudAssetV1p7beta1GcsDestination struct {
 	// Uri: The URI of the Cloud Storage object. It's the same URI that is used by
-	// gcloud storage. Example: "gs://bucket_name/object_name". See Viewing and Editing	// Object Metadata
+	// gcloud storage. Example: "gs://bucket_name/object_name". See Viewing and Editing	
+	// Object Metadata
 	// (https://cloud.google.com/storage/docs/viewing-editing-metadata) for more
 	// information.
 	Uri string `json:"uri,omitempty"`

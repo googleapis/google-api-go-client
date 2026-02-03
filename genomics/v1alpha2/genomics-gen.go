@@ -1086,7 +1086,8 @@ func (s *Pipeline) MarshalJSON() ([]byte, error) {
 // `/mnt/pd1/file.txt` maps to `/mnt/disk/file.txt` in the Docker
 // container. Acceptable paths are: Google Cloud storage pathLocal path
 // file file glob directory For outputs, the direction of the copy is
-// reversed: ``` gcloud storage cp /mnt/disk/file.txt gs://my-bucket/bar.txt ```// Acceptable paths are: Local pathGoogle Cloud Storage path file file
+// reversed: ``` gcloud storage cp /mnt/disk/file.txt gs://my-bucket/bar.txt ```
+// Acceptable paths are: Local pathGoogle Cloud Storage path file file
 // file directory - directory must already exist glob directory -
 // directory will be created if it doesn't exist One restriction due to
 // docker limitations, is that for outputs that are found on the boot

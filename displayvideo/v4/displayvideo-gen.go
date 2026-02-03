@@ -1064,18 +1064,19 @@ func (s AdGroup) MarshalJSON() ([]byte, error) {
 
 // AdGroupAd: A single ad associated with an ad group.
 type AdGroupAd struct {
-	// AdGroupAdId: The unique ID of the ad. Assigned by the system.
+	// AdGroupAdId: Output only. The unique ID of the ad. Assigned by the system.
 	AdGroupAdId int64 `json:"adGroupAdId,omitempty,string"`
 	// AdGroupId: The unique ID of the ad group that the ad belongs to. *Caution*:
 	// Parent ad groups for Demand Gen ads are not currently retrieveable using
 	// `advertisers.adGroups.list` or `advertisers.adGroups.get`. Demand Gen ads
 	// can be identified by the absence of the `ad_details` union field.
 	AdGroupId int64 `json:"adGroupId,omitempty,string"`
-	// AdPolicy: The policy approval status of the ad.
+	// AdPolicy: Output only. The policy approval status of the ad.
 	AdPolicy *AdPolicy `json:"adPolicy,omitempty"`
 	// AdUrls: List of URLs used by the ad.
 	AdUrls []*AdUrl `json:"adUrls,omitempty"`
-	// AdvertiserId: The unique ID of the advertiser the ad belongs to.
+	// AdvertiserId: Output only. The unique ID of the advertiser the ad belongs
+	// to.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 	// AudioAd: Details of an audio ad
 	// (//support.google.com/displayvideo/answer/6274216) used for reach marketing
@@ -1114,7 +1115,7 @@ type AdGroupAd struct {
 	// MastheadAd: Details of an ad served on the YouTube Home feed
 	// (//support.google.com/google-ads/answer/9709826).
 	MastheadAd *MastheadAd `json:"mastheadAd,omitempty"`
-	// Name: The resource name of the ad.
+	// Name: Output only. The resource name of the ad.
 	Name string `json:"name,omitempty"`
 	// NonSkippableAd: Details of a non-skippable short in-stream video ad
 	// (//support.google.com/displayvideo/answer/6274216), between 6 and 15
@@ -12360,7 +12361,7 @@ func (s ListAdAssetsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type ListAdGroupAdsResponse struct {
-	// AdGroupAds: The list of ad group ads. This list will be absent if empty.
+	// AdGroupAds: The list of ads. This list will be absent if empty.
 	AdGroupAds []*AdGroupAd `json:"adGroupAds,omitempty"`
 	// NextPageToken: A token to retrieve the next page of results. Pass this value
 	// in the page_token field in the subsequent call to `ListAdGroupAds` method to
@@ -19559,7 +19560,7 @@ type AdvertisersAdGroupAdsGetCall struct {
 
 // Get: Gets an ad group ad.
 //
-// - adGroupAdId: The ID of the ad group ad to fetch.
+// - adGroupAdId: The ID of the ad to fetch.
 // - advertiserId: The ID of the advertiser this ad group ad belongs to.
 func (r *AdvertisersAdGroupAdsService) Get(advertiserId int64, adGroupAdId int64) *AdvertisersAdGroupAdsGetCall {
 	c := &AdvertisersAdGroupAdsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -19671,18 +19672,18 @@ type AdvertisersAdGroupAdsListCall struct {
 
 // List: Lists ad group ads.
 //
-// - advertiserId: The ID of the advertiser the ad groups belongs to.
+// - advertiserId: The ID of the advertiser the ads belong to.
 func (r *AdvertisersAdGroupAdsService) List(advertiserId int64) *AdvertisersAdGroupAdsListCall {
 	c := &AdvertisersAdGroupAdsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
 	return c
 }
 
-// Filter sets the optional parameter "filter": Allows filtering by custom ad
-// group ad fields. Supported syntax: * Filter expressions are made up of one
-// or more restrictions. * Restrictions can be combined by `AND` and `OR`. A
-// sequence of restrictions implicitly uses `AND`. * A restriction has the form
-// of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)`
+// Filter sets the optional parameter "filter": Allows filtering by ad group ad
+// fields. Supported syntax: * Filter expressions are made up of one or more
+// restrictions. * Restrictions can be combined by `AND` and `OR`. A sequence
+// of restrictions implicitly uses `AND`. * A restriction has the form of
+// `{field} {operator} {value}`. * All fields must use the `EQUALS (=)`
 // operator. Supported fields: * `adGroupId` * `displayName` * `entityStatus` *
 // `adGroupAdId` Examples: * All ad group ads under an ad group:
 // `adGroupId="1234" * All ad group ads under an ad group with an entityStatus

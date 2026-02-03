@@ -662,7 +662,7 @@ type CancelOperationRequest struct {
 
 // ClusterSelector: Selector for clusters.
 type ClusterSelector struct {
-	// LabelSelector: Optional. A valid CEL (Common Expression Language) expression
+	// LabelSelector: Required. A valid CEL (Common Expression Language) expression
 	// which evaluates `resource.labels`.
 	LabelSelector string `json:"labelSelector,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LabelSelector") to
@@ -1042,6 +1042,8 @@ type CommonFeatureSpec struct {
 	Multiclusteringress *MultiClusterIngressFeatureSpec `json:"multiclusteringress,omitempty"`
 	// Rbacrolebindingactuation: RBAC Role Binding Actuation feature spec
 	Rbacrolebindingactuation *RBACRoleBindingActuationFeatureSpec `json:"rbacrolebindingactuation,omitempty"`
+	// Workloadidentity: Workload Identity feature spec.
+	Workloadidentity *WorkloadIdentityFeatureSpec `json:"workloadidentity,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Appdevexperience") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1073,6 +1075,8 @@ type CommonFeatureState struct {
 	Rbacrolebindingactuation *RBACRoleBindingActuationFeatureState `json:"rbacrolebindingactuation,omitempty"`
 	// State: Output only. The "running state" of the Feature in this Fleet.
 	State *FeatureState `json:"state,omitempty"`
+	// Workloadidentity: WorkloadIdentity fleet-level state.
+	Workloadidentity *WorkloadIdentityFeatureState `json:"workloadidentity,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Appdevexperience") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1249,12 +1253,19 @@ func (s ConfigManagementBinauthzVersion) MarshalJSON() ([]byte, error) {
 // ConfigManagementConfigSync: Configuration for Config Sync
 type ConfigManagementConfigSync struct {
 	// DeploymentOverrides: Optional. Configuration for deployment overrides.
+	// Applies only to Config Sync deployments with containers that are not a root
+	// or namespace reconciler: `reconciler-manager`, `otel-collector`,
+	// `resource-group-controller-manager`, `admission-webhook`. To override a root
+	// or namespace reconciler, use the rootsync or reposync fields at
+	// https://docs.cloud.google.com/kubernetes-engine/config-sync/docs/reference/rootsync-reposync-fields#override-resources
+	// instead.
 	DeploymentOverrides []*ConfigManagementDeploymentOverride `json:"deploymentOverrides,omitempty"`
-	// Enabled: Optional. Enables the installation of ConfigSync. If set to true,
-	// ConfigSync resources will be created and the other ConfigSync fields will be
-	// applied if exist. If set to false, all other ConfigSync fields will be
-	// ignored, ConfigSync resources will be deleted. If omitted, ConfigSync
-	// resources will be managed depends on the presence of the git or oci field.
+	// Enabled: Optional. Enables the installation of Config Sync. If set to true,
+	// the Feature will manage Config Sync resources, and apply the other
+	// ConfigSync fields if they exist. If set to false, the Feature will ignore
+	// all other ConfigSync fields and delete the Config Sync resources. If
+	// omitted, ConfigSync is considered enabled if the git or oci field is
+	// present.
 	Enabled bool `json:"enabled,omitempty"`
 	// Git: Optional. Git repo configuration for the cluster.
 	Git *ConfigManagementGitConfig `json:"git,omitempty"`
@@ -1271,11 +1282,15 @@ type ConfigManagementConfigSync struct {
 	// Oci: Optional. OCI repo configuration for the cluster
 	Oci *ConfigManagementOciConfig `json:"oci,omitempty"`
 	// PreventDrift: Optional. Set to true to enable the Config Sync admission
-	// webhook to prevent drifts. If set to `false`, disables the Config Sync
-	// admission webhook and does not prevent drifts.
+	// webhook to prevent drifts. If set to false, disables the Config Sync
+	// admission webhook and does not prevent drifts. Defaults to false. See
+	// https://docs.cloud.google.com/kubernetes-engine/config-sync/docs/how-to/prevent-config-drift
+	// for details.
 	PreventDrift bool `json:"preventDrift,omitempty"`
-	// SourceFormat: Optional. Specifies whether the Config Sync Repo is in
-	// "hierarchical" or "unstructured" mode.
+	// SourceFormat: Optional. Specifies whether the Config Sync repo is in
+	// `hierarchical` or `unstructured` mode. Defaults to `hierarchical`. See
+	// https://docs.cloud.google.com/kubernetes-engine/config-sync/docs/concepts/configs#organize-configs
+	// for an explanation.
 	SourceFormat string `json:"sourceFormat,omitempty"`
 	// StopSyncing: Optional. Set to true to stop syncing configs for a single
 	// cluster. Default to false.
@@ -1545,13 +1560,21 @@ func (s ConfigManagementConfigSyncVersion) MarshalJSON() ([]byte, error) {
 type ConfigManagementContainerOverride struct {
 	// ContainerName: Required. The name of the container.
 	ContainerName string `json:"containerName,omitempty"`
-	// CpuLimit: Optional. The cpu limit of the container.
+	// CpuLimit: Optional. The cpu limit of the container. Use the following CPU
+	// resource units:
+	// https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu.
 	CpuLimit string `json:"cpuLimit,omitempty"`
-	// CpuRequest: Optional. The cpu request of the container.
+	// CpuRequest: Optional. The cpu request of the container. Use the following
+	// CPU resource units:
+	// https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu.
 	CpuRequest string `json:"cpuRequest,omitempty"`
-	// MemoryLimit: Optional. The memory limit of the container.
+	// MemoryLimit: Optional. The memory limit of the container. Use the following
+	// memory resource units:
+	// https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-memory.
 	MemoryLimit string `json:"memoryLimit,omitempty"`
-	// MemoryRequest: Optional. The memory request of the container.
+	// MemoryRequest: Optional. The memory request of the container. Use the
+	// following memory resource units:
+	// https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-memory.
 	MemoryRequest string `json:"memoryRequest,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ContainerName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1681,18 +1704,19 @@ func (s ConfigManagementGatekeeperDeploymentState) MarshalJSON() ([]byte, error)
 // ConfigManagementGitConfig: Git repo configuration for a single cluster.
 type ConfigManagementGitConfig struct {
 	// GcpServiceAccountEmail: Optional. The Google Cloud Service Account Email
-	// used for auth when secret_type is gcpServiceAccount.
+	// used for auth when secret_type is `gcpserviceaccount`.
 	GcpServiceAccountEmail string `json:"gcpServiceAccountEmail,omitempty"`
 	// HttpsProxy: Optional. URL for the HTTPS proxy to be used when communicating
-	// with the Git repo.
+	// with the Git repo. Only specify when secret_type is `cookiefile`, `token`,
+	// or `none`.
 	HttpsProxy string `json:"httpsProxy,omitempty"`
 	// PolicyDir: Optional. The path within the Git repository that represents the
 	// top level of the repo to sync. Default: the root directory of the
 	// repository.
 	PolicyDir string `json:"policyDir,omitempty"`
 	// SecretType: Required. Type of secret configured for access to the Git repo.
-	// Must be one of ssh, cookiefile, gcenode, token, gcpserviceaccount, githubapp
-	// or none. The validation of this is case-sensitive.
+	// Must be one of `ssh`, `cookiefile`, `gcenode`, `token`, `gcpserviceaccount`,
+	// `githubapp` or `none`. The validation of this is case-sensitive.
 	SecretType string `json:"secretType,omitempty"`
 	// SyncBranch: Optional. The branch of the repository to sync from. Default:
 	// master.
@@ -1891,15 +1915,16 @@ func (s ConfigManagementInstallError) MarshalJSON() ([]byte, error) {
 // ConfigManagementMembershipSpec: **Anthos Config Management**: Configuration
 // for a single cluster. Intended to parallel the ConfigManagement CR.
 type ConfigManagementMembershipSpec struct {
-	// Binauthz: Optional. Binauthz conifguration for the cluster. Deprecated: This
-	// field will be ignored and should not be set.
+	// Binauthz: Optional. Deprecated: Binauthz configuration will be ignored and
+	// should not be set.
 	Binauthz *ConfigManagementBinauthzConfig `json:"binauthz,omitempty"`
-	// Cluster: Optional. The user-specified cluster name used by Config Sync
-	// cluster-name-selector annotation or ClusterSelector, for applying configs to
-	// only a subset of clusters. Omit this field if the cluster's fleet membership
-	// name is used by Config Sync cluster-name-selector annotation or
-	// ClusterSelector. Set this field if a name different from the cluster's fleet
-	// membership name is used by Config Sync cluster-name-selector annotation or
+	// Cluster: Optional. User-specified cluster name used by the Config Sync
+	// cluster-name-selector annotation or ClusterSelector object, for applying
+	// configs to only a subset of clusters. Read more about the
+	// cluster-name-selector annotation and ClusterSelector object at
+	// https://docs.cloud.google.com/kubernetes-engine/config-sync/docs/how-to/cluster-scoped-objects#limiting-configs.
+	// Only set this field if a name different from the cluster's fleet membership
+	// name is used by the Config Sync cluster-name-selector annotation or
 	// ClusterSelector.
 	Cluster string `json:"cluster,omitempty"`
 	// ConfigSync: Optional. Config Sync configuration for the cluster.
@@ -1922,7 +1947,10 @@ type ConfigManagementMembershipSpec struct {
 	// Deprecated: Configuring Policy Controller through the configmanagement
 	// feature is no longer recommended. Use the policycontroller feature instead.
 	PolicyController *ConfigManagementPolicyController `json:"policyController,omitempty"`
-	// Version: Optional. Version of ACM installed.
+	// Version: Optional. Version of Config Sync to install. Defaults to the latest
+	// supported Config Sync version if the config_sync field is enabled. See
+	// supported versions at
+	// https://cloud.google.com/kubernetes-engine/config-sync/docs/get-support-config-sync#version_support_policy.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Binauthz") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1987,14 +2015,14 @@ func (s ConfigManagementMembershipState) MarshalJSON() ([]byte, error) {
 // ConfigManagementOciConfig: OCI repo configuration for a single cluster
 type ConfigManagementOciConfig struct {
 	// GcpServiceAccountEmail: Optional. The Google Cloud Service Account Email
-	// used for auth when secret_type is gcpServiceAccount.
+	// used for auth when secret_type is `gcpserviceaccount`.
 	GcpServiceAccountEmail string `json:"gcpServiceAccountEmail,omitempty"`
 	// PolicyDir: Optional. The absolute path of the directory that contains the
 	// local resources. Default: the root directory of the image.
 	PolicyDir string `json:"policyDir,omitempty"`
 	// SecretType: Required. Type of secret configured for access to the OCI repo.
-	// Must be one of gcenode, gcpserviceaccount, k8sserviceaccount or none. The
-	// validation of this is case-sensitive.
+	// Must be one of `gcenode`, `gcpserviceaccount`, `k8sserviceaccount` or
+	// `none`. The validation of this is case-sensitive.
 	SecretType string `json:"secretType,omitempty"`
 	// SyncRepo: Required. The OCI image repository URL for the package to sync
 	// from. e.g.
@@ -4414,6 +4442,8 @@ type MembershipFeatureState struct {
 	Servicemesh *ServiceMeshMembershipState `json:"servicemesh,omitempty"`
 	// State: The high-level state of this Feature for a single membership.
 	State *FeatureState `json:"state,omitempty"`
+	// Workloadidentity: Workload Identity membership specific state.
+	Workloadidentity *WorkloadIdentityMembershipState `json:"workloadidentity,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Appdevexperience") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6633,6 +6663,191 @@ func (s WaveSchedule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// WorkloadIdentityFeatureSpec: **WorkloadIdentity**: Global feature
+// specification.
+type WorkloadIdentityFeatureSpec struct {
+	// ScopeTenancyPool: Pool to be used for Workload Identity. This pool in
+	// trust-domain mode is used with Fleet Tenancy, so that sameness can be
+	// enforced. ex:
+	// projects/example/locations/global/workloadidentitypools/custompool
+	ScopeTenancyPool string `json:"scopeTenancyPool,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ScopeTenancyPool") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ScopeTenancyPool") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkloadIdentityFeatureSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadIdentityFeatureSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkloadIdentityFeatureState: **WorkloadIdentity**: Global feature state.
+type WorkloadIdentityFeatureState struct {
+	// NamespaceStateDetails: The state of the IAM namespaces for the fleet.
+	NamespaceStateDetails map[string]WorkloadIdentityNamespaceStateDetail `json:"namespaceStateDetails,omitempty"`
+	// NamespaceStates: Deprecated, this field will be erased after code is changed
+	// to use the new field.
+	NamespaceStates map[string]string `json:"namespaceStates,omitempty"`
+	// ScopeTenancyWorkloadIdentityPool: The full name of the scope-tenancy pool
+	// for the fleet.
+	ScopeTenancyWorkloadIdentityPool string `json:"scopeTenancyWorkloadIdentityPool,omitempty"`
+	// WorkloadIdentityPool: The full name of the svc.id.goog pool for the fleet.
+	WorkloadIdentityPool string `json:"workloadIdentityPool,omitempty"`
+	// WorkloadIdentityPoolStateDetails: The state of the Workload Identity Pools
+	// for the fleet.
+	WorkloadIdentityPoolStateDetails map[string]WorkloadIdentityWorkloadIdentityPoolStateDetail `json:"workloadIdentityPoolStateDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NamespaceStateDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NamespaceStateDetails") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkloadIdentityFeatureState) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadIdentityFeatureState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkloadIdentityIdentityProviderStateDetail: IdentityProviderStateDetail
+// represents the state of an Identity Provider.
+type WorkloadIdentityIdentityProviderStateDetail struct {
+	// Code: The state of the Identity Provider.
+	//
+	// Possible values:
+	//   "IDENTITY_PROVIDER_STATE_UNSPECIFIED" - Unknown state.
+	//   "IDENTITY_PROVIDER_STATE_OK" - The Identity Provider was created/updated
+	// successfully.
+	//   "IDENTITY_PROVIDER_STATE_ERROR" - The Identity Provider was not
+	// created/updated successfully. The error message is in the description field.
+	Code string `json:"code,omitempty"`
+	// Description: A human-readable description of the current state or returned
+	// error.
+	Description string `json:"description,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkloadIdentityIdentityProviderStateDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadIdentityIdentityProviderStateDetail
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkloadIdentityMembershipState: **WorkloadIdentity**: The
+// membership-specific state for WorkloadIdentity feature.
+type WorkloadIdentityMembershipState struct {
+	// Description: Deprecated, this field will be erased after code is changed to
+	// use the new field.
+	Description string `json:"description,omitempty"`
+	// IdentityProviderStateDetails: The state of the Identity Providers
+	// corresponding to the membership.
+	IdentityProviderStateDetails map[string]WorkloadIdentityIdentityProviderStateDetail `json:"identityProviderStateDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkloadIdentityMembershipState) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadIdentityMembershipState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkloadIdentityNamespaceStateDetail: NamespaceStateDetail represents the
+// state of a IAM namespace.
+type WorkloadIdentityNamespaceStateDetail struct {
+	// Code: The state of the IAM namespace.
+	//
+	// Possible values:
+	//   "NAMESPACE_STATE_UNSPECIFIED" - Unknown state.
+	//   "NAMESPACE_STATE_OK" - The Namespace was created/updated successfully.
+	//   "NAMESPACE_STATE_ERROR" - The Namespace was not created/updated
+	// successfully. The error message is in the description field.
+	Code string `json:"code,omitempty"`
+	// Description: A human-readable description of the current state or returned
+	// error.
+	Description string `json:"description,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkloadIdentityNamespaceStateDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadIdentityNamespaceStateDetail
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkloadIdentityWorkloadIdentityPoolStateDetail:
+// WorkloadIdentityPoolStateDetail represents the state of the Workload
+// Identity Pools for the fleet.
+type WorkloadIdentityWorkloadIdentityPoolStateDetail struct {
+	// Code: The state of the Workload Identity Pool.
+	//
+	// Possible values:
+	//   "WORKLOAD_IDENTITY_POOL_STATE_UNSPECIFIED" - Unknown state.
+	//   "WORKLOAD_IDENTITY_POOL_STATE_OK" - The Workload Identity Pool was
+	// created/updated successfully.
+	//   "WORKLOAD_IDENTITY_POOL_STATE_ERROR" - The Workload Identity Pool was not
+	// created/updated successfully. The error message is in the description field.
+	Code string `json:"code,omitempty"`
+	// Description: A human-readable description of the current state or returned
+	// error.
+	Description string `json:"description,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkloadIdentityWorkloadIdentityPoolStateDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadIdentityWorkloadIdentityPoolStateDetail
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type OrganizationsLocationsFleetsListCall struct {
 	s            *Service
 	parent       string
@@ -6902,7 +7117,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

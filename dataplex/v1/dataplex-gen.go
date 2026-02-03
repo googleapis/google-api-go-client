@@ -228,6 +228,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.Glossaries = NewProjectsLocationsGlossariesService(s)
 	rs.GovernanceRules = NewProjectsLocationsGovernanceRulesService(s)
 	rs.Lakes = NewProjectsLocationsLakesService(s)
+	rs.MetadataFeeds = NewProjectsLocationsMetadataFeedsService(s)
 	rs.MetadataJobs = NewProjectsLocationsMetadataJobsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	return rs
@@ -259,6 +260,8 @@ type ProjectsLocationsService struct {
 	GovernanceRules *ProjectsLocationsGovernanceRulesService
 
 	Lakes *ProjectsLocationsLakesService
+
+	MetadataFeeds *ProjectsLocationsMetadataFeedsService
 
 	MetadataJobs *ProjectsLocationsMetadataJobsService
 
@@ -610,6 +613,15 @@ func NewProjectsLocationsLakesZonesEntitiesPartitionsService(s *Service) *Projec
 }
 
 type ProjectsLocationsLakesZonesEntitiesPartitionsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsMetadataFeedsService(s *Service) *ProjectsLocationsMetadataFeedsService {
+	rs := &ProjectsLocationsMetadataFeedsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsMetadataFeedsService struct {
 	s *Service
 }
 
@@ -2413,6 +2425,20 @@ type GoogleCloudDataplexV1DataDocumentationSpec struct {
 	// CatalogPublishingEnabled: Optional. Whether to publish result to Dataplex
 	// Catalog.
 	CatalogPublishingEnabled bool `json:"catalogPublishingEnabled,omitempty"`
+	// GenerationScopes: Optional. Specifies which components of the data
+	// documentation to generate. Any component that is required to generate the
+	// specified components will also be generated. If no generation scope is
+	// specified, all available documentation components will be generated.
+	//
+	// Possible values:
+	//   "GENERATION_SCOPE_UNSPECIFIED" - Unspecified generation scope. If no
+	// generation scope is specified, all available documentation components will
+	// be generated.
+	//   "ALL" - All the possible results will be generated.
+	//   "TABLE_AND_COLUMN_DESCRIPTIONS" - Table and column descriptions will be
+	// generated.
+	//   "SQL_QUERIES" - SQL queries will be generated.
+	GenerationScopes []string `json:"generationScopes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CatalogPublishingEnabled")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7053,6 +7079,37 @@ func (s GoogleCloudDataplexV1ListLakesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1ListMetadataFeedsResponse: Response message for
+// ListMetadataFeeds.
+type GoogleCloudDataplexV1ListMetadataFeedsResponse struct {
+	// MetadataFeeds: List of metadata feeds under the specified parent location.
+	MetadataFeeds []*GoogleCloudDataplexV1MetadataFeed `json:"metadataFeeds,omitempty"`
+	// NextPageToken: A token to retrieve the next page of results. If there are no
+	// more results in the list, the value is empty.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unordered list. Locations that the service couldn't reach.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "MetadataFeeds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MetadataFeeds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1ListMetadataFeedsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1ListMetadataFeedsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1ListMetadataJobsResponse: List metadata jobs response.
 type GoogleCloudDataplexV1ListMetadataJobsResponse struct {
 	// MetadataJobs: Metadata jobs under the specified parent location.
@@ -7195,6 +7252,136 @@ type GoogleCloudDataplexV1ListZonesResponse struct {
 
 func (s GoogleCloudDataplexV1ListZonesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListZonesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1MetadataFeed: MetadataFeed contains information related
+// to the metadata feed.
+type GoogleCloudDataplexV1MetadataFeed struct {
+	// CreateTime: Output only. The time when the feed was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Filters: Optional. The filters of the metadata feed. Only the changes that
+	// match the filters are published.
+	Filters *GoogleCloudDataplexV1MetadataFeedFilters `json:"filters,omitempty"`
+	// Labels: Optional. User-defined labels.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. The resource name of the metadata feed, in the format
+	// projects/{project_id_or_number}/locations/{location_id}/metadataFeeds/{metada
+	// ta_feed_id}.
+	Name string `json:"name,omitempty"`
+	// PubsubTopic: Optional. The pubsub topic that you want the metadata feed
+	// messages to publish to. Please grant Dataplex service account the permission
+	// to publish messages to the topic. The service account is:
+	// service-{PROJECT_NUMBER}@gcp-sa-dataplex.iam.gserviceaccount.com.
+	PubsubTopic string `json:"pubsubTopic,omitempty"`
+	// Scope: Required. The scope of the metadata feed. Only the in scope changes
+	// are published.
+	Scope *GoogleCloudDataplexV1MetadataFeedScope `json:"scope,omitempty"`
+	// Uid: Output only. A system-generated, globally unique ID for the metadata
+	// job. If the metadata job is deleted and then re-created with the same name,
+	// this ID is different.
+	Uid string `json:"uid,omitempty"`
+	// UpdateTime: Output only. The time when the feed was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1MetadataFeed) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1MetadataFeed
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1MetadataFeedFilters: Filters defines the type of
+// changes that you want to listen to. You can have multiple entry type filters
+// and multiple aspect type filters. All of the entry type filters are OR'ed
+// together. All of the aspect type filters are OR'ed together. All of the
+// entry type filters and aspect type filters are AND'ed together.
+type GoogleCloudDataplexV1MetadataFeedFilters struct {
+	// AspectTypes: Optional. The aspect types that you want to listen to.
+	// Depending on how the aspect is attached to the entry, in the format:
+	// projects/{project_id_or_number}/locations/{location}/aspectTypes/{aspect_type
+	// _id}.
+	AspectTypes []string `json:"aspectTypes,omitempty"`
+	// ChangeTypes: Optional. The type of change that you want to listen to. If not
+	// specified, all changes are published.
+	//
+	// Possible values:
+	//   "CHANGE_TYPE_UNSPECIFIED" - Unspecified change type. Defaults to
+	// UNSPECIFIED.
+	//   "CREATE" - The change is a create event.
+	//   "UPDATE" - The change is an update event.
+	//   "DELETE" - The change is a delete event.
+	ChangeTypes []string `json:"changeTypes,omitempty"`
+	// EntryTypes: Optional. The entry types that you want to listen to, specified
+	// as relative resource names in the format
+	// projects/{project_id_or_number}/locations/{location}/entryTypes/{entry_type_i
+	// d}. Only entries that belong to the specified entry types are published.
+	EntryTypes []string `json:"entryTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AspectTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AspectTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1MetadataFeedFilters) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1MetadataFeedFilters
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1MetadataFeedScope: Scope defines the scope of the
+// metadata feed. Scopes are exclusive. Only one of the scopes can be
+// specified.
+type GoogleCloudDataplexV1MetadataFeedScope struct {
+	// EntryGroups: Optional. The entry groups whose entries you want to listen to.
+	// Must be in the format:
+	// projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_gr
+	// oup_id}.
+	EntryGroups []string `json:"entryGroups,omitempty"`
+	// OrganizationLevel: Optional. Whether the metadata feed is at the
+	// organization-level. If true, all changes happened to the entries in the same
+	// organization as the feed are published. If false, you must specify a list of
+	// projects or a list of entry groups whose entries you want to listen to.The
+	// default is false.
+	OrganizationLevel bool `json:"organizationLevel,omitempty"`
+	// Projects: Optional. The projects whose entries you want to listen to. Must
+	// be in the same organization as the feed. Must be in the format:
+	// projects/{project_id_or_number}.
+	Projects []string `json:"projects,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EntryGroups") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EntryGroups") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1MetadataFeedScope) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1MetadataFeedScope
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11235,7 +11422,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: List all public locations: Use the path
+// GET /v1/locations. List project-visible locations: Use the path GET
+// /v1/projects/{project_id}/locations. This may include public locations as
+// well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
@@ -34801,6 +34992,626 @@ func (c *ProjectsLocationsLakesZonesEntitiesPartitionsListCall) Pages(ctx contex
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsMetadataFeedsCreateCall struct {
+	s                                 *Service
+	parent                            string
+	googleclouddataplexv1metadatafeed *GoogleCloudDataplexV1MetadataFeed
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Create: Creates a MetadataFeed.
+//
+//   - parent: The resource name of the parent location, in the format
+//     projects/{project_id_or_number}/locations/{location_id}.
+func (r *ProjectsLocationsMetadataFeedsService) Create(parent string, googleclouddataplexv1metadatafeed *GoogleCloudDataplexV1MetadataFeed) *ProjectsLocationsMetadataFeedsCreateCall {
+	c := &ProjectsLocationsMetadataFeedsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddataplexv1metadatafeed = googleclouddataplexv1metadatafeed
+	return c
+}
+
+// MetadataFeedId sets the optional parameter "metadataFeedId": The metadata
+// job ID. If not provided, a unique ID is generated with the prefix
+// metadata-job-.
+func (c *ProjectsLocationsMetadataFeedsCreateCall) MetadataFeedId(metadataFeedId string) *ProjectsLocationsMetadataFeedsCreateCall {
+	c.urlParams_.Set("metadataFeedId", metadataFeedId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": The service
+// validates the request without performing any mutations. The default is
+// false.
+func (c *ProjectsLocationsMetadataFeedsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsMetadataFeedsCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMetadataFeedsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsMetadataFeedsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMetadataFeedsCreateCall) Context(ctx context.Context) *ProjectsLocationsMetadataFeedsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMetadataFeedsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMetadataFeedsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddataplexv1metadatafeed)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/metadataFeeds")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.metadataFeeds.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.metadataFeeds.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMetadataFeedsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.metadataFeeds.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsMetadataFeedsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a MetadataFeed.
+//
+//   - name: The resource name of the metadata feed, in the format
+//     projects/{project_id_or_number}/locations/{location_id}/MetadataFeeds/{meta
+//     data_feed_id}.
+func (r *ProjectsLocationsMetadataFeedsService) Delete(name string) *ProjectsLocationsMetadataFeedsDeleteCall {
+	c := &ProjectsLocationsMetadataFeedsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMetadataFeedsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsMetadataFeedsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMetadataFeedsDeleteCall) Context(ctx context.Context) *ProjectsLocationsMetadataFeedsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMetadataFeedsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMetadataFeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.metadataFeeds.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.metadataFeeds.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMetadataFeedsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.metadataFeeds.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsMetadataFeedsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a MetadataFeed.
+//
+//   - name: The resource name of the metadata feed, in the format
+//     projects/{project_id_or_number}/locations/{location_id}/MetadataFeeds/{meta
+//     data_feed_id}.
+func (r *ProjectsLocationsMetadataFeedsService) Get(name string) *ProjectsLocationsMetadataFeedsGetCall {
+	c := &ProjectsLocationsMetadataFeedsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMetadataFeedsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsMetadataFeedsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsMetadataFeedsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsMetadataFeedsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMetadataFeedsGetCall) Context(ctx context.Context) *ProjectsLocationsMetadataFeedsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMetadataFeedsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMetadataFeedsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.metadataFeeds.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.metadataFeeds.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1MetadataFeed.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMetadataFeedsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1MetadataFeed, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1MetadataFeed{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.metadataFeeds.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsMetadataFeedsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Retrieve a list of MetadataFeeds.
+//
+//   - parent: The resource name of the parent location, in the format
+//     projects/{project_id_or_number}/locations/{location_id}.
+func (r *ProjectsLocationsMetadataFeedsService) List(parent string) *ProjectsLocationsMetadataFeedsListCall {
+	c := &ProjectsLocationsMetadataFeedsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter request. Filters are
+// case-sensitive. The service supports the following formats: labels.key1 =
+// "value1" labels:key1 name = "value"You can combine filters with AND, OR, and
+// NOT operators.
+func (c *ProjectsLocationsMetadataFeedsListCall) Filter(filter string) *ProjectsLocationsMetadataFeedsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": The field to sort the results
+// by, either name or create_time. If not specified, the ordering is undefined.
+func (c *ProjectsLocationsMetadataFeedsListCall) OrderBy(orderBy string) *ProjectsLocationsMetadataFeedsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// metadata feeds to return. The service might return fewer feeds than this
+// value. If unspecified, at most 10 feeds are returned. The maximum value is
+// 1,000.
+func (c *ProjectsLocationsMetadataFeedsListCall) PageSize(pageSize int64) *ProjectsLocationsMetadataFeedsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The page token received
+// from a previous ListMetadataFeeds call. Provide this token to retrieve the
+// subsequent page of results. When paginating, all other parameters that are
+// provided to the ListMetadataFeeds request must match the call that provided
+// the page token.
+func (c *ProjectsLocationsMetadataFeedsListCall) PageToken(pageToken string) *ProjectsLocationsMetadataFeedsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMetadataFeedsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsMetadataFeedsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsMetadataFeedsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsMetadataFeedsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMetadataFeedsListCall) Context(ctx context.Context) *ProjectsLocationsMetadataFeedsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMetadataFeedsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMetadataFeedsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/metadataFeeds")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.metadataFeeds.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.metadataFeeds.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1ListMetadataFeedsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMetadataFeedsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1ListMetadataFeedsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1ListMetadataFeedsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.metadataFeeds.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsMetadataFeedsListCall) Pages(ctx context.Context, f func(*GoogleCloudDataplexV1ListMetadataFeedsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsMetadataFeedsPatchCall struct {
+	s                                 *Service
+	name                              string
+	googleclouddataplexv1metadatafeed *GoogleCloudDataplexV1MetadataFeed
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Patch: Updates a MetadataFeed.
+//
+//   - name: Identifier. The resource name of the metadata feed, in the format
+//     projects/{project_id_or_number}/locations/{location_id}/metadataFeeds/{meta
+//     data_feed_id}.
+func (r *ProjectsLocationsMetadataFeedsService) Patch(name string, googleclouddataplexv1metadatafeed *GoogleCloudDataplexV1MetadataFeed) *ProjectsLocationsMetadataFeedsPatchCall {
+	c := &ProjectsLocationsMetadataFeedsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddataplexv1metadatafeed = googleclouddataplexv1metadatafeed
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Mask of fields to
+// update.
+func (c *ProjectsLocationsMetadataFeedsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsMetadataFeedsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": Only validate the
+// request, but do not perform mutations. The default is false.
+func (c *ProjectsLocationsMetadataFeedsPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsMetadataFeedsPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMetadataFeedsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsMetadataFeedsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMetadataFeedsPatchCall) Context(ctx context.Context) *ProjectsLocationsMetadataFeedsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMetadataFeedsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMetadataFeedsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddataplexv1metadatafeed)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.metadataFeeds.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.metadataFeeds.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMetadataFeedsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.metadataFeeds.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsMetadataJobsCancelCall struct {

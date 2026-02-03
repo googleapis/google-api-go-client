@@ -419,7 +419,8 @@ func (s AdaptiveMtSentence) MarshalJSON() ([]byte, error) {
 type AdaptiveMtTranslateRequest struct {
 	// Content: Required. The content of the input in string format.
 	Content []string `json:"content,omitempty"`
-	// Dataset: Required. The resource name for the dataset to use for adaptive MT.
+	// Dataset: Required. The resource name for the dataset to use for adaptive MT
+	// translation.
 	// `projects/{project}/locations/{location-id}/adaptiveMtDatasets/{dataset}`
 	Dataset string `json:"dataset,omitempty"`
 	// GlossaryConfig: Optional. Glossary to be applied. The glossary must be
@@ -3957,7 +3958,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
@@ -5352,7 +5357,7 @@ type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall struct {
 
 // List: Lists all AdaptiveMtFiles associated to an AdaptiveMtDataset.
 //
-//   - parent: The resource name of the project from which to list the Adaptive
+//   - parent: The resource name of the dataset from which to list the Adaptive
 //     MT files.
 //     `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset}`.
 func (r *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesService) List(parent string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall {
@@ -5501,8 +5506,8 @@ type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCa
 
 // List: Lists all AdaptiveMtSentences under a given file/dataset.
 //
-//   - parent: The resource name of the project from which to list the Adaptive
-//     MT files. The following format lists all sentences under a file.
+//   - parent: The resource name of the Adaptive MT file from which to list the
+//     sentences. The following format lists all sentences under a file.
 //     `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset}/adapt
 //     iveMtFiles/{file}` The following format lists all sentences within a
 //     dataset.
@@ -5653,8 +5658,8 @@ type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall struct {
 
 // List: Lists all AdaptiveMtSentences under a given file/dataset.
 //
-//   - parent: The resource name of the project from which to list the Adaptive
-//     MT files. The following format lists all sentences under a file.
+//   - parent: The resource name of the Adaptive MT file from which to list the
+//     sentences. The following format lists all sentences under a file.
 //     `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset}/adapt
 //     iveMtFiles/{file}` The following format lists all sentences within a
 //     dataset.

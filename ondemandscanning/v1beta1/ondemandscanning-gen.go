@@ -1089,6 +1089,9 @@ type DiscoveryOccurrence struct {
 	Files []*File `json:"files,omitempty"`
 	// LastScanTime: The last time this resource was scanned.
 	LastScanTime string `json:"lastScanTime,omitempty"`
+	// LastVulnerabilityUpdateTime: The last time vulnerability scan results
+	// changed.
+	LastVulnerabilityUpdateTime string `json:"lastVulnerabilityUpdateTime,omitempty"`
 	// SbomStatus: The status of an SBOM generation.
 	SbomStatus *SBOMStatus `json:"sbomStatus,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnalysisCompleted") to

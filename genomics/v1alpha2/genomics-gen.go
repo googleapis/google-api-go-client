@@ -1072,7 +1072,8 @@ func (s *Pipeline) MarshalJSON() ([]byte, error) {
 // must be set otherwise. The pipeline runner should add a key/value
 // pair to either the inputs or outputs map. The indicated data copies
 // will be carried out before/after pipeline execution, just as if the
-// corresponding arguments were provided to `gcloud storage cp`. For example:// Given the following `PipelineParameter`, specified in the
+// corresponding arguments were provided to `gcloud storage cp`. For example:
+// Given the following `PipelineParameter`, specified in the
 // `inputParameters` list: ``` {name: "input_file", localCopy: {path:
 // "file.txt", disk: "pd1"}} ``` where `disk` is defined in the
 // `PipelineResources` object as: ``` {name: "pd1", mountPoint:

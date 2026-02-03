@@ -282,7 +282,7 @@ type AccountConnector struct {
 	Name string `json:"name,omitempty"`
 	// OauthStartUri: Output only. Start OAuth flow by clicking on this URL.
 	OauthStartUri string `json:"oauthStartUri,omitempty"`
-	// ProviderOauthConfig: Provider OAuth config.
+	// ProviderOauthConfig: Optional. Provider OAuth config.
 	ProviderOauthConfig *ProviderOAuthConfig `json:"providerOauthConfig,omitempty"`
 	// UpdateTime: Output only. The timestamp when the accountConnector was
 	// updated.
@@ -436,6 +436,54 @@ func (s ArtifactDeployment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BasicAuthentication: Basic authentication with username and password.
+type BasicAuthentication struct {
+	// PasswordSecretVersion: The password SecretManager secret version to
+	// authenticate as.
+	PasswordSecretVersion string `json:"passwordSecretVersion,omitempty"`
+	// Username: Required. The username to authenticate as.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PasswordSecretVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PasswordSecretVersion") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BasicAuthentication) MarshalJSON() ([]byte, error) {
+	type NoMethod BasicAuthentication
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BearerTokenAuthentication: Bearer token authentication with a token.
+type BearerTokenAuthentication struct {
+	// TokenSecretVersion: Optional. The token SecretManager secret version to
+	// authenticate as.
+	TokenSecretVersion string `json:"tokenSecretVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TokenSecretVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TokenSecretVersion") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BearerTokenAuthentication) MarshalJSON() ([]byte, error) {
+	type NoMethod BearerTokenAuthentication
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BitbucketCloudConfig: Configuration for connections to an instance of
 // Bitbucket Cloud.
 type BitbucketCloudConfig struct {
@@ -571,6 +619,9 @@ type Connection struct {
 	// GitlabEnterpriseConfig: Configuration for connections to an instance of
 	// GitLab Enterprise.
 	GitlabEnterpriseConfig *GitLabEnterpriseConfig `json:"gitlabEnterpriseConfig,omitempty"`
+	// HttpConfig: Optional. Configuration for connections to an HTTP service
+	// provider.
+	HttpConfig *GenericHTTPEndpointConfig `json:"httpConfig,omitempty"`
 	// InstallationState: Output only. Installation state of the Connection.
 	InstallationState *InstallationState `json:"installationState,omitempty"`
 	// Labels: Optional. Labels as key value pairs
@@ -581,6 +632,9 @@ type Connection struct {
 	// Reconciling: Output only. Set to true when the connection is being set up or
 	// updated in the background.
 	Reconciling bool `json:"reconciling,omitempty"`
+	// SecureSourceManagerInstanceConfig: Configuration for connections to an
+	// instance of Secure Source Manager.
+	SecureSourceManagerInstanceConfig *SecureSourceManagerInstanceConfig `json:"secureSourceManagerInstanceConfig,omitempty"`
 	// Uid: Output only. A system-assigned unique identifier for the Connection.
 	Uid string `json:"uid,omitempty"`
 	// UpdateTime: Output only. [Output only] Update timestamp
@@ -645,7 +699,7 @@ type DeploymentEvent struct {
 	// This would be the min of all ArtifactDeployment deploy_times.
 	DeployTime string `json:"deployTime,omitempty"`
 	// Name: Identifier. The name of the DeploymentEvent. This name is provided by
-	// DCI. Format:
+	// Developer Connect insights. Format:
 	// projects/{project}/locations/{location}/insightsConfigs/{insights_config}/dep
 	// loymentEvents/{uuid}
 	Name string `json:"name,omitempty"`
@@ -976,6 +1030,44 @@ func (s GKEWorkload) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GenericHTTPEndpointConfig: Defines the configuration for connections to an
+// HTTP service provider.
+type GenericHTTPEndpointConfig struct {
+	// BasicAuthentication: Optional. Basic authentication with username and
+	// password.
+	BasicAuthentication *BasicAuthentication `json:"basicAuthentication,omitempty"`
+	// BearerTokenAuthentication: Optional. Bearer token authentication with a
+	// token.
+	BearerTokenAuthentication *BearerTokenAuthentication `json:"bearerTokenAuthentication,omitempty"`
+	// HostUri: Required. Immutable. The service provider's https endpoint.
+	HostUri string `json:"hostUri,omitempty"`
+	// ServiceDirectoryConfig: Optional. Configuration for using Service Directory
+	// to privately connect to a HTTP service provider. This should only be set if
+	// the Http service provider is hosted on-premises and not reachable by public
+	// internet. If this field is left empty, calls to the HTTP service provider
+	// will be made over the public internet.
+	ServiceDirectoryConfig *ServiceDirectoryConfig `json:"serviceDirectoryConfig,omitempty"`
+	// SslCaCertificate: Optional. The SSL certificate to use for requests to the
+	// HTTP service provider.
+	SslCaCertificate string `json:"sslCaCertificate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BasicAuthentication") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BasicAuthentication") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenericHTTPEndpointConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GenericHTTPEndpointConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GitHubConfig: Configuration for connections to github.com.
 type GitHubConfig struct {
 	// AppInstallationId: Optional. GitHub App installation id.
@@ -1030,6 +1122,9 @@ type GitHubEnterpriseConfig struct {
 	// InstallationUri: Output only. The URI to navigate to in order to manage the
 	// installation associated with this GitHubEnterpriseConfig.
 	InstallationUri string `json:"installationUri,omitempty"`
+	// Organization: Optional. Immutable. GitHub Enterprise organization in which
+	// the GitHub App is created.
+	Organization string `json:"organization,omitempty"`
 	// PrivateKeySecretVersion: Optional. SecretManager resource containing the
 	// private key of the GitHub App, formatted as
 	// `projects/*/secrets/*/versions/*` or
@@ -1361,7 +1456,7 @@ func (s HttpBody) MarshalJSON() ([]byte, error) {
 
 // InsightsConfig: The InsightsConfig resource is the core configuration object
 // to capture events from your Software Development Lifecycle. It acts as the
-// central hub for managing how Developer connect understands your application,
+// central hub for managing how Developer Connect understands your application,
 // its runtime environments, and the artifacts deployed within them.
 type InsightsConfig struct {
 	// Annotations: Optional. User specified annotations. See
@@ -1386,7 +1481,7 @@ type InsightsConfig struct {
 	// Name: Identifier. The name of the InsightsConfig. Format:
 	// projects/{project}/locations/{location}/insightsConfigs/{insightsConfig}
 	Name string `json:"name,omitempty"`
-	// Projects: Optional. The GCP projects to track with the InsightsConfig.
+	// Projects: Optional. The projects to track with the InsightsConfig.
 	Projects *Projects `json:"projects,omitempty"`
 	// Reconciling: Output only. Reconciling
 	// (https://google.aip.dev/128#reconciliation). Set to true if the current
@@ -2031,7 +2126,7 @@ func (s ProcessGitLabWebhookRequest) MarshalJSON() ([]byte, error) {
 
 // Projects: Projects represents the projects to track with the InsightsConfig.
 type Projects struct {
-	// ProjectIds: Optional. The GCP Project IDs. Format: projects/{project}
+	// ProjectIds: Optional. The project IDs. Format: {project}
 	ProjectIds []string `json:"projectIds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ProjectIds") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2057,7 +2152,7 @@ type ProviderOAuthConfig struct {
 	// event of changing scopes, user records under AccountConnector will be
 	// deleted and users will re-auth again.
 	Scopes []string `json:"scopes,omitempty"`
-	// SystemProviderId: Immutable. Developer Connect provided OAuth.
+	// SystemProviderId: Optional. Immutable. Developer Connect provided OAuth.
 	//
 	// Possible values:
 	//   "SYSTEM_PROVIDER_UNSPECIFIED" - No system provider specified.
@@ -2139,6 +2234,30 @@ func (s RuntimeConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SecureSourceManagerInstanceConfig: Configuration for connections to SSM
+// instance
+type SecureSourceManagerInstanceConfig struct {
+	// Instance: Required. Immutable. SSM instance resource, formatted as
+	// `projects/*/locations/*/instances/*`
+	Instance string `json:"instance,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Instance") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Instance") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SecureSourceManagerInstanceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SecureSourceManagerInstanceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ServiceDirectoryConfig: ServiceDirectoryConfig represents Service Directory
 // configuration for a connection.
 type ServiceDirectoryConfig struct {
@@ -2171,10 +2290,10 @@ type StartOAuthResponse struct {
 	AuthUri string `json:"authUri,omitempty"`
 	// ClientId: The client ID to the OAuth App of the service provider.
 	ClientId string `json:"clientId,omitempty"`
-	// CodeChallenge: https://datatracker.ietf.org/doc/html/rfc7636#section-4.1
-	// Follow http://shortn/_WFYl6U0NyC to include it in the AutoCodeURL.
+	// CodeChallenge: Please refer to
+	// https://datatracker.ietf.org/doc/html/rfc7636#section-4.1
 	CodeChallenge string `json:"codeChallenge,omitempty"`
-	// CodeChallengeMethod:
+	// CodeChallengeMethod: Please refer to
 	// https://datatracker.ietf.org/doc/html/rfc7636#section-4.2
 	CodeChallengeMethod string `json:"codeChallengeMethod,omitempty"`
 	// Scopes: The list of scopes requested by the application.
@@ -2442,7 +2561,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

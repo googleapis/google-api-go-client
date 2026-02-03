@@ -4096,6 +4096,14 @@ type MirroringEndpointGroup struct {
 	// is a terminal state and the endpoint group is not expected to recover. The
 	// only permitted operation is to retry deleting the endpoint group.
 	State string `json:"state,omitempty"`
+	// Type: Immutable. The type of the endpoint group. If left unspecified,
+	// defaults to DIRECT.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Not set.
+	//   "DIRECT" - An endpoint group that sends packets to a single deployment
+	// group.
+	Type string `json:"type,omitempty"`
 	// UpdateTime: Output only. The timestamp when the resource was most recently
 	// updated. See https://google.aip.dev/148#timestamps.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -8584,7 +8592,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

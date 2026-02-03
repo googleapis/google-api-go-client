@@ -914,6 +914,10 @@ type GoogleCloudRunV2Execution struct {
 	// CancelledCount: Output only. The number of tasks which reached phase
 	// Cancelled.
 	CancelledCount int64 `json:"cancelledCount,omitempty"`
+	// Client: Output only. Arbitrary identifier for the API client.
+	Client string `json:"client,omitempty"`
+	// ClientVersion: Output only. Arbitrary version identifier for the API client.
+	ClientVersion string `json:"clientVersion,omitempty"`
 	// CompletionTime: Output only. Represents time when the execution was
 	// completed. It is not guaranteed to be set in happens-before order across
 	// separate operations.
@@ -957,7 +961,7 @@ type GoogleCloudRunV2Execution struct {
 	// (https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`,
 	// `BETA`, and `GA`. Note that this value might not be what was used as input.
 	// For example, if ALPHA was provided as input in the parent resource, but only
-	// BETA and GA-level features are were, this field will be BETA.
+	// BETA and GA-level features are used, this field will be BETA.
 	//
 	// Possible values:
 	//   "LAUNCH_STAGE_UNSPECIFIED" - Do not use this default value.
@@ -1111,6 +1115,10 @@ type GoogleCloudRunV2ExecutionTemplate struct {
 	// annotations in v1 now have a corresponding field in v2 ExecutionTemplate.
 	// This field follows Kubernetes annotations' namespacing, limits, and rules.
 	Annotations map[string]string `json:"annotations,omitempty"`
+	// Client: Optional. Arbitrary identifier for the API client.
+	Client string `json:"client,omitempty"`
+	// ClientVersion: Optional. Arbitrary version identifier for the API client.
+	ClientVersion string `json:"clientVersion,omitempty"`
 	// Labels: Unstructured key value map that can be used to organize and
 	// categorize objects. User-provided labels are shared with Google's billing
 	// system, so they can be used to filter, or break down billing charges by
@@ -2284,6 +2292,10 @@ type GoogleCloudRunV2Revision struct {
 	// external tools to store and arbitrary metadata. They are not queryable and
 	// should be preserved when modifying objects.
 	Annotations map[string]string `json:"annotations,omitempty"`
+	// Client: Output only. Arbitrary identifier for the API client.
+	Client string `json:"client,omitempty"`
+	// ClientVersion: Output only. Arbitrary version identifier for the API client.
+	ClientVersion string `json:"clientVersion,omitempty"`
 	// Conditions: Output only. The Condition of this Revision, containing its
 	// readiness status, and detailed error information in case it did not reach a
 	// serving state.
@@ -2348,7 +2360,7 @@ type GoogleCloudRunV2Revision struct {
 	// (https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`,
 	// `BETA`, and `GA`. Note that this value might not be what was used as input.
 	// For example, if ALPHA was provided as input in the parent resource, but only
-	// BETA and GA-level features are were, this field will be BETA.
+	// BETA and GA-level features are used, this field will be BETA.
 	//
 	// Possible values:
 	//   "LAUNCH_STAGE_UNSPECIFIED" - Do not use this default value.
@@ -2516,6 +2528,10 @@ type GoogleCloudRunV2RevisionTemplate struct {
 	// field in v2 RevisionTemplate. This field follows Kubernetes annotations'
 	// namespacing, limits, and rules.
 	Annotations map[string]string `json:"annotations,omitempty"`
+	// Client: Optional. Arbitrary identifier for the API client.
+	Client string `json:"client,omitempty"`
+	// ClientVersion: Optional. Arbitrary version identifier for the API client.
+	ClientVersion string `json:"clientVersion,omitempty"`
 	// Containers: Holds the single container that defines the unit of execution
 	// for this Revision.
 	Containers []*GoogleCloudRunV2Container `json:"containers,omitempty"`
@@ -3913,6 +3929,10 @@ type GoogleCloudRunV2WorkerPoolRevisionTemplate struct {
 	// field in v2 WorkerPoolRevisionTemplate. This field follows Kubernetes
 	// annotations' namespacing, limits, and rules.
 	Annotations map[string]string `json:"annotations,omitempty"`
+	// Client: Optional. Arbitrary identifier for the API client.
+	Client string `json:"client,omitempty"`
+	// ClientVersion: Optional. Arbitrary version identifier for the API client.
+	ClientVersion string `json:"clientVersion,omitempty"`
 	// Containers: Holds list of the containers that defines the unit of execution
 	// for this Revision.
 	Containers []*GoogleCloudRunV2Container `json:"containers,omitempty"`

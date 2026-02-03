@@ -2280,6 +2280,17 @@ func (meth *Method) generateCode() {
 	} else {
 		pn(`reqHeaders := gensupport.SetHeaders(c.s.userAgent(), %s, c.header_, "x-goog-api-version", %q)`, contentType, apiVersion)
 	}
+	if meth.supportsMediaUpload() && meth.api.Name == "storage" {
+		comment = "Set auto checksum in case of a single chunk upload if enabled."
+		p("%s", asComment("", comment))
+		pn("if c.object != nil &&")
+		pn(`	c.object.Crc32c == "" &&`)
+		pn("	c.mediaInfo_ != nil &&")
+		pn(`	c.mediaInfo_.UploadType() == "multipart" &&`)
+		pn("	c.mediaInfo_.ChecksumEnabled() {")
+		pn("	c.object.Crc32c = c.mediaInfo_.GetAutoChecksum()")
+		pn("}")
+	}
 	if httpMethod == "GET" {
 		pn(`if c.ifNoneMatch_ != "" {`)
 		pn(` reqHeaders.Set("If-None-Match",  c.ifNoneMatch_)`)

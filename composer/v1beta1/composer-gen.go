@@ -1832,7 +1832,8 @@ type PrivateEnvironmentConfig struct {
 	// EnablePrivateEnvironment: Optional. If `true`, a Private IP Cloud Composer
 	// environment is created. If this field is set to true,
 	// `IPAllocationPolicy.use_ip_aliases` must be set to true for Cloud Composer
-	// environments in versions composer-1.*.*-airflow-*.*.*.
+	// environments in versions composer-1.*.*-airflow-*.*.*. This field is going
+	// to be deprecated. Use `networking_type` instead.
 	EnablePrivateEnvironment bool `json:"enablePrivateEnvironment,omitempty"`
 	// EnablePrivatelyUsedPublicIps: Optional. When enabled, IPs from public
 	// (non-RFC1918) ranges can be used for

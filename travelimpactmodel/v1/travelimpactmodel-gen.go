@@ -537,6 +537,82 @@ func (s Market) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// McpToolDataHandlingProfile: Profile describing the data handling
+// characteristics of an MCP tool. When used within the McpTool.meta field,
+// this message should be packed into a google.protobuf.Any and associated with
+// the key: "google.com/tool.profiles/data_handling"
+type McpToolDataHandlingProfile struct {
+	// InputDataAccessLevel: // The data access level of the tool's inputs.
+	//
+	// Possible values:
+	//   "DATA_ACCESS_LEVEL_UNSPECIFIED" - The default value. This value is unused.
+	//   "DATA_ACCESS_LEVEL_PUBLIC" - Public data.
+	//   "DATA_ACCESS_LEVEL_CONFIDENTIAL" - Confidential data.
+	//   "DATA_ACCESS_LEVEL_NEED_TO_KNOW" - Need-to-know data.
+	//   "DATA_ACCESS_LEVEL_PII" - Personally Identifiable Information (PII) data.
+	//   "DATA_ACCESS_LEVEL_USER" - User data.
+	//   "DATA_ACCESS_LEVEL_NO_DATA_ACCESS" - The tool does not access any data.
+	InputDataAccessLevel string `json:"inputDataAccessLevel,omitempty"`
+	// OutputDataAccessLevel: The data access level of the tool's outputs.
+	//
+	// Possible values:
+	//   "DATA_ACCESS_LEVEL_UNSPECIFIED" - The default value. This value is unused.
+	//   "DATA_ACCESS_LEVEL_PUBLIC" - Public data.
+	//   "DATA_ACCESS_LEVEL_CONFIDENTIAL" - Confidential data.
+	//   "DATA_ACCESS_LEVEL_NEED_TO_KNOW" - Need-to-know data.
+	//   "DATA_ACCESS_LEVEL_PII" - Personally Identifiable Information (PII) data.
+	//   "DATA_ACCESS_LEVEL_USER" - User data.
+	//   "DATA_ACCESS_LEVEL_NO_DATA_ACCESS" - The tool does not access any data.
+	OutputDataAccessLevel string `json:"outputDataAccessLevel,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InputDataAccessLevel") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InputDataAccessLevel") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s McpToolDataHandlingProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod McpToolDataHandlingProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// McpToolLifecycleProfile: Profile describing the lifecycle stage of an MCP
+// tool. When used within the McpTool.meta field, this message should be packed
+// into a google.protobuf.Any and associated with the key:
+// "google.com/tool.profiles/lifecycle"
+type McpToolLifecycleProfile struct {
+	// LaunchState: Output only. The current launch state of the MCP tool.
+	//
+	// Possible values:
+	//   "LAUNCH_STATE_UNSPECIFIED" - The default value. This value is unused.
+	//   "LAUNCH_STATE_DEVELOPMENT" - The tool is currently in development.
+	//   "LAUNCH_STATE_PRODUCTION_PREVIEW" - The tool is in production preview.
+	//   "LAUNCH_STATE_GENERAL_AVAILABILITY" - The tool is generally available.
+	LaunchState string `json:"launchState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LaunchState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LaunchState") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s McpToolLifecycleProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod McpToolLifecycleProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ModelVersion: Travel Impact Model version. For more information about the
 // model versioning see GitHub
 // (https://github.com/google/travel-impact-model/#versioning).

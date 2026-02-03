@@ -1543,6 +1543,10 @@ func (s BasePlan) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BasePriceOfferPhase: Details about base price offer phase.
+type BasePriceOfferPhase struct {
+}
+
 // BatchDeleteOneTimeProductOffersRequest: Request message for
 // BatchDeleteOneTimeProductOffers.
 type BatchDeleteOneTimeProductOffersRequest struct {
@@ -2907,6 +2911,87 @@ func (s DeactivateSubscriptionOfferRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DeferSubscriptionPurchaseRequest: Request for the v2
+// purchases.subscriptions.defer API.
+type DeferSubscriptionPurchaseRequest struct {
+	// DeferralContext: Required. Details about the subscription deferral.
+	DeferralContext *DeferralContext `json:"deferralContext,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeferralContext") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeferralContext") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeferSubscriptionPurchaseRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeferSubscriptionPurchaseRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeferSubscriptionPurchaseResponse: Response for the v2
+// purchases.subscriptions.defer API.
+type DeferSubscriptionPurchaseResponse struct {
+	// ItemExpiryTimeDetails: The new expiry time for each subscription items.
+	ItemExpiryTimeDetails []*ItemExpiryTimeDetails `json:"itemExpiryTimeDetails,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ItemExpiryTimeDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ItemExpiryTimeDetails") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeferSubscriptionPurchaseResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod DeferSubscriptionPurchaseResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeferralContext: Deferral context of the purchases.subscriptionsv2.defer
+// API.
+type DeferralContext struct {
+	// DeferDuration: Required. The duration by which all subscription items should
+	// be deferred.
+	DeferDuration string `json:"deferDuration,omitempty"`
+	// Etag: Required. The API will fail if the etag does not match the latest etag
+	// for this subscription. The etag is retrieved from
+	// purchases.subscriptionsv2.get:
+	// https://developers.google.com/android-publisher/api-ref/rest/v3/purchases.subscriptionsv2/get
+	Etag string `json:"etag,omitempty"`
+	// ValidateOnly: If set to "true", the request is a dry run to validate the
+	// effect of Defer, the subscription would not be impacted.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeferDuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeferDuration") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeferralContext) MarshalJSON() ([]byte, error) {
+	type NoMethod DeferralContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DeferredItemRemoval: Information related to deferred item replacement.
 type DeferredItemRemoval struct {
 }
@@ -3881,6 +3966,10 @@ func (s ExternallyHostedApk) MarshalJSON() ([]byte, error) {
 type FreeTrialDetails struct {
 }
 
+// FreeTrialOfferPhase: Details about free trial offer phase.
+type FreeTrialOfferPhase struct {
+}
+
 // FullRefund: A full refund of the remaining amount of a transaction.
 type FullRefund struct {
 }
@@ -4819,6 +4908,35 @@ func (s IntroductoryPriceInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// IntroductoryPriceOfferPhase: Details about introductory price offer phase.
+type IntroductoryPriceOfferPhase struct {
+}
+
+// ItemExpiryTimeDetails: Expiry time details of a subscription item.
+type ItemExpiryTimeDetails struct {
+	// ExpiryTime: The new expiry time for this subscription item.
+	ExpiryTime string `json:"expiryTime,omitempty"`
+	// ProductId: The product ID of the subscription item (for example,
+	// 'premium_plan').
+	ProductId string `json:"productId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExpiryTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExpiryTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ItemExpiryTimeDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ItemExpiryTimeDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ItemReplacement: Details about a subscription line item that is being
 // replaced.
 type ItemReplacement struct {
@@ -5488,6 +5606,35 @@ type OfferDetails struct {
 
 func (s OfferDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod OfferDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OfferPhase: Offer phase details.
+type OfferPhase struct {
+	// BasePrice: Set when the offer phase is a base plan pricing phase.
+	BasePrice *BasePriceOfferPhase `json:"basePrice,omitempty"`
+	// FreeTrial: Set when the offer phase is a free trial.
+	FreeTrial *FreeTrialOfferPhase `json:"freeTrial,omitempty"`
+	// IntroductoryPrice: Set when the offer phase is an introductory price offer
+	// phase.
+	IntroductoryPrice *IntroductoryPriceOfferPhase `json:"introductoryPrice,omitempty"`
+	// ProrationPeriod: Set when the offer phase is a proration period.
+	ProrationPeriod *ProrationPeriodOfferPhase `json:"prorationPeriod,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BasePrice") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BasePrice") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OfferPhase) MarshalJSON() ([]byte, error) {
+	type NoMethod OfferPhase
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7057,6 +7204,37 @@ type ProrationPeriodDetails struct {
 
 func (s ProrationPeriodDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ProrationPeriodDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ProrationPeriodOfferPhase: Details about proration period offer phase.
+type ProrationPeriodOfferPhase struct {
+	// OriginalOfferPhaseType: The original offer phase type before the proration
+	// period. Only set when the proration period is updated from an existing offer
+	// phase.
+	//
+	// Possible values:
+	//   "ORIGINAL_OFFER_PHASE_TYPE_UNSPECIFIED" - Unspecified original offer phase
+	// type.
+	//   "BASE" - The subscription is in the base pricing phase (e.g. full price).
+	//   "INTRODUCTORY" - The subscription is in an introductory pricing phase.
+	//   "FREE_TRIAL" - The subscription is in a free trial.
+	OriginalOfferPhaseType string `json:"originalOfferPhaseType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OriginalOfferPhaseType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OriginalOfferPhaseType") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProrationPeriodOfferPhase) MarshalJSON() ([]byte, error) {
+	type NoMethod ProrationPeriodOfferPhase
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8815,6 +8993,8 @@ type SubscriptionPurchaseLineItem struct {
 	LatestSuccessfulOrderId string `json:"latestSuccessfulOrderId,omitempty"`
 	// OfferDetails: The offer details for this item.
 	OfferDetails *OfferDetails `json:"offerDetails,omitempty"`
+	// OfferPhase: Current offer phase details for this item.
+	OfferPhase *OfferPhase `json:"offerPhase,omitempty"`
 	// PrepaidPlan: The item is prepaid.
 	PrepaidPlan *PrepaidPlan `json:"prepaidPlan,omitempty"`
 	// ProductId: The purchased product ID (for example, 'monthly001').
@@ -8855,6 +9035,10 @@ type SubscriptionPurchaseV2 struct {
 	// present if the subscription currently has subscription_state
 	// SUBSCRIPTION_STATE_CANCELED or SUBSCRIPTION_STATE_EXPIRED.
 	CanceledStateContext *CanceledStateContext `json:"canceledStateContext,omitempty"`
+	// Etag: Entity tag representing the current state of the subscription. The
+	// developer will provide this etag for subscription actions. This etag is
+	// always present for auto-renewing and prepaid subscriptions.
+	Etag string `json:"etag,omitempty"`
 	// ExternalAccountIdentifiers: User account identifier in the third-party
 	// service.
 	ExternalAccountIdentifiers *ExternalAccountIdentifiers `json:"externalAccountIdentifiers,omitempty"`
@@ -9672,9 +9856,9 @@ func (s *TrackRelease) UnmarshalJSON(data []byte) error {
 }
 
 // TrackTargetedCountry: Representation of a single country where the contents
-// of a track are available.
+// of a track can be made available.
 type TrackTargetedCountry struct {
-	// CountryCode: The country to target, as a two-letter CLDR code.
+	// CountryCode: The country that can be targeted, as a two-letter CLDR code.
 	CountryCode string `json:"countryCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CountryCode") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -24576,6 +24760,116 @@ func (c *PurchasesSubscriptionsv2CancelCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptionsv2.cancel", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type PurchasesSubscriptionsv2DeferCall struct {
+	s                                *Service
+	packageName                      string
+	token                            string
+	defersubscriptionpurchaserequest *DeferSubscriptionPurchaseRequest
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Defer: Defers the renewal of a subscription.
+//
+//   - packageName: The package of the application for which this subscription
+//     was purchased (for example, 'com.some.thing').
+//   - token: The token provided to the user's device when the subscription was
+//     purchased.
+func (r *PurchasesSubscriptionsv2Service) Defer(packageName string, token string, defersubscriptionpurchaserequest *DeferSubscriptionPurchaseRequest) *PurchasesSubscriptionsv2DeferCall {
+	c := &PurchasesSubscriptionsv2DeferCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.token = token
+	c.defersubscriptionpurchaserequest = defersubscriptionpurchaserequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PurchasesSubscriptionsv2DeferCall) Fields(s ...googleapi.Field) *PurchasesSubscriptionsv2DeferCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PurchasesSubscriptionsv2DeferCall) Context(ctx context.Context) *PurchasesSubscriptionsv2DeferCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PurchasesSubscriptionsv2DeferCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PurchasesSubscriptionsv2DeferCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.defersubscriptionpurchaserequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{token}:defer")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"token":       c.token,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptionsv2.defer", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.purchases.subscriptionsv2.defer" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DeferSubscriptionPurchaseResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PurchasesSubscriptionsv2DeferCall) Do(opts ...googleapi.CallOption) (*DeferSubscriptionPurchaseResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DeferSubscriptionPurchaseResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptionsv2.defer", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

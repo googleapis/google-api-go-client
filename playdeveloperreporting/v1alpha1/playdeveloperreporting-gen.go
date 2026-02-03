@@ -484,8 +484,8 @@ func (s GooglePlayDeveloperReportingV1alpha1App) MarshalJSON() ([]byte, error) {
 // GooglePlayDeveloperReportingV1alpha1AppVersion: Representations of an app
 // version.
 type GooglePlayDeveloperReportingV1alpha1AppVersion struct {
-	// VersionCode: Numeric version code of the app version (set by the app's
-	// developer).
+	// VersionCode: Optional. Numeric version code of the app version (set by the
+	// app's developer).
 	VersionCode int64 `json:"versionCode,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "VersionCode") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -754,7 +754,7 @@ func (s GooglePlayDeveloperReportingV1alpha1DimensionValue) MarshalJSON() ([]byt
 type GooglePlayDeveloperReportingV1alpha1ErrorCountMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1alpha1FreshnessInfo `json:"freshnessInfo,omitempty"`
-	// Name: The resource name. Format: apps/{app}/errorCountMetricSet
+	// Name: Identifier. The resource name. Format: apps/{app}/errorCountMetricSet
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -892,7 +892,8 @@ type GooglePlayDeveloperReportingV1alpha1ErrorReport struct {
 	// that would result in similar but more recent error reports being assigned to
 	// a different issue.
 	Issue string `json:"issue,omitempty"`
-	// Name: The resource name of the report. Format: apps/{app}/{report}
+	// Name: Identifier. The resource name of the report. Format:
+	// apps/{app}/{report}
 	Name string `json:"name,omitempty"`
 	// OsVersion: The OS version on which an event in this error report occurred
 	// on.
@@ -1253,7 +1254,8 @@ func (s GooglePlayDeveloperReportingV1alpha1MetricValue) MarshalJSON() ([]byte, 
 // GooglePlayDeveloperReportingV1alpha1MetricsRow: Represents a row of
 // dimensions and metrics.
 type GooglePlayDeveloperReportingV1alpha1MetricsRow struct {
-	// AggregationPeriod: Granularity of the aggregation period of the row.
+	// AggregationPeriod: Optional. Granularity of the aggregation period of the
+	// row.
 	//
 	// Possible values:
 	//   "AGGREGATION_PERIOD_UNSPECIFIED" - Unspecified granularity.
@@ -1262,12 +1264,12 @@ type GooglePlayDeveloperReportingV1alpha1MetricsRow struct {
 	//   "FULL_RANGE" - Data is aggregated over the full timeline range.
 	// Effectively this produces a single value rather than a timeline.
 	AggregationPeriod string `json:"aggregationPeriod,omitempty"`
-	// Dimensions: Dimension columns in the row.
+	// Dimensions: Optional. Dimension columns in the row.
 	Dimensions []*GooglePlayDeveloperReportingV1alpha1DimensionValue `json:"dimensions,omitempty"`
-	// Metrics: Metric columns in the row.
+	// Metrics: Optional. Metric columns in the row.
 	Metrics []*GooglePlayDeveloperReportingV1alpha1MetricValue `json:"metrics,omitempty"`
-	// StartTime: Starting date (and time for hourly aggregation) of the period
-	// covered by this row.
+	// StartTime: Optional. Starting date (and time for hourly aggregation) of the
+	// period covered by this row.
 	StartTime *GoogleTypeDateTime `json:"startTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AggregationPeriod") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1290,7 +1292,7 @@ func (s GooglePlayDeveloperReportingV1alpha1MetricsRow) MarshalJSON() ([]byte, e
 // GooglePlayDeveloperReportingV1alpha1OsVersion: Representation of an OS
 // version.
 type GooglePlayDeveloperReportingV1alpha1OsVersion struct {
-	// ApiLevel: Numeric version code of the OS - API level
+	// ApiLevel: Optional. Numeric version code of the OS - API level
 	ApiLevel int64 `json:"apiLevel,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "ApiLevel") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1313,20 +1315,20 @@ func (s GooglePlayDeveloperReportingV1alpha1OsVersion) MarshalJSON() ([]byte, er
 // GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetRequest: Request
 // message for QueryAnrRateMetricSet.
 type GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetRequest struct {
-	// Dimensions: Dimensions to slice the metrics by. **Supported dimensions:** *
-	// `apiLevel` (string): the API level of Android that was running on the user's
-	// device, e.g., 26. * `versionCode` (int64): version of the app that was
-	// running on the user's device. * `deviceModel` (string): unique identifier of
-	// the user's device model. The form of the identifier is 'deviceBrand/device',
-	// where deviceBrand corresponds to Build.BRAND and device corresponds to
-	// Build.DEVICE, e.g., google/coral. * `deviceBrand` (string): unique
-	// identifier of the user's device brand, e.g., google. * `deviceType`
-	// (string): the type (also known as form factor) of the user's device, e.g.,
-	// PHONE. * `countryCode` (string): the country or region of the user's device
-	// based on their IP address, represented as a 2-letter ISO-3166 code (e.g. US
-	// for the United States). * `deviceRamBucket` (int64): RAM of the device, in
-	// MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
-	// device's primary system-on-chip, e.g., Samsung. Reference
+	// Dimensions: Optional. Dimensions to slice the metrics by. **Supported
+	// dimensions:** * `apiLevel` (string): the API level of Android that was
+	// running on the user's device, e.g., 26. * `versionCode` (int64): version of
+	// the app that was running on the user's device. * `deviceModel` (string):
+	// unique identifier of the user's device model. The form of the identifier is
+	// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND and
+	// device corresponds to Build.DEVICE, e.g., google/coral. * `deviceBrand`
+	// (string): unique identifier of the user's device brand, e.g., google. *
+	// `deviceType` (string): the type (also known as form factor) of the user's
+	// device, e.g., PHONE. * `countryCode` (string): the country or region of the
+	// user's device based on their IP address, represented as a 2-letter ISO-3166
+	// code (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
+	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string):
+	// Make of the device's primary system-on-chip, e.g., Samsung. Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
 	// e.g., "Exynos 2100". Reference
@@ -1342,11 +1344,11 @@ type GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetRequest struct {
 	// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
 	// device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
-	// Filter: Filters to apply to data. The filtering expression follows AIP-160
-	// (https://google.aip.dev/160) standard and supports filtering by equality of
-	// all breakdown dimensions.
+	// Filter: Optional. Filters to apply to data. The filtering expression follows
+	// AIP-160 (https://google.aip.dev/160) standard and supports filtering by
+	// equality of all breakdown dimensions.
 	Filter string `json:"filter,omitempty"`
-	// Metrics: Metrics to aggregate. **Supported metrics:** * `anrRate`
+	// Metrics: Optional. Metrics to aggregate. **Supported metrics:** * `anrRate`
 	// (`google.type.Decimal`): Percentage of distinct users in the aggregation
 	// period that experienced at least one ANR. * `anrRate7dUserWeighted`
 	// (`google.type.Decimal`): Rolling average value of `anrRate` in the last 7
@@ -1373,30 +1375,31 @@ type GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetRequest struct {
 	// counted multiple times. The value is rounded to the nearest multiple of 10,
 	// 100, 1,000 or 1,000,000, depending on the magnitude of the value.
 	Metrics []string `json:"metrics,omitempty"`
-	// PageSize: Maximum size of the returned data. If unspecified, at most 1000
-	// rows will be returned. The maximum value is 100,000; values above 100,000
-	// will be coerced to 100,000.
+	// PageSize: Optional. Maximum size of the returned data. If unspecified, at
+	// most 1000 rows will be returned. The maximum value is 100,000; values above
+	// 100,000 will be coerced to 100,000.
 	PageSize int64 `json:"pageSize,omitempty"`
-	// PageToken: A page token, received from a previous call. Provide this to
-	// retrieve the subsequent page. When paginating, all other parameters provided
-	// to the request must match the call that provided the page token.
+	// PageToken: Optional. A page token, received from a previous call. Provide
+	// this to retrieve the subsequent page. When paginating, all other parameters
+	// provided to the request must match the call that provided the page token.
 	PageToken string `json:"pageToken,omitempty"`
-	// TimelineSpec: Specification of the timeline aggregation parameters.
-	// **Supported aggregation periods:** * DAILY: metrics are aggregated in
-	// calendar date intervals. Due to historical constraints, the default and only
-	// supported timezone is `America/Los_Angeles`. * HOURLY: metrics are
-	// aggregated in hourly intervals. The default and only supported timezone is
-	// `UTC`.
+	// TimelineSpec: Optional. Specification of the timeline aggregation
+	// parameters. **Supported aggregation periods:** * DAILY: metrics are
+	// aggregated in calendar date intervals. Due to historical constraints, the
+	// default and only supported timezone is `America/Los_Angeles`. * HOURLY:
+	// metrics are aggregated in hourly intervals. The default and only supported
+	// timezone is `UTC`.
 	TimelineSpec *GooglePlayDeveloperReportingV1alpha1TimelineSpec `json:"timelineSpec,omitempty"`
-	// UserCohort: User view to select. The output data will correspond to the
-	// selected view. **Supported values:** * `OS_PUBLIC` To select data from all
-	// publicly released Android versions. This is the default. Supports all the
-	// above dimensions. * `APP_TESTERS` To select data from users who have opted
-	// in to be testers. Supports all the above dimensions. * `OS_BETA` To select
-	// data from beta android versions only, excluding data from released android
-	// versions. Only the following dimensions are supported: * `versionCode`
-	// (int64): version of the app that was running on the user's device. *
-	// `osBuild` (string): OS build of the user's device, e.g., "T1B2.220916.004".
+	// UserCohort: Optional. User view to select. The output data will correspond
+	// to the selected view. **Supported values:** * `OS_PUBLIC` To select data
+	// from all publicly released Android versions. This is the default. Supports
+	// all the above dimensions. * `APP_TESTERS` To select data from users who have
+	// opted in to be testers. Supports all the above dimensions. * `OS_BETA` To
+	// select data from beta android versions only, excluding data from released
+	// android versions. Only the following dimensions are supported: *
+	// `versionCode` (int64): version of the app that was running on the user's
+	// device. * `osBuild` (string): OS build of the user's device, e.g.,
+	// "T1B2.220916.004".
 	//
 	// Possible values:
 	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
@@ -1457,20 +1460,20 @@ func (s GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetResponse) Marsh
 // GooglePlayDeveloperReportingV1alpha1QueryCrashRateMetricSetRequest: Request
 // message for QueryCrashRateMetricSet.
 type GooglePlayDeveloperReportingV1alpha1QueryCrashRateMetricSetRequest struct {
-	// Dimensions: Dimensions to slice the metrics by. **Supported dimensions:** *
-	// `apiLevel` (string): the API level of Android that was running on the user's
-	// device, e.g., 26. * `versionCode` (int64): version of the app that was
-	// running on the user's device. * `deviceModel` (string): unique identifier of
-	// the user's device model. The form of the identifier is 'deviceBrand/device',
-	// where deviceBrand corresponds to Build.BRAND and device corresponds to
-	// Build.DEVICE, e.g., google/coral. * `deviceBrand` (string): unique
-	// identifier of the user's device brand, e.g., google. * `deviceType`
-	// (string): the type (also known as form factor) of the user's device, e.g.,
-	// PHONE. * `countryCode` (string): the country or region of the user's device
-	// based on their IP address, represented as a 2-letter ISO-3166 code (e.g. US
-	// for the United States). * `deviceRamBucket` (int64): RAM of the device, in
-	// MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
-	// device's primary system-on-chip, e.g., Samsung. Reference
+	// Dimensions: Optional. Dimensions to slice the metrics by. **Supported
+	// dimensions:** * `apiLevel` (string): the API level of Android that was
+	// running on the user's device, e.g., 26. * `versionCode` (int64): version of
+	// the app that was running on the user's device. * `deviceModel` (string):
+	// unique identifier of the user's device model. The form of the identifier is
+	// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND and
+	// device corresponds to Build.DEVICE, e.g., google/coral. * `deviceBrand`
+	// (string): unique identifier of the user's device brand, e.g., google. *
+	// `deviceType` (string): the type (also known as form factor) of the user's
+	// device, e.g., PHONE. * `countryCode` (string): the country or region of the
+	// user's device based on their IP address, represented as a 2-letter ISO-3166
+	// code (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
+	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string):
+	// Make of the device's primary system-on-chip, e.g., Samsung. Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
 	// e.g., "Exynos 2100". Reference
@@ -1486,63 +1489,65 @@ type GooglePlayDeveloperReportingV1alpha1QueryCrashRateMetricSetRequest struct {
 	// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
 	// device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
-	// Filter: Filters to apply to data. The filtering expression follows AIP-160
-	// (https://google.aip.dev/160) standard and supports filtering by equality of
-	// all breakdown dimensions.
+	// Filter: Optional. Filters to apply to data. The filtering expression follows
+	// AIP-160 (https://google.aip.dev/160) standard and supports filtering by
+	// equality of all breakdown dimensions.
 	Filter string `json:"filter,omitempty"`
-	// Metrics: Metrics to aggregate. **Supported metrics:** * `crashRate`
-	// (`google.type.Decimal`): Percentage of distinct users in the aggregation
-	// period that experienced at least one crash. * `crashRate7dUserWeighted`
-	// (`google.type.Decimal`): Rolling average value of `crashRate` in the last 7
+	// Metrics: Optional. Metrics to aggregate. **Supported metrics:** *
+	// `crashRate` (`google.type.Decimal`): Percentage of distinct users in the
+	// aggregation period that experienced at least one crash. *
+	// `crashRate7dUserWeighted` (`google.type.Decimal`): Rolling average value of
+	// `crashRate` in the last 7 days. The daily values are weighted by the count
+	// of distinct users for the day. * `crashRate28dUserWeighted`
+	// (`google.type.Decimal`): Rolling average value of `crashRate` in the last 28
 	// days. The daily values are weighted by the count of distinct users for the
-	// day. * `crashRate28dUserWeighted` (`google.type.Decimal`): Rolling average
-	// value of `crashRate` in the last 28 days. The daily values are weighted by
-	// the count of distinct users for the day. Not supported in HOURLY
-	// granularity. * `userPerceivedCrashRate` (`google.type.Decimal`): Percentage
-	// of distinct users in the aggregation period that experienced at least one
-	// crash while they were actively using your app (a user-perceived crash). An
-	// app is considered to be in active use if it is displaying any activity or
-	// executing any foreground service. * `userPerceivedCrashRate7dUserWeighted`
-	// (`google.type.Decimal`): Rolling average value of `userPerceivedCrashRate`
-	// in the last 7 days. The daily values are weighted by the count of distinct
-	// users for the day. Not supported in HOURLY granularity. *
-	// `userPerceivedCrashRate28dUserWeighted` (`google.type.Decimal`): Rolling
-	// average value of `userPerceivedCrashRate` in the last 28 days. The daily
+	// day. Not supported in HOURLY granularity. * `userPerceivedCrashRate`
+	// (`google.type.Decimal`): Percentage of distinct users in the aggregation
+	// period that experienced at least one crash while they were actively using
+	// your app (a user-perceived crash). An app is considered to be in active use
+	// if it is displaying any activity or executing any foreground service. *
+	// `userPerceivedCrashRate7dUserWeighted` (`google.type.Decimal`): Rolling
+	// average value of `userPerceivedCrashRate` in the last 7 days. The daily
 	// values are weighted by the count of distinct users for the day. Not
-	// supported in HOURLY granularity. * `distinctUsers` (`google.type.Decimal`):
-	// Count of distinct users in the aggregation period that were used as
-	// normalization value for the `crashRate` and `userPerceivedCrashRate`
-	// metrics. A user is counted in this metric if they used the app actively
-	// during the aggregation period. An app is considered to be in active use if
-	// it is displaying any activity or executing any foreground service. Care must
-	// be taken not to aggregate this count further, as it may result in users
-	// being counted multiple times. The value is rounded to the nearest multiple
-	// of 10, 100, 1,000 or 1,000,000, depending on the magnitude of the value.
+	// supported in HOURLY granularity. * `userPerceivedCrashRate28dUserWeighted`
+	// (`google.type.Decimal`): Rolling average value of `userPerceivedCrashRate`
+	// in the last 28 days. The daily values are weighted by the count of distinct
+	// users for the day. Not supported in HOURLY granularity. * `distinctUsers`
+	// (`google.type.Decimal`): Count of distinct users in the aggregation period
+	// that were used as normalization value for the `crashRate` and
+	// `userPerceivedCrashRate` metrics. A user is counted in this metric if they
+	// used the app actively during the aggregation period. An app is considered to
+	// be in active use if it is displaying any activity or executing any
+	// foreground service. Care must be taken not to aggregate this count further,
+	// as it may result in users being counted multiple times. The value is rounded
+	// to the nearest multiple of 10, 100, 1,000 or 1,000,000, depending on the
+	// magnitude of the value.
 	Metrics []string `json:"metrics,omitempty"`
-	// PageSize: Maximum size of the returned data. If unspecified, at most 1000
-	// rows will be returned. The maximum value is 100,000; values above 100,000
-	// will be coerced to 100,000.
+	// PageSize: Optional. Maximum size of the returned data. If unspecified, at
+	// most 1000 rows will be returned. The maximum value is 100,000; values above
+	// 100,000 will be coerced to 100,000.
 	PageSize int64 `json:"pageSize,omitempty"`
-	// PageToken: A page token, received from a previous call. Provide this to
-	// retrieve the subsequent page. When paginating, all other parameters provided
-	// to the request must match the call that provided the page token.
+	// PageToken: Optional. A page token, received from a previous call. Provide
+	// this to retrieve the subsequent page. When paginating, all other parameters
+	// provided to the request must match the call that provided the page token.
 	PageToken string `json:"pageToken,omitempty"`
-	// TimelineSpec: Specification of the timeline aggregation parameters.
-	// **Supported aggregation periods:** * DAILY: metrics are aggregated in
-	// calendar date intervals. Due to historical constraints, the default and only
-	// supported timezone is `America/Los_Angeles`. * HOURLY: metrics are
-	// aggregated in hourly intervals. The default and only supported timezone is
-	// `UTC`.
+	// TimelineSpec: Optional. Specification of the timeline aggregation
+	// parameters. **Supported aggregation periods:** * DAILY: metrics are
+	// aggregated in calendar date intervals. Due to historical constraints, the
+	// default and only supported timezone is `America/Los_Angeles`. * HOURLY:
+	// metrics are aggregated in hourly intervals. The default and only supported
+	// timezone is `UTC`.
 	TimelineSpec *GooglePlayDeveloperReportingV1alpha1TimelineSpec `json:"timelineSpec,omitempty"`
-	// UserCohort: User view to select. The output data will correspond to the
-	// selected view. **Supported values:** * `OS_PUBLIC` To select data from all
-	// publicly released Android versions. This is the default. Supports all the
-	// above dimensions. * `APP_TESTERS` To select data from users who have opted
-	// in to be testers. Supports all the above dimensions. * `OS_BETA` To select
-	// data from beta android versions only, excluding data from released android
-	// versions. Only the following dimensions are supported: * `versionCode`
-	// (int64): version of the app that was running on the user's device. *
-	// `osBuild` (string): OS build of the user's device, e.g., "T1B2.220916.004".
+	// UserCohort: Optional. User view to select. The output data will correspond
+	// to the selected view. **Supported values:** * `OS_PUBLIC` To select data
+	// from all publicly released Android versions. This is the default. Supports
+	// all the above dimensions. * `APP_TESTERS` To select data from users who have
+	// opted in to be testers. Supports all the above dimensions. * `OS_BETA` To
+	// select data from beta android versions only, excluding data from released
+	// android versions. Only the following dimensions are supported: *
+	// `versionCode` (int64): version of the app that was running on the user's
+	// device. * `osBuild` (string): OS build of the user's device, e.g.,
+	// "T1B2.220916.004".
 	//
 	// Possible values:
 	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
@@ -1603,20 +1608,20 @@ func (s GooglePlayDeveloperReportingV1alpha1QueryCrashRateMetricSetResponse) Mar
 // GooglePlayDeveloperReportingV1alpha1QueryErrorCountMetricSetRequest: Request
 // message for QueryErrorCountMetricSet.
 type GooglePlayDeveloperReportingV1alpha1QueryErrorCountMetricSetRequest struct {
-	// Dimensions: Dimensions to slice the data by. **Supported dimensions:** *
-	// `apiLevel` (string): the API level of Android that was running on the user's
-	// device, e.g., 26. * `versionCode` (int64): unique identifier of the user's
-	// device model. The form of the identifier is 'deviceBrand/device', where
-	// deviceBrand corresponds to Build.BRAND and device corresponds to
-	// Build.DEVICE, e.g., google/coral. * `deviceModel` (string): unique
-	// identifier of the user's device model. * `deviceType` (string): identifier
-	// of the device's form factor, e.g., PHONE. * `reportType` (string): the type
-	// of error. The value should correspond to one of the possible values in
-	// ErrorType. * `issueId` (string): the id an error was assigned to. The value
-	// should correspond to the `{issue}` component of the issue name. *
-	// `deviceRamBucket` (int64): RAM of the device, in MB, in buckets (3GB, 4GB,
-	// etc.). * `deviceSocMake` (string): Make of the device's primary
-	// system-on-chip, e.g., Samsung. Reference
+	// Dimensions: Optional. Dimensions to slice the data by. **Supported
+	// dimensions:** * `apiLevel` (string): the API level of Android that was
+	// running on the user's device, e.g., 26. * `versionCode` (int64): unique
+	// identifier of the user's device model. The form of the identifier is
+	// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND and
+	// device corresponds to Build.DEVICE, e.g., google/coral. * `deviceModel`
+	// (string): unique identifier of the user's device model. * `deviceType`
+	// (string): identifier of the device's form factor, e.g., PHONE. *
+	// `reportType` (string): the type of error. The value should correspond to one
+	// of the possible values in ErrorType. * `issueId` (string): the id an error
+	// was assigned to. The value should correspond to the `{issue}` component of
+	// the issue name. * `deviceRamBucket` (int64): RAM of the device, in MB, in
+	// buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the device's
+	// primary system-on-chip, e.g., Samsung. Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
 	// e.g., "Exynos 2100". Reference
@@ -1632,31 +1637,32 @@ type GooglePlayDeveloperReportingV1alpha1QueryErrorCountMetricSetRequest struct 
 	// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
 	// device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
-	// Filter: Filters to apply to data. The filtering expression follows AIP-160
-	// (https://google.aip.dev/160) standard and supports filtering by equality of
-	// all breakdown dimensions and: * `isUserPerceived` (string): denotes whether
-	// error is user perceived or not, USER_PERCEIVED or NOT_USER_PERCEIVED.
+	// Filter: Optional. Filters to apply to data. The filtering expression follows
+	// AIP-160 (https://google.aip.dev/160) standard and supports filtering by
+	// equality of all breakdown dimensions and: * `isUserPerceived` (string):
+	// denotes whether error is user perceived or not, USER_PERCEIVED or
+	// NOT_USER_PERCEIVED.
 	Filter string `json:"filter,omitempty"`
-	// Metrics: Metrics to aggregate. **Supported metrics:** * `errorReportCount`
-	// (`google.type.Decimal`): Absolute count of individual error reports that
-	// have been received for an app. * `distinctUsers` (`google.type.Decimal`):
-	// Count of distinct users for which reports have been received. Care must be
-	// taken not to aggregate this count further, as it may result in users being
-	// counted multiple times. This value is not rounded, however it may be an
-	// approximation.
+	// Metrics: Optional. Metrics to aggregate. **Supported metrics:** *
+	// `errorReportCount` (`google.type.Decimal`): Absolute count of individual
+	// error reports that have been received for an app. * `distinctUsers`
+	// (`google.type.Decimal`): Count of distinct users for which reports have been
+	// received. Care must be taken not to aggregate this count further, as it may
+	// result in users being counted multiple times. This value is not rounded,
+	// however it may be an approximation.
 	Metrics []string `json:"metrics,omitempty"`
-	// PageSize: Maximum size of the returned data. If unspecified, at most 1000
-	// rows will be returned. The maximum value is 100000; values above 100000 will
-	// be coerced to 100000.
+	// PageSize: Optional. Maximum size of the returned data. If unspecified, at
+	// most 1000 rows will be returned. The maximum value is 100000; values above
+	// 100000 will be coerced to 100000.
 	PageSize int64 `json:"pageSize,omitempty"`
-	// PageToken: A page token, received from a previous call. Provide this to
-	// retrieve the subsequent page. When paginating, all other parameters provided
-	// to the request must match the call that provided the page token.
+	// PageToken: Optional. A page token, received from a previous call. Provide
+	// this to retrieve the subsequent page. When paginating, all other parameters
+	// provided to the request must match the call that provided the page token.
 	PageToken string `json:"pageToken,omitempty"`
-	// TimelineSpec: Specification of the timeline aggregation parameters.
-	// **Supported aggregation periods:** * DAILY: metrics are aggregated in
-	// calendar date intervals. The default and only supported timezone is
-	// `America/Los_Angeles`.
+	// TimelineSpec: Optional. Specification of the timeline aggregation
+	// parameters. **Supported aggregation periods:** * DAILY: metrics are
+	// aggregated in calendar date intervals. The default and only supported
+	// timezone is `America/Los_Angeles`.
 	TimelineSpec *GooglePlayDeveloperReportingV1alpha1TimelineSpec `json:"timelineSpec,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Dimensions") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1708,20 +1714,20 @@ func (s GooglePlayDeveloperReportingV1alpha1QueryErrorCountMetricSetResponse) Ma
 //
 //	Request message for QueryExcessiveWakeupRateMetricSet.
 type GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetRequest struct {
-	// Dimensions: Dimensions to slice the data by. **Supported dimensions:** *
-	// `apiLevel` (string): the API level of Android that was running on the user's
-	// device, e.g., 26. * `versionCode` (int64): version of the app that was
-	// running on the user's device. * `deviceModel` (string): unique identifier of
-	// the user's device model. The form of the identifier is 'deviceBrand/device',
-	// where deviceBrand corresponds to Build.BRAND and device corresponds to
-	// Build.DEVICE, e.g., google/coral. * `deviceBrand` (string): unique
-	// identifier of the user's device brand, e.g., google. * `deviceType`
-	// (string): the type (also known as form factor) of the user's device, e.g.,
-	// PHONE. * `countryCode` (string): the country or region of the user's device
-	// based on their IP address, represented as a 2-letter ISO-3166 code (e.g. US
-	// for the United States). * `deviceRamBucket` (int64): RAM of the device, in
-	// MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
-	// device's primary system-on-chip, e.g., Samsung. Reference
+	// Dimensions: Optional. Dimensions to slice the data by. **Supported
+	// dimensions:** * `apiLevel` (string): the API level of Android that was
+	// running on the user's device, e.g., 26. * `versionCode` (int64): version of
+	// the app that was running on the user's device. * `deviceModel` (string):
+	// unique identifier of the user's device model. The form of the identifier is
+	// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND and
+	// device corresponds to Build.DEVICE, e.g., google/coral. * `deviceBrand`
+	// (string): unique identifier of the user's device brand, e.g., google. *
+	// `deviceType` (string): the type (also known as form factor) of the user's
+	// device, e.g., PHONE. * `countryCode` (string): the country or region of the
+	// user's device based on their IP address, represented as a 2-letter ISO-3166
+	// code (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
+	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string):
+	// Make of the device's primary system-on-chip, e.g., Samsung. Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
 	// e.g., "Exynos 2100". Reference
@@ -1737,11 +1743,11 @@ type GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetReques
 	// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
 	// device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
-	// Filter: Filters to apply to data. The filtering expression follows AIP-160
-	// (https://google.aip.dev/160) standard and supports filtering by equality of
-	// all breakdown dimensions.
+	// Filter: Optional. Filters to apply to data. The filtering expression follows
+	// AIP-160 (https://google.aip.dev/160) standard and supports filtering by
+	// equality of all breakdown dimensions.
 	Filter string `json:"filter,omitempty"`
-	// Metrics: Metrics to aggregate. **Supported metrics:** *
+	// Metrics: Optional. Metrics to aggregate. **Supported metrics:** *
 	// `excessiveWakeupRate` (`google.type.Decimal`): Percentage of distinct users
 	// in the aggregation period that had more than 10 wakeups per hour. *
 	// `excessiveWakeupRate7dUserWeighted` (`google.type.Decimal`): Rolling average
@@ -1759,21 +1765,21 @@ type GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetReques
 	// multiple of 10, 100, 1,000 or 1,000,000, depending on the magnitude of the
 	// value.
 	Metrics []string `json:"metrics,omitempty"`
-	// PageSize: Maximum size of the returned data. If unspecified, at most 1000
-	// rows will be returned. The maximum value is 100000; values above 100000 will
-	// be coerced to 100000.
+	// PageSize: Optional. Maximum size of the returned data. If unspecified, at
+	// most 1000 rows will be returned. The maximum value is 100000; values above
+	// 100000 will be coerced to 100000.
 	PageSize int64 `json:"pageSize,omitempty"`
-	// PageToken: A page token, received from a previous call. Provide this to
-	// retrieve the subsequent page. When paginating, all other parameters provided
-	// to the request must match the call that provided the page token.
+	// PageToken: Optional. A page token, received from a previous call. Provide
+	// this to retrieve the subsequent page. When paginating, all other parameters
+	// provided to the request must match the call that provided the page token.
 	PageToken string `json:"pageToken,omitempty"`
-	// TimelineSpec: Specification of the timeline aggregation parameters.
-	// **Supported aggregation periods:** * DAILY: metrics are aggregated in
-	// calendar date intervals. Due to historical constraints, the only supported
-	// timezone is `America/Los_Angeles`.
+	// TimelineSpec: Optional. Specification of the timeline aggregation
+	// parameters. **Supported aggregation periods:** * DAILY: metrics are
+	// aggregated in calendar date intervals. Due to historical constraints, the
+	// only supported timezone is `America/Los_Angeles`.
 	TimelineSpec *GooglePlayDeveloperReportingV1alpha1TimelineSpec `json:"timelineSpec,omitempty"`
-	// UserCohort: User view to select. The output data will correspond to the
-	// selected view. The only supported value is `OS_PUBLIC`.
+	// UserCohort: Optional. User view to select. The output data will correspond
+	// to the selected view. The only supported value is `OS_PUBLIC`.
 	//
 	// Possible values:
 	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
@@ -1969,20 +1975,20 @@ func (s GooglePlayDeveloperReportingV1alpha1QueryLmkRateMetricSetResponse) Marsh
 // GooglePlayDeveloperReportingV1alpha1QuerySlowRenderingRateMetricSetRequest:
 // Request message for QuerySlowRenderingRateMetricSet.
 type GooglePlayDeveloperReportingV1alpha1QuerySlowRenderingRateMetricSetRequest struct {
-	// Dimensions: Dimensions to slice the data by. **Supported dimensions:** *
-	// `apiLevel` (string): the API level of Android that was running on the user's
-	// device, e.g., 26. * `versionCode` (int64): version of the app that was
-	// running on the user's device. * `deviceModel` (string): unique identifier of
-	// the user's device model. The form of the identifier is 'deviceBrand/device',
-	// where deviceBrand corresponds to Build.BRAND and device corresponds to
-	// Build.DEVICE, e.g., google/coral. * `deviceBrand` (string): unique
-	// identifier of the user's device brand, e.g., google. * `deviceType`
-	// (string): the type (also known as form factor) of the user's device, e.g.,
-	// PHONE. * `countryCode` (string): the country or region of the user's device
-	// based on their IP address, represented as a 2-letter ISO-3166 code (e.g. US
-	// for the United States). * `deviceRamBucket` (int64): RAM of the device, in
-	// MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
-	// device's primary system-on-chip, e.g., Samsung. Reference
+	// Dimensions: Optional. Dimensions to slice the data by. **Supported
+	// dimensions:** * `apiLevel` (string): the API level of Android that was
+	// running on the user's device, e.g., 26. * `versionCode` (int64): version of
+	// the app that was running on the user's device. * `deviceModel` (string):
+	// unique identifier of the user's device model. The form of the identifier is
+	// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND and
+	// device corresponds to Build.DEVICE, e.g., google/coral. * `deviceBrand`
+	// (string): unique identifier of the user's device brand, e.g., google. *
+	// `deviceType` (string): the type (also known as form factor) of the user's
+	// device, e.g., PHONE. * `countryCode` (string): the country or region of the
+	// user's device based on their IP address, represented as a 2-letter ISO-3166
+	// code (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
+	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string):
+	// Make of the device's primary system-on-chip, e.g., Samsung. Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
 	// e.g., "Exynos 2100". Reference
@@ -1998,11 +2004,11 @@ type GooglePlayDeveloperReportingV1alpha1QuerySlowRenderingRateMetricSetRequest 
 	// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
 	// device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
-	// Filter: Filters to apply to data. The filtering expression follows AIP-160
-	// (https://google.aip.dev/160) standard and supports filtering by equality of
-	// all breakdown dimensions.
+	// Filter: Optional. Filters to apply to data. The filtering expression follows
+	// AIP-160 (https://google.aip.dev/160) standard and supports filtering by
+	// equality of all breakdown dimensions.
 	Filter string `json:"filter,omitempty"`
-	// Metrics: Metrics to aggregate. **Supported metrics:** *
+	// Metrics: Optional. Metrics to aggregate. **Supported metrics:** *
 	// `slowRenderingRate20Fps` (`google.type.Decimal`): Percentage of distinct
 	// users in the aggregation period that had a slow rendering. *
 	// `slowRenderingRate20Fps7dUserWeighted` (`google.type.Decimal`): Rolling
@@ -2027,21 +2033,21 @@ type GooglePlayDeveloperReportingV1alpha1QuerySlowRenderingRateMetricSetRequest 
 	// multiple times. The value is rounded to the nearest multiple of 10, 100,
 	// 1,000 or 1,000,000, depending on the magnitude of the value.
 	Metrics []string `json:"metrics,omitempty"`
-	// PageSize: Maximum size of the returned data. If unspecified, at most 1000
-	// rows will be returned. The maximum value is 100000; values above 100000 will
-	// be coerced to 100000.
+	// PageSize: Optional. Maximum size of the returned data. If unspecified, at
+	// most 1000 rows will be returned. The maximum value is 100000; values above
+	// 100000 will be coerced to 100000.
 	PageSize int64 `json:"pageSize,omitempty"`
-	// PageToken: A page token, received from a previous call. Provide this to
-	// retrieve the subsequent page. When paginating, all other parameters provided
-	// to the request must match the call that provided the page token.
+	// PageToken: Optional. A page token, received from a previous call. Provide
+	// this to retrieve the subsequent page. When paginating, all other parameters
+	// provided to the request must match the call that provided the page token.
 	PageToken string `json:"pageToken,omitempty"`
-	// TimelineSpec: Specification of the timeline aggregation parameters.
-	// **Supported aggregation periods:** * DAILY: metrics are aggregated in
-	// calendar date intervals. Due to historical constraints, the only supported
-	// timezone is `America/Los_Angeles`.
+	// TimelineSpec: Optional. Specification of the timeline aggregation
+	// parameters. **Supported aggregation periods:** * DAILY: metrics are
+	// aggregated in calendar date intervals. Due to historical constraints, the
+	// only supported timezone is `America/Los_Angeles`.
 	TimelineSpec *GooglePlayDeveloperReportingV1alpha1TimelineSpec `json:"timelineSpec,omitempty"`
-	// UserCohort: User view to select. The output data will correspond to the
-	// selected view. The only supported value is `OS_PUBLIC`.
+	// UserCohort: Optional. User view to select. The output data will correspond
+	// to the selected view. The only supported value is `OS_PUBLIC`.
 	//
 	// Possible values:
 	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
@@ -2102,20 +2108,20 @@ func (s GooglePlayDeveloperReportingV1alpha1QuerySlowRenderingRateMetricSetRespo
 // GooglePlayDeveloperReportingV1alpha1QuerySlowStartRateMetricSetRequest:
 // Request message for QuerySlowStartRateMetricSet.
 type GooglePlayDeveloperReportingV1alpha1QuerySlowStartRateMetricSetRequest struct {
-	// Dimensions: Dimensions to slice the data by. **Supported dimensions:** *
-	// `apiLevel` (string): the API level of Android that was running on the user's
-	// device, e.g., 26. * `versionCode` (int64): version of the app that was
-	// running on the user's device. * `deviceModel` (string): unique identifier of
-	// the user's device model. The form of the identifier is 'deviceBrand/device',
-	// where deviceBrand corresponds to Build.BRAND and device corresponds to
-	// Build.DEVICE, e.g., google/coral. * `deviceBrand` (string): unique
-	// identifier of the user's device brand, e.g., google. * `deviceType`
-	// (string): the type (also known as form factor) of the user's device, e.g.,
-	// PHONE. * `countryCode` (string): the country or region of the user's device
-	// based on their IP address, represented as a 2-letter ISO-3166 code (e.g. US
-	// for the United States). * `deviceRamBucket` (int64): RAM of the device, in
-	// MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
-	// device's primary system-on-chip, e.g., Samsung. Reference
+	// Dimensions: Optional. Dimensions to slice the data by. **Supported
+	// dimensions:** * `apiLevel` (string): the API level of Android that was
+	// running on the user's device, e.g., 26. * `versionCode` (int64): version of
+	// the app that was running on the user's device. * `deviceModel` (string):
+	// unique identifier of the user's device model. The form of the identifier is
+	// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND and
+	// device corresponds to Build.DEVICE, e.g., google/coral. * `deviceBrand`
+	// (string): unique identifier of the user's device brand, e.g., google. *
+	// `deviceType` (string): the type (also known as form factor) of the user's
+	// device, e.g., PHONE. * `countryCode` (string): the country or region of the
+	// user's device based on their IP address, represented as a 2-letter ISO-3166
+	// code (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
+	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string):
+	// Make of the device's primary system-on-chip, e.g., Samsung. Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
 	// e.g., "Exynos 2100". Reference
@@ -2131,13 +2137,13 @@ type GooglePlayDeveloperReportingV1alpha1QuerySlowStartRateMetricSetRequest stru
 	// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
 	// device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
-	// Filter: Filters to apply to data. The filtering expression follows AIP-160
-	// (https://google.aip.dev/160) standard and supports filtering by equality of
-	// all breakdown dimensions.
+	// Filter: Optional. Filters to apply to data. The filtering expression follows
+	// AIP-160 (https://google.aip.dev/160) standard and supports filtering by
+	// equality of all breakdown dimensions.
 	Filter string `json:"filter,omitempty"`
-	// Metrics: Metrics to aggregate. **Supported metrics:** * `slowStartRate`
-	// (`google.type.Decimal`): Percentage of distinct users in the aggregation
-	// period that had a slow start. * `slowStartRate7dUserWeighted`
+	// Metrics: Optional. Metrics to aggregate. **Supported metrics:** *
+	// `slowStartRate` (`google.type.Decimal`): Percentage of distinct users in the
+	// aggregation period that had a slow start. * `slowStartRate7dUserWeighted`
 	// (`google.type.Decimal`): Rolling average value of `slowStartRate` in the
 	// last 7 days. The daily values are weighted by the count of distinct users
 	// for the day. * `slowStartRate28dUserWeighted` (`google.type.Decimal`):
@@ -2151,21 +2157,21 @@ type GooglePlayDeveloperReportingV1alpha1QuerySlowStartRateMetricSetRequest stru
 	// is rounded to the nearest multiple of 10, 100, 1,000 or 1,000,000, depending
 	// on the magnitude of the value.
 	Metrics []string `json:"metrics,omitempty"`
-	// PageSize: Maximum size of the returned data. If unspecified, at most 1000
-	// rows will be returned. The maximum value is 100000; values above 100000 will
-	// be coerced to 100000.
+	// PageSize: Optional. Maximum size of the returned data. If unspecified, at
+	// most 1000 rows will be returned. The maximum value is 100000; values above
+	// 100000 will be coerced to 100000.
 	PageSize int64 `json:"pageSize,omitempty"`
-	// PageToken: A page token, received from a previous call. Provide this to
-	// retrieve the subsequent page. When paginating, all other parameters provided
-	// to the request must match the call that provided the page token.
+	// PageToken: Optional. A page token, received from a previous call. Provide
+	// this to retrieve the subsequent page. When paginating, all other parameters
+	// provided to the request must match the call that provided the page token.
 	PageToken string `json:"pageToken,omitempty"`
-	// TimelineSpec: Specification of the timeline aggregation parameters.
-	// **Supported aggregation periods:** * DAILY: metrics are aggregated in
-	// calendar date intervals. Due to historical constraints, the only supported
-	// timezone is `America/Los_Angeles`.
+	// TimelineSpec: Optional. Specification of the timeline aggregation
+	// parameters. **Supported aggregation periods:** * DAILY: metrics are
+	// aggregated in calendar date intervals. Due to historical constraints, the
+	// only supported timezone is `America/Los_Angeles`.
 	TimelineSpec *GooglePlayDeveloperReportingV1alpha1TimelineSpec `json:"timelineSpec,omitempty"`
-	// UserCohort: User view to select. The output data will correspond to the
-	// selected view. The only supported value is `OS_PUBLIC`.
+	// UserCohort: Optional. User view to select. The output data will correspond
+	// to the selected view. The only supported value is `OS_PUBLIC`.
 	//
 	// Possible values:
 	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
@@ -2226,20 +2232,20 @@ func (s GooglePlayDeveloperReportingV1alpha1QuerySlowStartRateMetricSetResponse)
 // GooglePlayDeveloperReportingV1alpha1QueryStuckBackgroundWakelockRateMetricSet
 // Request: Request message for QueryStuckBackgroundWakelockRateMetricSet.
 type GooglePlayDeveloperReportingV1alpha1QueryStuckBackgroundWakelockRateMetricSetRequest struct {
-	// Dimensions: Dimensions to slice the data by. **Supported dimensions:** *
-	// `apiLevel` (string): the API level of Android that was running on the user's
-	// device, e.g., 26. * `versionCode` (int64): version of the app that was
-	// running on the user's device. * `deviceModel` (string): unique identifier of
-	// the user's device model. The form of the identifier is 'deviceBrand/device',
-	// where deviceBrand corresponds to Build.BRAND and device corresponds to
-	// Build.DEVICE, e.g., google/coral. * `deviceBrand` (string): unique
-	// identifier of the user's device brand, e.g., google. * `deviceType`
-	// (string): the type (also known as form factor) of the user's device, e.g.,
-	// PHONE. * `countryCode` (string): the country or region of the user's device
-	// based on their IP address, represented as a 2-letter ISO-3166 code (e.g. US
-	// for the United States). * `deviceRamBucket` (int64): RAM of the device, in
-	// MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
-	// device's primary system-on-chip, e.g., Samsung. Reference
+	// Dimensions: Optional. Dimensions to slice the data by. **Supported
+	// dimensions:** * `apiLevel` (string): the API level of Android that was
+	// running on the user's device, e.g., 26. * `versionCode` (int64): version of
+	// the app that was running on the user's device. * `deviceModel` (string):
+	// unique identifier of the user's device model. The form of the identifier is
+	// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND and
+	// device corresponds to Build.DEVICE, e.g., google/coral. * `deviceBrand`
+	// (string): unique identifier of the user's device brand, e.g., google. *
+	// `deviceType` (string): the type (also known as form factor) of the user's
+	// device, e.g., PHONE. * `countryCode` (string): the country or region of the
+	// user's device based on their IP address, represented as a 2-letter ISO-3166
+	// code (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
+	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string):
+	// Make of the device's primary system-on-chip, e.g., Samsung. Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
 	// e.g., "Exynos 2100". Reference
@@ -2255,11 +2261,11 @@ type GooglePlayDeveloperReportingV1alpha1QueryStuckBackgroundWakelockRateMetricS
 	// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
 	// device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
-	// Filter: Filters to apply to data. The filtering expression follows AIP-160
-	// (https://google.aip.dev/160) standard and supports filtering by equality of
-	// all breakdown dimensions.
+	// Filter: Optional. Filters to apply to data. The filtering expression follows
+	// AIP-160 (https://google.aip.dev/160) standard and supports filtering by
+	// equality of all breakdown dimensions.
 	Filter string `json:"filter,omitempty"`
-	// Metrics: Metrics to aggregate. **Supported metrics:** *
+	// Metrics: Optional. Metrics to aggregate. **Supported metrics:** *
 	// `stuckBgWakelockRate` (`google.type.Decimal`): Percentage of distinct users
 	// in the aggregation period that had a wakelock held in the background for
 	// longer than 1 hour. * `stuckBgWakelockRate7dUserWeighted`
@@ -2277,21 +2283,21 @@ type GooglePlayDeveloperReportingV1alpha1QueryStuckBackgroundWakelockRateMetricS
 	// multiple times. The value is rounded to the nearest multiple of 10, 100,
 	// 1,000 or 1,000,000, depending on the magnitude of the value.
 	Metrics []string `json:"metrics,omitempty"`
-	// PageSize: Maximum size of the returned data. If unspecified, at most 1000
-	// rows will be returned. The maximum value is 100000; values above 100000 will
-	// be coerced to 100000.
+	// PageSize: Optional. Maximum size of the returned data. If unspecified, at
+	// most 1000 rows will be returned. The maximum value is 100000; values above
+	// 100000 will be coerced to 100000.
 	PageSize int64 `json:"pageSize,omitempty"`
-	// PageToken: A page token, received from a previous call. Provide this to
-	// retrieve the subsequent page. When paginating, all other parameters provided
-	// to the request must match the call that provided the page token.
+	// PageToken: Optional. A page token, received from a previous call. Provide
+	// this to retrieve the subsequent page. When paginating, all other parameters
+	// provided to the request must match the call that provided the page token.
 	PageToken string `json:"pageToken,omitempty"`
-	// TimelineSpec: Specification of the timeline aggregation parameters.
-	// **Supported aggregation periods:** * DAILY: metrics are aggregated in
-	// calendar date intervals. Due to historical constraints, the only supported
-	// timezone is `America/Los_Angeles`.
+	// TimelineSpec: Optional. Specification of the timeline aggregation
+	// parameters. **Supported aggregation periods:** * DAILY: metrics are
+	// aggregated in calendar date intervals. Due to historical constraints, the
+	// only supported timezone is `America/Los_Angeles`.
 	TimelineSpec *GooglePlayDeveloperReportingV1alpha1TimelineSpec `json:"timelineSpec,omitempty"`
-	// UserCohort: User view to select. The output data will correspond to the
-	// selected view. The only supported value is `OS_PUBLIC`.
+	// UserCohort: Optional. User view to select. The output data will correspond
+	// to the selected view. The only supported value is `OS_PUBLIC`.
 	//
 	// Possible values:
 	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
@@ -2748,9 +2754,9 @@ func (s GooglePlayDeveloperReportingV1alpha1StuckBackgroundWakelockRateMetricSet
 // so make sure to check which timezones are supported by the metric set you
 // want to query.
 type GooglePlayDeveloperReportingV1alpha1TimelineSpec struct {
-	// AggregationPeriod: Type of the aggregation period of the datapoints in the
-	// timeline. Intervals are identified by the date and time at the start of the
-	// interval.
+	// AggregationPeriod: Optional. Type of the aggregation period of the
+	// datapoints in the timeline. Intervals are identified by the date and time at
+	// the start of the interval.
 	//
 	// Possible values:
 	//   "AGGREGATION_PERIOD_UNSPECIFIED" - Unspecified granularity.
@@ -2759,19 +2765,19 @@ type GooglePlayDeveloperReportingV1alpha1TimelineSpec struct {
 	//   "FULL_RANGE" - Data is aggregated over the full timeline range.
 	// Effectively this produces a single value rather than a timeline.
 	AggregationPeriod string `json:"aggregationPeriod,omitempty"`
-	// EndTime: Ending datapoint of the timeline (exclusive). See start_time for
-	// restrictions. The timezone of the end point must match the timezone of the
-	// start point.
-	EndTime *GoogleTypeDateTime `json:"endTime,omitempty"`
-	// StartTime: Starting datapoint of the timeline (inclusive). Must be aligned
-	// to the aggregation period as follows: * HOURLY: the 'minutes', 'seconds' and
-	// 'nanos' fields must be unset. The time_zone can be left unset (defaults to
-	// UTC) or set explicitly to "UTC". Setting any other utc_offset or timezone id
-	// will result in a validation error. * DAILY: the 'hours', 'minutes',
-	// 'seconds' and 'nanos' fields must be unset. Different metric sets support
-	// different timezones. It can be left unset to use the default timezone
-	// specified by the metric set. The timezone of the end point must match the
+	// EndTime: Optional. Ending datapoint of the timeline (exclusive). See
+	// start_time for restrictions. The timezone of the end point must match the
 	// timezone of the start point.
+	EndTime *GoogleTypeDateTime `json:"endTime,omitempty"`
+	// StartTime: Optional. Starting datapoint of the timeline (inclusive). Must be
+	// aligned to the aggregation period as follows: * HOURLY: the 'minutes',
+	// 'seconds' and 'nanos' fields must be unset. The time_zone can be left unset
+	// (defaults to UTC) or set explicitly to "UTC". Setting any other utc_offset
+	// or timezone id will result in a validation error. * DAILY: the 'hours',
+	// 'minutes', 'seconds' and 'nanos' fields must be unset. Different metric sets
+	// support different timezones. It can be left unset to use the default
+	// timezone specified by the metric set. The timezone of the end point must
+	// match the timezone of the start point.
 	StartTime *GoogleTypeDateTime `json:"startTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AggregationPeriod") to
 	// unconditionally include in API requests. By default, fields with empty or

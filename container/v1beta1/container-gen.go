@@ -516,6 +516,9 @@ type AddonsConfig struct {
 	PodSnapshotConfig *PodSnapshotConfig `json:"podSnapshotConfig,omitempty"`
 	// RayOperatorConfig: Optional. Configuration for Ray Operator addon.
 	RayOperatorConfig *RayOperatorConfig `json:"rayOperatorConfig,omitempty"`
+	// SliceControllerConfig: Optional. Configuration for the slice controller
+	// add-on.
+	SliceControllerConfig *SliceControllerConfig `json:"sliceControllerConfig,omitempty"`
 	// StatefulHaConfig: Optional. Configuration for the StatefulHA add-on.
 	StatefulHaConfig *StatefulHAConfig `json:"statefulHaConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudRunConfig") to
@@ -3544,6 +3547,35 @@ func (s GCPSecretManagerCertificateConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GPUDirectConfig: GPUDirectConfig specifies the GPU direct strategy on the
+// node pool.
+type GPUDirectConfig struct {
+	// GpuDirectStrategy: The type of GPU direct strategy to enable on the node
+	// pool.
+	//
+	// Possible values:
+	//   "GPU_DIRECT_STRATEGY_UNSPECIFIED" - Default value. No GPU Direct strategy
+	// is enabled on the node.
+	//   "RDMA" - GPUDirect-RDMA on A3 Ultra, and A4 machine types
+	GpuDirectStrategy string `json:"gpuDirectStrategy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GpuDirectStrategy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GpuDirectStrategy") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GPUDirectConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GPUDirectConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GPUDriverInstallationConfig: GPUDriverInstallationConfig specifies the
 // version of GPU driver to be auto installed.
 type GPUDriverInstallationConfig struct {
@@ -5766,6 +5798,8 @@ type NodeConfig struct {
 	FlexStart bool `json:"flexStart,omitempty"`
 	// GcfsConfig: GCFS (Google Container File System) configs.
 	GcfsConfig *GcfsConfig `json:"gcfsConfig,omitempty"`
+	// GpuDirectConfig: The configuration for GPU Direct
+	GpuDirectConfig *GPUDirectConfig `json:"gpuDirectConfig,omitempty"`
 	// Gvnic: Enable or disable gvnic on the node pool.
 	Gvnic *VirtualNIC `json:"gvnic,omitempty"`
 	// HostMaintenancePolicy: HostMaintenancePolicy contains the desired
@@ -8870,6 +8904,29 @@ func (s ShieldedNodes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SliceControllerConfig: Configuration for the Slice Controller.
+type SliceControllerConfig struct {
+	// Enabled: Optional. Indicates whether Slice Controller is enabled in the
+	// cluster.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SliceControllerConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SliceControllerConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SoleTenantConfig: SoleTenantConfig contains the NodeAffinities to specify
 // what shared sole tenant node groups should back the node pool.
 type SoleTenantConfig struct {
@@ -9837,6 +9894,9 @@ type UpgradeSettings struct {
 	//   "BLUE_GREEN" - blue-green upgrade.
 	//   "SURGE" - SURGE is the traditional way of upgrading a node pool. max_surge
 	// and max_unavailable determines the level of upgrade parallelism.
+	//   "SHORT_LIVED" - SHORT_LIVED is the dedicated upgrade strategy for
+	// QueuedProvisioning and flex start nodepools scaled up only by enqueueing to
+	// the Dynamic Workload Scheduler (DWS).
 	Strategy string `json:"strategy,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BlueGreenSettings") to
 	// unconditionally include in API requests. By default, fields with empty or

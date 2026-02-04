@@ -4800,6 +4800,9 @@ func (s NonCompliantFile) MarshalJSON() ([]byte, error) {
 
 // Note: A type of analysis that can be done for a resource.
 type Note struct {
+	// AdvisoryPublishTime: The timestamp when the advisory was first published by
+	// the source feed.
+	AdvisoryPublishTime string `json:"advisoryPublishTime,omitempty"`
 	// Attestation: A note describing an attestation role.
 	Attestation *AttestationNote `json:"attestation,omitempty"`
 	// Build: A note describing build provenance for a verifiable build.
@@ -4871,15 +4874,15 @@ type Note struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Attestation") to
+	// ForceSendFields is a list of field names (e.g. "AdvisoryPublishTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Attestation") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdvisoryPublishTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

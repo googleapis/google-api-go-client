@@ -4883,6 +4883,9 @@ func (s Location) MarshalJSON() ([]byte, error) {
 
 // Note: A type of analysis that can be done for a resource.
 type Note struct {
+	// AdvisoryPublishTime: The timestamp when the advisory was first published by
+	// the source.
+	AdvisoryPublishTime string `json:"advisoryPublishTime,omitempty"`
 	// AttestationAuthority: A note describing an attestation role.
 	AttestationAuthority *Authority `json:"attestationAuthority,omitempty"`
 	// BaseImage: A note describing a base image.
@@ -4960,13 +4963,13 @@ type Note struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AttestationAuthority") to
+	// ForceSendFields is a list of field names (e.g. "AdvisoryPublishTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AttestationAuthority") to include
+	// NullFields is a list of field names (e.g. "AdvisoryPublishTime") to include
 	// in API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

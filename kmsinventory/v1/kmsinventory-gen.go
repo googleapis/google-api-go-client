@@ -182,6 +182,7 @@ func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.CryptoKeys = NewProjectsCryptoKeysService(s)
 	rs.Locations = NewProjectsLocationsService(s)
+	rs.ProtectedResources = NewProjectsProtectedResourcesService(s)
 	return rs
 }
 
@@ -191,6 +192,8 @@ type ProjectsService struct {
 	CryptoKeys *ProjectsCryptoKeysService
 
 	Locations *ProjectsLocationsService
+
+	ProtectedResources *ProjectsProtectedResourcesService
 }
 
 func NewProjectsCryptoKeysService(s *Service) *ProjectsCryptoKeysService {
@@ -232,6 +235,15 @@ func NewProjectsLocationsKeyRingsCryptoKeysService(s *Service) *ProjectsLocation
 }
 
 type ProjectsLocationsKeyRingsCryptoKeysService struct {
+	s *Service
+}
+
+func NewProjectsProtectedResourcesService(s *Service) *ProjectsProtectedResourcesService {
+	rs := &ProjectsProtectedResourcesService{s: s}
+	return rs
+}
+
+type ProjectsProtectedResourcesService struct {
 	s *Service
 }
 
@@ -321,7 +333,7 @@ func (s GoogleCloudKmsInventoryV1ProtectedResource) MarshalJSON() ([]byte, error
 
 // GoogleCloudKmsInventoryV1ProtectedResourcesSummary: Aggregate information
 // about the resources protected by a Cloud KMS key in the same Cloud
-// organization as the key.
+// organization/project as the key.
 type GoogleCloudKmsInventoryV1ProtectedResourcesSummary struct {
 	// CloudProducts: The number of resources protected by the key grouped by Cloud
 	// product.
@@ -341,6 +353,11 @@ type GoogleCloudKmsInventoryV1ProtectedResourcesSummary struct {
 	// ResourceTypes: The number of resources protected by the key grouped by
 	// resource type.
 	ResourceTypes map[string]string `json:"resourceTypes,omitempty"`
+	// Warnings: Warning messages for the state of response
+	// ProtectedResourcesSummary For example, if the organization service account
+	// is not configured, INSUFFICIENT_PERMISSIONS_PARTIAL_DATA warning will be
+	// returned.
+	Warnings []*GoogleCloudKmsInventoryV1Warning `json:"warnings,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -388,6 +405,47 @@ type GoogleCloudKmsInventoryV1SearchProtectedResourcesResponse struct {
 
 func (s GoogleCloudKmsInventoryV1SearchProtectedResourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudKmsInventoryV1SearchProtectedResourcesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudKmsInventoryV1Warning: Warning message specifying various states
+// of response data that might indicate incomplete or partial results.
+type GoogleCloudKmsInventoryV1Warning struct {
+	// DisplayMessage: The literal message providing context and details about the
+	// warnings.
+	DisplayMessage string `json:"displayMessage,omitempty"`
+	// WarningCode: The specific warning code for the displayed message.
+	//
+	// Possible values:
+	//   "WARNING_CODE_UNSPECIFIED" - Default value. This value is unused.
+	//   "INSUFFICIENT_PERMISSIONS_PARTIAL_DATA" - Indicates that the caller or
+	// service agent lacks necessary permissions to view some of the requested
+	// data. The response may be partial. Examples: - KMS organization service
+	// agent {service_agent_name} lacks the `cloudasset.assets.searchAllResources`
+	// permission on the scope.
+	//   "RESOURCE_LIMIT_EXCEEDED_PARTIAL_DATA" - Indicates that a resource limit
+	// has been exceeded, resulting in partial data. Examples: - The project has
+	// more than 10,000 assets (resources, crypto keys, key handles, IAM policies,
+	// etc).
+	//   "ORG_LESS_PROJECT_PARTIAL_DATA" - Indicates that the project is org-less.
+	// Thus the analysis is only done for the project level data and results might
+	// be partial.
+	WarningCode string `json:"warningCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayMessage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayMessage") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudKmsInventoryV1Warning) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudKmsInventoryV1Warning
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1001,9 +1059,13 @@ type OrganizationsProtectedResourcesSearchCall struct {
 }
 
 // Search: Returns metadata about the resources protected by the given Cloud
-// KMS CryptoKey in the given Cloud organization.
+// KMS CryptoKey in the given Cloud organization/project.
 //
-// - scope: Resource name of the organization. Example: organizations/123.
+//   - scope: A scope can be an organization or a project. Resources protected by
+//     the crypto key in provided scope will be returned. The allowed values are:
+//   - organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/12345678") *
+//     projects/{PROJECT_ID} (e.g., "projects/foo-bar") *
+//     projects/{PROJECT_NUMBER} (e.g., "projects/12345678").
 func (r *OrganizationsProtectedResourcesService) Search(scope string) *OrganizationsProtectedResourcesSearchCall {
 	c := &OrganizationsProtectedResourcesSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope
@@ -1325,15 +1387,33 @@ type ProjectsLocationsKeyRingsCryptoKeysGetProtectedResourcesSummaryCall struct 
 }
 
 // GetProtectedResourcesSummary: Returns aggregate information about the
-// resources protected by the given Cloud KMS CryptoKey. Only resources within
-// the same Cloud organization as the key will be returned. The project that
-// holds the key must be part of an organization in order for this call to
-// succeed.
+// resources protected by the given Cloud KMS CryptoKey. By default, summary of
+// resources within the same Cloud organization as the key will be returned,
+// which requires the KMS organization service account to be configured(refer
+// https://docs.cloud.google.com/kms/docs/view-key-usage#required-roles). If
+// the KMS organization service account is not configured or key's project is
+// not part of an organization, set fallback_scope to `FALLBACK_SCOPE_PROJECT`
+// to retrieve a summary of protected resources within the key's project.
 //
 // - name: The resource name of the CryptoKey.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) GetProtectedResourcesSummary(name string) *ProjectsLocationsKeyRingsCryptoKeysGetProtectedResourcesSummaryCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysGetProtectedResourcesSummaryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// FallbackScope sets the optional parameter "fallbackScope": The scope to use
+// if the kms organization service account is not configured.
+//
+// Possible values:
+//
+//	"FALLBACK_SCOPE_UNSPECIFIED" - Unspecified scope type.
+//	"FALLBACK_SCOPE_PROJECT" - If set to `FALLBACK_SCOPE_PROJECT`, the API
+//
+// will fall back to using key's project as request scope if the kms
+// organization service account is not configured.
+func (c *ProjectsLocationsKeyRingsCryptoKeysGetProtectedResourcesSummaryCall) FallbackScope(fallbackScope string) *ProjectsLocationsKeyRingsCryptoKeysGetProtectedResourcesSummaryCall {
+	c.urlParams_.Set("fallbackScope", fallbackScope)
 	return c
 }
 
@@ -1427,4 +1507,182 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysGetProtectedResourcesSummaryCall) Do
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "kmsinventory.projects.locations.keyRings.cryptoKeys.getProtectedResourcesSummary", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsProtectedResourcesSearchCall struct {
+	s            *Service
+	scope        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Search: Returns metadata about the resources protected by the given Cloud
+// KMS CryptoKey in the given Cloud organization/project.
+//
+//   - scope: A scope can be an organization or a project. Resources protected by
+//     the crypto key in provided scope will be returned. The allowed values are:
+//   - organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/12345678") *
+//     projects/{PROJECT_ID} (e.g., "projects/foo-bar") *
+//     projects/{PROJECT_NUMBER} (e.g., "projects/12345678").
+func (r *ProjectsProtectedResourcesService) Search(scope string) *ProjectsProtectedResourcesSearchCall {
+	c := &ProjectsProtectedResourcesSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.scope = scope
+	return c
+}
+
+// CryptoKey sets the optional parameter "cryptoKey": Required. The resource
+// name of the CryptoKey.
+func (c *ProjectsProtectedResourcesSearchCall) CryptoKey(cryptoKey string) *ProjectsProtectedResourcesSearchCall {
+	c.urlParams_.Set("cryptoKey", cryptoKey)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// resources to return. The service may return fewer than this value. If
+// unspecified, at most 500 resources will be returned. The maximum value is
+// 500; values above 500 will be coerced to 500.
+func (c *ProjectsProtectedResourcesSearchCall) PageSize(pageSize int64) *ProjectsProtectedResourcesSearchCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous KeyTrackingService.SearchProtectedResources call. Provide
+// this to retrieve the subsequent page. When paginating, all other parameters
+// provided to KeyTrackingService.SearchProtectedResources must match the call
+// that provided the page token.
+func (c *ProjectsProtectedResourcesSearchCall) PageToken(pageToken string) *ProjectsProtectedResourcesSearchCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ResourceTypes sets the optional parameter "resourceTypes": A list of
+// resource types that this request searches for. If empty, it will search all
+// the trackable resource types
+// (https://cloud.google.com/kms/docs/view-key-usage#tracked-resource-types).
+// Regular expressions are also supported. For example: *
+// `compute.googleapis.com.*` snapshots resources whose type starts with
+// `compute.googleapis.com`. * `.*Image` snapshots resources whose type ends
+// with `Image`. * `.*Image.*` snapshots resources whose type contains `Image`.
+// See RE2 (https://github.com/google/re2/wiki/Syntax) for all supported
+// regular expression syntax. If the regular expression does not match any
+// supported resource type, an INVALID_ARGUMENT error will be returned.
+func (c *ProjectsProtectedResourcesSearchCall) ResourceTypes(resourceTypes ...string) *ProjectsProtectedResourcesSearchCall {
+	c.urlParams_.SetMulti("resourceTypes", append([]string{}, resourceTypes...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsProtectedResourcesSearchCall) Fields(s ...googleapi.Field) *ProjectsProtectedResourcesSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsProtectedResourcesSearchCall) IfNoneMatch(entityTag string) *ProjectsProtectedResourcesSearchCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsProtectedResourcesSearchCall) Context(ctx context.Context) *ProjectsProtectedResourcesSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsProtectedResourcesSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsProtectedResourcesSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+scope}/protectedResources:search")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"scope": c.scope,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "kmsinventory.projects.protectedResources.search", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "kmsinventory.projects.protectedResources.search" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudKmsInventoryV1SearchProtectedResourcesResponse.ServerResponse.Hea
+// der or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsProtectedResourcesSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudKmsInventoryV1SearchProtectedResourcesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudKmsInventoryV1SearchProtectedResourcesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "kmsinventory.projects.protectedResources.search", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsProtectedResourcesSearchCall) Pages(ctx context.Context, f func(*GoogleCloudKmsInventoryV1SearchProtectedResourcesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }

@@ -1,5 +1,18 @@
 # Changes
 
+## [0.265.0](https://github.com/googleapis/google-api-go-client/compare/v0.264.0...v0.265.0) (2026-02-04)
+
+
+### Features
+
+* Add checksums for single chunk json uploads ([#3448](https://github.com/googleapis/google-api-go-client/issues/3448)) ([0f1cb7b](https://github.com/googleapis/google-api-go-client/commit/0f1cb7b9b71b8f21e2bb14d69bd1e11a1ca7a9ff))
+* **all:** Auto-regenerate discovery clients ([#3473](https://github.com/googleapis/google-api-go-client/issues/3473)) ([e617dd5](https://github.com/googleapis/google-api-go-client/commit/e617dd5dc920921e5fff184be3c33a8ab9c8ce41))
+* **all:** Auto-regenerate discovery clients ([#3476](https://github.com/googleapis/google-api-go-client/issues/3476)) ([986f556](https://github.com/googleapis/google-api-go-client/commit/986f55600724d148e102413766cfbdc278adba38))
+* **all:** Auto-regenerate discovery clients ([#3477](https://github.com/googleapis/google-api-go-client/issues/3477)) ([cdb1738](https://github.com/googleapis/google-api-go-client/commit/cdb1738722afcceb26e6d4be934bac46682c1c25))
+* **all:** Auto-regenerate discovery clients ([#3479](https://github.com/googleapis/google-api-go-client/issues/3479)) ([2aa3478](https://github.com/googleapis/google-api-go-client/commit/2aa3478d4e2a94b30eb6873ff5b41cffef0e89bd))
+* **all:** Auto-regenerate discovery clients ([#3480](https://github.com/googleapis/google-api-go-client/issues/3480)) ([29bd843](https://github.com/googleapis/google-api-go-client/commit/29bd84381608db3db0385bd8f4544af458df7329))
+* **all:** Auto-regenerate discovery clients ([#3482](https://github.com/googleapis/google-api-go-client/issues/3482)) ([afa65b7](https://github.com/googleapis/google-api-go-client/commit/afa65b7fb9b586aac07247474fdd1efc5812e824))
+
 ## [0.264.0](https://github.com/googleapis/google-api-go-client/compare/v0.263.0...v0.264.0) (2026-01-29)
 
 

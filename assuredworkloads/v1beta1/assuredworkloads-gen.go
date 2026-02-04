@@ -1274,6 +1274,8 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// Arabia) partner.
 	//   "SOVEREIGN_CONTROLS_BY_CNTXT_NO_EKM" - Enum representing CNTXT (Kingdom of
 	// Saudi Arabia) partner offering without EKM.
+	//   "SPAIN_DATA_BOUNDARY_BY_TELEFONICA" - Enum representing Telefonica (Spain)
+	// partner.
 	Partner string `json:"partner,omitempty"`
 	// PartnerPermissions: Optional. Permissions granted to the AW Partner SA
 	// account for the customer workload

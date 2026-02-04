@@ -7769,6 +7769,8 @@ type GoogleCloudRetailV2alphaSearchRequest struct {
 	// PlaceId: Optional. An id corresponding to a place, such as a store id or
 	// region id. When specified, we use the price from the local inventory with
 	// the matching product's LocalInventory.place_id for revenue optimization.
+	// Note, the currency of the local inventory's price must match the currency of
+	// the product's price.
 	PlaceId string `json:"placeId,omitempty"`
 	// Query: Raw search query. If this field is empty, the request is considered a
 	// category browsing request and returned results are based on filter and

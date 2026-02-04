@@ -8678,6 +8678,8 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// gine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/.
 	// Otherwise, an INVALID_ARGUMENT error is returned.
 	Name string `json:"name,omitempty"`
+	// ObservabilityConfig: Optional. Observability config for the engine.
+	ObservabilityConfig *GoogleCloudDiscoveryengineV1ObservabilityConfig `json:"observabilityConfig,omitempty"`
 	// SearchEngineConfig: Configurations for the Search Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_SEARCH.
 	SearchEngineConfig *GoogleCloudDiscoveryengineV1EngineSearchEngineConfig `json:"searchEngineConfig,omitempty"`
@@ -10944,6 +10946,34 @@ func (s GoogleCloudDiscoveryengineV1NaturalLanguageQueryUnderstandingConfig) Mar
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1ObservabilityConfig: Observability config for a
+// resource.
+type GoogleCloudDiscoveryengineV1ObservabilityConfig struct {
+	// ObservabilityEnabled: Optional. Enables observability. If false, all other
+	// flags are ignored.
+	ObservabilityEnabled bool `json:"observabilityEnabled,omitempty"`
+	// SensitiveLoggingEnabled: Optional. Enables sensitive logging. Sensitive
+	// logging includes customer core content (e.g. prompts, responses). If false,
+	// will sanitize all sensitive fields.
+	SensitiveLoggingEnabled bool `json:"sensitiveLoggingEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ObservabilityEnabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ObservabilityEnabled") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1ObservabilityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ObservabilityConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1PageInfo: Detailed page information.
 type GoogleCloudDiscoveryengineV1PageInfo struct {
 	// PageCategory: The most specific category associated with a category page. To
@@ -11180,6 +11210,8 @@ type GoogleCloudDiscoveryengineV1ProjectCustomerProvidedConfigNotebooklmConfig s
 	// ModelArmorConfig: Model Armor configuration to be used for sanitizing user
 	// prompts and LLM responses.
 	ModelArmorConfig *GoogleCloudDiscoveryengineV1ProjectCustomerProvidedConfigNotebooklmConfigModelArmorConfig `json:"modelArmorConfig,omitempty"`
+	// ObservabilityConfig: Optional. Observability config for NotebookLM.
+	ObservabilityConfig *GoogleCloudDiscoveryengineV1ObservabilityConfig `json:"observabilityConfig,omitempty"`
 	// OptOutNotebookSharing: Optional. Whether to disable the notebook sharing
 	// feature for the project. Default to false if not specified.
 	OptOutNotebookSharing bool `json:"optOutNotebookSharing,omitempty"`
@@ -20774,6 +20806,8 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// gine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/.
 	// Otherwise, an INVALID_ARGUMENT error is returned.
 	Name string `json:"name,omitempty"`
+	// ObservabilityConfig: Optional. Observability config for the engine.
+	ObservabilityConfig *GoogleCloudDiscoveryengineV1alphaObservabilityConfig `json:"observabilityConfig,omitempty"`
 	// RecommendationMetadata: Output only. Additional information of a
 	// recommendation engine. Only applicable if solution_type is
 	// SOLUTION_TYPE_RECOMMENDATION.
@@ -22499,6 +22533,34 @@ func (s GoogleCloudDiscoveryengineV1alphaNaturalLanguageQueryUnderstandingConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaObservabilityConfig: Observability config
+// for a resource.
+type GoogleCloudDiscoveryengineV1alphaObservabilityConfig struct {
+	// ObservabilityEnabled: Optional. Enables observability. If false, all other
+	// flags are ignored.
+	ObservabilityEnabled bool `json:"observabilityEnabled,omitempty"`
+	// SensitiveLoggingEnabled: Optional. Enables sensitive logging. Sensitive
+	// logging includes customer core content (e.g. prompts, responses). If false,
+	// will sanitize all sensitive fields.
+	SensitiveLoggingEnabled bool `json:"sensitiveLoggingEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ObservabilityEnabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ObservabilityEnabled") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaObservabilityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaObservabilityConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaObtainCrawlRateResponse: Response message
 // for CrawlRateManagementService.ObtainCrawlRate method. The response contains
 // organcic or dedicated crawl rate time series data for monitoring, depending
@@ -22727,6 +22789,8 @@ type GoogleCloudDiscoveryengineV1alphaProjectCustomerProvidedConfigNotebooklmCon
 	// ModelArmorConfig: Model Armor configuration to be used for sanitizing user
 	// prompts and LLM responses.
 	ModelArmorConfig *GoogleCloudDiscoveryengineV1alphaProjectCustomerProvidedConfigNotebooklmConfigModelArmorConfig `json:"modelArmorConfig,omitempty"`
+	// ObservabilityConfig: Optional. Observability config for NotebookLM.
+	ObservabilityConfig *GoogleCloudDiscoveryengineV1alphaObservabilityConfig `json:"observabilityConfig,omitempty"`
 	// OptOutNotebookSharing: Optional. Whether to disable the notebook sharing
 	// feature for the project. Default to false if not specified.
 	OptOutNotebookSharing bool `json:"optOutNotebookSharing,omitempty"`
@@ -27533,6 +27597,8 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// gine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/.
 	// Otherwise, an INVALID_ARGUMENT error is returned.
 	Name string `json:"name,omitempty"`
+	// ObservabilityConfig: Optional. Observability config for the engine.
+	ObservabilityConfig *GoogleCloudDiscoveryengineV1betaObservabilityConfig `json:"observabilityConfig,omitempty"`
 	// SearchEngineConfig: Configurations for the Search Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_SEARCH.
 	SearchEngineConfig *GoogleCloudDiscoveryengineV1betaEngineSearchEngineConfig `json:"searchEngineConfig,omitempty"`
@@ -28773,6 +28839,34 @@ func (s GoogleCloudDiscoveryengineV1betaNaturalLanguageQueryUnderstandingConfig)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaObservabilityConfig: Observability config
+// for a resource.
+type GoogleCloudDiscoveryengineV1betaObservabilityConfig struct {
+	// ObservabilityEnabled: Optional. Enables observability. If false, all other
+	// flags are ignored.
+	ObservabilityEnabled bool `json:"observabilityEnabled,omitempty"`
+	// SensitiveLoggingEnabled: Optional. Enables sensitive logging. Sensitive
+	// logging includes customer core content (e.g. prompts, responses). If false,
+	// will sanitize all sensitive fields.
+	SensitiveLoggingEnabled bool `json:"sensitiveLoggingEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ObservabilityEnabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ObservabilityEnabled") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaObservabilityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaObservabilityConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaObtainCrawlRateResponse: Response message
 // for CrawlRateManagementService.ObtainCrawlRate method. The response contains
 // organcic or dedicated crawl rate time series data for monitoring, depending
@@ -28968,6 +29062,8 @@ type GoogleCloudDiscoveryengineV1betaProjectCustomerProvidedConfigNotebooklmConf
 	// ModelArmorConfig: Model Armor configuration to be used for sanitizing user
 	// prompts and LLM responses.
 	ModelArmorConfig *GoogleCloudDiscoveryengineV1betaProjectCustomerProvidedConfigNotebooklmConfigModelArmorConfig `json:"modelArmorConfig,omitempty"`
+	// ObservabilityConfig: Optional. Observability config for NotebookLM.
+	ObservabilityConfig *GoogleCloudDiscoveryengineV1betaObservabilityConfig `json:"observabilityConfig,omitempty"`
 	// OptOutNotebookSharing: Optional. Whether to disable the notebook sharing
 	// feature for the project. Default to false if not specified.
 	OptOutNotebookSharing bool `json:"optOutNotebookSharing,omitempty"`

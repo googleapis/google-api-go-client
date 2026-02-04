@@ -1521,6 +1521,7 @@ type GoogleCloudAiplatformV1beta1GenerateContentResponseUsageMetadata struct {
 	// Possible values:
 	//   "TRAFFIC_TYPE_UNSPECIFIED" - Unspecified request traffic type.
 	//   "ON_DEMAND" - The request was processed using Pay-As-You-Go quota.
+	//   "ON_DEMAND_PRIORITY" - Type for Priority Pay-As-You-Go traffic.
 	//   "ON_DEMAND_FLEX" - Type for Flex traffic.
 	//   "PROVISIONED_THROUGHPUT" - Type for Provisioned Throughput traffic.
 	TrafficType string `json:"trafficType,omitempty"`

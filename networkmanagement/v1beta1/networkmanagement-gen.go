@@ -1249,6 +1249,9 @@ type DropInfo struct {
 	// matched within this hybrid subnet.
 	//   "HYBRID_SUBNET_NO_ROUTE" - Packet is dropped because no matching route was
 	// found in the hybrid subnet.
+	//   "NO_VALID_ROUTE_FROM_GOOGLE_MANAGED_NETWORK_TO_DESTINATION" - Packet is
+	// dropped because there is no valid matching route from the network of the
+	// Google-managed service to the destination.
 	Cause string `json:"cause,omitempty"`
 	// DestinationGeolocationCode: Geolocation (region code) of the destination IP
 	// address (if relevant).
@@ -1444,8 +1447,6 @@ type Empty struct {
 
 // Endpoint: Source or destination of the Connectivity Test.
 type Endpoint struct {
-	// AlloyDbInstance: An AlloyDB Instance (https://cloud.google.com/alloydb) URI.
-	AlloyDbInstance string `json:"alloyDbInstance,omitempty"`
 	// AppEngineVersion: An App Engine (https://cloud.google.com/appengine)
 	// [service
 	// version](https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/
@@ -1527,21 +1528,25 @@ type Endpoint struct {
 	// located. Not relevant for destination endpoints.
 	//
 	// Possible values:
-	//   "NETWORK_TYPE_UNSPECIFIED" - Unspecified. The `project_id` field should be
-	// set to the project where the GCP endpoint is located, or where the non-GCP
-	// endpoint should be reachable from (via routes to non-GCP networks). The test
-	// will analyze all possible IP address locations. This might take longer and
-	// produce inaccurate or ambiguous results, so prefer specifying an explicit
-	// network type.
-	//   "GCP_NETWORK" - A VPC network. The `network` field should be set to the
-	// URI of this network. Only endpoints within this network will be considered.
+	//   "NETWORK_TYPE_UNSPECIFIED" - Unspecified. The test will analyze all
+	// possible IP address locations. This might take longer and produce inaccurate
+	// or ambiguous results, so prefer specifying an explicit network type. The
+	// `project_id` field should be set to the project where the GCP endpoint is
+	// located, or where the non-GCP endpoint should be reachable from (via routes
+	// to non-GCP networks). The project might also be inferred from the
+	// Connectivity Test project or other projects referenced in the request.
+	//   "GCP_NETWORK" - A VPC network. Should be used for internal IP addresses in
+	// VPC networks. The `network` field should be set to the URI of this network.
+	// Only endpoints within this network will be considered.
 	//   "NON_GCP_NETWORK" - A non-GCP network (for example, an on-premises network
-	// or network in another Cloud). The `network` field should be set to the URI
-	// of the VPC network containing a corresponding VPN tunnel, Interconnect
-	// attachment, or router appliance instance. Only endpoints reachable from the
-	// provided VPC network via the routes to non-GCP networks will be considered.
-	//   "INTERNET" - Internet. Only endpoints reachable over public Internet and
-	// endpoints within Google API and service ranges will be considered.
+	// or another cloud provider network). Should be used for internal IP addresses
+	// outside of Google Cloud. The `network` field should be set to the URI of the
+	// VPC network containing a corresponding Cloud VPN tunnel, Cloud Interconnect
+	// VLAN attachment, or a router appliance instance. Only endpoints reachable
+	// from the provided VPC network via the routes to non-GCP networks will be
+	// considered.
+	//   "INTERNET" - Internet. Should be used for internet-routable external IP
+	// addresses or IP addresses for global Google APIs and services.
 	NetworkType string `json:"networkType,omitempty"`
 	// Port: The IP protocol port of the endpoint. Only applicable when protocol is
 	// TCP or UDP.
@@ -1557,13 +1562,13 @@ type Endpoint struct {
 	// (https://cloud.google.com/memorystore/docs/redis) URI. Applicable only to
 	// destination endpoint.
 	RedisInstance string `json:"redisInstance,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AlloyDbInstance") to
+	// ForceSendFields is a list of field names (e.g. "AppEngineVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AlloyDbInstance") to include in
+	// NullFields is a list of field names (e.g. "AppEngineVersion") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1918,44 +1923,6 @@ type GkePodInfo struct {
 
 func (s GkePodInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GkePodInfo
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleManagedServiceInfo: For display only. Metadata associated with
-// ARRIVE_AT_GOOGLE_MANAGED_SERVICE state.
-type GoogleManagedServiceInfo struct {
-	// IpAddress: IP address of the Google-managed service endpoint.
-	IpAddress string `json:"ipAddress,omitempty"`
-	// NetworkUri: URI of the Google-managed service endpoint network, it is empty
-	// if the IP address is a public IP address.
-	NetworkUri string `json:"networkUri,omitempty"`
-	// ServiceType: Type of a Google-managed service.
-	//
-	// Possible values:
-	//   "SERVICE_TYPE_UNSPECIFIED" - Service type is unspecified.
-	//   "UNSUPPORTED" - Unsupported Google-managed service.
-	//   "CLOUD_SQL" - Cloud SQL Instance.
-	//   "GKE_CLUSTER_CONTROL_PLANE" - GKE Cluster control plane.
-	//   "REDIS_CLUSTER" - Redis Cluster.
-	//   "REDIS_INSTANCE" - Redis Instance.
-	ServiceType string `json:"serviceType,omitempty"`
-	// ServiceUri: URI of the Google-managed service.
-	ServiceUri string `json:"serviceUri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "IpAddress") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "IpAddress") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleManagedServiceInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleManagedServiceInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3468,8 +3435,6 @@ type Step struct {
 	GkeMaster *GKEMasterInfo `json:"gkeMaster,omitempty"`
 	// GkePod: Display information of a Google Kubernetes Engine Pod.
 	GkePod *GkePodInfo `json:"gkePod,omitempty"`
-	// GoogleManagedService: Display information of a Google-managed service.
-	GoogleManagedService *GoogleManagedServiceInfo `json:"googleManagedService,omitempty"`
 	// GoogleService: Display information of a Google service
 	GoogleService *GoogleServiceInfo `json:"googleService,omitempty"`
 	// HybridSubnet: Display information of a hybrid subnet.
@@ -3587,8 +3552,6 @@ type Step struct {
 	//   "SERVERLESS_EXTERNAL_CONNECTION" - Forwarding state: for packets
 	// originating from a serverless endpoint forwarded through public (external)
 	// connectivity.
-	//   "ARRIVE_AT_GOOGLE_MANAGED_SERVICE" - Forwarding state: arriving at a
-	// Google-managed service endpoint.
 	//   "NAT" - Transition state: packet header translated. The `nat` field is
 	// populated with the translation information.
 	//   "SKIP_GKE_POD_IP_MASQUERADING" - Transition state: GKE Pod IP masquerading
@@ -4110,7 +4073,11 @@ type OrganizationsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *OrganizationsLocationsService) List(name string) *OrganizationsLocationsListCall {
@@ -5496,7 +5463,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

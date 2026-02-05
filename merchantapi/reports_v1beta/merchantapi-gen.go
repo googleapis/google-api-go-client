@@ -1434,11 +1434,12 @@ type ProductView struct {
 	// Possible values:
 	//   "AGGREGATED_REPORTING_CONTEXT_STATUS_UNSPECIFIED" - Not specified.
 	//   "NOT_ELIGIBLE_OR_DISAPPROVED" - Product is not eligible or is disapproved
-	// for all reporting contexts.
-	//   "PENDING" - Product's status is pending in all reporting contexts.
+	// for all reporting contexts and countries.
+	//   "PENDING" - Product's status is pending in all reporting contexts and
+	// countries.
 	//   "ELIGIBLE_LIMITED" - Product is eligible for some (but not all) reporting
-	// contexts.
-	//   "ELIGIBLE" - Product is eligible for all reporting contexts.
+	// contexts and countries.
+	//   "ELIGIBLE" - Product is eligible for all reporting contexts and countries.
 	AggregatedReportingContextStatus string `json:"aggregatedReportingContextStatus,omitempty"`
 	// Availability: Availability
 	// (https://support.google.com/merchants/answer/6324448) of the product.

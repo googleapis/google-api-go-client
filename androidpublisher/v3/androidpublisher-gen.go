@@ -2584,6 +2584,14 @@ func (s Comment) MarshalJSON() ([]byte, error) {
 type ConvertRegionPricesRequest struct {
 	// Price: The intital price to convert other regions from. Tax exclusive.
 	Price *Money `json:"price,omitempty"`
+	// ProductTaxCategoryCode: Optional. Product tax category code in context.
+	// Product tax category determines the transaction tax rates applied to the
+	// product that will be factored into the price calculation. If not set, tax
+	// rates for the default product tax category will be used. Refer to the Help
+	// Center article
+	// (https://support.google.com/googleplay/android-developer/answer/16408159)
+	// for more information.
+	ProductTaxCategoryCode string `json:"productTaxCategoryCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Price") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

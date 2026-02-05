@@ -705,6 +705,26 @@ type AutokeyConfig struct {
 	// pertinent permissions). A request with an empty key project field will clear
 	// the configuration.
 	KeyProject string `json:"keyProject,omitempty"`
+	// KeyProjectResolutionMode: Optional. KeyProjectResolutionMode for the
+	// AutokeyConfig. Valid values are `DEDICATED_KEY_PROJECT`, `RESOURCE_PROJECT`,
+	// or `DISABLED`.
+	//
+	// Possible values:
+	//   "KEY_PROJECT_RESOLUTION_MODE_UNSPECIFIED" - Default value.
+	// KeyProjectResolutionMode when not specified will act as
+	// `DEDICATED_KEY_PROJECT`.
+	//   "DEDICATED_KEY_PROJECT" - Keys are created in a dedicated project
+	// specified by `key_project`.
+	//   "RESOURCE_PROJECT" - Keys are created in the same project as the resource
+	// requesting the key. `key_project` must not be set when this mode is used.
+	//   "DISABLED" - Disables the AutokeyConfig. When this mode is set, any
+	// AutokeyConfig from higher levels in the resource hierarchy are ignored for
+	// this resource and its descendants. This setting can be overridden by a more
+	// specific configuration at a lower level. For example, if Autokey is disabled
+	// on a folder, it can be re-enabled on a sub-folder or project within that
+	// folder by setting a different mode (e.g., DEDICATED_KEY_PROJECT or
+	// RESOURCE_PROJECT).
+	KeyProjectResolutionMode string `json:"keyProjectResolutionMode,omitempty"`
 	// Name: Identifier. Name of the AutokeyConfig resource, e.g.
 	// `folders/{FOLDER_NUMBER}/autokeyConfig`
 	Name string `json:"name,omitempty"`
@@ -2253,6 +2273,7 @@ type ImportJob struct {
 	// cryptographic operations are performed. Currently, this field is only
 	// populated for keys stored in HSM_SINGLE_TENANT. Note, this list is
 	// non-exhaustive and may apply to additional ProtectionLevels in the future.
+	// Supported resources: * "projects/*/locations/*/singleTenantHsmInstances/*"
 	CryptoKeyBackend string `json:"cryptoKeyBackend,omitempty"`
 	// ExpireEventTime: Output only. The time this ImportJob expired. Only present
 	// if state is EXPIRED.

@@ -1023,6 +1023,8 @@ type Workload struct {
 	// of Saudi Arabia) partner.
 	//   "PARTNER_SOVEREIGN_CONTROLS_BY_CNTXT_NO_EKM" - Enum representing CNXT
 	// (Kingdom of Saudi Arabia) partner offering without EKM provisioning.
+	//   "PARTNER_SPAIN_DATA_BOUNDARY_BY_TELEFONICA" - Enum representing Telefonica
+	// (Spain) partner.
 	Partner string `json:"partner,omitempty"`
 	// WorkloadOnboardingState: Container for workload onboarding steps.
 	WorkloadOnboardingState *WorkloadOnboardingState `json:"workloadOnboardingState,omitempty"`

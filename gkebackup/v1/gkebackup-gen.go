@@ -1515,6 +1515,28 @@ func (s GetBackupIndexDownloadUrlResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GetTagsRequest: Request message for GetTags.
+type GetTagsRequest struct {
+	// Name: Required. The full resource name of the service resource.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GetTagsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GetTagsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GetTagsResponse: Response message for GetTags.
 type GetTagsResponse struct {
 	// Etag: A checksum based on the current bindings. This field is always set in
@@ -3090,6 +3112,8 @@ type SetTagsRequest struct {
 	// Etag: Optional. A checksum based on the current bindings which can be passed
 	// to prevent race conditions. If not passed, etag check would be skipped.
 	Etag string `json:"etag,omitempty"`
+	// Name: Required. The full resource name of the service resource.
+	Name string `json:"name,omitempty"`
 	// RequestId: Optional. A unique identifier for this request. Must be a valid
 	// UUID. This request is only idempotent if a `request_id` is provided.
 	RequestId string `json:"requestId,omitempty"`
@@ -3792,7 +3816,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

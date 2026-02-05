@@ -253,7 +253,7 @@ type CancelSubscriptionRequest struct {
 	// CancelImmediately: Optional. If true, Google will cancel the subscription
 	// immediately, and may or may not (based on the contract) issue a prorated
 	// refund for the remainder of the billing cycle. Otherwise, Google defers the
-	// cancelation at renewal_time, and will not issue a refund. - YouTube
+	// cancellation at renewal_time, and will not issue a refund. - YouTube
 	// subscriptions must use this option currently. However, the user will still
 	// have access to the subscription until the end of the billing cycle.
 	CancelImmediately bool `json:"cancelImmediately,omitempty"`
@@ -262,9 +262,9 @@ type CancelSubscriptionRequest struct {
 	// Possible values:
 	//   "CANCELLATION_REASON_UNSPECIFIED" - Reason is unspecified. Should not be
 	// used.
-	//   "CANCELLATION_REASON_FRAUD" - Fraudualant transaction.
+	//   "CANCELLATION_REASON_FRAUD" - Fraudulent transaction.
 	//   "CANCELLATION_REASON_REMORSE" - Buyer's remorse.
-	//   "CANCELLATION_REASON_ACCIDENTAL_PURCHASE" - Accidential purchase.
+	//   "CANCELLATION_REASON_ACCIDENTAL_PURCHASE" - Accidental purchase.
 	//   "CANCELLATION_REASON_PAST_DUE" - Payment is past due.
 	//   "CANCELLATION_REASON_ACCOUNT_CLOSED" - Used for notification only, do not
 	// use in Cancel API. User account closed.
@@ -634,14 +634,14 @@ type FindEligiblePromotionsRequest struct {
 	// youtubePayload.partnerEligibilityId=eligibility-id`
 	Filter string `json:"filter,omitempty"`
 	// PageSize: Optional. The maximum number of promotions to return. The service
-	// may return fewer than this value. If unspecified, at most 50 products will
+	// may return fewer than this value. If unspecified, at most 50 promotions will
 	// be returned. The maximum value is 1000; values above 1000 will be coerced to
 	// 1000.
 	PageSize int64 `json:"pageSize,omitempty"`
-	// PageToken: Optional. A page token, received from a previous `ListPromotions`
-	// call. Provide this to retrieve the subsequent page. When paginating, all
-	// other parameters provided to `ListPromotions` must match the call that
-	// provided the page token.
+	// PageToken: Optional. A page token, received from a previous
+	// `FindEligiblePromotions` call. Provide this to retrieve the subsequent page.
+	// When paginating, all other parameters provided to `FindEligiblePromotions`
+	// must match the call that provided the page token.
 	PageToken string `json:"pageToken,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -690,11 +690,11 @@ func (s FindEligiblePromotionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// FiniteBillingCycleDetails: Details for a subscriptiin line item with finite
+// FiniteBillingCycleDetails: Details for a subscription line item with finite
 // billing cycles.
 type FiniteBillingCycleDetails struct {
-	// BillingCycleCountLimit: Required. The number of a subscription line item
-	// billing cycles after which billing will stop automatically.
+	// BillingCycleCountLimit: The number of a subscription line item billing
+	// cycles after which billing will stop automatically.
 	BillingCycleCountLimit int64 `json:"billingCycleCountLimit,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "BillingCycleCountLimit") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1027,7 +1027,7 @@ type Product struct {
 	// plan, which includes multiple subscription elements.
 	ProductType string `json:"productType,omitempty"`
 	// RegionCodes: Output only. 2-letter ISO region code where the product is
-	// available in. Ex. "US" Please refers to:
+	// available in. Ex. "US" Please refer to:
 	// https://en.wikipedia.org/wiki/ISO_3166-1
 	RegionCodes []string `json:"regionCodes,omitempty"`
 	// SubscriptionBillingCycleDuration: Output only. Specifies the length of the
@@ -1190,7 +1190,7 @@ type Promotion struct {
 	// introductory pricing.
 	PromotionType string `json:"promotionType,omitempty"`
 	// RegionCodes: Output only. 2-letter ISO region code where the promotion is
-	// available in. Ex. "US" Please refers to:
+	// available in. Ex. "US" Please refer to:
 	// https://en.wikipedia.org/wiki/ISO_3166-1
 	RegionCodes []string `json:"regionCodes,omitempty"`
 	// StartTime: Optional. Specifies the start time (inclusive) of the period that
@@ -1497,9 +1497,9 @@ type SubscriptionCancellationDetails struct {
 	// Possible values:
 	//   "CANCELLATION_REASON_UNSPECIFIED" - Reason is unspecified. Should not be
 	// used.
-	//   "CANCELLATION_REASON_FRAUD" - Fraudualant transaction.
+	//   "CANCELLATION_REASON_FRAUD" - Fraudulent transaction.
 	//   "CANCELLATION_REASON_REMORSE" - Buyer's remorse.
-	//   "CANCELLATION_REASON_ACCIDENTAL_PURCHASE" - Accidential purchase.
+	//   "CANCELLATION_REASON_ACCIDENTAL_PURCHASE" - Accidental purchase.
 	//   "CANCELLATION_REASON_PAST_DUE" - Payment is past due.
 	//   "CANCELLATION_REASON_ACCOUNT_CLOSED" - Used for notification only, do not
 	// use in Cancel API. User account closed.
@@ -1568,8 +1568,9 @@ type SubscriptionLineItem struct {
 	// OneTimeRecurrenceDetails: Output only. Details only set for a ONE_TIME
 	// recurrence line item.
 	OneTimeRecurrenceDetails *SubscriptionLineItemOneTimeRecurrenceDetails `json:"oneTimeRecurrenceDetails,omitempty"`
-	// Product: Required. Product resource name that identifies one the line item
-	// The format is 'partners/{partner_id}/products/{product_id}'.
+	// Product: Required. Product resource name that identifies the product
+	// associated with this line item. The format is
+	// 'partners/{partner_id}/products/{product_id}'.
 	Product string `json:"product,omitempty"`
 	// ProductPayload: Optional. Product specific payload for this line item.
 	ProductPayload *ProductPayload `json:"productPayload,omitempty"`
@@ -1947,8 +1948,8 @@ type PartnersProductsListCall struct {
 }
 
 // List: Currently, it doesn't support **YouTube** products. Retrieves the
-// products that can be resold by the partner. It should be autenticated with a
-// service account.
+// products that can be resold by the partner. It should be authenticated with
+// a service account.
 //
 //   - parent: The parent, the partner that can resell. Format:
 //     partners/{partner}.
@@ -2113,7 +2114,7 @@ type PartnersPromotionsFindEligibleCall struct {
 	header_                       http.Header
 }
 
-// FindEligible: Currently, it is only enabeld for **YouTube**. Finds eligible
+// FindEligible: Currently, it is only enabled for **YouTube**. Finds eligible
 // promotions for the current user. The API requires user authorization via
 // OAuth. The bare minimum oauth scope `openid` is sufficient, which will skip
 // the consent screen.
@@ -2244,7 +2245,7 @@ type PartnersPromotionsListCall struct {
 
 // List: Currently, it doesn't support **YouTube** promotions. Retrieves the
 // promotions, such as free trial, that can be used by the partner. It should
-// be autenticated with a service account.
+// be authenticated with a service account.
 //
 //   - parent: The parent, the partner that can resell. Format:
 //     partners/{partner}.
@@ -2272,7 +2273,7 @@ func (c *PartnersPromotionsListCall) Filter(filter string) *PartnersPromotionsLi
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // promotions to return. The service may return fewer than this value. If
-// unspecified, at most 50 products will be returned. The maximum value is
+// unspecified, at most 50 promotions will be returned. The maximum value is
 // 1000; values above 1000 will be coerced to 1000.
 func (c *PartnersPromotionsListCall) PageSize(pageSize int64) *PartnersPromotionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -3425,8 +3426,8 @@ type PartnersSubscriptionsLineItemsPatchCall struct {
 	header_              http.Header
 }
 
-// Patch: Updates a line item of a subscription. It should be autenticated with
-// a service account.
+// Patch: Updates a line item of a subscription. It should be authenticated
+// with a service account.
 //
 //   - name: Identifier. Resource name of the line item. Format:
 //     partners/{partner}/subscriptions/{subscription}/lineItems/{lineItem}.

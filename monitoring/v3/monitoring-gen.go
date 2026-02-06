@@ -4278,7 +4278,7 @@ type NotificationChannelStrategy struct {
 	// projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]
 	NotificationChannelNames []string `json:"notificationChannelNames,omitempty"`
 	// RenotifyInterval: The frequency at which to send reminder notifications for
-	// open incidents.
+	// open incidents. The value must be between 30 minutes and 24 hours.
 	RenotifyInterval string `json:"renotifyInterval,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NotificationChannelNames")
 	// to unconditionally include in API requests. By default, fields with empty or

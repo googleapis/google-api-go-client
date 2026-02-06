@@ -9058,8 +9058,8 @@ type EventticketobjectModifylinkedofferobjectsCall struct {
 	header_                         http.Header
 }
 
-// Modifylinkedofferobjects: Modifies linked offer objects for the event ticket
-// object with the given ID.
+// Modifylinkedofferobjects: Deprecated: Use Auto Linked Passes instead.
+// Modifies linked offer objects for the event ticket object with the given ID.
 //
 //   - resourceId: The unique identifier for an object. This ID must be unique
 //     across all objects from an issuer. This value should follow the format
@@ -15077,8 +15077,8 @@ type LoyaltyobjectModifylinkedofferobjectsCall struct {
 	header_                         http.Header
 }
 
-// Modifylinkedofferobjects: Modifies linked offer objects for the loyalty
-// object with the given ID.
+// Modifylinkedofferobjects: Deprecated: Use Auto Linked Passes instead.
+// Modifies linked offer objects for the loyalty object with the given ID.
 //
 //   - resourceId: The unique identifier for an object. This ID must be unique
 //     across all objects from an issuer. This value should follow the format

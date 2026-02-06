@@ -3813,8 +3813,10 @@ func (s RateGroup) MarshalJSON() ([]byte, error) {
 
 // Region: Represents a geographic region that you can use as a target with
 // both the `RegionalInventory` and `ShippingSettings` services. You can define
-// regions as collections of either postal codes or, in some countries, using
-// predefined geotargets. For more information, see Set up regions
+// regions as collections of either postal codes, radius areas or, in some
+// countries, using predefined geotargets. A region must be defined by
+// specifying exactly one of `postal_code_area`, `geotarget_area`, or
+// `radius_area`. For more information, see Set up regions
 // (https://support.google.com/merchants/answer/7410946#zippy=%2Ccreate-a-new-region)
 // for more information.
 type Region struct {

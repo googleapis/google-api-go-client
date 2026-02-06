@@ -637,36 +637,6 @@ type AutoscalingConfigOverrides struct {
 	// overrides the autoscaling target high_priority_cpu_utilization_percent in
 	// the top-level autoscaling configuration for the selected replicas.
 	AutoscalingTargetHighPriorityCpuUtilizationPercent int64 `json:"autoscalingTargetHighPriorityCpuUtilizationPercent,omitempty"`
-	// AutoscalingTargetTotalCpuUtilizationPercent: Optional. If specified,
-	// overrides the autoscaling target `total_cpu_utilization_percent` in the
-	// top-level autoscaling configuration for the selected replicas.
-	AutoscalingTargetTotalCpuUtilizationPercent int64 `json:"autoscalingTargetTotalCpuUtilizationPercent,omitempty"`
-	// DisableHighPriorityCpuAutoscaling: Optional. If true, disables high priority
-	// CPU autoscaling for the selected replicas and ignores
-	// high_priority_cpu_utilization_percent in the top-level autoscaling
-	// configuration. When setting this field to true, setting
-	// autoscaling_target_high_priority_cpu_utilization_percent field to a non-zero
-	// value for the same replica is not supported. If false, the
-	// autoscaling_target_high_priority_cpu_utilization_percent field in the
-	// replica will be used if set to a non-zero value. Otherwise, the
-	// high_priority_cpu_utilization_percent field in the top-level autoscaling
-	// configuration will be used. Setting both
-	// disable_high_priority_cpu_autoscaling and disable_total_cpu_autoscaling to
-	// true for the same replica is not supported.
-	DisableHighPriorityCpuAutoscaling bool `json:"disableHighPriorityCpuAutoscaling,omitempty"`
-	// DisableTotalCpuAutoscaling: Optional. If true, disables total CPU
-	// autoscaling for the selected replicas and ignores
-	// total_cpu_utilization_percent in the top-level autoscaling configuration.
-	// When setting this field to true, setting
-	// autoscaling_target_total_cpu_utilization_percent field to a non-zero value
-	// for the same replica is not supported. If false, the
-	// autoscaling_target_total_cpu_utilization_percent field in the replica will
-	// be used if set to a non-zero value. Otherwise, the
-	// total_cpu_utilization_percent field in the top-level autoscaling
-	// configuration will be used. Setting both
-	// disable_high_priority_cpu_autoscaling and disable_total_cpu_autoscaling to
-	// true for the same replica is not supported.
-	DisableTotalCpuAutoscaling bool `json:"disableTotalCpuAutoscaling,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoscalingLimits") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -724,26 +694,16 @@ func (s AutoscalingLimits) MarshalJSON() ([]byte, error) {
 
 // AutoscalingTargets: The autoscaling targets for an instance.
 type AutoscalingTargets struct {
-	// HighPriorityCpuUtilizationPercent: Optional. The target high priority cpu
+	// HighPriorityCpuUtilizationPercent: Required. The target high priority cpu
 	// utilization percentage that the autoscaler should be trying to achieve for
 	// the instance. This number is on a scale from 0 (no utilization) to 100 (full
-	// utilization). The valid range is [10, 90] inclusive. If not specified or set
-	// to 0, the autoscaler skips scaling based on high priority CPU utilization.
+	// utilization). The valid range is [10, 90] inclusive.
 	HighPriorityCpuUtilizationPercent int64 `json:"highPriorityCpuUtilizationPercent,omitempty"`
 	// StorageUtilizationPercent: Required. The target storage utilization
 	// percentage that the autoscaler should be trying to achieve for the instance.
 	// This number is on a scale from 0 (no utilization) to 100 (full utilization).
 	// The valid range is [10, 99] inclusive.
 	StorageUtilizationPercent int64 `json:"storageUtilizationPercent,omitempty"`
-	// TotalCpuUtilizationPercent: Optional. The target total CPU utilization
-	// percentage that the autoscaler should be trying to achieve for the instance.
-	// This number is on a scale from 0 (no utilization) to 100 (full utilization).
-	// The valid range is [10, 90] inclusive. If not specified or set to 0, the
-	// autoscaler skips scaling based on total CPU utilization. If both
-	// `high_priority_cpu_utilization_percent` and `total_cpu_utilization_percent`
-	// are specified, the autoscaler provisions the larger of the two required
-	// compute capacities to satisfy both targets.
-	TotalCpuUtilizationPercent int64 `json:"totalCpuUtilizationPercent,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "HighPriorityCpuUtilizationPercent") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from
@@ -840,16 +800,6 @@ type Backup struct {
 	// copying an existing backup, the expiration time specified must be less than
 	// `Backup.max_expire_time`.
 	MaxExpireTime string `json:"maxExpireTime,omitempty"`
-	// MinimumRestorableEdition: Output only. The minimum edition required to
-	// successfully restore the backup. Populated only if the edition is Enterprise
-	// or Enterprise Plus.
-	//
-	// Possible values:
-	//   "EDITION_UNSPECIFIED" - Edition not specified.
-	//   "STANDARD" - Standard edition.
-	//   "ENTERPRISE" - Enterprise edition.
-	//   "ENTERPRISE_PLUS" - Enterprise Plus edition.
-	MinimumRestorableEdition string `json:"minimumRestorableEdition,omitempty"`
 	// Name: Output only for the CreateBackup operation. Required for the
 	// UpdateBackup operation. A globally unique identifier for the backup which
 	// cannot be changed. Values are of the form
@@ -1424,31 +1374,6 @@ type ChildLink struct {
 
 func (s ChildLink) MarshalJSON() ([]byte, error) {
 	type NoMethod ChildLink
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// ClientContext: Container for various pieces of client-owned context attached
-// to a request.
-type ClientContext struct {
-	// SecureContext: Optional. Map of parameter name to value for this request.
-	// These values will be returned by any SECURE_CONTEXT() calls invoked by this
-	// request (e.g., by queries against Parameterized Secure Views).
-	SecureContext googleapi.RawMessage `json:"secureContext,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SecureContext") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SecureContext") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ClientContext) MarshalJSON() ([]byte, error) {
-	type NoMethod ClientContext
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5236,20 +5161,20 @@ func (s PartitionOptions) MarshalJSON() ([]byte, error) {
 
 // PartitionQueryRequest: The request for PartitionQuery
 type PartitionQueryRequest struct {
-	// ParamTypes: Optional. It isn't always possible for Cloud Spanner to infer
-	// the right SQL type from a JSON value. For example, values of type `BYTES`
-	// and values of type `STRING` both appear in params as JSON strings. In these
-	// cases, `param_types` can be used to specify the exact SQL type for some or
-	// all of the SQL query parameters. See the definition of Type for more
-	// information about SQL types.
+	// ParamTypes: It isn't always possible for Cloud Spanner to infer the right
+	// SQL type from a JSON value. For example, values of type `BYTES` and values
+	// of type `STRING` both appear in params as JSON strings. In these cases,
+	// `param_types` can be used to specify the exact SQL type for some or all of
+	// the SQL query parameters. See the definition of Type for more information
+	// about SQL types.
 	ParamTypes map[string]Type `json:"paramTypes,omitempty"`
-	// Params: Optional. Parameter names and values that bind to placeholders in
-	// the SQL string. A parameter placeholder consists of the `@` character
-	// followed by the parameter name (for example, `@firstName`). Parameter names
-	// can contain letters, numbers, and underscores. Parameters can appear
-	// anywhere that a literal value is expected. The same parameter name can be
-	// used more than once, for example: "WHERE id > @msg_id AND id < @msg_id +
-	// 100" It's an error to execute a SQL statement with unbound parameters.
+	// Params: Parameter names and values that bind to placeholders in the SQL
+	// string. A parameter placeholder consists of the `@` character followed by
+	// the parameter name (for example, `@firstName`). Parameter names can contain
+	// letters, numbers, and underscores. Parameters can appear anywhere that a
+	// literal value is expected. The same parameter name can be used more than
+	// once, for example: "WHERE id > @msg_id AND id < @msg_id + 100" It's an
+	// error to execute a SQL statement with unbound parameters.
 	Params googleapi.RawMessage `json:"params,omitempty"`
 	// PartitionOptions: Additional options that affect how many partitions are
 	// created.
@@ -6077,9 +6002,6 @@ func (s ReplicaSelection) MarshalJSON() ([]byte, error) {
 
 // RequestOptions: Common request options for various APIs.
 type RequestOptions struct {
-	// ClientContext: Optional. Optional context that may be needed for some
-	// requests.
-	ClientContext *ClientContext `json:"clientContext,omitempty"`
 	// Priority: Priority for the request.
 	//
 	// Possible values:
@@ -6109,13 +6031,13 @@ type RequestOptions struct {
 	// that exceed this limit are truncated. Any leading underscore (_) characters
 	// are removed from the string.
 	TransactionTag string `json:"transactionTag,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ClientContext") to
+	// ForceSendFields is a list of field names (e.g. "Priority") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ClientContext") to include in API
+	// NullFields is a list of field names (e.g. "Priority") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

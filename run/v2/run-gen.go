@@ -6926,10 +6926,11 @@ func (r *ProjectsLocationsInstancesService) Create(parent string, googlecloudrun
 	return c
 }
 
-// InstanceId sets the optional parameter "instanceId": Required. The unique
-// identifier for the Instance. It must begin with letter, and cannot end with
-// hyphen; must contain fewer than 50 characters. The name of the instance
-// becomes {parent}/instances/{instance_id}.
+// InstanceId sets the optional parameter "instanceId": The unique identifier
+// for the Instance. It must begin with letter, and cannot end with hyphen;
+// must contain fewer than 50 characters. The name of the instance becomes
+// {parent}/instances/{instance_id}. If not provided, the server will generate
+// a unique `instance_id`.
 func (c *ProjectsLocationsInstancesCreateCall) InstanceId(instanceId string) *ProjectsLocationsInstancesCreateCall {
 	c.urlParams_.Set("instanceId", instanceId)
 	return c
@@ -7638,8 +7639,9 @@ func (r *ProjectsLocationsJobsService) Create(parent string, googlecloudrunv2job
 	return c
 }
 
-// JobId sets the optional parameter "jobId": Required. The unique identifier
-// for the Job. The name of the job becomes {parent}/jobs/{job_id}.
+// JobId sets the optional parameter "jobId": The unique identifier for the
+// Job. The name of the job becomes {parent}/jobs/{job_id}. If not provided,
+// the server will generate a unique `job_id`.
 func (c *ProjectsLocationsJobsCreateCall) JobId(jobId string) *ProjectsLocationsJobsCreateCall {
 	c.urlParams_.Set("jobId", jobId)
 	return c
@@ -10082,10 +10084,11 @@ func (r *ProjectsLocationsServicesService) Create(parent string, googlecloudrunv
 	return c
 }
 
-// ServiceId sets the optional parameter "serviceId": Required. The unique
-// identifier for the Service. It must begin with letter, and cannot end with
-// hyphen; must contain fewer than 50 characters. The name of the service
-// becomes {parent}/services/{service_id}.
+// ServiceId sets the optional parameter "serviceId": The unique identifier for
+// the Service. It must begin with letter, and cannot end with hyphen; must
+// contain fewer than 50 characters. The name of the service becomes
+// {parent}/services/{service_id}. If not provided, the server will generate a
+// unique `service_id`.
 func (c *ProjectsLocationsServicesCreateCall) ServiceId(serviceId string) *ProjectsLocationsServicesCreateCall {
 	c.urlParams_.Set("serviceId", serviceId)
 	return c
@@ -11575,10 +11578,11 @@ func (c *ProjectsLocationsWorkerPoolsCreateCall) ValidateOnly(validateOnly bool)
 	return c
 }
 
-// WorkerPoolId sets the optional parameter "workerPoolId": Required. The
-// unique identifier for the WorkerPool. It must begin with letter, and cannot
-// end with hyphen; must contain fewer than 50 characters. The name of the
-// worker pool becomes `{parent}/workerPools/{worker_pool_id}`.
+// WorkerPoolId sets the optional parameter "workerPoolId": The unique
+// identifier for the WorkerPool. It must begin with letter, and cannot end
+// with hyphen; must contain fewer than 50 characters. The name of the worker
+// pool becomes `{parent}/workerPools/{worker_pool_id}`. If not provided, the
+// server will generate a unique `worker_pool_id`.
 func (c *ProjectsLocationsWorkerPoolsCreateCall) WorkerPoolId(workerPoolId string) *ProjectsLocationsWorkerPoolsCreateCall {
 	c.urlParams_.Set("workerPoolId", workerPoolId)
 	return c

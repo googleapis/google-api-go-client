@@ -1339,6 +1339,82 @@ type ProjectsService struct {
 	s *Service
 }
 
+// ApiservingMcpMcpToolDataHandlingProfile: Profile describing the data
+// handling characteristics of an MCP tool. When used within the McpTool.meta
+// field, this message should be packed into a google.protobuf.Any and
+// associated with the key: "google.com/tool.profiles/data_handling"
+type ApiservingMcpMcpToolDataHandlingProfile struct {
+	// InputDataAccessLevel: // The data access level of the tool's inputs.
+	//
+	// Possible values:
+	//   "DATA_ACCESS_LEVEL_UNSPECIFIED" - The default value. This value is unused.
+	//   "DATA_ACCESS_LEVEL_PUBLIC" - Public data.
+	//   "DATA_ACCESS_LEVEL_CONFIDENTIAL" - Confidential data.
+	//   "DATA_ACCESS_LEVEL_NEED_TO_KNOW" - Need-to-know data.
+	//   "DATA_ACCESS_LEVEL_PII" - Personally Identifiable Information (PII) data.
+	//   "DATA_ACCESS_LEVEL_USER" - User data.
+	//   "DATA_ACCESS_LEVEL_NO_DATA_ACCESS" - The tool does not access any data.
+	InputDataAccessLevel string `json:"inputDataAccessLevel,omitempty"`
+	// OutputDataAccessLevel: The data access level of the tool's outputs.
+	//
+	// Possible values:
+	//   "DATA_ACCESS_LEVEL_UNSPECIFIED" - The default value. This value is unused.
+	//   "DATA_ACCESS_LEVEL_PUBLIC" - Public data.
+	//   "DATA_ACCESS_LEVEL_CONFIDENTIAL" - Confidential data.
+	//   "DATA_ACCESS_LEVEL_NEED_TO_KNOW" - Need-to-know data.
+	//   "DATA_ACCESS_LEVEL_PII" - Personally Identifiable Information (PII) data.
+	//   "DATA_ACCESS_LEVEL_USER" - User data.
+	//   "DATA_ACCESS_LEVEL_NO_DATA_ACCESS" - The tool does not access any data.
+	OutputDataAccessLevel string `json:"outputDataAccessLevel,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InputDataAccessLevel") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InputDataAccessLevel") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ApiservingMcpMcpToolDataHandlingProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod ApiservingMcpMcpToolDataHandlingProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ApiservingMcpMcpToolLifecycleProfile: Profile describing the lifecycle stage
+// of an MCP tool. When used within the McpTool.meta field, this message should
+// be packed into a google.protobuf.Any and associated with the key:
+// "google.com/tool.profiles/lifecycle"
+type ApiservingMcpMcpToolLifecycleProfile struct {
+	// LaunchState: Output only. The current launch state of the MCP tool.
+	//
+	// Possible values:
+	//   "LAUNCH_STATE_UNSPECIFIED" - The default value. This value is unused.
+	//   "LAUNCH_STATE_DEVELOPMENT" - The tool is currently in development.
+	//   "LAUNCH_STATE_PRODUCTION_PREVIEW" - The tool is in production preview.
+	//   "LAUNCH_STATE_GENERAL_AVAILABILITY" - The tool is generally available.
+	LaunchState string `json:"launchState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LaunchState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LaunchState") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ApiservingMcpMcpToolLifecycleProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod ApiservingMcpMcpToolLifecycleProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // EdgeConfigstoreBundleBadBundle: Describes why a bundle is invalid. Intended
 // for use in error details.
 type EdgeConfigstoreBundleBadBundle struct {
@@ -10138,7 +10214,7 @@ func (s GoogleCloudApigeeV1RuntimeConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1RuntimeTraceConfig: NEXT ID: 8 RuntimeTraceConfig defines
+// GoogleCloudApigeeV1RuntimeTraceConfig: NEXT ID: 9 RuntimeTraceConfig defines
 // the configurations for distributed trace in an environment.
 type GoogleCloudApigeeV1RuntimeTraceConfig struct {
 	// Endpoint: Endpoint of the exporter.
@@ -10151,10 +10227,19 @@ type GoogleCloudApigeeV1RuntimeTraceConfig struct {
 	//   "EXPORTER_UNSPECIFIED" - Exporter unspecified
 	//   "JAEGER" - Jaeger exporter
 	//   "CLOUD_TRACE" - Cloudtrace exporter
+	//   "OPEN_TELEMETRY_COLLECTOR" - Open Telemetry Collector
 	Exporter string `json:"exporter,omitempty"`
 	// Name: Name of the trace config in the following format:
 	// `organizations/{org}/environment/{env}/traceConfig`
 	Name string `json:"name,omitempty"`
+	// OpenTelemetryProtocolEnabled: If `true`, the runtime uses OpenTelemetry
+	// Protocol (OTLP) to send trace data. Configuration Requirements (if
+	// `open_telemetry_protocol_enabled` is `true`): - Allowed `Exporter`s:
+	// `CLOUD_TRACE` or `OPEN_TELEMETRY_COLLECTOR`. - If `Exporter` is
+	// `OPEN_TELEMETRY_COLLECTOR`: - `endpoint` refers to a valid OTLP collector
+	// URL. - If `Exporter` is `CLOUD_TRACE`: - `endpoint` refers to a valid
+	// project ID
+	OpenTelemetryProtocolEnabled bool `json:"openTelemetryProtocolEnabled,omitempty"`
 	// Overrides: List of trace configuration overrides for spicific API proxies.
 	Overrides []*GoogleCloudApigeeV1RuntimeTraceConfigOverride `json:"overrides,omitempty"`
 	// RevisionCreateTime: The timestamp that the revision was created or updated.
@@ -10182,7 +10267,7 @@ func (s GoogleCloudApigeeV1RuntimeTraceConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1RuntimeTraceConfigOverride: NEXT ID: 7 Trace
+// GoogleCloudApigeeV1RuntimeTraceConfigOverride: NEXT ID: 8 Trace
 // configuration override for a specific API proxy in an environment.
 type GoogleCloudApigeeV1RuntimeTraceConfigOverride struct {
 	// ApiProxy: Name of the API proxy that will have its trace configuration
@@ -10191,6 +10276,14 @@ type GoogleCloudApigeeV1RuntimeTraceConfigOverride struct {
 	// Name: Name of the trace config override in the following format:
 	// `organizations/{org}/environment/{env}/traceConfig/overrides/{override}`
 	Name string `json:"name,omitempty"`
+	// OpenTelemetryProtocolEnabled: If `true`, the runtime uses OpenTelemetry
+	// Protocol (OTLP) to send trace data. Configuration Requirements (if
+	// `open_telemetry_protocol_enabled` is `true`): - Allowed `Exporter`s:
+	// `CLOUD_TRACE` or `OPEN_TELEMETRY_COLLECTOR`. - If `Exporter` is
+	// `OPEN_TELEMETRY_COLLECTOR`: - `endpoint` refers to a valid OTLP collector
+	// URL. - If `Exporter` is `CLOUD_TRACE`: - `endpoint` refers to a valid
+	// project ID
+	OpenTelemetryProtocolEnabled bool `json:"openTelemetryProtocolEnabled,omitempty"`
 	// RevisionCreateTime: The timestamp that the revision was created or updated.
 	RevisionCreateTime string `json:"revisionCreateTime,omitempty"`
 	// RevisionId: Revision number which can be used by the runtime to detect if
@@ -12417,6 +12510,7 @@ type GoogleCloudApigeeV1TraceConfig struct {
 	//   "EXPORTER_UNSPECIFIED" - Exporter unspecified
 	//   "JAEGER" - Jaeger exporter
 	//   "CLOUD_TRACE" - Cloudtrace exporter
+	//   "OPEN_TELEMETRY_COLLECTOR" - Open Telemetry Collector
 	Exporter string `json:"exporter,omitempty"`
 	// SamplingConfig: Distributed trace configuration for all API proxies in an
 	// environment. You can also override the configuration for a specific API

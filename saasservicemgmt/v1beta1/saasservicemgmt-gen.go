@@ -931,6 +931,9 @@ type Rollout struct {
 	Control *RolloutControl `json:"control,omitempty"`
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// DeleteTime: Output only. The timestamp when the resource was marked for
+	// deletion (deletion is an asynchronous operation).
+	DeleteTime string `json:"deleteTime,omitempty"`
 	// EffectiveUnitFilter: Optional. Output only. Output only snapshot of the
 	// effective unit filter at Rollout start time. Contains a
 	// CEL(https://github.com/google/cel-spec) expression consisting of a
@@ -1181,12 +1184,12 @@ func (s RolloutKind) MarshalJSON() ([]byte, error) {
 // RolloutStats: RolloutStats contains information about the progress of a
 // rollout.
 type RolloutStats struct {
-	// OperationsByState: Output only. A breakdown of the progress of operations
-	// triggered by the rollout. Provides a count of Operations by their state.
-	// This can be used to determine the number of units which have been updated,
-	// or are scheduled to be updated. There will be at most one entry per group.
-	// Possible values for operation groups are: - "SCHEDULED" - "PENDING" -
-	// "RUNNING" - "SUCCEEDED" - "FAILED" - "CANCELLED"
+	// OperationsByState: Optional. Output only. Unordered list. A breakdown of the
+	// progress of operations triggered by the rollout. Provides a count of
+	// Operations by their state. This can be used to determine the number of units
+	// which have been updated, or are scheduled to be updated. There will be at
+	// most one entry per group. Possible values for operation groups are: -
+	// "SCHEDULED" - "PENDING" - "RUNNING" - "SUCCEEDED" - "FAILED" - "CANCELLED"
 	OperationsByState []*Aggregate `json:"operationsByState,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "OperationsByState") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1706,7 +1709,10 @@ type UnitOperation struct {
 	// various conditions this resource can have.
 	Conditions []*UnitOperationCondition `json:"conditions,omitempty"`
 	// CreateTime: Output only. The timestamp when the resource was created.
-	CreateTime  string       `json:"createTime,omitempty"`
+	CreateTime string `json:"createTime,omitempty"`
+	// DeleteTime: Output only. The timestamp when the resource was marked for
+	// deletion (deletion is an asynchronous operation).
+	DeleteTime  string       `json:"deleteTime,omitempty"`
 	Deprovision *Deprovision `json:"deprovision,omitempty"`
 	// EngineState: Optional. Output only. The engine state for on-going deployment
 	// engine operation(s). This field is opaque for external usage.
@@ -2053,7 +2059,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

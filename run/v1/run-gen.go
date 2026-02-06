@@ -3687,6 +3687,8 @@ type InstanceStatus struct {
 	// ObservedGeneration: Output only. The 'generation' of the Instance that was
 	// last processed by the controller.
 	ObservedGeneration int64 `json:"observedGeneration,omitempty"`
+	// Urls: Output only. All URLs serving traffic for this Instance.
+	Urls []string `json:"urls,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Conditions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4397,10 +4399,11 @@ type ObjectMeta struct {
 	// `run.googleapis.com/gc-traffic-tags`: Service. *
 	// `run.googleapis.com/gpu-zonal-redundancy-disabled`: Revision. *
 	// `run.googleapis.com/health-check-disabled`: Revision. *
-	// `run.googleapis.com/ingress`: Service. * `run.googleapis.com/launch-stage`:
-	// Service, Job. * `run.googleapis.com/minScale`: Service. *
-	// `run.googleapis.com/maxScale`: Service. *
-	// `run.googleapis.com/manualInstanceCount`: Service. *
+	// `run.googleapis.com/ingress`: Service, Instance. *
+	// `run.googleapis.com/invoker-iam-disabled`: Service, Instance. *
+	// `run.googleapis.com/launch-stage`: Service, Job. *
+	// `run.googleapis.com/minScale`: Service. * `run.googleapis.com/maxScale`:
+	// Service. * `run.googleapis.com/manualInstanceCount`: Service. *
 	// `run.googleapis.com/network-interfaces`: Revision, Execution. *
 	// `run.googleapis.com/post-key-revocation-action-type`: Revision.
 	// `run.googleapis.com/scalingMode`: Service. * `run.googleapis.com/secrets`:
@@ -4423,7 +4426,9 @@ type ObjectMeta struct {
 	DeletionTimestamp string `json:"deletionTimestamp,omitempty"`
 	// Finalizers: Not supported by Cloud Run
 	Finalizers []string `json:"finalizers,omitempty"`
-	// GenerateName: Not supported by Cloud Run
+	// GenerateName: Optional. A prefix for the resource name if not provided in
+	// the create request. Must be less than 31 characters to allow for a random
+	// suffix.
 	GenerateName string `json:"generateName,omitempty"`
 	// Generation: A system-provided sequence number representing a specific
 	// generation of the desired state.
@@ -4432,9 +4437,10 @@ type ObjectMeta struct {
 	// categorize (scope and select) objects. May match selectors of replication
 	// controllers and routes.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Required. The name of the resource. Name is required when creating
-	// top-level resources (Service, Job), must be unique within a Cloud Run
-	// project/region, and cannot be changed once created.
+	// Name: Optional. The name of the resource. A name for creating top-level
+	// resources (Service, Job, WorkerPool). Must be unique within a Cloud Run
+	// project/region, and cannot be changed once created. If omitted, a default
+	// name will be generated.
 	Name string `json:"name,omitempty"`
 	// Namespace: Required. Defines the space within each name must be unique
 	// within a Cloud Run region. In Cloud Run, it must be project ID or number.
@@ -11225,7 +11231,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

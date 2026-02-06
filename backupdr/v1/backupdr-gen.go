@@ -4651,7 +4651,7 @@ type ResourceBackupConfig struct {
 	// Vaulted: Output only. Whether the target resource is protected by a backup
 	// vault. This is true if the backup_configs_details is not empty and any of
 	// the ResourceBackupConfig.backup_configs_details has a backup configuration
-	// with BackupConfigDetails.backup_vault set. set.
+	// with BackupConfigDetails.backup_vault set.
 	Vaulted bool `json:"vaulted,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackupConfigsDetails") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5660,7 +5660,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

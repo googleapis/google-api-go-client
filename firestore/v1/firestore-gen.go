@@ -3257,9 +3257,11 @@ func (s GoogleFirestoreAdminV1Stats) MarshalJSON() ([]byte, error) {
 // GoogleFirestoreAdminV1TtlConfig: The TTL (time-to-live) configuration for
 // documents that have this `Field` set. Storing a timestamp value into a
 // TTL-enabled field will be treated as the document's absolute expiration
-// time. Timestamp values in the past indicate that the document is eligible
-// for immediate expiration. Using any other data type or leaving the field
-// absent will disable expiration for the individual document.
+// time. For Enterprise edition databases, the timestamp value may also be
+// stored in an array value in the TTL-enabled field. Timestamp values in the
+// past indicate that the document is eligible for immediate expiration. Using
+// any other data type or leaving the field absent will disable expiration for
+// the individual document.
 type GoogleFirestoreAdminV1TtlConfig struct {
 	// State: Output only. The state of the TTL configuration.
 	//
@@ -11052,7 +11054,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

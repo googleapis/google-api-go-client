@@ -1583,7 +1583,7 @@ func (s ApplicationReportingSettings) MarshalJSON() ([]byte, error) {
 type ApplicationSigningKeyCert struct {
 	// SigningKeyCertFingerprintSha256: Required. The SHA-256 hash value of the
 	// signing key certificate of the app. This must be a valid SHA-256 hash value,
-	// i.e. 32 bytes. Otherwise, the policy is rejected.
+	// i.e. 32 bytes.
 	SigningKeyCertFingerprintSha256 string `json:"signingKeyCertFingerprintSha256,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "SigningKeyCertFingerprintSha256") to unconditionally include in API

@@ -2385,16 +2385,19 @@ func (s GetTemplateResponse) MarshalJSON() ([]byte, error) {
 // GetWorkerStacktracesRequest: Request to get worker stacktraces from debug
 // capture.
 type GetWorkerStacktracesRequest struct {
+	// EndTime: The end time for the stacktrace query. The returned stacktraces
+	// will be a recent stack trace at or shortly before this time.
+	EndTime string `json:"endTime,omitempty"`
 	// WorkerId: The worker for which to get stacktraces. The returned stacktraces
 	// will be for the SDK harness running on this worker.
 	WorkerId string `json:"workerId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "WorkerId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "WorkerId") to include in API
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

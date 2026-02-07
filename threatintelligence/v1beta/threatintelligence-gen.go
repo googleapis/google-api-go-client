@@ -278,6 +278,9 @@ type Alert struct {
 	// ExternalId: Output only. External ID for the alert. This is used internally
 	// to provide protection against out of order updates.
 	ExternalId string `json:"externalId,omitempty"`
+	// FindingCount: Output only. The number of findings associated with this
+	// alert.
+	FindingCount int64 `json:"findingCount,omitempty,string"`
 	// Findings: Output only. Findings that are covered by this alert.
 	Findings []string `json:"findings,omitempty"`
 	// Name: Identifier. Server generated name for the alert. format is
@@ -1560,6 +1563,33 @@ func (s FindingDetail) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GenerateOrgProfileConfigurationRequest: Request message for
+// GenerateOrgProfileConfiguration.
+type GenerateOrgProfileConfigurationRequest struct {
+	// DisplayName: Required. The display name of the organization to generate the
+	// profile for.
+	DisplayName string `json:"displayName,omitempty"`
+	// Domain: Required. The domain of the organization to generate the profile
+	// for.
+	Domain string `json:"domain,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateOrgProfileConfigurationRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateOrgProfileConfigurationRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // InbandVulnerability: Fleshed out vulnerability object that includes enough
 // details to fill out a vulnerability specific view for an issue.
 type InbandVulnerability struct {
@@ -2098,6 +2128,53 @@ func (s MisconfigurationReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Operation: This resource represents a long-running operation that is the
+// result of a network API call.
+type Operation struct {
+	// Done: If the value is `false`, it means the operation is still in progress.
+	// If `true`, the operation is completed, and either `error` or `response` is
+	// available.
+	Done bool `json:"done,omitempty"`
+	// Error: The error result of the operation in case of failure or cancellation.
+	Error *Status `json:"error,omitempty"`
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as create
+	// time. Some services might not provide such metadata. Any method that returns
+	// a long-running operation should document the metadata type, if any.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+	// Name: The server-assigned name, which is only unique within the same service
+	// that originally returns it. If you use the default HTTP mapping, the `name`
+	// should be a resource name ending with `operations/{unique_id}`.
+	Name string `json:"name,omitempty"`
+	// Response: The normal, successful response of the operation. If the original
+	// method returns no data on success, such as `Delete`, the response is
+	// `google.protobuf.Empty`. If the original method is standard
+	// `Get`/`Create`/`Update`, the response should be the resource. For other
+	// methods, the response should have the type `XxxResponse`, where `Xxx` is the
+	// original method name. For example, if the original method name is
+	// `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.
+	Response googleapi.RawMessage `json:"response,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Done") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Done") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Operation) MarshalJSON() ([]byte, error) {
+	type NoMethod Operation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PriorityAnalysis: Structured priority analysis for a threat.
 type PriorityAnalysis struct {
 	// Confidence: The level of confidence in the given verdict.
@@ -2332,6 +2409,40 @@ type SeverityAnalysis struct {
 
 func (s SeverityAnalysis) MarshalJSON() ([]byte, error) {
 	type NoMethod SeverityAnalysis
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Status: The `Status` type defines a logical error model that is suitable for
+// different programming environments, including REST APIs and RPC APIs. It is
+// used by gRPC (https://github.com/grpc). Each `Status` message contains three
+// pieces of data: error code, error message, and error details. You can find
+// out more about this error model and how to work with it in the API Design
+// Guide (https://cloud.google.com/apis/design/errors).
+type Status struct {
+	// Code: The status code, which should be an enum value of google.rpc.Code.
+	Code int64 `json:"code,omitempty"`
+	// Details: A list of messages that carry the error details. There is a common
+	// set of message types for APIs to use.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+	// Message: A developer-facing error message, which should be in English. Any
+	// user-facing error message should be localized and sent in the
+	// google.rpc.Status.details field, or localized by the client.
+	Message string `json:"message,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Status) MarshalJSON() ([]byte, error) {
+	type NoMethod Status
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2785,6 +2896,111 @@ func (s *VulnerabilityMatch) UnmarshalJSON(data []byte) error {
 	}
 	s.Cvss3Score = float64(s1.Cvss3Score)
 	return nil
+}
+
+type ProjectsGenerateOrgProfileCall struct {
+	s                                      *Service
+	name                                   string
+	generateorgprofileconfigurationrequest *GenerateOrgProfileConfigurationRequest
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// GenerateOrgProfile: Triggers the generation of a Customer Profile for a
+// project.
+//
+//   - name: The name of the project to generate the profile for. Format:
+//     projects/{project}.
+func (r *ProjectsService) GenerateOrgProfile(name string, generateorgprofileconfigurationrequest *GenerateOrgProfileConfigurationRequest) *ProjectsGenerateOrgProfileCall {
+	c := &ProjectsGenerateOrgProfileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.generateorgprofileconfigurationrequest = generateorgprofileconfigurationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsGenerateOrgProfileCall) Fields(s ...googleapi.Field) *ProjectsGenerateOrgProfileCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsGenerateOrgProfileCall) Context(ctx context.Context) *ProjectsGenerateOrgProfileCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsGenerateOrgProfileCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsGenerateOrgProfileCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.generateorgprofileconfigurationrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:generateOrgProfile")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "threatintelligence.projects.generateOrgProfile", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "threatintelligence.projects.generateOrgProfile" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsGenerateOrgProfileCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "threatintelligence.projects.generateOrgProfile", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsAlertsBenignCall struct {

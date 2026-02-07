@@ -311,7 +311,7 @@ func (s CloudAiDocumentaiLabHifiaToolsValidationValidatorInput) MarshalJSON() ([
 type CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRule struct {
 	ChildAlignmentRule *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleChildAlignmentRule `json:"childAlignmentRule,omitempty"`
 	// Description: Description of the validation rule. This has no use but for
-	// documentation
+	// documentation.
 	Description         string                                                                                   `json:"description,omitempty"`
 	EntityAlignmentRule *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleEntityAlignmentRule `json:"entityAlignmentRule,omitempty"`
 	FieldOccurrences    *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFieldOccurrences    `json:"fieldOccurrences,omitempty"`
@@ -1130,7 +1130,7 @@ func (s GoogleCloudDocumentaiUiv1beta3DocumentIdUnmanagedDocumentId) MarshalJSON
 type GoogleCloudDocumentaiUiv1beta3DocumentSchema struct {
 	// Description: Description of the schema.
 	Description string `json:"description,omitempty"`
-	// DisplayName: Display name to show to users.
+	// DisplayName: Display name to show users.
 	DisplayName string `json:"displayName,omitempty"`
 	// DocumentPrompt: Optional. Document level prompt provided by the user. This
 	// custom text is injected into the AI model's prompt to provide extra,
@@ -1175,15 +1175,15 @@ type GoogleCloudDocumentaiUiv1beta3DocumentSchemaEntityType struct {
 	EntityTypeMetadata *GoogleCloudDocumentaiUiv1beta3EntityTypeMetadata `json:"entityTypeMetadata,omitempty"`
 	// EnumValues: If specified, lists all the possible values for this entity.
 	// This should not be more than a handful of values. If the number of values is
-	// >10 or could change frequently use the `EntityType.value_ontology` field and
-	// specify a list of all possible values in a value ontology file.
+	// >10 or could change frequently, use the `EntityType.value_ontology` field
+	// and specify a list of all possible values in a value ontology file.
 	EnumValues *GoogleCloudDocumentaiUiv1beta3DocumentSchemaEntityTypeEnumValues `json:"enumValues,omitempty"`
 	// Name: Name of the type. It must be unique within the schema file and cannot
 	// be a "Common Type". The following naming conventions are used: - Use
 	// `snake_casing`. - Name matching is case-sensitive. - Maximum 64 characters.
 	// - Must start with a letter. - Allowed characters: ASCII letters
-	// `[a-z0-9_-]`. (For backward compatibility internal infrastructure and
-	// tooling can handle any ascii character.) - The `/` is sometimes used to
+	// `[a-z0-9_-]`. (For backward compatibility, internal infrastructure and
+	// tooling can handle any ASCII character.) - The `/` is sometimes used to
 	// denote a property of a type. For example `line_item/amount`. This convention
 	// is deprecated, but will still be honored for backward compatibility.
 	Name string `json:"name,omitempty"`
@@ -1299,7 +1299,7 @@ type GoogleCloudDocumentaiUiv1beta3DocumentSchemaMetadata struct {
 	// PrefixedNamingOnProperties: If set, all the nested entities must be prefixed
 	// with the parents.
 	PrefixedNamingOnProperties bool `json:"prefixedNamingOnProperties,omitempty"`
-	// SkipNamingValidation: If set, we will skip the naming format validation in
+	// SkipNamingValidation: If set, this will skip the naming format validation in
 	// the schema. So the string values in `DocumentSchema.EntityType.name` and
 	// `DocumentSchema.EntityType.Property.name` will not be checked.
 	SkipNamingValidation bool `json:"skipNamingValidation,omitempty"`
@@ -1432,7 +1432,7 @@ func (s GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionResponse) MarshalJ
 // GoogleCloudDocumentaiUiv1beta3EvaluationMetrics: Evaluation metrics, either
 // in aggregate or about a specific entity.
 type GoogleCloudDocumentaiUiv1beta3EvaluationMetrics struct {
-	// F1Score: The calculated f1 score.
+	// F1Score: The calculated F1 score.
 	F1Score float64 `json:"f1Score,omitempty"`
 	// FalseNegativesCount: The amount of false negatives.
 	FalseNegativesCount int64 `json:"falseNegativesCount,omitempty"`
@@ -2212,11 +2212,11 @@ func (s GoogleCloudDocumentaiUiv1beta3ProcessorVersionGenAiModelInfoCustomGenAiM
 // GoogleCloudDocumentaiUiv1beta3ProcessorVersionGenAiModelInfoFoundationGenAiMo
 // delInfo: Information for a pretrained Google-managed foundation model.
 type GoogleCloudDocumentaiUiv1beta3ProcessorVersionGenAiModelInfoFoundationGenAiModelInfo struct {
-	// FinetuningAllowed: Whether finetuning is allowed for this base processor
+	// FinetuningAllowed: Whether fine tuning is allowed for this base processor
 	// version.
 	FinetuningAllowed bool `json:"finetuningAllowed,omitempty"`
 	// MinTrainLabeledDocuments: The minimum number of labeled documents in the
-	// training dataset required for finetuning.
+	// training dataset required for fine tuning.
 	MinTrainLabeledDocuments int64 `json:"minTrainLabeledDocuments,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FinetuningAllowed") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2486,7 +2486,7 @@ func (s GoogleCloudDocumentaiUiv1beta3SampleDocumentsResponseSelectedDocument) M
 type GoogleCloudDocumentaiUiv1beta3Schema struct {
 	// Description: Description of the schema.
 	Description string `json:"description,omitempty"`
-	// DisplayName: Display name to show to users.
+	// DisplayName: Display name to show users.
 	DisplayName string `json:"displayName,omitempty"`
 	// EntityTypes: Entity types of the schema.
 	EntityTypes []*GoogleCloudDocumentaiUiv1beta3SchemaEntityType `json:"entityTypes,omitempty"`
@@ -3908,10 +3908,6 @@ type GoogleCloudDocumentaiV1beta3Dataset struct {
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
-	// SpannerIndexingConfig: Optional. A lightweight indexing source with low
-	// latency and high reliability, but lacking advanced features like CMEK and
-	// content-based search.
-	SpannerIndexingConfig *GoogleCloudDocumentaiV1beta3DatasetSpannerIndexingConfig `json:"spannerIndexingConfig,omitempty"`
 	// State: Required. State of the dataset. Ignored when updating dataset.
 	//
 	// Possible values:
@@ -4024,11 +4020,6 @@ type GoogleCloudDocumentaiV1beta3DatasetSchema struct {
 func (s GoogleCloudDocumentaiV1beta3DatasetSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DatasetSchema
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDocumentaiV1beta3DatasetSpannerIndexingConfig: Configuration
-// specific to spanner-based indexing.
-type GoogleCloudDocumentaiV1beta3DatasetSpannerIndexingConfig struct {
 }
 
 // GoogleCloudDocumentaiV1beta3DatasetUnmanagedDatasetConfig: Configuration
@@ -4155,8 +4146,9 @@ type GoogleCloudDocumentaiV1beta3DisableProcessorResponse struct {
 // Document AI to iterate and optimize for quality.
 type GoogleCloudDocumentaiV1beta3Document struct {
 	// BlobAssets: Optional. The blob assets in this document. This is used to
-	// store the content of the inline blobs in this document, e.g. image bytes,
-	// such that it can be referenced by other fields in the document via asset id.
+	// store the content of the inline blobs in this document, for example, image
+	// bytes, such that it can be referenced by other fields in the document via
+	// asset id.
 	BlobAssets []*GoogleCloudDocumentaiV1beta3DocumentBlobAsset `json:"blobAssets,omitempty"`
 	// ChunkedDocument: Document chunked based on chunking config.
 	ChunkedDocument *GoogleCloudDocumentaiV1beta3DocumentChunkedDocument `json:"chunkedDocument,omitempty"`
@@ -4172,7 +4164,7 @@ type GoogleCloudDocumentaiV1beta3Document struct {
 	// Entities: A list of entities detected on Document.text. For document shards,
 	// entities in this list may cross shard boundaries.
 	Entities []*GoogleCloudDocumentaiV1beta3DocumentEntity `json:"entities,omitempty"`
-	// EntitiesRevisionId: The entity revision id that `document.entities` field is
+	// EntitiesRevisionId: The entity revision ID that `document.entities` field is
 	// based on. If this field is set and `entities_revisions` is not empty, the
 	// entities in `document.entities` field are the entities in the entity
 	// revision with this id and `document.entity_validation_output` field is the
@@ -4256,13 +4248,13 @@ func (s GoogleCloudDocumentaiV1beta3DocumentAnnotations) MarshalJSON() ([]byte, 
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentBlobAsset: Represents a blob asset. It's
-// used to store the content of the inline blob in this document, e.g. image
-// bytes, such that it can be referenced by other fields in the document via
-// asset id.
+// used to store the content of the inline blob in this document, for example,
+// image bytes, such that it can be referenced by other fields in the document
+// via asset ID.
 type GoogleCloudDocumentaiV1beta3DocumentBlobAsset struct {
 	// AssetId: Optional. The id of the blob asset.
 	AssetId string `json:"assetId,omitempty"`
-	// Content: Optional. The content of the blob asset, e.g. image bytes.
+	// Content: Optional. The content of the blob asset, for example, image bytes.
 	Content string `json:"content,omitempty"`
 	// MimeType: The mime type of the blob asset. An IANA published media type
 	// (MIME type)
@@ -4346,7 +4338,7 @@ func (s GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunk) MarshalJSON() 
 
 // GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkChunkField: The
 // chunk field in the chunk. A chunk field could be one of the various types
-// (e.g. image, table) supported.
+// (for example, image, table) supported.
 type GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkChunkField struct {
 	// ImageChunkField: The image chunk field in the chunk.
 	ImageChunkField *GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkImageChunkField `json:"imageChunkField,omitempty"`
@@ -4824,8 +4816,8 @@ type GoogleCloudDocumentaiV1beta3DocumentEntity struct {
 	Id string `json:"id,omitempty"`
 	// MentionId: Optional. Deprecated. Use `id` field instead.
 	MentionId string `json:"mentionId,omitempty"`
-	// MentionText: Optional. Text value of the entity e.g. `1600 Amphitheatre
-	// Pkwy`.
+	// MentionText: Optional. Text value of the entity, for example, `1600
+	// Amphitheatre Pkwy`.
 	MentionText string `json:"mentionText,omitempty"`
 	// Method: Optional. Specifies how the entity's value is obtained.
 	//
@@ -4838,9 +4830,9 @@ type GoogleCloudDocumentaiV1beta3DocumentEntity struct {
 	// necessarily an exact text extraction from the document.
 	Method string `json:"method,omitempty"`
 	// NormalizedValue: Optional. Normalized entity value. Absent if the extracted
-	// value could not be converted or the type (e.g. address) is not supported for
-	// certain parsers. This field is also only populated for certain supported
-	// document types.
+	// value could not be converted or the type (for example, address) is not
+	// supported for certain parsers. This field is also only populated for certain
+	// supported document types.
 	NormalizedValue *GoogleCloudDocumentaiV1beta3DocumentEntityNormalizedValue `json:"normalizedValue,omitempty"`
 	// PageAnchor: Optional. Represents the provenance of this entity wrt. the
 	// location on the page where it was found.
@@ -4856,7 +4848,7 @@ type GoogleCloudDocumentaiV1beta3DocumentEntity struct {
 	// TextAnchor: Optional. Provenance of the entity. Text anchor indexing into
 	// the Document.text.
 	TextAnchor *GoogleCloudDocumentaiV1beta3DocumentTextAnchor `json:"textAnchor,omitempty"`
-	// Type: Required. Entity type from a schema e.g. `Address`.
+	// Type: Required. Entity type from a schema, for example, `Address`.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5288,8 +5280,8 @@ type GoogleCloudDocumentaiV1beta3DocumentPage struct {
 	// Transforms: Transformation matrices that were applied to the original
 	// document image to produce Page.image.
 	Transforms []*GoogleCloudDocumentaiV1beta3DocumentPageMatrix `json:"transforms,omitempty"`
-	// VisualElements: A list of detected non-text visual elements e.g. checkbox,
-	// signature etc. on the page.
+	// VisualElements: A list of detected non-text visual elements, for example,
+	// checkbox, signature etc. on the page.
 	VisualElements []*GoogleCloudDocumentaiV1beta3DocumentPageVisualElement `json:"visualElements,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Blocks") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5541,8 +5533,8 @@ type GoogleCloudDocumentaiV1beta3DocumentPageFormField struct {
 	// corrections were made to the text identified by the
 	// `field_value.text_anchor`, this field will contain the correction.
 	CorrectedValueText string `json:"correctedValueText,omitempty"`
-	// FieldName: Layout for the FormField name. e.g. `Address`, `Email`, `Grand
-	// total`, `Phone number`, etc.
+	// FieldName: Layout for the FormField name. For example, `Address`, `Email`,
+	// `Grand total`, `Phone number`, etc.
 	FieldName *GoogleCloudDocumentaiV1beta3DocumentPageLayout `json:"fieldName,omitempty"`
 	// FieldValue: Layout for the FormField value.
 	FieldValue *GoogleCloudDocumentaiV1beta3DocumentPageLayout `json:"fieldValue,omitempty"`
@@ -5697,8 +5689,8 @@ type GoogleCloudDocumentaiV1beta3DocumentPageLayout struct {
 	// BoundingPoly: The bounding polygon for the Layout.
 	BoundingPoly *GoogleCloudDocumentaiV1beta3BoundingPoly `json:"boundingPoly,omitempty"`
 	// Confidence: Confidence of the current Layout within context of the object
-	// this layout is for. e.g. confidence can be for a single token, a table, a
-	// visual element, etc. depending on context. Range `[0, 1]`.
+	// this layout is for. For example, confidence can be for a single token, a
+	// table, a visual element, etc. depending on context. Range `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 	// Orientation: Detected orientation for the Layout.
 	//
@@ -6075,7 +6067,7 @@ func (s *GoogleCloudDocumentaiV1beta3DocumentPageTokenStyleInfo) UnmarshalJSON(d
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentPageVisualElement: Detected non-text
-// visual elements e.g. checkbox, signature etc. on the page.
+// visual elements, for example, checkbox, signature etc. on the page.
 type GoogleCloudDocumentaiV1beta3DocumentPageVisualElement struct {
 	// DetectedLanguages: A list of detected languages together with confidence.
 	DetectedLanguages []*GoogleCloudDocumentaiV1beta3DocumentPageDetectedLanguage `json:"detectedLanguages,omitempty"`
@@ -6222,7 +6214,8 @@ func (s GoogleCloudDocumentaiV1beta3DocumentRevision) MarshalJSON() ([]byte, err
 // GoogleCloudDocumentaiV1beta3DocumentRevisionHumanReview: Human Review
 // information of the document.
 type GoogleCloudDocumentaiV1beta3DocumentRevisionHumanReview struct {
-	// State: Human review state. e.g. `requested`, `succeeded`, `rejected`.
+	// State: Human review state. For example, `requested`, `succeeded`,
+	// `rejected`.
 	State string `json:"state,omitempty"`
 	// StateMessage: A message providing more details about the current state of
 	// processing. For example, the rejection reason when the state is `rejected`.
@@ -6250,7 +6243,7 @@ func (s GoogleCloudDocumentaiV1beta3DocumentRevisionHumanReview) MarshalJSON() (
 type GoogleCloudDocumentaiV1beta3DocumentSchema struct {
 	// Description: Description of the schema.
 	Description string `json:"description,omitempty"`
-	// DisplayName: Display name to show to users.
+	// DisplayName: Display name to show users.
 	DisplayName string `json:"displayName,omitempty"`
 	// DocumentPrompt: Optional. Document level prompt provided by the user. This
 	// custom text is injected into the AI model's prompt to provide extra,
@@ -6295,15 +6288,15 @@ type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType struct {
 	EntityTypeMetadata *GoogleCloudDocumentaiV1beta3EntityTypeMetadata `json:"entityTypeMetadata,omitempty"`
 	// EnumValues: If specified, lists all the possible values for this entity.
 	// This should not be more than a handful of values. If the number of values is
-	// >10 or could change frequently use the `EntityType.value_ontology` field and
-	// specify a list of all possible values in a value ontology file.
+	// >10 or could change frequently, use the `EntityType.value_ontology` field
+	// and specify a list of all possible values in a value ontology file.
 	EnumValues *GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeEnumValues `json:"enumValues,omitempty"`
 	// Name: Name of the type. It must be unique within the schema file and cannot
 	// be a "Common Type". The following naming conventions are used: - Use
 	// `snake_casing`. - Name matching is case-sensitive. - Maximum 64 characters.
 	// - Must start with a letter. - Allowed characters: ASCII letters
-	// `[a-z0-9_-]`. (For backward compatibility internal infrastructure and
-	// tooling can handle any ascii character.) - The `/` is sometimes used to
+	// `[a-z0-9_-]`. (For backward compatibility, internal infrastructure and
+	// tooling can handle any ASCII character.) - The `/` is sometimes used to
 	// denote a property of a type. For example `line_item/amount`. This convention
 	// is deprecated, but will still be honored for backward compatibility.
 	Name string `json:"name,omitempty"`
@@ -6419,7 +6412,7 @@ type GoogleCloudDocumentaiV1beta3DocumentSchemaMetadata struct {
 	// PrefixedNamingOnProperties: If set, all the nested entities must be prefixed
 	// with the parents.
 	PrefixedNamingOnProperties bool `json:"prefixedNamingOnProperties,omitempty"`
-	// SkipNamingValidation: If set, we will skip the naming format validation in
+	// SkipNamingValidation: If set, this will skip the naming format validation in
 	// the schema. So the string values in `DocumentSchema.EntityType.name` and
 	// `DocumentSchema.EntityType.Property.name` will not be checked.
 	SkipNamingValidation bool `json:"skipNamingValidation,omitempty"`
@@ -6805,6 +6798,9 @@ type GoogleCloudDocumentaiV1beta3Evaluation struct {
 	// `projects/{project}/locations/{location}/processors/{processor}/processorVers
 	// ions/{processor_version}/evaluations/{evaluation}`
 	Name string `json:"name,omitempty"`
+	// Revisions: Contains all revisions of the evaluation, excluding the latest
+	// one.
+	Revisions []*GoogleCloudDocumentaiV1beta3EvaluationEvaluationRevision `json:"revisions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -6896,10 +6892,41 @@ func (s GoogleCloudDocumentaiV1beta3EvaluationCounters) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1beta3EvaluationEvaluationRevision: A revision of the
+// evaluation.
+type GoogleCloudDocumentaiV1beta3EvaluationEvaluationRevision struct {
+	// AllEntitiesMetrics: Output only. Metrics for all the entities in aggregate.
+	AllEntitiesMetrics *GoogleCloudDocumentaiV1beta3EvaluationMultiConfidenceMetrics `json:"allEntitiesMetrics,omitempty"`
+	// DocumentCounters: Output only. Counters for the documents used in the
+	// evaluation.
+	DocumentCounters *GoogleCloudDocumentaiV1beta3EvaluationCounters `json:"documentCounters,omitempty"`
+	// EntityMetrics: Output only. Metrics across confidence levels, for different
+	// entities.
+	EntityMetrics map[string]GoogleCloudDocumentaiV1beta3EvaluationMultiConfidenceMetrics `json:"entityMetrics,omitempty"`
+	// RevisionId: Output only. The revision ID of the evaluation.
+	RevisionId string `json:"revisionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllEntitiesMetrics") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllEntitiesMetrics") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3EvaluationEvaluationRevision) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3EvaluationEvaluationRevision
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1beta3EvaluationMetrics: Evaluation metrics, either in
 // aggregate or about a specific entity.
 type GoogleCloudDocumentaiV1beta3EvaluationMetrics struct {
-	// F1Score: The calculated f1 score.
+	// F1Score: The calculated F1 score.
 	F1Score float64 `json:"f1Score,omitempty"`
 	// FalseNegativesCount: The amount of false negatives.
 	FalseNegativesCount int64 `json:"falseNegativesCount,omitempty"`
@@ -7899,7 +7926,7 @@ type GoogleCloudDocumentaiV1beta3NextSchema struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// DisplayName: Required. The user-defined name of the Schema.
 	DisplayName string `json:"displayName,omitempty"`
-	// Labels: Optional. The GCP labels for the Schema.
+	// Labels: Optional. The {{gcp_name_short}} labels for the Schema.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. The resource name of the Schema. Format:
 	// `projects/{project}/locations/{location}/schemas/{schema}`
@@ -8179,8 +8206,8 @@ func (s GoogleCloudDocumentaiV1beta3ProcessOptionsLayoutConfig) MarshalJSON() ([
 type GoogleCloudDocumentaiV1beta3ProcessOptionsLayoutConfigChunkingConfig struct {
 	// BreakpointPercentileThreshold: Optional. The percentile of cosine
 	// dissimilarity that must be exceeded between a group of tokens and the next.
-	// The smaller this number is, the more chunks will be generated. THIS FIELD IS
-	// NOT YET USED.
+	// The smaller this number is, the more chunks will be generated. **Note:**
+	// This field is not yet used.
 	BreakpointPercentileThreshold int64 `json:"breakpointPercentileThreshold,omitempty"`
 	// ChunkSize: Optional. The chunk sizes to use when splitting documents, in
 	// order of level.
@@ -8189,7 +8216,7 @@ type GoogleCloudDocumentaiV1beta3ProcessOptionsLayoutConfigChunkingConfig struct
 	// headings when splitting.
 	IncludeAncestorHeadings bool `json:"includeAncestorHeadings,omitempty"`
 	// SemanticChunkingGroupSize: Optional. The number of tokens to group together
-	// when evaluating semantic similarity. THIS FIELD IS NOT YET USED.
+	// when evaluating semantic similarity. **Note:** This field is not yet used.
 	SemanticChunkingGroupSize bool `json:"semanticChunkingGroupSize,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "BreakpointPercentileThreshold") to unconditionally include in API requests.
@@ -8662,11 +8689,11 @@ func (s GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoCustomGenAiMod
 // GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoFoundationGenAiMode
 // lInfo: Information for a pretrained Google-managed foundation model.
 type GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoFoundationGenAiModelInfo struct {
-	// FinetuningAllowed: Whether finetuning is allowed for this base processor
+	// FinetuningAllowed: Whether fine tuning is allowed for this base processor
 	// version.
 	FinetuningAllowed bool `json:"finetuningAllowed,omitempty"`
 	// MinTrainLabeledDocuments: The minimum number of labeled documents in the
-	// training dataset required for finetuning.
+	// training dataset required for fine tuning.
 	MinTrainLabeledDocuments int64 `json:"minTrainLabeledDocuments,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FinetuningAllowed") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8970,7 +8997,7 @@ type GoogleCloudDocumentaiV1beta3SchemaVersion struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// DisplayName: Required. The user-defined name of the SchemaVersion.
 	DisplayName string `json:"displayName,omitempty"`
-	// Labels: Optional. The GCP labels for the SchemaVersion.
+	// Labels: Optional. The {{gcp_name_short}} labels for the SchemaVersion.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. The resource name of the SchemaVersion. Format:
 	// `projects/{project}/locations/{location}/schemas/{schema}/schemaVersions/{sch
@@ -10198,7 +10225,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
@@ -14689,9 +14720,8 @@ func (c *ProjectsLocationsSchemasListCall) PageSize(pageSize int64) *ProjectsLoc
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": We will return the schema
-// groups sorted by creation time. The page token will point to the next
-// Schema.
+// PageToken sets the optional parameter "pageToken": Returns the schema groups
+// sorted by creation time. The page token will point to the next Schema.
 func (c *ProjectsLocationsSchemasListCall) PageToken(pageToken string) *ProjectsLocationsSchemasListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -14832,7 +14862,7 @@ func (r *ProjectsLocationsSchemasService) Patch(name string, googleclouddocument
 
 // UpdateMask sets the optional parameter "updateMask": The update mask to
 // apply to the resource. **Note:** Only the following fields can be updated: -
-// display_name. - labels.
+// `display_name` - `labels`
 func (c *ProjectsLocationsSchemasPatchCall) UpdateMask(updateMask string) *ProjectsLocationsSchemasPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -15374,8 +15404,8 @@ func (c *ProjectsLocationsSchemasSchemaVersionsListCall) PageSize(pageSize int64
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": We will return the
-// SchemaVersion sorted by creation time. The page token will point to the next
+// PageToken sets the optional parameter "pageToken": Returns the SchemaVersion
+// sorted by creation time. The page token will point to the next
 // SchemaVersion.
 func (c *ProjectsLocationsSchemasSchemaVersionsListCall) PageToken(pageToken string) *ProjectsLocationsSchemasSchemaVersionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -15521,7 +15551,7 @@ func (r *ProjectsLocationsSchemasSchemaVersionsService) Patch(name string, googl
 
 // UpdateMask sets the optional parameter "updateMask": The update mask to
 // apply to the resource. **Note:** Only the following fields can be updated: -
-// display_name. - labels.
+// `display_name` - `labels`
 func (c *ProjectsLocationsSchemasSchemaVersionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsSchemasSchemaVersionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

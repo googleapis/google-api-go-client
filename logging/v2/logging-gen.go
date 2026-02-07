@@ -1071,12 +1071,13 @@ func (s BigQueryDataset) MarshalJSON() ([]byte, error) {
 // to BigQuery.
 type BigQueryOptions struct {
 	// UsePartitionedTables: Optional. Whether to use BigQuery's partition tables
-	// (https://cloud.google.com/bigquery/docs/partitioned-tables). By default,
-	// Cloud Logging creates dated tables based on the log entries' timestamps,
-	// e.g. syslog_20170523. With partitioned tables the date suffix is no longer
-	// present and special query syntax
-	// (https://cloud.google.com/bigquery/docs/querying-partitioned-tables) has to
-	// be used instead. In both cases, tables are sharded based on UTC timezone.
+	// (https://docs.cloud.google.com/bigquery/docs/partitioned-tables). By
+	// default, Cloud Logging creates dated tables based on the log entries'
+	// timestamps, e.g. syslog_20170523. With partitioned tables the date suffix is
+	// no longer present and special query syntax
+	// (https://docs.cloud.google.com/bigquery/docs/querying-partitioned-tables)
+	// has to be used instead. In both cases, tables are sharded based on UTC
+	// timezone.
 	UsePartitionedTables bool `json:"usePartitionedTables,omitempty"`
 	// UsesTimestampColumnPartitioning: Output only. True if new timestamp column
 	// based partitioning is in use, false if legacy ingress-time partitioning is
@@ -1287,10 +1288,10 @@ type CancelOperationRequest struct {
 // associated with a project, folder, organization, billing account, or
 // flexible resource.Note: CMEK for the Log Router can currently only be
 // configured for Google Cloud organizations. Once configured, it applies to
-// all projects and folders in the Google Cloud organization.See Enabling CMEK
-// for Log Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption) for more
-// information.
+// all projects and folders in the Google Cloud organization.See Configure CMEK
+// for Cloud Logging
+// (https://docs.cloud.google.com/logging/docs/routing/managed-encryption) for
+// more information.
 type CmekSettings struct {
 	// KmsKeyName: Optional. The resource name for the configured Cloud KMS key.KMS
 	// key name format:
@@ -1306,9 +1307,9 @@ type CmekSettings struct {
 	// the key that was in use when they started. Decryption operations will be
 	// completed using the key that was used at the time of encryption unless
 	// access to that key has been revoked.To disable CMEK for the Log Router, set
-	// this field to an empty string.See Enabling CMEK for Log Router
-	// (https://cloud.google.com/logging/docs/routing/managed-encryption) for more
-	// information.
+	// this field to an empty string.See Configure CMEK for Cloud Logging
+	// (https://docs.cloud.google.com/logging/docs/routing/managed-encryption) for
+	// more information.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// KmsKeyVersionName: Output only. The CryptoKeyVersion resource name for the
 	// configured Cloud KMS key.KMS key name format:
@@ -1327,10 +1328,10 @@ type CmekSettings struct {
 	// Log Router to access your Cloud KMS key.Before enabling CMEK for Log Router,
 	// you must first assign the cloudkms.cryptoKeyEncrypterDecrypter role to the
 	// service account that the Log Router will use to access your Cloud KMS key.
-	// Use GetCmekSettings to obtain the service account ID.See Enabling CMEK for
-	// Log Router
-	// (https://cloud.google.com/logging/docs/routing/managed-encryption) for more
-	// information.
+	// Use GetCmekSettings to obtain the service account ID.See Configure CMEK for
+	// Cloud Logging
+	// (https://docs.cloud.google.com/logging/docs/routing/managed-encryption) for
+	// more information.
 	ServiceAccountId string `json:"serviceAccountId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1533,9 +1534,9 @@ type DefaultSinkConfig struct {
 	// _Default sink in newly created resource containers.
 	Exclusions []*LogExclusion `json:"exclusions,omitempty"`
 	// Filter: Optional. An advanced logs filter
-	// (https://cloud.google.com/logging/docs/view/advanced-queries). The only
-	// exported log entries are those that are in the resource owning the sink and
-	// that match the filter.For
+	// (https://docs.cloud.google.com/logging/docs/view/building-queries#queries-by-expression).
+	// The only exported log entries are those that are in the resource owning the
+	// sink and that match the filter.For
 	// example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity>=ERRORTo
 	// match all logs, don't add exclusions and use the following line as the value
 	// of filter:logName:*Cannot be empty or unset when the value of mode is
@@ -1750,6 +1751,186 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// FieldSource: A source that can be used to represent a field within various
+// parts of a structured query, such as in SELECT, WHERE, or ORDER BY clauses.
+type FieldSource struct {
+	// AliasRef: The alias name for a field that has already been aliased within a
+	// different ProjectedField type elsewhere in the query model. The alias must
+	// be defined in the QueryBuilderConfig's field_sources list, otherwise the
+	// model is invalid.
+	AliasRef string `json:"aliasRef,omitempty"`
+	// ColumnType: The type of the selected field. This comes from the schema. Can
+	// be one of the BigQuery data types: - STRING - INT64 - FLOAT64 - BOOL -
+	// TIMESTAMP - DATE - RECORD - JSON
+	ColumnType string `json:"columnType,omitempty"`
+	// Field: The fully qualified, dot-delimited path to the selected atomic field
+	// (the leaf value). This path is used for primary selection and actions like
+	// drill-down or projection.The path components should match the exact field
+	// names or keys as they appear in the underlying data schema. For JSON fields,
+	// this means respecting the original casing (e.g., camelCase or snake_case as
+	// present in the JSON).To reference field names containing special characters
+	// (e.g., hyphens, spaces), enclose the individual path segment in backticks
+	// (`).Examples: * json_payload.labels.message * json_payload.request_id *
+	// httpRequest.status * json_payload.\my-custom-field`.value *jsonPayload.`my
+	// key with spaces`.data`
+	Field string `json:"field,omitempty"`
+	// IsJson: Whether the field is a JSON field, or has a parent that is a JSON
+	// field. This value is used to determine JSON extractions in generated SQL
+	// queries. Note that this is_json flag may be true when the column_type is not
+	// JSON if the parent is a JSON field. Ex: - A json_payload.message field might
+	// have is_json=true, since the 'json_payload' parent is of type JSON, and
+	// columnType='STRING' if the 'message' field is of type STRING.
+	IsJson bool `json:"isJson,omitempty"`
+	// ParentPath: The dot-delimited path of the parent container that holds the
+	// target field.This path defines the structural hierarchy and is essential for
+	// correctly generating SQL when field keys contain special characters (e.g.,
+	// dots or brackets).Example: json_payload.labels (This points to the 'labels'
+	// object). This is an empty string if the target field is at the root level.
+	ParentPath string `json:"parentPath,omitempty"`
+	// ProjectedField: A projected field option for when a user wants to use a
+	// field with some additional transformations such as casting or extractions.
+	ProjectedField *ProjectedField `json:"projectedField,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AliasRef") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AliasRef") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FieldSource) MarshalJSON() ([]byte, error) {
+	type NoMethod FieldSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FilterExpression: This is a leaf of the FilterPredicate. Ex: { field:
+// json_payload.message.error_code, filter_value: {numeric_value: 400},
+// comparator: EQUAL_TO} The field will be schema field that is selected using
+// the . annotation to display the drill down value. The value will be the user
+// inputted text that the filter is comparing against.
+type FilterExpression struct {
+	// Comparator: The comparison type to use for the filter.
+	//
+	// Possible values:
+	//   "COMPARATOR_UNSPECIFIED" - Invalid value, do not use.
+	//   "EQUALS" - The value is equal to the inputted value.
+	//   "MATCHES_REGEXP" - The value is equal to the inputted regex value.
+	//   "GREATER_THAN" - The value is greater than the inputted value.
+	//   "LESS_THAN" - The value is less than the inputted value.
+	//   "GREATER_THAN_EQUALS" - The value is greater than or equal to the inputted
+	// value.
+	//   "LESS_THAN_EQUALS" - The value is less than or equal to the inputted
+	// value.
+	//   "IS_NULL" - Requires the filter_value to be a Value type with null_value
+	// set to true.
+	//   "IN" - The value is in the inputted array value.
+	//   "LIKE" - The value is like the inputted value.
+	Comparator string `json:"comparator,omitempty"`
+	// FieldSource: Can be one of the FieldSource types: field name, alias ref,
+	// variable ref, or a literal value.
+	FieldSource *FieldSource `json:"fieldSource,omitempty"`
+	// FieldSourceValue: The field. This will be the field that is set as the Right
+	// Hand Side of the filter.
+	FieldSourceValue *FieldSource `json:"fieldSourceValue,omitempty"`
+	// IsNegation: Determines if the NOT flag should be added to the comparator.
+	IsNegation bool `json:"isNegation,omitempty"`
+	// LiteralValue: The Value will be used to hold user defined constants set as
+	// the Right Hand Side of the filter.
+	LiteralValue interface{} `json:"literalValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Comparator") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Comparator") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FilterExpression) MarshalJSON() ([]byte, error) {
+	type NoMethod FilterExpression
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FilterPredicate: A filter for a query. This equates to the WHERE clause in
+// SQL.
+type FilterPredicate struct {
+	// ChildPredicates: The children of the filter predicate. This equates to the
+	// branches of the filter predicate that could contain further nested leaves.
+	ChildPredicates []*FilterPredicate `json:"childPredicates,omitempty"`
+	// LeafPredicate: The leaves of the filter predicate. This equates to the last
+	// leaves of the filter predicate associated with an operator.
+	LeafPredicate *FilterExpression `json:"leafPredicate,omitempty"`
+	// OperatorType: The operator type for the filter. Currently there is no
+	// support for multiple levels of nesting, so this will be a single value with
+	// no joining of different operator types
+	//
+	// Possible values:
+	//   "OPERATOR_TYPE_UNSPECIFIED" - Invalid value, do not use.
+	//   "AND" - AND will be the default operator type.
+	//   "OR" - OR operator type.
+	//   "LEAF" - LEAF operator type.
+	OperatorType string `json:"operatorType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChildPredicates") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChildPredicates") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FilterPredicate) MarshalJSON() ([]byte, error) {
+	type NoMethod FilterPredicate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FunctionApplication: Defines the aggregation function to apply to this
+// field. This message is used only when operation is set to AGGREGATE.
+type FunctionApplication struct {
+	// Parameters: Optional. Parameters to be applied to the aggregation.
+	// Aggregations that support or require parameters are listed above.
+	Parameters []interface{} `json:"parameters,omitempty"`
+	// Type: Required. Specifies the aggregation function. Use one of the following
+	// string identifiers: "average": Computes the average (AVG). Applies only to
+	// numeric values. "count": Counts the number of values (COUNT).
+	// "count-distinct": Counts the number of distinct values (COUNT DISTINCT).
+	// "count-distinct-approx": Approximates the count of distinct values
+	// (APPROX_COUNT_DISTINCT). "max": Finds the maximum value (MAX). Applies only
+	// to numeric values. "min": Finds the minimum value (MIN). Applies only to
+	// numeric values. "sum": Computes the sum (SUM). Applies only to numeric
+	// values.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Parameters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Parameters") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FunctionApplication) MarshalJSON() ([]byte, error) {
+	type NoMethod FunctionApplication
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GetIamPolicyRequest: Request message for GetIamPolicy method.
 type GetIamPolicyRequest struct {
 	// Options: OPTIONAL: A GetPolicyOptions object for specifying options to
@@ -1883,8 +2064,8 @@ type IndexConfig struct {
 	// FieldPath: Required. The LogEntry field path to index.Note that some paths
 	// are automatically indexed, and other paths are not eligible for indexing.
 	// See indexing documentation(
-	// https://cloud.google.com/logging/docs/analyze/custom-index) for details.For
-	// example: jsonPayload.request.status
+	// https://docs.cloud.google.com/logging/docs/analyze/custom-index) for
+	// details.For example: jsonPayload.request.status
 	FieldPath string `json:"fieldPath,omitempty"`
 	// Type: Required. The type of data in this index.
 	//
@@ -2709,8 +2890,8 @@ type LogBucket struct {
 	// Name: Output only. The resource name of the bucket.For
 	// example:projects/my-project/locations/global/buckets/my-bucketFor a list of
 	// supported locations, see Supported Regions
-	// (https://cloud.google.com/logging/docs/region-support)For the location of
-	// global it is unspecified where log entries are actually stored.After a
+	// (https://docs.cloud.google.com/logging/docs/region-support)For the location
+	// of global it is unspecified where log entries are actually stored.After a
 	// bucket has been created, the location cannot be changed.
 	Name string `json:"name,omitempty"`
 	// RestrictedFields: Optional. Log entry field paths that are denied access in
@@ -3032,10 +3213,10 @@ type LogExclusion struct {
 	// value of this field.
 	Disabled bool `json:"disabled,omitempty"`
 	// Filter: Required. An advanced logs filter
-	// (https://cloud.google.com/logging/docs/view/advanced-queries) that matches
-	// the log entries to be excluded. By using the sample function
-	// (https://cloud.google.com/logging/docs/view/advanced-queries#sample), you
-	// can exclude less than 100% of the matching log entries.For example, the
+	// (https://docs.cloud.google.com/logging/docs/view/building-queries#queries-by-expression)
+	// that matches the log entries to be excluded. By using the sample function
+	// (https://docs.cloud.google.com/logging/docs/view/logging-query-language#sample),
+	// you can exclude less than 100% of the matching log entries.For example, the
 	// following query matches 99% of low-severity log entries from Google Cloud
 	// Storage buckets:resource.type=gcs_bucket severity<ERROR sample(insertId,
 	// 0.99)
@@ -3290,8 +3471,8 @@ type LogSink struct {
 	// "logging.googleapis.com/projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets
 	// /[BUCKET_ID]" The sink's writer_identity, set when the sink is created, must
 	// have permission to write to the destination or else the log entries are not
-	// exported. For more information, see Exporting Logs with Sinks
-	// (https://cloud.google.com/logging/docs/api/tasks/exporting-logs).
+	// exported. For more information, see Route logs to supported destinations
+	// (https://docs.cloud.google.com/logging/docs/export/configure_export_v2).
 	Destination string `json:"destination,omitempty"`
 	// Disabled: Optional. If set to true, then this sink is disabled and it does
 	// not export any log entries.
@@ -3301,9 +3482,9 @@ type LogSink struct {
 	// exclusions it will not be exported.
 	Exclusions []*LogExclusion `json:"exclusions,omitempty"`
 	// Filter: Optional. An advanced logs filter
-	// (https://cloud.google.com/logging/docs/view/advanced-queries). The only
-	// exported log entries are those that are in the resource owning the sink and
-	// that match the filter.For
+	// (https://docs.cloud.google.com/logging/docs/view/building-queries#queries-by-expression).
+	// The only exported log entries are those that are in the resource owning the
+	// sink and that match the filter.For
 	// example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity>=ERROR
 	Filter string `json:"filter,omitempty"`
 	// IncludeChildren: Optional. This field applies only to sinks owned by
@@ -3358,9 +3539,9 @@ type LogSink struct {
 	// custom_writer_identity or set automatically by sinks.create and sinks.update
 	// based on the value of unique_writer_identity in those methods.Until you
 	// grant this identity write-access to the destination, log entry exports from
-	// this sink will fail. For more information, see Granting Access for a
-	// Resource
-	// (https://cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource).
+	// this sink will fail. For more information, see Manage access to projects,
+	// folders, and organizations
+	// (https://docs.cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource).
 	// Consult the destination service's documentation to determine the appropriate
 	// IAM roles to assign to the identity.Sinks that have a destination that is a
 	// log bucket in the same project as the sink cannot have a writer_identity and
@@ -3467,8 +3648,8 @@ func (s LogView) MarshalJSON() ([]byte, error) {
 // and other UI state used in association with analysis of query results.
 type LoggingQuery struct {
 	// Filter: Required. An advanced query using the Logging Query Language
-	// (https://cloud.google.com/logging/docs/view/logging-query-language). The
-	// maximum length of the filter is 20000 characters.
+	// (https://docs.cloud.google.com/logging/docs/view/logging-query-language).
+	// The maximum length of the filter is 20000 characters.
 	Filter string `json:"filter,omitempty"`
 	// SummaryFieldEnd: Characters will be counted from the end of the string.
 	SummaryFieldEnd int64 `json:"summaryFieldEnd,omitempty"`
@@ -3938,21 +4119,24 @@ func (s Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// OpsAnalyticsQuery: Describes an analytics query that can be run in the Log
-// Analytics page of Google Cloud console.Preview: This is a preview feature
-// and may be subject to change before final release.
+// OpsAnalyticsQuery: Describes a query that can be run in Log Analytics.
 type OpsAnalyticsQuery struct {
-	// SqlQueryText: Required. A logs analytics SQL query, which generally follows
-	// BigQuery format.This is the SQL query that appears in the Log Analytics UI's
-	// query editor.
+	// QueryBuilder: Optional. A query builder configuration used in Log
+	// Analytics.If both query_builder and sql_query_text fields are set, then the
+	// sql_query_text will be used, if its non-empty. At least one of the two
+	// fields must be set.
+	QueryBuilder *QueryBuilderConfig `json:"queryBuilder,omitempty"`
+	// SqlQueryText: Optional. A Log Analytics SQL query in text format.If both
+	// sql_query_text and query_builder fields are set, then the sql_query_text
+	// will be used, if its non-empty. At least one of the two fields must be set.
 	SqlQueryText string `json:"sqlQueryText,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SqlQueryText") to
+	// ForceSendFields is a list of field names (e.g. "QueryBuilder") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SqlQueryText") to include in API
+	// NullFields is a list of field names (e.g. "QueryBuilder") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -4052,6 +4236,126 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ProjectedField: Represents a field selected in the query, analogous to an
+// item in a SQL SELECT clause. It specifies the source field and optionally
+// applies transformations like aggregation, casting, regex extraction, or
+// assigns an alias. Use ProjectedField when you need more than just the raw
+// source field name (for which you might use FieldSource directly in
+// QueryBuilderConfig's field_sources list if no transformations or specific
+// operation type are needed).
+type ProjectedField struct {
+	// Alias: The alias name for the field. Valid alias examples are: - single word
+	// alias: TestAlias - numbers in an alias: Alias123 - multi word alias should
+	// be enclosed in quotes: "Test Alias" Invalid alias examples are: - alias
+	// containing keywords: WHERE, SELECT, FROM, etc. - alias starting with a
+	// number: 1stAlias
+	Alias string `json:"alias,omitempty"`
+	// Cast: The cast for the field. This can any SQL cast type. Examples: - STRING
+	// - CHAR - DATE - TIMESTAMP - DATETIME - INT - FLOAT
+	Cast string `json:"cast,omitempty"`
+	// Field: The field name. This will be the field that is selected using the dot
+	// notation to display the drill down value.
+	Field string `json:"field,omitempty"`
+	// Operation: Specifies the role of this field (direct selection, grouping, or
+	// aggregation).
+	//
+	// Possible values:
+	//   "FIELD_OPERATION_UNSPECIFIED" - Invalid value. Operation must be
+	// specified.
+	//   "NO_SETTING" - Select the field directly without grouping or aggregation.
+	// Corresponds to including the raw field (potentially with cast, regex, or
+	// alias) in the SELECT list.
+	//   "GROUP_BY" - Group the query results by the distinct values of this field.
+	// Corresponds to including the field (potentially truncated) in the GROUP BY
+	// clause.
+	//   "AGGREGATE" - Apply an aggregation function to this field across grouped
+	// results. Corresponds to applying a function like COUNT, SUM, AVG in the
+	// SELECT list. Requires sql_aggregation_function to be set.
+	Operation string `json:"operation,omitempty"`
+	// RegexExtraction: The re2 extraction for the field. This will be used to
+	// extract the value from the field using REGEXP_EXTRACT. More information on
+	// re2 can be found here: https://github.com/google/re2/wiki/Syntax. Meta
+	// characters like +?()| will need to be escaped. Examples: -
+	// ".(autoscaler.*)$" will be converted to
+	// REGEXP_EXTRACT(JSON_VALUE(field),"request(.*(autoscaler.*)$)")in SQL. -
+	// "\(test_value\)$" will be converted to
+	// REGEXP_EXTRACT(JSON_VALUE(field),"request(\(test_value\)$)") in SQL.
+	RegexExtraction string `json:"regexExtraction,omitempty"`
+	// SqlAggregationFunction: The function to apply to the field.
+	SqlAggregationFunction *FunctionApplication `json:"sqlAggregationFunction,omitempty"`
+	// TruncationGranularity: The truncation granularity when grouping by a
+	// time/date field. This will be used to truncate the field to the granularity
+	// specified. This can be either a date or a time granularity found at
+	// https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#timestamp_trunc_granularity_date
+	// and
+	// https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#timestamp_trunc_granularity_time
+	// respectively.
+	TruncationGranularity string `json:"truncationGranularity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Alias") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Alias") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProjectedField) MarshalJSON() ([]byte, error) {
+	type NoMethod ProjectedField
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// QueryBuilderConfig: Defines a structured query configuration that can be
+// used instead of writing raw SQL. This configuration represents the
+// components of a SQL query (FROM, SELECT, WHERE, ORDER BY, LIMIT) and is
+// typically converted into an executable query (e.g., BigQuery SQL) by the
+// backend service to retrieve data for analysis or visualization.
+type QueryBuilderConfig struct {
+	// FieldSources: Defines the items to include in the query result, analogous to
+	// a SQL SELECT clause.
+	FieldSources []*FieldSource `json:"fieldSources,omitempty"`
+	// Filter: The filter to use for the query. This equates to the WHERE clause in
+	// SQL.
+	Filter *FilterPredicate `json:"filter,omitempty"`
+	// Limit: The limit to use for the query. This equates to the LIMIT clause in
+	// SQL. A limit of 0 will be treated as not enabled.
+	Limit int64 `json:"limit,omitempty,string"`
+	// OrderBys: The sort orders to use for the query. This equates to the ORDER BY
+	// clause in SQL.
+	OrderBys []*SortOrderParameter `json:"orderBys,omitempty"`
+	// ResourceNames: Required. The view/resource to query. For now only a single
+	// view/resource will be sent, but there are plans to allow multiple views in
+	// the future. Marking as repeated for that purpose. Example: -
+	// "projects/123/locations/global/buckets/456/views/_Default" -
+	// "projects/123/locations/global/metricBuckets/456/views/_Default"
+	ResourceNames []string `json:"resourceNames,omitempty"`
+	// SearchTerm: The plain text search to use for the query. There is no support
+	// for multiple search terms. This uses the SEARCH functionality in BigQuery.
+	// For example, a search_term = 'ERROR' would result in the following
+	// SQL:SELECT * FROM resource WHERE SEARCH(resource, 'ERROR') LIMIT 100
+	SearchTerm string `json:"searchTerm,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldSources") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldSources") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s QueryBuilderConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryBuilderConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RecentQuery: Describes a recent query executed on the Logs Explorer or Log
 // Analytics page within the last ~ 30 days.
 type RecentQuery struct {
@@ -4063,7 +4367,7 @@ type RecentQuery struct {
 	// Name: Output only. Resource name of the recent query.In the format:
 	// "projects/[PROJECT_ID]/locations/[LOCATION_ID]/recentQueries/[QUERY_ID]" For
 	// a list of supported locations, see Supported Regions
-	// (https://cloud.google.com/logging/docs/region-support)The QUERY_ID is a
+	// (https://docs.cloud.google.com/logging/docs/region-support)The QUERY_ID is a
 	// system generated alphanumeric ID.
 	Name string `json:"name,omitempty"`
 	// OpsAnalyticsQuery: Analytics query that can be executed in Log Analytics.
@@ -4221,7 +4525,7 @@ type SavedQuery struct {
 	// Name: Output only. Resource name of the saved query.In the format:
 	// "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]" For
 	// a list of supported locations, see Supported Regions
-	// (https://cloud.google.com/logging/docs/region-support#bucket-regions)After
+	// (https://docs.cloud.google.com/logging/docs/region-support#bucket-regions)After
 	// the saved query is created, the location cannot be changed.If the user
 	// doesn't provide a QUERY_ID, the system will generate an alphanumeric ID.
 	Name string `json:"name,omitempty"`
@@ -4311,17 +4615,18 @@ type Settings struct {
 	// roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key.The
 	// Cloud KMS key used by the Log Router can be updated by changing the
 	// kms_key_name to a new valid key name.To disable CMEK for the Log Router, set
-	// this field to an empty string.See Enabling CMEK for Log Router
-	// (https://cloud.google.com/logging/docs/routing/managed-encryption) for more
-	// information.
+	// this field to an empty string.See Configure CMEK for Cloud Logging
+	// (https://docs.cloud.google.com/logging/docs/routing/managed-encryption) for
+	// more information.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// KmsServiceAccountId: Output only. The service account that will be used by
 	// the Log Router to access your Cloud KMS key.Before enabling CMEK, you must
 	// first assign the role roles/cloudkms.cryptoKeyEncrypterDecrypter to the
 	// service account that will be used to access your Cloud KMS key. Use
-	// GetSettings to obtain the service account ID.See Enabling CMEK for Log
-	// Router (https://cloud.google.com/logging/docs/routing/managed-encryption)
-	// for more information.
+	// GetSettings to obtain the service account ID.See Configure CMEK for Cloud
+	// Logging
+	// (https://docs.cloud.google.com/logging/docs/routing/managed-encryption) for
+	// more information.
 	KmsServiceAccountId string `json:"kmsServiceAccountId,omitempty"`
 	// LoggingServiceAccountId: Output only. The service account for the given
 	// resource container, such as project or folder. Log sinks use this service
@@ -4354,6 +4659,39 @@ type Settings struct {
 
 func (s Settings) MarshalJSON() ([]byte, error) {
 	type NoMethod Settings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SortOrderParameter: A sort order for a query based on a column.
+type SortOrderParameter struct {
+	// FieldSource: The field to sort on. Can be one of the FieldSource types:
+	// field name, alias ref, variable ref, or a literal value.
+	FieldSource *FieldSource `json:"fieldSource,omitempty"`
+	// SortOrderDirection: The sort order to use for the query.
+	//
+	// Possible values:
+	//   "SORT_ORDER_UNSPECIFIED" - Invalid value, do not use.
+	//   "SORT_ORDER_NONE" - No sorting will be applied. This is used to determine
+	// if the query is in pass thru mode. To correctly chart a query in pass thru
+	// mode, NONE will need to be sent
+	//   "SORT_ORDER_ASCENDING" - The lowest-valued entries will be selected.
+	//   "SORT_ORDER_DESCENDING" - The highest-valued entries will be selected.
+	SortOrderDirection string `json:"sortOrderDirection,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldSource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldSource") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SortOrderParameter) MarshalJSON() ([]byte, error) {
+	type NoMethod SortOrderParameter
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4450,7 +4788,7 @@ func (s Status) MarshalJSON() ([]byte, error) {
 }
 
 // SummaryField: A field from the LogEntry that is added to the summary line
-// (https://cloud.google.com/logging/docs/view/logs-explorer-interface#add-summary-fields)
+// (https://docs.cloud.google.com/logging/docs/view/logs-explorer-interface#preferences)
 // for a query in the Logs Explorer.
 type SummaryField struct {
 	// Field: Optional. The field from the LogEntry to include in the summary line,
@@ -4772,9 +5110,9 @@ type BillingAccountsGetCmekSettingsCall struct {
 // CMEK for the Log Router can be configured for Google Cloud projects,
 // folders, organizations, and billing accounts. Once configured for an
 // organization, it applies to all projects and folders in the Google Cloud
-// organization.See Enabling CMEK for Log Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption) for more
-// information.
+// organization.See Configure CMEK for Cloud Logging
+// (https://docs.cloud.google.com/logging/docs/routing/managed-encryption) for
+// more information.
 //
 //   - name: The resource for which to retrieve CMEK settings.
 //     "projects/[PROJECT_ID]/cmekSettings"
@@ -4894,7 +5232,7 @@ type BillingAccountsGetSettingsCall struct {
 // GetSettings: Gets the settings for the given resource.Note: Settings can be
 // retrieved for Google Cloud projects, folders, organizations, and billing
 // accounts.See View default resource settings for Logging
-// (https://cloud.google.com/logging/docs/default-settings#view-org-settings)
+// (https://docs.cloud.google.com/logging/docs/default-settings#view-org-settings)
 // for more information.
 //
 //   - name: The resource for which to retrieve settings.
@@ -5714,7 +6052,11 @@ type BillingAccountsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: List all public locations: Use the path
+// GET /v1/locations. List project-visible locations: Use the path GET
+// /v1/projects/{project_id}/locations. This may include public locations as
+// well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *BillingAccountsLocationsService) List(name string) *BillingAccountsLocationsListCall {
@@ -9173,7 +9515,7 @@ type BillingAccountsLocationsSavedQueriesPatchCall struct {
 //   - name: Output only. Resource name of the saved query.In the format:
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]"
 //     For a list of supported locations, see Supported Regions
-//     (https://cloud.google.com/logging/docs/region-support#bucket-regions)After
+//     (https://docs.cloud.google.com/logging/docs/region-support#bucket-regions)After
 //     the saved query is created, the location cannot be changed.If the user
 //     doesn't provide a QUERY_ID, the system will generate an alphanumeric ID.
 func (r *BillingAccountsLocationsSavedQueriesService) Patch(name string, savedquery *SavedQuery) *BillingAccountsLocationsSavedQueriesPatchCall {
@@ -9603,7 +9945,7 @@ func (c *BillingAccountsSinksCreateCall) CustomWriterIdentity(customWriterIdenti
 // as the sink itself.If this field is set to true, or if the sink is owned by
 // a non-project resource such as an organization, then the value of
 // writer_identity will be a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
+// (https://docs.cloud.google.com/iam/docs/service-account-types#service-agents)
 // used by the sinks with the same parent. For more information, see
 // writer_identity in LogSink.
 func (c *BillingAccountsSinksCreateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *BillingAccountsSinksCreateCall {
@@ -10123,7 +10465,7 @@ func (c *BillingAccountsSinksPatchCall) CustomWriterIdentity(customWriterIdentit
 // values of this field are both false or both true, then there is no change to
 // the sink's writer_identity. If the old value is false and the new value is
 // true, then writer_identity is changed to a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
+// (https://docs.cloud.google.com/iam/docs/service-account-types#service-agents)
 // owned by Cloud Logging. It is an error if the old value is true and the new
 // value is set to false or defaulted to false.
 func (c *BillingAccountsSinksPatchCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *BillingAccountsSinksPatchCall {
@@ -10276,7 +10618,7 @@ func (c *BillingAccountsSinksUpdateCall) CustomWriterIdentity(customWriterIdenti
 // values of this field are both false or both true, then there is no change to
 // the sink's writer_identity. If the old value is false and the new value is
 // true, then writer_identity is changed to a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
+// (https://docs.cloud.google.com/iam/docs/service-account-types#service-agents)
 // owned by Cloud Logging. It is an error if the old value is true and the new
 // value is set to false or defaulted to false.
 func (c *BillingAccountsSinksUpdateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *BillingAccountsSinksUpdateCall {
@@ -11410,9 +11752,9 @@ type FoldersGetCmekSettingsCall struct {
 // CMEK for the Log Router can be configured for Google Cloud projects,
 // folders, organizations, and billing accounts. Once configured for an
 // organization, it applies to all projects and folders in the Google Cloud
-// organization.See Enabling CMEK for Log Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption) for more
-// information.
+// organization.See Configure CMEK for Cloud Logging
+// (https://docs.cloud.google.com/logging/docs/routing/managed-encryption) for
+// more information.
 //
 //   - name: The resource for which to retrieve CMEK settings.
 //     "projects/[PROJECT_ID]/cmekSettings"
@@ -11532,7 +11874,7 @@ type FoldersGetSettingsCall struct {
 // GetSettings: Gets the settings for the given resource.Note: Settings can be
 // retrieved for Google Cloud projects, folders, organizations, and billing
 // accounts.See View default resource settings for Logging
-// (https://cloud.google.com/logging/docs/default-settings#view-org-settings)
+// (https://docs.cloud.google.com/logging/docs/default-settings#view-org-settings)
 // for more information.
 //
 //   - name: The resource for which to retrieve settings.
@@ -11657,8 +11999,8 @@ type FoldersUpdateSettingsCall struct {
 // associated service account doesn't have the required
 // roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key. Access
 // to the key is disabled.See Configure default settings for organizations and
-// folders (https://cloud.google.com/logging/docs/default-settings) for more
-// information.
+// folders (https://docs.cloud.google.com/logging/docs/default-settings) for
+// more information.
 //
 //   - name: The resource name for the settings to update.
 //     "organizations/[ORGANIZATION_ID]/settings" "folders/[FOLDER_ID]/settings"
@@ -12477,7 +12819,11 @@ type FoldersLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: List all public locations: Use the path
+// GET /v1/locations. List project-visible locations: Use the path GET
+// /v1/projects/{project_id}/locations. This may include public locations as
+// well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *FoldersLocationsService) List(name string) *FoldersLocationsListCall {
@@ -16856,7 +17202,7 @@ type FoldersLocationsSavedQueriesPatchCall struct {
 //   - name: Output only. Resource name of the saved query.In the format:
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]"
 //     For a list of supported locations, see Supported Regions
-//     (https://cloud.google.com/logging/docs/region-support#bucket-regions)After
+//     (https://docs.cloud.google.com/logging/docs/region-support#bucket-regions)After
 //     the saved query is created, the location cannot be changed.If the user
 //     doesn't provide a QUERY_ID, the system will generate an alphanumeric ID.
 func (r *FoldersLocationsSavedQueriesService) Patch(name string, savedquery *SavedQuery) *FoldersLocationsSavedQueriesPatchCall {
@@ -17286,7 +17632,7 @@ func (c *FoldersSinksCreateCall) CustomWriterIdentity(customWriterIdentity strin
 // as the sink itself.If this field is set to true, or if the sink is owned by
 // a non-project resource such as an organization, then the value of
 // writer_identity will be a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
+// (https://docs.cloud.google.com/iam/docs/service-account-types#service-agents)
 // used by the sinks with the same parent. For more information, see
 // writer_identity in LogSink.
 func (c *FoldersSinksCreateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *FoldersSinksCreateCall {
@@ -17806,7 +18152,7 @@ func (c *FoldersSinksPatchCall) CustomWriterIdentity(customWriterIdentity string
 // values of this field are both false or both true, then there is no change to
 // the sink's writer_identity. If the old value is false and the new value is
 // true, then writer_identity is changed to a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
+// (https://docs.cloud.google.com/iam/docs/service-account-types#service-agents)
 // owned by Cloud Logging. It is an error if the old value is true and the new
 // value is set to false or defaulted to false.
 func (c *FoldersSinksPatchCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *FoldersSinksPatchCall {
@@ -17959,7 +18305,7 @@ func (c *FoldersSinksUpdateCall) CustomWriterIdentity(customWriterIdentity strin
 // values of this field are both false or both true, then there is no change to
 // the sink's writer_identity. If the old value is false and the new value is
 // true, then writer_identity is changed to a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
+// (https://docs.cloud.google.com/iam/docs/service-account-types#service-agents)
 // owned by Cloud Logging. It is an error if the old value is true and the new
 // value is set to false or defaulted to false.
 func (c *FoldersSinksUpdateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *FoldersSinksUpdateCall {
@@ -18184,7 +18530,11 @@ type LocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: List all public locations: Use the path
+// GET /v1/locations. List project-visible locations: Use the path GET
+// /v1/projects/{project_id}/locations. This may include public locations as
+// well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *LocationsService) List(name string) *LocationsListCall {
@@ -21533,9 +21883,9 @@ type OrganizationsGetCmekSettingsCall struct {
 // CMEK for the Log Router can be configured for Google Cloud projects,
 // folders, organizations, and billing accounts. Once configured for an
 // organization, it applies to all projects and folders in the Google Cloud
-// organization.See Enabling CMEK for Log Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption) for more
-// information.
+// organization.See Configure CMEK for Cloud Logging
+// (https://docs.cloud.google.com/logging/docs/routing/managed-encryption) for
+// more information.
 //
 //   - name: The resource for which to retrieve CMEK settings.
 //     "projects/[PROJECT_ID]/cmekSettings"
@@ -21655,7 +22005,7 @@ type OrganizationsGetSettingsCall struct {
 // GetSettings: Gets the settings for the given resource.Note: Settings can be
 // retrieved for Google Cloud projects, folders, organizations, and billing
 // accounts.See View default resource settings for Logging
-// (https://cloud.google.com/logging/docs/default-settings#view-org-settings)
+// (https://docs.cloud.google.com/logging/docs/default-settings#view-org-settings)
 // for more information.
 //
 //   - name: The resource for which to retrieve settings.
@@ -21778,9 +22128,9 @@ type OrganizationsUpdateCmekSettingsCall struct {
 // of the following are true: The value of kms_key_name is invalid. The
 // associated service account doesn't have the required
 // roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key. Access
-// to the key is disabled.See Enabling CMEK for Log Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption) for more
-// information.
+// to the key is disabled.See Configure CMEK for Cloud Logging
+// (https://docs.cloud.google.com/logging/docs/routing/managed-encryption) for
+// more information.
 //
 //   - name: The resource name for the CMEK settings to update.
 //     "projects/[PROJECT_ID]/cmekSettings"
@@ -21910,8 +22260,8 @@ type OrganizationsUpdateSettingsCall struct {
 // associated service account doesn't have the required
 // roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key. Access
 // to the key is disabled.See Configure default settings for organizations and
-// folders (https://cloud.google.com/logging/docs/default-settings) for more
-// information.
+// folders (https://docs.cloud.google.com/logging/docs/default-settings) for
+// more information.
 //
 //   - name: The resource name for the settings to update.
 //     "organizations/[ORGANIZATION_ID]/settings" "folders/[FOLDER_ID]/settings"
@@ -22730,7 +23080,11 @@ type OrganizationsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: List all public locations: Use the path
+// GET /v1/locations. List project-visible locations: Use the path GET
+// /v1/projects/{project_id}/locations. This may include public locations as
+// well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *OrganizationsLocationsService) List(name string) *OrganizationsLocationsListCall {
@@ -27109,7 +27463,7 @@ type OrganizationsLocationsSavedQueriesPatchCall struct {
 //   - name: Output only. Resource name of the saved query.In the format:
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]"
 //     For a list of supported locations, see Supported Regions
-//     (https://cloud.google.com/logging/docs/region-support#bucket-regions)After
+//     (https://docs.cloud.google.com/logging/docs/region-support#bucket-regions)After
 //     the saved query is created, the location cannot be changed.If the user
 //     doesn't provide a QUERY_ID, the system will generate an alphanumeric ID.
 func (r *OrganizationsLocationsSavedQueriesService) Patch(name string, savedquery *SavedQuery) *OrganizationsLocationsSavedQueriesPatchCall {
@@ -27539,7 +27893,7 @@ func (c *OrganizationsSinksCreateCall) CustomWriterIdentity(customWriterIdentity
 // as the sink itself.If this field is set to true, or if the sink is owned by
 // a non-project resource such as an organization, then the value of
 // writer_identity will be a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
+// (https://docs.cloud.google.com/iam/docs/service-account-types#service-agents)
 // used by the sinks with the same parent. For more information, see
 // writer_identity in LogSink.
 func (c *OrganizationsSinksCreateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *OrganizationsSinksCreateCall {
@@ -28059,7 +28413,7 @@ func (c *OrganizationsSinksPatchCall) CustomWriterIdentity(customWriterIdentity 
 // values of this field are both false or both true, then there is no change to
 // the sink's writer_identity. If the old value is false and the new value is
 // true, then writer_identity is changed to a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
+// (https://docs.cloud.google.com/iam/docs/service-account-types#service-agents)
 // owned by Cloud Logging. It is an error if the old value is true and the new
 // value is set to false or defaulted to false.
 func (c *OrganizationsSinksPatchCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *OrganizationsSinksPatchCall {
@@ -28212,7 +28566,7 @@ func (c *OrganizationsSinksUpdateCall) CustomWriterIdentity(customWriterIdentity
 // values of this field are both false or both true, then there is no change to
 // the sink's writer_identity. If the old value is false and the new value is
 // true, then writer_identity is changed to a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
+// (https://docs.cloud.google.com/iam/docs/service-account-types#service-agents)
 // owned by Cloud Logging. It is an error if the old value is true and the new
 // value is set to false or defaulted to false.
 func (c *OrganizationsSinksUpdateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *OrganizationsSinksUpdateCall {
@@ -28332,9 +28686,9 @@ type ProjectsGetCmekSettingsCall struct {
 // CMEK for the Log Router can be configured for Google Cloud projects,
 // folders, organizations, and billing accounts. Once configured for an
 // organization, it applies to all projects and folders in the Google Cloud
-// organization.See Enabling CMEK for Log Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption) for more
-// information.
+// organization.See Configure CMEK for Cloud Logging
+// (https://docs.cloud.google.com/logging/docs/routing/managed-encryption) for
+// more information.
 //
 //   - name: The resource for which to retrieve CMEK settings.
 //     "projects/[PROJECT_ID]/cmekSettings"
@@ -28454,7 +28808,7 @@ type ProjectsGetSettingsCall struct {
 // GetSettings: Gets the settings for the given resource.Note: Settings can be
 // retrieved for Google Cloud projects, folders, organizations, and billing
 // accounts.See View default resource settings for Logging
-// (https://cloud.google.com/logging/docs/default-settings#view-org-settings)
+// (https://docs.cloud.google.com/logging/docs/default-settings#view-org-settings)
 // for more information.
 //
 //   - name: The resource for which to retrieve settings.
@@ -29274,7 +29628,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: List all public locations: Use the path
+// GET /v1/locations. List project-visible locations: Use the path GET
+// /v1/projects/{project_id}/locations. This may include public locations as
+// well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
@@ -33653,7 +34011,7 @@ type ProjectsLocationsSavedQueriesPatchCall struct {
 //   - name: Output only. Resource name of the saved query.In the format:
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]"
 //     For a list of supported locations, see Supported Regions
-//     (https://cloud.google.com/logging/docs/region-support#bucket-regions)After
+//     (https://docs.cloud.google.com/logging/docs/region-support#bucket-regions)After
 //     the saved query is created, the location cannot be changed.If the user
 //     doesn't provide a QUERY_ID, the system will generate an alphanumeric ID.
 func (r *ProjectsLocationsSavedQueriesService) Patch(name string, savedquery *SavedQuery) *ProjectsLocationsSavedQueriesPatchCall {
@@ -34652,7 +35010,7 @@ func (c *ProjectsSinksCreateCall) CustomWriterIdentity(customWriterIdentity stri
 // as the sink itself.If this field is set to true, or if the sink is owned by
 // a non-project resource such as an organization, then the value of
 // writer_identity will be a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
+// (https://docs.cloud.google.com/iam/docs/service-account-types#service-agents)
 // used by the sinks with the same parent. For more information, see
 // writer_identity in LogSink.
 func (c *ProjectsSinksCreateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *ProjectsSinksCreateCall {
@@ -35172,7 +35530,7 @@ func (c *ProjectsSinksPatchCall) CustomWriterIdentity(customWriterIdentity strin
 // values of this field are both false or both true, then there is no change to
 // the sink's writer_identity. If the old value is false and the new value is
 // true, then writer_identity is changed to a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
+// (https://docs.cloud.google.com/iam/docs/service-account-types#service-agents)
 // owned by Cloud Logging. It is an error if the old value is true and the new
 // value is set to false or defaulted to false.
 func (c *ProjectsSinksPatchCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *ProjectsSinksPatchCall {
@@ -35325,7 +35683,7 @@ func (c *ProjectsSinksUpdateCall) CustomWriterIdentity(customWriterIdentity stri
 // values of this field are both false or both true, then there is no change to
 // the sink's writer_identity. If the old value is false and the new value is
 // true, then writer_identity is changed to a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
+// (https://docs.cloud.google.com/iam/docs/service-account-types#service-agents)
 // owned by Cloud Logging. It is an error if the old value is true and the new
 // value is set to false or defaulted to false.
 func (c *ProjectsSinksUpdateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *ProjectsSinksUpdateCall {
@@ -35477,7 +35835,7 @@ func (c *SinksCreateCall) CustomWriterIdentity(customWriterIdentity string) *Sin
 // as the sink itself.If this field is set to true, or if the sink is owned by
 // a non-project resource such as an organization, then the value of
 // writer_identity will be a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
+// (https://docs.cloud.google.com/iam/docs/service-account-types#service-agents)
 // used by the sinks with the same parent. For more information, see
 // writer_identity in LogSink.
 func (c *SinksCreateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *SinksCreateCall {
@@ -35997,7 +36355,7 @@ func (c *SinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *Sin
 // values of this field are both false or both true, then there is no change to
 // the sink's writer_identity. If the old value is false and the new value is
 // true, then writer_identity is changed to a service agent
-// (https://cloud.google.com/iam/docs/service-account-types#service-agents)
+// (https://docs.cloud.google.com/iam/docs/service-account-types#service-agents)
 // owned by Cloud Logging. It is an error if the old value is true and the new
 // value is set to false or defaulted to false.
 func (c *SinksUpdateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *SinksUpdateCall {
@@ -36117,9 +36475,9 @@ type V2GetCmekSettingsCall struct {
 // CMEK for the Log Router can be configured for Google Cloud projects,
 // folders, organizations, and billing accounts. Once configured for an
 // organization, it applies to all projects and folders in the Google Cloud
-// organization.See Enabling CMEK for Log Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption) for more
-// information.
+// organization.See Configure CMEK for Cloud Logging
+// (https://docs.cloud.google.com/logging/docs/routing/managed-encryption) for
+// more information.
 //
 //   - name: The resource for which to retrieve CMEK settings.
 //     "projects/[PROJECT_ID]/cmekSettings"
@@ -36239,7 +36597,7 @@ type V2GetSettingsCall struct {
 // GetSettings: Gets the settings for the given resource.Note: Settings can be
 // retrieved for Google Cloud projects, folders, organizations, and billing
 // accounts.See View default resource settings for Logging
-// (https://cloud.google.com/logging/docs/default-settings#view-org-settings)
+// (https://docs.cloud.google.com/logging/docs/default-settings#view-org-settings)
 // for more information.
 //
 //   - name: The resource for which to retrieve settings.
@@ -36362,9 +36720,9 @@ type V2UpdateCmekSettingsCall struct {
 // of the following are true: The value of kms_key_name is invalid. The
 // associated service account doesn't have the required
 // roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key. Access
-// to the key is disabled.See Enabling CMEK for Log Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption) for more
-// information.
+// to the key is disabled.See Configure CMEK for Cloud Logging
+// (https://docs.cloud.google.com/logging/docs/routing/managed-encryption) for
+// more information.
 //
 //   - name: The resource name for the CMEK settings to update.
 //     "projects/[PROJECT_ID]/cmekSettings"
@@ -36494,8 +36852,8 @@ type V2UpdateSettingsCall struct {
 // associated service account doesn't have the required
 // roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key. Access
 // to the key is disabled.See Configure default settings for organizations and
-// folders (https://cloud.google.com/logging/docs/default-settings) for more
-// information.
+// folders (https://docs.cloud.google.com/logging/docs/default-settings) for
+// more information.
 //
 //   - name: The resource name for the settings to update.
 //     "organizations/[ORGANIZATION_ID]/settings" "folders/[FOLDER_ID]/settings"

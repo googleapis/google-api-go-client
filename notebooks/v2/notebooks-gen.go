@@ -1150,9 +1150,10 @@ type ListInstancesResponse struct {
 	// NextPageToken: Page token that can be used to continue listing from the last
 	// result in the next list call.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Unreachable: Locations that could not be reached. For example,
-	// ['us-west1-a', 'us-central1-b']. A ListInstancesResponse will only contain
-	// either instances or unreachables,
+	// Unreachable: Unordered list. Locations that could not be reached. For
+	// example, ['projects/{project_id}/locations/us-west1-a',
+	// 'projects/{project_id}/locations/us-central1-b']. A ListInstancesResponse
+	// will only contain either instances or unreachables,
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2096,7 +2097,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
@@ -3258,7 +3263,10 @@ type ProjectsLocationsInstancesListCall struct {
 
 // List: Lists instances in a given project and location.
 //
-// - parent: Format: `parent=projects/{project_id}/locations/{location}`.
+//   - parent: The parent of the instance. Formats: -
+//     `projects/{project_id}/locations/{location}` to list instances in a
+//     specific zone. - `projects/{project_id}/locations/-` to list instances in
+//     all locations.
 func (r *ProjectsLocationsInstancesService) List(parent string) *ProjectsLocationsInstancesListCall {
 	c := &ProjectsLocationsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

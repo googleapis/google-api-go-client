@@ -227,6 +227,42 @@ type ProjectsLocationsServicesSchemasService struct {
 type CancelOperationRequest struct {
 }
 
+// ClientCache: Client caching settings of a connector.
+type ClientCache struct {
+	// EntityIdIncluded: Optional. A field that, if true, means that responses
+	// served by this connector will include entityIds in GraphQL response
+	// extensions. This helps the client SDK cache responses in an improved way,
+	// known as "normalized caching", if caching is enabled on the client. Each
+	// entityId is a stable key based on primary key values. Therefore, this field
+	// should only be set to true if the primary keys of accessed tables do not
+	// contain sensitive information.
+	EntityIdIncluded bool `json:"entityIdIncluded,omitempty"`
+	// StrictValidationEnabled: Optional. A field that, if true, enables stricter
+	// validation on the connector source code to make sure the operation response
+	// shapes are suitable for client-side caching. This can include additional
+	// errors and warnings. For example, using the same alias for different fields
+	// is disallowed, as it may cause conflicts or confusion with normalized
+	// caching. (This field is off by default for compatibility, but enabling it is
+	// highly recommended to catch common caching pitfalls.)
+	StrictValidationEnabled bool `json:"strictValidationEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EntityIdIncluded") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EntityIdIncluded") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClientCache) MarshalJSON() ([]byte, error) {
+	type NoMethod ClientCache
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CloudSqlInstance: Settings for CloudSQL instance configuration.
 type CloudSqlInstance struct {
 	// Instance: Required. Name of the CloudSQL instance, in the format: ```
@@ -255,6 +291,8 @@ func (s CloudSqlInstance) MarshalJSON() ([]byte, error) {
 type Connector struct {
 	// Annotations: Optional. Stores small amounts of arbitrary data.
 	Annotations map[string]string `json:"annotations,omitempty"`
+	// ClientCache: Optional. The client cache settings of the connector.
+	ClientCache *ClientCache `json:"clientCache,omitempty"`
 	// CreateTime: Output only. [Output only] Create time stamp.
 	CreateTime string `json:"createTime,omitempty"`
 	// DisplayName: Optional. Mutable human-readable name. 63 character limit.
@@ -298,6 +336,40 @@ type Connector struct {
 
 func (s Connector) MarshalJSON() ([]byte, error) {
 	type NoMethod Connector
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DataConnectProperties: Data Connect specific properties for a path under
+// response.data.
+type DataConnectProperties struct {
+	// EntityId: A single Entity ID. Set if the path points to a single entity.
+	EntityId string `json:"entityId,omitempty"`
+	// EntityIds: A list of Entity IDs. Set if the path points to an array of
+	// entities. An ID is present for each element of the array at the
+	// corresponding index.
+	EntityIds []string `json:"entityIds,omitempty"`
+	// MaxAge: The server-suggested duration before data under path is considered
+	// stale.
+	MaxAge string `json:"maxAge,omitempty"`
+	// Path: The path under response.data where the rest of the fields apply. Each
+	// element may be a string (field name) or number (array index). The root of
+	// response.data is denoted by the empty list `[]`.
+	Path []interface{} `json:"path,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EntityId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EntityId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataConnectProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod DataConnectProperties
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -368,6 +440,8 @@ type ExecuteMutationResponse struct {
 	Data googleapi.RawMessage `json:"data,omitempty"`
 	// Errors: Errors of this response.
 	Errors []*GraphqlError `json:"errors,omitempty"`
+	// Extensions: Additional response information.
+	Extensions *GraphqlResponseExtensions `json:"extensions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -421,6 +495,8 @@ type ExecuteQueryResponse struct {
 	Data googleapi.RawMessage `json:"data,omitempty"`
 	// Errors: Errors of this response.
 	Errors []*GraphqlError `json:"errors,omitempty"`
+	// Extensions: Additional response information.
+	Extensions *GraphqlResponseExtensions `json:"extensions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -718,8 +794,11 @@ type GraphqlResponse struct {
 	Data googleapi.RawMessage `json:"data,omitempty"`
 	// Errors: Errors of this response. If the data entry in the response is not
 	// present, the errors entry must be present. It conforms to
-	// https://spec.graphql.org/draft/#sec-Errors.
+	// https://spec.graphql.org/draft/#sec-Errors .
 	Errors []*GraphqlError `json:"errors,omitempty"`
+	// Extensions: Additional response information. It conforms to
+	// https://spec.graphql.org/draft/#sec-Extensions .
+	Extensions *GraphqlResponseExtensions `json:"extensions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -738,6 +817,30 @@ type GraphqlResponse struct {
 
 func (s GraphqlResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GraphqlResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GraphqlResponseExtensions: GraphqlResponseExtensions contains additional
+// information of `GraphqlResponse` or `ExecuteQueryResponse`.
+type GraphqlResponseExtensions struct {
+	// DataConnect: Data Connect specific GraphQL extension, a list of paths and
+	// properties.
+	DataConnect []*DataConnectProperties `json:"dataConnect,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataConnect") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataConnect") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GraphqlResponseExtensions) MarshalJSON() ([]byte, error) {
+	type NoMethod GraphqlResponseExtensions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1508,7 +1611,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

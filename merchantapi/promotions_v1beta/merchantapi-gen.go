@@ -220,6 +220,23 @@ type Attributes struct {
 	//   "FREE_SHIPPING_TWO_DAY" - Two day free shipping coupon value type. Only
 	// available for online promotions.
 	CouponValueType string `json:"couponValueType,omitempty"`
+	// CustomRedemptionRestriction: Optional. The custom redemption restriction for
+	// the promotion. If the `redemption_restriction` field is set to `CUSTOM`,
+	// this field must be set.
+	CustomRedemptionRestriction string `json:"customRedemptionRestriction,omitempty"`
+	// EventApplicability: Optional. Event applicability for this promotion. When
+	// present, this field indicates you are creating a sales event
+	// (https://support.google.com/merchants/answer/15523289?hl=en&sjid=11099988466404504696-NC)
+	// and not a product promotion. Exactly one of `product_applicability` or
+	// `event_applicability` must be set.
+	//
+	// Possible values:
+	//   "EVENT_APPLICABILITY_UNSPECIFIED" - Indicates that the event applicability
+	// is unspecified.
+	//   "SITEWIDE" - Indicates that the promotion applies to the entire site.
+	//   "SPECIFIC_CATEGORIES" - Indicates that the promotion applies to specific
+	// categories. When this is set, the GoogleProductCategory field is required.
+	EventApplicability string `json:"eventApplicability,omitempty"`
 	// FreeGiftDescription: Optional. Free gift description
 	// (https://support.google.com/merchants/answer/13847245?ref_topic=13773355&sjid=17642868584668136159-NC)
 	// for the promotion.
@@ -240,6 +257,13 @@ type Attributes struct {
 	// promotion. The attribute is set when `couponValueType` is equal to
 	// `buy_m_get_n_money_off` or `buy_m_get_n_percent_off`.
 	GetThisQuantityDiscounted int64 `json:"getThisQuantityDiscounted,omitempty,string"`
+	// GoogleProductCategories: Optional. A list of Google product categories for
+	// this promotion. Set if `EventApplicability` is `SPECIFIC_CATEGORIES`. Up to
+	// 5 product categories can be specified. For more details on eligible values
+	// for product categories, checkout the `google_product_category` attribute in
+	// the Promotion data specification
+	// (https://support.google.com/merchants/answer/2906014?hl=en).
+	GoogleProductCategories []string `json:"googleProductCategories,omitempty"`
 	// ItemGroupIdExclusion: Optional. Product filter by item group ID
 	// (https://support.google.com/merchants/answer/13837298?ref_topic=13773355&sjid=17642868584668136159-NC).
 	// The product filter attributes only applies when the products eligible for
@@ -279,6 +303,10 @@ type Attributes struct {
 	// (https://support.google.com/merchants/answer/13838102?ref_topic=13773355&sjid=17642868584668136159-NC)
 	// for the promotion.
 	LongTitle string `json:"longTitle,omitempty"`
+	// MaxDiscountAmount: Optional. The maximum monetary discount a customer can
+	// receive for the promotion. This field is only supported with the `Percent
+	// off` coupon value type.
+	MaxDiscountAmount *Price `json:"maxDiscountAmount,omitempty"`
 	// MinimumPurchaseAmount: Optional. Minimum purchase amount
 	// (https://support.google.com/merchants/answer/13837705?ref_topic=13773355&sjid=17642868584668136159-NC)
 	// for the promotion.
@@ -303,9 +331,10 @@ type Attributes struct {
 	// (https://support.google.com/merchants/answer/13837404?sjid=17642868584668136159-NC)
 	// offered in the promotion.
 	PercentOff int64 `json:"percentOff,omitempty,string"`
-	// ProductApplicability: Required. Applicability of the promotion to either all
+	// ProductApplicability: Optional. Applicability of the promotion to either all
 	// products or only specific products
 	// (https://support.google.com/merchants/answer/6396257?ref_topic=6396150&sjid=17642868584668136159-NC).
+	// Exactly one of `product_applicability` or `event_applicability` must be set.
 	//
 	// Possible values:
 	//   "PRODUCT_APPLICABILITY_UNSPECIFIED" - Which products the promotion applies
@@ -381,6 +410,23 @@ type Attributes struct {
 	// `promotion_url` is included. URL is used to confirm that the promotion is
 	// valid and can be redeemed.
 	PromotionUrl string `json:"promotionUrl,omitempty"`
+	// RedemptionRestriction: Optional. A restriction customers must meet before
+	// they can redeem the promotion.
+	//
+	// Possible values:
+	//   "REDEMPTION_RESTRICTION_UNSPECIFIED" - Indicates that the redemption
+	// restriction is unspecified.
+	//   "SUBSCRIBE" - The promotion can only be redeemed by signing up for a
+	// subscription.
+	//   "FIRST_ORDER" - The promotion can only be redeemed on the first order.
+	//   "SIGNUP_FOR_EMAIL" - The promotion can only be redeemed by signing up for
+	// email.
+	//   "SIGNUP_FOR_TEXT" - The promotion can only be redeemed by signing up for
+	// text message alerts.
+	//   "CUSTOM" - The promotion can only be redeemed with a custom redemption
+	// restriction. In this case, the `custom_redemption_restriction` field must be
+	// set.
+	RedemptionRestriction string `json:"redemptionRestriction,omitempty"`
 	// StoreApplicability: Optional. Whether the promotion applies to all stores,
 	// or only specified stores
 	// (https://support.google.com/merchants/answer/13857563?sjid=17642868584668136159-NC).

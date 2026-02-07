@@ -1304,6 +1304,10 @@ type CloudRunMetadata struct {
 	// ServiceUrls: Output only. The Cloud Run Service urls that are associated
 	// with a `Rollout`.
 	ServiceUrls []string `json:"serviceUrls,omitempty"`
+	// WorkerPool: Output only. The Cloud Run worker pool associated with a
+	// `Rollout`. Format is
+	// `projects/{project}/locations/{location}/workerPools/{worker_pool}`.
+	WorkerPool string `json:"workerPool,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Job") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1329,6 +1333,10 @@ type CloudRunRenderMetadata struct {
 	// manifest. Format is
 	// `projects/{project}/locations/{location}/services/{service}`.
 	Service string `json:"service,omitempty"`
+	// WorkerPool: Output only. The name of the Cloud Run Worker Pool in the
+	// rendered manifest. Format is
+	// `projects/{project}/locations/{location}/workerPools/{worker_pool}`.
+	WorkerPool string `json:"workerPool,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Service") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -6321,7 +6329,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

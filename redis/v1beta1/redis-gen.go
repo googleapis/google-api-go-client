@@ -1667,7 +1667,7 @@ func (s DatabaseResourceId) MarshalJSON() ([]byte, error) {
 }
 
 // DatabaseResourceMetadata: Common model for database resource instance
-// metadata. Next ID: 30
+// metadata. Next ID: 31
 type DatabaseResourceMetadata struct {
 	// AvailabilityConfiguration: Availability configuration for this instance
 	AvailabilityConfiguration *AvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
@@ -1690,6 +1690,7 @@ type DatabaseResourceMetadata struct {
 	//   "SUSPENDED" - When instance is suspended
 	//   "DELETED" - Instance is deleted.
 	//   "STATE_OTHER" - For rest of the other category
+	//   "STOPPED" - Instance is in STOPPED state.
 	CurrentState string `json:"currentState,omitempty"`
 	// CustomMetadata: Any custom metadata associated with the resource
 	CustomMetadata *CustomMetadataData `json:"customMetadata,omitempty"`
@@ -1718,6 +1719,7 @@ type DatabaseResourceMetadata struct {
 	//   "SUSPENDED" - When instance is suspended
 	//   "DELETED" - Instance is deleted.
 	//   "STATE_OTHER" - For rest of the other category
+	//   "STOPPED" - Instance is in STOPPED state.
 	ExpectedState string `json:"expectedState,omitempty"`
 	// GcbdrConfiguration: GCBDR configuration for the resource.
 	GcbdrConfiguration *GCBDRConfiguration `json:"gcbdrConfiguration,omitempty"`
@@ -1765,6 +1767,8 @@ type DatabaseResourceMetadata struct {
 	// the format of "/", such as "projects/123". For GCP provided resources,
 	// number should be project number.
 	ResourceContainer string `json:"resourceContainer,omitempty"`
+	// ResourceFlags: Optional. List of resource flags for the database resource.
+	ResourceFlags []*ResourceFlags `json:"resourceFlags,omitempty"`
 	// ResourceName: Required. Different from DatabaseResourceId.unique_id, a
 	// resource name can be reused over time. That is, after a resource named "ABC"
 	// is deleted, the name "ABC" can be used to to create a new resource within
@@ -4064,6 +4068,30 @@ func (s RescheduleMaintenanceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ResourceFlags: Message type for storing resource flags.
+type ResourceFlags struct {
+	// Key: Optional. Key of the resource flag.
+	Key string `json:"key,omitempty"`
+	// Value: Optional. Value of the resource flag.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResourceFlags) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceFlags
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ResourceMaintenanceDenySchedule: Deny maintenance period for the database
 // resource. It specifies the time range during which the maintenance cannot
 // start. This is configured by the customer.
@@ -4099,11 +4127,36 @@ type ResourceMaintenanceInfo struct {
 	// DenyMaintenanceSchedules: Optional. List of Deny maintenance period for the
 	// database resource.
 	DenyMaintenanceSchedules []*ResourceMaintenanceDenySchedule `json:"denyMaintenanceSchedules,omitempty"`
+	// IsInstanceStopped: Optional. Whether the instance is in stopped state. This
+	// information is temporarily being captured in maintenanceInfo, till STOPPED
+	// state is supported by DB Center.
+	IsInstanceStopped bool `json:"isInstanceStopped,omitempty"`
 	// MaintenanceSchedule: Optional. Maintenance window for the database resource.
 	MaintenanceSchedule *ResourceMaintenanceSchedule `json:"maintenanceSchedule,omitempty"`
+	// MaintenanceState: Output only. Current state of maintenance on the database
+	// resource.
+	//
+	// Possible values:
+	//   "MAINTENANCE_STATE_UNSPECIFIED" - Unspecified state.
+	//   "CREATING" - Database resource is being created.
+	//   "READY" - Database resource has been created and is ready to use.
+	//   "UPDATING" - Database resource is being updated.
+	//   "REPAIRING" - Database resource is unheathy and under repair.
+	//   "DELETING" - Database resource is being deleted.
+	//   "ERROR" - Database resource encountered an error and is in indeterministic
+	// state.
+	MaintenanceState string `json:"maintenanceState,omitempty"`
 	// MaintenanceVersion: Optional. Current Maintenance version of the database
 	// resource. Example: "MYSQL_8_0_41.R20250531.01_15"
 	MaintenanceVersion string `json:"maintenanceVersion,omitempty"`
+	// UpcomingMaintenance: Optional. Upcoming maintenance for the database
+	// resource. This field is populated once SLM generates and publishes upcoming
+	// maintenance window.
+	UpcomingMaintenance *UpcomingMaintenance `json:"upcomingMaintenance,omitempty"`
+	// VersionUpdateTime: Optional. This field will contain the date when the last
+	// version update was applied to the database resource. This will be used to
+	// calculate the age of the maintenance version.
+	VersionUpdateTime string `json:"versionUpdateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DenyMaintenanceSchedules")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4408,6 +4461,31 @@ func (s *TypedValue) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// UpcomingMaintenance: Upcoming maintenance for the database resource. This is
+// generated by SLM once the upcoming maintenance schedule is published.
+type UpcomingMaintenance struct {
+	// EndTime: Optional. The end time of the upcoming maintenance.
+	EndTime string `json:"endTime,omitempty"`
+	// StartTime: Optional. The start time of the upcoming maintenance.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpcomingMaintenance) MarshalJSON() ([]byte, error) {
+	type NoMethod UpcomingMaintenance
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // UpdateInfo: Represents information about an updating cluster.
 type UpdateInfo struct {
 	// TargetNodeType: Target node type for redis cluster.
@@ -4678,7 +4756,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

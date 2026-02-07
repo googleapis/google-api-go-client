@@ -4631,6 +4631,43 @@ func (s LiveChatFanFundingEventDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// LiveChatGiftDetails: Details about the gift event, this is only set if the
+// type is 'giftEvent'.
+type LiveChatGiftDetails struct {
+	// AltText: The alternative text to be used for accessibility.
+	AltText string `json:"altText,omitempty"`
+	// ComboCount: The number of times the gift has been sent in a row.
+	ComboCount int64 `json:"comboCount,omitempty"`
+	// GiftDuration: The duration of the gift.
+	GiftDuration string `json:"giftDuration,omitempty"`
+	// GiftName: The name of the gift.
+	GiftName string `json:"giftName,omitempty"`
+	// GiftUrl: The URL of the gift image.
+	GiftUrl string `json:"giftUrl,omitempty"`
+	// HasVisualEffect: Whether the gift involves a visual effect.
+	HasVisualEffect bool `json:"hasVisualEffect,omitempty"`
+	// JewelsCount: The cost of the gift in jewels.
+	JewelsCount int64 `json:"jewelsCount,omitempty"`
+	// Language: The BCP-47 language code of the gift.
+	Language string `json:"language,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AltText") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AltText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LiveChatGiftDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod LiveChatGiftDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type LiveChatGiftMembershipReceivedDetails struct {
 	// AssociatedMembershipGiftingMessageId: The ID of the membership gifting
 	// message that is related to this gift membership. This ID will always refer
@@ -4875,7 +4912,7 @@ func (s LiveChatMessageRetractedDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// LiveChatMessageSnippet: Next ID: 34
+// LiveChatMessageSnippet: Next ID: 35
 type LiveChatMessageSnippet struct {
 	// AuthorChannelId: The ID of the user that authored this message, this field
 	// is not always filled. textMessageEvent - the user that wrote the message
@@ -4896,6 +4933,9 @@ type LiveChatMessageSnippet struct {
 	// FanFundingEventDetails: Details about the funding event, this is only set if
 	// the type is 'fanFundingEvent'.
 	FanFundingEventDetails *LiveChatFanFundingEventDetails `json:"fanFundingEventDetails,omitempty"`
+	// GiftDetails: Details about the gift event, this is only set if the type is
+	// 'giftEvent'.
+	GiftDetails *LiveChatGiftDetails `json:"giftDetails,omitempty"`
 	// GiftMembershipReceivedDetails: Details about the Gift Membership Received
 	// event, this is only set if the type is 'giftMembershipReceivedEvent'.
 	GiftMembershipReceivedDetails *LiveChatGiftMembershipReceivedDetails `json:"giftMembershipReceivedDetails,omitempty"`
@@ -4950,6 +4990,7 @@ type LiveChatMessageSnippet struct {
 	//   "superChatEvent"
 	//   "superStickerEvent"
 	//   "pollEvent"
+	//   "giftEvent" - A virtual gift sent by a viewer to support a creator.
 	Type              string                            `json:"type,omitempty"`
 	UserBannedDetails *LiveChatUserBannedMessageDetails `json:"userBannedDetails,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthorChannelId") to

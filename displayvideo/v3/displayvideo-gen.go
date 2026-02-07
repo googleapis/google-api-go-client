@@ -881,33 +881,29 @@ func (s AdGroup) MarshalJSON() ([]byte, error) {
 type AdGroupAd struct {
 	// AdGroupAdId: Output only. The unique ID of the ad. Assigned by the system.
 	AdGroupAdId int64 `json:"adGroupAdId,omitempty,string"`
-	// AdGroupId: The unique ID of the ad group that the ad belongs to. *Caution*:
-	// Parent ad groups for Demand Gen ads are not currently retrieveable using
-	// `advertisers.adGroups.list` or `advertisers.adGroups.get`. Demand Gen ads
-	// can be identified by the absence of the `ad_details` union field.
+	// AdGroupId: Required. The unique ID of the ad group that the ad belongs to.
 	AdGroupId int64 `json:"adGroupId,omitempty,string"`
 	// AdPolicy: Output only. The policy approval status of the ad.
 	AdPolicy *AdPolicy `json:"adPolicy,omitempty"`
 	// AdUrls: List of URLs used by the ad.
 	AdUrls []*AdUrl `json:"adUrls,omitempty"`
-	// AdvertiserId: Output only. The unique ID of the advertiser the ad belongs
-	// to.
+	// AdvertiserId: Required. The unique ID of the advertiser the ad belongs to.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
-	// AudioAd: Details of an audio ad
+	// AudioAd: Output only. Details of an audio ad
 	// (//support.google.com/displayvideo/answer/6274216) used for reach marketing
 	// objectives.
 	AudioAd *AudioAd `json:"audioAd,omitempty"`
-	// BumperAd: Details of a non-skippable short video ad
+	// BumperAd: Output only. Details of a non-skippable short video ad
 	// (//support.google.com/displayvideo/answer/6274216), equal to or less than 6
 	// seconds, used for reach.
 	BumperAd *BumperAd `json:"bumperAd,omitempty"`
-	// DisplayName: The display name of the ad. Must be UTF-8 encoded with a
-	// maximum size of 255 bytes.
+	// DisplayName: Required. The display name of the ad. Must be UTF-8 encoded
+	// with a maximum size of 255 bytes.
 	DisplayName string `json:"displayName,omitempty"`
-	// DisplayVideoSourceAd: Details of an ad sourced from a Display & Video 360
-	// creative.
+	// DisplayVideoSourceAd: Output only. Details of an ad sourced from a Display &
+	// Video 360 creative.
 	DisplayVideoSourceAd *DisplayVideoSourceAd `json:"displayVideoSourceAd,omitempty"`
-	// EntityStatus: The entity status of the ad.
+	// EntityStatus: Required. The entity status of the ad.
 	//
 	// Possible values:
 	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not specified
@@ -923,26 +919,26 @@ type AdGroupAd struct {
 	//   "ENTITY_STATUS_SCHEDULED_FOR_DELETION" - The entity is scheduled for
 	// deletion.
 	EntityStatus string `json:"entityStatus,omitempty"`
-	// InStreamAd: Details of an in-stream ad skippable after 5 seconds
-	// (//support.google.com/displayvideo/answer/6274216), used for brand awareness
-	// or reach marketing objectives.
+	// InStreamAd: Output only. Details of an in-stream ad skippable after 5
+	// seconds (//support.google.com/displayvideo/answer/6274216), used for brand
+	// awareness or reach marketing objectives.
 	InStreamAd *InStreamAd `json:"inStreamAd,omitempty"`
-	// MastheadAd: Details of an ad served on the YouTube Home feed
+	// MastheadAd: Output only. Details of an ad served on the YouTube Home feed
 	// (//support.google.com/google-ads/answer/9709826).
 	MastheadAd *MastheadAd `json:"mastheadAd,omitempty"`
 	// Name: Output only. The resource name of the ad.
 	Name string `json:"name,omitempty"`
-	// NonSkippableAd: Details of a non-skippable short in-stream video ad
-	// (//support.google.com/displayvideo/answer/6274216), between 6 and 15
-	// seconds, used for reach marketing objectives.
+	// NonSkippableAd: Output only. Details of a non-skippable short in-stream
+	// video ad (//support.google.com/displayvideo/answer/6274216), between 6 and
+	// 15 seconds, used for reach marketing objectives.
 	NonSkippableAd *NonSkippableAd `json:"nonSkippableAd,omitempty"`
-	// VideoDiscoverAd: Details of an ad promoting a video
+	// VideoDiscoverAd: Output only. Details of an ad promoting a video
 	// (//support.google.com/displayvideo/answer/6274216) that shows in places of
 	// discovery.
 	VideoDiscoverAd *VideoDiscoveryAd `json:"videoDiscoverAd,omitempty"`
-	// VideoPerformanceAd: Details of an ad used in a video action campaign
-	// (//support.google.com/google-ads/answer/10147229) to drive actions to the
-	// business, service or product.
+	// VideoPerformanceAd: Output only. Details of an ad used in a video action
+	// campaign (//support.google.com/google-ads/answer/10147229) to drive actions
+	// to the business, service or product.
 	VideoPerformanceAd *VideoPerformanceAd `json:"videoPerformanceAd,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

@@ -1035,75 +1035,21 @@ func (s ConnectionInfo) MarshalJSON() ([]byte, error) {
 
 // ConnectionPoolConfig: Configuration for Managed Connection Pool (MCP).
 type ConnectionPoolConfig struct {
-	// DefaultPoolSize: Optional. Deprecated. Use 'flags' instead. The default pool
-	// size. Defaults to 20. Note: This field should not be added to client
-	// libraries if not present already.
-	DefaultPoolSize string `json:"defaultPoolSize,omitempty"`
-	// Enable: Optional. Deprecated; Prefer 'enabled' as this will be removed soon.
-	Enable bool `json:"enable,omitempty"`
 	// Enabled: Optional. Whether to enable Managed Connection Pool (MCP).
 	Enabled bool `json:"enabled,omitempty"`
 	// Flags: Optional. Connection Pool flags, as a list of "key": "value" pairs.
 	Flags map[string]string `json:"flags,omitempty"`
-	// IgnoreStartupParameters: Optional. Deprecated. Use 'flags' instead. The list
-	// of startup parameters to ignore. Defaults to ["extra_float_digits"] Note:
-	// This field should not be added to client libraries if not present already.
-	IgnoreStartupParameters []string `json:"ignoreStartupParameters,omitempty"`
-	// MaxClientConn: Optional. Deprecated. Use 'flags' instead. The maximum number
-	// of client connections allowed. Note: This field should not be added to
-	// client libraries if not present already.
-	MaxClientConn string `json:"maxClientConn,omitempty"`
-	// MaxPreparedStatements: Optional. Deprecated. Use 'flags' instead. The
-	// maximum number of prepared statements allowed. MCP makes sure that any
-	// statement prepared by a client, up to this limit, is available on the
-	// backing server connection in transaction and statement pooling mode. Even if
-	// the statement was originally prepared on another server connection. Defaults
-	// to 0. Note: This field should not be added to client libraries if not
-	// present already.
-	MaxPreparedStatements string `json:"maxPreparedStatements,omitempty"`
-	// MinPoolSize: Optional. Deprecated. Use 'flags' instead. The minimum pool
-	// size. Defaults to 0. Note: This field should not be added to client
-	// libraries if not present already.
-	MinPoolSize string `json:"minPoolSize,omitempty"`
-	// PoolMode: Optional. Deprecated. Use 'flags' instead. The pool mode. Defaults
-	// to `POOL_MODE_TRANSACTION`. Note: This field should not be added to client
-	// libraries if not present already.
-	//
-	// Possible values:
-	//   "POOL_MODE_UNSPECIFIED" - The pool mode is not specified. Defaults to
-	// `POOL_MODE_TRANSACTION`.
-	//   "POOL_MODE_SESSION" - Server is released back to pool after a client
-	// disconnects.
-	//   "POOL_MODE_TRANSACTION" - Server is released back to pool after a
-	// transaction finishes.
-	PoolMode string `json:"poolMode,omitempty"`
 	// PoolerCount: Output only. The number of running poolers per instance.
 	PoolerCount int64 `json:"poolerCount,omitempty"`
-	// QueryWaitTimeout: Optional. Deprecated. Use 'flags' instead. The maximum
-	// number of seconds queries are allowed to spend waiting for execution. If the
-	// query is not assigned to a server during that time, the client is
-	// disconnected. 0 disables. Note: This field should not be added to client
-	// libraries if not present already.
-	QueryWaitTimeout string `json:"queryWaitTimeout,omitempty"`
-	// ServerIdleTimeout: Optional. Deprecated. Use 'flags' instead. The maximum
-	// number of seconds a server is allowed to be idle before it is disconnected.
-	// 0 disables. Note: This field should not be added to client libraries if not
-	// present already.
-	ServerIdleTimeout string `json:"serverIdleTimeout,omitempty"`
-	// StatsUsers: Optional. Deprecated. Use 'flags' instead. The list of users
-	// that are allowed to connect to the MCP stats console. The users must exist
-	// in the database. Note: This field should not be added to client libraries if
-	// not present already.
-	StatsUsers []string `json:"statsUsers,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DefaultPoolSize") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DefaultPoolSize") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4230,7 +4176,7 @@ func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceId) MarshalJSON() (
 }
 
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata: Common model
-// for database resource instance metadata. Next ID: 30
+// for database resource instance metadata. Next ID: 31
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// AvailabilityConfiguration: Availability configuration for this instance
 	AvailabilityConfiguration *StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
@@ -4253,6 +4199,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	//   "SUSPENDED" - When instance is suspended
 	//   "DELETED" - Instance is deleted.
 	//   "STATE_OTHER" - For rest of the other category
+	//   "STOPPED" - Instance is in STOPPED state.
 	CurrentState string `json:"currentState,omitempty"`
 	// CustomMetadata: Any custom metadata associated with the resource
 	CustomMetadata *StorageDatabasecenterPartnerapiV1mainCustomMetadataData `json:"customMetadata,omitempty"`
@@ -4281,6 +4228,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	//   "SUSPENDED" - When instance is suspended
 	//   "DELETED" - Instance is deleted.
 	//   "STATE_OTHER" - For rest of the other category
+	//   "STOPPED" - Instance is in STOPPED state.
 	ExpectedState string `json:"expectedState,omitempty"`
 	// GcbdrConfiguration: GCBDR configuration for the resource.
 	GcbdrConfiguration *StorageDatabasecenterPartnerapiV1mainGCBDRConfiguration `json:"gcbdrConfiguration,omitempty"`
@@ -4328,6 +4276,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// the format of "/", such as "projects/123". For GCP provided resources,
 	// number should be project number.
 	ResourceContainer string `json:"resourceContainer,omitempty"`
+	// ResourceFlags: Optional. List of resource flags for the database resource.
+	ResourceFlags []*StorageDatabasecenterPartnerapiV1mainResourceFlags `json:"resourceFlags,omitempty"`
 	// ResourceName: Required. Different from DatabaseResourceId.unique_id, a
 	// resource name can be reused over time. That is, after a resource named "ABC"
 	// is deleted, the name "ABC" can be used to to create a new resource within
@@ -4974,6 +4924,31 @@ func (s StorageDatabasecenterPartnerapiV1mainOperationError) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// StorageDatabasecenterPartnerapiV1mainResourceFlags: Message type for storing
+// resource flags.
+type StorageDatabasecenterPartnerapiV1mainResourceFlags struct {
+	// Key: Optional. Key of the resource flag.
+	Key string `json:"key,omitempty"`
+	// Value: Optional. Value of the resource flag.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StorageDatabasecenterPartnerapiV1mainResourceFlags) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainResourceFlags
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // StorageDatabasecenterPartnerapiV1mainResourceMaintenanceDenySchedule: Deny
 // maintenance period for the database resource. It specifies the time range
 // during which the maintenance cannot start. This is configured by the
@@ -5010,6 +4985,10 @@ type StorageDatabasecenterPartnerapiV1mainResourceMaintenanceInfo struct {
 	// DenyMaintenanceSchedules: Optional. List of Deny maintenance period for the
 	// database resource.
 	DenyMaintenanceSchedules []*StorageDatabasecenterPartnerapiV1mainResourceMaintenanceDenySchedule `json:"denyMaintenanceSchedules,omitempty"`
+	// IsInstanceStopped: Optional. Whether the instance is in stopped state. This
+	// information is temporarily being captured in maintenanceInfo, till STOPPED
+	// state is supported by DB Center.
+	IsInstanceStopped bool `json:"isInstanceStopped,omitempty"`
 	// MaintenanceSchedule: Optional. Maintenance window for the database resource.
 	MaintenanceSchedule *StorageDatabasecenterPartnerapiV1mainResourceMaintenanceSchedule `json:"maintenanceSchedule,omitempty"`
 	// MaintenanceState: Output only. Current state of maintenance on the database
@@ -5032,6 +5011,10 @@ type StorageDatabasecenterPartnerapiV1mainResourceMaintenanceInfo struct {
 	// resource. This field is populated once SLM generates and publishes upcoming
 	// maintenance window.
 	UpcomingMaintenance *StorageDatabasecenterPartnerapiV1mainUpcomingMaintenance `json:"upcomingMaintenance,omitempty"`
+	// VersionUpdateTime: Optional. This field will contain the date when the last
+	// version update was applied to the database resource. This will be used to
+	// calculate the age of the maintenance version.
+	VersionUpdateTime string `json:"versionUpdateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DenyMaintenanceSchedules")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5934,7 +5917,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

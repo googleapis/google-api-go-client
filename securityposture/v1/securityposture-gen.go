@@ -758,6 +758,41 @@ func (s IaCValidationReport) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// IacValidationFailureCriteria: Represents the criteria for considering an IaC
+// validation as a failure.
+type IacValidationFailureCriteria struct {
+	// CreateTime: Output only. The time at which the resource was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Etag: Optional. The etag for optimistic concurrency.
+	Etag string `json:"etag,omitempty"`
+	// Name: Identifier. The resource name of the IacValidationFailureCriteria.
+	// Format:
+	// organizations/{organization}/locations/{location}/iacValidationFailureCriteri
+	// a
+	Name string `json:"name,omitempty"`
+	// SeverityCountThresholds: Optional. A list of severity thresholds. An IaC
+	// validation fails if any threshold is exceeded.
+	SeverityCountThresholds []*SeverityCountThreshold `json:"severityCountThresholds,omitempty"`
+	// UpdateTime: Output only. The time at which the resource was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IacValidationFailureCriteria) MarshalJSON() ([]byte, error) {
+	type NoMethod IacValidationFailureCriteria
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListLocationsResponse: The response message for Locations.ListLocations.
 type ListLocationsResponse struct {
 	// Locations: A list of locations that matches the specified filter in the
@@ -1674,6 +1709,39 @@ type SecurityHealthAnalyticsModule struct {
 
 func (s SecurityHealthAnalyticsModule) MarshalJSON() ([]byte, error) {
 	type NoMethod SecurityHealthAnalyticsModule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SeverityCountThreshold: Represents a threshold for a specific severity.
+type SeverityCountThreshold struct {
+	// Severity: Optional. The severity level, reusing the existing
+	// Violation.Severity.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Default value. This value is unused.
+	//   "CRITICAL" - Critical severity.
+	//   "HIGH" - High severity.
+	//   "MEDIUM" - Medium severity.
+	//   "LOW" - Low severity.
+	Severity string `json:"severity,omitempty"`
+	// ThresholdCount: Optional. If violation count meets or exceeds this
+	// threshold, validation fails.
+	ThresholdCount int64 `json:"thresholdCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Severity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Severity") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SeverityCountThreshold) MarshalJSON() ([]byte, error) {
+	type NoMethod SeverityCountThreshold
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

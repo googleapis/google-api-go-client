@@ -2970,12 +2970,15 @@ func (s GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig) MarshalJSON() ([]byte, erro
 type GooglePrivacyDlpV2CustomInfoType struct {
 	// DetectionRules: Set of detection rules to apply to all findings of this
 	// CustomInfoType. Rules are applied in order that they are specified. Not
-	// supported for the `surrogate_type` CustomInfoType.
+	// supported for the `surrogate_type`, `metadata_key_value_expression`, and
+	// `prompt` CustomInfoType.
 	DetectionRules []*GooglePrivacyDlpV2DetectionRule `json:"detectionRules,omitempty"`
 	// Dictionary: A list of phrases to detect as a CustomInfoType.
 	Dictionary *GooglePrivacyDlpV2Dictionary `json:"dictionary,omitempty"`
 	// ExclusionType: If set to EXCLUSION_TYPE_EXCLUDE this infoType will not cause
-	// a finding to be returned. It still can be used for rules matching.
+	// a finding to be returned. It still can be used for rules matching. Not
+	// supported for the `metadata_key_value_expression` and `prompt`
+	// CustomInfoType.
 	//
 	// Possible values:
 	//   "EXCLUSION_TYPE_UNSPECIFIED" - A finding of this custom info type will not

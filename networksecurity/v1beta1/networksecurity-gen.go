@@ -6525,7 +6525,7 @@ type OrganizationsLocationsFirewallEndpointsCreateCall struct {
 	header_          http.Header
 }
 
-// Create: Creates a new FirewallEndpoint in a given project and location.
+// Create: Creates a new FirewallEndpoint in a given organization and location.
 //
 // - parent: Value for parent.
 func (r *OrganizationsLocationsFirewallEndpointsService) Create(parent string, firewallendpoint *FirewallEndpoint) *OrganizationsLocationsFirewallEndpointsCreateCall {
@@ -6652,7 +6652,7 @@ type OrganizationsLocationsFirewallEndpointsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single Endpoint.
+// Delete: Deletes a single org Endpoint.
 //
 // - name: Name of the resource.
 func (r *OrganizationsLocationsFirewallEndpointsService) Delete(name string) *OrganizationsLocationsFirewallEndpointsDeleteCall {
@@ -6766,7 +6766,7 @@ type OrganizationsLocationsFirewallEndpointsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single Endpoint.
+// Get: Gets details of a single org Endpoint.
 //
 // - name: Name of the resource.
 func (r *OrganizationsLocationsFirewallEndpointsService) Get(name string) *OrganizationsLocationsFirewallEndpointsGetCall {
@@ -6876,7 +6876,7 @@ type OrganizationsLocationsFirewallEndpointsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists FirewallEndpoints in a given project and location.
+// List: Lists FirewallEndpoints in a given organization and location.
 //
 // - parent: Parent value for ListEndpointsRequest.
 func (r *OrganizationsLocationsFirewallEndpointsService) List(parent string) *OrganizationsLocationsFirewallEndpointsListCall {
@@ -7035,7 +7035,7 @@ type OrganizationsLocationsFirewallEndpointsPatchCall struct {
 	header_          http.Header
 }
 
-// Patch: Update a single Endpoint.
+// Patch: Update a single org Endpoint.
 //
 // - name: Immutable. Identifier. Name of resource.
 func (r *OrganizationsLocationsFirewallEndpointsService) Patch(name string, firewallendpoint *FirewallEndpoint) *OrganizationsLocationsFirewallEndpointsPatchCall {
@@ -15384,7 +15384,7 @@ type ProjectsLocationsFirewallEndpointsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single Endpoint.
+// Delete: Deletes a single project Endpoint.
 //
 // - name: Name of the resource.
 func (r *ProjectsLocationsFirewallEndpointsService) Delete(name string) *ProjectsLocationsFirewallEndpointsDeleteCall {
@@ -15498,7 +15498,7 @@ type ProjectsLocationsFirewallEndpointsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single Endpoint.
+// Get: Gets details of a single project Endpoint.
 //
 // - name: Name of the resource.
 func (r *ProjectsLocationsFirewallEndpointsService) Get(name string) *ProjectsLocationsFirewallEndpointsGetCall {
@@ -15767,7 +15767,7 @@ type ProjectsLocationsFirewallEndpointsPatchCall struct {
 	header_          http.Header
 }
 
-// Patch: Update a single Endpoint.
+// Patch: Update a single project Endpoint.
 //
 // - name: Immutable. Identifier. Name of resource.
 func (r *ProjectsLocationsFirewallEndpointsService) Patch(name string, firewallendpoint *FirewallEndpoint) *ProjectsLocationsFirewallEndpointsPatchCall {

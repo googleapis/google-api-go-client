@@ -1015,6 +1015,15 @@ type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 	// to Maintenance Window notifications
 	// (go/slm-rollout-maintenance-policies#prerequisites).
 	ConsumerDefinedName string `json:"consumerDefinedName,omitempty"`
+	// ConsumerProjectNumber: Optional. The consumer_project_number associated with
+	// this Apigee instance. This field is added specifically to support Apigee
+	// integration with SLM Rollout and UMM. It represents the numerical project ID
+	// of the GCP project that consumes this Apigee instance. It is used for SLM
+	// rollout notifications and UMM integration, enabling proper mapping to
+	// customer projects and log delivery for Apigee instances. This field
+	// complements consumer_project_id and may be used for specific Apigee
+	// scenarios where the numerical ID is required.
+	ConsumerProjectNumber string `json:"consumerProjectNumber,omitempty"`
 	// CreateTime: Output only. Timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// InstanceType: Optional. The instance_type of this instance of format:
@@ -1527,6 +1536,11 @@ type ListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*Operation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2587,12 +2601,24 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
+func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
+	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
 }
 
@@ -6634,6 +6660,19 @@ func (c *ProjectsLocationsGlobalOperationsListCall) PageSize(pageSize int64) *Pr
 // token.
 func (c *ProjectsLocationsGlobalOperationsListCall) PageToken(pageToken string) *ProjectsLocationsGlobalOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsGlobalOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsGlobalOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

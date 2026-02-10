@@ -3343,6 +3343,56 @@ func (s FieldComparison) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GenerateConnectionToolspecOverrideRequest: Request message for
+// GenerateConnectionToolspecOverride API.
+type GenerateConnectionToolspecOverrideRequest struct {
+	// ToolNames: Required. List of tools for which the tool spec override is to be
+	// generated.
+	ToolNames []*ToolName `json:"toolNames,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ToolNames") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ToolNames") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateConnectionToolspecOverrideRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateConnectionToolspecOverrideRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenerateConnectionToolspecOverrideResponse: Response message for
+// GenerateConnectionToolspecOverride API.
+type GenerateConnectionToolspecOverrideResponse struct {
+	// ToolspecOverride: Toolspec overrides for the connection.
+	ToolspecOverride *ToolspecOverride `json:"toolspecOverride,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ToolspecOverride") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ToolspecOverride") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateConnectionToolspecOverrideResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateConnectionToolspecOverrideResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // HPAConfig: Autoscaling config for connector deployment system metrics.
 type HPAConfig struct {
 	// CpuUtilizationThreshold: Output only. Percent CPU utilization where HPA
@@ -4615,6 +4665,55 @@ func (s MarketplaceConnectorDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ModifyConnectionToolspecOverrideRequest: Request message for
+// ModifyConnectionToolspecOverride API.
+type ModifyConnectionToolspecOverrideRequest struct {
+	// ToolspecOverride: Required. Toolspec overrides to be modified.
+	ToolspecOverride *ToolspecOverride `json:"toolspecOverride,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ToolspecOverride") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ToolspecOverride") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ModifyConnectionToolspecOverrideRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ModifyConnectionToolspecOverrideRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ModifyConnectionToolspecOverrideResponse: Response message for
+// ModifyConnectionToolspecOverride API.
+type ModifyConnectionToolspecOverrideResponse struct {
+	// ToolspecOverrides: Toolspec overrides for the connection.
+	ToolspecOverrides *ToolspecOverride `json:"toolspecOverrides,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ToolspecOverrides") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ToolspecOverrides") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ModifyConnectionToolspecOverrideResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ModifyConnectionToolspecOverrideResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // MultipleSelectConfig: MultipleSelectConfig represents the multiple options
 // for a config variable.
 type MultipleSelectConfig struct {
@@ -5464,6 +5563,11 @@ type RegionalSettings struct {
 func (s RegionalSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionalSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RemoveConnectionToolspecOverrideRequest: Request message for
+// RemoveConnectionToolspecOverride API.
+type RemoveConnectionToolspecOverrideRequest struct {
 }
 
 // RepairEventingRequest: Request message for ConnectorsService.RepairEventing
@@ -6446,6 +6550,69 @@ func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ToolName: Tool name for which the tool spec override is to be generated.
+type ToolName struct {
+	// EntityType: Optional. Entity type name for which the tool was generated.
+	EntityType string `json:"entityType,omitempty"`
+	// Name: Required. Tool name that was generated in the list tools call.
+	Name string `json:"name,omitempty"`
+	// Operation: Optional. Operation for which the tool was generated.
+	//
+	// Possible values:
+	//   "OPERATION_UNSPECIFIED" - Operation unspecified.
+	//   "LIST" - LIST entities.
+	//   "GET" - GET entity.
+	//   "CREATE" - CREATE entity.
+	//   "UPDATE" - UPDATE entity.
+	//   "DELETE" - DELETE entity.
+	Operation string `json:"operation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EntityType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EntityType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ToolName) MarshalJSON() ([]byte, error) {
+	type NoMethod ToolName
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ToolspecOverride: Toolspec overrides for a connection only holds the
+// information that is to be displayed in the UI for admins.
+type ToolspecOverride struct {
+	// CreateTime: Output only. Created time.
+	CreateTime string `json:"createTime,omitempty"`
+	// Tools: Required. List of tools defined in the tool spec. Marking this field
+	// as required as this is the only field that is editable by the user in modify
+	// API so we should have at least one tool in the list.
+	Tools []googleapi.RawMessage `json:"tools,omitempty"`
+	// UpdateTime: Output only. Updated time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ToolspecOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod ToolspecOverride
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TrafficShapingConfig: * TrafficShapingConfig defines the configuration for
 // shaping API traffic by specifying a quota limit and the duration over which
 // this limit is enforced. This configuration helps to control and manage the
@@ -7069,7 +7236,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
@@ -7549,6 +7720,113 @@ func (c *ProjectsLocationsConnectionsDeleteCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectionsGenerateToolspecOverrideCall struct {
+	s                                         *Service
+	name                                      string
+	generateconnectiontoolspecoverriderequest *GenerateConnectionToolspecOverrideRequest
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// GenerateToolspecOverride: Generates Toolspec Override for a connection for
+// the given list of entityTypes and operations. Returns results from the db if
+// the entityType and operation are already present.
+//
+//   - name: Resource name format:
+//     projects/{project}/locations/{location}/connections/{connection}.
+func (r *ProjectsLocationsConnectionsService) GenerateToolspecOverride(name string, generateconnectiontoolspecoverriderequest *GenerateConnectionToolspecOverrideRequest) *ProjectsLocationsConnectionsGenerateToolspecOverrideCall {
+	c := &ProjectsLocationsConnectionsGenerateToolspecOverrideCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.generateconnectiontoolspecoverriderequest = generateconnectiontoolspecoverriderequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsGenerateToolspecOverrideCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsGenerateToolspecOverrideCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsGenerateToolspecOverrideCall) Context(ctx context.Context) *ProjectsLocationsConnectionsGenerateToolspecOverrideCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsGenerateToolspecOverrideCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsGenerateToolspecOverrideCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.generateconnectiontoolspecoverriderequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:generateToolspecOverride")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.generateToolspecOverride", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.generateToolspecOverride" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenerateConnectionToolspecOverrideResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsGenerateToolspecOverrideCall) Do(opts ...googleapi.CallOption) (*GenerateConnectionToolspecOverrideResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenerateConnectionToolspecOverrideResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.generateToolspecOverride", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8189,6 +8467,112 @@ func (c *ProjectsLocationsConnectionsListenEventCall) Do(opts ...googleapi.CallO
 	return ret, nil
 }
 
+type ProjectsLocationsConnectionsModifyToolspecOverrideCall struct {
+	s                                       *Service
+	name                                    string
+	modifyconnectiontoolspecoverriderequest *ModifyConnectionToolspecOverrideRequest
+	urlParams_                              gensupport.URLParams
+	ctx_                                    context.Context
+	header_                                 http.Header
+}
+
+// ModifyToolspecOverride: Updates Toolspec Override for a connection with the
+// admin provided descriptions.
+//
+//   - name: Resource name format:
+//     projects/{project}/locations/{location}/connections/{connection}.
+func (r *ProjectsLocationsConnectionsService) ModifyToolspecOverride(name string, modifyconnectiontoolspecoverriderequest *ModifyConnectionToolspecOverrideRequest) *ProjectsLocationsConnectionsModifyToolspecOverrideCall {
+	c := &ProjectsLocationsConnectionsModifyToolspecOverrideCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.modifyconnectiontoolspecoverriderequest = modifyconnectiontoolspecoverriderequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsModifyToolspecOverrideCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsModifyToolspecOverrideCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsModifyToolspecOverrideCall) Context(ctx context.Context) *ProjectsLocationsConnectionsModifyToolspecOverrideCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsModifyToolspecOverrideCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsModifyToolspecOverrideCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.modifyconnectiontoolspecoverriderequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:modifyToolspecOverride")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.modifyToolspecOverride", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.modifyToolspecOverride" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ModifyConnectionToolspecOverrideResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsModifyToolspecOverrideCall) Do(opts ...googleapi.CallOption) (*ModifyConnectionToolspecOverrideResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ModifyConnectionToolspecOverrideResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.modifyToolspecOverride", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsConnectionsPatchCall struct {
 	s          *Service
 	name       string
@@ -8305,6 +8689,110 @@ func (c *ProjectsLocationsConnectionsPatchCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectionsRemoveToolspecOverrideCall struct {
+	s                                       *Service
+	name                                    string
+	removeconnectiontoolspecoverriderequest *RemoveConnectionToolspecOverrideRequest
+	urlParams_                              gensupport.URLParams
+	ctx_                                    context.Context
+	header_                                 http.Header
+}
+
+// RemoveToolspecOverride: Deletes all Toolspec Override for a connection.
+//
+//   - name: Resource name format:
+//     projects/{project}/locations/{location}/connections/{connection}.
+func (r *ProjectsLocationsConnectionsService) RemoveToolspecOverride(name string, removeconnectiontoolspecoverriderequest *RemoveConnectionToolspecOverrideRequest) *ProjectsLocationsConnectionsRemoveToolspecOverrideCall {
+	c := &ProjectsLocationsConnectionsRemoveToolspecOverrideCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.removeconnectiontoolspecoverriderequest = removeconnectiontoolspecoverriderequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsRemoveToolspecOverrideCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsRemoveToolspecOverrideCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsRemoveToolspecOverrideCall) Context(ctx context.Context) *ProjectsLocationsConnectionsRemoveToolspecOverrideCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsRemoveToolspecOverrideCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsRemoveToolspecOverrideCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.removeconnectiontoolspecoverriderequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:removeToolspecOverride")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.removeToolspecOverride", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.removeToolspecOverride" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsRemoveToolspecOverrideCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.removeToolspecOverride", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

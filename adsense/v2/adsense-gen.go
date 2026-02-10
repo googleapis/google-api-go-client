@@ -4921,6 +4921,35 @@ func (c *AccountsReportsGenerateCall) DateRange(dateRange string) *AccountsRepor
 //	"CUSTOM_SEARCH_STYLE_ID" - Custom search style id.
 //	"DOMAIN_REGISTRANT" - Domain registrants.
 //	"WEBSEARCH_QUERY_STRING" - Query strings for web searches.
+//	"OS_TYPE_NAME" - Localized operating system type name (e.g. "Windows",
+//
+// "MacOS", "Android"). For more information, see [Operating system
+// breakdown](https://support.google.com/adsense/answer/16853822).
+//
+//	"OS_TYPE_CODE" - Operating system type code (e.g. "WINDOWS", "MAC",
+//
+// "ANDROID"). For more information, see [Operating system
+// breakdown](https://support.google.com/adsense/answer/16853822).
+//
+//	"BROWSER_TYPE_NAME" - Localized browser type name (e.g. "Google Chrome",
+//
+// "Firefox", "Safari"). For more information, see [Browser
+// breakdown](https://support.google.com/adsense/answer/16851903).
+//
+//	"BROWSER_TYPE_CODE" - Browser type code (e.g. "CHROME", "FIREFOX",
+//
+// "SAFARI"). For more information, see [Browser
+// breakdown](https://support.google.com/adsense/answer/16851903).
+//
+//	"WEBVIEW_TYPE_NAME" - Localized webview type name (e.g. "Webview
+//
+// (Uncategorized)", "Non-webview"). For more information, see [Hosting App
+// breakdown](https://support.google.com/adsense/answer/16853515).
+//
+//	"WEBVIEW_TYPE_CODE" - Webview type code (e.g. "UNCATEGORIZED", "NONE").
+//
+// For more information, see [Hosting App
+// breakdown](https://support.google.com/adsense/answer/16853515).
 func (c *AccountsReportsGenerateCall) Dimensions(dimensions ...string) *AccountsReportsGenerateCall {
 	c.urlParams_.SetMulti("dimensions", append([]string{}, dimensions...))
 	return c
@@ -5533,6 +5562,35 @@ func (c *AccountsReportsGenerateCsvCall) DateRange(dateRange string) *AccountsRe
 //	"CUSTOM_SEARCH_STYLE_ID" - Custom search style id.
 //	"DOMAIN_REGISTRANT" - Domain registrants.
 //	"WEBSEARCH_QUERY_STRING" - Query strings for web searches.
+//	"OS_TYPE_NAME" - Localized operating system type name (e.g. "Windows",
+//
+// "MacOS", "Android"). For more information, see [Operating system
+// breakdown](https://support.google.com/adsense/answer/16853822).
+//
+//	"OS_TYPE_CODE" - Operating system type code (e.g. "WINDOWS", "MAC",
+//
+// "ANDROID"). For more information, see [Operating system
+// breakdown](https://support.google.com/adsense/answer/16853822).
+//
+//	"BROWSER_TYPE_NAME" - Localized browser type name (e.g. "Google Chrome",
+//
+// "Firefox", "Safari"). For more information, see [Browser
+// breakdown](https://support.google.com/adsense/answer/16851903).
+//
+//	"BROWSER_TYPE_CODE" - Browser type code (e.g. "CHROME", "FIREFOX",
+//
+// "SAFARI"). For more information, see [Browser
+// breakdown](https://support.google.com/adsense/answer/16851903).
+//
+//	"WEBVIEW_TYPE_NAME" - Localized webview type name (e.g. "Webview
+//
+// (Uncategorized)", "Non-webview"). For more information, see [Hosting App
+// breakdown](https://support.google.com/adsense/answer/16853515).
+//
+//	"WEBVIEW_TYPE_CODE" - Webview type code (e.g. "UNCATEGORIZED", "NONE").
+//
+// For more information, see [Hosting App
+// breakdown](https://support.google.com/adsense/answer/16853515).
 func (c *AccountsReportsGenerateCsvCall) Dimensions(dimensions ...string) *AccountsReportsGenerateCsvCall {
 	c.urlParams_.SetMulti("dimensions", append([]string{}, dimensions...))
 	return c

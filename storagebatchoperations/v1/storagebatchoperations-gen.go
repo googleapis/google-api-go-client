@@ -590,6 +590,10 @@ type Job struct {
 	// ErrorSummaries: Output only. Summarizes errors encountered with sample error
 	// log entries.
 	ErrorSummaries []*ErrorSummary `json:"errorSummaries,omitempty"`
+	// IsMultiBucketJob: Output only. If true, this Job operates on multiple
+	// buckets. Multibucket jobs are subject to different quota limits than
+	// single-bucket jobs.
+	IsMultiBucketJob bool `json:"isMultiBucketJob,omitempty"`
 	// LoggingConfig: Optional. Logging configuration.
 	LoggingConfig *LoggingConfig `json:"loggingConfig,omitempty"`
 	// Name: Identifier. The resource name of the Job. job_id is unique within the
@@ -615,6 +619,7 @@ type Job struct {
 	//   "SUCCEEDED" - Completed successfully.
 	//   "CANCELED" - Cancelled by the user.
 	//   "FAILED" - Terminated due to an unrecoverable failure.
+	//   "QUEUED" - Queued but not yet started.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

@@ -1383,6 +1383,12 @@ type GoogleMapsPlacesV1Place struct {
 	GoodForWatchingSports bool `json:"goodForWatchingSports,omitempty"`
 	// GoogleMapsLinks: Links to trigger different Google Maps actions.
 	GoogleMapsLinks *GoogleMapsPlacesV1PlaceGoogleMapsLinks `json:"googleMapsLinks,omitempty"`
+	// GoogleMapsTypeLabel: The type label of the place on Google Maps, localized
+	// to the request language if applicable, for example, "Restaurant", "Cafe",
+	// "Airport", etc. The type label may be different from the primary type
+	// display name and may not be a supported type in Places API Place Types table
+	// (https://developers.google.com/maps/documentation/places/web-service/place-types).
+	GoogleMapsTypeLabel *GoogleTypeLocalizedText `json:"googleMapsTypeLabel,omitempty"`
 	// GoogleMapsUri: A URL providing more information about this place.
 	GoogleMapsUri string `json:"googleMapsUri,omitempty"`
 	// IconBackgroundColor: Background color for icon_mask in hex format, e.g.

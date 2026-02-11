@@ -1589,8 +1589,8 @@ type CreateAndConfigureAccountRequest struct {
 	// such service needs to be provided. Currently exactly one of these needs to
 	// be `account_aggregation` and `accounts.createAndConfigure` method can be
 	// used to create a sub-account under an existing advanced account through this
-	// method. Additional `account_management` or `product_management` services may
-	// be provided.
+	// method. Additional `account_management` or `products_management` services
+	// may be provided.
 	Service []*AddAccountService `json:"service,omitempty"`
 	// SetAlias: Optional. If a relationship is created with a provider, you can
 	// set an alias for it with this field. The calling user must be an admin on

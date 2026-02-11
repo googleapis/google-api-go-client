@@ -566,6 +566,39 @@ func (s Date) MarshalJSON() ([]byte, error) {
 type DetachFunctionRequest struct {
 }
 
+// DirectVpcNetworkInterface: The Direct VPC network interface. This is
+// mutually exclusive with VPC Connector.
+type DirectVpcNetworkInterface struct {
+	// Network: Optional. The name of the VPC network to which the function will be
+	// connected. Specify either a VPC network or a subnet, or both. If you specify
+	// only a network, the subnet uses the same name as the network.
+	Network string `json:"network,omitempty"`
+	// Subnetwork: Optional. The name of the VPC subnetwork that the Cloud Function
+	// resource will get IPs from. Specify either a VPC network or a subnet, or
+	// both. If both network and subnetwork are specified, the given VPC subnetwork
+	// must belong to the given VPC network. If subnetwork is not specified, the
+	// subnetwork with the same name with the network will be used.
+	Subnetwork string `json:"subnetwork,omitempty"`
+	// Tags: Optional. Network tags applied to this Cloud Function resource.
+	Tags []string `json:"tags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Network") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Network") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DirectVpcNetworkInterface) MarshalJSON() ([]byte, error) {
+	type NoMethod DirectVpcNetworkInterface
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // EventFilter: Filters events based on exact matches on the CloudEvents
 // attributes.
 type EventFilter struct {
@@ -1660,6 +1693,19 @@ type ServiceConfig struct {
 	// BinaryAuthorizationPolicy: Optional. The binary authorization policy to be
 	// checked when deploying the Cloud Run service.
 	BinaryAuthorizationPolicy string `json:"binaryAuthorizationPolicy,omitempty"`
+	// DirectVpcEgress: Optional. Egress settings for direct VPC. If not provided,
+	// it defaults to VPC_EGRESS_PRIVATE_RANGES_ONLY.
+	//
+	// Possible values:
+	//   "DIRECT_VPC_EGRESS_UNSPECIFIED" - Unspecified.
+	//   "VPC_EGRESS_PRIVATE_RANGES_ONLY" - Sends only traffic to internal
+	// addresses through the VPC network.
+	//   "VPC_EGRESS_ALL_TRAFFIC" - Sends all outbound traffic through the VPC
+	// network.
+	DirectVpcEgress string `json:"directVpcEgress,omitempty"`
+	// DirectVpcNetworkInterface: Optional. The Direct VPC network interface for
+	// the Cloud Function. Currently only a single Direct VPC is supported.
+	DirectVpcNetworkInterface []*DirectVpcNetworkInterface `json:"directVpcNetworkInterface,omitempty"`
 	// EnvironmentVariables: Environment variables that shall be available during
 	// function execution.
 	EnvironmentVariables map[string]string `json:"environmentVariables,omitempty"`

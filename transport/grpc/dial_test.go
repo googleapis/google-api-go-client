@@ -348,8 +348,7 @@ func TestIsDirectPathEnabled(t *testing.T) {
 }
 func TestIsAuthCompatible_Direct(t *testing.T) {
 	ctx := context.Background()
-
-	// Create a token that looks like it came from the GCE Metadata Server
+	// A token that satisfies the GCE Metadata requirement
 	gceToken := (&oauth2.Token{
 		AccessToken: "fake-access-token",
 	}).WithExtra(map[string]interface{}{
@@ -380,7 +379,7 @@ func TestIsAuthCompatible_Direct(t *testing.T) {
 			name: "GCE Token - Compatible",
 			ds: &internal.DialSettings{
 				// Providing TokenSource here prevents internal.Creds
-				// from looking for real files on your Cloudtop.
+				// from looking for real files.
 				TokenSource: &mockTokenSource{token: gceToken},
 			},
 			want: true,
@@ -410,7 +409,6 @@ func TestIsAuthCompatible_Direct(t *testing.T) {
 	}
 }
 
-// Helper mock for the test
 type mockTokenSource struct {
 	token *oauth2.Token
 }

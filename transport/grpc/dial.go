@@ -548,3 +548,74 @@ func WithConnPool(p ConnPool) option.ClientOption {
 func (o connPoolOption) Apply(s *internal.DialSettings) {
 	s.GRPCConnPool = o.ConnPool
 }
+
+// DirectPathStatus encapsulates the logic to determine why DirectPath
+// is not being used.
+type DirectPathStatus struct {
+	// These fields isolate the string values from the global namespace.
+	Enabled           string
+	UserOptedOut      string
+	NotOnGCE          string
+	IncompatibleCreds string
+	onGCE             func() bool
+}
+
+// NewDirectPathDetector initializes a detector with the specific strings
+// required for server-side metrics.
+func NewDirectPathStatus() *DirectPathStatus {
+	return &DirectPathStatus{
+		Enabled:           "enabled",
+		UserOptedOut:      "user_opted_out",
+		NotOnGCE:          "not_on_gce",
+		IncompatibleCreds: "incompatible_creds",
+		onGCE:             metadata.OnGCE,
+	}
+}
+
+// CheckWithReason evaluates the current environment and options to return the
+// highest priority reason for fallback.
+func (d *DirectPathStatus) CheckWithReason(ctx context.Context, opts ...option.ClientOption) string {
+	o, err := processAndValidateOpts(opts)
+	if err != nil {
+		return d.UserOptedOut
+	}
+	// Check if user provided a custom connection or pool
+	if o.GRPCConn != nil || o.GRPCConnPool != nil || o.HTTPClient != nil {
+		return d.UserOptedOut
+	}
+	_, endpoint, err := internal.GetGRPCTransportConfigAndEndpoint(o)
+	if err != nil {
+		return d.UserOptedOut
+	}
+	// DirectPath not attempted via xDS
+	if !isDirectPathXdsUsed(o) {
+		return d.UserOptedOut
+	}
+	// DirectPath disabled by option or environment.
+	if !isDirectPathEnabled(endpoint, o) {
+		return d.UserOptedOut
+	}
+	if !d.onGCE() {
+		return d.NotOnGCE
+	}
+	// Credential is not compatible.
+	if !d.isAuthCompatible(ctx, o) {
+		return d.IncompatibleCreds
+	}
+	return d.Enabled
+}
+
+func (d *DirectPathStatus) isAuthCompatible(ctx context.Context, o *internal.DialSettings) bool {
+	// API Keys and NoAuth are not supported for DirectPath[cite: 8].
+	if o.NoAuth || o.APIKey != "" {
+		return false
+	}
+
+	creds, err := internal.Creds(ctx, o)
+	if err != nil || creds.TokenSource == nil {
+		return false
+	}
+
+	// Verify the token source is from the GCE Metadata Server.
+	return isTokenSourceDirectPathCompatible(creds.TokenSource, o)
+}

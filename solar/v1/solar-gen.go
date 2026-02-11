@@ -373,7 +373,8 @@ type DataLayers struct {
 	// by this URL will contain twelve bands, corresponding to January...December,
 	// in order.
 	MonthlyFluxUrl string `json:"monthlyFluxUrl,omitempty"`
-	// RgbUrl: The URL for an image of RGB data (aerial photo) of the region.
+	// RgbUrl: The URL for an image of RGB data (aerial or satellite photo) of the
+	// region.
 	RgbUrl string `json:"rgbUrl,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

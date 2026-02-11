@@ -930,6 +930,52 @@ func (s Field) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type GenerateCustomToolspecRequest struct {
+	// ToolNames: list of tools to be generated.
+	ToolNames []*ToolName `json:"toolNames,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ToolNames") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ToolNames") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateCustomToolspecRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateCustomToolspecRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenerateCustomToolspecResponse struct {
+	// ToolSpec: tool spec that has tool_defitions array containing the tools for
+	// all sted tool_names.
+	ToolSpec *ToolSpec `json:"toolSpec,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ToolSpec") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ToolSpec") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateCustomToolspecResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateCustomToolspecResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GetResourcePostRequest: Request message for
 // ConnectorAgentService.GetResourcePost
 type GetResourcePostRequest struct {
@@ -1320,6 +1366,30 @@ type ListActionsResponse struct {
 
 func (s ListActionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListActionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type ListCustomToolNamesResponse struct {
+	// ToolNames: List of custom tools.
+	ToolNames []*ToolName `json:"toolNames,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ToolNames") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ToolNames") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListCustomToolNamesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListCustomToolNamesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2253,6 +2323,39 @@ func (s ToolAnnotations) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type ToolName struct {
+	// EntityName: Entity name for which the tool was generated.
+	EntityName string `json:"entityName,omitempty"`
+	// Name: Tool name that was generated in the list tools call.
+	Name string `json:"name,omitempty"`
+	// Operation: Operation for which the tool was generated.
+	//
+	// Possible values:
+	//   "OPERATION_UNSPECIFIED" - Operation unspecified.
+	//   "LIST" - LIST entities.
+	//   "GET" - GET entity.
+	//   "CREATE" - CREATE entity.
+	//   "UPDATE" - UPDATE entity.
+	//   "DELETE" - DELETE entity.
+	Operation string `json:"operation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EntityName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EntityName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ToolName) MarshalJSON() ([]byte, error) {
+	type NoMethod ToolName
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type ToolSpec struct {
 	// ToolDefinitions: List of tool definitions.
 	ToolDefinitions []googleapi.RawMessage `json:"toolDefinitions,omitempty"`
@@ -2819,6 +2922,223 @@ func (c *ProjectsLocationsConnectionsExecuteSqlQueryCall) Do(opts ...googleapi.C
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.executeSqlQuery", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectionsGenerateConnectionToolspecOverrideCall struct {
+	s                             *Service
+	name                          string
+	generatecustomtoolspecrequest *GenerateCustomToolspecRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// GenerateConnectionToolspecOverride: Generate toolspec override for the given
+// list of toolNames.
+//
+//   - name: Resource name of the Connection. Format:
+//     projects/{project}/locations/{location}/connections/{connection}.
+func (r *ProjectsLocationsConnectionsService) GenerateConnectionToolspecOverride(name string, generatecustomtoolspecrequest *GenerateCustomToolspecRequest) *ProjectsLocationsConnectionsGenerateConnectionToolspecOverrideCall {
+	c := &ProjectsLocationsConnectionsGenerateConnectionToolspecOverrideCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.generatecustomtoolspecrequest = generatecustomtoolspecrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsGenerateConnectionToolspecOverrideCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsGenerateConnectionToolspecOverrideCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsGenerateConnectionToolspecOverrideCall) Context(ctx context.Context) *ProjectsLocationsConnectionsGenerateConnectionToolspecOverrideCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsGenerateConnectionToolspecOverrideCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsGenerateConnectionToolspecOverrideCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.generatecustomtoolspecrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:generateConnectionToolspecOverride")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.generateConnectionToolspecOverride", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.generateConnectionToolspecOverride" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenerateCustomToolspecResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsGenerateConnectionToolspecOverrideCall) Do(opts ...googleapi.CallOption) (*GenerateCustomToolspecResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenerateCustomToolspecResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.generateConnectionToolspecOverride", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectionsListCustomToolNamesCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListCustomToolNames: Lists custom tool names.
+//
+//   - name: Resource name of the Connection. Format:
+//     projects/{project}/locations/{location}/connections/{connection}.
+func (r *ProjectsLocationsConnectionsService) ListCustomToolNames(name string) *ProjectsLocationsConnectionsListCustomToolNamesCall {
+	c := &ProjectsLocationsConnectionsListCustomToolNamesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsListCustomToolNamesCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsListCustomToolNamesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsConnectionsListCustomToolNamesCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsListCustomToolNamesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsListCustomToolNamesCall) Context(ctx context.Context) *ProjectsLocationsConnectionsListCustomToolNamesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsListCustomToolNamesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsListCustomToolNamesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:listCustomToolNames")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.listCustomToolNames", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.listCustomToolNames" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListCustomToolNamesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsListCustomToolNamesCall) Do(opts ...googleapi.CallOption) (*ListCustomToolNamesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListCustomToolNamesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.listCustomToolNames", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

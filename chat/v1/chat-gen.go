@@ -2771,17 +2771,21 @@ func (s GoogleAppsCardV1Condition) MarshalJSON() ([]byte, error) {
 // configure the data sources for a widget. Available for Google Chat apps and
 // Google Workspace add-ons that extend Google Workspace Studio.
 type GoogleAppsCardV1DataSourceConfig struct {
+	// MinCharactersTrigger: The minimum number of characters the user must enter
+	// before this data provider is triggered (i.e., before it starts returning
+	// results).
+	MinCharactersTrigger int64 `json:"minCharactersTrigger,omitempty"`
 	// PlatformDataSource: The data is from a Google Workspace application.
 	PlatformDataSource *GoogleAppsCardV1PlatformDataSource `json:"platformDataSource,omitempty"`
 	// RemoteDataSource: The data is from a remote data provider.
 	RemoteDataSource *GoogleAppsCardV1Action `json:"remoteDataSource,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "PlatformDataSource") to
+	// ForceSendFields is a list of field names (e.g. "MinCharactersTrigger") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PlatformDataSource") to include
+	// NullFields is a list of field names (e.g. "MinCharactersTrigger") to include
 	// in API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3636,10 +3640,9 @@ type GoogleAppsCardV1SelectionInput struct {
 	// `multi_select_min_query_length` field, `external_data_source` field and
 	// `platform_data_source` field are ignored. Available for Google Workspace
 	// add-ons that extend Google Workspace Studio. Available for the `Dropdown
-	// widget` in Google Chat apps as part of the Developer Preview Program
-	// (https://developers.google.com/workspace/preview). For the `Dropdown` widget
-	// in Google Chat apps, only one `DataSourceConfig` is supported. If multiple
-	// `DataSourceConfig`s are set, only the first one is used.
+	// widget` in Google Chat apps. For the `Dropdown` widget in Google Chat apps,
+	// only one `DataSourceConfig` is supported. If multiple `DataSourceConfig`s
+	// are set, only the first one is used.
 	DataSourceConfigs []*GoogleAppsCardV1DataSourceConfig `json:"dataSourceConfigs,omitempty"`
 	// ExternalDataSource: An external data source, such as a relational database.
 	ExternalDataSource *GoogleAppsCardV1Action `json:"externalDataSource,omitempty"`
@@ -3691,17 +3694,15 @@ type GoogleAppsCardV1SelectionInput struct {
 	// button.
 	//   "SWITCH" - A set of switches. Users can turn on one or more switches.
 	//   "DROPDOWN" - A dropdown menu. Users can select one item from the menu. For
-	// Google Chat apps, as part of the [Developer Preview
-	// Program](https://developers.google.com/workspace/preview), you can populate
-	// items using a dynamic data source and autosuggest items as users type in the
-	// menu. For example, users can start typing the name of a Google Chat space
-	// and the widget autosuggests the space. To dynamically populate items for a
-	// dropdown menu, use one of the following types of data sources: * Google
-	// Workspace data: Items are populated using data from Google Workspace, such
-	// as Google Workspace users or Google Chat spaces. * External data: Items are
-	// populated from an external data source outside of Google Workspace. For
-	// examples of how to implement dropdown menus for Chat apps, see [Add a
-	// dropdown
+	// Google Chat apps, you can populate items using a dynamic data source and
+	// autosuggest items as users type in the menu. For example, users can start
+	// typing the name of a Google Chat space and the widget autosuggests the
+	// space. To dynamically populate items for a dropdown menu, use one of the
+	// following types of data sources: * Google Workspace data: Items are
+	// populated using data from Google Workspace, such as Google Workspace users
+	// or Google Chat spaces. * External data: Items are populated from an external
+	// data source outside of Google Workspace. For examples of how to implement
+	// dropdown menus for Chat apps, see [Add a dropdown
 	// menu](https://developers.google.com/workspace/chat/design-interactive-card-di
 	// alog#dropdown-menu) and [Dynamically populate drop-down
 	// menus](https://developers.google.com/workspace/chat/design-interactive-card-d

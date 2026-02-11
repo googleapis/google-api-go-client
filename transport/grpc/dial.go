@@ -552,7 +552,6 @@ func (o connPoolOption) Apply(s *internal.DialSettings) {
 // DirectPathStatus encapsulates the logic to determine why DirectPath
 // is not being used.
 type DirectPathStatus struct {
-	// These fields isolate the string values from the global namespace.
 	Enabled           string
 	UserOptedOut      string
 	NotOnGCE          string
@@ -560,8 +559,7 @@ type DirectPathStatus struct {
 	onGCE             func() bool
 }
 
-// NewDirectPathDetector initializes a detector with the specific strings
-// required for server-side metrics.
+// NewDirectPathStatus creates a new DirectPathStatus with reason strings initialized.
 func NewDirectPathStatus() *DirectPathStatus {
 	return &DirectPathStatus{
 		Enabled:           "enabled",
@@ -579,7 +577,7 @@ func (d *DirectPathStatus) CheckWithReason(ctx context.Context, opts ...option.C
 	if err != nil {
 		return d.UserOptedOut
 	}
-	// Check if user provided a custom connection or pool
+	// Check if user provided a custom connection or pool.
 	if o.GRPCConn != nil || o.GRPCConnPool != nil || o.HTTPClient != nil {
 		return d.UserOptedOut
 	}
@@ -587,7 +585,7 @@ func (d *DirectPathStatus) CheckWithReason(ctx context.Context, opts ...option.C
 	if err != nil {
 		return d.UserOptedOut
 	}
-	// DirectPath not attempted via xDS
+	// DirectPath not attempted via xDS.
 	if !isDirectPathXdsUsed(o) {
 		return d.UserOptedOut
 	}
@@ -606,7 +604,6 @@ func (d *DirectPathStatus) CheckWithReason(ctx context.Context, opts ...option.C
 }
 
 func (d *DirectPathStatus) isAuthCompatible(ctx context.Context, o *internal.DialSettings) bool {
-	// API Keys and NoAuth are not supported for DirectPath[cite: 8].
 	if o.NoAuth || o.APIKey != "" {
 		return false
 	}

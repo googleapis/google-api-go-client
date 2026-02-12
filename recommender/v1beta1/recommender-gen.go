@@ -585,10 +585,6 @@ type GoogleCloudRecommenderV1beta1Impact struct {
 	Category string `json:"category,omitempty"`
 	// CostProjection: Use with CategoryType.COST
 	CostProjection *GoogleCloudRecommenderV1beta1CostProjection `json:"costProjection,omitempty"`
-	// ImpactComponents: If populated, the impact contains multiple components. In
-	// this case, the top-level impact contains aggregated values and each
-	// component contains per-service details.
-	ImpactComponents []*GoogleCloudRecommenderV1beta1Impact `json:"impactComponents,omitempty"`
 	// ReliabilityProjection: Use with CategoryType.RELIABILITY
 	ReliabilityProjection *GoogleCloudRecommenderV1beta1ReliabilityProjection `json:"reliabilityProjection,omitempty"`
 	// SecurityProjection: Use with CategoryType.SECURITY

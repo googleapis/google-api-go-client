@@ -961,6 +961,18 @@ func (s OAuth2) MarshalJSON() ([]byte, error) {
 // OAuthSettings: Configuration for OAuth login&consent flow behavior as well
 // as for OAuth Credentials.
 type OAuthSettings struct {
+	// ClientId: Optional. OAuth 2.0 client ID used in the OAuth flow to generate
+	// an access token. If this field is set, you can skip obtaining the OAuth
+	// credentials in this step:
+	// https://developers.google.com/identity/protocols/OAuth2?hl=en_US#1.-obtain-oauth-2.0-credentials-from-the-google-api-console.
+	// However, this could allow for client sharing. The risks of client sharing
+	// are outlined here:
+	// https://cloud.google.com/iap/docs/sharing-oauth-clients#risks.
+	ClientId string `json:"clientId,omitempty"`
+	// ClientSecret: Optional. Input only. OAuth secret paired with client ID
+	ClientSecret string `json:"clientSecret,omitempty"`
+	// ClientSecretSha256: Output only. OAuth secret sha256 paired with client ID
+	ClientSecretSha256 string `json:"clientSecretSha256,omitempty"`
 	// LoginHint: Domain hint to send as hd=? parameter in OAuth request flow.
 	// Enables redirect to primary IDP by skipping Google's login screen.
 	// https://developers.google.com/identity/protocols/OpenIDConnect#hd-param
@@ -970,13 +982,13 @@ type OAuthSettings struct {
 	// ProgrammaticClients: Optional. List of client ids allowed to use IAP
 	// programmatically.
 	ProgrammaticClients []string `json:"programmaticClients,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "LoginHint") to
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "LoginHint") to include in API
+	// NullFields is a list of field names (e.g. "ClientId") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

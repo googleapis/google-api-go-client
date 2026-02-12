@@ -7075,6 +7075,125 @@ func (c *RegionHealthSourcesGetCall) Do(opts ...googleapi.CallOption) (*HealthSo
 	return ret, nil
 }
 
+type RegionHealthSourcesGetHealthCall struct {
+	s            *Service
+	project      string
+	region       string
+	healthSource string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetHealth: Gets the most recent health check results for this
+// regional HealthSource.
+//
+// - healthSource: Name of the HealthSource resource to get health for.
+// - project: Name of the project scoping this request.
+// - region: Name of the region scoping this request.
+func (r *RegionHealthSourcesService) GetHealth(project string, region string, healthSource string) *RegionHealthSourcesGetHealthCall {
+	c := &RegionHealthSourcesGetHealthCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.healthSource = healthSource
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *RegionHealthSourcesGetHealthCall) Fields(s ...googleapi.Field) *RegionHealthSourcesGetHealthCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RegionHealthSourcesGetHealthCall) IfNoneMatch(entityTag string) *RegionHealthSourcesGetHealthCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *RegionHealthSourcesGetHealthCall) Context(ctx context.Context) *RegionHealthSourcesGetHealthCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *RegionHealthSourcesGetHealthCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RegionHealthSourcesGetHealthCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/regions/{region}/healthSources/{healthSource}/getHealth")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":      c.project,
+		"region":       c.region,
+		"healthSource": c.healthSource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.regionHealthSources.getHealth", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.regionHealthSources.getHealth" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HealthSourceHealth.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *RegionHealthSourcesGetHealthCall) Do(opts ...googleapi.CallOption) (*HealthSourceHealth, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HealthSourceHealth{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.regionHealthSources.getHealth", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type RegionHealthSourcesInsertCall struct {
 	s            *Service
 	project      string
@@ -18408,10 +18527,24 @@ type RegionNetworkEndpointGroupsInsertCall struct {
 // the
 // parameters that are included in the request.
 //
-//   - project: Project ID for this request.
-//   - region: The name of the region where
-//     you want to create the network endpoint group. It should comply
-//     with
+// Note: Use the following APIs to manage network endpoint groups:
+//
+//		-
+//		To manage NEGs with zonal scope (such as zonal NEGs, hybrid connectivity
+//		NEGs): zonal
+//		API
+//		-
+//		To manage NEGs with regional scope (such as regional internet NEGs,
+//		serverless NEGs, Private Service Connect NEGs): regional
+//		API
+//		-
+//		To manage NEGs with global scope (such as global internet NEGs):global
+//		API
+//
+//	  - project: Project ID for this request.
+//	  - region: The name of the region where
+//	    you want to create the network endpoint group. It should comply
+//	    with
 //
 // RFC1035.
 func (r *RegionNetworkEndpointGroupsService) Insert(project string, region string, networkendpointgroup *NetworkEndpointGroup) *RegionNetworkEndpointGroupsInsertCall {
@@ -36745,6 +36878,149 @@ func (c *ReservationSlotsGetCall) Do(opts ...googleapi.CallOption) (*Reservation
 	return ret, nil
 }
 
+type ReservationSlotsGetVersionCall struct {
+	s                                 *Service
+	project                           string
+	zone                              string
+	parentName                        string
+	reservationSlot                   string
+	reservationslotsgetversionrequest *ReservationSlotsGetVersionRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// GetVersion: Allows customers to get SBOM versions of a reservation slot.
+//
+//   - parentName: The name of the parent reservation and parent block. In the
+//     format
+//     of
+//     reservations/{reservation_name}/reservationBlocks/{reservation_block_name}/
+//     reservationSubBlocks/{reservation_sub_block_name}.
+//   - project: Project ID for this request.
+//   - reservationSlot: The name of the reservation slot.
+//     Name should conform to RFC1035 or be a resource ID.
+//   - zone: Name of the zone for this request. Zone name should conform to
+//     RFC1035.
+func (r *ReservationSlotsService) GetVersion(project string, zone string, parentName string, reservationSlot string, reservationslotsgetversionrequest *ReservationSlotsGetVersionRequest) *ReservationSlotsGetVersionCall {
+	c := &ReservationSlotsGetVersionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.parentName = parentName
+	c.reservationSlot = reservationSlot
+	c.reservationslotsgetversionrequest = reservationslotsgetversionrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so
+// that if you must retry your request, the server will know to ignore
+// the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request and
+// the request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This
+// prevents clients from accidentally creating duplicate commitments.
+//
+// The request ID must be
+// a valid UUID with the exception that zero UUID is not
+// supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ReservationSlotsGetVersionCall) RequestId(requestId string) *ReservationSlotsGetVersionCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ReservationSlotsGetVersionCall) Fields(s ...googleapi.Field) *ReservationSlotsGetVersionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ReservationSlotsGetVersionCall) Context(ctx context.Context) *ReservationSlotsGetVersionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ReservationSlotsGetVersionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ReservationSlotsGetVersionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.reservationslotsgetversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/{+parentName}/reservationSlots/{reservationSlot}/getVersion")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":         c.project,
+		"zone":            c.zone,
+		"parentName":      c.parentName,
+		"reservationSlot": c.reservationSlot,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.reservationSlots.getVersion", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.reservationSlots.getVersion" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ReservationSlotsGetVersionCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.reservationSlots.getVersion", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ReservationSlotsListCall struct {
 	s            *Service
 	project      string
@@ -37015,6 +37291,128 @@ func (c *ReservationSlotsListCall) Pages(ctx context.Context, f func(*Reservatio
 	}
 }
 
+type ReservationSlotsUpdateCall struct {
+	s               *Service
+	project         string
+	zone            string
+	parentName      string
+	reservationSlot string
+	reservationslot *ReservationSlot
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Update: Update a reservation slot in the specified sub-block.
+//
+// - parentName: The name of the sub-block resource.
+// - project: The project ID for this request.
+// - reservationSlot: The name of the slot resource.
+// - zone: The name of the zone for this request, formatted as RFC1035.
+func (r *ReservationSlotsService) Update(project string, zone string, parentName string, reservationSlot string, reservationslot *ReservationSlot) *ReservationSlotsUpdateCall {
+	c := &ReservationSlotsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.parentName = parentName
+	c.reservationSlot = reservationSlot
+	c.reservationslot = reservationslot
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The fields to be
+// updated as part of this request.
+func (c *ReservationSlotsUpdateCall) UpdateMask(updateMask string) *ReservationSlotsUpdateCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ReservationSlotsUpdateCall) Fields(s ...googleapi.Field) *ReservationSlotsUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ReservationSlotsUpdateCall) Context(ctx context.Context) *ReservationSlotsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ReservationSlotsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ReservationSlotsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.reservationslot)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/{+parentName}/reservationSlots/{reservationSlot}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":         c.project,
+		"zone":            c.zone,
+		"parentName":      c.parentName,
+		"reservationSlot": c.reservationSlot,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.reservationSlots.update", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.reservationSlots.update" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ReservationSlotsUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.reservationSlots.update", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ReservationSubBlocksGetCall struct {
 	s                   *Service
 	project             string
@@ -37156,6 +37554,148 @@ func (c *ReservationSubBlocksGetCall) Do(opts ...googleapi.CallOption) (*Reserva
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.reservationSubBlocks.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ReservationSubBlocksGetVersionCall struct {
+	s                                     *Service
+	project                               string
+	zone                                  string
+	parentName                            string
+	reservationSubBlock                   string
+	reservationsubblocksgetversionrequest *ReservationSubBlocksGetVersionRequest
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// GetVersion: Allows customers to get SBOM versions of a reservation subBlock.
+//
+//   - parentName: The name of the parent reservation and parent block. In the
+//     format
+//     of
+//     reservations/{reservation_name}/reservationBlocks/{reservation_block_name}.
+//   - project: Project ID for this request.
+//   - reservationSubBlock: The name of the reservation subBlock.
+//     Name should conform to RFC1035 or be a resource ID.
+//   - zone: Name of the zone for this request. Zone name should conform to
+//     RFC1035.
+func (r *ReservationSubBlocksService) GetVersion(project string, zone string, parentName string, reservationSubBlock string, reservationsubblocksgetversionrequest *ReservationSubBlocksGetVersionRequest) *ReservationSubBlocksGetVersionCall {
+	c := &ReservationSubBlocksGetVersionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.parentName = parentName
+	c.reservationSubBlock = reservationSubBlock
+	c.reservationsubblocksgetversionrequest = reservationsubblocksgetversionrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so
+// that if you must retry your request, the server will know to ignore
+// the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request and
+// the request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This
+// prevents clients from accidentally creating duplicate commitments.
+//
+// The request ID must be
+// a valid UUID with the exception that zero UUID is not
+// supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ReservationSubBlocksGetVersionCall) RequestId(requestId string) *ReservationSubBlocksGetVersionCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ReservationSubBlocksGetVersionCall) Fields(s ...googleapi.Field) *ReservationSubBlocksGetVersionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ReservationSubBlocksGetVersionCall) Context(ctx context.Context) *ReservationSubBlocksGetVersionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ReservationSubBlocksGetVersionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ReservationSubBlocksGetVersionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.reservationsubblocksgetversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/{parentName}/reservationSubBlocks/{reservationSubBlock}/getVersion")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":             c.project,
+		"zone":                c.zone,
+		"parentName":          c.parentName,
+		"reservationSubBlock": c.reservationSubBlock,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.reservationSubBlocks.getVersion", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.reservationSubBlocks.getVersion" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ReservationSubBlocksGetVersionCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.reservationSubBlocks.getVersion", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -42080,6 +42620,268 @@ func (c *RolloutsListCall) Pages(ctx context.Context, f func(*RolloutsListRespon
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type RolloutsPauseCall struct {
+	s          *Service
+	project    string
+	rollout    string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Pause: Pauses a Rollout.
+//
+// - project: Project ID for this request.
+// - rollout: Name of the Rollout resource to pause.
+func (r *RolloutsService) Pause(project string, rollout string) *RolloutsPauseCall {
+	c := &RolloutsPauseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.rollout = rollout
+	return c
+}
+
+// Etag sets the optional parameter "etag": The etag of the Rollout.
+// If this is provided, the request will only succeed if the etag matches
+// the current etag of the Rollout.
+func (c *RolloutsPauseCall) Etag(etag string) *RolloutsPauseCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so
+// that if you must retry your request, the server will know to ignore
+// the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request and
+// the request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This
+// prevents clients from accidentally creating duplicate commitments.
+//
+// The request ID must be
+// a valid UUID with the exception that zero UUID is not
+// supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *RolloutsPauseCall) RequestId(requestId string) *RolloutsPauseCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *RolloutsPauseCall) Fields(s ...googleapi.Field) *RolloutsPauseCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *RolloutsPauseCall) Context(ctx context.Context) *RolloutsPauseCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *RolloutsPauseCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RolloutsPauseCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/global/rollouts/{rollout}/pause")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"rollout": c.rollout,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.rollouts.pause", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.rollouts.pause" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *RolloutsPauseCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.rollouts.pause", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type RolloutsResumeCall struct {
+	s          *Service
+	project    string
+	rollout    string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Resume: Resumes a Rollout.
+//
+// - project: Project ID for this request.
+// - rollout: Name of the Rollout resource to resume.
+func (r *RolloutsService) Resume(project string, rollout string) *RolloutsResumeCall {
+	c := &RolloutsResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.rollout = rollout
+	return c
+}
+
+// Etag sets the optional parameter "etag": The etag of the Rollout.
+// If this is provided, the request will only succeed if the etag matches
+// the current etag of the Rollout.
+func (c *RolloutsResumeCall) Etag(etag string) *RolloutsResumeCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so
+// that if you must retry your request, the server will know to ignore
+// the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request and
+// the request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This
+// prevents clients from accidentally creating duplicate commitments.
+//
+// The request ID must be
+// a valid UUID with the exception that zero UUID is not
+// supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *RolloutsResumeCall) RequestId(requestId string) *RolloutsResumeCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *RolloutsResumeCall) Fields(s ...googleapi.Field) *RolloutsResumeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *RolloutsResumeCall) Context(ctx context.Context) *RolloutsResumeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *RolloutsResumeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RolloutsResumeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/global/rollouts/{rollout}/resume")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"rollout": c.rollout,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.rollouts.resume", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.rollouts.resume" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *RolloutsResumeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.rollouts.resume", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type RoutersAggregatedListCall struct {

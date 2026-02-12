@@ -3727,7 +3727,7 @@ func (s AllocationSpecificSKUAllocationAllocatedInstancePropertiesReservedDisk) 
 
 // AllocationSpecificSKUAllocationReservedInstanceProperties: Properties of the
 // SKU instances being reserved.
-// Next ID: 9
+// Next ID: 10
 type AllocationSpecificSKUAllocationReservedInstanceProperties struct {
 	// GuestAccelerators: Specifies accelerator type and count.
 	GuestAccelerators []*AcceleratorConfig `json:"guestAccelerators,omitempty"`
@@ -10761,6 +10761,277 @@ type CacheKeyPolicy struct {
 
 func (s CacheKeyPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod CacheKeyPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CachePolicy: Message containing CachePolicy configuration for URL Map's
+// Route Action.
+type CachePolicy struct {
+	// CacheBypassRequestHeaderNames: Bypass the cache when the specified request
+	// headers are matched by name,
+	// e.g. Pragma or Authorization headers. Values are case-insensitive. Up to
+	// 5
+	// header names can be specified. The cache is bypassed for
+	// all
+	// cachePolicy.cacheMode settings.
+	CacheBypassRequestHeaderNames []string `json:"cacheBypassRequestHeaderNames,omitempty"`
+	// CacheKeyPolicy: The CacheKeyPolicy for this CachePolicy.
+	CacheKeyPolicy *CachePolicyCacheKeyPolicy `json:"cacheKeyPolicy,omitempty"`
+	// CacheMode: Specifies the cache setting for all responses from this route.
+	// If not specified, the default value is CACHE_ALL_STATIC.
+	//
+	// Possible values:
+	//   "CACHE_ALL_STATIC" - Automatically cache static content, including common
+	// image formats,
+	// media (video and audio), and web assets (JavaScript and CSS).
+	// Requests and responses that are marked as uncacheable, as well as
+	// dynamic content (including HTML), will not be cached.
+	//   "FORCE_CACHE_ALL" - Cache all content, ignoring any "private", "no-store"
+	// or "no-cache"
+	// directives in Cache-Control response headers.
+	// Warning: this may result in Cloud CDN caching private,
+	// per-user (user identifiable) content.
+	//   "USE_ORIGIN_HEADERS" - Requires the origin to set valid caching headers to
+	// cache content.
+	// Responses without these headers will not be cached at the edge, and
+	// will
+	// require a full trip to the origin on every request, potentially
+	// impacting
+	// performance and increasing load on the origin server.
+	CacheMode string `json:"cacheMode,omitempty"`
+	// ClientTtl: Specifies a separate client (e.g. browser client) maximum TTL.
+	// This is
+	// used to clamp the max-age (or Expires) value sent to the client.
+	// With
+	// FORCE_CACHE_ALL, the lesser of client_ttl and default_ttl is used for
+	// the
+	// response max-age directive, along with a "public" directive.  For
+	// cacheable content in CACHE_ALL_STATIC mode, client_ttl clamps the
+	// max-age
+	// from the origin (if specified), or else sets the response max-age
+	// directive to the lesser of the client_ttl and default_ttl, and also
+	// ensures a "public" cache-control directive is present.
+	// If a client TTL is not specified, a default value (1 hour) will be used.
+	// The maximum allowed value is 31,622,400s (1 year).
+	ClientTtl *Duration `json:"clientTtl,omitempty"`
+	// DefaultTtl: Specifies the default TTL for cached content served by this
+	// origin for
+	// responses that do not have an existing valid TTL (max-age or
+	// s-maxage).
+	// Setting a TTL of "0" means "always revalidate".
+	// The value of defaultTTL cannot be set to a value greater than that
+	// of
+	// maxTTL.
+	// When the cacheMode is set to FORCE_CACHE_ALL, the defaultTTL
+	// will overwrite the TTL set in all responses. The maximum allowed value
+	// is
+	// 31,622,400s (1 year). Infrequently accessed objects may be evicted from
+	// the cache before the defined TTL.
+	DefaultTtl *Duration `json:"defaultTtl,omitempty"`
+	// MaxTtl: Specifies the maximum allowed TTL for cached content served by
+	// this
+	// origin.
+	// Cache directives that attempt to set a max-age or s-maxage higher than
+	// this, or an Expires header more than maxTTL seconds in the future will
+	// be capped at the value of maxTTL, as if it were the value of an
+	// s-maxage Cache-Control directive.
+	// Headers sent to the client will not be modified.
+	// Setting a TTL of "0" means "always revalidate".
+	// The maximum allowed value is 31,622,400s (1 year). Infrequently
+	// accessed
+	// objects may be evicted from the cache before the defined TTL.
+	MaxTtl *Duration `json:"maxTtl,omitempty"`
+	// NegativeCaching: Negative caching allows per-status code TTLs to be set, in
+	// order
+	// to apply fine-grained caching for common errors or redirects.
+	// This can reduce the load on your origin and improve end-user
+	// experience by reducing response latency.
+	// When the cache mode is set to CACHE_ALL_STATIC or
+	// USE_ORIGIN_HEADERS,
+	// negative caching applies to responses with the specified response code
+	// that lack any Cache-Control, Expires, or Pragma: no-cache directives.
+	// When the cache mode is set to FORCE_CACHE_ALL, negative caching applies
+	// to all responses with the specified response code, and override any
+	// caching headers.
+	// By default, Cloud CDN will apply the following default TTLs to these
+	// status codes:
+	// HTTP 300 (Multiple Choice), 301, 308 (Permanent Redirects): 10m
+	// HTTP 404 (Not Found), 410 (Gone),
+	// 451 (Unavailable For Legal Reasons): 120s
+	// HTTP 405 (Method Not Found), 501 (Not Implemented): 60s.
+	// These defaults can be overridden in negative_caching_policy.
+	NegativeCaching bool `json:"negativeCaching,omitempty"`
+	// NegativeCachingPolicy: Sets a cache TTL for the specified HTTP status
+	// code.
+	// negative_caching must be enabled to configure
+	// negative_caching_policy.
+	// Omitting the policy and leaving negative_caching enabled will use
+	// Cloud CDN's default cache TTLs.
+	// Note that when specifying an explicit negative_caching_policy, you
+	// should take care to specify a cache TTL for all response codes
+	// that you wish to cache. Cloud CDN will not apply any default
+	// negative caching when a policy exists.
+	NegativeCachingPolicy []*CachePolicyNegativeCachingPolicy `json:"negativeCachingPolicy,omitempty"`
+	// RequestCoalescing: If true then Cloud CDN will combine multiple concurrent
+	// cache fill
+	// requests into a small number of requests to the origin.
+	RequestCoalescing bool `json:"requestCoalescing,omitempty"`
+	// ServeWhileStale: Serve existing content from the cache (if available) when
+	// revalidating
+	// content with the origin, or when an error is encountered when refreshing
+	// the cache.
+	// This setting defines the default "max-stale" duration for any
+	// cached
+	// responses that do not specify a max-stale directive. Stale responses
+	// that
+	// exceed the TTL configured here will not be served. The default
+	// limit
+	// (max-stale) is 86400s (1 day), which will allow stale content to be
+	// served up to this limit beyond the max-age (or s-maxage) of a
+	// cached
+	// response.
+	// The maximum allowed value is 604800 (1 week).
+	// Set this to zero (0) to disable serve-while-stale.
+	ServeWhileStale *Duration `json:"serveWhileStale,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "CacheBypassRequestHeaderNames") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CacheBypassRequestHeaderNames")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CachePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod CachePolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CachePolicyCacheKeyPolicy: Message containing what to include in the cache
+// key for a request for Cache
+// Policy defined on Route Action.
+type CachePolicyCacheKeyPolicy struct {
+	// ExcludedQueryParameters: Names of query string parameters to exclude in
+	// cache keys. All other
+	// parameters will be included. Either specify excluded_query_parameters
+	// or
+	// included_query_parameters, not both. '&' and '=' will be percent encoded
+	// and not treated as delimiters.
+	//
+	// Note: This field applies to routes that use backend services. Attempting
+	// to set it on a route that points exclusively to Backend Buckets will
+	// result in a configuration error. For routes that point to a Backend
+	// Bucket, use includedQueryParameters to define which parameters should
+	// be a part of the cache key.
+	ExcludedQueryParameters []string `json:"excludedQueryParameters,omitempty"`
+	// IncludeHost: If true, requests to different hosts will be cached
+	// separately.
+	//
+	// Note: This setting is only applicable to routes that use a Backend
+	// Service. It does not affect requests served by a Backend Bucket, as the
+	// host is never included in a Backend Bucket's cache key. Attempting to set
+	// it on a route that points exclusively to Backend Buckets will result in
+	// a
+	// configuration error.
+	IncludeHost bool `json:"includeHost,omitempty"`
+	// IncludeProtocol: If true, http and https requests will be cached
+	// separately.
+	//
+	// Note: This setting is only applicable to routes that use a Backend
+	// Service. It does not affect requests served by a Backend Bucket, as
+	// the
+	// protocol is never included in a Backend Bucket's cache key. Attempting
+	// to
+	// set on a route that points exclusively to Backend Buckets will result in
+	// a configuration error.
+	IncludeProtocol bool `json:"includeProtocol,omitempty"`
+	// IncludeQueryString: If true, include query string parameters in the cache
+	// key according to
+	// included_query_parameters and excluded_query_parameters. If neither is
+	// set, the entire query string will be included. If false, the query
+	// string
+	// will be excluded from the cache key entirely.
+	//
+	// Note: This field applies to routes that use backend services. Attempting
+	// to set it on a route that points exclusively to Backend Buckets will
+	// result in a configuration error.  For routes that point to a Backend
+	// Bucket, use includedQueryParameters to define which parameters should
+	// be a part of the cache key.
+	IncludeQueryString bool `json:"includeQueryString,omitempty"`
+	// IncludedCookieNames: Allows HTTP cookies (by name) to be used in the cache
+	// key.
+	// The name=value pair will be used in the cache key Cloud CDN
+	// generates.
+	//
+	// Note: This setting is only applicable to routes that use a Backend
+	// Service. It does not affect requests served by a Backend Bucket.
+	// Attempting to set it on a route that points exclusively to Backend
+	// Buckets will result in a configuration error. Up to 5 cookie names can
+	// be
+	// specified.
+	IncludedCookieNames []string `json:"includedCookieNames,omitempty"`
+	// IncludedHeaderNames: Allows HTTP request headers (by name) to be used in the
+	// cache key.
+	IncludedHeaderNames []string `json:"includedHeaderNames,omitempty"`
+	// IncludedQueryParameters: Names of query string parameters to include in
+	// cache keys. All other
+	// parameters will be excluded. Either specify included_query_parameters
+	// or
+	// excluded_query_parameters, not both. '&' and '=' will be percent encoded
+	// and not treated as delimiters.
+	IncludedQueryParameters []string `json:"includedQueryParameters,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExcludedQueryParameters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExcludedQueryParameters") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CachePolicyCacheKeyPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod CachePolicyCacheKeyPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CachePolicyNegativeCachingPolicy: Specify CDN TTLs for response error codes.
+type CachePolicyNegativeCachingPolicy struct {
+	// Code: The HTTP status code to define a TTL against. Only HTTP status
+	// codes
+	// 300, 301, 302, 307, 308, 404, 405, 410, 421, 451 and 501 can be
+	// specified as values, and you cannot specify a status code more than
+	// once.
+	Code int64 `json:"code,omitempty"`
+	// Ttl: The TTL (in seconds) for which to cache responses with
+	// the
+	// corresponding status code.
+	// The maximum allowed value is 1800s (30 minutes). Infrequently
+	// accessed
+	// objects may be evicted from the cache before the defined TTL.
+	Ttl *Duration `json:"ttl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CachePolicyNegativeCachingPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod CachePolicyNegativeCachingPolicy
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -18904,6 +19175,10 @@ func (s ForwardingRulesScopedListWarningData) MarshalJSON() ([]byte, error) {
 }
 
 type FutureReservation struct {
+	// AdvancedDeploymentControl: Advanced control for cluster management,
+	// applicable only to DENSE
+	// deployment type future reservations.
+	AdvancedDeploymentControl *ReservationAdvancedDeploymentControl `json:"advancedDeploymentControl,omitempty"`
 	// AggregateReservation: Aggregate reservation details for the future
 	// reservation.
 	AggregateReservation *AllocationAggregateReservation `json:"aggregateReservation,omitempty"`
@@ -19076,15 +19351,15 @@ type FutureReservation struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AggregateReservation") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AdvancedDeploymentControl")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AggregateReservation") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdvancedDeploymentControl") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -25082,6 +25357,10 @@ func (s HttpRetryPolicy) MarshalJSON() ([]byte, error) {
 }
 
 type HttpRouteAction struct {
+	// CachePolicy: Cache policy for this URL Map’s route. Available only for
+	// Global
+	// EXTERNAL_MANAGED load balancer schemes.
+	CachePolicy *CachePolicy `json:"cachePolicy,omitempty"`
 	// CorsPolicy: The specification for allowing client-side cross-origin
 	// requests. For more
 	// information about the W3C recommendation for cross-origin resource
@@ -25180,13 +25459,13 @@ type HttpRouteAction struct {
 	// settings
 	// specified in this HttpRouteAction.
 	WeightedBackendServices []*WeightedBackendService `json:"weightedBackendServices,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CorsPolicy") to
+	// ForceSendFields is a list of field names (e.g. "CachePolicy") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CorsPolicy") to include in API
+	// NullFields is a list of field names (e.g. "CachePolicy") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -26711,7 +26990,8 @@ type Instance struct {
 	// setTags
 	// method. Each tag within the list must comply withRFC1035.
 	// Multiple tags can be specified via the 'tags.items' field.
-	Tags *Tags `json:"tags,omitempty"`
+	Tags                   *Tags                   `json:"tags,omitempty"`
+	WorkloadIdentityConfig *WorkloadIdentityConfig `json:"workloadIdentityConfig,omitempty"`
 	// Zone: Output only. [Output Only] URL of the zone where the instance
 	// resides.
 	// You must specify this field as part of the HTTP request URL. It is
@@ -29119,6 +29399,12 @@ type InstanceGroupManagerStatus struct {
 	// BulkInstanceOperation: Output only. [Output Only] The status of bulk
 	// instance operation.
 	BulkInstanceOperation *InstanceGroupManagerStatusBulkInstanceOperation `json:"bulkInstanceOperation,omitempty"`
+	// CurrentInstanceStatuses: Output only. [Output Only] The list of instance
+	// statuses and the number of instances
+	// in this managed instance group that have the status. Currently only
+	// shown
+	// for TPU MIGs
+	CurrentInstanceStatuses *InstanceGroupManagerStatusInstanceStatusSummary `json:"currentInstanceStatuses,omitempty"`
 	// IsStable: Output only. [Output Only] A bit indicating whether the managed
 	// instance group is in a
 	// stable state. A stable state means that: none of the instances in
@@ -29319,6 +29605,91 @@ type InstanceGroupManagerStatusBulkInstanceOperationLastProgressCheckErrorErrors
 
 func (s InstanceGroupManagerStatusBulkInstanceOperationLastProgressCheckErrorErrorsErrorDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceGroupManagerStatusBulkInstanceOperationLastProgressCheckErrorErrorsErrorDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InstanceGroupManagerStatusInstanceStatusSummary: The list of instance
+// statuses and the number of instances in this managed
+// instance group that have the status. For more information about how
+// to
+// interpret each status check the instance lifecycle documentation.
+// Currently only shown for TPU MIGs.
+type InstanceGroupManagerStatusInstanceStatusSummary struct {
+	// Deprovisioning: Output only. [Output Only] The number of instances in the
+	// managed instance group
+	// that have DEPROVISIONING status.
+	Deprovisioning int64 `json:"deprovisioning,omitempty"`
+	// NonExistent: Output only. [Output Only] The number of instances that have
+	// not been created yet or
+	// have been deleted. Includes only instances that would be shown in
+	// the
+	// listManagedInstances method and not all instances that have been
+	// deleted in the lifetime of the MIG.
+	// Does not include FlexStart instances that are waiting for the
+	// resources
+	// availability, they are considered as 'pending'.
+	NonExistent int64 `json:"nonExistent,omitempty"`
+	// Pending: Output only. [Output Only] The number of instances in the managed
+	// instance group
+	// that have PENDING status, that is FlexStart instances that are waiting
+	// for resources. Instances that do not exist because of the other reasons
+	// are counted as 'non_existent'.
+	Pending int64 `json:"pending,omitempty"`
+	// PendingStop: Output only. [Output Only] The number of instances in the
+	// managed instance group
+	// that have PENDING_STOP status.
+	PendingStop int64 `json:"pendingStop,omitempty"`
+	// Provisioning: Output only. [Output Only] The number of instances in the
+	// managed instance group
+	// that have PROVISIONING status.
+	Provisioning int64 `json:"provisioning,omitempty"`
+	// Repairing: Output only. [Output Only] The number of instances in the managed
+	// instance group
+	// that have REPAIRING status.
+	Repairing int64 `json:"repairing,omitempty"`
+	// Running: Output only. [Output Only] The number of instances in the managed
+	// instance group
+	// that have RUNNING status.
+	Running int64 `json:"running,omitempty"`
+	// Staging: Output only. [Output Only] The number of instances in the managed
+	// instance group
+	// that have STAGING status.
+	Staging int64 `json:"staging,omitempty"`
+	// Stopped: Output only. [Output Only] The number of instances in the managed
+	// instance group
+	// that have STOPPED status.
+	Stopped int64 `json:"stopped,omitempty"`
+	// Stopping: Output only. [Output Only] The number of instances in the managed
+	// instance group
+	// that have STOPPING status.
+	Stopping int64 `json:"stopping,omitempty"`
+	// Suspended: Output only. [Output Only] The number of instances in the managed
+	// instance group
+	// that have SUSPENDED status.
+	Suspended int64 `json:"suspended,omitempty"`
+	// Suspending: Output only. [Output Only] The number of instances in the
+	// managed instance group
+	// that have SUSPENDING status.
+	Suspending int64 `json:"suspending,omitempty"`
+	// Terminated: Output only. [Output Only] The number of instances in the
+	// managed instance group
+	// that have TERMINATED status.
+	Terminated int64 `json:"terminated,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Deprovisioning") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Deprovisioning") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstanceGroupManagerStatusInstanceStatusSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceGroupManagerStatusInstanceStatusSummary
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -31793,7 +32164,8 @@ type InstanceProperties struct {
 	// firewalls. The setTags method can modify this list of tags. Each tag
 	// within
 	// the list must comply with RFC1035.
-	Tags *Tags `json:"tags,omitempty"`
+	Tags                   *Tags                   `json:"tags,omitempty"`
+	WorkloadIdentityConfig *WorkloadIdentityConfig `json:"workloadIdentityConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdvancedMachineFeatures") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -33310,6 +33682,10 @@ type InstantSnapshot struct {
 	// cannot
 	// be a dash.
 	Name string `json:"name,omitempty"`
+	// Params: Input only. Additional params passed with the request, but not
+	// persisted
+	// as part of resource payload.
+	Params *InstantSnapshotParams `json:"params,omitempty"`
 	// Region: Output only. [Output Only] URL of the region where the instant
 	// snapshot resides.
 	// You must specify this field as part of the HTTP request URL. It is
@@ -33935,6 +34311,37 @@ func (s InstantSnapshotListWarningData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InstantSnapshotParams: Additional instant snapshot params.
+type InstantSnapshotParams struct {
+	// ResourceManagerTags: Input only. Resource manager tags to be bound to the
+	// instant snapshot. Tag keys and
+	// values have the same definition as resource
+	// manager tags. Keys and values can be either in numeric format,
+	// such as `tagKeys/{tag_key_id}` and `tagValues/{tag_value_id}` or
+	// in
+	// namespaced format such as `{org_id|project_id}/{tag_key_short_name}`
+	// and
+	// `{tag_value_short_name}`. The field is ignored (both PUT &
+	// PATCH) when empty.
+	ResourceManagerTags map[string]string `json:"resourceManagerTags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ResourceManagerTags") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ResourceManagerTags") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstantSnapshotParams) MarshalJSON() ([]byte, error) {
+	type NoMethod InstantSnapshotParams
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type InstantSnapshotResourceStatus struct {
 	// StorageSizeBytes: [Output Only] The storage size of this instant snapshot.
 	StorageSizeBytes int64 `json:"storageSizeBytes,omitempty,string"`
@@ -34409,9 +34816,7 @@ type Interconnect struct {
 	// attachments may be
 	// provisioned on this interconnect.
 	State string `json:"state,omitempty"`
-	// Subzone: Specific subzone in the InterconnectLocation that represents
-	// where
-	// this connection is to be provisioned.
+	// Subzone: To be deprecated.
 	//
 	// Possible values:
 	//   "SUBZONE_A" - Subzone A.
@@ -43643,6 +44048,20 @@ func (s NetworkEndpoint) MarshalJSON() ([]byte, error) {
 // reached, whether they are reachable, and where they are located.
 // For more information about using NEGs for different use cases, seeNetwork
 // endpoint groups overview.
+//
+// Note: Use the following APIs to manage network endpoint groups:
+//
+//	-
+//	To manage NEGs with zonal scope (such as zonal NEGs, hybrid connectivity
+//	NEGs): zonal
+//	API
+//	-
+//	To manage NEGs with regional scope (such as regional internet NEGs,
+//	serverless NEGs, Private Service Connect NEGs): regional
+//	API
+//	-
+//	To manage NEGs with global scope (such as global internet NEGs):global
+//	API
 type NetworkEndpointGroup struct {
 	// Annotations: Optional. Metadata defined as annotations on the network
 	// endpoint group.
@@ -45141,6 +45560,10 @@ type NetworkInterface struct {
 	// AliasIpRanges: An array of alias IP ranges for this network interface.
 	// You can only specify this field for network interfaces in VPC networks.
 	AliasIpRanges []*AliasIpRange `json:"aliasIpRanges,omitempty"`
+	// EnableVpcScopedDns: Optional. If true, DNS resolution will be enabled over
+	// this interface. Only valid
+	// with network_attachment.
+	EnableVpcScopedDns bool `json:"enableVpcScopedDns,omitempty"`
 	// Fingerprint: Fingerprint hash of contents stored in this network
 	// interface.
 	// This field will be ignored when inserting an Instance or
@@ -57853,6 +58276,17 @@ type Reservation struct {
 	// when you
 	// create the resource.
 	Description string `json:"description,omitempty"`
+	// EarlyAccessMaintenance: Indicates the early access maintenance for the
+	// reservation.
+	// If this field is absent or set to NO_EARLY_ACCESS, the reservation is
+	// not
+	// enrolled in early access maintenance and the standard notice applies.
+	//
+	// Possible values:
+	//   "NO_EARLY_ACCESS" - No early access.
+	//   "WAVE1" - Wave 1: Fastest notification period
+	//   "WAVE2" - Wave 2: Medium notification period
+	EarlyAccessMaintenance string `json:"earlyAccessMaintenance,omitempty"`
 	// EnableEmergentMaintenance: Indicates whether Compute Engine allows unplanned
 	// maintenance for your VMs;
 	// for example, to fix hardware errors.
@@ -61101,6 +61535,9 @@ type ResourceStatusEffectiveInstanceMetadata struct {
 	// EnableOsloginMetadataValue: Effective enable-oslogin value at Instance
 	// level.
 	EnableOsloginMetadataValue bool `json:"enableOsloginMetadataValue,omitempty"`
+	// GceContainerDeclarationMetadataValue: Effective gce-container-declaration
+	// value at Instance level.
+	GceContainerDeclarationMetadataValue bool `json:"gceContainerDeclarationMetadataValue,omitempty"`
 	// SerialPortEnableMetadataValue: Effective serial-port-enable value at
 	// Instance level.
 	SerialPortEnableMetadataValue bool `json:"serialPortEnableMetadataValue,omitempty"`
@@ -65626,6 +66063,12 @@ type Scheduling struct {
 	// therefore, in a `TERMINATED` state. SeeInstance Life
 	// Cycle for more information on the possible instance states.
 	Preemptible bool `json:"preemptible,omitempty"`
+	// PreemptionNoticeDuration: Specifies the Metadata Service preemption notice
+	// duration before the  GCE ACPI G2 Soft
+	//  Off signal is triggered for Spot
+	//  VMs only. If not specified, there will be no wait before the G2 Soft
+	//  Off signal is triggered.
+	PreemptionNoticeDuration *Duration `json:"preemptionNoticeDuration,omitempty"`
 	// ProvisioningModel: Specifies the provisioning model of the instance.
 	//
 	// Possible values:
@@ -85514,6 +85957,27 @@ type WireProperties struct {
 
 func (s WireProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod WireProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type WorkloadIdentityConfig struct {
+	Identity                   string `json:"identity,omitempty"`
+	IdentityCertificateEnabled bool   `json:"identityCertificateEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Identity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Identity") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkloadIdentityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadIdentityConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

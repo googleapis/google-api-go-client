@@ -1450,13 +1450,13 @@ type NewSpotInstancesConfig struct {
 	// (https://cloud.google.com/compute/docs/machine-resource) to use, e.g.
 	// `n2-standard-2`.
 	MachineType string `json:"machineType,omitempty"`
-	// TerminationAction: Optional. Specifies the termination action of the
-	// instance
+	// TerminationAction: Optional. Termination action for the instance. If not
+	// specified, Compute Engine sets the termination action to DELETE.
 	//
 	// Possible values:
-	//   "TERMINATION_ACTION_UNSPECIFIED" - Unspecified termination action
-	//   "STOP" - Stop the instance
-	//   "DELETE" - Delete the instance
+	//   "TERMINATION_ACTION_UNSPECIFIED" - Not set.
+	//   "STOP" - Compute Engine stops the Spot VM on preemption.
+	//   "DELETE" - Compute Engine deletes the Spot VM on preemption.
 	TerminationAction string `json:"terminationAction,omitempty"`
 	// Zone: Required. Immutable. Name of the zone in which VM instances should
 	// run, e.g., `us-central1-a`. Must be in the same region as the cluster, and
@@ -1566,7 +1566,7 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // OperationProgress: Message describing the progress of a cluster mutation
-// long-running operation. operation.
+// long-running operation.
 type OperationProgress struct {
 	// Steps: Output only. Steps and status of the operation.
 	Steps []*OperationStep `json:"steps,omitempty"`
@@ -1776,8 +1776,7 @@ func (s SlurmLoginNodes) MarshalJSON() ([]byte, error) {
 // workloads submitted to the cluster.
 type SlurmNodeSet struct {
 	// ComputeId: Optional. ID of the compute resource on which this nodeset will
-	// run. Must match a key in the cluster's compute_resources
-	// (Cluster.compute_resources).
+	// run. Must match a key in the cluster's compute_resources.
 	ComputeId string `json:"computeId,omitempty"`
 	// ComputeInstance: Optional. If set, indicates that the nodeset should be
 	// backed by Compute Engine instances.
@@ -1834,13 +1833,13 @@ type SlurmOrchestrator struct {
 	// LoginNodes: Required. Configuration for login nodes, which allow users to
 	// access the cluster over SSH.
 	LoginNodes *SlurmLoginNodes `json:"loginNodes,omitempty"`
-	// NodeSets: Required. Configuration of Slurm nodesets, which define groups of
-	// compute resources that can be used by Slurm. At least one compute node is
-	// required.
+	// NodeSets: Optional. Compute resource configuration for the Slurm nodesets in
+	// your cluster. If not specified, the cluster won't create any nodes.
 	NodeSets []*SlurmNodeSet `json:"nodeSets,omitempty"`
-	// Partitions: Required. Configuration of Slurm partitions, which group one or
-	// more nodesets. Acts as a queue against which jobs can be submitted. At least
-	// one partition is required.
+	// Partitions: Optional. Configuration for the Slurm partitions in your
+	// cluster. Each partition can contain one or more nodesets, and you can submit
+	// separate jobs on each partition. If you don't specify at least one partition
+	// in your cluster, you can't submit jobs to the cluster.
 	Partitions []*SlurmPartition `json:"partitions,omitempty"`
 	// PrologBashScripts: Optional. Slurm prolog scripts
 	// (https://slurm.schedmd.com/prolog_epilog.html), which will be executed by
@@ -1932,7 +1931,7 @@ func (s Status) MarshalJSON() ([]byte, error) {
 // VM instance.
 type StorageConfig struct {
 	// Id: Required. ID of the storage resource to mount, which must match a key in
-	// the cluster's storage_resources (Cluster.storage_resources).
+	// the cluster's storage_resources.
 	Id string `json:"id,omitempty"`
 	// LocalMount: Required. A directory inside the VM instance's file system where
 	// the storage resource should be mounted (e.g., `/mnt/share`).
@@ -2205,7 +2204,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

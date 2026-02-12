@@ -1273,15 +1273,6 @@ type GoogleIamAdminV1WorkforcePoolProviderExtraAttributesOAuth2Client struct {
 	// user's groups that are returned from Microsoft Entra ID can be mapped by
 	// using the following attributes: * OIDC: `assertion.groups` * SAML:
 	// `assertion.attributes.groups`
-	//   "AZURE_AD_GROUPS_DISPLAY_NAME" - Used to get the user's group claims from
-	// the Microsoft Entra ID identity provider using the configuration provided in
-	// ExtraAttributesOAuth2Client. The `displayName` property of the
-	// `microsoft.graph.group` object is used for claim mapping. See
-	// https://learn.microsoft.com/en-us/graph/api/resources/group?view=graph-rest-1.0#properties
-	// for more details on `microsoft.graph.group` properties. The display names of
-	// the user's groups that are returned from Microsoft Entra ID can be mapped by
-	// using the following attributes: * OIDC: `assertion.groups` * SAML:
-	// `assertion.attributes.groups`
 	AttributesType string `json:"attributesType,omitempty"`
 	// ClientId: Required. The OAuth 2.0 client ID for retrieving extra attributes
 	// from the identity provider. Required to get the Access Token using client
@@ -3891,10 +3882,12 @@ type WorkforcePoolProvider struct {
 	// intervals during the user's active session. Each user identity in the
 	// workforce identity pool must map to a unique Microsoft Entra ID user.
 	ExtendedAttributesOauth2Client *GoogleIamAdminV1WorkforcePoolProviderExtraAttributesOAuth2Client `json:"extendedAttributesOauth2Client,omitempty"`
-	// ExtraAttributesOauth2Client: Optional. The configuration for OAuth 2.0
-	// client used to get the additional user attributes. This should be used when
-	// users can't get the desired claims in authentication credentials. Currently,
-	// this configuration is only supported with OIDC protocol.
+	// ExtraAttributesOauth2Client: Optional. Defines the configuration for the
+	// OAuth 2.0 client that is used to get the additional user attributes in a
+	// separate backchannel call to the identity provider. This should be used when
+	// users can't get the required claims in authentication credentials.
+	// Currently, the OAuth 2.0 protocol is the only supported authorization method
+	// for this backchannel call.
 	ExtraAttributesOauth2Client *GoogleIamAdminV1WorkforcePoolProviderExtraAttributesOAuth2Client `json:"extraAttributesOauth2Client,omitempty"`
 	// Name: Identifier. The resource name of the provider. Format:
 	// `locations/{location}/workforcePools/{workforce_pool_id}/providers/{provider_

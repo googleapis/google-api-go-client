@@ -376,6 +376,8 @@ type ActivityEvents struct {
 	Parameters []*ActivityEventsParameters `json:"parameters,omitempty"`
 	// ResourceIds: Resource ids associated with the event.
 	ResourceIds []string `json:"resourceIds,omitempty"`
+	// Status: Status of the event. Note: Not all events have status.
+	Status *ActivityEventsStatus `json:"status,omitempty"`
 	// Type: Type of event. The Google Workspace service or feature that an
 	// administrator changes is identified in the `type` property which identifies
 	// an event using the `eventName` property. For a full list of the API's `type`
@@ -511,6 +513,36 @@ type ActivityId struct {
 
 func (s ActivityId) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityId
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ActivityEventsStatus: Status of the event. Note: Not all events have status.
+type ActivityEventsStatus struct {
+	// ErrorCode: Error code of the event. Note: Field can be empty.
+	ErrorCode string `json:"errorCode,omitempty"`
+	// ErrorMessage: Error message of the event. Note: Field can be empty.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+	// EventStatus: * Status of the event. Possible values if not empty: -
+	// UNKNOWN_EVENT_STATUS - SUCCEEDED - SUCCEEDED_WITH_WARNINGS - FAILED -
+	// SKIPPED
+	EventStatus string `json:"eventStatus,omitempty"`
+	// HttpStatusCode: Status code of the event. Note: Field can be empty.
+	HttpStatusCode int64 `json:"httpStatusCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ActivityEventsStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod ActivityEventsStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1151,6 +1183,16 @@ func (c *ActivitiesListCall) ActorIpAddress(actorIpAddress string) *ActivitiesLi
 	return c
 }
 
+// ApplicationInfoFilter sets the optional parameter "applicationInfoFilter":
+// Used to filter on the `oAuthClientId` field present in `ApplicationInfo`
+// (#applicationinfo) message. **Usage** ```
+// GET...&applicationInfoFilter=oAuthClientId="clientId"
+// GET...&applicationInfoFilter=oAuthClientId=%22clientId%22 ```
+func (c *ActivitiesListCall) ApplicationInfoFilter(applicationInfoFilter string) *ActivitiesListCall {
+	c.urlParams_.Set("applicationInfoFilter", applicationInfoFilter)
+	return c
+}
+
 // CustomerId sets the optional parameter "customerId": The unique ID of the
 // customer to retrieve data for.
 func (c *ActivitiesListCall) CustomerId(customerId string) *ActivitiesListCall {
@@ -1252,6 +1294,15 @@ func (c *ActivitiesListCall) MaxResults(maxResults int64) *ActivitiesListCall {
 	return c
 }
 
+// NetworkInfoFilter sets the optional parameter "networkInfoFilter": Used to
+// filter on the `regionCode` field present in `NetworkInfo` (#networkinfo)
+// message. **Usage** ``` GET...&networkInfoFilter=regionCode="IN"
+// GET...&networkInfoFilter=regionCode=%22IN%22 ```
+func (c *ActivitiesListCall) NetworkInfoFilter(networkInfoFilter string) *ActivitiesListCall {
+	c.urlParams_.Set("networkInfoFilter", networkInfoFilter)
+	return c
+}
+
 // OrgUnitID sets the optional parameter "orgUnitID": ID of the organizational
 // unit to report on. Activity records will be shown only for users who belong
 // to the specified organizational unit. Data before Dec 17, 2018 doesn't
@@ -1326,6 +1377,15 @@ func (c *ActivitiesListCall) ResourceDetailsFilter(resourceDetailsFilter string)
 // provided and the difference must not be greater than 30 days.
 func (c *ActivitiesListCall) StartTime(startTime string) *ActivitiesListCall {
 	c.urlParams_.Set("startTime", startTime)
+	return c
+}
+
+// StatusFilter sets the optional parameter "statusFilter": Used to filter on
+// the `statusCode` field present in `Status` (#status) message. **Usage** ```
+// GET...&statusFilter=statusCode="200"
+// GET...&statusFilter=statusCode=%22200%22 ```
+func (c *ActivitiesListCall) StatusFilter(statusFilter string) *ActivitiesListCall {
+	c.urlParams_.Set("statusFilter", statusFilter)
 	return c
 }
 

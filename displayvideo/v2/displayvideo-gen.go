@@ -7946,11 +7946,11 @@ func (s IdFilter) MarshalJSON() ([]byte, error) {
 
 // ImageAsset: Meta data of an image asset.
 type ImageAsset struct {
-	// FileSize: File size of the image asset in bytes.
+	// FileSize: Output only. File size of the image asset in bytes.
 	FileSize int64 `json:"fileSize,omitempty,string"`
-	// FullSize: Metadata for this image at its original size.
+	// FullSize: Output only. Metadata for this image at its original size.
 	FullSize *Dimensions `json:"fullSize,omitempty"`
-	// MimeType: MIME type of the image asset.
+	// MimeType: Output only. MIME type of the image asset.
 	MimeType string `json:"mimeType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FileSize") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14679,7 +14679,8 @@ func (s YoutubeVideoAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error
 
 // YoutubeVideoDetails: Details of a YouTube video.
 type YoutubeVideoDetails struct {
-	// Id: The YouTube video ID which can be searched on YouTube webpage.
+	// Id: Output only. The YouTube video ID which can be searched on YouTube
+	// webpage.
 	Id string `json:"id,omitempty"`
 	// UnavailableReason: The reason why the video data is not available.
 	//
@@ -14688,6 +14689,9 @@ type YoutubeVideoDetails struct {
 	//   "VIDEO_UNAVAILABLE_REASON_PRIVATE" - The video is private.
 	//   "VIDEO_UNAVAILABLE_REASON_DELETED" - The video is deleted.
 	UnavailableReason string `json:"unavailableReason,omitempty"`
+	// VideoAssetId: Required. The YouTube video asset id. This is
+	// ad_asset.ad_asset_id.
+	VideoAssetId int64 `json:"videoAssetId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

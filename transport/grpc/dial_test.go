@@ -7,6 +7,7 @@ package grpc
 import (
 	"bytes"
 	"context"
+	"errors"
 	"log"
 	"net/http"
 	"os"
@@ -346,8 +347,10 @@ func TestIsDirectPathEnabled(t *testing.T) {
 		})
 	}
 }
-func TestIsAuthCompatible_Direct(t *testing.T) {
+func TestAuthReason(t *testing.T) {
 	ctx := context.Background()
+	detector := NewDirectPathStatus()
+
 	// A token that satisfies the GCE Metadata requirement
 	gceToken := (&oauth2.Token{
 		AccessToken: "fake-access-token",
@@ -359,21 +362,21 @@ func TestIsAuthCompatible_Direct(t *testing.T) {
 	tests := []struct {
 		name string
 		ds   *internal.DialSettings
-		want bool
+		want string
 	}{
 		{
 			name: "API Key - Incompatible",
 			ds: &internal.DialSettings{
 				APIKey: "secret-key",
 			},
-			want: false,
+			want: detector.APIKey,
 		},
 		{
 			name: "No Auth - Incompatible",
 			ds: &internal.DialSettings{
 				NoAuth: true,
 			},
-			want: false,
+			want: detector.NoAuth,
 		},
 		{
 			name: "GCE Token - Compatible",
@@ -382,7 +385,7 @@ func TestIsAuthCompatible_Direct(t *testing.T) {
 				// from looking for real files.
 				TokenSource: &mockTokenSource{token: gceToken},
 			},
-			want: true,
+			want: "", // Empty string signifies compatibility
 		},
 		{
 			name: "Standard Token - Incompatible",
@@ -391,19 +394,36 @@ func TestIsAuthCompatible_Direct(t *testing.T) {
 					token: &oauth2.Token{AccessToken: "regular-token"},
 				},
 			},
-			want: false,
+			want: detector.NotComputeMetadata,
+		},
+		{
+			name: "Non-default Service Account - Incompatible",
+			ds: &internal.DialSettings{
+				TokenSource: &mockTokenSource{
+					token: (&oauth2.Token{}).WithExtra(map[string]interface{}{
+						"oauth2.google.tokenSource":    "compute-metadata",
+						"oauth2.google.serviceAccount": "custom-sa@project.iam.gserviceaccount.com",
+					}),
+				},
+			},
+			want: detector.NotDefaultServiceAccount,
+		},
+		{
+			name: "Token Fetch Error",
+			ds: &internal.DialSettings{
+				TokenSource: &mockTokenSource{err: errors.New("network error")},
+			},
+			want: detector.TokenFetchError,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			d := NewDirectPathStatus()
-
-			// Calling the method directly
-			got := d.isAuthCompatible(ctx, tt.ds)
+			// Calling the helper directly to verify granular reasons.
+			got := detector.authReason(ctx, tt.ds)
 
 			if got != tt.want {
-				t.Errorf("%s: isAuthCompatible() = %v, want %v", tt.name, got, tt.want)
+				t.Errorf("%s: authReason() = %q, want %q", tt.name, got, tt.want)
 			}
 		})
 	}
@@ -411,69 +431,70 @@ func TestIsAuthCompatible_Direct(t *testing.T) {
 
 type mockTokenSource struct {
 	token *oauth2.Token
+	err   error
 }
 
 func (ts *mockTokenSource) Token() (*oauth2.Token, error) {
-	return ts.token, nil
+	return ts.token, ts.err
 }
 
 func TestDirectPathStatus_CheckWithReason(t *testing.T) {
 	ctx := context.Background()
 	detector := NewDirectPathStatus()
-	// A token that satisfies the GCE Metadata requirement
+
+	validEndpoint := option.WithEndpoint("dns:///foo.googleapis.com")
 	gceToken := (&oauth2.Token{AccessToken: "fake-token"}).WithExtra(map[string]interface{}{
 		"oauth2.google.tokenSource":    "compute-metadata",
 		"oauth2.google.serviceAccount": "default",
 	})
 
 	tests := []struct {
-		name  string
-		opts  []option.ClientOption
-		onGCE bool
-		want  string
+		name    string
+		opts    []option.ClientOption
+		onGCE   bool
+		envVars map[string]string
+		want    string
 	}{
 		{
-			name:  "User opted out - custom HTTP client",
-			opts:  []option.ClientOption{option.WithHTTPClient(http.DefaultClient)},
-			onGCE: true,
-			want:  detector.UserOptedOut,
+			name: "User opted out - custom HTTP client",
+			opts: []option.ClientOption{option.WithHTTPClient(http.DefaultClient)},
+			want: detector.CustomHTTPClient,
 		},
 		{
-			name: "User opted out - DirectPathXds not enabled",
-			opts: []option.ClientOption{option.WithEndpoint("dns:///google.com"),
+			name: "XDS not enabled",
+			opts: []option.ClientOption{
 				internaloption.EnableDirectPath(true),
+				validEndpoint,
 			},
-			onGCE: true,
-			want:  detector.UserOptedOut,
+			want: detector.XdsNotEnabled,
 		},
 		{
-			name: "User opted out - DirectPath not enabled",
-			opts: []option.ClientOption{option.WithEndpoint("dns:///google.com"),
+			name: "Option disabled",
+			opts: []option.ClientOption{
+				internaloption.EnableDirectPath(false),
 				internaloption.EnableDirectPathXds(),
+				validEndpoint,
 			},
-			onGCE: true,
-			want:  detector.UserOptedOut,
+			want: detector.OptionDisabled,
 		},
 		{
-			name: "User opted out - Endpoint scheme not supported",
+			name: "Env disabled",
 			opts: []option.ClientOption{
 				internaloption.EnableDirectPath(true),
 				internaloption.EnableDirectPathXds(),
-				option.WithEndpoint("https://google.com"), // Only dns:/// or no prefix allowed
+				validEndpoint,
 			},
-			onGCE: true,
-			want:  detector.UserOptedOut,
+			envVars: map[string]string{disableDirectPath: "true"},
+			want:    detector.EnvDisabled,
 		},
 		{
-			name:  "Success",
-			onGCE: true, // This will override the metadata check
+			name: "Unsupported endpoint scheme",
 			opts: []option.ClientOption{
 				internaloption.EnableDirectPath(true),
 				internaloption.EnableDirectPathXds(),
-				option.WithEndpoint("dns:///google.com"),
-				option.WithTokenSource(&mockTokenSource{token: gceToken}),
+				option.WithEndpoint("https://google.com"),
 			},
-			want: detector.Enabled,
+			want: detector.UnsupportedEndpoint,
 		},
 		{
 			name:  "Not on GCE",
@@ -481,71 +502,97 @@ func TestDirectPathStatus_CheckWithReason(t *testing.T) {
 			opts: []option.ClientOption{
 				internaloption.EnableDirectPath(true),
 				internaloption.EnableDirectPathXds(),
-				option.WithEndpoint("dns:///google.com"),
+				validEndpoint,
 				option.WithTokenSource(&mockTokenSource{token: gceToken}),
 			},
 			want: detector.NotOnGCE,
 		},
 		{
-			name: "Incompatible credentials - API Key",
-			opts: []option.ClientOption{
-				option.WithAPIKey("test-key"),
-				internaloption.EnableDirectPath(true),
-				internaloption.EnableDirectPathXds(),
-				option.WithEndpoint("dns:///google.com"),
-			},
-			onGCE: true,
-			want:  detector.IncompatibleCreds,
-		},
-		{
-			name: "Incompatible credentials - NoAuth",
+			name: "No Auth - Incompatible",
 			opts: []option.ClientOption{
 				option.WithoutAuthentication(),
 				internaloption.EnableDirectPath(true),
 				internaloption.EnableDirectPathXds(),
-				option.WithEndpoint("dns:///google.com"),
+				validEndpoint,
 			},
 			onGCE: true,
-			want:  detector.IncompatibleCreds,
+			want:  detector.NoAuth,
 		},
 		{
-			name: "Incompatible credentials - Token Source missing GCE metadata",
+			name: "API Key - Incompatible",
+			opts: []option.ClientOption{
+				option.WithAPIKey("test-key"),
+				internaloption.EnableDirectPath(true),
+				internaloption.EnableDirectPathXds(),
+				validEndpoint,
+			},
+			onGCE: true,
+			want:  detector.APIKey,
+		},
+		{
+			name: "Token fetch error",
 			opts: []option.ClientOption{
 				internaloption.EnableDirectPath(true),
 				internaloption.EnableDirectPathXds(),
-				option.WithEndpoint("dns:///google.com"),
+				validEndpoint,
+				option.WithTokenSource(&mockTokenSource{err: errors.New("fail")}),
+			},
+			onGCE: true,
+			want:  detector.TokenFetchError,
+		},
+		{
+			name: "Incompatible credentials - Not compute metadata",
+			opts: []option.ClientOption{
+				internaloption.EnableDirectPath(true),
+				internaloption.EnableDirectPathXds(),
+				validEndpoint,
 				option.WithTokenSource(&mockTokenSource{
-					token: &oauth2.Token{AccessToken: "not-gce"},
+					token: &oauth2.Token{AccessToken: "regular-token"},
 				}),
 			},
 			onGCE: true,
-			want:  detector.IncompatibleCreds,
+			want:  detector.NotComputeMetadata,
 		},
 		{
-			name: "Incompatible credentials - Non-default service account without permission",
+			name: "Incompatible credentials - Non-default service account",
 			opts: []option.ClientOption{
 				internaloption.EnableDirectPath(true),
 				internaloption.EnableDirectPathXds(),
-				option.WithEndpoint("dns:///google.com"),
+				validEndpoint,
 				option.WithTokenSource(&mockTokenSource{
 					token: (&oauth2.Token{}).WithExtra(map[string]interface{}{
 						"oauth2.google.tokenSource":    "compute-metadata",
-						"oauth2.google.serviceAccount": "custom-sa@project.iam.gserviceaccount.com",
+						"oauth2.google.serviceAccount": "custom-sa",
 					}),
 				}),
 			},
 			onGCE: true,
-			want:  detector.IncompatibleCreds,
+			want:  detector.NotDefaultServiceAccount,
+		},
+		{
+			name:  "Success",
+			onGCE: true,
+			opts: []option.ClientOption{
+				internaloption.EnableDirectPath(true),
+				internaloption.EnableDirectPathXds(),
+				validEndpoint,
+				option.WithTokenSource(&mockTokenSource{token: gceToken}),
+			},
+			want: detector.Enabled,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			os.Setenv(disableDirectPath, "false")
+			for k, v := range tt.envVars {
+				os.Setenv(k, v)
+			}
+
 			detector.onGCE = func() bool { return tt.onGCE }
 			got := detector.CheckWithReason(ctx, tt.opts...)
 			if got != tt.want {
-				t.Errorf("CheckWithReason() = %v, want %v", got, tt.want)
+				t.Errorf("%s: CheckWithReason() = %v, want %v", tt.name, got, tt.want)
 			}
 		})
 	}

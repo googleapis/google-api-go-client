@@ -1554,6 +1554,9 @@ type GoogleCloudRunV2Instance struct {
 	// reach a serving state. See comments in `reconciling` for additional
 	// information on reconciliation process in Cloud Run.
 	TerminalCondition *GoogleCloudRunV2Condition `json:"terminalCondition,omitempty"`
+	// Timeout: Optional. Duration the instance may be active before the system
+	// will shut it down.
+	Timeout string `json:"timeout,omitempty"`
 	// Uid: Output only. Server assigned unique identifier for the trigger. The
 	// value is a UUID4 string and guaranteed to remain unchanged until the
 	// resource is deleted.
@@ -2300,7 +2303,7 @@ type GoogleCloudRunV2Revision struct {
 	// readiness status, and detailed error information in case it did not reach a
 	// serving state.
 	Conditions []*GoogleCloudRunV2Condition `json:"conditions,omitempty"`
-	// Containers: Holds the single container that defines the unit of execution
+	// Containers: Containers holds the list which define the units of execution
 	// for this Revision.
 	Containers []*GoogleCloudRunV2Container `json:"containers,omitempty"`
 	// CreateTime: Output only. The creation time.
@@ -2466,6 +2469,12 @@ func (s GoogleCloudRunV2Revision) MarshalJSON() ([]byte, error) {
 // GoogleCloudRunV2RevisionScaling: Settings for revision-level scaling
 // settings.
 type GoogleCloudRunV2RevisionScaling struct {
+	// ConcurrencyUtilization: Optional. Determines a threshold for concurrency
+	// utilization before scaling begins.
+	ConcurrencyUtilization float64 `json:"concurrencyUtilization,omitempty"`
+	// CpuUtilization: Optional. Determines a threshold for CPU utilization before
+	// scaling begins.
+	CpuUtilization float64 `json:"cpuUtilization,omitempty"`
 	// MaxInstanceCount: Optional. Maximum number of serving instances that this
 	// resource should have. When unspecified, the field is set to the server
 	// default value of 100. For more information see
@@ -2474,15 +2483,15 @@ type GoogleCloudRunV2RevisionScaling struct {
 	// MinInstanceCount: Optional. Minimum number of serving instances that this
 	// resource should have.
 	MinInstanceCount int64 `json:"minInstanceCount,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MaxInstanceCount") to
+	// ForceSendFields is a list of field names (e.g. "ConcurrencyUtilization") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MaxInstanceCount") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ConcurrencyUtilization") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2490,6 +2499,22 @@ type GoogleCloudRunV2RevisionScaling struct {
 func (s GoogleCloudRunV2RevisionScaling) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2RevisionScaling
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudRunV2RevisionScaling) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRunV2RevisionScaling
+	var s1 struct {
+		ConcurrencyUtilization gensupport.JSONFloat64 `json:"concurrencyUtilization"`
+		CpuUtilization         gensupport.JSONFloat64 `json:"cpuUtilization"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ConcurrencyUtilization = float64(s1.ConcurrencyUtilization)
+	s.CpuUtilization = float64(s1.CpuUtilization)
+	return nil
 }
 
 // GoogleCloudRunV2RevisionScalingStatus: Effective settings for the current

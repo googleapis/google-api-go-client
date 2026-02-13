@@ -3964,6 +3964,11 @@ type TlsRoute struct {
 	Rules []*TlsRouteRouteRule `json:"rules,omitempty"`
 	// SelfLink: Output only. Server-defined URL of this resource
 	SelfLink string `json:"selfLink,omitempty"`
+	// TargetProxies: Optional. TargetProxies defines a list of TargetTcpProxies
+	// this TlsRoute is attached to, as one of the routing rules to route the
+	// requests served by the TargetTcpProxy. Each TargetTcpProxy reference should
+	// match the pattern: `projects/*/locations/*/targetTcpProxies/`
+	TargetProxies []string `json:"targetProxies,omitempty"`
 	// UpdateTime: Output only. The timestamp when the resource was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -4574,7 +4579,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

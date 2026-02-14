@@ -9432,6 +9432,12 @@
               "location": "query",
               "type": "string"
             },
+            "countryDartId": {
+              "description": "Optional. Country Dart ID. If not specified, defaults to 256 (US).",
+              "format": "int64",
+              "location": "query",
+              "type": "string"
+            },
             "id": {
               "description": "Required. TV Campaign ID.",
               "location": "path",
@@ -9445,6 +9451,33 @@
               "location": "path",
               "pattern": "^[^/]+$",
               "required": true,
+              "type": "string"
+            },
+            "tvDataProvider": {
+              "description": "Optional. TV data provider. If not specified, defaults to `COMSCORE_NATIONAL_US`.",
+              "enum": [
+                "INVALID_TV_DATA_PROVIDER",
+                "IBOPE_AR",
+                "IBOPE_BR",
+                "IBOPE_CL",
+                "IBOPE_CO",
+                "TNS_VN",
+                "COMSCORE_NATIONAL_US",
+                "COMSCORE_CA",
+                "SAMBA_AU"
+              ],
+              "enumDescriptions": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "location": "query",
               "type": "string"
             }
           },
@@ -9475,6 +9508,12 @@
               "location": "query",
               "type": "string"
             },
+            "countryDartId": {
+              "description": "Optional. Country Dart ID. If not specified, defaults to 256 (US).",
+              "format": "int64",
+              "location": "query",
+              "type": "string"
+            },
             "name": {
               "description": "Required. Search string to filter the list of TV campaign summaries. Matches any substring. Required field.",
               "location": "query",
@@ -9486,6 +9525,33 @@
               "location": "path",
               "pattern": "^[^/]+$",
               "required": true,
+              "type": "string"
+            },
+            "tvDataProvider": {
+              "description": "Optional. TV data provider. If not specified, defaults to `COMSCORE_NATIONAL_US`.",
+              "enum": [
+                "INVALID_TV_DATA_PROVIDER",
+                "IBOPE_AR",
+                "IBOPE_BR",
+                "IBOPE_CL",
+                "IBOPE_CO",
+                "TNS_VN",
+                "COMSCORE_NATIONAL_US",
+                "COMSCORE_CA",
+                "SAMBA_AU"
+              ],
+              "enumDescriptions": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "location": "query",
               "type": "string"
             }
           },
@@ -10005,7 +10071,7 @@
       }
     }
   },
-  "revision": "20251023",
+  "revision": "20260211",
   "rootUrl": "https://dfareporting.googleapis.com/",
   "schemas": {
     "Account": {
@@ -11564,7 +11630,7 @@
       "type": "object"
     },
     "CartData": {
-      "description": " *Beta:* This feature is currently in beta. Contains additional information about cart data. This field may only be used when calling batchinsert; it is not supported by batchupdate. Cart data reporting is only supported in SA360. [Learn more](https://support.google.com/sa360/topic/13425788)",
+      "description": "Contains additional information about cart data. This field may only be used when calling batchinsert; it is not supported by batchupdate. Cart data reporting is only supported in SA360. [Learn more](https://support.google.com/sa360/topic/13425788)",
       "id": "CartData",
       "properties": {
         "items": {
@@ -12391,6 +12457,36 @@
         "sslEnabled": {
           "description": "Whether ad serving supports secure servers in this country.",
           "type": "boolean"
+        },
+        "tvDataProviders": {
+          "description": "Output only. The TV data providers supported in this country.",
+          "items": {
+            "enum": [
+              "INVALID_TV_DATA_PROVIDER",
+              "IBOPE_AR",
+              "IBOPE_BR",
+              "IBOPE_CL",
+              "IBOPE_CO",
+              "TNS_VN",
+              "COMSCORE_NATIONAL_US",
+              "COMSCORE_CA",
+              "SAMBA_AU"
+            ],
+            "enumDescriptions": [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
         }
       },
       "type": "object"
@@ -20528,6 +20624,11 @@
           "$ref": "StudioCreativeDimension",
           "description": "Dimension of this studio creative. This is a required field on insertion if format is BANNER or EXPANDING."
         },
+        "durationSeconds": {
+          "description": "Optional. Duration of this studio creative in seconds.",
+          "format": "int32",
+          "type": "integer"
+        },
         "dynamicProfileId": {
           "description": "Dynamic profile ID of this studio creative.",
           "format": "int64",
@@ -20540,14 +20641,16 @@
             "BANNER",
             "EXPANDING",
             "INTERSTITIAL",
-            "VPAID_LINEAR_VIDEO"
+            "VPAID_LINEAR_VIDEO",
+            "INSTREAM_VIDEO"
           ],
           "enumDescriptions": [
             "The format of the studio creative is unknown. This value is unused.",
             "Banner format.",
             "Expanding format.",
             "Intertitial format.",
-            "VPAID linear video creative format."
+            "VPAID linear video creative format.",
+            "In-stream video creative format."
           ],
           "type": "string"
         },
@@ -20563,6 +20666,22 @@
         },
         "name": {
           "description": "Identifier. Name of this studio creative. This is a required field on insertion.",
+          "type": "string"
+        },
+        "orientation": {
+          "description": "Optional. LINT.ThenChange( //depot/google3/ads/richmedia/studio/proto/stubby/creative.proto:orientation, //depot/google3/ads/xfa/proto/api/enum.proto:orientation, //depot/google3/java/com/google/ads/richmedia/studio/domain/model/converter/CreativeConverter.java:orientation ) Orientation of this studio creative.",
+          "enum": [
+            "ORIENTATION_UNKNOWN",
+            "ASSET_LANDSCAPE",
+            "ASSET_PORTRAIT",
+            "ASSET_SQUARE"
+          ],
+          "enumDescriptions": [
+            "The orientation of the studio creative is unknown.",
+            "The asset is a landscape asset.",
+            "The asset is a portrait asset.",
+            "The asset is a square asset."
+          ],
           "type": "string"
         },
         "status": {

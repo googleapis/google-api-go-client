@@ -208,6 +208,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.KeyHandles = NewProjectsLocationsKeyHandlesService(s)
 	rs.KeyRings = NewProjectsLocationsKeyRingsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.RetiredResources = NewProjectsLocationsRetiredResourcesService(s)
 	rs.SingleTenantHsmInstances = NewProjectsLocationsSingleTenantHsmInstancesService(s)
 	return rs
 }
@@ -224,6 +225,8 @@ type ProjectsLocationsService struct {
 	KeyRings *ProjectsLocationsKeyRingsService
 
 	Operations *ProjectsLocationsOperationsService
+
+	RetiredResources *ProjectsLocationsRetiredResourcesService
 
 	SingleTenantHsmInstances *ProjectsLocationsSingleTenantHsmInstancesService
 }
@@ -306,6 +309,15 @@ func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperati
 }
 
 type ProjectsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsRetiredResourcesService(s *Service) *ProjectsLocationsRetiredResourcesService {
+	rs := &ProjectsLocationsRetiredResourcesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsRetiredResourcesService struct {
 	s *Service
 }
 
@@ -716,7 +728,8 @@ type AutokeyConfig struct {
 	//   "DEDICATED_KEY_PROJECT" - Keys are created in a dedicated project
 	// specified by `key_project`.
 	//   "RESOURCE_PROJECT" - Keys are created in the same project as the resource
-	// requesting the key. `key_project` must not be set when this mode is used.
+	// requesting the key. The `key_project` must not be set when this mode is
+	// used.
 	//   "DISABLED" - Disables the AutokeyConfig. When this mode is set, any
 	// AutokeyConfig from higher levels in the resource hierarchy are ignored for
 	// this resource and its descendants. This setting can be overridden by a more
@@ -726,7 +739,8 @@ type AutokeyConfig struct {
 	// RESOURCE_PROJECT).
 	KeyProjectResolutionMode string `json:"keyProjectResolutionMode,omitempty"`
 	// Name: Identifier. Name of the AutokeyConfig resource, e.g.
-	// `folders/{FOLDER_NUMBER}/autokeyConfig`
+	// `folders/{FOLDER_NUMBER}/autokeyConfig` or
+	// `projects/{PROJECT_NUMBER}/autokeyConfig`.
 	Name string `json:"name,omitempty"`
 	// State: Output only. The state for the AutokeyConfig.
 	//
@@ -2839,6 +2853,38 @@ func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListRetiredResourcesResponse: Response message for
+// KeyManagementService.ListRetiredResources.
+type ListRetiredResourcesResponse struct {
+	// NextPageToken: A token to retrieve the next page of results. Pass this value
+	// in ListRetiredResourcesRequest.page_token to retrieve the next page of
+	// results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// RetiredResources: The list of RetiredResources.
+	RetiredResources []*RetiredResource `json:"retiredResources,omitempty"`
+	// TotalSize: The total number of RetiredResources that matched the query.
+	TotalSize int64 `json:"totalSize,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListRetiredResourcesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListRetiredResourcesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListSingleTenantHsmInstanceProposalsResponse: Response message for
 // HsmManagement.ListSingleTenantHsmInstanceProposals.
 type ListSingleTenantHsmInstanceProposalsResponse struct {
@@ -4044,6 +4090,44 @@ func (s RequiredActionQuorumReply) MarshalJSON() ([]byte, error) {
 type RestoreCryptoKeyVersionRequest struct {
 }
 
+// RetiredResource: A RetiredResource resource represents the record of a
+// deleted CryptoKey. Its purpose is to provide visibility into retained user
+// data and to prevent reuse of these names for new CryptoKeys.
+type RetiredResource struct {
+	// DeleteTime: Output only. The time at which the original resource was deleted
+	// and this RetiredResource record was created.
+	DeleteTime string `json:"deleteTime,omitempty"`
+	// Name: Output only. Identifier. The resource name for this RetiredResource in
+	// the format `projects/*/locations/*/retiredResources/*`.
+	Name string `json:"name,omitempty"`
+	// OriginalResource: Output only. The full resource name of the original
+	// CryptoKey that was deleted in the format
+	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
+	OriginalResource string `json:"originalResource,omitempty"`
+	// ResourceType: Output only. The resource type of the original deleted
+	// resource.
+	ResourceType string `json:"resourceType,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DeleteTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeleteTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RetiredResource) MarshalJSON() ([]byte, error) {
+	type NoMethod RetiredResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ServiceResolver: A ServiceResolver represents an EKM replica that can be
 // reached within an EkmConnection.
 type ServiceResolver struct {
@@ -4754,7 +4838,8 @@ type FoldersUpdateAutokeyConfigCall struct {
 // resulting CryptoKey.
 //
 //   - name: Identifier. Name of the AutokeyConfig resource, e.g.
-//     `folders/{FOLDER_NUMBER}/autokeyConfig`.
+//     `folders/{FOLDER_NUMBER}/autokeyConfig` or
+//     `projects/{PROJECT_NUMBER}/autokeyConfig`.
 func (r *FoldersService) UpdateAutokeyConfig(name string, autokeyconfig *AutokeyConfig) *FoldersUpdateAutokeyConfigCall {
 	c := &FoldersUpdateAutokeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5770,7 +5855,8 @@ type ProjectsUpdateAutokeyConfigCall struct {
 // resulting CryptoKey.
 //
 //   - name: Identifier. Name of the AutokeyConfig resource, e.g.
-//     `folders/{FOLDER_NUMBER}/autokeyConfig`.
+//     `folders/{FOLDER_NUMBER}/autokeyConfig` or
+//     `projects/{PROJECT_NUMBER}/autokeyConfig`.
 func (r *ProjectsService) UpdateAutokeyConfig(name string, autokeyconfig *AutokeyConfig) *ProjectsUpdateAutokeyConfigCall {
 	c := &ProjectsUpdateAutokeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6317,7 +6403,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
@@ -9235,6 +9325,107 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysDecryptCall) Do(opts ...googleapi.Ca
 	return ret, nil
 }
 
+type ProjectsLocationsKeyRingsCryptoKeysDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Permanently deletes the given CryptoKey. All child CryptoKeyVersions
+// must have been previously deleted using
+// KeyManagementService.DeleteCryptoKeyVersion. The specified crypto key will
+// be immediately and permanently deleted upon calling this method. This action
+// cannot be undone.
+//
+// - name: The name of the CryptoKey to delete.
+func (r *ProjectsLocationsKeyRingsCryptoKeysService) Delete(name string) *ProjectsLocationsKeyRingsCryptoKeysDeleteCall {
+	c := &ProjectsLocationsKeyRingsCryptoKeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsKeyRingsCryptoKeysDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsKeyRingsCryptoKeysDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsKeyRingsCryptoKeysDeleteCall) Context(ctx context.Context) *ProjectsLocationsKeyRingsCryptoKeysDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsKeyRingsCryptoKeysDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsKeyRingsCryptoKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.keyRings.cryptoKeys.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsKeyRingsCryptoKeysDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.keyRings.cryptoKeys.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsKeyRingsCryptoKeysEncryptCall struct {
 	s              *Service
 	name           string
@@ -10619,6 +10810,108 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDecapsulateCall) Do
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.decapsulate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Permanently deletes the given CryptoKeyVersion. Only possible if the
+// version has not been previously imported and if its state is one of
+// DESTROYED, IMPORT_FAILED, or GENERATION_FAILED. Successfully imported
+// CryptoKeyVersions cannot be deleted at this time. The specified version will
+// be immediately and permanently deleted upon calling this method. This action
+// cannot be undone.
+//
+// - name: The name of the CryptoKeyVersion to delete.
+func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) Delete(name string) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDeleteCall {
+	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12772,6 +13065,268 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsRetiredResourcesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a specific RetiredResource resource, which represents the
+// record of a deleted CryptoKey.
+//
+// - name: The name of the RetiredResource to get.
+func (r *ProjectsLocationsRetiredResourcesService) Get(name string) *ProjectsLocationsRetiredResourcesGetCall {
+	c := &ProjectsLocationsRetiredResourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRetiredResourcesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsRetiredResourcesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRetiredResourcesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsRetiredResourcesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRetiredResourcesGetCall) Context(ctx context.Context) *ProjectsLocationsRetiredResourcesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRetiredResourcesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRetiredResourcesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.retiredResources.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.retiredResources.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RetiredResource.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsRetiredResourcesGetCall) Do(opts ...googleapi.CallOption) (*RetiredResource, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RetiredResource{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.retiredResources.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsRetiredResourcesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the RetiredResources which are the records of deleted
+// CryptoKeys. RetiredResources prevent the reuse of these resource names after
+// deletion.
+//
+//   - parent: The project-specific location holding the RetiredResources, in the
+//     format `projects/*/locations/*`.
+func (r *ProjectsLocationsRetiredResourcesService) List(parent string) *ProjectsLocationsRetiredResourcesListCall {
+	c := &ProjectsLocationsRetiredResourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Optional limit on the
+// number of RetiredResources to be included in the response. Further
+// RetiredResources can subsequently be obtained by including the
+// ListRetiredResourcesResponse.next_page_token in a subsequent request. If
+// unspecified, the server will pick an appropriate default.
+func (c *ProjectsLocationsRetiredResourcesListCall) PageSize(pageSize int64) *ProjectsLocationsRetiredResourcesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Optional pagination
+// token, returned earlier via ListRetiredResourcesResponse.next_page_token.
+func (c *ProjectsLocationsRetiredResourcesListCall) PageToken(pageToken string) *ProjectsLocationsRetiredResourcesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRetiredResourcesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsRetiredResourcesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRetiredResourcesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsRetiredResourcesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRetiredResourcesListCall) Context(ctx context.Context) *ProjectsLocationsRetiredResourcesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRetiredResourcesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRetiredResourcesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/retiredResources")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.retiredResources.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.retiredResources.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListRetiredResourcesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRetiredResourcesListCall) Do(opts ...googleapi.CallOption) (*ListRetiredResourcesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListRetiredResourcesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.retiredResources.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsRetiredResourcesListCall) Pages(ctx context.Context, f func(*ListRetiredResourcesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsSingleTenantHsmInstancesCreateCall struct {

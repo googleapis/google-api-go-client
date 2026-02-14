@@ -985,7 +985,7 @@ func (s AdAsset) MarshalJSON() ([]byte, error) {
 
 // AdGroup: A single ad group associated with a line item.
 type AdGroup struct {
-	// AdGroupFormat: The format of the ads in the ad group.
+	// AdGroupFormat: Required. The format of the ads in the ad group.
 	//
 	// Possible values:
 	//   "AD_GROUP_FORMAT_UNSPECIFIED" - Format value is not specified or is
@@ -1002,19 +1002,22 @@ type AdGroup struct {
 	//   "AD_GROUP_FORMAT_MASTHEAD" - Masthead Ad that is surfaced on the top slot
 	// on the YouTube homepage.
 	AdGroupFormat string `json:"adGroupFormat,omitempty"`
-	// AdGroupId: The unique ID of the ad group. Assigned by the system.
+	// AdGroupId: Output only. The unique ID of the ad group. Assigned by the
+	// system.
 	AdGroupId int64 `json:"adGroupId,omitempty,string"`
-	// AdvertiserId: The unique ID of the advertiser the ad group belongs to.
+	// AdvertiserId: Output only. The unique ID of the advertiser the ad group
+	// belongs to.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
-	// BidStrategy: The bidding strategy used by the ad group. Only the
-	// youtubeAndPartnersBid field can be used in the bidding strategy.
+	// BidStrategy: Optional. The bidding strategy used by the ad group. Only the
+	// youtubeAndPartnersBid and demandGenBid field can be used in the bidding
+	// strategy.
 	BidStrategy *BiddingStrategy `json:"bidStrategy,omitempty"`
-	// DisplayName: The display name of the ad group. Must be UTF-8 encoded with a
-	// maximum size of 255 bytes.
+	// DisplayName: Required. The display name of the ad group. Must be UTF-8
+	// encoded with a maximum size of 255 bytes.
 	DisplayName string `json:"displayName,omitempty"`
-	// EntityStatus: Controls whether or not the ad group can spend its budget and
-	// bid on inventory. If the ad group's parent line item is not active, the ad
-	// group can't spend its budget even if its own status is
+	// EntityStatus: Required. Controls whether or not the ad group can spend its
+	// budget and bid on inventory. If the ad group's parent line item is not
+	// active, the ad group can't spend its budget even if its own status is
 	// `ENTITY_STATUS_ACTIVE`.
 	//
 	// Possible values:
@@ -1031,13 +1034,15 @@ type AdGroup struct {
 	//   "ENTITY_STATUS_SCHEDULED_FOR_DELETION" - The entity is scheduled for
 	// deletion.
 	EntityStatus string `json:"entityStatus,omitempty"`
-	// LineItemId: The unique ID of the line item that the ad group belongs to.
+	// LineItemId: Required. The unique ID of the line item that the ad group
+	// belongs to.
 	LineItemId int64 `json:"lineItemId,omitempty,string"`
-	// Name: The resource name of the ad group.
+	// Name: Output only. Identifier. The resource name of the ad group.
 	Name string `json:"name,omitempty"`
-	// ProductFeedData: The settings of the product feed in this ad group.
+	// ProductFeedData: Optional. The settings of the product feed in this ad
+	// group.
 	ProductFeedData *ProductFeedData `json:"productFeedData,omitempty"`
-	// TargetingExpansion: The optimized targeting
+	// TargetingExpansion: Optional. The optimized targeting
 	// (//support.google.com/displayvideo/answer/12060859) settings of the ad
 	// group.
 	TargetingExpansion *TargetingExpansionConfig `json:"targetingExpansion,omitempty"`
@@ -1066,33 +1071,30 @@ func (s AdGroup) MarshalJSON() ([]byte, error) {
 type AdGroupAd struct {
 	// AdGroupAdId: Output only. The unique ID of the ad. Assigned by the system.
 	AdGroupAdId int64 `json:"adGroupAdId,omitempty,string"`
-	// AdGroupId: The unique ID of the ad group that the ad belongs to. *Caution*:
-	// Parent ad groups for Demand Gen ads are not currently retrieveable using
-	// `advertisers.adGroups.list` or `advertisers.adGroups.get`. Demand Gen ads
-	// can be identified by the absence of the `ad_details` union field.
+	// AdGroupId: Required. The unique ID of the ad group that the ad belongs to.
 	AdGroupId int64 `json:"adGroupId,omitempty,string"`
 	// AdPolicy: Output only. The policy approval status of the ad.
 	AdPolicy *AdPolicy `json:"adPolicy,omitempty"`
-	// AdUrls: List of URLs used by the ad.
+	// AdUrls: Output only. List of URLs used by the ad.
 	AdUrls []*AdUrl `json:"adUrls,omitempty"`
 	// AdvertiserId: Output only. The unique ID of the advertiser the ad belongs
 	// to.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
-	// AudioAd: Details of an audio ad
+	// AudioAd: Output only. Details of an audio ad
 	// (//support.google.com/displayvideo/answer/6274216) used for reach marketing
 	// objectives.
 	AudioAd *AudioAd `json:"audioAd,omitempty"`
-	// BumperAd: Details of a non-skippable short video ad
+	// BumperAd: Output only. Details of a non-skippable short video ad
 	// (//support.google.com/displayvideo/answer/6274216), equal to or less than 6
 	// seconds, used for reach.
 	BumperAd *BumperAd `json:"bumperAd,omitempty"`
-	// DisplayName: The display name of the ad. Must be UTF-8 encoded with a
-	// maximum size of 255 bytes.
+	// DisplayName: Required. The display name of the ad. Must be UTF-8 encoded
+	// with a maximum size of 255 bytes.
 	DisplayName string `json:"displayName,omitempty"`
-	// DisplayVideoSourceAd: Details of an ad sourced from a Display & Video 360
-	// creative.
+	// DisplayVideoSourceAd: Output only. Details of an ad sourced from a Display &
+	// Video 360 creative.
 	DisplayVideoSourceAd *DisplayVideoSourceAd `json:"displayVideoSourceAd,omitempty"`
-	// EntityStatus: The entity status of the ad.
+	// EntityStatus: Required. The entity status of the ad.
 	//
 	// Possible values:
 	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not specified
@@ -1108,26 +1110,26 @@ type AdGroupAd struct {
 	//   "ENTITY_STATUS_SCHEDULED_FOR_DELETION" - The entity is scheduled for
 	// deletion.
 	EntityStatus string `json:"entityStatus,omitempty"`
-	// InStreamAd: Details of an in-stream ad skippable after 5 seconds
-	// (//support.google.com/displayvideo/answer/6274216), used for brand awareness
-	// or reach marketing objectives.
+	// InStreamAd: Output only. Details of an in-stream ad skippable after 5
+	// seconds (//support.google.com/displayvideo/answer/6274216), used for brand
+	// awareness or reach marketing objectives.
 	InStreamAd *InStreamAd `json:"inStreamAd,omitempty"`
-	// MastheadAd: Details of an ad served on the YouTube Home feed
+	// MastheadAd: Output only. Details of an ad served on the YouTube Home feed
 	// (//support.google.com/google-ads/answer/9709826).
 	MastheadAd *MastheadAd `json:"mastheadAd,omitempty"`
 	// Name: Output only. The resource name of the ad.
 	Name string `json:"name,omitempty"`
-	// NonSkippableAd: Details of a non-skippable short in-stream video ad
-	// (//support.google.com/displayvideo/answer/6274216), between 6 and 15
-	// seconds, used for reach marketing objectives.
+	// NonSkippableAd: Output only. Details of a non-skippable short in-stream
+	// video ad (//support.google.com/displayvideo/answer/6274216), between 6 and
+	// 15 seconds, used for reach marketing objectives.
 	NonSkippableAd *NonSkippableAd `json:"nonSkippableAd,omitempty"`
-	// VideoDiscoverAd: Details of an ad promoting a video
+	// VideoDiscoverAd: Output only. Details of an ad promoting a video
 	// (//support.google.com/displayvideo/answer/6274216) that shows in places of
 	// discovery.
 	VideoDiscoverAd *VideoDiscoveryAd `json:"videoDiscoverAd,omitempty"`
-	// VideoPerformanceAd: Details of an ad used in a video action campaign
-	// (//support.google.com/google-ads/answer/10147229) to drive actions to the
-	// business, service or product.
+	// VideoPerformanceAd: Output only. Details of an ad used in a video action
+	// campaign (//support.google.com/google-ads/answer/10147229) to drive actions
+	// to the business, service or product.
 	VideoPerformanceAd *VideoPerformanceAd `json:"videoPerformanceAd,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -10743,11 +10745,11 @@ func (s IdFilter) MarshalJSON() ([]byte, error) {
 
 // ImageAsset: Meta data of an image asset.
 type ImageAsset struct {
-	// FileSize: File size of the image asset in bytes.
+	// FileSize: Output only. File size of the image asset in bytes.
 	FileSize int64 `json:"fileSize,omitempty,string"`
-	// FullSize: Metadata for this image at its original size.
+	// FullSize: Output only. Metadata for this image at its original size.
 	FullSize *Dimensions `json:"fullSize,omitempty"`
-	// MimeType: MIME type of the image asset.
+	// MimeType: Output only. MIME type of the image asset.
 	MimeType string `json:"mimeType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FileSize") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -17848,7 +17850,8 @@ func (s YoutubeVideoAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error
 
 // YoutubeVideoDetails: Details of a YouTube video.
 type YoutubeVideoDetails struct {
-	// Id: The YouTube video ID which can be searched on YouTube webpage.
+	// Id: Output only. The YouTube video ID which can be searched on YouTube
+	// webpage.
 	Id string `json:"id,omitempty"`
 	// UnavailableReason: The reason why the video data is not available.
 	//
@@ -17857,6 +17860,9 @@ type YoutubeVideoDetails struct {
 	//   "VIDEO_UNAVAILABLE_REASON_PRIVATE" - The video is private.
 	//   "VIDEO_UNAVAILABLE_REASON_DELETED" - The video is deleted.
 	UnavailableReason string `json:"unavailableReason,omitempty"`
+	// VideoAssetId: Required. The YouTube video asset id. This is
+	// ad_asset.ad_asset_id.
+	VideoAssetId int64 `json:"videoAssetId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

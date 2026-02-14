@@ -800,7 +800,7 @@ func (s ActiveViewVideoViewabilityMetricConfig) MarshalJSON() ([]byte, error) {
 
 // AdGroup: A single ad group associated with a line item.
 type AdGroup struct {
-	// AdGroupFormat: The format of the ads in the ad group.
+	// AdGroupFormat: Required. The format of the ads in the ad group.
 	//
 	// Possible values:
 	//   "AD_GROUP_FORMAT_UNSPECIFIED" - Format value is not specified or is
@@ -817,19 +817,22 @@ type AdGroup struct {
 	//   "AD_GROUP_FORMAT_MASTHEAD" - Masthead Ad that is surfaced on the top slot
 	// on the YouTube homepage.
 	AdGroupFormat string `json:"adGroupFormat,omitempty"`
-	// AdGroupId: The unique ID of the ad group. Assigned by the system.
+	// AdGroupId: Output only. The unique ID of the ad group. Assigned by the
+	// system.
 	AdGroupId int64 `json:"adGroupId,omitempty,string"`
-	// AdvertiserId: The unique ID of the advertiser the ad group belongs to.
+	// AdvertiserId: Output only. The unique ID of the advertiser the ad group
+	// belongs to.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
-	// BidStrategy: The bidding strategy used by the ad group. Only the
-	// youtubeAndPartnersBid field can be used in the bidding strategy.
+	// BidStrategy: Optional. The bidding strategy used by the ad group. Only the
+	// youtubeAndPartnersBid and demandGenBid field can be used in the bidding
+	// strategy.
 	BidStrategy *BiddingStrategy `json:"bidStrategy,omitempty"`
-	// DisplayName: The display name of the ad group. Must be UTF-8 encoded with a
-	// maximum size of 255 bytes.
+	// DisplayName: Required. The display name of the ad group. Must be UTF-8
+	// encoded with a maximum size of 255 bytes.
 	DisplayName string `json:"displayName,omitempty"`
-	// EntityStatus: Controls whether or not the ad group can spend its budget and
-	// bid on inventory. If the ad group's parent line item is not active, the ad
-	// group can't spend its budget even if its own status is
+	// EntityStatus: Required. Controls whether or not the ad group can spend its
+	// budget and bid on inventory. If the ad group's parent line item is not
+	// active, the ad group can't spend its budget even if its own status is
 	// `ENTITY_STATUS_ACTIVE`.
 	//
 	// Possible values:
@@ -846,13 +849,15 @@ type AdGroup struct {
 	//   "ENTITY_STATUS_SCHEDULED_FOR_DELETION" - The entity is scheduled for
 	// deletion.
 	EntityStatus string `json:"entityStatus,omitempty"`
-	// LineItemId: The unique ID of the line item that the ad group belongs to.
+	// LineItemId: Required. The unique ID of the line item that the ad group
+	// belongs to.
 	LineItemId int64 `json:"lineItemId,omitempty,string"`
-	// Name: The resource name of the ad group.
+	// Name: Output only. Identifier. The resource name of the ad group.
 	Name string `json:"name,omitempty"`
-	// ProductFeedData: The settings of the product feed in this ad group.
+	// ProductFeedData: Optional. The settings of the product feed in this ad
+	// group.
 	ProductFeedData *ProductFeedData `json:"productFeedData,omitempty"`
-	// TargetingExpansion: The optimized targeting
+	// TargetingExpansion: Optional. The optimized targeting
 	// (//support.google.com/displayvideo/answer/12060859) settings of the ad
 	// group.
 	TargetingExpansion *TargetingExpansionConfig `json:"targetingExpansion,omitempty"`

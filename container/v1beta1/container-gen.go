@@ -1474,8 +1474,10 @@ type Cluster struct {
 	ClusterIpv4Cidr string `json:"clusterIpv4Cidr,omitempty"`
 	// ClusterTelemetry: Telemetry integration for the cluster.
 	ClusterTelemetry *ClusterTelemetry `json:"clusterTelemetry,omitempty"`
-	// CompliancePostureConfig: Enable/Disable Compliance Posture features for the
-	// cluster.
+	// CompliancePostureConfig: Optional. Deprecated: Compliance Posture is no
+	// longer supported. For more details, see
+	// https://cloud.google.com/kubernetes-engine/docs/deprecations/posture-management-deprecation.
+	// Enable/Disable Compliance Posture features for the cluster.
 	CompliancePostureConfig *CompliancePostureConfig `json:"compliancePostureConfig,omitempty"`
 	// Conditions: Which conditions caused the current cluster state.
 	Conditions []*StatusCondition `json:"conditions,omitempty"`
@@ -1730,8 +1732,8 @@ type Cluster struct {
 	// SecretSyncConfig: Configuration for sync Secret Manager secrets as k8s
 	// secrets.
 	SecretSyncConfig *SecretSyncConfig `json:"secretSyncConfig,omitempty"`
-	// SecurityPostureConfig: Enable/Disable Security Posture API features for the
-	// cluster.
+	// SecurityPostureConfig: Optional. Enable/Disable Security Posture API
+	// features for the cluster.
 	SecurityPostureConfig *SecurityPostureConfig `json:"securityPostureConfig,omitempty"`
 	// SelfLink: Output only. Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -1828,6 +1830,7 @@ type ClusterAutoscaling struct {
 	// Possible values:
 	//   "AUTOPILOT_GENERAL_PROFILE_UNSPECIFIED" - Use default configuration.
 	//   "NO_PERFORMANCE" - Avoid extra IP consumption.
+	//   "NONE" - Use default configuration.
 	AutopilotGeneralProfile string `json:"autopilotGeneralProfile,omitempty"`
 	// AutoprovisioningLocations: The list of Google Compute Engine zones
 	// (https://cloud.google.com/compute/docs/zones#available) in which the
@@ -1958,8 +1961,10 @@ type ClusterUpdate struct {
 	DesiredClusterAutoscaling *ClusterAutoscaling `json:"desiredClusterAutoscaling,omitempty"`
 	// DesiredClusterTelemetry: The desired telemetry integration for the cluster.
 	DesiredClusterTelemetry *ClusterTelemetry `json:"desiredClusterTelemetry,omitempty"`
-	// DesiredCompliancePostureConfig: Enable/Disable Compliance Posture features
-	// for the cluster.
+	// DesiredCompliancePostureConfig: Deprecated: Compliance Posture is no longer
+	// supported. For more details, see
+	// https://cloud.google.com/kubernetes-engine/docs/deprecations/posture-management-deprecation.
+	// Enable/Disable Compliance Posture features for the cluster.
 	DesiredCompliancePostureConfig *CompliancePostureConfig `json:"desiredCompliancePostureConfig,omitempty"`
 	// DesiredContainerdConfig: The desired containerd config for the cluster.
 	DesiredContainerdConfig *ContainerdConfig `json:"desiredContainerdConfig,omitempty"`
@@ -2425,8 +2430,11 @@ func (s CompleteIPRotationRequest) MarshalJSON() ([]byte, error) {
 type CompleteNodePoolUpgradeRequest struct {
 }
 
-// CompliancePostureConfig: CompliancePostureConfig defines the settings needed
-// to enable/disable features for the Compliance Posture.
+// CompliancePostureConfig: Deprecated: Compliance Posture is no longer
+// supported. For more details, see
+// https://cloud.google.com/kubernetes-engine/docs/deprecations/posture-management-deprecation.
+// CompliancePostureConfig defines the settings needed to enable/disable
+// features for the Compliance Posture.
 type CompliancePostureConfig struct {
 	// ComplianceStandards: List of enabled compliance standards.
 	ComplianceStandards []*ComplianceStandard `json:"complianceStandards,omitempty"`
@@ -2633,6 +2641,36 @@ type CostManagementConfig struct {
 
 func (s CostManagementConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CostManagementConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CrashLoopBackOffConfig: Contains config to modify node-level parameters for
+// container restart behavior.
+type CrashLoopBackOffConfig struct {
+	// MaxContainerRestartPeriod: Optional. The maximum duration the backoff delay
+	// can accrue to for container restarts, minimum 1 second, maximum 300 seconds.
+	// If not set, defaults to the internal crashloopbackoff maximum. The string
+	// must be a sequence of decimal numbers, each with optional fraction and a
+	// unit suffix, such as "300ms". Valid time units are "ns", "us" (or "µs"),
+	// "ms", "s", "m", "h". See
+	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#configurable-container-restart-delay
+	// for more details.
+	MaxContainerRestartPeriod string `json:"maxContainerRestartPeriod,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxContainerRestartPeriod")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxContainerRestartPeriod") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CrashLoopBackOffConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CrashLoopBackOffConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3032,6 +3070,39 @@ type DesiredEnterpriseConfig struct {
 
 func (s DesiredEnterpriseConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DesiredEnterpriseConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DisruptionBudget: DisruptionBudget defines the upgrade disruption budget for
+// the cluster control plane.
+type DisruptionBudget struct {
+	// LastDisruptionTime: Output only. The last time a disruption was performed on
+	// the control plane.
+	LastDisruptionTime string `json:"lastDisruptionTime,omitempty"`
+	// LastMinorVersionDisruptionTime: Output only. The last time a minor version
+	// upgrade was performed on the control plane.
+	LastMinorVersionDisruptionTime string `json:"lastMinorVersionDisruptionTime,omitempty"`
+	// MinorVersionDisruptionInterval: Optional. The minimum duration between two
+	// minor version upgrades of the control plane.
+	MinorVersionDisruptionInterval string `json:"minorVersionDisruptionInterval,omitempty"`
+	// PatchVersionDisruptionInterval: Optional. The minimum duration between two
+	// patch version upgrades of the control plane.
+	PatchVersionDisruptionInterval string `json:"patchVersionDisruptionInterval,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LastDisruptionTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LastDisruptionTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DisruptionBudget) MarshalJSON() ([]byte, error) {
+	type NoMethod DisruptionBudget
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5039,6 +5110,9 @@ func (s MaintenanceExclusionOptions) MarshalJSON() ([]byte, error) {
 // MaintenancePolicy: MaintenancePolicy defines the maintenance policy to be
 // used for the cluster.
 type MaintenancePolicy struct {
+	// DisruptionBudget: Optional. The upgrade disruption budget for the cluster
+	// control plane.
+	DisruptionBudget *DisruptionBudget `json:"disruptionBudget,omitempty"`
 	// ResourceVersion: A hash identifying the version of this policy, so that
 	// updates to fields of the policy won't accidentally undo intermediate changes
 	// (and so that users of the API unaware of some fields won't accidentally
@@ -5048,13 +5122,13 @@ type MaintenancePolicy struct {
 	// Window: Specifies the maintenance window in which maintenance may be
 	// performed.
 	Window *MaintenanceWindow `json:"window,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ResourceVersion") to
+	// ForceSendFields is a list of field names (e.g. "DisruptionBudget") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ResourceVersion") to include in
+	// NullFields is a list of field names (e.g. "DisruptionBudget") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -6101,6 +6175,9 @@ type NodeKubeletConfig struct {
 	// resource characteristics to be granted increased CPU affinity and
 	// exclusivity on the node. The default value is 'none' if unspecified.
 	CpuManagerPolicy string `json:"cpuManagerPolicy,omitempty"`
+	// CrashLoopBackOff: Optional. Contains configuration options to modify
+	// node-level parameters for container restart behavior.
+	CrashLoopBackOff *CrashLoopBackOffConfig `json:"crashLoopBackOff,omitempty"`
 	// EvictionMaxPodGracePeriodSeconds: Optional.
 	// eviction_max_pod_grace_period_seconds is the maximum allowed grace period
 	// (in seconds) to use when terminating pods in response to a soft eviction
@@ -6168,6 +6245,22 @@ type NodeKubeletConfig struct {
 	// Controls the maximum number of processes allowed to run in a pod. The value
 	// must be greater than or equal to 1024 and less than 4194304.
 	PodPidsLimit int64 `json:"podPidsLimit,omitempty,string"`
+	// ShutdownGracePeriodCriticalPodsSeconds: Optional.
+	// shutdown_grace_period_critical_pods_seconds is the maximum allowed grace
+	// period (in seconds) used to terminate critical pods during a node shutdown.
+	// This value should be <= shutdown_grace_period_seconds, and is only valid if
+	// shutdown_grace_period_seconds is set.
+	// https://kubernetes.io/docs/concepts/cluster-administration/node-shutdown/
+	// Range: [0, 120].
+	ShutdownGracePeriodCriticalPodsSeconds int64 `json:"shutdownGracePeriodCriticalPodsSeconds,omitempty"`
+	// ShutdownGracePeriodSeconds: Optional. shutdown_grace_period_seconds is the
+	// maximum allowed grace period (in seconds) the total duration that the node
+	// should delay the shutdown during a graceful shutdown. This is the total
+	// grace period for pod termination for both regular and critical pods.
+	// https://kubernetes.io/docs/concepts/cluster-administration/node-shutdown/ If
+	// set to 0, node will not enable the graceful node shutdown functionality.
+	// This field is only valid for Spot VMs. Allowed values: 0, 30, 120.
+	ShutdownGracePeriodSeconds int64 `json:"shutdownGracePeriodSeconds,omitempty"`
 	// SingleProcessOomKill: Optional. Defines whether to enable single process OOM
 	// killer. If true, will prevent the memory.oom.group flag from being set for
 	// container cgroups in cgroups v2. This causes processes in the container to
@@ -6308,10 +6401,12 @@ type NodeNetworkConfig struct {
 	PodRange string `json:"podRange,omitempty"`
 	// Subnetwork: Optional. The subnetwork name/path for the node pool. Format:
 	// projects/{project}/regions/{region}/subnetworks/{subnetwork} If the cluster
-	// is associated with multiple subnetworks, the subnetwork can be either: 1. A
-	// user supplied subnetwork name/full path during node pool creation. Example1:
-	// my-subnet Example2:
-	// projects/gke-project/regions/us-central1/subnetworks/my-subnet 2. A
+	// is associated with multiple subnetworks, the subnetwork can be either: - A
+	// user supplied subnetwork name during node pool creation (e.g., `my-subnet`).
+	// The name must be between 1 and 63 characters long, start with a letter,
+	// contain only letters, numbers, and hyphens, and end with a letter or a
+	// number. - A full subnetwork path during node pool creation, such as
+	// `projects/gke-project/regions/us-central1/subnetworks/my-subnet` - A
 	// subnetwork path picked based on the IP utilization during node pool creation
 	// and is immutable.
 	Subnetwork string `json:"subnetwork,omitempty"`
@@ -8250,16 +8345,20 @@ type SecurityPostureConfig struct {
 	//   "MODE_UNSPECIFIED" - Default value not specified.
 	//   "DISABLED" - Disables Security Posture features on the cluster.
 	//   "BASIC" - Applies Security Posture features on the cluster.
-	//   "ENTERPRISE" - Applies the Security Posture off cluster Enterprise level
-	// features.
+	//   "ENTERPRISE" - Deprecated: Security Posture Enterprise features are no
+	// longer supported. For more details, see
+	// https://cloud.google.com/kubernetes-engine/docs/deprecations/posture-management-deprecation.
+	// Applies the Security Posture off cluster Enterprise level features.
 	Mode string `json:"mode,omitempty"`
 	// VulnerabilityMode: Sets which mode to use for vulnerability scanning.
 	//
 	// Possible values:
 	//   "VULNERABILITY_MODE_UNSPECIFIED" - Default value not specified.
 	//   "VULNERABILITY_DISABLED" - Disables vulnerability scanning on the cluster.
-	//   "VULNERABILITY_BASIC" - Applies basic vulnerability scanning on the
-	// cluster.
+	//   "VULNERABILITY_BASIC" - Deprecated: Basic vulnerability scanning is no
+	// longer supported. For more details, see
+	// https://cloud.google.com/kubernetes-engine/docs/deprecations/posture-management-deprecation.
+	// Applies basic vulnerability scanning on the cluster.
 	//   "VULNERABILITY_ENTERPRISE" - Applies the Security Posture's vulnerability
 	// on cluster Enterprise level features.
 	VulnerabilityMode string `json:"vulnerabilityMode,omitempty"`

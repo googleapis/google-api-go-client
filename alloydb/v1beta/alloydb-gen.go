@@ -4972,6 +4972,9 @@ func (s StorageDatabasecenterPartnerapiV1mainResourceMaintenanceDenySchedule) Ma
 // StorageDatabasecenterPartnerapiV1mainResourceMaintenanceInfo:
 // MaintenanceInfo to capture the maintenance details of database resource.
 type StorageDatabasecenterPartnerapiV1mainResourceMaintenanceInfo struct {
+	// CurrentVersionReleaseDate: Optional. The date when the current maintenance
+	// version was released.
+	CurrentVersionReleaseDate *GoogleTypeDate `json:"currentVersionReleaseDate,omitempty"`
 	// DenyMaintenanceSchedules: Optional. List of Deny maintenance period for the
 	// database resource.
 	DenyMaintenanceSchedules []*StorageDatabasecenterPartnerapiV1mainResourceMaintenanceDenySchedule `json:"denyMaintenanceSchedules,omitempty"`
@@ -5001,17 +5004,13 @@ type StorageDatabasecenterPartnerapiV1mainResourceMaintenanceInfo struct {
 	// resource. This field is populated once SLM generates and publishes upcoming
 	// maintenance window.
 	UpcomingMaintenance *StorageDatabasecenterPartnerapiV1mainUpcomingMaintenance `json:"upcomingMaintenance,omitempty"`
-	// VersionUpdateTime: Optional. This field will contain the date when the last
-	// version update was applied to the database resource. This will be used to
-	// calculate the age of the maintenance version.
-	VersionUpdateTime string `json:"versionUpdateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DenyMaintenanceSchedules")
+	// ForceSendFields is a list of field names (e.g. "CurrentVersionReleaseDate")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DenyMaintenanceSchedules") to
+	// NullFields is a list of field names (e.g. "CurrentVersionReleaseDate") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

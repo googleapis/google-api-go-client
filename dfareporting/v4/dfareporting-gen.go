@@ -2663,10 +2663,9 @@ func (s CampaignsListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CartData:  *Beta:* This feature is currently in beta. Contains additional
-// information about cart data. This field may only be used when calling
-// batchinsert; it is not supported by batchupdate. Cart data reporting is only
-// supported in SA360. Learn more
+// CartData: Contains additional information about cart data. This field may
+// only be used when calling batchinsert; it is not supported by batchupdate.
+// Cart data reporting is only supported in SA360. Learn more
 // (https://support.google.com/sa360/topic/13425788)
 type CartData struct {
 	// Items: Data of the items purchased.
@@ -12177,6 +12176,8 @@ type StudioCreative struct {
 	// Dimension: Dimension of this studio creative. This is a required field on
 	// insertion if format is BANNER or EXPANDING.
 	Dimension *StudioCreativeDimension `json:"dimension,omitempty"`
+	// DurationSeconds: Optional. Duration of this studio creative in seconds.
+	DurationSeconds int64 `json:"durationSeconds,omitempty"`
 	// DynamicProfileId: Dynamic profile ID of this studio creative.
 	DynamicProfileId int64 `json:"dynamicProfileId,omitempty,string"`
 	// Format: Format of this studio creative. This is a required field on
@@ -12189,6 +12190,7 @@ type StudioCreative struct {
 	//   "EXPANDING" - Expanding format.
 	//   "INTERSTITIAL" - Intertitial format.
 	//   "VPAID_LINEAR_VIDEO" - VPAID linear video creative format.
+	//   "INSTREAM_VIDEO" - In-stream video creative format.
 	Format string `json:"format,omitempty"`
 	// Id: Output only. Unique ID of this studio creative. This is a read-only,
 	// auto-generated field.
@@ -12199,6 +12201,18 @@ type StudioCreative struct {
 	// Name: Identifier. Name of this studio creative. This is a required field on
 	// insertion.
 	Name string `json:"name,omitempty"`
+	// Orientation: Optional. LINT.ThenChange(
+	// //depot/google3/ads/richmedia/studio/proto/stubby/creative.proto:orientation,
+	//  //depot/google3/ads/xfa/proto/api/enum.proto:orientation,
+	// //depot/google3/java/com/google/ads/richmedia/studio/domain/model/converter/C
+	// reativeConverter.java:orientation ) Orientation of this studio creative.
+	//
+	// Possible values:
+	//   "ORIENTATION_UNKNOWN" - The orientation of the studio creative is unknown.
+	//   "ASSET_LANDSCAPE" - The asset is a landscape asset.
+	//   "ASSET_PORTRAIT" - The asset is a portrait asset.
+	//   "ASSET_SQUARE" - The asset is a square asset.
+	Orientation string `json:"orientation,omitempty"`
 	// Status: Output only. Status of this studio creative. It is a read-only
 	// field.
 	//

@@ -2574,10 +2574,9 @@ func (s CampaignsListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CartData:  *Beta:* This feature is currently in beta. Contains additional
-// information about cart data. This field may only be used when calling
-// batchinsert; it is not supported by batchupdate. Cart data reporting is only
-// supported in SA360. Learn more
+// CartData: Contains additional information about cart data. This field may
+// only be used when calling batchinsert; it is not supported by batchupdate.
+// Cart data reporting is only supported in SA360. Learn more
 // (https://support.google.com/sa360/topic/13425788)
 type CartData struct {
 	// Items: Data of the items purchased.
@@ -3598,6 +3597,20 @@ type Country struct {
 	Name string `json:"name,omitempty"`
 	// SslEnabled: Whether ad serving supports secure servers in this country.
 	SslEnabled bool `json:"sslEnabled,omitempty"`
+	// TvDataProviders: Output only. The TV data providers supported in this
+	// country.
+	//
+	// Possible values:
+	//   "INVALID_TV_DATA_PROVIDER"
+	//   "IBOPE_AR"
+	//   "IBOPE_BR"
+	//   "IBOPE_CL"
+	//   "IBOPE_CO"
+	//   "TNS_VN"
+	//   "COMSCORE_NATIONAL_US"
+	//   "COMSCORE_CA"
+	//   "SAMBA_AU"
+	TvDataProviders []string `json:"tvDataProviders,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -11581,6 +11594,8 @@ type StudioCreative struct {
 	// Dimension: Dimension of this studio creative. This is a required field on
 	// insertion if format is BANNER or EXPANDING.
 	Dimension *StudioCreativeDimension `json:"dimension,omitempty"`
+	// DurationSeconds: Optional. Duration of this studio creative in seconds.
+	DurationSeconds int64 `json:"durationSeconds,omitempty"`
 	// DynamicProfileId: Dynamic profile ID of this studio creative.
 	DynamicProfileId int64 `json:"dynamicProfileId,omitempty,string"`
 	// Format: Format of this studio creative. This is a required field on
@@ -11593,6 +11608,7 @@ type StudioCreative struct {
 	//   "EXPANDING" - Expanding format.
 	//   "INTERSTITIAL" - Intertitial format.
 	//   "VPAID_LINEAR_VIDEO" - VPAID linear video creative format.
+	//   "INSTREAM_VIDEO" - In-stream video creative format.
 	Format string `json:"format,omitempty"`
 	// Id: Output only. Unique ID of this studio creative. This is a read-only,
 	// auto-generated field.
@@ -11603,6 +11619,18 @@ type StudioCreative struct {
 	// Name: Identifier. Name of this studio creative. This is a required field on
 	// insertion.
 	Name string `json:"name,omitempty"`
+	// Orientation: Optional. LINT.ThenChange(
+	// //depot/google3/ads/richmedia/studio/proto/stubby/creative.proto:orientation,
+	//  //depot/google3/ads/xfa/proto/api/enum.proto:orientation,
+	// //depot/google3/java/com/google/ads/richmedia/studio/domain/model/converter/C
+	// reativeConverter.java:orientation ) Orientation of this studio creative.
+	//
+	// Possible values:
+	//   "ORIENTATION_UNKNOWN" - The orientation of the studio creative is unknown.
+	//   "ASSET_LANDSCAPE" - The asset is a landscape asset.
+	//   "ASSET_PORTRAIT" - The asset is a portrait asset.
+	//   "ASSET_SQUARE" - The asset is a square asset.
+	Orientation string `json:"orientation,omitempty"`
 	// Status: Output only. Status of this studio creative. It is a read-only
 	// field.
 	//
@@ -38741,6 +38769,32 @@ func (c *TvCampaignDetailsGetCall) AccountId(accountId int64) *TvCampaignDetails
 	return c
 }
 
+// CountryDartId sets the optional parameter "countryDartId": Country Dart ID.
+// If not specified, defaults to 256 (US).
+func (c *TvCampaignDetailsGetCall) CountryDartId(countryDartId int64) *TvCampaignDetailsGetCall {
+	c.urlParams_.Set("countryDartId", fmt.Sprint(countryDartId))
+	return c
+}
+
+// TvDataProvider sets the optional parameter "tvDataProvider": TV data
+// provider. If not specified, defaults to `COMSCORE_NATIONAL_US`.
+//
+// Possible values:
+//
+//	"INVALID_TV_DATA_PROVIDER"
+//	"IBOPE_AR"
+//	"IBOPE_BR"
+//	"IBOPE_CL"
+//	"IBOPE_CO"
+//	"TNS_VN"
+//	"COMSCORE_NATIONAL_US"
+//	"COMSCORE_CA"
+//	"SAMBA_AU"
+func (c *TvCampaignDetailsGetCall) TvDataProvider(tvDataProvider string) *TvCampaignDetailsGetCall {
+	c.urlParams_.Set("tvDataProvider", tvDataProvider)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -38859,10 +38913,36 @@ func (c *TvCampaignSummariesListCall) AccountId(accountId int64) *TvCampaignSumm
 	return c
 }
 
+// CountryDartId sets the optional parameter "countryDartId": Country Dart ID.
+// If not specified, defaults to 256 (US).
+func (c *TvCampaignSummariesListCall) CountryDartId(countryDartId int64) *TvCampaignSummariesListCall {
+	c.urlParams_.Set("countryDartId", fmt.Sprint(countryDartId))
+	return c
+}
+
 // Name sets the optional parameter "name": Required. Search string to filter
 // the list of TV campaign summaries. Matches any substring. Required field.
 func (c *TvCampaignSummariesListCall) Name(name string) *TvCampaignSummariesListCall {
 	c.urlParams_.Set("name", name)
+	return c
+}
+
+// TvDataProvider sets the optional parameter "tvDataProvider": TV data
+// provider. If not specified, defaults to `COMSCORE_NATIONAL_US`.
+//
+// Possible values:
+//
+//	"INVALID_TV_DATA_PROVIDER"
+//	"IBOPE_AR"
+//	"IBOPE_BR"
+//	"IBOPE_CL"
+//	"IBOPE_CO"
+//	"TNS_VN"
+//	"COMSCORE_NATIONAL_US"
+//	"COMSCORE_CA"
+//	"SAMBA_AU"
+func (c *TvCampaignSummariesListCall) TvDataProvider(tvDataProvider string) *TvCampaignSummariesListCall {
+	c.urlParams_.Set("tvDataProvider", tvDataProvider)
 	return c
 }
 

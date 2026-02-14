@@ -2290,6 +2290,12 @@ type GoogleBigtableAdminV2TypeFloat32 struct {
 type GoogleBigtableAdminV2TypeFloat64 struct {
 }
 
+// GoogleBigtableAdminV2TypeGeography: A geography type, representing a point
+// or region on Earth. The value is stored in `Value.bytes_value` as Well-Known
+// Binary (WKB) bytes.
+type GoogleBigtableAdminV2TypeGeography struct {
+}
+
 // GoogleBigtableAdminV2TypeInt64: Int64 Values of type `Int64` are stored in
 // `Value.int_value`.
 type GoogleBigtableAdminV2TypeInt64 struct {
@@ -4385,6 +4391,8 @@ type Type struct {
 	Float32Type *GoogleBigtableAdminV2TypeFloat32 `json:"float32Type,omitempty"`
 	// Float64Type: Float64
 	Float64Type *GoogleBigtableAdminV2TypeFloat64 `json:"float64Type,omitempty"`
+	// GeographyType: Geography
+	GeographyType *GoogleBigtableAdminV2TypeGeography `json:"geographyType,omitempty"`
 	// Int64Type: Int64
 	Int64Type *GoogleBigtableAdminV2TypeInt64 `json:"int64Type,omitempty"`
 	// MapType: Map
@@ -13971,7 +13979,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

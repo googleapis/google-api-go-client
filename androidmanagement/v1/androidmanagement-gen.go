@@ -5359,7 +5359,7 @@ type NetworkInfo struct {
 	NetworkOperatorName string `json:"networkOperatorName,omitempty"`
 	// TelephonyInfos: Provides telephony information associated with each SIM card
 	// on the device. Only supported on fully managed devices starting from Android
-	// API level 23.
+	// 6.
 	TelephonyInfos []*TelephonyInfo `json:"telephonyInfos,omitempty"`
 	// WifiMacAddress: Wi-Fi MAC address of the device. For example,
 	// 7c:11:11:11:11:11.
@@ -8076,13 +8076,14 @@ func (s SystemUpdateInfo) MarshalJSON() ([]byte, error) {
 }
 
 // TelephonyInfo: Telephony information associated with a given SIM card on the
-// device. Only supported on fully managed devices starting from Android API
-// level 23.
+// device. This is supported for all SIM cards on fully managed devices on
+// Android 6 and above. In addition, this is supported for admin-added eSIMs on
+// all devices for Android 15 and above.
 type TelephonyInfo struct {
 	// ActivationState: Output only. Activation state of the SIM card on the
 	// device. This is applicable for eSIMs only. This is supported on all devices
-	// for API level 35 and above. This is always ACTIVATION_STATE_UNSPECIFIED for
-	// physical SIMs and for devices below API level 35.
+	// for Android 15 and above. This is always ACTIVATION_STATE_UNSPECIFIED for
+	// physical SIMs and for devices below Android 15.
 	//
 	// Possible values:
 	//   "ACTIVATION_STATE_UNSPECIFIED" - Activation state is not specified.
@@ -8093,8 +8094,8 @@ type TelephonyInfo struct {
 	CarrierName string `json:"carrierName,omitempty"`
 	// ConfigMode: Output only. The configuration mode of the SIM card on the
 	// device. This is applicable for eSIMs only. This is supported on all devices
-	// for API level 35 and above. This is always CONFIG_MODE_UNSPECIFIED for
-	// physical SIMs and for devices below API level 35.
+	// for Android 15 and above. This is always CONFIG_MODE_UNSPECIFIED for
+	// physical SIMs and for devices below Android 15.
 	//
 	// Possible values:
 	//   "CONFIG_MODE_UNSPECIFIED" - The configuration mode is unspecified.

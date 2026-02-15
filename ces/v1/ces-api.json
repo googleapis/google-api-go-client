@@ -2246,7 +2246,7 @@
       }
     }
   },
-  "revision": "20260209",
+  "revision": "20260213",
   "rootUrl": "https://ces.googleapis.com/",
   "schemas": {
     "Action": {
@@ -6809,7 +6809,8 @@
             "ADVANCED_PRODUCT_DETAILS",
             "SHORT_FORM",
             "OVERALL_SATISFACTION",
-            "ORDER_SUMMARY"
+            "ORDER_SUMMARY",
+            "APPOINTMENT_DETAILS"
           ],
           "enumDescriptions": [
             "Unspecified widget type.",
@@ -6821,7 +6822,8 @@
             "Advanced product details widget.",
             "Short form widget.",
             "Overall satisfaction widget.",
-            "Order summary widget."
+            "Order summary widget.",
+            "Appointment details widget."
           ],
           "type": "string"
         }

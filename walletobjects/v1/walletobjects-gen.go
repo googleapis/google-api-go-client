@@ -2055,9 +2055,9 @@ type EventTicketClass struct {
 	// the class, both will be displayed. The maximum number of these fields
 	// displayed is 10 from the object and 10 from the class.
 	TextModulesData []*TextModuleData `json:"textModulesData,omitempty"`
-	// ValueAddedModuleData: Optional value added module data. Maximum of twelve on
-	// the class. For a pass only twelve will be displayed, prioritizing those from
-	// the object.
+	// ValueAddedModuleData: Optional value added module data. Maximum of fifteen
+	// on the class. For a pass only fifteen will be displayed, prioritizing those
+	// from the object.
 	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Venue: Event venue details.
 	Venue *EventVenue `json:"venue,omitempty"`
@@ -2311,8 +2311,8 @@ type EventTicketObject struct {
 	// can be used. An object's state will be changed to `expired` when this time
 	// period has passed.
 	ValidTimeInterval *TimeInterval `json:"validTimeInterval,omitempty"`
-	// ValueAddedModuleData: Optional value added module data. Maximum of twelve on
-	// the object.
+	// ValueAddedModuleData: Optional value added module data. Maximum of fifteen
+	// on the object. For a pass only fifteen will be displayed.
 	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Version: Deprecated
 	Version int64 `json:"version,omitempty,string"`
@@ -2826,9 +2826,9 @@ type FlightClass struct {
 	// the class, both will be displayed. The maximum number of these fields
 	// displayed is 10 from the object and 10 from the class.
 	TextModulesData []*TextModuleData `json:"textModulesData,omitempty"`
-	// ValueAddedModuleData: Optional value added module data. Maximum of twelve on
-	// the class. For a pass only twelve will be displayed, prioritizing those from
-	// the object.
+	// ValueAddedModuleData: Optional value added module data. Maximum of fifteen
+	// on the class. For a pass only fifteen will be displayed, prioritizing those
+	// from the object.
 	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Version: Deprecated
 	Version int64 `json:"version,omitempty,string"`
@@ -3105,8 +3105,8 @@ type FlightObject struct {
 	// can be used. An object's state will be changed to `expired` when this time
 	// period has passed.
 	ValidTimeInterval *TimeInterval `json:"validTimeInterval,omitempty"`
-	// ValueAddedModuleData: Optional value added module data. Maximum of twelve on
-	// the object.
+	// ValueAddedModuleData: Optional value added module data. Maximum of fifteen
+	// on the object. For a pass only fifteen will be displayed.
 	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Version: Deprecated
 	Version int64 `json:"version,omitempty,string"`
@@ -3284,9 +3284,9 @@ type GenericClass struct {
 	// the object, both will be displayed. The maximum number of these fields
 	// displayed is 10 from class and 10 from object.
 	TextModulesData []*TextModuleData `json:"textModulesData,omitempty"`
-	// ValueAddedModuleData: Optional value added module data. Maximum of twelve on
-	// the class. For a pass only twelve will be displayed, prioritizing those from
-	// the object.
+	// ValueAddedModuleData: Optional value added module data. Maximum of fifteen
+	// on the class. For a pass only fifteen will be displayed, prioritizing those
+	// from the object.
 	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// ViewUnlockRequirement: View Unlock Requirement options for the generic pass.
 	//
@@ -3518,8 +3518,8 @@ type GenericObject struct {
 	// usable. When the time period is passed, the object will be considered
 	// expired, which will affect the rendering on user's devices.
 	ValidTimeInterval *TimeInterval `json:"validTimeInterval,omitempty"`
-	// ValueAddedModuleData: Optional value added module data. Maximum of twelve on
-	// the object.
+	// ValueAddedModuleData: Optional value added module data. Maximum of fifteen
+	// on the object. For a pass only fifteen will be displayed.
 	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// WideLogo: The wide logo of the pass. When provided, this will be used in
 	// place of the logo in the top left of the card view.
@@ -3775,9 +3775,9 @@ type GiftCardClass struct {
 	// the class, both will be displayed. The maximum number of these fields
 	// displayed is 10 from the object and 10 from the class.
 	TextModulesData []*TextModuleData `json:"textModulesData,omitempty"`
-	// ValueAddedModuleData: Optional value added module data. Maximum of twelve on
-	// the class. For a pass only twelve will be displayed, prioritizing those from
-	// the object.
+	// ValueAddedModuleData: Optional value added module data. Maximum of fifteen
+	// on the class. For a pass only fifteen will be displayed, prioritizing those
+	// from the object.
 	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Version: Deprecated
 	Version int64 `json:"version,omitempty,string"`
@@ -4014,8 +4014,8 @@ type GiftCardObject struct {
 	// can be used. An object's state will be changed to `expired` when this time
 	// period has passed.
 	ValidTimeInterval *TimeInterval `json:"validTimeInterval,omitempty"`
-	// ValueAddedModuleData: Optional value added module data. Maximum of twelve on
-	// the object.
+	// ValueAddedModuleData: Optional value added module data. Maximum of fifteen
+	// on the object. For a pass only fifteen will be displayed.
 	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Version: Deprecated
 	Version int64 `json:"version,omitempty,string"`
@@ -4786,9 +4786,9 @@ type LoyaltyClass struct {
 	// the class, both will be displayed. The maximum number of these fields
 	// displayed is 10 from the object and 10 from the class.
 	TextModulesData []*TextModuleData `json:"textModulesData,omitempty"`
-	// ValueAddedModuleData: Optional value added module data. Maximum of twelve on
-	// the class. For a pass only twelve will be displayed, prioritizing those from
-	// the object.
+	// ValueAddedModuleData: Optional value added module data. Maximum of fifteen
+	// on the class. For a pass only fifteen will be displayed, prioritizing those
+	// from the object.
 	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Version: Deprecated
 	Version int64 `json:"version,omitempty,string"`
@@ -5031,8 +5031,8 @@ type LoyaltyObject struct {
 	// can be used. An object's state will be changed to `expired` when this time
 	// period has passed.
 	ValidTimeInterval *TimeInterval `json:"validTimeInterval,omitempty"`
-	// ValueAddedModuleData: Optional value added module data. Maximum of twelve on
-	// the object.
+	// ValueAddedModuleData: Optional value added module data. Maximum of fifteen
+	// on the object. For a pass only fifteen will be displayed.
 	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Version: Deprecated
 	Version int64 `json:"version,omitempty,string"`
@@ -5868,9 +5868,9 @@ type OfferClass struct {
 	// TitleImage: The title image of the offer. This image is displayed in both
 	// the details and list views of the app.
 	TitleImage *Image `json:"titleImage,omitempty"`
-	// ValueAddedModuleData: Optional value added module data. Maximum of twelve on
-	// the class. For a pass only twelve will be displayed, prioritizing those from
-	// the object.
+	// ValueAddedModuleData: Optional value added module data. Maximum of fifteen
+	// on the class. For a pass only fifteen will be displayed, prioritizing those
+	// from the object.
 	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Version: Deprecated
 	Version int64 `json:"version,omitempty,string"`
@@ -6093,8 +6093,8 @@ type OfferObject struct {
 	// can be used. An object's state will be changed to `expired` when this time
 	// period has passed.
 	ValidTimeInterval *TimeInterval `json:"validTimeInterval,omitempty"`
-	// ValueAddedModuleData: Optional value added module data. Maximum of twelve on
-	// the object.
+	// ValueAddedModuleData: Optional value added module data. Maximum of fifteen
+	// on the object. For a pass only fifteen will be displayed.
 	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Version: Deprecated
 	Version int64 `json:"version,omitempty,string"`
@@ -7353,9 +7353,9 @@ type TransitClass struct {
 	//   "OTHER"
 	//   "other" - Legacy alias for `OTHER`. Deprecated.
 	TransitType string `json:"transitType,omitempty"`
-	// ValueAddedModuleData: Optional value added module data. Maximum of twelve on
-	// the class. For a pass only twelve will be displayed, prioritizing those from
-	// the object.
+	// ValueAddedModuleData: Optional value added module data. Maximum of fifteen
+	// on the class. For a pass only fifteen will be displayed, prioritizing those
+	// from the object.
 	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Version: Deprecated
 	Version int64 `json:"version,omitempty,string"`
@@ -7665,8 +7665,8 @@ type TransitObject struct {
 	// can be used. An object's state will be changed to `expired` when this time
 	// period has passed.
 	ValidTimeInterval *TimeInterval `json:"validTimeInterval,omitempty"`
-	// ValueAddedModuleData: Optional value added module data. Maximum of twelve on
-	// the object.
+	// ValueAddedModuleData: Optional value added module data. Maximum of fifteen
+	// on the object. For a pass only fifteen will be displayed.
 	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Version: Deprecated
 	Version int64 `json:"version,omitempty,string"`

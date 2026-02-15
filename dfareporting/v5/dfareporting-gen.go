@@ -6173,7 +6173,9 @@ func (s DirectorySitesListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DynamicFeed: Contains dynamic feed information.
+// DynamicFeed:  *Beta:* This API resource is available only to a very limited
+// number of customers. If you'd like to use this resource, please reach out to
+// your Google sales representative. Contains dynamic feed information.
 type DynamicFeed struct {
 	// ContentSource: Required. The content source of the dynamic feed. This is a
 	// required field.
@@ -6238,8 +6240,8 @@ func (s DynamicFeed) MarshalJSON() ([]byte, error) {
 
 // DynamicFeedsInsertRequest: Dynamic profile ID is required for dynamic feed
 // insert as the current GPA API only can create a dynamic feed under profile
-// context,even though the dynnamic feed itself don't need the dynamic profile
-// id. See
+// context,even though the dynamic feed itself don't need the dynamic profile
+// id.
 type DynamicFeedsInsertRequest struct {
 	// DynamicFeed: Required. Dynamic feed to insert.
 	DynamicFeed *DynamicFeed `json:"dynamicFeed,omitempty"`
@@ -6263,7 +6265,10 @@ func (s DynamicFeedsInsertRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DynamicProfile: Contains dynamic profile information.
+// DynamicProfile:  *Beta:* This API resource is available only to a very
+// limited number of customers. If you'd like to use this resource, please
+// reach out to your Google sales representative. Contains dynamic profile
+// information.
 type DynamicProfile struct {
 	// Active: Optional. Active version of the dynamic profile.
 	Active *DynamicProfileVersion `json:"active,omitempty"`
@@ -6361,7 +6366,8 @@ func (s DynamicProfileFeedSettings) MarshalJSON() ([]byte, error) {
 // DynamicProfileGenerateCodeResponse: Response message for
 // DfareportingDynamicProfiles.GenerateCode.
 type DynamicProfileGenerateCodeResponse struct {
-	// Code: Generated code for the dynamic profile.
+	// Code: Generated code for the dynamic profile. The code will need to be
+	// unescaped.
 	Code string `json:"code,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -11581,12 +11587,16 @@ func (s SortedDimension) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StudioCreative: Contains studio creative information.
+// StudioCreative:  *Beta:* This API resource is available only to a very
+// limited number of customers. If you'd like to use this resource, please
+// reach out to your Google sales representative. Contains studio creative
+// information.
 type StudioCreative struct {
 	// AssetIds: List of assets associated with this studio creative. It is a
 	// required field on insertion.
 	AssetIds googleapi.Int64s `json:"assetIds,omitempty"`
-	// BackupImageAssetId: Backup image asset ID of this studio creative.
+	// BackupImageAssetId: Backup image asset ID of this studio creative. It is a
+	// required field on insertion.
 	BackupImageAssetId int64 `json:"backupImageAssetId,omitempty,string"`
 	// CreatedInfo: The timestamp when the studio creative was created. This is a
 	// read-only, auto-generated field.
@@ -11594,8 +11604,6 @@ type StudioCreative struct {
 	// Dimension: Dimension of this studio creative. This is a required field on
 	// insertion if format is BANNER or EXPANDING.
 	Dimension *StudioCreativeDimension `json:"dimension,omitempty"`
-	// DurationSeconds: Optional. Duration of this studio creative in seconds.
-	DurationSeconds int64 `json:"durationSeconds,omitempty"`
 	// DynamicProfileId: Dynamic profile ID of this studio creative.
 	DynamicProfileId int64 `json:"dynamicProfileId,omitempty,string"`
 	// Format: Format of this studio creative. This is a required field on
@@ -11608,7 +11616,6 @@ type StudioCreative struct {
 	//   "EXPANDING" - Expanding format.
 	//   "INTERSTITIAL" - Intertitial format.
 	//   "VPAID_LINEAR_VIDEO" - VPAID linear video creative format.
-	//   "INSTREAM_VIDEO" - In-stream video creative format.
 	Format string `json:"format,omitempty"`
 	// Id: Output only. Unique ID of this studio creative. This is a read-only,
 	// auto-generated field.
@@ -11619,18 +11626,6 @@ type StudioCreative struct {
 	// Name: Identifier. Name of this studio creative. This is a required field on
 	// insertion.
 	Name string `json:"name,omitempty"`
-	// Orientation: Optional. LINT.ThenChange(
-	// //depot/google3/ads/richmedia/studio/proto/stubby/creative.proto:orientation,
-	//  //depot/google3/ads/xfa/proto/api/enum.proto:orientation,
-	// //depot/google3/java/com/google/ads/richmedia/studio/domain/model/converter/C
-	// reativeConverter.java:orientation ) Orientation of this studio creative.
-	//
-	// Possible values:
-	//   "ORIENTATION_UNKNOWN" - The orientation of the studio creative is unknown.
-	//   "ASSET_LANDSCAPE" - The asset is a landscape asset.
-	//   "ASSET_PORTRAIT" - The asset is a portrait asset.
-	//   "ASSET_SQUARE" - The asset is a square asset.
-	Orientation string `json:"orientation,omitempty"`
 	// Status: Output only. Status of this studio creative. It is a read-only
 	// field.
 	//
@@ -11673,7 +11668,10 @@ func (s StudioCreative) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StudioCreativeAsset: Contains studio creative asset information.
+// StudioCreativeAsset:  *Beta:* This API resource is available only to a very
+// limited number of customers. If you'd like to use this resource, please
+// reach out to your Google sales representative. Contains studio creative
+// asset information.
 type StudioCreativeAsset struct {
 	// CreateInfo: Output only. The creation timestamp of the studio creative
 	// asset. This is a read-only field.
@@ -25479,7 +25477,8 @@ type DynamicFeedsRetransformCall struct {
 	header_       http.Header
 }
 
-// Retransform: Retransforms a dynamic feed.
+// Retransform: Retransforms a dynamic feed. Only draft feeds can be
+// retransformed (i.e. the feed has not been published).
 //
 // - dynamicFeedId: Dynamic feed ID.
 func (r *DynamicFeedsService) Retransform(dynamicFeedId int64) *DynamicFeedsRetransformCall {
@@ -25576,7 +25575,9 @@ type DynamicFeedsUpdateCall struct {
 	header_     http.Header
 }
 
-// Update: Updates a new dynamic feed.
+// Update: Updates a new dynamic feed. For draft feeds, only Element can be
+// updated. For published feeds, only FeedSchedule can be updated. Other fields
+// will be ignored.
 func (r *DynamicFeedsService) Update(dynamicfeed *DynamicFeed) *DynamicFeedsUpdateCall {
 	c := &DynamicFeedsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.dynamicfeed = dynamicfeed
@@ -25673,7 +25674,8 @@ type DynamicProfilesGenerateCodeCall struct {
 	header_          http.Header
 }
 
-// GenerateCode: Generates code for a dynamic profile.
+// GenerateCode: Generates code for a dynamic profile, which will need
+// unescaping.
 //
 // - dynamicProfileId: Dynamic profile ID.
 func (r *DynamicProfilesService) GenerateCode(dynamicProfileId int64) *DynamicProfilesGenerateCodeCall {

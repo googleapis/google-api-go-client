@@ -4541,9 +4541,13 @@ type SecurityProfile struct {
 	//   "THREAT_PREVENTION" - Profile type for threat prevention.
 	//   "CUSTOM_MIRRORING" - Profile type for packet mirroring v2
 	//   "CUSTOM_INTERCEPT" - Profile type for TPPI.
+	//   "URL_FILTERING" - Profile type for URL filtering.
 	Type string `json:"type,omitempty"`
 	// UpdateTime: Output only. Last resource update timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
+	// UrlFilteringProfile: The URL filtering configuration for the
+	// SecurityProfile.
+	UrlFilteringProfile *UrlFilteringProfile `json:"urlFilteringProfile,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -4598,6 +4602,9 @@ type SecurityProfileGroup struct {
 	ThreatPreventionProfile string `json:"threatPreventionProfile,omitempty"`
 	// UpdateTime: Output only. Last resource update timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
+	// UrlFilteringProfile: Optional. Reference to a SecurityProfile with the
+	// UrlFiltering configuration.
+	UrlFilteringProfile string `json:"urlFilteringProfile,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -4986,6 +4993,63 @@ type TlsInspectionPolicy struct {
 
 func (s TlsInspectionPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod TlsInspectionPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UrlFilter: A URL filter defines an action to take for some URL match.
+type UrlFilter struct {
+	// FilteringAction: Required. The action taken when this filter is applied.
+	//
+	// Possible values:
+	//   "URL_FILTERING_ACTION_UNSPECIFIED" - Filtering action not specified.
+	//   "ALLOW" - The connection matching this filter will be allowed to transmit.
+	//   "DENY" - The connection matching this filter will be dropped.
+	FilteringAction string `json:"filteringAction,omitempty"`
+	// Priority: Required. The priority of this filter within the URL Filtering
+	// Profile. Lower integers indicate higher priorities. The priority of a filter
+	// must be unique within a URL Filtering Profile.
+	Priority int64 `json:"priority,omitempty"`
+	// Urls: Required. The list of strings that a URL must match with for this
+	// filter to be applied.
+	Urls []string `json:"urls,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FilteringAction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FilteringAction") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UrlFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod UrlFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UrlFilteringProfile: UrlFilteringProfile defines filters based on URL.
+type UrlFilteringProfile struct {
+	// UrlFilters: Optional. The list of filtering configs in which each config
+	// defines an action to take for some URL match.
+	UrlFilters []*UrlFilter `json:"urlFilters,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UrlFilters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UrlFilters") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UrlFilteringProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod UrlFilteringProfile
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

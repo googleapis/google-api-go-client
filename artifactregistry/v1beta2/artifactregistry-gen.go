@@ -528,6 +528,7 @@ type Hash struct {
 	//   "HASH_TYPE_UNSPECIFIED" - Unspecified.
 	//   "SHA256" - SHA256 hash.
 	//   "MD5" - MD5 hash.
+	//   "DIRSUM_SHA256" - Dirsum SHA256 hash.
 	Type string `json:"type,omitempty"`
 	// Value: The hash value.
 	Value string `json:"value,omitempty"`
@@ -1961,7 +1962,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

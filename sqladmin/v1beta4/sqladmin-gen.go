@@ -556,6 +556,12 @@ type Backup struct {
 	//   "SQLSERVER_2022_EXPRESS" - The database version is SQL Server 2022
 	// Express.
 	//   "SQLSERVER_2022_WEB" - The database version is SQL Server 2022 Web.
+	//   "SQLSERVER_2025_STANDARD" - The database version is SQL Server 2025
+	// Standard.
+	//   "SQLSERVER_2025_ENTERPRISE" - The database version is SQL Server 2025
+	// Enterprise.
+	//   "SQLSERVER_2025_EXPRESS" - The database version is SQL Server 2025
+	// Express.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// Description: The description of this backup.
 	Description string `json:"description,omitempty"`
@@ -899,6 +905,12 @@ type BackupRun struct {
 	//   "SQLSERVER_2022_EXPRESS" - The database version is SQL Server 2022
 	// Express.
 	//   "SQLSERVER_2022_WEB" - The database version is SQL Server 2022 Web.
+	//   "SQLSERVER_2025_STANDARD" - The database version is SQL Server 2025
+	// Standard.
+	//   "SQLSERVER_2025_ENTERPRISE" - The database version is SQL Server 2025
+	// Enterprise.
+	//   "SQLSERVER_2025_EXPRESS" - The database version is SQL Server 2025
+	// Express.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// Description: The description of this run, only applicable to on-demand
 	// backups.
@@ -1067,6 +1079,17 @@ type CloneContext struct {
 	// DestinationInstanceName: Name of the Cloud SQL instance to be created as a
 	// clone.
 	DestinationInstanceName string `json:"destinationInstanceName,omitempty"`
+	// DestinationNetwork: Optional. The fully qualified URI of the VPC network to
+	// which the cloned instance will be connected via Private Services Access for
+	// private IP. For
+	// example:`projects/my-network-project/global/networks/my-network`. This field
+	// is only required for cross-project cloning.
+	DestinationNetwork string `json:"destinationNetwork,omitempty"`
+	// DestinationProject: Optional. The project ID of the destination project
+	// where the cloned instance will be created. To perform a cross-project clone,
+	// this field is required. If not specified, the clone is created in the same
+	// project as the source instance.
+	DestinationProject string `json:"destinationProject,omitempty"`
 	// Kind: This is always `sql#cloneContext`.
 	Kind string `json:"kind,omitempty"`
 	// PitrTimestampMs: Reserved for future use.
@@ -1268,6 +1291,12 @@ type ConnectSettings struct {
 	//   "SQLSERVER_2022_EXPRESS" - The database version is SQL Server 2022
 	// Express.
 	//   "SQLSERVER_2022_WEB" - The database version is SQL Server 2022 Web.
+	//   "SQLSERVER_2025_STANDARD" - The database version is SQL Server 2025
+	// Standard.
+	//   "SQLSERVER_2025_ENTERPRISE" - The database version is SQL Server 2025
+	// Enterprise.
+	//   "SQLSERVER_2025_EXPRESS" - The database version is SQL Server 2025
+	// Express.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// DnsName: The dns name of the instance.
 	DnsName string `json:"dnsName,omitempty"`
@@ -1600,6 +1629,12 @@ type DatabaseInstance struct {
 	//   "SQLSERVER_2022_EXPRESS" - The database version is SQL Server 2022
 	// Express.
 	//   "SQLSERVER_2022_WEB" - The database version is SQL Server 2022 Web.
+	//   "SQLSERVER_2025_STANDARD" - The database version is SQL Server 2025
+	// Standard.
+	//   "SQLSERVER_2025_ENTERPRISE" - The database version is SQL Server 2025
+	// Enterprise.
+	//   "SQLSERVER_2025_EXPRESS" - The database version is SQL Server 2025
+	// Express.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// DiskEncryptionConfiguration: Disk encryption configuration specific to an
 	// instance.
@@ -2619,6 +2654,12 @@ type Flag struct {
 	//   "SQLSERVER_2022_EXPRESS" - The database version is SQL Server 2022
 	// Express.
 	//   "SQLSERVER_2022_WEB" - The database version is SQL Server 2022 Web.
+	//   "SQLSERVER_2025_STANDARD" - The database version is SQL Server 2025
+	// Standard.
+	//   "SQLSERVER_2025_ENTERPRISE" - The database version is SQL Server 2025
+	// Enterprise.
+	//   "SQLSERVER_2025_EXPRESS" - The database version is SQL Server 2025
+	// Express.
 	AppliesTo []string `json:"appliesTo,omitempty"`
 	// FlagScope: Scope of flag.
 	//
@@ -4711,6 +4752,12 @@ type PreCheckMajorVersionUpgradeContext struct {
 	//   "SQLSERVER_2022_EXPRESS" - The database version is SQL Server 2022
 	// Express.
 	//   "SQLSERVER_2022_WEB" - The database version is SQL Server 2022 Web.
+	//   "SQLSERVER_2025_STANDARD" - The database version is SQL Server 2025
+	// Standard.
+	//   "SQLSERVER_2025_ENTERPRISE" - The database version is SQL Server 2025
+	// Enterprise.
+	//   "SQLSERVER_2025_EXPRESS" - The database version is SQL Server 2025
+	// Express.
 	TargetDatabaseVersion string `json:"targetDatabaseVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -14988,7 +15035,9 @@ func (c *UsersUpdateCall) Name(name string) *UsersUpdateCall {
 }
 
 // RevokeExistingRoles sets the optional parameter "revokeExistingRoles":
-// revoke the existing roles granted to the user.
+// Specifies whether to revoke existing roles that are not present in the
+// `database_roles` field. If `false` or unset, the database roles specified in
+// `database_roles` are added to the user's existing roles.
 func (c *UsersUpdateCall) RevokeExistingRoles(revokeExistingRoles bool) *UsersUpdateCall {
 	c.urlParams_.Set("revokeExistingRoles", fmt.Sprint(revokeExistingRoles))
 	return c

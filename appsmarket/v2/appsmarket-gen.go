@@ -184,11 +184,11 @@ type CustomerLicense struct {
 	Editions []*Editions `json:"editions,omitempty"`
 	// Id: The ID of the customer license.
 	Id string `json:"id,omitempty"`
-	// Kind: The type of API resource. This is always appsmarket#customerLicense.
+	// Kind: The type of API resource. This is always `appsmarket#customerLicense`.
 	Kind string `json:"kind,omitempty"`
 	// State: The customer's license status. One of: - `ACTIVE`: The customer has a
-	// valid license. - `UNLICENSED`: There is no license: either this customer has
-	// never installed your application, or else has deleted it.
+	// valid license. - `UNLICENSED`: There is no license. Either this customer has
+	// never installed your application or has deleted it.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -246,9 +246,9 @@ type UserLicense struct {
 	// Enabled: The domain administrator has activated the application for this
 	// domain.
 	Enabled bool `json:"enabled,omitempty"`
-	// Id: The ID of user license.
+	// Id: The ID of the user license.
 	Id string `json:"id,omitempty"`
-	// Kind: The type of API resource. This is always appsmarket#userLicense.
+	// Kind: The type of API resource. This is always `appsmarket#userLicense`.
 	Kind string `json:"kind,omitempty"`
 	// State: The user's licensing status. One of: - `ACTIVE`: The user has a valid
 	// license and should be permitted to use the application. - `UNLICENSED`: The
@@ -289,11 +289,13 @@ type CustomerLicenseGetCall struct {
 	header_       http.Header
 }
 
-// Get: Gets the status of a license for a customer to determine if they have
-// access for a given app.
+// Get: Gets the customer's licensing status to determine if they have access
+// to a given app. For more information, see Getting app installation and
+// licensing details
+// (https://developers.google.com/workspace/marketplace/example-calls-marketplace-api).
 //
-// - applicationId: Application Id.
-// - customerId: Customer Id.
+// - applicationId: The ID of the application.
+// - customerId: The ID of the customer.
 func (r *CustomerLicenseService) Get(applicationId string, customerId string) *CustomerLicenseGetCall {
 	c := &CustomerLicenseGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -404,11 +406,13 @@ type UserLicenseGetCall struct {
 	header_       http.Header
 }
 
-// Get: Gets the user's licensing status for their permission to use a given
-// app.
+// Get: Gets the user's licensing status to determine if they have permission
+// to use a given app. For more information, see Getting app installation and
+// licensing details
+// (https://developers.google.com/workspace/marketplace/example-calls-marketplace-api).
 //
-// - applicationId: Application Id.
-// - userId: User Id.
+// - applicationId: The ID of the application.
+// - userId: The ID of the user.
 func (r *UserLicenseService) Get(applicationId string, userId string) *UserLicenseGetCall {
 	c := &UserLicenseGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId

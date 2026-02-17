@@ -2574,10 +2574,9 @@ func (s CampaignsListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CartData:  *Beta:* This feature is currently in beta. Contains additional
-// information about cart data. This field may only be used when calling
-// batchinsert; it is not supported by batchupdate. Cart data reporting is only
-// supported in SA360. Learn more
+// CartData: Contains additional information about cart data. This field may
+// only be used when calling batchinsert; it is not supported by batchupdate.
+// Cart data reporting is only supported in SA360. Learn more
 // (https://support.google.com/sa360/topic/13425788)
 type CartData struct {
 	// Items: Data of the items purchased.
@@ -3598,6 +3597,20 @@ type Country struct {
 	Name string `json:"name,omitempty"`
 	// SslEnabled: Whether ad serving supports secure servers in this country.
 	SslEnabled bool `json:"sslEnabled,omitempty"`
+	// TvDataProviders: Output only. The TV data providers supported in this
+	// country.
+	//
+	// Possible values:
+	//   "INVALID_TV_DATA_PROVIDER"
+	//   "IBOPE_AR"
+	//   "IBOPE_BR"
+	//   "IBOPE_CL"
+	//   "IBOPE_CO"
+	//   "TNS_VN"
+	//   "COMSCORE_NATIONAL_US"
+	//   "COMSCORE_CA"
+	//   "SAMBA_AU"
+	TvDataProviders []string `json:"tvDataProviders,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -6160,7 +6173,9 @@ func (s DirectorySitesListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DynamicFeed: Contains dynamic feed information.
+// DynamicFeed:  *Beta:* This API resource is available only to a very limited
+// number of customers. If you'd like to use this resource, please reach out to
+// your Google sales representative. Contains dynamic feed information.
 type DynamicFeed struct {
 	// ContentSource: Required. The content source of the dynamic feed. This is a
 	// required field.
@@ -6225,8 +6240,8 @@ func (s DynamicFeed) MarshalJSON() ([]byte, error) {
 
 // DynamicFeedsInsertRequest: Dynamic profile ID is required for dynamic feed
 // insert as the current GPA API only can create a dynamic feed under profile
-// context,even though the dynnamic feed itself don't need the dynamic profile
-// id. See
+// context,even though the dynamic feed itself don't need the dynamic profile
+// id.
 type DynamicFeedsInsertRequest struct {
 	// DynamicFeed: Required. Dynamic feed to insert.
 	DynamicFeed *DynamicFeed `json:"dynamicFeed,omitempty"`
@@ -6250,7 +6265,10 @@ func (s DynamicFeedsInsertRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DynamicProfile: Contains dynamic profile information.
+// DynamicProfile:  *Beta:* This API resource is available only to a very
+// limited number of customers. If you'd like to use this resource, please
+// reach out to your Google sales representative. Contains dynamic profile
+// information.
 type DynamicProfile struct {
 	// Active: Optional. Active version of the dynamic profile.
 	Active *DynamicProfileVersion `json:"active,omitempty"`
@@ -6348,7 +6366,8 @@ func (s DynamicProfileFeedSettings) MarshalJSON() ([]byte, error) {
 // DynamicProfileGenerateCodeResponse: Response message for
 // DfareportingDynamicProfiles.GenerateCode.
 type DynamicProfileGenerateCodeResponse struct {
-	// Code: Generated code for the dynamic profile.
+	// Code: Generated code for the dynamic profile. The code will need to be
+	// unescaped.
 	Code string `json:"code,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -11568,12 +11587,16 @@ func (s SortedDimension) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StudioCreative: Contains studio creative information.
+// StudioCreative:  *Beta:* This API resource is available only to a very
+// limited number of customers. If you'd like to use this resource, please
+// reach out to your Google sales representative. Contains studio creative
+// information.
 type StudioCreative struct {
 	// AssetIds: List of assets associated with this studio creative. It is a
 	// required field on insertion.
 	AssetIds googleapi.Int64s `json:"assetIds,omitempty"`
-	// BackupImageAssetId: Backup image asset ID of this studio creative.
+	// BackupImageAssetId: Backup image asset ID of this studio creative. It is a
+	// required field on insertion.
 	BackupImageAssetId int64 `json:"backupImageAssetId,omitempty,string"`
 	// CreatedInfo: The timestamp when the studio creative was created. This is a
 	// read-only, auto-generated field.
@@ -11645,7 +11668,10 @@ func (s StudioCreative) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StudioCreativeAsset: Contains studio creative asset information.
+// StudioCreativeAsset:  *Beta:* This API resource is available only to a very
+// limited number of customers. If you'd like to use this resource, please
+// reach out to your Google sales representative. Contains studio creative
+// asset information.
 type StudioCreativeAsset struct {
 	// CreateInfo: Output only. The creation timestamp of the studio creative
 	// asset. This is a read-only field.
@@ -25451,7 +25477,8 @@ type DynamicFeedsRetransformCall struct {
 	header_       http.Header
 }
 
-// Retransform: Retransforms a dynamic feed.
+// Retransform: Retransforms a dynamic feed. Only draft feeds can be
+// retransformed (i.e. the feed has not been published).
 //
 // - dynamicFeedId: Dynamic feed ID.
 func (r *DynamicFeedsService) Retransform(dynamicFeedId int64) *DynamicFeedsRetransformCall {
@@ -25548,7 +25575,9 @@ type DynamicFeedsUpdateCall struct {
 	header_     http.Header
 }
 
-// Update: Updates a new dynamic feed.
+// Update: Updates a new dynamic feed. For draft feeds, only Element can be
+// updated. For published feeds, only FeedSchedule can be updated. Other fields
+// will be ignored.
 func (r *DynamicFeedsService) Update(dynamicfeed *DynamicFeed) *DynamicFeedsUpdateCall {
 	c := &DynamicFeedsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.dynamicfeed = dynamicfeed
@@ -25645,7 +25674,8 @@ type DynamicProfilesGenerateCodeCall struct {
 	header_          http.Header
 }
 
-// GenerateCode: Generates code for a dynamic profile.
+// GenerateCode: Generates code for a dynamic profile, which will need
+// unescaping.
 //
 // - dynamicProfileId: Dynamic profile ID.
 func (r *DynamicProfilesService) GenerateCode(dynamicProfileId int64) *DynamicProfilesGenerateCodeCall {
@@ -38741,6 +38771,32 @@ func (c *TvCampaignDetailsGetCall) AccountId(accountId int64) *TvCampaignDetails
 	return c
 }
 
+// CountryDartId sets the optional parameter "countryDartId": Country Dart ID.
+// If not specified, defaults to 256 (US).
+func (c *TvCampaignDetailsGetCall) CountryDartId(countryDartId int64) *TvCampaignDetailsGetCall {
+	c.urlParams_.Set("countryDartId", fmt.Sprint(countryDartId))
+	return c
+}
+
+// TvDataProvider sets the optional parameter "tvDataProvider": TV data
+// provider. If not specified, defaults to `COMSCORE_NATIONAL_US`.
+//
+// Possible values:
+//
+//	"INVALID_TV_DATA_PROVIDER"
+//	"IBOPE_AR"
+//	"IBOPE_BR"
+//	"IBOPE_CL"
+//	"IBOPE_CO"
+//	"TNS_VN"
+//	"COMSCORE_NATIONAL_US"
+//	"COMSCORE_CA"
+//	"SAMBA_AU"
+func (c *TvCampaignDetailsGetCall) TvDataProvider(tvDataProvider string) *TvCampaignDetailsGetCall {
+	c.urlParams_.Set("tvDataProvider", tvDataProvider)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -38859,10 +38915,36 @@ func (c *TvCampaignSummariesListCall) AccountId(accountId int64) *TvCampaignSumm
 	return c
 }
 
+// CountryDartId sets the optional parameter "countryDartId": Country Dart ID.
+// If not specified, defaults to 256 (US).
+func (c *TvCampaignSummariesListCall) CountryDartId(countryDartId int64) *TvCampaignSummariesListCall {
+	c.urlParams_.Set("countryDartId", fmt.Sprint(countryDartId))
+	return c
+}
+
 // Name sets the optional parameter "name": Required. Search string to filter
 // the list of TV campaign summaries. Matches any substring. Required field.
 func (c *TvCampaignSummariesListCall) Name(name string) *TvCampaignSummariesListCall {
 	c.urlParams_.Set("name", name)
+	return c
+}
+
+// TvDataProvider sets the optional parameter "tvDataProvider": TV data
+// provider. If not specified, defaults to `COMSCORE_NATIONAL_US`.
+//
+// Possible values:
+//
+//	"INVALID_TV_DATA_PROVIDER"
+//	"IBOPE_AR"
+//	"IBOPE_BR"
+//	"IBOPE_CL"
+//	"IBOPE_CO"
+//	"TNS_VN"
+//	"COMSCORE_NATIONAL_US"
+//	"COMSCORE_CA"
+//	"SAMBA_AU"
+func (c *TvCampaignSummariesListCall) TvDataProvider(tvDataProvider string) *TvCampaignSummariesListCall {
+	c.urlParams_.Set("tvDataProvider", tvDataProvider)
 	return c
 }
 

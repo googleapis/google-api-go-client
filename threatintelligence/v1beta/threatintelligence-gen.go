@@ -6,7 +6,7 @@
 
 // Package threatintelligence provides access to the Threat Intelligence API.
 //
-// For product documentation, see: https://cloud.google.com/threatintelligence/docs/reference/rest
+// For product documentation, see: https://docs.cloud.google.com/threatintelligence/
 //
 // # Library status
 //

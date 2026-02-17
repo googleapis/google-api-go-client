@@ -34,6 +34,11 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	runService, err := run.NewService(ctx, option.WithScopes(run.RunReadonlyScope))
+//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -101,12 +106,21 @@ const (
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// See, edit, configure, and delete your Google Cloud Run data and see the
+	// email address for your Google Account
+	RunScope = "https://www.googleapis.com/auth/run"
+
+	// See your Google Cloud Run data and the email address of your Google Account
+	RunReadonlyScope = "https://www.googleapis.com/auth/run.readonly"
 )
 
 // NewService creates a new APIService.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
+		"https://www.googleapis.com/auth/run",
+		"https://www.googleapis.com/auth/run.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -3622,6 +3636,9 @@ type InstanceSpec struct {
 	// the running container, and determines what permissions the Instance has. If
 	// not provided, the Instance will use the project's default service account.
 	ServiceAccountName string `json:"serviceAccountName,omitempty"`
+	// Timeout: Optional. Duration the instance may be active before the system
+	// will shut it down.
+	Timeout string `json:"timeout,omitempty"`
 	// Volumes: Optional. List of volumes that can be mounted by containers
 	// belonging to the Instance.
 	Volumes []*Volume `json:"volumes,omitempty"`
@@ -4751,9 +4768,8 @@ func (s ResourceRequirements) MarshalJSON() ([]byte, error) {
 }
 
 // Revision: Revision is an immutable snapshot of code and configuration. A
-// revision references a container image. Revisions are created by updates to a
-// Configuration. See also:
-// https://github.com/knative/specs/blob/main/specs/serving/overview.md#revision
+// revision references one or more container images. Revisions are created by
+// updates to a Service.
 type Revision struct {
 	// ApiVersion: The API version for this call such as "serving.knative.dev/v1".
 	ApiVersion string `json:"apiVersion,omitempty"`
@@ -4797,8 +4813,7 @@ type RevisionSpec struct {
 	// when requested CPU < 1.
 	ContainerConcurrency int64 `json:"containerConcurrency,omitempty"`
 	// Containers: Required. Containers holds the list which define the units of
-	// execution for this Revision. In the context of a Revision, we disallow a
-	// number of fields on this Container, including: name and lifecycle.
+	// execution for this Revision.
 	Containers []*Container `json:"containers,omitempty"`
 	// EnableServiceLinks: Not supported by Cloud Run.
 	EnableServiceLinks bool `json:"enableServiceLinks,omitempty"`

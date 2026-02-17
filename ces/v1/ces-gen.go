@@ -1165,6 +1165,13 @@ type Callback struct {
 	// Disabled: Optional. Whether the callback is disabled. Disabled callbacks are
 	// ignored by the agent.
 	Disabled bool `json:"disabled,omitempty"`
+	// ProactiveExecutionEnabled: Optional. If enabled, the callback will also be
+	// executed on intermediate model outputs. This setting only affects after
+	// model callback. **ENABLE WITH CAUTION**. Typically after model callback only
+	// needs to be executed after receiving all model responses. Enabling proactive
+	// execution may have negative implication on the execution cost and latency,
+	// and should only be enabled in rare situations.
+	ProactiveExecutionEnabled bool `json:"proactiveExecutionEnabled,omitempty"`
 	// PythonCode: Required. The python code to execute for the callback.
 	PythonCode string `json:"pythonCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -1713,6 +1720,9 @@ type Conversation struct {
 	//   "INPUT_TYPE_AUDIO" - The input message is audio.
 	//   "INPUT_TYPE_IMAGE" - The input message is image.
 	//   "INPUT_TYPE_BLOB" - The input message is blob file.
+	//   "INPUT_TYPE_TOOL_RESPONSE" - The input message is client function tool
+	// response.
+	//   "INPUT_TYPE_VARIABLES" - The input message are variables.
 	InputTypes []string `json:"inputTypes,omitempty"`
 	// LanguageCode: Output only. The language code of the conversation.
 	LanguageCode string `json:"languageCode,omitempty"`
@@ -3074,6 +3084,9 @@ type GoogleSearchTool struct {
 	// Example: "example.com", "another.site". A maximum of 20 domains can be
 	// specified.
 	PreferredDomains []string `json:"preferredDomains,omitempty"`
+	// PromptConfig: Optional. Prompt instructions passed to planner on how the
+	// search results should be processed for text and voice.
+	PromptConfig *GoogleSearchToolPromptConfig `json:"promptConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ContextUrls") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3089,6 +3102,35 @@ type GoogleSearchTool struct {
 
 func (s GoogleSearchTool) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSearchTool
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleSearchToolPromptConfig: Prompt settings used by the model when
+// processing or summarizing the google search results.
+type GoogleSearchToolPromptConfig struct {
+	// TextPrompt: Optional. Defines the prompt used for the system instructions
+	// when interacting with the agent in chat conversations. If not set, default
+	// prompt will be used.
+	TextPrompt string `json:"textPrompt,omitempty"`
+	// VoicePrompt: Optional. Defines the prompt used for the system instructions
+	// when interacting with the agent in voice conversations. If not set, default
+	// prompt will be used.
+	VoicePrompt string `json:"voicePrompt,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TextPrompt") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TextPrompt") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleSearchToolPromptConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleSearchToolPromptConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3462,6 +3504,9 @@ type ImportAppRequest struct {
 	// GcsUri: The Google Cloud Storage (https://cloud.google.com/storage/docs/)
 	// URI from which to import app. The format of this URI must be `gs:///`.
 	GcsUri string `json:"gcsUri,omitempty"`
+	// IgnoreAppLock: Optional. Flag for overriding the app lock during import. If
+	// set to true, the import process will ignore the app lock.
+	IgnoreAppLock bool `json:"ignoreAppLock,omitempty"`
 	// ImportOptions: Optional. Options governing the import process for the app.
 	ImportOptions *ImportAppRequestImportOptions `json:"importOptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppContent") to
@@ -6098,6 +6143,7 @@ type WidgetTool struct {
 	//   "SHORT_FORM" - Short form widget.
 	//   "OVERALL_SATISFACTION" - Overall satisfaction widget.
 	//   "ORDER_SUMMARY" - Order summary widget.
+	//   "APPOINTMENT_DETAILS" - Appointment details widget.
 	WidgetType string `json:"widgetType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8675,7 +8721,8 @@ func (c *ProjectsLocationsAppsConversationsListCall) PageToken(pageToken string)
 }
 
 // Source sets the optional parameter "source": Indicate the source of the
-// conversation. If not set, Source.Live will be applied by default.
+// conversation. If not set, Source.Live will be applied by default. Will be
+// deprecated in favor of `sources` field.
 //
 // Possible values:
 //
@@ -8685,6 +8732,20 @@ func (c *ProjectsLocationsAppsConversationsListCall) PageToken(pageToken string)
 //	"EVAL" - The conversation is from the evaluation.
 func (c *ProjectsLocationsAppsConversationsListCall) Source(source string) *ProjectsLocationsAppsConversationsListCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// Sources sets the optional parameter "sources": Indicate the sources of the
+// conversations. If not set, all available sources will be applied by default.
+//
+// Possible values:
+//
+//	"SOURCE_UNSPECIFIED" - Unspecified source.
+//	"LIVE" - The conversation is from the live end user.
+//	"SIMULATOR" - The conversation is from the simulator.
+//	"EVAL" - The conversation is from the evaluation.
+func (c *ProjectsLocationsAppsConversationsListCall) Sources(sources ...string) *ProjectsLocationsAppsConversationsListCall {
+	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
 }
 

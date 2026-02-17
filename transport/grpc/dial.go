@@ -565,6 +565,7 @@ const (
 	statusAPIKey                   = "api_key"
 	statusMissingTokenSource       = "missing_token_source"
 	statusTokenFetchError          = "token_fetch_error"
+	statusNilToken                 = "nil_token"
 	statusNotComputeMetadata       = "not_compute_metadata"
 	statusNotDefaultServiceAccount = "not_default_service_account"
 )
@@ -647,7 +648,7 @@ func checkAuthStatus(ctx context.Context, o *internal.DialSettings) string {
 		return statusTokenFetchError
 	}
 	if tok == nil {
-		return statusTokenFetchError
+		return statusNilToken
 	}
 
 	// AllowNonDefaultServiceAccount bypasses the metadata source and default account checks.

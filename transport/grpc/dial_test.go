@@ -415,6 +415,13 @@ func TestCheckAuthStatus(t *testing.T) {
 			},
 			want: statusTokenFetchError,
 		},
+		{
+			name: "Nil Token - Incompatible",
+			ds: &internal.DialSettings{
+				TokenSource: &mockTokenSource{token: nil}, // Token() returns (nil, nil)
+			},
+			want: statusNilToken,
+		},
 	}
 
 	for _, tt := range tests {
@@ -546,6 +553,17 @@ func TestCheckDirectPathStatus(t *testing.T) {
 			},
 			onGCE: true,
 			want:  statusTokenFetchError,
+		},
+		{
+			name: "Nil token returned",
+			opts: []option.ClientOption{
+				internaloption.EnableDirectPath(true),
+				internaloption.EnableDirectPathXds(),
+				validEndpoint,
+				option.WithTokenSource(&mockTokenSource{token: nil}),
+			},
+			onGCE: true,
+			want:  statusNilToken,
 		},
 		{
 			name: "Incompatible credentials - Not compute metadata",

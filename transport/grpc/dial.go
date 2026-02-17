@@ -549,122 +549,105 @@ func (o connPoolOption) Apply(s *internal.DialSettings) {
 	s.GRPCConnPool = o.ConnPool
 }
 
-// DirectPathStatus encapsulates the logic to determine why DirectPath
-// is not being used.
-type DirectPathStatus struct {
-	Enabled                  string
-	CustomGRPCConn           string
-	CustomGRPCConnPool       string
-	CustomHTTPClient         string
-	EndpointFetchError       string
-	XdsNotEnabled            string
-	OptionDisabled           string
-	UnsupportedEndpoint      string
-	EnvDisabled              string
-	NotOnGCE                 string
-	NoAuth                   string
-	APIKey                   string
-	MissingTokenSource       string
-	TokenFetchError          string
-	NotComputeMetadata       string
-	NotDefaultServiceAccount string
-	onGCE                    func() bool
-}
+// Status strings for DirectPath status check. These are used for telemetry and should not be changed without considering the impact on metrics.
+const (
+	statusEnabled                  = "enabled"
+	statusCustomGRPCConn           = "custom_grpc_conn"
+	statusCustomGRPCConnPool       = "custom_grpc_conn_pool"
+	statusCustomHTTPClient         = "custom_http_client"
+	statusEndpointFetchError       = "endpoint_fetch_error"
+	statusXdsNotEnabled            = "xds_not_enabled"
+	statusOptionDisabled           = "option_disabled"
+	statusUnsupportedEndpoint      = "unsupported_endpoint"
+	statusEnvDisabled              = "env_disabled"
+	statusNotOnGCE                 = "not_on_gce"
+	statusNoAuth                   = "no_auth"
+	statusAPIKey                   = "api_key"
+	statusMissingTokenSource       = "missing_token_source"
+	statusTokenFetchError          = "token_fetch_error"
+	statusNotComputeMetadata       = "not_compute_metadata"
+	statusNotDefaultServiceAccount = "not_default_service_account"
+)
 
-// NewDirectPathStatus creates a new DirectPathStatus with descriptive reason strings.
-func NewDirectPathStatus() *DirectPathStatus {
-	return &DirectPathStatus{
-		Enabled:                  "enabled",
-		CustomGRPCConn:           "custom_grpc_conn",
-		CustomGRPCConnPool:       "custom_grpc_conn_pool",
-		CustomHTTPClient:         "custom_http_client",
-		EndpointFetchError:       "endpoint_fetch_error",
-		XdsNotEnabled:            "xds_not_enabled",
-		OptionDisabled:           "option_disabled",
-		UnsupportedEndpoint:      "unsupported_endpoint",
-		EnvDisabled:              "env_disabled",
-		NotOnGCE:                 "not_on_gce",
-		NoAuth:                   "no_auth",
-		APIKey:                   "api_key",
-		MissingTokenSource:       "missing_token_source",
-		TokenFetchError:          "token_fetch_error",
-		NotComputeMetadata:       "not_compute_metadata",
-		NotDefaultServiceAccount: "not_default_service_account",
-		onGCE:                    metadata.OnGCE,
-	}
-}
+// For unit testing.
+var onGCE = metadata.OnGCE
 
-// CheckWithReason evaluates the current environment and options to return the
-// highest priority reason for fallback.
-func (d *DirectPathStatus) CheckWithReason(ctx context.Context, opts ...option.ClientOption) string {
+// CheckDirectPathStatus evaluates the current environment and options to return
+// a status string describing the reason why DirectPath is not possible.
+func CheckDirectPathStatus(ctx context.Context, opts ...option.ClientOption) string {
 	o, err := processAndValidateOpts(opts)
 	if err != nil {
-		return d.EndpointFetchError
+		return statusEndpointFetchError
 	}
-	// Check for custom resources that preclude DirectPath.
-	if o.GRPCConn != nil {
-		return d.CustomGRPCConn
+
+	// DirectPath disabled by environment variable.
+	if strings.EqualFold(os.Getenv(disableDirectPath), "true") {
+		return statusEnvDisabled
 	}
-	if o.GRPCConnPool != nil {
-		return d.CustomGRPCConnPool
-	}
-	if o.HTTPClient != nil {
-		return d.CustomHTTPClient
+	// DirectPath disabled by option.
+	if !o.EnableDirectPath {
+		return statusOptionDisabled
 	}
 
 	_, endpoint, err := internal.GetGRPCTransportConfigAndEndpoint(o)
 	if err != nil {
-		return d.EndpointFetchError
+		return statusEndpointFetchError
 	}
-	// DirectPath not attempted via xDS.
-	if !isDirectPathXdsUsed(o) {
-		return d.XdsNotEnabled
-	}
-	// DirectPath disabled by option.
-	if !o.EnableDirectPath {
-		return d.OptionDisabled
-	}
+
 	// DirectPath disabled by unsupported endpoint scheme (e.g., https://).
 	if !checkDirectPathEndPoint(endpoint) {
-		return d.UnsupportedEndpoint
-	}
-	// DirectPath disabled by environment variable.
-	if strings.EqualFold(os.Getenv(disableDirectPath), "true") {
-		return d.EnvDisabled
+		return statusUnsupportedEndpoint
 	}
 
-	if !d.onGCE() {
-		return d.NotOnGCE
+	// DirectPath not attempted via xDS.
+	if !isDirectPathXdsUsed(o) {
+		return statusXdsNotEnabled
 	}
+
+	// Check for custom resources that preclude DirectPath.
+	if o.GRPCConn != nil {
+		return statusCustomGRPCConn
+	}
+	if o.GRPCConnPool != nil {
+		return statusCustomGRPCConnPool
+	}
+	if o.HTTPClient != nil {
+		return statusCustomHTTPClient
+	}
+
+	if !onGCE() {
+		return statusNotOnGCE
+	}
+
 	// Specific credential compatibility check.
-	if reason := d.authReason(ctx, o); reason != "" {
-		return reason
+	if authStatus := checkAuthStatus(ctx, o); authStatus != "" {
+		return authStatus
 	}
-	return d.Enabled
+	return statusEnabled
 }
 
-func (d *DirectPathStatus) authReason(ctx context.Context, o *internal.DialSettings) string {
+func checkAuthStatus(ctx context.Context, o *internal.DialSettings) string {
 	if o.NoAuth {
-		return d.NoAuth
+		return statusNoAuth
 	}
 	if o.APIKey != "" {
-		return d.APIKey
+		return statusAPIKey
 	}
 
 	creds, err := internal.Creds(ctx, o)
 	if err != nil {
-		return d.TokenFetchError
+		return statusTokenFetchError
 	}
 	if creds.TokenSource == nil {
-		return d.MissingTokenSource
+		return statusMissingTokenSource
 	}
 
 	tok, err := creds.TokenSource.Token()
 	if err != nil {
-		return d.TokenFetchError
+		return statusTokenFetchError
 	}
 	if tok == nil {
-		return d.TokenFetchError
+		return statusTokenFetchError
 	}
 
 	// AllowNonDefaultServiceAccount bypasses the metadata source and default account checks.
@@ -674,11 +657,11 @@ func (d *DirectPathStatus) authReason(ctx context.Context, o *internal.DialSetti
 
 	// Verify the token source is the GCE Metadata Server.
 	if source, _ := tok.Extra("oauth2.google.tokenSource").(string); source != "compute-metadata" {
-		return d.NotComputeMetadata
+		return statusNotComputeMetadata
 	}
 	// Verify the default service account is used.
 	if acct, _ := tok.Extra("oauth2.google.serviceAccount").(string); acct != "default" {
-		return d.NotDefaultServiceAccount
+		return statusNotDefaultServiceAccount
 	}
 	return ""
 }

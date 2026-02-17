@@ -347,11 +347,11 @@ func TestIsDirectPathEnabled(t *testing.T) {
 		})
 	}
 }
-func TestAuthReason(t *testing.T) {
-	ctx := context.Background()
-	detector := NewDirectPathStatus()
 
-	// A token that satisfies the GCE Metadata requirement
+func TestCheckAuthStatus(t *testing.T) {
+	ctx := context.Background()
+
+	// A token that satisfies the GCE Metadata requirement.
 	gceToken := (&oauth2.Token{
 		AccessToken: "fake-access-token",
 	}).WithExtra(map[string]interface{}{
@@ -369,14 +369,14 @@ func TestAuthReason(t *testing.T) {
 			ds: &internal.DialSettings{
 				APIKey: "secret-key",
 			},
-			want: detector.APIKey,
+			want: statusAPIKey,
 		},
 		{
 			name: "No Auth - Incompatible",
 			ds: &internal.DialSettings{
 				NoAuth: true,
 			},
-			want: detector.NoAuth,
+			want: statusNoAuth,
 		},
 		{
 			name: "GCE Token - Compatible",
@@ -385,7 +385,7 @@ func TestAuthReason(t *testing.T) {
 				// from looking for real files.
 				TokenSource: &mockTokenSource{token: gceToken},
 			},
-			want: "", // Empty string signifies compatibility
+			want: "", // Empty string signifies compatibility.
 		},
 		{
 			name: "Standard Token - Incompatible",
@@ -394,7 +394,7 @@ func TestAuthReason(t *testing.T) {
 					token: &oauth2.Token{AccessToken: "regular-token"},
 				},
 			},
-			want: detector.NotComputeMetadata,
+			want: statusNotComputeMetadata,
 		},
 		{
 			name: "Non-default Service Account - Incompatible",
@@ -406,24 +406,24 @@ func TestAuthReason(t *testing.T) {
 					}),
 				},
 			},
-			want: detector.NotDefaultServiceAccount,
+			want: statusNotDefaultServiceAccount,
 		},
 		{
 			name: "Token Fetch Error",
 			ds: &internal.DialSettings{
 				TokenSource: &mockTokenSource{err: errors.New("network error")},
 			},
-			want: detector.TokenFetchError,
+			want: statusTokenFetchError,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			// Calling the helper directly to verify granular reasons.
-			got := detector.authReason(ctx, tt.ds)
+			// Calling the helper directly to verify granular statuses.
+			got := checkAuthStatus(ctx, tt.ds)
 
 			if got != tt.want {
-				t.Errorf("%s: authReason() = %q, want %q", tt.name, got, tt.want)
+				t.Errorf("%s: checkAuthStatus() = %q, want %q", tt.name, got, tt.want)
 			}
 		})
 	}
@@ -438,15 +438,18 @@ func (ts *mockTokenSource) Token() (*oauth2.Token, error) {
 	return ts.token, ts.err
 }
 
-func TestDirectPathStatus_CheckWithReason(t *testing.T) {
+func TestCheckDirectPathStatus(t *testing.T) {
 	ctx := context.Background()
-	detector := NewDirectPathStatus()
 
 	validEndpoint := option.WithEndpoint("dns:///foo.googleapis.com")
 	gceToken := (&oauth2.Token{AccessToken: "fake-token"}).WithExtra(map[string]interface{}{
 		"oauth2.google.tokenSource":    "compute-metadata",
 		"oauth2.google.serviceAccount": "default",
 	})
+
+	// Setup onGCE mock for the package.
+	origOnGCE := onGCE
+	defer func() { onGCE = origOnGCE }()
 
 	tests := []struct {
 		name    string
@@ -456,9 +459,13 @@ func TestDirectPathStatus_CheckWithReason(t *testing.T) {
 		want    string
 	}{
 		{
-			name: "User opted out - custom HTTP client",
-			opts: []option.ClientOption{option.WithHTTPClient(http.DefaultClient)},
-			want: detector.CustomHTTPClient,
+			name: "Custom HTTP client",
+			opts: []option.ClientOption{
+				internaloption.EnableDirectPath(true),
+				internaloption.EnableDirectPathXds(),
+				validEndpoint,
+				option.WithHTTPClient(http.DefaultClient)},
+			want: statusCustomHTTPClient,
 		},
 		{
 			name: "XDS not enabled",
@@ -466,7 +473,7 @@ func TestDirectPathStatus_CheckWithReason(t *testing.T) {
 				internaloption.EnableDirectPath(true),
 				validEndpoint,
 			},
-			want: detector.XdsNotEnabled,
+			want: statusXdsNotEnabled,
 		},
 		{
 			name: "Option disabled",
@@ -475,7 +482,7 @@ func TestDirectPathStatus_CheckWithReason(t *testing.T) {
 				internaloption.EnableDirectPathXds(),
 				validEndpoint,
 			},
-			want: detector.OptionDisabled,
+			want: statusOptionDisabled,
 		},
 		{
 			name: "Env disabled",
@@ -485,7 +492,7 @@ func TestDirectPathStatus_CheckWithReason(t *testing.T) {
 				validEndpoint,
 			},
 			envVars: map[string]string{disableDirectPath: "true"},
-			want:    detector.EnvDisabled,
+			want:    statusEnvDisabled,
 		},
 		{
 			name: "Unsupported endpoint scheme",
@@ -494,7 +501,7 @@ func TestDirectPathStatus_CheckWithReason(t *testing.T) {
 				internaloption.EnableDirectPathXds(),
 				option.WithEndpoint("https://google.com"),
 			},
-			want: detector.UnsupportedEndpoint,
+			want: statusUnsupportedEndpoint,
 		},
 		{
 			name:  "Not on GCE",
@@ -505,7 +512,7 @@ func TestDirectPathStatus_CheckWithReason(t *testing.T) {
 				validEndpoint,
 				option.WithTokenSource(&mockTokenSource{token: gceToken}),
 			},
-			want: detector.NotOnGCE,
+			want: statusNotOnGCE,
 		},
 		{
 			name: "No Auth - Incompatible",
@@ -516,7 +523,7 @@ func TestDirectPathStatus_CheckWithReason(t *testing.T) {
 				validEndpoint,
 			},
 			onGCE: true,
-			want:  detector.NoAuth,
+			want:  statusNoAuth,
 		},
 		{
 			name: "API Key - Incompatible",
@@ -527,7 +534,7 @@ func TestDirectPathStatus_CheckWithReason(t *testing.T) {
 				validEndpoint,
 			},
 			onGCE: true,
-			want:  detector.APIKey,
+			want:  statusAPIKey,
 		},
 		{
 			name: "Token fetch error",
@@ -538,7 +545,7 @@ func TestDirectPathStatus_CheckWithReason(t *testing.T) {
 				option.WithTokenSource(&mockTokenSource{err: errors.New("fail")}),
 			},
 			onGCE: true,
-			want:  detector.TokenFetchError,
+			want:  statusTokenFetchError,
 		},
 		{
 			name: "Incompatible credentials - Not compute metadata",
@@ -551,7 +558,7 @@ func TestDirectPathStatus_CheckWithReason(t *testing.T) {
 				}),
 			},
 			onGCE: true,
-			want:  detector.NotComputeMetadata,
+			want:  statusNotComputeMetadata,
 		},
 		{
 			name: "Incompatible credentials - Non-default service account",
@@ -567,7 +574,7 @@ func TestDirectPathStatus_CheckWithReason(t *testing.T) {
 				}),
 			},
 			onGCE: true,
-			want:  detector.NotDefaultServiceAccount,
+			want:  statusNotDefaultServiceAccount,
 		},
 		{
 			name:  "Success",
@@ -578,21 +585,25 @@ func TestDirectPathStatus_CheckWithReason(t *testing.T) {
 				validEndpoint,
 				option.WithTokenSource(&mockTokenSource{token: gceToken}),
 			},
-			want: detector.Enabled,
+			want: statusEnabled,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			// Clear environment variables that could affect results.
 			os.Setenv(disableDirectPath, "false")
+			os.Setenv(enableDirectPathXds, "false")
 			for k, v := range tt.envVars {
 				os.Setenv(k, v)
 			}
 
-			detector.onGCE = func() bool { return tt.onGCE }
-			got := detector.CheckWithReason(ctx, tt.opts...)
+			// Mock the GCE environment status.
+			onGCE = func() bool { return tt.onGCE }
+
+			got := CheckDirectPathStatus(ctx, tt.opts...)
 			if got != tt.want {
-				t.Errorf("%s: CheckWithReason() = %v, want %v", tt.name, got, tt.want)
+				t.Errorf("%s: CheckDirectPathStatus() = %v, want %v", tt.name, got, tt.want)
 			}
 		})
 	}

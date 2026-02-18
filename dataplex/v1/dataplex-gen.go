@@ -3421,6 +3421,10 @@ func (s GoogleCloudDataplexV1DataQualityResultPostScanActionsResultBigQueryExpor
 type GoogleCloudDataplexV1DataQualityRule struct {
 	// Column: Optional. The unnested column which this rule is evaluated against.
 	Column string `json:"column,omitempty"`
+	// DebugQueries: Optional. Specifies the debug queries for this rule.
+	// Currently, only one query is supported, but this may be expanded in the
+	// future.
+	DebugQueries []*GoogleCloudDataplexV1DataQualityRuleDebugQuery `json:"debugQueries,omitempty"`
 	// Description: Optional. Description of the rule. The maximum length is 1,024
 	// characters.
 	Description string `json:"description,omitempty"`
@@ -3503,6 +3507,45 @@ func (s *GoogleCloudDataplexV1DataQualityRule) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
+// GoogleCloudDataplexV1DataQualityRuleDebugQuery: Specifies a SQL statement
+// that is evaluated to return up to 10 scalar values that are used to debug
+// rules. If the rule fails, the values can help diagnose the cause of the
+// failure.The SQL statement must use GoogleSQL syntax
+// (https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax),
+// and must not contain any semicolons.You can use the data reference parameter
+// ${data()} to reference the source table with all of its precondition filters
+// applied. Examples of precondition filters include row filters, incremental
+// data filters, and sampling. For more information, see Data reference
+// parameter
+// (https://cloud.google.com/dataplex/docs/auto-data-quality-overview#data-reference-parameter).You
+// can also name results with an explicit alias using [AS] alias. For more
+// information, see BigQuery explicit aliases
+// (https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#explicit_alias_syntax).Example:
+// SELECT MIN(col1) AS min_col1, MAX(col1) AS max_col1 FROM ${data()}
+type GoogleCloudDataplexV1DataQualityRuleDebugQuery struct {
+	// Description: Optional. Specifies the description of the debug query. The
+	// maximum length is 1,024 characters.
+	Description string `json:"description,omitempty"`
+	// SqlStatement: Required. Specifies the SQL statement to be executed.
+	SqlStatement string `json:"sqlStatement,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataQualityRuleDebugQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualityRuleDebugQuery
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1DataQualityRuleNonNullExpectation: Evaluates whether
 // each column value is null.
 type GoogleCloudDataplexV1DataQualityRuleNonNullExpectation struct {
@@ -3573,6 +3616,10 @@ type GoogleCloudDataplexV1DataQualityRuleResult struct {
 	// statement in a SQL assertion rule.This field is only valid for SQL assertion
 	// rules.
 	AssertionRowCount int64 `json:"assertionRowCount,omitempty,string"`
+	// DebugQueriesResultSets: Output only. Contains the results of all debug
+	// queries for this rule. The number of result sets will correspond to the
+	// number of debug_queries.
+	DebugQueriesResultSets []*GoogleCloudDataplexV1DataQualityRuleResultDebugQueryResultSet `json:"debugQueriesResultSets,omitempty"`
 	// EvaluatedCount: Output only. The number of rows a rule was evaluated
 	// against.This field is only valid for row-level type rules.Evaluated count
 	// can be configured to either include all rows (default) - with null rows
@@ -3627,6 +3674,60 @@ func (s *GoogleCloudDataplexV1DataQualityRuleResult) UnmarshalJSON(data []byte) 
 	}
 	s.PassRatio = float64(s1.PassRatio)
 	return nil
+}
+
+// GoogleCloudDataplexV1DataQualityRuleResultDebugQueryResult: Contains a
+// single result from the debug query.
+type GoogleCloudDataplexV1DataQualityRuleResultDebugQueryResult struct {
+	// Name: Specifies the name of the result. Available if provided with an
+	// explicit alias using [AS] alias.
+	Name string `json:"name,omitempty"`
+	// Type: Indicates the data type of the result. For more information, see
+	// BigQuery data types
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-types).
+	Type string `json:"type,omitempty"`
+	// Value: Represents the value of the result as a string.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataQualityRuleResultDebugQueryResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualityRuleResultDebugQueryResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataQualityRuleResultDebugQueryResultSet: Contains all
+// results from a debug query.
+type GoogleCloudDataplexV1DataQualityRuleResultDebugQueryResultSet struct {
+	// Results: Output only. Contains all results. Up to 10 results can be
+	// returned.
+	Results []*GoogleCloudDataplexV1DataQualityRuleResultDebugQueryResult `json:"results,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Results") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Results") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataQualityRuleResultDebugQueryResultSet) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualityRuleResultDebugQueryResultSet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1DataQualityRuleRowConditionExpectation: Evaluates
@@ -7264,6 +7365,35 @@ type GoogleCloudDataplexV1ListZonesResponse struct {
 
 func (s GoogleCloudDataplexV1ListZonesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1ListZonesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1LookupEntryLinksResponse: Response message for
+// LookupEntryLinks.
+type GoogleCloudDataplexV1LookupEntryLinksResponse struct {
+	// EntryLinks: List of entry links that reference the specified entry.
+	EntryLinks []*GoogleCloudDataplexV1EntryLink `json:"entryLinks,omitempty"`
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "EntryLinks") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EntryLinks") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1LookupEntryLinksResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1LookupEntryLinksResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11749,6 +11879,194 @@ func (c *ProjectsLocationsLookupEntryCall) Do(opts ...googleapi.CallOption) (*Go
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.lookupEntry", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsLookupEntryLinksCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// LookupEntryLinks: Looks up Entry Links referencing the specified Entry.
+//
+//   - name: The project to which the request should be attributed to Format:
+//     projects/{project_id_or_number}/locations/{location_id}.
+func (r *ProjectsLocationsService) LookupEntryLinks(name string) *ProjectsLocationsLookupEntryLinksCall {
+	c := &ProjectsLocationsLookupEntryLinksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Entry sets the optional parameter "entry": Required. The resource name of
+// the referred Entry. Format:
+// projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_gr
+// oup_id}/entries/{entry_id}. Entry Links which references this entry will be
+// returned in the response.
+func (c *ProjectsLocationsLookupEntryLinksCall) Entry(entry string) *ProjectsLocationsLookupEntryLinksCall {
+	c.urlParams_.Set("entry", entry)
+	return c
+}
+
+// EntryLinkTypes sets the optional parameter "entryLinkTypes": Entry link
+// types to filter the response by. If empty, all entry link types will be
+// returned. At most 10 entry link types can be specified.
+func (c *ProjectsLocationsLookupEntryLinksCall) EntryLinkTypes(entryLinkTypes ...string) *ProjectsLocationsLookupEntryLinksCall {
+	c.urlParams_.SetMulti("entryLinkTypes", append([]string{}, entryLinkTypes...))
+	return c
+}
+
+// EntryMode sets the optional parameter "entryMode": Mode of entry reference.
+//
+// Possible values:
+//
+//	"ENTRY_MODE_UNSPECIFIED" - Unspecified entry mode. Returns both
+//
+// directional and non-directional entry links which references the entry.
+//
+//	"SOURCE" - Returns all directed entry links which references the entry as
+//
+// source.
+//
+//	"TARGET" - Return all directed entry links which references the entry as
+//
+// target.
+func (c *ProjectsLocationsLookupEntryLinksCall) EntryMode(entryMode string) *ProjectsLocationsLookupEntryLinksCall {
+	c.urlParams_.Set("entryMode", entryMode)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// EntryLinks to return. The service may return fewer than this value. If
+// unspecified, at most 10 EntryLinks will be returned. The maximum value is
+// 10; values above 10 will be coerced to 10.
+func (c *ProjectsLocationsLookupEntryLinksCall) PageSize(pageSize int64) *ProjectsLocationsLookupEntryLinksCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token received from
+// a previous LookupEntryLinks call. Provide this to retrieve the subsequent
+// page. When paginating, all other parameters that are provided to the
+// LookupEntryLinks request must match the call that provided the page token.
+func (c *ProjectsLocationsLookupEntryLinksCall) PageToken(pageToken string) *ProjectsLocationsLookupEntryLinksCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsLookupEntryLinksCall) Fields(s ...googleapi.Field) *ProjectsLocationsLookupEntryLinksCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsLookupEntryLinksCall) IfNoneMatch(entityTag string) *ProjectsLocationsLookupEntryLinksCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsLookupEntryLinksCall) Context(ctx context.Context) *ProjectsLocationsLookupEntryLinksCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsLookupEntryLinksCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsLookupEntryLinksCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:lookupEntryLinks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.lookupEntryLinks", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.lookupEntryLinks" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1LookupEntryLinksResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsLookupEntryLinksCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1LookupEntryLinksResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1LookupEntryLinksResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.lookupEntryLinks", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsLookupEntryLinksCall) Pages(ctx context.Context, f func(*GoogleCloudDataplexV1LookupEntryLinksResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsSearchEntriesCall struct {

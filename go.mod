@@ -1,6 +1,6 @@
 module google.golang.org/api
 
-go 1.24.0
+go 1.25.0
 
 retract v0.258.0 // due to https://github.com/googleapis/google-cloud-go/issues/13503
 

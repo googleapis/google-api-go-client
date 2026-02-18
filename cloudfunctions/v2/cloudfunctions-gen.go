@@ -2111,9 +2111,11 @@ type UpgradeInfo struct {
 	// un-successful and 1st gen function might have broken.
 	//   "COMMIT_FUNCTION_UPGRADE_ERROR_ROLLBACK_SAFE" - CommitFunctionUpgrade API
 	// was un-successful but safe to rollback traffic or abort.
-	//   "COMMIT_FUNCTION_UPGRADE_AS_GEN2_SUCCESSFUL" - Indicates that the
-	// `CommitFunctionUpgradeAsGen2` API call succeeded and the function was
-	// successfully migrated to the 2nd Gen stack.
+	//   "COMMIT_FUNCTION_UPGRADE_AS_GEN2_SUCCESSFUL" - Deprecated: This state is
+	// no longer returned by the backend. Clients should not rely on polling for
+	// this specific state. A successful upgrade is now indicated by the
+	// long-running operation completing successfully with a Function resource in
+	// the response.
 	//   "COMMIT_FUNCTION_UPGRADE_AS_GEN2_ERROR" - CommitFunctionUpgradeAsGen2 API
 	// was un-successful and 1st gen function might have broken.
 	UpgradeState string `json:"upgradeState,omitempty"`

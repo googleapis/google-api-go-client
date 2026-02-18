@@ -530,8 +530,9 @@ func (s Accepted) MarshalJSON() ([]byte, error) {
 type Account struct {
 	// AccountId: Output only. The ID of the account.
 	AccountId int64 `json:"accountId,omitempty,string"`
-	// AccountName: Required. A human-readable name of the account. See store name
-	// (https://support.google.com/merchants/answer/160556) and business name
+	// AccountName: Required. A human-readable name of the account. Don't use
+	// punctuation, capitalization, or non-alphanumeric symbols such as the "/" or
+	// "_" symbols. See Adding a business name
 	// (https://support.google.com/merchants/answer/12159159) for more information.
 	AccountName string `json:"accountName,omitempty"`
 	// AdultContent: Optional. Whether this account contains adult content.
@@ -1465,10 +1466,11 @@ type CheckoutSettings struct {
 	// be a copy of url settings. Otherwise, it will have the value of the parent
 	// account (for only marketplace sellers).
 	EffectiveUriSettings *UriSettings `json:"effectiveUriSettings,omitempty"`
-	// EligibleDestinations: Optional. The destinations (also known as Marketing
-	// methods (https://support.google.com/merchants/answer/15130232)) to which the
-	// checkout program applies, valid destination values are `SHOPPING_ADS`,
-	// `FREE_LISTINGS`
+	// EligibleDestinations: Optional. Required for the create operation. The
+	// destinations (also known as Marketing methods
+	// (https://support.google.com/merchants/answer/15130232)) to which the
+	// checkout program applies. Valid destination values are `SHOPPING_ADS` and
+	// `FREE_LISTINGS`.
 	//
 	// Possible values:
 	//   "DESTINATION_ENUM_UNSPECIFIED" - Not specified.

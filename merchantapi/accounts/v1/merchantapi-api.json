@@ -2410,7 +2410,7 @@
       }
     }
   },
-  "revision": "20260206",
+  "revision": "20260213",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "About": {
@@ -2484,7 +2484,7 @@
           "type": "string"
         },
         "accountName": {
-          "description": "Required. A human-readable name of the account. See [store name](https://support.google.com/merchants/answer/160556) and [business name](https://support.google.com/merchants/answer/12159159) for more information.",
+          "description": "Required. A human-readable name of the account. Don't use punctuation, capitalization, or non-alphanumeric symbols such as the \"/\" or \"_\" symbols. See [Adding a business name](https://support.google.com/merchants/answer/12159159) for more information.",
           "type": "string"
         },
         "adultContent": {
@@ -3123,7 +3123,7 @@
           "readOnly": true
         },
         "eligibleDestinations": {
-          "description": "Optional. The destinations (also known as [Marketing methods](https://support.google.com/merchants/answer/15130232)) to which the checkout program applies, valid destination values are `SHOPPING_ADS`, `FREE_LISTINGS`",
+          "description": "Optional. Required for the create operation. The destinations (also known as [Marketing methods](https://support.google.com/merchants/answer/15130232)) to which the checkout program applies. Valid destination values are `SHOPPING_ADS` and `FREE_LISTINGS`.",
           "items": {
             "enum": [
               "DESTINATION_ENUM_UNSPECIFIED",

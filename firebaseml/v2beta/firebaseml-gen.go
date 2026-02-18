@@ -1222,6 +1222,19 @@ type GoogleCloudAiplatformV1beta1FunctionResponse struct {
 	// details (if any). If "output" and "error" keys are not specified, then whole
 	// "response" is treated as function output.
 	Response googleapi.RawMessage `json:"response,omitempty"`
+	// Scheduling: Optional. Specifies how the response should be scheduled in the
+	// conversation. Only applicable to NON_BLOCKING function calls, is ignored
+	// otherwise. Defaults to WHEN_IDLE.
+	//
+	// Possible values:
+	//   "SCHEDULING_UNSPECIFIED" - This value is unused.
+	//   "SILENT" - Only add the result to the conversation context, do not
+	// interrupt or trigger generation.
+	//   "WHEN_IDLE" - Add the result to the conversation context, and prompt to
+	// generate output without interrupting ongoing generation.
+	//   "INTERRUPT" - Add the result to the conversation context, interrupt
+	// ongoing generation and prompt to generate output.
+	Scheduling string `json:"scheduling,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1951,9 +1964,9 @@ func (s GoogleCloudAiplatformV1beta1GroundingChunk) MarshalJSON() ([]byte, error
 }
 
 // GoogleCloudAiplatformV1beta1GroundingChunkMaps: A `Maps` chunk is a piece of
-// evidence that comes from Google Maps. It contains information about a place,
-// such as its name, address, and reviews. This is used to provide the user
-// with rich, location-based information.
+// evidence that comes from Google Maps, containing information about places or
+// routes. This is used to provide the user with rich, location-based
+// information.
 type GoogleCloudAiplatformV1beta1GroundingChunkMaps struct {
 	// PlaceAnswerSources: The sources that were used to generate the place answer.
 	// This includes review snippets and photos that were used to generate the

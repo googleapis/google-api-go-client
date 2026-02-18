@@ -408,8 +408,8 @@ func (s GoogleCloudKmsInventoryV1SearchProtectedResourcesResponse) MarshalJSON()
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudKmsInventoryV1Warning: Warning message specifying various states
-// of response data that might indicate incomplete or partial results.
+// GoogleCloudKmsInventoryV1Warning: A warning message that indicates potential
+// problems with the response data.
 type GoogleCloudKmsInventoryV1Warning struct {
 	// DisplayMessage: The literal message providing context and details about the
 	// warnings.
@@ -420,16 +420,16 @@ type GoogleCloudKmsInventoryV1Warning struct {
 	//   "WARNING_CODE_UNSPECIFIED" - Default value. This value is unused.
 	//   "INSUFFICIENT_PERMISSIONS_PARTIAL_DATA" - Indicates that the caller or
 	// service agent lacks necessary permissions to view some of the requested
-	// data. The response may be partial. Examples: - KMS organization service
-	// agent {service_agent_name} lacks the `cloudasset.assets.searchAllResources`
+	// data. The response may be partial. Example: - KMS organization service agent
+	// {service_agent_name} lacks the `cloudasset.assets.searchAllResources`
 	// permission on the scope.
 	//   "RESOURCE_LIMIT_EXCEEDED_PARTIAL_DATA" - Indicates that a resource limit
-	// has been exceeded, resulting in partial data. Examples: - The project has
+	// has been exceeded, resulting in partial data. Example: - The project has
 	// more than 10,000 assets (resources, crypto keys, key handles, IAM policies,
 	// etc).
-	//   "ORG_LESS_PROJECT_PARTIAL_DATA" - Indicates that the project is org-less.
-	// Thus the analysis is only done for the project level data and results might
-	// be partial.
+	//   "ORG_LESS_PROJECT_PARTIAL_DATA" - Indicates that the project exists
+	// outside of an organization resource. Thus the analysis is only done for the
+	// project level data and results might be partial.
 	WarningCode string `json:"warningCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayMessage") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1062,10 +1062,11 @@ type OrganizationsProtectedResourcesSearchCall struct {
 // KMS CryptoKey in the given Cloud organization/project.
 //
 //   - scope: A scope can be an organization or a project. Resources protected by
-//     the crypto key in provided scope will be returned. The allowed values are:
-//   - organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/12345678") *
-//     projects/{PROJECT_ID} (e.g., "projects/foo-bar") *
-//     projects/{PROJECT_NUMBER} (e.g., "projects/12345678").
+//     the crypto key in provided scope will be returned. The following values
+//     are allowed: * organizations/{ORGANIZATION_NUMBER} (e.g.,
+//     "organizations/12345678") * projects/{PROJECT_ID} (e.g.,
+//     "projects/foo-bar") * projects/{PROJECT_NUMBER} (e.g.,
+//     "projects/12345678").
 func (r *OrganizationsProtectedResourcesService) Search(scope string) *OrganizationsProtectedResourcesSearchCall {
 	c := &OrganizationsProtectedResourcesSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope
@@ -1522,10 +1523,11 @@ type ProjectsProtectedResourcesSearchCall struct {
 // KMS CryptoKey in the given Cloud organization/project.
 //
 //   - scope: A scope can be an organization or a project. Resources protected by
-//     the crypto key in provided scope will be returned. The allowed values are:
-//   - organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/12345678") *
-//     projects/{PROJECT_ID} (e.g., "projects/foo-bar") *
-//     projects/{PROJECT_NUMBER} (e.g., "projects/12345678").
+//     the crypto key in provided scope will be returned. The following values
+//     are allowed: * organizations/{ORGANIZATION_NUMBER} (e.g.,
+//     "organizations/12345678") * projects/{PROJECT_ID} (e.g.,
+//     "projects/foo-bar") * projects/{PROJECT_NUMBER} (e.g.,
+//     "projects/12345678").
 func (r *ProjectsProtectedResourcesService) Search(scope string) *ProjectsProtectedResourcesSearchCall {
 	c := &ProjectsProtectedResourcesSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope

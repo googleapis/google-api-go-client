@@ -7345,6 +7345,11 @@ type WorkerPool struct {
 	//   "DEFAULT_PACKAGE_SET_PYTHON" - Stage packages typically useful to workers
 	// written in Python.
 	DefaultPackageSet string `json:"defaultPackageSet,omitempty"`
+	// DiskProvisionedIops: Optional. IOPS provisioned for the root disk for VMs.
+	DiskProvisionedIops int64 `json:"diskProvisionedIops,omitempty,string"`
+	// DiskProvisionedThroughputMibps: Optional. Throughput provisioned for the
+	// root disk for VMs.
+	DiskProvisionedThroughputMibps int64 `json:"diskProvisionedThroughputMibps,omitempty,string"`
 	// DiskSizeGb: Size of root disk for VMs, in GB. If zero or unspecified, the
 	// service will attempt to choose a reasonable default.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty"`

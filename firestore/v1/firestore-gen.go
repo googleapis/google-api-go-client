@@ -1593,7 +1593,11 @@ type GoogleFirestoreAdminV1Backup struct {
 	// ExpireTime: Output only. The timestamp at which this backup expires.
 	ExpireTime string `json:"expireTime,omitempty"`
 	// Name: Output only. The unique resource name of the Backup. Format is
-	// `projects/{project}/locations/{location}/backups/{backup}`.
+	// `projects/{project}/locations/{location}/backups/{backup}`. The location in
+	// the name will be the Standard Managed Multi-Region (SMMR) location (e.g.
+	// `us`) if the backup was created with an SMMR location, or the Google Managed
+	// Multi-Region (GMMR) location (e.g. `nam5`) if the backup was created with a
+	// GMMR location.
 	Name string `json:"name,omitempty"`
 	// SnapshotTime: Output only. The backup contains an externally consistent copy
 	// of the database at this time.
@@ -2993,27 +2997,6 @@ func (s GoogleFirestoreAdminV1ListUserCredsResponse) MarshalJSON() ([]byte, erro
 // GoogleFirestoreAdminV1LocationMetadata: The metadata message for
 // google.cloud.location.Location.metadata.
 type GoogleFirestoreAdminV1LocationMetadata struct {
-	// AvailableStoragePlacements: The storage placements available in the
-	// location. When the location represents a Standard Managed Multi-Region
-	// (SMMR) like "us", this field lists the available Google-Managed
-	// Multi-Regions (GMMRs) within it, such as "nam5" or "eur3".
-	AvailableStoragePlacements []string `json:"availableStoragePlacements,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AvailableStoragePlacements")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AvailableStoragePlacements") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleFirestoreAdminV1LocationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleFirestoreAdminV1LocationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1PitrSnapshot: A consistent snapshot of a database at a

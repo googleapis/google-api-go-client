@@ -120,6 +120,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		return nil, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
+	s.AccountTypes = NewAccountTypesService(s)
 	s.AudienceMembers = NewAudienceMembersService(s)
 	s.Events = NewEventsService(s)
 	s.RequestStatus = NewRequestStatusService(s)
@@ -147,6 +148,8 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	AccountTypes *AccountTypesService
+
 	AudienceMembers *AudienceMembersService
 
 	Events *EventsService
@@ -159,6 +162,99 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewAccountTypesService(s *Service) *AccountTypesService {
+	rs := &AccountTypesService{s: s}
+	rs.Accounts = NewAccountTypesAccountsService(s)
+	return rs
+}
+
+type AccountTypesService struct {
+	s *Service
+
+	Accounts *AccountTypesAccountsService
+}
+
+func NewAccountTypesAccountsService(s *Service) *AccountTypesAccountsService {
+	rs := &AccountTypesAccountsService{s: s}
+	rs.Insights = NewAccountTypesAccountsInsightsService(s)
+	rs.PartnerLinks = NewAccountTypesAccountsPartnerLinksService(s)
+	rs.UserListDirectLicenses = NewAccountTypesAccountsUserListDirectLicensesService(s)
+	rs.UserListGlobalLicenses = NewAccountTypesAccountsUserListGlobalLicensesService(s)
+	rs.UserLists = NewAccountTypesAccountsUserListsService(s)
+	return rs
+}
+
+type AccountTypesAccountsService struct {
+	s *Service
+
+	Insights *AccountTypesAccountsInsightsService
+
+	PartnerLinks *AccountTypesAccountsPartnerLinksService
+
+	UserListDirectLicenses *AccountTypesAccountsUserListDirectLicensesService
+
+	UserListGlobalLicenses *AccountTypesAccountsUserListGlobalLicensesService
+
+	UserLists *AccountTypesAccountsUserListsService
+}
+
+func NewAccountTypesAccountsInsightsService(s *Service) *AccountTypesAccountsInsightsService {
+	rs := &AccountTypesAccountsInsightsService{s: s}
+	return rs
+}
+
+type AccountTypesAccountsInsightsService struct {
+	s *Service
+}
+
+func NewAccountTypesAccountsPartnerLinksService(s *Service) *AccountTypesAccountsPartnerLinksService {
+	rs := &AccountTypesAccountsPartnerLinksService{s: s}
+	return rs
+}
+
+type AccountTypesAccountsPartnerLinksService struct {
+	s *Service
+}
+
+func NewAccountTypesAccountsUserListDirectLicensesService(s *Service) *AccountTypesAccountsUserListDirectLicensesService {
+	rs := &AccountTypesAccountsUserListDirectLicensesService{s: s}
+	return rs
+}
+
+type AccountTypesAccountsUserListDirectLicensesService struct {
+	s *Service
+}
+
+func NewAccountTypesAccountsUserListGlobalLicensesService(s *Service) *AccountTypesAccountsUserListGlobalLicensesService {
+	rs := &AccountTypesAccountsUserListGlobalLicensesService{s: s}
+	rs.UserListGlobalLicenseCustomerInfos = NewAccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosService(s)
+	return rs
+}
+
+type AccountTypesAccountsUserListGlobalLicensesService struct {
+	s *Service
+
+	UserListGlobalLicenseCustomerInfos *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosService
+}
+
+func NewAccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosService(s *Service) *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosService {
+	rs := &AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosService{s: s}
+	return rs
+}
+
+type AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosService struct {
+	s *Service
+}
+
+func NewAccountTypesAccountsUserListsService(s *Service) *AccountTypesAccountsUserListsService {
+	rs := &AccountTypesAccountsUserListsService{s: s}
+	return rs
+}
+
+type AccountTypesAccountsUserListsService struct {
+	s *Service
 }
 
 func NewAudienceMembersService(s *Service) *AudienceMembersService {
@@ -265,10 +361,17 @@ type AudienceMember struct {
 	// MobileData: Data identifying the user's mobile devices.
 	MobileData *MobileData `json:"mobileData,omitempty"`
 	// PairData: Publisher Advertiser Identity Reconciliation (PAIR) IDs
-	// (//support.google.com/admanager/answer/15067908).
+	// (//support.google.com/admanager/answer/15067908). This feature is only
+	// available to data partners.
 	PairData *PairData `json:"pairData,omitempty"`
+	// PpidData: Data related to publisher provided identifiers. This feature is
+	// only available to data partners.
+	PpidData *PpidData `json:"ppidData,omitempty"`
 	// UserData: User-provided data that identifies the user.
 	UserData *UserData `json:"userData,omitempty"`
+	// UserIdData: Data related to unique identifiers for a user, as defined by the
+	// advertiser.
+	UserIdData *UserIdData `json:"userIdData,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Consent") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -320,6 +423,32 @@ type AwsWrappedKeyInfo struct {
 
 func (s AwsWrappedKeyInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AwsWrappedKeyInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Baseline: Baseline criteria against which insights are compared.
+type Baseline struct {
+	// BaselineLocation: The baseline location of the request. Baseline location is
+	// an OR-list of the requested regions.
+	BaselineLocation *Location `json:"baselineLocation,omitempty"`
+	// LocationAutoDetectionEnabled: If set to true, the service will try to
+	// automatically detect the baseline location for insights.
+	LocationAutoDetectionEnabled bool `json:"locationAutoDetectionEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaselineLocation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaselineLocation") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Baseline) MarshalJSON() ([]byte, error) {
+	type NoMethod Baseline
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -404,6 +533,41 @@ type Consent struct {
 
 func (s Consent) MarshalJSON() ([]byte, error) {
 	type NoMethod Consent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ContactIdInfo: Additional information when `CONTACT_ID` is one of the
+// `upload_key_types`.
+type ContactIdInfo struct {
+	// DataSourceType: Optional. Immutable. Source of the upload data
+	//
+	// Possible values:
+	//   "DATA_SOURCE_TYPE_UNSPECIFIED" - Not specified.
+	//   "DATA_SOURCE_TYPE_FIRST_PARTY" - The uploaded data is first-party data.
+	//   "DATA_SOURCE_TYPE_THIRD_PARTY_CREDIT_BUREAU" - The uploaded data is from a
+	// third-party credit bureau.
+	//   "DATA_SOURCE_TYPE_THIRD_PARTY_VOTER_FILE" - The uploaded data is from a
+	// third-party voter file.
+	//   "DATA_SOURCE_TYPE_THIRD_PARTY_PARTNER_DATA" - The uploaded data is third
+	// party partner data.
+	DataSourceType string `json:"dataSourceType,omitempty"`
+	// MatchRatePercentage: Output only. Match rate for customer match user lists.
+	MatchRatePercentage int64 `json:"matchRatePercentage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataSourceType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataSourceType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ContactIdInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ContactIdInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -513,6 +677,15 @@ type DeviceInfo struct {
 func (s DeviceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // EncryptionInfo: Encryption information for the data being ingested.
@@ -925,9 +1098,15 @@ type IngestAudienceMembersStatus struct {
 	// PairDataIngestionStatus: The status of the pair data ingestion to the
 	// destination.
 	PairDataIngestionStatus *IngestPairDataStatus `json:"pairDataIngestionStatus,omitempty"`
+	// PpidDataIngestionStatus: The status of the ppid data ingestion to the
+	// destination.
+	PpidDataIngestionStatus *IngestPpidDataStatus `json:"ppidDataIngestionStatus,omitempty"`
 	// UserDataIngestionStatus: The status of the user data ingestion to the
 	// destination.
 	UserDataIngestionStatus *IngestUserDataStatus `json:"userDataIngestionStatus,omitempty"`
+	// UserIdDataIngestionStatus: The status of the user id data ingestion to the
+	// destination.
+	UserIdDataIngestionStatus *IngestUserIdDataStatus `json:"userIdDataIngestionStatus,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MobileDataIngestionStatus")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1103,6 +1282,35 @@ func (s IngestPairDataStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// IngestPpidDataStatus: The status of the ppid data ingestion to the
+// destination containing stats related to the ingestion.
+type IngestPpidDataStatus struct {
+	// PpidCount: The total count of ppids sent in the upload request for the
+	// destination. Includes all ppids in the request, regardless of whether they
+	// were successfully ingested or not.
+	PpidCount int64 `json:"ppidCount,omitempty,string"`
+	// RecordCount: The total count of audience members sent in the upload request
+	// for the destination. Includes all audience members in the request,
+	// regardless of whether they were successfully ingested or not.
+	RecordCount int64 `json:"recordCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "PpidCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PpidCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IngestPpidDataStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod IngestPpidDataStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // IngestUserDataStatus: The status of the user data ingestion to the
 // destination containing stats related to the ingestion.
 type IngestUserDataStatus struct {
@@ -1153,6 +1361,87 @@ type IngestUserDataStatus struct {
 
 func (s IngestUserDataStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod IngestUserDataStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IngestUserIdDataStatus: The status of the user id data ingestion to the
+// destination containing stats related to the ingestion.
+type IngestUserIdDataStatus struct {
+	// RecordCount: The total count of audience members sent in the upload request
+	// for the destination. Includes all audience members in the request,
+	// regardless of whether they were successfully ingested or not.
+	RecordCount int64 `json:"recordCount,omitempty,string"`
+	// UserIdCount: The total count of user ids sent in the upload request for the
+	// destination. Includes all user ids in the request, regardless of whether
+	// they were successfully ingested or not.
+	UserIdCount int64 `json:"userIdCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "RecordCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RecordCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IngestUserIdDataStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod IngestUserIdDataStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IngestedUserListInfo: Represents a user list that is populated by user
+// provided data.
+type IngestedUserListInfo struct {
+	// ContactIdInfo: Optional. Additional information when `CONTACT_ID` is one of
+	// the `upload_key_types`.
+	ContactIdInfo *ContactIdInfo `json:"contactIdInfo,omitempty"`
+	// MobileIdInfo: Optional. Additional information when `MOBILE_ID` is one of
+	// the `upload_key_types`.
+	MobileIdInfo *MobileIdInfo `json:"mobileIdInfo,omitempty"`
+	// PairIdInfo: Optional. Additional information when `PAIR_ID` is one of the
+	// `upload_key_types`. This feature is only available to data partners.
+	PairIdInfo *PairIdInfo `json:"pairIdInfo,omitempty"`
+	// PartnerAudienceInfo: Optional. Additional information for partner audiences.
+	// This feature is only available to data partners.
+	PartnerAudienceInfo *PartnerAudienceInfo `json:"partnerAudienceInfo,omitempty"`
+	// PseudonymousIdInfo: Optional. Additional information for `PSEUDONYMOUS_ID`
+	// is one of the `upload_key_types`.
+	PseudonymousIdInfo *PseudonymousIdInfo `json:"pseudonymousIdInfo,omitempty"`
+	// UploadKeyTypes: Required. Immutable. Upload key types of this user list.
+	//
+	// Possible values:
+	//   "UPLOAD_KEY_TYPE_UNSPECIFIED" - Not specified.
+	//   "CONTACT_ID" - Customer info such as email address, phone number or
+	// physical address.
+	//   "MOBILE_ID" - Mobile advertising ids.
+	//   "USER_ID" - Third party provided user ids.
+	//   "PAIR_ID" - Publisher advertiser identity reconciliation ids.
+	//   "PSEUDONYMOUS_ID" - Data Management Platform IDs: - Google User ID -
+	// Partner Provided ID - Publisher Provided ID - iOS IDFA - Android advertising
+	// ID - Roku ID - Amazon Fire TV ID - Xbox or Microsoft ID
+	UploadKeyTypes []string `json:"uploadKeyTypes,omitempty"`
+	// UserIdInfo: Optional. Additional information when `USER_ID` is one of the
+	// `upload_key_types`.
+	UserIdInfo *UserIdInfo `json:"userIdInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContactIdInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContactIdInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IngestedUserListInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod IngestedUserListInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1234,6 +1523,239 @@ func (s ItemParameter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListUserListDirectLicensesResponse: Response from the
+// ListUserListDirectLicensesRequest.
+type ListUserListDirectLicensesResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// UserListDirectLicenses: The licenses for the given user list in the request.
+	UserListDirectLicenses []*UserListDirectLicense `json:"userListDirectLicenses,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListUserListDirectLicensesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListUserListDirectLicensesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListUserListGlobalLicenseCustomerInfosResponse: Response from the
+// ListUserListGlobalLicensesCustomerInfoRequest.
+type ListUserListGlobalLicenseCustomerInfosResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// UserListGlobalLicenseCustomerInfos: The customer information for the given
+	// license in the request.
+	UserListGlobalLicenseCustomerInfos []*UserListGlobalLicenseCustomerInfo `json:"userListGlobalLicenseCustomerInfos,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListUserListGlobalLicenseCustomerInfosResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListUserListGlobalLicenseCustomerInfosResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListUserListGlobalLicensesResponse: Response from the
+// ListUserListGlobalLicensesRequest.
+type ListUserListGlobalLicensesResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// UserListGlobalLicenses: The licenses for the given user list in the request.
+	UserListGlobalLicenses []*UserListGlobalLicense `json:"userListGlobalLicenses,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListUserListGlobalLicensesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListUserListGlobalLicensesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListUserListsResponse: Response message for ListUserLists.
+type ListUserListsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// UserLists: The user lists from the specified account.
+	UserLists []*UserList `json:"userLists,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListUserListsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListUserListsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Location: The baseline location of the request. Baseline location is on
+// OR-list of ISO 3166-1 alpha-2 region codes of the requested regions.
+type Location struct {
+	// RegionCodes: List of ISO 3166-1 alpha-2 region codes.
+	RegionCodes []string `json:"regionCodes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RegionCodes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RegionCodes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Location) MarshalJSON() ([]byte, error) {
+	type NoMethod Location
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MarketingDataInsight: Insights for marketing data. This feature is only
+// available to data partners.
+type MarketingDataInsight struct {
+	// Attributes: Insights for values of a given dimension.
+	Attributes []*MarketingDataInsightsAttribute `json:"attributes,omitempty"`
+	// Dimension: The dimension to which the insight belongs.
+	//
+	// Possible values:
+	//   "AUDIENCE_INSIGHTS_DIMENSION_UNSPECIFIED" - Not specified.
+	//   "AUDIENCE_INSIGHTS_DIMENSION_UNKNOWN" - The value is unknown in this
+	// version.
+	//   "AFFINITY_USER_INTEREST" - An Affinity UserInterest.
+	//   "IN_MARKET_USER_INTEREST" - An In-Market UserInterest.
+	//   "AGE_RANGE" - An age range.
+	//   "GENDER" - A gender.
+	Dimension string `json:"dimension,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Attributes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MarketingDataInsight) MarshalJSON() ([]byte, error) {
+	type NoMethod MarketingDataInsight
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MarketingDataInsightsAttribute: Insights for a collection of related
+// attributes of the same dimension.
+type MarketingDataInsightsAttribute struct {
+	// AgeRange: Age range of the audience for which the lift is provided.
+	//
+	// Possible values:
+	//   "AGE_RANGE_UNSPECIFIED" - Not specified.
+	//   "AGE_RANGE_UNKNOWN" - Unknown.
+	//   "AGE_RANGE_18_24" - Between 18 and 24 years old.
+	//   "AGE_RANGE_25_34" - Between 25 and 34 years old.
+	//   "AGE_RANGE_35_44" - Between 35 and 44 years old.
+	//   "AGE_RANGE_45_54" - Between 45 and 54 years old.
+	//   "AGE_RANGE_55_64" - Between 55 and 64 years old.
+	//   "AGE_RANGE_65_UP" - 65 years old and beyond.
+	AgeRange string `json:"ageRange,omitempty"`
+	// Gender: Gender of the audience for which the lift is provided.
+	//
+	// Possible values:
+	//   "GENDER_UNSPECIFIED" - Not specified.
+	//   "GENDER_UNKNOWN" - Unknown.
+	//   "GENDER_MALE" - Male.
+	//   "GENDER_FEMALE" - Female.
+	Gender string `json:"gender,omitempty"`
+	// Lift: Measure of lift that the audience has for the attribute value as
+	// compared to the baseline. Range [0-1].
+	Lift float64 `json:"lift,omitempty"`
+	// UserInterestId: The user interest ID.
+	UserInterestId int64 `json:"userInterestId,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "AgeRange") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgeRange") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MarketingDataInsightsAttribute) MarshalJSON() ([]byte, error) {
+	type NoMethod MarketingDataInsightsAttribute
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *MarketingDataInsightsAttribute) UnmarshalJSON(data []byte) error {
+	type NoMethod MarketingDataInsightsAttribute
+	var s1 struct {
+		Lift gensupport.JSONFloat64 `json:"lift"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Lift = float64(s1.Lift)
+	return nil
+}
+
 // MobileData: Mobile IDs for the audience. At least one mobile ID is required.
 type MobileData struct {
 	// MobileIds: Required. The list of mobile device IDs (advertising ID/IDFA). At
@@ -1257,8 +1779,52 @@ func (s MobileData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MobileIdInfo: Additional information when `MOBILE_ID` is one of the
+// `upload_key_types`.
+type MobileIdInfo struct {
+	// AppId: Required. Immutable. A string that uniquely identifies a mobile
+	// application from which the data was collected.
+	AppId string `json:"appId,omitempty"`
+	// DataSourceType: Optional. Immutable. Source of the upload data.
+	//
+	// Possible values:
+	//   "DATA_SOURCE_TYPE_UNSPECIFIED" - Not specified.
+	//   "DATA_SOURCE_TYPE_FIRST_PARTY" - The uploaded data is first-party data.
+	//   "DATA_SOURCE_TYPE_THIRD_PARTY_CREDIT_BUREAU" - The uploaded data is from a
+	// third-party credit bureau.
+	//   "DATA_SOURCE_TYPE_THIRD_PARTY_VOTER_FILE" - The uploaded data is from a
+	// third-party voter file.
+	//   "DATA_SOURCE_TYPE_THIRD_PARTY_PARTNER_DATA" - The uploaded data is third
+	// party partner data.
+	DataSourceType string `json:"dataSourceType,omitempty"`
+	// KeySpace: Required. Immutable. The key space of mobile IDs.
+	//
+	// Possible values:
+	//   "KEY_SPACE_UNSPECIFIED" - Not specified.
+	//   "IOS" - The iOS keyspace.
+	//   "ANDROID" - The Android keyspace.
+	KeySpace string `json:"keySpace,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AppId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MobileIdInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod MobileIdInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PairData: PAIR (//support.google.com/admanager/answer/15067908) IDs for the
-// audience. At least one PAIR ID is required.
+// audience. At least one PAIR ID is required. This feature is only available
+// to data partners.
 type PairData struct {
 	// PairIds: Required. Cleanroom-provided PII data, hashed with SHA256, and
 	// encrypted with an EC commutative cipher using publisher key for the PAIR
@@ -1283,6 +1849,139 @@ func (s PairData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PairIdInfo: Additional information when `PAIR_ID` is one of the
+// `upload_key_types`. This feature is only available to data partners.
+type PairIdInfo struct {
+	// AdvertiserIdentifierCount: Output only. The count of the advertiser's first
+	// party data records that have been uploaded to a clean room provider. This
+	// does not signify the size of a PAIR user list.
+	AdvertiserIdentifierCount int64 `json:"advertiserIdentifierCount,omitempty,string"`
+	// CleanRoomIdentifier: Required. Immutable. Identifies a unique advertiser to
+	// publisher relationship with one clean room provider or across multiple clean
+	// room providers.
+	CleanRoomIdentifier string `json:"cleanRoomIdentifier,omitempty"`
+	// MatchRatePercentage: Output only. This field denotes the percentage of
+	// membership match of this user list with the corresponding publisher's first
+	// party data. Must be between 0 and 100 inclusive.
+	MatchRatePercentage int64 `json:"matchRatePercentage,omitempty"`
+	// PublisherId: Required. Immutable. Identifies the publisher that the
+	// Publisher Advertiser Identity Reconciliation user list is reconciled with.
+	// This field is provided by the cleanroom provider and is only unique in the
+	// scope of that cleanroom. This cannot be used as a global identifier across
+	// multiple cleanrooms.
+	PublisherId int64 `json:"publisherId,omitempty,string"`
+	// PublisherName: Optional. Descriptive name of the publisher to be displayed
+	// in the UI for a better targeting experience.
+	PublisherName string `json:"publisherName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdvertiserIdentifierCount")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdvertiserIdentifierCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PairIdInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod PairIdInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PartnerAudienceInfo: Additional information for partner audiences. This
+// feature is only available to data partners.
+type PartnerAudienceInfo struct {
+	// CommercePartner: Optional. The commerce partner name. Only allowed if
+	// `partner_audience_source` is `COMMERCE_AUDIENCE`.
+	CommercePartner string `json:"commercePartner,omitempty"`
+	// PartnerAudienceSource: Required. Immutable. The source of the partner
+	// audience.
+	//
+	// Possible values:
+	//   "PARTNER_AUDIENCE_SOURCE_UNSPECIFIED" - Not specified.
+	//   "COMMERCE_AUDIENCE" - Partner Audience source is commerce audience.
+	//   "LINEAR_TV_AUDIENCE" - Partner Audience source is linear TV audience.
+	//   "AGENCY_PROVIDER_AUDIENCE" - Partner Audience source is agency/provider
+	// audience.
+	PartnerAudienceSource string `json:"partnerAudienceSource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CommercePartner") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CommercePartner") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PartnerAudienceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod PartnerAudienceInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PartnerLink: A partner link between an owning account and a partner account.
+type PartnerLink struct {
+	// Name: Identifier. The name of the partner link. Format:
+	// accountTypes/{account_type}/accounts/{account}/partnerLinks/{partner_link}
+	Name string `json:"name,omitempty"`
+	// OwningAccount: Required. The owning account granting access to the partner
+	// account.
+	OwningAccount *ProductAccount `json:"owningAccount,omitempty"`
+	// PartnerAccount: Required. The partner account granted access by the owning
+	// account.
+	PartnerAccount *ProductAccount `json:"partnerAccount,omitempty"`
+	// PartnerLinkId: Output only. The partner link ID.
+	PartnerLinkId string `json:"partnerLinkId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PartnerLink) MarshalJSON() ([]byte, error) {
+	type NoMethod PartnerLink
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PpidData: Publisher provided identifiers data holding the ppids. At least
+// one ppid is required. This feature is only available to data partners.
+type PpidData struct {
+	// Ppids: Required. The list of publisher provided identifiers for a user.
+	Ppids []string `json:"ppids,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Ppids") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Ppids") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PpidData) MarshalJSON() ([]byte, error) {
+	type NoMethod PpidData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ProductAccount: Represents a specific account.
 type ProductAccount struct {
 	// AccountId: Required. The ID of the account. For example, your Google Ads
@@ -1299,6 +1998,7 @@ type ProductAccount struct {
 	//   "DISPLAY_VIDEO_ADVERTISER" - Display & Video 360 advertiser.
 	//   "DATA_PARTNER" - Data Partner.
 	//   "GOOGLE_ANALYTICS_PROPERTY" - Google Analytics.
+	//   "GOOGLE_AD_MANAGER_AUDIENCE_LINK" - Google Ad Manager audience link.
 	AccountType string `json:"accountType,omitempty"`
 	// Product: Deprecated. Use `account_type` instead.
 	//
@@ -1324,6 +2024,41 @@ type ProductAccount struct {
 
 func (s ProductAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductAccount
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PseudonymousIdInfo: Additional information when `PSEUDONYMOUS_ID` is one of
+// the `upload_key_types`.
+type PseudonymousIdInfo struct {
+	// BillableRecordCount: Optional. Immutable. The number of billable records
+	// (e.g. uploaded or matched).
+	BillableRecordCount int64 `json:"billableRecordCount,omitempty,string"`
+	// SyncStatus: Output only. Sync status of the user list.
+	//
+	// Possible values:
+	//   "SYNC_STATUS_UNSPECIFIED" - Not specified.
+	//   "CREATED" - The user list has been created as a placeholder. List contents
+	// and/or metadata are still being synced. The user list is not ready for use.
+	//   "READY_FOR_USE" - The user list is ready for use. Contents and cookies
+	// have been synced correctly.
+	//   "FAILED" - An error has occurred syncing user list contents and/or
+	// metadata. The user list cannot be used.
+	SyncStatus string `json:"syncStatus,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BillableRecordCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BillableRecordCount") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PseudonymousIdInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod PseudonymousIdInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1403,9 +2138,15 @@ type RemoveAudienceMembersStatus struct {
 	// PairDataRemovalStatus: The status of the pair data removal from the
 	// destination.
 	PairDataRemovalStatus *RemovePairDataStatus `json:"pairDataRemovalStatus,omitempty"`
+	// PpidDataRemovalStatus: The status of the ppid data removal from the
+	// destination.
+	PpidDataRemovalStatus *RemovePpidDataStatus `json:"ppidDataRemovalStatus,omitempty"`
 	// UserDataRemovalStatus: The status of the user data removal from the
 	// destination.
 	UserDataRemovalStatus *RemoveUserDataStatus `json:"userDataRemovalStatus,omitempty"`
+	// UserIdDataRemovalStatus: The status of the user id data removal from the
+	// destination.
+	UserIdDataRemovalStatus *RemoveUserIdDataStatus `json:"userIdDataRemovalStatus,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MobileDataRemovalStatus") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1482,6 +2223,35 @@ func (s RemovePairDataStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RemovePpidDataStatus: The status of the ppid data removal from the
+// destination.
+type RemovePpidDataStatus struct {
+	// PpidCount: The total count of ppids sent in the removal request. Includes
+	// all ppids in the request, regardless of whether they were successfully
+	// removed or not.
+	PpidCount int64 `json:"ppidCount,omitempty,string"`
+	// RecordCount: The total count of audience members sent in the removal
+	// request. Includes all audience members in the request, regardless of whether
+	// they were successfully removed or not.
+	RecordCount int64 `json:"recordCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "PpidCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PpidCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemovePpidDataStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod RemovePpidDataStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RemoveUserDataStatus: The status of the user data removal from the
 // destination.
 type RemoveUserDataStatus struct {
@@ -1508,6 +2278,35 @@ type RemoveUserDataStatus struct {
 
 func (s RemoveUserDataStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoveUserDataStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RemoveUserIdDataStatus: The status of the user id data removal from the
+// destination.
+type RemoveUserIdDataStatus struct {
+	// RecordCount: The total count of audience members sent in the removal
+	// request. Includes all audience members in the request, regardless of whether
+	// they were successfully removed or not.
+	RecordCount int64 `json:"recordCount,omitempty,string"`
+	// UserIdCount: The total count of user ids sent in the removal request.
+	// Includes all user ids in the request, regardless of whether they were
+	// successfully removed or not.
+	UserIdCount int64 `json:"userIdCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "RecordCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RecordCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemoveUserIdDataStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoveUserIdDataStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1557,6 +2356,57 @@ func (s RequestStatusPerDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RetrieveInsightsRequest: Request message for DM API
+// MarketingDataInsightsService.RetrieveInsights
+type RetrieveInsightsRequest struct {
+	// Baseline: Required. Baseline for the insights requested.
+	Baseline *Baseline `json:"baseline,omitempty"`
+	// UserListId: Required. The user list ID for which insights are requested.
+	UserListId string `json:"userListId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Baseline") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Baseline") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RetrieveInsightsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RetrieveInsightsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RetrieveInsightsResponse: Response message for DM API
+// MarketingDataInsightsService.RetrieveInsights
+type RetrieveInsightsResponse struct {
+	// MarketingDataInsights: Contains the insights for the marketing data.
+	MarketingDataInsights []*MarketingDataInsight `json:"marketingDataInsights,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "MarketingDataInsights") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MarketingDataInsights") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RetrieveInsightsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RetrieveInsightsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RetrieveRequestStatusResponse: Response from the
 // RetrieveRequestStatusRequest.
 type RetrieveRequestStatusResponse struct {
@@ -1582,6 +2432,62 @@ type RetrieveRequestStatusResponse struct {
 
 func (s RetrieveRequestStatusResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RetrieveRequestStatusResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SearchPartnerLinksResponse: Response from the SearchPartnerLinksRequest.
+type SearchPartnerLinksResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// PartnerLinks: The partner links for the given account.
+	PartnerLinks []*PartnerLink `json:"partnerLinks,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SearchPartnerLinksResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchPartnerLinksResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SizeInfo: Estimated number of members in this user list in different target
+// networks.
+type SizeInfo struct {
+	// DisplayNetworkMembersCount: Output only. Estimated number of members in this
+	// user list, on the Google Display Network.
+	DisplayNetworkMembersCount int64 `json:"displayNetworkMembersCount,omitempty,string"`
+	// SearchNetworkMembersCount: Output only. Estimated number of members in this
+	// user list in the google.com domain. These are the members available for
+	// targeting in Search campaigns.
+	SearchNetworkMembersCount int64 `json:"searchNetworkMembersCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "DisplayNetworkMembersCount")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayNetworkMembersCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SizeInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod SizeInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1616,6 +2522,32 @@ type Status struct {
 
 func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TargetNetworkInfo: Eligibility information for different target networks.
+type TargetNetworkInfo struct {
+	// EligibleForDisplay: Output only. Indicates this user list is eligible for
+	// Google Display Network.
+	EligibleForDisplay bool `json:"eligibleForDisplay,omitempty"`
+	// EligibleForSearch: Optional. Indicates if this user list is eligible for
+	// Google Search Network.
+	EligibleForSearch bool `json:"eligibleForSearch,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EligibleForDisplay") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EligibleForDisplay") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TargetNetworkInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod TargetNetworkInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1680,6 +2612,62 @@ func (s UserData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// UserIdData: User id data holding the user id.
+type UserIdData struct {
+	// UserId: Required. A unique identifier for a user, as defined by the
+	// advertiser.
+	UserId string `json:"userId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UserId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UserId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UserIdData) MarshalJSON() ([]byte, error) {
+	type NoMethod UserIdData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UserIdInfo: Additional information when `USER_ID` is one of the
+// `upload_key_types`.
+type UserIdInfo struct {
+	// DataSourceType: Optional. Immutable. Source of the upload data.
+	//
+	// Possible values:
+	//   "DATA_SOURCE_TYPE_UNSPECIFIED" - Not specified.
+	//   "DATA_SOURCE_TYPE_FIRST_PARTY" - The uploaded data is first-party data.
+	//   "DATA_SOURCE_TYPE_THIRD_PARTY_CREDIT_BUREAU" - The uploaded data is from a
+	// third-party credit bureau.
+	//   "DATA_SOURCE_TYPE_THIRD_PARTY_VOTER_FILE" - The uploaded data is from a
+	// third-party voter file.
+	//   "DATA_SOURCE_TYPE_THIRD_PARTY_PARTNER_DATA" - The uploaded data is third
+	// party partner data.
+	DataSourceType string `json:"dataSourceType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataSourceType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataSourceType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UserIdInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod UserIdInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // UserIdentifier: A single identifier for the user.
 type UserIdentifier struct {
 	// Address: The known components of a user's address. Holds a grouping of
@@ -1706,6 +2694,403 @@ type UserIdentifier struct {
 
 func (s UserIdentifier) MarshalJSON() ([]byte, error) {
 	type NoMethod UserIdentifier
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UserList: A user list resource.
+type UserList struct {
+	// AccessReason: Output only. The reason this account has been granted access
+	// to the list.
+	//
+	// Possible values:
+	//   "ACCESS_REASON_UNSPECIFIED" - Not specified.
+	//   "OWNED" - The resource is owned by the user.
+	//   "SHARED" - The resource is shared to the user.
+	//   "LICENSED" - The resource is licensed to the user.
+	//   "SUBSCRIBED" - The user subscribed to the resource.
+	//   "AFFILIATED" - The resource is accessible to the user.
+	AccessReason string `json:"accessReason,omitempty"`
+	// AccountAccessStatus: Optional. Indicates if this share is still enabled.
+	// When a user list is shared with the account this field is set to `ENABLED`.
+	// Later the user list owner can decide to revoke the share and make it
+	// `DISABLED`.
+	//
+	// Possible values:
+	//   "ACCESS_STATUS_UNSPECIFIED" - Not specified.
+	//   "ENABLED" - The access is enabled.
+	//   "DISABLED" - The access is disabled.
+	AccountAccessStatus string `json:"accountAccessStatus,omitempty"`
+	// ClosingReason: Output only. The reason why this user list membership status
+	// is closed.
+	//
+	// Possible values:
+	//   "CLOSING_REASON_UNSPECIFIED" - Not specified.
+	//   "UNUSED" - The user list was closed because it has not been used in
+	// targeting recently. See https://support.google.com/google-ads/answer/2472738
+	// for details.
+	ClosingReason string `json:"closingReason,omitempty"`
+	// Description: Optional. A description of the user list.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Required. The display name of the user list.
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: Output only. The unique ID of the user list.
+	Id int64 `json:"id,omitempty,string"`
+	// IngestedUserListInfo: Optional. Represents a user list that is populated by
+	// user ingested data.
+	IngestedUserListInfo *IngestedUserListInfo `json:"ingestedUserListInfo,omitempty"`
+	// IntegrationCode: Optional. An ID from external system. It is used by user
+	// list sellers to correlate IDs on their systems.
+	IntegrationCode string `json:"integrationCode,omitempty"`
+	// MembershipDuration: Optional. The duration a user remains in the user list.
+	// Valid durations are exact multiples of 24 hours (86400 seconds). Providing a
+	// value that is not an exact multiple of 24 hours will result in an
+	// INVALID_ARGUMENT error.
+	MembershipDuration string `json:"membershipDuration,omitempty"`
+	// MembershipStatus: Optional. Membership status of this user list.
+	//
+	// Possible values:
+	//   "MEMBERSHIP_STATUS_UNSPECIFIED" - Not specified.
+	//   "OPEN" - Open status - User list is accruing members and can be targeted
+	// to.
+	//   "CLOSED" - Closed status - No new members being added.
+	MembershipStatus string `json:"membershipStatus,omitempty"`
+	// Name: Identifier. The resource name of the user list. Format:
+	// accountTypes/{account_type}/accounts/{account}/userLists/{user_list}
+	Name string `json:"name,omitempty"`
+	// ReadOnly: Output only. An option that indicates if a user may edit a list.
+	ReadOnly bool `json:"readOnly,omitempty"`
+	// SizeInfo: Output only. Estimated number of members in this user list in
+	// different target networks.
+	SizeInfo *SizeInfo `json:"sizeInfo,omitempty"`
+	// TargetNetworkInfo: Optional. Eligibility information for different target
+	// networks.
+	TargetNetworkInfo *TargetNetworkInfo `json:"targetNetworkInfo,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AccessReason") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessReason") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UserList) MarshalJSON() ([]byte, error) {
+	type NoMethod UserList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UserListDirectLicense: A user list direct license. This feature is only
+// available to data partners.
+type UserListDirectLicense struct {
+	// ClientAccountDisplayName: Output only. Name of client customer which the
+	// user list is being licensed to. This field is read-only.
+	ClientAccountDisplayName string `json:"clientAccountDisplayName,omitempty"`
+	// ClientAccountId: Immutable. ID of client customer which the user list is
+	// being licensed to.
+	ClientAccountId int64 `json:"clientAccountId,omitempty,string"`
+	// ClientAccountType: Immutable. Account type of client customer which the user
+	// list is being licensed to.
+	//
+	// Possible values:
+	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_UNKNOWN" - Unknown.
+	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_GOOGLE_ADS" - Google Ads customer.
+	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_DISPLAY_VIDEO_PARTNER" - Display &
+	// Video 360 partner.
+	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_DISPLAY_VIDEO_ADVERTISER" - Display
+	// & Video 360 advertiser.
+	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_GOOGLE_AD_MANAGER_AUDIENCE_LINK" -
+	// Google Ad Manager audience link.
+	ClientAccountType string `json:"clientAccountType,omitempty"`
+	// HistoricalPricings: Output only. Pricing history of this user list license.
+	// This field is read-only.
+	HistoricalPricings []*UserListLicensePricing `json:"historicalPricings,omitempty"`
+	// Metrics: Output only. Metrics related to this license This field is
+	// read-only and only populated if the start and end dates are set in the
+	// ListUserListDirectLicenses call
+	Metrics *UserListLicenseMetrics `json:"metrics,omitempty"`
+	// Name: Identifier. The resource name of the user list direct license.
+	Name string `json:"name,omitempty"`
+	// Pricing: Optional. UserListDirectLicense pricing.
+	Pricing *UserListLicensePricing `json:"pricing,omitempty"`
+	// Status: Optional. Status of UserListDirectLicense - ENABLED or DISABLED.
+	//
+	// Possible values:
+	//   "USER_LIST_LICENSE_STATUS_UNSPECIFIED" - Unknown.
+	//   "USER_LIST_LICENSE_STATUS_ENABLED" - Active status - user list is still
+	// being licensed.
+	//   "USER_LIST_LICENSE_STATUS_DISABLED" - Inactive status - user list is no
+	// longer being licensed.
+	Status string `json:"status,omitempty"`
+	// UserListDisplayName: Output only. Name of the user list being licensed. This
+	// field is read-only.
+	UserListDisplayName string `json:"userListDisplayName,omitempty"`
+	// UserListId: Immutable. ID of the user list being licensed.
+	UserListId int64 `json:"userListId,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ClientAccountDisplayName")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientAccountDisplayName") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UserListDirectLicense) MarshalJSON() ([]byte, error) {
+	type NoMethod UserListDirectLicense
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UserListGlobalLicense: A user list global license. This feature is only
+// available to data partners.
+type UserListGlobalLicense struct {
+	// HistoricalPricings: Output only. Pricing history of this user list license.
+	// This field is read-only.
+	HistoricalPricings []*UserListLicensePricing `json:"historicalPricings,omitempty"`
+	// LicenseType: Immutable. Product type of client customer which the user list
+	// is being licensed to.
+	//
+	// Possible values:
+	//   "USER_LIST_GLOBAL_LICENSE_TYPE_UNSPECIFIED" - UNSPECIFIED.
+	//   "USER_LIST_GLOBAL_LICENSE_TYPE_RESELLER" - Reseller license.
+	//   "USER_LIST_GLOBAL_LICENSE_TYPE_DATA_MART_SELL_SIDE" - DataMart Sell Side
+	// license.
+	//   "USER_LIST_GLOBAL_LICENSE_TYPE_DATA_MART_BUY_SIDE" - DataMart Buy Side
+	// license.
+	LicenseType string `json:"licenseType,omitempty"`
+	// Metrics: Output only. Metrics related to this license This field is
+	// read-only and only populated if the start and end dates are set in the
+	// ListUserListGlobalLicenses call
+	Metrics *UserListLicenseMetrics `json:"metrics,omitempty"`
+	// Name: Identifier. The resource name of the user list global license.
+	Name string `json:"name,omitempty"`
+	// Pricing: Optional. UserListGlobalLicense pricing.
+	Pricing *UserListLicensePricing `json:"pricing,omitempty"`
+	// Status: Optional. Status of UserListGlobalLicense - ENABLED or DISABLED.
+	//
+	// Possible values:
+	//   "USER_LIST_LICENSE_STATUS_UNSPECIFIED" - Unknown.
+	//   "USER_LIST_LICENSE_STATUS_ENABLED" - Active status - user list is still
+	// being licensed.
+	//   "USER_LIST_LICENSE_STATUS_DISABLED" - Inactive status - user list is no
+	// longer being licensed.
+	Status string `json:"status,omitempty"`
+	// UserListDisplayName: Output only. Name of the user list being licensed. This
+	// field is read-only.
+	UserListDisplayName string `json:"userListDisplayName,omitempty"`
+	// UserListId: Immutable. ID of the user list being licensed.
+	UserListId int64 `json:"userListId,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "HistoricalPricings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HistoricalPricings") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UserListGlobalLicense) MarshalJSON() ([]byte, error) {
+	type NoMethod UserListGlobalLicense
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UserListGlobalLicenseCustomerInfo: Information about a customer of a user
+// list global license. This will automatically be created by the system when a
+// customer purchases a global license.
+type UserListGlobalLicenseCustomerInfo struct {
+	// ClientAccountDisplayName: Output only. Name of client customer which the
+	// user list is being licensed to.
+	ClientAccountDisplayName string `json:"clientAccountDisplayName,omitempty"`
+	// ClientAccountId: Output only. ID of client customer which the user list is
+	// being licensed to.
+	ClientAccountId int64 `json:"clientAccountId,omitempty,string"`
+	// ClientAccountType: Output only. Product type of client customer which the
+	// user list is being licensed to.
+	//
+	// Possible values:
+	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_UNKNOWN" - Unknown.
+	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_GOOGLE_ADS" - Google Ads customer.
+	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_DISPLAY_VIDEO_PARTNER" - Display &
+	// Video 360 partner.
+	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_DISPLAY_VIDEO_ADVERTISER" - Display
+	// & Video 360 advertiser.
+	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_GOOGLE_AD_MANAGER_AUDIENCE_LINK" -
+	// Google Ad Manager audience link.
+	ClientAccountType string `json:"clientAccountType,omitempty"`
+	// HistoricalPricings: Output only. Pricing history of this user list license.
+	HistoricalPricings []*UserListLicensePricing `json:"historicalPricings,omitempty"`
+	// LicenseType: Output only. Product type of client customer which the user
+	// list is being licensed to.
+	//
+	// Possible values:
+	//   "USER_LIST_GLOBAL_LICENSE_TYPE_UNSPECIFIED" - UNSPECIFIED.
+	//   "USER_LIST_GLOBAL_LICENSE_TYPE_RESELLER" - Reseller license.
+	//   "USER_LIST_GLOBAL_LICENSE_TYPE_DATA_MART_SELL_SIDE" - DataMart Sell Side
+	// license.
+	//   "USER_LIST_GLOBAL_LICENSE_TYPE_DATA_MART_BUY_SIDE" - DataMart Buy Side
+	// license.
+	LicenseType string `json:"licenseType,omitempty"`
+	// Metrics: Output only. Metrics related to this license This field is only
+	// populated if the start and end dates are set in the
+	// ListUserListGlobalLicenseCustomerInfos call.
+	Metrics *UserListLicenseMetrics `json:"metrics,omitempty"`
+	// Name: Identifier. The resource name of the user list global license
+	// customer.
+	Name string `json:"name,omitempty"`
+	// Pricing: Output only. UserListDirectLicense pricing.
+	Pricing *UserListLicensePricing `json:"pricing,omitempty"`
+	// Status: Output only. Status of UserListDirectLicense - ENABLED or DISABLED.
+	//
+	// Possible values:
+	//   "USER_LIST_LICENSE_STATUS_UNSPECIFIED" - Unknown.
+	//   "USER_LIST_LICENSE_STATUS_ENABLED" - Active status - user list is still
+	// being licensed.
+	//   "USER_LIST_LICENSE_STATUS_DISABLED" - Inactive status - user list is no
+	// longer being licensed.
+	Status string `json:"status,omitempty"`
+	// UserListDisplayName: Output only. Name of the user list being licensed.
+	UserListDisplayName string `json:"userListDisplayName,omitempty"`
+	// UserListId: Output only. ID of the user list being licensed.
+	UserListId int64 `json:"userListId,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "ClientAccountDisplayName")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientAccountDisplayName") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UserListGlobalLicenseCustomerInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod UserListGlobalLicenseCustomerInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UserListLicenseMetrics: Metrics related to a user list license.
+type UserListLicenseMetrics struct {
+	// ClickCount: Output only. The number of clicks for the user list license.
+	ClickCount int64 `json:"clickCount,omitempty,string"`
+	// EndDate: Output only. The end date (inclusive) of the metrics in the format
+	// YYYYMMDD. For example, 20260102 represents January 2, 2026. If `start_date`
+	// is used in the filter, `end_date` is also required. If neither `start_date`
+	// nor `end_date` are included in the filter, the UserListLicenseMetrics fields
+	// will not be populated in the response.
+	EndDate int64 `json:"endDate,omitempty,string"`
+	// ImpressionCount: Output only. The number of impressions for the user list
+	// license.
+	ImpressionCount int64 `json:"impressionCount,omitempty,string"`
+	// RevenueUsdMicros: Output only. The revenue for the user list license in USD
+	// micros.
+	RevenueUsdMicros int64 `json:"revenueUsdMicros,omitempty,string"`
+	// StartDate: Output only. The start date (inclusive) of the metrics in the
+	// format YYYYMMDD. For example, 20260102 represents January 2, 2026. If
+	// `end_date` is used in the filter, `start_date` is also required. If neither
+	// `start_date` nor `end_date` are included in the filter, the
+	// UserListLicenseMetrics fields will not be populated in the response.
+	StartDate int64 `json:"startDate,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "ClickCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClickCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UserListLicenseMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod UserListLicenseMetrics
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UserListLicensePricing: A user list license pricing.
+type UserListLicensePricing struct {
+	// BuyerApprovalState: Output only. The buyer approval state of this pricing.
+	// This field is read-only.
+	//
+	// Possible values:
+	//   "USER_LIST_PRICING_BUYER_APPROVAL_STATE_UNSPECIFIED" - UNSPECIFIED.
+	//   "PENDING" - User list client has not yet accepted the pricing terms set by
+	// the user list owner.
+	//   "APPROVED" - User list client has accepted the pricing terms set by the
+	// user list owner.
+	//   "REJECTED" - User list client has rejected the pricing terms set by the
+	// user list owner.
+	BuyerApprovalState string `json:"buyerApprovalState,omitempty"`
+	// CostMicros: Optional. The cost associated with the model, in micro units
+	// (10^-6), in the currency specified by the currency_code field. For example,
+	// 2000000 means $2 if `currency_code` is `USD`.
+	CostMicros int64 `json:"costMicros,omitempty,string"`
+	// CostType: Immutable. The cost type of this pricing. Can be set only in the
+	// `create` operation. Can't be updated for an existing license.
+	//
+	// Possible values:
+	//   "USER_LIST_PRICING_COST_TYPE_UNSPECIFIED" - Unspecified.
+	//   "CPC" - Cost per click.
+	//   "CPM" - Cost per mille (thousand impressions).
+	//   "MEDIA_SHARE" - Media share.
+	CostType string `json:"costType,omitempty"`
+	// CurrencyCode: Optional. The currency in which cost and max_cost is
+	// specified. Must be a three-letter currency code defined in ISO 4217.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+	// EndTime: Optional. End time of the pricing.
+	EndTime string `json:"endTime,omitempty"`
+	// MaxCostMicros: Optional. The maximum CPM a commerce audience can be charged
+	// when the MEDIA_SHARE cost type is used. The value is in micro units (10^-6)
+	// and in the currency specified by the currency_code field. For example,
+	// 2000000 means $2 if `currency_code` is `USD`. This is only relevant when
+	// cost_type is MEDIA_SHARE. When cost_type is not MEDIA_SHARE, and this field
+	// is set, a MAX_COST_NOT_ALLOWED error will be returned. If not set or set
+	// to`0`, there is no cap.
+	MaxCostMicros int64 `json:"maxCostMicros,omitempty,string"`
+	// PricingActive: Output only. Whether this pricing is active.
+	PricingActive bool `json:"pricingActive,omitempty"`
+	// PricingId: Output only. The ID of this pricing.
+	PricingId int64 `json:"pricingId,omitempty,string"`
+	// StartTime: Output only. Start time of the pricing.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BuyerApprovalState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BuyerApprovalState") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UserListLicensePricing) MarshalJSON() ([]byte, error) {
+	type NoMethod UserListLicensePricing
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1847,6 +3232,2311 @@ type WarningInfo struct {
 func (s WarningInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod WarningInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type AccountTypesAccountsInsightsRetrieveCall struct {
+	s                       *Service
+	parent                  string
+	retrieveinsightsrequest *RetrieveInsightsRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Retrieve: Retrieves marketing data insights for a given user list. This
+// feature is only available to data partners. Authorization Headers: This
+// method supports the following optional headers to define how the API
+// authorizes access for the request: * `login-account`: (Optional) The
+// resource name of the account where the Google Account of the credentials is
+// a user. If not set, defaults to the account of the request. Format:
+// `accountTypes/{loginAccountType}/accounts/{loginAccountId}` *
+// `linked-account`: (Optional) The resource name of the account with an
+// established product link to the `login-account`. Format:
+// `accountTypes/{linkedAccountType}/accounts/{linkedAccountId}`
+//
+//   - parent: The parent account that owns the user list. Format:
+//     `accountTypes/{account_type}/accounts/{account}`.
+func (r *AccountTypesAccountsInsightsService) Retrieve(parent string, retrieveinsightsrequest *RetrieveInsightsRequest) *AccountTypesAccountsInsightsRetrieveCall {
+	c := &AccountTypesAccountsInsightsRetrieveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.retrieveinsightsrequest = retrieveinsightsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountTypesAccountsInsightsRetrieveCall) Fields(s ...googleapi.Field) *AccountTypesAccountsInsightsRetrieveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountTypesAccountsInsightsRetrieveCall) Context(ctx context.Context) *AccountTypesAccountsInsightsRetrieveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountTypesAccountsInsightsRetrieveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountTypesAccountsInsightsRetrieveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.retrieveinsightsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/insights:retrieve")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.insights.retrieve", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamanager.accountTypes.accounts.insights.retrieve" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RetrieveInsightsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountTypesAccountsInsightsRetrieveCall) Do(opts ...googleapi.CallOption) (*RetrieveInsightsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RetrieveInsightsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.insights.retrieve", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountTypesAccountsPartnerLinksCreateCall struct {
+	s           *Service
+	parent      string
+	partnerlink *PartnerLink
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Create: Creates a partner link for the given account. Authorization Headers:
+// This method supports the following optional headers to define how the API
+// authorizes access for the request: * `login-account`: (Optional) The
+// resource name of the account where the Google Account of the credentials is
+// a user. If not set, defaults to the account of the request. Format:
+// `accountTypes/{loginAccountType}/accounts/{loginAccountId}` *
+// `linked-account`: (Optional) The resource name of the account with an
+// established product link to the `login-account`. Format:
+// `accountTypes/{linkedAccountType}/accounts/{linkedAccountId}`
+//
+//   - parent: The parent, which owns this collection of partner links. Format:
+//     accountTypes/{account_type}/accounts/{account}.
+func (r *AccountTypesAccountsPartnerLinksService) Create(parent string, partnerlink *PartnerLink) *AccountTypesAccountsPartnerLinksCreateCall {
+	c := &AccountTypesAccountsPartnerLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.partnerlink = partnerlink
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountTypesAccountsPartnerLinksCreateCall) Fields(s ...googleapi.Field) *AccountTypesAccountsPartnerLinksCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountTypesAccountsPartnerLinksCreateCall) Context(ctx context.Context) *AccountTypesAccountsPartnerLinksCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountTypesAccountsPartnerLinksCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountTypesAccountsPartnerLinksCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.partnerlink)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/partnerLinks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.partnerLinks.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamanager.accountTypes.accounts.partnerLinks.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *PartnerLink.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AccountTypesAccountsPartnerLinksCreateCall) Do(opts ...googleapi.CallOption) (*PartnerLink, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &PartnerLink{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.partnerLinks.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountTypesAccountsPartnerLinksDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a partner link for the given account. Authorization Headers:
+// This method supports the following optional headers to define how the API
+// authorizes access for the request: * `login-account`: (Optional) The
+// resource name of the account where the Google Account of the credentials is
+// a user. If not set, defaults to the account of the request. Format:
+// `accountTypes/{loginAccountType}/accounts/{loginAccountId}` *
+// `linked-account`: (Optional) The resource name of the account with an
+// established product link to the `login-account`. Format:
+// `accountTypes/{linkedAccountType}/accounts/{linkedAccountId}`
+//
+//   - name: The resource name of the partner link to delete. Format:
+//     accountTypes/{account_type}/accounts/{account}/partnerLinks/{partner_link}.
+func (r *AccountTypesAccountsPartnerLinksService) Delete(name string) *AccountTypesAccountsPartnerLinksDeleteCall {
+	c := &AccountTypesAccountsPartnerLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountTypesAccountsPartnerLinksDeleteCall) Fields(s ...googleapi.Field) *AccountTypesAccountsPartnerLinksDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountTypesAccountsPartnerLinksDeleteCall) Context(ctx context.Context) *AccountTypesAccountsPartnerLinksDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountTypesAccountsPartnerLinksDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountTypesAccountsPartnerLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.partnerLinks.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamanager.accountTypes.accounts.partnerLinks.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AccountTypesAccountsPartnerLinksDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.partnerLinks.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountTypesAccountsPartnerLinksSearchCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Search: Searches for all partner links to and from a given account.
+// Authorization Headers: This method supports the following optional headers
+// to define how the API authorizes access for the request: * `login-account`:
+// (Optional) The resource name of the account where the Google Account of the
+// credentials is a user. If not set, defaults to the account of the request.
+// Format: `accountTypes/{loginAccountType}/accounts/{loginAccountId}` *
+// `linked-account`: (Optional) The resource name of the account with an
+// established product link to the `login-account`. Format:
+// `accountTypes/{linkedAccountType}/accounts/{linkedAccountId}`
+//
+//   - parent: Account to search for partner links. If no `filter` is specified,
+//     all partner links where this account is either the `owning_account` or
+//     `partner_account` are returned. Format:
+//     `accountTypes/{account_type}/accounts/{account}`.
+func (r *AccountTypesAccountsPartnerLinksService) Search(parent string) *AccountTypesAccountsPartnerLinksSearchCall {
+	c := &AccountTypesAccountsPartnerLinksSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter string
+// (//google.aip.dev/160). All fields need to be on the left hand side of each
+// condition (for example: `partner_link_id = 123456789`). Supported
+// operations: - `AND` - `=` - `!=` Supported fields: - `partner_link_id` -
+// `owning_account.account_type` - `owning_account.account_id` -
+// `partner_account.account_type` - `partner_account.account_id` Example:
+// `owning_account.account_type = "GOOGLE_ADS" OR partner_account.account_id =
+// 987654321`
+func (c *AccountTypesAccountsPartnerLinksSearchCall) Filter(filter string) *AccountTypesAccountsPartnerLinksSearchCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// partner links to return. The service may return fewer than this value. If
+// unspecified, at most 10 partner links will be returned. The maximum value is
+// 100; values above 100 will be coerced to 100.
+func (c *AccountTypesAccountsPartnerLinksSearchCall) PageSize(pageSize int64) *AccountTypesAccountsPartnerLinksSearchCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `SearchPartnerLinks` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `SearchPartnerLinks` must match the call that provided the page token.
+func (c *AccountTypesAccountsPartnerLinksSearchCall) PageToken(pageToken string) *AccountTypesAccountsPartnerLinksSearchCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountTypesAccountsPartnerLinksSearchCall) Fields(s ...googleapi.Field) *AccountTypesAccountsPartnerLinksSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountTypesAccountsPartnerLinksSearchCall) IfNoneMatch(entityTag string) *AccountTypesAccountsPartnerLinksSearchCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountTypesAccountsPartnerLinksSearchCall) Context(ctx context.Context) *AccountTypesAccountsPartnerLinksSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountTypesAccountsPartnerLinksSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountTypesAccountsPartnerLinksSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/partnerLinks:search")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.partnerLinks.search", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamanager.accountTypes.accounts.partnerLinks.search" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SearchPartnerLinksResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountTypesAccountsPartnerLinksSearchCall) Do(opts ...googleapi.CallOption) (*SearchPartnerLinksResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SearchPartnerLinksResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.partnerLinks.search", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountTypesAccountsPartnerLinksSearchCall) Pages(ctx context.Context, f func(*SearchPartnerLinksResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type AccountTypesAccountsUserListDirectLicensesCreateCall struct {
+	s                     *Service
+	parent                string
+	userlistdirectlicense *UserListDirectLicense
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Create: Creates a user list direct license. This feature is only available
+// to data partners.
+//
+//   - parent: The account that owns the user list being licensed. Should be in
+//     the format accountTypes/{ACCOUNT_TYPE}/accounts/{ACCOUNT_ID}.
+func (r *AccountTypesAccountsUserListDirectLicensesService) Create(parent string, userlistdirectlicense *UserListDirectLicense) *AccountTypesAccountsUserListDirectLicensesCreateCall {
+	c := &AccountTypesAccountsUserListDirectLicensesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.userlistdirectlicense = userlistdirectlicense
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountTypesAccountsUserListDirectLicensesCreateCall) Fields(s ...googleapi.Field) *AccountTypesAccountsUserListDirectLicensesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountTypesAccountsUserListDirectLicensesCreateCall) Context(ctx context.Context) *AccountTypesAccountsUserListDirectLicensesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountTypesAccountsUserListDirectLicensesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountTypesAccountsUserListDirectLicensesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.userlistdirectlicense)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/userListDirectLicenses")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userListDirectLicenses.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamanager.accountTypes.accounts.userListDirectLicenses.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *UserListDirectLicense.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountTypesAccountsUserListDirectLicensesCreateCall) Do(opts ...googleapi.CallOption) (*UserListDirectLicense, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &UserListDirectLicense{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userListDirectLicenses.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountTypesAccountsUserListDirectLicensesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a user list direct license. This feature is only available to
+// data partners.
+//
+// - name: The resource name of the user list direct license.
+func (r *AccountTypesAccountsUserListDirectLicensesService) Get(name string) *AccountTypesAccountsUserListDirectLicensesGetCall {
+	c := &AccountTypesAccountsUserListDirectLicensesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountTypesAccountsUserListDirectLicensesGetCall) Fields(s ...googleapi.Field) *AccountTypesAccountsUserListDirectLicensesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountTypesAccountsUserListDirectLicensesGetCall) IfNoneMatch(entityTag string) *AccountTypesAccountsUserListDirectLicensesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountTypesAccountsUserListDirectLicensesGetCall) Context(ctx context.Context) *AccountTypesAccountsUserListDirectLicensesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountTypesAccountsUserListDirectLicensesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountTypesAccountsUserListDirectLicensesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userListDirectLicenses.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamanager.accountTypes.accounts.userListDirectLicenses.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *UserListDirectLicense.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountTypesAccountsUserListDirectLicensesGetCall) Do(opts ...googleapi.CallOption) (*UserListDirectLicense, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &UserListDirectLicense{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userListDirectLicenses.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountTypesAccountsUserListDirectLicensesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all user list direct licenses owned by the parent account. This
+// feature is only available to data partners.
+//
+//   - parent: The account whose licenses are being queried. Should be in the
+//     format accountTypes/{ACCOUNT_TYPE}/accounts/{ACCOUNT_ID}.
+func (r *AccountTypesAccountsUserListDirectLicensesService) List(parent string) *AccountTypesAccountsUserListDirectLicensesListCall {
+	c := &AccountTypesAccountsUserListDirectLicensesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filters to apply to the list
+// request. All fields need to be on the left hand side of each condition (for
+// example: user_list_id = 123). **Supported Operations:** - `AND` - `=` - `!=`
+// - `>` - `>=` - `<` - `<=` **Unsupported Fields:** - `name` (use get method
+// instead) - `historical_pricings` and all its subfields -
+// `pricing.start_time` - `pricing.end_time`
+func (c *AccountTypesAccountsUserListDirectLicensesListCall) Filter(filter string) *AccountTypesAccountsUserListDirectLicensesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// licenses to return per page. The service may return fewer than this value.
+// If unspecified, at most 50 licenses will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
+func (c *AccountTypesAccountsUserListDirectLicensesListCall) PageSize(pageSize int64) *AccountTypesAccountsUserListDirectLicensesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListUserListDirectLicense` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListUserListDirectLicense` must match the call that provided the page
+// token.
+func (c *AccountTypesAccountsUserListDirectLicensesListCall) PageToken(pageToken string) *AccountTypesAccountsUserListDirectLicensesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountTypesAccountsUserListDirectLicensesListCall) Fields(s ...googleapi.Field) *AccountTypesAccountsUserListDirectLicensesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountTypesAccountsUserListDirectLicensesListCall) IfNoneMatch(entityTag string) *AccountTypesAccountsUserListDirectLicensesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountTypesAccountsUserListDirectLicensesListCall) Context(ctx context.Context) *AccountTypesAccountsUserListDirectLicensesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountTypesAccountsUserListDirectLicensesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountTypesAccountsUserListDirectLicensesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/userListDirectLicenses")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userListDirectLicenses.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamanager.accountTypes.accounts.userListDirectLicenses.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListUserListDirectLicensesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountTypesAccountsUserListDirectLicensesListCall) Do(opts ...googleapi.CallOption) (*ListUserListDirectLicensesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListUserListDirectLicensesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userListDirectLicenses.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountTypesAccountsUserListDirectLicensesListCall) Pages(ctx context.Context, f func(*ListUserListDirectLicensesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type AccountTypesAccountsUserListDirectLicensesPatchCall struct {
+	s                     *Service
+	name                  string
+	userlistdirectlicense *UserListDirectLicense
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Patch: Updates a user list direct license. This feature is only available to
+// data partners.
+//
+// - name: Identifier. The resource name of the user list direct license.
+func (r *AccountTypesAccountsUserListDirectLicensesService) Patch(name string, userlistdirectlicense *UserListDirectLicense) *AccountTypesAccountsUserListDirectLicensesPatchCall {
+	c := &AccountTypesAccountsUserListDirectLicensesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.userlistdirectlicense = userlistdirectlicense
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. The special character `*` is not supported and an
+// `INVALID_UPDATE_MASK` error will be thrown if used.
+func (c *AccountTypesAccountsUserListDirectLicensesPatchCall) UpdateMask(updateMask string) *AccountTypesAccountsUserListDirectLicensesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountTypesAccountsUserListDirectLicensesPatchCall) Fields(s ...googleapi.Field) *AccountTypesAccountsUserListDirectLicensesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountTypesAccountsUserListDirectLicensesPatchCall) Context(ctx context.Context) *AccountTypesAccountsUserListDirectLicensesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountTypesAccountsUserListDirectLicensesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountTypesAccountsUserListDirectLicensesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.userlistdirectlicense)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userListDirectLicenses.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamanager.accountTypes.accounts.userListDirectLicenses.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *UserListDirectLicense.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountTypesAccountsUserListDirectLicensesPatchCall) Do(opts ...googleapi.CallOption) (*UserListDirectLicense, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &UserListDirectLicense{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userListDirectLicenses.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountTypesAccountsUserListGlobalLicensesCreateCall struct {
+	s                     *Service
+	parent                string
+	userlistgloballicense *UserListGlobalLicense
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Create: Creates a user list global license. This feature is only available
+// to data partners.
+//
+//   - parent: The account that owns the user list being licensed. Should be in
+//     the format accountTypes/{ACCOUNT_TYPE}/accounts/{ACCOUNT_ID}.
+func (r *AccountTypesAccountsUserListGlobalLicensesService) Create(parent string, userlistgloballicense *UserListGlobalLicense) *AccountTypesAccountsUserListGlobalLicensesCreateCall {
+	c := &AccountTypesAccountsUserListGlobalLicensesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.userlistgloballicense = userlistgloballicense
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountTypesAccountsUserListGlobalLicensesCreateCall) Fields(s ...googleapi.Field) *AccountTypesAccountsUserListGlobalLicensesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountTypesAccountsUserListGlobalLicensesCreateCall) Context(ctx context.Context) *AccountTypesAccountsUserListGlobalLicensesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountTypesAccountsUserListGlobalLicensesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountTypesAccountsUserListGlobalLicensesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.userlistgloballicense)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/userListGlobalLicenses")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userListGlobalLicenses.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamanager.accountTypes.accounts.userListGlobalLicenses.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *UserListGlobalLicense.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountTypesAccountsUserListGlobalLicensesCreateCall) Do(opts ...googleapi.CallOption) (*UserListGlobalLicense, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &UserListGlobalLicense{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userListGlobalLicenses.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountTypesAccountsUserListGlobalLicensesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a user list global license. This feature is only available to
+// data partners.
+//
+// - name: The resource name of the user list global license.
+func (r *AccountTypesAccountsUserListGlobalLicensesService) Get(name string) *AccountTypesAccountsUserListGlobalLicensesGetCall {
+	c := &AccountTypesAccountsUserListGlobalLicensesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountTypesAccountsUserListGlobalLicensesGetCall) Fields(s ...googleapi.Field) *AccountTypesAccountsUserListGlobalLicensesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountTypesAccountsUserListGlobalLicensesGetCall) IfNoneMatch(entityTag string) *AccountTypesAccountsUserListGlobalLicensesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountTypesAccountsUserListGlobalLicensesGetCall) Context(ctx context.Context) *AccountTypesAccountsUserListGlobalLicensesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountTypesAccountsUserListGlobalLicensesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountTypesAccountsUserListGlobalLicensesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userListGlobalLicenses.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamanager.accountTypes.accounts.userListGlobalLicenses.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *UserListGlobalLicense.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountTypesAccountsUserListGlobalLicensesGetCall) Do(opts ...googleapi.CallOption) (*UserListGlobalLicense, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &UserListGlobalLicense{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userListGlobalLicenses.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountTypesAccountsUserListGlobalLicensesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all user list global licenses owned by the parent account. This
+// feature is only available to data partners.
+//
+//   - parent: The account whose licenses are being queried. Should be in the
+//     format accountTypes/{ACCOUNT_TYPE}/accounts/{ACCOUNT_ID}.
+func (r *AccountTypesAccountsUserListGlobalLicensesService) List(parent string) *AccountTypesAccountsUserListGlobalLicensesListCall {
+	c := &AccountTypesAccountsUserListGlobalLicensesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filters to apply to the list
+// request. All fields need to be on the left hand side of each condition (for
+// example: user_list_id = 123). **Supported Operations:** - `AND` - `=` - `!=`
+// - `>` - `>=` - `<` - `<=` **Unsupported Fields:** - `name` (use get method
+// instead) - `historical_pricings` and all its subfields -
+// `pricing.start_time` - `pricing.end_time`
+func (c *AccountTypesAccountsUserListGlobalLicensesListCall) Filter(filter string) *AccountTypesAccountsUserListGlobalLicensesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// licenses to return. The service may return fewer than this value. If
+// unspecified, at most 50 licenses will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
+func (c *AccountTypesAccountsUserListGlobalLicensesListCall) PageSize(pageSize int64) *AccountTypesAccountsUserListGlobalLicensesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListUserListGlobalLicense` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListUserListDirectLicense` must match the call that provided the page
+// token.
+func (c *AccountTypesAccountsUserListGlobalLicensesListCall) PageToken(pageToken string) *AccountTypesAccountsUserListGlobalLicensesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountTypesAccountsUserListGlobalLicensesListCall) Fields(s ...googleapi.Field) *AccountTypesAccountsUserListGlobalLicensesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountTypesAccountsUserListGlobalLicensesListCall) IfNoneMatch(entityTag string) *AccountTypesAccountsUserListGlobalLicensesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountTypesAccountsUserListGlobalLicensesListCall) Context(ctx context.Context) *AccountTypesAccountsUserListGlobalLicensesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountTypesAccountsUserListGlobalLicensesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountTypesAccountsUserListGlobalLicensesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/userListGlobalLicenses")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userListGlobalLicenses.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamanager.accountTypes.accounts.userListGlobalLicenses.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListUserListGlobalLicensesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountTypesAccountsUserListGlobalLicensesListCall) Do(opts ...googleapi.CallOption) (*ListUserListGlobalLicensesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListUserListGlobalLicensesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userListGlobalLicenses.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountTypesAccountsUserListGlobalLicensesListCall) Pages(ctx context.Context, f func(*ListUserListGlobalLicensesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type AccountTypesAccountsUserListGlobalLicensesPatchCall struct {
+	s                     *Service
+	name                  string
+	userlistgloballicense *UserListGlobalLicense
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Patch: Updates a user list global license. This feature is only available to
+// data partners.
+//
+// - name: Identifier. The resource name of the user list global license.
+func (r *AccountTypesAccountsUserListGlobalLicensesService) Patch(name string, userlistgloballicense *UserListGlobalLicense) *AccountTypesAccountsUserListGlobalLicensesPatchCall {
+	c := &AccountTypesAccountsUserListGlobalLicensesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.userlistgloballicense = userlistgloballicense
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. The special character `*` is not supported and an
+// `INVALID_UPDATE_MASK` error will be thrown if used.
+func (c *AccountTypesAccountsUserListGlobalLicensesPatchCall) UpdateMask(updateMask string) *AccountTypesAccountsUserListGlobalLicensesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountTypesAccountsUserListGlobalLicensesPatchCall) Fields(s ...googleapi.Field) *AccountTypesAccountsUserListGlobalLicensesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountTypesAccountsUserListGlobalLicensesPatchCall) Context(ctx context.Context) *AccountTypesAccountsUserListGlobalLicensesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountTypesAccountsUserListGlobalLicensesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountTypesAccountsUserListGlobalLicensesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.userlistgloballicense)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userListGlobalLicenses.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamanager.accountTypes.accounts.userListGlobalLicenses.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *UserListGlobalLicense.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountTypesAccountsUserListGlobalLicensesPatchCall) Do(opts ...googleapi.CallOption) (*UserListGlobalLicense, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &UserListGlobalLicense{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userListGlobalLicenses.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all customer info for a user list global license. This feature
+// is only available to data partners.
+//
+//   - parent: The global license whose customer info are being queried. Should
+//     be in the format
+//     `accountTypes/{ACCOUNT_TYPE}/accounts/{ACCOUNT_ID}/userListGlobalLicenses/{
+//     USER_LIST_GLOBAL_LICENSE_ID}`. To list all global license customer info
+//     under an account, replace the user list global license id with a '-' (for
+//     example,
+//     `accountTypes/DATA_PARTNER/accounts/123/userListGlobalLicenses/-`).
+func (r *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosService) List(parent string) *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall {
+	c := &AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filters to apply to the list
+// request. All fields need to be on the left hand side of each condition (for
+// example: user_list_id = 123). **Supported Operations:** - `AND` - `=` - `!=`
+// - `>` - `>=` - `<` - `<=` **Unsupported Fields:** - `name` (use get method
+// instead) - `historical_pricings` and all its subfields -
+// `pricing.start_time` - `pricing.end_time`
+func (c *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall) Filter(filter string) *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// licenses to return. The service may return fewer than this value. If
+// unspecified, at most 50 licenses will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
+func (c *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall) PageSize(pageSize int64) *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListUserListDirectLicense` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListUserListDirectLicense` must match the call that provided the page
+// token.
+func (c *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall) PageToken(pageToken string) *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall) Fields(s ...googleapi.Field) *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall) IfNoneMatch(entityTag string) *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall) Context(ctx context.Context) *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/userListGlobalLicenseCustomerInfos")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userListGlobalLicenses.userListGlobalLicenseCustomerInfos.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamanager.accountTypes.accounts.userListGlobalLicenses.userListGlobalLicenseCustomerInfos.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListUserListGlobalLicenseCustomerInfosResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall) Do(opts ...googleapi.CallOption) (*ListUserListGlobalLicenseCustomerInfosResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListUserListGlobalLicenseCustomerInfosResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userListGlobalLicenses.userListGlobalLicenseCustomerInfos.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall) Pages(ctx context.Context, f func(*ListUserListGlobalLicenseCustomerInfosResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type AccountTypesAccountsUserListsCreateCall struct {
+	s          *Service
+	parent     string
+	userlist   *UserList
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a UserList. Authorization Headers: This method supports the
+// following optional headers to define how the API authorizes access for the
+// request: * `login-account`: (Optional) The resource name of the account
+// where the Google Account of the credentials is a user. If not set, defaults
+// to the account of the request. Format:
+// `accountTypes/{loginAccountType}/accounts/{loginAccountId}` *
+// `linked-account`: (Optional) The resource name of the account with an
+// established product link to the `login-account`. Format:
+// `accountTypes/{linkedAccountType}/accounts/{linkedAccountId}`
+//
+//   - parent: The parent account where this user list will be created. Format:
+//     accountTypes/{account_type}/accounts/{account}.
+func (r *AccountTypesAccountsUserListsService) Create(parent string, userlist *UserList) *AccountTypesAccountsUserListsCreateCall {
+	c := &AccountTypesAccountsUserListsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.userlist = userlist
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If true, the
+// request is validated but not executed.
+func (c *AccountTypesAccountsUserListsCreateCall) ValidateOnly(validateOnly bool) *AccountTypesAccountsUserListsCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountTypesAccountsUserListsCreateCall) Fields(s ...googleapi.Field) *AccountTypesAccountsUserListsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountTypesAccountsUserListsCreateCall) Context(ctx context.Context) *AccountTypesAccountsUserListsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountTypesAccountsUserListsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountTypesAccountsUserListsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.userlist)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/userLists")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userLists.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamanager.accountTypes.accounts.userLists.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *UserList.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AccountTypesAccountsUserListsCreateCall) Do(opts ...googleapi.CallOption) (*UserList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &UserList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userLists.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountTypesAccountsUserListsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a UserList. Authorization Headers: This method supports the
+// following optional headers to define how the API authorizes access for the
+// request: * `login-account`: (Optional) The resource name of the account
+// where the Google Account of the credentials is a user. If not set, defaults
+// to the account of the request. Format:
+// `accountTypes/{loginAccountType}/accounts/{loginAccountId}` *
+// `linked-account`: (Optional) The resource name of the account with an
+// established product link to the `login-account`. Format:
+// `accountTypes/{linkedAccountType}/accounts/{linkedAccountId}`
+//
+//   - name: The name of the user list to delete. Format:
+//     accountTypes/{account_type}/accounts/{account}/userLists/{user_list}.
+func (r *AccountTypesAccountsUserListsService) Delete(name string) *AccountTypesAccountsUserListsDeleteCall {
+	c := &AccountTypesAccountsUserListsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If true, the
+// request is validated but not executed.
+func (c *AccountTypesAccountsUserListsDeleteCall) ValidateOnly(validateOnly bool) *AccountTypesAccountsUserListsDeleteCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountTypesAccountsUserListsDeleteCall) Fields(s ...googleapi.Field) *AccountTypesAccountsUserListsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountTypesAccountsUserListsDeleteCall) Context(ctx context.Context) *AccountTypesAccountsUserListsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountTypesAccountsUserListsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountTypesAccountsUserListsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userLists.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamanager.accountTypes.accounts.userLists.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AccountTypesAccountsUserListsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userLists.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountTypesAccountsUserListsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a UserList. Authorization Headers: This method supports the
+// following optional headers to define how the API authorizes access for the
+// request: * `login-account`: (Optional) The resource name of the account
+// where the Google Account of the credentials is a user. If not set, defaults
+// to the account of the request. Format:
+// `accountTypes/{loginAccountType}/accounts/{loginAccountId}` *
+// `linked-account`: (Optional) The resource name of the account with an
+// established product link to the `login-account`. Format:
+// `accountTypes/{linkedAccountType}/accounts/{linkedAccountId}`
+//
+//   - name: The resource name of the UserList to retrieve. Format:
+//     accountTypes/{account_type}/accounts/{account}/userLists/{user_list}.
+func (r *AccountTypesAccountsUserListsService) Get(name string) *AccountTypesAccountsUserListsGetCall {
+	c := &AccountTypesAccountsUserListsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountTypesAccountsUserListsGetCall) Fields(s ...googleapi.Field) *AccountTypesAccountsUserListsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountTypesAccountsUserListsGetCall) IfNoneMatch(entityTag string) *AccountTypesAccountsUserListsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountTypesAccountsUserListsGetCall) Context(ctx context.Context) *AccountTypesAccountsUserListsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountTypesAccountsUserListsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountTypesAccountsUserListsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userLists.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamanager.accountTypes.accounts.userLists.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *UserList.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AccountTypesAccountsUserListsGetCall) Do(opts ...googleapi.CallOption) (*UserList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &UserList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userLists.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountTypesAccountsUserListsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists UserLists. Authorization Headers: This method supports the
+// following optional headers to define how the API authorizes access for the
+// request: * `login-account`: (Optional) The resource name of the account
+// where the Google Account of the credentials is a user. If not set, defaults
+// to the account of the request. Format:
+// `accountTypes/{loginAccountType}/accounts/{loginAccountId}` *
+// `linked-account`: (Optional) The resource name of the account with an
+// established product link to the `login-account`. Format:
+// `accountTypes/{linkedAccountType}/accounts/{linkedAccountId}`
+//
+//   - parent: The parent account which owns this collection of user lists.
+//     Format: accountTypes/{account_type}/accounts/{account}.
+func (r *AccountTypesAccountsUserListsService) List(parent string) *AccountTypesAccountsUserListsListCall {
+	c := &AccountTypesAccountsUserListsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter string
+// (//google.aip.dev/160). All fields need to be on the left hand side of each
+// condition (for example: `display_name = "list 1"). Supported operations: -
+// `AND` - `=` - `!=` - `>` - `>=` - `<` - `<=` - `:` (has) Supported fields: -
+// `id` - `display_name` - `description` - `membership_status` -
+// `integration_code` - `access_reason` -
+// `ingested_user_list_info.upload_key_types`
+func (c *AccountTypesAccountsUserListsListCall) Filter(filter string) *AccountTypesAccountsUserListsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of user
+// lists to return. The service may return fewer than this value. If
+// unspecified, at most 50 user lists will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
+func (c *AccountTypesAccountsUserListsListCall) PageSize(pageSize int64) *AccountTypesAccountsUserListsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListUserLists` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListUserLists` must match the call that provided the page token.
+func (c *AccountTypesAccountsUserListsListCall) PageToken(pageToken string) *AccountTypesAccountsUserListsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountTypesAccountsUserListsListCall) Fields(s ...googleapi.Field) *AccountTypesAccountsUserListsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountTypesAccountsUserListsListCall) IfNoneMatch(entityTag string) *AccountTypesAccountsUserListsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountTypesAccountsUserListsListCall) Context(ctx context.Context) *AccountTypesAccountsUserListsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountTypesAccountsUserListsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountTypesAccountsUserListsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/userLists")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userLists.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamanager.accountTypes.accounts.userLists.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListUserListsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountTypesAccountsUserListsListCall) Do(opts ...googleapi.CallOption) (*ListUserListsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListUserListsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userLists.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountTypesAccountsUserListsListCall) Pages(ctx context.Context, f func(*ListUserListsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type AccountTypesAccountsUserListsPatchCall struct {
+	s          *Service
+	name       string
+	userlist   *UserList
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a UserList. Authorization Headers: This method supports the
+// following optional headers to define how the API authorizes access for the
+// request: * `login-account`: (Optional) The resource name of the account
+// where the Google Account of the credentials is a user. If not set, defaults
+// to the account of the request. Format:
+// `accountTypes/{loginAccountType}/accounts/{loginAccountId}` *
+// `linked-account`: (Optional) The resource name of the account with an
+// established product link to the `login-account`. Format:
+// `accountTypes/{linkedAccountType}/accounts/{linkedAccountId}`
+//
+//   - name: Identifier. The resource name of the user list. Format:
+//     accountTypes/{account_type}/accounts/{account}/userLists/{user_list}.
+func (r *AccountTypesAccountsUserListsService) Patch(name string, userlist *UserList) *AccountTypesAccountsUserListsPatchCall {
+	c := &AccountTypesAccountsUserListsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.userlist = userlist
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update.
+func (c *AccountTypesAccountsUserListsPatchCall) UpdateMask(updateMask string) *AccountTypesAccountsUserListsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If true, the
+// request is validated but not executed.
+func (c *AccountTypesAccountsUserListsPatchCall) ValidateOnly(validateOnly bool) *AccountTypesAccountsUserListsPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountTypesAccountsUserListsPatchCall) Fields(s ...googleapi.Field) *AccountTypesAccountsUserListsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountTypesAccountsUserListsPatchCall) Context(ctx context.Context) *AccountTypesAccountsUserListsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountTypesAccountsUserListsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountTypesAccountsUserListsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.userlist)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userLists.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamanager.accountTypes.accounts.userLists.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *UserList.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AccountTypesAccountsUserListsPatchCall) Do(opts ...googleapi.CallOption) (*UserList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &UserList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userLists.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type AudienceMembersIngestCall struct {

@@ -3511,6 +3511,7 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	//   "GCNV" - Google Cloud NetApp Volumes connector.
 	//   "GOOGLE_CHAT" - Google Chat connector.
 	//   "GOOGLE_SITES" - Google Sites connector.
+	//   "REMOTE_MCP" - Remote MCP based connector.
 	ConnectorType string `json:"connectorType,omitempty"`
 	// CreateEuaSaas: Optional. Whether the END USER AUTHENTICATION connector is
 	// created in SaaS.
@@ -4634,6 +4635,10 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	//   "CONFIGURABLE_BILLING_APPROACH_ENABLED" - The billing approach follows
 	// configurations specified by customer.
 	ConfigurableBillingApproach string `json:"configurableBillingApproach,omitempty"`
+	// ConnectorTenantInfo: Optional. Maps a connector ID (e.g., "hybrid-github",
+	// "shopify") to tenant-specific information required for that connector. The
+	// structure of the tenant information string is connector-dependent.
+	ConnectorTenantInfo map[string]string `json:"connectorTenantInfo,omitempty"`
 	// CreateTime: Output only. Timestamp the Recommendation Engine was created at.
 	CreateTime string `json:"createTime,omitempty"`
 	// DataStoreIds: Optional. The data stores associated with this engine. For
@@ -5666,6 +5671,7 @@ type GoogleCloudDiscoveryengineV1LicenseConfig struct {
 	//   "SUBSCRIPTION_TERM_ONE_MONTH" - 1 month.
 	//   "SUBSCRIPTION_TERM_ONE_YEAR" - 1 year.
 	//   "SUBSCRIPTION_TERM_THREE_YEARS" - 3 years.
+	//   "SUBSCRIPTION_TERM_CUSTOM" - Custom term. Must set the end_date.
 	SubscriptionTerm string `json:"subscriptionTerm,omitempty"`
 	// SubscriptionTier: Required. Subscription tier information for the license
 	// config.
@@ -11716,6 +11722,7 @@ type GoogleCloudDiscoveryengineV1alphaBillingAccountLicenseConfig struct {
 	//   "SUBSCRIPTION_TERM_ONE_MONTH" - 1 month.
 	//   "SUBSCRIPTION_TERM_ONE_YEAR" - 1 year.
 	//   "SUBSCRIPTION_TERM_THREE_YEARS" - 3 years.
+	//   "SUBSCRIPTION_TERM_CUSTOM" - Custom term. Must set the end_date.
 	SubscriptionTerm string `json:"subscriptionTerm,omitempty"`
 	// SubscriptionTier: Required. The subscription tier.
 	//
@@ -14155,6 +14162,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	//   "GCNV" - Google Cloud NetApp Volumes connector.
 	//   "GOOGLE_CHAT" - Google Chat connector.
 	//   "GOOGLE_SITES" - Google Sites connector.
+	//   "REMOTE_MCP" - Remote MCP based connector.
 	ConnectorType string `json:"connectorType,omitempty"`
 	// CreateEuaSaas: Optional. Whether the END USER AUTHENTICATION connector is
 	// created in SaaS.
@@ -15908,6 +15916,10 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	//   "CONFIGURABLE_BILLING_APPROACH_ENABLED" - The billing approach follows
 	// configurations specified by customer.
 	ConfigurableBillingApproach string `json:"configurableBillingApproach,omitempty"`
+	// ConnectorTenantInfo: Optional. Maps a connector ID (e.g., "hybrid-github",
+	// "shopify") to tenant-specific information required for that connector. The
+	// structure of the tenant information string is connector-dependent.
+	ConnectorTenantInfo map[string]string `json:"connectorTenantInfo,omitempty"`
 	// CreateTime: Output only. Timestamp the Recommendation Engine was created at.
 	CreateTime string `json:"createTime,omitempty"`
 	// DataStoreIds: Optional. The data stores associated with this engine. For
@@ -18792,6 +18804,7 @@ type GoogleCloudDiscoveryengineV1alphaLicenseConfig struct {
 	//   "SUBSCRIPTION_TERM_ONE_MONTH" - 1 month.
 	//   "SUBSCRIPTION_TERM_ONE_YEAR" - 1 year.
 	//   "SUBSCRIPTION_TERM_THREE_YEARS" - 3 years.
+	//   "SUBSCRIPTION_TERM_CUSTOM" - Custom term. Must set the end_date.
 	SubscriptionTerm string `json:"subscriptionTerm,omitempty"`
 	// SubscriptionTier: Required. Subscription tier information for the license
 	// config.
@@ -22799,8 +22812,8 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	NaturalLanguageQueryUnderstandingSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestNaturalLanguageQueryUnderstandingSpec `json:"naturalLanguageQueryUnderstandingSpec,omitempty"`
 	// NumResultsPerDataStore: Optional. The maximum number of results to retrieve
 	// from each data store. If not specified, it will use the
-	// SearchRequest.data_store_specs.num_results if provided, otherwise there is
-	// no limit.
+	// SearchRequest.DataStoreSpec.num_results if provided, otherwise there is no
+	// limit.
 	NumResultsPerDataStore int64 `json:"numResultsPerDataStore,omitempty"`
 	// Offset: A 0-indexed integer that specifies the current offset (that is,
 	// starting result location, amongst the Documents deemed by the API as
@@ -29679,6 +29692,10 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	//   "CONFIGURABLE_BILLING_APPROACH_ENABLED" - The billing approach follows
 	// configurations specified by customer.
 	ConfigurableBillingApproach string `json:"configurableBillingApproach,omitempty"`
+	// ConnectorTenantInfo: Optional. Maps a connector ID (e.g., "hybrid-github",
+	// "shopify") to tenant-specific information required for that connector. The
+	// structure of the tenant information string is connector-dependent.
+	ConnectorTenantInfo map[string]string `json:"connectorTenantInfo,omitempty"`
 	// CreateTime: Output only. Timestamp the Recommendation Engine was created at.
 	CreateTime string `json:"createTime,omitempty"`
 	// DataStoreIds: Optional. The data stores associated with this engine. For
@@ -30927,6 +30944,7 @@ type GoogleCloudDiscoveryengineV1betaLicenseConfig struct {
 	//   "SUBSCRIPTION_TERM_ONE_MONTH" - 1 month.
 	//   "SUBSCRIPTION_TERM_ONE_YEAR" - 1 year.
 	//   "SUBSCRIPTION_TERM_THREE_YEARS" - 3 years.
+	//   "SUBSCRIPTION_TERM_CUSTOM" - Custom term. Must set the end_date.
 	SubscriptionTerm string `json:"subscriptionTerm,omitempty"`
 	// SubscriptionTier: Required. Subscription tier information for the license
 	// config.
@@ -31812,8 +31830,8 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	NaturalLanguageQueryUnderstandingSpec *GoogleCloudDiscoveryengineV1betaSearchRequestNaturalLanguageQueryUnderstandingSpec `json:"naturalLanguageQueryUnderstandingSpec,omitempty"`
 	// NumResultsPerDataStore: Optional. The maximum number of results to retrieve
 	// from each data store. If not specified, it will use the
-	// SearchRequest.data_store_specs.num_results if provided, otherwise there is
-	// no limit.
+	// SearchRequest.DataStoreSpec.num_results if provided, otherwise there is no
+	// limit.
 	NumResultsPerDataStore int64 `json:"numResultsPerDataStore,omitempty"`
 	// Offset: A 0-indexed integer that specifies the current offset (that is,
 	// starting result location, amongst the Documents deemed by the API as

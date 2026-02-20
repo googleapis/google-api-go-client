@@ -872,6 +872,34 @@ func (s ColumnSortingOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CoordinatedWidget: A widget that contains two widget visualizations that are
+// coordinated in display. Currently, we only support the primary widget of
+// TimeSeriesTable with the secondary widget of XyChart.
+type CoordinatedWidget struct {
+	// Primary: Required. The primary visualization. Must be set. Must contain a
+	// data source.
+	Primary *Widget `json:"primary,omitempty"`
+	// Secondary: Required. The secondary visualization. Must be set. Must contain
+	// a data source.
+	Secondary *Widget `json:"secondary,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Primary") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Primary") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CoordinatedWidget) MarshalJSON() ([]byte, error) {
+	type NoMethod CoordinatedWidget
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Dashboard: A Google Stackdriver dashboard. Dashboards define the content and
 // layout of pages in the Stackdriver web application.
 type Dashboard struct {
@@ -3284,6 +3312,9 @@ type Widget struct {
 	// are within the area spanned by the grouping widget are considered member
 	// widgets.
 	CollapsibleGroup *CollapsibleGroup `json:"collapsibleGroup,omitempty"`
+	// CoordinatedWidget: A widget that contains two widget visualizations that are
+	// coordinated in display.
+	CoordinatedWidget *CoordinatedWidget `json:"coordinatedWidget,omitempty"`
 	// ErrorReportingPanel: A widget that displays a list of error groups.
 	ErrorReportingPanel *ErrorReportingPanel `json:"errorReportingPanel,omitempty"`
 	// FilterControl: A widget that displays an input field to change the value of

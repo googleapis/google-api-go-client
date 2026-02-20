@@ -1687,19 +1687,24 @@ type DestroyCryptoKeyVersionRequest struct {
 
 // Digest: A Digest holds a cryptographic message digest.
 type Digest struct {
+	// ExternalMu: A message digest produced with SHAKE-256, to be used with ML-DSA
+	// external-μ algorithms only. See "message representative" note in section
+	// 6.2, algorithm 7 of the FIPS-204 standard:
+	// https://doi.org/10.6028/nist.fips.204
+	ExternalMu string `json:"externalMu,omitempty"`
 	// Sha256: A message digest produced with the SHA-256 algorithm.
 	Sha256 string `json:"sha256,omitempty"`
 	// Sha384: A message digest produced with the SHA-384 algorithm.
 	Sha384 string `json:"sha384,omitempty"`
 	// Sha512: A message digest produced with the SHA-512 algorithm.
 	Sha512 string `json:"sha512,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Sha256") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "ExternalMu") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Sha256") to include in API
+	// NullFields is a list of field names (e.g. "ExternalMu") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

@@ -3645,8 +3645,8 @@ type ProductsManagement struct {
 // (https://support.google.com/merchants/answer/13889434) program, which
 // enables products from a business's store to be shown across Google for free.
 // The following list is the available set of program resource IDs accessible
-// through the API: * `checkout` * `free-listings` * `shopping-ads` *
-// `youtube-shopping-checkout`
+// through the API: * `checkout` * `free-listings` * `product-ratings` *
+// `shopping-ads` * `youtube-shopping-checkout`
 type Program struct {
 	// ActiveRegionCodes: Output only. The regions in which the account is actively
 	// participating in the program. Active regions are defined as those where all

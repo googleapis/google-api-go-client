@@ -9866,6 +9866,7 @@ type GoogleCloudDialogflowV2beta1ConversationProfile struct {
 	TimeZone                               string                                                 `json:"timeZone,omitempty"`
 	TtsConfig                              *GoogleCloudDialogflowV2beta1SynthesizeSpeechConfig    `json:"ttsConfig,omitempty"`
 	UpdateTime                             string                                                 `json:"updateTime,omitempty"`
+	UseBidiStreaming                       bool                                                   `json:"useBidiStreaming,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

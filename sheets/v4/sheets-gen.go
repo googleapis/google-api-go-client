@@ -447,8 +447,8 @@ func (s AddDimensionGroupResponse) MarshalJSON() ([]byte, error) {
 
 // AddFilterViewRequest: Adds a filter view.
 type AddFilterViewRequest struct {
-	// Filter: The filter to add. The filterViewId field is optional; if one is not
-	// set, an id will be randomly generated. (It is an error to specify the ID of
+	// Filter: The filter to add. The filterViewId field is optional. If one is not
+	// set, an ID will be randomly generated. (It is an error to specify the ID of
 	// a filter that already exists.)
 	Filter *FilterView `json:"filter,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
@@ -1274,7 +1274,9 @@ func (s BasicChartSpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BasicFilter: The default filter associated with a sheet.
+// BasicFilter: The default filter associated with a sheet. For more
+// information, see Manage data visibility with filters
+// (https://developers.google.com/workspace/sheets/api/guides/filters).
 type BasicFilter struct {
 	// Criteria: The criteria for showing/hiding values per column. The map's key
 	// is the column index, and the value is the criteria for that column. This
@@ -1372,9 +1374,9 @@ func (s BatchClearValuesByDataFilterRequest) MarshalJSON() ([]byte, error) {
 type BatchClearValuesByDataFilterResponse struct {
 	// ClearedRanges: The ranges that were cleared, in A1 notation
 	// (https://developers.google.com/workspace/sheets/api/guides/concepts#cell).
-	// If the requests are for an unbounded range or a ranger larger than the
-	// bounds of the sheet, this is the actual ranges that were cleared, bounded to
-	// the sheet's limits.
+	// If the requests are for an unbounded range or a range larger than the bounds
+	// of the sheet, this is the actual ranges that were cleared, bounded to the
+	// sheet's limits.
 	ClearedRanges []string `json:"clearedRanges,omitempty"`
 	// SpreadsheetId: The spreadsheet the updates were applied to.
 	SpreadsheetId string `json:"spreadsheetId,omitempty"`
@@ -1427,7 +1429,7 @@ func (s BatchClearValuesRequest) MarshalJSON() ([]byte, error) {
 // spreadsheet.
 type BatchClearValuesResponse struct {
 	// ClearedRanges: The ranges that were cleared, in A1 notation. If the requests
-	// are for an unbounded range or a ranger larger than the bounds of the sheet,
+	// are for an unbounded range or a range larger than the bounds of the sheet,
 	// this is the actual ranges that were cleared, bounded to the sheet's limits.
 	ClearedRanges []string `json:"clearedRanges,omitempty"`
 	// SpreadsheetId: The spreadsheet the updates were applied to.
@@ -3115,7 +3117,7 @@ type ClearValuesRequest struct {
 // spreadsheet.
 type ClearValuesResponse struct {
 	// ClearedRange: The range (in A1 notation) that was cleared. (If the request
-	// was for an unbounded range or a ranger larger than the bounds of the sheet,
+	// was for an unbounded range or a range larger than the bounds of the sheet,
 	// this will be the actual range that was cleared, bounded to the sheet's
 	// limits.)
 	ClearedRange string `json:"clearedRange,omitempty"`
@@ -3582,7 +3584,8 @@ func (s DataExecutionStatus) MarshalJSON() ([]byte, error) {
 }
 
 // DataFilter: Filter that describes what data should be selected or returned
-// from a request.
+// from a request. For more information, see Read, write, and search metadata
+// (https://developers.google.com/workspace/sheets/api/guides/metadata).
 type DataFilter struct {
 	// A1Range: Selects data that matches the specified A1 range.
 	A1Range string `json:"a1Range,omitempty"`
@@ -4704,13 +4707,15 @@ func (s DeleteTableRequest) MarshalJSON() ([]byte, error) {
 }
 
 // DeveloperMetadata: Developer metadata associated with a location or object
-// in a spreadsheet. Developer metadata may be used to associate arbitrary data
-// with various parts of a spreadsheet and will remain associated at those
-// locations as they move around and the spreadsheet is edited. For example, if
-// developer metadata is associated with row 5 and another row is then
-// subsequently inserted above row 5, that original metadata will still be
-// associated with the row it was first associated with (what is now row 6). If
-// the associated object is deleted its metadata is deleted too.
+// in a spreadsheet. For more information, see Read, write, and search metadata
+// (https://developers.google.com/workspace/sheets/api/guides/metadata).
+// Developer metadata may be used to associate arbitrary data with various
+// parts of a spreadsheet and it will remain associated at those locations as
+// they move around and the spreadsheet is edited. For example, if developer
+// metadata is associated with row 5 and another row is then subsequently
+// inserted above row 5, that original metadata is still associated with the
+// row it was first associated with (what is now row 6). If the associated
+// object is deleted then its metadata is deleted too.
 type DeveloperMetadata struct {
 	// Location: The location where the metadata is associated.
 	Location *DeveloperMetadataLocation `json:"location,omitempty"`
@@ -4724,7 +4729,7 @@ type DeveloperMetadata struct {
 	MetadataKey string `json:"metadataKey,omitempty"`
 	// MetadataValue: Data associated with the metadata's key.
 	MetadataValue string `json:"metadataValue,omitempty"`
-	// Visibility: The metadata visibility. Developer metadata must always have a
+	// Visibility: The metadata visibility. Developer metadata must always have
 	// visibility specified.
 	//
 	// Possible values:
@@ -4760,7 +4765,7 @@ func (s DeveloperMetadata) MarshalJSON() ([]byte, error) {
 type DeveloperMetadataLocation struct {
 	// DimensionRange: Represents the row or column when metadata is associated
 	// with a dimension. The specified DimensionRange must represent a single row
-	// or column; it cannot be unbounded or span multiple rows or columns.
+	// or column. It cannot be unbounded or span multiple rows or columns.
 	DimensionRange *DimensionRange `json:"dimensionRange,omitempty"`
 	// LocationType: The type of location this object represents. This field is
 	// read-only.
@@ -4802,7 +4807,7 @@ func (s DeveloperMetadataLocation) MarshalJSON() ([]byte, error) {
 // key. If a key, visibility, and location type are all specified, this
 // considers all developer metadata with that key and visibility that are
 // associated with a location of that type. In general, this selects all
-// DeveloperMetadata that matches the intersection of all the specified fields;
+// DeveloperMetadata that match the intersection of all the specified fields;
 // any field or combination of fields may be specified.
 type DeveloperMetadataLookup struct {
 	// LocationMatchingStrategy: Determines how this lookup matches the location.
@@ -4834,7 +4839,7 @@ type DeveloperMetadataLookup struct {
 	// associated on rows. If the field is left unspecified, all location types are
 	// considered. This field cannot be specified as SPREADSHEET when the
 	// locationMatchingStrategy is specified as INTERSECTING or when the
-	// metadataLocation is specified as a non-spreadsheet location: spreadsheet
+	// metadataLocation is specified as a non-spreadsheet location. Spreadsheet
 	// metadata cannot intersect any other developer metadata location. This field
 	// also must be left unspecified when the locationMatchingStrategy is specified
 	// as EXACT.
@@ -5293,11 +5298,12 @@ func (s *ExtendedValue) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// FilterCriteria: Criteria for showing/hiding rows in a filter or filter view.
+// FilterCriteria: Criteria for showing or hiding rows in a filter or filter
+// view.
 type FilterCriteria struct {
-	// Condition: A condition that must be true for values to be shown. (This does
-	// not override hidden_values -- if a value is listed there, it will still be
-	// hidden.)
+	// Condition: A condition that must be `true` for values to be shown. (This
+	// does not override hidden_values -- if a value is listed there, it will still
+	// be hidden.)
 	Condition *BooleanCondition `json:"condition,omitempty"`
 	// HiddenValues: Values that should be hidden.
 	HiddenValues []string `json:"hiddenValues,omitempty"`
@@ -5363,29 +5369,31 @@ func (s FilterSpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// FilterView: A filter view.
+// FilterView: A filter view. For more information, see Manage data visibility
+// with filters
+// (https://developers.google.com/workspace/sheets/api/guides/filters).
 type FilterView struct {
 	// Criteria: The criteria for showing/hiding values per column. The map's key
 	// is the column index, and the value is the criteria for that column. This
 	// field is deprecated in favor of filter_specs.
 	Criteria map[string]FilterCriteria `json:"criteria,omitempty"`
-	// FilterSpecs: The filter criteria for showing/hiding values per column. Both
-	// criteria and filter_specs are populated in responses. If both fields are
-	// specified in an update request, this field takes precedence.
+	// FilterSpecs: The filter criteria for showing or hiding values per column.
+	// Both criteria and filter_specs are populated in responses. If both fields
+	// are specified in an update request, this field takes precedence.
 	FilterSpecs []*FilterSpec `json:"filterSpecs,omitempty"`
 	// FilterViewId: The ID of the filter view.
 	FilterViewId int64 `json:"filterViewId,omitempty"`
 	// NamedRangeId: The named range this filter view is backed by, if any. When
-	// writing, only one of range or named_range_id or table_id may be set.
+	// writing, only one of range, named_range_id, or table_id may be set.
 	NamedRangeId string `json:"namedRangeId,omitempty"`
-	// Range: The range this filter view covers. When writing, only one of range or
-	// named_range_id or table_id may be set.
+	// Range: The range this filter view covers. When writing, only one of range,
+	// named_range_id, or table_id may be set.
 	Range *GridRange `json:"range,omitempty"`
 	// SortSpecs: The sort order per column. Later specifications are used when
 	// values are equal in the earlier specifications.
 	SortSpecs []*SortSpec `json:"sortSpecs,omitempty"`
 	// TableId: The table this filter view is backed by, if any. When writing, only
-	// one of range or named_range_id or table_id may be set.
+	// one of range, named_range_id, or table_id may be set.
 	TableId string `json:"tableId,omitempty"`
 	// Title: The name of the filter view.
 	Title string `json:"title,omitempty"`
@@ -10119,17 +10127,19 @@ type SpreadsheetsGetByDataFilterCall struct {
 }
 
 // GetByDataFilter: Returns the spreadsheet at the given ID. The caller must
-// specify the spreadsheet ID. This method differs from GetSpreadsheet in that
-// it allows selecting which subsets of spreadsheet data to return by
-// specifying a dataFilters parameter. Multiple DataFilters can be specified.
-// Specifying one or more data filters returns the portions of the spreadsheet
-// that intersect ranges matched by any of the filters. By default, data within
-// grids is not returned. You can include grid data one of 2 ways: * Specify a
-// field mask
+// specify the spreadsheet ID. For more information, see Read, write, and
+// search metadata
+// (https://developers.google.com/workspace/sheets/api/guides/metadata). This
+// method differs from GetSpreadsheet in that it allows selecting which subsets
+// of spreadsheet data to return by specifying a dataFilters parameter.
+// Multiple DataFilters can be specified. Specifying one or more data filters
+// returns the portions of the spreadsheet that intersect ranges matched by any
+// of the filters. By default, data within grids is not returned. You can
+// include grid data in one of two ways: * Specify a field mask
 // (https://developers.google.com/workspace/sheets/api/guides/field-masks)
-// listing your desired fields using the `fields` URL parameter in HTTP * Set
-// the includeGridData parameter to true. If a field mask is set, the
-// `includeGridData` parameter is ignored For large spreadsheets, as a best
+// listing your desired fields using the `fields` URL parameter in HTTP. * Set
+// the includeGridData parameter to `true`. If a field mask is set, the
+// `includeGridData` parameter is ignored. For large spreadsheets, as a best
 // practice, retrieve only the specific spreadsheet fields that you want.
 //
 // - spreadsheetId: The spreadsheet to request.
@@ -10236,6 +10246,8 @@ type SpreadsheetsDeveloperMetadataGetCall struct {
 
 // Get: Returns the developer metadata with the specified ID. The caller must
 // specify the spreadsheet ID and the developer metadata's unique metadataId.
+// For more information, see Read, write, and search metadata
+// (https://developers.google.com/workspace/sheets/api/guides/metadata).
 //
 // - metadataId: The ID of the developer metadata to retrieve.
 // - spreadsheetId: The ID of the spreadsheet to retrieve metadata from.
@@ -10348,9 +10360,11 @@ type SpreadsheetsDeveloperMetadataSearchCall struct {
 	header_                        http.Header
 }
 
-// Search: Returns all developer metadata matching the specified DataFilter. If
-// the provided DataFilter represents a DeveloperMetadataLookup object, this
-// will return all DeveloperMetadata entries selected by it. If the DataFilter
+// Search: Returns all developer metadata matching the specified DataFilter.
+// For more information, see Read, write, and search metadata
+// (https://developers.google.com/workspace/sheets/api/guides/metadata). If the
+// provided DataFilter represents a DeveloperMetadataLookup object, this will
+// return all DeveloperMetadata entries selected by it. If the DataFilter
 // represents a location in a spreadsheet, this will return all developer
 // metadata associated with locations intersecting that region.
 //
@@ -10901,10 +10915,12 @@ type SpreadsheetsValuesBatchClearByDataFilterCall struct {
 }
 
 // BatchClearByDataFilter: Clears one or more ranges of values from a
-// spreadsheet. The caller must specify the spreadsheet ID and one or more
-// DataFilters. Ranges matching any of the specified data filters will be
-// cleared. Only values are cleared -- all other properties of the cell (such
-// as formatting, data validation, etc..) are kept.
+// spreadsheet. For more information, see Read, write, and search metadata
+// (https://developers.google.com/workspace/sheets/api/guides/metadata). The
+// caller must specify the spreadsheet ID and one or more DataFilters. Ranges
+// matching any of the specified data filters will be cleared. Only values are
+// cleared -- all other properties of the cell (such as formatting, data
+// validation, etc.) are kept.
 //
 // - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) BatchClearByDataFilter(spreadsheetId string, batchclearvaluesbydatafilterrequest *BatchClearValuesByDataFilterRequest) *SpreadsheetsValuesBatchClearByDataFilterCall {
@@ -11203,9 +11219,11 @@ type SpreadsheetsValuesBatchGetByDataFilterCall struct {
 }
 
 // BatchGetByDataFilter: Returns one or more ranges of values that match the
-// specified data filters. The caller must specify the spreadsheet ID and one
-// or more DataFilters. Ranges that match any of the data filters in the
-// request will be returned.
+// specified data filters. For more information, see Read, write, and search
+// metadata
+// (https://developers.google.com/workspace/sheets/api/guides/metadata). The
+// caller must specify the spreadsheet ID and one or more DataFilters. Ranges
+// that match any of the data filters in the request will be returned.
 //
 // - spreadsheetId: The ID of the spreadsheet to retrieve data from.
 func (r *SpreadsheetsValuesService) BatchGetByDataFilter(spreadsheetId string, batchgetvaluesbydatafilterrequest *BatchGetValuesByDataFilterRequest) *SpreadsheetsValuesBatchGetByDataFilterCall {
@@ -11416,8 +11434,10 @@ type SpreadsheetsValuesBatchUpdateByDataFilterCall struct {
 }
 
 // BatchUpdateByDataFilter: Sets values in one or more ranges of a spreadsheet.
-// The caller must specify the spreadsheet ID, a valueInputOption, and one or
-// more DataFilterValueRanges.
+// For more information, see Read, write, and search metadata
+// (https://developers.google.com/workspace/sheets/api/guides/metadata). The
+// caller must specify the spreadsheet ID, a valueInputOption, and one or more
+// DataFilterValueRanges.
 //
 // - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) BatchUpdateByDataFilter(spreadsheetId string, batchupdatevaluesbydatafilterrequest *BatchUpdateValuesByDataFilterRequest) *SpreadsheetsValuesBatchUpdateByDataFilterCall {

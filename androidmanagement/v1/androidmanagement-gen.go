@@ -3984,7 +3984,9 @@ type GoogleAuthenticationSettings struct {
 	// devices. This value can be set only via the Google Admin Console. Google
 	// authentication can be used with signin_url In the case where Google
 	// authentication is required and a signin_url is specified, Google
-	// authentication will be launched before signin_url.
+	// authentication will be launched before signin_url. This value is overridden
+	// by EnrollmentToken.googleAuthenticationOptions and
+	// SigninDetail.googleAuthenticationOptions, if they are set.
 	//
 	// Possible values:
 	//   "GOOGLE_AUTHENTICATION_REQUIRED_UNSPECIFIED" - This value is not used.

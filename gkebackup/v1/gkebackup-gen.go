@@ -590,6 +590,9 @@ type Backup struct {
 	// Name: Output only. Identifier. The fully qualified name of the Backup.
 	// `projects/*/locations/*/backupPlans/*/backups/*`
 	Name string `json:"name,omitempty"`
+	// NamespaceCount: Output only. The total number of user managed namespaces
+	// contained in the Backup.
+	NamespaceCount int64 `json:"namespaceCount,omitempty"`
 	// PermissiveMode: Output only. If false, Backup will fail when Backup for GKE
 	// detects Kubernetes configuration that is non-standard or requires additional
 	// setup to restore. Inherited from the parent BackupPlan's permissive_mode
@@ -877,6 +880,9 @@ type BackupPlan struct {
 	// Name: Output only. Identifier. The full name of the BackupPlan resource.
 	// Format: `projects/*/locations/*/backupPlans/*`
 	Name string `json:"name,omitempty"`
+	// ProtectedNamespaceCount: Output only. The number of user managed namespaces
+	// backed up in the last successful Backup created via this BackupPlan.
+	ProtectedNamespaceCount int64 `json:"protectedNamespaceCount,omitempty"`
 	// ProtectedPodCount: Output only. The number of Kubernetes Pods backed up in
 	// the last successful Backup created via this BackupPlan.
 	ProtectedPodCount int64 `json:"protectedPodCount,omitempty"`

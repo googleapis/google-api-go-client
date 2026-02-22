@@ -33648,7 +33648,7 @@ func (r *ProjectsLocationsDashboardsService) Patch(name string, googlecloudconta
 // UpdateMask sets the optional parameter "updateMask": List of fields to be
 // updated. All possible fields can be updated by passing `*`, or a subset of
 // the following updateable fields can be provided: * `display_name` *
-// `root_container`
+// `root_container` * `description`
 func (c *ProjectsLocationsDashboardsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDashboardsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

@@ -1077,8 +1077,11 @@ func (s CommonFleetDefaultMemberConfigSpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CompliancePostureConfig: CompliancePostureConfig defines the settings needed
-// to enable/disable features for the Compliance Posture.
+// CompliancePostureConfig: Deprecated: Compliance Posture is no longer
+// supported. For more details, see
+// https://cloud.google.com/kubernetes-engine/docs/deprecations/posture-management-deprecation.
+// CompliancePostureConfig defines the settings needed to enable/disable
+// features for the Compliance Posture.
 type CompliancePostureConfig struct {
 	// ComplianceStandards: List of enabled compliance standards.
 	ComplianceStandards []*ComplianceStandard `json:"complianceStandards,omitempty"`
@@ -2244,13 +2247,15 @@ type DefaultClusterConfig struct {
 	// BinaryAuthorizationConfig: Optional. Enable/Disable binary authorization
 	// features for the cluster.
 	BinaryAuthorizationConfig *BinaryAuthorizationConfig `json:"binaryAuthorizationConfig,omitempty"`
-	// CompliancePostureConfig: Optional. Enable/Disable Compliance Posture
-	// features for the cluster. Note that on UpdateFleet, only full replacement of
-	// this field is allowed. Users are not allowed for partial updates through
-	// field mask.
+	// CompliancePostureConfig: Optional. Deprecated: Compliance Posture is no
+	// longer supported. For more details, see
+	// https://cloud.google.com/kubernetes-engine/docs/deprecations/posture-management-deprecation.
+	// Enable/Disable Compliance Posture features for the cluster. Note that on
+	// UpdateFleet, only full replacement of this field is allowed. Users are not
+	// allowed for partial updates through field mask.
 	CompliancePostureConfig *CompliancePostureConfig `json:"compliancePostureConfig,omitempty"`
-	// SecurityPostureConfig: Enable/Disable Security Posture features for the
-	// cluster.
+	// SecurityPostureConfig: Optional. Enable/Disable Security Posture features
+	// for the cluster.
 	SecurityPostureConfig *SecurityPostureConfig `json:"securityPostureConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BinaryAuthorizationConfig")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -5504,16 +5509,20 @@ type SecurityPostureConfig struct {
 	//   "MODE_UNSPECIFIED" - Default value not specified.
 	//   "DISABLED" - Disables Security Posture features on the cluster.
 	//   "BASIC" - Applies Security Posture features on the cluster.
-	//   "ENTERPRISE" - Applies the Security Posture off cluster Enterprise level
-	// features.
+	//   "ENTERPRISE" - Deprecated: Security Posture Enterprise features are no
+	// longer supported. For more details, see
+	// https://cloud.google.com/kubernetes-engine/docs/deprecations/posture-management-deprecation.
+	// Applies the Security Posture off cluster Enterprise level features.
 	Mode string `json:"mode,omitempty"`
 	// VulnerabilityMode: Sets which mode to use for vulnerability scanning.
 	//
 	// Possible values:
 	//   "VULNERABILITY_MODE_UNSPECIFIED" - Default value not specified.
 	//   "VULNERABILITY_DISABLED" - Disables vulnerability scanning on the cluster.
-	//   "VULNERABILITY_BASIC" - Applies basic vulnerability scanning on the
-	// cluster.
+	//   "VULNERABILITY_BASIC" - Deprecated: Basic vulnerability scanning is no
+	// longer supported. For more details, see
+	// https://cloud.google.com/kubernetes-engine/docs/deprecations/posture-management-deprecation.
+	// Applies basic vulnerability scanning on the cluster.
 	//   "VULNERABILITY_ENTERPRISE" - Applies the Security Posture's vulnerability
 	// on cluster Enterprise level features.
 	VulnerabilityMode string `json:"vulnerabilityMode,omitempty"`

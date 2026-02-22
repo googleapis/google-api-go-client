@@ -1258,6 +1258,10 @@ type GoogleCloudDocumentaiUiv1beta3DocumentSchemaEntityTypeProperty struct {
 	// document text.
 	//   "DERIVE" - The entity's value is derived through inference and is not
 	// necessarily an exact text extraction from the document.
+	//   "RELAXED_EXTRACT" - Attempts to extract the position and value as-is from
+	// the document text. If the value cannot be grounded in the text, it falls
+	// back to derivation through inference, for both position and value. Note: The
+	// inference fallback is currently only supported for boolean entities.
 	Method string `json:"method,omitempty"`
 	// Name: The name of the property. Follows the same guidelines as the
 	// EntityType name.
@@ -2570,6 +2574,10 @@ type GoogleCloudDocumentaiUiv1beta3SchemaEntityType struct {
 	// document text.
 	//   "DERIVE" - The entity's value is derived through inference and is not
 	// necessarily an exact text extraction from the document.
+	//   "RELAXED_EXTRACT" - Attempts to extract the position and value as-is from
+	// the document text. If the value cannot be grounded in the text, it falls
+	// back to derivation through inference, for both position and value. Note: The
+	// inference fallback is currently only supported for boolean entities.
 	Method string `json:"method,omitempty"`
 	// OccurrenceType: Occurrence type limits the number of times an entity type
 	// appears in the document.
@@ -5185,6 +5193,10 @@ type GoogleCloudDocumentaiV1DocumentSchemaEntityTypeProperty struct {
 	// document text.
 	//   "DERIVE" - The entity's value is derived through inference and is not
 	// necessarily an exact text extraction from the document.
+	//   "RELAXED_EXTRACT" - Attempts to extract the position and value as-is from
+	// the document text. If the value cannot be grounded in the text, it falls
+	// back to derivation through inference, for both position and value. Note: The
+	// inference fallback is currently only supported for boolean entities.
 	Method string `json:"method,omitempty"`
 	// Name: The name of the property. Follows the same guidelines as the
 	// EntityType name.
@@ -8210,6 +8222,10 @@ type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty struct {
 	// document text.
 	//   "DERIVE" - The entity's value is derived through inference and is not
 	// necessarily an exact text extraction from the document.
+	//   "RELAXED_EXTRACT" - Attempts to extract the position and value as-is from
+	// the document text. If the value cannot be grounded in the text, it falls
+	// back to derivation through inference, for both position and value. Note: The
+	// inference fallback is currently only supported for boolean entities.
 	Method string `json:"method,omitempty"`
 	// Name: The name of the property. Follows the same guidelines as the
 	// EntityType name.

@@ -254,6 +254,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Routes = NewRoutesService(s)
 	s.SecurityPolicies = NewSecurityPoliciesService(s)
 	s.ServiceAttachments = NewServiceAttachmentsService(s)
+	s.SnapshotGroups = NewSnapshotGroupsService(s)
 	s.SnapshotSettings = NewSnapshotSettingsService(s)
 	s.Snapshots = NewSnapshotsService(s)
 	s.SslCertificates = NewSslCertificatesService(s)
@@ -515,6 +516,8 @@ type Service struct {
 	SecurityPolicies *SecurityPoliciesService
 
 	ServiceAttachments *ServiceAttachmentsService
+
+	SnapshotGroups *SnapshotGroupsService
 
 	SnapshotSettings *SnapshotSettingsService
 
@@ -1537,6 +1540,15 @@ func NewServiceAttachmentsService(s *Service) *ServiceAttachmentsService {
 }
 
 type ServiceAttachmentsService struct {
+	s *Service
+}
+
+func NewSnapshotGroupsService(s *Service) *SnapshotGroupsService {
+	rs := &SnapshotGroupsService{s: s}
+	return rs
+}
+
+type SnapshotGroupsService struct {
 	s *Service
 }
 
@@ -4016,12 +4028,6 @@ type AttachedDisk struct {
 	//   "PERSISTENT"
 	//   "SCRATCH"
 	Type string `json:"type,omitempty"`
-	// UserLicenses: Output only. [Output Only] A list of user provided licenses.
-	// It represents a list of
-	// URLs to the license resource. Unlike regular licenses, user
-	// provided
-	// licenses can be modified after the disk is created.
-	UserLicenses []string `json:"userLicenses,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Architecture") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4160,8 +4166,8 @@ type AttachedDiskInitializeParams struct {
 	// You must provide exactly two replica zones, and one zone must be the same
 	// as the instance zone.
 	ReplicaZones []string `json:"replicaZones,omitempty"`
-	// ResourceManagerTags: Resource manager tags to be bound to the disk. Tag keys
-	// and values
+	// ResourceManagerTags: Input only. Resource manager tags to be bound to the
+	// disk. Tag keys and values
 	// have the same definition as resource
 	// manager tags. Keys and values can be either in numeric format,
 	// such as `tagKeys/{tag_key_id}` and `tagValues/456` or in namespaced
@@ -5843,6 +5849,9 @@ type Backend struct {
 	// For usage guidelines, seeUtilization
 	// balancing mode.
 	MaxUtilization float64 `json:"maxUtilization,omitempty"`
+	// OrchestrationInfo: Information about the resource or system that manages the
+	// backend.
+	OrchestrationInfo *BackendBackendOrchestrationInfo `json:"orchestrationInfo,omitempty"`
 	// Preference: This field indicates whether this backend should be fully
 	// utilized before
 	// sending traffic to backends with default preference. The possible
@@ -5905,6 +5914,30 @@ func (s *Backend) UnmarshalJSON(data []byte) error {
 	s.MaxRatePerInstance = float64(s1.MaxRatePerInstance)
 	s.MaxUtilization = float64(s1.MaxUtilization)
 	return nil
+}
+
+// BackendBackendOrchestrationInfo: A message containing information about the
+// resource or system that manages
+// the backend.
+type BackendBackendOrchestrationInfo struct {
+	// ResourceUri: The URI of the resource or system that manages the backend.
+	ResourceUri string `json:"resourceUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ResourceUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ResourceUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackendBackendOrchestrationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod BackendBackendOrchestrationInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BackendBucket: Represents a Cloud Storage Bucket resource.
@@ -7630,6 +7663,9 @@ type BackendService struct {
 	//
 	// networkPassThroughLbTrafficPolicy cannot be specified with haPolicy.
 	NetworkPassThroughLbTrafficPolicy *BackendServiceNetworkPassThroughLbTrafficPolicy `json:"networkPassThroughLbTrafficPolicy,omitempty"`
+	// OrchestrationInfo: Information about the resource or system that manages the
+	// backend service.
+	OrchestrationInfo *BackendServiceOrchestrationInfo `json:"orchestrationInfo,omitempty"`
 	// OutlierDetection: Settings controlling the ejection of unhealthy backend
 	// endpoints from the
 	// load balancing pool of each individual proxy instance that processes
@@ -9543,6 +9579,32 @@ func (s *BackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinity) Unmarshal
 	return nil
 }
 
+// BackendServiceOrchestrationInfo: A message containing information about the
+// resource or system that manages
+// the backend service.
+type BackendServiceOrchestrationInfo struct {
+	// ResourceUri: The resource URI of the resource or system that manages the
+	// backend
+	// service.
+	ResourceUri string `json:"resourceUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ResourceUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ResourceUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackendServiceOrchestrationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod BackendServiceOrchestrationInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BackendServiceParams: Additional Backend Service parameters.
 type BackendServiceParams struct {
 	// ResourceManagerTags: Tag keys/values directly bound to this resource.
@@ -10407,6 +10469,8 @@ type BulkInsertDiskResource struct {
 	// InstantSnapshotGroupParameters: The parameters for the instant snapshot
 	// group.
 	InstantSnapshotGroupParameters *InstantSnapshotGroupParameters `json:"instantSnapshotGroupParameters,omitempty"`
+	// SnapshotGroupParameters: The parameters for the snapshot group.
+	SnapshotGroupParameters *SnapshotGroupParameters `json:"snapshotGroupParameters,omitempty"`
 	// SourceConsistencyGroupPolicy: The URL of the DiskConsistencyGroupPolicy for
 	// the group of disks to clone.
 	// This may be a full or partial URL, such as:
@@ -13877,15 +13941,6 @@ type Disk struct {
 	// disk
 	// types.
 	Type string `json:"type,omitempty"`
-	// UserLicenses: A list of publicly visible user-licenses. Unlike regular
-	// licenses, user
-	// provided licenses can be modified after the disk is created. This includes
-	// a list of URLs to the license resource. For example, to provide a
-	// debian
-	// license:
-	//
-	// https://www.googleapis.com/compute/v1/projects/debian-cloud/global/licenses/debian-9-stretch
-	UserLicenses []string `json:"userLicenses,omitempty"`
 	// Users: Output only. [Output Only] Links to the users of the disk (attached
 	// instances)
 	// in form:projects/project/zones/zone/instances/instance
@@ -14476,8 +14531,8 @@ func (s DiskMoveRequest) MarshalJSON() ([]byte, error) {
 
 // DiskParams: Additional disk params.
 type DiskParams struct {
-	// ResourceManagerTags: Resource manager tags to be bound to the disk. Tag keys
-	// and values
+	// ResourceManagerTags: Input only. Resource manager tags to be bound to the
+	// disk. Tag keys and values
 	// have the same definition as resource
 	// manager tags. Keys and values can be either in numeric format,
 	// such as `tagKeys/{tag_key_id}` and `tagValues/456` or in namespaced
@@ -26344,15 +26399,6 @@ type Image struct {
 	// (regional or
 	// multi-regional).
 	StorageLocations []string `json:"storageLocations,omitempty"`
-	// UserLicenses: A list of publicly visible user-licenses. Unlike regular
-	// licenses, user
-	// provided licenses can be modified after the disk is created. This includes
-	// a list of URLs to the license resource. For example, to provide a
-	// debian
-	// license:
-	//
-	// https://www.googleapis.com/compute/v1/projects/debian-cloud/global/licenses/debian-9-stretch
-	UserLicenses []string `json:"userLicenses,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -26633,8 +26679,8 @@ func (s ImageListWarningData) MarshalJSON() ([]byte, error) {
 
 // ImageParams: Additional image params.
 type ImageParams struct {
-	// ResourceManagerTags: Resource manager tags to be bound to the image. Tag
-	// keys and values have
+	// ResourceManagerTags: Input only. Resource manager tags to be bound to the
+	// image. Tag keys and values have
 	// the same definition as resource
 	// manager tags. Keys and values can be either in numeric format,
 	// such as `tagKeys/{tag_key_id}` and `tagValues/456` or in namespaced
@@ -28765,8 +28811,8 @@ func (s InstanceGroupManagerListWarningData) MarshalJSON() ([]byte, error) {
 // InstanceGroupManagerParams: Input only additional params for instance group
 // manager creation.
 type InstanceGroupManagerParams struct {
-	// ResourceManagerTags: Resource manager tags to bind to the managed instance
-	// group. The tags are
+	// ResourceManagerTags: Input only. Resource manager tags to bind to the
+	// managed instance group. The tags are
 	// key-value pairs. Keys and values can be either in numeric format,
 	// such as `tagKeys/{tag_key_id}` and `tagValues/456` or in namespaced
 	// format such as `{org_id|project_id}/{tag_key_short_name}`
@@ -30122,6 +30168,33 @@ func (s InstanceGroupManagersApplyUpdatesRequest) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InstanceGroupManagersConfigureAcceleratorTopologiesRequest:
+// InstanceGroupManagers.ConfigureAcceleratorTopologies
+type InstanceGroupManagersConfigureAcceleratorTopologiesRequest struct {
+	// AcceleratorTopologyActions: Map of accelerator topologies that should have
+	// their state changed to
+	// the specified value. The key is the hashed topology locus id. It can
+	// be
+	// obtained from the GetAvailableAcceleratorTopologies rpc.
+	AcceleratorTopologyActions map[string]string `json:"acceleratorTopologyActions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AcceleratorTopologyActions")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AcceleratorTopologyActions") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstanceGroupManagersConfigureAcceleratorTopologiesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceGroupManagersConfigureAcceleratorTopologiesRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // InstanceGroupManagersCreateInstancesRequest:
 // InstanceGroupManagers.createInstances
 type InstanceGroupManagersCreateInstancesRequest struct {
@@ -30213,6 +30286,8 @@ type InstanceGroupManagersGetAvailableAcceleratorTopologiesResponse struct {
 	// id of the topology
 	// location.
 	AcceleratorTopologiesInfo map[string]InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopologyInfo `json:"acceleratorTopologiesInfo,omitempty"`
+	// MultiMig: URL to MMIG this MIG belongs to.
+	MultiMig string `json:"multiMig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -30251,7 +30326,18 @@ type InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTo
 	// issue with the inter-chip connectivity that makes this
 	// part of the infrastructure unsuitable for forming a
 	// working inter-chip connected group.
-	AcceleratorTopologyHealth string `json:"acceleratorTopologyHealth,omitempty"`
+	//   "UNKNOWN" - No signal available
+	AcceleratorTopologyHealth string                                                                                  `json:"acceleratorTopologyHealth,omitempty"`
+	AcceleratorTopologyState  *InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopologyState `json:"acceleratorTopologyState,omitempty"`
+	// Possible values:
+	//   "ALL_HEALTHY" - Infrastructure is healthy
+	//   "UNHEALTHY_OR_MISSING" - Some VMs are in another state than RUNNING or
+	// they are missing.
+	InstancesHealth string `json:"instancesHealth,omitempty"`
+	// Parent: Identified by the topology Id in the accelerator_topology_info map.
+	// Empty
+	// for the top-level topology
+	Parent string `json:"parent,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AcceleratorTopology") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -30267,6 +30353,124 @@ type InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTo
 
 func (s InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopologyInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopologyInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopo
+// logyState: Specifies the topology state
+type InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopologyState struct {
+	// Possible values:
+	//   "ACTIVATING"
+	//   "ACTIVE"
+	//   "ACTIVE_DEGRADED" - The topology is active but with potential performance
+	// degradation.
+	//   "DEACTIVATING"
+	//   "FAILED" - Critical non-retriable error that the user has to act manually
+	//   "INACTIVE"
+	//   "INCOMPLETE" - Not all VMs have been provisioned
+	CurrentState string `json:"currentState,omitempty"`
+	// Error: Reason why the topology state change failed
+	Error *InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopologyStateError `json:"error,omitempty"`
+	// ErrorTimestamp: Timestamp when the last error happened
+	ErrorTimestamp string `json:"errorTimestamp,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CurrentState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CurrentState") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopologyState) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopologyState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopo
+// logyStateError: Reason why the topology state change failed
+type InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopologyStateError struct {
+	// Errors: [Output Only] The array of errors encountered while processing
+	// this
+	// operation.
+	Errors []*InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopologyStateErrorErrors `json:"errors,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Errors") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopologyStateError) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopologyStateError
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopologyStateErrorErrors struct {
+	// Code: [Output Only] The error type identifier for this error.
+	Code string `json:"code,omitempty"`
+	// ErrorDetails: [Output Only] An optional list of messages that contain the
+	// error
+	// details. There is a set of defined message types to use for
+	// providing
+	// details.The syntax depends on the error code. For example,
+	// QuotaExceededInfo will have details when the error code is
+	// QUOTA_EXCEEDED.
+	ErrorDetails []*InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopologyStateErrorErrorsErrorDetails `json:"errorDetails,omitempty"`
+	// Location: [Output Only] Indicates the field in the request that caused the
+	// error.
+	// This property is optional.
+	Location string `json:"location,omitempty"`
+	// Message: [Output Only] An optional, human-readable error message.
+	Message string `json:"message,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopologyStateErrorErrors) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopologyStateErrorErrors
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopologyStateErrorErrorsErrorDetails struct {
+	ErrorInfo        *ErrorInfo         `json:"errorInfo,omitempty"`
+	Help             *Help              `json:"help,omitempty"`
+	LocalizedMessage *LocalizedMessage  `json:"localizedMessage,omitempty"`
+	QuotaInfo        *QuotaExceededInfo `json:"quotaInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopologyStateErrorErrorsErrorDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopologyStateErrorErrorsErrorDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -31979,8 +32183,8 @@ type InstanceParams struct {
 	// Relevant only for
 	// Instances.Insert API.
 	RequestValidForDuration *Duration `json:"requestValidForDuration,omitempty"`
-	// ResourceManagerTags: Resource manager tags to be bound to the instance. Tag
-	// keys and values
+	// ResourceManagerTags: Input only. Resource manager tags to be bound to the
+	// instance. Tag keys and values
 	// have the same definition as resource
 	// manager tags. Keys and values can be either in numeric format,
 	// such as `tagKeys/{tag_key_id}` and `tagValues/456` or in namespaced
@@ -32127,8 +32331,8 @@ type InstanceProperties struct {
 	// from.
 	// Note that for MachineImage, this is not supported yet.
 	ReservationAffinity *ReservationAffinity `json:"reservationAffinity,omitempty"`
-	// ResourceManagerTags: Resource manager tags to be bound to the instance. Tag
-	// keys and values
+	// ResourceManagerTags: Input only. Resource manager tags to be bound to the
+	// instance. Tag keys and values
 	// have the same definition as resource
 	// manager tags. Keys must be in the format `tagKeys/{tag_key_id}`, and
 	// values are in the format `tagValues/456`. The field is ignored (both PUT
@@ -40136,6 +40340,191 @@ func (s ListInstantSnapshotGroupsWarningData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListSnapshotGroups: Contains a list of SnapshotGroup resources.
+type ListSnapshotGroups struct {
+	Etag string `json:"etag,omitempty"`
+	// Id: [Output Only] Unique identifier for the resource; defined by the server.
+	Id string `json:"id,omitempty"`
+	// Items: A list of SnapshotGroup resources.
+	Items []*SnapshotGroup `json:"items,omitempty"`
+	// Kind: Output only. Type of resource.
+	Kind string `json:"kind,omitempty"`
+	// NextPageToken: [Output Only] This token allows you to get the next page of
+	// results for
+	// list requests. If the number of results is larger thanmaxResults, use the
+	// nextPageToken as a value for
+	// the query parameter pageToken in the next list request.
+	// Subsequent list requests will have their own nextPageToken to
+	// continue paging through the results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// SelfLink: Output only. [Output Only] Server-defined URL for this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+	// Unreachables: Output only. [Output Only] Unreachable
+	// resources.
+	// end_interface: MixerListResponseWithEtagBuilder
+	Unreachables []string `json:"unreachables,omitempty"`
+	// Warning: [Output Only] Informational warning message.
+	Warning *ListSnapshotGroupsWarning `json:"warning,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListSnapshotGroups) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSnapshotGroups
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListSnapshotGroupsWarning: [Output Only] Informational warning message.
+type ListSnapshotGroupsWarning struct {
+	// Code: [Output Only] A warning code, if applicable. For example,
+	// Compute
+	// Engine returns NO_RESULTS_ON_PAGE if there
+	// are no results in the response.
+	//
+	// Possible values:
+	//   "CLEANUP_FAILED" - Warning about failed cleanup of transient changes made
+	// by a failed
+	// operation.
+	//   "DEPRECATED_RESOURCE_USED" - A link to a deprecated resource was created.
+	//   "DEPRECATED_TYPE_USED" - When deploying and at least one of the resources
+	// has a type marked as
+	// deprecated
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE" - The user created a boot disk that is
+	// larger than image size.
+	//   "EXPERIMENTAL_TYPE_USED" - When deploying and at least one of the
+	// resources has a type marked as
+	// experimental
+	//   "EXTERNAL_API_WARNING" - Warning that is present in an external api call
+	//   "FIELD_VALUE_OVERRIDEN" - Warning that value of a field has been
+	// overridden.
+	// Deprecated unused field.
+	//   "INJECTED_KERNELS_DEPRECATED" - The operation involved use of an injected
+	// kernel, which is deprecated.
+	//   "INVALID_HEALTH_CHECK_FOR_DYNAMIC_WIEGHTED_LB" - A WEIGHTED_MAGLEV backend
+	// service is associated with a health check that is
+	// not of type HTTP/HTTPS/HTTP2.
+	//   "LARGE_DEPLOYMENT_WARNING" - When deploying a deployment with a
+	// exceedingly large number of resources
+	//   "LIST_OVERHEAD_QUOTA_EXCEED" - Resource can't be retrieved due to list
+	// overhead quota exceed
+	// which captures the amount of resources filtered out by
+	// user-defined list filter.
+	//   "MISSING_TYPE_DEPENDENCY" - A resource depends on a missing type
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED" - The route's nextHopIp address is not
+	// assigned to an instance on the
+	// network.
+	//   "NEXT_HOP_CANNOT_IP_FORWARD" - The route's next hop instance cannot ip
+	// forward.
+	//   "NEXT_HOP_INSTANCE_HAS_NO_IPV6_INTERFACE" - The route's nextHopInstance
+	// URL refers to an instance that does not have an
+	// ipv6 interface on the same network as the route.
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND" - The route's nextHopInstance URL refers to
+	// an instance that does not exist.
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK" - The route's nextHopInstance URL
+	// refers to an instance that is not on the
+	// same network as the route.
+	//   "NEXT_HOP_NOT_RUNNING" - The route's next hop instance does not have a
+	// status of RUNNING.
+	//   "NOT_CRITICAL_ERROR" - Error which is not critical. We decided to continue
+	// the process despite
+	// the mentioned error.
+	//   "NO_RESULTS_ON_PAGE" - No results are present on a particular list page.
+	//   "PARTIAL_SUCCESS" - Success is reported, but some results may be missing
+	// due to errors
+	//   "QUOTA_INFO_UNAVAILABLE" - Quota information is not available to client
+	// requests (e.g:
+	// regions.list).
+	//   "REQUIRED_TOS_AGREEMENT" - The user attempted to use a resource that
+	// requires a TOS they have not
+	// accepted.
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING" - Warning that a resource is
+	// in use.
+	//   "RESOURCE_NOT_DELETED" - One or more of the resources set to auto-delete
+	// could not be deleted
+	// because they were in use.
+	//   "SCHEMA_VALIDATION_IGNORED" - When a resource schema validation is
+	// ignored.
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE" - Instance template used in instance
+	// group manager is valid as such, but
+	// its application does not make a lot of sense, because it allows only
+	// single instance in instance group.
+	//   "UNDECLARED_PROPERTIES" - When undeclared properties in the schema are
+	// present
+	//   "UNREACHABLE" - A given scope cannot be reached.
+	Code string `json:"code,omitempty"`
+	// Data: [Output Only] Metadata about this warning in key:
+	// value format. For example:
+	//
+	// "data": [
+	//   {
+	//    "key": "scope",
+	//    "value": "zones/us-east1-d"
+	//   }
+	Data []*ListSnapshotGroupsWarningData `json:"data,omitempty"`
+	// Message: [Output Only] A human-readable description of the warning code.
+	Message string `json:"message,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListSnapshotGroupsWarning) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSnapshotGroupsWarning
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type ListSnapshotGroupsWarningData struct {
+	// Key: [Output Only] A key that provides more detail on the warning
+	// being
+	// returned. For example, for warnings where there are no results in a
+	// list
+	// request for a particular zone, this key might be scope and
+	// the key value might be the zone name. Other examples might be a
+	// key
+	// indicating a deprecated resource and a suggested replacement, or a
+	// warning about invalid network settings (for example, if an instance
+	// attempts to perform IP forwarding but is not enabled for IP forwarding).
+	Key string `json:"key,omitempty"`
+	// Value: [Output Only] A warning data value corresponding to the key.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListSnapshotGroupsWarningData) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSnapshotGroupsWarningData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type LocalDisk struct {
 	// DiskCount: Specifies the number of such disks.
 	DiskCount int64 `json:"diskCount,omitempty"`
@@ -40203,6 +40592,17 @@ type LocationPolicy struct {
 	// Currently only zone names are supported and must be represented as
 	// valid
 	// internal URLs, such as zones/us-central1-a.
+	// The bulkInsert operation doesn't create instances in an AI zone, even if
+	// an AI zone is available in the specified region. For example, if you set
+	// a
+	// DENY preference for us-central1-a, Compute Engine will
+	// consider
+	// us-central1-b and us-central1-c for instance creation, but
+	// not
+	// us-central1-ai1a. Also, you can't use the locations[] configuration to
+	// allow instance creation in an AI zone. To include an AI zone in
+	// bulkInsert
+	// operations, use the locationPolicy.zones[] field.
 	Locations map[string]LocationPolicyLocation `json:"locations,omitempty"`
 	// TargetShape: Strategy for distributing VMs across zones in a region.
 	//
@@ -40226,6 +40626,11 @@ type LocationPolicy struct {
 	// failure.
 	// Recommended for highly available serving workloads.
 	TargetShape string `json:"targetShape,omitempty"`
+	// Zones: The bulkInsert operation applies any preferences set in the
+	// locations
+	// field to the specific zones listed in the zones field if the same zones
+	// are specified in both fields.
+	Zones []*LocationPolicyZoneConfiguration `json:"zones,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Locations") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -40296,6 +40701,30 @@ type LocationPolicyLocationConstraints struct {
 
 func (s LocationPolicyLocationConstraints) MarshalJSON() ([]byte, error) {
 	type NoMethod LocationPolicyLocationConstraints
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type LocationPolicyZoneConfiguration struct {
+	// Zone: The URL of the zone.
+	// The zone must exist in the region where the request is called.
+	// Zones must be represented as valid partial URLs,
+	// such as zones/us-central1-a.
+	Zone string `json:"zone,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Zone") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Zone") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LocationPolicyZoneConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod LocationPolicyZoneConfiguration
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -42623,6 +43052,54 @@ type NamedPort struct {
 
 func (s NamedPort) MarshalJSON() ([]byte, error) {
 	type NoMethod NamedPort
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type NamedSet struct {
+	// Description: An optional description of named set.
+	Description string `json:"description,omitempty"`
+	// Elements: CEL expressions that are comparable to constructs of this set's
+	// type
+	// (see Policy Language).
+	Elements []*Expr `json:"elements,omitempty"`
+	// Fingerprint: A fingerprint for the Named Set being applied to this Router,
+	// which is
+	// essentially a hash of the Named Set used for optimistic locking.
+	// The fingerprint is initially generated by Compute Engine and changes
+	// after every request to modify or update the Named Set. You must
+	// always
+	// provide an up-to-date fingerprint hash in order to update or
+	// change
+	// labels.
+	//
+	// To see the latest fingerprint, make a getNamedSet() request
+	// to retrieve a Named Set.
+	Fingerprint string `json:"fingerprint,omitempty"`
+	// Name: This set's name, which must be a resource ID segment and unique within
+	// all
+	// named sets owned by the Router. Name should conform to RFC1035.
+	Name string `json:"name,omitempty"`
+	// Type: This named set's type
+	//
+	// Possible values:
+	//   "NAMED_SET_TYPE_COMMUNITY" - The Named Set is a Community Named Set.
+	//   "NAMED_SET_TYPE_PREFIX" - The Named Set is a Prefix Named Set.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NamedSet) MarshalJSON() ([]byte, error) {
+	type NoMethod NamedSet
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -58315,6 +58792,10 @@ type Reservation struct {
 	// cannot
 	// be a dash.
 	Name string `json:"name,omitempty"`
+	// Params: Input only. Additional params passed with the request, but not
+	// persisted
+	// as part of resource payload.
+	Params *ReservationParams `json:"params,omitempty"`
 	// ProtectionTier: Protection tier for the workload which specifies the
 	// workload expectations
 	// in the event of infrastructure failures at data center (e.g. power
@@ -59294,6 +59775,37 @@ func (s ReservationListWarningData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ReservationParams: Additional reservation params.
+type ReservationParams struct {
+	// ResourceManagerTags: Input only. Resource manager tags to be bound to the
+	// reservation. Tag keys and
+	// values have the same definition as resource
+	// manager tags. Keys and values can be either in numeric format,
+	// such as `tagKeys/{tag_key_id}` and `tagValues/{tag_value_id}` or
+	// in
+	// namespaced format such as `{org_id|project_id}/{tag_key_short_name}`
+	// and
+	// `{tag_value_short_name}`. The field is ignored (both PUT &
+	// PATCH) when empty.
+	ResourceManagerTags map[string]string `json:"resourceManagerTags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ResourceManagerTags") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ResourceManagerTags") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReservationParams) MarshalJSON() ([]byte, error) {
+	type NoMethod ReservationParams
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ReservationSlot: Represents a reservation slot resource.
 type ReservationSlot struct {
 	// CreationTimestamp: Output only. [Output Only] The creation timestamp,
@@ -59328,6 +59840,7 @@ type ReservationSlot struct {
 	//   "CREATING" - The resources are being allocated for the reservation slot.
 	//   "DELETING" - The reservation slot is currently being deleted.
 	//   "STATE_UNSPECIFIED"
+	//   "UNAVAILABLE" - The reservation slot is currently unavailable.
 	State string `json:"state,omitempty"`
 	// Status: Output only. [Output Only] The status of the reservation slot.
 	Status *ReservationSlotStatus `json:"status,omitempty"`
@@ -65070,6 +65583,31 @@ func (s RouterStatusResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type RoutersGetNamedSetResponse struct {
+	// Etag: end_interface: MixerGetResponseWithEtagBuilder
+	Etag     string    `json:"etag,omitempty"`
+	Resource *NamedSet `json:"resource,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RoutersGetNamedSetResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RoutersGetNamedSetResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type RoutersGetRoutePolicyResponse struct {
 	Resource *RoutePolicy `json:"resource,omitempty"`
 
@@ -65275,6 +65813,191 @@ type RoutersListBgpRoutesWarningData struct {
 
 func (s RoutersListBgpRoutesWarningData) MarshalJSON() ([]byte, error) {
 	type NoMethod RoutersListBgpRoutesWarningData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type RoutersListNamedSets struct {
+	Etag string `json:"etag,omitempty"`
+	// Id: [Output Only] The unique identifier for the resource. This identifier
+	// is
+	// defined by the server.
+	Id string `json:"id,omitempty"`
+	// Kind: Output only. [Output Only] Type of resource.
+	// Alwayscompute#routersListNamedSets for lists of named sets.
+	Kind string `json:"kind,omitempty"`
+	// NextPageToken: [Output Only] This token allows you to get the next page of
+	// results for
+	// list requests. If the number of results is larger thanmaxResults, use the
+	// nextPageToken as a value for
+	// the query parameter pageToken in the next list request.
+	// Subsequent list requests will have their own nextPageToken to
+	// continue paging through the results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Result: [Output Only] A list of named sets.
+	Result []*NamedSet `json:"result,omitempty"`
+	// SelfLink: Output only. [Output Only] Server-defined URL for this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+	// Unreachables: Output only. [Output Only] Unreachable resources.
+	Unreachables []string `json:"unreachables,omitempty"`
+	// Warning: [Output Only] Informational warning message.
+	Warning *RoutersListNamedSetsWarning `json:"warning,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RoutersListNamedSets) MarshalJSON() ([]byte, error) {
+	type NoMethod RoutersListNamedSets
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RoutersListNamedSetsWarning: [Output Only] Informational warning message.
+type RoutersListNamedSetsWarning struct {
+	// Code: [Output Only] A warning code, if applicable. For example,
+	// Compute
+	// Engine returns NO_RESULTS_ON_PAGE if there
+	// are no results in the response.
+	//
+	// Possible values:
+	//   "CLEANUP_FAILED" - Warning about failed cleanup of transient changes made
+	// by a failed
+	// operation.
+	//   "DEPRECATED_RESOURCE_USED" - A link to a deprecated resource was created.
+	//   "DEPRECATED_TYPE_USED" - When deploying and at least one of the resources
+	// has a type marked as
+	// deprecated
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE" - The user created a boot disk that is
+	// larger than image size.
+	//   "EXPERIMENTAL_TYPE_USED" - When deploying and at least one of the
+	// resources has a type marked as
+	// experimental
+	//   "EXTERNAL_API_WARNING" - Warning that is present in an external api call
+	//   "FIELD_VALUE_OVERRIDEN" - Warning that value of a field has been
+	// overridden.
+	// Deprecated unused field.
+	//   "INJECTED_KERNELS_DEPRECATED" - The operation involved use of an injected
+	// kernel, which is deprecated.
+	//   "INVALID_HEALTH_CHECK_FOR_DYNAMIC_WIEGHTED_LB" - A WEIGHTED_MAGLEV backend
+	// service is associated with a health check that is
+	// not of type HTTP/HTTPS/HTTP2.
+	//   "LARGE_DEPLOYMENT_WARNING" - When deploying a deployment with a
+	// exceedingly large number of resources
+	//   "LIST_OVERHEAD_QUOTA_EXCEED" - Resource can't be retrieved due to list
+	// overhead quota exceed
+	// which captures the amount of resources filtered out by
+	// user-defined list filter.
+	//   "MISSING_TYPE_DEPENDENCY" - A resource depends on a missing type
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED" - The route's nextHopIp address is not
+	// assigned to an instance on the
+	// network.
+	//   "NEXT_HOP_CANNOT_IP_FORWARD" - The route's next hop instance cannot ip
+	// forward.
+	//   "NEXT_HOP_INSTANCE_HAS_NO_IPV6_INTERFACE" - The route's nextHopInstance
+	// URL refers to an instance that does not have an
+	// ipv6 interface on the same network as the route.
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND" - The route's nextHopInstance URL refers to
+	// an instance that does not exist.
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK" - The route's nextHopInstance URL
+	// refers to an instance that is not on the
+	// same network as the route.
+	//   "NEXT_HOP_NOT_RUNNING" - The route's next hop instance does not have a
+	// status of RUNNING.
+	//   "NOT_CRITICAL_ERROR" - Error which is not critical. We decided to continue
+	// the process despite
+	// the mentioned error.
+	//   "NO_RESULTS_ON_PAGE" - No results are present on a particular list page.
+	//   "PARTIAL_SUCCESS" - Success is reported, but some results may be missing
+	// due to errors
+	//   "QUOTA_INFO_UNAVAILABLE" - Quota information is not available to client
+	// requests (e.g:
+	// regions.list).
+	//   "REQUIRED_TOS_AGREEMENT" - The user attempted to use a resource that
+	// requires a TOS they have not
+	// accepted.
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING" - Warning that a resource is
+	// in use.
+	//   "RESOURCE_NOT_DELETED" - One or more of the resources set to auto-delete
+	// could not be deleted
+	// because they were in use.
+	//   "SCHEMA_VALIDATION_IGNORED" - When a resource schema validation is
+	// ignored.
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE" - Instance template used in instance
+	// group manager is valid as such, but
+	// its application does not make a lot of sense, because it allows only
+	// single instance in instance group.
+	//   "UNDECLARED_PROPERTIES" - When undeclared properties in the schema are
+	// present
+	//   "UNREACHABLE" - A given scope cannot be reached.
+	Code string `json:"code,omitempty"`
+	// Data: [Output Only] Metadata about this warning in key:
+	// value format. For example:
+	//
+	// "data": [
+	//   {
+	//    "key": "scope",
+	//    "value": "zones/us-east1-d"
+	//   }
+	Data []*RoutersListNamedSetsWarningData `json:"data,omitempty"`
+	// Message: [Output Only] A human-readable description of the warning code.
+	Message string `json:"message,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RoutersListNamedSetsWarning) MarshalJSON() ([]byte, error) {
+	type NoMethod RoutersListNamedSetsWarning
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type RoutersListNamedSetsWarningData struct {
+	// Key: [Output Only] A key that provides more detail on the warning
+	// being
+	// returned. For example, for warnings where there are no results in a
+	// list
+	// request for a particular zone, this key might be scope and
+	// the key value might be the zone name. Other examples might be a
+	// key
+	// indicating a deprecated resource and a suggested replacement, or a
+	// warning about invalid network settings (for example, if an instance
+	// attempts to perform IP forwarding but is not enabled for IP forwarding).
+	Key string `json:"key,omitempty"`
+	// Value: [Output Only] A warning data value corresponding to the key.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RoutersListNamedSetsWarningData) MarshalJSON() ([]byte, error) {
+	type NoMethod RoutersListNamedSetsWarningData
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -69900,6 +70623,13 @@ type Snapshot struct {
 	// you
 	// do not need to provide a key to use the snapshot later.
 	SnapshotEncryptionKey *CustomerEncryptionKey `json:"snapshotEncryptionKey,omitempty"`
+	// SnapshotGroupId: Output only. [Output Only] The unique ID of the snapshot
+	// group that this snapshot
+	// belongs to.
+	SnapshotGroupId string `json:"snapshotGroupId,omitempty"`
+	// SnapshotGroupName: Output only. [Output only] The snapshot group that this
+	// snapshot belongs to.
+	SnapshotGroupName string `json:"snapshotGroupName,omitempty"`
 	// SnapshotType: Indicates the type of the snapshot.
 	//
 	// Possible values:
@@ -69990,10 +70720,6 @@ type Snapshot struct {
 	// (regional or
 	// multi-regional).
 	StorageLocations []string `json:"storageLocations,omitempty"`
-	// UserLicenses: [Output Only] A list of user provided licenses represented by
-	// a list of
-	// URLs to the license resource.
-	UserLicenses []string `json:"userLicenses,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -70199,6 +70925,168 @@ func (s SnapshotAggregatedListWarningData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SnapshotGroup: Represents a SnapshotGroup resource.
+//
+// A snapshot group is a set of snapshots that represents a point in time
+// state
+// of a consistency group.
+type SnapshotGroup struct {
+	// CreationTimestamp: Output only. [Output Only] Creation timestamp
+	// inRFC3339
+	// text format.
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+	// Description: Optional. An optional description of this resource. Provide
+	// this property when you
+	// create the resource.
+	Description string `json:"description,omitempty"`
+	// Id: Output only. [Output Only] The unique identifier for the resource. This
+	// identifier is
+	// defined by the server.
+	Id uint64 `json:"id,omitempty,string"`
+	// Kind: Output only. [Output Only] Type of the resource.
+	// Alwayscompute#snapshotGroup for SnapshotGroup
+	// resources.
+	Kind string `json:"kind,omitempty"`
+	// Name: Identifier. Name of the resource; provided by the client when the
+	// resource is created.
+	// The name must be 1-63 characters long, and comply withRFC1035.
+	// Specifically, the name must be 1-63 characters long and match the
+	// regular
+	// expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first
+	// character must be a lowercase letter, and all following characters must be
+	// a dash, lowercase letter, or digit, except the last character, which
+	// cannot
+	// be a dash.
+	Name string `json:"name,omitempty"`
+	// SelfLink: Output only. [Output Only] Server-defined URL for the resource.
+	SelfLink string `json:"selfLink,omitempty"`
+	// SelfLinkWithId: Output only. [Output Only] Server-defined URL for this
+	// resource's resource id.
+	SelfLinkWithId string `json:"selfLinkWithId,omitempty"`
+	// SourceInfo: Output only. [Output Only]
+	SourceInfo *SnapshotGroupSourceInfo `json:"sourceInfo,omitempty"`
+	// SourceInstantSnapshotGroup: Input field for the source instant snapshot
+	// group.
+	SourceInstantSnapshotGroup string `json:"sourceInstantSnapshotGroup,omitempty"`
+	// SourceInstantSnapshotGroupInfo: Output only. [Output Only]
+	SourceInstantSnapshotGroupInfo *SnapshotGroupSourceInstantSnapshotGroupInfo `json:"sourceInstantSnapshotGroupInfo,omitempty"`
+	// Status: Output only. [Output Only]
+	//
+	// Possible values:
+	//   "CREATING"
+	//   "DELETING"
+	//   "FAILED"
+	//   "INVALID"
+	//   "READY"
+	//   "UNKNOWN"
+	//   "UPLOADING"
+	Status string `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreationTimestamp") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreationTimestamp") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SnapshotGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod SnapshotGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type SnapshotGroupParameters struct {
+	// ReplicaZones: URLs of the zones where disks should be replicated to. Only
+	// applicable
+	// for regional resources.
+	ReplicaZones []string `json:"replicaZones,omitempty"`
+	// SourceSnapshotGroup: The source snapshot group used to create disks. You can
+	// provide this as a
+	// partial or full URL to the resource. For example, the following are
+	// valid
+	// values:
+	//
+	//
+	//      -
+	// https://www.googleapis.com/compute/v1/projects/project/global/snapshotGroups/snapshotGroup
+	//
+	//    - projects/project/global/snapshotGroups/snapshotGroup
+	//      - global/snapshotGroups/snapshotGroup
+	SourceSnapshotGroup string `json:"sourceSnapshotGroup,omitempty"`
+	// Type: URL of the disk type resource describing which disk type to use to
+	// create
+	// disks. Provide this when creating the disk. For
+	// example:projects/project/zones/zone/diskTypes/pd-ssd. See Persistent
+	// disk
+	// types.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ReplicaZones") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ReplicaZones") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SnapshotGroupParameters) MarshalJSON() ([]byte, error) {
+	type NoMethod SnapshotGroupParameters
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type SnapshotGroupSourceInfo struct {
+	ConsistencyGroup   string `json:"consistencyGroup,omitempty"`
+	ConsistencyGroupId string `json:"consistencyGroupId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConsistencyGroup") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConsistencyGroup") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SnapshotGroupSourceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod SnapshotGroupSourceInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type SnapshotGroupSourceInstantSnapshotGroupInfo struct {
+	InstantSnapshotGroup   string `json:"instantSnapshotGroup,omitempty"`
+	InstantSnapshotGroupId string `json:"instantSnapshotGroupId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InstantSnapshotGroup") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InstantSnapshotGroup") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SnapshotGroupSourceInstantSnapshotGroupInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod SnapshotGroupSourceInstantSnapshotGroupInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SnapshotList: Contains a list of Snapshot resources.
 type SnapshotList struct {
 	// Id: [Output Only] Unique identifier for the resource; defined by the server.
@@ -70381,8 +71269,8 @@ func (s SnapshotListWarningData) MarshalJSON() ([]byte, error) {
 
 // SnapshotParams: Additional snapshot params.
 type SnapshotParams struct {
-	// ResourceManagerTags: Resource manager tags to be bound to the snapshot. Tag
-	// keys and values have
+	// ResourceManagerTags: Input only. Resource manager tags to be bound to the
+	// snapshot. Tag keys and values have
 	// the same definition as resource
 	// manager tags. Keys and values can be either in numeric format,
 	// such as `tagKeys/{tag_key_id}` and `tagValues/456` or in namespaced
@@ -82949,9 +83837,9 @@ type VmExtensionPolicy struct {
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 	// Description: An optional description of this resource.
 	Description string `json:"description,omitempty"`
-	// ExtensionPolicies: Required. A map of extension names (e.g., "cloudops") to
-	// their corresponding policy
-	// configurations.
+	// ExtensionPolicies: Required. A map of extension names (for example,
+	// "ops-agent") to their corresponding
+	// policy configurations.
 	ExtensionPolicies map[string]VmExtensionPolicyExtensionPolicy `json:"extensionPolicies,omitempty"`
 	// GlobalResourceLink: Optional. Output only. [Output Only] Link to the global
 	// policy that manages this zone policy, if
@@ -82991,7 +83879,7 @@ type VmExtensionPolicy struct {
 	// integers indicate higher priorities. If you do not specify a priority
 	// when
 	// creating a rule, it is assigned a priority of 1000. If priorities are
-	// equal, the policy with the more recent creation timestamp takes precedence.
+	// equal, the policy with the most recent creation timestamp takes precedence.
 	Priority int64 `json:"priority,omitempty"`
 	// SelfLink: Output only. [Output Only] Server-defined fully-qualified URL for
 	// this resource.

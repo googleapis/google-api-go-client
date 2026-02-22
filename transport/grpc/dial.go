@@ -548,3 +548,121 @@ func WithConnPool(p ConnPool) option.ClientOption {
 func (o connPoolOption) Apply(s *internal.DialSettings) {
 	s.GRPCConnPool = o.ConnPool
 }
+
+// Status strings for DirectPath status check. These are used for telemetry and should not be changed without considering the impact on metrics.
+const (
+	statusEnabled                  = "enabled"
+	statusCustomGRPCConn           = "custom_grpc_conn"
+	statusCustomGRPCConnPool       = "custom_grpc_conn_pool"
+	statusCustomHTTPClient         = "custom_http_client"
+	statusEndpointFetchError       = "endpoint_fetch_error"
+	statusXdsNotEnabled            = "xds_not_enabled"
+	statusOptionDisabled           = "option_disabled"
+	statusUnsupportedEndpoint      = "unsupported_endpoint"
+	statusEnvDisabled              = "env_disabled"
+	statusNotOnGCE                 = "not_on_gce"
+	statusNoAuth                   = "no_auth"
+	statusAPIKey                   = "api_key"
+	statusMissingTokenSource       = "missing_token_source"
+	statusTokenFetchError          = "token_fetch_error"
+	statusNilToken                 = "nil_token"
+	statusNotComputeMetadata       = "not_compute_metadata"
+	statusNotDefaultServiceAccount = "not_default_service_account"
+)
+
+// For unit testing.
+var onGCE = metadata.OnGCE
+
+// CheckDirectPathStatus evaluates the current environment and options to return
+// a status string describing the reason why DirectPath is not possible.
+func CheckDirectPathStatus(ctx context.Context, opts ...option.ClientOption) string {
+	o, err := processAndValidateOpts(opts)
+	if err != nil {
+		return statusEndpointFetchError
+	}
+
+	// DirectPath disabled by environment variable.
+	if strings.EqualFold(os.Getenv(disableDirectPath), "true") {
+		return statusEnvDisabled
+	}
+	// DirectPath disabled by option.
+	if !o.EnableDirectPath {
+		return statusOptionDisabled
+	}
+
+	_, endpoint, err := internal.GetGRPCTransportConfigAndEndpoint(o)
+	if err != nil {
+		return statusEndpointFetchError
+	}
+
+	// DirectPath disabled by unsupported endpoint scheme (e.g., https://).
+	if !checkDirectPathEndPoint(endpoint) {
+		return statusUnsupportedEndpoint
+	}
+
+	// DirectPath not attempted via xDS.
+	if !isDirectPathXdsUsed(o) {
+		return statusXdsNotEnabled
+	}
+
+	// Check for custom resources that preclude DirectPath.
+	if o.GRPCConn != nil {
+		return statusCustomGRPCConn
+	}
+	if o.GRPCConnPool != nil {
+		return statusCustomGRPCConnPool
+	}
+	if o.HTTPClient != nil {
+		return statusCustomHTTPClient
+	}
+
+	if !onGCE() {
+		return statusNotOnGCE
+	}
+
+	// Specific credential compatibility check.
+	if authStatus := checkAuthStatus(ctx, o); authStatus != "" {
+		return authStatus
+	}
+	return statusEnabled
+}
+
+func checkAuthStatus(ctx context.Context, o *internal.DialSettings) string {
+	if o.NoAuth {
+		return statusNoAuth
+	}
+	if o.APIKey != "" {
+		return statusAPIKey
+	}
+
+	creds, err := internal.Creds(ctx, o)
+	if err != nil {
+		return statusTokenFetchError
+	}
+	if creds.TokenSource == nil {
+		return statusMissingTokenSource
+	}
+
+	tok, err := creds.TokenSource.Token()
+	if err != nil {
+		return statusTokenFetchError
+	}
+	if tok == nil {
+		return statusNilToken
+	}
+
+	// AllowNonDefaultServiceAccount bypasses the metadata source and default account checks.
+	if o.AllowNonDefaultServiceAccount {
+		return ""
+	}
+
+	// Verify the token source is the GCE Metadata Server.
+	if source, _ := tok.Extra("oauth2.google.tokenSource").(string); source != "compute-metadata" {
+		return statusNotComputeMetadata
+	}
+	// Verify the default service account is used.
+	if acct, _ := tok.Extra("oauth2.google.serviceAccount").(string); acct != "default" {
+		return statusNotDefaultServiceAccount
+	}
+	return ""
+}

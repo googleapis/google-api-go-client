@@ -69,8 +69,7 @@ func TestPagesParam(t *testing.T) {
 	server := httptest.NewServer(handler)
 	defer server.Close()
 
-	client := &http.Client{}
-	s, err := crm.New(client)
+	s, err := crm.NewService(context.TODO())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -118,8 +117,7 @@ func TestPagesRequestField(t *testing.T) {
 	server := httptest.NewServer(handler)
 	defer server.Close()
 
-	client := &http.Client{}
-	s, err := crm.New(client)
+	s, err := crm.NewService(context.TODO())
 	if err != nil {
 		t.Fatal(err)
 	}

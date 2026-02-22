@@ -470,6 +470,8 @@ type BaseImage struct {
 	LayerCount int64 `json:"layerCount,omitempty"`
 	// Name: The name of the base image.
 	Name string `json:"name,omitempty"`
+	// Registry: The registry of the base image.
+	Registry string `json:"registry,omitempty"`
 	// Repository: The repository name in which the base image is from.
 	Repository string `json:"repository,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LayerCount") to

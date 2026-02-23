@@ -4371,8 +4371,9 @@ func (s JwtInsertResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// JwtResource: A JWT representation of a pass.
 type JwtResource struct {
-	// Jwt: A string representing a JWT of the format described at
+	// Jwt: Required. A string representing a JWT of the format described at
 	// https://developers.google.com/wallet/reference/rest/v1/Jwt
 	Jwt string `json:"jwt,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Jwt") to unconditionally

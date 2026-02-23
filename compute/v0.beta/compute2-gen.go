@@ -12501,7 +12501,7 @@ type DisksUpdateCall struct {
 // Update: Updates the specified disk with the data included in the
 // request.
 // The update is performed only on selected fields included as part
-// of update-mask. Only the following fields can be modified: user_license.
+// of update-mask.
 //
 // - disk: The disk name for this request.
 // - project: Project ID for this request.
@@ -32612,6 +32612,142 @@ func (c *InstanceGroupManagersApplyUpdatesToInstancesCall) Do(opts ...googleapi.
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.instanceGroupManagers.applyUpdatesToInstances", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type InstanceGroupManagersConfigureAcceleratorTopologiesCall struct {
+	s                                                          *Service
+	project                                                    string
+	zone                                                       string
+	instanceGroupManager                                       string
+	instancegroupmanagersconfigureacceleratortopologiesrequest *InstanceGroupManagersConfigureAcceleratorTopologiesRequest
+	urlParams_                                                 gensupport.URLParams
+	ctx_                                                       context.Context
+	header_                                                    http.Header
+}
+
+// ConfigureAcceleratorTopologies: Updates the accelerator topologies
+// configuration.
+//
+//   - instanceGroupManager: The name of the managed instance group.
+//     It should conform to RFC1035.
+//   - project: Project ID for this request.
+//   - zone: The name of thezone
+//     where the managed instance group is located.
+//
+// It should conform to RFC1035.
+func (r *InstanceGroupManagersService) ConfigureAcceleratorTopologies(project string, zone string, instanceGroupManager string, instancegroupmanagersconfigureacceleratortopologiesrequest *InstanceGroupManagersConfigureAcceleratorTopologiesRequest) *InstanceGroupManagersConfigureAcceleratorTopologiesCall {
+	c := &InstanceGroupManagersConfigureAcceleratorTopologiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.instanceGroupManager = instanceGroupManager
+	c.instancegroupmanagersconfigureacceleratortopologiesrequest = instancegroupmanagersconfigureacceleratortopologiesrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so
+// that if you must retry your request, the server will know to ignore
+// the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request and
+// the request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+//
+// The request ID must be
+// a valid UUID with the exception that zero UUID is not
+// supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *InstanceGroupManagersConfigureAcceleratorTopologiesCall) RequestId(requestId string) *InstanceGroupManagersConfigureAcceleratorTopologiesCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *InstanceGroupManagersConfigureAcceleratorTopologiesCall) Fields(s ...googleapi.Field) *InstanceGroupManagersConfigureAcceleratorTopologiesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *InstanceGroupManagersConfigureAcceleratorTopologiesCall) Context(ctx context.Context) *InstanceGroupManagersConfigureAcceleratorTopologiesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *InstanceGroupManagersConfigureAcceleratorTopologiesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InstanceGroupManagersConfigureAcceleratorTopologiesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.instancegroupmanagersconfigureacceleratortopologiesrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/configureAcceleratorTopologies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":              c.project,
+		"zone":                 c.zone,
+		"instanceGroupManager": c.instanceGroupManager,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.instanceGroupManagers.configureAcceleratorTopologies", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.instanceGroupManagers.configureAcceleratorTopologies" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *InstanceGroupManagersConfigureAcceleratorTopologiesCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.instanceGroupManagers.configureAcceleratorTopologies", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

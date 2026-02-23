@@ -751,6 +751,15 @@ type ClusterUpgradeFleetSpec struct {
 	// PostConditions: Required. Post conditions to evaluate to mark an upgrade
 	// COMPLETE. Required.
 	PostConditions *ClusterUpgradePostConditions `json:"postConditions,omitempty"`
+	// UpgradeEngine: Output only. The effective upgrade engine for the fleet.
+	//
+	// Possible values:
+	//   "UPGRADE_ENGINE_UNSPECIFIED" - Default value.
+	//   "SEQUENCING_V1" - Upgrades are managed using fleet-based rollout
+	// sequencing.
+	//   "SEQUENCING_V2" - Upgrades are managed using rollout sequencing with
+	// custom stages.
+	UpgradeEngine string `json:"upgradeEngine,omitempty"`
 	// UpstreamFleets: This fleet consumes upgrades that have COMPLETE status code
 	// in the upstream fleets. See UpgradeStatus.Code for code definitions. The
 	// fleet name should be either fleet project number or id. This is defined as
@@ -1263,8 +1272,11 @@ func (s CommonFleetDefaultMemberConfigSpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CompliancePostureConfig: CompliancePostureConfig defines the settings needed
-// to enable/disable features for the Compliance Posture.
+// CompliancePostureConfig: Deprecated: Compliance Posture is no longer
+// supported. For more details, see
+// https://cloud.google.com/kubernetes-engine/docs/deprecations/posture-management-deprecation.
+// CompliancePostureConfig defines the settings needed to enable/disable
+// features for the Compliance Posture.
 type CompliancePostureConfig struct {
 	// ComplianceStandards: List of enabled compliance standards.
 	ComplianceStandards []*ComplianceStandard `json:"complianceStandards,omitempty"`
@@ -2510,13 +2522,15 @@ type DefaultClusterConfig struct {
 	// BinaryAuthorizationConfig: Optional. Enable/Disable binary authorization
 	// features for the cluster.
 	BinaryAuthorizationConfig *BinaryAuthorizationConfig `json:"binaryAuthorizationConfig,omitempty"`
-	// CompliancePostureConfig: Optional. Enable/Disable Compliance Posture
-	// features for the cluster. Note that on UpdateFleet, only full replacement of
-	// this field is allowed. Users are not allowed for partial updates through
-	// field mask.
+	// CompliancePostureConfig: Optional. Deprecated: Compliance Posture is no
+	// longer supported. For more details, see
+	// https://cloud.google.com/kubernetes-engine/docs/deprecations/posture-management-deprecation.
+	// Enable/Disable Compliance Posture features for the cluster. Note that on
+	// UpdateFleet, only full replacement of this field is allowed. Users are not
+	// allowed for partial updates through field mask.
 	CompliancePostureConfig *CompliancePostureConfig `json:"compliancePostureConfig,omitempty"`
-	// SecurityPostureConfig: Enable/Disable Security Posture features for the
-	// cluster.
+	// SecurityPostureConfig: Optional. Enable/Disable Security Posture features
+	// for the cluster.
 	SecurityPostureConfig *SecurityPostureConfig `json:"securityPostureConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BinaryAuthorizationConfig")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -2569,37 +2583,6 @@ func (s EdgeCluster) MarshalJSON() ([]byte, error) {
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-}
-
-// ExcludedCluster: An excluded cluster from the rollout.
-type ExcludedCluster struct {
-	// Membership: Output only. The name of the fleet Membership resource
-	// associated to the excluded cluster.
-	Membership string `json:"membership,omitempty"`
-	// Reason: Output only. The reason for excluding the cluster from the rollout.
-	//
-	// Possible values:
-	//   "REASON_UNSPECIFIED" - Default value.
-	//   "EXCLUDED_BY_FILTER" - The cluster was excluded by the rollout filter.
-	//   "ALREADY_UPGRADED" - The cluster was already upgraded.
-	//   "VERSION_TOO_OLD" - The cluster version is too old.
-	Reason string `json:"reason,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Membership") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Membership") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ExcludedCluster) MarshalJSON() ([]byte, error) {
-	type NoMethod ExcludedCluster
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression Language
@@ -2847,30 +2830,6 @@ type FeatureState struct {
 
 func (s FeatureState) MarshalJSON() ([]byte, error) {
 	type NoMethod FeatureState
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// FeatureUpdate: Feature config to use for Rollout.
-type FeatureUpdate struct {
-	// BinaryAuthorizationConfig: Optional. Configuration for Binary Authorization.
-	BinaryAuthorizationConfig *BinaryAuthorizationConfig `json:"binaryAuthorizationConfig,omitempty"`
-	// SecurityPostureConfig: Optional. Configuration for Security Posture.
-	SecurityPostureConfig *SecurityPostureConfig `json:"securityPostureConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BinaryAuthorizationConfig")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BinaryAuthorizationConfig") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s FeatureUpdate) MarshalJSON() ([]byte, error) {
-	type NoMethod FeatureUpdate
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6018,11 +5977,6 @@ type Rollout struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Etag: Output only. etag of the Rollout Ex. abc1234
 	Etag string `json:"etag,omitempty"`
-	// ExcludedClusters: Optional. Output only. The excluded clusters from the
-	// rollout.
-	ExcludedClusters []*ExcludedCluster `json:"excludedClusters,omitempty"`
-	// Feature: Optional. Feature config to use for Rollout.
-	Feature *FeatureUpdate `json:"feature,omitempty"`
 	// Labels: Optional. Labels for this Rollout.
 	Labels map[string]string `json:"labels,omitempty"`
 	// MembershipStates: Output only. States of upgrading control plane or node
@@ -6037,8 +5991,6 @@ type Rollout struct {
 	// rollout sequence that initiatied this Rollout. In the format of
 	// `projects/{project}/locations/global/rolloutSequences/{rollout_sequence}`.
 	RolloutSequence string `json:"rolloutSequence,omitempty"`
-	// Schedule: Output only. The schedule of the Rollout.
-	Schedule *Schedule `json:"schedule,omitempty"`
 	// Stages: Output only. The stages of the Rollout.
 	Stages []*RolloutStage `json:"stages,omitempty"`
 	// State: Output only. State specifies various states of the Rollout.
@@ -6049,7 +6001,6 @@ type Rollout struct {
 	//   "PAUSED" - The Rollout is paused.
 	//   "CANCELLED" - The Rollout is in a failure terminal state.
 	//   "COMPLETED" - The Rollout is in a terminal state.
-	//   "SCHEDULED" - The Rollout is scheduled to start.
 	State string `json:"state,omitempty"`
 	// StateReason: Output only. A human-readable description explaining the reason
 	// for the current state.
@@ -6133,6 +6084,8 @@ type RolloutSequence struct {
 	Name string `json:"name,omitempty"`
 	// Stages: Required. Ordered list of stages that constitutes this Rollout.
 	Stages []*Stage `json:"stages,omitempty"`
+	// State: Output only. State of the Rollout Sequence as a whole.
+	State *RolloutSequenceState `json:"state,omitempty"`
 	// Uid: Output only. Google-generated UUID for this resource. This is unique
 	// across all Rollout Sequence resources. If a Rollout Sequence resource is
 	// deleted and another resource with the same name is created, it gets a
@@ -6159,6 +6112,47 @@ type RolloutSequence struct {
 
 func (s RolloutSequence) MarshalJSON() ([]byte, error) {
 	type NoMethod RolloutSequence
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RolloutSequenceState: State and reasons of the Rollout Sequence.
+type RolloutSequenceState struct {
+	// LifecycleState: Output only. Lifecycle state of the Rollout Sequence.
+	//
+	// Possible values:
+	//   "LIFECYCLE_STATE_UNSPECIFIED" - The default value. This value is used if
+	// the state is omitted.
+	//   "LIFECYCLE_STATE_ACTIVE" - The Rollout Sequence is active.
+	//   "LIFECYCLE_STATE_WARNING" - The Rollout Sequence has warnings.
+	//   "LIFECYCLE_STATE_ERROR" - The Rollout Sequence has errors.
+	LifecycleState string `json:"lifecycleState,omitempty"`
+	// StateReasons: Output only. StateReason represents the reason for the Rollout
+	// Sequence state.
+	//
+	// Possible values:
+	//   "STATE_REASON_UNSPECIFIED" - Default unspecified value.
+	//   "FLEET_FEATURE_DELETED_ERROR" - A fleet feature is deleted.
+	//   "FLEET_DELETED_ERROR" - A fleet is deleted.
+	//   "EMPTY_STAGE_WARNING" - A stage is empty.
+	//   "MIXED_RELEASE_CHANNELS_WARNING" - Mixed release channels in the sequence.
+	//   "INTERNAL_ERROR" - Internal error, for example when host project is
+	// soft-deleted.
+	StateReasons []string `json:"stateReasons,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LifecycleState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LifecycleState") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RolloutSequenceState) MarshalJSON() ([]byte, error) {
+	type NoMethod RolloutSequenceState
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6248,28 +6242,6 @@ type RolloutTarget struct {
 
 func (s RolloutTarget) MarshalJSON() ([]byte, error) {
 	type NoMethod RolloutTarget
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// Schedule: Schedule represents the schedule of the Rollout.
-type Schedule struct {
-	// Waves: Output only. The schedule of each wave in the Rollout.
-	Waves []*WaveSchedule `json:"waves,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Waves") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Waves") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s Schedule) MarshalJSON() ([]byte, error) {
-	type NoMethod Schedule
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6405,16 +6377,20 @@ type SecurityPostureConfig struct {
 	//   "MODE_UNSPECIFIED" - Default value not specified.
 	//   "DISABLED" - Disables Security Posture features on the cluster.
 	//   "BASIC" - Applies Security Posture features on the cluster.
-	//   "ENTERPRISE" - Applies the Security Posture off cluster Enterprise level
-	// features.
+	//   "ENTERPRISE" - Deprecated: Security Posture Enterprise features are no
+	// longer supported. For more details, see
+	// https://cloud.google.com/kubernetes-engine/docs/deprecations/posture-management-deprecation.
+	// Applies the Security Posture off cluster Enterprise level features.
 	Mode string `json:"mode,omitempty"`
 	// VulnerabilityMode: Sets which mode to use for vulnerability scanning.
 	//
 	// Possible values:
 	//   "VULNERABILITY_MODE_UNSPECIFIED" - Default value not specified.
 	//   "VULNERABILITY_DISABLED" - Disables vulnerability scanning on the cluster.
-	//   "VULNERABILITY_BASIC" - Applies basic vulnerability scanning on the
-	// cluster.
+	//   "VULNERABILITY_BASIC" - Deprecated: Basic vulnerability scanning is no
+	// longer supported. For more details, see
+	// https://cloud.google.com/kubernetes-engine/docs/deprecations/posture-management-deprecation.
+	// Applies basic vulnerability scanning on the cluster.
 	//   "VULNERABILITY_ENTERPRISE" - Applies the Security Posture's vulnerability
 	// on cluster Enterprise level features.
 	VulnerabilityMode string `json:"vulnerabilityMode,omitempty"`
@@ -7312,7 +7288,6 @@ type VersionUpgrade struct {
 	//   "TYPE_UNSPECIFIED" - Default value.
 	//   "TYPE_CONTROL_PLANE" - Control plane upgrade.
 	//   "TYPE_NODE_POOL" - Node pool upgrade.
-	//   "TYPE_CONFIG_SYNC" - Config Sync upgrade.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DesiredVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7329,32 +7304,6 @@ type VersionUpgrade struct {
 
 func (s VersionUpgrade) MarshalJSON() ([]byte, error) {
 	type NoMethod VersionUpgrade
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// WaveSchedule: WaveSchedule represents the schedule of a single rollout wave.
-type WaveSchedule struct {
-	// WaveEndTime: Output only. The time at which the wave ends.
-	WaveEndTime string `json:"waveEndTime,omitempty"`
-	// WaveNumber: Output only. The wave number to which this schedule applies.
-	WaveNumber int64 `json:"waveNumber,omitempty"`
-	// WaveStartTime: Output only. The time at which the wave starts.
-	WaveStartTime string `json:"waveStartTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "WaveEndTime") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "WaveEndTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s WaveSchedule) MarshalJSON() ([]byte, error) {
-	type NoMethod WaveSchedule
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

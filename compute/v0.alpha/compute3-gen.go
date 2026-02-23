@@ -2741,9 +2741,7 @@ type RegionDisksUpdateCall struct {
 
 // Update: Update the specified disk with the data included in the request.
 // Update is
-// performed only on selected fields included as part of update-mask. Only
-// the
-// following fields can be modified: user_license.
+// performed only on selected fields included as part of update-mask.
 //
 // - disk: The disk name for this request.
 // - project: Project ID for this request.
@@ -37500,7 +37498,7 @@ func (c *ReservationSubBlocksGetCall) doRequest(alt string) (*http.Response, err
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/{parentName}/reservationSubBlocks/{reservationSubBlock}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/{+parentName}/reservationSubBlocks/{reservationSubBlock}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
@@ -37643,7 +37641,7 @@ func (c *ReservationSubBlocksGetVersionCall) doRequest(alt string) (*http.Respon
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/{parentName}/reservationSubBlocks/{reservationSubBlock}/getVersion")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/{+parentName}/reservationSubBlocks/{reservationSubBlock}/getVersion")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -37893,7 +37891,7 @@ func (c *ReservationSubBlocksListCall) doRequest(alt string) (*http.Response, er
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/{parentName}/reservationSubBlocks")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/{+parentName}/reservationSubBlocks")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
@@ -38051,7 +38049,7 @@ func (c *ReservationSubBlocksPerformMaintenanceCall) doRequest(alt string) (*htt
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/{parentName}/reservationSubBlocks/{reservationSubBlock}/performMaintenance")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/{+parentName}/reservationSubBlocks/{reservationSubBlock}/performMaintenance")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, nil)
 	if err != nil {
@@ -38193,7 +38191,7 @@ func (c *ReservationSubBlocksReportFaultyCall) doRequest(alt string) (*http.Resp
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/{parentName}/reservationSubBlocks/{reservationSubBlock}/reportFaulty")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/{+parentName}/reservationSubBlocks/{reservationSubBlock}/reportFaulty")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {

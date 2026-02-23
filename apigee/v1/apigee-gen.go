@@ -10891,6 +10891,15 @@ type GoogleCloudApigeeV1SecurityAssessmentResultResource struct {
 	// ApiHubDeploymentDetails: Output only. Additional details for the API Hub
 	// deployment.
 	ApiHubDeploymentDetails *GoogleCloudApigeeV1SecurityAssessmentResultResourceApiHubDeploymentDetails `json:"apiHubDeploymentDetails,omitempty"`
+	// ApiHubGatewayType: Optional.
+	//
+	// Possible values:
+	//   "API_HUB_GATEWAY_TYPE_UNSPECIFIED" - Gateway type is not specified.
+	//   "APIGEE_X" - Gateway is Apigee X for API Hub.
+	//   "APIGEE_HYBRID" - Gateway is Apigee Hybrid for API Hub.
+	//   "APIGEE_EDGE" - Gateway is Apigee Edge for API Hub.
+	//   "APIGEE_OPDK" - Gateway is Apigee OPDK for API Hub.
+	ApiHubGatewayType string `json:"apiHubGatewayType,omitempty"`
 	// Name: Required. Name of this resource. For an Apigee API Proxy, this should
 	// be the id of the API proxy. For an API Hub Deployment, this should be the id
 	// of the deployment.
@@ -11254,6 +11263,12 @@ func (s GoogleCloudApigeeV1SecurityIncident) MarshalJSON() ([]byte, error) {
 // GoogleCloudApigeeV1SecurityMonitoringCondition: Security monitoring
 // condition for risk assessment version 2.
 type GoogleCloudApigeeV1SecurityMonitoringCondition struct {
+	// ApiHubGateway: Optional. The API Hub gateway monitored by the security
+	// monitoring condition. This should only be set if risk_assessment_type is
+	// API_HUB. Format:
+	// `projects/{project}/locations/{location}/plugins/{plugin}/instances/{instance
+	// }`
+	ApiHubGateway string `json:"apiHubGateway,omitempty"`
 	// CreateTime: Output only. The time of the security monitoring condition
 	// creation.
 	CreateTime string `json:"createTime,omitempty"`
@@ -11269,8 +11284,19 @@ type GoogleCloudApigeeV1SecurityMonitoringCondition struct {
 	// Profile: Required. ID of security profile of the security monitoring
 	// condition.
 	Profile string `json:"profile,omitempty"`
-	// Scope: Optional. Scope of the security monitoring condition. For Apigee, the
-	// environment is the scope of the resources.
+	// RiskAssessmentType: Optional. The risk assessment type of the security
+	// monitoring condition. Defaults to ADVANCED_API_SECURITY.
+	//
+	// Possible values:
+	//   "RISK_ASSESSMENT_TYPE_UNSPECIFIED" - Risk assessment type is not
+	// specified.
+	//   "APIGEE" - Risk assessment type is Apigee.
+	//   "API_HUB" - Risk assessment type is API Hub.
+	RiskAssessmentType string `json:"riskAssessmentType,omitempty"`
+	// Scope: Optional. Scope of the security monitoring condition. When
+	// RiskAssessmentType is APIGEE, the scope should be set to the environment of
+	// the resources. When RiskAssessmentType is API_HUB, the scope should not be
+	// set.
 	Scope string `json:"scope,omitempty"`
 	// TotalDeployedResources: Output only. Total number of deployed resources
 	// within scope.
@@ -11284,13 +11310,13 @@ type GoogleCloudApigeeV1SecurityMonitoringCondition struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "ApiHubGateway") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// NullFields is a list of field names (e.g. "ApiHubGateway") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -51780,6 +51806,23 @@ func (r *OrganizationsSecurityMonitoringConditionsService) Delete(name string) *
 	return c
 }
 
+// RiskAssessmentType sets the optional parameter "riskAssessmentType": The
+// risk assessment type of the security monitoring condition. Defaults to
+// ADVANCED_API_SECURITY.
+//
+// Possible values:
+//
+//	"RISK_ASSESSMENT_TYPE_UNSPECIFIED" - Risk assessment type is not
+//
+// specified.
+//
+//	"APIGEE" - Risk assessment type is Apigee.
+//	"API_HUB" - Risk assessment type is API Hub.
+func (c *OrganizationsSecurityMonitoringConditionsDeleteCall) RiskAssessmentType(riskAssessmentType string) *OrganizationsSecurityMonitoringConditionsDeleteCall {
+	c.urlParams_.Set("riskAssessmentType", riskAssessmentType)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -51878,6 +51921,23 @@ type OrganizationsSecurityMonitoringConditionsGetCall struct {
 func (r *OrganizationsSecurityMonitoringConditionsService) Get(name string) *OrganizationsSecurityMonitoringConditionsGetCall {
 	c := &OrganizationsSecurityMonitoringConditionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// RiskAssessmentType sets the optional parameter "riskAssessmentType": The
+// risk assessment type of the security monitoring condition. Defaults to
+// ADVANCED_API_SECURITY.
+//
+// Possible values:
+//
+//	"RISK_ASSESSMENT_TYPE_UNSPECIFIED" - Risk assessment type is not
+//
+// specified.
+//
+//	"APIGEE" - Risk assessment type is Apigee.
+//	"API_HUB" - Risk assessment type is API Hub.
+func (c *OrganizationsSecurityMonitoringConditionsGetCall) RiskAssessmentType(riskAssessmentType string) *OrganizationsSecurityMonitoringConditionsGetCall {
+	c.urlParams_.Set("riskAssessmentType", riskAssessmentType)
 	return c
 }
 
@@ -51993,7 +52053,11 @@ func (r *OrganizationsSecurityMonitoringConditionsService) List(parent string) *
 }
 
 // Filter sets the optional parameter "filter": Filter for the monitoring
-// conditions. For example: `profile=profile1 AND scope=env1`
+// conditions. When RiskAssessmentType is APIGEE, monitoring conditions can be
+// filtered by profile and scope. For example: `profile=profile1 AND
+// scope=env1` When RiskAssessmentType is API_HUB, monitoring conditions can be
+// filtered by profile and api_hub_gateway. For example: `profile=profile1 AND
+// api_hub_gateway=gateway1`
 func (c *OrganizationsSecurityMonitoringConditionsListCall) Filter(filter string) *OrganizationsSecurityMonitoringConditionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -52011,6 +52075,23 @@ func (c *OrganizationsSecurityMonitoringConditionsListCall) PageSize(pageSize in
 // retrieve the subsequent page.
 func (c *OrganizationsSecurityMonitoringConditionsListCall) PageToken(pageToken string) *OrganizationsSecurityMonitoringConditionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// RiskAssessmentType sets the optional parameter "riskAssessmentType": The
+// risk assessment type of the security monitoring condition. Defaults to
+// ADVANCED_API_SECURITY.
+//
+// Possible values:
+//
+//	"RISK_ASSESSMENT_TYPE_UNSPECIFIED" - Risk assessment type is not
+//
+// specified.
+//
+//	"APIGEE" - Risk assessment type is Apigee.
+//	"API_HUB" - Risk assessment type is API Hub.
+func (c *OrganizationsSecurityMonitoringConditionsListCall) RiskAssessmentType(riskAssessmentType string) *OrganizationsSecurityMonitoringConditionsListCall {
+	c.urlParams_.Set("riskAssessmentType", riskAssessmentType)
 	return c
 }
 

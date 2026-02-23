@@ -2461,6 +2461,71 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ExternalExposure: Details about the externally exposed resource associated
+// with the finding.
+type ExternalExposure struct {
+	// BackendService: The full resource name of load balancer backend service, for
+	// example,
+	// "//compute.googleapis.com/projects/{project-id}/global/backendServices/{name}
+	// ".
+	BackendService string `json:"backendService,omitempty"`
+	// ExposedEndpoint: The resource which is running the exposed service, for
+	// example,
+	// "//compute.googleapis.com/projects/{project-id}/zones/{zone}/instances/{insta
+	// nce}.”
+	ExposedEndpoint string `json:"exposedEndpoint,omitempty"`
+	// ExposedService: The name and version of the service, for example, "Jupyter
+	// Notebook 6.14.0".
+	ExposedService string `json:"exposedService,omitempty"`
+	// ForwardingRule: The full resource name of the forwarding rule, for example,
+	// "//compute.googleapis.com/projects/{project-id}/global/forwardingRules/{forwa
+	// rding-rule-name}".
+	ForwardingRule string `json:"forwardingRule,omitempty"`
+	// InstanceGroup: The full resource name of the instance group, for example,
+	// "//compute.googleapis.com/projects/{project-id}/global/instanceGroups/{name}"
+	// .
+	InstanceGroup string `json:"instanceGroup,omitempty"`
+	// LoadBalancerFirewallPolicy: The full resource name of the load balancer
+	// firewall policy, for example,
+	// "//compute.googleapis.com/projects/{project-id}/global/firewallPolicies/{poli
+	// cy-name}".
+	LoadBalancerFirewallPolicy string `json:"loadBalancerFirewallPolicy,omitempty"`
+	// NetworkEndpointGroup: The full resource name of the network endpoint group,
+	// for example,
+	// "//compute.googleapis.com/projects/{project-id}/global/networkEndpointGroups/
+	// {name}".
+	NetworkEndpointGroup string `json:"networkEndpointGroup,omitempty"`
+	// PrivateIpAddress: Private IP address of the exposed endpoint.
+	PrivateIpAddress string `json:"privateIpAddress,omitempty"`
+	// PrivatePort: Port number associated with private IP address.
+	PrivatePort string `json:"privatePort,omitempty"`
+	// PublicIpAddress: Public IP address of the exposed endpoint.
+	PublicIpAddress string `json:"publicIpAddress,omitempty"`
+	// PublicPort: Public port number of the exposed endpoint.
+	PublicPort string `json:"publicPort,omitempty"`
+	// ServiceFirewallPolicy: The full resource name of the firewall policy of the
+	// exposed service, for example,
+	// "//compute.googleapis.com/projects/{project-id}/global/firewallPolicies/{poli
+	// cy-name}".
+	ServiceFirewallPolicy string `json:"serviceFirewallPolicy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackendService") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackendService") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExternalExposure) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalExposure
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // File: File information about the related binary/library used by an
 // executable, or the script used by a script interpreter
 type File struct {
@@ -2631,6 +2696,8 @@ type Finding struct {
 	EventTime string `json:"eventTime,omitempty"`
 	// Exfiltration: Represents exfiltrations associated with the finding.
 	Exfiltration *Exfiltration `json:"exfiltration,omitempty"`
+	// ExternalExposure: External exposure associated with the finding.
+	ExternalExposure *ExternalExposure `json:"externalExposure,omitempty"`
 	// ExternalSystems: Output only. Third party SIEM/SOAR fields within SCC,
 	// contains external system information and external system finding fields.
 	ExternalSystems map[string]GoogleCloudSecuritycenterV1ExternalSystem `json:"externalSystems,omitempty"`
@@ -2661,6 +2728,8 @@ type Finding struct {
 	// that contain sensitive data.
 	//   "CHOKEPOINT" - Describes a resource or resource group where high risk
 	// attack paths converge, based on attack path simulations (APS).
+	//   "EXTERNAL_EXPOSURE" - Describes a potential security risk due to the
+	// resource being exposed to the internet.
 	FindingClass string `json:"findingClass,omitempty"`
 	// GroupMemberships: Contains details about groups of which this finding is a
 	// member. A group is a collection of findings that are related in some way.
@@ -6344,6 +6413,71 @@ func (s GoogleCloudSecuritycenterV2Exfiltration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV2ExternalExposure: Details about the externally
+// exposed resource associated with the finding.
+type GoogleCloudSecuritycenterV2ExternalExposure struct {
+	// BackendService: The full resource name of load balancer backend service, for
+	// example,
+	// "//compute.googleapis.com/projects/{project-id}/global/backendServices/{name}
+	// ".
+	BackendService string `json:"backendService,omitempty"`
+	// ExposedEndpoint: The resource which is running the exposed service, for
+	// example,
+	// "//compute.googleapis.com/projects/{project-id}/zones/{zone}/instances/{insta
+	// nce}.”
+	ExposedEndpoint string `json:"exposedEndpoint,omitempty"`
+	// ExposedService: The name and version of the service, for example, "Jupyter
+	// Notebook 6.14.0".
+	ExposedService string `json:"exposedService,omitempty"`
+	// ForwardingRule: The full resource name of the forwarding rule, for example,
+	// "//compute.googleapis.com/projects/{project-id}/global/forwardingRules/{forwa
+	// rding-rule-name}".
+	ForwardingRule string `json:"forwardingRule,omitempty"`
+	// InstanceGroup: The full resource name of the instance group, for example,
+	// "//compute.googleapis.com/projects/{project-id}/global/instanceGroups/{name}"
+	// .
+	InstanceGroup string `json:"instanceGroup,omitempty"`
+	// LoadBalancerFirewallPolicy: The full resource name of the load balancer
+	// firewall policy, for example,
+	// "//compute.googleapis.com/projects/{project-id}/global/firewallPolicies/{poli
+	// cy-name}".
+	LoadBalancerFirewallPolicy string `json:"loadBalancerFirewallPolicy,omitempty"`
+	// NetworkEndpointGroup: The full resource name of the network endpoint group,
+	// for example,
+	// "//compute.googleapis.com/projects/{project-id}/global/networkEndpointGroups/
+	// {name}".
+	NetworkEndpointGroup string `json:"networkEndpointGroup,omitempty"`
+	// PrivateIpAddress: Private IP address of the exposed endpoint.
+	PrivateIpAddress string `json:"privateIpAddress,omitempty"`
+	// PrivatePort: Port number associated with private IP address.
+	PrivatePort string `json:"privatePort,omitempty"`
+	// PublicIpAddress: Public IP address of the exposed endpoint.
+	PublicIpAddress string `json:"publicIpAddress,omitempty"`
+	// PublicPort: Public port number of the exposed endpoint.
+	PublicPort string `json:"publicPort,omitempty"`
+	// ServiceFirewallPolicy: The full resource name of the firewall policy of the
+	// exposed service, for example,
+	// "//compute.googleapis.com/projects/{project-id}/global/firewallPolicies/{poli
+	// cy-name}".
+	ServiceFirewallPolicy string `json:"serviceFirewallPolicy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackendService") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackendService") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2ExternalExposure) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2ExternalExposure
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2ExternalSystem: Representation of third party
 // SIEM/SOAR fields within SCC.
 type GoogleCloudSecuritycenterV2ExternalSystem struct {
@@ -6582,6 +6716,8 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	EventTime string `json:"eventTime,omitempty"`
 	// Exfiltration: Represents exfiltrations associated with the finding.
 	Exfiltration *GoogleCloudSecuritycenterV2Exfiltration `json:"exfiltration,omitempty"`
+	// ExternalExposure: External exposure associated with the finding.
+	ExternalExposure *GoogleCloudSecuritycenterV2ExternalExposure `json:"externalExposure,omitempty"`
 	// ExternalSystems: Output only. Third party SIEM/SOAR fields within SCC,
 	// contains external system information and external system finding fields.
 	ExternalSystems map[string]GoogleCloudSecuritycenterV2ExternalSystem `json:"externalSystems,omitempty"`
@@ -6611,6 +6747,8 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	// that contain sensitive data.
 	//   "CHOKEPOINT" - Describes a resource or resource group where high risk
 	// attack paths converge, based on attack path simulations (APS).
+	//   "EXTERNAL_EXPOSURE" - Describes a potential security risk due to the
+	// resource being exposed to the internet.
 	FindingClass string `json:"findingClass,omitempty"`
 	// GroupMemberships: Contains details about groups of which this finding is a
 	// member. A group is a collection of findings that are related in some way.

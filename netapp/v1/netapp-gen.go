@@ -901,6 +901,36 @@ func (s CachePrePopulate) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
+// CloneDetails: Details about a clone volume.
+type CloneDetails struct {
+	// SharedSpaceGib: Output only. Shared space in GiB. Determined at volume
+	// creation time based on size of source snapshot.
+	SharedSpaceGib int64 `json:"sharedSpaceGib,omitempty,string"`
+	// SourceSnapshot: Output only. Specifies the full resource name of the source
+	// snapshot from which this volume was cloned. Format:
+	// projects/{project}/locations/{location}/volumes/{volume}/snapshots/{snapshot}
+	SourceSnapshot string `json:"sourceSnapshot,omitempty"`
+	// SourceVolume: Output only. Full name of the source volume resource. Format:
+	// projects/{project}/locations/{location}/volumes/{volume}
+	SourceVolume string `json:"sourceVolume,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SharedSpaceGib") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SharedSpaceGib") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloneDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod CloneDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DailySchedule: Make a snapshot every day e.g. at 04:00, 05:20, 23:50
 type DailySchedule struct {
 	// Hour: Set the hour to start the snapshot (0-23), defaults to midnight (0).
@@ -2886,6 +2916,9 @@ type Volume struct {
 	CacheParameters *CacheParameters `json:"cacheParameters,omitempty"`
 	// CapacityGib: Required. Capacity in GIB of the volume
 	CapacityGib int64 `json:"capacityGib,omitempty,string"`
+	// CloneDetails: Output only. If this volume is a clone, this field contains
+	// details about the clone.
+	CloneDetails *CloneDetails `json:"cloneDetails,omitempty"`
 	// ColdTierSizeGib: Output only. Size of the volume cold tier data rounded down
 	// to the nearest GiB.
 	ColdTierSizeGib int64 `json:"coldTierSizeGib,omitempty,string"`

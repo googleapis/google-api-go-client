@@ -34,6 +34,11 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	runService, err := run.NewService(ctx, option.WithScopes(run.RunReadonlyScope))
+//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -101,12 +106,21 @@ const (
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// See, edit, configure, and delete your Google Cloud Run data and see the
+	// email address for your Google Account
+	RunScope = "https://www.googleapis.com/auth/run"
+
+	// See your Google Cloud Run data and the email address of your Google Account
+	RunReadonlyScope = "https://www.googleapis.com/auth/run.readonly"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
+		"https://www.googleapis.com/auth/run",
+		"https://www.googleapis.com/auth/run.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -482,11 +496,17 @@ func (s GoogleCloudRunV2CancelExecutionRequest) MarshalJSON() ([]byte, error) {
 // https://cloud.google.com/sql/docs/mysql/connect-run for more information on
 // how to connect Cloud SQL and Cloud Run.
 type GoogleCloudRunV2CloudSqlInstance struct {
-	// Instances: The Cloud SQL instance connection names, as can be found in
-	// https://console.cloud.google.com/sql/instances. Visit
+	// Instances: A list of Cloud SQL instance connection names. Cloud Run uses
+	// these to establish connections to the specified Cloud SQL instances. While
+	// the SQL instance name itself is unique within a project, the full connection
+	// name requires the location for proper routing. Format:
+	// `{project}:{location}:{instance}` Example:
+	// `my-project:us-central1:my-instance` You can find this value on the
+	// instance's **Overview** page in the Google Cloud console or by using the
+	// following `gcloud` command: ```sh gcloud sql instances describe
+	// INSTANCE_NAME \ --format='value(connectionName)' ``` Visit
 	// https://cloud.google.com/sql/docs/mysql/connect-run for more information on
-	// how to connect Cloud SQL and Cloud Run. Format:
-	// {project}:{location}:{instance}
+	// how to connect Cloud SQL and Cloud Run.
 	Instances []string `json:"instances,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Instances") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2303,8 +2323,8 @@ type GoogleCloudRunV2Revision struct {
 	// readiness status, and detailed error information in case it did not reach a
 	// serving state.
 	Conditions []*GoogleCloudRunV2Condition `json:"conditions,omitempty"`
-	// Containers: Containers holds the list which define the units of execution
-	// for this Revision.
+	// Containers: Holds the list which define the units of execution for this
+	// Revision.
 	Containers []*GoogleCloudRunV2Container `json:"containers,omitempty"`
 	// CreateTime: Output only. The creation time.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2470,10 +2490,13 @@ func (s GoogleCloudRunV2Revision) MarshalJSON() ([]byte, error) {
 // settings.
 type GoogleCloudRunV2RevisionScaling struct {
 	// ConcurrencyUtilization: Optional. Determines a threshold for concurrency
-	// utilization before scaling begins.
+	// utilization before scaling begins. Accepted values are between `0.4` and
+	// `0.95` (inclusive) or `0.0` to disable concurrency utilization as threshold
+	// for scaling.
 	ConcurrencyUtilization float64 `json:"concurrencyUtilization,omitempty"`
 	// CpuUtilization: Optional. Determines a threshold for CPU utilization before
-	// scaling begins.
+	// scaling begins. Accepted values are between `0.4` and `0.95` (inclusive) or
+	// `0.0` to disable CPU utilization as threshold for scaling.
 	CpuUtilization float64 `json:"cpuUtilization,omitempty"`
 	// MaxInstanceCount: Optional. Maximum number of serving instances that this
 	// resource should have. When unspecified, the field is set to the server
@@ -2557,8 +2580,8 @@ type GoogleCloudRunV2RevisionTemplate struct {
 	Client string `json:"client,omitempty"`
 	// ClientVersion: Optional. Arbitrary version identifier for the API client.
 	ClientVersion string `json:"clientVersion,omitempty"`
-	// Containers: Holds the single container that defines the unit of execution
-	// for this Revision.
+	// Containers: Holds the list which define the units of execution for this
+	// Revision.
 	Containers []*GoogleCloudRunV2Container `json:"containers,omitempty"`
 	// EncryptionKey: A reference to a customer managed encryption key (CMEK) to
 	// use to encrypt this container image. For more information, go to
@@ -10754,6 +10777,18 @@ func (r *ProjectsLocationsServicesService) Patch(name string, googlecloudrunv2se
 // Service does not exist.
 func (c *ProjectsLocationsServicesPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsServicesPatchCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// ForceNewRevision sets the optional parameter "forceNewRevision": If set to
+// true, a new revision will be created from the template even if the system
+// doesn't detect any changes from the previously deployed revision. This may
+// be useful for cases where the underlying resources need to be recreated or
+// reinitialized. For example if the image is specified by label, but the
+// underlying image digest has changed) or if the container performs deployment
+// initialization work that needs to be performed again.
+func (c *ProjectsLocationsServicesPatchCall) ForceNewRevision(forceNewRevision bool) *ProjectsLocationsServicesPatchCall {
+	c.urlParams_.Set("forceNewRevision", fmt.Sprint(forceNewRevision))
 	return c
 }
 

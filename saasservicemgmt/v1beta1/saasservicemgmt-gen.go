@@ -1694,7 +1694,7 @@ func (s UnitKind) MarshalJSON() ([]byte, error) {
 // the future for non-mutating operations). UnitOperations allow different
 // actors interacting with the same unit to focus only on the change they have
 // requested. This is a base object that contains the common fields in all unit
-// operations. Next: 19
+// operations. Next: 22
 type UnitOperation struct {
 	// Annotations: Optional. Annotations is an unstructured key-value map stored
 	// with a resource that may be set by external tools to store and retrieve
@@ -1832,6 +1832,9 @@ type UnitOperationCondition struct {
 	//   "TYPE_RUNNING" - Condition type is running.
 	//   "TYPE_SUCCEEDED" - Condition type is succeeded.
 	//   "TYPE_CANCELLED" - Condition type is cancelled.
+	//   "TYPE_APP_CREATED" - Indicates if AppHub app has been created.
+	//   "TYPE_APP_COMPONENTS_REGISTERED" - Indicates if services and workloads
+	// have been registered with AppHub.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LastTransitionTime") to
 	// unconditionally include in API requests. By default, fields with empty or

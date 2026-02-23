@@ -1276,6 +1276,51 @@ func (s BlobStorageSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BulkDeleteResourcesRequest: Request to bulk delete FHIR resources.
+type BulkDeleteResourcesRequest struct {
+	// GcsDestination: Optional. The Cloud Storage output destination. The
+	// Healthcare Service Agent account requires the `roles/storage.objectAdmin`
+	// role on the Cloud Storage location. The deleted resources outputs are
+	// organized by FHIR resource types. The server creates one or more objects per
+	// resource type. Each object contains newline delimited strings in the format
+	// {resourceType}/{resourceId}.
+	GcsDestination *GoogleCloudHealthcareV1beta1FhirGcsDestination `json:"gcsDestination,omitempty"`
+	// Type: Optional. String of comma-delimited FHIR resource types. If provided,
+	// only resources of the specified resource type(s) will be deleted.
+	Type string `json:"type,omitempty"`
+	// Until: Optional. If provided, only resources updated before or atthis time
+	// are deleted. The time uses the format YYYY-MM-DDThh:mm:ss.sss+zz:zz. For
+	// example, `2015-02-07T13:28:17.239+02:00` or `2017-01-01T00:00:00Z`. The time
+	// must be specified to the second and include a time zone.
+	Until string `json:"until,omitempty"`
+	// VersionConfig: Optional. Specifies which version of the resources to delete.
+	//
+	// Possible values:
+	//   "VERSION_CONFIG_UNSPECIFIED" - Unspecified version config. Defaults to
+	// ALL.
+	//   "ALL" - Delete the current version and all history versions.
+	//   "CURRENT_ONLY" - Delete the current version only and create a historical
+	// version of the deleted resource.
+	//   "HISTORY_ONLY" - Delete all history versions only.
+	VersionConfig string `json:"versionConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GcsDestination") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BulkDeleteResourcesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkDeleteResourcesRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BulkExportGcsDestination: The configuration for exporting to Cloud Storage
 // using the bulk export API.
 type BulkExportGcsDestination struct {
@@ -2123,14 +2168,14 @@ type DeidentifyDicomStoreRequest struct {
 	// Config: Deidentify configuration. Only one of `config` and `gcs_config_uri`
 	// can be specified.
 	Config *DeidentifyConfig `json:"config,omitempty"`
-	// DestinationStore: Required. The name of the DICOM store to create and write
-	// the redacted data to. For example,
+	// DestinationStore: Required. The name of the DICOM store to write the
+	// redacted data to. For example,
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomSto
-	// res/{dicom_store_id}`. * The destination dataset must exist. * The source
-	// dataset and destination dataset must both reside in the same location.
-	// De-identifying data across multiple locations is not supported. * The
-	// destination DICOM store must not exist. * The caller must have the necessary
-	// permissions to create the destination DICOM store.
+	// res/{dicom_store_id}`. * The destination dataset and DICOM store must exist.
+	// * The source dataset and destination dataset must both reside in the same
+	// location. De-identifying data across multiple locations is not supported. *
+	// The caller must have the healthcare.dicomStores.dicomWebWrite permission to
+	// write to the destination DICOM store.
 	DestinationStore string `json:"destinationStore,omitempty"`
 	// FilterConfig: Filter configuration.
 	FilterConfig *DicomFilterConfig `json:"filterConfig,omitempty"`
@@ -2165,15 +2210,14 @@ type DeidentifyFhirStoreRequest struct {
 	// Config: Deidentify configuration. Only one of `config` and `gcs_config_uri`
 	// can be specified.
 	Config *DeidentifyConfig `json:"config,omitempty"`
-	// DestinationStore: Required. The name of the FHIR store to create and write
-	// the redacted data to. For example,
+	// DestinationStore: Required. The name of the FHIR store to write the redacted
+	// data to. For example,
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStor
-	// es/{fhir_store_id}`. * The destination dataset must exist. * The source
-	// dataset and destination dataset must both reside in the same location.
-	// De-identifying data across multiple locations is not supported. * The
-	// destination FHIR store must exist. * The caller must have the
-	// healthcare.fhirResources.update permission to write to the destination FHIR
-	// store.
+	// es/{fhir_store_id}`. * The destination dataset and FHIR store must exist. *
+	// The source dataset and destination dataset must both reside in the same
+	// location. De-identifying data across multiple locations is not supported. *
+	// The caller must have the healthcare.fhirResources.update permission to write
+	// to the destination FHIR store.
 	DestinationStore string `json:"destinationStore,omitempty"`
 	// GcsConfigUri: Cloud Storage location to read the JSON
 	// cloud.healthcare.deidentify.DeidentifyConfig from, overriding the default
@@ -3983,16 +4027,38 @@ type GoogleCloudHealthcareV1beta1DicomGcsDestination struct {
 	// types are consistent with supported formats in DICOMweb:
 	// https://cloud.google.com/healthcare/docs/dicom#retrieve_transaction.
 	// Specifically, the following are supported: - application/dicom;
-	// transfer-syntax=1.2.840.10008.1.2.1 (uncompressed DICOM) -
-	// application/dicom; transfer-syntax=1.2.840.10008.1.2.4.50 (DICOM with
-	// embedded JPEG Baseline) - application/dicom;
+	// transfer-syntax=1.2.840.10008.1.2 (DICOM Implicit VR Little Endian) -
+	// application/dicom; transfer-syntax=1.2.840.10008.1.2.1 (DICOM Explicit VR
+	// Little Endian) - application/dicom; transfer-syntax=1.2.840.10008.1.2.1.99
+	// (DICOM Deflated Explicit VR Little Endian) - application/dicom;
+	// transfer-syntax=1.2.840.10008.1.2.4.50 (DICOM with embedded JPEG Baseline) -
+	// application/dicom; transfer-syntax=1.2.840.10008.1.2.4.51 (DICOM with
+	// embedded JPEG Extended) - application/dicom;
+	// transfer-syntax=1.2.840.10008.1.2.4.57 (DICOM with embedded JPEG Lossless) -
+	// application/dicom; transfer-syntax=1.2.840.10008.1.2.4.70 (DICOM with
+	// embedded JPEG Lossless First-Order Prediction) - application/dicom;
+	// transfer-syntax=1.2.840.10008.1.2.4.80 (DICOM with embedded JPEG-LS
+	// Lossless) - application/dicom; transfer-syntax=1.2.840.10008.1.2.4.81 (DICOM
+	// with embedded JPEG-LS Lossy (Near-Lossless)) - application/dicom;
 	// transfer-syntax=1.2.840.10008.1.2.4.90 (DICOM with embedded JPEG 2000
 	// Lossless Only) - application/dicom; transfer-syntax=1.2.840.10008.1.2.4.91
-	// (DICOM with embedded JPEG 2000)h - application/dicom; transfer-syntax=*
-	// (DICOM with no transcoding) - application/octet-stream;
-	// transfer-syntax=1.2.840.10008.1.2.1 (raw uncompressed PixelData) -
-	// application/octet-stream; transfer-syntax=* (raw PixelData in whatever
-	// format it was uploaded in) - image/jpeg;
+	// (DICOM with embedded JPEG 2000) - application/dicom;
+	// transfer-syntax=1.2.840.10008.1.2.4.110 (DICOM with embedded JPEG XL
+	// Lossless) - application/dicom; transfer-syntax=1.2.840.10008.1.2.4.111
+	// (DICOM with embedded JPEG XL JPEG Recompression) - application/dicom;
+	// transfer-syntax=1.2.840.10008.1.2.4.112 (DICOM with embedded JPEG XL) -
+	// application/dicom; transfer-syntax=1.2.840.10008.1.2.4.201 (DICOM with
+	// embedded High-Throughput JPEG 2000 Lossless) - application/dicom;
+	// transfer-syntax=1.2.840.10008.1.2.4.202 (DICOM with embedded High-Throughput
+	// JPEG 2000 with RPCL Options Lossless) - application/dicom;
+	// transfer-syntax=1.2.840.10008.1.2.4.203 (DICOM with embedded High-Throughput
+	// JPEG 2000) - application/dicom; transfer-syntax=1.2.840.10008.1.2.5 (DICOM
+	// with embedded RLE Lossless) - application/dicom;
+	// transfer-syntax=1.2.840.10008.1.2.8.1 (DICOM with embedded Deflated Image
+	// Frame Compression) - application/dicom; transfer-syntax=* (DICOM with no
+	// transcoding) - application/octet-stream; transfer-syntax=1.2.840.10008.1.2.1
+	// (raw uncompressed PixelData) - application/octet-stream; transfer-syntax=*
+	// (raw PixelData in whatever format it was uploaded in) - image/jpeg;
 	// transfer-syntax=1.2.840.10008.1.2.4.50 (Consumer JPEG) - image/png The
 	// following extensions are used for output files: - application/dicom -> .dcm
 	// - image/jpeg -> .jpg - image/png -> .png - application/octet-stream -> no
@@ -7440,7 +7506,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
@@ -18079,6 +18149,116 @@ func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall) doRequest(alt s
 func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
+}
+
+type ProjectsLocationsDatasetsFhirStoresBulkDeleteCall struct {
+	s                          *Service
+	name                       string
+	bulkdeleteresourcesrequest *BulkDeleteResourcesRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// BulkDelete: Bulk deletes the FHIR resources from the given FHIR store. This
+// method returns an Operation that can be used to track the progress of the
+// deletion by calling GetOperation. The success and secondary_success counters
+// correspond to the deleted current version and historical versions,
+// respectively.
+//
+//   - name: The name of the FHIR store to bulk delete resources from, in the
+//     format of
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirSt
+//     ores/{fhir_store_id}`.
+func (r *ProjectsLocationsDatasetsFhirStoresService) BulkDelete(name string, bulkdeleteresourcesrequest *BulkDeleteResourcesRequest) *ProjectsLocationsDatasetsFhirStoresBulkDeleteCall {
+	c := &ProjectsLocationsDatasetsFhirStoresBulkDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.bulkdeleteresourcesrequest = bulkdeleteresourcesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresBulkDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkDeleteCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresBulkDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresBulkDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.bulkdeleteresourcesrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:bulkDelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.bulkDelete", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.bulkDelete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.bulkDelete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsDatasetsFhirStoresConfigureSearchCall struct {

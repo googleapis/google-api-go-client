@@ -2622,6 +2622,30 @@ func (s NetworkInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// NgfwPacketInspectionInfo: For display only. Metadata associated with a layer
+// 7 packet inspection by the firewall.
+type NgfwPacketInspectionInfo struct {
+	// SecurityProfileGroupUri: URI of the security profile group associated with
+	// this firewall packet inspection.
+	SecurityProfileGroupUri string `json:"securityProfileGroupUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SecurityProfileGroupUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SecurityProfileGroupUri") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NgfwPacketInspectionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod NgfwPacketInspectionInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is the
 // result of a network API call.
 type Operation struct {
@@ -3458,6 +3482,9 @@ type Step struct {
 	Nat *NatInfo `json:"nat,omitempty"`
 	// Network: Display information of a Google Cloud network.
 	Network *NetworkInfo `json:"network,omitempty"`
+	// NgfwPacketInspection: Display information of a layer 7 packet inspection by
+	// the firewall.
+	NgfwPacketInspection *NgfwPacketInspectionInfo `json:"ngfwPacketInspection,omitempty"`
 	// ProjectId: Project ID that contains the configuration this step is
 	// validating.
 	ProjectId string `json:"projectId,omitempty"`
@@ -3552,6 +3579,8 @@ type Step struct {
 	//   "SERVERLESS_EXTERNAL_CONNECTION" - Forwarding state: for packets
 	// originating from a serverless endpoint forwarded through public (external)
 	// connectivity.
+	//   "NGFW_PACKET_INSPECTION" - Forwarding state: Layer 7 packet inspection by
+	// the firewall endpoint based on the configured security profile group.
 	//   "NAT" - Transition state: packet header translated. The `nat` field is
 	// populated with the translation information.
 	//   "SKIP_GKE_POD_IP_MASQUERADING" - Transition state: GKE Pod IP masquerading

@@ -2161,9 +2161,9 @@ type MoveFileResponse struct {
 
 // MoveFolderRequest: `MoveFolder` request message.
 type MoveFolderRequest struct {
-	// DestinationContainingFolder: Required. The name of the Folder, TeamFolder,
-	// or root location to move the Folder to. Can be in the format of: - "" to
-	// move into the root User folder - `projects/*/locations/*/folders/*` -
+	// DestinationContainingFolder: Optional. The name of the Folder, TeamFolder,
+	// or root location to move the Folder to. Can be in the format of: "" to move
+	// into the root User folder, `projects/*/locations/*/folders/*`,
 	// `projects/*/locations/*/teamFolders/*`
 	DestinationContainingFolder string `json:"destinationContainingFolder,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
@@ -2186,9 +2186,9 @@ func (s MoveFolderRequest) MarshalJSON() ([]byte, error) {
 
 // MoveRepositoryRequest: `MoveRepository` request message.
 type MoveRepositoryRequest struct {
-	// DestinationContainingFolder: Required. The name of the Folder, TeamFolder,
-	// or root location to move the repository to. Can be in the format of: - "" to
-	// move into the root User folder - `projects/*/locations/*/folders/*` -
+	// DestinationContainingFolder: Optional. The name of the Folder, TeamFolder,
+	// or root location to move the repository to. Can be in the format of: "" to
+	// move into the root User folder, `projects/*/locations/*/folders/*`,
 	// `projects/*/locations/*/teamFolders/*`
 	DestinationContainingFolder string `json:"destinationContainingFolder,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
@@ -2890,7 +2890,7 @@ type Relation struct {
 	// Connection: Optional. The connection specifying the credentials to be used
 	// to read and write to external storage, such as Cloud Storage. The connection
 	// can have the form `{project}.{location}.{connection_id}` or
-	// `projects/{project}/locations/{location}/connections/{connection_id}", or be
+	// `projects/{project}/locations/{location}/connections/{connection_id}`, or be
 	// set to DEFAULT.
 	Connection string `json:"connection,omitempty"`
 	// DependencyTargets: A list of actions that this action depends on.
@@ -4237,7 +4237,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

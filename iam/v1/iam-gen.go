@@ -4144,17 +4144,20 @@ type WorkloadIdentityPool struct {
 	//   "MODE_UNSPECIFIED" - State unspecified. New pools should not use this
 	// mode. Pools with an unspecified mode will operate as if they are in
 	// federation-only mode.
-	//   "FEDERATION_ONLY" - Federation-only mode. Federation-only pools can only
-	// be used for federating external workload identities into Google Cloud.
+	//   "FEDERATION_ONLY" - Federation-only mode. FEDERATION_ONLY mode pools can
+	// only be used for federating external workload identities into Google Cloud.
 	// Unless otherwise noted, no structure or format constraints are applied to
-	// workload identities in a federation-only pool, and you cannot create any
-	// resources within the pool besides providers.
-	//   "TRUST_DOMAIN" - Trust-domain mode. Trust-domain pools can be used to
-	// assign identities to Google Cloud workloads. All identities within a
-	// trust-domain pool must consist of a single namespace and individual workload
-	// identifier. The subject identifier for all identities must conform to the
-	// following format: `ns//sa/` WorkloadIdentityPoolProviders cannot be created
-	// within trust-domain pools.
+	// workload identities in a FEDERATION_ONLY mode pool, and you cannot create
+	// any resources within the pool besides providers.
+	//   "TRUST_DOMAIN" - Trust-domain mode. TRUST_DOMAIN mode pools can be used to
+	// assign identities to Google Cloud workloads. Identities within a
+	// TRUST_DOMAIN mode pool share the same root of trust.
+	// WorkloadIdentityPoolProviders cannot be created within trust-domain pools.
+	//   "SYSTEM_TRUST_DOMAIN" - SYSTEM_TRUST_DOMAIN mode pools are managed by
+	// Google Cloud services. Neither WorkloadIdentityPoolNamespaces nor
+	// WorkloadIdentityPoolProviders can be created within SYSTEM_TRUST_DOMAIN mode
+	// pools. All identities within a SYSTEM_TRUST_DOMAIN mode pool are in one of
+	// the following formats: * `spiffe:///ns//sa/` * `spiffe:///resources//`
 	Mode string `json:"mode,omitempty"`
 	// Name: Identifier. The resource name of the pool.
 	Name string `json:"name,omitempty"`

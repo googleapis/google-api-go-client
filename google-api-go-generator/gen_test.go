@@ -237,6 +237,18 @@ func TestRenameVersion(t *testing.T) {
 			version: "my_api_v1.2",
 			want:    "my_api/v1.2",
 		},
+		{
+			version: "alpha",
+			want:    "v0.alpha",
+		},
+		{
+			version: "beta",
+			want:    "v0.beta",
+		},
+		{
+			version: "preview",
+			want:    "v1.preview",
+		},
 	}
 	for _, test := range tests {
 		if got := renameVersion(test.version); got != test.want {

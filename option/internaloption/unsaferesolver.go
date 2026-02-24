@@ -21,14 +21,14 @@ type unsafeResolver struct {
 // implementation details.
 //
 // The method is experimental and subject to change without notice.
-func NewUnsafeResolver(opts ...option.ClientOption) *unsafeResolver {
+func NewUnsafeResolver(opts ...option.ClientOption) (*unsafeResolver, error) {
 	ds := new(internal.DialSettings)
 	for _, o := range opts {
 		o.Apply(ds)
 	}
 	return &unsafeResolver{
 		ds: ds,
-	}
+	}, nil
 }
 
 // ResolvedGRPCConnPoolSize provides the passed in value correspnding to the

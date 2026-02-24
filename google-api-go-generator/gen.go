@@ -467,6 +467,9 @@ func renameVersion(version string) string {
 	if version == "alpha" || version == "beta" {
 		return "v0." + version
 	}
+	if version == "preview" {
+		return "v1.preview"
+	}
 	if m := oddVersionRE.FindStringSubmatch(version); m != nil {
 		return m[1] + "/" + m[2]
 	}

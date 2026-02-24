@@ -326,6 +326,8 @@ func (s Api) MarshalJSON() ([]byte, error) {
 type Aspect struct {
 	// Kind: The type of this aspect configuration.
 	Kind string `json:"kind,omitempty"`
+	// Rules: Optional. Rules of the Configuration.
+	Rules []*AspectRule `json:"rules,omitempty"`
 	// Spec: Content of the configuration. The underlying schema should be defined
 	// by Aspect owners as protobuf message under `google/api/configaspects/proto`.
 	Spec googleapi.RawMessage `json:"spec,omitempty"`
@@ -344,6 +346,33 @@ type Aspect struct {
 
 func (s Aspect) MarshalJSON() ([]byte, error) {
 	type NoMethod Aspect
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AspectRule: Rule-based configuration for an aspect.
+type AspectRule struct {
+	// Config: Required. Rules of the configuration. The underlying schema should
+	// be defined by Aspect owners as protobuf message under
+	// `google/api/configaspects/proto`.
+	Config googleapi.RawMessage `json:"config,omitempty"`
+	// Selector: Required. Selects the RPC methods to which this rule applies.
+	// Refer to selector for syntax details.
+	Selector string `json:"selector,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Config") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Config") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AspectRule) MarshalJSON() ([]byte, error) {
+	type NoMethod AspectRule
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

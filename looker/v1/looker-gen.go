@@ -553,9 +553,6 @@ func (s ImportInstanceRequest) MarshalJSON() ([]byte, error) {
 type Instance struct {
 	// AdminSettings: Looker Instance Admin settings.
 	AdminSettings *AdminSettings `json:"adminSettings,omitempty"`
-	// CatalogIntegrationEnabled: Optional. Indicates whether catalog integration
-	// is enabled for the Looker instance.
-	CatalogIntegrationEnabled bool `json:"catalogIntegrationEnabled,omitempty"`
 	// ClassType: Optional. Storage class of the instance.
 	//
 	// Possible values:
@@ -650,17 +647,6 @@ type Instance struct {
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
-	// SoftDeleteReason: Output only. The reason for the instance being in a
-	// soft-deleted state.
-	//
-	// Possible values:
-	//   "SOFT_DELETE_REASON_UNSPECIFIED" - Soft delete reason is unspecified. This
-	// is the default value.
-	//   "BILLING_ACCOUNT_ISSUE" - Instance is soft deleted due to billing account
-	// issues.
-	//   "TRIAL_EXPIRED" - Instance is soft deleted due to trial expiration.
-	//   "CUSTOMER_REQUEST" - Instance is soft deleted by the customer.
-	SoftDeleteReason string `json:"softDeleteReason,omitempty"`
 	// State: Output only. The state of the instance.
 	//
 	// Possible values:
@@ -674,9 +660,6 @@ type Instance struct {
 	//   "EXPORTING" - Instance is being exported.
 	//   "IMPORTING" - Instance is importing data.
 	State string `json:"state,omitempty"`
-	// SuspendedTime: Output only. The time when the Looker instance was suspended
-	// (soft deleted).
-	SuspendedTime string `json:"suspendedTime,omitempty"`
 	// UpdateTime: Output only. The time when the Looker instance was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// UserMetadata: Optional. User metadata.
@@ -974,6 +957,10 @@ type OAuthConfig struct {
 	// ClientSecret: Input only. Client secret from an external OAuth application.
 	// This is an input-only field, and thus will not be set in any responses.
 	ClientSecret string `json:"clientSecret,omitempty"`
+	// SharedOauthClientEnabled: Optional. Whether to use the shared OAuth client.
+	// Instances specifying this field do not need to provide client_id and
+	// client_secret.
+	SharedOauthClientEnabled bool `json:"sharedOauthClientEnabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClientId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1280,10 +1267,6 @@ func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UndeleteInstanceRequest: Request options for undeleting an instance.
-type UndeleteInstanceRequest struct {
-}
-
 // UserMetadata: Metadata about users for a Looker instance.
 type UserMetadata struct {
 	// AdditionalDeveloperUserCount: Optional. The number of additional developer
@@ -1431,7 +1414,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
@@ -2584,109 +2571,6 @@ func (c *ProjectsLocationsInstancesRestoreCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "looker.projects.locations.instances.restore", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsInstancesUndeleteCall struct {
-	s                       *Service
-	name                    string
-	undeleteinstancerequest *UndeleteInstanceRequest
-	urlParams_              gensupport.URLParams
-	ctx_                    context.Context
-	header_                 http.Header
-}
-
-// Undelete: Undeletes Looker instance.
-//
-// - name: Format: projects/{project}/locations/{location}/instances/{instance}.
-func (r *ProjectsLocationsInstancesService) Undelete(name string, undeleteinstancerequest *UndeleteInstanceRequest) *ProjectsLocationsInstancesUndeleteCall {
-	c := &ProjectsLocationsInstancesUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.undeleteinstancerequest = undeleteinstancerequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsInstancesUndeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesUndeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsInstancesUndeleteCall) Context(ctx context.Context) *ProjectsLocationsInstancesUndeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsInstancesUndeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsInstancesUndeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.undeleteinstancerequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:undelete")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "looker.projects.locations.instances.undelete", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "looker.projects.locations.instances.undelete" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsInstancesUndeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "looker.projects.locations.instances.undelete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

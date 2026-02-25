@@ -7469,6 +7469,8 @@ func (s VulnerabilityLocation) MarshalJSON() ([]byte, error) {
 // VulnerabilityType: VulnerabilityType provides metadata about a security
 // vulnerability.
 type VulnerabilityType struct {
+	// AdvisoryPublishTime: Time this advisory was published by the source.
+	AdvisoryPublishTime string `json:"advisoryPublishTime,omitempty"`
 	// CvssScore: The CVSS score for this Vulnerability.
 	CvssScore float64 `json:"cvssScore,omitempty"`
 	// CvssV2: The full description of the CVSS for version 2.
@@ -7497,15 +7499,15 @@ type VulnerabilityType struct {
 	//   "HIGH" - High Impact
 	//   "CRITICAL" - Critical Impact
 	Severity string `json:"severity,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CvssScore") to
+	// ForceSendFields is a list of field names (e.g. "AdvisoryPublishTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CvssScore") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdvisoryPublishTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

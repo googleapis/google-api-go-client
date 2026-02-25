@@ -1026,6 +1026,8 @@ type BootDiskDefaults struct {
 	// disks that balance performance and cost.
 	//   "COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED" - Hyperdisk balanced disk
 	// type.
+	//   "COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED_HIGH_AVAILABILITY" -
+	// Hyperdisk balanced high availability disk type.
 	DiskType string `json:"diskType,omitempty"`
 	// Encryption: Optional. The encryption to apply to the boot disk.
 	Encryption *Encryption `json:"encryption,omitempty"`
@@ -1212,6 +1214,8 @@ type ComputeEngineDisk struct {
 	// disks that balance performance and cost.
 	//   "COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED" - Hyperdisk balanced disk
 	// type.
+	//   "COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED_HIGH_AVAILABILITY" -
+	// Hyperdisk balanced high availability disk type.
 	DiskType string `json:"diskType,omitempty"`
 	// ReplicaZones: Optional. Replication zones of the regional disk. Should be of
 	// the form: projects/{target-project}/locations/{replica-zone} Currently only
@@ -1349,6 +1353,8 @@ type ComputeEngineTargetDefaults struct {
 	// disks that balance performance and cost.
 	//   "COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED" - Hyperdisk balanced disk
 	// type.
+	//   "COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED_HIGH_AVAILABILITY" -
+	// Hyperdisk balanced high availability disk type.
 	DiskType string `json:"diskType,omitempty"`
 	// EnableIntegrityMonitoring: Optional. Defines whether the instance has
 	// integrity monitoring enabled. This can be set to true only if the VM boot
@@ -1469,6 +1475,8 @@ type ComputeEngineTargetDetails struct {
 	// disks that balance performance and cost.
 	//   "COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED" - Hyperdisk balanced disk
 	// type.
+	//   "COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED_HIGH_AVAILABILITY" -
+	// Hyperdisk balanced high availability disk type.
 	DiskType string `json:"diskType,omitempty"`
 	// EnableIntegrityMonitoring: Optional. Defines whether the instance has
 	// integrity monitoring enabled.
@@ -3625,6 +3633,8 @@ type PersistentDiskDefaults struct {
 	// disks that balance performance and cost.
 	//   "COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED" - Hyperdisk balanced disk
 	// type.
+	//   "COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED_HIGH_AVAILABILITY" -
+	// Hyperdisk balanced high availability disk type.
 	DiskType string `json:"diskType,omitempty"`
 	// Encryption: Optional. The encryption to apply to the disk.
 	Encryption *Encryption `json:"encryption,omitempty"`

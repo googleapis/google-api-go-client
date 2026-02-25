@@ -318,6 +318,51 @@ type VitalsStuckbackgroundwakelockrateService struct {
 	s *Service
 }
 
+// ApiservingMcpMcpToolDataHandlingProfile: Profile describing the data
+// handling characteristics of an MCP tool. When used within the McpTool.meta
+// field, this message should be packed into a google.protobuf.Any and
+// associated with the key: "google.com/tool.profiles/data_handling"
+type ApiservingMcpMcpToolDataHandlingProfile struct {
+	// InputDataAccessLevel: // The data access level of the tool's inputs.
+	//
+	// Possible values:
+	//   "DATA_ACCESS_LEVEL_UNSPECIFIED" - The default value. This value is unused.
+	//   "DATA_ACCESS_LEVEL_PUBLIC" - Public data.
+	//   "DATA_ACCESS_LEVEL_CONFIDENTIAL" - Confidential data.
+	//   "DATA_ACCESS_LEVEL_NEED_TO_KNOW" - Need-to-know data.
+	//   "DATA_ACCESS_LEVEL_PII" - Personally Identifiable Information (PII) data.
+	//   "DATA_ACCESS_LEVEL_USER" - User data.
+	//   "DATA_ACCESS_LEVEL_NO_DATA_ACCESS" - The tool does not access any data.
+	InputDataAccessLevel string `json:"inputDataAccessLevel,omitempty"`
+	// OutputDataAccessLevel: The data access level of the tool's outputs.
+	//
+	// Possible values:
+	//   "DATA_ACCESS_LEVEL_UNSPECIFIED" - The default value. This value is unused.
+	//   "DATA_ACCESS_LEVEL_PUBLIC" - Public data.
+	//   "DATA_ACCESS_LEVEL_CONFIDENTIAL" - Confidential data.
+	//   "DATA_ACCESS_LEVEL_NEED_TO_KNOW" - Need-to-know data.
+	//   "DATA_ACCESS_LEVEL_PII" - Personally Identifiable Information (PII) data.
+	//   "DATA_ACCESS_LEVEL_USER" - User data.
+	//   "DATA_ACCESS_LEVEL_NO_DATA_ACCESS" - The tool does not access any data.
+	OutputDataAccessLevel string `json:"outputDataAccessLevel,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InputDataAccessLevel") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InputDataAccessLevel") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ApiservingMcpMcpToolDataHandlingProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod ApiservingMcpMcpToolDataHandlingProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePlayDeveloperReportingV1beta1Anomaly: Represents an anomaly detected
 // in a dataset. Our anomaly detection systems flag datapoints in a time series
 // that fall outside of and expected range derived from historical data.

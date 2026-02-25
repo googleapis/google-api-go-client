@@ -1975,6 +1975,8 @@ type GoogleCloudAiplatformV1beta1GroundingChunkMaps struct {
 	// PlaceId: This Place's resource name, in `places/{place_id}` format. This can
 	// be used to look up the place in the Google Maps API.
 	PlaceId string `json:"placeId,omitempty"`
+	// Route: Output only. Route information.
+	Route *GoogleCloudAiplatformV1beta1GroundingChunkMapsRoute `json:"route,omitempty"`
 	// Text: The text of the place answer.
 	Text string `json:"text,omitempty"`
 	// Title: The title of the place.
@@ -2048,6 +2050,34 @@ type GoogleCloudAiplatformV1beta1GroundingChunkMapsPlaceAnswerSourcesReviewSnipp
 
 func (s GoogleCloudAiplatformV1beta1GroundingChunkMapsPlaceAnswerSourcesReviewSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1GroundingChunkMapsPlaceAnswerSourcesReviewSnippet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1GroundingChunkMapsRoute: Route information from
+// Google Maps.
+type GoogleCloudAiplatformV1beta1GroundingChunkMapsRoute struct {
+	// DistanceMeters: The total distance of the route, in meters.
+	DistanceMeters int64 `json:"distanceMeters,omitempty"`
+	// Duration: The total duration of the route.
+	Duration string `json:"duration,omitempty"`
+	// EncodedPolyline: An encoded polyline of the route. See
+	// https://developers.google.com/maps/documentation/utilities/polylinealgorithm
+	EncodedPolyline string `json:"encodedPolyline,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DistanceMeters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DistanceMeters") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1GroundingChunkMapsRoute) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1GroundingChunkMapsRoute
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2201,7 +2231,7 @@ func (s GoogleCloudAiplatformV1beta1GroundingMetadataSourceFlaggingUri) MarshalJ
 }
 
 // GoogleCloudAiplatformV1beta1GroundingSupport: A collection of supporting
-// references for a segment of the model's response.
+// references for a segment or part of the model's response.
 type GoogleCloudAiplatformV1beta1GroundingSupport struct {
 	// ConfidenceScores: The confidence scores for the support references. This
 	// list is parallel to the `grounding_chunk_indices` list. A score is a value

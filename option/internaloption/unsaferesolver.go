@@ -5,8 +5,6 @@
 package internaloption
 
 import (
-	"errors"
-
 	"google.golang.org/api/internal"
 	"google.golang.org/api/option"
 )
@@ -49,12 +47,4 @@ func (ur *unsafeResolver) ResolvedGRPCEndpoint() (string, error) {
 // WithGRPCConn option.
 func (ur *unsafeResolver) ResolvedGRPCConnIsCustom() bool {
 	return ur.ds.GRPCConn != nil
-}
-
-// ProbeDirectPathConfiguration attempts to identify if the passed in options
-// are expected to yield result in a client that can communicate over direct
-// path.  It will return an error with more details about possible causes that
-// prevent direct path from being used, or nil if no issues were identified.
-func (ur *unsafeResolver) ProbeDirectPathConfiguration() error {
-	return errors.New("unimplemented")
 }

@@ -444,6 +444,8 @@ type MerchantReviewDestinationStatus struct {
 	// ads](https://support.google.com/merchants/answer/11544533).
 	//   "FREE_LISTINGS" - [Free product
 	// listings](https://support.google.com/merchants/answer/9199328).
+	//   "FREE_LISTINGS_UCP_CHECKOUT" - [Free product listings on UCP
+	// checkout](https://developers.google.com/merchant/ucp).
 	//   "FREE_LOCAL_LISTINGS" - [Free local product
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
@@ -517,6 +519,8 @@ type MerchantReviewItemLevelIssue struct {
 	// ads](https://support.google.com/merchants/answer/11544533).
 	//   "FREE_LISTINGS" - [Free product
 	// listings](https://support.google.com/merchants/answer/9199328).
+	//   "FREE_LISTINGS_UCP_CHECKOUT" - [Free product listings on UCP
+	// checkout](https://developers.google.com/merchant/ucp).
 	//   "FREE_LOCAL_LISTINGS" - [Free local product
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
@@ -638,6 +642,8 @@ type ProductChange struct {
 	// ads](https://support.google.com/merchants/answer/11544533).
 	//   "FREE_LISTINGS" - [Free product
 	// listings](https://support.google.com/merchants/answer/9199328).
+	//   "FREE_LISTINGS_UCP_CHECKOUT" - [Free product listings on UCP
+	// checkout](https://developers.google.com/merchant/ucp).
 	//   "FREE_LOCAL_LISTINGS" - [Free local product
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
@@ -877,6 +883,8 @@ type ProductReviewDestinationStatus struct {
 	// ads](https://support.google.com/merchants/answer/11544533).
 	//   "FREE_LISTINGS" - [Free product
 	// listings](https://support.google.com/merchants/answer/9199328).
+	//   "FREE_LISTINGS_UCP_CHECKOUT" - [Free product listings on UCP
+	// checkout](https://developers.google.com/merchant/ucp).
 	//   "FREE_LOCAL_LISTINGS" - [Free local product
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
@@ -950,6 +958,8 @@ type ProductReviewItemLevelIssue struct {
 	// ads](https://support.google.com/merchants/answer/11544533).
 	//   "FREE_LISTINGS" - [Free product
 	// listings](https://support.google.com/merchants/answer/9199328).
+	//   "FREE_LISTINGS_UCP_CHECKOUT" - [Free product listings on UCP
+	// checkout](https://developers.google.com/merchant/ucp).
 	//   "FREE_LOCAL_LISTINGS" - [Free local product
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle

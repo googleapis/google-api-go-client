@@ -697,7 +697,8 @@ func (s CustomAttribute) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DestinationStatus: The destination status of the product status.
+// DestinationStatus: The destination status of the product status. Equivalent
+// to `StatusPerReportingContext` in Reports API.
 type DestinationStatus struct {
 	// ApprovedCountries: List of country codes (ISO 3166-1 alpha-2) where the
 	// offer is approved.
@@ -730,6 +731,8 @@ type DestinationStatus struct {
 	// ads](https://support.google.com/merchants/answer/11544533).
 	//   "FREE_LISTINGS" - [Free product
 	// listings](https://support.google.com/merchants/answer/9199328).
+	//   "FREE_LISTINGS_UCP_CHECKOUT" - [Free product listings on UCP
+	// checkout](https://developers.google.com/merchant/ucp).
 	//   "FREE_LOCAL_LISTINGS" - [Free local product
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
@@ -901,6 +904,8 @@ type ItemLevelIssue struct {
 	// ads](https://support.google.com/merchants/answer/11544533).
 	//   "FREE_LISTINGS" - [Free product
 	// listings](https://support.google.com/merchants/answer/9199328).
+	//   "FREE_LISTINGS_UCP_CHECKOUT" - [Free product listings on UCP
+	// checkout](https://developers.google.com/merchant/ucp).
 	//   "FREE_LOCAL_LISTINGS" - [Free local product
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
@@ -1222,6 +1227,8 @@ type ProductChange struct {
 	// ads](https://support.google.com/merchants/answer/11544533).
 	//   "FREE_LISTINGS" - [Free product
 	// listings](https://support.google.com/merchants/answer/9199328).
+	//   "FREE_LISTINGS_UCP_CHECKOUT" - [Free product listings on UCP
+	// checkout](https://developers.google.com/merchant/ucp).
 	//   "FREE_LOCAL_LISTINGS" - [Free local product
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle

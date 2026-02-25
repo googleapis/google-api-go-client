@@ -34,6 +34,11 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	composerService, err := composer.NewService(ctx, option.WithScopes(composer.CloudcomposerScope))
+//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -101,12 +106,17 @@ const (
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// See, edit, configure, and delete your Google Cloud Composer data and see the
+	// email address for your Google Account
+	CloudcomposerScope = "https://www.googleapis.com/auth/cloudcomposer"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
+		"https://www.googleapis.com/auth/cloudcomposer",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -1843,6 +1853,15 @@ type PrivateEnvironmentConfig struct {
 	// NetworkingConfig: Optional. Configuration for the network connections
 	// configuration in the environment.
 	NetworkingConfig *NetworkingConfig `json:"networkingConfig,omitempty"`
+	// NetworkingType: Optional. Networking type for the environment, either
+	// private or public.
+	//
+	// Possible values:
+	//   "NETWORKING_TYPE_UNSPECIFIED" - Default networking type.
+	//   "PRIVATE" - Private IP Cloud Composer environment with no access to the
+	// internet.
+	//   "PUBLIC" - Cloud Composer environment with access to the internet.
+	NetworkingType string `json:"networkingType,omitempty"`
 	// PrivateClusterConfig: Optional. Configuration for the private GKE cluster
 	// for a Private IP Cloud Composer environment.
 	PrivateClusterConfig *PrivateClusterConfig `json:"privateClusterConfig,omitempty"`

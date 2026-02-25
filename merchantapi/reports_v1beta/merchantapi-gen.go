@@ -761,6 +761,8 @@ type IssueSeverityPerReportingContext struct {
 	// ads](https://support.google.com/merchants/answer/11544533).
 	//   "FREE_LISTINGS" - [Free product
 	// listings](https://support.google.com/merchants/answer/9199328).
+	//   "FREE_LISTINGS_UCP_CHECKOUT" - [Free product listings on UCP
+	// checkout](https://developers.google.com/merchant/ucp).
 	//   "FREE_LOCAL_LISTINGS" - [Free local product
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
@@ -834,7 +836,10 @@ func (s ItemIssue) MarshalJSON() ([]byte, error) {
 // ItemIssueSeverity: How the issue affects the serving of the product.
 type ItemIssueSeverity struct {
 	// AggregatedSeverity: Aggregated severity of the issue for all reporting
-	// contexts it affects. **This field can be used for filtering the results.**
+	// contexts it affects. Reporting contexts included in the computation of the
+	// aggregated severity can be restricted using a filter on the
+	// `reporting_context` field. **This field can be used for filtering the
+	// results.**
 	//
 	// Possible values:
 	//   "AGGREGATED_ISSUE_SEVERITY_UNSPECIFIED" - Not specified.
@@ -844,7 +849,9 @@ type ItemIssueSeverity struct {
 	// affects.
 	//   "PENDING" - Issue resolution is `PENDING_PROCESSING`.
 	AggregatedSeverity string `json:"aggregatedSeverity,omitempty"`
-	// SeverityPerReportingContext: Issue severity per reporting context.
+	// SeverityPerReportingContext: Issue severity per reporting context. Reporting
+	// contexts included in this list can be restricted using a filter on the
+	// `reporting_context` field.
 	SeverityPerReportingContext []*IssueSeverityPerReportingContext `json:"severityPerReportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AggregatedSeverity") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1190,6 +1197,8 @@ type ProductChange struct {
 	// ads](https://support.google.com/merchants/answer/11544533).
 	//   "FREE_LISTINGS" - [Free product
 	// listings](https://support.google.com/merchants/answer/9199328).
+	//   "FREE_LISTINGS_UCP_CHECKOUT" - [Free product listings on UCP
+	// checkout](https://developers.google.com/merchant/ucp).
 	//   "FREE_LOCAL_LISTINGS" - [Free local product
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
@@ -1421,15 +1430,19 @@ func (s ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
 }
 
 // ProductView: Fields available for query in `product_view` table. Products in
-// the current inventory. Products in this table are the same as in Products
-// sub-API but not all product attributes from Products sub-API are available
-// for query in this table. In contrast to Products sub-API, this table allows
-// to filter the returned list of products by product attributes. To retrieve a
-// single product by `id` or list all products, Products sub-API should be
-// used. Values are only set for fields requested explicitly in the request's
-// search query.
+// the current inventory. Products in this table are the same as a Product
+// resource in Products sub-API
+// (https://developers.google.com/merchant/api/reference/rest/products_v1/accounts.products)
+// but not all product attributes from Products sub-API are available for query
+// in this table. In contrast to Products sub-API, this table allows to filter
+// the returned list of products by product attributes. To retrieve a single
+// product by `id` or list all products, Products sub-API should be used.
+// Values are only set for fields requested explicitly in the request's search
+// query.
 type ProductView struct {
-	// AggregatedReportingContextStatus: Aggregated status.
+	// AggregatedReportingContextStatus: Aggregated status across all reporting
+	// contexts. Reporting contexts included in the computation of the aggregated
+	// status can be restricted using a filter on the `reporting_context` field.
 	//
 	// Possible values:
 	//   "AGGREGATED_REPORTING_CONTEXT_STATUS_UNSPECIFIED" - Not specified.
@@ -1531,10 +1544,62 @@ type ProductView struct {
 	// ProductTypeL5: Product type (5th level) in merchant's own product taxonomy
 	// (https://support.google.com/merchants/answer/6324406).
 	ProductTypeL5 string `json:"productTypeL5,omitempty"`
+	// ReportingContext: Reporting context to restrict the query to. Restricts the
+	// reporting contexts returned in `status_per_reporting_context` and
+	// `item_issues`, and used to compute `aggregated_reporting_context_status`.
+	// **This field can only be used in the `WHERE` clause and cannot be selected
+	// in the `SELECT` clause.**
+	//
+	// Possible values:
+	//   "REPORTING_CONTEXT_ENUM_UNSPECIFIED" - Not specified.
+	//   "SHOPPING_ADS" - [Shopping
+	// ads](https://support.google.com/merchants/answer/6149970).
+	//   "DISCOVERY_ADS" - Deprecated: Use `DEMAND_GEN_ADS` instead. [Discovery and
+	// Demand Gen ads](https://support.google.com/merchants/answer/13389785).
+	//   "DEMAND_GEN_ADS" - [Demand Gen
+	// ads](https://support.google.com/merchants/answer/13389785).
+	//   "DEMAND_GEN_ADS_DISCOVER_SURFACE" - [Demand Gen ads on Discover
+	// surface](https://support.google.com/merchants/answer/13389785).
+	//   "VIDEO_ADS" - [Video
+	// ads](https://support.google.com/google-ads/answer/6340491).
+	//   "DISPLAY_ADS" - [Display
+	// ads](https://support.google.com/merchants/answer/6069387).
+	//   "LOCAL_INVENTORY_ADS" - [Local inventory
+	// ads](https://support.google.com/merchants/answer/3271956).
+	//   "VEHICLE_INVENTORY_ADS" - [Vehicle inventory
+	// ads](https://support.google.com/merchants/answer/11544533).
+	//   "FREE_LISTINGS" - [Free product
+	// listings](https://support.google.com/merchants/answer/9199328).
+	//   "FREE_LISTINGS_UCP_CHECKOUT" - [Free product listings on UCP
+	// checkout](https://developers.google.com/merchant/ucp).
+	//   "FREE_LOCAL_LISTINGS" - [Free local product
+	// listings](https://support.google.com/merchants/answer/9825611).
+	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
+	// listings](https://support.google.com/merchants/answer/11544533).
+	//   "YOUTUBE_AFFILIATE" - [Youtube
+	// Affiliate](https://support.google.com/youtube/answer/13376398).
+	//   "YOUTUBE_SHOPPING" - [YouTube
+	// Shopping](https://support.google.com/merchants/answer/13478370).
+	//   "CLOUD_RETAIL" - [Cloud
+	// retail](https://cloud.google.com/solutions/retail).
+	//   "LOCAL_CLOUD_RETAIL" - [Local cloud
+	// retail](https://cloud.google.com/solutions/retail).
+	//   "PRODUCT_REVIEWS" - [Product
+	// Reviews](https://support.google.com/merchants/answer/14620732).
+	//   "MERCHANT_REVIEWS" - [Merchant
+	// Reviews](https://developers.google.com/merchant-review-feeds).
+	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	ReportingContext string `json:"reportingContext,omitempty"`
 	// ShippingLabel: Normalized shipping label
 	// (https://support.google.com/merchants/answer/6324504) specified in the data
 	// source.
 	ShippingLabel string `json:"shippingLabel,omitempty"`
+	// StatusPerReportingContext: Detailed product status per reporting context.
+	// Reporting contexts included in this list can be restricted using a filter on
+	// the `reporting_context` field. Equivalent to
+	// `ProductStatus.destination_statuses` in Products API. **This field cannot be
+	// used for sorting or filtering the results.**
+	StatusPerReportingContext []*StatusPerReportingContext `json:"statusPerReportingContext,omitempty"`
 	// ThumbnailLink: Link to the processed image of the product, hosted on the
 	// Google infrastructure.
 	ThumbnailLink string `json:"thumbnailLink,omitempty"`
@@ -1615,7 +1680,7 @@ func (s ReportRow) MarshalJSON() ([]byte, error) {
 // SearchRequest: Request message for the `ReportService.Search` method.
 type SearchRequest struct {
 	// PageSize: Optional. Number of `ReportRows` to retrieve in a single page.
-	// Defaults to 1000. Values above 5000 are coerced to 5000.
+	// Defaults to 1000. Values above 100,000 are coerced to 100,000.
 	PageSize int64 `json:"pageSize,omitempty"`
 	// PageToken: Optional. Token of the page to retrieve. If not specified, the
 	// first page of results is returned. In order to request the next page of
@@ -1625,8 +1690,7 @@ type SearchRequest struct {
 	// Query: Required. Query that defines a report to be retrieved. For details on
 	// how to construct your query, see the Query Language guide
 	// (/merchant/api/guides/reports/query-language). For the full list of
-	// available tables and fields, see the Available fields
-	// (/merchant/api/reference/rest/reports_{api_version}/accounts.reports).
+	// available tables and fields, see the Available fields.
 	Query string `json:"query,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PageSize") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1671,6 +1735,82 @@ type SearchResponse struct {
 
 func (s SearchResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StatusPerReportingContext: Status of the product for a specific reporting
+// context. Equivalent to `DestinationStatus` in Products API.
+type StatusPerReportingContext struct {
+	// ApprovedCountries: List of approved countries in the reporting context,
+	// represented in ISO 3166 (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+	// format, for example, `US`.
+	ApprovedCountries []string `json:"approvedCountries,omitempty"`
+	// DisapprovedCountries: List of disapproved countries in the reporting
+	// context, represented in ISO 3166
+	// (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format, for example,
+	// `US`.
+	DisapprovedCountries []string `json:"disapprovedCountries,omitempty"`
+	// PendingCountries: List of pending countries in the reporting context,
+	// represented in ISO 3166 (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+	// format, for example, `US`.
+	PendingCountries []string `json:"pendingCountries,omitempty"`
+	// ReportingContext: Reporting context the status applies to.
+	//
+	// Possible values:
+	//   "REPORTING_CONTEXT_ENUM_UNSPECIFIED" - Not specified.
+	//   "SHOPPING_ADS" - [Shopping
+	// ads](https://support.google.com/merchants/answer/6149970).
+	//   "DISCOVERY_ADS" - Deprecated: Use `DEMAND_GEN_ADS` instead. [Discovery and
+	// Demand Gen ads](https://support.google.com/merchants/answer/13389785).
+	//   "DEMAND_GEN_ADS" - [Demand Gen
+	// ads](https://support.google.com/merchants/answer/13389785).
+	//   "DEMAND_GEN_ADS_DISCOVER_SURFACE" - [Demand Gen ads on Discover
+	// surface](https://support.google.com/merchants/answer/13389785).
+	//   "VIDEO_ADS" - [Video
+	// ads](https://support.google.com/google-ads/answer/6340491).
+	//   "DISPLAY_ADS" - [Display
+	// ads](https://support.google.com/merchants/answer/6069387).
+	//   "LOCAL_INVENTORY_ADS" - [Local inventory
+	// ads](https://support.google.com/merchants/answer/3271956).
+	//   "VEHICLE_INVENTORY_ADS" - [Vehicle inventory
+	// ads](https://support.google.com/merchants/answer/11544533).
+	//   "FREE_LISTINGS" - [Free product
+	// listings](https://support.google.com/merchants/answer/9199328).
+	//   "FREE_LISTINGS_UCP_CHECKOUT" - [Free product listings on UCP
+	// checkout](https://developers.google.com/merchant/ucp).
+	//   "FREE_LOCAL_LISTINGS" - [Free local product
+	// listings](https://support.google.com/merchants/answer/9825611).
+	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
+	// listings](https://support.google.com/merchants/answer/11544533).
+	//   "YOUTUBE_AFFILIATE" - [Youtube
+	// Affiliate](https://support.google.com/youtube/answer/13376398).
+	//   "YOUTUBE_SHOPPING" - [YouTube
+	// Shopping](https://support.google.com/merchants/answer/13478370).
+	//   "CLOUD_RETAIL" - [Cloud
+	// retail](https://cloud.google.com/solutions/retail).
+	//   "LOCAL_CLOUD_RETAIL" - [Local cloud
+	// retail](https://cloud.google.com/solutions/retail).
+	//   "PRODUCT_REVIEWS" - [Product
+	// Reviews](https://support.google.com/merchants/answer/14620732).
+	//   "MERCHANT_REVIEWS" - [Merchant
+	// Reviews](https://developers.google.com/merchant-review-feeds).
+	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	ReportingContext string `json:"reportingContext,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApprovedCountries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApprovedCountries") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StatusPerReportingContext) MarshalJSON() ([]byte, error) {
+	type NoMethod StatusPerReportingContext
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

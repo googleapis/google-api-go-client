@@ -1,5 +1,17 @@
 # Changes
 
+## [0.269.0](https://github.com/googleapis/google-api-go-client/compare/v0.268.0...v0.269.0) (2026-02-24)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#3512](https://github.com/googleapis/google-api-go-client/issues/3512)) ([7565f1c](https://github.com/googleapis/google-api-go-client/commit/7565f1ce32823b000e15c99cee73abe69b956a80))
+
+
+### Bug Fixes
+
+* **generator:** Handle preview version pkg name ([#3511](https://github.com/googleapis/google-api-go-client/issues/3511)) ([2a249ce](https://github.com/googleapis/google-api-go-client/commit/2a249ce376787bdfb5b9a71198e7e2458d471b54))
+
 ## [0.268.0](https://github.com/googleapis/google-api-go-client/compare/v0.267.0...v0.268.0) (2026-02-23)
 
 

@@ -1527,8 +1527,8 @@ type MediationGroupTargeting struct {
 	// ExcludedRegionCodes: The Unicode country/region code (CLDR) of a location,
 	// such as "US". Unset if this mediation group does not exclude any region.
 	ExcludedRegionCodes []string `json:"excludedRegionCodes,omitempty"`
-	// Format: Ad format targeted by this mediation group. Examples: "banner",
-	// "native".
+	// Format: Ad format targeted by this mediation group. Examples: "BANNER",
+	// "NATIVE".
 	Format string `json:"format,omitempty"`
 	// IdfaTargeting: The parameter can be used to target ad requests based on the
 	// availability of the IDFA. If set to ALL, the mediation group applies to all

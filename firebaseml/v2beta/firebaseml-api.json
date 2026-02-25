@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20260215",
+  "revision": "20260222",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -1581,6 +1581,11 @@
           "description": "This Place's resource name, in `places/{place_id}` format. This can be used to look up the place in the Google Maps API.",
           "type": "string"
         },
+        "route": {
+          "$ref": "GoogleCloudAiplatformV1beta1GroundingChunkMapsRoute",
+          "description": "Output only. Route information.",
+          "readOnly": true
+        },
         "text": {
           "description": "The text of the place answer.",
           "type": "string"
@@ -1624,6 +1629,27 @@
         },
         "title": {
           "description": "The title of the review.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1GroundingChunkMapsRoute": {
+      "description": "Route information from Google Maps.",
+      "id": "GoogleCloudAiplatformV1beta1GroundingChunkMapsRoute",
+      "properties": {
+        "distanceMeters": {
+          "description": "The total distance of the route, in meters.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "duration": {
+          "description": "The total duration of the route.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "encodedPolyline": {
+          "description": "An encoded polyline of the route. See https://developers.google.com/maps/documentation/utilities/polylinealgorithm",
           "type": "string"
         }
       },
@@ -1749,7 +1775,7 @@
       "type": "object"
     },
     "GoogleCloudAiplatformV1beta1GroundingSupport": {
-      "description": "A collection of supporting references for a segment of the model's response.",
+      "description": "A collection of supporting references for a segment or part of the model's response.",
       "id": "GoogleCloudAiplatformV1beta1GroundingSupport",
       "properties": {
         "confidenceScores": {

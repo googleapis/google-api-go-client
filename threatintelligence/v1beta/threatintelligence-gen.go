@@ -3894,7 +3894,8 @@ type ProjectsFindingsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get a finding by name.
+// Get: Get a finding by name. The `name` field should have the format:
+// `projects/{project}/findings/{finding}`
 //
 // - name: Name of the finding to get.
 func (r *ProjectsFindingsService) Get(name string) *ProjectsFindingsGetCall {
@@ -4003,7 +4004,8 @@ type ProjectsFindingsListCall struct {
 	header_      http.Header
 }
 
-// List: Get a list of findings that meet the filter criteria.
+// List: Get a list of findings that meet the filter criteria. The `parent`
+// field in ListFindingsRequest should have the format: projects/{project}
 //
 // - parent: Parent of the findings.
 func (r *ProjectsFindingsService) List(parent string) *ProjectsFindingsListCall {
@@ -4160,10 +4162,11 @@ type ProjectsFindingsSearchCall struct {
 }
 
 // Search: SearchFindings is a more powerful version of ListFindings that
-// supports complex queries like "findings for issues" using functions such as
-// `has_issue` and `has_asset` in the query string. Example to search for
-// findings for a specific issue:
-// `has_issue("name=\"vaults/vault-12345/issues/issue-12345\"")`)
+// supports complex queries like "findings for alerts" using functions such as
+// `has_alert` in the query string. The `parent` field in SearchFindingsRequest
+// should have the format: projects/{project} Example to search for findings
+// for a specific issue:
+// `has_alert("name=\"projects/gti-12345/alerts/alert-12345\"")`
 //
 // - parent: Parent of the findings. Format: vaults/{vault}.
 func (r *ProjectsFindingsService) Search(parent string) *ProjectsFindingsSearchCall {
@@ -4193,10 +4196,9 @@ func (c *ProjectsFindingsSearchCall) PageToken(pageToken string) *ProjectsFindin
 
 // Query sets the optional parameter "query": Query on what findings will be
 // returned. This supports the same filter criteria as
-// FindingService.ListFindings as well as the following relationship queries
-// `has_issue` and `has_asset`. Examples: -
-// has_issue("name=\"vaults/vault-12345/issues/issue-12345\"") -
-// has_asset("name=\"vaults/vault-12345/assets/asset-12345\"")
+// FindingService.ListFindings as well as the following relationship query
+// `has_alert`. Example: -
+// `has_alert("name=\"projects/gti-12345/alerts/alert-12345\"")`
 func (c *ProjectsFindingsSearchCall) Query(query string) *ProjectsFindingsSearchCall {
 	c.urlParams_.Set("query", query)
 	return c

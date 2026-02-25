@@ -37,6 +37,20 @@ func (ur *unsafeResolver) ResolvedGRPCConnPoolSize() int {
 	return ur.ds.GRPCConnPoolSize
 }
 
+// ResolvedGRPCEndpoint returns the resolved endpoint address used for
+// establishing gRPC connections.
+func (ur *unsafeResolver) ResolvedGRPCEndpoint() (string, error) {
+	_, addr, err := internal.GetGRPCTransportConfigAndEndpoint(ur.ds)
+	return addr, err
+}
+
+// ResolvedGRPCConnIsCustom exposes whether the provided options included
+// directives for providing a customized transport, corresponding to the
+// WithGRPCConn option.
+func (ur *unsafeResolver) ResolvedGRPCConnIsCustom() bool {
+	return ur.ds.GRPCConn != nil
+}
+
 // ProbeDirectPathConfiguration attempts to identify if the passed in options
 // are expected to yield result in a client that can communicate over direct
 // path.  It will return an error with more details about possible causes that

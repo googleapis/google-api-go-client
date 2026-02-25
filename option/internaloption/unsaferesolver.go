@@ -9,7 +9,9 @@ import (
 	"google.golang.org/api/option"
 )
 
-type unsafeResolver struct {
+// UnsafeResolver is used to introspect client options, which
+// are opaque by their nature as functional options.
+type UnsafeResolver struct {
 	ds *internal.DialSettings
 }
 
@@ -19,25 +21,25 @@ type unsafeResolver struct {
 // implementation details.
 //
 // The method is experimental and subject to change without notice.
-func NewUnsafeResolver(opts ...option.ClientOption) (*unsafeResolver, error) {
+func NewUnsafeResolver(opts ...option.ClientOption) (*UnsafeResolver, error) {
 	ds := new(internal.DialSettings)
 	for _, o := range opts {
 		o.Apply(ds)
 	}
-	return &unsafeResolver{
+	return &UnsafeResolver{
 		ds: ds,
 	}, nil
 }
 
 // ResolvedGRPCConnPoolSize provides the passed in value correspnding to the
 // WithGRPCConnectionPool option in google.golang.org/option.
-func (ur *unsafeResolver) ResolvedGRPCConnPoolSize() int {
+func (ur *UnsafeResolver) ResolvedGRPCConnPoolSize() int {
 	return ur.ds.GRPCConnPoolSize
 }
 
 // ResolvedGRPCEndpoint returns the resolved endpoint address used for
 // establishing gRPC connections.
-func (ur *unsafeResolver) ResolvedGRPCEndpoint() (string, error) {
+func (ur *UnsafeResolver) ResolvedGRPCEndpoint() (string, error) {
 	_, addr, err := internal.GetGRPCTransportConfigAndEndpoint(ur.ds)
 	return addr, err
 }
@@ -45,6 +47,6 @@ func (ur *unsafeResolver) ResolvedGRPCEndpoint() (string, error) {
 // ResolvedGRPCConnIsCustom exposes whether the provided options included
 // directives for providing a customized transport, corresponding to the
 // WithGRPCConn option.
-func (ur *unsafeResolver) ResolvedGRPCConnIsCustom() bool {
+func (ur *UnsafeResolver) ResolvedGRPCConnIsCustom() bool {
 	return ur.ds.GRPCConn != nil
 }

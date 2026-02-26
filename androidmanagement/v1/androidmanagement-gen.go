@@ -6283,10 +6283,7 @@ type Policy struct {
 	// from manually setting the date and time. If autoDateAndTimeZone is set, this
 	// field is ignored.
 	AutoTimeRequired bool `json:"autoTimeRequired,omitempty"`
-	// BlockApplicationsEnabled: Whether applications other than the ones
-	// configured in applications are blocked from being installed. When set,
-	// applications that were installed under a previous policy but no longer
-	// appear in the policy are automatically uninstalled.
+	// BlockApplicationsEnabled: This field has no effect.
 	BlockApplicationsEnabled bool `json:"blockApplicationsEnabled,omitempty"`
 	// BluetoothConfigDisabled: Whether configuring bluetooth is disabled.
 	BluetoothConfigDisabled bool `json:"bluetoothConfigDisabled,omitempty"`

@@ -1042,7 +1042,7 @@ type ApiKeyConfig struct {
 	//
 	// Possible values:
 	//   "REQUEST_LOCATION_UNSPECIFIED" - Unspecified. This value should not be
-	// unused.
+	// used.
 	//   "HEADER" - Represents the key in http header.
 	//   "QUERY_STRING" - Represents the key in query string.
 	RequestLocation string `json:"requestLocation,omitempty"`
@@ -1616,6 +1616,8 @@ type ChannelProfile struct {
 	//   "CONTACT_CENTER_AS_A_SERVICE" - Contact Center as a Service (CCaaS)
 	// channel.
 	//   "FIVE9" - Five9 channel.
+	//   "CONTACT_CENTER_INTEGRATION" - Third party contact center integration
+	// channel.
 	ChannelType string `json:"channelType,omitempty"`
 	// DisableBargeInControl: Optional. Whether to disable user barge-in control in
 	// the conversation. - **true**: User interruptions are disabled while the
@@ -1821,7 +1823,7 @@ func (s Citations) MarshalJSON() ([]byte, error) {
 
 // CitationsCitedChunk: Piece of cited information.
 type CitationsCitedChunk struct {
-	// Text: Text used for citaiton.
+	// Text: Text used for citation.
 	Text string `json:"text,omitempty"`
 	// Title: Title of the cited document.
 	Title string `json:"title,omitempty"`
@@ -3339,6 +3341,10 @@ type EvaluationMetricsThresholdsGoldenEvaluationMetricsThresholds struct {
 	// ExpectationLevelMetricsThresholds: Optional. The expectation level metrics
 	// thresholds.
 	ExpectationLevelMetricsThresholds *EvaluationMetricsThresholdsGoldenEvaluationMetricsThresholdsExpectationLevelMetricsThresholds `json:"expectationLevelMetricsThresholds,omitempty"`
+	// ToolMatchingSettings: Optional. The tool matching settings. An extra tool
+	// call is a tool call that is present in the execution but does not match any
+	// tool call in the golden expectation.
+	ToolMatchingSettings *EvaluationMetricsThresholdsToolMatchingSettings `json:"toolMatchingSettings,omitempty"`
 	// TurnLevelMetricsThresholds: Optional. The turn level metrics thresholds.
 	TurnLevelMetricsThresholds *EvaluationMetricsThresholdsGoldenEvaluationMetricsThresholdsTurnLevelMetricsThresholds `json:"turnLevelMetricsThresholds,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
@@ -3453,6 +3459,36 @@ func (s *EvaluationMetricsThresholdsGoldenEvaluationMetricsThresholdsTurnLevelMe
 	}
 	s.OverallToolInvocationCorrectnessThreshold = float64(s1.OverallToolInvocationCorrectnessThreshold)
 	return nil
+}
+
+// EvaluationMetricsThresholdsToolMatchingSettings: Settings for matching tool
+// calls.
+type EvaluationMetricsThresholdsToolMatchingSettings struct {
+	// ExtraToolCallBehavior: Optional. Behavior for extra tool calls. Defaults to
+	// FAIL.
+	//
+	// Possible values:
+	//   "EXTRA_TOOL_CALL_BEHAVIOR_UNSPECIFIED" - Unspecified behavior. Defaults to
+	// FAIL.
+	//   "FAIL" - Fail the evaluation if an extra tool call is encountered.
+	//   "ALLOW" - Allow the extra tool call.
+	ExtraToolCallBehavior string `json:"extraToolCallBehavior,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExtraToolCallBehavior") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExtraToolCallBehavior") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EvaluationMetricsThresholdsToolMatchingSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod EvaluationMetricsThresholdsToolMatchingSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EvaluationPersona: A persona represents an end user in an evaluation.
@@ -4784,6 +4820,9 @@ type ExecuteToolRequest struct {
 	// ToolsetTool: Optional. The toolset tool to execute. Only one tool should
 	// match the predicate from the toolset. Otherwise, an error will be returned.
 	ToolsetTool *ToolsetTool `json:"toolsetTool,omitempty"`
+	// Variables: Optional. The variables that are available for the tool
+	// execution.
+	Variables googleapi.RawMessage `json:"variables,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -4804,16 +4843,18 @@ func (s ExecuteToolRequest) MarshalJSON() ([]byte, error) {
 
 // ExecuteToolResponse: Response message for ToolService.ExecuteTool.
 type ExecuteToolResponse struct {
-	// Response: Required. The tool execution result in JSON object format. Use
-	// "output" key to specify tool response and "error" key to specify error
-	// details (if any). If "output" and "error" keys are not specified, then whole
-	// "response" is treated as tool execution result.
+	// Response: The tool execution result in JSON object format. Use "output" key
+	// to specify tool response and "error" key to specify error details (if any).
+	// If "output" and "error" keys are not specified, then whole "response" is
+	// treated as tool execution result.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 	// Tool: The name of the tool that got executed. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/tools/{tool}`
 	Tool string `json:"tool,omitempty"`
 	// ToolsetTool: The toolset tool that got executed.
 	ToolsetTool *ToolsetTool `json:"toolsetTool,omitempty"`
+	// Variables: The variable values at the end of the tool execution.
+	Variables googleapi.RawMessage `json:"variables,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -7569,9 +7610,9 @@ func (s RetrieveToolSchemaRequest) MarshalJSON() ([]byte, error) {
 // RetrieveToolSchemaResponse: Response message for
 // ToolService.RetrieveToolSchema.
 type RetrieveToolSchemaResponse struct {
-	// InputSchema: Required. The schema of the tool input parameters.
+	// InputSchema: The schema of the tool input parameters.
 	InputSchema *Schema `json:"inputSchema,omitempty"`
-	// OutputSchema: Required. The schema of the tool output parameters.
+	// OutputSchema: The schema of the tool output parameters.
 	OutputSchema *Schema `json:"outputSchema,omitempty"`
 	// Tool: The name of the tool that the schema is for. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/tools/{tool}`
@@ -7624,8 +7665,7 @@ func (s RetrieveToolsRequest) MarshalJSON() ([]byte, error) {
 
 // RetrieveToolsResponse: Response message for ToolService.RetrieveTools.
 type RetrieveToolsResponse struct {
-	// Tools: Required. The list of tools that are included in the specified
-	// toolset.
+	// Tools: The list of tools that are included in the specified toolset.
 	Tools []*Tool `json:"tools,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -7903,9 +7943,9 @@ type Schema struct {
 	Properties map[string]Schema `json:"properties,omitempty"`
 	// Ref: Optional. Allows indirect references between schema nodes. The value
 	// should be a valid reference to a child of the root `defs`. For example, the
-	// following schema defines a reference to a schema node named "Pet": type:
+	// following schema defines a reference to a schema node named "Pet": ``` type:
 	// object properties: pet: ref: #/defs/Pet defs: Pet: type: object properties:
-	// name: type: string The value of the "pet" property is a reference to the
+	// name: type: string ``` The value of the "pet" property is a reference to the
 	// schema node named "Pet". See details in
 	// https://json-schema.org/understanding-json-schema/structuring.
 	Ref string `json:"ref,omitempty"`
@@ -8131,10 +8171,11 @@ type SessionInput struct {
 	// additional session parameters.
 	Variables googleapi.RawMessage `json:"variables,omitempty"`
 	// WillContinue: Optional. A flag to indicate if the current message is a
-	// fragment of a larger input in the bidi streaming session. When `true`, the
-	// agent will defer processing until a subsequent message with `will_continue`
-	// set to `false` is received. Note: This flag has no effect on audio and DTMF
-	// inputs, which are always processed in real-time.
+	// fragment of a larger input in the bidi streaming session. When set to
+	// `true`, the agent defers processing until it receives a subsequent message
+	// where `will_continue` is `false`, or until the system detects an endpoint in
+	// the audio input. NOTE: This field does not apply to audio and DTMF inputs,
+	// as they are always processed automatically based on the endpointing signal.
 	WillContinue bool `json:"willContinue,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Audio") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -9064,6 +9105,8 @@ type WidgetTool struct {
 	//   "OVERALL_SATISFACTION" - Overall satisfaction widget.
 	//   "ORDER_SUMMARY" - Order summary widget.
 	//   "APPOINTMENT_DETAILS" - Appointment details widget.
+	//   "APPOINTMENT_SCHEDULER" - Appointment scheduler widget.
+	//   "CONTACT_FORM" - Contact form widget.
 	WidgetType string `json:"widgetType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14750,12 +14793,26 @@ func (r *ProjectsLocationsAppsEvaluationsService) List(parent string) *ProjectsL
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter to be applied when
-// listing the evaluations. See https://google.aip.dev/160 for more details.
-// Currently supports filtering by the following fields: * evaluation_datasets,
-// using the evaluation dataset ID in the format
-// evaluation_datasets:evaluation_dataset_id. * tags, using the tag in the
-// format tags:tag.
+// EvaluationFilter sets the optional parameter "evaluationFilter": Filter to
+// be applied on the evaluation when listing the evaluations. See
+// https://google.aip.dev/160 for more details. Supported fields:
+// evaluation_datasets
+func (c *ProjectsLocationsAppsEvaluationsListCall) EvaluationFilter(evaluationFilter string) *ProjectsLocationsAppsEvaluationsListCall {
+	c.urlParams_.Set("evaluationFilter", evaluationFilter)
+	return c
+}
+
+// EvaluationRunFilter sets the optional parameter "evaluationRunFilter":
+// Filter string for fields on the associated EvaluationRun resources. See
+// https://google.aip.dev/160 for more details. Supported fields: create_time,
+// initiated_by, app_version_display_name
+func (c *ProjectsLocationsAppsEvaluationsListCall) EvaluationRunFilter(evaluationRunFilter string) *ProjectsLocationsAppsEvaluationsListCall {
+	c.urlParams_.Set("evaluationRunFilter", evaluationRunFilter)
+	return c
+}
+
+// Filter sets the optional parameter "filter": Deprecated: Use
+// evaluation_filter and evaluation_run_filter instead.
 func (c *ProjectsLocationsAppsEvaluationsListCall) Filter(filter string) *ProjectsLocationsAppsEvaluationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

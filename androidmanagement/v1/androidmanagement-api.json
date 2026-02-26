@@ -1265,7 +1265,7 @@
       }
     }
   },
-  "revision": "20260219",
+  "revision": "20260224",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdbShellCommandEvent": {
@@ -6114,7 +6114,7 @@
         },
         "blockApplicationsEnabled": {
           "deprecated": true,
-          "description": "Whether applications other than the ones configured in applications are blocked from being installed. When set, applications that were installed under a previous policy but no longer appear in the policy are automatically uninstalled.",
+          "description": "This field has no effect.",
           "type": "boolean"
         },
         "bluetoothConfigDisabled": {

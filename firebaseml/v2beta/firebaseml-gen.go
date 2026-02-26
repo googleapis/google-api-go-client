@@ -1935,6 +1935,9 @@ func (s GoogleCloudAiplatformV1beta1GoogleSearchRetrieval) MarshalJSON() ([]byte
 // claim made by the model. When grounding is enabled, the model returns a
 // `GroundingChunk` that contains a reference to the source of the information.
 type GoogleCloudAiplatformV1beta1GroundingChunk struct {
+	// Image: A grounding chunk from an image search result. See the `Image`
+	// message for details.
+	Image *GoogleCloudAiplatformV1beta1GroundingChunkImage `json:"image,omitempty"`
 	// Maps: A grounding chunk from Google Maps. See the `Maps` message for
 	// details.
 	Maps *GoogleCloudAiplatformV1beta1GroundingChunkMaps `json:"maps,omitempty"`
@@ -1945,21 +1948,52 @@ type GoogleCloudAiplatformV1beta1GroundingChunk struct {
 	// Web: A grounding chunk from a web page, typically from Google Search. See
 	// the `Web` message for details.
 	Web *GoogleCloudAiplatformV1beta1GroundingChunkWeb `json:"web,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Maps") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Image") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Maps") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "Image") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudAiplatformV1beta1GroundingChunk) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1GroundingChunk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1GroundingChunkImage: An `Image` chunk is a piece
+// of evidence that comes from an image search result. It contains the URI of
+// the image search result and the URI of the image. This is used to provide
+// the user with a link to the source of the information.
+type GoogleCloudAiplatformV1beta1GroundingChunkImage struct {
+	// Domain: The domain of the image search result page.
+	Domain string `json:"domain,omitempty"`
+	// ImageUri: The URI of the image.
+	ImageUri string `json:"imageUri,omitempty"`
+	// SourceUri: The URI of the image search result page.
+	SourceUri string `json:"sourceUri,omitempty"`
+	// Title: The title of the image search result page.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Domain") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Domain") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1GroundingChunkImage) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1GroundingChunkImage
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2167,6 +2201,10 @@ type GoogleCloudAiplatformV1beta1GroundingMetadata struct {
 	// generated content to the grounding chunks. This field is populated when the
 	// grounding source is Google Search or Vertex AI Search.
 	GroundingSupports []*GoogleCloudAiplatformV1beta1GroundingSupport `json:"groundingSupports,omitempty"`
+	// ImageSearchQueries: Optional. The image search queries that were used to
+	// generate the content. This field is populated only when the grounding source
+	// is Google Search with the Image Search search_type enabled.
+	ImageSearchQueries []string `json:"imageSearchQueries,omitempty"`
 	// RetrievalMetadata: Optional. Output only. Metadata related to the retrieval
 	// grounding source.
 	RetrievalMetadata *GoogleCloudAiplatformV1beta1RetrievalMetadata `json:"retrievalMetadata,omitempty"`
@@ -2246,6 +2284,10 @@ type GoogleCloudAiplatformV1beta1GroundingSupport struct {
 	// field has the values `[1, 3]`, it means that `grounding_chunks[1]` and
 	// `grounding_chunks[3]` are the sources for the claim in the content segment.
 	GroundingChunkIndices []int64 `json:"groundingChunkIndices,omitempty"`
+	// RenderedParts: Indices into the `rendered_parts` field of the
+	// `GroundingMetadata` message. These indices specify which rendered parts are
+	// associated with this support message.
+	RenderedParts []int64 `json:"renderedParts,omitempty"`
 	// Segment: The content segment that this support message applies to.
 	Segment *GoogleCloudAiplatformV1beta1Segment `json:"segment,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConfidenceScores") to
@@ -3666,6 +3708,9 @@ type GoogleCloudAiplatformV1beta1ToolGoogleSearch struct {
 	// results. The default limit is 2000 domains. Example: ["amazon.com",
 	// "facebook.com"].
 	ExcludeDomains []string `json:"excludeDomains,omitempty"`
+	// SearchTypes: Optional. The set of search types to enable. If not set, web
+	// search is enabled by default.
+	SearchTypes *GoogleCloudAiplatformV1beta1ToolGoogleSearchSearchTypes `json:"searchTypes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BlockingConfidence") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3682,6 +3727,43 @@ type GoogleCloudAiplatformV1beta1ToolGoogleSearch struct {
 func (s GoogleCloudAiplatformV1beta1ToolGoogleSearch) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1ToolGoogleSearch
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1ToolGoogleSearchImageSearch: Image search for
+// grounding and related configurations.
+type GoogleCloudAiplatformV1beta1ToolGoogleSearchImageSearch struct {
+}
+
+// GoogleCloudAiplatformV1beta1ToolGoogleSearchSearchTypes: Different types of
+// search that can be enabled on the GoogleSearch tool.
+type GoogleCloudAiplatformV1beta1ToolGoogleSearchSearchTypes struct {
+	// ImageSearch: Optional. Setting this field enables image search. Image bytes
+	// are returned.
+	ImageSearch *GoogleCloudAiplatformV1beta1ToolGoogleSearchImageSearch `json:"imageSearch,omitempty"`
+	// WebSearch: Optional. Setting this field enables web search. Only text
+	// results are returned.
+	WebSearch *GoogleCloudAiplatformV1beta1ToolGoogleSearchWebSearch `json:"webSearch,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ImageSearch") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ImageSearch") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1ToolGoogleSearchSearchTypes) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1ToolGoogleSearchSearchTypes
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1ToolGoogleSearchWebSearch: Standard web search
+// for grounding and related configurations. Only text results are returned.
+type GoogleCloudAiplatformV1beta1ToolGoogleSearchWebSearch struct {
 }
 
 // GoogleCloudAiplatformV1beta1ToolParallelAiSearch: ParallelAiSearch tool

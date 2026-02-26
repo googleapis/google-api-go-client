@@ -849,6 +849,7 @@ type CpuMetric struct {
 	//   "G4" - GPU-based machine, skip quota reporting.
 	//   "C3"
 	//   "C4"
+	//   "C4A"
 	//   "M2" - MEMORY_OPTIMIZED_UPGRADE_PREMIUM
 	//   "M1" - MEMORY_OPTIMIZED
 	//   "N1"
@@ -1053,6 +1054,24 @@ type CpuMetric struct {
 	//   "C4_HIGHMEM_144"
 	//   "C4_HIGHMEM_192"
 	//   "C4_HIGHMEM_288"
+	//   "C4A_STANDARD_8"
+	//   "C4A_STANDARD_16"
+	//   "C4A_STANDARD_32"
+	//   "C4A_STANDARD_48"
+	//   "C4A_STANDARD_64"
+	//   "C4A_STANDARD_72"
+	//   "C4A_HIGHCPU_8"
+	//   "C4A_HIGHCPU_16"
+	//   "C4A_HIGHCPU_32"
+	//   "C4A_HIGHCPU_48"
+	//   "C4A_HIGHCPU_64"
+	//   "C4A_HIGHCPU_72"
+	//   "C4A_HIGHMEM_8"
+	//   "C4A_HIGHMEM_16"
+	//   "C4A_HIGHMEM_32"
+	//   "C4A_HIGHMEM_48"
+	//   "C4A_HIGHMEM_64"
+	//   "C4A_HIGHMEM_72"
 	MachineSpec string `json:"machineSpec,omitempty"`
 	// TrackingLabels: Billing tracking labels. They do not contain any user data
 	// but only the labels set by Vertex Core Infra itself. Tracking labels' keys
@@ -1620,6 +1639,24 @@ type GpuMetric struct {
 	//   "C4_HIGHMEM_144"
 	//   "C4_HIGHMEM_192"
 	//   "C4_HIGHMEM_288"
+	//   "C4A_STANDARD_8"
+	//   "C4A_STANDARD_16"
+	//   "C4A_STANDARD_32"
+	//   "C4A_STANDARD_48"
+	//   "C4A_STANDARD_64"
+	//   "C4A_STANDARD_72"
+	//   "C4A_HIGHCPU_8"
+	//   "C4A_HIGHCPU_16"
+	//   "C4A_HIGHCPU_32"
+	//   "C4A_HIGHCPU_48"
+	//   "C4A_HIGHCPU_64"
+	//   "C4A_HIGHCPU_72"
+	//   "C4A_HIGHMEM_8"
+	//   "C4A_HIGHMEM_16"
+	//   "C4A_HIGHMEM_32"
+	//   "C4A_HIGHMEM_48"
+	//   "C4A_HIGHMEM_64"
+	//   "C4A_HIGHMEM_72"
 	MachineSpec string `json:"machineSpec,omitempty"`
 	// TrackingLabels: Billing tracking labels. They do not contain any user data
 	// but only the labels set by Vertex Core Infra itself. Tracking labels' keys
@@ -2084,6 +2121,24 @@ type RamMetric struct {
 	//   "C4_HIGHMEM_144"
 	//   "C4_HIGHMEM_192"
 	//   "C4_HIGHMEM_288"
+	//   "C4A_STANDARD_8"
+	//   "C4A_STANDARD_16"
+	//   "C4A_STANDARD_32"
+	//   "C4A_STANDARD_48"
+	//   "C4A_STANDARD_64"
+	//   "C4A_STANDARD_72"
+	//   "C4A_HIGHCPU_8"
+	//   "C4A_HIGHCPU_16"
+	//   "C4A_HIGHCPU_32"
+	//   "C4A_HIGHCPU_48"
+	//   "C4A_HIGHCPU_64"
+	//   "C4A_HIGHCPU_72"
+	//   "C4A_HIGHMEM_8"
+	//   "C4A_HIGHMEM_16"
+	//   "C4A_HIGHMEM_32"
+	//   "C4A_HIGHMEM_48"
+	//   "C4A_HIGHMEM_64"
+	//   "C4A_HIGHMEM_72"
 	MachineSpec string `json:"machineSpec,omitempty"`
 	// Memories: Required. VM memory in gb.
 	Memories float64 `json:"memories,omitempty"`
@@ -2102,6 +2157,7 @@ type RamMetric struct {
 	//   "G2"
 	//   "G4"
 	//   "C4"
+	//   "C4A"
 	//   "C3"
 	//   "M2" - MEMORY_OPTIMIZED_UPGRADE_PREMIUM
 	//   "M1" - MEMORY_OPTIMIZED

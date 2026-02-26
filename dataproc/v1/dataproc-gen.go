@@ -972,6 +972,48 @@ func (s ApplicationInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AttachedDiskConfig: Specifies the config of attached disk options for single
+// VM instance.
+type AttachedDiskConfig struct {
+	// DiskSizeGb: Optional. Disk size in GB.
+	DiskSizeGb int64 `json:"diskSizeGb,omitempty"`
+	// DiskType: Optional. Disk type.
+	//
+	// Possible values:
+	//   "DISK_TYPE_UNSPECIFIED" - Required unspecified disk type.
+	//   "HYPERDISK_BALANCED" - Hyperdisk Balanced disk type.
+	//   "HYPERDISK_EXTREME" - Hyperdisk Extreme disk type.
+	//   "HYPERDISK_ML" - Hyperdisk ML disk type.
+	//   "HYPERDISK_THROUGHPUT" - Hyperdisk Throughput disk type.
+	DiskType string `json:"diskType,omitempty"`
+	// ProvisionedIops: Optional. Indicates how many IOPS to provision for the
+	// attached disk. This sets the number of I/O operations per second that the
+	// disk can handle. See
+	// https://cloud.google.com/compute/docs/disks/hyperdisks#hyperdisk-features
+	ProvisionedIops int64 `json:"provisionedIops,omitempty,string"`
+	// ProvisionedThroughput: Optional. Indicates how much throughput to provision
+	// for the attached disk. This sets the number of throughput mb per second that
+	// the disk can handle. See
+	// https://cloud.google.com/compute/docs/disks/hyperdisks#hyperdisk-features
+	ProvisionedThroughput int64 `json:"provisionedThroughput,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "DiskSizeGb") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DiskSizeGb") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AttachedDiskConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AttachedDiskConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AuthenticationConfig: Authentication configuration for a workload is used to
 // set the default identity for the workload execution. The config specifies
 // the type of identity (service account or user) that will be used by
@@ -2103,6 +2145,9 @@ func (s DiagnoseClusterResults) MarshalJSON() ([]byte, error) {
 // DiskConfig: Specifies the config of boot disk and attached disk options for
 // a group of VM instances.
 type DiskConfig struct {
+	// AttachedDiskConfigs: Optional. A list of attached disk configs for a group
+	// of VM instances.
+	AttachedDiskConfigs []*AttachedDiskConfig `json:"attachedDiskConfigs,omitempty"`
 	// BootDiskProvisionedIops: Optional. Indicates how many IOPS to provision for
 	// the disk. This sets the number of I/O operations per second that the disk
 	// can handle. This field is supported only if boot_disk_type is
@@ -2133,15 +2178,15 @@ type DiskConfig struct {
 	// and the boot disk contains only basic config and installed binaries.Note:
 	// Local SSD options may vary by machine type and number of vCPUs selected.
 	NumLocalSsds int64 `json:"numLocalSsds,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BootDiskProvisionedIops") to
+	// ForceSendFields is a list of field names (e.g. "AttachedDiskConfigs") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BootDiskProvisionedIops") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AttachedDiskConfigs") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -23451,11 +23496,14 @@ func (c *ProjectsRegionsJobsListCall) ClusterName(clusterName string) *ProjectsR
 
 // Filter sets the optional parameter "filter": A filter constraining the jobs
 // to list. Filters are case-sensitive and have the following syntax:field =
-// value AND field = value ...where field is status.state or labels.[KEY], and
-// [KEY] is a label key. value can be * to match all values. status.state can
-// be either ACTIVE or NON_ACTIVE. Only the logical AND operator is supported;
-// space-separated items are treated as having an implicit AND operator.Example
-// filter:status.state = ACTIVE AND labels.env = staging AND labels.starred = *
+// value AND field = value ...where field is status.state or insertTime, or
+// labels.[KEY], and [KEY] is a label key. value can be * to match all values.
+// status.state can be either ACTIVE or NON_ACTIVE. Allows insertTime to be a
+// timestamp in RFC 3339 format in double quotes, such as 2025-01-01T00:00:00Z.
+// Only the logical AND operator is supported; space-separated items are
+// treated as having an implicit AND operator.Example filter:status.state =
+// ACTIVE AND labels.env = staging AND labels.starred = * AND insertTime <=
+// "2025-01-01T00:00:00Z"
 func (c *ProjectsRegionsJobsListCall) Filter(filter string) *ProjectsRegionsJobsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

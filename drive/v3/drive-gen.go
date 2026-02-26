@@ -725,7 +725,7 @@ func (s AppList) MarshalJSON() ([]byte, error) {
 type Approval struct {
 	// ApprovalId: The Approval ID.
 	ApprovalId string `json:"approvalId,omitempty"`
-	// CompleteTime: Output only. The time time the approval was completed.
+	// CompleteTime: Output only. The time the approval was completed.
 	CompleteTime string `json:"completeTime,omitempty"`
 	// CreateTime: Output only. The time the approval was created.
 	CreateTime string `json:"createTime,omitempty"`

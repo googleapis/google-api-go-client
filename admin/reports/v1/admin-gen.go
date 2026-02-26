@@ -522,7 +522,7 @@ type ActivityEventsStatus struct {
 	ErrorCode string `json:"errorCode,omitempty"`
 	// ErrorMessage: Error message of the event. Note: Field can be empty.
 	ErrorMessage string `json:"errorMessage,omitempty"`
-	// EventStatus: * Status of the event. Possible values if not empty: -
+	// EventStatus: Status of the event. Possible values if not empty: -
 	// UNKNOWN_EVENT_STATUS - SUCCEEDED - SUCCEEDED_WITH_WARNINGS - FAILED -
 	// SKIPPED
 	EventStatus string `json:"eventStatus,omitempty"`

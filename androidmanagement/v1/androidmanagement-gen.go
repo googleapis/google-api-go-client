@@ -3011,6 +3011,8 @@ type DeviceConnectivityManagement struct {
 	// (https://developers.google.com/android/management/5g-network-slicing) guide
 	// for more details.
 	PreferentialNetworkServiceSettings *PreferentialNetworkServiceSettings `json:"preferentialNetworkServiceSettings,omitempty"`
+	// PrivateDnsSettings: Optional. The global private DNS settings.
+	PrivateDnsSettings *PrivateDnsSettings `json:"privateDnsSettings,omitempty"`
 	// TetheringSettings: Controls tethering settings. Based on the value set, the
 	// user is partially or fully disallowed from using different forms of
 	// tethering.
@@ -7066,6 +7068,66 @@ type PreferentialNetworkServiceSettings struct {
 
 func (s PreferentialNetworkServiceSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod PreferentialNetworkServiceSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PrivateDnsSettings: Controls the device's private DNS settings.
+type PrivateDnsSettings struct {
+	// PrivateDnsHost: Optional. The hostname of the DNS server. This must be set
+	// if and only if private_dns_mode is set to PRIVATE_DNS_SPECIFIED_HOST.
+	// Supported on Android 10 and above on fully managed devices. A
+	// NonComplianceDetail with MANAGEMENT_MODE is reported on other management
+	// modes. A NonComplianceDetail with API_LEVEL is reported if the Android
+	// version is less than 10. A NonComplianceDetail with PENDING is reported if
+	// the device is not connected to a network. A NonComplianceDetail with
+	// nonComplianceReason INVALID_VALUE and specificNonComplianceReason
+	// PRIVATE_DNS_HOST_NOT_SERVING is reported if the specified host is not a DNS
+	// server or not supported on Android. A NonComplianceReason with
+	// nonComplianceReason INVALID_VALUE is reported if applying this setting fails
+	// for any other reason.
+	PrivateDnsHost string `json:"privateDnsHost,omitempty"`
+	// PrivateDnsMode: Optional. The configuration mode for device's global private
+	// DNS settings. If this is set to PRIVATE_DNS_SPECIFIED_HOST, then
+	// private_dns_host must be set.
+	//
+	// Possible values:
+	//   "PRIVATE_DNS_MODE_UNSPECIFIED" - Unspecified. Defaults to
+	// PRIVATE_DNS_USER_CHOICE.
+	//   "PRIVATE_DNS_USER_CHOICE" - The user is allowed to configure private DNS.
+	//   "PRIVATE_DNS_AUTOMATIC" - Automatic private DNS mode. The device tries to
+	// use the network-provided DNS server over an encrypted connection before
+	// resorting to cleartext. The user is not allowed to modify this setting.
+	// Supported on Android 10 and above on fully managed devices and work profiles
+	// on company-owned devices. A NonComplianceDetail with MANAGEMENT_MODE is
+	// reported on other management modes. A NonComplianceDetail with API_LEVEL is
+	// reported if the Android version is less than 10. A NonComplianceReason with
+	// INVALID_VALUE is reported if setting this fails for any other reason.Note:
+	// For work profiles on company-owned devices, setting this mode prevents the
+	// user from changing the setting, but the active private DNS setting is not
+	// modified. A NonComplianceDetail with MANAGEMENT_MODE is reported in this
+	// case.
+	//   "PRIVATE_DNS_SPECIFIED_HOST" - The device only uses the DNS server
+	// specified in private_dns_host. The user is not allowed to modify this
+	// setting. If this is set, then private_dns_host must be set. Supported on
+	// Android 10 and above on fully managed devices. A NonComplianceDetail with
+	// MANAGEMENT_MODE is reported on other management modes. A NonComplianceDetail
+	// with API_LEVEL is reported if the Android version is less than 10.
+	PrivateDnsMode string `json:"privateDnsMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PrivateDnsHost") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PrivateDnsHost") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PrivateDnsSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod PrivateDnsSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

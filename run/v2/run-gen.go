@@ -2490,12 +2490,12 @@ func (s GoogleCloudRunV2Revision) MarshalJSON() ([]byte, error) {
 // settings.
 type GoogleCloudRunV2RevisionScaling struct {
 	// ConcurrencyUtilization: Optional. Determines a threshold for concurrency
-	// utilization before scaling begins. Accepted values are between `0.4` and
+	// utilization before scaling begins. Accepted values are between `0.1` and
 	// `0.95` (inclusive) or `0.0` to disable concurrency utilization as threshold
 	// for scaling.
 	ConcurrencyUtilization float64 `json:"concurrencyUtilization,omitempty"`
 	// CpuUtilization: Optional. Determines a threshold for CPU utilization before
-	// scaling begins. Accepted values are between `0.4` and `0.95` (inclusive) or
+	// scaling begins. Accepted values are between `0.1` and `0.95` (inclusive) or
 	// `0.0` to disable CPU utilization as threshold for scaling.
 	CpuUtilization float64 `json:"cpuUtilization,omitempty"`
 	// MaxInstanceCount: Optional. Maximum number of serving instances that this

@@ -6450,6 +6450,10 @@ func (s GoogleCloudDocumentaiV1beta3DocumentSchemaMetadata) MarshalJSON() ([]byt
 // sharding may be performed to produce several document shards. Each document
 // shard contains this field to detail which shard it is.
 type GoogleCloudDocumentaiV1beta3DocumentShardInfo struct {
+	// PageOffset: The index of the first page in Document.pages in the overall
+	// document global pages. Available for document shards created by the document
+	// splitter.
+	PageOffset int64 `json:"pageOffset,omitempty"`
 	// ShardCount: Total number of shards.
 	ShardCount int64 `json:"shardCount,omitempty,string"`
 	// ShardIndex: The 0-based index of this shard.
@@ -6457,13 +6461,13 @@ type GoogleCloudDocumentaiV1beta3DocumentShardInfo struct {
 	// TextOffset: The index of the first character in Document.text in the overall
 	// document global text.
 	TextOffset int64 `json:"textOffset,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "ShardCount") to
+	// ForceSendFields is a list of field names (e.g. "PageOffset") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ShardCount") to include in API
+	// NullFields is a list of field names (e.g. "PageOffset") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

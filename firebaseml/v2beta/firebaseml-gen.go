@@ -3322,7 +3322,10 @@ type GoogleCloudAiplatformV1beta1Schema struct {
 	// reused by `ref` elsewhere in the schema. Only allowed at root level of the
 	// schema.
 	Defs map[string]GoogleCloudAiplatformV1beta1Schema `json:"defs,omitempty"`
-	// Description: Optional. Description of the schema.
+	// Description: Optional. Describes the data. The model uses this field to
+	// understand the purpose of the schema and how to use it. It is a best
+	// practice to provide a clear and descriptive explanation for the schema and
+	// its properties here, rather than in the prompt.
 	Description string `json:"description,omitempty"`
 	// Enum: Optional. Possible values of the field. This field can be used to
 	// restrict a value to a fixed set of values. To mark a field as an enum, set

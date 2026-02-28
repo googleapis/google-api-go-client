@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20260223",
+  "revision": "20260225",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -2568,7 +2568,7 @@
           "type": "object"
         },
         "description": {
-          "description": "Optional. Description of the schema.",
+          "description": "Optional. Describes the data. The model uses this field to understand the purpose of the schema and how to use it. It is a best practice to provide a clear and descriptive explanation for the schema and its properties here, rather than in the prompt.",
           "type": "string"
         },
         "enum": {

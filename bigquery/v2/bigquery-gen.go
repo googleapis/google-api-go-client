@@ -2003,7 +2003,7 @@ func (s DataMaskingStatistics) MarshalJSON() ([]byte, error) {
 
 // DataPolicyOption: Data policy option. For more information, see Mask data by
 // applying data policies to a column
-// (https://cloud.google.com/bigquery/docs/column-data-masking#data-policies-on-column/).
+// (https://docs.cloud.google.com/bigquery/docs/column-data-masking#data-policies-on-column).
 type DataPolicyOption struct {
 	// Name: Data policy resource name in the form of
 	// projects/project_id/locations/location_id/dataPolicies/data_policy_id.
@@ -4111,6 +4111,20 @@ type IncrementalResultStats struct {
 	//   "UNSUPPORTED_OPERATOR" - Query includes an operation that is not
 	// supported.
 	DisabledReason string `json:"disabledReason,omitempty"`
+	// DisabledReasonDetails: Output only. Additional human-readable clarification,
+	// if available, for DisabledReason.
+	DisabledReasonDetails string `json:"disabledReasonDetails,omitempty"`
+	// FirstIncrementalRowTime: Output only. The time at which the first
+	// incremental result was written. If the query needed to restart internally,
+	// this only describes the final attempt.
+	FirstIncrementalRowTime string `json:"firstIncrementalRowTime,omitempty"`
+	// IncrementalRowCount: Output only. Number of rows that were in the latest
+	// result set before query completion.
+	IncrementalRowCount int64 `json:"incrementalRowCount,omitempty,string"`
+	// LastIncrementalRowTime: Output only. The time at which the last incremental
+	// result was written. Does not include the final result written after query
+	// completion.
+	LastIncrementalRowTime string `json:"lastIncrementalRowTime,omitempty"`
 	// ResultSetLastModifyTime: Output only. The time at which the result table's
 	// contents were modified. May be absent if no results have been written or the
 	// query has completed.

@@ -1085,6 +1085,7 @@ type GitHubConfig struct {
 	//   "DEVELOPER_CONNECT" - The Developer Connect GitHub Application.
 	//   "FIREBASE" - The Firebase GitHub Application.
 	//   "GEMINI_CODE_ASSIST" - The Gemini Code Assist Application.
+	//   "DATAFORM" - The Dataform GitHub Application.
 	GithubApp string `json:"githubApp,omitempty"`
 	// InstallationUri: Output only. The URI to navigate to in order to manage the
 	// installation associated with this GitHubConfig.
@@ -2229,11 +2230,11 @@ func (s RuntimeConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SecureSourceManagerInstanceConfig: Configuration for connections to SSM
-// instance
+// SecureSourceManagerInstanceConfig: Configuration for connections to Secure
+// Source Manager instance
 type SecureSourceManagerInstanceConfig struct {
-	// Instance: Required. Immutable. SSM instance resource, formatted as
-	// `projects/*/locations/*/instances/*`
+	// Instance: Required. Immutable. Secure Source Manager instance resource,
+	// formatted as `projects/*/locations/*/instances/*`
 	Instance string `json:"instance,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Instance") to
 	// unconditionally include in API requests. By default, fields with empty or

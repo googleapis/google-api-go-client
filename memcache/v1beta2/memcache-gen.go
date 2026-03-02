@@ -935,6 +935,9 @@ type Instance struct {
 	// (https://cloud.google.com/vpc/docs/vpc) to which the instance is connected.
 	// If left unspecified, the `default` network will be used.
 	AuthorizedNetwork string `json:"authorizedNetwork,omitempty"`
+	// AvailableMaintenanceVersions: Output only. The available maintenance
+	// versions that can be applied to the instance.
+	AvailableMaintenanceVersions []string `json:"availableMaintenanceVersions,omitempty"`
 	// CreateTime: Output only. The time the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DiscoveryEndpoint: Output only. Endpoint for the Discovery API.
@@ -942,6 +945,9 @@ type Instance struct {
 	// DisplayName: User provided name for the instance, which is only used for
 	// display purposes. Cannot be more than 80 characters.
 	DisplayName string `json:"displayName,omitempty"`
+	// EffectiveMaintenanceVersion: Output only. The effective maintenance version
+	// of the instance.
+	EffectiveMaintenanceVersion string `json:"effectiveMaintenanceVersion,omitempty"`
 	// InstanceMessages: List of messages that describe the current state of the
 	// Memcached instance.
 	InstanceMessages []*InstanceMessage `json:"instanceMessages,omitempty"`
@@ -955,6 +961,10 @@ type Instance struct {
 	MaintenancePolicy *GoogleCloudMemcacheV1beta2MaintenancePolicy `json:"maintenancePolicy,omitempty"`
 	// MaintenanceSchedule: Output only. Published maintenance schedule.
 	MaintenanceSchedule *MaintenanceSchedule `json:"maintenanceSchedule,omitempty"`
+	// MaintenanceVersion: Optional. Last self service update maintenance version
+	// triggered by the customer. If it is empty, it means that the maintenance
+	// version is not set by the user.
+	MaintenanceVersion string `json:"maintenanceVersion,omitempty"`
 	// MemcacheFullVersion: Output only. The full version of memcached server
 	// running on this instance. System automatically determines the full memcached
 	// version for an instance based on the input MemcacheVersion. The full version

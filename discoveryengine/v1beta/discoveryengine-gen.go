@@ -3272,6 +3272,12 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	// DestinationConfigs: Optional. Any target destinations used to connect to
 	// third-party services.
 	DestinationConfigs []*GoogleCloudDiscoveryengineV1DestinationConfig `json:"destinationConfigs,omitempty"`
+	// EgressFqdns: Output only. The list of FQDNs of the data connector can egress
+	// to. This includes both FQDN derived from the customer provided instance URL
+	// and default per connector type FQDNs. Note: This field is derived from both
+	// the DataConnector.params, and connector source spec. It should only be used
+	// for CAIS and Org Policy evaluation purposes.
+	EgressFqdns []string `json:"egressFqdns,omitempty"`
 	// EndUserConfig: Optional. Any params and credentials used specifically for
 	// EUA connectors.
 	EndUserConfig *GoogleCloudDiscoveryengineV1DataConnectorEndUserConfig `json:"endUserConfig,omitempty"`
@@ -3416,6 +3422,9 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	SyncMode string `json:"syncMode,omitempty"`
 	// UpdateTime: Output only. Timestamp the DataConnector was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
+	// VpcscEnabled: Output only. Whether the connector is created with VPC-SC
+	// enabled. This is only used for CuOP evaluation purpose.
+	VpcscEnabled bool `json:"vpcscEnabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AclEnabled") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4429,6 +4438,25 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// KnowledgeGraphConfig: Optional. Configurations for the Knowledge Graph. Only
 	// applicable if solution_type is SOLUTION_TYPE_SEARCH.
 	KnowledgeGraphConfig *GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfig `json:"knowledgeGraphConfig,omitempty"`
+	// MarketplaceAgentVisibility: Optional. The visibility of marketplace agents
+	// in the agent gallery.
+	//
+	// Possible values:
+	//   "MARKETPLACE_AGENT_VISIBILITY_UNSPECIFIED" - Defaults to
+	// `MARKETPLACE_AGENT_VISIBILITY_UNSPECIFIED`.
+	//   "SHOW_AVAILABLE_AGENTS_ONLY" - Only agents that are currently available
+	// for use by the user are visible.
+	//   "SHOW_AGENTS_ALREADY_INTEGRATED" - Show marketplace agents that the user
+	// does not yet have access to but are integrated into the engine. This level
+	// also includes all agents visible with `SHOW_AVAILABLE_AGENTS_ONLY`.
+	//   "SHOW_AGENTS_ALREADY_PURCHASED" - Show all agents visible with
+	// `SHOW_AGENTS_ALREADY_INTEGRATED`, plus agents that have already been
+	// purchased by the project/organization, even if they are not currently
+	// integrated into the engine.
+	//   "SHOW_ALL_AGENTS" - All agents in the marketplace are visible, regardless
+	// of access or purchase status. This level encompasses all agents shown in the
+	// previous levels.
+	MarketplaceAgentVisibility string `json:"marketplaceAgentVisibility,omitempty"`
 	// MediaRecommendationEngineConfig: Configurations for the Media Engine. Only
 	// applicable on the data stores with solution_type
 	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
@@ -4450,6 +4478,8 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	Name string `json:"name,omitempty"`
 	// ObservabilityConfig: Optional. Observability config for the engine.
 	ObservabilityConfig *GoogleCloudDiscoveryengineV1ObservabilityConfig `json:"observabilityConfig,omitempty"`
+	// ProcurementContactEmail: Optional. The email of the procurement contact.
+	ProcurementContactEmail string `json:"procurementContactEmail,omitempty"`
 	// SearchEngineConfig: Configurations for the Search Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_SEARCH.
 	SearchEngineConfig *GoogleCloudDiscoveryengineV1EngineSearchEngineConfig `json:"searchEngineConfig,omitempty"`
@@ -9834,6 +9864,12 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// DestinationConfigs: Optional. Any target destinations used to connect to
 	// third-party services.
 	DestinationConfigs []*GoogleCloudDiscoveryengineV1alphaDestinationConfig `json:"destinationConfigs,omitempty"`
+	// EgressFqdns: Output only. The list of FQDNs of the data connector can egress
+	// to. This includes both FQDN derived from the customer provided instance URL
+	// and default per connector type FQDNs. Note: This field is derived from both
+	// the DataConnector.params, and connector source spec. It should only be used
+	// for CAIS and Org Policy evaluation purposes.
+	EgressFqdns []string `json:"egressFqdns,omitempty"`
 	// EndUserConfig: Optional. Any params and credentials used specifically for
 	// EUA connectors.
 	EndUserConfig *GoogleCloudDiscoveryengineV1alphaDataConnectorEndUserConfig `json:"endUserConfig,omitempty"`
@@ -9978,6 +10014,9 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	SyncMode string `json:"syncMode,omitempty"`
 	// UpdateTime: Output only. Timestamp the DataConnector was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
+	// VpcscEnabled: Output only. Whether the connector is created with VPC-SC
+	// enabled. This is only used for CuOP evaluation purpose.
+	VpcscEnabled bool `json:"vpcscEnabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AclEnabled") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -11196,6 +11235,25 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// KnowledgeGraphConfig: Optional. Configurations for the Knowledge Graph. Only
 	// applicable if solution_type is SOLUTION_TYPE_SEARCH.
 	KnowledgeGraphConfig *GoogleCloudDiscoveryengineV1alphaEngineKnowledgeGraphConfig `json:"knowledgeGraphConfig,omitempty"`
+	// MarketplaceAgentVisibility: Optional. The visibility of marketplace agents
+	// in the agent gallery.
+	//
+	// Possible values:
+	//   "MARKETPLACE_AGENT_VISIBILITY_UNSPECIFIED" - Defaults to
+	// `MARKETPLACE_AGENT_VISIBILITY_UNSPECIFIED`.
+	//   "SHOW_AVAILABLE_AGENTS_ONLY" - Only agents that are currently available
+	// for use by the user are visible.
+	//   "SHOW_AGENTS_ALREADY_INTEGRATED" - Show marketplace agents that the user
+	// does not yet have access to but are integrated into the engine. This level
+	// also includes all agents visible with `SHOW_AVAILABLE_AGENTS_ONLY`.
+	//   "SHOW_AGENTS_ALREADY_PURCHASED" - Show all agents visible with
+	// `SHOW_AGENTS_ALREADY_INTEGRATED`, plus agents that have already been
+	// purchased by the project/organization, even if they are not currently
+	// integrated into the engine.
+	//   "SHOW_ALL_AGENTS" - All agents in the marketplace are visible, regardless
+	// of access or purchase status. This level encompasses all agents shown in the
+	// previous levels.
+	MarketplaceAgentVisibility string `json:"marketplaceAgentVisibility,omitempty"`
 	// MediaRecommendationEngineConfig: Configurations for the Media Engine. Only
 	// applicable on the data stores with solution_type
 	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
@@ -11217,6 +11275,8 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	Name string `json:"name,omitempty"`
 	// ObservabilityConfig: Optional. Observability config for the engine.
 	ObservabilityConfig *GoogleCloudDiscoveryengineV1alphaObservabilityConfig `json:"observabilityConfig,omitempty"`
+	// ProcurementContactEmail: Optional. The email of the procurement contact.
+	ProcurementContactEmail string `json:"procurementContactEmail,omitempty"`
 	// RecommendationMetadata: Output only. Additional information of a
 	// recommendation engine. Only applicable if solution_type is
 	// SOLUTION_TYPE_RECOMMENDATION.
@@ -12867,10 +12927,13 @@ func (s GoogleCloudDiscoveryengineV1alphaLicenseConfig) MarshalJSON() ([]byte, e
 type GoogleCloudDiscoveryengineV1alphaListSessionsRequest struct {
 	// Filter: A comma-separated list of fields to filter by, in EBNF grammar. The
 	// supported fields are: * `user_pseudo_id` * `state` * `display_name` *
-	// `starred` * `is_pinned` * `labels` * `create_time` * `update_time` Examples:
-	// * `user_pseudo_id = some_id` * `display_name = "some_name" * `starred =
-	// true` * `is_pinned=true AND (NOT labels:hidden)` * `create_time >
-	// "1970-01-01T12:00:00Z"
+	// `starred` * `is_pinned` * `labels` * `create_time` * `update_time` *
+	// `collaborative_project` Examples: * `user_pseudo_id = some_id` *
+	// `display_name = "some_name" * `starred = true` * `is_pinned=true AND (NOT
+	// labels:hidden)` * `create_time > "1970-01-01T12:00:00Z" *
+	// `collaborative_project =
+	// "projects/123/locations/global/collections/default_collection/engines/"
+	// "default_engine/collaborative_projects/cp1"
 	Filter string `json:"filter,omitempty"`
 	// OrderBy: A comma-separated list of fields to order by, sorted in ascending
 	// order. Use "desc" after a field name for descending. Supported fields: *
@@ -22984,6 +23047,25 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// KnowledgeGraphConfig: Optional. Configurations for the Knowledge Graph. Only
 	// applicable if solution_type is SOLUTION_TYPE_SEARCH.
 	KnowledgeGraphConfig *GoogleCloudDiscoveryengineV1betaEngineKnowledgeGraphConfig `json:"knowledgeGraphConfig,omitempty"`
+	// MarketplaceAgentVisibility: Optional. The visibility of marketplace agents
+	// in the agent gallery.
+	//
+	// Possible values:
+	//   "MARKETPLACE_AGENT_VISIBILITY_UNSPECIFIED" - Defaults to
+	// `MARKETPLACE_AGENT_VISIBILITY_UNSPECIFIED`.
+	//   "SHOW_AVAILABLE_AGENTS_ONLY" - Only agents that are currently available
+	// for use by the user are visible.
+	//   "SHOW_AGENTS_ALREADY_INTEGRATED" - Show marketplace agents that the user
+	// does not yet have access to but are integrated into the engine. This level
+	// also includes all agents visible with `SHOW_AVAILABLE_AGENTS_ONLY`.
+	//   "SHOW_AGENTS_ALREADY_PURCHASED" - Show all agents visible with
+	// `SHOW_AGENTS_ALREADY_INTEGRATED`, plus agents that have already been
+	// purchased by the project/organization, even if they are not currently
+	// integrated into the engine.
+	//   "SHOW_ALL_AGENTS" - All agents in the marketplace are visible, regardless
+	// of access or purchase status. This level encompasses all agents shown in the
+	// previous levels.
+	MarketplaceAgentVisibility string `json:"marketplaceAgentVisibility,omitempty"`
 	// MediaRecommendationEngineConfig: Configurations for the Media Engine. Only
 	// applicable on the data stores with solution_type
 	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
@@ -23005,6 +23087,8 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	Name string `json:"name,omitempty"`
 	// ObservabilityConfig: Optional. Observability config for the engine.
 	ObservabilityConfig *GoogleCloudDiscoveryengineV1betaObservabilityConfig `json:"observabilityConfig,omitempty"`
+	// ProcurementContactEmail: Optional. The email of the procurement contact.
+	ProcurementContactEmail string `json:"procurementContactEmail,omitempty"`
 	// SearchEngineConfig: Configurations for the Search Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_SEARCH.
 	SearchEngineConfig *GoogleCloudDiscoveryengineV1betaEngineSearchEngineConfig `json:"searchEngineConfig,omitempty"`
@@ -41199,9 +41283,12 @@ func (r *ProjectsLocationsCollectionsDataStoresSessionsService) List(parent stri
 // Filter sets the optional parameter "filter": A comma-separated list of
 // fields to filter by, in EBNF grammar. The supported fields are: *
 // `user_pseudo_id` * `state` * `display_name` * `starred` * `is_pinned` *
-// `labels` * `create_time` * `update_time` Examples: * `user_pseudo_id =
-// some_id` * `display_name = "some_name" * `starred = true` * `is_pinned=true
-// AND (NOT labels:hidden)` * `create_time > "1970-01-01T12:00:00Z"
+// `labels` * `create_time` * `update_time` * `collaborative_project` Examples:
+// * `user_pseudo_id = some_id` * `display_name = "some_name" * `starred =
+// true` * `is_pinned=true AND (NOT labels:hidden)` * `create_time >
+// "1970-01-01T12:00:00Z" * `collaborative_project =
+// "projects/123/locations/global/collections/default_collection/engines/"
+// "default_engine/collaborative_projects/cp1"
 func (c *ProjectsLocationsCollectionsDataStoresSessionsListCall) Filter(filter string) *ProjectsLocationsCollectionsDataStoresSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -49756,9 +49843,12 @@ func (r *ProjectsLocationsCollectionsEnginesSessionsService) List(parent string)
 // Filter sets the optional parameter "filter": A comma-separated list of
 // fields to filter by, in EBNF grammar. The supported fields are: *
 // `user_pseudo_id` * `state` * `display_name` * `starred` * `is_pinned` *
-// `labels` * `create_time` * `update_time` Examples: * `user_pseudo_id =
-// some_id` * `display_name = "some_name" * `starred = true` * `is_pinned=true
-// AND (NOT labels:hidden)` * `create_time > "1970-01-01T12:00:00Z"
+// `labels` * `create_time` * `update_time` * `collaborative_project` Examples:
+// * `user_pseudo_id = some_id` * `display_name = "some_name" * `starred =
+// true` * `is_pinned=true AND (NOT labels:hidden)` * `create_time >
+// "1970-01-01T12:00:00Z" * `collaborative_project =
+// "projects/123/locations/global/collections/default_collection/engines/"
+// "default_engine/collaborative_projects/cp1"
 func (c *ProjectsLocationsCollectionsEnginesSessionsListCall) Filter(filter string) *ProjectsLocationsCollectionsEnginesSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -57019,9 +57109,12 @@ func (r *ProjectsLocationsDataStoresSessionsService) List(parent string) *Projec
 // Filter sets the optional parameter "filter": A comma-separated list of
 // fields to filter by, in EBNF grammar. The supported fields are: *
 // `user_pseudo_id` * `state` * `display_name` * `starred` * `is_pinned` *
-// `labels` * `create_time` * `update_time` Examples: * `user_pseudo_id =
-// some_id` * `display_name = "some_name" * `starred = true` * `is_pinned=true
-// AND (NOT labels:hidden)` * `create_time > "1970-01-01T12:00:00Z"
+// `labels` * `create_time` * `update_time` * `collaborative_project` Examples:
+// * `user_pseudo_id = some_id` * `display_name = "some_name" * `starred =
+// true` * `is_pinned=true AND (NOT labels:hidden)` * `create_time >
+// "1970-01-01T12:00:00Z" * `collaborative_project =
+// "projects/123/locations/global/collections/default_collection/engines/"
+// "default_engine/collaborative_projects/cp1"
 func (c *ProjectsLocationsDataStoresSessionsListCall) Filter(filter string) *ProjectsLocationsDataStoresSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -61315,7 +61408,8 @@ type ProjectsLocationsLicenseConfigsCreateCall struct {
 	header_                                       http.Header
 }
 
-// Create: Creates a LicenseConfig
+// Create: Creates a LicenseConfig This method should only be used for creating
+// NotebookLm licenses or Gemini Enterprise free trial licenses.
 //
 //   - parent: The parent resource name, such as
 //     `projects/{project}/locations/{location}`.

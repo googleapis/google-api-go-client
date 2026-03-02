@@ -1897,13 +1897,15 @@ func (s Status) MarshalJSON() ([]byte, error) {
 }
 
 // TagBinding: A TagBinding represents a connection between a TagValue and a
-// cloud resource Once a TagBinding is created, the TagValue is applied to all
+// cloud resource. When a TagBinding is created, the TagValue is applied to all
 // the descendants of the Google Cloud resource.
 type TagBinding struct {
 	// Name: Output only. The name of the TagBinding. This is a String of the form:
 	// `tagBindings/{full-resource-name}/{tag-value-name}` (e.g.
 	// `tagBindings/%2F%2Fcloudresourcemanager.googleapis.com%2Fprojects%2F123/tagVa
-	// lues/456`).
+	// lues/456`) or `tagBindings/{full-resource-name}/{tag-key-name}` (e.g.
+	// `tagBindings/%2F%2Fcloudresourcemanager.googleapis.com%2Fprojects%2F123/tagKe
+	// ys/123`).
 	Name string `json:"name,omitempty"`
 	// Parent: The full resource name of the resource the TagValue is bound to.
 	// E.g. `//cloudresourcemanager.googleapis.com/projects/123`

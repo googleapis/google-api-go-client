@@ -432,9 +432,10 @@ type AuthzExtension struct {
 	// resource. The format must comply with the requirements for labels
 	// (/compute/docs/labeling-resources#requirements) for Google Cloud resources.
 	Labels map[string]string `json:"labels,omitempty"`
-	// LoadBalancingScheme: Required. All backend services and forwarding rules
+	// LoadBalancingScheme: Optional. All backend services and forwarding rules
 	// referenced by this extension must share the same load balancing scheme.
-	// Supported values: `INTERNAL_MANAGED`, `EXTERNAL_MANAGED`. For more
+	// Supported values: `INTERNAL_MANAGED`, `EXTERNAL_MANAGED`. Can be omitted for
+	// AuthzExtensions that do not reference a backend service. For more
 	// information, refer to Backend services overview
 	// (https://cloud.google.com/load-balancing/docs/backend-service).
 	//

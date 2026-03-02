@@ -3993,7 +3993,13 @@ func (s AuthorizedSellerStatusTargetingOptionDetails) MarshalJSON() ([]byte, err
 type BiddingStrategy struct {
 	// FixedBid: A strategy that uses a fixed bid price.
 	FixedBid *FixedBidStrategy `json:"fixedBid,omitempty"`
-	// MaximizeSpendAutoBid: * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPA`,
+	// MaximizeSpendAutoBid: A strategy that automatically adjusts the bid to
+	// optimize to your performance goal while spending the full budget. At
+	// insertion order level, the markup_type of line items cannot be set to
+	// `PARTNER_REVENUE_MODEL_MARKUP_TYPE_CPM`. In addition, the
+	// performance_goal_type value assigned to an insertion order determines the
+	// possible line_item_type values available for line items under that insertion
+	// order: * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPA`,
 	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPC`, and
 	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_AV_VIEWED` only allow for
 	// `LINE_ITEM_TYPE_DISPLAY_DEFAULT` or `LINE_ITEM_TYPE_VIDEO_DEFAULT` line
@@ -10354,7 +10360,12 @@ type InsertionOrder struct {
 	// order belongs to.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 	// BidStrategy: Optional. The bidding strategy of the insertion order. By
-	// default, fixed_bid is set.
+	// default, fixed_bid is set. If the budget field automationType is set to
+	// `INSERTION_ORDER_AUTOMATION_TYPE_BUDGET` or
+	// `INSERTION_ORDER_AUTOMATION_TYPE_BID_BUDGET`, the insertion order will
+	// impose this bidding strategy on its line items. If an imposed bidding
+	// strategy is not compatible with a line item's enableOptimizedTargeting
+	// setting, the optimized targeting setting will be updated.
 	BidStrategy *BiddingStrategy `json:"bidStrategy,omitempty"`
 	// Budget: Required. The budget allocation settings of the insertion order.
 	Budget *InsertionOrderBudget `json:"budget,omitempty"`
@@ -15609,7 +15620,12 @@ type TargetingExpansionConfig struct {
 	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_IVO_TEN` *
 	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_AV_VIEWED`
 	// performance_goal_auto_bid: *
-	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM`
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM` This also applies if
+	// the line item inherits one of the above bid strategies from the parent
+	// insertion order. Bid strategies set at the insertion order-level will be
+	// inherited by their line items if the `InsertionOrder` budget field
+	// automationType is set to `INSERTION_ORDER_AUTOMATION_TYPE_BUDGET` or
+	// `INSERTION_ORDER_AUTOMATION_TYPE_BID_BUDGET`.
 	EnableOptimizedTargeting bool `json:"enableOptimizedTargeting,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudienceExpansionLevel") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -309,6 +309,8 @@ type BucketOperation struct {
 	//   "CANCELED" - Cancelled by the user.
 	//   "FAILED" - Terminated due to an unrecoverable failure.
 	State string `json:"state,omitempty"`
+	// UpdateObjectCustomContext: Update object custom context.
+	UpdateObjectCustomContext *UpdateObjectCustomContext `json:"updateObjectCustomContext,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -392,6 +394,32 @@ type Counters struct {
 
 func (s Counters) MarshalJSON() ([]byte, error) {
 	type NoMethod Counters
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomContextUpdates: Describes a collection of updates to apply to custom
+// contexts identified by key.
+type CustomContextUpdates struct {
+	// KeysToClear: Optional. Custom contexts to clear by key. A key cannot be
+	// present in both `updates` and `keys_to_clear`.
+	KeysToClear []string `json:"keysToClear,omitempty"`
+	// Updates: Optional. Insert or update the existing custom contexts.
+	Updates map[string]ObjectCustomContextPayload `json:"updates,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KeysToClear") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KeysToClear") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomContextUpdates) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomContextUpdates
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -621,6 +649,8 @@ type Job struct {
 	//   "FAILED" - Terminated due to an unrecoverable failure.
 	//   "QUEUED" - Queued but not yet started.
 	State string `json:"state,omitempty"`
+	// UpdateObjectCustomContext: Update object custom context.
+	UpdateObjectCustomContext *UpdateObjectCustomContext `json:"updateObjectCustomContext,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -866,6 +896,32 @@ type Manifest struct {
 
 func (s Manifest) MarshalJSON() ([]byte, error) {
 	type NoMethod Manifest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ObjectCustomContextPayload: Describes the payload of a user defined object
+// custom context.
+type ObjectCustomContextPayload struct {
+	// Value: The value of the object custom context. If set, `value` must NOT be
+	// an empty string since it is a required field in custom context. If unset,
+	// `value` will be ignored and no changes will be made to the `value` field of
+	// the custom context payload.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ObjectCustomContextPayload) MarshalJSON() ([]byte, error) {
+	type NoMethod ObjectCustomContextPayload
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1173,6 +1229,33 @@ type Status struct {
 
 func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpdateObjectCustomContext: Describes options to update object custom
+// contexts.
+type UpdateObjectCustomContext struct {
+	// ClearAll: If set, must be set to true and all existing object custom
+	// contexts will be deleted.
+	ClearAll bool `json:"clearAll,omitempty"`
+	// CustomContextUpdates: A collection of updates to apply to specific custom
+	// contexts. Use this to add, update or delete individual contexts by key.
+	CustomContextUpdates *CustomContextUpdates `json:"customContextUpdates,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClearAll") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClearAll") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateObjectCustomContext) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateObjectCustomContext
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

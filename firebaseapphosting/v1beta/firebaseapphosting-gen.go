@@ -250,15 +250,19 @@ type ProjectsLocationsOperationsService struct {
 // ArchiveSource: The URI of an storage archive or a signed URL to use as the
 // build source.
 type ArchiveSource struct {
-	// Author: Optional. The author contained in the metadata of a version control
-	// change.
+	// Author: Optional. Deprecated: Not used. The author contained in the metadata
+	// of a version control change.
 	Author *SourceUserMetadata `json:"author,omitempty"`
 	// Description: Optional. An optional message that describes the uploaded
 	// version of the source code.
 	Description string `json:"description,omitempty"`
 	// ExternalSignedUri: Signed URL to an archive in a storage bucket.
 	ExternalSignedUri string `json:"externalSignedUri,omitempty"`
-	// RootDirectory: Optional. Relative path in the archive.
+	// RootDirectory: Optional. The directory relative to the root of the archive
+	// to use as the root for the deployed web app. Defaults to use the root of the
+	// repository if not provided. If deploying a monorepo
+	// (https://firebase.google.com/docs/app-hosting/monorepos), this should be the
+	// directory that contains the `package.json` or `apphosting.yaml` file.
 	RootDirectory string `json:"rootDirectory,omitempty"`
 	// UserStorageUri: URI to an archive in Cloud Storage. The object must be a
 	// zipped (.zip) or gzipped archive file (.tar.gz) containing source to deploy.
@@ -402,11 +406,11 @@ type Build struct {
 	// Environment: Output only. The environment name of the backend when this
 	// build was created.
 	Environment string `json:"environment,omitempty"`
-	// Error: Output only. A status and (human readable) error message for the
-	// build, if in a `FAILED` state. Deprecated: Use `errors` instead.
+	// Error: Output only. Deprecated: Use `errors` instead. A status and (human
+	// readable) error message for the build, if in a `FAILED` state.
 	Error *Status `json:"error,omitempty"`
-	// ErrorSource: Output only. The source of the error for the build, if in a
-	// `FAILED` state. Deprecated: Use `errors` instead.
+	// ErrorSource: Output only. Deprecated: Use `errors` instead. The source of
+	// the error for the build, if in a `FAILED` state.
 	//
 	// Possible values:
 	//   "ERROR_SOURCE_UNSPECIFIED" - Indicates that generic error occurred outside
@@ -519,6 +523,10 @@ type Codebase struct {
 	Repository string `json:"repository,omitempty"`
 	// RootDirectory: Optional. If `repository` is provided, the directory relative
 	// to the root of the repository to use as the root for the deployed web app.
+	// Defaults to use the root of the repository if not provided. If deploying a
+	// monorepo (https://firebase.google.com/docs/app-hosting/monorepos), this
+	// should be the directory that contains the `package.json` or
+	// `apphosting.yaml` file.
 	RootDirectory string `json:"rootDirectory,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Repository") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -558,6 +566,13 @@ type CodebaseSource struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Hash: Output only. The full SHA-1 hash of a Git commit, if available.
 	Hash string `json:"hash,omitempty"`
+	// Repository: Output only. The resource name for the Developer Connect
+	// `gitRepositoryLink`
+	// (https://cloud.google.com/developer-connect/docs/api/reference/rest/v1/projects.locations.connections.gitRepositoryLinks)
+	// used for this build, in the format:
+	// `projects/{project}/locations/{location}/connections/{connection}/gitReposito
+	// ryLinks/{repositoryLink}`
+	Repository string `json:"repository,omitempty"`
 	// Uri: Output only. A URI linking to the codebase on an hosting provider's
 	// website. May not be valid if the commit has been rebased or force-pushed out
 	// of existence in the linked repository.
@@ -591,7 +606,7 @@ type Config struct {
 	// Env: Optional. Supplied environment variables for a specific build. Provided
 	// at Build creation time and immutable afterwards. This field is only
 	// applicable for Builds using a build image - (e.g., ContainerSource or
-	// ArchiveSource with locally_build_source) Attempts to set this for other
+	// ArchiveSource with locally_built_source) Attempts to set this for other
 	// build types will result in an error
 	Env []*EnvironmentVariable `json:"env,omitempty"`
 	// RunConfig: Optional. Additional configuration of the Cloud Run `service`
@@ -1780,7 +1795,7 @@ func (s RolloutPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RunConfig: Additional configuration to apply to the Cloud Run `service`
+// RunConfig: Configuration applied to the Cloud Run `service`
 // (https://cloud.google.com/run/docs/reference/rest/v2/projects.locations.services#resource:-service).
 type RunConfig struct {
 	// Concurrency: Optional. Maximum number of requests that each Cloud Run
@@ -1896,15 +1911,17 @@ func (s ServingBehavior) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SourceUserMetadata: Metadata for the user who started the build.
+// SourceUserMetadata: Deprecated: Not used. Metadata for the user who started
+// the build.
 type SourceUserMetadata struct {
-	// DisplayName: Output only. The user-chosen displayname. May be empty.
+	// DisplayName: Output only. Deprecated: Not used. The user-chosen displayname.
+	// May be empty.
 	DisplayName string `json:"displayName,omitempty"`
-	// Email: Output only. The account email linked to the EUC that created the
-	// build. May be a service account or other robot account.
+	// Email: Output only. Deprecated: Not used. The account email linked to the
+	// EUC that created the build. May be a service account or other robot account.
 	Email string `json:"email,omitempty"`
-	// ImageUri: Output only. The URI of a profile photo associated with the user
-	// who created the build.
+	// ImageUri: Output only. Deprecated: Not used. The URI of a profile photo
+	// associated with the user who created the build.
 	ImageUri string `json:"imageUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or

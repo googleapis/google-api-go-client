@@ -2328,7 +2328,13 @@ func (s AuthorizedSellerStatusTargetingOptionDetails) MarshalJSON() ([]byte, err
 type BiddingStrategy struct {
 	// FixedBid: A strategy that uses a fixed bid price.
 	FixedBid *FixedBidStrategy `json:"fixedBid,omitempty"`
-	// MaximizeSpendAutoBid: * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPA`,
+	// MaximizeSpendAutoBid: A strategy that automatically adjusts the bid to
+	// optimize to your performance goal while spending the full budget. At
+	// insertion order level, the markup_type of line items cannot be set to
+	// `PARTNER_REVENUE_MODEL_MARKUP_TYPE_CPM`. In addition, the
+	// performance_goal_type value assigned to an insertion order determines the
+	// possible line_item_type values available for line items under that insertion
+	// order: * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPA`,
 	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPC`, and
 	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_AV_VIEWED` only allow for
 	// `LINE_ITEM_TYPE_DISPLAY_DEFAULT` or `LINE_ITEM_TYPE_VIDEO_DEFAULT` line
@@ -8001,7 +8007,12 @@ type InsertionOrder struct {
 	// order belongs to.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 	// BidStrategy: Optional. The bidding strategy of the insertion order. By
-	// default, fixed_bid is set.
+	// default, fixed_bid is set. If the budget field automationType is set to
+	// `INSERTION_ORDER_AUTOMATION_TYPE_BUDGET` or
+	// `INSERTION_ORDER_AUTOMATION_TYPE_BID_BUDGET`, the insertion order will
+	// impose this bidding strategy on its line items. If an imposed bidding
+	// strategy is not compatible with a line item's enableOptimizedTargeting
+	// setting, the optimized targeting setting will be updated.
 	BidStrategy *BiddingStrategy `json:"bidStrategy,omitempty"`
 	// BillableOutcome: Immutable. The billable outcome of the insertion order.
 	// Outcome based buying is deprecated. `BILLABLE_OUTCOME_PAY_PER_IMPRESSION` is

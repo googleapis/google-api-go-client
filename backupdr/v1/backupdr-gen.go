@@ -3475,6 +3475,14 @@ func (s InitializeParams) MarshalJSON() ([]byte, error) {
 
 // InitializeServiceRequest: Request message for initializing the service.
 type InitializeServiceRequest struct {
+	// BackupPlanLocation: Optional. The location where the BackupPlan will be
+	// created. This field is required for multi-region BackupVaults and is
+	// optional for regional BackupVaults. It is useful when creating a Backup
+	// Vault in a multi-region, allowing the BackupPlan to reside in a specific
+	// region within that multi-region. If this field is not provided, the
+	// BackupPlan will be created in the same location as specified in the `name`
+	// field.
+	BackupPlanLocation string `json:"backupPlanLocation,omitempty"`
 	// CloudSqlInstanceInitializationConfig: Optional. The configuration for
 	// initializing a Cloud SQL instance.
 	CloudSqlInstanceInitializationConfig *CloudSqlInstanceInitializationConfig `json:"cloudSqlInstanceInitializationConfig,omitempty"`
@@ -3494,18 +3502,16 @@ type InitializeServiceRequest struct {
 	// config will be applied. Examples include, "compute.googleapis.com/Instance"
 	// and "storage.googleapis.com/Bucket".
 	ResourceType string `json:"resourceType,omitempty"`
-	// ForceSendFields is a list of field names (e.g.
-	// "CloudSqlInstanceInitializationConfig") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted from
-	// API requests. See
+	// ForceSendFields is a list of field names (e.g. "BackupPlanLocation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g.
-	// "CloudSqlInstanceInitializationConfig") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted from API
-	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
-	// more details.
+	// NullFields is a list of field names (e.g. "BackupPlanLocation") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
@@ -12709,7 +12715,7 @@ type ProjectsLocationsServiceConfigInitializeCall struct {
 // Initialize: Initializes the service related config for a project.
 //
 //   - name: The resource name of the serviceConfig used to initialize the
-//     service. Format:
+//     service. The location must be the location of the BackupVault. Format:
 //     `projects/{project_id}/locations/{location}/serviceConfig`.
 func (r *ProjectsLocationsServiceConfigService) Initialize(name string, initializeservicerequest *InitializeServiceRequest) *ProjectsLocationsServiceConfigInitializeCall {
 	c := &ProjectsLocationsServiceConfigInitializeCall{s: r.s, urlParams_: make(gensupport.URLParams)}

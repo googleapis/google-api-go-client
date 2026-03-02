@@ -1129,7 +1129,10 @@ func (s BatchWriteRequest) MarshalJSON() ([]byte, error) {
 // BatchWriteResponse: The result of applying a batch of mutations.
 type BatchWriteResponse struct {
 	// CommitTimestamp: The commit timestamp of the transaction that applied this
-	// batch. Present if `status` is `OK`, absent otherwise.
+	// batch. Present if status is OK and the mutation groups were applied, absent
+	// otherwise. For mutation groups with conditions, a status=OK and missing
+	// commit_timestamp means that the mutation groups were not applied due to the
+	// condition not being satisfied after evaluation.
 	CommitTimestamp string `json:"commitTimestamp,omitempty"`
 	// Indexes: The mutation groups applied in this batch. The values index into
 	// the `mutation_groups` field in the corresponding `BatchWriteRequest`.

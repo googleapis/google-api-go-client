@@ -1137,6 +1137,9 @@ type ConsumerConfig struct {
 	// ConsumerImportSubnetRoutesWithPublicIp: Import subnet routes with public ip
 	// flag value for peering from consumer to producer.
 	ConsumerImportSubnetRoutesWithPublicIp bool `json:"consumerImportSubnetRoutesWithPublicIp,omitempty"`
+	// ConsumerPeeringActive: Output only. If this is true, consumer peering is
+	// active.
+	ConsumerPeeringActive bool `json:"consumerPeeringActive,omitempty"`
 	// ProducerExportCustomRoutes: Export custom routes flag value for peering from
 	// producer to consumer.
 	ProducerExportCustomRoutes bool `json:"producerExportCustomRoutes,omitempty"`

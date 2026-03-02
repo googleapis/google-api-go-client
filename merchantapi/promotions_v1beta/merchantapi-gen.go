@@ -176,6 +176,25 @@ type AccountsPromotionsService struct {
 
 // Attributes: Attributes.
 type Attributes struct {
+	// Audience: Optional. This field defines the audience a promotion will be
+	// visible to.
+	//
+	// Possible values:
+	//   "AUDIENCE_UNSPECIFIED" - The promotion is not restricted to any audience
+	// and will be shown to all users. Default value.
+	//   "NEW_CUSTOMERS" - The Promotion will be shown to new customers only. If
+	// this value is set, the `promotion_destinations` field in `Attributes` must
+	// include `SHOPPING_ADS`. Requests that do not satisfy this condition will be
+	// rejected. For more details, see [First order
+	// promotions](https://support.google.com/merchants/answer/16310477?hl=en-IE&sji
+	// d=513157547625651759-NC)
+	//   "LOCATION" - The Promotion will be shown to customer within a certain
+	// location. Applicable locations must be specified in the
+	// `region_id_inclusion` field and the `promotion_destinations` field must
+	// contain `FREE_LISTINGS`. For more details, see [Regional
+	// Promotions](https://support.google.com/merchants/answer/16700435?hl=en&sjid=8
+	// 815806704218720187-NC).
+	Audience string `json:"audience,omitempty"`
 	// BrandExclusion: Optional. Product filter by brand exclusion
 	// (https://support.google.com/merchants/answer/13861679?ref_topic=13773355&sjid=17642868584668136159-NC)
 	// for the promotion. The product filter attributes only applies when the
@@ -427,6 +446,11 @@ type Attributes struct {
 	// restriction. In this case, the `custom_redemption_restriction` field must be
 	// set.
 	RedemptionRestriction string `json:"redemptionRestriction,omitempty"`
+	// RegionIdInclusion: Optional. A list of regions
+	// (https://support.google.com/merchants/answer/15406457?hl=en&sjid=8815806704218720187-NC#howregionswork)
+	// where the promotion is applicable. Must be set if `audience` is set to
+	// `LOCATION`.
+	RegionIdInclusion []string `json:"regionIdInclusion,omitempty"`
 	// StoreApplicability: Optional. Whether the promotion applies to all stores,
 	// or only specified stores
 	// (https://support.google.com/merchants/answer/13857563?sjid=17642868584668136159-NC).
@@ -456,15 +480,15 @@ type Attributes struct {
 	// the product is sold in. See the Local product inventory data specification
 	// (https://support.google.com/merchants/answer/3061342) for more information.
 	StoreCodesInclusion []string `json:"storeCodesInclusion,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BrandExclusion") to
+	// ForceSendFields is a list of field names (e.g. "Audience") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BrandExclusion") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Audience") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

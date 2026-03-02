@@ -961,8 +961,8 @@ func (s Datastore) MarshalJSON() ([]byte, error) {
 
 // DatastoreMountConfig: The Datastore Mount configuration
 type DatastoreMountConfig struct {
-	// AccessMode: Optional. NFS is accessed by hosts in read mode Optional.
-	// Default value used will be READ_WRITE
+	// AccessMode: Optional. The access mode of the NFS volume. Optional. Default
+	// value used will be READ_WRITE
 	//
 	// Possible values:
 	//   "ACCESS_MODE_UNSPECIFIED" - The default value. This value should never be
@@ -970,9 +970,8 @@ type DatastoreMountConfig struct {
 	//   "READ_ONLY" - NFS is accessed by hosts in read mode
 	//   "READ_WRITE" - NFS is accessed by hosts in read and write mode
 	AccessMode string `json:"accessMode,omitempty"`
-	// Datastore: Required. The resource name of the datastore to unmount. The
-	// datastore requested to be mounted should be in same region/zone as the
-	// cluster. Resource names are schemeless URIs that follow the conventions in
+	// Datastore: Required. The resource name of the datastore to mount. Resource
+	// names are schemeless URIs that follow the conventions in
 	// https://cloud.google.com/apis/design/resource_names. For example:
 	// `projects/my-project/locations/us-central1/datastores/my-datastore`
 	Datastore string `json:"datastore,omitempty"`
@@ -988,12 +987,6 @@ type DatastoreMountConfig struct {
 	// used.
 	//   "NFS_V3" - NFS 3
 	NfsVersion string `json:"nfsVersion,omitempty"`
-	// SecurityType: Optional. ONLY required when NFS 4.1 version is used
-	//
-	// Possible values:
-	//   "SECURITY_TYPE_UNSPECIFIED" - The default value. This value should never
-	// be used.
-	SecurityType string `json:"securityType,omitempty"`
 	// Servers: Output only. Server IP addresses of the NFS volume. For NFS 3, you
 	// can only provide a single server IP address or DNS names.
 	Servers []string `json:"servers,omitempty"`
@@ -1017,13 +1010,19 @@ func (s DatastoreMountConfig) MarshalJSON() ([]byte, error) {
 
 // DatastoreNetwork: The network configuration for the datastore.
 type DatastoreNetwork struct {
-	// ConnectionCount: Optional. The number of connections of the NFS volume.
-	// Spported from vsphere 8.0u1
+	// ConnectionCount: Optional. connection_count is used to set multiple
+	// connections from NFS client on ESXi host to NFS server. A higher number of
+	// connections results in better performance on datastores. In MountDatastore
+	// API by default max 4 connections are configured. User can set value of
+	// connection_count between 1 to 4. Connection_count is supported from vsphere
+	// 8.0u1 for earlier version 1 connection count is set on the ESXi hosts.
 	ConnectionCount int64 `json:"connectionCount,omitempty"`
-	// Mtu: Optional. The Maximal Transmission Unit (MTU) of the datastore. System
-	// sets default MTU size. It prefers the VPC peering MTU, falling back to the
-	// VEN MTU if no peering MTU is found. when detected, and falling back to the
-	// VEN MTU otherwise.
+	// Mtu: Optional. MTU value is set on the VMKernel adapter for the NFS traffic.
+	// By default standard 1500 MTU size is set in MountDatastore API which is good
+	// for typical setups. However google VPC networks supports jumbo MTU 8896. We
+	// recommend to tune this value based on the NFS traffic performance.
+	// Performance can be determined using benchmarking I/O tools like fio
+	// (Flexible I/O Tester) utility.
 	Mtu int64 `json:"mtu,omitempty"`
 	// NetworkPeering: Output only. The resource name of the network peering, used
 	// to access the file share by clients on private cloud. Resource names are
@@ -2774,7 +2773,7 @@ func (s NetworkService) MarshalJSON() ([]byte, error) {
 
 // NfsDatastore: The NFS datastore configuration.
 type NfsDatastore struct {
-	// GoogleFileService: Google service file service configuration
+	// GoogleFileService: Google file service configuration
 	GoogleFileService *GoogleFileService `json:"googleFileService,omitempty"`
 	// GoogleVmwareFileService: GCVE file service configuration
 	GoogleVmwareFileService *GoogleVmwareFileService `json:"googleVmwareFileService,omitempty"`
@@ -4206,6 +4205,7 @@ type VmwareUpgradeComponent struct {
 	//   "WITNESS_VM" - witness VM in case of stretch PC
 	//   "NSXT" - nsxt
 	//   "CLUSTER" - Cluster is used in case of BM
+	//   "VM_TOOLS" - VMware Tools.
 	ComponentType string `json:"componentType,omitempty"`
 	// State: Output only. Component's upgrade state.
 	//
@@ -4563,7 +4563,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
@@ -5020,7 +5024,6 @@ type ProjectsLocationsDatastoresCreateCall struct {
 }
 
 // Create: Creates a new `Datastore` resource in a given project and location.
-// Datastores are regional resources
 //
 //   - parent: The resource name of the location to create the new datastore in.
 //     Resource names are schemeless URIs that follow the conventions in
@@ -5569,8 +5572,8 @@ type ProjectsLocationsDatastoresPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Modifies a Datastore resource. Only the following fields can be
-// updated: `description`. Only fields specified in `updateMask` are applied.
+// Patch: Modifies a Datastore resource. Only fields specified in `updateMask`
+// are applied.
 //
 //   - name: Output only. Identifier. The resource name of this datastore.
 //     Resource names are schemeless URIs that follow the conventions in
@@ -5596,7 +5599,7 @@ func (c *ProjectsLocationsDatastoresPatchCall) RequestId(requestId string) *Proj
 // update. The fields specified in the `update_mask` are relative to the
 // resource, not the full request. A field will be overwritten if it is in the
 // mask. If the user does not provide a mask then all fields will be
-// overwritten. Only the following fields can be updated: `description`.
+// overwritten.
 func (c *ProjectsLocationsDatastoresPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDatastoresPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -11604,8 +11607,7 @@ type ProjectsLocationsPrivateCloudsClustersMountDatastoreCall struct {
 	header_               http.Header
 }
 
-// MountDatastore: Mounts a `Datastore` on a cluster resource Datastores are
-// zonal resources
+// MountDatastore: Mounts a `Datastore` on a cluster resource
 //
 //   - name: The resource name of the cluster to mount the datastore. Resource
 //     names are schemeless URIs that follow the conventions in
@@ -12067,8 +12069,7 @@ type ProjectsLocationsPrivateCloudsClustersUnmountDatastoreCall struct {
 	header_                 http.Header
 }
 
-// UnmountDatastore: Mounts a `Datastore` on a cluster resource Datastores are
-// zonal resources
+// UnmountDatastore: Unmounts a `Datastore` on a cluster resource
 //
 //   - name: The resource name of the cluster to unmount the datastore. Resource
 //     names are schemeless URIs that follow the conventions in

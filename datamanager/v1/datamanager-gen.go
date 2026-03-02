@@ -1852,7 +1852,7 @@ func (s PairData) MarshalJSON() ([]byte, error) {
 // PairIdInfo: Additional information when `PAIR_ID` is one of the
 // `upload_key_types`. This feature is only available to data partners.
 type PairIdInfo struct {
-	// AdvertiserIdentifierCount: Output only. The count of the advertiser's first
+	// AdvertiserIdentifierCount: Optional. The count of the advertiser's first
 	// party data records that have been uploaded to a clean room provider. This
 	// does not signify the size of a PAIR user list.
 	AdvertiserIdentifierCount int64 `json:"advertiserIdentifierCount,omitempty,string"`
@@ -1860,7 +1860,7 @@ type PairIdInfo struct {
 	// publisher relationship with one clean room provider or across multiple clean
 	// room providers.
 	CleanRoomIdentifier string `json:"cleanRoomIdentifier,omitempty"`
-	// MatchRatePercentage: Output only. This field denotes the percentage of
+	// MatchRatePercentage: Optional. This field denotes the percentage of
 	// membership match of this user list with the corresponding publisher's first
 	// party data. Must be between 0 and 100 inclusive.
 	MatchRatePercentage int64 `json:"matchRatePercentage,omitempty"`
@@ -1870,7 +1870,7 @@ type PairIdInfo struct {
 	// scope of that cleanroom. This cannot be used as a global identifier across
 	// multiple cleanrooms.
 	PublisherId int64 `json:"publisherId,omitempty,string"`
-	// PublisherName: Optional. Descriptive name of the publisher to be displayed
+	// PublisherName: Required. Descriptive name of the publisher to be displayed
 	// in the UI for a better targeting experience.
 	PublisherName string `json:"publisherName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdvertiserIdentifierCount")
@@ -3601,7 +3601,7 @@ func (r *AccountTypesAccountsPartnerLinksService) Search(parent string) *Account
 // operations: - `AND` - `=` - `!=` Supported fields: - `partner_link_id` -
 // `owning_account.account_type` - `owning_account.account_id` -
 // `partner_account.account_type` - `partner_account.account_id` Example:
-// `owning_account.account_type = "GOOGLE_ADS" OR partner_account.account_id =
+// `owning_account.account_type = "GOOGLE_ADS" AND partner_account.account_id =
 // 987654321`
 func (c *AccountTypesAccountsPartnerLinksSearchCall) Filter(filter string) *AccountTypesAccountsPartnerLinksSearchCall {
 	c.urlParams_.Set("filter", filter)

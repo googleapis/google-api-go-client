@@ -2038,12 +2038,15 @@ type DataRetentionDeletionEvent struct {
 	//
 	// Possible values:
 	//   "EVENT_TYPE_UNSPECIFIED" - Unspecified event type.
-	//   "EVENT_TYPE_MAX_TTL_EXCEEDED" - The maximum retention time has been
-	// exceeded.
+	//   "EVENT_TYPE_MAX_TTL_EXCEEDED" - Deprecated: This field is pending removal.
+	// Use EVENT_TYPE_MAX_TTL_FROM_CREATION or
+	// EVENT_TYPE_MAX_TTL_FROM_LAST_MODIFICATION instead.
 	//   "EVENT_TYPE_MAX_TTL_FROM_CREATION" - Max TTL from the asset's creation
 	// time.
 	//   "EVENT_TYPE_MAX_TTL_FROM_LAST_MODIFICATION" - Max TTL from the asset's
 	// last modification time.
+	//   "EVENT_TYPE_MIN_TTL_FROM_CREATION" - Min TTL from the asset's creation
+	// time.
 	EventType string `json:"eventType,omitempty"`
 	// MaxRetentionAllowed: Maximum duration of retention allowed from the DRD
 	// control. This comes from the DRD control where users set a max TTL for their
@@ -2052,6 +2055,10 @@ type DataRetentionDeletionEvent struct {
 	// this case, a DataRetentionDeletionEvent will be generated for that Cloud
 	// Storage bucket, and the max_retention_allowed is 90 days.
 	MaxRetentionAllowed string `json:"maxRetentionAllowed,omitempty"`
+	// MinRetentionAllowed: Min duration of retention allowed from the DSPM
+	// retention control. This field is only populated when event type is set to
+	// EVENT_TYPE_MIN_TTL_FROM_CREATION.
+	MinRetentionAllowed string `json:"minRetentionAllowed,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataObjectCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6073,12 +6080,15 @@ type GoogleCloudSecuritycenterV2DataRetentionDeletionEvent struct {
 	//
 	// Possible values:
 	//   "EVENT_TYPE_UNSPECIFIED" - Unspecified event type.
-	//   "EVENT_TYPE_MAX_TTL_EXCEEDED" - The maximum retention time has been
-	// exceeded.
+	//   "EVENT_TYPE_MAX_TTL_EXCEEDED" - Deprecated: This field is pending removal.
+	// Use EVENT_TYPE_MAX_TTL_FROM_CREATION or
+	// EVENT_TYPE_MAX_TTL_FROM_LAST_MODIFICATION instead.
 	//   "EVENT_TYPE_MAX_TTL_FROM_CREATION" - Max TTL from the asset's creation
 	// time.
 	//   "EVENT_TYPE_MAX_TTL_FROM_LAST_MODIFICATION" - Max TTL from the asset's
 	// last modification time.
+	//   "EVENT_TYPE_MIN_TTL_FROM_CREATION" - Min TTL from the asset's creation
+	// time.
 	EventType string `json:"eventType,omitempty"`
 	// MaxRetentionAllowed: Maximum duration of retention allowed from the DRD
 	// control. This comes from the DRD control where users set a max TTL for their
@@ -6087,6 +6097,10 @@ type GoogleCloudSecuritycenterV2DataRetentionDeletionEvent struct {
 	// this case, a DataRetentionDeletionEvent will be generated for that Cloud
 	// Storage bucket, and the max_retention_allowed is 90 days.
 	MaxRetentionAllowed string `json:"maxRetentionAllowed,omitempty"`
+	// MinRetentionAllowed: Min duration of retention allowed from the DSPM
+	// retention control. This field is only populated when event type is set to
+	// EVENT_TYPE_MIN_TTL_FROM_CREATION.
+	MinRetentionAllowed string `json:"minRetentionAllowed,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataObjectCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

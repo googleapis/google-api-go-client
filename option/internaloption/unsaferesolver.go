@@ -9,18 +9,22 @@ import (
 	"google.golang.org/api/option"
 )
 
-// UnsafeResolver is used to introspect client options, which
-// are opaque by their nature as functional options.
+// UnsafeResolver provides a mechanism for introspecting values passed through
+// during client instantiations, which are defined as functional options.  It
+// is by its nature not meant for general use, as it requires understanding of
+// internal implementations.  It is intended for use solely by internal Google
+// client code, and provides no stability contract.
+//
+// This is an EXPERIMENTAL API and may be changed or removed in the future.
 type UnsafeResolver struct {
 	ds *internal.DialSettings
 }
 
-// NewUnsafeResolver provides and experimental mechanism for introspecting
-// passed-in ClientOptions.  It is intended for use by internal Google client
-// code, and provides no stability contract as it's dependent on internal
-// implementation details.
+// NewUnsafeResolver instantiates a new ClientOption resolver.  It is indended
+// for user solely by internal Google client code.  See the corresponding
+// UnsafeResolver type for more details.
 //
-// The method is experimental and subject to change without notice.
+// This is an EXPERIMENTAL API and may be changed or removed in the future.
 func NewUnsafeResolver(opts ...option.ClientOption) (*UnsafeResolver, error) {
 	ds := new(internal.DialSettings)
 	for _, o := range opts {
@@ -33,12 +37,16 @@ func NewUnsafeResolver(opts ...option.ClientOption) (*UnsafeResolver, error) {
 
 // ResolvedGRPCConnPoolSize provides the passed in value correspnding to the
 // WithGRPCConnectionPool option in google.golang.org/option.
+//
+// This is an EXPERIMENTAL API and may be changed or removed in the future.
 func (ur *UnsafeResolver) ResolvedGRPCConnPoolSize() int {
 	return ur.ds.GRPCConnPoolSize
 }
 
 // ResolvedGRPCEndpoint returns the resolved endpoint address used for
 // establishing gRPC connections.
+//
+// This is an EXPERIMENTAL API and may be changed or removed in the future.
 func (ur *UnsafeResolver) ResolvedGRPCEndpoint() (string, error) {
 	_, addr, err := internal.GetGRPCTransportConfigAndEndpoint(ur.ds)
 	return addr, err
@@ -47,6 +55,8 @@ func (ur *UnsafeResolver) ResolvedGRPCEndpoint() (string, error) {
 // ResolvedGRPCConnIsCustom exposes whether the provided options included
 // directives for providing a customized transport, corresponding to the
 // WithGRPCConn option.
+//
+// This is an EXPERIMENTAL API and may be changed or removed in the future.
 func (ur *UnsafeResolver) ResolvedGRPCConnIsCustom() bool {
 	return ur.ds.GRPCConn != nil
 }

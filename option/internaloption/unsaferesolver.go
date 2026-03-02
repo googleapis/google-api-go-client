@@ -20,7 +20,7 @@ type UnsafeResolver struct {
 	ds *internal.DialSettings
 }
 
-// NewUnsafeResolver instantiates a new ClientOption resolver.  It is indended
+// NewUnsafeResolver instantiates a new ClientOption resolver.  It is intended
 // for user solely by internal Google client code.  See the corresponding
 // UnsafeResolver type for more details.
 //

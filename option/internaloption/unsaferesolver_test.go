@@ -19,6 +19,8 @@ func TestNewUnsafeResolver(t *testing.T) {
 		wantResolvedGRPCEndpointAddress string
 		wantResolvedGRPCEndpointError   bool
 		wantResolvedGRPCConnIsCustom    bool
+		wantResolvedEnableDirectPath    bool
+		wantResolvedEnableDirectPathXds bool
 	}{
 		{
 			desc: "empty",
@@ -55,6 +57,22 @@ func TestNewUnsafeResolver(t *testing.T) {
 			},
 			wantResolvedGRPCConnIsCustom: true,
 		},
+		{
+			desc: "direct path plain",
+			opts: []option.ClientOption{
+				EnableDirectPath(true),
+			},
+			wantResolvedEnableDirectPath: true,
+		},
+		{
+			desc: "direct path xds",
+			opts: []option.ClientOption{
+				EnableDirectPath(true),
+				EnableDirectPathXds(),
+			},
+			wantResolvedEnableDirectPath:    true,
+			wantResolvedEnableDirectPathXds: true,
+		},
 	} {
 		t.Run(tc.desc, func(t *testing.T) {
 			ur, err := NewUnsafeResolver(tc.opts...)
@@ -62,8 +80,7 @@ func TestNewUnsafeResolver(t *testing.T) {
 				t.Fatalf("NewUnsafeResolver errored: %v", err)
 			}
 			// check ResolvedGRPCConnPoolSize
-			got := ur.ResolvedGRPCConnPoolSize()
-			if got != tc.wantResolvedGRPCConnPoolSize {
+			if got := ur.ResolvedGRPCConnPoolSize(); got != tc.wantResolvedGRPCConnPoolSize {
 				t.Errorf("ResolveGRPCConnPoolSize: got %d, want %d", got, tc.wantResolvedGRPCConnPoolSize)
 			}
 			// check ResolvedGRPCEndpoint
@@ -81,9 +98,15 @@ func TestNewUnsafeResolver(t *testing.T) {
 				t.Errorf("ResolvedGRPCEndpoint: address mismatch, got %q want %q", gotAddr, tc.wantResolvedGRPCEndpointAddress)
 			}
 			// check ResolvedGRPCConnIsCustom
-			gotCustom := ur.ResolvedGRPCConnIsCustom()
-			if gotCustom != tc.wantResolvedGRPCConnIsCustom {
-				t.Errorf("ResolvedGRPCConnIsCustom: got %T want %T", gotCustom, tc.wantResolvedGRPCConnIsCustom)
+			if gotCustom := ur.ResolvedGRPCConnIsCustom(); gotCustom != tc.wantResolvedGRPCConnIsCustom {
+				t.Errorf("ResolvedGRPCConnIsCustom: got %t want %t", gotCustom, tc.wantResolvedGRPCConnIsCustom)
+			}
+			// check ResolvedGRPCConnIsCustom
+			if gotDirectPath := ur.ResolvedEnableDirectPath(); gotDirectPath != tc.wantResolvedEnableDirectPath {
+				t.Errorf("ResolvedEnableDirectPath: got %t want %t", gotDirectPath, tc.wantResolvedEnableDirectPath)
+			}
+			if gotDirectPathXds := ur.ResolvedEnableDirectPathXds(); gotDirectPathXds != tc.wantResolvedEnableDirectPathXds {
+				t.Errorf("ResolvedEnableDirectPathXds: got %t want %t", gotDirectPathXds, tc.wantResolvedEnableDirectPathXds)
 			}
 		})
 	}

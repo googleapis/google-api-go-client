@@ -60,3 +60,20 @@ func (ur *UnsafeResolver) ResolvedGRPCEndpoint() (string, error) {
 func (ur *UnsafeResolver) ResolvedGRPCConnIsCustom() bool {
 	return ur.ds.GRPCConn != nil
 }
+
+// ResolvedEnableDirectPath returns whether DirectPath was explicitly enabled.
+// This corresponds to the EnableDirectPath option in this package.
+//
+// This is an EXPERIMENTAL API and may be changed or removed in the future.
+func (ur *UnsafeResolver) ResolvedEnableDirectPath() bool {
+	return ur.ds.EnableDirectPath
+}
+
+// ResolvedEnableDirectPathXds returns whether extensible directory service (xDS)
+// support was requested as part of direct path enablement.  This corresponds to the
+// EnableDirectPathXds option in this package.
+//
+// This is an EXPERIMENTAL API and may be changed or removed in the future.
+func (ur *UnsafeResolver) ResolvedEnableDirectPathXds() bool {
+	return ur.ds.EnableDirectPathXds
+}

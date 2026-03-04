@@ -4075,15 +4075,14 @@ type Table struct {
 	// containing the table. Note one can still delete the data stored in the table
 	// through Data APIs.
 	DeletionProtection bool `json:"deletionProtection,omitempty"`
-	// Granularity: Immutable. The granularity (i.e. `MILLIS`) at which timestamps
-	// are stored in this table. Timestamps not matching the granularity will be
-	// rejected. If unspecified at creation time, the value will be set to
-	// `MILLIS`. Views: `SCHEMA_VIEW`, `FULL`.
+	// Granularity: Immutable. The granularity at which timestamps are stored in
+	// this table. Timestamps not matching the granularity will be rejected. If
+	// unspecified at creation time, the value will be set to `MILLIS`. Views:
+	// `SCHEMA_VIEW`, `FULL`.
 	//
 	// Possible values:
 	//   "TIMESTAMP_GRANULARITY_UNSPECIFIED" - The user did not specify a
-	// granularity. Should not be returned. When specified during table creation,
-	// MILLIS will be used.
+	// granularity. Should not be returned.
 	//   "MILLIS" - The table keeps data versioned at a granularity of 1ms.
 	Granularity string `json:"granularity,omitempty"`
 	// Name: The unique name of the table. Values are of the form

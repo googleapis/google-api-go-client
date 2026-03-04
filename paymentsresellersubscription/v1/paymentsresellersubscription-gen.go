@@ -1356,15 +1356,13 @@ func (s ServicePeriod) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Subscription: A subscription serves as a central billing entity between an
-// external partner and Google. The underlying Google services rely on the
-// subscription state to grant or revoke the user's service entitlement. It's
-// important to note that the subscription state may not always perfectly align
-// with the user's service entitlement. For example, some Google services may
-// continue providing access to the user until the current billing cycle ends,
-// even if the subscription has been immediately canceled. However, other
-// services may not do the same. To fully understand the specific details,
-// please consult the relevant contract or product policy.
+// Subscription: Acts as a central billing entity between an external partner
+// and Google. Google services use the subscription state to grant or revoke
+// the user's service entitlement. Note: The subscription state might not
+// perfectly align with the user's service entitlement. Some services might
+// continue providing access until the current cycle ends, even if the
+// subscription is immediately canceled. Consult the relevant contract or
+// product policy for specific details.
 type Subscription struct {
 	// CancellationDetails: Output only. Describes the details of a cancelled
 	// subscription. Only applicable to subscription of state `STATE_CANCELLED`.
@@ -1862,18 +1860,17 @@ func (s UndoCancelSubscriptionResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UserSession: A user session contains a short-lived token that includes
-// information required to interact with Google Payments Reseller Platform
-// using the following web endpoints. - A user session token should be
-// generated dynamically for an authenticated user. You should refrain from
-// sharing a token directly with a user in an unauthenticated context, such as
-// SMS, or email. - You can re-generate new session tokens repeatedly for same
-// `generate` request if necessary, regardless of the previous tokens being
-// expired or not. You don't need to worry about multiple sessions resulting in
-// duplicate fulfillments as guaranteed by the same subscription id. Please
-// refer to the Google Managed Signup
+// UserSession: Contains a short-lived token containing information required to
+// interact with the Google Payments Reseller Platform via web endpoints. -
+// Generate a user session token dynamically for an authenticated user. Do not
+// share a token directly with a user in an unauthenticated context, such as
+// SMS or email. - You can regenerate new session tokens repeatedly for the
+// same `generate` request if necessary, regardless of whether previous tokens
+// have expired. Multiple sessions will not result in duplicate fulfillments
+// because the `subscription ID` guarantees uniqueness. For more integration
+// details, see the Google Managed Signup
 // (/payments/reseller/subscription/reference/index/User.Signup.Integration/Goog
-// le.Managed.Signup) documentation for additional integration details.
+// le.Managed.Signup) documentation.
 type UserSession struct {
 	// ExpireTime: Output only. The time at which the user session expires.
 	ExpireTime string `json:"expireTime,omitempty"`

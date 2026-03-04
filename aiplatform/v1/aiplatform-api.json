@@ -30765,9 +30765,42 @@
       }
     }
   },
-  "revision": "20260217",
+  "revision": "20260228",
   "rootUrl": "https://aiplatform.googleapis.com/",
   "schemas": {
+    "CloudAiLargeModelsVisionGenerateVideoExperiments": {
+      "description": "Experimental parameters for video generation.",
+      "id": "CloudAiLargeModelsVisionGenerateVideoExperiments",
+      "properties": {
+        "humanPose": {
+          "$ref": "CloudAiLargeModelsVisionHumanPose",
+          "description": "Human pose parameters for Pose Control"
+        },
+        "modelName": {
+          "description": "Model names, as defined in: xyz ",
+          "type": "string"
+        },
+        "numDiffusionSteps": {
+          "description": "Number of diffusion steps",
+          "format": "int32",
+          "type": "integer"
+        },
+        "promptInputs": {
+          "$ref": "CloudAiLargeModelsVisionPromptInputs",
+          "description": "Prompt chunks for \"ProModel\" prompting. If set, the prompt will not be rewritten, and top-level prompt ignored."
+        },
+        "videoTransformMaskGcsUri": {
+          "description": "GCS URI of the grayscale video mask for Differential Diffusion. Maps to sdedit_video_tmax_scale_map ",
+          "type": "string"
+        },
+        "videoTransformStrength": {
+          "description": "SDEdit: Scalar noise level (0.0 to 1.0) Maps to sdedit_tmax ",
+          "format": "float",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
     "CloudAiLargeModelsVisionGenerateVideoResponse": {
       "description": "Generate video response.",
       "id": "CloudAiLargeModelsVisionGenerateVideoResponse",
@@ -30808,12 +30841,30 @@
           "description": "Base64 encoded bytes string representing the video.",
           "type": "string"
         },
+        "experimentsMetadata": {
+          "$ref": "CloudAiLargeModelsVisionGenerateVideoExperiments",
+          "description": "Optional metadata returned from experimental requests. Likely only includes the rewritten prompt chunks."
+        },
         "gcsUri": {
           "description": "Cloud Storage URI where the generated video is written.",
           "type": "string"
         },
         "mimeType": {
           "description": "The MIME type of the content of the video. - video/mp4",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CloudAiLargeModelsVisionHumanPose": {
+      "id": "CloudAiLargeModelsVisionHumanPose",
+      "properties": {
+        "bodyLandmarksGcsUri": {
+          "description": "GCS URI of the human pose video to condition video generation.",
+          "type": "string"
+        },
+        "faceLandmarksGcsUri": {
+          "description": "GCS URI of the face landmarks video to condition video generation.",
           "type": "string"
         }
       },
@@ -30947,6 +30998,36 @@
         "y2": {
           "format": "float",
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "CloudAiLargeModelsVisionPromptInputs": {
+      "description": "\"Direct\" prompting for Experimental Video Generation. These will be sent directly to the LDM without being rewritten.",
+      "id": "CloudAiLargeModelsVisionPromptInputs",
+      "properties": {
+        "audioPrompt": {
+          "description": "Description of audio content in the video, without speech.",
+          "type": "string"
+        },
+        "negativeAudioPrompt": {
+          "description": "Negative description of audio content in the video.",
+          "type": "string"
+        },
+        "negativePrompt": {
+          "description": "Single negative prompt for what not to generate.",
+          "type": "string"
+        },
+        "promptChunks": {
+          "description": "2s, 256 tokens per chunk, 4 total chunks. Required.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "transcript": {
+          "description": "Spoken transcript of the video for characters.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -37734,6 +37815,10 @@
           "$ref": "GoogleCloudAiplatformV1GroundingMetadata",
           "description": "Optional. Metadata returned to client when grounding is enabled."
         },
+        "inputTranscription": {
+          "$ref": "GoogleCloudAiplatformV1Transcription",
+          "description": "Optional. Audio transcription of user input."
+        },
         "interrupted": {
           "description": "Optional. Flag indicating that LLM was interrupted when generating the content. Usually it's due to user interruption during a bidi streaming.",
           "type": "boolean"
@@ -37744,6 +37829,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "outputTranscription": {
+          "$ref": "GoogleCloudAiplatformV1Transcription",
+          "description": "Optional. Audio transcription of model output."
         },
         "partial": {
           "description": "Optional. Indicates whether the text content is part of a unfinished text stream. Only used for streaming mode and when the content is plain text.",
@@ -41805,6 +41894,10 @@
       "description": "A piece of evidence that supports a claim made by the model. This is used to show a citation for a claim made by the model. When grounding is enabled, the model returns a `GroundingChunk` that contains a reference to the source of the information.",
       "id": "GoogleCloudAiplatformV1GroundingChunk",
       "properties": {
+        "image": {
+          "$ref": "GoogleCloudAiplatformV1GroundingChunkImage",
+          "description": "A grounding chunk from an image search result. See the `Image` message for details."
+        },
         "maps": {
           "$ref": "GoogleCloudAiplatformV1GroundingChunkMaps",
           "description": "A grounding chunk from Google Maps. See the `Maps` message for details."
@@ -41820,6 +41913,29 @@
       },
       "type": "object"
     },
+    "GoogleCloudAiplatformV1GroundingChunkImage": {
+      "description": "An `Image` chunk is a piece of evidence that comes from an image search result. It contains the URI of the image search result and the URI of the image. This is used to provide the user with a link to the source of the information.",
+      "id": "GoogleCloudAiplatformV1GroundingChunkImage",
+      "properties": {
+        "domain": {
+          "description": "The domain of the image search result page.",
+          "type": "string"
+        },
+        "imageUri": {
+          "description": "The URI of the image.",
+          "type": "string"
+        },
+        "sourceUri": {
+          "description": "The URI of the image search result page.",
+          "type": "string"
+        },
+        "title": {
+          "description": "The title of the image search result page.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudAiplatformV1GroundingChunkMaps": {
       "description": "A `Maps` chunk is a piece of evidence that comes from Google Maps, containing information about places or routes. This is used to provide the user with rich, location-based information.",
       "id": "GoogleCloudAiplatformV1GroundingChunkMaps",
@@ -41831,6 +41947,11 @@
         "placeId": {
           "description": "This Place's resource name, in `places/{place_id}` format. This can be used to look up the place in the Google Maps API.",
           "type": "string"
+        },
+        "route": {
+          "$ref": "GoogleCloudAiplatformV1GroundingChunkMapsRoute",
+          "description": "Output only. Route information.",
+          "readOnly": true
         },
         "text": {
           "description": "The text of the place answer.",
@@ -41875,6 +41996,27 @@
         },
         "title": {
           "description": "The title of the review.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1GroundingChunkMapsRoute": {
+      "description": "Route information from Google Maps.",
+      "id": "GoogleCloudAiplatformV1GroundingChunkMapsRoute",
+      "properties": {
+        "distanceMeters": {
+          "description": "The total distance of the route, in meters.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "duration": {
+          "description": "The total duration of the route.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "encodedPolyline": {
+          "description": "An encoded polyline of the route. See https://developers.google.com/maps/documentation/utilities/polylinealgorithm",
           "type": "string"
         }
       },
@@ -41950,6 +42092,13 @@
           },
           "type": "array"
         },
+        "imageSearchQueries": {
+          "description": "Optional. The image search queries that were used to generate the content. This field is populated only when the grounding source is Google Search with the Image Search search_type enabled.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "retrievalMetadata": {
           "$ref": "GoogleCloudAiplatformV1RetrievalMetadata",
           "description": "Optional. Output only. Metadata related to the retrieval grounding source.",
@@ -41993,7 +42142,7 @@
       "type": "object"
     },
     "GoogleCloudAiplatformV1GroundingSupport": {
-      "description": "A collection of supporting references for a segment of the model's response.",
+      "description": "A collection of supporting references for a segment or part of the model's response.",
       "id": "GoogleCloudAiplatformV1GroundingSupport",
       "properties": {
         "confidenceScores": {
@@ -42006,6 +42155,14 @@
         },
         "groundingChunkIndices": {
           "description": "A list of indices into the `grounding_chunks` field of the `GroundingMetadata` message. These indices specify which grounding chunks support the claim made in the content segment. For example, if this field has the values `[1, 3]`, it means that `grounding_chunks[1]` and `grounding_chunks[3]` are the sources for the claim in the content segment.",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "type": "array"
+        },
+        "renderedParts": {
+          "description": "Indices into the `rendered_parts` field of the `GroundingMetadata` message. These indices specify which rendered parts are associated with this support message.",
           "items": {
             "format": "int32",
             "type": "integer"
@@ -60582,8 +60739,39 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "searchTypes": {
+          "$ref": "GoogleCloudAiplatformV1ToolGoogleSearchSearchTypes",
+          "description": "Optional. The set of search types to enable. If not set, web search is enabled by default."
         }
       },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1ToolGoogleSearchImageSearch": {
+      "description": "Image search for grounding and related configurations.",
+      "id": "GoogleCloudAiplatformV1ToolGoogleSearchImageSearch",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1ToolGoogleSearchSearchTypes": {
+      "description": "Different types of search that can be enabled on the GoogleSearch tool.",
+      "id": "GoogleCloudAiplatformV1ToolGoogleSearchSearchTypes",
+      "properties": {
+        "imageSearch": {
+          "$ref": "GoogleCloudAiplatformV1ToolGoogleSearchImageSearch",
+          "description": "Optional. Setting this field enables image search. Image bytes are returned."
+        },
+        "webSearch": {
+          "$ref": "GoogleCloudAiplatformV1ToolGoogleSearchWebSearch",
+          "description": "Optional. Setting this field enables web search. Only text results are returned."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1ToolGoogleSearchWebSearch": {
+      "description": "Standard web search for grounding and related configurations. Only text results are returned.",
+      "id": "GoogleCloudAiplatformV1ToolGoogleSearchWebSearch",
+      "properties": {},
       "type": "object"
     },
     "GoogleCloudAiplatformV1ToolNameMatchInput": {
@@ -61347,6 +61535,21 @@
       "properties": {
         "toolName": {
           "description": "Required. Spec for tool name to be checked for in the predicted trajectory.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1Transcription": {
+      "description": "Audio transcription in Server Content.",
+      "id": "GoogleCloudAiplatformV1Transcription",
+      "properties": {
+        "finished": {
+          "description": "Optional. The bool indicates the end of the transcription.",
+          "type": "boolean"
+        },
+        "text": {
+          "description": "Optional. Transcription text.",
           "type": "string"
         }
       },

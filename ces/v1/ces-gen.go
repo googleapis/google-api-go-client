@@ -768,6 +768,8 @@ type App struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: Required. Display name of the app.
 	DisplayName string `json:"displayName,omitempty"`
+	// ErrorHandlingSettings: Optional. Error handling settings of the app.
+	ErrorHandlingSettings *ErrorHandlingSettings `json:"errorHandlingSettings,omitempty"`
 	// Etag: Output only. Etag used to ensure the object hasn't changed during a
 	// read-modify-write operation. If the etag is empty, the update will overwrite
 	// any concurrent changes.
@@ -1409,6 +1411,8 @@ func (s ChannelProfileWebWidgetConfigSecuritySettings) MarshalJSON() ([]byte, er
 type Chunk struct {
 	// AgentTransfer: Optional. Agent transfer event.
 	AgentTransfer *AgentTransfer `json:"agentTransfer,omitempty"`
+	// Blob: Optional. Blob data.
+	Blob *Blob `json:"blob,omitempty"`
 	// DefaultVariables: A struct represents default variables at the start of the
 	// conversation, keyed by variable names.
 	DefaultVariables googleapi.RawMessage `json:"defaultVariables,omitempty"`
@@ -2398,9 +2402,11 @@ func (s DataStoreToolSummarizationConfig) MarshalJSON() ([]byte, error) {
 // Deployment: A deployment represents an immutable, queryable version of the
 // app. It is used to deploy an app version with a specific channel profile.
 type Deployment struct {
-	// AppVersion: Required. The resource name of the app version to deploy.
+	// AppVersion: Optional. The resource name of the app version to deploy.
 	// Format:
-	// projects/{project}/locations/{location}/apps/{app}/versions/{version}
+	// `projects/{project}/locations/{location}/apps/{app}/versions/{version}` Use
+	// `projects/{project}/locations/{location}/apps/{app}/versions/-` to use the
+	// draft app.
 	AppVersion string `json:"appVersion,omitempty"`
 	// ChannelProfile: Required. The channel profile used in the deployment.
 	ChannelProfile *ChannelProfile `json:"channelProfile,omitempty"`
@@ -2413,7 +2419,7 @@ type Deployment struct {
 	// any concurrent changes.
 	Etag string `json:"etag,omitempty"`
 	// Name: Identifier. The resource name of the deployment. Format:
-	// projects/{project}/locations/{location}/apps/{app}/deployments/{deployment}
+	// `projects/{project}/locations/{location}/apps/{app}/deployments/{deployment}`
 	Name string `json:"name,omitempty"`
 	// UpdateTime: Output only. Timestamp when this deployment was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -2552,6 +2558,74 @@ type EndUserAuthConfigOauth2JwtBearerConfig struct {
 
 func (s EndUserAuthConfigOauth2JwtBearerConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod EndUserAuthConfigOauth2JwtBearerConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EndpointControlPolicy: Defines project/location level endpoint control
+// policy.
+type EndpointControlPolicy struct {
+	// AllowedOrigins: Optional. The allowed HTTP(s) origins that tools in the App
+	// are able to directly call. The enforcement depends on the value of
+	// enforcement_scope and the VPC-SC status of the project. If a port number is
+	// not provided, all ports will be allowed. Otherwise, the port number must
+	// match exactly. For example, "https://example.com" will match
+	// "https://example.com:443" and any other port. "https://example.com:443" will
+	// only match "https://example.com:443".
+	AllowedOrigins []string `json:"allowedOrigins,omitempty"`
+	// EnforcementScope: Optional. The scope in which this policy's allowed_origins
+	// list is enforced.
+	//
+	// Possible values:
+	//   "ENFORCEMENT_SCOPE_UNSPECIFIED" - Unspecified. This policy will be treated
+	// as VPCSC_ONLY.
+	//   "VPCSC_ONLY" - This policy applies only when VPC-SC is active.
+	//   "ALWAYS" - This policy ALWAYS applies, regardless of VPC-SC status.
+	EnforcementScope string `json:"enforcementScope,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowedOrigins") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowedOrigins") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EndpointControlPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod EndpointControlPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ErrorHandlingSettings: Settings to describe how errors should be handled in
+// the app.
+type ErrorHandlingSettings struct {
+	// ErrorHandlingStrategy: Optional. The strategy to use for error handling.
+	//
+	// Possible values:
+	//   "ERROR_HANDLING_STRATEGY_UNSPECIFIED" - Unspecified error handling
+	// strategy. Defaults to FALLBACK_RESPONSE.
+	//   "NONE" - No specific handling is enabled.
+	//   "FALLBACK_RESPONSE" - A fallback message will be returned to the user in
+	// case of LLM errors.
+	ErrorHandlingStrategy string `json:"errorHandlingStrategy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorHandlingStrategy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorHandlingStrategy") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ErrorHandlingSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod ErrorHandlingSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5133,6 +5207,37 @@ func (s *Schema) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// SecuritySettings: Project/Location level security settings for CES.
+type SecuritySettings struct {
+	// CreateTime: Output only. Create time of the security settings.
+	CreateTime string `json:"createTime,omitempty"`
+	// EndpointControlPolicy: Optional. Endpoint control related settings.
+	EndpointControlPolicy *EndpointControlPolicy `json:"endpointControlPolicy,omitempty"`
+	// Etag: Output only. Etag of the security settings.
+	Etag string `json:"etag,omitempty"`
+	// Name: Identifier. The unique identifier of the security settings. Format:
+	// `projects/{project}/locations/{location}/securitySettings`
+	Name string `json:"name,omitempty"`
+	// UpdateTime: Output only. Last update time of the security settings.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SecuritySettings) MarshalJSON() ([]byte, error) {
+	type NoMethod SecuritySettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ServiceAccountAuthConfig: Configurations for authentication using a custom
 // service account.
 type ServiceAccountAuthConfig struct {
@@ -5204,7 +5309,7 @@ type SessionConfig struct {
 	Deployment string `json:"deployment,omitempty"`
 	// EntryAgent: Optional. The entry agent to handle the session. If not
 	// specified, the session will be handled by the root agent of the app. Format:
-	// `projects/{project}/locations/{location}/agents/{agent}`
+	// `projects/{project}/locations/{location}/apps/{app}/agents/{agent}`
 	EntryAgent string `json:"entryAgent,omitempty"`
 	// HistoricalContexts: Optional. The historical context of the session,
 	// including user inputs, agent responses, and other messages. Typically, CES
@@ -5227,6 +5332,10 @@ type SessionConfig struct {
 	// will use the time zone specified in the App.time_zone_settings. The format
 	// is the IANA Time Zone Database time zone, e.g. "America/Los_Angeles".
 	TimeZone string `json:"timeZone,omitempty"`
+	// UseToolFakes: Optional. Whether to use tool fakes for the session. If this
+	// field is set, the agent will attempt use tool fakes instead of calling the
+	// real tools.
+	UseToolFakes bool `json:"useToolFakes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Deployment") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5589,9 +5698,9 @@ type TlsConfigCaCert struct {
 	// or unspecified, CES will use Google's default trust store to verify
 	// certificates. N.B. Make sure the HTTPS server certificates are signed with
 	// "subject alt name". For instance a certificate can be self-signed using the
-	// following command, openssl x509 -req -days 200 -in example.com.csr \
+	// following command: ``` openssl x509 -req -days 200 -in example.com.csr \
 	// -signkey example.com.key \ -out example.com.crt \ -extfile <(printf
-	// "\nsubjectAltName='DNS:www.example.com'")
+	// "\nsubjectAltName='DNS:www.example.com'") ```
 	Cert string `json:"cert,omitempty"`
 	// DisplayName: Required. The name of the allowed custom CA certificates. This
 	// can be used to disambiguate the custom CA certificates.
@@ -5653,12 +5762,12 @@ type Tool struct {
 	// McpTool: Optional. The MCP tool. An MCP tool cannot be created or updated
 	// directly and is managed by the MCP toolset.
 	McpTool *McpTool `json:"mcpTool,omitempty"`
-	// Name: Identifier. The unique identifier of the tool. Format: -
-	// `projects/{project}/locations/{location}/apps/{app}/tools/{tool}` for ##
-	// standalone tools.
+	// Name: Identifier. The resource name of the tool. Format: *
+	// `projects/{project}/locations/{location}/apps/{app}/tools/{tool}` for
+	// standalone tools. *
 	// `projects/{project}/locations/{location}/apps/{app}/toolsets/{toolset}/tools/
 	// {tool}` for tools retrieved from a toolset. These tools are dynamic and
-	// output-only, they cannot be referenced directly where a tool is expected.
+	// output-only; they cannot be referenced directly where a tool is expected.
 	Name string `json:"name,omitempty"`
 	// OpenApiTool: Optional. The open API tool.
 	OpenApiTool *OpenApiTool `json:"openApiTool,omitempty"`
@@ -9406,7 +9515,8 @@ type ProjectsLocationsAppsDeploymentsPatchCall struct {
 // Patch: Updates the specified deployment.
 //
 //   - name: Identifier. The resource name of the deployment. Format:
-//     projects/{project}/locations/{location}/apps/{app}/deployments/{deployment}.
+//     `projects/{project}/locations/{location}/apps/{app}/deployments/{deployment
+//     }`.
 func (r *ProjectsLocationsAppsDeploymentsService) Patch(name string, deployment *Deployment) *ProjectsLocationsAppsDeploymentsPatchCall {
 	c := &ProjectsLocationsAppsDeploymentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11427,7 +11537,7 @@ func (c *ProjectsLocationsAppsToolsListCall) Pages(ctx context.Context, f func(*
 
 type ProjectsLocationsAppsToolsPatchCall struct {
 	s          *Service
-	nameid     string
+	name       string
 	tool       *Tool
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
@@ -11436,15 +11546,15 @@ type ProjectsLocationsAppsToolsPatchCall struct {
 
 // Patch: Updates the specified tool.
 //
-//   - name: Identifier. The unique identifier of the tool. Format: -
-//     `projects/{project}/locations/{location}/apps/{app}/tools/{tool}` for ##
-//     standalone tools.
+//   - name: Identifier. The resource name of the tool. Format: *
+//     `projects/{project}/locations/{location}/apps/{app}/tools/{tool}` for
+//     standalone tools. *
 //     `projects/{project}/locations/{location}/apps/{app}/toolsets/{toolset}/tool
 //     s/{tool}` for tools retrieved from a toolset. These tools are dynamic and
-//     output-only, they cannot be referenced directly where a tool is expected.
-func (r *ProjectsLocationsAppsToolsService) Patch(nameid string, tool *Tool) *ProjectsLocationsAppsToolsPatchCall {
+//     output-only; they cannot be referenced directly where a tool is expected.
+func (r *ProjectsLocationsAppsToolsService) Patch(name string, tool *Tool) *ProjectsLocationsAppsToolsPatchCall {
 	c := &ProjectsLocationsAppsToolsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.nameid = nameid
+	c.name = name
 	c.tool = tool
 	return c
 }
@@ -11496,7 +11606,7 @@ func (c *ProjectsLocationsAppsToolsPatchCall) doRequest(alt string) (*http.Respo
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.nameid,
+		"name": c.name,
 	})
 	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.tools.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)

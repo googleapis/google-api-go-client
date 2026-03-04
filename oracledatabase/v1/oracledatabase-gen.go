@@ -1950,6 +1950,13 @@ type Database struct {
 	//   "FAILED_DISABLING" - Indicates that the operations insights failed to
 	// disable.
 	OpsInsightsStatus string `json:"opsInsightsStatus,omitempty"`
+	// PluggableDatabaseId: Optional. The ID of the pluggable database associated
+	// with the Database. The ID must be unique within the project and location.
+	PluggableDatabaseId string `json:"pluggableDatabaseId,omitempty"`
+	// PluggableDatabaseName: Optional. The pluggable database associated with the
+	// Database. The name must begin with an alphabetic character and can contain a
+	// maximum of thirty alphanumeric characters.
+	PluggableDatabaseName string `json:"pluggableDatabaseName,omitempty"`
 	// Properties: Optional. The properties of the Database.
 	Properties *DatabaseProperties `json:"properties,omitempty"`
 	// TdeWalletPassword: Optional. The TDE wallet password for the database.

@@ -3067,6 +3067,9 @@ type GoogleCloudDiscoveryengineV1ActionConfig struct {
 	// UseStaticSecrets: Optional. Whether to use static secrets for the connector.
 	// If true, the secrets provided in the action_params will be ignored.
 	UseStaticSecrets bool `json:"useStaticSecrets,omitempty"`
+	// UserDefinedScopesMapping: Optional. Mapping from operation name to the list
+	// of scopes. Only be populated if there are user specified scopes.
+	UserDefinedScopesMapping map[string]GoogleCloudDiscoveryengineV1ActionConfigScopeList `json:"userDefinedScopesMapping,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActionParams") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3082,6 +3085,28 @@ type GoogleCloudDiscoveryengineV1ActionConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1ActionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1ActionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ActionConfigScopeList: Stores a list of scopes.
+type GoogleCloudDiscoveryengineV1ActionConfigScopeList struct {
+	// Scopes: Optional. The list of scopes.
+	Scopes []string `json:"scopes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Scopes") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Scopes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1ActionConfigScopeList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ActionConfigScopeList
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4854,6 +4879,8 @@ func (s GoogleCloudDiscoveryengineV1AnswerQueryUnderstandingInfoQueryClassificat
 type GoogleCloudDiscoveryengineV1AnswerReference struct {
 	// ChunkInfo: Chunk information.
 	ChunkInfo *GoogleCloudDiscoveryengineV1AnswerReferenceChunkInfo `json:"chunkInfo,omitempty"`
+	// Queries: Output only. The search queries that produced this reference.
+	Queries []string `json:"queries,omitempty"`
 	// StructuredDocumentInfo: Structured document information.
 	StructuredDocumentInfo *GoogleCloudDiscoveryengineV1AnswerReferenceStructuredDocumentInfo `json:"structuredDocumentInfo,omitempty"`
 	// UnstructuredDocumentInfo: Unstructured document information.
@@ -8378,8 +8405,19 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	CreateEuaSaas bool `json:"createEuaSaas,omitempty"`
 	// CreateTime: Output only. Timestamp the DataConnector was created at.
 	CreateTime string `json:"createTime,omitempty"`
-	// DataSource: Required. The name of the data source. Supported values:
-	// `salesforce`, `jira`, `confluence`, `bigquery`.
+	// DataSource: Required. The identifier for the data source. This is a partial
+	// list of supported connectors. Please refer to the documentation
+	// (https://docs.cloud.google.com/gemini/enterprise/docs/connectors/introduction-to-connectors-and-data-stores)
+	// for the full list of connectors. Supported first-party connectors include: *
+	// `gcs` * `bigquery` * `gcp_fhir` * `google_mail` * `google_drive` *
+	// `google_calendar` * `google_chat` Supported third-party connectors include:
+	// Generally available (GA) connectors: * `onedrive` * `outlook` * `confluence`
+	// * `jira` * `servicenow` * `sharepoint` Preview connectors: * `asana` *
+	// `azure_active_directory` * `box` * `canva` * `confluence_server` *
+	// `custom_connector` * `docusign` * `dropbox` * `dynamics365` * `github` *
+	// `gitlab` * `hubspot` * `jira_server` * `linear` * `native_cloud_identity` *
+	// `notion` * `okta` * `pagerduty` * `peoplesoft` * `salesforce` * `shopify` *
+	// `slack` * `snowflake` * `teams` * `trello` * `workday` * `zendesk`
 	DataSource string `json:"dataSource,omitempty"`
 	// DestinationConfigs: Optional. Any target destinations used to connect to
 	// third-party services.
@@ -8792,6 +8830,9 @@ type GoogleCloudDiscoveryengineV1DataStore struct {
 	// DocumentProcessingConfig: Configuration for Document understanding and
 	// enrichment.
 	DocumentProcessingConfig *GoogleCloudDiscoveryengineV1DocumentProcessingConfig `json:"documentProcessingConfig,omitempty"`
+	// FederatedSearchConfig: Optional. If set, this DataStore is a federated
+	// search DataStore.
+	FederatedSearchConfig *GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfig `json:"federatedSearchConfig,omitempty"`
 	// HealthcareFhirConfig: Optional. Configuration for `HEALTHCARE_FHIR`
 	// vertical.
 	HealthcareFhirConfig *GoogleCloudDiscoveryengineV1HealthcareFhirConfig `json:"healthcareFhirConfig,omitempty"`
@@ -8912,6 +8953,182 @@ type GoogleCloudDiscoveryengineV1DataStoreBillingEstimation struct {
 
 func (s GoogleCloudDiscoveryengineV1DataStoreBillingEstimation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1DataStoreBillingEstimation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfig: Stores
+// information for federated search.
+type GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfig struct {
+	// AlloyDbConfig: AlloyDB config. If set, this DataStore is connected to
+	// AlloyDB.
+	AlloyDbConfig *GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigAlloyDbConfig `json:"alloyDbConfig,omitempty"`
+	// NotebooklmConfig: NotebookLM config. If set, this DataStore is connected to
+	// NotebookLM Enterprise.
+	NotebooklmConfig *GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigNotebooklmConfig `json:"notebooklmConfig,omitempty"`
+	// ThirdPartyOauthConfig: Third Party OAuth config. If set, this DataStore is
+	// connected to a third party application.
+	ThirdPartyOauthConfig *GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigThirdPartyOauthConfig `json:"thirdPartyOauthConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlloyDbConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlloyDbConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigAlloyDbConfig:
+// Stores information for connecting to AlloyDB.
+type GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigAlloyDbConfig struct {
+	// AlloydbAiNlConfig: Optional. Configuration for Magic.
+	AlloydbAiNlConfig *GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigAlloyDbConfigAlloyDbAiNaturalLanguageConfig `json:"alloydbAiNlConfig,omitempty"`
+	// AlloydbConnectionConfig: Required. Configuration for connecting to AlloyDB.
+	AlloydbConnectionConfig *GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigAlloyDbConfigAlloyDbConnectionConfig `json:"alloydbConnectionConfig,omitempty"`
+	// ReturnedFields: Optional. Fields to be returned in the search results. If
+	// empty, all fields will be returned.
+	ReturnedFields []string `json:"returnedFields,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlloydbAiNlConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlloydbAiNlConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigAlloyDbConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigAlloyDbConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigAlloyDbConfigAlloyD
+// bAiNaturalLanguageConfig: Configuration for AlloyDB AI Natural Language.
+type GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigAlloyDbConfigAlloyDbAiNaturalLanguageConfig struct {
+	// NlConfigId: Optional. AlloyDb AI NL config id, i.e. the value that was used
+	// for calling `SELECT alloydb_ai_nl.g_create_configuration(...)`. Can be
+	// empty.
+	NlConfigId string `json:"nlConfigId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NlConfigId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NlConfigId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigAlloyDbConfigAlloyDbAiNaturalLanguageConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigAlloyDbConfigAlloyDbAiNaturalLanguageConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigAlloyDbConfigAlloyD
+// bConnectionConfig: Configuration for connecting to AlloyDB.
+type GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigAlloyDbConfigAlloyDbConnectionConfig struct {
+	// AuthMode: Optional. Auth mode.
+	//
+	// Possible values:
+	//   "AUTH_MODE_UNSPECIFIED"
+	//   "AUTH_MODE_SERVICE_ACCOUNT" - Uses P4SA when VAIS talks to AlloyDB.
+	//   "AUTH_MODE_END_USER_ACCOUNT" - Uses EUC when VAIS talks to AlloyDB.
+	AuthMode string `json:"authMode,omitempty"`
+	// Database: Required. The AlloyDB database to connect to.
+	Database string `json:"database,omitempty"`
+	// EnablePsvs: Optional. If true, enable PSVS for AlloyDB.
+	EnablePsvs bool `json:"enablePsvs,omitempty"`
+	// Instance: Required. The AlloyDB instance to connect to.
+	Instance string `json:"instance,omitempty"`
+	// Password: Required. Database password. If auth_mode = END_USER_ACCOUNT, it
+	// can be unset. In that case, the password will be inferred on the AlloyDB
+	// side, based on the authenticated user.
+	Password string `json:"password,omitempty"`
+	// User: Required. Database user. If auth_mode = END_USER_ACCOUNT, it can be
+	// unset. In that case, the user will be inferred on the AlloyDB side, based on
+	// the authenticated user.
+	User string `json:"user,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthMode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigAlloyDbConfigAlloyDbConnectionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigAlloyDbConfigAlloyDbConnectionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigNotebooklmConfig:
+// Config for connecting to NotebookLM Enterprise.
+type GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigNotebooklmConfig struct {
+	// SearchConfig: Required. Search config name. Format:
+	// projects/*/locations/global/notebookLmSearchConfigs/*
+	SearchConfig string `json:"searchConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SearchConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SearchConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigNotebooklmConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigNotebooklmConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigThirdPartyOauthConf
+// ig: Stores information for third party applicationOAuth.
+type GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigThirdPartyOauthConfig struct {
+	// AppName: Optional. The type of the application. E.g., "jira", "box", etc.
+	AppName string `json:"appName,omitempty"`
+	// InstanceName: Optional. The instance name identifying the 3P app, e.g.,
+	// "vaissptbots-my". This is different from the instance_uri which is the full
+	// URL of the 3P app e.g., "https://vaissptbots-my.sharepoint.com".
+	InstanceName string `json:"instanceName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AppName") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigThirdPartyOauthConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigThirdPartyOauthConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13808,9 +14025,7 @@ type GoogleCloudDiscoveryengineV1SearchRequest struct {
 	// Example #2 (coordination between /search API calls and /answer API calls):
 	// Call /answer API with the session ID generated in the first call. Here, the
 	// answer generation happens in the context of the search results from the
-	// first search call. Multi-turn Search feature is currently at private GA
-	// stage. Please use v1alpha or v1beta version instead before we launch this
-	// feature to public GA. Or ask for allowlisting through Google Support team.
+	// first search call.
 	Session string `json:"session,omitempty"`
 	// SessionSpec: Session specification. Can be used only when `session` is set.
 	SessionSpec *GoogleCloudDiscoveryengineV1SearchRequestSessionSpec `json:"sessionSpec,omitempty"`
@@ -14773,9 +14988,6 @@ func (s GoogleCloudDiscoveryengineV1SearchRequestSearchAsYouTypeSpec) MarshalJSO
 }
 
 // GoogleCloudDiscoveryengineV1SearchRequestSessionSpec: Session specification.
-// Multi-turn Search feature is currently at private GA stage. Please use
-// v1alpha or v1beta version instead before we launch this feature to public
-// GA. Or ask for allowlisting through Google Support team.
 type GoogleCloudDiscoveryengineV1SearchRequestSessionSpec struct {
 	// QueryId: If set, the search result gets stored to the "turn" specified by
 	// this query ID. Example: Let's say the session looks like this: session {
@@ -17002,6 +17214,12 @@ type GoogleCloudDiscoveryengineV1UserEvent struct {
 	// {engine_id}`. Optional. Only required for Engine produced user events. For
 	// example, user events from blended search.
 	Engine string `json:"engine,omitempty"`
+	// Entity: Optional. Represents the entity for customers that may run multiple
+	// different entities, domains, sites or regions, for example, `Google US`,
+	// `Google Ads`, `Waymo`, `google.com`, `youtube.com`, etc. We recommend that
+	// you set `entity` to get better per-entity search, completion, and prediction
+	// results.
+	Entity string `json:"entity,omitempty"`
 	// EventTime: Only required for UserEventService.ImportUserEvents method.
 	// Timestamp of when the user event happened.
 	EventTime string `json:"eventTime,omitempty"`
@@ -17109,7 +17327,9 @@ type GoogleCloudDiscoveryengineV1UserInfo struct {
 	// different users. This mixes the event history of those users together, which
 	// results in degraded model quality. The field must be a UTF-8 encoded string
 	// with a length limit of 128 characters. Otherwise, an `INVALID_ARGUMENT`
-	// error is returned.
+	// error is returned. Represents an opaque ID to the Search API. The Search API
+	// doesn't interpret the value in any way. This field is used to associate
+	// events with a user across sessions if the events are being uploaded.
 	UserId string `json:"userId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "TimeZone") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -18086,6 +18306,9 @@ type GoogleCloudDiscoveryengineV1alphaActionConfig struct {
 	// UseStaticSecrets: Optional. Whether to use static secrets for the connector.
 	// If true, the secrets provided in the action_params will be ignored.
 	UseStaticSecrets bool `json:"useStaticSecrets,omitempty"`
+	// UserDefinedScopesMapping: Optional. Mapping from operation name to the list
+	// of scopes. Only be populated if there are user specified scopes.
+	UserDefinedScopesMapping map[string]GoogleCloudDiscoveryengineV1alphaActionConfigScopeList `json:"userDefinedScopesMapping,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActionParams") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -18101,6 +18324,29 @@ type GoogleCloudDiscoveryengineV1alphaActionConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaActionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaActionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaActionConfigScopeList: Stores a list of
+// scopes.
+type GoogleCloudDiscoveryengineV1alphaActionConfigScopeList struct {
+	// Scopes: Optional. The list of scopes.
+	Scopes []string `json:"scopes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Scopes") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Scopes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaActionConfigScopeList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaActionConfigScopeList
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -18631,6 +18877,8 @@ func (s GoogleCloudDiscoveryengineV1alphaAnswerQueryUnderstandingInfoQueryClassi
 type GoogleCloudDiscoveryengineV1alphaAnswerReference struct {
 	// ChunkInfo: Chunk information.
 	ChunkInfo *GoogleCloudDiscoveryengineV1alphaAnswerReferenceChunkInfo `json:"chunkInfo,omitempty"`
+	// Queries: Output only. The search queries that produced this reference.
+	Queries []string `json:"queries,omitempty"`
 	// StructuredDocumentInfo: Structured document information.
 	StructuredDocumentInfo *GoogleCloudDiscoveryengineV1alphaAnswerReferenceStructuredDocumentInfo `json:"structuredDocumentInfo,omitempty"`
 	// UnstructuredDocumentInfo: Unstructured document information.
@@ -20781,8 +21029,19 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// DataProtectionPolicy: Optional. Specifies the data protection policy for the
 	// connector.
 	DataProtectionPolicy *GoogleCloudDiscoveryengineV1alphaDataProtectionPolicy `json:"dataProtectionPolicy,omitempty"`
-	// DataSource: Required. The name of the data source. Supported values:
-	// `salesforce`, `jira`, `confluence`, `bigquery`.
+	// DataSource: Required. The identifier for the data source. This is a partial
+	// list of supported connectors. Please refer to the documentation
+	// (https://docs.cloud.google.com/gemini/enterprise/docs/connectors/introduction-to-connectors-and-data-stores)
+	// for the full list of connectors. Supported first-party connectors include: *
+	// `gcs` * `bigquery` * `gcp_fhir` * `google_mail` * `google_drive` *
+	// `google_calendar` * `google_chat` Supported third-party connectors include:
+	// Generally available (GA) connectors: * `onedrive` * `outlook` * `confluence`
+	// * `jira` * `servicenow` * `sharepoint` Preview connectors: * `asana` *
+	// `azure_active_directory` * `box` * `canva` * `confluence_server` *
+	// `custom_connector` * `docusign` * `dropbox` * `dynamics365` * `github` *
+	// `gitlab` * `hubspot` * `jira_server` * `linear` * `native_cloud_identity` *
+	// `notion` * `okta` * `pagerduty` * `peoplesoft` * `salesforce` * `shopify` *
+	// `slack` * `snowflake` * `teams` * `trello` * `workday` * `zendesk`
 	DataSource string `json:"dataSource,omitempty"`
 	// DestinationConfigs: Optional. Any target destinations used to connect to
 	// third-party services.
@@ -21242,6 +21501,9 @@ type GoogleCloudDiscoveryengineV1alphaDataStore struct {
 	// DocumentProcessingConfig: Configuration for Document understanding and
 	// enrichment.
 	DocumentProcessingConfig *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig `json:"documentProcessingConfig,omitempty"`
+	// FederatedSearchConfig: Optional. If set, this DataStore is a federated
+	// search DataStore.
+	FederatedSearchConfig *GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfig `json:"federatedSearchConfig,omitempty"`
 	// HealthcareFhirConfig: Optional. Configuration for `HEALTHCARE_FHIR`
 	// vertical.
 	HealthcareFhirConfig *GoogleCloudDiscoveryengineV1alphaHealthcareFhirConfig `json:"healthcareFhirConfig,omitempty"`
@@ -21363,6 +21625,184 @@ type GoogleCloudDiscoveryengineV1alphaDataStoreBillingEstimation struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaDataStoreBillingEstimation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaDataStoreBillingEstimation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfig: Stores
+// information for federated search.
+type GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfig struct {
+	// AlloyDbConfig: AlloyDB config. If set, this DataStore is connected to
+	// AlloyDB.
+	AlloyDbConfig *GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigAlloyDbConfig `json:"alloyDbConfig,omitempty"`
+	// NotebooklmConfig: NotebookLM config. If set, this DataStore is connected to
+	// NotebookLM Enterprise.
+	NotebooklmConfig *GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigNotebooklmConfig `json:"notebooklmConfig,omitempty"`
+	// ThirdPartyOauthConfig: Third Party OAuth config. If set, this DataStore is
+	// connected to a third party application.
+	ThirdPartyOauthConfig *GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigThirdPartyOauthConfig `json:"thirdPartyOauthConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlloyDbConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlloyDbConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigAlloyDbConfig:
+//
+//	Stores information for connecting to AlloyDB.
+type GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigAlloyDbConfig struct {
+	// AlloydbAiNlConfig: Optional. Configuration for Magic.
+	AlloydbAiNlConfig *GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigAlloyDbConfigAlloyDbAiNaturalLanguageConfig `json:"alloydbAiNlConfig,omitempty"`
+	// AlloydbConnectionConfig: Required. Configuration for connecting to AlloyDB.
+	AlloydbConnectionConfig *GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigAlloyDbConfigAlloyDbConnectionConfig `json:"alloydbConnectionConfig,omitempty"`
+	// ReturnedFields: Optional. Fields to be returned in the search results. If
+	// empty, all fields will be returned.
+	ReturnedFields []string `json:"returnedFields,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlloydbAiNlConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlloydbAiNlConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigAlloyDbConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigAlloyDbConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigAlloyDbConfigA
+// lloyDbAiNaturalLanguageConfig: Configuration for AlloyDB AI Natural
+// Language.
+type GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigAlloyDbConfigAlloyDbAiNaturalLanguageConfig struct {
+	// NlConfigId: Optional. AlloyDb AI NL config id, i.e. the value that was used
+	// for calling `SELECT alloydb_ai_nl.g_create_configuration(...)`. Can be
+	// empty.
+	NlConfigId string `json:"nlConfigId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NlConfigId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NlConfigId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigAlloyDbConfigAlloyDbAiNaturalLanguageConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigAlloyDbConfigAlloyDbAiNaturalLanguageConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigAlloyDbConfigA
+// lloyDbConnectionConfig: Configuration for connecting to AlloyDB.
+type GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigAlloyDbConfigAlloyDbConnectionConfig struct {
+	// AuthMode: Optional. Auth mode.
+	//
+	// Possible values:
+	//   "AUTH_MODE_UNSPECIFIED"
+	//   "AUTH_MODE_SERVICE_ACCOUNT" - Uses P4SA when VAIS talks to AlloyDB.
+	//   "AUTH_MODE_END_USER_ACCOUNT" - Uses EUC when VAIS talks to AlloyDB.
+	AuthMode string `json:"authMode,omitempty"`
+	// Database: Required. The AlloyDB database to connect to.
+	Database string `json:"database,omitempty"`
+	// EnablePsvs: Optional. If true, enable PSVS for AlloyDB.
+	EnablePsvs bool `json:"enablePsvs,omitempty"`
+	// Instance: Required. The AlloyDB instance to connect to.
+	Instance string `json:"instance,omitempty"`
+	// Password: Required. Database password. If auth_mode = END_USER_ACCOUNT, it
+	// can be unset. In that case, the password will be inferred on the AlloyDB
+	// side, based on the authenticated user.
+	Password string `json:"password,omitempty"`
+	// User: Required. Database user. If auth_mode = END_USER_ACCOUNT, it can be
+	// unset. In that case, the user will be inferred on the AlloyDB side, based on
+	// the authenticated user.
+	User string `json:"user,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthMode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigAlloyDbConfigAlloyDbConnectionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigAlloyDbConfigAlloyDbConnectionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigNotebooklmConf
+// ig: Config for connecting to NotebookLM Enterprise.
+type GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigNotebooklmConfig struct {
+	// SearchConfig: Required. Search config name. Format:
+	// projects/*/locations/global/notebookLmSearchConfigs/*
+	SearchConfig string `json:"searchConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SearchConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SearchConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigNotebooklmConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigNotebooklmConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigThirdPartyOaut
+// hConfig: Stores information for third party applicationOAuth.
+type GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigThirdPartyOauthConfig struct {
+	// AppName: Optional. The type of the application. E.g., "jira", "box", etc.
+	AppName string `json:"appName,omitempty"`
+	// InstanceName: Optional. The instance name identifying the 3P app, e.g.,
+	// "vaissptbots-my". This is different from the instance_uri which is the full
+	// URL of the 3P app e.g., "https://vaissptbots-my.sharepoint.com".
+	InstanceName string `json:"instanceName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AppName") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigThirdPartyOauthConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigThirdPartyOauthConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -25571,9 +26011,7 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// Example #2 (coordination between /search API calls and /answer API calls):
 	// Call /answer API with the session ID generated in the first call. Here, the
 	// answer generation happens in the context of the search results from the
-	// first search call. Multi-turn Search feature is currently at private GA
-	// stage. Please use v1alpha or v1beta version instead before we launch this
-	// feature to public GA. Or ask for allowlisting through Google Support team.
+	// first search call.
 	Session string `json:"session,omitempty"`
 	// SessionSpec: Session specification. Can be used only when `session` is set.
 	SessionSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestSessionSpec `json:"sessionSpec,omitempty"`
@@ -26786,9 +27224,7 @@ func (s GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpec) Marsh
 }
 
 // GoogleCloudDiscoveryengineV1alphaSearchRequestSessionSpec: Session
-// specification. Multi-turn Search feature is currently at private GA stage.
-// Please use v1alpha or v1beta version instead before we launch this feature
-// to public GA. Or ask for allowlisting through Google Support team.
+// specification.
 type GoogleCloudDiscoveryengineV1alphaSearchRequestSessionSpec struct {
 	// QueryId: If set, the search result gets stored to the "turn" specified by
 	// this query ID. Example: Let's say the session looks like this: session {
@@ -27532,7 +27968,9 @@ type GoogleCloudDiscoveryengineV1alphaUserInfo struct {
 	// different users. This mixes the event history of those users together, which
 	// results in degraded model quality. The field must be a UTF-8 encoded string
 	// with a length limit of 128 characters. Otherwise, an `INVALID_ARGUMENT`
-	// error is returned.
+	// error is returned. Represents an opaque ID to the Search API. The Search API
+	// doesn't interpret the value in any way. This field is used to associate
+	// events with a user across sessions if the events are being uploaded.
 	UserId string `json:"userId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "TimeZone") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -28521,6 +28959,9 @@ type GoogleCloudDiscoveryengineV1betaDataStore struct {
 	// DocumentProcessingConfig: Configuration for Document understanding and
 	// enrichment.
 	DocumentProcessingConfig *GoogleCloudDiscoveryengineV1betaDocumentProcessingConfig `json:"documentProcessingConfig,omitempty"`
+	// FederatedSearchConfig: Optional. If set, this DataStore is a federated
+	// search DataStore.
+	FederatedSearchConfig *GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfig `json:"federatedSearchConfig,omitempty"`
 	// HealthcareFhirConfig: Optional. Configuration for `HEALTHCARE_FHIR`
 	// vertical.
 	HealthcareFhirConfig *GoogleCloudDiscoveryengineV1betaHealthcareFhirConfig `json:"healthcareFhirConfig,omitempty"`
@@ -28640,6 +29081,182 @@ type GoogleCloudDiscoveryengineV1betaDataStoreBillingEstimation struct {
 
 func (s GoogleCloudDiscoveryengineV1betaDataStoreBillingEstimation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaDataStoreBillingEstimation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfig: Stores
+// information for federated search.
+type GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfig struct {
+	// AlloyDbConfig: AlloyDB config. If set, this DataStore is connected to
+	// AlloyDB.
+	AlloyDbConfig *GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigAlloyDbConfig `json:"alloyDbConfig,omitempty"`
+	// NotebooklmConfig: NotebookLM config. If set, this DataStore is connected to
+	// NotebookLM Enterprise.
+	NotebooklmConfig *GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigNotebooklmConfig `json:"notebooklmConfig,omitempty"`
+	// ThirdPartyOauthConfig: Third Party OAuth config. If set, this DataStore is
+	// connected to a third party application.
+	ThirdPartyOauthConfig *GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigThirdPartyOauthConfig `json:"thirdPartyOauthConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlloyDbConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlloyDbConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigAlloyDbConfig:
+// Stores information for connecting to AlloyDB.
+type GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigAlloyDbConfig struct {
+	// AlloydbAiNlConfig: Optional. Configuration for Magic.
+	AlloydbAiNlConfig *GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigAlloyDbConfigAlloyDbAiNaturalLanguageConfig `json:"alloydbAiNlConfig,omitempty"`
+	// AlloydbConnectionConfig: Required. Configuration for connecting to AlloyDB.
+	AlloydbConnectionConfig *GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigAlloyDbConfigAlloyDbConnectionConfig `json:"alloydbConnectionConfig,omitempty"`
+	// ReturnedFields: Optional. Fields to be returned in the search results. If
+	// empty, all fields will be returned.
+	ReturnedFields []string `json:"returnedFields,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlloydbAiNlConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlloydbAiNlConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigAlloyDbConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigAlloyDbConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigAlloyDbConfigAl
+// loyDbAiNaturalLanguageConfig: Configuration for AlloyDB AI Natural Language.
+type GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigAlloyDbConfigAlloyDbAiNaturalLanguageConfig struct {
+	// NlConfigId: Optional. AlloyDb AI NL config id, i.e. the value that was used
+	// for calling `SELECT alloydb_ai_nl.g_create_configuration(...)`. Can be
+	// empty.
+	NlConfigId string `json:"nlConfigId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NlConfigId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NlConfigId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigAlloyDbConfigAlloyDbAiNaturalLanguageConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigAlloyDbConfigAlloyDbAiNaturalLanguageConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigAlloyDbConfigAl
+// loyDbConnectionConfig: Configuration for connecting to AlloyDB.
+type GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigAlloyDbConfigAlloyDbConnectionConfig struct {
+	// AuthMode: Optional. Auth mode.
+	//
+	// Possible values:
+	//   "AUTH_MODE_UNSPECIFIED"
+	//   "AUTH_MODE_SERVICE_ACCOUNT" - Uses P4SA when VAIS talks to AlloyDB.
+	//   "AUTH_MODE_END_USER_ACCOUNT" - Uses EUC when VAIS talks to AlloyDB.
+	AuthMode string `json:"authMode,omitempty"`
+	// Database: Required. The AlloyDB database to connect to.
+	Database string `json:"database,omitempty"`
+	// EnablePsvs: Optional. If true, enable PSVS for AlloyDB.
+	EnablePsvs bool `json:"enablePsvs,omitempty"`
+	// Instance: Required. The AlloyDB instance to connect to.
+	Instance string `json:"instance,omitempty"`
+	// Password: Required. Database password. If auth_mode = END_USER_ACCOUNT, it
+	// can be unset. In that case, the password will be inferred on the AlloyDB
+	// side, based on the authenticated user.
+	Password string `json:"password,omitempty"`
+	// User: Required. Database user. If auth_mode = END_USER_ACCOUNT, it can be
+	// unset. In that case, the user will be inferred on the AlloyDB side, based on
+	// the authenticated user.
+	User string `json:"user,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthMode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigAlloyDbConfigAlloyDbConnectionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigAlloyDbConfigAlloyDbConnectionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigNotebooklmConfi
+// g: Config for connecting to NotebookLM Enterprise.
+type GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigNotebooklmConfig struct {
+	// SearchConfig: Required. Search config name. Format:
+	// projects/*/locations/global/notebookLmSearchConfigs/*
+	SearchConfig string `json:"searchConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SearchConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SearchConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigNotebooklmConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigNotebooklmConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigThirdPartyOauth
+// Config: Stores information for third party applicationOAuth.
+type GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigThirdPartyOauthConfig struct {
+	// AppName: Optional. The type of the application. E.g., "jira", "box", etc.
+	AppName string `json:"appName,omitempty"`
+	// InstanceName: Optional. The instance name identifying the 3P app, e.g.,
+	// "vaissptbots-my". This is different from the instance_uri which is the full
+	// URL of the 3P app e.g., "https://vaissptbots-my.sharepoint.com".
+	InstanceName string `json:"instanceName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AppName") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigThirdPartyOauthConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigThirdPartyOauthConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -31519,9 +32136,7 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// Example #2 (coordination between /search API calls and /answer API calls):
 	// Call /answer API with the session ID generated in the first call. Here, the
 	// answer generation happens in the context of the search results from the
-	// first search call. Multi-turn Search feature is currently at private GA
-	// stage. Please use v1alpha or v1beta version instead before we launch this
-	// feature to public GA. Or ask for allowlisting through Google Support team.
+	// first search call.
 	Session string `json:"session,omitempty"`
 	// SessionSpec: Session specification. Can be used only when `session` is set.
 	SessionSpec *GoogleCloudDiscoveryengineV1betaSearchRequestSessionSpec `json:"sessionSpec,omitempty"`
@@ -32729,9 +33344,7 @@ func (s GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpec) Marsha
 }
 
 // GoogleCloudDiscoveryengineV1betaSearchRequestSessionSpec: Session
-// specification. Multi-turn Search feature is currently at private GA stage.
-// Please use v1alpha or v1beta version instead before we launch this feature
-// to public GA. Or ask for allowlisting through Google Support team.
+// specification.
 type GoogleCloudDiscoveryengineV1betaSearchRequestSessionSpec struct {
 	// QueryId: If set, the search result gets stored to the "turn" specified by
 	// this query ID. Example: Let's say the session looks like this: session {
@@ -33235,7 +33848,9 @@ type GoogleCloudDiscoveryengineV1betaUserInfo struct {
 	// different users. This mixes the event history of those users together, which
 	// results in degraded model quality. The field must be a UTF-8 encoded string
 	// with a length limit of 128 characters. Otherwise, an `INVALID_ARGUMENT`
-	// error is returned.
+	// error is returned. Represents an opaque ID to the Search API. The Search API
+	// doesn't interpret the value in any way. This field is used to associate
+	// events with a user across sessions if the events are being uploaded.
 	UserId string `json:"userId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "TimeZone") to
 	// unconditionally include in API requests. By default, fields with empty or

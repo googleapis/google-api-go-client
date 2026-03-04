@@ -2351,6 +2351,20 @@ type GoogleCloudAiplatformV1beta1ImageConfig struct {
 	// children.
 	//   "ALLOW_NONE" - Prevents the model from generating images of people.
 	PersonGeneration string `json:"personGeneration,omitempty"`
+	// ProminentPeople: Optional. Controls whether prominent people (celebrities)
+	// generation is allowed. If used with personGeneration, personGeneration enum
+	// would take precedence. For instance, if ALLOW_NONE is set, all person
+	// generation would be blocked. If this field is unspecified, the default
+	// behavior is to allow prominent people.
+	//
+	// Possible values:
+	//   "PROMINENT_PEOPLE_UNSPECIFIED" - Unspecified value. The model will proceed
+	// with the default behavior, which is to allow generation of prominent people.
+	//   "ALLOW_PROMINENT_PEOPLE" - Allows the model to generate images of
+	// prominent people.
+	//   "BLOCK_PROMINENT_PEOPLE" - Prevents the model from generating images of
+	// prominent people.
+	ProminentPeople string `json:"prominentPeople,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AspectRatio") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

@@ -1087,6 +1087,8 @@ type App struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: Required. Display name of the app.
 	DisplayName string `json:"displayName,omitempty"`
+	// ErrorHandlingSettings: Optional. Error handling settings of the app.
+	ErrorHandlingSettings *ErrorHandlingSettings `json:"errorHandlingSettings,omitempty"`
 	// Etag: Output only. Etag used to ensure the object hasn't changed during a
 	// read-modify-write operation. If the etag is empty, the update will overwrite
 	// any concurrent changes.
@@ -1763,6 +1765,8 @@ func (s ChannelProfileWebWidgetConfigSecuritySettings) MarshalJSON() ([]byte, er
 type Chunk struct {
 	// AgentTransfer: Optional. Agent transfer event.
 	AgentTransfer *AgentTransfer `json:"agentTransfer,omitempty"`
+	// Blob: Optional. Blob data.
+	Blob *Blob `json:"blob,omitempty"`
 	// DefaultVariables: A struct represents default variables at the start of the
 	// conversation, keyed by variable names.
 	DefaultVariables googleapi.RawMessage `json:"defaultVariables,omitempty"`
@@ -2757,9 +2761,11 @@ type DeleteEvaluationRunOperationMetadata struct {
 // Deployment: A deployment represents an immutable, queryable version of the
 // app. It is used to deploy an app version with a specific channel profile.
 type Deployment struct {
-	// AppVersion: Required. The resource name of the app version to deploy.
+	// AppVersion: Optional. The resource name of the app version to deploy.
 	// Format:
-	// projects/{project}/locations/{location}/apps/{app}/versions/{version}
+	// `projects/{project}/locations/{location}/apps/{app}/versions/{version}` Use
+	// `projects/{project}/locations/{location}/apps/{app}/versions/-` to use the
+	// draft app.
 	AppVersion string `json:"appVersion,omitempty"`
 	// ChannelProfile: Required. The channel profile used in the deployment.
 	ChannelProfile *ChannelProfile `json:"channelProfile,omitempty"`
@@ -2772,7 +2778,7 @@ type Deployment struct {
 	// any concurrent changes.
 	Etag string `json:"etag,omitempty"`
 	// Name: Identifier. The resource name of the deployment. Format:
-	// projects/{project}/locations/{location}/apps/{app}/deployments/{deployment}
+	// `projects/{project}/locations/{location}/apps/{app}/deployments/{deployment}`
 	Name string `json:"name,omitempty"`
 	// UpdateTime: Output only. Timestamp when this deployment was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -2911,6 +2917,74 @@ type EndUserAuthConfigOauth2JwtBearerConfig struct {
 
 func (s EndUserAuthConfigOauth2JwtBearerConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod EndUserAuthConfigOauth2JwtBearerConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EndpointControlPolicy: Defines project/location level endpoint control
+// policy.
+type EndpointControlPolicy struct {
+	// AllowedOrigins: Optional. The allowed HTTP(s) origins that tools in the App
+	// are able to directly call. The enforcement depends on the value of
+	// enforcement_scope and the VPC-SC status of the project. If a port number is
+	// not provided, all ports will be allowed. Otherwise, the port number must
+	// match exactly. For example, "https://example.com" will match
+	// "https://example.com:443" and any other port. "https://example.com:443" will
+	// only match "https://example.com:443".
+	AllowedOrigins []string `json:"allowedOrigins,omitempty"`
+	// EnforcementScope: Optional. The scope in which this policy's allowed_origins
+	// list is enforced.
+	//
+	// Possible values:
+	//   "ENFORCEMENT_SCOPE_UNSPECIFIED" - Unspecified. This policy will be treated
+	// as VPCSC_ONLY.
+	//   "VPCSC_ONLY" - This policy applies only when VPC-SC is active.
+	//   "ALWAYS" - This policy ALWAYS applies, regardless of VPC-SC status.
+	EnforcementScope string `json:"enforcementScope,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowedOrigins") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowedOrigins") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EndpointControlPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod EndpointControlPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ErrorHandlingSettings: Settings to describe how errors should be handled in
+// the app.
+type ErrorHandlingSettings struct {
+	// ErrorHandlingStrategy: Optional. The strategy to use for error handling.
+	//
+	// Possible values:
+	//   "ERROR_HANDLING_STRATEGY_UNSPECIFIED" - Unspecified error handling
+	// strategy. Defaults to FALLBACK_RESPONSE.
+	//   "NONE" - No specific handling is enabled.
+	//   "FALLBACK_RESPONSE" - A fallback message will be returned to the user in
+	// case of LLM errors.
+	ErrorHandlingStrategy string `json:"errorHandlingStrategy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorHandlingStrategy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorHandlingStrategy") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ErrorHandlingSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod ErrorHandlingSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8001,6 +8075,40 @@ func (s *Schema) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// SecuritySettings: Project/Location level security settings for CES.
+type SecuritySettings struct {
+	// CreateTime: Output only. Create time of the security settings.
+	CreateTime string `json:"createTime,omitempty"`
+	// EndpointControlPolicy: Optional. Endpoint control related settings.
+	EndpointControlPolicy *EndpointControlPolicy `json:"endpointControlPolicy,omitempty"`
+	// Etag: Output only. Etag of the security settings.
+	Etag string `json:"etag,omitempty"`
+	// Name: Identifier. The unique identifier of the security settings. Format:
+	// `projects/{project}/locations/{location}/securitySettings`
+	Name string `json:"name,omitempty"`
+	// UpdateTime: Output only. Last update time of the security settings.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SecuritySettings) MarshalJSON() ([]byte, error) {
+	type NoMethod SecuritySettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ServiceAccountAuthConfig: Configurations for authentication using a custom
 // service account.
 type ServiceAccountAuthConfig struct {
@@ -8072,7 +8180,7 @@ type SessionConfig struct {
 	Deployment string `json:"deployment,omitempty"`
 	// EntryAgent: Optional. The entry agent to handle the session. If not
 	// specified, the session will be handled by the root agent of the app. Format:
-	// `projects/{project}/locations/{location}/agents/{agent}`
+	// `projects/{project}/locations/{location}/apps/{app}/agents/{agent}`
 	EntryAgent string `json:"entryAgent,omitempty"`
 	// HistoricalContexts: Optional. The historical context of the session,
 	// including user inputs, agent responses, and other messages. Typically, CES
@@ -8095,6 +8203,10 @@ type SessionConfig struct {
 	// will use the time zone specified in the App.time_zone_settings. The format
 	// is the IANA Time Zone Database time zone, e.g. "America/Los_Angeles".
 	TimeZone string `json:"timeZone,omitempty"`
+	// UseToolFakes: Optional. Whether to use tool fakes for the session. If this
+	// field is set, the agent will attempt use tool fakes instead of calling the
+	// real tools.
+	UseToolFakes bool `json:"useToolFakes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Deployment") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -8509,9 +8621,9 @@ type TlsConfigCaCert struct {
 	// or unspecified, CES will use Google's default trust store to verify
 	// certificates. N.B. Make sure the HTTPS server certificates are signed with
 	// "subject alt name". For instance a certificate can be self-signed using the
-	// following command, openssl x509 -req -days 200 -in example.com.csr \
+	// following command: ``` openssl x509 -req -days 200 -in example.com.csr \
 	// -signkey example.com.key \ -out example.com.crt \ -extfile <(printf
-	// "\nsubjectAltName='DNS:www.example.com'")
+	// "\nsubjectAltName='DNS:www.example.com'") ```
 	Cert string `json:"cert,omitempty"`
 	// DisplayName: Required. The name of the allowed custom CA certificates. This
 	// can be used to disambiguate the custom CA certificates.
@@ -8573,12 +8685,12 @@ type Tool struct {
 	// McpTool: Optional. The MCP tool. An MCP tool cannot be created or updated
 	// directly and is managed by the MCP toolset.
 	McpTool *McpTool `json:"mcpTool,omitempty"`
-	// Name: Identifier. The unique identifier of the tool. Format: -
-	// `projects/{project}/locations/{location}/apps/{app}/tools/{tool}` for ##
-	// standalone tools.
+	// Name: Identifier. The resource name of the tool. Format: *
+	// `projects/{project}/locations/{location}/apps/{app}/tools/{tool}` for
+	// standalone tools. *
 	// `projects/{project}/locations/{location}/apps/{app}/toolsets/{toolset}/tools/
 	// {tool}` for tools retrieved from a toolset. These tools are dynamic and
-	// output-only, they cannot be referenced directly where a tool is expected.
+	// output-only; they cannot be referenced directly where a tool is expected.
 	Name string `json:"name,omitempty"`
 	// OpenApiTool: Optional. The open API tool.
 	OpenApiTool *OpenApiTool `json:"openApiTool,omitempty"`
@@ -9054,6 +9166,65 @@ func (s TriggerActionTransferAgent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// UploadEvaluationAudioRequest: Request message for
+// EvaluationService.UploadEvaluationAudio.
+type UploadEvaluationAudioRequest struct {
+	// AudioContent: Required. The raw audio bytes. The format of the audio must be
+	// single-channel LINEAR16 with a sample rate of 16kHz (default
+	// InputAudioConfig).
+	AudioContent string `json:"audioContent,omitempty"`
+	// PreviousAudioGcsUri: Optional. The Google Cloud Storage URI of the
+	// previously uploaded audio file to be deleted. Format: `gs:///`
+	PreviousAudioGcsUri string `json:"previousAudioGcsUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AudioContent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AudioContent") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UploadEvaluationAudioRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UploadEvaluationAudioRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UploadEvaluationAudioResponse: Response message for
+// EvaluationService.UploadEvaluationAudio.
+type UploadEvaluationAudioResponse struct {
+	// AudioGcsUri: The Google Cloud Storage URI where the uploaded audio file is
+	// stored. Format: `gs:///`
+	AudioGcsUri string `json:"audioGcsUri,omitempty"`
+	// Duration: The duration of the audio.
+	Duration string `json:"duration,omitempty"`
+	// Transcript: The transcript of the audio, generated by Cloud Speech-to-Text.
+	Transcript string `json:"transcript,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AudioGcsUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AudioGcsUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UploadEvaluationAudioResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod UploadEvaluationAudioResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // WebSearchQuery: Represents a single web search query and its associated
 // search uri.
 type WebSearchQuery struct {
@@ -9235,6 +9406,118 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 	return ret, nil
 }
 
+type ProjectsLocationsGetSecuritySettingsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetSecuritySettings: Retrieves the security settings for the project and
+// location.
+//
+//   - name: The resource name of the security settings to retrieve. Format:
+//     `projects/{project}/locations/{location}/securitySettings`.
+func (r *ProjectsLocationsService) GetSecuritySettings(name string) *ProjectsLocationsGetSecuritySettingsCall {
+	c := &ProjectsLocationsGetSecuritySettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGetSecuritySettingsCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetSecuritySettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGetSecuritySettingsCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetSecuritySettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGetSecuritySettingsCall) Context(ctx context.Context) *ProjectsLocationsGetSecuritySettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGetSecuritySettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGetSecuritySettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.getSecuritySettings", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.getSecuritySettings" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SecuritySettings.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsGetSecuritySettingsCall) Do(opts ...googleapi.CallOption) (*SecuritySettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SecuritySettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.getSecuritySettings", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsListCall struct {
 	s            *Service
 	name         string
@@ -9400,6 +9683,120 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsUpdateSecuritySettingsCall struct {
+	s                *Service
+	nameid           string
+	securitysettings *SecuritySettings
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// UpdateSecuritySettings: Updates the security settings for the project and
+// location.
+//
+//   - name: Identifier. The unique identifier of the security settings. Format:
+//     `projects/{project}/locations/{location}/securitySettings`.
+func (r *ProjectsLocationsService) UpdateSecuritySettings(nameid string, securitysettings *SecuritySettings) *ProjectsLocationsUpdateSecuritySettingsCall {
+	c := &ProjectsLocationsUpdateSecuritySettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.securitysettings = securitysettings
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask is used to
+// control which fields get updated. If the mask is not present, all fields
+// will be updated.
+func (c *ProjectsLocationsUpdateSecuritySettingsCall) UpdateMask(updateMask string) *ProjectsLocationsUpdateSecuritySettingsCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsUpdateSecuritySettingsCall) Fields(s ...googleapi.Field) *ProjectsLocationsUpdateSecuritySettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsUpdateSecuritySettingsCall) Context(ctx context.Context) *ProjectsLocationsUpdateSecuritySettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsUpdateSecuritySettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsUpdateSecuritySettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.securitysettings)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.updateSecuritySettings", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.updateSecuritySettings" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SecuritySettings.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsUpdateSecuritySettingsCall) Do(opts ...googleapi.CallOption) (*SecuritySettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SecuritySettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.updateSecuritySettings", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsAppsCreateCall struct {
@@ -12746,7 +13143,8 @@ type ProjectsLocationsAppsDeploymentsPatchCall struct {
 // Patch: Updates the specified deployment.
 //
 //   - name: Identifier. The resource name of the deployment. Format:
-//     projects/{project}/locations/{location}/apps/{app}/deployments/{deployment}.
+//     `projects/{project}/locations/{location}/apps/{app}/deployments/{deployment
+//     }`.
 func (r *ProjectsLocationsAppsDeploymentsService) Patch(name string, deployment *Deployment) *ProjectsLocationsAppsDeploymentsPatchCall {
 	c := &ProjectsLocationsAppsDeploymentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15073,6 +15471,116 @@ func (c *ProjectsLocationsAppsEvaluationsPatchCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.evaluations.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAppsEvaluationsUploadEvaluationAudioCall struct {
+	s                            *Service
+	name                         string
+	uploadevaluationaudiorequest *UploadEvaluationAudioRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// UploadEvaluationAudio: Uploads audio for use in Golden Evaluations. Stores
+// the audio in the Cloud Storage bucket defined in
+// 'App.logging_settings.evaluation_audio_recording_config.gcs_bucket' and
+// returns a transcript.
+//
+//   - name: The resource name of the Evaluation for which to upload the
+//     evaluation audio. Format:
+//     `projects/{project}/locations/{location}/apps/{app}/evaluations/{evaluation
+//     }`.
+func (r *ProjectsLocationsAppsEvaluationsService) UploadEvaluationAudio(name string, uploadevaluationaudiorequest *UploadEvaluationAudioRequest) *ProjectsLocationsAppsEvaluationsUploadEvaluationAudioCall {
+	c := &ProjectsLocationsAppsEvaluationsUploadEvaluationAudioCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.uploadevaluationaudiorequest = uploadevaluationaudiorequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsEvaluationsUploadEvaluationAudioCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsEvaluationsUploadEvaluationAudioCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsEvaluationsUploadEvaluationAudioCall) Context(ctx context.Context) *ProjectsLocationsAppsEvaluationsUploadEvaluationAudioCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsEvaluationsUploadEvaluationAudioCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsEvaluationsUploadEvaluationAudioCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.uploadevaluationaudiorequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:uploadEvaluationAudio")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.evaluations.uploadEvaluationAudio", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.evaluations.uploadEvaluationAudio" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *UploadEvaluationAudioResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAppsEvaluationsUploadEvaluationAudioCall) Do(opts ...googleapi.CallOption) (*UploadEvaluationAudioResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &UploadEvaluationAudioResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.evaluations.uploadEvaluationAudio", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -17984,7 +18492,7 @@ func (c *ProjectsLocationsAppsToolsListCall) Pages(ctx context.Context, f func(*
 
 type ProjectsLocationsAppsToolsPatchCall struct {
 	s          *Service
-	nameid     string
+	name       string
 	tool       *Tool
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
@@ -17993,15 +18501,15 @@ type ProjectsLocationsAppsToolsPatchCall struct {
 
 // Patch: Updates the specified tool.
 //
-//   - name: Identifier. The unique identifier of the tool. Format: -
-//     `projects/{project}/locations/{location}/apps/{app}/tools/{tool}` for ##
-//     standalone tools.
+//   - name: Identifier. The resource name of the tool. Format: *
+//     `projects/{project}/locations/{location}/apps/{app}/tools/{tool}` for
+//     standalone tools. *
 //     `projects/{project}/locations/{location}/apps/{app}/toolsets/{toolset}/tool
 //     s/{tool}` for tools retrieved from a toolset. These tools are dynamic and
-//     output-only, they cannot be referenced directly where a tool is expected.
-func (r *ProjectsLocationsAppsToolsService) Patch(nameid string, tool *Tool) *ProjectsLocationsAppsToolsPatchCall {
+//     output-only; they cannot be referenced directly where a tool is expected.
+func (r *ProjectsLocationsAppsToolsService) Patch(name string, tool *Tool) *ProjectsLocationsAppsToolsPatchCall {
 	c := &ProjectsLocationsAppsToolsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.nameid = nameid
+	c.name = name
 	c.tool = tool
 	return c
 }
@@ -18053,7 +18561,7 @@ func (c *ProjectsLocationsAppsToolsPatchCall) doRequest(alt string) (*http.Respo
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.nameid,
+		"name": c.name,
 	})
 	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.tools.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)

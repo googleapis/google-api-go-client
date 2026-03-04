@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20260225",
+  "revision": "20260301",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -1872,6 +1872,20 @@
             "Allows the model to generate images of people, including adults and children.",
             "Allows the model to generate images of adults, but not children.",
             "Prevents the model from generating images of people."
+          ],
+          "type": "string"
+        },
+        "prominentPeople": {
+          "description": "Optional. Controls whether prominent people (celebrities) generation is allowed. If used with personGeneration, personGeneration enum would take precedence. For instance, if ALLOW_NONE is set, all person generation would be blocked. If this field is unspecified, the default behavior is to allow prominent people.",
+          "enum": [
+            "PROMINENT_PEOPLE_UNSPECIFIED",
+            "ALLOW_PROMINENT_PEOPLE",
+            "BLOCK_PROMINENT_PEOPLE"
+          ],
+          "enumDescriptions": [
+            "Unspecified value. The model will proceed with the default behavior, which is to allow generation of prominent people.",
+            "Allows the model to generate images of prominent people.",
+            "Prevents the model from generating images of prominent people."
           ],
           "type": "string"
         }

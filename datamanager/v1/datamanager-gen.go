@@ -1860,7 +1860,7 @@ type PairIdInfo struct {
 	// publisher relationship with one clean room provider or across multiple clean
 	// room providers.
 	CleanRoomIdentifier string `json:"cleanRoomIdentifier,omitempty"`
-	// MatchRatePercentage: Optional. This field denotes the percentage of
+	// MatchRatePercentage: Required. This field denotes the percentage of
 	// membership match of this user list with the corresponding publisher's first
 	// party data. Must be between 0 and 100 inclusive.
 	MatchRatePercentage int64 `json:"matchRatePercentage,omitempty"`

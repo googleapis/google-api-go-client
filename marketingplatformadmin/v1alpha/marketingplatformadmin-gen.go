@@ -762,7 +762,7 @@ type OrganizationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Lookup for a single organization.
+// Get: Looks up a single organization.
 //
 //   - name: The name of the Organization to retrieve. Format:
 //     organizations/{org_id}.
@@ -1014,7 +1014,7 @@ type OrganizationsReportPropertyUsageCall struct {
 	header_                    http.Header
 }
 
-// ReportPropertyUsage: Get the usage and billing data for properties within
+// ReportPropertyUsage: Gets the usage and billing data for properties within
 // the organization for the specified month. Per direct client org, user needs
 // to be OrgAdmin/BillingAdmin on the organization in order to view the billing
 // and usage data. Per sales partner client org, user needs to be

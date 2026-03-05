@@ -1249,6 +1249,7 @@ type DropInfo struct {
 	// matched within this hybrid subnet.
 	//   "HYBRID_SUBNET_NO_ROUTE" - Packet is dropped because no matching route was
 	// found in the hybrid subnet.
+	//   "GKE_NETWORK_POLICY" - Packet is dropped by GKE Network Policy.
 	//   "NO_VALID_ROUTE_FROM_GOOGLE_MANAGED_NETWORK_TO_DESTINATION" - Packet is
 	// dropped because there is no valid matching route from the network of the
 	// Google-managed service to the destination.
@@ -1891,6 +1892,77 @@ type GKEMasterInfo struct {
 
 func (s GKEMasterInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GKEMasterInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GkeNetworkPolicyInfo: For display only. Metadata associated with a GKE
+// Network Policy.
+type GkeNetworkPolicyInfo struct {
+	// Action: Possible values: ALLOW, DENY
+	Action string `json:"action,omitempty"`
+	// Direction: Possible values: INGRESS, EGRESS
+	Direction string `json:"direction,omitempty"`
+	// DisplayName: The name of the Network Policy.
+	DisplayName string `json:"displayName,omitempty"`
+	// Uri: The URI of the Network Policy. Format for a Network Policy in a zonal
+	// cluster:
+	// `projects//zones//clusters//k8s/namespaces//networking.k8s.io/networkpolicies
+	// /` Format for a Network Policy in a regional cluster:
+	// `projects//locations//clusters//k8s/namespaces//networking.k8s.io/networkpoli
+	// cies/`
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GkeNetworkPolicyInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GkeNetworkPolicyInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GkeNetworkPolicySkippedInfo: For display only. Contains information about
+// why GKE Network Policy evaluation was skipped.
+type GkeNetworkPolicySkippedInfo struct {
+	// Reason: Reason why Network Policy evaluation was skipped.
+	//
+	// Possible values:
+	//   "REASON_UNSPECIFIED" - Unused default value.
+	//   "NETWORK_POLICY_DISABLED" - Network Policy is disabled on the cluster.
+	//   "INGRESS_SOURCE_ON_SAME_NODE" - Ingress traffic to a Pod from a source on
+	// the same Node is always allowed.
+	//   "EGRESS_FROM_NODE_NETWORK_NAMESPACE_POD" - Egress traffic from a Pod that
+	// uses the Node's network namespace is not subject to Network Policy.
+	//   "NETWORK_POLICY_NOT_APPLIED_TO_RESPONSE_TRAFFIC" - Network Policy is not
+	// applied to response traffic. This is because GKE Network Policy evaluation
+	// is stateful in both GKE Dataplane V2 (eBPF) and legacy (iptables)
+	// implementations.
+	//   "NETWORK_POLICY_ANALYSIS_UNSUPPORTED" - Network Policy evaluation is
+	// currently not supported for clusters with FQDN Network Policies enabled.
+	Reason string `json:"reason,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Reason") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Reason") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GkeNetworkPolicySkippedInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GkeNetworkPolicySkippedInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3457,6 +3529,11 @@ type Step struct {
 	ForwardingRule *ForwardingRuleInfo `json:"forwardingRule,omitempty"`
 	// GkeMaster: Display information of a Google Kubernetes Engine cluster master.
 	GkeMaster *GKEMasterInfo `json:"gkeMaster,omitempty"`
+	// GkeNetworkPolicy: Display information of a GKE Network Policy.
+	GkeNetworkPolicy *GkeNetworkPolicyInfo `json:"gkeNetworkPolicy,omitempty"`
+	// GkeNetworkPolicySkipped: Display information of the reason why GKE Network
+	// Policy evaluation was skipped.
+	GkeNetworkPolicySkipped *GkeNetworkPolicySkippedInfo `json:"gkeNetworkPolicySkipped,omitempty"`
 	// GkePod: Display information of a Google Kubernetes Engine Pod.
 	GkePod *GkePodInfo `json:"gkePod,omitempty"`
 	// GoogleService: Display information of a Google service
@@ -3574,6 +3651,7 @@ type Step struct {
 	//   "ARRIVE_AT_INTERCONNECT_ATTACHMENT" - Forwarding state: arriving at an
 	// interconnect attachment.
 	//   "ARRIVE_AT_VPC_CONNECTOR" - Forwarding state: arriving at a VPC connector.
+	//   "ARRIVE_AT_GKE_POD" - Forwarding state: arriving at a GKE Pod.
 	//   "DIRECT_VPC_EGRESS_CONNECTION" - Forwarding state: for packets originating
 	// from a serverless endpoint forwarded through Direct VPC egress.
 	//   "SERVERLESS_EXTERNAL_CONNECTION" - Forwarding state: for packets
@@ -3586,6 +3664,16 @@ type Step struct {
 	//   "SKIP_GKE_POD_IP_MASQUERADING" - Transition state: GKE Pod IP masquerading
 	// is skipped. The `ip_masquerading_skipped` field is populated with the
 	// reason.
+	//   "SKIP_GKE_INGRESS_NETWORK_POLICY" - Transition state: GKE Ingress Network
+	// Policy is skipped. The `gke_network_policy_skipped` field is populated with
+	// the reason.
+	//   "SKIP_GKE_EGRESS_NETWORK_POLICY" - Transition state: GKE Egress Network
+	// Policy is skipped. The `gke_network_policy_skipped` field is populated with
+	// the reason.
+	//   "APPLY_INGRESS_GKE_NETWORK_POLICY" - Config checking state: verify ingress
+	// GKE network policy.
+	//   "APPLY_EGRESS_GKE_NETWORK_POLICY" - Config checking state: verify egress
+	// GKE network policy.
 	//   "PROXY_CONNECTION" - Transition state: original connection is terminated
 	// and a new proxied connection is initiated.
 	//   "DELIVER" - Final state: packet could be delivered.

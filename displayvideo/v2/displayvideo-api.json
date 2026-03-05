@@ -7981,7 +7981,7 @@
       }
     }
   },
-  "revision": "20260224",
+  "revision": "20260303",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActivateManualTriggerRequest": {
@@ -14630,7 +14630,7 @@
             "Insertion order automation option is not specified or is unknown in this version.",
             "Automatic budget allocation. Allow the system to automatically shift budget to owning line items to optimize performance defined by kpi. No automation on bid settings.",
             "No automation of bid or budget on insertion order level. Bid and budget must be manually configured at the line item level.",
-            "Allow the system to automatically adjust bids and shift budget to owning line items to optimize performance defined by kpi."
+            "Allow the system to automatically adjust bids and shift budget to owning line items to optimize performance defined by bid_strategy."
           ],
           "type": "string"
         },
@@ -15552,6 +15552,13 @@
       "description": "Details for assigned keyword targeting option. This will be populated in the details field of an AssignedTargetingOption when targeting_type is `TARGETING_TYPE_KEYWORD`.",
       "id": "KeywordAssignedTargetingOptionDetails",
       "properties": {
+        "exemptedPolicyNames": {
+          "description": "Optional. The policy names to exempt the keyword from. This field is only applicable for Demand Gen keywords, which are positively targeted.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "keyword": {
           "description": "Required. The keyword, for example `car insurance`. Positive keyword cannot be offensive word. Must be UTF-8 encoded with a maximum size of 255 bytes. Maximum number of characters is 80. Maximum number of words is 10.",
           "type": "string"
@@ -15679,7 +15686,7 @@
         },
         "frequencyCap": {
           "$ref": "FrequencyCap",
-          "description": "Required. The impression frequency cap settings of the line item. The max_impressions field in this settings object must be used if assigning a limited cap."
+          "description": "Optional. The impression frequency cap settings of the line item. The max_impressions field in this settings object must be used if assigning a limited cap. This field is REQUIRED for all line item types excluding LINE_ITEM_TYPE_DEMAND_GEN."
         },
         "insertionOrderId": {
           "description": "Required. Immutable. The unique ID of the insertion order that the line item belongs to.",
@@ -15868,7 +15875,7 @@
       "id": "LineItemBudget",
       "properties": {
         "budgetAllocationType": {
-          "description": "Required. The type of the budget allocation. `LINE_ITEM_BUDGET_ALLOCATION_TYPE_AUTOMATIC` is only applicable when automatic budget allocation is enabled for the parent insertion order.",
+          "description": "Required. The type of the budget allocation. `LINE_ITEM_BUDGET_ALLOCATION_TYPE_AUTOMATIC` is only applicable when automatic budget allocation is enabled for the parent insertion order. For demand gen line items, budget allocation type must be `LINE_ITEM_BUDGET_ALLOCATION_TYPE_FIXED`. Demand Gen line items do not support other budget allocation types.",
           "enum": [
             "LINE_ITEM_BUDGET_ALLOCATION_TYPE_UNSPECIFIED",
             "LINE_ITEM_BUDGET_ALLOCATION_TYPE_AUTOMATIC",
@@ -17533,7 +17540,7 @@
           "type": "string"
         },
         "markupType": {
-          "description": "Required. The markup type of the partner revenue model.",
+          "description": "Required. The markup type of the partner revenue model. Demand Gen line items only support `PARTNER_REVENUE_MODEL_MARKUP_TYPE_TOTAL_MEDIA_COST_MARKUP`.",
           "enum": [
             "PARTNER_REVENUE_MODEL_MARKUP_TYPE_UNSPECIFIED",
             "PARTNER_REVENUE_MODEL_MARKUP_TYPE_CPM",

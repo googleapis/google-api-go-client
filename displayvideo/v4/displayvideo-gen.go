@@ -10721,7 +10721,7 @@ type InsertionOrderBudget struct {
 	// line item level.
 	//   "INSERTION_ORDER_AUTOMATION_TYPE_BID_BUDGET" - Allow the system to
 	// automatically adjust bids and shift budget to owning line items to optimize
-	// performance defined by kpi.
+	// performance defined by bid_strategy.
 	AutomationType string `json:"automationType,omitempty"`
 	// BudgetSegments: Required. The list of budget segments. Use a budget segment
 	// to specify a specific budget for a given period of time an insertion order
@@ -11602,6 +11602,10 @@ func (s Invoice) MarshalJSON() ([]byte, error) {
 // targeting option. This will be populated in the details field of an
 // AssignedTargetingOption when targeting_type is `TARGETING_TYPE_KEYWORD`.
 type KeywordAssignedTargetingOptionDetails struct {
+	// ExemptedPolicyNames: Optional. The policy names to exempt the keyword from.
+	// This field is only applicable for Demand Gen keywords, which are positively
+	// targeted.
+	ExemptedPolicyNames []string `json:"exemptedPolicyNames,omitempty"`
 	// Keyword: Required. The keyword, for example `car insurance`. Positive
 	// keyword cannot be offensive word. Must be UTF-8 encoded with a maximum size
 	// of 255 bytes. Maximum number of characters is 80. Maximum number of words is
@@ -11609,15 +11613,15 @@ type KeywordAssignedTargetingOptionDetails struct {
 	Keyword string `json:"keyword,omitempty"`
 	// Negative: Indicates if this option is being negatively targeted.
 	Negative bool `json:"negative,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Keyword") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "ExemptedPolicyNames") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Keyword") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ExemptedPolicyNames") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -11822,9 +11826,10 @@ type LineItem struct {
 	ExcludeNewExchanges bool `json:"excludeNewExchanges,omitempty"`
 	// Flight: Required. The start and end time of the line item's flight.
 	Flight *LineItemFlight `json:"flight,omitempty"`
-	// FrequencyCap: Required. The impression frequency cap settings of the line
+	// FrequencyCap: Optional. The impression frequency cap settings of the line
 	// item. The max_impressions field in this settings object must be used if
-	// assigning a limited cap.
+	// assigning a limited cap. This field is REQUIRED for all line item types
+	// excluding LINE_ITEM_TYPE_DEMAND_GEN.
 	FrequencyCap *FrequencyCap `json:"frequencyCap,omitempty"`
 	// InsertionOrderId: Required. Immutable. The unique ID of the insertion order
 	// that the line item belongs to.
@@ -12026,7 +12031,10 @@ func (s LineItemAssignedTargetingOption) MarshalJSON() ([]byte, error) {
 type LineItemBudget struct {
 	// BudgetAllocationType: Required. The type of the budget allocation.
 	// `LINE_ITEM_BUDGET_ALLOCATION_TYPE_AUTOMATIC` is only applicable when
-	// automatic budget allocation is enabled for the parent insertion order.
+	// automatic budget allocation is enabled for the parent insertion order. For
+	// demand gen line items, budget allocation type must be
+	// `LINE_ITEM_BUDGET_ALLOCATION_TYPE_FIXED`. Demand Gen line items do not
+	// support other budget allocation types.
 	//
 	// Possible values:
 	//   "LINE_ITEM_BUDGET_ALLOCATION_TYPE_UNSPECIFIED" - Type value is not
@@ -14480,7 +14488,9 @@ type PartnerRevenueModel struct {
 	// represents the total media cost percent markup in millis. For example, 100
 	// represents 0.1% (decimal 0.001).
 	MarkupAmount int64 `json:"markupAmount,omitempty,string"`
-	// MarkupType: Required. The markup type of the partner revenue model.
+	// MarkupType: Required. The markup type of the partner revenue model. Demand
+	// Gen line items only support
+	// `PARTNER_REVENUE_MODEL_MARKUP_TYPE_TOTAL_MEDIA_COST_MARKUP`.
 	//
 	// Possible values:
 	//   "PARTNER_REVENUE_MODEL_MARKUP_TYPE_UNSPECIFIED" - Type value is not
@@ -16111,31 +16121,26 @@ type ThirdPartyMeasurementConfigs struct {
 	// BrandLiftVendorConfigs: Optional. The third-party vendors measuring brand
 	// lift. The following third-party vendors are applicable: *
 	// `THIRD_PARTY_VENDOR_DYNATA` * `THIRD_PARTY_VENDOR_KANTAR` *
-	// `THIRD_PARTY_VENDOR_KANTAR_MILLWARD_BROWN` *
-	// `THIRD_PARTY_VENDOR_GOOGLE_INTERNAL` * `THIRD_PARTY_VENDOR_INTAGE` *
-	// `THIRD_PARTY_VENDOR_NIELSEN` * `THIRD_PARTY_VENDOR_MACROMILL`
+	// `THIRD_PARTY_VENDOR_INTAGE` * `THIRD_PARTY_VENDOR_NIELSEN` *
+	// `THIRD_PARTY_VENDOR_MACROMILL`
 	BrandLiftVendorConfigs []*ThirdPartyVendorConfig `json:"brandLiftVendorConfigs,omitempty"`
 	// BrandSafetyVendorConfigs: Optional. The third-party vendors measuring brand
 	// safety. The following third-party vendors are applicable: *
-	// `THIRD_PARTY_VENDOR_ZERF` * `THIRD_PARTY_VENDOR_DOUBLE_VERIFY` *
-	// `THIRD_PARTY_VENDOR_INTEGRAL_AD_SCIENCE` *
-	// `THIRD_PARTY_VENDOR_GOOGLE_INTERNAL` * `THIRD_PARTY_VENDOR_ZEFR`
+	// `THIRD_PARTY_VENDOR_DOUBLE_VERIFY` *
+	// `THIRD_PARTY_VENDOR_INTEGRAL_AD_SCIENCE` * `THIRD_PARTY_VENDOR_ZEFR`
 	BrandSafetyVendorConfigs []*ThirdPartyVendorConfig `json:"brandSafetyVendorConfigs,omitempty"`
 	// ReachVendorConfigs: Optional. The third-party vendors measuring reach. The
 	// following third-party vendors are applicable: * `THIRD_PARTY_VENDOR_NIELSEN`
 	// * `THIRD_PARTY_VENDOR_COMSCORE` * `THIRD_PARTY_VENDOR_KANTAR` *
-	// `THIRD_PARTY_VENDOR_GOOGLE_INTERNAL` *
-	// `THIRD_PARTY_VENDOR_KANTAR_MILLWARD_BROWN` *
 	// `THIRD_PARTY_VENDOR_VIDEO_RESEARCH` * `THIRD_PARTY_VENDOR_MEDIA_SCOPE` *
 	// `THIRD_PARTY_VENDOR_AUDIENCE_PROJECT` * `THIRD_PARTY_VENDOR_VIDEO_AMP` *
-	// `THIRD_PARTY_VENDOR_ISPOT_TV`
+	// `THIRD_PARTY_VENDOR_ISPOT_TV` * `THIRD_PARTY_VENDOR_GEMIUS`
 	ReachVendorConfigs []*ThirdPartyVendorConfig `json:"reachVendorConfigs,omitempty"`
 	// ViewabilityVendorConfigs: Optional. The third-party vendors measuring
 	// viewability. The following third-party vendors are applicable: *
 	// `THIRD_PARTY_VENDOR_MOAT` * `THIRD_PARTY_VENDOR_DOUBLE_VERIFY` *
 	// `THIRD_PARTY_VENDOR_INTEGRAL_AD_SCIENCE` * `THIRD_PARTY_VENDOR_COMSCORE` *
-	// `THIRD_PARTY_VENDOR_TELEMETRY` * `THIRD_PARTY_VENDOR_MEETRICS` *
-	// `THIRD_PARTY_VENDOR_GOOGLE_INTERNAL`
+	// `THIRD_PARTY_VENDOR_TELEMETRY` * `THIRD_PARTY_VENDOR_MEETRICS`
 	ViewabilityVendorConfigs []*ThirdPartyVendorConfig `json:"viewabilityVendorConfigs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BrandLiftVendorConfigs") to
 	// unconditionally include in API requests. By default, fields with empty or

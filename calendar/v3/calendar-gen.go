@@ -1757,6 +1757,9 @@ func (s EventFocusTimeProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type EventLabel struct {
+}
+
 type EventOutOfOfficeProperties struct {
 	// AutoDeclineMode: Whether to decline meeting invitations which overlap Out of
 	// office events. Valid values are declineNone, meaning that no meeting
@@ -2105,6 +2108,9 @@ type FreeBusyResponse struct {
 func (s FreeBusyResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FreeBusyResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type LabelProperties struct {
 }
 
 type Setting struct {

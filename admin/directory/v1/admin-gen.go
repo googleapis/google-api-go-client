@@ -6253,8 +6253,8 @@ func (c *ChromeosdevicesListCall) Projection(projection string) *Chromeosdevices
 }
 
 // Query sets the optional parameter "query": Search string in the format given
-// at
-// https://developers.google.com/workspace/admin/directory/v1/list-query-operators
+// at List query operators
+// (https://developers.google.com/workspace/admin/directory/v1/list-query-operators).
 func (c *ChromeosdevicesListCall) Query(query string) *ChromeosdevicesListCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -6855,8 +6855,8 @@ func (r *CustomerDevicesChromeosService) CountChromeOsDevices(customerId string)
 }
 
 // Filter sets the optional parameter "filter": Search string in the format
-// given at
-// https://developers.google.com/workspace/admin/directory/v1/list-query-operators
+// given at List query operators
+// (https://developers.google.com/workspace/admin/directory/v1/list-query-operators).
 func (c *CustomerDevicesChromeosCountChromeOsDevicesCall) Filter(filter string) *CustomerDevicesChromeosCountChromeOsDevicesCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -17554,9 +17554,9 @@ type UsersCreateGuestCall struct {
 }
 
 // CreateGuest: Create a guest user with access to a subset of Workspace
-// capabilities (https://support.google.com/a/answer/16558545?hl=en). This
-// feature is currently in Alpha. Please reach out to support if you are
-// interested in trying this feature.
+// capabilities (https://support.google.com/a/answer/16558545). This feature is
+// currently in Alpha. Please reach out to support if you are interested in
+// trying this feature.
 func (r *UsersService) CreateGuest(directoryuserscreateguestrequest *DirectoryUsersCreateGuestRequest) *UsersCreateGuestCall {
 	c := &UsersCreateGuestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.directoryuserscreateguestrequest = directoryuserscreateguestrequest

@@ -47388,6 +47388,14 @@ func (r *InstancesService) Update(project string, zone string, instance string, 
 	return c
 }
 
+// DiscardLocalSsd sets the optional parameter "discardLocalSsd": Whether to
+// discard local SSDs from the instance during restart
+// default value is false.
+func (c *InstancesUpdateCall) DiscardLocalSsd(discardLocalSsd bool) *InstancesUpdateCall {
+	c.urlParams_.Set("discardLocalSsd", fmt.Sprint(discardLocalSsd))
+	return c
+}
+
 // MinimalAction sets the optional parameter "minimalAction": Specifies the
 // action to take when updating an instance even if the
 // updated properties do not require it. If not specified, then

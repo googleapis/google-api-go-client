@@ -2877,13 +2877,14 @@ func (c *RegionDisksUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, er
 }
 
 type RegionDisksUpdateKmsKeyCall struct {
-	s          *Service
-	project    string
-	region     string
-	disk       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
+	s                             *Service
+	project                       string
+	region                        string
+	disk                          string
+	regiondiskupdatekmskeyrequest *RegionDiskUpdateKmsKeyRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
 }
 
 // UpdateKmsKey: Rotates the customer-managed
@@ -2892,11 +2893,12 @@ type RegionDisksUpdateKmsKeyCall struct {
 // - disk: Name of the Disk resource, should conform to RFC1035.
 // - project: Project ID for this request.
 // - region: The name of the region for this request.
-func (r *RegionDisksService) UpdateKmsKey(project string, region string, disk string) *RegionDisksUpdateKmsKeyCall {
+func (r *RegionDisksService) UpdateKmsKey(project string, region string, disk string, regiondiskupdatekmskeyrequest *RegionDiskUpdateKmsKeyRequest) *RegionDisksUpdateKmsKeyCall {
 	c := &RegionDisksUpdateKmsKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.region = region
 	c.disk = disk
+	c.regiondiskupdatekmskeyrequest = regiondiskupdatekmskeyrequest
 	return c
 }
 
@@ -2946,12 +2948,16 @@ func (c *RegionDisksUpdateKmsKeyCall) Header() http.Header {
 }
 
 func (c *RegionDisksUpdateKmsKeyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.regiondiskupdatekmskeyrequest)
+	if err != nil {
+		return nil, err
+	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/regions/{region}/disks/{disk}/updateKmsKey")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, nil)
+	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -2961,7 +2967,7 @@ func (c *RegionDisksUpdateKmsKeyCall) doRequest(alt string) (*http.Response, err
 		"region":  c.region,
 		"disk":    c.disk,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.regionDisks.updateKmsKey", "request", internallog.HTTPRequest(req, nil))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.regionDisks.updateKmsKey", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -29107,13 +29113,14 @@ func (c *RegionSnapshotsTestIamPermissionsCall) Do(opts ...googleapi.CallOption)
 }
 
 type RegionSnapshotsUpdateKmsKeyCall struct {
-	s          *Service
-	project    string
-	region     string
-	snapshot   string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
+	s                                 *Service
+	project                           string
+	region                            string
+	snapshot                          string
+	regionsnapshotupdatekmskeyrequest *RegionSnapshotUpdateKmsKeyRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
 }
 
 // UpdateKmsKey: Rotates the customer-managed
@@ -29123,11 +29130,12 @@ type RegionSnapshotsUpdateKmsKeyCall struct {
 //   - region: Name of the region for this request.
 //   - snapshot: Name of the snapshot resource to update. Should conform to
 //     RFC1035.
-func (r *RegionSnapshotsService) UpdateKmsKey(project string, region string, snapshot string) *RegionSnapshotsUpdateKmsKeyCall {
+func (r *RegionSnapshotsService) UpdateKmsKey(project string, region string, snapshot string, regionsnapshotupdatekmskeyrequest *RegionSnapshotUpdateKmsKeyRequest) *RegionSnapshotsUpdateKmsKeyCall {
 	c := &RegionSnapshotsUpdateKmsKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.region = region
 	c.snapshot = snapshot
+	c.regionsnapshotupdatekmskeyrequest = regionsnapshotupdatekmskeyrequest
 	return c
 }
 
@@ -29177,12 +29185,16 @@ func (c *RegionSnapshotsUpdateKmsKeyCall) Header() http.Header {
 }
 
 func (c *RegionSnapshotsUpdateKmsKeyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.regionsnapshotupdatekmskeyrequest)
+	if err != nil {
+		return nil, err
+	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/regions/{region}/snapshots/{snapshot}/updateKmsKey")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, nil)
+	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -29192,7 +29204,7 @@ func (c *RegionSnapshotsUpdateKmsKeyCall) doRequest(alt string) (*http.Response,
 		"region":   c.region,
 		"snapshot": c.snapshot,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.regionSnapshots.updateKmsKey", "request", internallog.HTTPRequest(req, nil))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.regionSnapshots.updateKmsKey", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -53861,12 +53873,13 @@ func (c *SnapshotsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*Tes
 }
 
 type SnapshotsUpdateKmsKeyCall struct {
-	s          *Service
-	project    string
-	snapshot   string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
+	s                           *Service
+	project                     string
+	snapshot                    string
+	snapshotupdatekmskeyrequest *SnapshotUpdateKmsKeyRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
 }
 
 // UpdateKmsKey: Rotates the customer-managed
@@ -53875,10 +53888,11 @@ type SnapshotsUpdateKmsKeyCall struct {
 //   - project: Project ID for this request.
 //   - snapshot: Name of the snapshot resource to update. Should conform to
 //     RFC1035.
-func (r *SnapshotsService) UpdateKmsKey(project string, snapshot string) *SnapshotsUpdateKmsKeyCall {
+func (r *SnapshotsService) UpdateKmsKey(project string, snapshot string, snapshotupdatekmskeyrequest *SnapshotUpdateKmsKeyRequest) *SnapshotsUpdateKmsKeyCall {
 	c := &SnapshotsUpdateKmsKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.snapshot = snapshot
+	c.snapshotupdatekmskeyrequest = snapshotupdatekmskeyrequest
 	return c
 }
 
@@ -53928,12 +53942,16 @@ func (c *SnapshotsUpdateKmsKeyCall) Header() http.Header {
 }
 
 func (c *SnapshotsUpdateKmsKeyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.snapshotupdatekmskeyrequest)
+	if err != nil {
+		return nil, err
+	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/global/snapshots/{snapshot}/updateKmsKey")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, nil)
+	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -53942,7 +53960,7 @@ func (c *SnapshotsUpdateKmsKeyCall) doRequest(alt string) (*http.Response, error
 		"project":  c.project,
 		"snapshot": c.snapshot,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.snapshots.updateKmsKey", "request", internallog.HTTPRequest(req, nil))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.snapshots.updateKmsKey", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 

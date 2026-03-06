@@ -13004,13 +13004,14 @@ func (c *DisksUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 }
 
 type DisksUpdateKmsKeyCall struct {
-	s          *Service
-	project    string
-	zone       string
-	disk       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
+	s                       *Service
+	project                 string
+	zone                    string
+	disk                    string
+	diskupdatekmskeyrequest *DiskUpdateKmsKeyRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
 }
 
 // UpdateKmsKey: Rotates the customer-managed
@@ -13019,11 +13020,12 @@ type DisksUpdateKmsKeyCall struct {
 // - disk: Name of the Disk resource, should conform to RFC1035.
 // - project: Project ID for this request.
 // - zone: The name of the zone for this request.
-func (r *DisksService) UpdateKmsKey(project string, zone string, disk string) *DisksUpdateKmsKeyCall {
+func (r *DisksService) UpdateKmsKey(project string, zone string, disk string, diskupdatekmskeyrequest *DiskUpdateKmsKeyRequest) *DisksUpdateKmsKeyCall {
 	c := &DisksUpdateKmsKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.zone = zone
 	c.disk = disk
+	c.diskupdatekmskeyrequest = diskupdatekmskeyrequest
 	return c
 }
 
@@ -13073,12 +13075,16 @@ func (c *DisksUpdateKmsKeyCall) Header() http.Header {
 }
 
 func (c *DisksUpdateKmsKeyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.diskupdatekmskeyrequest)
+	if err != nil {
+		return nil, err
+	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/disks/{disk}/updateKmsKey")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, nil)
+	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -13088,7 +13094,7 @@ func (c *DisksUpdateKmsKeyCall) doRequest(alt string) (*http.Response, error) {
 		"zone":    c.zone,
 		"disk":    c.disk,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.disks.updateKmsKey", "request", internallog.HTTPRequest(req, nil))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.disks.updateKmsKey", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 

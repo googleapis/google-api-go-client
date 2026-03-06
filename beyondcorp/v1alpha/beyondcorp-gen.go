@@ -2340,6 +2340,11 @@ type GoogleCloudBeyondcorpSaasplatformSubscriptionsV1alphaSubscription struct {
 	//   "SUBSCRIBER_TYPE_UNSPECIFIED" - Default value. This value is unused.
 	//   "ONLINE" - Represents an online subscription.
 	//   "OFFLINE" - Represents an offline subscription.
+	//   "CEP_TRIAL" - Represents a trial subscription. This maps to the 'TRIAL'
+	// subscriber_type in the Entitler proto
+	// (google3/identity/cloud/contextawareaccess/billing/proto/enums.proto), but
+	// is named 'CEP_TRIAL' here to avoid a name collision with the 'Type' enum
+	// defined above.
 	SubscriberType string `json:"subscriberType,omitempty"`
 	// Type: Required. Type of subscription.
 	//
@@ -2843,6 +2848,11 @@ func (s GoogleCloudBeyondcorpSecuritygatewaysV1alphaListSecurityGatewaysResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudBeyondcorpSecuritygatewaysV1alphaLoggingConfig: Configuration for
+// Cloud Logging.
+type GoogleCloudBeyondcorpSecuritygatewaysV1alphaLoggingConfig struct {
+}
+
 // GoogleCloudBeyondcorpSecuritygatewaysV1alphaProxyProtocolConfig: The
 // configuration for the proxy.
 type GoogleCloudBeyondcorpSecuritygatewaysV1alphaProxyProtocolConfig struct {
@@ -2901,6 +2911,9 @@ type GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGateway struct {
 	// Hubs: Optional. Map of Hubs that represents regional data path deployment
 	// with GCP region as a key.
 	Hubs map[string]GoogleCloudBeyondcorpSecuritygatewaysV1alphaHub `json:"hubs,omitempty"`
+	// Logging: Optional. Configuration for Cloud Logging. If this field is
+	// present, the logging will be enabled.
+	Logging *GoogleCloudBeyondcorpSecuritygatewaysV1alphaLoggingConfig `json:"logging,omitempty"`
 	// Name: Identifier. Name of the resource.
 	Name string `json:"name,omitempty"`
 	// ProxyProtocolConfig: Optional. Shared proxy configuration for all apps.

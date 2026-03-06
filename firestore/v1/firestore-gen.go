@@ -2059,8 +2059,8 @@ type GoogleFirestoreAdminV1Database struct {
 	// generation runtimes. This value may be empty in which case the appid to use
 	// for URL-encoded keys is the project_id (eg: foo instead of v~foo).
 	KeyPrefix string `json:"keyPrefix,omitempty"`
-	// LocationId: The location of the database. Available locations are listed at
-	// https://cloud.google.com/firestore/docs/locations.
+	// LocationId: Required. The location of the database. Available locations are
+	// listed at https://cloud.google.com/firestore/docs/locations.
 	LocationId string `json:"locationId,omitempty"`
 	// MongodbCompatibleDataAccessMode: Optional. The MongoDB compatible API data
 	// access mode to use for this database. If not set on write, the default value
@@ -2111,7 +2111,7 @@ type GoogleFirestoreAdminV1Database struct {
 	// this resource. For example: "123/environment": "production",
 	// "123/costCenter": "marketing"
 	Tags map[string]string `json:"tags,omitempty"`
-	// Type: The type of the database. See
+	// Type: Required. The type of the database. See
 	// https://cloud.google.com/datastore/docs/firestore-or-datastore for
 	// information about how to choose.
 	//
@@ -4406,19 +4406,26 @@ type StructuredQuery struct {
 	// `END AT` but before the `LIMIT` clause. Requires: * The value must be
 	// greater than or equal to zero if specified.
 	Offset int64 `json:"offset,omitempty"`
-	// OrderBy: The order to apply to the query results. Firestore allows callers
-	// to provide a full ordering, a partial ordering, or no ordering at all. In
-	// all cases, Firestore guarantees a stable ordering through the following
-	// rules: * The `order_by` is required to reference all fields used with an
-	// inequality filter. * All fields that are required to be in the `order_by`
-	// but are not already present are appended in lexicographical ordering of the
-	// field name. * If an order on `__name__` is not specified, it is appended by
-	// default. Fields are appended with the same sort direction as the last order
-	// specified, or 'ASCENDING' if no order was specified. For example: * `ORDER
-	// BY a` becomes `ORDER BY a ASC, __name__ ASC` * `ORDER BY a DESC` becomes
-	// `ORDER BY a DESC, __name__ DESC` * `WHERE a > 1` becomes `WHERE a > 1 ORDER
-	// BY a ASC, __name__ ASC` * `WHERE __name__ > ... AND a > 1` becomes `WHERE
-	// __name__ > ... AND a > 1 ORDER BY a ASC, __name__ ASC`
+	// OrderBy: The order to apply to the query results. Callers can provide a full
+	// ordering, a partial ordering, or no ordering at all. While Firestore will
+	// always respect the provided order, the behavior for queries without a full
+	// ordering is different per database edition: In Standard edition, Firestore
+	// guarantees a stable ordering through the following rules: * The `order_by`
+	// is required to reference all fields used with an inequality filter. * All
+	// fields that are required to be in the `order_by` but are not already present
+	// are appended in lexicographical ordering of the field name. * If an order on
+	// `__name__` is not specified, it is appended by default. Fields are appended
+	// with the same sort direction as the last order specified, or 'ASCENDING' if
+	// no order was specified. For example: * `ORDER BY a` becomes `ORDER BY a ASC,
+	// __name__ ASC` * `ORDER BY a DESC` becomes `ORDER BY a DESC, __name__ DESC` *
+	// `WHERE a > 1` becomes `WHERE a > 1 ORDER BY a ASC, __name__ ASC` * `WHERE
+	// __name__ > ... AND a > 1` becomes `WHERE __name__ > ... AND a > 1 ORDER BY a
+	// ASC, __name__ ASC` In Enterprise edition, Firestore does not guarantee a
+	// stable ordering. Instead it will pick the most efficient ordering based on
+	// the indexes available at the time of query execution. This will result in a
+	// different ordering for queries that are otherwise identical. To ensure a
+	// stable ordering, always include a unique field in the `order_by` clause,
+	// such as `__name__`.
 	OrderBy []*Order `json:"orderBy,omitempty"`
 	// Select: Optional sub-set of the fields to return. This acts as a
 	// DocumentMask over the documents returned from a query. When not set, assumes
@@ -4706,6 +4713,11 @@ type Value struct {
 	// TimestampValue: A timestamp value. Precise only to microseconds. When
 	// stored, any additional precision is rounded down.
 	TimestampValue string `json:"timestampValue,omitempty"`
+	// VariableReferenceValue: Pointer to a variable defined elsewhere in a
+	// pipeline. Unlike `field_reference_value` which references a field within a
+	// document, this refers to a variable, defined in a separate namespace than
+	// the fields of a document.
+	VariableReferenceValue string `json:"variableReferenceValue,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ArrayValue") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

@@ -238,11 +238,15 @@ type ProjectsRelatedaccountgroupsMembershipsService struct {
 // GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment: Account defender
 // risk assessment.
 type GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment struct {
+	// AccountTakeoverVerdict: Output only. Account takeover risk assessment for
+	// this request.
+	AccountTakeoverVerdict *GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountTakeoverVerdict `json:"accountTakeoverVerdict,omitempty"`
 	// Labels: Output only. Labels for this request.
 	//
 	// Possible values:
 	//   "ACCOUNT_DEFENDER_LABEL_UNSPECIFIED" - Default unspecified type.
-	//   "PROFILE_MATCH" - The request matches a known good profile for the user.
+	//   "PROFILE_MATCH" - The request matches a trusted profile associated with
+	// this account.
 	//   "SUSPICIOUS_LOGIN_ACTIVITY" - The request is potentially a suspicious
 	// login event and must be further verified either through multi-factor
 	// authentication or another system.
@@ -253,21 +257,133 @@ type GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment struct {
 	// number of related accounts. It does not necessarily imply that the account
 	// is bad but can require further investigation.
 	Labels []string `json:"labels,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Labels") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AccountTakeoverVerdict") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Labels") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AccountTakeoverVerdict") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountRiskReason:
+// Risk explainability reasons for account defender.
+type GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountRiskReason struct {
+	// Reason: Output only. A risk reason associated with this request.
+	//
+	// Possible values:
+	//   "RISK_REASON_UNSPECIFIED" - Default unspecified type.
+	//   "CLIENT_HISTORICAL_BOT_ACTIVITY" - The client has been observed sending
+	// bot-like traffic to this site in the past. This reason incorporates
+	// historical reputation and indicates that the client is known to use bots,
+	// even if the current request is being made by a human.
+	//   "ACCOUNT_IN_LARGE_RELATED_GROUP" - The account is part of a large group of
+	// related accounts, indicating that it may be part of a fraudulent network.
+	// Related accounts are identified based on having similar traffic patterns and
+	// request characteristics.
+	//   "CLIENT_ACCESSED_MANY_ACCOUNTS" - The client has been observed accessing
+	// many accounts on this site.
+	Reason string `json:"reason,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Reason") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Reason") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountRiskReason) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountRiskReason
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountTakeoverVerdi
+// ct: Account takeover risk assessment.
+type GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountTakeoverVerdict struct {
+	// Risk: Output only. Account takeover attempt probability. Values are from 0.0
+	// (lowest risk) to 1.0 (highest risk).
+	Risk float64 `json:"risk,omitempty"`
+	// RiskReasons: Output only. Unordered list. Reasons why the request appears
+	// risky. Risk reasons can be returned even if the risk is low, as trustworthy
+	// requests can still have some risk signals.
+	RiskReasons []*GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountRiskReason `json:"riskReasons,omitempty"`
+	// TrustReasons: Output only. Unordered list. Reasons why the request appears
+	// trustworthy. Trust reasons can be returned even if the risk is high, as
+	// risky requests can still have some trust signals.
+	TrustReasons []*GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountTrustReason `json:"trustReasons,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Risk") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Risk") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountTakeoverVerdict) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountTakeoverVerdict
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountTakeoverVerdict) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountTakeoverVerdict
+	var s1 struct {
+		Risk gensupport.JSONFloat64 `json:"risk"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Risk = float64(s1.Risk)
+	return nil
+}
+
+// GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountTrustReason:
+// Trust explainability reasons for account defender.
+type GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountTrustReason struct {
+	// Reason: Output only. A trust reason associated with this request.
+	//
+	// Possible values:
+	//   "TRUST_REASON_UNSPECIFIED" - Default unspecified type.
+	//   "PROFILE_MATCH" - The request matches a trusted profile associated with
+	// this account. Equivalent to `AccountDefenderLabel.PROFILE_MATCH`.
+	//   "ACCOUNT_HISTORY_REPUTABLE" - The account's historical activity is
+	// reputable. It is unlikely that the account has been compromised in the past.
+	Reason string `json:"reason,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Reason") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Reason") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountTrustReason) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountTrustReason
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1892,8 +2008,10 @@ type GoogleCloudRecaptchaenterpriseV1RiskAnalysis struct {
 	//   "FAILED" - A solution was submitted that was incorrect or otherwise deemed
 	// suspicious.
 	Challenge string `json:"challenge,omitempty"`
-	// ExtendedVerdictReasons: Output only. Extended verdict reasons to be used for
-	// experimentation only. The set of possible reasons is subject to change.
+	// ExtendedVerdictReasons: Output only. Advanced reasons contributing to the
+	// risk analysis verdict. These reasons are available to Enterprise tier
+	// projects only. Contact sales for more information. The set of possible
+	// reasons is subject to change.
 	ExtendedVerdictReasons []string `json:"extendedVerdictReasons,omitempty"`
 	// Reasons: Output only. Reasons contributing to the risk analysis verdict.
 	//

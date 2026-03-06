@@ -2000,6 +2000,11 @@ func (s GoogleCloudBeyondcorpSecuritygatewaysV1ListSecurityGatewaysResponse) Mar
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudBeyondcorpSecuritygatewaysV1LoggingConfig: Configuration for
+// Cloud Logging.
+type GoogleCloudBeyondcorpSecuritygatewaysV1LoggingConfig struct {
+}
+
 // GoogleCloudBeyondcorpSecuritygatewaysV1ProxyProtocolConfig: The
 // configuration for the proxy.
 type GoogleCloudBeyondcorpSecuritygatewaysV1ProxyProtocolConfig struct {
@@ -2058,6 +2063,9 @@ type GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGateway struct {
 	// Hubs: Optional. Map of Hubs that represents regional data path deployment
 	// with GCP region as a key.
 	Hubs map[string]GoogleCloudBeyondcorpSecuritygatewaysV1Hub `json:"hubs,omitempty"`
+	// Logging: Optional. Configuration for Cloud Logging. If this field is
+	// present, the logging will be enabled.
+	Logging *GoogleCloudBeyondcorpSecuritygatewaysV1LoggingConfig `json:"logging,omitempty"`
 	// Name: Identifier. Name of the resource.
 	Name string `json:"name,omitempty"`
 	// ProxyProtocolConfig: Optional. Shared proxy configuration for all apps.

@@ -811,7 +811,7 @@ type GooglePrivacyDlpV2AdjustByMatchingInfoTypes struct {
 	// `DOCUMENT_TYPE/HR/RESUME` finding is not.
 	InfoTypes []*GooglePrivacyDlpV2InfoType `json:"infoTypes,omitempty"`
 	// MatchingType: How the adjustment rule is applied. Only
-	// MATCHING_TYPE_PARTIAL_MATCH is supported: - Partial match: adjusts the
+	// `MATCHING_TYPE_PARTIAL_MATCH` is supported: - Partial match: adjusts the
 	// findings of infoTypes specified in the inspection rule when they have a
 	// nonempty intersection with a finding of an infoType specified in this
 	// adjustment rule.
@@ -3006,6 +3006,8 @@ type GooglePrivacyDlpV2CustomInfoType struct {
 	//   "VERY_LIKELY" - Confidence level is high. Lowest chance of a false
 	// positive.
 	Likelihood string `json:"likelihood,omitempty"`
+	// MetadataKeyValueExpression: key-value pairs to detect in the metadata.
+	MetadataKeyValueExpression *GooglePrivacyDlpV2MetadataKeyValueExpression `json:"metadataKeyValueExpression,omitempty"`
 	// Regex: Regular expression based CustomInfoType.
 	Regex *GooglePrivacyDlpV2Regex `json:"regex,omitempty"`
 	// SensitivityScore: Sensitivity for this CustomInfoType. If this
@@ -5257,7 +5259,10 @@ type GooglePrivacyDlpV2Domain struct {
 	// Possible values:
 	//   "SIGNAL_UNSPECIFIED" - Unused.
 	//   "MODEL" - One or more machine learning models are present.
-	//   "TEXT_EMBEDDING" - A table appears to be a text embedding.
+	//   "TEXT_EMBEDDING" - A table appears to contain text embeddings.
+	//   "EMBEDDING" - A table appears to contain embeddings of any type (for
+	// example, text, image, multimodal). The `TEXT_EMBEDDING` signal might also be
+	// present if the table contains text embeddings.
 	//   "VERTEX_PLUGIN" - The [Cloud SQL Vertex
 	// AI](https://cloud.google.com/sql/docs/postgres/integrate-cloud-sql-with-verte
 	// x-ai) plugin is installed on the database.
@@ -7043,7 +7048,8 @@ type GooglePrivacyDlpV2InspectConfig struct {
 	MinLikelihoodPerInfoType []*GooglePrivacyDlpV2InfoTypeLikelihood `json:"minLikelihoodPerInfoType,omitempty"`
 	// RuleSet: Set of rules to apply to the findings for this InspectConfig.
 	// Exclusion rules, contained in the set are executed in the end, other rules
-	// are executed in the order they are specified for each info type.
+	// are executed in the order they are specified for each info type. Not
+	// supported for the `metadata_key_value_expression` CustomInfoType.
 	RuleSet []*GooglePrivacyDlpV2InspectionRuleSet `json:"ruleSet,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ContentOptions") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7655,6 +7661,34 @@ type GooglePrivacyDlpV2Key struct {
 
 func (s GooglePrivacyDlpV2Key) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Key
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2KeyValueMetadataLabel: The metadata key that contains a
+// finding.
+type GooglePrivacyDlpV2KeyValueMetadataLabel struct {
+	// Key: The metadata key. The format depends on the source of the metadata.
+	// Examples: - Microsoft Purview Information Protection keys look like
+	// 'MSIP_Label_122709e3-8f6b-4860-985f-7f722a94f61e_Enabled',
+	// 'MSIP_Label_122709e3-8f6b-4860-985f-7f722a94f61e_Method',
+	// 'MSIP_Label_122709e3-8f6b-4860-985f-7f722a94f61e_Name'. - General metadata
+	// keys look like 'Author', 'Title', 'Description'.
+	Key string `json:"key,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2KeyValueMetadataLabel) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2KeyValueMetadataLabel
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8355,8 +8389,35 @@ func (s GooglePrivacyDlpV2LocationSupport) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2Manual struct {
 }
 
+// GooglePrivacyDlpV2MetadataKeyValueExpression: Configuration for a custom
+// infoType that detects given expression of key-value pair in the metadata.
+type GooglePrivacyDlpV2MetadataKeyValueExpression struct {
+	// KeyRegex: The regular expression for the key. Key should be non-empty.
+	KeyRegex string `json:"keyRegex,omitempty"`
+	// ValueRegex: The regular expression for the value. Value should be non-empty.
+	ValueRegex string `json:"valueRegex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KeyRegex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KeyRegex") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2MetadataKeyValueExpression) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2MetadataKeyValueExpression
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2MetadataLocation: Metadata Location
 type GooglePrivacyDlpV2MetadataLocation struct {
+	// KeyValueMetadataLabel: Metadata key that contains the finding.
+	KeyValueMetadataLabel *GooglePrivacyDlpV2KeyValueMetadataLabel `json:"keyValueMetadataLabel,omitempty"`
 	// StorageLabel: Storage metadata.
 	StorageLabel *GooglePrivacyDlpV2StorageMetadataLabel `json:"storageLabel,omitempty"`
 	// Type: Type of metadata containing the finding.
@@ -8364,16 +8425,17 @@ type GooglePrivacyDlpV2MetadataLocation struct {
 	// Possible values:
 	//   "METADATATYPE_UNSPECIFIED" - Unused
 	//   "STORAGE_METADATA" - General file metadata provided by Cloud Storage.
+	//   "CONTENT_METADATA" - Metadata extracted from the files.
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "StorageLabel") to
+	// ForceSendFields is a list of field names (e.g. "KeyValueMetadataLabel") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "StorageLabel") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "KeyValueMetadataLabel") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

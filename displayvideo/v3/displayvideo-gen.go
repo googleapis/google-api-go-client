@@ -816,10 +816,14 @@ type AdGroup struct {
 	// in-stream and bumper ads.
 	//   "AD_GROUP_FORMAT_MASTHEAD" - Masthead Ad that is surfaced on the top slot
 	// on the YouTube homepage.
+	//   "AD_GROUP_FORMAT_DEMAND_GEN" - Demand Gen ads.
 	AdGroupFormat string `json:"adGroupFormat,omitempty"`
 	// AdGroupId: Output only. The unique ID of the ad group. Assigned by the
 	// system.
 	AdGroupId int64 `json:"adGroupId,omitempty,string"`
+	// AdGroupInventoryControl: Optional. Specifies the inventory control of the ad
+	// group. This field is required for Demand Gen ad groups.
+	AdGroupInventoryControl *AdGroupInventoryControl `json:"adGroupInventoryControl,omitempty"`
 	// AdvertiserId: Output only. The unique ID of the advertiser the ad group
 	// belongs to.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
@@ -903,6 +907,22 @@ type AdGroupAd struct {
 	// (//support.google.com/displayvideo/answer/6274216), equal to or less than 6
 	// seconds, used for reach.
 	BumperAd *BumperAd `json:"bumperAd,omitempty"`
+	// DemandGenCarouselAd: Details of a Demand Gen carousel ad
+	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
+	// -NC#CarouselAd).
+	DemandGenCarouselAd *DemandGenCarouselAd `json:"demandGenCarouselAd,omitempty"`
+	// DemandGenImageAd: Details of a Demand Gen image ad
+	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
+	// -NC#ImageAd).
+	DemandGenImageAd *DemandGenImageAd `json:"demandGenImageAd,omitempty"`
+	// DemandGenProductAd: Details of a Demand Gen product ad
+	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
+	// -NC#Product-onlyAd).
+	DemandGenProductAd *DemandGenProductAd `json:"demandGenProductAd,omitempty"`
+	// DemandGenVideoAd: Details of a Demand Gen video ad
+	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
+	// -NC#VideoAd).
+	DemandGenVideoAd *DemandGenVideoAd `json:"demandGenVideoAd,omitempty"`
 	// DisplayName: Required. The display name of the ad. Must be UTF-8 encoded
 	// with a maximum size of 255 bytes.
 	DisplayName string `json:"displayName,omitempty"`
@@ -990,6 +1010,37 @@ type AdGroupAssignedTargetingOption struct {
 
 func (s AdGroupAssignedTargetingOption) MarshalJSON() ([]byte, error) {
 	type NoMethod AdGroupAssignedTargetingOption
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdGroupInventoryControl: The inventory control of the ad group.
+type AdGroupInventoryControl struct {
+	// AdGroupInventoryStrategy: The inventory strategy.
+	//
+	// Possible values:
+	//   "AD_GROUP_INVENTORY_STRATEGY_UNSPECIFIED" - Not specified or unknown.
+	//   "AD_GROUP_INVENTORY_STRATEGY_ALL_GOOGLE_AND_DISPLAY_NETWORK_INVENTORY" -
+	// The ad group is opted-in to all Google and Display Network inventory.
+	//   "AD_GROUP_INVENTORY_STRATEGY_ALL_GOOGLE_INVENTORY" - The ad group is
+	// opted-in to all Google inventory.
+	AdGroupInventoryStrategy string `json:"adGroupInventoryStrategy,omitempty"`
+	// SelectedInventories: The selected inventories.
+	SelectedInventories *SelectedInventories `json:"selectedInventories,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdGroupInventoryStrategy")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdGroupInventoryStrategy") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdGroupInventoryControl) MarshalJSON() ([]byte, error) {
+	type NoMethod AdGroupInventoryControl
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3991,6 +4042,9 @@ func (s AuthorizedSellerStatusTargetingOptionDetails) MarshalJSON() ([]byte, err
 // BiddingStrategy: Settings that control the bid strategy. Bid strategy
 // determines the bid price.
 type BiddingStrategy struct {
+	// DemandGenBid: A bid strategy used by Demand Gen resources. It can only be
+	// used for a Demand Gen line item or ad group entity.
+	DemandGenBid *DemandGenBiddingStrategy `json:"demandGenBid,omitempty"`
 	// FixedBid: A strategy that uses a fixed bid price.
 	FixedBid *FixedBidStrategy `json:"fixedBid,omitempty"`
 	// MaximizeSpendAutoBid: A strategy that automatically adjusts the bid to
@@ -4017,13 +4071,13 @@ type BiddingStrategy struct {
 	// resources. It can only be used for a YouTube and Partners line item or ad
 	// group entity.
 	YoutubeAndPartnersBid *YoutubeAndPartnersBiddingStrategy `json:"youtubeAndPartnersBid,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FixedBid") to
+	// ForceSendFields is a list of field names (e.g. "DemandGenBid") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FixedBid") to include in API
+	// NullFields is a list of field names (e.g. "DemandGenBid") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -4127,6 +4181,85 @@ type BudgetSummary struct {
 
 func (s BudgetSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod BudgetSummary
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BulkEditAdGroupAssignedTargetingOptionsRequest: Request message for
+// BulkEditAdGroupAssignedTargetingOptions.
+type BulkEditAdGroupAssignedTargetingOptionsRequest struct {
+	// AdGroupIds: Required. The IDs of the ad groups the assigned targeting
+	// options will belong to. A maximum of 25 ad group IDs can be specified.
+	AdGroupIds googleapi.Int64s `json:"adGroupIds,omitempty"`
+	// CreateRequests: Optional. The assigned targeting options to create in batch,
+	// specified as a list of `CreateAssignedTargetingOptionRequest`. Supported
+	// targeting types: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` *
+	// `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` *
+	// `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_GENDER` *
+	// `TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_HOUSEHOLD_INCOME` *
+	// `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` *
+	// `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_REGIONAL_LOCATION_LIST` *
+	// `TARGETING_TYPE_URL` * `TARGETING_TYPE_YOUTUBE_CHANNEL` *
+	// `TARGETING_TYPE_YOUTUBE_VIDEO`
+	CreateRequests []*CreateAssignedTargetingOptionsRequest `json:"createRequests,omitempty"`
+	// DeleteRequests: Optional. The assigned targeting options to delete in batch,
+	// specified as a list of `DeleteAssignedTargetingOptionsRequest`. Supported
+	// targeting types: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` *
+	// `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` *
+	// `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_GENDER` *
+	// `TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_HOUSEHOLD_INCOME` *
+	// `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` *
+	// `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_REGIONAL_LOCATION_LIST` *
+	// `TARGETING_TYPE_URL` * `TARGETING_TYPE_YOUTUBE_CHANNEL` *
+	// `TARGETING_TYPE_YOUTUBE_VIDEO`
+	DeleteRequests []*DeleteAssignedTargetingOptionsRequest `json:"deleteRequests,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdGroupIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdGroupIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BulkEditAdGroupAssignedTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkEditAdGroupAssignedTargetingOptionsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BulkEditAdGroupAssignedTargetingOptionsResponse: Response message for
+// BulkEditAssignedTargetingOptions.
+type BulkEditAdGroupAssignedTargetingOptionsResponse struct {
+	// Errors: Output only. The error information for each ad group that failed to
+	// update.
+	Errors []*Status `json:"errors,omitempty"`
+	// FailedAdGroupIds: Output only. The IDs of the ad groups which failed to
+	// update.
+	FailedAdGroupIds googleapi.Int64s `json:"failedAdGroupIds,omitempty"`
+	// UpdatedAdGroupIds: Output only. The IDs of the ad groups which were
+	// successfully updated.
+	UpdatedAdGroupIds googleapi.Int64s `json:"updatedAdGroupIds,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Errors") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BulkEditAdGroupAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkEditAdGroupAssignedTargetingOptionsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5196,6 +5329,45 @@ func (s CampaignGoal) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CarouselCard: Details for a Demand Gen carousel card.
+type CarouselCard struct {
+	// CallToAction: Required. The call-to-action button shown on the card. Must
+	// use 10 characters or less.
+	CallToAction string `json:"callToAction,omitempty"`
+	// FinalMobileUrl: Optional. The URL address of the webpage that people reach
+	// after they click the card on a mobile device.
+	FinalMobileUrl string `json:"finalMobileUrl,omitempty"`
+	// FinalUrl: Required. The URL address of the webpage that people reach after
+	// they click the card.
+	FinalUrl string `json:"finalUrl,omitempty"`
+	// Headline: Required. The headline of the card.
+	Headline string `json:"headline,omitempty"`
+	// MarketingImage: Optional. The marketing image shown on the card.
+	MarketingImage *ImageAsset `json:"marketingImage,omitempty"`
+	// PortraitMarketingImage: Optional. The portrait marketing image shown on the
+	// card.
+	PortraitMarketingImage *ImageAsset `json:"portraitMarketingImage,omitempty"`
+	// SquareMarketingImage: Optional. The square marketing image shown on the
+	// card.
+	SquareMarketingImage *ImageAsset `json:"squareMarketingImage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CallToAction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CallToAction") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CarouselCard) MarshalJSON() ([]byte, error) {
+	type NoMethod CarouselCard
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CarrierAndIspAssignedTargetingOptionDetails: Details for assigned carrier
 // and ISP targeting option. This will be populated in the details field of an
 // AssignedTargetingOption when targeting_type is
@@ -6197,6 +6369,13 @@ type ConversionCountingConfig struct {
 	// inclusive. For example, to track 50% of the post-click conversions, set a
 	// value of 50000.
 	PostViewCountPercentageMillis int64 `json:"postViewCountPercentageMillis,omitempty,string"`
+	// PrimaryAttributionModelId: Optional. The attribution model to use for
+	// conversion measurement. This attribution model will determine how
+	// conversions are counted. The Primary model can be set by you for a
+	// floodlight config or group. More details here
+	// (https://support.google.com/displayvideo/answer/7409983). Only applicable to
+	// Demand Gen line items.
+	PrimaryAttributionModelId int64 `json:"primaryAttributionModelId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "FloodlightActivityConfigs")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7519,7 +7698,8 @@ type DayAndTimeAssignedTargetingOptionDetails struct {
 	// between 0 (start of day) and 23 (1 hour before end of day).
 	StartHour int64 `json:"startHour,omitempty"`
 	// TimeZoneResolution: Required. The mechanism used to determine which timezone
-	// to use for this day and time targeting setting.
+	// to use for this day and time targeting setting. For demand gen line items,
+	// this field is always TIME_ZONE_RESOLUTION_ADVERTISER.
 	//
 	// Possible values:
 	//   "TIME_ZONE_RESOLUTION_UNSPECIFIED" - Time zone resolution is either
@@ -7684,6 +7864,353 @@ type DeleteAssignedTargetingOptionsRequest struct {
 
 func (s DeleteAssignedTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteAssignedTargetingOptionsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DemandGenBiddingStrategy: Settings that control the bid strategy for Demand
+// Gen resources.
+type DemandGenBiddingStrategy struct {
+	// EffectiveBiddingValue: Output only. If AG doesn't set value for tCPA or
+	// tROAS, line item bidding value will be the effective_bidding_value, if the
+	// bidding strategy type is not tCPA or tROAS, effective_bidding_value is
+	// always 0. For line item, it will be the same as the value field.
+	EffectiveBiddingValue int64 `json:"effectiveBiddingValue,omitempty,string"`
+	// EffectiveBiddingValueSource: Output only. Source of the effective bidding
+	// value.
+	//
+	// Possible values:
+	//   "BIDDING_SOURCE_UNSPECIFIED" - Bidding source is not specified or unknown.
+	//   "BIDDING_SOURCE_LINE_ITEM" - Bidding value is inherited from the line
+	// item.
+	//   "BIDDING_SOURCE_AD_GROUP" - Bidding value is defined in the ad group.
+	EffectiveBiddingValueSource string `json:"effectiveBiddingValueSource,omitempty"`
+	// Type: Optional. The type of the bidding strategy. This can only be set at
+	// the line item level.
+	//
+	// Possible values:
+	//   "DEMAND_GEN_BIDDING_STRATEGY_TYPE_UNSPECIFIED" - Type is not specified or
+	// unknown.
+	//   "DEMAND_GEN_BIDDING_STRATEGY_TYPE_TARGET_CPA" - A bidding strategy that
+	// automatically optimizes conversions per dollar.
+	//   "DEMAND_GEN_BIDDING_STRATEGY_TYPE_TARGET_ROAS" - A bidding strategy that
+	// automatically maximizes revenue while averaging a specific target Return On
+	// Ad Spend (ROAS).
+	//   "DEMAND_GEN_BIDDING_STRATEGY_TYPE_MAXIMIZE_CONVERSIONS" - A bidding
+	// strategy that automatically maximizes number of conversions
+	//   "DEMAND_GEN_BIDDING_STRATEGY_TYPE_MAXIMIZE_CONVERSION_VALUE" - A bidding
+	// strategy that automatically maximizes revenue while spending your budget.
+	//   "DEMAND_GEN_BIDDING_STRATEGY_TYPE_MAXIMIZE_CLICKS" - A bidding strategy
+	// that automatically maximizes clicks within a given budget.
+	Type string `json:"type,omitempty"`
+	// Value: Optional. The value used by the bidding strategy. This can be set at
+	// the line item and ad group level. This field is only applicable for the
+	// following strategy types: * `DEMAND_GEN_BIDDING_STRATEGY_TYPE_TARGET_CPA` *
+	// `DEMAND_GEN_BIDDING_STRATEGY_TYPE_TARGET_ROAS` Value of this field is in
+	// micros of the advertiser's currency or ROAS value. For example, 1000000
+	// represents 1.0 standard units of the currency or 100% ROAS value. If not
+	// using an applicable strategy, the value of this field will be 0.
+	Value int64 `json:"value,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "EffectiveBiddingValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EffectiveBiddingValue") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DemandGenBiddingStrategy) MarshalJSON() ([]byte, error) {
+	type NoMethod DemandGenBiddingStrategy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DemandGenCarouselAd: Details for a Demand Gen carousel ad.
+type DemandGenCarouselAd struct {
+	// BusinessName: Required. The business name shown on the ad.
+	BusinessName string `json:"businessName,omitempty"`
+	// Cards: Required. The list of cards shown on the ad.
+	Cards []*CarouselCard `json:"cards,omitempty"`
+	// CustomParameters: Optional. The custom parameters to pass custom values to
+	// tracking URL template.
+	CustomParameters map[string]string `json:"customParameters,omitempty"`
+	// Description: Required. The description of the ad.
+	Description string `json:"description,omitempty"`
+	// FinalUrl: Required. The URL address of the webpage that people reach after
+	// they click the ad.
+	FinalUrl string `json:"finalUrl,omitempty"`
+	// FinalUrlSuffix: Optional. The suffix to append to landing page URLs.
+	FinalUrlSuffix string `json:"finalUrlSuffix,omitempty"`
+	// Headline: Required. The headline of the ad.
+	Headline string `json:"headline,omitempty"`
+	// Logo: Required. The logo image used by this ad.
+	Logo *ImageAsset `json:"logo,omitempty"`
+	// TrackingUrl: Output only. The URL address loaded in the background for
+	// tracking purposes.
+	TrackingUrl string `json:"trackingUrl,omitempty"`
+	// UserSpecifiedTrackingUrl: Optional. The tracking URL specified by the user
+	// manually.
+	UserSpecifiedTrackingUrl string `json:"userSpecifiedTrackingUrl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BusinessName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BusinessName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DemandGenCarouselAd) MarshalJSON() ([]byte, error) {
+	type NoMethod DemandGenCarouselAd
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DemandGenImageAd: Details for a Demand Gen image ad.
+type DemandGenImageAd struct {
+	// BusinessName: Required. The business name shown on the ad.
+	BusinessName string `json:"businessName,omitempty"`
+	// CallToAction: Required. The call-to-action button shown on the ad.
+	CallToAction string `json:"callToAction,omitempty"`
+	// CustomParameters: Optional. The custom parameters to pass custom values to
+	// tracking URL template.
+	CustomParameters map[string]string `json:"customParameters,omitempty"`
+	// Descriptions: Required. The list of descriptions shown on the ad.
+	Descriptions []string `json:"descriptions,omitempty"`
+	// FinalMobileUrl: Optional. The URL address of the webpage that people reach
+	// after they click the ad on a mobile device.
+	FinalMobileUrl string `json:"finalMobileUrl,omitempty"`
+	// FinalUrl: Required. The URL address of the webpage that people reach after
+	// they click the ad.
+	FinalUrl string `json:"finalUrl,omitempty"`
+	// FinalUrlSuffix: Optional. The suffix to append to landing page URLs.
+	FinalUrlSuffix string `json:"finalUrlSuffix,omitempty"`
+	// Headlines: Required. The list of headlines shown on the ad.
+	Headlines []string `json:"headlines,omitempty"`
+	// LogoImages: The list of logo images shown on the ad.
+	LogoImages []*ImageAsset `json:"logoImages,omitempty"`
+	// MarketingImages: The list of marketing images shown on the ad.
+	MarketingImages []*ImageAsset `json:"marketingImages,omitempty"`
+	// PortraitMarketingImages: The list of portrait marketing images shown on the
+	// ad.
+	PortraitMarketingImages []*ImageAsset `json:"portraitMarketingImages,omitempty"`
+	// SquareMarketingImages: The list of square marketing images shown on the ad.
+	SquareMarketingImages []*ImageAsset `json:"squareMarketingImages,omitempty"`
+	// TrackingUrl: Output only. The URL address loaded in the background for
+	// tracking purposes.
+	TrackingUrl string `json:"trackingUrl,omitempty"`
+	// UserSpecifiedTrackingUrl: Optional. The tracking URL specified by the user
+	// manually.
+	UserSpecifiedTrackingUrl string `json:"userSpecifiedTrackingUrl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BusinessName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BusinessName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DemandGenImageAd) MarshalJSON() ([]byte, error) {
+	type NoMethod DemandGenImageAd
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DemandGenProductAd: Details for a Demand Gen product ad.
+type DemandGenProductAd struct {
+	// BusinessName: Required. The business name shown on the ad.
+	BusinessName string `json:"businessName,omitempty"`
+	// CallToAction: Required. The call-to-action button shown on the ad. The
+	// supported values are: * `AUTOMATED` * `APPLY_NOW` * `BOOK_NOW` *
+	// `CONTACT_US` * `DOWNLOAD` * `GET_QUOTE` * `LEARN_MORE` * `SHOP_NOW` *
+	// `SIGN_UP` * `SUBSCRIBE`
+	//
+	// Possible values:
+	//   "CALL_TO_ACTION_UNSPECIFIED" - Not specified or unknown.
+	//   "AUTOMATED" - Automated.
+	//   "LEARN_MORE" - Learn more.
+	//   "GET_QUOTE" - Get quote.
+	//   "APPLY_NOW" - Apply now.
+	//   "SIGN_UP" - Sign up.
+	//   "CONTACT_US" - Contact us.
+	//   "SUBSCRIBE" - Subscribe.
+	//   "DOWNLOAD" - Download.
+	//   "BOOK_NOW" - Book now.
+	//   "SHOP_NOW" - Shop now.
+	//   "BUY_NOW" - Buy now.
+	//   "DONATE_NOW" - Donate now.
+	//   "ORDER_NOW" - Order now.
+	//   "PLAY_NOW" - Play now.
+	//   "SEE_MORE" - See more.
+	//   "START_NOW" - Start now.
+	//   "VISIT_SITE" - Visit site.
+	//   "WATCH_NOW" - Watch now.
+	CallToAction string `json:"callToAction,omitempty"`
+	// CustomParameters: Optional. The custom parameters to pass custom values to
+	// tracking URL template.
+	CustomParameters map[string]string `json:"customParameters,omitempty"`
+	// Description: Required. The description of the ad.
+	Description string `json:"description,omitempty"`
+	// DisplayUrlBreadcrumb1: Optional. The first piece after the domain in the
+	// display URL.
+	DisplayUrlBreadcrumb1 string `json:"displayUrlBreadcrumb1,omitempty"`
+	// DisplayUrlBreadcrumb2: Optional. The second piece after the domain in the
+	// display URL.
+	DisplayUrlBreadcrumb2 string `json:"displayUrlBreadcrumb2,omitempty"`
+	// FinalUrl: Required. The URL address of the webpage that people reach after
+	// they click the ad.
+	FinalUrl string `json:"finalUrl,omitempty"`
+	// FinalUrlSuffix: Optional. The suffix to append to landing page URLs.
+	FinalUrlSuffix string `json:"finalUrlSuffix,omitempty"`
+	// Headline: Required. The headline of the ad.
+	Headline string `json:"headline,omitempty"`
+	// Logo: Required. The logo image used by this ad.
+	Logo *ImageAsset `json:"logo,omitempty"`
+	// TrackingUrl: Output only. The URL address loaded in the background for
+	// tracking purposes.
+	TrackingUrl string `json:"trackingUrl,omitempty"`
+	// UserSpecifiedTrackingUrl: Optional. The tracking URL specified by the user
+	// manually.
+	UserSpecifiedTrackingUrl string `json:"userSpecifiedTrackingUrl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BusinessName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BusinessName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DemandGenProductAd) MarshalJSON() ([]byte, error) {
+	type NoMethod DemandGenProductAd
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DemandGenSettings: Settings for Demand Gen line items.
+type DemandGenSettings struct {
+	// GeoLanguageTargetingEnabled: Optional. Immutable. Whether location and
+	// language targeting can be set at the line item level. Otherwise, relevant
+	// targeting types must be assigned directly to the ad groups.
+	GeoLanguageTargetingEnabled bool `json:"geoLanguageTargetingEnabled,omitempty"`
+	// LinkedMerchantId: Optional. The ID of the merchant which is linked to the
+	// line item for product feed.
+	LinkedMerchantId int64 `json:"linkedMerchantId,omitempty,string"`
+	// ThirdPartyMeasurementConfigs: Optional. The third party measurement settings
+	// for the Demand Gen line item.
+	ThirdPartyMeasurementConfigs *ThirdPartyMeasurementConfigs `json:"thirdPartyMeasurementConfigs,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "GeoLanguageTargetingEnabled") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GeoLanguageTargetingEnabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DemandGenSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod DemandGenSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DemandGenVideoAd: Details for a Demand Gen video ad.
+type DemandGenVideoAd struct {
+	// BusinessName: Required. The business name shown on the ad.
+	BusinessName string `json:"businessName,omitempty"`
+	// CallToAction: Required. The call-to-action button shown on the ad. The
+	// supported values are: * `AUTOMATED` * `LEARN_MORE` * `GET_QUOTE` *
+	// `APPLY_NOW` * `SIGN_UP` * `CONTACT_US` * `SUBSCRIBE` * `DOWNLOAD` *
+	// `BOOK_NOW` * `SHOP_NOW` * `BUY_NOW` * `DONATE_NOW` * `ORDER_NOW` *
+	// `PLAY_NOW` * `SEE_MORE` * `START_NOW` * `VISIT_SITE` * `WATCH_NOW`
+	//
+	// Possible values:
+	//   "CALL_TO_ACTION_UNSPECIFIED" - Not specified or unknown.
+	//   "AUTOMATED" - Automated.
+	//   "LEARN_MORE" - Learn more.
+	//   "GET_QUOTE" - Get quote.
+	//   "APPLY_NOW" - Apply now.
+	//   "SIGN_UP" - Sign up.
+	//   "CONTACT_US" - Contact us.
+	//   "SUBSCRIBE" - Subscribe.
+	//   "DOWNLOAD" - Download.
+	//   "BOOK_NOW" - Book now.
+	//   "SHOP_NOW" - Shop now.
+	//   "BUY_NOW" - Buy now.
+	//   "DONATE_NOW" - Donate now.
+	//   "ORDER_NOW" - Order now.
+	//   "PLAY_NOW" - Play now.
+	//   "SEE_MORE" - See more.
+	//   "START_NOW" - Start now.
+	//   "VISIT_SITE" - Visit site.
+	//   "WATCH_NOW" - Watch now.
+	CallToAction string `json:"callToAction,omitempty"`
+	// CompanionBanner: Optional. The companion banner used by this ad.
+	CompanionBanner *ImageAsset `json:"companionBanner,omitempty"`
+	// CustomParameters: Optional. The custom parameters to pass custom values to
+	// tracking URL template.
+	CustomParameters map[string]string `json:"customParameters,omitempty"`
+	// Descriptions: Required. The list of descriptions shown on the ad.
+	Descriptions []string `json:"descriptions,omitempty"`
+	// DisplayUrlBreadcrumb1: Optional. The first piece after the domain in the
+	// display URL.
+	DisplayUrlBreadcrumb1 string `json:"displayUrlBreadcrumb1,omitempty"`
+	// DisplayUrlBreadcrumb2: Optional. The second piece after the domain in the
+	// display URL.
+	DisplayUrlBreadcrumb2 string `json:"displayUrlBreadcrumb2,omitempty"`
+	// FinalMobileUrl: Optional. The URL address of the webpage that people reach
+	// after they click the ad on a mobile device.
+	FinalMobileUrl string `json:"finalMobileUrl,omitempty"`
+	// FinalUrl: Required. The URL address of the webpage that people reach after
+	// they click the ad.
+	FinalUrl string `json:"finalUrl,omitempty"`
+	// FinalUrlSuffix: Optional. The suffix to append to landing page URLs.
+	FinalUrlSuffix string `json:"finalUrlSuffix,omitempty"`
+	// Headlines: Required. The list of headlines shown on the ad.
+	Headlines []string `json:"headlines,omitempty"`
+	// Logo: Required. The logo image used by this ad.
+	Logo *ImageAsset `json:"logo,omitempty"`
+	// LongHeadlines: Required. The list of lone headlines shown on the ad.
+	LongHeadlines []string `json:"longHeadlines,omitempty"`
+	// TrackingUrl: Output only. The URL address loaded in the background for
+	// tracking purposes.
+	TrackingUrl string `json:"trackingUrl,omitempty"`
+	// UserSpecifiedTrackingUrl: Optional. The tracking URL specified by the user
+	// manually.
+	UserSpecifiedTrackingUrl string `json:"userSpecifiedTrackingUrl,omitempty"`
+	// Videos: Required. The list of YouTube video assets used by this ad.
+	Videos []*YoutubeVideoDetails `json:"videos,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BusinessName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BusinessName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DemandGenVideoAd) MarshalJSON() ([]byte, error) {
+	type NoMethod DemandGenVideoAd
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10305,19 +10832,21 @@ func (s IdFilter) MarshalJSON() ([]byte, error) {
 
 // ImageAsset: Meta data of an image asset.
 type ImageAsset struct {
+	// AssetId: Required. The unique ID of the asset.
+	AssetId int64 `json:"assetId,omitempty,string"`
 	// FileSize: Output only. File size of the image asset in bytes.
 	FileSize int64 `json:"fileSize,omitempty,string"`
 	// FullSize: Output only. Metadata for this image at its original size.
 	FullSize *Dimensions `json:"fullSize,omitempty"`
 	// MimeType: Output only. MIME type of the image asset.
 	MimeType string `json:"mimeType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FileSize") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AssetId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FileSize") to include in API
+	// NullFields is a list of field names (e.g. "AssetId") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -11576,6 +12105,8 @@ type LineItem struct {
 	ConversionCounting *ConversionCountingConfig `json:"conversionCounting,omitempty"`
 	// CreativeIds: The IDs of the creatives associated with the line item.
 	CreativeIds googleapi.Int64s `json:"creativeIds,omitempty"`
+	// DemandGenSettings: Optional. Settings specific to Demand Gen line items.
+	DemandGenSettings *DemandGenSettings `json:"demandGenSettings,omitempty"`
 	// DisplayName: Required. The display name of the line item. Must be UTF-8
 	// encoded with a maximum size of 240 bytes.
 	DisplayName string `json:"displayName,omitempty"`
@@ -11690,6 +12221,7 @@ type LineItem struct {
 	//   "LINE_ITEM_TYPE_VIDEO_OUT_OF_HOME" - Video ads served on
 	// digital-out-of-home inventory. Line items of this type and their targeting
 	// cannot be created or updated using the API.
+	//   "LINE_ITEM_TYPE_DEMAND_GEN" - Demand Gen ads.
 	LineItemType string `json:"lineItemType,omitempty"`
 	// MobileApp: The mobile app promoted by the line item. This is applicable only
 	// when line_item_type is either `LINE_ITEM_TYPE_DISPLAY_MOBILE_APP_INSTALL` or
@@ -15251,6 +15783,41 @@ func (s SearchTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SelectedInventories: The inventory control of the ad group.
+type SelectedInventories struct {
+	// AllowDiscover: Whether the ad group is opted-in to Discover inventory.
+	AllowDiscover bool `json:"allowDiscover,omitempty"`
+	// AllowGmail: Whether the ad group is opted-in to Gmail inventory.
+	AllowGmail bool `json:"allowGmail,omitempty"`
+	// AllowGoogleDisplayNetwork: Whether the ad group is opted-in to Google
+	// Display Network inventory.
+	AllowGoogleDisplayNetwork bool `json:"allowGoogleDisplayNetwork,omitempty"`
+	// AllowYoutubeFeed: Whether the ad group is opted-in to YouTube in-feed
+	// inventory.
+	AllowYoutubeFeed bool `json:"allowYoutubeFeed,omitempty"`
+	// AllowYoutubeShorts: Whether the ad group is opted-in to YouTube shorts
+	// inventory.
+	AllowYoutubeShorts bool `json:"allowYoutubeShorts,omitempty"`
+	// AllowYoutubeStream: Whether the ad group is opted-in to YouTube in-stream.
+	AllowYoutubeStream bool `json:"allowYoutubeStream,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowDiscover") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowDiscover") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SelectedInventories) MarshalJSON() ([]byte, error) {
+	type NoMethod SelectedInventories
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SensitiveCategoryAssignedTargetingOptionDetails: Targeting details for
 // sensitive category. This will be populated in the details field of an
 // AssignedTargetingOption when targeting_type is
@@ -16020,6 +16587,15 @@ type ThirdPartyVendorConfig struct {
 	//   "THIRD_PARTY_VENDOR_KANTAR" - Kantar.
 	//   "THIRD_PARTY_VENDOR_DYNATA" - Dynata.
 	//   "THIRD_PARTY_VENDOR_TRANSUNION" - Transunion.
+	//   "THIRD_PARTY_VENDOR_ORIGIN" - Origin.
+	//   "THIRD_PARTY_VENDOR_GEMIUS" - Gemius.
+	//   "THIRD_PARTY_VENDOR_MEDIA_SCOPE" - MediaScope.
+	//   "THIRD_PARTY_VENDOR_AUDIENCE_PROJECT" - Audience Project.
+	//   "THIRD_PARTY_VENDOR_VIDEO_AMP" - Video Amp.
+	//   "THIRD_PARTY_VENDOR_ISPOT_TV" - Ispot TV.
+	//   "THIRD_PARTY_VENDOR_INTAGE" - Intage.
+	//   "THIRD_PARTY_VENDOR_MACROMILL" - Macromill.
+	//   "THIRD_PARTY_VENDOR_VIDEO_RESEARCH" - Video Research.
 	Vendor string `json:"vendor,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PlacementId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -18026,6 +18602,211 @@ func (c *AdvertisersPatchCall) Do(opts ...googleapi.CallOption) (*Advertiser, er
 	return ret, nil
 }
 
+type AdvertisersAdGroupAdsCreateCall struct {
+	s            *Service
+	advertiserId int64
+	adgroupad    *AdGroupAd
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Create: Creates an ad group ad.
+//
+//   - advertiserId: Output only. The unique ID of the advertiser the ad belongs
+//     to.
+func (r *AdvertisersAdGroupAdsService) Create(advertiserId int64, adgroupad *AdGroupAd) *AdvertisersAdGroupAdsCreateCall {
+	c := &AdvertisersAdGroupAdsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.adgroupad = adgroupad
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersAdGroupAdsCreateCall) Fields(s ...googleapi.Field) *AdvertisersAdGroupAdsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersAdGroupAdsCreateCall) Context(ctx context.Context) *AdvertisersAdGroupAdsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersAdGroupAdsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersAdGroupAdsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.adgroupad)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/advertisers/{+advertiserId}/adGroupAds")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroupAds.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.adGroupAds.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AdGroupAd.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AdvertisersAdGroupAdsCreateCall) Do(opts ...googleapi.CallOption) (*AdGroupAd, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AdGroupAd{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroupAds.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AdvertisersAdGroupAdsDeleteCall struct {
+	s            *Service
+	advertiserId int64
+	adGroupAdId  int64
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Delete: Deletes an ad group ad.
+//
+// - adGroupAdId: The ID of the ad to delete.
+// - advertiserId: The ID of the advertiser the ad belongs to.
+func (r *AdvertisersAdGroupAdsService) Delete(advertiserId int64, adGroupAdId int64) *AdvertisersAdGroupAdsDeleteCall {
+	c := &AdvertisersAdGroupAdsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.adGroupAdId = adGroupAdId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersAdGroupAdsDeleteCall) Fields(s ...googleapi.Field) *AdvertisersAdGroupAdsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersAdGroupAdsDeleteCall) Context(ctx context.Context) *AdvertisersAdGroupAdsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersAdGroupAdsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersAdGroupAdsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/advertisers/{+advertiserId}/adGroupAds/{+adGroupAdId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+		"adGroupAdId":  strconv.FormatInt(c.adGroupAdId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroupAds.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.adGroupAds.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AdvertisersAdGroupAdsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroupAds.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type AdvertisersAdGroupAdsGetCall struct {
 	s            *Service
 	advertiserId int64
@@ -18316,6 +19097,233 @@ func (c *AdvertisersAdGroupAdsListCall) Pages(ctx context.Context, f func(*ListA
 	}
 }
 
+type AdvertisersAdGroupAdsPatchCall struct {
+	s            *Service
+	advertiserId int64
+	adGroupAdId  int64
+	adgroupad    *AdGroupAd
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Patch: Updates an ad group ad.
+//
+//   - adGroupAdId: Output only. The unique ID of the ad. Assigned by the system.
+//   - advertiserId: Output only. The unique ID of the advertiser the ad belongs
+//     to.
+func (r *AdvertisersAdGroupAdsService) Patch(advertiserId int64, adGroupAdId int64, adgroupad *AdGroupAd) *AdvertisersAdGroupAdsPatchCall {
+	c := &AdvertisersAdGroupAdsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.adGroupAdId = adGroupAdId
+	c.adgroupad = adgroupad
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The mask to
+// control which fields to update.
+func (c *AdvertisersAdGroupAdsPatchCall) UpdateMask(updateMask string) *AdvertisersAdGroupAdsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersAdGroupAdsPatchCall) Fields(s ...googleapi.Field) *AdvertisersAdGroupAdsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersAdGroupAdsPatchCall) Context(ctx context.Context) *AdvertisersAdGroupAdsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersAdGroupAdsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersAdGroupAdsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.adgroupad)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/advertisers/{+advertiserId}/adGroupAds/{+adGroupAdId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+		"adGroupAdId":  strconv.FormatInt(c.adGroupAdId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroupAds.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.adGroupAds.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AdGroupAd.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AdvertisersAdGroupAdsPatchCall) Do(opts ...googleapi.CallOption) (*AdGroupAd, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AdGroupAd{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroupAds.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AdvertisersAdGroupsBulkEditAssignedTargetingOptionsCall struct {
+	s                                              *Service
+	advertiserId                                   int64
+	bulkeditadgroupassignedtargetingoptionsrequest *BulkEditAdGroupAssignedTargetingOptionsRequest
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// BulkEditAssignedTargetingOptions: Bulk edits targeting options for multiple
+// ad groups. The same set of delete and create requests will be applied to all
+// specified ad groups. Specifically, the operation will delete the assigned
+// targeting options provided in
+// BulkEditAdGroupAssignedTargetingOptionsRequest.delete_requests from each ad
+// group, and then create the assigned targeting options provided in
+// BulkEditAdGroupAssignedTargetingOptionsRequest.create_requests. Only ad
+// groups under a line item of line_item_type `LINE_ITEM_TYPE_DEMAND_GEN` are
+// supported for this method.
+//
+// - advertiserId: The ID of the advertiser the ad groups belong to.
+func (r *AdvertisersAdGroupsService) BulkEditAssignedTargetingOptions(advertiserId int64, bulkeditadgroupassignedtargetingoptionsrequest *BulkEditAdGroupAssignedTargetingOptionsRequest) *AdvertisersAdGroupsBulkEditAssignedTargetingOptionsCall {
+	c := &AdvertisersAdGroupsBulkEditAssignedTargetingOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.bulkeditadgroupassignedtargetingoptionsrequest = bulkeditadgroupassignedtargetingoptionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersAdGroupsBulkEditAssignedTargetingOptionsCall) Fields(s ...googleapi.Field) *AdvertisersAdGroupsBulkEditAssignedTargetingOptionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersAdGroupsBulkEditAssignedTargetingOptionsCall) Context(ctx context.Context) *AdvertisersAdGroupsBulkEditAssignedTargetingOptionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersAdGroupsBulkEditAssignedTargetingOptionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersAdGroupsBulkEditAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.bulkeditadgroupassignedtargetingoptionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/advertisers/{+advertiserId}/adGroups:bulkEditAssignedTargetingOptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.bulkEditAssignedTargetingOptions", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.adGroups.bulkEditAssignedTargetingOptions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BulkEditAdGroupAssignedTargetingOptionsResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersAdGroupsBulkEditAssignedTargetingOptionsCall) Do(opts ...googleapi.CallOption) (*BulkEditAdGroupAssignedTargetingOptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BulkEditAdGroupAssignedTargetingOptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.bulkEditAssignedTargetingOptions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type AdvertisersAdGroupsBulkListAdGroupAssignedTargetingOptionsCall struct {
 	s            *Service
 	advertiserId int64
@@ -18503,6 +19511,213 @@ func (c *AdvertisersAdGroupsBulkListAdGroupAssignedTargetingOptionsCall) Pages(c
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type AdvertisersAdGroupsCreateCall struct {
+	s            *Service
+	advertiserId int64
+	adgroup      *AdGroup
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Create: Creates a new ad group. Returns the newly created ad group if
+// successful.
+//
+//   - advertiserId: Output only. The unique ID of the advertiser the ad group
+//     belongs to.
+func (r *AdvertisersAdGroupsService) Create(advertiserId int64, adgroup *AdGroup) *AdvertisersAdGroupsCreateCall {
+	c := &AdvertisersAdGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.adgroup = adgroup
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersAdGroupsCreateCall) Fields(s ...googleapi.Field) *AdvertisersAdGroupsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersAdGroupsCreateCall) Context(ctx context.Context) *AdvertisersAdGroupsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersAdGroupsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersAdGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.adgroup)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/advertisers/{+advertiserId}/adGroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.adGroups.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AdGroup.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AdvertisersAdGroupsCreateCall) Do(opts ...googleapi.CallOption) (*AdGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AdGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AdvertisersAdGroupsDeleteCall struct {
+	s            *Service
+	advertiserId int64
+	adGroupId    int64
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Delete: Deletes a AdGroup. Returns error code `NOT_FOUND` if the ad group
+// does not exist.
+//
+// - adGroupId: The ID of the ad group to delete.
+// - advertiserId: The ID of the advertiser this ad group belongs to.
+func (r *AdvertisersAdGroupsService) Delete(advertiserId int64, adGroupId int64) *AdvertisersAdGroupsDeleteCall {
+	c := &AdvertisersAdGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.adGroupId = adGroupId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersAdGroupsDeleteCall) Fields(s ...googleapi.Field) *AdvertisersAdGroupsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersAdGroupsDeleteCall) Context(ctx context.Context) *AdvertisersAdGroupsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersAdGroupsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersAdGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/advertisers/{+advertiserId}/adGroups/{+adGroupId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+		"adGroupId":    strconv.FormatInt(c.adGroupId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.adGroups.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AdvertisersAdGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type AdvertisersAdGroupsGetCall struct {
@@ -18793,6 +20008,366 @@ func (c *AdvertisersAdGroupsListCall) Pages(ctx context.Context, f func(*ListAdG
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type AdvertisersAdGroupsPatchCall struct {
+	s            *Service
+	advertiserId int64
+	adGroupId    int64
+	adgroup      *AdGroup
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Patch: Updates an existing ad group. Returns the updated ad group if
+// successful.
+//
+//   - adGroupId: Output only. The unique ID of the ad group. Assigned by the
+//     system.
+//   - advertiserId: Output only. The unique ID of the advertiser the ad group
+//     belongs to.
+func (r *AdvertisersAdGroupsService) Patch(advertiserId int64, adGroupId int64, adgroup *AdGroup) *AdvertisersAdGroupsPatchCall {
+	c := &AdvertisersAdGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.adGroupId = adGroupId
+	c.adgroup = adgroup
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The mask to
+// control which fields to update.
+func (c *AdvertisersAdGroupsPatchCall) UpdateMask(updateMask string) *AdvertisersAdGroupsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersAdGroupsPatchCall) Fields(s ...googleapi.Field) *AdvertisersAdGroupsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersAdGroupsPatchCall) Context(ctx context.Context) *AdvertisersAdGroupsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersAdGroupsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersAdGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.adgroup)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/advertisers/{+advertiserId}/adGroups/{+adGroupId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+		"adGroupId":    strconv.FormatInt(c.adGroupId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.adGroups.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AdGroup.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AdvertisersAdGroupsPatchCall) Do(opts ...googleapi.CallOption) (*AdGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AdGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsCreateCall struct {
+	s                       *Service
+	advertiserId            int64
+	adGroupId               int64
+	targetingType           string
+	assignedtargetingoption *AssignedTargetingOption
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Create: Assigns a targeting option to an ad group. Returns the assigned
+// targeting option if successful. Only ad groups under a line item of
+// line_item_type `LINE_ITEM_TYPE_DEMAND_GEN` are supported for this method.
+//
+//   - adGroupId: The ID of the ad group the assigned targeting option will
+//     belong to.
+//   - advertiserId: The ID of the advertiser the ad group belongs to.
+//   - targetingType: Identifies the type of this assigned targeting option.
+//     Supported targeting types: * `TARGETING_TYPE_AGE_RANGE` *
+//     `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` *
+//     `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_CATEGORY` *
+//     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
+//     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_KEYWORD` *
+//     `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_PARENTAL_STATUS` *
+//     `TARGETING_TYPE_REGIONAL_LOCATION_LIST` * `TARGETING_TYPE_URL` *
+//     `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`.
+func (r *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsService) Create(advertiserId int64, adGroupId int64, targetingType string, assignedtargetingoption *AssignedTargetingOption) *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsCreateCall {
+	c := &AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.adGroupId = adGroupId
+	c.targetingType = targetingType
+	c.assignedtargetingoption = assignedtargetingoption
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsCreateCall) Fields(s ...googleapi.Field) *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsCreateCall) Context(ctx context.Context) *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.assignedtargetingoption)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/advertisers/{+advertiserId}/adGroups/{+adGroupId}/targetingTypes/{+targetingType}/assignedTargetingOptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":  strconv.FormatInt(c.advertiserId, 10),
+		"adGroupId":     strconv.FormatInt(c.adGroupId, 10),
+		"targetingType": c.targetingType,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.targetingTypes.assignedTargetingOptions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.adGroups.targetingTypes.assignedTargetingOptions.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AssignedTargetingOption.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ...googleapi.CallOption) (*AssignedTargetingOption, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AssignedTargetingOption{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.targetingTypes.assignedTargetingOptions.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsDeleteCall struct {
+	s                         *Service
+	advertiserId              int64
+	adGroupId                 int64
+	targetingType             string
+	assignedTargetingOptionId string
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Delete: Deletes an assigned targeting option from an ad group. Only ad
+// groups under a line item of line_item_type `LINE_ITEM_TYPE_DEMAND_GEN` are
+// supported for this method.
+//
+//   - adGroupId: The ID of the ad group the assigned targeting option belongs
+//     to.
+//   - advertiserId: The ID of the advertiser the ad group belongs to.
+//   - assignedTargetingOptionId: The ID of the assigned targeting option to
+//     delete.
+//   - targetingType: Identifies the type of this assigned targeting option.
+//     Supported targeting types: * `TARGETING_TYPE_AGE_RANGE` *
+//     `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` *
+//     `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_CATEGORY` *
+//     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_HOUSEHOLD_INCOME` *
+//     `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_PARENTAL_STATUS` *
+//     `TARGETING_TYPE_SESSION_POSITION` * `TARGETING_TYPE_URL` *
+//     `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`.
+func (r *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsService) Delete(advertiserId int64, adGroupId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsDeleteCall {
+	c := &AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.adGroupId = adGroupId
+	c.targetingType = targetingType
+	c.assignedTargetingOptionId = assignedTargetingOptionId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsDeleteCall) Fields(s ...googleapi.Field) *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsDeleteCall) Context(ctx context.Context) *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/advertisers/{+advertiserId}/adGroups/{+adGroupId}/targetingTypes/{+targetingType}/assignedTargetingOptions/{+assignedTargetingOptionId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":              strconv.FormatInt(c.advertiserId, 10),
+		"adGroupId":                 strconv.FormatInt(c.adGroupId, 10),
+		"targetingType":             c.targetingType,
+		"assignedTargetingOptionId": c.assignedTargetingOptionId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.targetingTypes.assignedTargetingOptions.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.adGroups.targetingTypes.assignedTargetingOptions.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.targetingTypes.assignedTargetingOptions.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsGetCall struct {

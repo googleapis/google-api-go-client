@@ -2326,6 +2326,9 @@ func (s AuthorizedSellerStatusTargetingOptionDetails) MarshalJSON() ([]byte, err
 // BiddingStrategy: Settings that control the bid strategy. Bid strategy
 // determines the bid price.
 type BiddingStrategy struct {
+	// DemandGenBid: A bid strategy used by Demand Gen resources. It can only be
+	// used for a Demand Gen line item or ad group entity.
+	DemandGenBid *DemandGenBiddingStrategy `json:"demandGenBid,omitempty"`
 	// FixedBid: A strategy that uses a fixed bid price.
 	FixedBid *FixedBidStrategy `json:"fixedBid,omitempty"`
 	// MaximizeSpendAutoBid: A strategy that automatically adjusts the bid to
@@ -2348,13 +2351,13 @@ type BiddingStrategy struct {
 	// meet or beat a specified performance goal. It is to be used only for a line
 	// item entity.
 	PerformanceGoalAutoBid *PerformanceGoalBidStrategy `json:"performanceGoalAutoBid,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FixedBid") to
+	// ForceSendFields is a list of field names (e.g. "DemandGenBid") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FixedBid") to include in API
+	// NullFields is a list of field names (e.g. "DemandGenBid") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -4317,6 +4320,13 @@ type ConversionCountingConfig struct {
 	// inclusive. For example, to track 50% of the post-click conversions, set a
 	// value of 50000.
 	PostViewCountPercentageMillis int64 `json:"postViewCountPercentageMillis,omitempty,string"`
+	// PrimaryAttributionModelId: Optional. The attribution model to use for
+	// conversion measurement. This attribution model will determine how
+	// conversions are counted. The Primary model can be set by you for a
+	// floodlight config or group. More details here
+	// (https://support.google.com/displayvideo/answer/7409983). Only applicable to
+	// Demand Gen line items.
+	PrimaryAttributionModelId int64 `json:"primaryAttributionModelId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "FloodlightActivityConfigs")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5463,7 +5473,8 @@ type DayAndTimeAssignedTargetingOptionDetails struct {
 	// between 0 (start of day) and 23 (1 hour before end of day).
 	StartHour int64 `json:"startHour,omitempty"`
 	// TimeZoneResolution: Required. The mechanism used to determine which timezone
-	// to use for this day and time targeting setting.
+	// to use for this day and time targeting setting. For demand gen line items,
+	// this field is always TIME_ZONE_RESOLUTION_ADVERTISER.
 	//
 	// Possible values:
 	//   "TIME_ZONE_RESOLUTION_UNSPECIFIED" - Time zone resolution is either
@@ -5628,6 +5639,97 @@ type DeleteAssignedTargetingOptionsRequest struct {
 
 func (s DeleteAssignedTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteAssignedTargetingOptionsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DemandGenBiddingStrategy: Settings that control the bid strategy for Demand
+// Gen resources.
+type DemandGenBiddingStrategy struct {
+	// EffectiveBiddingValue: Output only. If AG doesn't set value for tCPA or
+	// tROAS, line item bidding value will be the effective_bidding_value, if the
+	// bidding strategy type is not tCPA or tROAS, effective_bidding_value is
+	// always 0. For line item, it will be the same as the value field.
+	EffectiveBiddingValue int64 `json:"effectiveBiddingValue,omitempty,string"`
+	// EffectiveBiddingValueSource: Output only. Source of the effective bidding
+	// value.
+	//
+	// Possible values:
+	//   "BIDDING_SOURCE_UNSPECIFIED" - Bidding source is not specified or unknown.
+	//   "BIDDING_SOURCE_LINE_ITEM" - Bidding value is inherited from the line
+	// item.
+	//   "BIDDING_SOURCE_AD_GROUP" - Bidding value is defined in the ad group.
+	EffectiveBiddingValueSource string `json:"effectiveBiddingValueSource,omitempty"`
+	// Type: Optional. The type of the bidding strategy. This can only be set at
+	// the line item level.
+	//
+	// Possible values:
+	//   "DEMAND_GEN_BIDDING_STRATEGY_TYPE_UNSPECIFIED" - Type is not specified or
+	// unknown.
+	//   "DEMAND_GEN_BIDDING_STRATEGY_TYPE_TARGET_CPA" - A bidding strategy that
+	// automatically optimizes conversions per dollar.
+	//   "DEMAND_GEN_BIDDING_STRATEGY_TYPE_TARGET_ROAS" - A bidding strategy that
+	// automatically maximizes revenue while averaging a specific target Return On
+	// Ad Spend (ROAS).
+	//   "DEMAND_GEN_BIDDING_STRATEGY_TYPE_MAXIMIZE_CONVERSIONS" - A bidding
+	// strategy that automatically maximizes number of conversions
+	//   "DEMAND_GEN_BIDDING_STRATEGY_TYPE_MAXIMIZE_CONVERSION_VALUE" - A bidding
+	// strategy that automatically maximizes revenue while spending your budget.
+	//   "DEMAND_GEN_BIDDING_STRATEGY_TYPE_MAXIMIZE_CLICKS" - A bidding strategy
+	// that automatically maximizes clicks within a given budget.
+	Type string `json:"type,omitempty"`
+	// Value: Optional. The value used by the bidding strategy. This can be set at
+	// the line item and ad group level. This field is only applicable for the
+	// following strategy types: * `DEMAND_GEN_BIDDING_STRATEGY_TYPE_TARGET_CPA` *
+	// `DEMAND_GEN_BIDDING_STRATEGY_TYPE_TARGET_ROAS` Value of this field is in
+	// micros of the advertiser's currency or ROAS value. For example, 1000000
+	// represents 1.0 standard units of the currency or 100% ROAS value. If not
+	// using an applicable strategy, the value of this field will be 0.
+	Value int64 `json:"value,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "EffectiveBiddingValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EffectiveBiddingValue") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DemandGenBiddingStrategy) MarshalJSON() ([]byte, error) {
+	type NoMethod DemandGenBiddingStrategy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DemandGenSettings: Settings for Demand Gen line items.
+type DemandGenSettings struct {
+	// GeoLanguageTargetingEnabled: Optional. Immutable. Whether location and
+	// language targeting can be set at the line item level. Otherwise, relevant
+	// targeting types must be assigned directly to the ad groups.
+	GeoLanguageTargetingEnabled bool `json:"geoLanguageTargetingEnabled,omitempty"`
+	// LinkedMerchantId: Optional. The ID of the merchant which is linked to the
+	// line item for product feed.
+	LinkedMerchantId int64 `json:"linkedMerchantId,omitempty,string"`
+	// ThirdPartyMeasurementConfigs: Optional. The third party measurement settings
+	// for the Demand Gen line item.
+	ThirdPartyMeasurementConfigs *ThirdPartyMeasurementConfigs `json:"thirdPartyMeasurementConfigs,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "GeoLanguageTargetingEnabled") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GeoLanguageTargetingEnabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DemandGenSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod DemandGenSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7952,19 +8054,21 @@ func (s IdFilter) MarshalJSON() ([]byte, error) {
 
 // ImageAsset: Meta data of an image asset.
 type ImageAsset struct {
+	// AssetId: Required. The unique ID of the asset.
+	AssetId int64 `json:"assetId,omitempty,string"`
 	// FileSize: Output only. File size of the image asset in bytes.
 	FileSize int64 `json:"fileSize,omitempty,string"`
 	// FullSize: Output only. Metadata for this image at its original size.
 	FullSize *Dimensions `json:"fullSize,omitempty"`
 	// MimeType: Output only. MIME type of the image asset.
 	MimeType string `json:"mimeType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FileSize") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AssetId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FileSize") to include in API
+	// NullFields is a list of field names (e.g. "AssetId") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -9135,6 +9239,8 @@ type LineItem struct {
 	ConversionCounting *ConversionCountingConfig `json:"conversionCounting,omitempty"`
 	// CreativeIds: The IDs of the creatives associated with the line item.
 	CreativeIds googleapi.Int64s `json:"creativeIds,omitempty"`
+	// DemandGenSettings: Optional. Settings specific to Demand Gen line items.
+	DemandGenSettings *DemandGenSettings `json:"demandGenSettings,omitempty"`
 	// DisplayName: Required. The display name of the line item. Must be UTF-8
 	// encoded with a maximum size of 240 bytes.
 	DisplayName string `json:"displayName,omitempty"`
@@ -9249,6 +9355,7 @@ type LineItem struct {
 	//   "LINE_ITEM_TYPE_VIDEO_OUT_OF_HOME" - Video ads served on
 	// digital-out-of-home inventory. Line items of this type and their targeting
 	// cannot be created or updated using the API.
+	//   "LINE_ITEM_TYPE_DEMAND_GEN" - Demand Gen ads.
 	LineItemType string `json:"lineItemType,omitempty"`
 	// MobileApp: The mobile app promoted by the line item. This is applicable only
 	// when line_item_type is either `LINE_ITEM_TYPE_DISPLAY_MOBILE_APP_INSTALL` or
@@ -13385,6 +13492,51 @@ func (s TargetingOption) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ThirdPartyMeasurementConfigs: Settings that control what third-party vendors
+// are measuring specific line item metrics.
+type ThirdPartyMeasurementConfigs struct {
+	// BrandLiftVendorConfigs: Optional. The third-party vendors measuring brand
+	// lift. The following third-party vendors are applicable: *
+	// `THIRD_PARTY_VENDOR_DYNATA` * `THIRD_PARTY_VENDOR_KANTAR` *
+	// `THIRD_PARTY_VENDOR_INTAGE` * `THIRD_PARTY_VENDOR_NIELSEN` *
+	// `THIRD_PARTY_VENDOR_MACROMILL`
+	BrandLiftVendorConfigs []*ThirdPartyVendorConfig `json:"brandLiftVendorConfigs,omitempty"`
+	// BrandSafetyVendorConfigs: Optional. The third-party vendors measuring brand
+	// safety. The following third-party vendors are applicable: *
+	// `THIRD_PARTY_VENDOR_DOUBLE_VERIFY` *
+	// `THIRD_PARTY_VENDOR_INTEGRAL_AD_SCIENCE` * `THIRD_PARTY_VENDOR_ZEFR`
+	BrandSafetyVendorConfigs []*ThirdPartyVendorConfig `json:"brandSafetyVendorConfigs,omitempty"`
+	// ReachVendorConfigs: Optional. The third-party vendors measuring reach. The
+	// following third-party vendors are applicable: * `THIRD_PARTY_VENDOR_NIELSEN`
+	// * `THIRD_PARTY_VENDOR_COMSCORE` * `THIRD_PARTY_VENDOR_KANTAR` *
+	// `THIRD_PARTY_VENDOR_VIDEO_RESEARCH` * `THIRD_PARTY_VENDOR_MEDIA_SCOPE` *
+	// `THIRD_PARTY_VENDOR_AUDIENCE_PROJECT` * `THIRD_PARTY_VENDOR_VIDEO_AMP` *
+	// `THIRD_PARTY_VENDOR_ISPOT_TV` * `THIRD_PARTY_VENDOR_GEMIUS`
+	ReachVendorConfigs []*ThirdPartyVendorConfig `json:"reachVendorConfigs,omitempty"`
+	// ViewabilityVendorConfigs: Optional. The third-party vendors measuring
+	// viewability. The following third-party vendors are applicable: *
+	// `THIRD_PARTY_VENDOR_MOAT` * `THIRD_PARTY_VENDOR_DOUBLE_VERIFY` *
+	// `THIRD_PARTY_VENDOR_INTEGRAL_AD_SCIENCE` * `THIRD_PARTY_VENDOR_COMSCORE` *
+	// `THIRD_PARTY_VENDOR_TELEMETRY` * `THIRD_PARTY_VENDOR_MEETRICS`
+	ViewabilityVendorConfigs []*ThirdPartyVendorConfig `json:"viewabilityVendorConfigs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BrandLiftVendorConfigs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BrandLiftVendorConfigs") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ThirdPartyMeasurementConfigs) MarshalJSON() ([]byte, error) {
+	type NoMethod ThirdPartyMeasurementConfigs
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ThirdPartyOnlyConfig: Settings for advertisers that use third-party ad
 // servers only.
 type ThirdPartyOnlyConfig struct {
@@ -13493,6 +13645,15 @@ type ThirdPartyVendorConfig struct {
 	//   "THIRD_PARTY_VENDOR_KANTAR" - Kantar.
 	//   "THIRD_PARTY_VENDOR_DYNATA" - Dynata.
 	//   "THIRD_PARTY_VENDOR_TRANSUNION" - Transunion.
+	//   "THIRD_PARTY_VENDOR_ORIGIN" - Origin.
+	//   "THIRD_PARTY_VENDOR_GEMIUS" - Gemius.
+	//   "THIRD_PARTY_VENDOR_MEDIA_SCOPE" - MediaScope.
+	//   "THIRD_PARTY_VENDOR_AUDIENCE_PROJECT" - Audience Project.
+	//   "THIRD_PARTY_VENDOR_VIDEO_AMP" - Video Amp.
+	//   "THIRD_PARTY_VENDOR_ISPOT_TV" - Ispot TV.
+	//   "THIRD_PARTY_VENDOR_INTAGE" - Intage.
+	//   "THIRD_PARTY_VENDOR_MACROMILL" - Macromill.
+	//   "THIRD_PARTY_VENDOR_VIDEO_RESEARCH" - Video Research.
 	Vendor string `json:"vendor,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PlacementId") to
 	// unconditionally include in API requests. By default, fields with empty or

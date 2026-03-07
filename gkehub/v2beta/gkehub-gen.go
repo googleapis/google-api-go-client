@@ -2399,7 +2399,7 @@ type MembershipFeature struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// DeleteTime: Output only. When the MembershipFeature resource was deleted.
 	DeleteTime string `json:"deleteTime,omitempty"`
-	// Labels: GCP labels for this MembershipFeature.
+	// Labels: Google Cloud labels for this MembershipFeature.
 	Labels map[string]string `json:"labels,omitempty"`
 	// LifecycleState: Output only. Lifecycle information of the resource itself.
 	LifecycleState *LifecycleState `json:"lifecycleState,omitempty"`
@@ -3263,6 +3263,8 @@ type ServiceMeshCondition struct {
 	//   "QUOTA_EXCEEDED_TCP_FILTERS" - TCPFilter quota exceeded error code.
 	//   "QUOTA_EXCEEDED_NETWORK_ENDPOINT_GROUPS" - NetworkEndpointGroup quota
 	// exceeded error code.
+	//   "CONFIG_APPLY_BLOCKED" - Configuration failed to apply due to fleet being
+	// blocked.
 	//   "LEGACY_MC_SECRETS" - Legacy istio secrets found for multicluster error
 	// code
 	//   "WORKLOAD_IDENTITY_REQUIRED" - Workload identity required error code

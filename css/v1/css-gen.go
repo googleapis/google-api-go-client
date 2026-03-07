@@ -445,8 +445,8 @@ type Attributes struct {
 	// items.
 	SizeSystem string `json:"sizeSystem,omitempty"`
 	// SizeTypes: The cut of the item. It can be used to represent combined size
-	// types for apparel items. Maximum two of size types can be provided (see
-	// https://support.google.com/merchants/answer/6324497 (size type)).
+	// types for apparel items. Maximum two of size types can be provided (see size
+	// type (https://support.google.com/merchants/answer/6324497).
 	SizeTypes []string `json:"sizeTypes,omitempty"`
 	// Title: Title of the item.
 	Title string `json:"title,omitempty"`

@@ -4528,6 +4528,7 @@ type GoogleDevtoolsCloudbuildV1BuildOptions struct {
 	//   "GO_MODULE_H1" - Dirhash of a Go module's source code which is then
 	// hex-encoded.
 	//   "SHA512" - Use a sha512 hash.
+	//   "DIRSUM_SHA256" - Use a dirsum_sha256 hash.
 	SourceProvenanceHash []string `json:"sourceProvenanceHash,omitempty"`
 	// SubstitutionOption: Option to specify behavior when there is an error in the
 	// substitution checks. NOTE: this is always set to ALLOW_LOOSE for triggered
@@ -5032,6 +5033,7 @@ type GoogleDevtoolsCloudbuildV1Hash struct {
 	//   "GO_MODULE_H1" - Dirhash of a Go module's source code which is then
 	// hex-encoded.
 	//   "SHA512" - Use a sha512 hash.
+	//   "DIRSUM_SHA256" - Use a dirsum_sha256 hash.
 	Type string `json:"type,omitempty"`
 	// Value: The hash value.
 	Value string `json:"value,omitempty"`

@@ -506,8 +506,11 @@ type GoogleFirebaseAppdistroV1alphaAiStep struct {
 	// Hint: Optional. Hint text containing suggestions to help the agent
 	// accomplish the goal
 	Hint string `json:"hint,omitempty"`
-	// SuccessCriteria: Optional. A description of criteria the agent should use to
-	// determine if the goal has been successfully completed
+	// SuccessCriteria: Optional. A visual description of the screen's expected
+	// state after the step has been successfully completed. This is referred to as
+	// the "final screen assertion" in the Firebase console and CLI tools. This
+	// field must be provided for the last step in a test case, and is optional for
+	// all other steps.
 	SuccessCriteria string `json:"successCriteria,omitempty"`
 	// TestCase: Output only. The test case that contained this step. Note: The
 	// test case may have changed or been deleted since this step was created.

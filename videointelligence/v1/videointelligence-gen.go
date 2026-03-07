@@ -1352,6 +1352,9 @@ func (s GoogleCloudVideointelligenceV1SpeechTranscription) MarshalJSON() ([]byte
 // GoogleCloudVideointelligenceV1SpeechTranscriptionConfig: Config for
 // SPEECH_TRANSCRIPTION.
 type GoogleCloudVideointelligenceV1SpeechTranscriptionConfig struct {
+	// AudioOutputUriPrefix: Optional. Legacy field. This field must be a Cloud
+	// Storage URI prefix. (e.g., `gs://bucket/path/`).
+	AudioOutputUriPrefix string `json:"audioOutputUriPrefix,omitempty"`
 	// AudioTracks: Optional. For file formats, such as MXF or MKV, supporting
 	// multiple audio tracks, specify up to two tracks. Default: track 0.
 	AudioTracks []int64 `json:"audioTracks,omitempty"`
@@ -1398,15 +1401,15 @@ type GoogleCloudVideointelligenceV1SpeechTranscriptionConfig struct {
 	// SpeechContexts: Optional. A means to provide context to assist the speech
 	// recognition.
 	SpeechContexts []*GoogleCloudVideointelligenceV1SpeechContext `json:"speechContexts,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AudioTracks") to
+	// ForceSendFields is a list of field names (e.g. "AudioOutputUriPrefix") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AudioTracks") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AudioOutputUriPrefix") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1831,6 +1834,10 @@ type GoogleCloudVideointelligenceV1WordInfo struct {
 	// `enable_word_time_offsets=true` and only in the top hypothesis. This is an
 	// experimental feature and the accuracy of the time offset can vary.
 	EndTime string `json:"endTime,omitempty"`
+	// SpeakerLabel: Output only. A distinct string value is assigned for every
+	// speaker within the audio. This field specifies which one of those speakers
+	// was detected to have spoken this word.
+	SpeakerLabel string `json:"speakerLabel,omitempty"`
 	// SpeakerTag: Output only. A distinct integer value is assigned for every
 	// speaker within the audio. This field specifies which one of those speakers
 	// was detected to have spoken this word. Value ranges from 1 up to
@@ -3027,6 +3034,10 @@ type GoogleCloudVideointelligenceV1beta2WordInfo struct {
 	// `enable_word_time_offsets=true` and only in the top hypothesis. This is an
 	// experimental feature and the accuracy of the time offset can vary.
 	EndTime string `json:"endTime,omitempty"`
+	// SpeakerLabel: Output only. A distinct string value is assigned for every
+	// speaker within the audio. This field specifies which one of those speakers
+	// was detected to have spoken this word.
+	SpeakerLabel string `json:"speakerLabel,omitempty"`
 	// SpeakerTag: Output only. A distinct integer value is assigned for every
 	// speaker within the audio. This field specifies which one of those speakers
 	// was detected to have spoken this word. Value ranges from 1 up to
@@ -4223,6 +4234,10 @@ type GoogleCloudVideointelligenceV1p1beta1WordInfo struct {
 	// `enable_word_time_offsets=true` and only in the top hypothesis. This is an
 	// experimental feature and the accuracy of the time offset can vary.
 	EndTime string `json:"endTime,omitempty"`
+	// SpeakerLabel: Output only. A distinct string value is assigned for every
+	// speaker within the audio. This field specifies which one of those speakers
+	// was detected to have spoken this word.
+	SpeakerLabel string `json:"speakerLabel,omitempty"`
 	// SpeakerTag: Output only. A distinct integer value is assigned for every
 	// speaker within the audio. This field specifies which one of those speakers
 	// was detected to have spoken this word. Value ranges from 1 up to
@@ -5419,6 +5434,10 @@ type GoogleCloudVideointelligenceV1p2beta1WordInfo struct {
 	// `enable_word_time_offsets=true` and only in the top hypothesis. This is an
 	// experimental feature and the accuracy of the time offset can vary.
 	EndTime string `json:"endTime,omitempty"`
+	// SpeakerLabel: Output only. A distinct string value is assigned for every
+	// speaker within the audio. This field specifies which one of those speakers
+	// was detected to have spoken this word.
+	SpeakerLabel string `json:"speakerLabel,omitempty"`
 	// SpeakerTag: Output only. A distinct integer value is assigned for every
 	// speaker within the audio. This field specifies which one of those speakers
 	// was detected to have spoken this word. Value ranges from 1 up to
@@ -6807,6 +6826,10 @@ type GoogleCloudVideointelligenceV1p3beta1WordInfo struct {
 	// `enable_word_time_offsets=true` and only in the top hypothesis. This is an
 	// experimental feature and the accuracy of the time offset can vary.
 	EndTime string `json:"endTime,omitempty"`
+	// SpeakerLabel: Output only. A distinct string value is assigned for every
+	// speaker within the audio. This field specifies which one of those speakers
+	// was detected to have spoken this word.
+	SpeakerLabel string `json:"speakerLabel,omitempty"`
 	// SpeakerTag: Output only. A distinct integer value is assigned for every
 	// speaker within the audio. This field specifies which one of those speakers
 	// was detected to have spoken this word. Value ranges from 1 up to
@@ -6865,6 +6888,11 @@ type GoogleLongrunningListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -7657,6 +7685,19 @@ func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *Projects
 // token.
 func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

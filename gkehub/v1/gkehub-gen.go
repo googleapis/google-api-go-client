@@ -3459,8 +3459,8 @@ type KubernetesMetadata struct {
 	NodeCount int64 `json:"nodeCount,omitempty"`
 	// NodeProviderId: Output only. Node providerID as reported by the first node
 	// in the list of nodes on the Kubernetes endpoint. On Kubernetes platforms
-	// that support zero-node clusters (like GKE-on-GCP), the node_count will be
-	// zero and the node_provider_id will be empty.
+	// that support zero-node clusters (like GKE on Google Cloud), the node_count
+	// will be zero and the node_provider_id will be empty.
 	NodeProviderId string `json:"nodeProviderId,omitempty"`
 	// UpdateTime: Output only. The time at which these details were last updated.
 	// This update_time is different from the Membership-level update_time since
@@ -4110,7 +4110,8 @@ type MembershipEndpoint struct {
 	ApplianceCluster *ApplianceCluster `json:"applianceCluster,omitempty"`
 	// EdgeCluster: Optional. Specific information for a Google Edge cluster.
 	EdgeCluster *EdgeCluster `json:"edgeCluster,omitempty"`
-	// GkeCluster: Optional. Specific information for a GKE-on-GCP cluster.
+	// GkeCluster: Optional. Specific information for a GKE on Google Cloud
+	// cluster.
 	GkeCluster *GkeCluster `json:"gkeCluster,omitempty"`
 	// GoogleManaged: Output only. Whether the lifecycle of this membership is
 	// managed by a google cluster platform service.
@@ -5598,6 +5599,8 @@ type ServiceMeshCondition struct {
 	//   "QUOTA_EXCEEDED_TCP_FILTERS" - TCPFilter quota exceeded error code.
 	//   "QUOTA_EXCEEDED_NETWORK_ENDPOINT_GROUPS" - NetworkEndpointGroup quota
 	// exceeded error code.
+	//   "CONFIG_APPLY_BLOCKED" - Configuration failed to apply due to fleet being
+	// blocked.
 	//   "LEGACY_MC_SECRETS" - Legacy istio secrets found for multicluster error
 	// code
 	//   "WORKLOAD_IDENTITY_REQUIRED" - Workload identity required error code

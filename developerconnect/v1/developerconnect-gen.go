@@ -607,7 +607,8 @@ type Connection struct {
 	Etag string `json:"etag,omitempty"`
 	// GitProxyConfig: Optional. Configuration for the git proxy feature. Enabling
 	// the git proxy allows clients to perform git operations on the repositories
-	// linked in the connection.
+	// linked in the connection. Learn more
+	// (https://docs.cloud.google.com/developer-connect/docs/configure-git-proxy).
 	GitProxyConfig *GitProxyConfig `json:"gitProxyConfig,omitempty"`
 	// GithubConfig: Configuration for connections to github.com.
 	GithubConfig *GitHubConfig `json:"githubConfig,omitempty"`

@@ -3059,11 +3059,7 @@ type LogEntry struct {
 	// retention period. If this field is omitted in a new log entry, then Logging
 	// assigns it the current time. Timestamps have nanosecond accuracy, but
 	// trailing zeros in the fractional seconds might be omitted when the timestamp
-	// is displayed.Incoming log entries must have timestamps that don't exceed the
-	// logs retention period
-	// (https://cloud.google.com/logging/quotas#logs_retention_periods) in the
-	// past, and that don't exceed 24 hours in the future. Log entries outside
-	// those time boundaries are rejected by Logging.
+	// is displayed.
 	Timestamp string `json:"timestamp,omitempty"`
 	// Trace: Optional. The trace ID being written to Cloud Trace
 	// (https://docs.cloud.google.com/trace/docs) in association with this log

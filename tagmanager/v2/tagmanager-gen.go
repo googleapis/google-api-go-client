@@ -2939,6 +2939,17 @@ type VariableFormatValue struct {
 	ConvertFalseToValue *Parameter `json:"convertFalseToValue,omitempty"`
 	// ConvertNullToValue: The value to convert if a variable value is null.
 	ConvertNullToValue *Parameter `json:"convertNullToValue,omitempty"`
+	// ConvertToBoolean: The option to convert a variable value to a boolean.
+	ConvertToBoolean bool `json:"convertToBoolean,omitempty"`
+	// ConvertToNumber: The option to convert a variable value to a number.
+	//
+	// Possible values:
+	//   "decimalSeparatorTypeUnspecified"
+	//   "period" - The option to convert a variable value to a number with a
+	// period as the decimal separator.
+	//   "comma" - The option to convert a variable value to a number with a comma
+	// as the decimal separator.
+	ConvertToNumber string `json:"convertToNumber,omitempty"`
 	// ConvertTrueToValue: The value to convert if a variable value is true.
 	ConvertTrueToValue *Parameter `json:"convertTrueToValue,omitempty"`
 	// ConvertUndefinedToValue: The value to convert if a variable value is

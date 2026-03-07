@@ -1233,6 +1233,9 @@ type PostgreSql struct {
 	// to be durably persisted, even if an OK status code is returned. All or parts
 	// of the data may be lost or reverted to earlier versions.
 	Ephemeral bool `json:"ephemeral,omitempty"`
+	// Schema: Optional. User-configured PostgreSQL schema. Defaults to "public" if
+	// not specified.
+	Schema string `json:"schema,omitempty"`
 	// SchemaMigration: Optional. Configure how to perform Postgresql schema
 	// migration.
 	//

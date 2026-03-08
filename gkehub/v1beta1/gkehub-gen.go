@@ -202,8 +202,8 @@ type ProjectsLocationsOperationsService struct {
 // ApplianceCluster: ApplianceCluster contains information specific to GDC Edge
 // Appliance Clusters.
 type ApplianceCluster struct {
-	// ResourceLink: Immutable. Self-link of the GCP resource for the Appliance
-	// Cluster. For example:
+	// ResourceLink: Immutable. Self-link of the Google Cloud resource for the
+	// Appliance Cluster. For example:
 	// //transferappliance.googleapis.com/projects/my-project/locations/us-west1-a/a
 	// ppliances/my-appliance
 	ResourceLink string `json:"resourceLink,omitempty"`
@@ -485,8 +485,8 @@ func (s ConnectAgentResource) MarshalJSON() ([]byte, error) {
 // EdgeCluster: EdgeCluster contains information specific to Google Edge
 // Clusters.
 type EdgeCluster struct {
-	// ResourceLink: Immutable. Self-link of the GCP resource for the Edge Cluster.
-	// For example:
+	// ResourceLink: Immutable. Self-link of the Google Cloud resource for the Edge
+	// Cluster. For example:
 	// //edgecontainer.googleapis.com/projects/my-project/locations/us-west1-a/clust
 	// ers/my-cluster
 	ResourceLink string `json:"resourceLink,omitempty"`
@@ -627,8 +627,8 @@ type GkeCluster struct {
 	// ClusterMissing: Output only. If cluster_missing is set then it denotes that
 	// the GKE cluster no longer exists in the GKE Control Plane.
 	ClusterMissing bool `json:"clusterMissing,omitempty"`
-	// ResourceLink: Immutable. Self-link of the GCP resource for the GKE cluster.
-	// For example:
+	// ResourceLink: Immutable. Self-link of the Google Cloud resource for the GKE
+	// cluster. For example:
 	// //container.googleapis.com/projects/my-project/locations/us-west1-a/clusters/
 	// my-cluster Zonal clusters are also supported.
 	ResourceLink string `json:"resourceLink,omitempty"`
@@ -698,8 +698,8 @@ type KubernetesMetadata struct {
 	NodeCount int64 `json:"nodeCount,omitempty"`
 	// NodeProviderId: Output only. Node providerID as reported by the first node
 	// in the list of nodes on the Kubernetes endpoint. On Kubernetes platforms
-	// that support zero-node clusters (like GKE-on-GCP), the node_count will be
-	// zero and the node_provider_id will be empty.
+	// that support zero-node clusters (like GKE-on-Google Cloud), the node_count
+	// will be zero and the node_provider_id will be empty.
 	NodeProviderId string `json:"nodeProviderId,omitempty"`
 	// UpdateTime: Output only. The time at which these details were last updated.
 	// This update_time is different from the Membership-level update_time since
@@ -939,8 +939,8 @@ type Membership struct {
 	// This includes GKE distributions such as GKE-OnPrem and GKE-OnBareMetal.
 	//   "MULTI_CLOUD" - Public cloud infrastructure.
 	InfrastructureType string `json:"infrastructureType,omitempty"`
-	// Labels: Optional. GCP labels for this membership. These labels are not
-	// leveraged by multi-cluster features, instead, we prefer cluster labels,
+	// Labels: Optional. Google Cloud labels for this membership. These labels are
+	// not leveraged by multi-cluster features, instead, we prefer cluster labels,
 	// which can be set on GKE cluster or other cluster types.
 	Labels map[string]string `json:"labels,omitempty"`
 	// LastConnectionTime: Output only. For clusters using Connect, the timestamp
@@ -1005,7 +1005,8 @@ type MembershipEndpoint struct {
 	ApplianceCluster *ApplianceCluster `json:"applianceCluster,omitempty"`
 	// EdgeCluster: Optional. Specific information for a Google Edge cluster.
 	EdgeCluster *EdgeCluster `json:"edgeCluster,omitempty"`
-	// GkeCluster: Optional. Specific information for a GKE-on-GCP cluster.
+	// GkeCluster: Optional. Specific information for a GKE-on-Google Cloud
+	// cluster.
 	GkeCluster *GkeCluster `json:"gkeCluster,omitempty"`
 	// KubernetesMetadata: Output only. Useful Kubernetes-specific metadata.
 	KubernetesMetadata *KubernetesMetadata `json:"kubernetesMetadata,omitempty"`
@@ -1124,7 +1125,7 @@ type MultiCloudCluster struct {
 	// API(gkemulticloud.googleapis.com) resource for this GKE Multi-Cloud cluster
 	// no longer exists.
 	ClusterMissing bool `json:"clusterMissing,omitempty"`
-	// ResourceLink: Immutable. Self-link of the GCP resource for the GKE
+	// ResourceLink: Immutable. Self-link of the Google Cloud resource for the GKE
 	// Multi-Cloud cluster. For example:
 	// //gkemulticloud.googleapis.com/projects/my-project/locations/us-west1-a/awsCl
 	// usters/my-cluster
@@ -1169,8 +1170,8 @@ type OnPremCluster struct {
 	//   "STANDALONE" - The ClusterType is baremetal standalone cluster.
 	//   "USER" - The ClusterType is user cluster.
 	ClusterType string `json:"clusterType,omitempty"`
-	// ResourceLink: Immutable. Self-link of the GCP resource for the GKE On-Prem
-	// cluster. For example:
+	// ResourceLink: Immutable. Self-link of the Google Cloud resource for the GKE
+	// On-Prem cluster. For example:
 	// //gkeonprem.googleapis.com/projects/my-project/locations/us-west1-a/vmwareClu
 	// sters/my-cluster
 	// //gkeonprem.googleapis.com/projects/my-project/locations/us-west1-a/bareMetal

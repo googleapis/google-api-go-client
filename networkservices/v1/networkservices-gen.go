@@ -524,6 +524,14 @@ type AuthzExtension struct {
 	// headers have been delivered, then the HTTP stream to the downstream client
 	// is reset.
 	FailOpen bool `json:"failOpen,omitempty"`
+	// ForwardAttributes: Optional. List of the Envoy attributes to forward to the
+	// extension server. The attributes provided here are included as part of the
+	// `ProcessingRequest.attributes` field (of type `map`), where the keys are the
+	// attribute names. Refer to the documentation
+	// (https://cloud.google.com/service-extensions/docs/cel-matcher-language-reference#attributes)
+	// for the names of attributes that can be forwarded. If omitted, no attributes
+	// are sent. Each element is a string indicating the attribute name.
+	ForwardAttributes []string `json:"forwardAttributes,omitempty"`
 	// ForwardHeaders: Optional. List of the HTTP headers to forward to the
 	// extension (from the client). If omitted, all headers are sent. Each element
 	// is a string indicating the header name.
@@ -995,6 +1003,14 @@ type ExtensionChainExtension struct {
 	// headers have been delivered, then the HTTP stream to the downstream client
 	// is reset.
 	FailOpen bool `json:"failOpen,omitempty"`
+	// ForwardAttributes: Optional. List of the Envoy attributes to forward to the
+	// extension server. The attributes provided here are included as part of the
+	// `ProcessingRequest.attributes` field (of type `map`), where the keys are the
+	// attribute names. Refer to the documentation
+	// (https://cloud.google.com/service-extensions/docs/cel-matcher-language-reference#attributes)
+	// for the names of attributes that can be forwarded. If omitted, no attributes
+	// are sent. Each element is a string indicating the attribute name.
+	ForwardAttributes []string `json:"forwardAttributes,omitempty"`
 	// ForwardHeaders: Optional. List of the HTTP headers to forward to the
 	// extension (from the client or backend). If omitted, all headers are sent.
 	// Each element is a string indicating the header name.

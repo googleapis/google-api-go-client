@@ -4579,8 +4579,19 @@ type PointInTimeRestoreContext struct {
 	// the Cloud SQL instance is accessible for private IP. For example,
 	// `/projects/myProject/global/networks/default`.
 	PrivateNetwork string `json:"privateNetwork,omitempty"`
+	// Region: Optional. The region of the target instance where the datasource
+	// will be restored. For example: "us-central1".
+	Region string `json:"region,omitempty"`
 	// TargetInstance: Target instance name.
 	TargetInstance string `json:"targetInstance,omitempty"`
+	// TargetInstanceClearSettingsFieldNames: Optional. Specifies the instance
+	// settings that will be cleared from the source instance. This field is only
+	// applicable for cross project PITRs.
+	TargetInstanceClearSettingsFieldNames []string `json:"targetInstanceClearSettingsFieldNames,omitempty"`
+	// TargetInstanceSettings: Optional. Specifies the instance settings that will
+	// be overridden from the source instance. This field is only applicable for
+	// cross project PITRs.
+	TargetInstanceSettings *DatabaseInstance `json:"targetInstanceSettings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllocatedIpRange") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

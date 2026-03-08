@@ -3467,6 +3467,12 @@ type StorageDatabasecenterPartnerapiV1mainConfigBasedSignalData struct {
 	// extended support.
 	//   "SIGNAL_TYPE_NO_AUTOMATED_BACKUP_POLICY" - Represents if a resource has no
 	// automated backup policy.
+	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Represents if a resource
+	// version is nearing end of life.
+	//   "SIGNAL_TYPE_LAST_BACKUP_OLD" - Represents if the last backup of a
+	// resource is older than 24 hours.
+	//   "SIGNAL_TYPE_NOT_PROTECTED_BY_AUTOMATIC_FAILOVER" - Represents if a
+	// resource is not protected by automatic failover.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3888,6 +3894,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// policy.
 	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Resource version is in extended support.
 	//   "SIGNAL_TYPE_PERFORMANCE_KPI_CHANGE" - Change in performance KPIs.
+	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Database version nearing end
+	// of life.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -4045,6 +4053,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	//   "SUB_RESOURCE_TYPE_READ_REPLICA" - An instance acting as a read-replica.
 	//   "SUB_RESOURCE_TYPE_EXTERNAL_PRIMARY" - An instance acting as an external
 	// primary.
+	//   "SUB_RESOURCE_TYPE_READ_POOL" - An instance acting as Read Pool.
 	//   "SUB_RESOURCE_TYPE_OTHER" - For rest of the other categories.
 	InstanceType string `json:"instanceType,omitempty"`
 	// IsDeletionProtectionEnabled: Optional. Whether deletion protection is
@@ -4398,6 +4407,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalDa
 	// policy.
 	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Resource version is in extended support.
 	//   "SIGNAL_TYPE_PERFORMANCE_KPI_CHANGE" - Change in performance KPIs.
+	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Database version nearing end
+	// of life.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4420,16 +4431,21 @@ func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSigna
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceSignalData: Database
 // resource signal data. This is used to send signals to Condor which are based
 // on the DB/Instance/Fleet level configurations. These will be used to send
-// signals for all inventory types. Next ID: 7
+// signals for all inventory types. Next ID: 9
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceSignalData struct {
+	// BackupRun: Deprecated: Use signal_metadata_list instead.
+	BackupRun *StorageDatabasecenterPartnerapiV1mainBackupRun `json:"backupRun,omitempty"`
 	// FullResourceName: Required. Full Resource name of the source resource.
 	FullResourceName string `json:"fullResourceName,omitempty"`
 	// LastRefreshTime: Required. Last time signal was refreshed
 	LastRefreshTime string `json:"lastRefreshTime,omitempty"`
 	// ResourceId: Database resource id.
 	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
-	// SignalBoolValue: Signal data for boolean signals.
+	// SignalBoolValue: Deprecated: Use signal_metadata_list instead.
 	SignalBoolValue bool `json:"signalBoolValue,omitempty"`
+	// SignalMetadataList: This will support array of OneOf signal metadata
+	// information for a given signal type.
+	SignalMetadataList []*StorageDatabasecenterPartnerapiV1mainSignalMetadata `json:"signalMetadataList,omitempty"`
 	// SignalState: Required. Output only. Signal state of the signal
 	//
 	// Possible values:
@@ -4456,16 +4472,22 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceSignalData struct {
 	// extended support.
 	//   "SIGNAL_TYPE_NO_AUTOMATED_BACKUP_POLICY" - Represents if a resource has no
 	// automated backup policy.
+	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Represents if a resource
+	// version is nearing end of life.
+	//   "SIGNAL_TYPE_LAST_BACKUP_OLD" - Represents if the last backup of a
+	// resource is older than 24 hours.
+	//   "SIGNAL_TYPE_NOT_PROTECTED_BY_AUTOMATIC_FAILOVER" - Represents if a
+	// resource is not protected by automatic failover.
 	SignalType string `json:"signalType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
+	// ForceSendFields is a list of field names (e.g. "BackupRun") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FullResourceName") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BackupRun") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4918,6 +4940,32 @@ type StorageDatabasecenterPartnerapiV1mainRetentionSettings struct {
 
 func (s StorageDatabasecenterPartnerapiV1mainRetentionSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainRetentionSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StorageDatabasecenterPartnerapiV1mainSignalMetadata: SignalMetadata contains
+// one of the signal metadata proto messages associated with a SignalType. This
+// proto will be mapped to SignalMetadata message in storage.proto. Next ID: 3
+type StorageDatabasecenterPartnerapiV1mainSignalMetadata struct {
+	// BackupRun: Signal data for backup runs.
+	BackupRun *StorageDatabasecenterPartnerapiV1mainBackupRun `json:"backupRun,omitempty"`
+	// SignalBoolValue: Signal data for boolean signals.
+	SignalBoolValue bool `json:"signalBoolValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupRun") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupRun") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StorageDatabasecenterPartnerapiV1mainSignalMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainSignalMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

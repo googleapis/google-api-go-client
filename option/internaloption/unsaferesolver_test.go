@@ -13,14 +13,16 @@ import (
 
 func TestNewUnsafeResolver(t *testing.T) {
 	for _, tc := range []struct {
-		desc                            string
-		opts                            []option.ClientOption
-		wantResolvedGRPCConnPoolSize    int
-		wantResolvedGRPCEndpointAddress string
-		wantResolvedGRPCEndpointError   bool
-		wantResolvedGRPCConnIsCustom    bool
-		wantResolvedEnableDirectPath    bool
-		wantResolvedEnableDirectPathXds bool
+		desc                              string
+		opts                              []option.ClientOption
+		wantResolvedWithAPIKeyIsCustom    bool
+		wantResolvedGRPCConnPoolSize      int
+		wantResolvedGRPCEndpointAddress   string
+		wantResolvedGRPCEndpointError     bool
+		wantResolvedGRPCConnIsCustom      bool
+		wantResolvedEnableDirectPath      bool
+		wantResolvedEnableDirectPathXds   bool
+		wantResolvedWithoutAuthentication bool
 	}{
 		{
 			desc: "empty",
@@ -73,11 +75,29 @@ func TestNewUnsafeResolver(t *testing.T) {
 			wantResolvedEnableDirectPath:    true,
 			wantResolvedEnableDirectPathXds: true,
 		},
+		{
+			desc: "api key",
+			opts: []option.ClientOption{
+				option.WithAPIKey("foo"),
+			},
+			wantResolvedWithAPIKeyIsCustom: true,
+		},
+		{
+			desc: "without auth",
+			opts: []option.ClientOption{
+				option.WithoutAuthentication(),
+			},
+			wantResolvedWithoutAuthentication: true,
+		},
 	} {
 		t.Run(tc.desc, func(t *testing.T) {
 			ur, err := NewUnsafeResolver(tc.opts...)
 			if err != nil {
 				t.Fatalf("NewUnsafeResolver errored: %v", err)
+			}
+			// check ResolvedWithAPIKeyIsCustom
+			if got := ur.ResolvedWithAPIKeyIsCustom(); got != tc.wantResolvedWithAPIKeyIsCustom {
+				t.Errorf("ResolvedWithAPIKeyIsCustom: got %t, want %t", got, tc.wantResolvedWithAPIKeyIsCustom)
 			}
 			// check ResolvedGRPCConnPoolSize
 			if got := ur.ResolvedGRPCConnPoolSize(); got != tc.wantResolvedGRPCConnPoolSize {
@@ -107,6 +127,10 @@ func TestNewUnsafeResolver(t *testing.T) {
 			}
 			if gotDirectPathXds := ur.ResolvedEnableDirectPathXds(); gotDirectPathXds != tc.wantResolvedEnableDirectPathXds {
 				t.Errorf("ResolvedEnableDirectPathXds: got %t want %t", gotDirectPathXds, tc.wantResolvedEnableDirectPathXds)
+			}
+			// check ResolvedWithoutAuth
+			if got := ur.ResolvedWithoutAuthentication(); got != tc.wantResolvedWithoutAuthentication {
+				t.Errorf("ResolvedWithoutAuthentication: got %t, want %t", got, tc.wantResolvedWithoutAuthentication)
 			}
 		})
 	}

@@ -70,6 +70,15 @@ func (ur *UnsafeResolver) ResolvedGRPCConnIsCustom() bool {
 	return ur.ds.GRPCConn != nil
 }
 
+// ResolvedHTTPClientIsCustom returns whether the option to supply an API key was
+// populate. This corresponds to the WithHTTPClient ClientOption in
+// google.golang.org/option.
+//
+// This is an EXPERIMENTAL API and may be changed or removed in the future.
+func (ur *UnsafeResolver) ResolvedHTTPClientIsCustom() bool {
+	return ur.ds.HTTPClient != nil
+}
+
 // ResolvedEnableDirectPath returns whether DirectPath was explicitly enabled.
 // This corresponds to the EnableDirectPath option in this package.
 //

@@ -5,6 +5,7 @@
 package internaloption
 
 import (
+	"net/http"
 	"testing"
 
 	"google.golang.org/api/option"
@@ -20,6 +21,7 @@ func TestNewUnsafeResolver(t *testing.T) {
 		wantResolvedGRPCEndpointAddress   string
 		wantResolvedGRPCEndpointError     bool
 		wantResolvedGRPCConnIsCustom      bool
+		wantResolvedHTTPClientIsCustom    bool
 		wantResolvedEnableDirectPath      bool
 		wantResolvedEnableDirectPathXds   bool
 		wantResolvedWithoutAuthentication bool
@@ -89,6 +91,13 @@ func TestNewUnsafeResolver(t *testing.T) {
 			},
 			wantResolvedWithoutAuthentication: true,
 		},
+		{
+			desc: "http client",
+			opts: []option.ClientOption{
+				option.WithHTTPClient(&http.Client{}),
+			},
+			wantResolvedHTTPClientIsCustom: true,
+		},
 	} {
 		t.Run(tc.desc, func(t *testing.T) {
 			ur, err := NewUnsafeResolver(tc.opts...)
@@ -96,8 +105,8 @@ func TestNewUnsafeResolver(t *testing.T) {
 				t.Fatalf("NewUnsafeResolver errored: %v", err)
 			}
 			// check ResolvedWithAPIKeyIsCustom
-			if got := ur.ResolvedWithAPIKeyIsCustom(); got != tc.wantResolvedWithAPIKeyIsCustom {
-				t.Errorf("ResolvedWithAPIKeyIsCustom: got %t, want %t", got, tc.wantResolvedWithAPIKeyIsCustom)
+			if gotCustom := ur.ResolvedWithAPIKeyIsCustom(); gotCustom != tc.wantResolvedWithAPIKeyIsCustom {
+				t.Errorf("ResolvedWithAPIKeyIsCustom: got %t, want %t", gotCustom, tc.wantResolvedWithAPIKeyIsCustom)
 			}
 			// check ResolvedGRPCConnPoolSize
 			if got := ur.ResolvedGRPCConnPoolSize(); got != tc.wantResolvedGRPCConnPoolSize {
@@ -121,7 +130,11 @@ func TestNewUnsafeResolver(t *testing.T) {
 			if gotCustom := ur.ResolvedGRPCConnIsCustom(); gotCustom != tc.wantResolvedGRPCConnIsCustom {
 				t.Errorf("ResolvedGRPCConnIsCustom: got %t want %t", gotCustom, tc.wantResolvedGRPCConnIsCustom)
 			}
-			// check ResolvedGRPCConnIsCustom
+			// check ResolvedHTTPClientIsCustom
+			if gotCustom := ur.ResolvedHTTPClientIsCustom(); gotCustom != tc.wantResolvedHTTPClientIsCustom {
+				t.Errorf("ResolvedHTTPClientIsCustom: got %t want %t", gotCustom, tc.wantResolvedHTTPClientIsCustom)
+			}
+			// check ResolvedEnableDirectPath
 			if gotDirectPath := ur.ResolvedEnableDirectPath(); gotDirectPath != tc.wantResolvedEnableDirectPath {
 				t.Errorf("ResolvedEnableDirectPath: got %t want %t", gotDirectPath, tc.wantResolvedEnableDirectPath)
 			}

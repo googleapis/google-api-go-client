@@ -4398,7 +4398,7 @@ type TermsOfService struct {
 	//
 	// Possible values:
 	//   "TERMS_OF_SERVICE_KIND_UNSPECIFIED" - Default value. This value is unused.
-	//   "MERCHANT_CENTER" - Merchant Center application.
+	//   "MERCHANT_CENTER" - Terms of service for the Merchant Center application.
 	Kind string `json:"kind,omitempty"`
 	// Name: Identifier. The resource name of the terms of service version. Format:
 	// `termsOfService/{version}`
@@ -4464,7 +4464,7 @@ type TermsOfServiceAgreementState struct {
 	//
 	// Possible values:
 	//   "TERMS_OF_SERVICE_KIND_UNSPECIFIED" - Default value. This value is unused.
-	//   "MERCHANT_CENTER" - Merchant Center application.
+	//   "MERCHANT_CENTER" - Terms of service for the Merchant Center application.
 	TermsOfServiceKind string `json:"termsOfServiceKind,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -13328,7 +13328,7 @@ func (r *TermsOfServiceService) RetrieveLatest() *TermsOfServiceRetrieveLatestCa
 // Possible values:
 //
 //	"TERMS_OF_SERVICE_KIND_UNSPECIFIED" - Default value. This value is unused.
-//	"MERCHANT_CENTER" - Merchant Center application.
+//	"MERCHANT_CENTER" - Terms of service for the Merchant Center application.
 func (c *TermsOfServiceRetrieveLatestCall) Kind(kind string) *TermsOfServiceRetrieveLatestCall {
 	c.urlParams_.Set("kind", kind)
 	return c

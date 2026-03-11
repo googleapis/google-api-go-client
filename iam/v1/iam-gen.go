@@ -1568,6 +1568,15 @@ type InlineCertificateIssuanceConfig struct {
 	// initiated. Must be between 50 and 80. If no value is specified, rotation
 	// window percentage is defaulted to 50.
 	RotationWindowPercentage int64 `json:"rotationWindowPercentage,omitempty"`
+	// UseDefaultSharedCa: Optional. If set to true, the trust domain will utilize
+	// the GCP-provisioned default CA. A default CA in the same region as the
+	// workload will be selected to issue the certificate. Enabling this will clear
+	// any existing `ca_pools` configuration to provision the certificates. NOTE:
+	// This field is mutually exclusive with `ca_pools`. If this flag is enabled,
+	// certificates will be automatically provisioned from the default shared CAs.
+	// This flag should not be set if you want to use your own CA pools to
+	// provision the certificates.
+	UseDefaultSharedCa bool `json:"useDefaultSharedCa,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CaPools") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3580,6 +3589,11 @@ type TrustStore struct {
 	// validation against a given TrustStore. The incoming end entity's certificate
 	// must be in the trust chain of one of the trust anchors here.
 	TrustAnchors []*TrustAnchor `json:"trustAnchors,omitempty"`
+	// TrustDefaultSharedCa: Optional. If set to True, the trust bundle will
+	// include the private ca managed identity regional root public certificates.
+	// Important: `trust_default_shared_ca` is only supported for managed identity
+	// trust domain resource.
+	TrustDefaultSharedCa bool `json:"trustDefaultSharedCa,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IntermediateCas") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

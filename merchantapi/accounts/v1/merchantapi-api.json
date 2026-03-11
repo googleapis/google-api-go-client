@@ -2388,7 +2388,7 @@
               ],
               "enumDescriptions": [
                 "Default value. This value is unused.",
-                "Merchant Center application."
+                "Terms of service for the Merchant Center application."
               ],
               "location": "query",
               "type": "string"
@@ -2410,7 +2410,7 @@
       }
     }
   },
-  "revision": "20260223",
+  "revision": "20260305",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "About": {
@@ -5438,7 +5438,7 @@
           ],
           "enumDescriptions": [
             "Default value. This value is unused.",
-            "Merchant Center application."
+            "Terms of service for the Merchant Center application."
           ],
           "type": "string"
         },
@@ -5481,7 +5481,7 @@
           ],
           "enumDescriptions": [
             "Default value. This value is unused.",
-            "Merchant Center application."
+            "Terms of service for the Merchant Center application."
           ],
           "type": "string"
         }

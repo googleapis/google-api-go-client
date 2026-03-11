@@ -1474,7 +1474,8 @@ func (c *BlogsGetCall) MaxPosts(maxPosts int64) *BlogsGetCall {
 	return c
 }
 
-// View sets the optional parameter "view":
+// View sets the optional parameter "view": Unspecified is interpreted as
+// READER.
 //
 // Possible values:
 //
@@ -1595,7 +1596,8 @@ func (r *BlogsService) GetByUrl(url string) *BlogsGetByUrlCall {
 	return c
 }
 
-// View sets the optional parameter "view":
+// View sets the optional parameter "view": Unspecified is interpreted as
+// READER.
 //
 // Possible values:
 //
@@ -1745,7 +1747,8 @@ func (c *BlogsListByUserCall) Status(status ...string) *BlogsListByUserCall {
 	return c
 }
 
-// View sets the optional parameter "view":
+// View sets the optional parameter "view": Unspecified is interpreted as the
+// user's role on the blog.
 //
 // Possible values:
 //

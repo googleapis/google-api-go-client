@@ -1150,10 +1150,11 @@ type EnvironmentVariable struct {
 	// Value: A plaintext value. This value is encrypted at rest, but all project
 	// readers can view the value when reading your backend configuration.
 	Value string `json:"value,omitempty"`
-	// Variable: Required. The name of the environment variable. - Must be a valid
-	// environment variable name (e.g. A-Z or underscores). - May not start with
-	// "FIREBASE" or "GOOGLE". - May not be a reserved environment variable for
-	// KNative/Cloud Run
+	// Variable: Required. The name of the environment variable. The environment
+	// variables reserved by Cloud Run
+	// (https://docs.cloud.google.com/run/docs/configuring/services/environment-variables#reserved)
+	// should not be set. Additionally, variable names cannot start with
+	// "X_FIREBASE_".
 	Variable string `json:"variable,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Availability") to
 	// unconditionally include in API requests. By default, fields with empty or

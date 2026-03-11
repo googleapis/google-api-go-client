@@ -6101,7 +6101,7 @@
       }
     }
   },
-  "revision": "20260219",
+  "revision": "20260309",
   "rootUrl": "https://contactcenterinsights.googleapis.com/",
   "schemas": {
     "GoogleCloudContactcenterinsightsV1Analysis": {
@@ -7720,6 +7720,13 @@
         "metadataUri": {
           "description": "Cloud Storage URI that points to a file that contains the conversation metadata.",
           "type": "string"
+        },
+        "turnLevelAudios": {
+          "description": "Cloud Storage URIs that points to files that contain the conversation audio for each turn. Assume the order of the URIs is the same as the order of the transcript turns.",
+          "items": {
+            "$ref": "GoogleCloudContactcenterinsightsV1ConversationDataSourceTurnLevelAudio"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -8013,6 +8020,10 @@
         "text": {
           "description": "The text of this segment.",
           "type": "string"
+        },
+        "turnLevelAudio": {
+          "$ref": "GoogleCloudContactcenterinsightsV1ConversationDataSourceTurnLevelAudio",
+          "description": "Turn level audio for this transcript segment."
         },
         "words": {
           "description": "A list of the word-specific information for each word in the segment.",
@@ -12400,6 +12411,10 @@
           "$ref": "GoogleCloudContactcenterinsightsV1SpeechConfig",
           "description": "Optional. Default Speech-to-Text resources to use while ingesting audio files. Optional, CCAI Insights will create a default if not provided. This applies to conversations ingested from the `UploadConversation` and `IngestConversations` endpoints, including conversations coming from CCAI Platform."
         },
+        "timeZone": {
+          "description": "Optional. The time zone applied to the project. This is a string representation of the time zone, for example, \"America/New_York\". This field follows the IANA TZ database format. See https://www.iana.org/time-zones for a list of valid values. If no value is set the user time zone will be used.",
+          "type": "string"
+        },
         "updateTime": {
           "description": "Output only. The time at which the settings were last updated.",
           "format": "google-datetime",
@@ -13760,6 +13775,29 @@
         "metadataUri": {
           "description": "Cloud Storage URI that points to a file that contains the conversation metadata.",
           "type": "string"
+        },
+        "turnLevelAudios": {
+          "description": "Cloud Storage URIs that points to files that contain the conversation audio for each turn. Assume the order of the URIs is the same as the order of the transcript turns.",
+          "items": {
+            "$ref": "GoogleCloudContactcenterinsightsV1alpha1ConversationDataSourceTurnLevelAudio"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1alpha1ConversationDataSourceTurnLevelAudio": {
+      "description": "A wrapper for holding the audio for any given turn.",
+      "id": "GoogleCloudContactcenterinsightsV1alpha1ConversationDataSourceTurnLevelAudio",
+      "properties": {
+        "audioDuration": {
+          "description": "The duration of the audio.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "audioGcsUri": {
+          "description": "The Cloud Storage URI of the audio for any given turn.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -14037,6 +14075,10 @@
         "text": {
           "description": "The text of this segment.",
           "type": "string"
+        },
+        "turnLevelAudio": {
+          "$ref": "GoogleCloudContactcenterinsightsV1alpha1ConversationDataSourceTurnLevelAudio",
+          "description": "Turn level audio for this transcript segment."
         },
         "words": {
           "description": "A list of the word-specific information for each word in the segment.",
@@ -18264,6 +18306,29 @@
         "metadataUri": {
           "description": "Cloud Storage URI that points to a file that contains the conversation metadata.",
           "type": "string"
+        },
+        "turnLevelAudios": {
+          "description": "Cloud Storage URIs that points to files that contain the conversation audio for each turn. Assume the order of the URIs is the same as the order of the transcript turns.",
+          "items": {
+            "$ref": "GoogleCloudContactcenterinsightsV1mainConversationDataSourceTurnLevelAudio"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1mainConversationDataSourceTurnLevelAudio": {
+      "description": "A wrapper for holding the audio for any given turn.",
+      "id": "GoogleCloudContactcenterinsightsV1mainConversationDataSourceTurnLevelAudio",
+      "properties": {
+        "audioDuration": {
+          "description": "The duration of the audio.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "audioGcsUri": {
+          "description": "The Cloud Storage URI of the audio for any given turn.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -18541,6 +18606,10 @@
         "text": {
           "description": "The text of this segment.",
           "type": "string"
+        },
+        "turnLevelAudio": {
+          "$ref": "GoogleCloudContactcenterinsightsV1mainConversationDataSourceTurnLevelAudio",
+          "description": "Turn level audio for this transcript segment."
         },
         "words": {
           "description": "A list of the word-specific information for each word in the segment.",

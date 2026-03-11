@@ -482,6 +482,9 @@ type GoogleCloudKmsV1CryptoKey struct {
 	// more allowed justification codes.
 	// https://cloud.google.com/assured-workloads/key-access-justifications/docs/justification-codes
 	// By default, this field is absent, and all justification codes are allowed.
+	// If the `key_access_justifications_policy.allowed_access_reasons` is empty
+	// (zero allowed justification code), all encrypt, decrypt, and sign operations
+	// will fail.
 	KeyAccessJustificationsPolicy *GoogleCloudKmsV1KeyAccessJustificationsPolicy `json:"keyAccessJustificationsPolicy,omitempty"`
 	// Labels: Labels with user-defined metadata. For more information, see
 	// Labeling Keys (https://cloud.google.com/kms/docs/labeling-keys).
@@ -909,11 +912,15 @@ func (s GoogleCloudKmsV1ExternalProtectionLevelOptions) MarshalJSON() ([]byte, e
 
 // GoogleCloudKmsV1KeyAccessJustificationsPolicy: A
 // KeyAccessJustificationsPolicy specifies zero or more allowed AccessReason
-// values for encrypt, decrypt, and sign operations on a CryptoKey.
+// values for encrypt, decrypt, and sign operations on a CryptoKey or
+// KeyAccessJustificationsPolicyConfig (the default Key Access Justifications
+// policy).
 type GoogleCloudKmsV1KeyAccessJustificationsPolicy struct {
 	// AllowedAccessReasons: The list of allowed reasons for access to a CryptoKey.
-	// Zero allowed access reasons means all encrypt, decrypt, and sign operations
-	// for the CryptoKey associated with this policy will fail.
+	// Note that empty allowed_access_reasons has a different meaning depending on
+	// where this message appears. If this is under
+	// KeyAccessJustificationsPolicyConfig, it means allow-all. If this is under
+	// CryptoKey, it means deny-all.
 	//
 	// Possible values:
 	//   "REASON_UNSPECIFIED" - Unspecified access reason.

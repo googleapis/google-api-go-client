@@ -2402,6 +2402,10 @@ type GoogleCloudContactcenterinsightsV1ConversationDataSource struct {
 	// MetadataUri: Cloud Storage URI that points to a file that contains the
 	// conversation metadata.
 	MetadataUri string `json:"metadataUri,omitempty"`
+	// TurnLevelAudios: Cloud Storage URIs that points to files that contain the
+	// conversation audio for each turn. Assume the order of the URIs is the same
+	// as the order of the transcript turns.
+	TurnLevelAudios []*GoogleCloudContactcenterinsightsV1ConversationDataSourceTurnLevelAudio `json:"turnLevelAudios,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DialogflowSource") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2751,6 +2755,8 @@ type GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegment s
 	Sentiment *GoogleCloudContactcenterinsightsV1SentimentData `json:"sentiment,omitempty"`
 	// Text: The text of this segment.
 	Text string `json:"text,omitempty"`
+	// TurnLevelAudio: Turn level audio for this transcript segment.
+	TurnLevelAudio *GoogleCloudContactcenterinsightsV1ConversationDataSourceTurnLevelAudio `json:"turnLevelAudio,omitempty"`
 	// Words: A list of the word-specific information for each word in the segment.
 	Words []*GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentWordInfo `json:"words,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChannelTag") to
@@ -8581,6 +8587,11 @@ type GoogleCloudContactcenterinsightsV1Settings struct {
 	// `UploadConversation` and `IngestConversations` endpoints, including
 	// conversations coming from CCAI Platform.
 	SpeechConfig *GoogleCloudContactcenterinsightsV1SpeechConfig `json:"speechConfig,omitempty"`
+	// TimeZone: Optional. The time zone applied to the project. This is a string
+	// representation of the time zone, for example, "America/New_York". This field
+	// follows the IANA TZ database format. See https://www.iana.org/time-zones for
+	// a list of valid values. If no value is set the user time zone will be used.
+	TimeZone string `json:"timeZone,omitempty"`
 	// UpdateTime: Output only. The time at which the settings were last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -10278,6 +10289,10 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationDataSource struct {
 	// MetadataUri: Cloud Storage URI that points to a file that contains the
 	// conversation metadata.
 	MetadataUri string `json:"metadataUri,omitempty"`
+	// TurnLevelAudios: Cloud Storage URIs that points to files that contain the
+	// conversation audio for each turn. Assume the order of the URIs is the same
+	// as the order of the transcript turns.
+	TurnLevelAudios []*GoogleCloudContactcenterinsightsV1alpha1ConversationDataSourceTurnLevelAudio `json:"turnLevelAudios,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DialogflowSource") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -10293,6 +10308,32 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationDataSource struct {
 
 func (s GoogleCloudContactcenterinsightsV1alpha1ConversationDataSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationDataSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ConversationDataSourceTurnLevelAudio:
+//
+//	A wrapper for holding the audio for any given turn.
+type GoogleCloudContactcenterinsightsV1alpha1ConversationDataSourceTurnLevelAudio struct {
+	// AudioDuration: The duration of the audio.
+	AudioDuration string `json:"audioDuration,omitempty"`
+	// AudioGcsUri: The Cloud Storage URI of the audio for any given turn.
+	AudioGcsUri string `json:"audioGcsUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AudioDuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AudioDuration") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationDataSourceTurnLevelAudio) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationDataSourceTurnLevelAudio
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10603,6 +10644,8 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSeg
 	Sentiment *GoogleCloudContactcenterinsightsV1alpha1SentimentData `json:"sentiment,omitempty"`
 	// Text: The text of this segment.
 	Text string `json:"text,omitempty"`
+	// TurnLevelAudio: Turn level audio for this transcript segment.
+	TurnLevelAudio *GoogleCloudContactcenterinsightsV1alpha1ConversationDataSourceTurnLevelAudio `json:"turnLevelAudio,omitempty"`
 	// Words: A list of the word-specific information for each word in the segment.
 	Words []*GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentWordInfo `json:"words,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChannelTag") to
@@ -15949,6 +15992,10 @@ type GoogleCloudContactcenterinsightsV1mainConversationDataSource struct {
 	// MetadataUri: Cloud Storage URI that points to a file that contains the
 	// conversation metadata.
 	MetadataUri string `json:"metadataUri,omitempty"`
+	// TurnLevelAudios: Cloud Storage URIs that points to files that contain the
+	// conversation audio for each turn. Assume the order of the URIs is the same
+	// as the order of the transcript turns.
+	TurnLevelAudios []*GoogleCloudContactcenterinsightsV1mainConversationDataSourceTurnLevelAudio `json:"turnLevelAudios,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DialogflowSource") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -15964,6 +16011,31 @@ type GoogleCloudContactcenterinsightsV1mainConversationDataSource struct {
 
 func (s GoogleCloudContactcenterinsightsV1mainConversationDataSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1mainConversationDataSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainConversationDataSourceTurnLevelAudio:
+// A wrapper for holding the audio for any given turn.
+type GoogleCloudContactcenterinsightsV1mainConversationDataSourceTurnLevelAudio struct {
+	// AudioDuration: The duration of the audio.
+	AudioDuration string `json:"audioDuration,omitempty"`
+	// AudioGcsUri: The Cloud Storage URI of the audio for any given turn.
+	AudioGcsUri string `json:"audioGcsUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AudioDuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AudioDuration") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainConversationDataSourceTurnLevelAudio) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainConversationDataSourceTurnLevelAudio
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -16273,6 +16345,8 @@ type GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegme
 	Sentiment *GoogleCloudContactcenterinsightsV1mainSentimentData `json:"sentiment,omitempty"`
 	// Text: The text of this segment.
 	Text string `json:"text,omitempty"`
+	// TurnLevelAudio: Turn level audio for this transcript segment.
+	TurnLevelAudio *GoogleCloudContactcenterinsightsV1mainConversationDataSourceTurnLevelAudio `json:"turnLevelAudio,omitempty"`
 	// Words: A list of the word-specific information for each word in the segment.
 	Words []*GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentWordInfo `json:"words,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChannelTag") to

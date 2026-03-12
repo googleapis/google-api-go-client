@@ -800,7 +800,7 @@ func (s ActiveViewVideoViewabilityMetricConfig) MarshalJSON() ([]byte, error) {
 
 // AdGroup: A single ad group associated with a line item.
 type AdGroup struct {
-	// AdGroupFormat: Required. The format of the ads in the ad group.
+	// AdGroupFormat: Required. Immutable. The format of the ads in the ad group.
 	//
 	// Possible values:
 	//   "AD_GROUP_FORMAT_UNSPECIFIED" - Format value is not specified or is
@@ -853,8 +853,8 @@ type AdGroup struct {
 	//   "ENTITY_STATUS_SCHEDULED_FOR_DELETION" - The entity is scheduled for
 	// deletion.
 	EntityStatus string `json:"entityStatus,omitempty"`
-	// LineItemId: Required. The unique ID of the line item that the ad group
-	// belongs to.
+	// LineItemId: Required. Immutable. The unique ID of the line item that the ad
+	// group belongs to.
 	LineItemId int64 `json:"lineItemId,omitempty,string"`
 	// Name: Output only. Identifier. The resource name of the ad group.
 	Name string `json:"name,omitempty"`
@@ -890,7 +890,8 @@ func (s AdGroup) MarshalJSON() ([]byte, error) {
 type AdGroupAd struct {
 	// AdGroupAdId: Output only. The unique ID of the ad. Assigned by the system.
 	AdGroupAdId int64 `json:"adGroupAdId,omitempty,string"`
-	// AdGroupId: Required. The unique ID of the ad group that the ad belongs to.
+	// AdGroupId: Required. Immutable. The unique ID of the ad group that the ad
+	// belongs to.
 	AdGroupId int64 `json:"adGroupId,omitempty,string"`
 	// AdPolicy: Output only. The policy approval status of the ad.
 	AdPolicy *AdPolicy `json:"adPolicy,omitempty"`

@@ -1265,7 +1265,7 @@
       }
     }
   },
-  "revision": "20260303",
+  "revision": "20260310",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdbShellCommandEvent": {
@@ -6436,7 +6436,7 @@
           "type": "boolean"
         },
         "networkResetDisabled": {
-          "description": "Whether resetting network settings is disabled.",
+          "description": "Whether resetting network settings is disabled. This applies only on fully managed devices. A NonComplianceDetail with MANAGEMENT_MODE is reported for other management modes.",
           "type": "boolean"
         },
         "oncCertificateProviders": {

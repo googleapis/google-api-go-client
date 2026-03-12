@@ -210,7 +210,8 @@ type AndroidConfig struct {
 	// Notification: Notification to send to android devices.
 	Notification *AndroidNotification `json:"notification,omitempty"`
 	// Priority: Message priority. Can take "normal" and "high" values. For more
-	// information, see Setting the priority of a message (https://goo.gl/GjONJv).
+	// information, see Setting the priority of a message
+	// (https://firebase.google.com/docs/cloud-messaging/customize-messages/setting-message-priority).
 	//
 	// Possible values:
 	//   "NORMAL" - Default priority for data messages. Normal priority messages
@@ -304,9 +305,6 @@ type AndroidNotification struct {
 	// to localize the body text to the user's current localization. See String
 	// Resources (https://goo.gl/NdFZGI) for more information.
 	BodyLocKey string `json:"bodyLocKey,omitempty"`
-	// BypassProxyNotification: If set, display notifications delivered to the
-	// device will be handled by the app instead of the proxy.
-	BypassProxyNotification bool `json:"bypassProxyNotification,omitempty"`
 	// ChannelId: The notification's channel id
 	// (https://developer.android.com/guide/topics/ui/notifiers/notifications#ManageChannels)
 	// (new in Android O). The app must create a channel with this channel ID
@@ -377,10 +375,14 @@ type AndroidNotification struct {
 	// Priority is an indication of how much of the user's attention should be
 	// consumed by this notification. Low-priority notifications may be hidden from
 	// the user in certain situations, while the user might be interrupted for a
-	// higher-priority notification. The effect of setting the same priorities may
-	// differ slightly on different platforms. Note this priority differs from
-	// `AndroidMessagePriority`. This priority is processed by the client after the
-	// message has been delivered, whereas AndroidMessagePriority
+	// higher-priority notification. This parameter affects notification priority
+	// only on devices running Android 7.1 (API level 25) and lower. On Android 8.0
+	// (API level 26) and higher, priority is ignored in favor of channel
+	// importance
+	// (https://developer.android.com/develop/ui/views/notifications/channels#importance).
+	// Note this priority differs from `AndroidMessagePriority`. This priority is
+	// processed by the client after the message has been delivered, whereas
+	// AndroidMessagePriority
 	// (https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#androidmessagepriority)
 	// is an FCM concept that controls when the message is delivered.
 	//

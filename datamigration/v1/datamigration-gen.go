@@ -5762,7 +5762,7 @@ type SslConfig struct {
 	//   "SERVER_ONLY" - Only 'ca_certificate' specified.
 	//   "SERVER_CLIENT" - Both server ('ca_certificate'), and client
 	// ('client_key', 'client_certificate') specified.
-	//   "REQUIRED" - Mandates SSL encryption for all connections. This doesn’t
+	//   "REQUIRED" - Mandates SSL encryption for all connections. This does not
 	// require certificate verification.
 	//   "NONE" - Connection is not encrypted.
 	Type string `json:"type,omitempty"`

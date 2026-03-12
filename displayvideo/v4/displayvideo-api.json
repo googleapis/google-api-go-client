@@ -9363,7 +9363,7 @@
       }
     }
   },
-  "revision": "20260305",
+  "revision": "20260310",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActiveViewVideoViewabilityMetricConfig": {
@@ -9542,7 +9542,7 @@
       "id": "AdGroup",
       "properties": {
         "adGroupFormat": {
-          "description": "Required. The format of the ads in the ad group.",
+          "description": "Required. Immutable. The format of the ads in the ad group.",
           "enum": [
             "AD_GROUP_FORMAT_UNSPECIFIED",
             "AD_GROUP_FORMAT_IN_STREAM",
@@ -9614,7 +9614,7 @@
           "type": "string"
         },
         "lineItemId": {
-          "description": "Required. The unique ID of the line item that the ad group belongs to.",
+          "description": "Required. Immutable. The unique ID of the line item that the ad group belongs to.",
           "format": "int64",
           "type": "string"
         },
@@ -9645,7 +9645,7 @@
           "type": "string"
         },
         "adGroupId": {
-          "description": "Required. The unique ID of the ad group that the ad belongs to.",
+          "description": "Required. Immutable. The unique ID of the ad group that the ad belongs to.",
           "format": "int64",
           "type": "string"
         },

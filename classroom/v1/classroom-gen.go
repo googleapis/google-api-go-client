@@ -643,6 +643,10 @@ type AddOnAttachmentStudentSubmission struct {
 	//   "RETURNED" - Has been returned to the student.
 	//   "RECLAIMED_BY_STUDENT" - Student chose to "unsubmit" the assignment.
 	PostSubmissionState string `json:"postSubmissionState,omitempty"`
+	// UserId: Identifier for the student that owns this submission. Requires the
+	// user to be a teacher in the course and have permission to read student
+	// submissions.
+	UserId string `json:"userId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

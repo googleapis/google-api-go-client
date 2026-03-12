@@ -708,12 +708,33 @@ type Asset struct {
 	AssignedGroups []string `json:"assignedGroups,omitempty"`
 	// Attributes: Generic asset attributes.
 	Attributes map[string]string `json:"attributes,omitempty"`
+	// AwsApiGatewayRestApiDetails: Output only. Asset information specific for AWS
+	// API Gateway REST APIs.
+	AwsApiGatewayRestApiDetails *AwsApiGatewayRestApiDetails `json:"awsApiGatewayRestApiDetails,omitempty"`
+	// AwsAppSyncGraphqlApiDetails: Output only. Asset information specific for AWS
+	// AppSync GraphQL APIs.
+	AwsAppSyncGraphqlApiDetails *AwsAppSyncGraphqlApiDetails `json:"awsAppSyncGraphqlApiDetails,omitempty"`
+	// AwsApplicationLoadBalancerDetails: Output only. Asset information specific
+	// for AWS Application Load Balancers.
+	AwsApplicationLoadBalancerDetails *AwsApplicationLoadBalancerDetails `json:"awsApplicationLoadBalancerDetails,omitempty"`
+	// AwsAutoscalingGroupDetails: Output only. Asset information specific for
+	// AwsAutoscalingGroupDetails
+	AwsAutoscalingGroupDetails *AwsAutoscalingGroupDetails `json:"awsAutoscalingGroupDetails,omitempty"`
+	// AwsBatchComputeEnvironmentDetails: Output only. Asset information specific
+	// for AWS Batch Compute Environments.
+	AwsBatchComputeEnvironmentDetails *AwsBatchComputeEnvironmentDetails `json:"awsBatchComputeEnvironmentDetails,omitempty"`
 	// AwsCloudFrontDistributionDetails: Output only. Asset information specific
 	// for AWS CloudFront distributions.
 	AwsCloudFrontDistributionDetails *AwsCloudFrontDistributionDetails `json:"awsCloudFrontDistributionDetails,omitempty"`
 	// AwsDynamodbTableDetails: Output only. Asset information specific for AWS
 	// DynamoDB tables.
 	AwsDynamodbTableDetails *AwsDynamoDBTableDetails `json:"awsDynamodbTableDetails,omitempty"`
+	// AwsEbsVolumeDetails: Output only. Asset information specific for AWS EBS
+	// Volumes.
+	AwsEbsVolumeDetails *AwsEbsVolumeDetails `json:"awsEbsVolumeDetails,omitempty"`
+	// AwsEcrRepositoryDetails: Output only. Asset information specific for
+	// AwsEcrRepositoryDetails
+	AwsEcrRepositoryDetails *AwsEcrRepositoryDetails `json:"awsEcrRepositoryDetails,omitempty"`
 	// AwsEcsClusterDetails: Output only. Asset information specific for AWS ECS
 	// clusters.
 	AwsEcsClusterDetails *AwsEcsClusterDetails `json:"awsEcsClusterDetails,omitempty"`
@@ -723,9 +744,18 @@ type Asset struct {
 	// AwsEksClusterDetails: Output only. Asset information specific for AWS EKS
 	// clusters.
 	AwsEksClusterDetails *AwsEksClusterDetails `json:"awsEksClusterDetails,omitempty"`
+	// AwsElasticIpAddressDetails: Output only. Asset information specific for AWS
+	// Elastic IP Addresses.
+	AwsElasticIpAddressDetails *AwsElasticIpAddressDetails `json:"awsElasticIpAddressDetails,omitempty"`
+	// AwsElasticNetworkInterfaceDetails: Output only. Asset information specific
+	// for AWS Elastic Network Interfaces.
+	AwsElasticNetworkInterfaceDetails *AwsElasticNetworkInterfaceDetails `json:"awsElasticNetworkInterfaceDetails,omitempty"`
 	// AwsElbLoadBalancerDetails: Output only. Asset information specific for AWS
 	// Load Balancers.
 	AwsElbLoadBalancerDetails *AwsElbLoadBalancerDetails `json:"awsElbLoadBalancerDetails,omitempty"`
+	// AwsInternetGatewayDetails: Output only. Asset information specific for AWS
+	// Internet Gateways.
+	AwsInternetGatewayDetails *AwsInternetGatewayDetails `json:"awsInternetGatewayDetails,omitempty"`
 	// AwsLambdaFunctionDetails: Output only. Asset information specific for AWS
 	// Lambda functions.
 	AwsLambdaFunctionDetails *AwsLambdaFunctionDetails `json:"awsLambdaFunctionDetails,omitempty"`
@@ -740,6 +770,9 @@ type Asset struct {
 	// AwsS3BucketDetails: Output only. Asset information specific for AWS S3
 	// buckets.
 	AwsS3BucketDetails *AwsS3BucketDetails `json:"awsS3BucketDetails,omitempty"`
+	// AwsSnsTopicDetails: Output only. Asset information specific for AWS SNS
+	// Topics.
+	AwsSnsTopicDetails *AwsSnsTopicDetails `json:"awsSnsTopicDetails,omitempty"`
 	// AwsVpcDetails: Output only. Asset information specific for AWS VPCs.
 	AwsVpcDetails *AwsVpcDetails `json:"awsVpcDetails,omitempty"`
 	// CreateTime: Output only. The timestamp when the asset was created.
@@ -806,11 +839,32 @@ func (s Asset) MarshalJSON() ([]byte, error) {
 type AssetFrame struct {
 	// Attributes: Generic asset attributes.
 	Attributes map[string]string `json:"attributes,omitempty"`
+	// AwsApiGatewayRestApiDetails: Optional. Asset information specific for AWS
+	// API Gateway REST APIs.
+	AwsApiGatewayRestApiDetails *AwsApiGatewayRestApiDetails `json:"awsApiGatewayRestApiDetails,omitempty"`
+	// AwsAppSyncGraphqlApiDetails: Optional. Asset information specific for AWS
+	// AppSync GraphQL APIs.
+	AwsAppSyncGraphqlApiDetails *AwsAppSyncGraphqlApiDetails `json:"awsAppSyncGraphqlApiDetails,omitempty"`
+	// AwsApplicationLoadBalancerDetails: Optional. Asset information specific for
+	// AWS Application Load Balancers.
+	AwsApplicationLoadBalancerDetails *AwsApplicationLoadBalancerDetails `json:"awsApplicationLoadBalancerDetails,omitempty"`
+	// AwsAutoscalingGroupDetails: Optional. Asset information specific for
+	// AwsAutoscalingGroupDetails
+	AwsAutoscalingGroupDetails *AwsAutoscalingGroupDetails `json:"awsAutoscalingGroupDetails,omitempty"`
+	// AwsBatchComputeEnvironmentDetails: Optional. Asset information specific for
+	// AWS Batch Compute Environments.
+	AwsBatchComputeEnvironmentDetails *AwsBatchComputeEnvironmentDetails `json:"awsBatchComputeEnvironmentDetails,omitempty"`
 	// AwsCloudFrontDistributionDetails: Asset information specific for AWS
 	// CloudFront distributions.
 	AwsCloudFrontDistributionDetails *AwsCloudFrontDistributionDetails `json:"awsCloudFrontDistributionDetails,omitempty"`
 	// AwsDynamodbTableDetails: Asset information specific for AWS DynamoDB tables.
 	AwsDynamodbTableDetails *AwsDynamoDBTableDetails `json:"awsDynamodbTableDetails,omitempty"`
+	// AwsEbsVolumeDetails: Optional. Asset information specific for AWS EBS
+	// Volumes.
+	AwsEbsVolumeDetails *AwsEbsVolumeDetails `json:"awsEbsVolumeDetails,omitempty"`
+	// AwsEcrRepositoryDetails: Asset information specific for
+	// AwsEcrRepositoryDetails
+	AwsEcrRepositoryDetails *AwsEcrRepositoryDetails `json:"awsEcrRepositoryDetails,omitempty"`
 	// AwsEcsClusterDetails: Asset information specific for AWS ECS clusters.
 	AwsEcsClusterDetails *AwsEcsClusterDetails `json:"awsEcsClusterDetails,omitempty"`
 	// AwsEfsFileSystemDetails: Asset information specific for AWS EFS file
@@ -818,9 +872,18 @@ type AssetFrame struct {
 	AwsEfsFileSystemDetails *AwsEfsFileSystemDetails `json:"awsEfsFileSystemDetails,omitempty"`
 	// AwsEksClusterDetails: Asset information specific for AWS EKS clusters.
 	AwsEksClusterDetails *AwsEksClusterDetails `json:"awsEksClusterDetails,omitempty"`
+	// AwsElasticIpAddressDetails: Optional. Asset information specific for AWS
+	// Elastic IP Addresses.
+	AwsElasticIpAddressDetails *AwsElasticIpAddressDetails `json:"awsElasticIpAddressDetails,omitempty"`
+	// AwsElasticNetworkInterfaceDetails: Optional. Asset information specific for
+	// AWS Elastic Network Interfaces.
+	AwsElasticNetworkInterfaceDetails *AwsElasticNetworkInterfaceDetails `json:"awsElasticNetworkInterfaceDetails,omitempty"`
 	// AwsElbLoadBalancerDetails: Asset information specific for AWS Load
 	// Balancers.
 	AwsElbLoadBalancerDetails *AwsElbLoadBalancerDetails `json:"awsElbLoadBalancerDetails,omitempty"`
+	// AwsInternetGatewayDetails: Optional. Asset information specific for AWS
+	// Internet Gateways.
+	AwsInternetGatewayDetails *AwsInternetGatewayDetails `json:"awsInternetGatewayDetails,omitempty"`
 	// AwsLambdaFunctionDetails: Asset information specific for AWS Lambda
 	// functions.
 	AwsLambdaFunctionDetails *AwsLambdaFunctionDetails `json:"awsLambdaFunctionDetails,omitempty"`
@@ -833,6 +896,8 @@ type AssetFrame struct {
 	AwsRoute53HostedZoneDetails *AwsRoute53HostedZoneDetails `json:"awsRoute53HostedZoneDetails,omitempty"`
 	// AwsS3BucketDetails: Asset information specific for AWS S3 buckets.
 	AwsS3BucketDetails *AwsS3BucketDetails `json:"awsS3BucketDetails,omitempty"`
+	// AwsSnsTopicDetails: Optional. Asset information specific for AWS SNS Topics.
+	AwsSnsTopicDetails *AwsSnsTopicDetails `json:"awsSnsTopicDetails,omitempty"`
 	// AwsVpcDetails: Asset information specific for AWS VPCs.
 	AwsVpcDetails *AwsVpcDetails `json:"awsVpcDetails,omitempty"`
 	// CollectionType: Optional. Frame collection type, if not specified the
@@ -1106,12 +1171,41 @@ func (s AssetsExportJobPerformanceData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AwsApiGatewayRestApiDetails: Asset information specific for AWS API Gateway
+// REST APIs.
+type AwsApiGatewayRestApiDetails struct {
+}
+
+// AwsAppSyncGraphqlApiDetails: Asset information specific for AWS AppSync
+// GraphQL APIs.
+type AwsAppSyncGraphqlApiDetails struct {
+}
+
+// AwsApplicationLoadBalancerDetails: Asset information specific for AWS
+// Application Load Balancers.
+type AwsApplicationLoadBalancerDetails struct {
+}
+
+// AwsAutoscalingGroupDetails: Asset information specific for AWS Autoscaling
+// Group.
+type AwsAutoscalingGroupDetails struct {
+}
+
+// AwsBatchComputeEnvironmentDetails: Asset information specific for AWS Batch
+// Compute Environments.
+type AwsBatchComputeEnvironmentDetails struct {
+}
+
 // AwsCloudFrontDistributionDetails: Details of an AWS CloudFront distribution.
 type AwsCloudFrontDistributionDetails struct {
 }
 
 // AwsDynamoDBTableDetails: Details of an AWS DynamoDB table.
 type AwsDynamoDBTableDetails struct {
+}
+
+// AwsEbsVolumeDetails: Asset information specific for AWS EBS Volumes.
+type AwsEbsVolumeDetails struct {
 }
 
 // AwsEc2PlatformDetails: AWS EC2 specific details.
@@ -1147,6 +1241,10 @@ func (s AwsEc2PlatformDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AwsEcrRepositoryDetails: Asset information specific for AWS ECR Repository.
+type AwsEcrRepositoryDetails struct {
+}
+
 // AwsEcsClusterDetails: Details of an AWS ECS cluster.
 type AwsEcsClusterDetails struct {
 }
@@ -1159,9 +1257,24 @@ type AwsEfsFileSystemDetails struct {
 type AwsEksClusterDetails struct {
 }
 
+// AwsElasticIpAddressDetails: Asset information specific for AWS Elastic IP
+// Addresses.
+type AwsElasticIpAddressDetails struct {
+}
+
+// AwsElasticNetworkInterfaceDetails: Asset information specific for AWS
+// Elastic Network Interfaces.
+type AwsElasticNetworkInterfaceDetails struct {
+}
+
 // AwsElbLoadBalancerDetails: Asset information specific for AWS Load
 // Balancers.
 type AwsElbLoadBalancerDetails struct {
+}
+
+// AwsInternetGatewayDetails: Asset information specific for AWS Internet
+// Gateways.
+type AwsInternetGatewayDetails struct {
 }
 
 // AwsLambdaFunctionDetails: Asset information specific for AWS Lambda
@@ -1313,6 +1426,10 @@ type AwsS3BucketDetailsVersioning struct {
 func (s AwsS3BucketDetailsVersioning) MarshalJSON() ([]byte, error) {
 	type NoMethod AwsS3BucketDetailsVersioning
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AwsSnsTopicDetails: Asset information specific for AWS SNS Topics.
+type AwsSnsTopicDetails struct {
 }
 
 // AwsVpcDetails: Asset information specific for AWS VPCs.
@@ -3124,6 +3241,53 @@ type ErrorFrame struct {
 func (s ErrorFrame) MarshalJSON() ([]byte, error) {
 	type NoMethod ErrorFrame
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EstimatedUsage: Estimated usage data.
+type EstimatedUsage struct {
+	// EstimatedCpuPercentage: Optional. Estimated CPU utilization percentage. Must
+	// be in the range [1, 100].
+	EstimatedCpuPercentage float64 `json:"estimatedCpuPercentage,omitempty"`
+	// EstimatedDiskPercentage: Optional. Estimated disk utilization percentage.
+	// Must be in the range [1, 100].
+	EstimatedDiskPercentage float64 `json:"estimatedDiskPercentage,omitempty"`
+	// EstimatedMemoryPercentage: Optional. Estimated memory utilization
+	// percentage. Must be in the range [1, 100].
+	EstimatedMemoryPercentage float64 `json:"estimatedMemoryPercentage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EstimatedCpuPercentage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EstimatedCpuPercentage") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EstimatedUsage) MarshalJSON() ([]byte, error) {
+	type NoMethod EstimatedUsage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *EstimatedUsage) UnmarshalJSON(data []byte) error {
+	type NoMethod EstimatedUsage
+	var s1 struct {
+		EstimatedCpuPercentage    gensupport.JSONFloat64 `json:"estimatedCpuPercentage"`
+		EstimatedDiskPercentage   gensupport.JSONFloat64 `json:"estimatedDiskPercentage"`
+		EstimatedMemoryPercentage gensupport.JSONFloat64 `json:"estimatedMemoryPercentage"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.EstimatedCpuPercentage = float64(s1.EstimatedCpuPercentage)
+	s.EstimatedDiskPercentage = float64(s1.EstimatedDiskPercentage)
+	s.EstimatedMemoryPercentage = float64(s1.EstimatedMemoryPercentage)
+	return nil
 }
 
 // ExecutionReport: A resource that reports result of the import job execution.
@@ -6311,6 +6475,9 @@ type ReportSummaryAssetAggregateStats struct {
 	// DatabaseTypes: Output only. Count of assets grouped by database type. Keys
 	// here are taken from DatabaseType enum. Only present for databases.
 	DatabaseTypes *ReportSummaryChartData `json:"databaseTypes,omitempty"`
+	// EstimatedUsageStats: Output only. Estimated usage stats for the assets in
+	// this collection.
+	EstimatedUsageStats *ReportSummaryAssetAggregateStatsEstimatedUsageStats `json:"estimatedUsageStats,omitempty"`
 	// MemoryBytesHistogram: Histogram showing a distribution of memory sizes.
 	MemoryBytesHistogram *ReportSummaryHistogramChartData `json:"memoryBytesHistogram,omitempty"`
 	// MemoryUtilization: Total memory split into Used/Free buckets.
@@ -6354,6 +6521,35 @@ type ReportSummaryAssetAggregateStats struct {
 
 func (s ReportSummaryAssetAggregateStats) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportSummaryAssetAggregateStats
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReportSummaryAssetAggregateStatsEstimatedUsageStats: Estimated usage stats
+// for the assets in this collection.
+type ReportSummaryAssetAggregateStatsEstimatedUsageStats struct {
+	// TotalAssetsUsingEstimatedUsage: Output only. The number of assets that are
+	// using at least one estimated usage metric for rightsizing.
+	TotalAssetsUsingEstimatedUsage int64 `json:"totalAssetsUsingEstimatedUsage,omitempty,string"`
+	// TotalVirtualMachinesUsingEstimatedUsage: Output only. The number of virtual
+	// machines in this finding that are using at least one estimated usage metric
+	// for rightsizing.
+	TotalVirtualMachinesUsingEstimatedUsage int64 `json:"totalVirtualMachinesUsingEstimatedUsage,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g.
+	// "TotalAssetsUsingEstimatedUsage") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TotalAssetsUsingEstimatedUsage")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReportSummaryAssetAggregateStatsEstimatedUsageStats) MarshalJSON() ([]byte, error) {
+	type NoMethod ReportSummaryAssetAggregateStatsEstimatedUsageStats
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8057,6 +8253,10 @@ type VirtualMachinePreferences struct {
 	// ComputeEnginePreferences: Optional. Compute Engine preferences concern
 	// insights and recommendations for Compute Engine target.
 	ComputeEnginePreferences *ComputeEnginePreferences `json:"computeEnginePreferences,omitempty"`
+	// EstimatedUsage: Optional. Estimated usage data for missing usage data. If
+	// performance data is available, it overrides this field. If not set, default
+	// values will be used for the usage data.
+	EstimatedUsage *EstimatedUsage `json:"estimatedUsage,omitempty"`
 	// NetworkCostParameters: Optional. Parameters that affect network cost
 	// estimations. If not set, default values will be used for the parameters.
 	NetworkCostParameters *VirtualMachinePreferencesNetworkCostParameters `json:"networkCostParameters,omitempty"`

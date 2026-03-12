@@ -6,7 +6,7 @@
 
 // Package ces provides access to the Gemini Enterprise for Customer Experience API.
 //
-// For product documentation, see: https://cloud.google.com/customer-engagement-ai/conversational-agents/ps/reference
+// For product documentation, see: https://docs.cloud.google.com/customer-engagement-ai/conversational-agents/ps
 //
 // # Library status
 //
@@ -653,6 +653,34 @@ type AgentRemoteDialogflowAgent struct {
 
 func (s AgentRemoteDialogflowAgent) MarshalJSON() ([]byte, error) {
 	type NoMethod AgentRemoteDialogflowAgent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AgentTool: Represents a tool that allows the agent to call another agent.
+type AgentTool struct {
+	// Description: Optional. Description of the tool's purpose.
+	Description string `json:"description,omitempty"`
+	// Name: Required. The name of the agent tool.
+	Name string `json:"name,omitempty"`
+	// RootAgent: Optional. The resource name of the root agent that is the entry
+	// point of the tool. Format:
+	// `projects/{project}/locations/{location}/agents/{agent}`
+	RootAgent string `json:"rootAgent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AgentTool) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentTool
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4888,6 +4916,10 @@ type ExecuteToolRequest struct {
 	// Args: Optional. The input parameters and values for the tool in JSON object
 	// format.
 	Args googleapi.RawMessage `json:"args,omitempty"`
+	// Context: Optional. The ToolCallContext
+	// (https://docs.cloud.google.com/customer-engagement-ai/conversational-agents/ps/tool/python#environment
+	// for details) to be passed to the Python tool.
+	Context googleapi.RawMessage `json:"context,omitempty"`
 	// Tool: Optional. The name of the tool to execute. Format:
 	// projects/{project}/locations/{location}/apps/{app}/tools/{tool}
 	Tool string `json:"tool,omitempty"`
@@ -4952,6 +4984,10 @@ func (s ExecuteToolResponse) MarshalJSON() ([]byte, error) {
 
 // ExportAppRequest: Request message for AgentService.ExportApp.
 type ExportAppRequest struct {
+	// AppVersion: Optional. The resource name of the app version to export.
+	// Format:
+	// `projects/{project}/locations/{location}/apps/{app}/versions/{version}`.
+	AppVersion string `json:"appVersion,omitempty"`
 	// ExportFormat: Required. The format to export the app in.
 	//
 	// Possible values:
@@ -4964,13 +5000,13 @@ type ExportAppRequest struct {
 	// format of this URI must be `gs:///`. The exported app archive will be
 	// written directly to the specified GCS object.
 	GcsUri string `json:"gcsUri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
+	// ForceSendFields is a list of field names (e.g. "AppVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExportFormat") to include in API
+	// NullFields is a list of field names (e.g. "AppVersion") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -8649,6 +8685,8 @@ func (s TlsConfigCaCert) MarshalJSON() ([]byte, error) {
 // Tool: A tool represents an action that the CES agent can take to achieve
 // certain goals.
 type Tool struct {
+	// AgentTool: Optional. The agent tool.
+	AgentTool *AgentTool `json:"agentTool,omitempty"`
 	// ClientFunction: Optional. The client function.
 	ClientFunction *ClientFunction `json:"clientFunction,omitempty"`
 	// ConnectorTool: Optional. The Integration Connector tool.
@@ -8707,15 +8745,15 @@ type Tool struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ClientFunction") to
+	// ForceSendFields is a list of field names (e.g. "AgentTool") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ClientFunction") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgentTool") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -9255,12 +9293,17 @@ func (s WebSearchQuery) MarshalJSON() ([]byte, error) {
 // client is responsible for processing the widget and generating the next user
 // query to continue the interaction with the agent.
 type WidgetTool struct {
+	// DataMapping: Optional. The mapping that defines how data from a source tool
+	// is mapped to the widget's input parameters.
+	DataMapping *WidgetToolDataMapping `json:"dataMapping,omitempty"`
 	// Description: Optional. The description of the widget tool.
 	Description string `json:"description,omitempty"`
 	// Name: Required. The display name of the widget tool.
 	Name string `json:"name,omitempty"`
 	// Parameters: Optional. The input parameters of the widget tool.
 	Parameters *Schema `json:"parameters,omitempty"`
+	// UiConfig: Optional. Configuration for rendering the widget.
+	UiConfig googleapi.RawMessage `json:"uiConfig,omitempty"`
 	// WidgetType: Optional. The type of the widget tool. If not specified, the
 	// default type will be CUSTOMIZED.
 	//
@@ -9279,13 +9322,13 @@ type WidgetTool struct {
 	//   "APPOINTMENT_SCHEDULER" - Appointment scheduler widget.
 	//   "CONTACT_FORM" - Contact form widget.
 	WidgetType string `json:"widgetType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Description") to
+	// ForceSendFields is a list of field names (e.g. "DataMapping") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Description") to include in API
+	// NullFields is a list of field names (e.g. "DataMapping") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -9294,6 +9337,45 @@ type WidgetTool struct {
 
 func (s WidgetTool) MarshalJSON() ([]byte, error) {
 	type NoMethod WidgetTool
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WidgetToolDataMapping: Configuration for mapping data from a source tool to
+// the widget's input parameters.
+type WidgetToolDataMapping struct {
+	// FieldMappings: Optional. A map of widget input parameter fields to the
+	// corresponding output fields of the source tool.
+	FieldMappings map[string]string `json:"fieldMappings,omitempty"`
+	// Mode: Optional. The mode of the data mapping.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Unspecified mode.
+	//   "FIELD_MAPPING" - Use the `field_mappings` map for data transformation.
+	//   "PYTHON_SCRIPT" - Use the `python_script` for data transformation.
+	Mode string `json:"mode,omitempty"`
+	// PythonScript: Optional. A Python script used to transform the source tool's
+	// output into the widget's input format. This is used when the mapping is too
+	// complex for simple field mappings.
+	PythonScript string `json:"pythonScript,omitempty"`
+	// SourceToolName: Optional. The resource name of the tool that provides the
+	// data for the widget (e.g., a search tool or a custom function). Format:
+	// `projects/{project}/locations/{location}/agents/{agent}/tools/{tool}`
+	SourceToolName string `json:"sourceToolName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldMappings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldMappings") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WidgetToolDataMapping) MarshalJSON() ([]byte, error) {
+	type NoMethod WidgetToolDataMapping
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -17895,7 +17977,7 @@ type ProjectsLocationsAppsSessionsRunSessionCall struct {
 	header_           http.Header
 }
 
-// RunSession: Initiates a single turn interaction with the CES agent within a
+// RunSession: Initiates a single-turn interaction with the CES agent within a
 // session.
 //
 //   - session: The unique identifier of the session. Format:

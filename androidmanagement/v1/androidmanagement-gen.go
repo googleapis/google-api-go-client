@@ -6581,7 +6581,9 @@ type Policy struct {
 	// override this setting under specific circumstances. Please see
 	// DISALLOW_CONFIGURING_WIFI for further details.
 	NetworkEscapeHatchEnabled bool `json:"networkEscapeHatchEnabled,omitempty"`
-	// NetworkResetDisabled: Whether resetting network settings is disabled.
+	// NetworkResetDisabled: Whether resetting network settings is disabled. This
+	// applies only on fully managed devices. A NonComplianceDetail with
+	// MANAGEMENT_MODE is reported for other management modes.
 	NetworkResetDisabled bool `json:"networkResetDisabled,omitempty"`
 	// OncCertificateProviders: This feature is not generally available.
 	OncCertificateProviders []*OncCertificateProvider `json:"oncCertificateProviders,omitempty"`

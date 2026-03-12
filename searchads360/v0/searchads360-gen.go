@@ -402,6 +402,20 @@ type GoogleAdsSearchads360V0Common__AssetUsage struct {
 	//   "LEAD_FORM" - The asset is used as a lead form.
 	//   "BUSINESS_LOGO" - The asset is used as a business logo.
 	//   "DESCRIPTION_PREFIX" - The asset is used as a description prefix.
+	//   "APP_ICON" - The asset is used as an app icon.
+	//   "APP_TITLE" - The asset is used as an app title.
+	//   "APP_SCREENSHOT" - The asset is used as an app screenshot.
+	//   "APP_COVER_PHOTO" - The asset is used as an app cover photo.
+	//   "APP_SHORT_DESCRIPTION" - The asset is used as an app short description.
+	//   "APP_DEVELOPER_NAME" - The asset is used as an app developer name.
+	//   "HEADLINE_AS_SITELINK_POSITION_ONE" - A headline asset used as a sitelink
+	// in position 1.
+	//   "HEADLINE_AS_SITELINK_POSITION_TWO" - A headline asset used as a sitelink
+	// in position 2.
+	//   "DESCRIPTION_LINE_HEADLINE_AS_SITELINK_POSITION_ONE" - A description line
+	// asset used as a sitelink in position 1.
+	//   "DESCRIPTION_LINE_HEADLINE_AS_SITELINK_POSITION_TWO" - A description line
+	// asset used as a sitelink in position 2.
 	ServedAssetFieldType string `json:"servedAssetFieldType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Asset") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1039,13 +1053,13 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// https://support.google.com/sa360/answer/9250611.
 	AllConversionsByConversionDate float64 `json:"allConversionsByConversionDate,omitempty"`
 	// AllConversionsFromClickToCall: The number of times people clicked the "Call"
-	// button to call a store during or after clicking an ad. This number doesn't
-	// include whether or not calls were connected, or the duration of any calls.
-	// This metric applies to feed items only.
+	// button to call a business during or after clicking an ad. This number
+	// doesn't include whether or not calls were connected, or the duration of any
+	// calls. This metric applies to feed items only.
 	AllConversionsFromClickToCall float64 `json:"allConversionsFromClickToCall,omitempty"`
 	// AllConversionsFromDirections: The number of times people clicked a "Get
-	// directions" button to navigate to a store after clicking an ad. This metric
-	// applies to feed items only.
+	// directions" button to navigate to a business after clicking an ad. This
+	// metric applies to feed items only.
 	AllConversionsFromDirections float64 `json:"allConversionsFromDirections,omitempty"`
 	// AllConversionsFromInteractionsRate: All conversions from interactions (as
 	// oppose to view through conversions) divided by the number of ad
@@ -1055,20 +1069,21 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// conversions from interactions divided by the total number of interactions.
 	AllConversionsFromInteractionsValuePerInteraction float64 `json:"allConversionsFromInteractionsValuePerInteraction,omitempty"`
 	// AllConversionsFromMenu: The number of times people clicked a link to view a
-	// store's menu after clicking an ad. This metric applies to feed items only.
+	// business's menu after clicking an ad. This metric applies to feed items
+	// only.
 	AllConversionsFromMenu float64 `json:"allConversionsFromMenu,omitempty"`
 	// AllConversionsFromOrder: The number of times people placed an order at a
-	// store after clicking an ad. This metric applies to feed items only.
+	// business after clicking an ad. This metric applies to feed items only.
 	AllConversionsFromOrder float64 `json:"allConversionsFromOrder,omitempty"`
 	// AllConversionsFromOtherEngagement: The number of other conversions (for
-	// example, posting a review or saving a location for a store) that occurred
+	// example, posting a review or saving a location for a business) that occurred
 	// after people clicked an ad. This metric applies to feed items only.
 	AllConversionsFromOtherEngagement float64 `json:"allConversionsFromOtherEngagement,omitempty"`
 	// AllConversionsFromStoreVisit: Estimated number of times people visited a
-	// store after clicking an ad. This metric applies to feed items only.
+	// business after clicking an ad. This metric applies to feed items only.
 	AllConversionsFromStoreVisit float64 `json:"allConversionsFromStoreVisit,omitempty"`
 	// AllConversionsFromStoreWebsite: The number of times that people were taken
-	// to a store's URL after clicking an ad. This metric applies to feed items
+	// to a business's URL after clicking an ad. This metric applies to feed items
 	// only.
 	AllConversionsFromStoreWebsite float64 `json:"allConversionsFromStoreWebsite,omitempty"`
 	// AllConversionsValue: The value of all conversions.
@@ -2108,6 +2123,20 @@ func (s GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo) MarshalJSON() ([]
 
 // GoogleAdsSearchads360V0Common__Segments: Segment only fields.
 type GoogleAdsSearchads360V0Common__Segments struct {
+	// AdFormatType: Ad Format type.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - No value has been specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in this
+	// version.
+	//   "VERTICAL_ADS_PROMOTION" - An ad format that promotes a specific entity
+	// within a vertical, for example, a hotel ad in the Travel vertical on Search.
+	//   "VERTICAL_ADS_BOOKING_LINK" - An ad format for a booking link
+	// call-to-action within a vertical ad, for example a 'Book Now' link for a
+	// hotel ad.
+	//   "TEXT" - A standard text ad format. This is currently only used for ads on
+	// the Search network.
+	AdFormatType string `json:"adFormatType,omitempty"`
 	// AdNetworkType: Ad network type.
 	//
 	// Possible values:
@@ -2178,6 +2207,8 @@ type GoogleAdsSearchads360V0Common__Segments struct {
 	//   "CONVERTED_LEAD" - A lead conversion imported from an external source into
 	// Google Ads, that has further completed a chosen stage as defined by the lead
 	// gen advertiser.
+	//   "YOUTUBE_FOLLOW_ON_VIEWS" - User watches an ad from a channel and later
+	// watches either the same video or a video from the same channel as the ad.
 	ConversionActionCategory string `json:"conversionActionCategory,omitempty"`
 	// ConversionActionName: Conversion action name.
 	ConversionActionName string `json:"conversionActionName,omitempty"`
@@ -2366,18 +2397,58 @@ type GoogleAdsSearchads360V0Common__Segments struct {
 	Quarter string `json:"quarter,omitempty"`
 	// RawEventConversionDimensions: The raw event conversion dimensions.
 	RawEventConversionDimensions []*GoogleAdsSearchads360V0Common__Value `json:"rawEventConversionDimensions,omitempty"`
+	// VerticalAdsEventParticipantDisplayNames: The display names of participants
+	// in an event listing, like performers, speakers, or teams.
+	VerticalAdsEventParticipantDisplayNames string `json:"verticalAdsEventParticipantDisplayNames,omitempty"`
+	// VerticalAdsHotelClass: The class of the hotel. Generally in the range of 1
+	// to 5 stars, but fully customizable in the hotel feed.
+	VerticalAdsHotelClass int64 `json:"verticalAdsHotelClass,omitempty,string"`
+	// VerticalAdsListing: The listing associated with a listing impression, click
+	// or conversion.
+	VerticalAdsListing string `json:"verticalAdsListing,omitempty"`
+	// VerticalAdsListingBrand: The brand associated with a specific listing within
+	// a Vertical Ads context, for example, the brand of a car rental, a vacation
+	// home, or an event.
+	VerticalAdsListingBrand string `json:"verticalAdsListingBrand,omitempty"`
+	// VerticalAdsListingCity: The city where the vertical ads listing is located.
+	VerticalAdsListingCity string `json:"verticalAdsListingCity,omitempty"`
+	// VerticalAdsListingCountry: The country where the vertical ads listing is
+	// located.
+	VerticalAdsListingCountry string `json:"verticalAdsListingCountry,omitempty"`
+	// VerticalAdsListingRegion: The region where the vertical ads listing is
+	// located.
+	VerticalAdsListingRegion string `json:"verticalAdsListingRegion,omitempty"`
+	// VerticalAdsPartnerAccount: A specific partner account within a Partner
+	// Center (for example, Hotel Center) that supplies inventory feed data for
+	// Vertical Ads.
+	VerticalAdsPartnerAccount int64 `json:"verticalAdsPartnerAccount,omitempty,string"`
+	// VerticalAdsVertical: Type of vertical ad, such as Vacation Rentals, Car
+	// Rentals, or Events, used to categorize and segment data in the context of
+	// Vertical Ads.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in this
+	// version.
+	//   "HOTELS" - Hotels travel vertical.
+	//   "VACATION_RENTALS" - Vacation rentals travel vertical.
+	//   "RENTAL_CARS" - Rental cars travel vertical.
+	//   "EVENTS" - Events travel vertical.
+	//   "THINGS_TO_DO" - Things to do travel vertical.
+	//   "FLIGHTS" - Flights travel vertical.
+	VerticalAdsVertical string `json:"verticalAdsVertical,omitempty"`
 	// Week: Week as defined as Monday through Sunday, and represented by the date
 	// of Monday. Formatted as yyyy-MM-dd.
 	Week string `json:"week,omitempty"`
 	// Year: Year, formatted as yyyy.
 	Year int64 `json:"year,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AdNetworkType") to
+	// ForceSendFields is a list of field names (e.g. "AdFormatType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AdNetworkType") to include in API
+	// NullFields is a list of field names (e.g. "AdFormatType") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3407,6 +3478,7 @@ type GoogleAdsSearchads360V0Errors__ErrorCode struct {
 	// client account under the manager account.
 	//   "FILTER_HAS_TOO_MANY_VALUES" - The number of values (right-hand-side
 	// operands) in a filter exceeds the limit.
+	//   "REQUIRED_SEGMENT_FIELD_MISSING" - Required segment field is missing.
 	QueryError string `json:"queryError,omitempty"`
 	// QuotaError: An error with the amount of quota remaining.
 	//
@@ -3986,11 +4058,14 @@ type GoogleAdsSearchads360V0ResourcesCampaignNetworkSettings struct {
 	// TargetGoogleSearch: Whether ads will be served with google.com search
 	// results.
 	TargetGoogleSearch bool `json:"targetGoogleSearch,omitempty"`
-	// TargetPartnerSearchNetwork: Whether ads will be served on the Google Partner
-	// Network. This is available only to some select Google partner accounts.
+	// TargetPartnerSearchNetwork: Whether ads will be served on the partner
+	// network. This is available only to some select partner accounts. Unless you
+	// have been instructed to use this field, it likely does not apply to your
+	// account. This does not control whether ads will be served on Google Search
+	// Partners Network; use `target_search_network` for that instead.
 	TargetPartnerSearchNetwork bool `json:"targetPartnerSearchNetwork,omitempty"`
-	// TargetSearchNetwork: Whether ads will be served on partner sites in the
-	// Google Search Network (requires `target_google_search` to also be `true`).
+	// TargetSearchNetwork: Whether ads will be served on sites in the Google
+	// Search Partners Network (requires `target_google_search` to also be `true`).
 	TargetSearchNetwork bool `json:"targetSearchNetwork,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "TargetContentNetwork") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4767,7 +4842,10 @@ type GoogleAdsSearchads360V0Resources__AdGroup struct {
 	//   "OPTIMIZE" - Optimize ad group ads based on clicks or conversions.
 	//   "ROTATE_FOREVER" - Rotate evenly forever.
 	AdRotationMode string `json:"adRotationMode,omitempty"`
-	// CpcBidMicros: The maximum CPC (cost-per-click) bid.
+	// CpcBidMicros: The maximum CPC (cost-per-click) bid. This field is used when
+	// the ad group's effective bidding strategy is Manual CPC. This field is not
+	// applicable and will be ignored if the ad group's campaign is using a
+	// portfolio bidding strategy.
 	CpcBidMicros int64 `json:"cpcBidMicros,omitempty,string"`
 	// CreationTime: Output only. The timestamp when this ad_group was created. The
 	// timestamp is in the customer's time zone and in "yyyy-MM-dd HH:mm:ss"
@@ -6819,9 +6897,13 @@ func (s GoogleAdsSearchads360V0Resources__CampaignAudienceView) MarshalJSON() ([
 
 // GoogleAdsSearchads360V0Resources__CampaignBudget: A campaign budget.
 type GoogleAdsSearchads360V0Resources__CampaignBudget struct {
-	// AmountMicros: The amount of the budget, in the local currency for the
-	// account. Amount is specified in micros, where one million is equivalent to
-	// one currency unit. Monthly spend is capped at 30.4 times this amount.
+	// AmountMicros: The average daily amount to be spent by the campaign. This
+	// field is used when the CampaignBudget `period` is set to `DAILY`, which is
+	// the default. Amount is specified in micros in the account's local currency.
+	// One million micros is equivalent to one currency unit. The effective monthly
+	// spend is capped at 30.4 times this daily amount. This field is mutually
+	// exclusive with 'total_amount_micros'. Only one of 'amount_micros' or
+	// 'total_amount_micros' should be set.
 	AmountMicros int64 `json:"amountMicros,omitempty,string"`
 	// DeliveryMethod: The delivery method that determines the rate at which the
 	// campaign budget is spent. Defaults to STANDARD if unspecified in a create
@@ -7066,6 +7148,13 @@ func (s GoogleAdsSearchads360V0Resources__CampaignLabel) MarshalJSON() ([]byte, 
 }
 
 // GoogleAdsSearchads360V0Resources__CartDataSalesView: Cart data sales view.
+// Provides information about the products which were purchased if conversions
+// with cart data is implemented. Performance metrics like revenue, gross
+// profit, lead/cross-sell metrics etc. and Merchant Center attributes such as
+// brand, category etc. are available for products defined in an inventory feed
+// and sold as a result of Google ads. For purchases attributed to clicks on
+// Shopping ads, dimensions of both clicked and sold products can be viewed
+// together.
 type GoogleAdsSearchads360V0Resources__CartDataSalesView struct {
 	// ResourceName: Output only. The resource name of the Cart data sales view.
 	// Cart data sales view resource names have the form:
@@ -7306,6 +7395,8 @@ type GoogleAdsSearchads360V0Resources__ConversionAction struct {
 	//   "CONVERTED_LEAD" - A lead conversion imported from an external source into
 	// Google Ads, that has further completed a chosen stage as defined by the lead
 	// gen advertiser.
+	//   "YOUTUBE_FOLLOW_ON_VIEWS" - User watches an ad from a channel and later
+	// watches either the same video or a video from the same channel as the ad.
 	Category string `json:"category,omitempty"`
 	// ClickThroughLookbackWindowDays: The maximum number of days that may elapse
 	// between an interaction (for example, a click) and a conversion event.
@@ -8590,12 +8681,16 @@ func (s GoogleAdsSearchads360V0Resources__ShoppingPerformanceView) MarshalJSON()
 }
 
 // GoogleAdsSearchads360V0Resources__UserList: A user list. This is a list of
-// users a customer may target.
+// users a customer may target. The unique key of a user list consists of the
+// following fields: `id`. Note that the `name` must also be unique for user
+// lists owned by a given customer, except in some cases where `access_reason`
+// is set to `SHARED`. Violating the unique name constraint produces error:
+// `UserListError.INVALID_NAME`.
 type GoogleAdsSearchads360V0Resources__UserList struct {
 	// Id: Output only. Id of the user list.
 	Id int64 `json:"id,omitempty,string"`
-	// Name: Name of this user list. Depending on its access_reason, the user list
-	// name may not be unique (for example, if access_reason=SHARED)
+	// Name: Name of this user list. Unique per user list, except in some cases
+	// where a user list of the same name has `access_reason` set to `SHARED`.
 	Name string `json:"name,omitempty"`
 	// ResourceName: Immutable. The resource name of the user list. User list
 	// resource names have the form:

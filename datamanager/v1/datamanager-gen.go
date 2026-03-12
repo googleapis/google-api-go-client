@@ -3596,13 +3596,16 @@ func (r *AccountTypesAccountsPartnerLinksService) Search(parent string) *Account
 }
 
 // Filter sets the optional parameter "filter": A filter string
-// (//google.aip.dev/160). All fields need to be on the left hand side of each
-// condition (for example: `partner_link_id = 123456789`). Supported
-// operations: - `AND` - `=` - `!=` Supported fields: - `partner_link_id` -
-// `owning_account.account_type` - `owning_account.account_id` -
-// `partner_account.account_type` - `partner_account.account_id` Example:
-// `owning_account.account_type = "GOOGLE_ADS" AND partner_account.account_id =
-// 987654321`
+// (https://google.aip.dev/160). All fields need to be on the left hand side of
+// each condition (for example: `partner_link_id = 123456789`). Fields must be
+// specified using either all camel case
+// (https://en.wikipedia.org/wiki/Camel_case) or all snake case
+// (https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel
+// case and snake case. Supported operations: - `AND` - `=` - `!=` Supported
+// fields: - `partner_link_id` - `owning_account.account_type` -
+// `owning_account.account_id` - `partner_account.account_type` -
+// `partner_account.account_id` Example: `owning_account.account_type =
+// "GOOGLE_ADS" AND partner_account.account_id = 987654321`
 func (c *AccountTypesAccountsPartnerLinksSearchCall) Filter(filter string) *AccountTypesAccountsPartnerLinksSearchCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3976,12 +3979,16 @@ func (r *AccountTypesAccountsUserListDirectLicensesService) List(parent string) 
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filters to apply to the list
-// request. All fields need to be on the left hand side of each condition (for
-// example: user_list_id = 123). **Supported Operations:** - `AND` - `=` - `!=`
-// - `>` - `>=` - `<` - `<=` **Unsupported Fields:** - `name` (use get method
-// instead) - `historical_pricings` and all its subfields -
-// `pricing.start_time` - `pricing.end_time`
+// Filter sets the optional parameter "filter": A filter string
+// (https://google.aip.dev/160) to apply to the list request. All fields need
+// to be on the left hand side of each condition (for example: `user_list_id =
+// 123`). Fields must be specified using either all camel case
+// (https://en.wikipedia.org/wiki/Camel_case) or all snake case
+// (https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel
+// case and snake case. **Supported Operations:** - `AND` - `=` - `!=` - `>` -
+// `>=` - `<` - `<=` **Unsupported Fields:** - `name` (use get method instead)
+// - `historical_pricings` and all its subfields - `pricing.start_time` -
+// `pricing.end_time`
 func (c *AccountTypesAccountsUserListDirectLicensesListCall) Filter(filter string) *AccountTypesAccountsUserListDirectLicensesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4469,12 +4476,16 @@ func (r *AccountTypesAccountsUserListGlobalLicensesService) List(parent string) 
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filters to apply to the list
-// request. All fields need to be on the left hand side of each condition (for
-// example: user_list_id = 123). **Supported Operations:** - `AND` - `=` - `!=`
-// - `>` - `>=` - `<` - `<=` **Unsupported Fields:** - `name` (use get method
-// instead) - `historical_pricings` and all its subfields -
-// `pricing.start_time` - `pricing.end_time`
+// Filter sets the optional parameter "filter": A filter string
+// (https://google.aip.dev/160) to apply to the list request. All fields need
+// to be on the left hand side of each condition (for example: `user_list_id =
+// 123`). Fields must be specified using either all camel case
+// (https://en.wikipedia.org/wiki/Camel_case) or all snake case
+// (https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel
+// case and snake case. **Supported Operations:** - `AND` - `=` - `!=` - `>` -
+// `>=` - `<` - `<=` **Unsupported Fields:** - `name` (use get method instead)
+// - `historical_pricings` and all its subfields - `pricing.start_time` -
+// `pricing.end_time`
 func (c *AccountTypesAccountsUserListGlobalLicensesListCall) Filter(filter string) *AccountTypesAccountsUserListGlobalLicensesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4750,12 +4761,16 @@ func (r *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomer
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filters to apply to the list
-// request. All fields need to be on the left hand side of each condition (for
-// example: user_list_id = 123). **Supported Operations:** - `AND` - `=` - `!=`
-// - `>` - `>=` - `<` - `<=` **Unsupported Fields:** - `name` (use get method
-// instead) - `historical_pricings` and all its subfields -
-// `pricing.start_time` - `pricing.end_time`
+// Filter sets the optional parameter "filter": A filter string
+// (https://google.aip.dev/160) to apply to the list request. All fields need
+// to be on the left hand side of each condition (for example: `user_list_id =
+// 123`). Fields must be specified using either all camel case
+// (https://en.wikipedia.org/wiki/Camel_case) or all snake case
+// (https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel
+// case and snake case. **Supported Operations:** - `AND` - `=` - `!=` - `>` -
+// `>=` - `<` - `<=` **Unsupported Fields:** - `name` (use get method instead)
+// - `historical_pricings` and all its subfields - `pricing.start_time` -
+// `pricing.end_time`
 func (c *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall) Filter(filter string) *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5271,11 +5286,14 @@ func (r *AccountTypesAccountsUserListsService) List(parent string) *AccountTypes
 }
 
 // Filter sets the optional parameter "filter": A filter string
-// (//google.aip.dev/160). All fields need to be on the left hand side of each
-// condition (for example: `display_name = "list 1"). Supported operations: -
-// `AND` - `=` - `!=` - `>` - `>=` - `<` - `<=` - `:` (has) Supported fields: -
-// `id` - `display_name` - `description` - `membership_status` -
-// `integration_code` - `access_reason` -
+// (https://google.aip.dev/160). All fields need to be on the left hand side of
+// each condition (for example: `display_name = "list 1"). Fields must be
+// specified using either all camel case
+// (https://en.wikipedia.org/wiki/Camel_case) or all snake case
+// (https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel
+// case and snake case. Supported operations: - `AND` - `=` - `!=` - `>` - `>=`
+// - `<` - `<=` - `:` (has) Supported fields: - `id` - `display_name` -
+// `description` - `membership_status` - `integration_code` - `access_reason` -
 // `ingested_user_list_info.upload_key_types`
 func (c *AccountTypesAccountsUserListsListCall) Filter(filter string) *AccountTypesAccountsUserListsListCall {
 	c.urlParams_.Set("filter", filter)

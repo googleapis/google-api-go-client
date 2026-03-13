@@ -1828,9 +1828,9 @@ func (s *NativeContent) UnmarshalJSON(data []byte) error {
 // that contain a list of included and excluded numeric IDs used in app, user
 // list, geo, and vertical id targeting.
 type NumericTargetingDimension struct {
-	// ExcludedIds: The IDs excluded in a configuration.
+	// ExcludedIds: The IDs excluded in a config.
 	ExcludedIds googleapi.Int64s `json:"excludedIds,omitempty"`
-	// IncludedIds: The IDs included in a configuration.
+	// IncludedIds: The IDs included in a config.
 	IncludedIds googleapi.Int64s `json:"includedIds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExcludedIds") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1967,14 +1967,13 @@ func (s PolicyTopicEvidence) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PretargetingConfig: Pretargeting configuration: a set of targeting
-// dimensions applied at the pretargeting stage of the RTB funnel. These
-// control which inventory a bidder will receive bid requests for.
+// PretargetingConfig: Pretargeting config: a set of targeting dimensions
+// applied at the pretargeting stage of the RTB funnel. These control which
+// inventory a bidder will receive bid requests for.
 type PretargetingConfig struct {
-	// AllowedUserTargetingModes: Targeting modes included by this configuration. A
-	// bid request must allow all the specified targeting modes. An unset value
-	// allows all bid requests to be sent, regardless of which targeting modes they
-	// allow.
+	// AllowedUserTargetingModes: Targeting modes included by this config. A bid
+	// request must allow all the specified targeting modes. An unset value allows
+	// all bid requests to be sent, regardless of which targeting modes they allow.
 	//
 	// Possible values:
 	//   "USER_TARGETING_MODE_UNSPECIFIED" - Placeholder for undefined user
@@ -1992,27 +1991,26 @@ type PretargetingConfig struct {
 	// destination app is not listed in the targeting dimension).
 	AppTargeting *AppTargeting `json:"appTargeting,omitempty"`
 	// BillingId: Output only. The identifier that corresponds to this pretargeting
-	// configuration that helps buyers track and attribute their spend across their
-	// own arbitrary divisions. If a bid request matches more than one
-	// configuration, the buyer chooses which billing_id to attribute each of their
-	// bids.
+	// config that helps buyers track and attribute their spend across their own
+	// arbitrary divisions. If a bid request matches more than one config, the
+	// buyer chooses which billing_id to attribute each of their bids.
 	BillingId int64 `json:"billingId,omitempty,string"`
-	// DisplayName: The diplay name associated with this configuration. This name
-	// must be unique among all the pretargeting configurations a bidder has.
+	// DisplayName: The diplay name associated with this config. This name must be
+	// unique among all the pretargeting configs a bidder has.
 	DisplayName string `json:"displayName,omitempty"`
 	// ExcludedContentLabelIds: The sensitive content category label IDs excluded
-	// in this configuration. Bid requests for inventory with any of the specified
-	// content label IDs will not be sent. Refer to this file
+	// in this config. Bid requests for inventory with any of the specified content
+	// label IDs will not be sent. Refer to this file
 	// https://storage.googleapis.com/adx-rtb-dictionaries/content-labels.txt for
 	// category IDs.
 	ExcludedContentLabelIds googleapi.Int64s `json:"excludedContentLabelIds,omitempty"`
-	// GeoTargeting: The geos included or excluded in this configuration defined in
+	// GeoTargeting: The geos included or excluded in this config defined in
 	// https://storage.googleapis.com/adx-rtb-dictionaries/geo-table.csv
 	GeoTargeting *NumericTargetingDimension `json:"geoTargeting,omitempty"`
-	// IncludedCreativeDimensions: Creative dimensions included by this
-	// configuration. Only bid requests eligible for at least one of the specified
-	// creative dimensions will be sent. An unset value allows all bid requests to
-	// be sent, regardless of creative dimension.
+	// IncludedCreativeDimensions: Creative dimensions included by this config.
+	// Only bid requests eligible for at least one of the specified creative
+	// dimensions will be sent. An unset value allows all bid requests to be sent,
+	// regardless of creative dimension.
 	IncludedCreativeDimensions []*CreativeDimensions `json:"includedCreativeDimensions,omitempty"`
 	// IncludedEnvironments: Environments that are being included. Bid requests
 	// will not be sent for a given environment if it is not included. Further
@@ -2025,10 +2023,9 @@ type PretargetingConfig struct {
 	//   "APP" - App environment.
 	//   "WEB" - Web environment.
 	IncludedEnvironments []string `json:"includedEnvironments,omitempty"`
-	// IncludedFormats: Creative formats included by this configuration. Only bid
-	// requests eligible for at least one of the specified creative formats will be
-	// sent. An unset value will allow all bid requests to be sent, regardless of
-	// format.
+	// IncludedFormats: Creative formats included by this config. Only bid requests
+	// eligible for at least one of the specified creative formats will be sent. An
+	// unset value will allow all bid requests to be sent, regardless of format.
 	//
 	// Possible values:
 	//   "CREATIVE_FORMAT_UNSPECIFIED" - Placeholder for undefined creative format.
@@ -2037,16 +2034,16 @@ type PretargetingConfig struct {
 	//   "VAST" - VAST video or audio creative.
 	//   "NATIVE" - Native creative, including standard and video native ads.
 	IncludedFormats []string `json:"includedFormats,omitempty"`
-	// IncludedLanguages: The languages included in this configuration, represented
-	// by their language code. See
+	// IncludedLanguages: The languages included in this config, represented by
+	// their language code. See
 	// https://developers.google.com/adwords/api/docs/appendix/languagecodes.
 	IncludedLanguages []string `json:"includedLanguages,omitempty"`
 	// IncludedMobileOperatingSystemIds: The mobile operating systems included in
-	// this configuration as defined in
+	// this config as defined in
 	// https://storage.googleapis.com/adx-rtb-dictionaries/mobile-os.csv
 	IncludedMobileOperatingSystemIds googleapi.Int64s `json:"includedMobileOperatingSystemIds,omitempty"`
-	// IncludedPlatforms: The platforms included by this configration. Bid requests
-	// for devices with the specified platform types will be sent. An unset value
+	// IncludedPlatforms: The platforms included by this config. Bid requests for
+	// devices with the specified platform types will be sent. An unset value
 	// allows all bid requests to be sent, regardless of platform.
 	//
 	// Possible values:
@@ -2057,9 +2054,9 @@ type PretargetingConfig struct {
 	//   "TABLET" - The tablet platform.
 	//   "CONNECTED_TV" - The connected TV platform.
 	IncludedPlatforms []string `json:"includedPlatforms,omitempty"`
-	// IncludedUserIdTypes: User identifier types included in this configuration.
-	// At least one of the user identifier types specified in this list must be
-	// available for the bid request to be sent.
+	// IncludedUserIdTypes: User identifier types included in this config. At least
+	// one of the user identifier types specified in this list must be available
+	// for the bid request to be sent.
 	//
 	// Possible values:
 	//   "USER_ID_TYPE_UNSPECIFIED" - Placeholder for unspecified user identifier.
@@ -2073,9 +2070,9 @@ type PretargetingConfig struct {
 	//   "PUBLISHER_FIRST_PARTY_ID" - Publisher first party ID, scoped to a single
 	// site, app or vendor needs to be present on the bid request.
 	IncludedUserIdTypes []string `json:"includedUserIdTypes,omitempty"`
-	// InterstitialTargeting: The interstitial targeting specified for this
-	// configuration. The unset value will allow bid requests to be sent regardless
-	// of whether they are for interstitials or not.
+	// InterstitialTargeting: The interstitial targeting specified for this config.
+	// The unset value will allow bid requests to be sent regardless of whether
+	// they are for interstitials or not.
 	//
 	// Possible values:
 	//   "INTERSTITIAL_TARGETING_UNSPECIFIED" - Unspecified interstitial targeting.
@@ -2089,20 +2086,20 @@ type PretargetingConfig struct {
 	// invalid. Previously targeted geos may become invalid due to privacy
 	// restrictions.
 	InvalidGeoIds googleapi.Int64s `json:"invalidGeoIds,omitempty"`
-	// MaximumQps: The maximum QPS threshold for this configuration. The bidder
-	// should receive no more than this number of bid requests matching this
-	// configuration per second across all their bidding endpoints among all
-	// trading locations. Further information available at
+	// MaximumQps: The maximum QPS threshold for this config. The bidder should
+	// receive no more than this number of bid requests matching this config per
+	// second across all their bidding endpoints among all trading locations.
+	// Further information available at
 	// https://developers.google.com/authorized-buyers/rtb/peer-guide
 	MaximumQps int64 `json:"maximumQps,omitempty,string"`
 	// MinimumViewabilityDecile: The targeted minimum viewability decile, ranging
-	// in values [0, 10]. A value of 5 means that the configuration will only match
+	// in values [0, 10]. A value of 5 means that the config will only match
 	// adslots for which we predict at least 50% viewability. Values > 10 will be
 	// rounded down to 10. An unset value or a value of 0 indicates that bid
 	// requests will be sent regardless of viewability.
 	MinimumViewabilityDecile int64 `json:"minimumViewabilityDecile,omitempty"`
-	// Name: Output only. Name of the pretargeting configuration that must follow
-	// the pattern `bidders/{bidder_account_id}/pretargetingConfigs/{config_id}`
+	// Name: Output only. Name of the pretargeting config that must follow the
+	// pattern `bidders/{bidder_account_id}/pretargetingConfigs/{config_id}`
 	Name string `json:"name,omitempty"`
 	// PublisherTargeting: Targeting on a subset of publisher inventory. Publishers
 	// can either be targeted positively (bid requests will be sent only if the
@@ -2118,20 +2115,20 @@ type PretargetingConfig struct {
 	// (https://developers.google.com/authorized-buyers/rtb/downloads/openrtb-adx-proto).
 	// Publisher IDs will be returned in the order that they were entered.
 	PublisherTargeting *StringTargetingDimension `json:"publisherTargeting,omitempty"`
-	// State: Output only. The state of this pretargeting configuration.
+	// State: Output only. The state of this pretargeting config.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Placeholder for undefined state.
-	//   "ACTIVE" - This pretargeting configuration is actively being used to
-	// filter bid requests.
-	//   "SUSPENDED" - This pretargeting configuration is suspended and not used in
+	//   "ACTIVE" - This pretargeting config is actively being used to filter bid
+	// requests.
+	//   "SUSPENDED" - This pretargeting config is suspended and not used in
 	// serving.
 	State string `json:"state,omitempty"`
-	// UserListTargeting: The remarketing lists included or excluded in this
-	// configuration as defined in UserList.
+	// UserListTargeting: The remarketing lists included or excluded in this config
+	// as defined in UserList.
 	UserListTargeting *NumericTargetingDimension `json:"userListTargeting,omitempty"`
-	// VerticalTargeting: The verticals included or excluded in this configuration
-	// as defined in
+	// VerticalTargeting: The verticals included or excluded in this config as
+	// defined in
 	// https://developers.google.com/authorized-buyers/rtb/downloads/publisher-verticals
 	VerticalTargeting *NumericTargetingDimension `json:"verticalTargeting,omitempty"`
 	// WebTargeting: Targeting on a subset of site inventory. If WEB is listed in
@@ -2140,7 +2137,7 @@ type PretargetingConfig struct {
 	// web-based bid requests to be sent. Sites can either be targeting positively
 	// (bid requests will be sent only if the destination site is listed in the
 	// targeting dimension) or negatively (bid requests will be sent only if the
-	// destination site is not listed in the pretargeting configuration).
+	// destination site is not listed in the pretargeting config).
 	WebTargeting *StringTargetingDimension `json:"webTargeting,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4415,8 +4412,8 @@ type BiddersPretargetingConfigsPatchCall struct {
 
 // Patch: Updates a pretargeting configuration.
 //
-//   - name: Output only. Name of the pretargeting configuration that must follow
-//     the pattern `bidders/{bidder_account_id}/pretargetingConfigs/{config_id}`.
+//   - name: Output only. Name of the pretargeting config that must follow the
+//     pattern `bidders/{bidder_account_id}/pretargetingConfigs/{config_id}`.
 func (r *BiddersPretargetingConfigsService) Patch(name string, pretargetingconfig *PretargetingConfig) *BiddersPretargetingConfigsPatchCall {
 	c := &BiddersPretargetingConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

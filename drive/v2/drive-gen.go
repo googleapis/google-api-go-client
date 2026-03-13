@@ -9818,7 +9818,7 @@ func (r *PermissionsService) Delete(fileId string, permissionId string) *Permiss
 }
 
 // EnforceExpansiveAccess sets the optional parameter "enforceExpansiveAccess":
-// Whether the request should enforce expansive access rules.
+// Deprecated: All requests use the expansive access rules.
 func (c *PermissionsDeleteCall) EnforceExpansiveAccess(enforceExpansiveAccess bool) *PermissionsDeleteCall {
 	c.urlParams_.Set("enforceExpansiveAccess", fmt.Sprint(enforceExpansiveAccess))
 	return c
@@ -10180,7 +10180,7 @@ func (c *PermissionsInsertCall) EmailMessage(emailMessage string) *PermissionsIn
 }
 
 // EnforceExpansiveAccess sets the optional parameter "enforceExpansiveAccess":
-// Whether the request should enforce expansive access rules.
+// Deprecated: All requests use the expansive access rules.
 func (c *PermissionsInsertCall) EnforceExpansiveAccess(enforceExpansiveAccess bool) *PermissionsInsertCall {
 	c.urlParams_.Set("enforceExpansiveAccess", fmt.Sprint(enforceExpansiveAccess))
 	return c
@@ -10523,7 +10523,7 @@ func (r *PermissionsService) Patch(fileId string, permissionId string, permissio
 }
 
 // EnforceExpansiveAccess sets the optional parameter "enforceExpansiveAccess":
-// Whether the request should enforce expansive access rules.
+// Deprecated: All requests use the expansive access rules.
 func (c *PermissionsPatchCall) EnforceExpansiveAccess(enforceExpansiveAccess bool) *PermissionsPatchCall {
 	c.urlParams_.Set("enforceExpansiveAccess", fmt.Sprint(enforceExpansiveAccess))
 	return c
@@ -10677,7 +10677,7 @@ func (r *PermissionsService) Update(fileId string, permissionId string, permissi
 }
 
 // EnforceExpansiveAccess sets the optional parameter "enforceExpansiveAccess":
-// Whether the request should enforce expansive access rules.
+// Deprecated: All requests use the expansive access rules.
 func (c *PermissionsUpdateCall) EnforceExpansiveAccess(enforceExpansiveAccess bool) *PermissionsUpdateCall {
 	c.urlParams_.Set("enforceExpansiveAccess", fmt.Sprint(enforceExpansiveAccess))
 	return c

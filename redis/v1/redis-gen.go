@@ -696,6 +696,8 @@ func (s CertificateAuthority) MarshalJSON() ([]byte, error) {
 
 // Cluster: A cluster instance.
 type Cluster struct {
+	// AclPolicy: Optional. The ACL policy to be applied to the cluster.
+	AclPolicy string `json:"aclPolicy,omitempty"`
 	// AllowFewerZonesDeployment: Optional. Immutable. Deprecated, do not use.
 	AllowFewerZonesDeployment bool `json:"allowFewerZonesDeployment,omitempty"`
 	// AsyncClusterEndpointsDeletionEnabled: Optional. If true, cluster endpoints
@@ -862,15 +864,15 @@ type Cluster struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AllowFewerZonesDeployment")
-	// to unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AclPolicy") to
+	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AllowFewerZonesDeployment") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AclPolicy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1100,6 +1102,12 @@ type ConfigBasedSignalData struct {
 	// extended support.
 	//   "SIGNAL_TYPE_NO_AUTOMATED_BACKUP_POLICY" - Represents if a resource has no
 	// automated backup policy.
+	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Represents if a resource
+	// version is nearing end of life.
+	//   "SIGNAL_TYPE_LAST_BACKUP_OLD" - Represents if the last backup of a
+	// resource is older than 24 hours.
+	//   "SIGNAL_TYPE_NOT_PROTECTED_BY_AUTOMATIC_FAILOVER" - Represents if a
+	// resource is not protected by automatic failover.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1602,6 +1610,8 @@ type DatabaseResourceHealthSignalData struct {
 	// policy.
 	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Resource version is in extended support.
 	//   "SIGNAL_TYPE_PERFORMANCE_KPI_CHANGE" - Change in performance KPIs.
+	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Database version nearing end
+	// of life.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -1759,6 +1769,9 @@ type DatabaseResourceMetadata struct {
 	//   "SUB_RESOURCE_TYPE_READ_REPLICA" - An instance acting as a read-replica.
 	//   "SUB_RESOURCE_TYPE_EXTERNAL_PRIMARY" - An instance acting as an external
 	// primary.
+	//   "SUB_RESOURCE_TYPE_READ_POOL" - An instance acting as Read Pool.
+	//   "SUB_RESOURCE_TYPE_RESERVATION" - Represents a reservation resource.
+	//   "SUB_RESOURCE_TYPE_DATASET" - Represents a dataset resource.
 	//   "SUB_RESOURCE_TYPE_OTHER" - For rest of the other categories.
 	InstanceType string `json:"instanceType,omitempty"`
 	// IsDeletionProtectionEnabled: Optional. Whether deletion protection is
@@ -2112,6 +2125,8 @@ type DatabaseResourceRecommendationSignalData struct {
 	// policy.
 	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Resource version is in extended support.
 	//   "SIGNAL_TYPE_PERFORMANCE_KPI_CHANGE" - Change in performance KPIs.
+	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Database version nearing end
+	// of life.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2134,16 +2149,23 @@ func (s DatabaseResourceRecommendationSignalData) MarshalJSON() ([]byte, error) 
 // DatabaseResourceSignalData: Database resource signal data. This is used to
 // send signals to Condor which are based on the DB/Instance/Fleet level
 // configurations. These will be used to send signals for all inventory types.
-// Next ID: 7
+// Next ID: 10
 type DatabaseResourceSignalData struct {
+	// BackupRun: Deprecated: Use signal_metadata_list instead.
+	BackupRun *BackupRun `json:"backupRun,omitempty"`
 	// FullResourceName: Required. Full Resource name of the source resource.
 	FullResourceName string `json:"fullResourceName,omitempty"`
 	// LastRefreshTime: Required. Last time signal was refreshed
 	LastRefreshTime string `json:"lastRefreshTime,omitempty"`
+	// Location: Resource location.
+	Location string `json:"location,omitempty"`
 	// ResourceId: Database resource id.
 	ResourceId *DatabaseResourceId `json:"resourceId,omitempty"`
-	// SignalBoolValue: Signal data for boolean signals.
+	// SignalBoolValue: Deprecated: Use signal_metadata_list instead.
 	SignalBoolValue bool `json:"signalBoolValue,omitempty"`
+	// SignalMetadataList: This will support array of OneOf signal metadata
+	// information for a given signal type.
+	SignalMetadataList []*SignalMetadata `json:"signalMetadataList,omitempty"`
 	// SignalState: Required. Output only. Signal state of the signal
 	//
 	// Possible values:
@@ -2170,16 +2192,22 @@ type DatabaseResourceSignalData struct {
 	// extended support.
 	//   "SIGNAL_TYPE_NO_AUTOMATED_BACKUP_POLICY" - Represents if a resource has no
 	// automated backup policy.
+	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Represents if a resource
+	// version is nearing end of life.
+	//   "SIGNAL_TYPE_LAST_BACKUP_OLD" - Represents if the last backup of a
+	// resource is older than 24 hours.
+	//   "SIGNAL_TYPE_NOT_PROTECTED_BY_AUTOMATIC_FAILOVER" - Represents if a
+	// resource is not protected by automatic failover.
 	SignalType string `json:"signalType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
+	// ForceSendFields is a list of field names (e.g. "BackupRun") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FullResourceName") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BackupRun") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2768,12 +2796,13 @@ type Instance struct {
 	// the instance can scale up and down the number of replicas. Not valid for
 	// basic tier.
 	ReadReplicasMode string `json:"readReplicasMode,omitempty"`
-	// RedisConfigs: Optional. Redis configuration parameters, according to
-	// http://redis.io/topics/config. Currently, the only supported parameters are:
-	// Redis version 3.2 and newer: * maxmemory-policy * notify-keyspace-events
-	// Redis version 4.0 and newer: * activedefrag * lfu-decay-time *
-	// lfu-log-factor * maxmemory-gb Redis version 5.0 and newer: *
-	// stream-node-max-bytes * stream-node-max-entries
+	// RedisConfigs: Optional. Redis configuration parameters, according to Redis
+	// configuration
+	// (https://redis.io/docs/latest/operate/oss_and_stack/management/config/).
+	// Currently, the only supported parameters are: Redis version 3.2 and newer: *
+	// maxmemory-policy * notify-keyspace-events Redis version 4.0 and newer: *
+	// activedefrag * lfu-decay-time * lfu-log-factor * maxmemory-gb Redis version
+	// 5.0 and newer: * stream-node-max-bytes * stream-node-max-entries
 	RedisConfigs map[string]string `json:"redisConfigs,omitempty"`
 	// RedisVersion: Optional. The version of Redis software. If not provided, the
 	// default version will be used. Currently, the supported values are: *
@@ -4356,6 +4385,32 @@ type SharedRegionalCertificateAuthority struct {
 
 func (s SharedRegionalCertificateAuthority) MarshalJSON() ([]byte, error) {
 	type NoMethod SharedRegionalCertificateAuthority
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SignalMetadata: SignalMetadata contains one of the signal metadata proto
+// messages associated with a SignalType. This proto will be mapped to
+// SignalMetadata message in storage.proto. Next ID: 3
+type SignalMetadata struct {
+	// BackupRun: Signal data for backup runs.
+	BackupRun *BackupRun `json:"backupRun,omitempty"`
+	// SignalBoolValue: Signal data for boolean signals.
+	SignalBoolValue bool `json:"signalBoolValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupRun") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupRun") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SignalMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod SignalMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

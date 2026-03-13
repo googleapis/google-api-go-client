@@ -405,6 +405,12 @@ type Attributes struct {
 	LowPrice *Price `json:"lowPrice,omitempty"`
 	// Material: The material of which the item is made.
 	Material string `json:"material,omitempty"`
+	// MaxRating: Maximum rating score of the product. Required if `rating` is
+	// provided. This field is for an upcoming feature and is not yet used.
+	MaxRating int64 `json:"maxRating,omitempty,string"`
+	// MinRating: Minimum rating score of the product. Required if `rating` is
+	// provided. This field is for an upcoming feature and is not yet used.
+	MinRating int64 `json:"minRating,omitempty,string"`
 	// Mpn: Manufacturer Part Number (MPN
 	// (https://support.google.com/merchants/answer/188494#mpn)) of the item.
 	Mpn string `json:"mpn,omitempty"`
@@ -436,6 +442,16 @@ type Attributes struct {
 	// ProductWidth: The width of the product in the units provided. The value must
 	// be between 0 (exclusive) and 3000 (inclusive).
 	ProductWidth *ProductDimension `json:"productWidth,omitempty"`
+	// Rating: Average rating score of the product. The value must be within the
+	// range of [`min_rating`, `max_rating`], inclusive. When displayed on the
+	// product page, this rating is normalized to a scale of [1, 5] with one
+	// decimal place. If provided, `review_count`, `min_rating`, and `max_rating`
+	// are also required. This field is for an upcoming feature and is not yet
+	// used.
+	Rating float64 `json:"rating,omitempty"`
+	// ReviewCount: Number of reviews of the product. Required if `rating` is
+	// provided. This field is for an upcoming feature and is not yet used.
+	ReviewCount int64 `json:"reviewCount,omitempty,string"`
 	// Size: Size of the item. Only one value is allowed. For variants with
 	// different sizes, insert a separate product for each size with the same
 	// `itemGroupId` value (see https://support.google.com/merchants/answer/6324492
@@ -466,6 +482,20 @@ type Attributes struct {
 func (s Attributes) MarshalJSON() ([]byte, error) {
 	type NoMethod Attributes
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *Attributes) UnmarshalJSON(data []byte) error {
+	type NoMethod Attributes
+	var s1 struct {
+		Rating gensupport.JSONFloat64 `json:"rating"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Rating = float64(s1.Rating)
+	return nil
 }
 
 // Certification: The certification for the product. Use the this attribute to

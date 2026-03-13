@@ -3563,6 +3563,59 @@ func (s GoogleCloudDiscoveryengineV1AdvancedSiteSearchConfig) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1AgentGatewaySetting: Agent Gateway setting,
+// which may be attached to Gemini Enterprise resources for egress control of
+// Gemini Enterprise agents to agents and tools outside of Gemini Enterprise.
+type GoogleCloudDiscoveryengineV1AgentGatewaySetting struct {
+	// DefaultEgressAgentGateway: Optional. The default egress agent gateway to
+	// use, when this setting is applied to a Gemini Enterprise resource. The
+	// deployment mode must be GOOGLE_MANAGED, and the governed access path must be
+	// AGENT_TO_ANYWHERE.
+	DefaultEgressAgentGateway *GoogleCloudDiscoveryengineV1AgentGatewaySettingAgentGatewayReference `json:"defaultEgressAgentGateway,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DefaultEgressAgentGateway")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefaultEgressAgentGateway") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1AgentGatewaySetting) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1AgentGatewaySetting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1AgentGatewaySettingAgentGatewayReference:
+// Reference to an Agent Gateway resource.
+type GoogleCloudDiscoveryengineV1AgentGatewaySettingAgentGatewayReference struct {
+	// Name: Required. Immutable. The resource name of the agent gateway. Expected
+	// format:
+	// `projects/{project_number}/locations/{location}/agentGateways/{agent_gateway}
+	// `.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1AgentGatewaySettingAgentGatewayReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1AgentGatewaySettingAgentGatewayReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1AlertPolicyConfig: The connector level alert
 // config.
 type GoogleCloudDiscoveryengineV1AlertPolicyConfig struct {
@@ -10006,6 +10059,8 @@ type GoogleCloudDiscoveryengineV1EnableAdvancedSiteSearchResponse struct {
 // GoogleCloudDiscoveryengineV1Engine: Metadata that describes the training and
 // serving parameters of an Engine.
 type GoogleCloudDiscoveryengineV1Engine struct {
+	// AgentGatewaySetting: Optional. The agent gateway setting for the engine.
+	AgentGatewaySetting *GoogleCloudDiscoveryengineV1AgentGatewaySetting `json:"agentGatewaySetting,omitempty"`
 	// AppType: Optional. Immutable. This the application type which this engine
 	// resource represents. NOTE: this is a new concept independ of existing
 	// industry vertical or solution type.
@@ -10119,8 +10174,8 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	Name string `json:"name,omitempty"`
 	// ObservabilityConfig: Optional. Observability config for the engine.
 	ObservabilityConfig *GoogleCloudDiscoveryengineV1ObservabilityConfig `json:"observabilityConfig,omitempty"`
-	// ProcurementContactEmail: Optional. The email of the procurement contact.
-	ProcurementContactEmail string `json:"procurementContactEmail,omitempty"`
+	// ProcurementContactEmails: Optional. The emails of the procurement contacts.
+	ProcurementContactEmails []string `json:"procurementContactEmails,omitempty"`
 	// SearchEngineConfig: Configurations for the Search Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_SEARCH.
 	SearchEngineConfig *GoogleCloudDiscoveryengineV1EngineSearchEngineConfig `json:"searchEngineConfig,omitempty"`
@@ -10143,15 +10198,15 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AppType") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AgentGatewaySetting") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AppType") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgentGatewaySetting") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -12409,12 +12464,12 @@ func (s GoogleCloudDiscoveryengineV1NaturalLanguageQueryUnderstandingConfig) Mar
 // GoogleCloudDiscoveryengineV1ObservabilityConfig: Observability config for a
 // resource.
 type GoogleCloudDiscoveryengineV1ObservabilityConfig struct {
-	// ObservabilityEnabled: Optional. Enables observability. If false, all other
+	// ObservabilityEnabled: Optional. Enables observability. If `false`, all other
 	// flags are ignored.
 	ObservabilityEnabled bool `json:"observabilityEnabled,omitempty"`
 	// SensitiveLoggingEnabled: Optional. Enables sensitive logging. Sensitive
-	// logging includes customer core content (e.g. prompts, responses). If false,
-	// will sanitize all sensitive fields.
+	// logging includes customer core content (e.g. prompts, responses). If
+	// `false`, will sanitize all sensitive fields.
 	SensitiveLoggingEnabled bool `json:"sensitiveLoggingEnabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ObservabilityEnabled") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -18419,6 +18474,59 @@ func (s GoogleCloudDiscoveryengineV1alphaAdvancedSiteSearchConfig) MarshalJSON()
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaAgentGatewaySetting: Agent Gateway setting,
+// which may be attached to Gemini Enterprise resources for egress control of
+// Gemini Enterprise agents to agents and tools outside of Gemini Enterprise.
+type GoogleCloudDiscoveryengineV1alphaAgentGatewaySetting struct {
+	// DefaultEgressAgentGateway: Optional. The default egress agent gateway to
+	// use, when this setting is applied to a Gemini Enterprise resource. The
+	// deployment mode must be GOOGLE_MANAGED, and the governed access path must be
+	// AGENT_TO_ANYWHERE.
+	DefaultEgressAgentGateway *GoogleCloudDiscoveryengineV1alphaAgentGatewaySettingAgentGatewayReference `json:"defaultEgressAgentGateway,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DefaultEgressAgentGateway")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefaultEgressAgentGateway") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAgentGatewaySetting) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAgentGatewaySetting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAgentGatewaySettingAgentGatewayReference:
+// Reference to an Agent Gateway resource.
+type GoogleCloudDiscoveryengineV1alphaAgentGatewaySettingAgentGatewayReference struct {
+	// Name: Required. Immutable. The resource name of the agent gateway. Expected
+	// format:
+	// `projects/{project_number}/locations/{location}/agentGateways/{agent_gateway}
+	// `.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAgentGatewaySettingAgentGatewayReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAgentGatewaySettingAgentGatewayReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaAlertPolicyConfig: The connector level
 // alert config.
 type GoogleCloudDiscoveryengineV1alphaAlertPolicyConfig struct {
@@ -21397,11 +21505,11 @@ func (s GoogleCloudDiscoveryengineV1alphaDataConnectorSourceEntity) MarshalJSON(
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDiscoveryengineV1alphaDataProtectionPolicy: Data protection
-// policy config for a connector.
+// GoogleCloudDiscoveryengineV1alphaDataProtectionPolicy: Contains the data
+// protection policy config for a DataStore or a connector.
 type GoogleCloudDiscoveryengineV1alphaDataProtectionPolicy struct {
-	// SensitiveDataProtectionPolicy: Optional. The sensitive data protection
-	// policy for the connector source.
+	// SensitiveDataProtectionPolicy: Optional. Specifies the sensitive data
+	// protection policy for the connector source.
 	SensitiveDataProtectionPolicy *GoogleCloudDiscoveryengineV1alphaDataProtectionPolicySensitiveDataProtectionPolicy `json:"sensitiveDataProtectionPolicy,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "SensitiveDataProtectionPolicy") to unconditionally include in API requests.
@@ -21426,8 +21534,8 @@ func (s GoogleCloudDiscoveryengineV1alphaDataProtectionPolicy) MarshalJSON() ([]
 // (https://cloud.google.com/sensitive-data-protection/docs/sensitive-data-protection-overview)
 // policy.
 type GoogleCloudDiscoveryengineV1alphaDataProtectionPolicySensitiveDataProtectionPolicy struct {
-	// Policy: Optional. The Sensitive Data Protection content policy resource
-	// name.
+	// Policy: Optional. Specifies the resource name of the Sensitive Data
+	// Protection content policy.
 	Policy string `json:"policy,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -22525,6 +22633,8 @@ type GoogleCloudDiscoveryengineV1alphaEnableAdvancedSiteSearchResponse struct {
 // GoogleCloudDiscoveryengineV1alphaEngine: Metadata that describes the
 // training and serving parameters of an Engine.
 type GoogleCloudDiscoveryengineV1alphaEngine struct {
+	// AgentGatewaySetting: Optional. The agent gateway setting for the engine.
+	AgentGatewaySetting *GoogleCloudDiscoveryengineV1alphaAgentGatewaySetting `json:"agentGatewaySetting,omitempty"`
 	// AppType: Optional. Immutable. This the application type which this engine
 	// resource represents. NOTE: this is a new concept independ of existing
 	// industry vertical or solution type.
@@ -22638,8 +22748,8 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	Name string `json:"name,omitempty"`
 	// ObservabilityConfig: Optional. Observability config for the engine.
 	ObservabilityConfig *GoogleCloudDiscoveryengineV1alphaObservabilityConfig `json:"observabilityConfig,omitempty"`
-	// ProcurementContactEmail: Optional. The email of the procurement contact.
-	ProcurementContactEmail string `json:"procurementContactEmail,omitempty"`
+	// ProcurementContactEmails: Optional. The emails of the procurement contacts.
+	ProcurementContactEmails []string `json:"procurementContactEmails,omitempty"`
 	// RecommendationMetadata: Output only. Additional information of a
 	// recommendation engine. Only applicable if solution_type is
 	// SOLUTION_TYPE_RECOMMENDATION.
@@ -22666,15 +22776,15 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// UpdateTime: Output only. Timestamp the Recommendation Engine was last
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AppType") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AgentGatewaySetting") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AppType") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgentGatewaySetting") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -23518,6 +23628,23 @@ type GoogleCloudDiscoveryengineV1alphaFieldConfig struct {
 	// _root.datePublished * Publish date of the reviews:
 	// _root.review.datePublished
 	SchemaOrgPaths []string `json:"schemaOrgPaths,omitempty"`
+	// SearchableFieldImportance: Optional. Specifies the importance of the field
+	// when `searchable_option` is `SEARCHABLE_ENABLED`. If `searchable_option` is
+	// `SEARCHABLE_DISABLED`, this field is ignored. If `searchable_option` is
+	// `SEARCHABLE_ENABLED` and this is `SEARCHABLE_FIELD_IMPORTANCE_UNSPECIFIED`,
+	// it behaves as `DEFAULT_IMPORTANCE`.
+	//
+	// Possible values:
+	//   "SEARCHABLE_FIELD_IMPORTANCE_UNSPECIFIED" - Value used when unset. Behaves
+	// as `DEFAULT_IMPORTANCE` if the field is searchable.
+	//   "VERY_LOW_IMPORTANCE" - Provides a tiny signal for search.
+	//   "LOW_IMPORTANCE" - Indicates the field is used for search, but is less
+	// important than the default.
+	//   "DEFAULT_IMPORTANCE" - Default importance. Equivalent to previous
+	// behavior.
+	//   "HIGH_IMPORTANCE" - More important than default fields.
+	//   "VERY_HIGH_IMPORTANCE" - Most important field for search.
+	SearchableFieldImportance string `json:"searchableFieldImportance,omitempty"`
 	// SearchableOption: If searchable_option is SEARCHABLE_ENABLED, field values
 	// are searchable by text queries in SearchService.Search. If
 	// SEARCHABLE_ENABLED but field type is numerical, field values will not be
@@ -24390,12 +24517,12 @@ func (s GoogleCloudDiscoveryengineV1alphaNaturalLanguageQueryUnderstandingConfig
 // GoogleCloudDiscoveryengineV1alphaObservabilityConfig: Observability config
 // for a resource.
 type GoogleCloudDiscoveryengineV1alphaObservabilityConfig struct {
-	// ObservabilityEnabled: Optional. Enables observability. If false, all other
+	// ObservabilityEnabled: Optional. Enables observability. If `false`, all other
 	// flags are ignored.
 	ObservabilityEnabled bool `json:"observabilityEnabled,omitempty"`
 	// SensitiveLoggingEnabled: Optional. Enables sensitive logging. Sensitive
-	// logging includes customer core content (e.g. prompts, responses). If false,
-	// will sanitize all sensitive fields.
+	// logging includes customer core content (e.g. prompts, responses). If
+	// `false`, will sanitize all sensitive fields.
 	SensitiveLoggingEnabled bool `json:"sensitiveLoggingEnabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ObservabilityEnabled") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -28143,6 +28270,59 @@ func (s GoogleCloudDiscoveryengineV1betaAdvancedSiteSearchConfig) MarshalJSON() 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaAgentGatewaySetting: Agent Gateway setting,
+// which may be attached to Gemini Enterprise resources for egress control of
+// Gemini Enterprise agents to agents and tools outside of Gemini Enterprise.
+type GoogleCloudDiscoveryengineV1betaAgentGatewaySetting struct {
+	// DefaultEgressAgentGateway: Optional. The default egress agent gateway to
+	// use, when this setting is applied to a Gemini Enterprise resource. The
+	// deployment mode must be GOOGLE_MANAGED, and the governed access path must be
+	// AGENT_TO_ANYWHERE.
+	DefaultEgressAgentGateway *GoogleCloudDiscoveryengineV1betaAgentGatewaySettingAgentGatewayReference `json:"defaultEgressAgentGateway,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DefaultEgressAgentGateway")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefaultEgressAgentGateway") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAgentGatewaySetting) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAgentGatewaySetting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAgentGatewaySettingAgentGatewayReference:
+// Reference to an Agent Gateway resource.
+type GoogleCloudDiscoveryengineV1betaAgentGatewaySettingAgentGatewayReference struct {
+	// Name: Required. Immutable. The resource name of the agent gateway. Expected
+	// format:
+	// `projects/{project_number}/locations/{location}/agentGateways/{agent_gateway}
+	// `.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAgentGatewaySettingAgentGatewayReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAgentGatewaySettingAgentGatewayReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaBatchCreateTargetSiteMetadata: Metadata
 // related to the progress of the
 // SiteSearchEngineService.BatchCreateTargetSites operation. This will be
@@ -29755,6 +29935,8 @@ type GoogleCloudDiscoveryengineV1betaEnableAdvancedSiteSearchResponse struct {
 // GoogleCloudDiscoveryengineV1betaEngine: Metadata that describes the training
 // and serving parameters of an Engine.
 type GoogleCloudDiscoveryengineV1betaEngine struct {
+	// AgentGatewaySetting: Optional. The agent gateway setting for the engine.
+	AgentGatewaySetting *GoogleCloudDiscoveryengineV1betaAgentGatewaySetting `json:"agentGatewaySetting,omitempty"`
 	// AppType: Optional. Immutable. This the application type which this engine
 	// resource represents. NOTE: this is a new concept independ of existing
 	// industry vertical or solution type.
@@ -29868,8 +30050,8 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	Name string `json:"name,omitempty"`
 	// ObservabilityConfig: Optional. Observability config for the engine.
 	ObservabilityConfig *GoogleCloudDiscoveryengineV1betaObservabilityConfig `json:"observabilityConfig,omitempty"`
-	// ProcurementContactEmail: Optional. The email of the procurement contact.
-	ProcurementContactEmail string `json:"procurementContactEmail,omitempty"`
+	// ProcurementContactEmails: Optional. The emails of the procurement contacts.
+	ProcurementContactEmails []string `json:"procurementContactEmails,omitempty"`
 	// SearchEngineConfig: Configurations for the Search Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_SEARCH.
 	SearchEngineConfig *GoogleCloudDiscoveryengineV1betaEngineSearchEngineConfig `json:"searchEngineConfig,omitempty"`
@@ -29889,15 +30071,15 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// UpdateTime: Output only. Timestamp the Recommendation Engine was last
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AppType") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AgentGatewaySetting") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AppType") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgentGatewaySetting") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -31132,12 +31314,12 @@ func (s GoogleCloudDiscoveryengineV1betaNaturalLanguageQueryUnderstandingConfig)
 // GoogleCloudDiscoveryengineV1betaObservabilityConfig: Observability config
 // for a resource.
 type GoogleCloudDiscoveryengineV1betaObservabilityConfig struct {
-	// ObservabilityEnabled: Optional. Enables observability. If false, all other
+	// ObservabilityEnabled: Optional. Enables observability. If `false`, all other
 	// flags are ignored.
 	ObservabilityEnabled bool `json:"observabilityEnabled,omitempty"`
 	// SensitiveLoggingEnabled: Optional. Enables sensitive logging. Sensitive
-	// logging includes customer core content (e.g. prompts, responses). If false,
-	// will sanitize all sensitive fields.
+	// logging includes customer core content (e.g. prompts, responses). If
+	// `false`, will sanitize all sensitive fields.
 	SensitiveLoggingEnabled bool `json:"sensitiveLoggingEnabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ObservabilityEnabled") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -66640,9 +66822,9 @@ func (c *ProjectsLocationsUserStoresUserLicensesListCall) OrderBy(orderBy string
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Server
-// may return fewer items than requested. If unspecified, defaults to 10. The
-// maximum value is 50; values above 50 will be coerced to 50. If this field is
-// negative, an INVALID_ARGUMENT error is returned.
+// may return fewer items than requested. If unspecified, defaults to 1000. The
+// maximum value is 1000; values above 1000 will be coerced to 1000. If this
+// field is negative, an INVALID_ARGUMENT error is returned.
 func (c *ProjectsLocationsUserStoresUserLicensesListCall) PageSize(pageSize int64) *ProjectsLocationsUserStoresUserLicensesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

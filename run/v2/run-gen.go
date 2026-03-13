@@ -1416,6 +1416,28 @@ func (s GoogleCloudRunV2ImageExportStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRunV2InlinedSource: Inlined source.
+type GoogleCloudRunV2InlinedSource struct {
+	// Sources: Required. Input only. The source code.
+	Sources []*GoogleCloudRunV2SourceFile `json:"sources,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Sources") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Sources") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2InlinedSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2InlinedSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRunV2Instance: A Cloud Run Instance represents a single group of
 // containers running in a region.
 type GoogleCloudRunV2Instance struct {
@@ -3070,6 +3092,10 @@ func (s GoogleCloudRunV2ServiceScaling) MarshalJSON() ([]byte, error) {
 type GoogleCloudRunV2SourceCode struct {
 	// CloudStorageSource: The source is a Cloud Storage bucket.
 	CloudStorageSource *GoogleCloudRunV2CloudStorageSource `json:"cloudStorageSource,omitempty"`
+	// InlinedSource: Optional. Input only. Source code inlined in the request.
+	// Cloud Run will store the inlined_source to Cloud Storage and replace the
+	// field with cloud_storage_source.
+	InlinedSource *GoogleCloudRunV2InlinedSource `json:"inlinedSource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudStorageSource") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3085,6 +3111,34 @@ type GoogleCloudRunV2SourceCode struct {
 
 func (s GoogleCloudRunV2SourceCode) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2SourceCode
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2SourceFile: Source file.
+type GoogleCloudRunV2SourceFile struct {
+	// Content: Required. Input only. The source code as raw text.
+	Content string `json:"content,omitempty"`
+	// Filename: Required. Input only. The file name for the source code. e.g.,
+	// "index.js" or "node_modules/dependency.js". The filename must be less
+	// than 255 characters and cannot contain `..`, `./`, `//`, or end with a `/`.
+	// Cloud Run will place the files in the container subdirectories, please use
+	// relative path to access the file.
+	Filename string `json:"filename,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2SourceFile) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2SourceFile
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3709,7 +3763,8 @@ type GoogleCloudRunV2VolumeMount struct {
 	// Name: Required. This must match the Name of a Volume.
 	Name string `json:"name,omitempty"`
 	// SubPath: Optional. Path within the volume from which the container's volume
-	// should be mounted. Defaults to "" (volume's root).
+	// should be mounted. Defaults to "" (volume's root). This field is currently
+	// ignored for Secret volumes.
 	SubPath string `json:"subPath,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MountPath") to
 	// unconditionally include in API requests. By default, fields with empty or

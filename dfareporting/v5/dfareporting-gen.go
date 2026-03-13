@@ -3602,6 +3602,7 @@ type Country struct {
 	//
 	// Possible values:
 	//   "INVALID_TV_DATA_PROVIDER"
+	//   "INTAGE_JP"
 	//   "IBOPE_AR"
 	//   "IBOPE_BR"
 	//   "IBOPE_CL"
@@ -12495,6 +12496,7 @@ type TvCampaignTimepoint struct {
 	//
 	// Possible values:
 	//   "WEEKS_UNSPECIFIED" - Default value, should never be set.
+	//   "DAYS_ONE" - One Day.
 	//   "WEEKS_ONE" - One week.
 	//   "WEEKS_FOUR" - Four weeks.
 	//   "WEEKS_EIGHT" - Eight weeks.
@@ -32218,6 +32220,36 @@ func (c *PlacementsGeneratetagsCall) TagFormats(tagFormats ...string) *Placement
 	return c
 }
 
+// TagPropertiesDcDbmMacroIncluded sets the optional parameter
+// "tagProperties.dcDbmMacroIncluded": Indicates whether to include the dc_dbm
+// macro in the generated tags. Learn more
+// (https://support.google.com/campaignmanager/answer/9280273) about this
+// macro.
+func (c *PlacementsGeneratetagsCall) TagPropertiesDcDbmMacroIncluded(tagPropertiesDcDbmMacroIncluded bool) *PlacementsGeneratetagsCall {
+	c.urlParams_.Set("tagProperties.dcDbmMacroIncluded", fmt.Sprint(tagPropertiesDcDbmMacroIncluded))
+	return c
+}
+
+// TagPropertiesGppMacrosIncluded sets the optional parameter
+// "tagProperties.gppMacrosIncluded": Indicates whether to include the GPP
+// macro in the generated tags. Learn more
+// (https://support.google.com/campaignmanager/answer/10031693) about this
+// macro.
+func (c *PlacementsGeneratetagsCall) TagPropertiesGppMacrosIncluded(tagPropertiesGppMacrosIncluded bool) *PlacementsGeneratetagsCall {
+	c.urlParams_.Set("tagProperties.gppMacrosIncluded", fmt.Sprint(tagPropertiesGppMacrosIncluded))
+	return c
+}
+
+// TagPropertiesTcfGdprMacrosIncluded sets the optional parameter
+// "tagProperties.tcfGdprMacrosIncluded": Indicates whether to include the TCF
+// macro in the generated tags. Default true. Learn more
+// (https://support.google.com/campaignmanager/answer/10031693) about this
+// macro.
+func (c *PlacementsGeneratetagsCall) TagPropertiesTcfGdprMacrosIncluded(tagPropertiesTcfGdprMacrosIncluded bool) *PlacementsGeneratetagsCall {
+	c.urlParams_.Set("tagProperties.tcfGdprMacrosIncluded", fmt.Sprint(tagPropertiesTcfGdprMacrosIncluded))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -38784,6 +38816,7 @@ func (c *TvCampaignDetailsGetCall) CountryDartId(countryDartId int64) *TvCampaig
 // Possible values:
 //
 //	"INVALID_TV_DATA_PROVIDER"
+//	"INTAGE_JP"
 //	"IBOPE_AR"
 //	"IBOPE_BR"
 //	"IBOPE_CL"
@@ -38935,6 +38968,7 @@ func (c *TvCampaignSummariesListCall) Name(name string) *TvCampaignSummariesList
 // Possible values:
 //
 //	"INVALID_TV_DATA_PROVIDER"
+//	"INTAGE_JP"
 //	"IBOPE_AR"
 //	"IBOPE_BR"
 //	"IBOPE_CL"

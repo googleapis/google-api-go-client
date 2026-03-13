@@ -2969,16 +2969,14 @@ func (s GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig) MarshalJSON() ([]byte, erro
 // data in question.
 type GooglePrivacyDlpV2CustomInfoType struct {
 	// DetectionRules: Set of detection rules to apply to all findings of this
-	// CustomInfoType. Rules are applied in order that they are specified. Not
-	// supported for the `surrogate_type`, `metadata_key_value_expression`, and
-	// `prompt` CustomInfoType.
+	// CustomInfoType. Rules are applied in the order that they are specified. Only
+	// supported for the `dictionary`, `regex`, and `stored_type` CustomInfoTypes.
 	DetectionRules []*GooglePrivacyDlpV2DetectionRule `json:"detectionRules,omitempty"`
 	// Dictionary: A list of phrases to detect as a CustomInfoType.
 	Dictionary *GooglePrivacyDlpV2Dictionary `json:"dictionary,omitempty"`
 	// ExclusionType: If set to EXCLUSION_TYPE_EXCLUDE this infoType will not cause
-	// a finding to be returned. It still can be used for rules matching. Not
-	// supported for the `metadata_key_value_expression` and `prompt`
-	// CustomInfoType.
+	// a finding to be returned. It still can be used for rules matching. Only
+	// supported for the `dictionary`, `regex`, and `stored_type` CustomInfoTypes.
 	//
 	// Possible values:
 	//   "EXCLUSION_TYPE_UNSPECIFIED" - A finding of this custom info type will not
@@ -3006,7 +3004,7 @@ type GooglePrivacyDlpV2CustomInfoType struct {
 	//   "VERY_LIKELY" - Confidence level is high. Lowest chance of a false
 	// positive.
 	Likelihood string `json:"likelihood,omitempty"`
-	// MetadataKeyValueExpression: key-value pairs to detect in the metadata.
+	// MetadataKeyValueExpression: Key-value pair to detect in the metadata.
 	MetadataKeyValueExpression *GooglePrivacyDlpV2MetadataKeyValueExpression `json:"metadataKeyValueExpression,omitempty"`
 	// Regex: Regular expression based CustomInfoType.
 	Regex *GooglePrivacyDlpV2Regex `json:"regex,omitempty"`
@@ -7668,11 +7666,8 @@ func (s GooglePrivacyDlpV2Key) MarshalJSON() ([]byte, error) {
 // finding.
 type GooglePrivacyDlpV2KeyValueMetadataLabel struct {
 	// Key: The metadata key. The format depends on the source of the metadata.
-	// Examples: - Microsoft Purview Information Protection keys look like
-	// 'MSIP_Label_122709e3-8f6b-4860-985f-7f722a94f61e_Enabled',
-	// 'MSIP_Label_122709e3-8f6b-4860-985f-7f722a94f61e_Method',
-	// 'MSIP_Label_122709e3-8f6b-4860-985f-7f722a94f61e_Name'. - General metadata
-	// keys look like 'Author', 'Title', 'Description'.
+	// Example: - `MSIP_Label_122709e3-8f6b-4860-985f-7f722a94f61e_Enabled` (a
+	// Microsoft Purview Information Protection key example)
 	Key string `json:"key,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -8390,7 +8385,8 @@ type GooglePrivacyDlpV2Manual struct {
 }
 
 // GooglePrivacyDlpV2MetadataKeyValueExpression: Configuration for a custom
-// infoType that detects given expression of key-value pair in the metadata.
+// infoType that detects key-value pairs in the metadata matching the specified
+// regular expressions.
 type GooglePrivacyDlpV2MetadataKeyValueExpression struct {
 	// KeyRegex: The regular expression for the key. Key should be non-empty.
 	KeyRegex string `json:"keyRegex,omitempty"`

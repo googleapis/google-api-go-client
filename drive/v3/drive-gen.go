@@ -8560,7 +8560,7 @@ func (c *PermissionsCreateCall) EmailMessage(emailMessage string) *PermissionsCr
 }
 
 // EnforceExpansiveAccess sets the optional parameter "enforceExpansiveAccess":
-// Whether the request should enforce expansive access rules.
+// Deprecated: All requests use the expansive access rules.
 func (c *PermissionsCreateCall) EnforceExpansiveAccess(enforceExpansiveAccess bool) *PermissionsCreateCall {
 	c.urlParams_.Set("enforceExpansiveAccess", fmt.Sprint(enforceExpansiveAccess))
 	return c
@@ -8737,7 +8737,7 @@ func (r *PermissionsService) Delete(fileId string, permissionId string) *Permiss
 }
 
 // EnforceExpansiveAccess sets the optional parameter "enforceExpansiveAccess":
-// Whether the request should enforce expansive access rules.
+// Deprecated: All requests use the expansive access rules.
 func (c *PermissionsDeleteCall) EnforceExpansiveAccess(enforceExpansiveAccess bool) *PermissionsDeleteCall {
 	c.urlParams_.Set("enforceExpansiveAccess", fmt.Sprint(enforceExpansiveAccess))
 	return c
@@ -9177,7 +9177,7 @@ func (r *PermissionsService) Update(fileId string, permissionId string, permissi
 }
 
 // EnforceExpansiveAccess sets the optional parameter "enforceExpansiveAccess":
-// Whether the request should enforce expansive access rules.
+// Deprecated: All requests use the expansive access rules.
 func (c *PermissionsUpdateCall) EnforceExpansiveAccess(enforceExpansiveAccess bool) *PermissionsUpdateCall {
 	c.urlParams_.Set("enforceExpansiveAccess", fmt.Sprint(enforceExpansiveAccess))
 	return c

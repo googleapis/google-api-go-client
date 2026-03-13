@@ -237,6 +237,39 @@
               ]
             }
           }
+        },
+        "tracks": {
+          "resources": {
+            "releases": {
+              "methods": {
+                "list": {
+                  "description": "Returns the list of all releases for a given track. This excludes any releases that are obsolete.",
+                  "flatPath": "androidpublisher/v3/applications/{applicationsId}/tracks/{tracksId}/releases",
+                  "httpMethod": "GET",
+                  "id": "androidpublisher.applications.tracks.releases.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. The parent track, which owns this collection of releases. Format: applications/{package_name}/tracks/{track}",
+                      "location": "path",
+                      "pattern": "^applications/[^/]+/tracks/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "androidpublisher/v3/{+parent}/releases",
+                  "response": {
+                    "$ref": "ListReleaseSummariesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/androidpublisher"
+                  ]
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -418,6 +451,21 @@
             "editId"
           ],
           "parameters": {
+            "changesInReviewBehavior": {
+              "description": "Optional. The behavior of committing a new edit while changes are already in review.",
+              "enum": [
+                "CHANGES_IN_REVIEW_BEHAVIOR_TYPE_UNSPECIFIED",
+                "CANCEL_IN_REVIEW_AND_SUBMIT",
+                "ERROR_IF_IN_REVIEW"
+              ],
+              "enumDescriptions": [
+                "The behavior is not specified.",
+                "The changes in review will be canceled, and the new changes will be sent for review. Thus resetting the review process.",
+                "The commit will fail with an error if there are changes in review. If the edit doesn't result in a new submission being created then it won't throw an error even if there are changes in review."
+              ],
+              "location": "query",
+              "type": "string"
+            },
             "changesNotSentForReview": {
               "description": "When a rejection happens, the parameter will make sure that the changes in this edit won't be reviewed until they are explicitly sent for review from within the Google Play Console UI. These changes will be added to any other changes that are not yet sent for review.",
               "location": "query",
@@ -5589,7 +5637,7 @@
       }
     }
   },
-  "revision": "20260204",
+  "revision": "20260311",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Abi": {
@@ -6124,6 +6172,18 @@
       "description": "Deprecated: subscription archiving is not supported.",
       "id": "ArchiveSubscriptionRequest",
       "properties": {},
+      "type": "object"
+    },
+    "ArtifactSummary": {
+      "description": "Contains information about the artifact.",
+      "id": "ArtifactSummary",
+      "properties": {
+        "versionCode": {
+          "description": "The version code of the artifact.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
       "type": "object"
     },
     "AssetModuleMetadata": {
@@ -8967,6 +9027,20 @@
       },
       "type": "object"
     },
+    "ListReleaseSummariesResponse": {
+      "description": "Wraps response to list releases.",
+      "id": "ListReleaseSummariesResponse",
+      "properties": {
+        "releases": {
+          "description": "List of releases on this track. This excludes any releases that are obsolete.",
+          "items": {
+            "$ref": "ReleaseSummary"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "ListSubscriptionOffersResponse": {
       "description": "Response message for ListSubscriptionOffers.",
       "id": "ListSubscriptionOffersResponse",
@@ -10988,6 +11062,50 @@
       "properties": {
         "version": {
           "description": "Required. A string representing the version of available regions being used for the specified resource. Regional prices and latest supported version for the resource have to be specified according to the information published in [this article](https://support.google.com/googleplay/android-developer/answer/10532353). Each time the supported locations substantially change, the version will be incremented. Using this field will ensure that creating and updating the resource with an older region's version and set of regional prices and currencies will succeed even though a new version is available.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ReleaseSummary": {
+      "description": "Contains information about the release.",
+      "id": "ReleaseSummary",
+      "properties": {
+        "activeArtifacts": {
+          "description": "List of active artifacts on this release. This does not include controlled artifacts.",
+          "items": {
+            "$ref": "ArtifactSummary"
+          },
+          "type": "array"
+        },
+        "releaseLifecycleState": {
+          "description": "The lifecycle state of the release.",
+          "enum": [
+            "RELEASE_LIFECYCLE_STATE_UNSPECIFIED",
+            "RELEASE_LIFECYCLE_STATE_DRAFT",
+            "RELEASE_LIFECYCLE_STATE_NOT_SENT_FOR_REVIEW",
+            "RELEASE_LIFECYCLE_STATE_IN_REVIEW",
+            "RELEASE_LIFECYCLE_STATE_APPROVED_NOT_PUBLISHED",
+            "RELEASE_LIFECYCLE_STATE_NOT_APPROVED",
+            "RELEASE_LIFECYCLE_STATE_PUBLISHED"
+          ],
+          "enumDescriptions": [
+            "Fallback value, do not use.",
+            "Waiting to be saved and submitted.",
+            "Not sent for review and waiting developer action.",
+            "Sent for review and pending outcome before it can be published.",
+            "Not yet published, but ready to be published and awaiting developer action. Only applicable for developers with managed publishing turned on.",
+            "Review submission was rejected.",
+            "Published, includes latest halted release."
+          ],
+          "type": "string"
+        },
+        "releaseName": {
+          "description": "The name of the release.",
+          "type": "string"
+        },
+        "track": {
+          "description": "The alias of the track that this release belongs to.",
           "type": "string"
         }
       },

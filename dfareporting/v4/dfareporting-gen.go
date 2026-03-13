@@ -13077,6 +13077,7 @@ type TvCampaignTimepoint struct {
 	//
 	// Possible values:
 	//   "WEEKS_UNSPECIFIED" - Default value, should never be set.
+	//   "DAYS_ONE" - One Day.
 	//   "WEEKS_ONE" - One week.
 	//   "WEEKS_FOUR" - Four weeks.
 	//   "WEEKS_EIGHT" - Eight weeks.

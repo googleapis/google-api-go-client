@@ -4010,15 +4010,16 @@ func (s Region) MarshalJSON() ([]byte, error) {
 
 // RegisterGcpRequest: Request message for the RegisterGCP method.
 type RegisterGcpRequest struct {
-	// DeveloperEmail: Immutable. If the developer email provided is associated
-	// with a user in the merchant account provided, the user will be updated to
-	// have "API developer" access type and the email preference corresponding to
-	// that user will be updated to have the new "API notifications" preference. If
-	// the developer email provided is not associated with any user we will just
-	// add it as a contact. The email preference corresponding to that contact will
-	// have the new "API notifications" preference. Make sure the email used is
-	// associated with a Google Account (Google Workspace account or Gmail account)
-	// and is not a service account as service accounts can't receive emails.
+	// DeveloperEmail: Immutable. Optional field. Developer role can be also added
+	// by using `users.update` method. If the developer email provided is
+	// associated with a user in the provided merchant account, the user will be
+	// updated to have `API_DEVELOPER` `access_rights` and the email preference
+	// corresponding to that user will be updated to have the new API notifications
+	// preference. If the developer email provided is not associated with any user,
+	// it is added as a contact. The email preference corresponding to that contact
+	// will have the new API notifications preference. Make sure the email used is
+	// associated with a Google Account and is not a service account as service
+	// accounts can't receive emails.
 	DeveloperEmail string `json:"developerEmail,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DeveloperEmail") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -12878,8 +12879,7 @@ type AccountsUsersDeleteCall struct {
 
 // Delete: Deletes a Merchant Center account user. Executing this method
 // requires admin access. The user to be deleted can't be the last admin user
-// of that account. Also a user is protected from deletion if it is managed by
-// Business Manager"
+// of that account.
 //
 //   - name: The name of the user to delete. Format:
 //     `accounts/{account}/users/{email}` It is also possible to delete the user

@@ -576,13 +576,13 @@ func (s BlockDeviceUserResponse) MarshalJSON() ([]byte, error) {
 }
 
 // BrowserAttributes: Contains information about browser profiles reported by
-// the Endpoint Verification extension
-// (https://chromewebstore.google.com/detail/endpoint-verification/callobklhcbilhphinckomhgkigmfocg?pli=1).
+// the Clients on the device (e.g. Endpoint Verification extension
+// (https://chromewebstore.google.com/detail/endpoint-verification/callobklhcbilhphinckomhgkigmfocg?pli=1)).
 type BrowserAttributes struct {
 	// ChromeBrowserInfo: Represents the current state of the Chrome browser
 	// attributes
 	// (https://cloud.google.com/access-context-manager/docs/browser-attributes)
-	// sent by the Endpoint Verification extension
+	// sent by the clients on the device, such as Endpoint Verification extension
 	// (https://chromewebstore.google.com/detail/endpoint-verification/callobklhcbilhphinckomhgkigmfocg?pli=1).
 	ChromeBrowserInfo *BrowserInfo `json:"chromeBrowserInfo,omitempty"`
 	// ChromeProfileId: Chrome profile ID that is exposed by the Chrome API. It is
@@ -609,8 +609,8 @@ func (s BrowserAttributes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BrowserInfo: Browser-specific fields reported by the Endpoint Verification
-// extension
+// BrowserInfo: Browser-specific fields reported by clients on the device, such
+// as Endpoint Verification extension
 // (https://chromewebstore.google.com/detail/endpoint-verification/callobklhcbilhphinckomhgkigmfocg?pli=1).
 type BrowserInfo struct {
 	// BrowserManagementState: Output only. Browser's management state.
@@ -675,6 +675,10 @@ type BrowserInfo struct {
 	//   "PHISHING_REUSE" - Warning is shown when the user reuses their protected
 	// password on a phishing site.
 	PasswordProtectionWarningTrigger string `json:"passwordProtectionWarningTrigger,omitempty"`
+	// Policies: Output only. Chrome policies information for the browser as can be
+	// seen in chrome://policy. Full possibilities of policies can be consulted in
+	// Chrome Enterprise Policy List (https://chromeenterprise.google/policies/).
+	Policies []*ChromePolicy `json:"policies,omitempty"`
 	// SafeBrowsingProtectionLevel: Current state of Safe Browsing protection level
 	// (https://chromeenterprise.google/policies/#SafeBrowsingProtectionLevel).
 	//
@@ -911,6 +915,76 @@ type CheckTransitiveMembershipResponse struct {
 
 func (s CheckTransitiveMembershipResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CheckTransitiveMembershipResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ChromePolicy: Represents a Chrome policy and its current state.
+type ChromePolicy struct {
+	// Conflicts: Output only. A list of other policy values for the same policy
+	// name that were not applied due to lower precedence. This field is empty if
+	// there were no conflicts.
+	Conflicts []*PolicyConflict `json:"conflicts,omitempty"`
+	// Name: Output only. The unique name of the Chrome policy. These names
+	// correspond to the policy names listed in Chrome Enterprise Policy List
+	// (https://chromeenterprise.google/policies/)
+	Name string `json:"name,omitempty"`
+	// Scope: Output only. The scope at which the *applied* policy value is set
+	// (USER or MACHINE).
+	//
+	// Possible values:
+	//   "SCOPE_UNKNOWN" - Default value. The policy scope is unknown or not
+	// specified.
+	//   "USER" - User-level policy. This scope indicates the policy applies to the
+	// specific user session or profile. For cloud policies, this is typically the
+	// signed-in Chrome profile. On some platforms like Windows, this can also
+	// refer to the OS user.
+	//   "MACHINE" - Machine-level policy. This scope indicates the policy applies
+	// system-wide to all users on the current machine or device.
+	Scope string `json:"scope,omitempty"`
+	// Source: Output only. The source from which the *applied* policy value
+	// originated.
+	//
+	// Possible values:
+	//   "SOURCE_UNKNOWN" - Default value. The policy source is unknown or not
+	// specified.
+	//   "ENTERPRISE_DEFAULT" - The policy is provided by Chrome's default settings
+	// when running in an enterprise environment.
+	//   "CLOUD" - The policy is managed and pushed from a cloud-based
+	// administration console, such as the Google Admin console.
+	//   "ACTIVE_DIRECTORY" - The policy is sourced from Active Directory,
+	// primarily for Active Directory-managed ChromeOS devices.
+	//   "DEVICE_LOCAL_ACCOUNT_OVERRIDE_DEPRECATED" - Deprecated: Formerly used
+	// when a policy was overridden by ChromeOS for public sessions or kiosk mode.
+	//   "PLATFORM" - The policy is set by OS built-in tool on desktop.
+	//   "PRIORITY_CLOUD_DEPRECATED" - Deprecated: Formerly used for cloud policies
+	// with higher priority.
+	//   "MERGED" - The applied policy value is the result of a merge from multiple
+	// policy sources.
+	//   "COMMAND_LINE" - The policy is set using a command line argument passed to
+	// the Chrome executable, usually intended for development or testing.
+	//   "CLOUD_FROM_ASH" - For ChromeOS, this indicates a policy set by cloud
+	// management in the Ash browser and then made available to the Lacros browser.
+	//   "RESTRICTED_MANAGED_GUEST_SESSION_OVERRIDE" - The policy is set by the
+	// restricted managed guest session override.
+	Source string `json:"source,omitempty"`
+	// Value: Output only. The currently applied value of the policy. The format
+	// depends on the policy type (e.g., boolean, string, JSON array/object).
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Conflicts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Conflicts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ChromePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod ChromePolicy
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1170,6 +1244,11 @@ type Device struct {
 	BootloaderVersion string `json:"bootloaderVersion,omitempty"`
 	// Brand: Output only. Device brand. Example: Samsung.
 	Brand string `json:"brand,omitempty"`
+	// BrowserProfiles: Browser profiles on the device. This is a copy of the
+	// BrowserAttributes message defined in EndpointVerificationSpecificAttributes.
+	// We are replicating it here since EndpointVerification isn't the only client
+	// reporting browser profiles.
+	BrowserProfiles []*BrowserAttributes `json:"browserProfiles,omitempty"`
 	// BuildNumber: Output only. Build number of the device.
 	BuildNumber string `json:"buildNumber,omitempty"`
 	// ClientTypes: List of the clients the device is reporting to.
@@ -3799,6 +3878,68 @@ type Policy struct {
 
 func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyConflict: Represents a policy value from a source that was not applied
+// because a higher-priority source took precedence.
+type PolicyConflict struct {
+	// Scope: Output only. The scope at which this lower-priority policy is set
+	// (USER or MACHINE).
+	//
+	// Possible values:
+	//   "SCOPE_UNKNOWN" - Default value. The policy scope is unknown or not
+	// specified.
+	//   "USER" - User-level policy. This scope indicates the policy applies to the
+	// specific user session or profile. For cloud policies, this is typically the
+	// signed-in Chrome profile. On some platforms like Windows, this can also
+	// refer to the OS user.
+	//   "MACHINE" - Machine-level policy. This scope indicates the policy applies
+	// system-wide to all users on the current machine or device.
+	Scope string `json:"scope,omitempty"`
+	// Source: Output only. The source from which this lower-priority policy value
+	// originated.
+	//
+	// Possible values:
+	//   "SOURCE_UNKNOWN" - Default value. The policy source is unknown or not
+	// specified.
+	//   "ENTERPRISE_DEFAULT" - The policy is provided by Chrome's default settings
+	// when running in an enterprise environment.
+	//   "CLOUD" - The policy is managed and pushed from a cloud-based
+	// administration console, such as the Google Admin console.
+	//   "ACTIVE_DIRECTORY" - The policy is sourced from Active Directory,
+	// primarily for Active Directory-managed ChromeOS devices.
+	//   "DEVICE_LOCAL_ACCOUNT_OVERRIDE_DEPRECATED" - Deprecated: Formerly used
+	// when a policy was overridden by ChromeOS for public sessions or kiosk mode.
+	//   "PLATFORM" - The policy is set by OS built-in tool on desktop.
+	//   "PRIORITY_CLOUD_DEPRECATED" - Deprecated: Formerly used for cloud policies
+	// with higher priority.
+	//   "MERGED" - The applied policy value is the result of a merge from multiple
+	// policy sources.
+	//   "COMMAND_LINE" - The policy is set using a command line argument passed to
+	// the Chrome executable, usually intended for development or testing.
+	//   "CLOUD_FROM_ASH" - For ChromeOS, this indicates a policy set by cloud
+	// management in the Ash browser and then made available to the Lacros browser.
+	//   "RESTRICTED_MANAGED_GUEST_SESSION_OVERRIDE" - The policy is set by the
+	// restricted managed guest session override.
+	Source string `json:"source,omitempty"`
+	// Value: Output only. The policy value from this lower-priority source.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Scope") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Scope") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyConflict) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyConflict
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

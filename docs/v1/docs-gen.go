@@ -975,7 +975,7 @@ type DateElementProperties struct {
 	// DateFormat: Determines how the date part of the DateElement will be
 	// displayed in the document. If unset, the default value is
 	// DATE_FORMAT_MONTH_DAY_YEAR_ABBREVIATED, indicating the DateElement will be
-	// formatted as `MMM d, y` in `en_US`, or locale specific equivalent.
+	// formatted as `MMM d, y` in `en`, or locale specific equivalent.
 	//
 	// Possible values:
 	//   "DATE_FORMAT_UNSPECIFIED" - The date format is unspecified.
@@ -994,9 +994,15 @@ type DateElementProperties struct {
 	// DisplayText: Output only. Indicates how the DateElement is displayed in the
 	// document.
 	DisplayText string `json:"displayText,omitempty"`
-	// Locale: The locale of the document, as defined by the Unicode Common Locale
-	// Data Repository (CLDR) project. For example, `en_US`. If unset, the default
-	// locale is `en_US`.
+	// Locale: The language code of the DateElement. For example, `en`. If unset,
+	// the default locale is `en`. Limited to the following locales: `af`, `am`,
+	// `ar`, `az`, `be`, `bg`, `bn`, `ca`, `cs`, `da`, `de`, `el`, `en`, `en-CA`,
+	// `en-GB`, `es`, `es-419`, `et`, `eu`, `fa`, `fi`, `fil`, `fr`, `fr-CA`, `gl`,
+	// `gu`, `hi`, `hr`, `hu`, `hy`, `id`, `is`, `it`, `iw`, `ja`, `ka`, `kk`,
+	// `km`, `kn`, `ko`, `lo`, `lt`, `lv`, `ml`, `mn`, `mr`, `ms`, `ne`, `nl`,
+	// `no`, `pa`, `pl`, `pt-BR`, `pt-PT`, `ro`, `ru`, `si`, `sk`, `sl`, `sr`,
+	// `sv`, `sw`, `ta`, `te`, `th`, `tr`, `uk`, `ur`, `vi`, `zh-CN`, `zh-HK`,
+	// `zh-TW`, `zu`, `cy`, `my`.
 	Locale string `json:"locale,omitempty"`
 	// TimeFormat: Determines how the time part of the DateElement will be
 	// displayed in the document. If unset, the default value is

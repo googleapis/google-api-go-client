@@ -645,7 +645,7 @@ type AddOnAttachmentStudentSubmission struct {
 	PostSubmissionState string `json:"postSubmissionState,omitempty"`
 	// UserId: Identifier for the student that owns this submission. Requires the
 	// user to be a teacher in the course and have permission to read student
-	// submissions.
+	// submissions. Read-only.
 	UserId string `json:"userId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

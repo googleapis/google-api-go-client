@@ -1386,6 +1386,10 @@ type BackupPlan struct {
 	// backup plan that performs a daily backup at 6pm and retains data for 3
 	// months". The description must be at most 2048 characters.
 	Description string `json:"description,omitempty"`
+	// DiskBackupPlanProperties: Optional. Defines optional properties specific to
+	// backups of disk-based resources, such as Compute Engine Persistent Disks.
+	// This includes settings like whether to perform a guest flush.
+	DiskBackupPlanProperties *DiskBackupPlanProperties `json:"diskBackupPlanProperties,omitempty"`
 	// Etag: Optional. `etag` is returned from the service in the response. As a
 	// user of the service, you may provide an etag value in this field to prevent
 	// stale resources.
@@ -2633,6 +2637,30 @@ func (s DataSourceReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DiskBackupPlanProperties: --- DiskBackupPlanProperties Message ---
+type DiskBackupPlanProperties struct {
+	// GuestFlush: Optional. Indicates whether to perform a guest flush operation
+	// before taking a disk backup. When set to false, the system will create
+	// crash-consistent backups. Default value is false.
+	GuestFlush bool `json:"guestFlush,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GuestFlush") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GuestFlush") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DiskBackupPlanProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod DiskBackupPlanProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DiskBackupProperties: DiskBackupProperties represents the properties of a
 // Disk backup.
 type DiskBackupProperties struct {
@@ -2651,6 +2679,9 @@ type DiskBackupProperties struct {
 	// EnableConfidentialCompute: Indicates whether the source disk is using
 	// confidential compute mode.
 	EnableConfidentialCompute bool `json:"enableConfidentialCompute,omitempty"`
+	// GuestFlush: Optional. Defines if the guest flush is enabled for the source
+	// disk. Default value is false.
+	GuestFlush bool `json:"guestFlush,omitempty"`
 	// GuestOsFeature: A list of guest OS features that are applicable to this
 	// backup.
 	GuestOsFeature []*GuestOsFeature `json:"guestOsFeature,omitempty"`
@@ -4060,6 +4091,9 @@ func (s Location) MarshalJSON() ([]byte, error) {
 }
 
 type LocationMetadata struct {
+	// UnsupportedFeatures: List of features that are not supported in the
+	// location.
+	//
 	// Possible values:
 	//   "FEATURE_UNSPECIFIED"
 	//   "MANAGEMENT_SERVER"

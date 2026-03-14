@@ -655,6 +655,29 @@ func (s Channel) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CustomerIdentity: Identity of the Google Workspace customer who owns the
+// resource.
+type CustomerIdentity struct {
+	// Id: Customer id.
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomerIdentity) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomerIdentity
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Date: Represents a whole or partial calendar date, such as a birthday. The
 // time of day and time zone are either specified elsewhere or are
 // insignificant. The date is relative to the Gregorian Calendar. This can
@@ -861,6 +884,30 @@ func (s FieldValueUserValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GroupIdentity: Identity of the group who owns the resource.
+type GroupIdentity struct {
+	// GroupEmail: Group email.
+	GroupEmail string `json:"groupEmail,omitempty"`
+	// Id: Group gaia id.
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GroupEmail") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GroupEmail") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GroupIdentity) MarshalJSON() ([]byte, error) {
+	type NoMethod GroupIdentity
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // NestedParameter: JSON template for a parameter used in various reports.
 type NestedParameter struct {
 	// BoolValue: Boolean value of the parameter.
@@ -895,6 +942,57 @@ func (s NestedParameter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// OwnerDetails: Details of the owner of the resource.
+type OwnerDetails struct {
+	// OwnerIdentity: Identity details of the owner(s) of the resource.
+	OwnerIdentity []*OwnerIdentity `json:"ownerIdentity,omitempty"`
+	// OwnerType: Type of the owner of the resource.
+	OwnerType string `json:"ownerType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OwnerIdentity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OwnerIdentity") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OwnerDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod OwnerDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OwnerIdentity: Identity details of the owner of the resource.
+type OwnerIdentity struct {
+	// CustomerIdentity: Identity of the Google Workspace customer who owns the
+	// resource.
+	CustomerIdentity *CustomerIdentity `json:"customerIdentity,omitempty"`
+	// GroupIdentity: Identity of the group who owns the resource.
+	GroupIdentity *GroupIdentity `json:"groupIdentity,omitempty"`
+	// UserIdentity: Identity of the user who owns the resource.
+	UserIdentity *UserIdentity `json:"userIdentity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomerIdentity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomerIdentity") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OwnerIdentity) MarshalJSON() ([]byte, error) {
+	type NoMethod OwnerIdentity
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Reason: The reason why the label/field was applied.
 type Reason struct {
 	// ReasonType: The type of the reason.
@@ -921,8 +1019,12 @@ func (s Reason) MarshalJSON() ([]byte, error) {
 type ResourceDetails struct {
 	// AppliedLabels: List of labels applied on the resource
 	AppliedLabels []*AppliedLabel `json:"appliedLabels,omitempty"`
-	// Id: Identifier of the resource.
+	// Id: Identifier of the resource, such as a doc_id for a Drive document, a
+	// conference_id for a Meet conference, or a "gaia_id/rfc2822_message_id" for
+	// an email.
 	Id string `json:"id,omitempty"`
+	// OwnerDetails: Owner details of the resource.
+	OwnerDetails *OwnerDetails `json:"ownerDetails,omitempty"`
 	// Relation: Defines relationship of the resource to the events
 	Relation string `json:"relation,omitempty"`
 	// Title: Title of the resource. For instance, in case of a drive document,
@@ -1137,6 +1239,30 @@ type UsageReportsWarningsData struct {
 
 func (s UsageReportsWarningsData) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageReportsWarningsData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UserIdentity: Identity of the user who owns the resource.
+type UserIdentity struct {
+	// Id: User gaia id.
+	Id string `json:"id,omitempty"`
+	// UserEmail: User email.
+	UserEmail string `json:"userEmail,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UserIdentity) MarshalJSON() ([]byte, error) {
+	type NoMethod UserIdentity
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

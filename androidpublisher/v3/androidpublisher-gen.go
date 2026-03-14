@@ -1339,7 +1339,7 @@ func (s AppVersionRange) MarshalJSON() ([]byte, error) {
 type ArchiveSubscriptionRequest struct {
 }
 
-// ArtifactSummary: Contains information about the artifact.
+// ArtifactSummary: Summary of an artifact.
 type ArtifactSummary struct {
 	// VersionCode: The version code of the artifact.
 	VersionCode int64 `json:"versionCode,omitempty"`
@@ -5213,10 +5213,12 @@ func (s ListOneTimeProductsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListReleaseSummariesResponse: Wraps response to list releases.
+// ListReleaseSummariesResponse: Response listing all releases for a given
+// track that are either ready to be sent for review, in review, approved, not
+// approved or available.
 type ListReleaseSummariesResponse struct {
-	// Releases: List of releases on this track. This excludes any releases that
-	// are obsolete.
+	// Releases: List of releases for this track. There will be a maximum of 20
+	// releases returned.
 	Releases []*ReleaseSummary `json:"releases,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -7899,30 +7901,31 @@ func (s RegionsVersion) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ReleaseSummary: Contains information about the release.
+// ReleaseSummary: Summary of a release.
 type ReleaseSummary struct {
-	// ActiveArtifacts: List of active artifacts on this release. This does not
-	// include controlled artifacts.
+	// ActiveArtifacts: List of active artifacts on this release.
 	ActiveArtifacts []*ArtifactSummary `json:"activeArtifacts,omitempty"`
-	// ReleaseLifecycleState: The lifecycle state of the release.
+	// ReleaseLifecycleState: The lifecycle state of a release.
 	//
 	// Possible values:
-	//   "RELEASE_LIFECYCLE_STATE_UNSPECIFIED" - Fallback value, do not use.
-	//   "RELEASE_LIFECYCLE_STATE_DRAFT" - Waiting to be saved and submitted.
-	//   "RELEASE_LIFECYCLE_STATE_NOT_SENT_FOR_REVIEW" - Not sent for review and
-	// waiting developer action.
-	//   "RELEASE_LIFECYCLE_STATE_IN_REVIEW" - Sent for review and pending outcome
-	// before it can be published.
-	//   "RELEASE_LIFECYCLE_STATE_APPROVED_NOT_PUBLISHED" - Not yet published, but
-	// ready to be published and awaiting developer action. Only applicable for
-	// developers with managed publishing turned on.
-	//   "RELEASE_LIFECYCLE_STATE_NOT_APPROVED" - Review submission was rejected.
-	//   "RELEASE_LIFECYCLE_STATE_PUBLISHED" - Published, includes latest halted
-	// release.
+	//   "RELEASE_LIFECYCLE_STATE_UNSPECIFIED" - Not specified.
+	//   "RELEASE_LIFECYCLE_STATE_DRAFT" - The release is not yet ready and can be
+	// still edited.
+	//   "RELEASE_LIFECYCLE_STATE_NOT_SENT_FOR_REVIEW" - The release is ready to be
+	// sent for review and awaiting developer action.
+	//   "RELEASE_LIFECYCLE_STATE_IN_REVIEW" - Submitted and undergoing the review
+	// process.
+	//   "RELEASE_LIFECYCLE_STATE_APPROVED_NOT_PUBLISHED" - Passed review and is
+	// ready to be published (due to managed publishing).
+	//   "RELEASE_LIFECYCLE_STATE_NOT_APPROVED" - Failed the review process.
+	//   "RELEASE_LIFECYCLE_STATE_PUBLISHED" - Currently available to users on the
+	// track. This includes fully or partially rolled out releases to users and any
+	// halted release that can be resumed.
 	ReleaseLifecycleState string `json:"releaseLifecycleState,omitempty"`
-	// ReleaseName: The name of the release.
+	// ReleaseName: Name of the release.
 	ReleaseName string `json:"releaseName,omitempty"`
-	// Track: The alias of the track that this release belongs to.
+	// Track: Identifier of the track. More on track name
+	// (https://developers.google.com/android-publisher/tracks).
 	Track string `json:"track,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActiveArtifacts") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -11934,24 +11937,28 @@ func (r *EditsService) Commit(packageName string, editId string) *EditsCommitCal
 }
 
 // ChangesInReviewBehavior sets the optional parameter
-// "changesInReviewBehavior": The behavior of committing a new edit while
-// changes are already in review.
+// "changesInReviewBehavior": Specify how the API should behave if there are
+// changes currently in review. If this value is not set, it will default to
+// "CANCEL_IN_REVIEW_AND_SUBMIT", which will cancel the changes in review and
+// then send all the changes for publishing.
 //
 // Possible values:
 //
-//	"CHANGES_IN_REVIEW_BEHAVIOR_TYPE_UNSPECIFIED" - The behavior is not
+//	"CHANGES_IN_REVIEW_BEHAVIOR_TYPE_UNSPECIFIED" - Defaults to
 //
-// specified.
+// CANCEL_IN_REVIEW_AND_SUBMIT.
 //
-//	"CANCEL_IN_REVIEW_AND_SUBMIT" - The changes in review will be canceled,
+//	"CANCEL_IN_REVIEW_AND_SUBMIT" - If there are changes already in review,
 //
-// and the new changes will be sent for review. Thus resetting the review
-// process.
+// then this will cancel that review first and then send all the changes for
+// publishing.
 //
-//	"ERROR_IF_IN_REVIEW" - The commit will fail with an error if there are
+//	"ERROR_IF_IN_REVIEW" - If there are changes in review, then this will
 //
-// changes in review. If the edit doesn't result in a new submission being
-// created then it won't throw an error even if there are changes in review.
+// return an error. Please refer to the error message sample that is returned
+// when this happens. Note that this won't invalidate the edit. If there aren't
+// any changes in review, then this will continue and send the new changes for
+// publishing.
 func (c *EditsCommitCall) ChangesInReviewBehavior(changesInReviewBehavior string) *EditsCommitCall {
 	c.urlParams_.Set("changesInReviewBehavior", changesInReviewBehavior)
 	return c

@@ -4366,7 +4366,7 @@
       }
     }
   },
-  "revision": "20260308",
+  "revision": "20260310",
   "rootUrl": "https://classroom.googleapis.com/",
   "schemas": {
     "AddOnAttachment": {
@@ -4460,7 +4460,7 @@
           "type": "string"
         },
         "userId": {
-          "description": "Identifier for the student that owns this submission. Requires the user to be a teacher in the course and have permission to read student submissions.",
+          "description": "Identifier for the student that owns this submission. Requires the user to be a teacher in the course and have permission to read student submissions. Read-only.",
           "type": "string"
         }
       },

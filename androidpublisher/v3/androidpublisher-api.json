@@ -452,16 +452,16 @@
           ],
           "parameters": {
             "changesInReviewBehavior": {
-              "description": "Optional. The behavior of committing a new edit while changes are already in review.",
+              "description": "Optional. Specify how the API should behave if there are changes currently in review. If this value is not set, it will default to \"CANCEL_IN_REVIEW_AND_SUBMIT\", which will cancel the changes in review and then send all the changes for publishing.",
               "enum": [
                 "CHANGES_IN_REVIEW_BEHAVIOR_TYPE_UNSPECIFIED",
                 "CANCEL_IN_REVIEW_AND_SUBMIT",
                 "ERROR_IF_IN_REVIEW"
               ],
               "enumDescriptions": [
-                "The behavior is not specified.",
-                "The changes in review will be canceled, and the new changes will be sent for review. Thus resetting the review process.",
-                "The commit will fail with an error if there are changes in review. If the edit doesn't result in a new submission being created then it won't throw an error even if there are changes in review."
+                "Defaults to CANCEL_IN_REVIEW_AND_SUBMIT.",
+                "If there are changes already in review, then this will cancel that review first and then send all the changes for publishing.",
+                "If there are changes in review, then this will return an error. Please refer to the error message sample that is returned when this happens. Note that this won't invalidate the edit. If there aren't any changes in review, then this will continue and send the new changes for publishing."
               ],
               "location": "query",
               "type": "string"
@@ -5637,7 +5637,7 @@
       }
     }
   },
-  "revision": "20260311",
+  "revision": "20260312",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Abi": {
@@ -6175,7 +6175,7 @@
       "type": "object"
     },
     "ArtifactSummary": {
-      "description": "Contains information about the artifact.",
+      "description": "Summary of an artifact.",
       "id": "ArtifactSummary",
       "properties": {
         "versionCode": {
@@ -9028,11 +9028,11 @@
       "type": "object"
     },
     "ListReleaseSummariesResponse": {
-      "description": "Wraps response to list releases.",
+      "description": "Response listing all releases for a given track that are either ready to be sent for review, in review, approved, not approved or available.",
       "id": "ListReleaseSummariesResponse",
       "properties": {
         "releases": {
-          "description": "List of releases on this track. This excludes any releases that are obsolete.",
+          "description": "List of releases for this track. There will be a maximum of 20 releases returned.",
           "items": {
             "$ref": "ReleaseSummary"
           },
@@ -11068,18 +11068,18 @@
       "type": "object"
     },
     "ReleaseSummary": {
-      "description": "Contains information about the release.",
+      "description": "Summary of a release.",
       "id": "ReleaseSummary",
       "properties": {
         "activeArtifacts": {
-          "description": "List of active artifacts on this release. This does not include controlled artifacts.",
+          "description": "List of active artifacts on this release.",
           "items": {
             "$ref": "ArtifactSummary"
           },
           "type": "array"
         },
         "releaseLifecycleState": {
-          "description": "The lifecycle state of the release.",
+          "description": "The lifecycle state of a release.",
           "enum": [
             "RELEASE_LIFECYCLE_STATE_UNSPECIFIED",
             "RELEASE_LIFECYCLE_STATE_DRAFT",
@@ -11090,22 +11090,22 @@
             "RELEASE_LIFECYCLE_STATE_PUBLISHED"
           ],
           "enumDescriptions": [
-            "Fallback value, do not use.",
-            "Waiting to be saved and submitted.",
-            "Not sent for review and waiting developer action.",
-            "Sent for review and pending outcome before it can be published.",
-            "Not yet published, but ready to be published and awaiting developer action. Only applicable for developers with managed publishing turned on.",
-            "Review submission was rejected.",
-            "Published, includes latest halted release."
+            "Not specified.",
+            "The release is not yet ready and can be still edited.",
+            "The release is ready to be sent for review and awaiting developer action.",
+            "Submitted and undergoing the review process.",
+            "Passed review and is ready to be published (due to managed publishing).",
+            "Failed the review process.",
+            "Currently available to users on the track. This includes fully or partially rolled out releases to users and any halted release that can be resumed."
           ],
           "type": "string"
         },
         "releaseName": {
-          "description": "The name of the release.",
+          "description": "Name of the release.",
           "type": "string"
         },
         "track": {
-          "description": "The alias of the track that this release belongs to.",
+          "description": "Identifier of the track. More on [track name](https://developers.google.com/android-publisher/tracks).",
           "type": "string"
         }
       },

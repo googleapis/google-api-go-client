@@ -379,7 +379,7 @@ type AppProfile struct {
 	Description string `json:"description,omitempty"`
 	// Etag: Strongly validated etag for optimistic concurrency control. Preserve
 	// the value returned from `GetAppProfile` when calling `UpdateAppProfile` to
-	// fail the request if there has been a modification in the mean time. The
+	// fail the request if there has been a modification in the meantime. The
 	// `update_mask` of the request need not include `etag` for this protection to
 	// apply. See Wikipedia (https://en.wikipedia.org/wiki/HTTP_ETag) and RFC 7232
 	// (https://tools.ietf.org/html/rfc7232#section-2.3) for more details.

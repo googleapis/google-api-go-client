@@ -1470,15 +1470,18 @@ type RateLimits struct {
 	// to the maximum specified by `max_burst_size`. Each time a task is
 	// dispatched, a token is removed from the bucket. Tasks will be dispatched
 	// until the queue's bucket runs out of tokens. The bucket will be continuously
-	// refilled with new tokens based on max_dispatches_per_second. Cloud Tasks
-	// will pick the value of `max_burst_size` based on the value of
-	// max_dispatches_per_second. For queues that were created or updated using
-	// `queue.yaml/xml`, `max_burst_size` is equal to bucket_size
+	// refilled with new tokens based on `max_dispatches_per_second`. Cloud Tasks
+	// automatically sets an appropriate `max_burst_size` based on the value of
+	// `max_dispatches_per_second`. The value is dynamically optimized to ensure
+	// queue stability and throughput. It is generally at least equal to
+	// `max_dispatches_per_second` but might be higher to accommodate bursts of
+	// traffic. For queues that were created or updated using `queue.yaml/xml`,
+	// `max_burst_size` is equal to bucket_size
 	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#bucket_size).
 	// Since `max_burst_size` is output only, if UpdateQueue is called on a queue
 	// created by `queue.yaml/xml`, `max_burst_size` will be reset based on the
-	// value of max_dispatches_per_second, regardless of whether
-	// max_dispatches_per_second is updated.
+	// value of `max_dispatches_per_second`, regardless of whether
+	// `max_dispatches_per_second` is updated.
 	MaxBurstSize int64 `json:"maxBurstSize,omitempty"`
 	// MaxConcurrentDispatches: The maximum number of concurrent tasks that Cloud
 	// Tasks allows to be dispatched for this queue. After this threshold has been
@@ -2198,7 +2201,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service.
+// List: Lists information about the supported locations for this service. This
+// method can be called in two ways: * **List all public locations:** Use the
+// path `GET /v1/locations`. * **List project-visible locations:** Use the path
+// `GET /v1/projects/{project_id}/locations`. This may include public locations
+// as well as private or other locations specifically visible to the project.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
@@ -2362,7 +2369,7 @@ type ProjectsLocationsUpdateCmekConfigCall struct {
 }
 
 // UpdateCmekConfig: Creates or Updates a CMEK config. Updates the Customer
-// Managed Encryption Key assotiated with the Cloud Tasks location (Creates if
+// Managed Encryption Key associated with the Cloud Tasks location (Creates if
 // the key does not already exist). All new tasks created in the location will
 // be encrypted at-rest with the KMS-key provided in the config.
 //

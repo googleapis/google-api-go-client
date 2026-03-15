@@ -1968,6 +1968,15 @@ func (s InternalRange) MarshalJSON() ([]byte, error) {
 // prefixes to Google Cloud. Alternatively, in active/passive configurations,
 // all attachments should be capable of advertising the same prefixes.
 type LinkedInterconnectAttachments struct {
+	// ExcludeExportRanges: Optional. Dynamic routes overlapped/encompassed by
+	// exclude export ranges are excluded during export to hub.
+	ExcludeExportRanges []string `json:"excludeExportRanges,omitempty"`
+	// ExcludeImportRanges: Optional. Hub routes overlapped/encompassed by exclude
+	// import ranges are excluded during import from hub.
+	ExcludeImportRanges []string `json:"excludeImportRanges,omitempty"`
+	// IncludeExportRanges: Optional. Dynamic routes fully encompassed by include
+	// export ranges are included during export to hub.
+	IncludeExportRanges []string `json:"includeExportRanges,omitempty"`
 	// IncludeImportRanges: Optional. Hub routes fully encompassed by include
 	// import ranges are included during import from hub.
 	IncludeImportRanges []string `json:"includeImportRanges,omitempty"`
@@ -1981,13 +1990,13 @@ type LinkedInterconnectAttachments struct {
 	// VpcNetwork: Output only. The VPC network where these VLAN attachments are
 	// located.
 	VpcNetwork string `json:"vpcNetwork,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "IncludeImportRanges") to
+	// ForceSendFields is a list of field names (e.g. "ExcludeExportRanges") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "IncludeImportRanges") to include
+	// NullFields is a list of field names (e.g. "ExcludeExportRanges") to include
 	// in API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2046,6 +2055,15 @@ func (s LinkedProducerVpcNetwork) MarshalJSON() ([]byte, error) {
 // the same set of sites outside of Google Cloud, we recommend that you
 // associate those instances with the same spoke.
 type LinkedRouterApplianceInstances struct {
+	// ExcludeExportRanges: Optional. Dynamic routes overlapped/encompassed by
+	// exclude export ranges are excluded during export to hub.
+	ExcludeExportRanges []string `json:"excludeExportRanges,omitempty"`
+	// ExcludeImportRanges: Optional. Hub routes overlapped/encompassed by exclude
+	// import ranges are excluded during import from hub.
+	ExcludeImportRanges []string `json:"excludeImportRanges,omitempty"`
+	// IncludeExportRanges: Optional. Dynamic routes fully encompassed by include
+	// export ranges are included during export to hub.
+	IncludeExportRanges []string `json:"includeExportRanges,omitempty"`
 	// IncludeImportRanges: Optional. Hub routes fully encompassed by include
 	// import ranges are included during import from hub.
 	IncludeImportRanges []string `json:"includeImportRanges,omitempty"`
@@ -2059,13 +2077,13 @@ type LinkedRouterApplianceInstances struct {
 	// VpcNetwork: Output only. The VPC network where these router appliance
 	// instances are located.
 	VpcNetwork string `json:"vpcNetwork,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "IncludeImportRanges") to
+	// ForceSendFields is a list of field names (e.g. "ExcludeExportRanges") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "IncludeImportRanges") to include
+	// NullFields is a list of field names (e.g. "ExcludeExportRanges") to include
 	// in API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2124,6 +2142,15 @@ func (s LinkedVpcNetwork) MarshalJSON() ([]byte, error) {
 // prefixes to Google Cloud. Alternatively, in a passive/active configuration,
 // all tunnels should be capable of advertising the same prefixes.
 type LinkedVpnTunnels struct {
+	// ExcludeExportRanges: Optional. Dynamic routes overlapped/encompassed by
+	// exclude export ranges are excluded during export to hub.
+	ExcludeExportRanges []string `json:"excludeExportRanges,omitempty"`
+	// ExcludeImportRanges: Optional. Hub routes overlapped/encompassed by exclude
+	// import ranges are excluded during import from hub.
+	ExcludeImportRanges []string `json:"excludeImportRanges,omitempty"`
+	// IncludeExportRanges: Optional. Dynamic routes fully encompassed by include
+	// export ranges are included during export to hub.
+	IncludeExportRanges []string `json:"includeExportRanges,omitempty"`
 	// IncludeImportRanges: Optional. Hub routes fully encompassed by include
 	// import ranges are included during import from hub.
 	IncludeImportRanges []string `json:"includeImportRanges,omitempty"`
@@ -2137,13 +2164,13 @@ type LinkedVpnTunnels struct {
 	// VpcNetwork: Output only. The VPC network where these VPN tunnels are
 	// located.
 	VpcNetwork string `json:"vpcNetwork,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "IncludeImportRanges") to
+	// ForceSendFields is a list of field names (e.g. "ExcludeExportRanges") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "IncludeImportRanges") to include
+	// NullFields is a list of field names (e.g. "ExcludeExportRanges") to include
 	// in API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2761,6 +2788,7 @@ type LocationMetadata struct {
 	// location
 	//   "SITE_TO_SITE_SPOKES" - Site-to-site spokes are supported in this location
 	//   "GATEWAY_SPOKES" - Gateway spokes are supported in this location.
+	//   "TRANSPORTS" - Supports transports in this location.
 	LocationFeatures []string `json:"locationFeatures,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LocationFeatures") to
 	// unconditionally include in API requests. By default, fields with empty or

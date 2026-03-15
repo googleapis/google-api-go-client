@@ -3299,6 +3299,7 @@ type BusinessChainTargetingOptionDetails struct {
 	//   "GEO_REGION_TYPE_COMMUNE" - The geographic region is a commune.
 	//   "GEO_REGION_TYPE_COLLOQUIAL_AREA" - The geographic region is a colloquial
 	// area.
+	//   "GEO_REGION_TYPE_POST_TOWN" - The geographic region is a post town.
 	GeoRegionType string `json:"geoRegionType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BusinessChain") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7460,6 +7461,7 @@ type GeoRegionAssignedTargetingOptionDetails struct {
 	//   "GEO_REGION_TYPE_COMMUNE" - The geographic region is a commune.
 	//   "GEO_REGION_TYPE_COLLOQUIAL_AREA" - The geographic region is a colloquial
 	// area.
+	//   "GEO_REGION_TYPE_POST_TOWN" - The geographic region is a post town.
 	GeoRegionType string `json:"geoRegionType,omitempty"`
 	// Negative: Indicates if this option is being negatively targeted.
 	Negative bool `json:"negative,omitempty"`
@@ -7565,6 +7567,7 @@ type GeoRegionTargetingOptionDetails struct {
 	//   "GEO_REGION_TYPE_COMMUNE" - The geographic region is a commune.
 	//   "GEO_REGION_TYPE_COLLOQUIAL_AREA" - The geographic region is a colloquial
 	// area.
+	//   "GEO_REGION_TYPE_POST_TOWN" - The geographic region is a post town.
 	GeoRegionType string `json:"geoRegionType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -13240,6 +13243,10 @@ func (s TargetFrequency) MarshalJSON() ([]byte, error) {
 // (//support.google.com/displayvideo/answer/12060859) settings of the line
 // item.
 type TargetingExpansionConfig struct {
+	// ExcludeDemographicExpansion: Optional. Whether to exclude demographic
+	// expansion for Optimized Targeting. This field only applies to Demand Gen ad
+	// groups.
+	ExcludeDemographicExpansion bool `json:"excludeDemographicExpansion,omitempty"`
 	// ExcludeFirstPartyAudience: Whether to exclude first-party audiences from use
 	// in targeting expansion. This field was deprecated with the launch of
 	// optimized targeting (//support.google.com/displayvideo/answer/12060859).
@@ -13269,13 +13276,13 @@ type TargetingExpansionConfig struct {
 	//   "MOST_EXPANSION" - If used, will automatically be set to
 	// `LEAST_EXPANSION`.
 	TargetingExpansionLevel string `json:"targetingExpansionLevel,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExcludeFirstPartyAudience")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "ExcludeDemographicExpansion") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExcludeFirstPartyAudience") to
+	// NullFields is a list of field names (e.g. "ExcludeDemographicExpansion") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

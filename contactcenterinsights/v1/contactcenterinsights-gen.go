@@ -785,6 +785,10 @@ type GoogleCloudContactcenterinsightsV1AnnotatorSelector struct {
 	PhraseMatchers []string `json:"phraseMatchers,omitempty"`
 	// QaConfig: Configuration for the QA annotator.
 	QaConfig *GoogleCloudContactcenterinsightsV1AnnotatorSelectorQaConfig `json:"qaConfig,omitempty"`
+	// RunAutoLabelingAnnotator: Optional. Whether to run the auto-labeling
+	// annotator. If true, the auto-labeling annotator will be run. This is a
+	// non-billable operation designed for fixing or backfilling custom labels.
+	RunAutoLabelingAnnotator bool `json:"runAutoLabelingAnnotator,omitempty"`
 	// RunEntityAnnotator: Whether to run the entity annotator.
 	RunEntityAnnotator bool `json:"runEntityAnnotator,omitempty"`
 	// RunIntentAnnotator: Whether to run the intent annotator.
@@ -1262,6 +1266,9 @@ type GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsMetadata struct {
 	// PartialErrors: Output only. Partial errors during bulk analyze operation
 	// that might cause the operation output to be incomplete.
 	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
+	// Relabel: Output only. If true, the labeling rules will be re-evaluated for
+	// the conversations.
+	Relabel bool `json:"relabel,omitempty"`
 	// Request: The original request for bulk analyze.
 	Request *GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsRequest `json:"request,omitempty"`
 	// TotalRequestedAnalysesCount: Total number of analyses requested. Computed by
@@ -1300,6 +1307,9 @@ type GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsRequest struct {
 	Filter string `json:"filter,omitempty"`
 	// Parent: Required. The parent resource to create analyses in.
 	Parent string `json:"parent,omitempty"`
+	// Relabel: Optional. If true, the labeling rules will be re-evaluated for the
+	// conversations.
+	Relabel bool `json:"relabel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnalysisPercentage") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9521,6 +9531,10 @@ type GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelector struct {
 	PhraseMatchers []string `json:"phraseMatchers,omitempty"`
 	// QaConfig: Configuration for the QA annotator.
 	QaConfig *GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelectorQaConfig `json:"qaConfig,omitempty"`
+	// RunAutoLabelingAnnotator: Optional. Whether to run the auto-labeling
+	// annotator. If true, the auto-labeling annotator will be run. This is a
+	// non-billable operation designed for fixing or backfilling custom labels.
+	RunAutoLabelingAnnotator bool `json:"runAutoLabelingAnnotator,omitempty"`
 	// RunEntityAnnotator: Whether to run the entity annotator.
 	RunEntityAnnotator bool `json:"runEntityAnnotator,omitempty"`
 	// RunIntentAnnotator: Whether to run the intent annotator.
@@ -9749,6 +9763,9 @@ type GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsMetadata st
 	// PartialErrors: Output only. Partial errors during bulk analyze operation
 	// that might cause the operation output to be incomplete.
 	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
+	// Relabel: Output only. If true, the labeling rules will be re-evaluated for
+	// the conversations.
+	Relabel bool `json:"relabel,omitempty"`
 	// Request: The original request for bulk analyze.
 	Request *GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsRequest `json:"request,omitempty"`
 	// TotalRequestedAnalysesCount: Total number of analyses requested. Computed by
@@ -9787,6 +9804,9 @@ type GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsRequest str
 	Filter string `json:"filter,omitempty"`
 	// Parent: Required. The parent resource to create analyses in.
 	Parent string `json:"parent,omitempty"`
+	// Relabel: Optional. If true, the labeling rules will be re-evaluated for the
+	// conversations.
+	Relabel bool `json:"relabel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnalysisPercentage") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -15020,6 +15040,10 @@ type GoogleCloudContactcenterinsightsV1mainAnnotatorSelector struct {
 	PhraseMatchers []string `json:"phraseMatchers,omitempty"`
 	// QaConfig: Configuration for the QA annotator.
 	QaConfig *GoogleCloudContactcenterinsightsV1mainAnnotatorSelectorQaConfig `json:"qaConfig,omitempty"`
+	// RunAutoLabelingAnnotator: Optional. Whether to run the auto-labeling
+	// annotator. If true, the auto-labeling annotator will be run. This is a
+	// non-billable operation designed for fixing or backfilling custom labels.
+	RunAutoLabelingAnnotator bool `json:"runAutoLabelingAnnotator,omitempty"`
 	// RunEntityAnnotator: Whether to run the entity annotator.
 	RunEntityAnnotator bool `json:"runEntityAnnotator,omitempty"`
 	// RunIntentAnnotator: Whether to run the intent annotator.
@@ -15248,6 +15272,9 @@ type GoogleCloudContactcenterinsightsV1mainBulkAnalyzeConversationsMetadata stru
 	// PartialErrors: Output only. Partial errors during bulk analyze operation
 	// that might cause the operation output to be incomplete.
 	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
+	// Relabel: Output only. If true, the labeling rules will be re-evaluated for
+	// the conversations.
+	Relabel bool `json:"relabel,omitempty"`
 	// Request: The original request for bulk analyze.
 	Request *GoogleCloudContactcenterinsightsV1mainBulkAnalyzeConversationsRequest `json:"request,omitempty"`
 	// TotalRequestedAnalysesCount: Total number of analyses requested. Computed by
@@ -15286,6 +15313,9 @@ type GoogleCloudContactcenterinsightsV1mainBulkAnalyzeConversationsRequest struc
 	Filter string `json:"filter,omitempty"`
 	// Parent: Required. The parent resource to create analyses in.
 	Parent string `json:"parent,omitempty"`
+	// Relabel: Optional. If true, the labeling rules will be re-evaluated for the
+	// conversations.
+	Relabel bool `json:"relabel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnalysisPercentage") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

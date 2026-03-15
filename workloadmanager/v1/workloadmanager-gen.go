@@ -456,14 +456,13 @@ func (s ActuationOutput) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AgentCommand: * An AgentCommand specifies a one-time executable program for
+// AgentCommand: An AgentCommand specifies a one-time executable program for
 // the agent to run.
 type AgentCommand struct {
-	// Command: command is the name of the agent one-time executable that will be
-	// invoked.
+	// Command: The name of the agent one-time executable that will be invoked.
 	Command string `json:"command,omitempty"`
-	// Parameters: parameters is a map of key/value pairs that can be used to
-	// specify additional one-time executable settings.
+	// Parameters: A map of key/value pairs that can be used to specify additional
+	// one-time executable settings.
 	Parameters map[string]string `json:"parameters,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Command") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -839,12 +838,13 @@ func (s BackupProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BigQueryDestination: Message describing big query destination
+// BigQueryDestination: BigQuery destination for evaluation results.
 type BigQueryDestination struct {
-	// CreateNewResultsTable: Optional. determine if results will be saved in a new
-	// table
+	// CreateNewResultsTable: Optional. Determines if a new results table will be
+	// created when an Execution is created.
 	CreateNewResultsTable bool `json:"createNewResultsTable,omitempty"`
-	// DestinationDataset: Optional. destination dataset to save evaluation results
+	// DestinationDataset: Optional. Destination dataset to save evaluation
+	// results.
 	DestinationDataset string `json:"destinationDataset,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateNewResultsTable") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -910,7 +910,7 @@ func (s CloudResource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Command: * Command specifies the type of command to execute.
+// Command: Command specifies the type of command to execute.
 type Command struct {
 	// AgentCommand: AgentCommand specifies a one-time executable program for the
 	// agent to run.
@@ -1208,46 +1208,52 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// Evaluation: Message describing Evaluation object
+// Evaluation: Represents a Workload Manager Evaluation configuration. An
+// Evaluation defines a set of rules to be validated against a scope of Cloud
+// resources.
 type Evaluation struct {
-	// BigQueryDestination: Optional. BigQuery destination
+	// BigQueryDestination: Optional. The BigQuery destination for detailed
+	// evaluation results. If this field is specified, the results of each
+	// evaluation execution are exported to BigQuery.
 	BigQueryDestination *BigQueryDestination `json:"bigQueryDestination,omitempty"`
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. [Output only] Create time stamp.
 	CreateTime string `json:"createTime,omitempty"`
 	// CustomRulesBucket: The Cloud Storage bucket name for custom rules.
 	CustomRulesBucket string `json:"customRulesBucket,omitempty"`
-	// Description: Description of the Evaluation
+	// Description: Description of the Evaluation.
 	Description string `json:"description,omitempty"`
-	// EvaluationType: Evaluation type
+	// EvaluationType: Evaluation type.
 	//
 	// Possible values:
-	//   "EVALUATION_TYPE_UNSPECIFIED" - Not specified
-	//   "SAP" - SAP best practices
-	//   "SQL_SERVER" - SQL best practices
-	//   "OTHER" - Customized best practices
-	//   "SCC_IAC" - SCC IaC (Infra as Code) best practices.
+	//   "EVALUATION_TYPE_UNSPECIFIED" - Not specified.
+	//   "SAP" - SAP best practices.
+	//   "SQL_SERVER" - SQL best practices.
+	//   "OTHER" - Customized best practices.
 	EvaluationType string `json:"evaluationType,omitempty"`
 	// KmsKey: Optional. Immutable. Customer-managed encryption key name, in the
-	// format projects/*/locations/*/keyRings/*/cryptoKeys/*.
+	// format projects/*/locations/*/keyRings/*/cryptoKeys/*. The key will be used
+	// for CMEK encryption of the evaluation resource.
 	KmsKey string `json:"kmsKey,omitempty"`
-	// Labels: Labels as key value pairs
+	// Labels: Labels as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: name of resource names have the form
-	// 'projects/{project_id}/locations/{location_id}/evaluations/{evaluation_id}'
+	// Name: Name of resource that has the form
+	// `projects/{project_id}/locations/{location_id}/evaluations/{evaluation_id}`.
 	Name string `json:"name,omitempty"`
-	// ResourceFilter: annotations as key value pairs
+	// ResourceFilter: Resource filter for an evaluation defining the scope of
+	// resources to be evaluated.
 	ResourceFilter *ResourceFilter `json:"resourceFilter,omitempty"`
-	// ResourceStatus: Output only. [Output only] The updated rule ids if exist.
+	// ResourceStatus: Output only. [Output only] The current lifecycle state of
+	// the evaluation resource.
 	ResourceStatus *ResourceStatus `json:"resourceStatus,omitempty"`
-	// RuleNames: the name of the rule
+	// RuleNames: The names of the rules used for this evaluation.
 	RuleNames []string `json:"ruleNames,omitempty"`
-	// RuleVersions: Output only. [Output only] The updated rule ids if exist.
-	RuleVersions []string `json:"ruleVersions,omitempty"`
-	// Schedule: crontab format schedule for scheduled evaluation, currently only
-	// support the following schedule: "0 */1 * * *", "0 */6 * * *", "0 */12 * *
-	// *", "0 0 */1 * *", "0 0 */7 * *",
+	// Schedule: Crontab format schedule for scheduled evaluation, currently only
+	// supports the following fixed schedules: * `0 */1 * * *` # Hourly * `0 */6 *
+	// * *` # Every 6 hours * `0 */12 * * *` # Every 12 hours * `0 0 */1 * *` #
+	// Daily * `0 0 */7 * *` # Weekly * `0 0 */14 * *` # Every 14 days * `0 0 1 */1
+	// *` # Monthly
 	Schedule string `json:"schedule,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// UpdateTime: Output only. [Output only] Update time stamp.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1270,52 +1276,52 @@ func (s Evaluation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Execution: Message describing Execution object
+// Execution: Execution that represents a single run of an Evaluation.
 type Execution struct {
-	// EndTime: Output only. [Output only] End time stamp
+	// EndTime: Output only. [Output only] End time stamp.
 	EndTime string `json:"endTime,omitempty"`
-	// Engine: Optional. Engine
+	// Engine: Optional. Engine.
 	//
 	// Possible values:
-	//   "ENGINE_UNSPECIFIED" - The original CG
-	//   "ENGINE_SCANNER" - SlimCG / Scanner
-	//   "V2" - Evaluation Engine V2
+	//   "ENGINE_UNSPECIFIED" - The original CG.
+	//   "ENGINE_SCANNER" - SlimCG / Scanner.
+	//   "V2" - Evaluation Engine V2.
 	Engine string `json:"engine,omitempty"`
-	// EvaluationId: Output only. [Output only] Evaluation ID
+	// EvaluationId: Output only. [Output only] Evaluation ID.
 	EvaluationId string `json:"evaluationId,omitempty"`
-	// ExternalDataSources: Optional. External data sources
+	// ExternalDataSources: Optional. External data sources.
 	ExternalDataSources []*ExternalDataSources `json:"externalDataSources,omitempty"`
-	// InventoryTime: Output only. [Output only] Inventory time stamp
+	// InventoryTime: Output only. [Output only] Inventory time stamp.
 	InventoryTime string `json:"inventoryTime,omitempty"`
-	// Labels: Labels as key value pairs
+	// Labels: Labels as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: The name of execution resource. The format is
 	// projects/{project}/locations/{location}/evaluations/{evaluation}/executions/{
-	// execution}
+	// execution}.
 	Name string `json:"name,omitempty"`
-	// Notices: Output only. Additional information generated by the execution
+	// Notices: Output only. Additional information generated by the execution.
 	Notices []*Notice `json:"notices,omitempty"`
-	// ResultSummary: Output only. [Output only] Result summary for the execution
+	// ResultSummary: Output only. [Output only] Result summary for the execution.
 	ResultSummary *Summary `json:"resultSummary,omitempty"`
-	// RuleResults: Output only. execution result summary per rule
+	// RuleResults: Output only. Execution result summary per rule.
 	RuleResults []*RuleExecutionResult `json:"ruleResults,omitempty"`
-	// RunType: type represent whether the execution executed directly by user or
-	// scheduled according evaluation.schedule field.
+	// RunType: Type which represents whether the execution executed directly by
+	// user or scheduled according to the `Evaluation.schedule` field.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - type of execution is unspecified
-	//   "ONE_TIME" - type of execution is one time
-	//   "SCHEDULED" - type of execution is scheduled
+	//   "TYPE_UNSPECIFIED" - Type of execution is unspecified.
+	//   "ONE_TIME" - Type of execution is one time.
+	//   "SCHEDULED" - Type of execution is scheduled.
 	RunType string `json:"runType,omitempty"`
-	// StartTime: Output only. [Output only] Start time stamp
+	// StartTime: Output only. [Output only] Start time stamp.
 	StartTime string `json:"startTime,omitempty"`
-	// State: Output only. [Output only] State
+	// State: Output only. [Output only] State.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - state of execution is unspecified
-	//   "RUNNING" - the execution is running in backend service
-	//   "SUCCEEDED" - the execution run success
-	//   "FAILED" - the execution run failed
+	//   "STATE_UNSPECIFIED" - State of execution is unspecified.
+	//   "RUNNING" - The execution is running in backend service.
+	//   "SUCCEEDED" - The execution run succeeded.
+	//   "FAILED" - The execution run failed.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1338,7 +1344,7 @@ func (s Execution) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ExecutionResult: Message describing the result of an execution
+// ExecutionResult: The result of an execution.
 type ExecutionResult struct {
 	// Commands: The commands to remediate the violation.
 	Commands []*Command `json:"commands,omitempty"`
@@ -1350,12 +1356,12 @@ type ExecutionResult struct {
 	Rule string `json:"rule,omitempty"`
 	// Severity: The severity of violation.
 	Severity string `json:"severity,omitempty"`
-	// Type: Execution result type of the scanned resource
+	// Type: Execution result type of the scanned resource.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Unknown state
-	//   "TYPE_PASSED" - resource successfully passed the rule
-	//   "TYPE_VIOLATED" - resource violated the rule
+	//   "TYPE_UNSPECIFIED" - Unknown state.
+	//   "TYPE_PASSED" - Resource successfully passed the rule.
+	//   "TYPE_VIOLATED" - Resource violated the rule.
 	Type string `json:"type,omitempty"`
 	// ViolationDetails: The details of violation in an evaluation result.
 	ViolationDetails *ViolationDetails `json:"violationDetails,omitempty"`
@@ -1379,7 +1385,7 @@ func (s ExecutionResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ExternalDataSources: Message for external data sources
+// ExternalDataSources: External data sources for an execution.
 type ExternalDataSources struct {
 	// AssetType: Required. The asset type of the external data source. This can be
 	// a supported Cloud Asset Inventory asset type (see
@@ -1388,16 +1394,16 @@ type ExternalDataSources struct {
 	// user.
 	AssetType string `json:"assetType,omitempty"`
 	// Name: Optional. Name of external data source. The name will be used inside
-	// the rego/sql to refer the external data
+	// the rego/sql to refer the external data.
 	Name string `json:"name,omitempty"`
-	// Type: Required. Type of external data source
+	// Type: Required. Type of external data source.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Unknown type
-	//   "BIG_QUERY_TABLE" - BigQuery table
+	//   "TYPE_UNSPECIFIED" - Unknown type.
+	//   "BIG_QUERY_TABLE" - BigQuery table.
 	Type string `json:"type,omitempty"`
 	// Uri: Required. URI of external data source. example of bq table
-	// {project_ID}.{dataset_ID}.{table_ID}
+	// {project_ID}.{dataset_ID}.{table_ID}.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AssetType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1417,9 +1423,11 @@ func (s ExternalDataSources) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GceInstanceFilter: Message describing compute engine instance filter
+// GceInstanceFilter: A filter for matching Compute Engine instances.
 type GceInstanceFilter struct {
-	// ServiceAccounts: Service account of compute engine
+	// ServiceAccounts: If non-empty, only Compute Engine instances associated with
+	// at least one of the provided service accounts will be included in the
+	// evaluation.
 	ServiceAccounts []string `json:"serviceAccounts,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ServiceAccounts") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1582,56 +1590,6 @@ func (s InstanceProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// InvalidRule: Message represent an rule that failed to be validated.
-type InvalidRule struct {
-	// DisplayName: display name of the invalid rule
-	DisplayName string `json:"displayName,omitempty"`
-	// GcsUri: cloud storage destination of the invalid rule
-	GcsUri string `json:"gcsUri,omitempty"`
-	// Name: name of the invalid rule
-	Name string `json:"name,omitempty"`
-	// ValiadtionError: The error message of valdating rule formats.
-	ValiadtionError string `json:"valiadtionError,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DisplayName") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s InvalidRule) MarshalJSON() ([]byte, error) {
-	type NoMethod InvalidRule
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// InvalidRulesWrapper: Message wrappes a list of invalid rules.
-type InvalidRulesWrapper struct {
-	// InvalidRules: The invalid rules that failed to be validated.
-	InvalidRules []*InvalidRule `json:"invalidRules,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "InvalidRules") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "InvalidRules") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s InvalidRulesWrapper) MarshalJSON() ([]byte, error) {
-	type NoMethod InvalidRulesWrapper
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // ListActuationsResponse: The response object from `ListActuations`.
 type ListActuationsResponse struct {
 	// Actuations: The list of Actuation
@@ -1723,9 +1681,9 @@ func (s ListDiscoveredProfilesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListEvaluationsResponse: Message for response to listing Evaluations
+// ListEvaluationsResponse: Response message for the ListEvaluations RPC.
 type ListEvaluationsResponse struct {
-	// Evaluations: The list of Evaluation
+	// Evaluations: The list of evaluations.
 	Evaluations []*Evaluation `json:"evaluations,omitempty"`
 	// NextPageToken: A token identifying a page of results the server should
 	// return.
@@ -1753,7 +1711,8 @@ func (s ListEvaluationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListExecutionResultsResponse: Message for response of list execution results
+// ListExecutionResultsResponse: Response message for the ListExecutionResults
+// RPC.
 type ListExecutionResultsResponse struct {
 	// ExecutionResults: The versions from the specified publisher.
 	ExecutionResults []*ExecutionResult `json:"executionResults,omitempty"`
@@ -1781,9 +1740,9 @@ func (s ListExecutionResultsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListExecutionsResponse: Message for response to listing Executions
+// ListExecutionsResponse: Response message for the ListExecutions RPC.
 type ListExecutionsResponse struct {
-	// Executions: The list of Execution
+	// Executions: The list of Execution.
 	Executions []*Execution `json:"executions,omitempty"`
 	// NextPageToken: A token identifying a page of results the server should
 	// return.
@@ -1872,25 +1831,22 @@ func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListRulesResponse: Mesesage of response of list rules
+// ListRulesResponse: Response message for the ListRules RPC.
 type ListRulesResponse struct {
-	// InvalidRulesWrapper: A wrapper of the invalid rules that failed to be
-	// validated.
-	InvalidRulesWrapper *InvalidRulesWrapper `json:"invalidRulesWrapper,omitempty"`
-	// Rules: all rules in response
+	// Rules: All rules in response.
 	Rules []*Rule `json:"rules,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "InvalidRulesWrapper") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Rules") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "InvalidRulesWrapper") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Rules") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1900,12 +1856,13 @@ func (s ListRulesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListScannedResourcesResponse: Message for response to list scanned resources
+// ListScannedResourcesResponse: Response message for the ListScannedResources
+// RPC.
 type ListScannedResourcesResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
 	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// ScannedResources: All scanned resources in response
+	// ScannedResources: All scanned resources in response.
 	ScannedResources []*ScannedResource `json:"scannedResources,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2016,9 +1973,9 @@ func (s LocationDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Notice: Message for additional information generated by the execution
+// Notice: Additional information generated by an execution.
 type Notice struct {
-	// Message: Output only. Message of the notice
+	// Message: Output only. Message of the notice.
 	Message string `json:"message,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2206,7 +2163,7 @@ func (s Product) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Resource: Message represent resource in execution result
+// Resource: Resource in execution result.
 type Resource struct {
 	// Name: The name of the resource.
 	Name string `json:"name,omitempty"`
@@ -2232,15 +2189,23 @@ func (s Resource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ResourceFilter: Message describing resource filters
+// ResourceFilter: Resource filter for an evaluation defining the scope of
+// resources to be evaluated.
 type ResourceFilter struct {
-	// GceInstanceFilter: Filter compute engine resource
+	// GceInstanceFilter: Filter compute engine resources.
 	GceInstanceFilter *GceInstanceFilter `json:"gceInstanceFilter,omitempty"`
-	// InclusionLabels: The label used for filter resource
+	// InclusionLabels: Labels to filter resources by. Each key-value pair in the
+	// map must exist on the resource for it to be included (e.g. VM instance
+	// labels). For example, specifying `{ "env": "prod", "database": "nosql" }`
+	// will only include resources that have labels `env=prod` and
+	// `database=nosql`.
 	InclusionLabels map[string]string `json:"inclusionLabels,omitempty"`
-	// ResourceIdPatterns: The id pattern for filter resource
+	// ResourceIdPatterns: The pattern to filter resources by their id For example,
+	// a pattern of ".*prod-cluster.*" will match all resources that contain
+	// "prod-cluster" in their ID.
 	ResourceIdPatterns []string `json:"resourceIdPatterns,omitempty"`
-	// Scopes: The scopes of evaluation resource
+	// Scopes: The scopes of evaluation resource. Format: * `projects/{project_id}`
+	// * `folders/{folder_id}` * `organizations/{organization_id}`
 	Scopes []string `json:"scopes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GceInstanceFilter") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2260,12 +2225,9 @@ func (s ResourceFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ResourceStatus: Message describing resource status
+// ResourceStatus: The lifecycle status of an Evaluation resource.
 type ResourceStatus struct {
-	// RulesNewerVersions: Historical: Used before 2023-05-22 the new version of
-	// rule id if exists
-	RulesNewerVersions []string `json:"rulesNewerVersions,omitempty"`
-	// State: State of the resource
+	// State: State of the Evaluation resource.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The state has not been populated in this message.
@@ -2274,15 +2236,15 @@ type ResourceStatus struct {
 	// Update operations.
 	//   "DELETING" - Resource has an active Delete operation.
 	State string `json:"state,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RulesNewerVersions") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RulesNewerVersions") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2292,39 +2254,39 @@ func (s ResourceStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Rule: Message represent a rule
+// Rule: A rule to be evaluated.
 type Rule struct {
 	// AssetType: The CAI asset type of the rule is evaluating, for joined asset
 	// types, it will be the corresponding primary asset types.
 	AssetType string `json:"assetType,omitempty"`
-	// Description: descrite rule in plain language
+	// Description: Describe rule in plain language.
 	Description string `json:"description,omitempty"`
-	// DisplayName: the name display in UI
+	// DisplayName: The name display in UI.
 	DisplayName string `json:"displayName,omitempty"`
-	// ErrorMessage: the message template for rule
+	// ErrorMessage: The message template for rule.
 	ErrorMessage string `json:"errorMessage,omitempty"`
-	// Name: rule name
+	// Name: Rule name.
 	Name string `json:"name,omitempty"`
-	// PrimaryCategory: the primary category
+	// PrimaryCategory: The primary category.
 	PrimaryCategory string `json:"primaryCategory,omitempty"`
-	// Remediation: the remediation for the rule
+	// Remediation: The remediation for the rule.
 	Remediation string `json:"remediation,omitempty"`
-	// RevisionId: Output only. the version of the rule
+	// RevisionId: Output only. The version of the rule.
 	RevisionId string `json:"revisionId,omitempty"`
 	// RuleType: The type of the rule.
 	//
 	// Possible values:
 	//   "RULE_TYPE_UNSPECIFIED" - Not specified.
-	//   "BASELINE" - Baseline rules
-	//   "CUSTOM" - Custom rules
+	//   "BASELINE" - Baseline rules.
+	//   "CUSTOM" - Custom rules.
 	RuleType string `json:"ruleType,omitempty"`
-	// SecondaryCategory: the secondary category
+	// SecondaryCategory: The secondary category.
 	SecondaryCategory string `json:"secondaryCategory,omitempty"`
-	// Severity: the severity of the rule
+	// Severity: The severity of the rule.
 	Severity string `json:"severity,omitempty"`
-	// Tags: List of user-defined tags
+	// Tags: List of user-defined tags.
 	Tags []string `json:"tags,omitempty"`
-	// Uri: the docuement url for the rule
+	// Uri: The document url for the rule.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AssetType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2344,23 +2306,23 @@ func (s Rule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RuleExecutionResult: Message for execution result summary per rule
+// RuleExecutionResult: Execution result summary per rule.
 type RuleExecutionResult struct {
-	// Message: Execution message, if any
+	// Message: Execution message, if any.
 	Message string `json:"message,omitempty"`
-	// ResultCount: Number of violations
+	// ResultCount: Number of violations.
 	ResultCount int64 `json:"resultCount,omitempty,string"`
-	// Rule: rule name
+	// Rule: Rule name as plain text like `sap-hana-configured`.
 	Rule string `json:"rule,omitempty"`
-	// ScannedResourceCount: Number of total scanned resources
+	// ScannedResourceCount: Number of total scanned resources.
 	ScannedResourceCount int64 `json:"scannedResourceCount,omitempty,string"`
-	// State: Output only. The execution status
+	// State: Output only. The execution status.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unknown state
-	//   "STATE_SUCCESS" - execution completed successfully
-	//   "STATE_FAILURE" - execution completed with failures
-	//   "STATE_SKIPPED" - execution was not executed
+	//   "STATE_SUCCESS" - Execution completed successfully
+	//   "STATE_FAILURE" - Execution completed with failures
+	//   "STATE_SKIPPED" - Execution was not executed
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2404,13 +2366,11 @@ func (s RuleOutput) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RunEvaluationRequest: Message for creating a Execution
+// RunEvaluationRequest: Request message for the RunEvaluation RPC.
 type RunEvaluationRequest struct {
-	// Execution: Required. The resource being created
+	// Execution: Required. The resource being created.
 	Execution *Execution `json:"execution,omitempty"`
-	// ExecutionId: Required. Id of the requesting object If auto-generating Id
-	// server-side, remove this field and execution_id from the method_signature of
-	// Create RPC
+	// ExecutionId: Required. ID of the execution which will be created.
 	ExecutionId string `json:"executionId,omitempty"`
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server will
@@ -3239,11 +3199,11 @@ func (s SapWorkload) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ScannedResource: Message of scanned resource
+// ScannedResource: A scanned resource.
 type ScannedResource struct {
-	// Resource: resource name
+	// Resource: Resource name.
 	Resource string `json:"resource,omitempty"`
-	// Type: resource type
+	// Type: Resource type.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Resource") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3296,12 +3256,12 @@ func (s ServiceStates) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ShellCommand: * A ShellCommand is invoked via the agent's command line
-// executor
+// ShellCommand: A ShellCommand is invoked via the agent's command line
+// executor.
 type ShellCommand struct {
-	// Args: args is a string of arguments to be passed to the command.
+	// Args: Arguments to be passed to the command.
 	Args string `json:"args,omitempty"`
-	// Command: command is the name of the command to be executed.
+	// Command: The name of the command to be executed.
 	Command string `json:"command,omitempty"`
 	// TimeoutSeconds: Optional. If not specified, the default timeout is 60
 	// seconds.
@@ -3612,15 +3572,15 @@ func (s Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Summary: Message for execution summary
+// Summary: Execution summary.
 type Summary struct {
-	// Failures: Output only. Number of failures
+	// Failures: Output only. Number of failures.
 	Failures int64 `json:"failures,omitempty,string"`
 	// NewFailures: Output only. Number of new failures compared to the previous
-	// execution
+	// execution.
 	NewFailures int64 `json:"newFailures,omitempty,string"`
 	// NewFixes: Output only. Number of new fixes compared to the previous
-	// execution
+	// execution.
 	NewFixes int64 `json:"newFixes,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Failures") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3737,7 +3697,7 @@ func (s UpcomingMaintenanceEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ViolationDetails: Message describing the violation in an evaluation result.
+// ViolationDetails: The violation in an evaluation result.
 type ViolationDetails struct {
 	// Asset: The name of the asset.
 	Asset string `json:"asset,omitempty"`
@@ -5543,7 +5503,7 @@ func (r *ProjectsLocationsEvaluationsService) Create(parent string, evaluation *
 }
 
 // EvaluationId sets the optional parameter "evaluationId": Required. Id of the
-// requesting object
+// requesting object.
 func (c *ProjectsLocationsEvaluationsCreateCall) EvaluationId(evaluationId string) *ProjectsLocationsEvaluationsCreateCall {
 	c.urlParams_.Set("evaluationId", evaluationId)
 	return c
@@ -5667,7 +5627,7 @@ func (r *ProjectsLocationsEvaluationsService) Delete(name string) *ProjectsLocat
 }
 
 // Force sets the optional parameter "force": Followed the best practice from
-// https://aip.dev/135#cascading-delete
+// https://aip.dev/135#cascading-delete.
 func (c *ProjectsLocationsEvaluationsDeleteCall) Force(force bool) *ProjectsLocationsEvaluationsDeleteCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c
@@ -5904,7 +5864,7 @@ func (c *ProjectsLocationsEvaluationsListCall) Filter(filter string) *ProjectsLo
 }
 
 // OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// results.
 func (c *ProjectsLocationsEvaluationsListCall) OrderBy(orderBy string) *ProjectsLocationsEvaluationsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -6049,8 +6009,9 @@ type ProjectsLocationsEvaluationsPatchCall struct {
 
 // Patch: Updates the parameters of a single Evaluation.
 //
-//   - name: name of resource names have the form
-//     'projects/{project_id}/locations/{location_id}/evaluations/{evaluation_id}'.
+//   - name: Name of resource that has the form
+//     `projects/{project_id}/locations/{location_id}/evaluations/{evaluation_id}`
+//     .
 func (r *ProjectsLocationsEvaluationsService) Patch(name string, evaluation *Evaluation) *ProjectsLocationsEvaluationsPatchCall {
 	c := &ProjectsLocationsEvaluationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6402,14 +6363,14 @@ type ProjectsLocationsEvaluationsExecutionsListCall struct {
 // List: Lists Executions in a given project and location.
 //
 //   - parent: The resource prefix of the Execution using the form:
-//     'projects/{project}/locations/{location}/evaluations/{evaluation}'.
+//     `projects/{project}/locations/{location}/evaluations/{evaluation}`.
 func (r *ProjectsLocationsEvaluationsExecutionsService) List(parent string) *ProjectsLocationsEvaluationsExecutionsListCall {
 	c := &ProjectsLocationsEvaluationsExecutionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filtering results.
 func (c *ProjectsLocationsEvaluationsExecutionsListCall) Filter(filter string) *ProjectsLocationsEvaluationsExecutionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6561,9 +6522,8 @@ type ProjectsLocationsEvaluationsExecutionsRunCall struct {
 
 // Run: Creates a new Execution in a given project and location.
 //
-//   - name: The resource name of the Execution using the form:
-//     'projects/{project}/locations/{location}/evaluations/{evaluation}/execution
-//     s/{execution}'.
+//   - name: The resource name of the Evaluation using the form:
+//     `projects/{project}/locations/{location}/evaluations/{evaluation}`.
 func (r *ProjectsLocationsEvaluationsExecutionsService) Run(name string, runevaluationrequest *RunEvaluationRequest) *ProjectsLocationsEvaluationsExecutionsRunCall {
 	c := &ProjectsLocationsEvaluationsExecutionsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6674,7 +6634,7 @@ func (r *ProjectsLocationsEvaluationsExecutionsResultsService) List(parent strin
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filtering results.
 func (c *ProjectsLocationsEvaluationsExecutionsResultsListCall) Filter(filter string) *ProjectsLocationsEvaluationsExecutionsResultsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6819,14 +6779,14 @@ type ProjectsLocationsEvaluationsExecutionsScannedResourcesListCall struct {
 
 // List: List all scanned resources for a single Execution.
 //
-// - parent: parent for ListScannedResourcesRequest.
+// - parent: Parent for ListScannedResourcesRequest.
 func (r *ProjectsLocationsEvaluationsExecutionsScannedResourcesService) List(parent string) *ProjectsLocationsEvaluationsExecutionsScannedResourcesListCall {
 	c := &ProjectsLocationsEvaluationsExecutionsScannedResourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filtering results.
 func (c *ProjectsLocationsEvaluationsExecutionsScannedResourcesListCall) Filter(filter string) *ProjectsLocationsEvaluationsExecutionsScannedResourcesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6854,7 +6814,7 @@ func (c *ProjectsLocationsEvaluationsExecutionsScannedResourcesListCall) PageTok
 	return c
 }
 
-// Rule sets the optional parameter "rule": rule name
+// Rule sets the optional parameter "rule": Rule name.
 func (c *ProjectsLocationsEvaluationsExecutionsScannedResourcesListCall) Rule(rule string) *ProjectsLocationsEvaluationsExecutionsScannedResourcesListCall {
 	c.urlParams_.Set("rule", rule)
 	return c
@@ -7712,18 +7672,17 @@ func (c *ProjectsLocationsRulesListCall) CustomRulesBucket(customRulesBucket str
 //
 // Possible values:
 //
-//	"EVALUATION_TYPE_UNSPECIFIED" - Not specified
-//	"SAP" - SAP best practices
-//	"SQL_SERVER" - SQL best practices
-//	"OTHER" - Customized best practices
-//	"SCC_IAC" - SCC IaC (Infra as Code) best practices.
+//	"EVALUATION_TYPE_UNSPECIFIED" - Not specified.
+//	"SAP" - SAP best practices.
+//	"SQL_SERVER" - SQL best practices.
+//	"OTHER" - Customized best practices.
 func (c *ProjectsLocationsRulesListCall) EvaluationType(evaluationType string) *ProjectsLocationsRulesListCall {
 	c.urlParams_.Set("evaluationType", evaluationType)
 	return c
 }
 
 // Filter sets the optional parameter "filter": Filter based on
-// primary_category, secondary_category
+// primary_category, secondary_category.
 func (c *ProjectsLocationsRulesListCall) Filter(filter string) *ProjectsLocationsRulesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

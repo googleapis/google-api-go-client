@@ -19308,6 +19308,10 @@ type FutureReservation struct {
 	// update an
 	// existing commitment.
 	CommitmentInfo *FutureReservationCommitmentInfo `json:"commitmentInfo,omitempty"`
+	// Possible values:
+	//   "CONFIDENTIAL_COMPUTE_TYPE_TDX" - Intel Trust Domain Extensions.
+	//   "CONFIDENTIAL_COMPUTE_TYPE_UNSPECIFIED"
+	ConfidentialComputeType string `json:"confidentialComputeType,omitempty"`
 	// CreationTimestamp: Output only. [Output Only] The creation timestamp for
 	// this future reservation inRFC3339
 	// text format.
@@ -26912,14 +26916,20 @@ type ImageRawDisk struct {
 	// An optional SHA1 checksum of the disk image before unpackaging provided
 	// by the client when the disk image is created.
 	Sha1Checksum string `json:"sha1Checksum,omitempty"`
-	// Source: The full Google Cloud Storage URL where the raw disk image archive
-	// is
-	// stored.
-	// The following are valid formats for the URL:
+	// Source: The full Google Cloud Storage URL or Artifact Registry path where
+	// the raw
+	// disk image archive is stored.
+	// The following are valid formats:
 	//
 	//    - https://storage.googleapis.com/bucket_name/image_archive_name
 	//    -
 	// https://storage.googleapis.com/bucket_name/folder_name/image_archive_name
+	//    -
+	// projects/project/locations/location/repositories/repo/packages/package/versio
+	// ns/version_id
+	//    -
+	// projects/project/locations/location/repositories/repo/packages/package/versio
+	// ns/version_id@dirsum_sha256:hex_value
 	//
 	//
 	//
@@ -30807,6 +30817,11 @@ type InstanceGroupManagersConfigureAcceleratorTopologiesRequest struct {
 	// be
 	// obtained from the GetAvailableAcceleratorTopologies rpc.
 	AcceleratorTopologyActions map[string]string `json:"acceleratorTopologyActions,omitempty"`
+	// AcceleratorTopologyConfigurations: Map of accelerator topologies that should
+	// have their state changed to
+	// the specified configuration. The map key is the hashed topology locus id.
+	// It can be obtained from the GetAvailableAcceleratorTopologies rpc.
+	AcceleratorTopologyConfigurations map[string]InstanceGroupManagersConfigureAcceleratorTopologiesRequestAcceleratorTopologyConfiguration `json:"acceleratorTopologyConfigurations,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AcceleratorTopologyActions")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -30822,6 +30837,43 @@ type InstanceGroupManagersConfigureAcceleratorTopologiesRequest struct {
 
 func (s InstanceGroupManagersConfigureAcceleratorTopologiesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceGroupManagersConfigureAcceleratorTopologiesRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InstanceGroupManagersConfigureAcceleratorTopologiesRequestAcceleratorTopology
+// Configuration: Configuration for a single accelerator topology.
+type InstanceGroupManagersConfigureAcceleratorTopologiesRequestAcceleratorTopologyConfiguration struct {
+	// Possible values:
+	//   "ACCELERATOR_TOPOLOGY_ACTION_UNSPECIFIED" - Default value. Should not be
+	// used.
+	//   "ACTIVATE" - The accelerator topology is to be activated.
+	//   "DEACTIVATE" - The accelerator topology is to be deactivated.
+	Action string `json:"action,omitempty"`
+	// ExternalId: Identifier of the accelerator topology assigned externally
+	// to
+	// differentiate who is the owner of the topology. The format needs to
+	// conform to RFC1035 and be unique. The uniqueness is guaranteed by
+	// the
+	// requestor. If it is provided on activating the sub-slice it will have to
+	// be provided on deactivating as well. This identifier is cleared
+	// on
+	// successful deform of a sub-slice.
+	ExternalId string `json:"externalId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstanceGroupManagersConfigureAcceleratorTopologiesRequestAcceleratorTopologyConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceGroupManagersConfigureAcceleratorTopologiesRequestAcceleratorTopologyConfiguration
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -30956,7 +31008,6 @@ type InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTo
 	// issue with the inter-chip connectivity that makes this
 	// part of the infrastructure unsuitable for forming a
 	// working inter-chip connected group.
-	//   "UNKNOWN" - No signal available
 	AcceleratorTopologyHealth string                                                                                  `json:"acceleratorTopologyHealth,omitempty"`
 	AcceleratorTopologyState  *InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopologyState `json:"acceleratorTopologyState,omitempty"`
 	// Possible values:
@@ -31003,6 +31054,15 @@ type InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTo
 	Error *InstanceGroupManagersGetAvailableAcceleratorTopologiesResponseAcceleratorTopologyStateError `json:"error,omitempty"`
 	// ErrorTimestamp: Timestamp when the last error happened
 	ErrorTimestamp string `json:"errorTimestamp,omitempty"`
+	// ExternalId: Identifier of the accelerator topology assigned externally
+	// to
+	// differentiate who is the owner of the topology. This is set
+	// in
+	// ConfigureAcceleratorTopologies. If it is provided on activating
+	// the
+	// sub-slice it will have to be provided on deactivating as well.
+	// This identifier is cleared on successful deform of a sub-slice.
+	ExternalId string `json:"externalId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CurrentState") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -59707,6 +59767,10 @@ type Reservation struct {
 	// commitment. This field
 	// displays for reservations that are tied to a commitment.
 	Commitment string `json:"commitment,omitempty"`
+	// Possible values:
+	//   "CONFIDENTIAL_COMPUTE_TYPE_TDX" - Intel Trust Domain Extensions.
+	//   "CONFIDENTIAL_COMPUTE_TYPE_UNSPECIFIED"
+	ConfidentialComputeType string `json:"confidentialComputeType,omitempty"`
 	// CreationTimestamp: Output only. [Output Only] Creation timestamp
 	// inRFC3339
 	// text format.

@@ -5100,6 +5100,7 @@ type BusinessChainTargetingOptionDetails struct {
 	//   "GEO_REGION_TYPE_COMMUNE" - The geographic region is a commune.
 	//   "GEO_REGION_TYPE_COLLOQUIAL_AREA" - The geographic region is a colloquial
 	// area.
+	//   "GEO_REGION_TYPE_POST_TOWN" - The geographic region is a post town.
 	GeoRegionType string `json:"geoRegionType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BusinessChain") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10231,6 +10232,7 @@ type GeoRegionAssignedTargetingOptionDetails struct {
 	//   "GEO_REGION_TYPE_COMMUNE" - The geographic region is a commune.
 	//   "GEO_REGION_TYPE_COLLOQUIAL_AREA" - The geographic region is a colloquial
 	// area.
+	//   "GEO_REGION_TYPE_POST_TOWN" - The geographic region is a post town.
 	GeoRegionType string `json:"geoRegionType,omitempty"`
 	// Negative: Indicates if this option is being negatively targeted.
 	Negative bool `json:"negative,omitempty"`
@@ -10336,6 +10338,7 @@ type GeoRegionTargetingOptionDetails struct {
 	//   "GEO_REGION_TYPE_COMMUNE" - The geographic region is a commune.
 	//   "GEO_REGION_TYPE_COLLOQUIAL_AREA" - The geographic region is a colloquial
 	// area.
+	//   "GEO_REGION_TYPE_POST_TOWN" - The geographic region is a post town.
 	GeoRegionType string `json:"geoRegionType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -16205,6 +16208,10 @@ type TargetingExpansionConfig struct {
 	// automationType is set to `INSERTION_ORDER_AUTOMATION_TYPE_BUDGET` or
 	// `INSERTION_ORDER_AUTOMATION_TYPE_BID_BUDGET`.
 	EnableOptimizedTargeting bool `json:"enableOptimizedTargeting,omitempty"`
+	// ExcludeDemographicExpansion: Optional. Whether to exclude demographic
+	// expansion for Optimized Targeting. This field only applies to Demand Gen ad
+	// groups.
+	ExcludeDemographicExpansion bool `json:"excludeDemographicExpansion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudienceExpansionLevel") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

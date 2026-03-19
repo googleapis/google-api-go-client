@@ -602,6 +602,30 @@ func (s GoogleCloudApihubV1AddonConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApihubV1AgentRegistrySyncConfig: The configuration for Agent
+// Registry sync.
+type GoogleCloudApihubV1AgentRegistrySyncConfig struct {
+	// Disabled: Optional. If true, the MCP data sync to the Agent Registry will be
+	// disabled. The default value is false.
+	Disabled bool `json:"disabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Disabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Disabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1AgentRegistrySyncConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1AgentRegistrySyncConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApihubV1AllDataAddonConfig: Configuration for addons which act on
 // all data in the API hub. This is used to specify if the addon is enabled for
 // all data in the API hub.
@@ -1028,9 +1052,9 @@ func (s GoogleCloudApihubV1ApiOperation) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudApihubV1ApiView: The view of an API.
 type GoogleCloudApihubV1ApiView struct {
-	// McpServerView: Output only. MCP server view.
+	// McpServerView: MCP server view.
 	McpServerView *GoogleCloudApihubV1FlattenedApiVersionDeploymentView `json:"mcpServerView,omitempty"`
-	// McpToolView: Output only. MCP tools view.
+	// McpToolView: MCP tools view.
 	McpToolView *GoogleCloudApihubV1FlattenedApiVersionOperationDeploymentView `json:"mcpToolView,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "McpServerView") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1411,6 +1435,9 @@ func (s GoogleCloudApihubV1CollectApiDataRequest) MarshalJSON() ([]byte, error) 
 // GoogleCloudApihubV1Config: Available configurations to provision an ApiHub
 // Instance.
 type GoogleCloudApihubV1Config struct {
+	// AgentRegistrySyncConfig: Optional. The configuration for syncing MCP data in
+	// the API Hub instance to the Agent Registry.
+	AgentRegistrySyncConfig *GoogleCloudApihubV1AgentRegistrySyncConfig `json:"agentRegistrySyncConfig,omitempty"`
 	// CmekKeyName: Optional. The Customer Managed Encryption Key (CMEK) used for
 	// data encryption. The CMEK name should follow the format of
 	// `projects/([^/]+)/locations/([^/]+)/keyRings/([^/]+)/cryptoKeys/([^/]+)`,
@@ -1432,15 +1459,15 @@ type GoogleCloudApihubV1Config struct {
 	// VertexLocation: Optional. The name of the Vertex AI location where the data
 	// store is stored.
 	VertexLocation string `json:"vertexLocation,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CmekKeyName") to
+	// ForceSendFields is a list of field names (e.g. "AgentRegistrySyncConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CmekKeyName") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgentRegistrySyncConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2461,11 +2488,11 @@ func (s GoogleCloudApihubV1FetchAdditionalSpecContentResponse) MarshalJSON() ([]
 // GoogleCloudApihubV1FlattenedApiVersionDeploymentView: A flattened view of an
 // API, its version and one of the linked deployments.
 type GoogleCloudApihubV1FlattenedApiVersionDeploymentView struct {
-	// Api: The API.
+	// Api: Optional. The API.
 	Api *GoogleCloudApihubV1Api `json:"api,omitempty"`
-	// Deployment: The deployment.
+	// Deployment: Optional. The deployment.
 	Deployment *GoogleCloudApihubV1Deployment `json:"deployment,omitempty"`
-	// Version: The version.
+	// Version: Optional. The version.
 	Version *GoogleCloudApihubV1Version `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Api") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2490,13 +2517,13 @@ func (s GoogleCloudApihubV1FlattenedApiVersionDeploymentView) MarshalJSON() ([]b
 // deployments. If there are no deployments linked to the operation then the
 // result will be empty.
 type GoogleCloudApihubV1FlattenedApiVersionOperationDeploymentView struct {
-	// Api: The API.
+	// Api: Optional. The API.
 	Api *GoogleCloudApihubV1Api `json:"api,omitempty"`
-	// ApiOperation: The API operation.
+	// ApiOperation: Optional. The API operation.
 	ApiOperation *GoogleCloudApihubV1ApiOperation `json:"apiOperation,omitempty"`
-	// Deployment: The deployment.
+	// Deployment: Optional. The deployment.
 	Deployment *GoogleCloudApihubV1Deployment `json:"deployment,omitempty"`
-	// Version: The version.
+	// Version: Optional. The version.
 	Version *GoogleCloudApihubV1Version `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Api") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4391,7 +4418,7 @@ func (s GoogleCloudApihubV1ResourceConfig) MarshalJSON() ([]byte, error) {
 // GoogleCloudApihubV1RetrieveApiViewsResponse: The RetrieveApiViews method's
 // response.
 type GoogleCloudApihubV1RetrieveApiViewsResponse struct {
-	// ApiViews: The list of API views.
+	// ApiViews: Output only. The list of API views.
 	ApiViews []*GoogleCloudApihubV1ApiView `json:"apiViews,omitempty"`
 	// NextPageToken: Next page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -6995,6 +7022,121 @@ func (c *ProjectsLocationsApiHubInstancesLookupCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apihub.projects.locations.apiHubInstances.lookup", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsApiHubInstancesPatchCall struct {
+	s                                 *Service
+	name                              string
+	googlecloudapihubv1apihubinstance *GoogleCloudApihubV1ApiHubInstance
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Patch: Update an Api Hub instance. The following fields in the
+// ApiHubInstance can be updated: * disable_search * vertex_location *
+// agent_registry_sync_config The update_mask should be used to specify the
+// fields being updated.
+//
+//   - name: Identifier. Format:
+//     `projects/{project}/locations/{location}/apiHubInstances/{apiHubInstance}`.
+func (r *ProjectsLocationsApiHubInstancesService) Patch(name string, googlecloudapihubv1apihubinstance *GoogleCloudApihubV1ApiHubInstance) *ProjectsLocationsApiHubInstancesPatchCall {
+	c := &ProjectsLocationsApiHubInstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapihubv1apihubinstance = googlecloudapihubv1apihubinstance
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update.
+func (c *ProjectsLocationsApiHubInstancesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsApiHubInstancesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsApiHubInstancesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsApiHubInstancesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsApiHubInstancesPatchCall) Context(ctx context.Context) *ProjectsLocationsApiHubInstancesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsApiHubInstancesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsApiHubInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapihubv1apihubinstance)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apihub.projects.locations.apiHubInstances.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apihub.projects.locations.apiHubInstances.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsApiHubInstancesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apihub.projects.locations.apiHubInstances.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -961,17 +961,13 @@ func (s OAuth2) MarshalJSON() ([]byte, error) {
 // OAuthSettings: Configuration for OAuth login&consent flow behavior as well
 // as for OAuth Credentials.
 type OAuthSettings struct {
-	// ClientId: Optional. OAuth 2.0 client ID used in the OAuth flow to generate
-	// an access token. If this field is set, you can skip obtaining the OAuth
-	// credentials in this step:
-	// https://developers.google.com/identity/protocols/OAuth2?hl=en_US#1.-obtain-oauth-2.0-credentials-from-the-google-api-console.
-	// However, this could allow for client sharing. The risks of client sharing
-	// are outlined here:
+	// ClientId: Optional. OAuth 2.0 client ID used in the OAuth flow. This allows
+	// for client sharing. The risks of client sharing are outlined here:
 	// https://cloud.google.com/iap/docs/sharing-oauth-clients#risks.
 	ClientId string `json:"clientId,omitempty"`
-	// ClientSecret: Optional. Input only. OAuth secret paired with client ID
+	// ClientSecret: Optional. Input only. OAuth secret paired with client ID.
 	ClientSecret string `json:"clientSecret,omitempty"`
-	// ClientSecretSha256: Output only. OAuth secret sha256 paired with client ID
+	// ClientSecretSha256: Output only. OAuth secret SHA256 paired with client ID.
 	ClientSecretSha256 string `json:"clientSecretSha256,omitempty"`
 	// LoginHint: Domain hint to send as hd=? parameter in OAuth request flow.
 	// Enables redirect to primary IDP by skipping Google's login screen.

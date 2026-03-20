@@ -270,6 +270,8 @@ type AccountConnector struct {
 	// CreateTime: Output only. The timestamp when the accountConnector was
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
+	// CustomOauthConfig: Custom OAuth config.
+	CustomOauthConfig *CustomOAuthConfig `json:"customOauthConfig,omitempty"`
 	// Etag: Optional. This checksum is computed by the server based on the value
 	// of other fields, and may be sent on update and delete requests to ensure the
 	// client has an up-to-date value before proceeding.
@@ -284,6 +286,8 @@ type AccountConnector struct {
 	OauthStartUri string `json:"oauthStartUri,omitempty"`
 	// ProviderOauthConfig: Optional. Provider OAuth config.
 	ProviderOauthConfig *ProviderOAuthConfig `json:"providerOauthConfig,omitempty"`
+	// ProxyConfig: Optional. Configuration for the http and git proxy features.
+	ProxyConfig *ProxyConfig `json:"proxyConfig,omitempty"`
 	// UpdateTime: Output only. The timestamp when the accountConnector was
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -686,6 +690,64 @@ func (s CryptoKeyConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CustomOAuthConfig: Message for a customized OAuth config.
+type CustomOAuthConfig struct {
+	// AuthUri: Required. Immutable. The OAuth2 authorization server URL.
+	AuthUri string `json:"authUri,omitempty"`
+	// ClientId: Required. The client ID of the OAuth application.
+	ClientId string `json:"clientId,omitempty"`
+	// ClientSecret: Required. Input only. The client secret of the OAuth
+	// application. It will be provided as plain text, but encrypted and stored in
+	// developer connect. As INPUT_ONLY field, it will not be included in the
+	// output.
+	ClientSecret string `json:"clientSecret,omitempty"`
+	// HostUri: Required. The host URI of the OAuth application.
+	HostUri string `json:"hostUri,omitempty"`
+	// PkceDisabled: Optional. Disable PKCE for this OAuth config. PKCE is enabled
+	// by default.
+	PkceDisabled bool `json:"pkceDisabled,omitempty"`
+	// ScmProvider: Required. The type of the SCM provider.
+	//
+	// Possible values:
+	//   "SCM_PROVIDER_UNKNOWN" - The SCM is not specified or BYO Account Connector
+	// is not an SCM.
+	//   "GITHUB_ENTERPRISE" - BYO Account Connector is an instance of GitHub
+	// Enterprise.
+	//   "GITLAB_ENTERPRISE" - BYO Account Connector is an instance of GitLab
+	// Enterprise.
+	//   "BITBUCKET_DATA_CENTER" - BYO Account Connector is an instance of
+	// Bitbucket Data Center.
+	ScmProvider string `json:"scmProvider,omitempty"`
+	// Scopes: Required. The scopes to be requested during OAuth.
+	Scopes []string `json:"scopes,omitempty"`
+	// ServerVersion: Output only. SCM server version installed at the host URI.
+	ServerVersion string `json:"serverVersion,omitempty"`
+	// ServiceDirectoryConfig: Optional. Configuration for using Service Directory
+	// to connect to a private service.
+	ServiceDirectoryConfig *ServiceDirectoryConfig `json:"serviceDirectoryConfig,omitempty"`
+	// SslCaCertificate: Optional. SSL certificate to use for requests to a private
+	// service.
+	SslCaCertificate string `json:"sslCaCertificate,omitempty"`
+	// TokenUri: Required. Immutable. The OAuth2 token request URL.
+	TokenUri string `json:"tokenUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthUri") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomOAuthConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomOAuthConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DeploymentEvent: The DeploymentEvent resource represents the deployment of
 // the artifact within the InsightsConfig resource.
 type DeploymentEvent struct {
@@ -975,6 +1037,35 @@ type FetchReadWriteTokenResponse struct {
 
 func (s FetchReadWriteTokenResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchReadWriteTokenResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FetchUserRepositoriesResponse: Response message for FetchUserRepositories.
+type FetchUserRepositoriesResponse struct {
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// UserRepos: The repositories that the user can access with this account
+	// connector.
+	UserRepos []*UserRepository `json:"userRepos,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FetchUserRepositoriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchUserRepositoriesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2190,6 +2281,30 @@ func (s ProviderOAuthConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ProxyConfig: The proxy configuration.
+type ProxyConfig struct {
+	// Enabled: Optional. Setting this to true allows the git and http proxies to
+	// perform actions on behalf of the user configured under the account
+	// connector.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProxyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ProxyConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RuntimeConfig: RuntimeConfig represents the runtimes where the application
 // is deployed.
 type RuntimeConfig struct {
@@ -2432,6 +2547,39 @@ type UserCredential struct {
 
 func (s UserCredential) MarshalJSON() ([]byte, error) {
 	type NoMethod UserCredential
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UserRepository: A user repository that can be linked to the account
+// connector. Consists of the repo name and the git proxy URL to forward
+// requests to this repo.
+type UserRepository struct {
+	// CloneUri: Output only. The git clone URL of the repo. For example:
+	// https://github.com/myuser/myrepo.git
+	CloneUri string `json:"cloneUri,omitempty"`
+	// DisplayName: Output only. The user friendly repo name (e.g., myuser/myrepo)
+	DisplayName string `json:"displayName,omitempty"`
+	// GitProxyUri: Output only. The Git proxy URL for this repo. For example:
+	// https://us-west1-git.developerconnect.dev/a/my-proj/my-ac/myuser/myrepo.git.
+	// Populated only when `proxy_config.enabled` is set to `true` in the Account
+	// Connector. This URL is used by other Google services that integrate with
+	// Developer Connect.
+	GitProxyUri string `json:"gitProxyUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloneUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloneUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UserRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod UserRepository
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2982,6 +3130,161 @@ func (c *ProjectsLocationsAccountConnectorsDeleteCall) Do(opts ...googleapi.Call
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.accountConnectors.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsAccountConnectorsFetchUserRepositoriesCall struct {
+	s                *Service
+	accountConnector string
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// FetchUserRepositories: FetchUserRepositories returns a list of UserRepos
+// that are available for an account connector resource.
+//
+//   - accountConnector: The name of the Account Connector resource in the
+//     format: `projects/*/locations/*/accountConnectors/*`.
+func (r *ProjectsLocationsAccountConnectorsService) FetchUserRepositories(accountConnector string) *ProjectsLocationsAccountConnectorsFetchUserRepositoriesCall {
+	c := &ProjectsLocationsAccountConnectorsFetchUserRepositoriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountConnector = accountConnector
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of results to return
+// in the list. Defaults to 20.
+func (c *ProjectsLocationsAccountConnectorsFetchUserRepositoriesCall) PageSize(pageSize int64) *ProjectsLocationsAccountConnectorsFetchUserRepositoriesCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page start.
+func (c *ProjectsLocationsAccountConnectorsFetchUserRepositoriesCall) PageToken(pageToken string) *ProjectsLocationsAccountConnectorsFetchUserRepositoriesCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Repository sets the optional parameter "repository": The name of the
+// repository. When specified, only the UserRepository with this name will be
+// returned if the repository is accessible under this Account Connector for
+// the calling user.
+func (c *ProjectsLocationsAccountConnectorsFetchUserRepositoriesCall) Repository(repository string) *ProjectsLocationsAccountConnectorsFetchUserRepositoriesCall {
+	c.urlParams_.Set("repository", repository)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAccountConnectorsFetchUserRepositoriesCall) Fields(s ...googleapi.Field) *ProjectsLocationsAccountConnectorsFetchUserRepositoriesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAccountConnectorsFetchUserRepositoriesCall) IfNoneMatch(entityTag string) *ProjectsLocationsAccountConnectorsFetchUserRepositoriesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAccountConnectorsFetchUserRepositoriesCall) Context(ctx context.Context) *ProjectsLocationsAccountConnectorsFetchUserRepositoriesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAccountConnectorsFetchUserRepositoriesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAccountConnectorsFetchUserRepositoriesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+accountConnector}:fetchUserRepositories")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"accountConnector": c.accountConnector,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.accountConnectors.fetchUserRepositories", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "developerconnect.projects.locations.accountConnectors.fetchUserRepositories" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FetchUserRepositoriesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAccountConnectorsFetchUserRepositoriesCall) Do(opts ...googleapi.CallOption) (*FetchUserRepositoriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FetchUserRepositoriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.accountConnectors.fetchUserRepositories", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAccountConnectorsFetchUserRepositoriesCall) Pages(ctx context.Context, f func(*FetchUserRepositoriesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsAccountConnectorsGetCall struct {

@@ -2055,6 +2055,7 @@ func (s GoogleCloudDialogflowCxV3InputAudioConfig) MarshalJSON() ([]byte, error)
 type GoogleCloudDialogflowCxV3Intent struct {
 	Description     string                                           `json:"description,omitempty"`
 	DisplayName     string                                           `json:"displayName,omitempty"`
+	DtmfPattern     string                                           `json:"dtmfPattern,omitempty"`
 	IsFallback      bool                                             `json:"isFallback,omitempty"`
 	Labels          map[string]string                                `json:"labels,omitempty"`
 	Name            string                                           `json:"name,omitempty"`
@@ -4401,6 +4402,7 @@ func (s GoogleCloudDialogflowCxV3beta1InputAudioConfig) MarshalJSON() ([]byte, e
 type GoogleCloudDialogflowCxV3beta1Intent struct {
 	Description     string                                                `json:"description,omitempty"`
 	DisplayName     string                                                `json:"displayName,omitempty"`
+	DtmfPattern     string                                                `json:"dtmfPattern,omitempty"`
 	IsFallback      bool                                                  `json:"isFallback,omitempty"`
 	Labels          map[string]string                                     `json:"labels,omitempty"`
 	Name            string                                                `json:"name,omitempty"`
@@ -6738,9 +6740,11 @@ type GoogleCloudDialogflowV2Conversation struct {
 	//   "CONVERSATION_STAGE_UNSPECIFIED"
 	//   "VIRTUAL_AGENT_STAGE"
 	//   "HUMAN_ASSIST_STAGE"
-	ConversationStage         string                                                         `json:"conversationStage,omitempty"`
-	EndTime                   string                                                         `json:"endTime,omitempty"`
-	IngestedContextReferences map[string]GoogleCloudDialogflowV2ConversationContextReference `json:"ingestedContextReferences,omitempty"`
+	ConversationStage          string                                                         `json:"conversationStage,omitempty"`
+	EndTime                    string                                                         `json:"endTime,omitempty"`
+	IngestedContextReferences  map[string]GoogleCloudDialogflowV2ConversationContextReference `json:"ingestedContextReferences,omitempty"`
+	InitialConversationProfile *GoogleCloudDialogflowV2ConversationProfile                    `json:"initialConversationProfile,omitempty"`
+	InitialGeneratorContexts   map[string]GoogleCloudDialogflowV2ConversationGeneratorContext `json:"initialGeneratorContexts,omitempty"`
 	// Possible values:
 	//   "LIFECYCLE_STATE_UNSPECIFIED"
 	//   "IN_PROGRESS"
@@ -6905,6 +6909,34 @@ type GoogleCloudDialogflowV2ConversationEvent struct {
 
 func (s GoogleCloudDialogflowV2ConversationEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2ConversationEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudDialogflowV2ConversationGeneratorContext struct {
+	// Possible values:
+	//   "GENERATOR_TYPE_UNSPECIFIED"
+	//   "FREE_FORM"
+	//   "AGENT_COACHING"
+	//   "SUMMARIZATION"
+	//   "TRANSLATION"
+	//   "AGENT_FEEDBACK"
+	//   "CUSTOMER_MESSAGE_GENERATION"
+	GeneratorType string `json:"generatorType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GeneratorType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GeneratorType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2ConversationGeneratorContext) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ConversationGeneratorContext
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

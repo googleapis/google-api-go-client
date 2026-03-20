@@ -1403,6 +1403,9 @@ type GrafeasV1FileLocation struct {
 	// LayerDetails: Each package found in a file should have its own layer
 	// metadata (that is, information from the origin layer of the package).
 	LayerDetails *GrafeasV1LayerDetails `json:"layerDetails,omitempty"`
+	// LineNumber: Line number in the file where the package was found. Optional
+	// field that only applies to source repository scanning.
+	LineNumber int64 `json:"lineNumber,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FilePath") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

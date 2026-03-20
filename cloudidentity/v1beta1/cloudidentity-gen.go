@@ -448,7 +448,7 @@ type AndroidAttributes struct {
 	// corporate profile.
 	//   "DEVICE_OWNER" - Device Owner privileges on the device.
 	OwnershipPrivilege string `json:"ownershipPrivilege,omitempty"`
-	// SupportsWorkProfile: Whether device supports Android work profiles. If
+	// SupportsWorkProfile: Whether the device supports Android work profiles. If
 	// false, this service will not block access to corp data even if an
 	// administrator turns on the "Enforce Work Profile" policy.
 	SupportsWorkProfile bool `json:"supportsWorkProfile,omitempty"`
@@ -576,7 +576,7 @@ func (s BlockDeviceUserResponse) MarshalJSON() ([]byte, error) {
 }
 
 // BrowserAttributes: Contains information about browser profiles reported by
-// the Clients on the device (e.g. Endpoint Verification extension
+// the clients on the device (e.g. Endpoint Verification extension
 // (https://chromewebstore.google.com/detail/endpoint-verification/callobklhcbilhphinckomhgkigmfocg?pli=1)).
 type BrowserAttributes struct {
 	// ChromeBrowserInfo: Represents the current state of the Chrome browser
@@ -1321,8 +1321,9 @@ type Device struct {
 	//   "APPROVED" - Device is approved.
 	//   "BLOCKED" - Device is blocked.
 	//   "PENDING" - Device is pending approval.
-	//   "UNPROVISIONED" - The device is not provisioned. Device will start from
-	// this state until some action is taken (i.e. a user starts using the device).
+	//   "UNPROVISIONED" - The device is not provisioned. The device will start
+	// from this state until some action is taken (i.e. a user starts using the
+	// device).
 	//   "WIPING" - Data and settings on the device are being removed.
 	//   "WIPED" - All data and settings on the device are removed.
 	ManagementState string `json:"managementState,omitempty"`

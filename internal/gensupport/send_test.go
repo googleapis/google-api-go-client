@@ -37,8 +37,9 @@ func TestSendRequestWithRetry(t *testing.T) {
 }
 
 type headerRoundTripper struct {
-	wantHeader        http.Header
-	wantXgoogAPIRegex string // test x-goog-api-client separately
+	wantHeader         http.Header
+	wantXgoogAPIRegex  string // test x-goog-api-client separately
+	wantXgoogReqParams string
 }
 
 func (rt *headerRoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
@@ -51,9 +52,16 @@ func (rt *headerRoundTripper) RoundTrip(r *http.Request) (*http.Response, error)
 		return nil, fmt.Errorf("X-Goog-Api-Client header has wrong format\ngot %v\nwant regex matching %v", r.Header.Get("X-Goog-Api-Client"), rt.wantXgoogAPIRegex)
 	}
 
+	if rt.wantXgoogReqParams != "" {
+		if got := r.Header.Get("X-Goog-Request-Params"); got != rt.wantXgoogReqParams {
+			return nil, fmt.Errorf("X-Goog-Request-Params header has wrong format\ngot %v\nwant %v", got, rt.wantXgoogReqParams)
+		}
+	}
+
 	// Ignore x-goog headers sent by SendRequestWithRetry
 	r.Header.Del("X-Goog-Gcs-Idempotency-Token")
 	r.Header.Del("X-Goog-Api-Client") // this was tested above already
+	r.Header.Del("X-Goog-Request-Params") // this was tested above already
 
 	if diff := cmp.Diff(r.Header, rt.wantHeader); diff != "" {
 		return nil, fmt.Errorf("headers don't match: %v", diff)
@@ -83,16 +91,17 @@ func TestSendRequestHeader(t *testing.T) {
 	}
 }
 
-// Ensure that x-goog-api-client headers set via the context are merged properly
+// Ensure that x-goog-api-client and x-goog-request-params headers set via the context are merged properly
 // and passed through to the request as expected.
-func TestSendRequestXgoogHeaderxxx(t *testing.T) {
+func TestSendRequestXgoogHeaders(t *testing.T) {
 	ctx := context.Background()
-	ctx = callctx.SetHeaders(ctx, "x-goog-api-client", "val/1", "bar", "200", "x-goog-api-client", "val/2")
-	ctx = callctx.SetHeaders(ctx, "x-goog-api-client", "val/11 val/22")
+	ctx = callctx.SetHeaders(ctx, "x-goog-api-client", "val/1", "bar", "200", "x-goog-api-client", "val/2", "x-goog-request-params", "param1=a")
+	ctx = callctx.SetHeaders(ctx, "x-goog-api-client", "val/11 val/22", "x-goog-request-params", "param2=b")
 
 	transport := &headerRoundTripper{
-		wantHeader:        map[string][]string{"Bar": {"200"}},
-		wantXgoogAPIRegex: "^val/1 val/2 val/11 val/22$",
+		wantHeader:         map[string][]string{"Bar": {"200"}},
+		wantXgoogAPIRegex:  "^val/1 val/2 val/11 val/22$",
+		wantXgoogReqParams: "param1=a&param2=b",
 	}
 	client := http.Client{Transport: transport}
 

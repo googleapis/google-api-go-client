@@ -4932,8 +4932,6 @@ func (s GoogleCloudDiscoveryengineV1AnswerQueryUnderstandingInfoQueryClassificat
 type GoogleCloudDiscoveryengineV1AnswerReference struct {
 	// ChunkInfo: Chunk information.
 	ChunkInfo *GoogleCloudDiscoveryengineV1AnswerReferenceChunkInfo `json:"chunkInfo,omitempty"`
-	// Queries: Output only. The search queries that produced this reference.
-	Queries []string `json:"queries,omitempty"`
 	// StructuredDocumentInfo: Structured document information.
 	StructuredDocumentInfo *GoogleCloudDiscoveryengineV1AnswerReferenceStructuredDocumentInfo `json:"structuredDocumentInfo,omitempty"`
 	// UnstructuredDocumentInfo: Unstructured document information.
@@ -8475,6 +8473,8 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	// DestinationConfigs: Optional. Any target destinations used to connect to
 	// third-party services.
 	DestinationConfigs []*GoogleCloudDiscoveryengineV1DestinationConfig `json:"destinationConfigs,omitempty"`
+	// DynamicTools: Output only. The dynamic tools fetched for this connector.
+	DynamicTools []*GoogleCloudDiscoveryengineV1DynamicTool `json:"dynamicTools,omitempty"`
 	// EgressFqdns: Output only. The list of FQDNs of the data connector can egress
 	// to. This includes both FQDN derived from the customer provided instance URL
 	// and default per connector type FQDNs. Note: This field is derived from both
@@ -10016,6 +10016,34 @@ func (s *GoogleCloudDiscoveryengineV1DoubleList) UnmarshalJSON(data []byte) erro
 		s.Values[i] = float64(s1.Values[i])
 	}
 	return nil
+}
+
+// GoogleCloudDiscoveryengineV1DynamicTool: Configuration for dynamic tools.
+type GoogleCloudDiscoveryengineV1DynamicTool struct {
+	// Description: Optional. The description of the tool.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Optional. The display name of the tool.
+	DisplayName string `json:"displayName,omitempty"`
+	// Enabled: Optional. Whether the tool is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// Name: Required. The name of the tool.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1DynamicTool) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DynamicTool
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDiscoveryengineV1EnableAdvancedSiteSearchMetadata: Metadata
@@ -13918,6 +13946,11 @@ type GoogleCloudDiscoveryengineV1SearchRequest struct {
 	// for more information. If `naturalLanguageQueryUnderstandingSpec` is not
 	// specified, no additional natural language query understanding will be done.
 	NaturalLanguageQueryUnderstandingSpec *GoogleCloudDiscoveryengineV1SearchRequestNaturalLanguageQueryUnderstandingSpec `json:"naturalLanguageQueryUnderstandingSpec,omitempty"`
+	// NumResultsPerDataStore: Optional. The maximum number of results to retrieve
+	// from each data store. If not specified, it will use the
+	// SearchRequest.DataStoreSpec.num_results if provided, otherwise there is no
+	// limit.
+	NumResultsPerDataStore int64 `json:"numResultsPerDataStore,omitempty"`
 	// Offset: A 0-indexed integer that specifies the current offset (that is,
 	// starting result location, amongst the Documents deemed by the API as
 	// relevant) in search results. This field is only considered if page_token is
@@ -14686,6 +14719,12 @@ type GoogleCloudDiscoveryengineV1SearchRequestDataStoreSpec struct {
 	// Filtering
 	// (https://cloud.google.com/generative-ai-app-builder/docs/filter-search-metadata)
 	Filter string `json:"filter,omitempty"`
+	// NumResults: Optional. The maximum number of results to retrieve from this
+	// data store. If not specified, it will use the
+	// SearchRequest.num_results_per_data_store if provided, otherwise there is no
+	// limit. If both this field and SearchRequest.num_results_per_data_store are
+	// specified, this field will be used.
+	NumResults int64 `json:"numResults,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BoostSpec") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -16301,10 +16340,10 @@ type GoogleCloudDiscoveryengineV1SetUpDataConnectorRequest struct {
 	// CollectionId: Required. The ID to use for the Collection, which will become
 	// the final component of the Collection's resource name. A new Collection is
 	// created as part of the DataConnector setup. DataConnector is a singleton
-	// resource under Collection, managing all DataStores of the Collection. This
-	// field must conform to RFC-1034 (https://tools.ietf.org/html/rfc1034)
-	// standard with a length limit of 63 characters. Otherwise, an
-	// INVALID_ARGUMENT error is returned.
+	// resource under Collection, managing all DataStores of the Collection. Should
+	// conform to RFC-1034 (https://tools.ietf.org/html/rfc1034) standard with a
+	// length limit of 63 characters. Otherwise, an `INVALID_ARGUMENT` error is
+	// returned.
 	CollectionId string `json:"collectionId,omitempty"`
 	// DataConnector: Required. The DataConnector to initialize in the newly
 	// created Collection.
@@ -18985,8 +19024,6 @@ func (s GoogleCloudDiscoveryengineV1alphaAnswerQueryUnderstandingInfoQueryClassi
 type GoogleCloudDiscoveryengineV1alphaAnswerReference struct {
 	// ChunkInfo: Chunk information.
 	ChunkInfo *GoogleCloudDiscoveryengineV1alphaAnswerReferenceChunkInfo `json:"chunkInfo,omitempty"`
-	// Queries: Output only. The search queries that produced this reference.
-	Queries []string `json:"queries,omitempty"`
 	// StructuredDocumentInfo: Structured document information.
 	StructuredDocumentInfo *GoogleCloudDiscoveryengineV1alphaAnswerReferenceStructuredDocumentInfo `json:"structuredDocumentInfo,omitempty"`
 	// UnstructuredDocumentInfo: Unstructured document information.
@@ -21154,6 +21191,8 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// DestinationConfigs: Optional. Any target destinations used to connect to
 	// third-party services.
 	DestinationConfigs []*GoogleCloudDiscoveryengineV1alphaDestinationConfig `json:"destinationConfigs,omitempty"`
+	// DynamicTools: Output only. The dynamic tools fetched for this connector.
+	DynamicTools []*GoogleCloudDiscoveryengineV1alphaDynamicTool `json:"dynamicTools,omitempty"`
 	// EgressFqdns: Output only. The list of FQDNs of the data connector can egress
 	// to. This includes both FQDN derived from the customer provided instance URL
 	// and default per connector type FQDNs. Note: This field is derived from both
@@ -22594,6 +22633,35 @@ type GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfigOcrPa
 
 func (s GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfigOcrParsingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfigOcrParsingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDynamicTool: Configuration for dynamic
+// tools.
+type GoogleCloudDiscoveryengineV1alphaDynamicTool struct {
+	// Description: Optional. The description of the tool.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Optional. The display name of the tool.
+	DisplayName string `json:"displayName,omitempty"`
+	// Enabled: Optional. Whether the tool is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// Name: Required. The name of the tool.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDynamicTool) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDynamicTool
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -35384,9 +35452,9 @@ func (c *ProjectsLocationsSetUpDataConnectorV2Call) CollectionDisplayName(collec
 // use for the Collection, which will become the final component of the
 // Collection's resource name. A new Collection is created as part of the
 // DataConnector setup. DataConnector is a singleton resource under Collection,
-// managing all DataStores of the Collection. This field must conform to
-// RFC-1034 (https://tools.ietf.org/html/rfc1034) standard with a length limit
-// of 63 characters. Otherwise, an INVALID_ARGUMENT error is returned.
+// managing all DataStores of the Collection. Should conform to RFC-1034
+// (https://tools.ietf.org/html/rfc1034) standard with a length limit of 63
+// characters. Otherwise, an `INVALID_ARGUMENT` error is returned.
 func (c *ProjectsLocationsSetUpDataConnectorV2Call) CollectionId(collectionId string) *ProjectsLocationsSetUpDataConnectorV2Call {
 	c.urlParams_.Set("collectionId", collectionId)
 	return c
@@ -36258,9 +36326,9 @@ type ProjectsLocationsCollectionsGetDataConnectorCall struct {
 //   - name: Full resource name of DataConnector, such as
 //     `projects/{project}/locations/{location}/collections/{collection_id}/dataCo
 //     nnector`. If the caller does not have permission to access the
-//     DataConnector, regardless of whether or not it exists, a PERMISSION_DENIED
-//     error is returned. If the requested DataConnector does not exist, a
-//     NOT_FOUND error is returned.
+//     DataConnector, regardless of whether or not it exists, a
+//     `PERMISSION_DENIED` error is returned. If the requested DataConnector does
+//     not exist, a `NOT_FOUND` error is returned.
 func (r *ProjectsLocationsCollectionsService) GetDataConnector(name string) *ProjectsLocationsCollectionsGetDataConnectorCall {
 	c := &ProjectsLocationsCollectionsGetDataConnectorCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -36388,7 +36456,7 @@ func (r *ProjectsLocationsCollectionsService) UpdateDataConnector(name string, g
 // `data_protection_policy` Note: Support for these fields may vary depending
 // on the connector type. For example, not all connectors support
 // `destination_configs`. If an unsupported or unknown field path is provided,
-// the request will return an INVALID_ARGUMENT error.
+// the request will return an `INVALID_ARGUMENT` error.
 func (c *ProjectsLocationsCollectionsUpdateDataConnectorCall) UpdateMask(updateMask string) *ProjectsLocationsCollectionsUpdateDataConnectorCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -48934,7 +49002,7 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsGetCardCall) doReque
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{+tenant}/card")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/card")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
@@ -49039,7 +49107,7 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageSendCall) doR
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{+tenant}/message:send")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/message:send")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -49145,7 +49213,7 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageStreamCall) d
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{+tenant}/message:stream")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/message:stream")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -49366,7 +49434,7 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksCancelCall) doR
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{+tenant}/{+name}:cancel")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/{+name}:cancel")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -49487,7 +49555,7 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksGetCall) doRequ
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{+tenant}/{+name}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/{+name}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
@@ -49605,7 +49673,7 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksSubscribeCall) 
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{+tenant}/{+name}:subscribe")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/{+name}:subscribe")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
@@ -49721,7 +49789,7 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificatio
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{+tenant}/{+parent}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/{+parent}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -49825,7 +49893,7 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificatio
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{+tenant}/{+name}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/{+name}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, nil)
 	if err != nil {
@@ -49941,7 +50009,7 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificatio
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{+tenant}/{+name}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/{+name}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
@@ -50074,7 +50142,7 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificatio
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{+tenant}/{+parent}/pushNotificationConfigs")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/{+parent}/pushNotificationConfigs")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
@@ -66231,219 +66299,6 @@ func (c *ProjectsLocationsUserStoresBatchUpdateUserLicensesCall) Do(opts ...goog
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.userStores.batchUpdateUserLicenses", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsUserStoresCreateCall struct {
-	s                                     *Service
-	parent                                string
-	googleclouddiscoveryenginev1userstore *GoogleCloudDiscoveryengineV1UserStore
-	urlParams_                            gensupport.URLParams
-	ctx_                                  context.Context
-	header_                               http.Header
-}
-
-// Create: Creates a new User Store.
-//
-//   - parent: The parent collection resource name, such as
-//     `projects/{project}/locations/{location}`.
-func (r *ProjectsLocationsUserStoresService) Create(parent string, googleclouddiscoveryenginev1userstore *GoogleCloudDiscoveryengineV1UserStore) *ProjectsLocationsUserStoresCreateCall {
-	c := &ProjectsLocationsUserStoresCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.googleclouddiscoveryenginev1userstore = googleclouddiscoveryenginev1userstore
-	return c
-}
-
-// UserStoreId sets the optional parameter "userStoreId": Required. The ID of
-// the User Store to create. The ID must contain only letters (a-z, A-Z),
-// numbers (0-9), underscores (_), and hyphens (-). The maximum length is 63
-// characters.
-func (c *ProjectsLocationsUserStoresCreateCall) UserStoreId(userStoreId string) *ProjectsLocationsUserStoresCreateCall {
-	c.urlParams_.Set("userStoreId", userStoreId)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsUserStoresCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsUserStoresCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsUserStoresCreateCall) Context(ctx context.Context) *ProjectsLocationsUserStoresCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsUserStoresCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsUserStoresCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1userstore)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/userStores")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.userStores.create", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "discoveryengine.projects.locations.userStores.create" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudDiscoveryengineV1UserStore.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsUserStoresCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1UserStore, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudDiscoveryengineV1UserStore{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.userStores.create", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsUserStoresDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes the User Store.
-//
-//   - name: The name of the User Store to delete. Format:
-//     `projects/{project}/locations/{location}/userStores/{user_store_id}`.
-func (r *ProjectsLocationsUserStoresService) Delete(name string) *ProjectsLocationsUserStoresDeleteCall {
-	c := &ProjectsLocationsUserStoresDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsUserStoresDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsUserStoresDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsUserStoresDeleteCall) Context(ctx context.Context) *ProjectsLocationsUserStoresDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsUserStoresDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsUserStoresDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.userStores.delete", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "discoveryengine.projects.locations.userStores.delete" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsUserStoresDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleLongrunningOperation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.userStores.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -2751,6 +2751,27 @@ func (s GoogleCloudDialogflowCxV3FlowMultiLanguageSettings) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type GoogleCloudDialogflowCxV3FlowTraceMetadata struct {
+	DisplayName string `json:"displayName,omitempty"`
+	Flow        string `json:"flow,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3FlowTraceMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3FlowTraceMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudDialogflowCxV3FlowTransition struct {
 	DisplayName string `json:"displayName,omitempty"`
 	Flow        string `json:"flow,omitempty"`
@@ -3708,6 +3729,7 @@ func (s GoogleCloudDialogflowCxV3InputAudioConfig) MarshalJSON() ([]byte, error)
 type GoogleCloudDialogflowCxV3Intent struct {
 	Description     string                                           `json:"description,omitempty"`
 	DisplayName     string                                           `json:"displayName,omitempty"`
+	DtmfPattern     string                                           `json:"dtmfPattern,omitempty"`
 	IsFallback      bool                                             `json:"isFallback,omitempty"`
 	Labels          map[string]string                                `json:"labels,omitempty"`
 	Name            string                                           `json:"name,omitempty"`
@@ -5080,6 +5102,27 @@ func (s GoogleCloudDialogflowCxV3PlaybookStep) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type GoogleCloudDialogflowCxV3PlaybookTraceMetadata struct {
+	DisplayName string `json:"displayName,omitempty"`
+	Playbook    string `json:"playbook,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3PlaybookTraceMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3PlaybookTraceMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudDialogflowCxV3PlaybookTransition struct {
 	DisplayName string `json:"displayName,omitempty"`
 	Playbook    string `json:"playbook,omitempty"`
@@ -5207,6 +5250,7 @@ type GoogleCloudDialogflowCxV3QueryResult struct {
 	ResponseMessages           []*GoogleCloudDialogflowCxV3ResponseMessage          `json:"responseMessages,omitempty"`
 	SentimentAnalysisResult    *GoogleCloudDialogflowCxV3SentimentAnalysisResult    `json:"sentimentAnalysisResult,omitempty"`
 	Text                       string                                               `json:"text,omitempty"`
+	TraceBlocks                []*GoogleCloudDialogflowCxV3TraceBlock               `json:"traceBlocks,omitempty"`
 	Transcript                 string                                               `json:"transcript,omitempty"`
 	TriggerEvent               string                                               `json:"triggerEvent,omitempty"`
 	TriggerIntent              string                                               `json:"triggerIntent,omitempty"`
@@ -6049,6 +6093,26 @@ func (s GoogleCloudDialogflowCxV3SessionInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type GoogleCloudDialogflowCxV3SpeechProcessingMetadata struct {
+	DisplayName string `json:"displayName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3SpeechProcessingMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3SpeechProcessingMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudDialogflowCxV3SpeechToTextSettings struct {
 	EnableSpeechAdaptation bool `json:"enableSpeechAdaptation,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableSpeechAdaptation") to
@@ -6752,6 +6816,41 @@ type GoogleCloudDialogflowCxV3ToolVersion struct {
 
 func (s GoogleCloudDialogflowCxV3ToolVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ToolVersion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudDialogflowCxV3TraceBlock struct {
+	Actions      []*GoogleCloudDialogflowCxV3Action `json:"actions,omitempty"`
+	CompleteTime string                             `json:"completeTime,omitempty"`
+	// Possible values:
+	//   "OUTPUT_STATE_UNSPECIFIED"
+	//   "OUTPUT_STATE_OK"
+	//   "OUTPUT_STATE_CANCELLED"
+	//   "OUTPUT_STATE_FAILED"
+	//   "OUTPUT_STATE_ESCALATED"
+	//   "OUTPUT_STATE_PENDING"
+	EndState                 string                                             `json:"endState,omitempty"`
+	FlowTraceMetadata        *GoogleCloudDialogflowCxV3FlowTraceMetadata        `json:"flowTraceMetadata,omitempty"`
+	InputParameters          googleapi.RawMessage                               `json:"inputParameters,omitempty"`
+	OutputParameters         googleapi.RawMessage                               `json:"outputParameters,omitempty"`
+	PlaybookTraceMetadata    *GoogleCloudDialogflowCxV3PlaybookTraceMetadata    `json:"playbookTraceMetadata,omitempty"`
+	SpeechProcessingMetadata *GoogleCloudDialogflowCxV3SpeechProcessingMetadata `json:"speechProcessingMetadata,omitempty"`
+	StartTime                string                                             `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Actions") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Actions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3TraceBlock) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3TraceBlock
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8766,6 +8865,7 @@ func (s GoogleCloudDialogflowCxV3beta1InputAudioConfig) MarshalJSON() ([]byte, e
 type GoogleCloudDialogflowCxV3beta1Intent struct {
 	Description     string                                                `json:"description,omitempty"`
 	DisplayName     string                                                `json:"displayName,omitempty"`
+	DtmfPattern     string                                                `json:"dtmfPattern,omitempty"`
 	IsFallback      bool                                                  `json:"isFallback,omitempty"`
 	Labels          map[string]string                                     `json:"labels,omitempty"`
 	Name            string                                                `json:"name,omitempty"`

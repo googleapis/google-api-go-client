@@ -1442,6 +1442,11 @@ type ProductAttributes struct {
 	ProductWidth *ProductDimension `json:"productWidth,omitempty"`
 	// PromotionIds: The unique ID of a promotion.
 	PromotionIds []string `json:"promotionIds,omitempty"`
+	// ReturnPolicyLabel: The return label of the product, used to group products
+	// in account-level return policies. Max. 100 characters. For more information,
+	// see Return policy label
+	// (https://support.google.com/merchants/answer/9445425).
+	ReturnPolicyLabel string `json:"returnPolicyLabel,omitempty"`
 	// SalePrice: Advertised sale price of the item.
 	SalePrice *Price `json:"salePrice,omitempty"`
 	// SalePriceEffectiveDate: Date range during which the item is on sale, see
@@ -1458,8 +1463,9 @@ type ProductAttributes struct {
 	ShippingHandlingBusinessDays []*ShippingBusinessDaysConfig `json:"shippingHandlingBusinessDays,omitempty"`
 	// ShippingHeight: Height of the item for shipping.
 	ShippingHeight *ShippingDimension `json:"shippingHeight,omitempty"`
-	// ShippingLabel: The shipping label of the product, used to group product in
-	// account-level shipping rules.
+	// ShippingLabel: The shipping label of the product, used to group products in
+	// account-level shipping rules. Max. 100 characters. For more information, see
+	// Shipping label (https://support.google.com/merchants/answer/6324504).
 	ShippingLabel string `json:"shippingLabel,omitempty"`
 	// ShippingLength: Length of the item for shipping.
 	ShippingLength *ShippingDimension `json:"shippingLength,omitempty"`

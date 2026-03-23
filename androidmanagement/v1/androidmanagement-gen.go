@@ -6177,6 +6177,8 @@ type PersonalUsagePolicies struct {
 	// existing private space will be removed.
 	PrivateSpacePolicy string `json:"privateSpacePolicy,omitempty"`
 	// ScreenCaptureDisabled: If true, screen capture is disabled for all users.
+	// This also blocks Circle to Search
+	// (https://support.google.com/android/answer/14508957).
 	ScreenCaptureDisabled bool `json:"screenCaptureDisabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "AccountTypesWithManagementDisabled") to unconditionally include in API
@@ -6688,7 +6690,8 @@ type Policy struct {
 	RemoveUserDisabled bool `json:"removeUserDisabled,omitempty"`
 	// SafeBootDisabled: Whether rebooting the device into safe boot is disabled.
 	SafeBootDisabled bool `json:"safeBootDisabled,omitempty"`
-	// ScreenCaptureDisabled: Whether screen capture is disabled.
+	// ScreenCaptureDisabled: Whether screen capture is disabled. This also blocks
+	// Circle to Search (https://support.google.com/android/answer/14508957).
 	ScreenCaptureDisabled bool `json:"screenCaptureDisabled,omitempty"`
 	// SetUserIconDisabled: Whether changing the user icon is disabled. This
 	// applies only on devices running Android 7 and above.

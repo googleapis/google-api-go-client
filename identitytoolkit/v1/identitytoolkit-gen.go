@@ -1675,7 +1675,7 @@ type GoogleCloudIdentitytoolkitV1SendVerificationCodeRequest struct {
 	//   "RECAPTCHA_VERSION_UNSPECIFIED" - The reCAPTCHA version is not specified.
 	//   "RECAPTCHA_ENTERPRISE" - The reCAPTCHA enterprise.
 	RecaptchaVersion string `json:"recaptchaVersion,omitempty"`
-	// SafetyNetToken: Android only. Safety Net has been deprecated. Please use
+	// SafetyNetToken: Android only. Safety Net has been deprecated. Use
 	// play_integrity_token instead.
 	SafetyNetToken string `json:"safetyNetToken,omitempty"`
 	// TenantId: Tenant ID of the Identity Platform tenant the user is signing in
@@ -3084,12 +3084,14 @@ type AccountsCreateAuthUriCall struct {
 
 // CreateAuthUri: If an email identifier is specified, checks and returns if
 // any user account is registered with the email. If there is a registered
-// account, fetches all providers associated with the account's email. If the
-// provider ID of an Identity Provider (IdP) is specified, creates an
-// authorization URI for the IdP. The user can be directed to this URI to sign
-// in with the IdP. An API key
-// (https://cloud.google.com/docs/authentication/api-keys) is required in the
-// request in order to identify the Google Cloud project.
+// account, fetches all providers associated with the account's email. If email
+// enumeration protection
+// (https://cloud.google.com/identity-platform/docs/admin/email-enumeration-protection)
+// is enabled, this method returns an empty list. If the provider ID of an
+// Identity Provider (IdP) is specified, creates an authorization URI for the
+// IdP. The user can be directed to this URI to sign in with the IdP. An API
+// key (https://cloud.google.com/docs/authentication/api-keys) is required in
+// the request in order to identify the Google Cloud project.
 func (r *AccountsService) CreateAuthUri(googlecloudidentitytoolkitv1createauthurirequest *GoogleCloudIdentitytoolkitV1CreateAuthUriRequest) *AccountsCreateAuthUriCall {
 	c := &AccountsCreateAuthUriCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googlecloudidentitytoolkitv1createauthurirequest = googlecloudidentitytoolkitv1createauthurirequest

@@ -786,9 +786,10 @@ func (s CloudSQLConnectionConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CloudSQLMigrationConfig: Configuration information for migrating from
-// self-managed hive metastore on Google Cloud using Cloud SQL as the backend
-// database to Dataproc Metastore.
+// CloudSQLMigrationConfig: Deprecated: Migrations to Dataproc Metastore are no
+// longer supported. Use BigLake Metastore migration instead. Configuration
+// information for migrating from self-managed hive metastore on Google Cloud
+// using Cloud SQL as the backend database to Dataproc Metastore.
 type CloudSQLMigrationConfig struct {
 	// CdcConfig: Required. Configuration information to start the Change Data
 	// Capture (CDC) streams from customer database to backend database of Dataproc
@@ -1827,9 +1828,10 @@ func (s MetadataManagementActivity) MarshalJSON() ([]byte, error) {
 
 // MigrationExecution: The details of a migration execution resource.
 type MigrationExecution struct {
-	// CloudSqlMigrationConfig: Configuration information specific to migrating
-	// from self-managed hive metastore on Google Cloud using Cloud SQL as the
-	// backend database to Dataproc Metastore.
+	// CloudSqlMigrationConfig: Deprecated: Migrations to Dataproc Metastore are no
+	// longer supported. Use BigLake Metastore migration instead. Configuration
+	// information specific to migrating from self-managed hive metastore on Google
+	// Cloud using Cloud SQL as the backend database to Dataproc Metastore.
 	CloudSqlMigrationConfig *CloudSQLMigrationConfig `json:"cloudSqlMigrationConfig,omitempty"`
 	// CreateTime: Output only. The time when the migration execution was started.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1840,7 +1842,9 @@ type MigrationExecution struct {
 	// projects/{project_number}/locations/{location_id}/services/{service_id}/migra
 	// tionExecutions/{migration_execution_id}
 	Name string `json:"name,omitempty"`
-	// Phase: Output only. The current phase of the migration execution.
+	// Phase: Output only. Deprecated: Phase was designed for incoming migrations
+	// to Dataproc Metastore, not applicable when migrating away from it. The
+	// current phase of the migration execution.
 	//
 	// Possible values:
 	//   "PHASE_UNSPECIFIED" - The phase of the migration execution is unknown.

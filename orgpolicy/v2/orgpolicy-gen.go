@@ -298,7 +298,7 @@ func (s GoogleCloudOrgpolicyV2AlternatePolicySpec) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudOrgpolicyV2Constraint: A constraint describes a way to restrict
+// GoogleCloudOrgpolicyV2Constraint: A constraint describes a way to restrict a
 // resource's configuration. For example, you could enforce a constraint that
 // controls which Google Cloud services can be activated across an
 // organization, or whether a Compute Engine instance can have serial port
@@ -330,9 +330,11 @@ type GoogleCloudOrgpolicyV2Constraint struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: The human readable name. Mutable.
 	DisplayName string `json:"displayName,omitempty"`
-	// EquivalentConstraint: Managed constraint and canned constraint sometimes can
-	// have equivalents. This field is used to store the equivalent constraint
-	// name.
+	// EquivalentConstraint: Defines the equivalent constraint name, if it exists.
+	// Managed constraints can have an equivalent legacy managed constraint, and
+	// legacy managed constraints can have an equivalent managed constraint. For
+	// example, "constraints/iam.disableServiceAccountKeyUpload" is equivalent to
+	// "constraints/iam.managed.disableServiceAccountKeyUpload".
 	EquivalentConstraint string `json:"equivalentConstraint,omitempty"`
 	// ListConstraint: Defines this constraint as being a list constraint.
 	ListConstraint *GoogleCloudOrgpolicyV2ConstraintListConstraint `json:"listConstraint,omitempty"`
@@ -422,9 +424,8 @@ type GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinition struct {
 	// Parameters: Stores the structure of `Parameters` used by the constraint
 	// condition. The key of `map` represents the name of the parameter.
 	Parameters map[string]GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameter `json:"parameters,omitempty"`
-	// ResourceTypes: The resource instance type on which this policy applies.
-	// Format will be of the form : `/` Example: *
-	// `compute.googleapis.com/Instance`.
+	// ResourceTypes: The resource instance type that this policy applies to, in
+	// the format `/`. Example: * `compute.googleapis.com/Instance`.
 	ResourceTypes []string `json:"resourceTypes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActionType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -474,7 +475,7 @@ type GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameter struct 
 	Type string `json:"type,omitempty"`
 	// ValidValuesExpr: Provides a CEL expression to specify the acceptable
 	// parameter values during assignment. For example, parameterName in
-	// ("parameterValue1", "parameterValue2")
+	// ("parameterValue1", "parameterValue2").
 	ValidValuesExpr string `json:"validValuesExpr,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DefaultValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -497,7 +498,7 @@ func (s GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameter) Mar
 // GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameterMetadata:
 // Defines Metadata structure.
 type GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameterMetadata struct {
-	// Description: Detailed description of what this `parameter` is and use of it.
+	// Description: Detailed description of what this `parameter` is and its use.
 	// Mutable.
 	Description string `json:"description,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -716,8 +717,8 @@ func (s GoogleCloudOrgpolicyV2ListPoliciesResponse) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudOrgpolicyV2Policy: Defines an organization policy which is used
-// to specify constraints for configurations of Google Cloud resources.
+// GoogleCloudOrgpolicyV2Policy: Defines an organization policy that is used to
+// specify constraints for configurations of Google Cloud resources.
 type GoogleCloudOrgpolicyV2Policy struct {
 	// Alternate: Deprecated.
 	Alternate *GoogleCloudOrgpolicyV2AlternatePolicySpec `json:"alternate,omitempty"`
@@ -726,12 +727,13 @@ type GoogleCloudOrgpolicyV2Policy struct {
 	// enforced.
 	DryRunSpec *GoogleCloudOrgpolicyV2PolicySpec `json:"dryRunSpec,omitempty"`
 	// Etag: Optional. An opaque tag indicating the current state of the policy,
-	// used for concurrency control. This 'etag' is computed by the server based on
-	// the value of other fields, and may be sent on update and delete requests to
-	// ensure the client has an up-to-date value before proceeding.
+	// used for concurrency control. This entity tag (ETag) is computed by the
+	// server based on the value of other fields, and may be sent on update and
+	// delete requests to ensure the client has an up-to-date value before
+	// proceeding.
 	Etag string `json:"etag,omitempty"`
 	// Name: Immutable. The resource name of the policy. Must be one of the
-	// following forms, where `constraint_name` is the name of the constraint which
+	// following forms, where `constraint_name` is the name of the constraint that
 	// this policy configures: *
 	// `projects/{project_number}/policies/{constraint_name}` *
 	// `folders/{folder_id}/policies/{constraint_name}` *
@@ -765,21 +767,22 @@ func (s GoogleCloudOrgpolicyV2Policy) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudOrgpolicyV2PolicySpec: Defines a Google Cloud policy
-// specification which is used to specify constraints for configurations of
+// specification that is used to specify constraints for configurations of
 // Google Cloud resources.
 type GoogleCloudOrgpolicyV2PolicySpec struct {
 	// Etag: An opaque tag indicating the current version of the policySpec, used
 	// for concurrency control. This field is ignored if used in a `CreatePolicy`
 	// request. When the policy is returned from either a `GetPolicy` or a
-	// `ListPolicies` request, this `etag` indicates the version of the current
-	// policySpec to use when executing a read-modify-write loop. When the policy
-	// is returned from a `GetEffectivePolicy` request, the `etag` will be unset.
+	// `ListPolicies` request, this entity tag (ETag) indicates the version of the
+	// current policySpec to use when executing a read-modify-write loop. When the
+	// policy is returned from a `GetEffectivePolicy` request, the ETag will be
+	// unset.
 	Etag string `json:"etag,omitempty"`
 	// InheritFromParent: Determines the inheritance behavior for this policy. If
 	// `inherit_from_parent` is true, policy rules set higher up in the hierarchy
 	// (up to the closest root) are inherited and present in the effective policy.
 	// If it is false, then no rules are inherited, and this policy becomes the new
-	// root for evaluation. This field can be set only for policies which configure
+	// root for evaluation. This field can be set only for policies that configure
 	// list constraints.
 	InheritFromParent bool `json:"inheritFromParent,omitempty"`
 	// Reset: Ignores policies set above this resource and restores the
@@ -789,11 +792,10 @@ type GoogleCloudOrgpolicyV2PolicySpec struct {
 	// set to false.
 	Reset bool `json:"reset,omitempty"`
 	// Rules: In policies for boolean constraints, the following requirements
-	// apply: - There must be one and only one policy rule where condition is
-	// unset. - Boolean policy rules with conditions must set `enforced` to the
-	// opposite of the policy rule without a condition. - During policy evaluation,
-	// policy rules with conditions that are true for a target resource take
-	// precedence.
+	// apply: - There must be exactly one policy rule where a condition is unset. -
+	// Boolean policy rules with conditions must set `enforced` to the opposite of
+	// the policy rule without a condition. - During policy evaluation, policy
+	// rules with conditions that are true for a target resource take precedence.
 	Rules []*GoogleCloudOrgpolicyV2PolicySpecPolicyRule `json:"rules,omitempty"`
 	// UpdateTime: Output only. The time stamp this was previously updated. This
 	// represents the last time a call to `CreatePolicy` or `UpdatePolicy` was made
@@ -1253,9 +1255,10 @@ func (r *FoldersPoliciesService) Delete(name string) *FoldersPoliciesDeleteCall 
 	return c
 }
 
-// Etag sets the optional parameter "etag": The current etag of policy. If an
-// etag is provided and does not match the current etag of the policy, deletion
-// will be blocked and an ABORTED error will be returned.
+// Etag sets the optional parameter "etag": The current entity tag (ETag) of
+// the organization policy. If an ETag is provided and doesn't match the
+// current ETag of the policy, deletion of the policy will be blocked and an
+// `ABORTED` error will be returned.
 func (c *FoldersPoliciesDeleteCall) Etag(etag string) *FoldersPoliciesDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -1352,8 +1355,8 @@ type FoldersPoliciesGetCall struct {
 }
 
 // Get: Gets a policy on a resource. If no policy is set on the resource,
-// `NOT_FOUND` is returned. The `etag` value can be used with `UpdatePolicy()`
-// to update a policy during read-modify-write.
+// `NOT_FOUND` is returned. The entity tag (ETag) can be used with
+// `UpdatePolicy()` to update a policy during read-modify-write.
 //
 // - name: Resource name of the policy. See Policy for naming requirements.
 func (r *FoldersPoliciesService) Get(name string) *FoldersPoliciesGetCall {
@@ -1465,7 +1468,7 @@ type FoldersPoliciesGetEffectivePolicyCall struct {
 
 // GetEffectivePolicy: Gets the effective policy on a resource. This is the
 // result of merging policies in the resource hierarchy and evaluating
-// conditions. The returned policy will not have an `etag` or `condition` set
+// conditions. The returned policy will not have an ETag or `condition` set
 // because it is an evaluated policy across multiple resources. Subtrees of
 // Resource Manager resource hierarchy with 'under:' prefix will not be
 // expanded.
@@ -1730,14 +1733,14 @@ type FoldersPoliciesPatchCall struct {
 }
 
 // Patch: Updates a policy. Returns a `google.rpc.Status` with
-// `google.rpc.Code.NOT_FOUND` if the constraint or the policy do not exist.
-// Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the etag
-// supplied in the request does not match the persisted etag of the policy
+// `google.rpc.Code.NOT_FOUND` if the constraint or the policy doesn't exist.
+// Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the ETag
+// supplied in the request doesn't match the persisted ETag of the policy.
 // Note: the supplied policy will perform a full overwrite of all fields.
 //
 //   - name: Immutable. The resource name of the policy. Must be one of the
 //     following forms, where `constraint_name` is the name of the constraint
-//     which this policy configures: *
+//     that this policy configures: *
 //     `projects/{project_number}/policies/{constraint_name}` *
 //     `folders/{folder_id}/policies/{constraint_name}` *
 //     `organizations/{organization_id}/policies/{constraint_name}` For example,
@@ -1753,9 +1756,8 @@ func (r *FoldersPoliciesService) Patch(name string, googlecloudorgpolicyv2policy
 }
 
 // UpdateMask sets the optional parameter "updateMask": Field mask used to
-// specify the fields to be overwritten in the policy by the set. The fields
-// specified in the update_mask are relative to the policy, not the full
-// request.
+// specify the fields to be overwritten in the policy. The fields specified in
+// the update_mask are relative to the policy, not the full request.
 func (c *FoldersPoliciesPatchCall) UpdateMask(updateMask string) *FoldersPoliciesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -2707,9 +2709,10 @@ func (r *OrganizationsPoliciesService) Delete(name string) *OrganizationsPolicie
 	return c
 }
 
-// Etag sets the optional parameter "etag": The current etag of policy. If an
-// etag is provided and does not match the current etag of the policy, deletion
-// will be blocked and an ABORTED error will be returned.
+// Etag sets the optional parameter "etag": The current entity tag (ETag) of
+// the organization policy. If an ETag is provided and doesn't match the
+// current ETag of the policy, deletion of the policy will be blocked and an
+// `ABORTED` error will be returned.
 func (c *OrganizationsPoliciesDeleteCall) Etag(etag string) *OrganizationsPoliciesDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -2806,8 +2809,8 @@ type OrganizationsPoliciesGetCall struct {
 }
 
 // Get: Gets a policy on a resource. If no policy is set on the resource,
-// `NOT_FOUND` is returned. The `etag` value can be used with `UpdatePolicy()`
-// to update a policy during read-modify-write.
+// `NOT_FOUND` is returned. The entity tag (ETag) can be used with
+// `UpdatePolicy()` to update a policy during read-modify-write.
 //
 // - name: Resource name of the policy. See Policy for naming requirements.
 func (r *OrganizationsPoliciesService) Get(name string) *OrganizationsPoliciesGetCall {
@@ -2919,7 +2922,7 @@ type OrganizationsPoliciesGetEffectivePolicyCall struct {
 
 // GetEffectivePolicy: Gets the effective policy on a resource. This is the
 // result of merging policies in the resource hierarchy and evaluating
-// conditions. The returned policy will not have an `etag` or `condition` set
+// conditions. The returned policy will not have an ETag or `condition` set
 // because it is an evaluated policy across multiple resources. Subtrees of
 // Resource Manager resource hierarchy with 'under:' prefix will not be
 // expanded.
@@ -3184,14 +3187,14 @@ type OrganizationsPoliciesPatchCall struct {
 }
 
 // Patch: Updates a policy. Returns a `google.rpc.Status` with
-// `google.rpc.Code.NOT_FOUND` if the constraint or the policy do not exist.
-// Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the etag
-// supplied in the request does not match the persisted etag of the policy
+// `google.rpc.Code.NOT_FOUND` if the constraint or the policy doesn't exist.
+// Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the ETag
+// supplied in the request doesn't match the persisted ETag of the policy.
 // Note: the supplied policy will perform a full overwrite of all fields.
 //
 //   - name: Immutable. The resource name of the policy. Must be one of the
 //     following forms, where `constraint_name` is the name of the constraint
-//     which this policy configures: *
+//     that this policy configures: *
 //     `projects/{project_number}/policies/{constraint_name}` *
 //     `folders/{folder_id}/policies/{constraint_name}` *
 //     `organizations/{organization_id}/policies/{constraint_name}` For example,
@@ -3207,9 +3210,8 @@ func (r *OrganizationsPoliciesService) Patch(name string, googlecloudorgpolicyv2
 }
 
 // UpdateMask sets the optional parameter "updateMask": Field mask used to
-// specify the fields to be overwritten in the policy by the set. The fields
-// specified in the update_mask are relative to the policy, not the full
-// request.
+// specify the fields to be overwritten in the policy. The fields specified in
+// the update_mask are relative to the policy, not the full request.
 func (c *OrganizationsPoliciesPatchCall) UpdateMask(updateMask string) *OrganizationsPoliciesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3579,9 +3581,10 @@ func (r *ProjectsPoliciesService) Delete(name string) *ProjectsPoliciesDeleteCal
 	return c
 }
 
-// Etag sets the optional parameter "etag": The current etag of policy. If an
-// etag is provided and does not match the current etag of the policy, deletion
-// will be blocked and an ABORTED error will be returned.
+// Etag sets the optional parameter "etag": The current entity tag (ETag) of
+// the organization policy. If an ETag is provided and doesn't match the
+// current ETag of the policy, deletion of the policy will be blocked and an
+// `ABORTED` error will be returned.
 func (c *ProjectsPoliciesDeleteCall) Etag(etag string) *ProjectsPoliciesDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -3678,8 +3681,8 @@ type ProjectsPoliciesGetCall struct {
 }
 
 // Get: Gets a policy on a resource. If no policy is set on the resource,
-// `NOT_FOUND` is returned. The `etag` value can be used with `UpdatePolicy()`
-// to update a policy during read-modify-write.
+// `NOT_FOUND` is returned. The entity tag (ETag) can be used with
+// `UpdatePolicy()` to update a policy during read-modify-write.
 //
 // - name: Resource name of the policy. See Policy for naming requirements.
 func (r *ProjectsPoliciesService) Get(name string) *ProjectsPoliciesGetCall {
@@ -3791,7 +3794,7 @@ type ProjectsPoliciesGetEffectivePolicyCall struct {
 
 // GetEffectivePolicy: Gets the effective policy on a resource. This is the
 // result of merging policies in the resource hierarchy and evaluating
-// conditions. The returned policy will not have an `etag` or `condition` set
+// conditions. The returned policy will not have an ETag or `condition` set
 // because it is an evaluated policy across multiple resources. Subtrees of
 // Resource Manager resource hierarchy with 'under:' prefix will not be
 // expanded.
@@ -4056,14 +4059,14 @@ type ProjectsPoliciesPatchCall struct {
 }
 
 // Patch: Updates a policy. Returns a `google.rpc.Status` with
-// `google.rpc.Code.NOT_FOUND` if the constraint or the policy do not exist.
-// Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the etag
-// supplied in the request does not match the persisted etag of the policy
+// `google.rpc.Code.NOT_FOUND` if the constraint or the policy doesn't exist.
+// Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the ETag
+// supplied in the request doesn't match the persisted ETag of the policy.
 // Note: the supplied policy will perform a full overwrite of all fields.
 //
 //   - name: Immutable. The resource name of the policy. Must be one of the
 //     following forms, where `constraint_name` is the name of the constraint
-//     which this policy configures: *
+//     that this policy configures: *
 //     `projects/{project_number}/policies/{constraint_name}` *
 //     `folders/{folder_id}/policies/{constraint_name}` *
 //     `organizations/{organization_id}/policies/{constraint_name}` For example,
@@ -4079,9 +4082,8 @@ func (r *ProjectsPoliciesService) Patch(name string, googlecloudorgpolicyv2polic
 }
 
 // UpdateMask sets the optional parameter "updateMask": Field mask used to
-// specify the fields to be overwritten in the policy by the set. The fields
-// specified in the update_mask are relative to the policy, not the full
-// request.
+// specify the fields to be overwritten in the policy. The fields specified in
+// the update_mask are relative to the policy, not the full request.
 func (c *ProjectsPoliciesPatchCall) UpdateMask(updateMask string) *ProjectsPoliciesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

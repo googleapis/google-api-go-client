@@ -174,6 +174,7 @@ func NewConferenceRecordsService(s *Service) *ConferenceRecordsService {
 	rs := &ConferenceRecordsService{s: s}
 	rs.Participants = NewConferenceRecordsParticipantsService(s)
 	rs.Recordings = NewConferenceRecordsRecordingsService(s)
+	rs.SmartNotes = NewConferenceRecordsSmartNotesService(s)
 	rs.Transcripts = NewConferenceRecordsTranscriptsService(s)
 	return rs
 }
@@ -184,6 +185,8 @@ type ConferenceRecordsService struct {
 	Participants *ConferenceRecordsParticipantsService
 
 	Recordings *ConferenceRecordsRecordingsService
+
+	SmartNotes *ConferenceRecordsSmartNotesService
 
 	Transcripts *ConferenceRecordsTranscriptsService
 }
@@ -215,6 +218,15 @@ func NewConferenceRecordsRecordingsService(s *Service) *ConferenceRecordsRecordi
 }
 
 type ConferenceRecordsRecordingsService struct {
+	s *Service
+}
+
+func NewConferenceRecordsSmartNotesService(s *Service) *ConferenceRecordsSmartNotesService {
+	rs := &ConferenceRecordsSmartNotesService{s: s}
+	return rs
+}
+
+type ConferenceRecordsSmartNotesService struct {
 	s *Service
 }
 
@@ -555,6 +567,35 @@ func (s ListRecordingsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListSmartNotesResponse: Response for ListSmartNotes method.
+type ListSmartNotesResponse struct {
+	// NextPageToken: Token to be circulated back for further List call if current
+	// List doesn't include all the smart notes. Unset if all smart notes are
+	// returned.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// SmartNotes: List of smart notes in one page.
+	SmartNotes []*SmartNote `json:"smartNotes,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListSmartNotesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSmartNotesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListTranscriptEntriesResponse: Response for ListTranscriptEntries method.
 type ListTranscriptEntriesResponse struct {
 	// NextPageToken: Token to be circulated back for further List call if current
@@ -866,6 +907,51 @@ type SignedinUser struct {
 
 func (s SignedinUser) MarshalJSON() ([]byte, error) {
 	type NoMethod SignedinUser
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SmartNote: Metadata for a smart note generated from a conference. It refers
+// to the notes generated from Take Notes with Gemini during the conference.
+type SmartNote struct {
+	// DocsDestination: Output only. The Google Doc destination where the smart
+	// notes are saved.
+	DocsDestination *DocsDestination `json:"docsDestination,omitempty"`
+	// EndTime: Output only. Timestamp when the smart notes stopped.
+	EndTime string `json:"endTime,omitempty"`
+	// Name: Output only. Identifier. Resource name of the smart notes. Format:
+	// `conferenceRecords/{conference_record}/smartNotes/{smart_note}`, where
+	// `{smart_note}` is a 1:1 mapping to each unique smart notes session of the
+	// conference.
+	Name string `json:"name,omitempty"`
+	// StartTime: Output only. Timestamp when the smart notes started.
+	StartTime string `json:"startTime,omitempty"`
+	// State: Output only. Current state.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default, never used.
+	//   "STARTED" - An active smart notes session has started.
+	//   "ENDED" - This smart notes session has ended, but the smart notes file
+	// hasn't been generated yet.
+	//   "FILE_GENERATED" - Smart notes file is generated and ready to download.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DocsDestination") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DocsDestination") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SmartNote) MarshalJSON() ([]byte, error) {
+	type NoMethod SmartNote
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2183,6 +2269,264 @@ func (c *ConferenceRecordsRecordingsListCall) Do(opts ...googleapi.CallOption) (
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ConferenceRecordsRecordingsListCall) Pages(ctx context.Context, f func(*ListRecordingsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ConferenceRecordsSmartNotesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets smart notes by smart note ID.
+//
+//   - name: Resource name of the smart note. Format:
+//     conferenceRecords/{conference_record}/smartNotes/{smart_note}.
+func (r *ConferenceRecordsSmartNotesService) Get(name string) *ConferenceRecordsSmartNotesGetCall {
+	c := &ConferenceRecordsSmartNotesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ConferenceRecordsSmartNotesGetCall) Fields(s ...googleapi.Field) *ConferenceRecordsSmartNotesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ConferenceRecordsSmartNotesGetCall) IfNoneMatch(entityTag string) *ConferenceRecordsSmartNotesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ConferenceRecordsSmartNotesGetCall) Context(ctx context.Context) *ConferenceRecordsSmartNotesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ConferenceRecordsSmartNotesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ConferenceRecordsSmartNotesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "meet.conferenceRecords.smartNotes.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "meet.conferenceRecords.smartNotes.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SmartNote.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ConferenceRecordsSmartNotesGetCall) Do(opts ...googleapi.CallOption) (*SmartNote, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SmartNote{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "meet.conferenceRecords.smartNotes.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ConferenceRecordsSmartNotesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the set of smart notes from the conference record. By default,
+// ordered by start time and in ascending order.
+//
+// - parent: Format: `conferenceRecords/{conference_record}`.
+func (r *ConferenceRecordsSmartNotesService) List(parent string) *ConferenceRecordsSmartNotesListCall {
+	c := &ConferenceRecordsSmartNotesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of smart
+// notes to return. The service might return fewer than this value. If
+// unspecified, at most 10 smart notes are returned. The maximum value is 100;
+// values above 100 are coerced to 100. Maximum might change in the future.
+func (c *ConferenceRecordsSmartNotesListCall) PageSize(pageSize int64) *ConferenceRecordsSmartNotesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token returned from
+// previous List Call.
+func (c *ConferenceRecordsSmartNotesListCall) PageToken(pageToken string) *ConferenceRecordsSmartNotesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ConferenceRecordsSmartNotesListCall) Fields(s ...googleapi.Field) *ConferenceRecordsSmartNotesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ConferenceRecordsSmartNotesListCall) IfNoneMatch(entityTag string) *ConferenceRecordsSmartNotesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ConferenceRecordsSmartNotesListCall) Context(ctx context.Context) *ConferenceRecordsSmartNotesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ConferenceRecordsSmartNotesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ConferenceRecordsSmartNotesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/smartNotes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "meet.conferenceRecords.smartNotes.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "meet.conferenceRecords.smartNotes.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListSmartNotesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ConferenceRecordsSmartNotesListCall) Do(opts ...googleapi.CallOption) (*ListSmartNotesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSmartNotesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "meet.conferenceRecords.smartNotes.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ConferenceRecordsSmartNotesListCall) Pages(ctx context.Context, f func(*ListSmartNotesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

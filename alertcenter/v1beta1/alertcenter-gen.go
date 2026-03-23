@@ -891,6 +891,32 @@ func (s BatchUndeleteAlertsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ClientSideEncryptionServiceUnavailable: Alerts for client-side encryption
+// outages.
+type ClientSideEncryptionServiceUnavailable struct {
+	// IdpError: Identity providers impacted by an outage or misconfiguration.
+	IdpError []*IdentityProviderError `json:"idpError,omitempty"`
+	// KeyServiceError: External key services impacted by an outage or
+	// misconfiguration.
+	KeyServiceError []*KeyServiceError `json:"keyServiceError,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IdpError") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IdpError") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClientSideEncryptionServiceUnavailable) MarshalJSON() ([]byte, error) {
+	type NoMethod ClientSideEncryptionServiceUnavailable
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CloudPubsubTopic: A reference to a Cloud Pubsub topic. To register for
 // notifications, the owner of the topic must grant
 // `alerts-api-push-notifications@system.gserviceaccount.com` the
@@ -1291,6 +1317,91 @@ type GoogleOperations struct {
 
 func (s GoogleOperations) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleOperations
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IdentityProviderError: Error related to an identity provider.
+type IdentityProviderError struct {
+	// AuthorizationBaseUrl: Authorization base url of the identity provider.
+	AuthorizationBaseUrl string `json:"authorizationBaseUrl,omitempty"`
+	// ErrorCount: Number of similar errors encountered.
+	ErrorCount int64 `json:"errorCount,omitempty,string"`
+	// ErrorInfo: Info on the identity provider error.
+	//
+	// Possible values:
+	//   "IDENTITY_PROVIDER_ERROR_INFO_UNSPECIFIED" - Error info not specified.
+	//   "EMAIL_MISMATCH" - Email in the ID token is different from the user's
+	// email.
+	//   "UNAVAILABLE_DISCOVERY_CONTENT" - Discovery URL was unreachable.
+	//   "INVALID_DISCOVERY_CONTENT" - Discovery URL did not contain all the
+	// necessary information.
+	//   "UNAVAILABLE_CSE_CONFIGURATION_CONTENT" - URL for client-side encryption
+	// configuration content was unreachable.
+	//   "INVALID_CSE_CONFIGURATION_CONTENT" - Client-side encryption .well-known
+	// URL did not contain all the necessary information.
+	//   "INVALID_ID_TOKEN" - ID token returned by the identity provider is
+	// invalid.
+	//   "INVALID_OIDC_SETUP" - OIDC setup error.
+	//   "UNAVAILABLE_IDP" - Identity provider was unreachable.
+	//   "AUTH_CODE_EXCHANGE_ERROR" - Auth code exchange error.
+	//   "AUTHENTICATION_TOKEN_MISSING_CLAIM_EMAIL" - Authentication token has no
+	// "email" or "google_email" claim.
+	ErrorInfo string `json:"errorInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthorizationBaseUrl") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthorizationBaseUrl") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IdentityProviderError) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityProviderError
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// KeyServiceError: Error related to an external key service.
+type KeyServiceError struct {
+	// ErrorCount: Number of similar errors encountered.
+	ErrorCount int64 `json:"errorCount,omitempty,string"`
+	// ErrorInfo: Info on the key service error.
+	//
+	// Possible values:
+	//   "KEY_SERVICE_ERROR_INFO_UNSPECIFIED" - Error info not specified.
+	//   "MALFORMED_JSON" - The response has malformed JSON.
+	//   "MISSING_KEY" - The response did not contain the wrapped/unwrapped key.
+	//   "MISSING_SIGNATURE" - SMIME sign only: The sign response did not contain
+	// the signature.
+	//   "MISSING_ALGORITHM_NAME" - SMIME only: The sign response does not include
+	// the algorithm name.
+	//   "UNSUPPORTED_ALGORITHM" - SMIME only: the algorithm name in the response
+	// is not supported by the client.
+	//   "FETCH_REQUEST_ERROR" - Fetch request on the client has failed.
+	ErrorInfo string `json:"errorInfo,omitempty"`
+	// HttpResponseCode: HTTP response status code from the key service.
+	HttpResponseCode int64 `json:"httpResponseCode,omitempty,string"`
+	// KeyServiceUrl: Url of the external key service.
+	KeyServiceUrl string `json:"keyServiceUrl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s KeyServiceError) MarshalJSON() ([]byte, error) {
+	type NoMethod KeyServiceError
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

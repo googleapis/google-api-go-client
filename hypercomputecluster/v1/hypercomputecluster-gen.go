@@ -274,7 +274,8 @@ type Cluster struct {
 	ComputeResources map[string]ComputeResource `json:"computeResources,omitempty"`
 	// CreateTime: Output only. Time that the cluster was originally created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: Optional. User-provided description of the cluster.
+	// Description: Optional. User-provided description of the cluster. Maximum of
+	// 2048 characters.
 	Description string `json:"description,omitempty"`
 	// Labels: Optional. Labels
 	// (https://cloud.google.com/compute/docs/labeling-resources) applied to the

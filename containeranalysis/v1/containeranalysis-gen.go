@@ -1581,6 +1581,12 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Artifacts struct {
 	// the uploaded objects will be stored in the Build resource's results field.
 	// If any objects fail to be pushed, the build is marked FAILURE.
 	Objects *ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsArtifactObjects `json:"objects,omitempty"`
+	// Oci: Optional. A list of OCI images to be uploaded to Artifact Registry upon
+	// successful completion of all build steps. OCI images in the specified paths
+	// will be uploaded to the specified Artifact Registry repository using the
+	// builder service account's credentials. If any images fail to be pushed, the
+	// build is marked FAILURE.
+	Oci []*ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsOci `json:"oci,omitempty"`
 	// PythonPackages: A list of Python packages to be uploaded to Artifact
 	// Registry upon successful completion of all build steps. The build service
 	// account credentials will be used to perform the upload. If any objects fail
@@ -1754,6 +1760,35 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsNpmPackage struct {
 
 func (s ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsNpmPackage) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsNpmPackage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsOci: OCI image to upload
+// to Artifact Registry upon successful completion of all build steps.
+type ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsOci struct {
+	// File: Required. Path on the local file system where to find the container to
+	// upload. e.g. /workspace/my-image.tar
+	File string `json:"file,omitempty"`
+	// RegistryPath: Required. Registry path to upload the container to. e.g.
+	// us-east1-docker.pkg.dev/my-project/my-repo/my-image
+	RegistryPath string `json:"registryPath,omitempty"`
+	// Tags: Optional. Tags to apply to the uploaded image. e.g. latest, 1.0.0
+	Tags []string `json:"tags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "File") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "File") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsOci) MarshalJSON() ([]byte, error) {
+	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsOci
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2329,6 +2364,16 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1BuiltImage struct {
 	// Name: Name used to push the container image to Google Container Registry, as
 	// presented to `docker push`.
 	Name string `json:"name,omitempty"`
+	// OciMediaType: Output only. The OCI media type of the artifact. Non-OCI
+	// images, such as Docker images, will have an unspecified value.
+	//
+	// Possible values:
+	//   "OCI_MEDIA_TYPE_UNSPECIFIED" - Default value.
+	//   "IMAGE_MANIFEST" - The artifact is an image manifest, which represents a
+	// single image with all its layers.
+	//   "IMAGE_INDEX" - The artifact is an image index, which can contain a list
+	// of image manifests.
+	OciMediaType string `json:"ociMediaType,omitempty"`
 	// PushTiming: Output only. Stores timing information for pushing the specified
 	// image.
 	PushTiming *ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan `json:"pushTiming,omitempty"`
@@ -4032,6 +4077,9 @@ type GrafeasV1FileLocation struct {
 	// LayerDetails: Each package found in a file should have its own layer
 	// metadata (that is, information from the origin layer of the package).
 	LayerDetails *LayerDetails `json:"layerDetails,omitempty"`
+	// LineNumber: Line number in the file where the package was found. Optional
+	// field that only applies to source repository scanning.
+	LineNumber int64 `json:"lineNumber,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FilePath") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

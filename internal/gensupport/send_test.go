@@ -60,7 +60,7 @@ func (rt *headerRoundTripper) RoundTrip(r *http.Request) (*http.Response, error)
 
 	// Ignore x-goog headers sent by SendRequestWithRetry
 	r.Header.Del("X-Goog-Gcs-Idempotency-Token")
-	r.Header.Del("X-Goog-Api-Client") // this was tested above already
+	r.Header.Del("X-Goog-Api-Client")     // this was tested above already
 	r.Header.Del("X-Goog-Request-Params") // this was tested above already
 
 	if diff := cmp.Diff(r.Header, rt.wantHeader); diff != "" {

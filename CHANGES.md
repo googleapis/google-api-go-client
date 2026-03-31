@@ -1,5 +1,12 @@
 # Changes
 
+## [0.273.1](https://github.com/googleapis/google-api-go-client/compare/v0.273.0...v0.273.1) (2026-03-31)
+
+
+### Bug Fixes
+
+* Merge duplicate x-goog-request-params header ([#3547](https://github.com/googleapis/google-api-go-client/issues/3547)) ([2008108](https://github.com/googleapis/google-api-go-client/commit/2008108eb50215407a945afc2db9c45998c42bbe))
+
 ## [0.273.0](https://github.com/googleapis/google-api-go-client/compare/v0.272.0...v0.273.0) (2026-03-23)
 
 

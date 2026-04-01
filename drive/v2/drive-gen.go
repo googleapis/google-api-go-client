@@ -370,9 +370,13 @@ type About struct {
 	CanCreateDrives bool `json:"canCreateDrives,omitempty"`
 	// CanCreateTeamDrives: Deprecated: Use `canCreateDrives` instead.
 	CanCreateTeamDrives bool `json:"canCreateTeamDrives,omitempty"`
-	// DomainSharingPolicy: The domain sharing policy for the current user.
+	// DomainSharingPolicy: Deprecated: Does not granularly represent allowlisted
+	// domains or Trust Rules. The domain sharing policy for the current user.
 	// Possible values are: * `allowed` * `allowedWithWarning` * `incomingOnly` *
-	// `disallowed`
+	// `disallowed` Note that if the user is enrolled in Trust Rules, `disallowed`
+	// will always be returned. If sharing is restricted to allowlisted domains,
+	// either `incomingOnly` or `allowedWithWarning` will be returned, depending on
+	// whether receiving files from outside the allowlisted domains is permitted.
 	DomainSharingPolicy string `json:"domainSharingPolicy,omitempty"`
 	// DriveThemes: A list of themes that are supported for shared drives.
 	DriveThemes []*AboutDriveThemes `json:"driveThemes,omitempty"`
@@ -6246,7 +6250,8 @@ type DrivesListCall struct {
 // List:  Lists the user's shared drives. This method accepts the `q`
 // parameter, which is a search query combining one or more search terms. For
 // more information, see the Search for shared drives
-// (/workspace/drive/api/guides/search-shareddrives) guide.
+// (https://developers.google.com/workspace/drive/api/guides/search-shareddrives)
+// guide.
 func (r *DrivesService) List() *DrivesListCall {
 	c := &DrivesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -7226,9 +7231,10 @@ type FilesGetCall struct {
 // parameter `alt=media`, then the response includes the file contents in the
 // response body. Downloading content with `alt=media` only works if the file
 // is stored in Drive. To download Google Docs, Sheets, and Slides use
-// `files.export` (/workspace/drive/api/reference/rest/v2/files/export)
+// `files.export`
+// (https://developers.google.com/workspace/drive/api/reference/rest/v2/files/export)
 // instead. For more information, see Download & export files
-// (/workspace/drive/api/guides/manage-downloads).
+// (https://developers.google.com/workspace/drive/api/guides/manage-downloads).
 //
 // - fileId: The ID for the file in question.
 func (r *FilesService) Get(fileId string) *FilesGetCall {
@@ -7425,8 +7431,8 @@ type FilesInsertCall struct {
 // MIME type, rather than the literal `*/*` value. The literal `*/*` is only
 // used to indicate that any valid MIME type can be uploaded. For more
 // information on uploading files, see Upload file data
-// (/workspace/drive/api/guides/manage-uploads). Apps creating shortcuts with
-// `files.insert` must specify the MIME type
+// (https://developers.google.com/workspace/drive/api/guides/manage-uploads).
+// Apps creating shortcuts with `files.insert` must specify the MIME type
 // `application/vnd.google-apps.shortcut`. Apps should specify a file extension
 // in the `title` property when inserting files with the API. For example, an
 // operation to insert a JPEG file should specify something like "title":
@@ -7700,11 +7706,13 @@ type FilesListCall struct {
 }
 
 // List:  Lists the user's files. For more information, see Search for files
-// and folders (/workspace/drive/api/guides/search-files). This method accepts
-// the `q` parameter, which is a search query combining one or more search
-// terms. This method returns *all* files by default, including trashed files.
-// If you don't want trashed files to appear in the list, use the
-// `trashed=false` query parameter to remove trashed files from the results.
+// and folders
+// (https://developers.google.com/workspace/drive/api/guides/search-files).
+// This method accepts the `q` parameter, which is a search query combining one
+// or more search terms. This method returns *all* files by default, including
+// trashed files. If you don't want trashed files to appear in the list, use
+// the `trashed=false` query parameter to remove trashed files from the
+// results.
 func (r *FilesService) List() *FilesListCall {
 	c := &FilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -8876,9 +8884,10 @@ type FilesUpdateCall struct {
 // types:* `*/*` (Specify a valid MIME type, rather than the literal `*/*`
 // value. The literal `*/*` is only used to indicate that any valid MIME type
 // can be uploaded. For more information, see Google Workspace and Google Drive
-// supported MIME types (/workspace/drive/api/guides/mime-types).) For more
-// information on uploading files, see Upload file data
-// (/workspace/drive/api/guides/manage-uploads).
+// supported MIME types
+// (https://developers.google.com/workspace/drive/api/guides/mime-types).) For
+// more information on uploading files, see Upload file data
+// (https://developers.google.com/workspace/drive/api/guides/manage-uploads).
 //
 // - fileId: The ID of the file to update.
 func (r *FilesService) Update(fileId string, file *File) *FilesUpdateCall {

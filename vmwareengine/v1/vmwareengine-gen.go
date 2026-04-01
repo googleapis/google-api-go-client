@@ -2482,6 +2482,10 @@ type MountDatastoreRequest struct {
 	// RequestId: Optional. The request ID must be a valid UUID with the exception
 	// that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
 	RequestId string `json:"requestId,omitempty"`
+	// ValidateOnly: Optional. If set to `true`, only validates the request but
+	// doesn’t execute the request. If set to `false`, validates and executes the
+	// request.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DatastoreMountConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3977,6 +3981,10 @@ type UnmountDatastoreRequest struct {
 	// RequestId: Optional. The request ID must be a valid UUID with the exception
 	// that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
 	RequestId string `json:"requestId,omitempty"`
+	// ValidateOnly: Optional. If set to `true`, only validates the request but
+	// doesn’t execute the request. If set to `false`, validates and executes the
+	// request.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Datastore") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4564,10 +4572,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
@@ -5966,6 +5980,14 @@ func (c *ProjectsLocationsNetworkPeeringsCreateCall) RequestId(requestId string)
 	return c
 }
 
+// ValidateOnly sets the optional parameter "validateOnly": If set to `true`,
+// only validates the request but doesn’t execute the request. If set to
+// `false`, validates and executes the request.
+func (c *ProjectsLocationsNetworkPeeringsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsNetworkPeeringsCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -6518,6 +6540,14 @@ func (c *ProjectsLocationsNetworkPeeringsPatchCall) UpdateMask(updateMask string
 	return c
 }
 
+// ValidateOnly sets the optional parameter "validateOnly": If set to `true`,
+// only validates the request but doesn’t execute the request. If set to
+// `false`, validates and executes the request.
+func (c *ProjectsLocationsNetworkPeeringsPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsNetworkPeeringsPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -6818,6 +6848,14 @@ func (c *ProjectsLocationsNetworkPoliciesCreateCall) NetworkPolicyId(networkPoli
 // (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsNetworkPoliciesCreateCall) RequestId(requestId string) *ProjectsLocationsNetworkPoliciesCreateCall {
 	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set to `true`,
+// only validates the request but doesn’t execute the request. If set to
+// `false`, validates and executes the request.
+func (c *ProjectsLocationsNetworkPoliciesCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsNetworkPoliciesCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 
@@ -7533,6 +7571,14 @@ func (c *ProjectsLocationsNetworkPoliciesPatchCall) UpdateMask(updateMask string
 	return c
 }
 
+// ValidateOnly sets the optional parameter "validateOnly": If set to `true`,
+// only validates the request but doesn’t execute the request. If set to
+// `false`, validates and executes the request.
+func (c *ProjectsLocationsNetworkPoliciesPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsNetworkPoliciesPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -7667,6 +7713,14 @@ func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesCreateCall) External
 // (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesCreateCall) RequestId(requestId string) *ProjectsLocationsNetworkPoliciesExternalAccessRulesCreateCall {
 	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set to `true`,
+// only validates the request but doesn’t execute the request. If set to
+// `false`, validates and executes the request.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsNetworkPoliciesExternalAccessRulesCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 
@@ -8217,6 +8271,14 @@ func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesPatchCall) RequestId
 // will be overwritten.
 func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsNetworkPoliciesExternalAccessRulesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set to `true`,
+// only validates the request but doesn’t execute the// request. If set to
+// `false`, validates and executes the request.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsNetworkPoliciesExternalAccessRulesPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 
@@ -9009,8 +9071,9 @@ func (c *ProjectsLocationsPrivateCloudsCreateCall) RequestId(requestId string) *
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": True if you want
-// the request to be validated and not executed; false otherwise.
+// ValidateOnly sets the optional parameter "validateOnly": If set to `true`,
+// only validates the request but doesn’t execute the request. If set to
+// `false`, validates and executes the request.
 func (c *ProjectsLocationsPrivateCloudsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsPrivateCloudsCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -9823,6 +9886,14 @@ func (c *ProjectsLocationsPrivateCloudsPatchCall) RequestId(requestId string) *P
 // overwritten.
 func (c *ProjectsLocationsPrivateCloudsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsPrivateCloudsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set to `true`,
+// only validates the request but doesn’t execute the request. If set to
+// `false`, validates and executes the request.
+func (c *ProjectsLocationsPrivateCloudsPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsPrivateCloudsPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 
@@ -10979,8 +11050,9 @@ func (c *ProjectsLocationsPrivateCloudsClustersCreateCall) RequestId(requestId s
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": True if you want
-// the request to be validated and not executed; false otherwise.
+// ValidateOnly sets the optional parameter "validateOnly": If set to `true`,
+// only validates the request but doesn’t execute the request. If set to
+// `false`, validates and executes the request.
 func (c *ProjectsLocationsPrivateCloudsClustersCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsPrivateCloudsClustersCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -11751,8 +11823,9 @@ func (c *ProjectsLocationsPrivateCloudsClustersPatchCall) UpdateMask(updateMask 
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": True if you want
-// the request to be validated and not executed; false otherwise.
+// ValidateOnly sets the optional parameter "validateOnly": If set to `true`,
+// only validates the request but doesn’t execute the request. If set to
+// `false`, validates and executes the request.
 func (c *ProjectsLocationsPrivateCloudsClustersPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsPrivateCloudsClustersPatchCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -12484,6 +12557,14 @@ func (c *ProjectsLocationsPrivateCloudsExternalAddressesCreateCall) RequestId(re
 	return c
 }
 
+// ValidateOnly sets the optional parameter "validateOnly": If set to `true`,
+// only validates the request but doesn’t execute the request. If set to
+// `false`, validates and executes the request.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsPrivateCloudsExternalAddressesCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -13036,6 +13117,14 @@ func (c *ProjectsLocationsPrivateCloudsExternalAddressesPatchCall) RequestId(req
 // will be overwritten.
 func (c *ProjectsLocationsPrivateCloudsExternalAddressesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsPrivateCloudsExternalAddressesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set to `true`,
+// only validates the request but doesn’t execute the request. If set to
+// `false`, validates and executes the request.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsPrivateCloudsExternalAddressesPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 
@@ -16236,6 +16325,14 @@ func (c *ProjectsLocationsPrivateConnectionsCreateCall) RequestId(requestId stri
 	return c
 }
 
+// ValidateOnly sets the optional parameter "validateOnly": If set to `true`,
+// only validates the request but doesn’t execute the request. If set to
+// `false`, validates and executes the request.
+func (c *ProjectsLocationsPrivateConnectionsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsPrivateConnectionsCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -16788,6 +16885,14 @@ func (c *ProjectsLocationsPrivateConnectionsPatchCall) UpdateMask(updateMask str
 	return c
 }
 
+// ValidateOnly sets the optional parameter "validateOnly": If set to `true`,
+// only validates the request but doesn’t execute the request. If set to
+// `false`, validates and executes the request.
+func (c *ProjectsLocationsPrivateConnectionsPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsPrivateConnectionsPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -17066,6 +17171,14 @@ func (r *ProjectsLocationsVmwareEngineNetworksService) Create(parent string, vmw
 // (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsVmwareEngineNetworksCreateCall) RequestId(requestId string) *ProjectsLocationsVmwareEngineNetworksCreateCall {
 	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set to `true`,
+// only validates the request but doesn’t execute the request. If set to
+// `false`, validates and executes the request.
+func (c *ProjectsLocationsVmwareEngineNetworksCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsVmwareEngineNetworksCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 
@@ -17644,6 +17757,14 @@ func (c *ProjectsLocationsVmwareEngineNetworksPatchCall) RequestId(requestId str
 // `description`.
 func (c *ProjectsLocationsVmwareEngineNetworksPatchCall) UpdateMask(updateMask string) *ProjectsLocationsVmwareEngineNetworksPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set to `true`,
+// only validates the request but doesn’t execute the request. If set to
+// `false`, validates and executes the request.
+func (c *ProjectsLocationsVmwareEngineNetworksPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsVmwareEngineNetworksPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 

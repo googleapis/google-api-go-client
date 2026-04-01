@@ -672,6 +672,10 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CancelOperationRequest: The request message for Operations.CancelOperation.
+type CancelOperationRequest struct {
+}
+
 // CleanupPolicy: Artifact policy configuration for repository cleanup
 // policies.
 type CleanupPolicy struct {
@@ -2528,6 +2532,53 @@ func (s Package) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PlatformLogsConfig: The platform logs config for a project or a repository.
+type PlatformLogsConfig struct {
+	// LoggingState: Optional. The state of the platform logs: enabled or disabled.
+	//
+	// Possible values:
+	//   "LOGGING_STATE_UNSPECIFIED" - Platform logs settings for the parent
+	// resource haven't been set. This is the default state or when the user clears
+	// the settings for the parent.
+	//   "ENABLED" - Platform logs are enabled.
+	//   "DISABLED" - Platform logs are disabled.
+	LoggingState string `json:"loggingState,omitempty"`
+	// SeverityLevel: Optional. The severity level for the logs. Logs will be
+	// generated if their severity level is >= than the value of the severity level
+	// mentioned here.
+	//
+	// Possible values:
+	//   "SEVERITY_LEVEL_UNSPECIFIED" - No severity level specified, meaning
+	// everything is being logged.
+	//   "DEBUG" - Debug or trace information.
+	//   "INFO" - Routine information, such as ongoing status or performance.
+	//   "NOTICE" - Normal but significant events, such as start up, shut down, or
+	// a configuration change.
+	//   "WARNING" - Warning events that might cause problems.
+	//   "ERROR" - Error events that are likely to cause problems.
+	//   "CRITICAL" - Critical events that cause more severe problems or outages.
+	//   "ALERT" - Alert events that require a person must take an action
+	// immediately.
+	//   "EMERGENCY" - One or more systems are unusable.
+	SeverityLevel string `json:"severityLevel,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LoggingState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LoggingState") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PlatformLogsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PlatformLogsConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Policy: An Identity and Access Management (IAM) policy, which specifies
 // access controls for Google Cloud resources. A `Policy` is a collection of
 // `bindings`. A `binding` binds one or more `members`, or principals, to a
@@ -2615,6 +2666,35 @@ type Policy struct {
 
 func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ProjectConfig: The Artifact Registry logging configurations that apply to a
+// Project.
+type ProjectConfig struct {
+	// Name: Identifier. The name of the project's configuration. Always of the
+	// form: projects/{project}/locations/{location}/projectConfig
+	Name string `json:"name,omitempty"`
+	// PlatformLogsConfig: Optional. Configuration for platform logs.
+	PlatformLogsConfig *PlatformLogsConfig `json:"platformLogsConfig,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProjectConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ProjectConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2844,6 +2924,8 @@ type Repository struct {
 	// `projects/p1/locations/us-central1/repositories/repo1`. For each location in
 	// a project, repository names must be unique.
 	Name string `json:"name,omitempty"`
+	// PlatformLogsConfig: Optional. Configuration for platform logs.
+	PlatformLogsConfig *PlatformLogsConfig `json:"platformLogsConfig,omitempty"`
 	// RegistryUri: Output only. The repository endpoint, for example:
 	// `us-docker.pkg.dev/my-proj/my-repo`.
 	RegistryUri string `json:"registryUri,omitempty"`
@@ -4036,6 +4118,116 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 	return ret, nil
 }
 
+type ProjectsLocationsGetProjectConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetProjectConfig: Retrieves the project configuration.
+//
+//   - name: The name of the project's logging configuration:
+//     projects/{project}/locations/{location}/projectConfig.
+func (r *ProjectsLocationsService) GetProjectConfig(name string) *ProjectsLocationsGetProjectConfigCall {
+	c := &ProjectsLocationsGetProjectConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGetProjectConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetProjectConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGetProjectConfigCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetProjectConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGetProjectConfigCall) Context(ctx context.Context) *ProjectsLocationsGetProjectConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGetProjectConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGetProjectConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "artifactregistry.projects.locations.getProjectConfig", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.getProjectConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ProjectConfig.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGetProjectConfigCall) Do(opts ...googleapi.CallOption) (*ProjectConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ProjectConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "artifactregistry.projects.locations.getProjectConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsGetVpcscConfigCall struct {
 	s            *Service
 	name         string
@@ -4155,10 +4347,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
@@ -4312,6 +4510,119 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 	}
 }
 
+type ProjectsLocationsUpdateProjectConfigCall struct {
+	s             *Service
+	name          string
+	projectconfig *ProjectConfig
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// UpdateProjectConfig: Updates the project configuration.
+//
+//   - name: Identifier. The name of the project's configuration. Always of the
+//     form: projects/{project}/locations/{location}/projectConfig.
+func (r *ProjectsLocationsService) UpdateProjectConfig(name string, projectconfig *ProjectConfig) *ProjectsLocationsUpdateProjectConfigCall {
+	c := &ProjectsLocationsUpdateProjectConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.projectconfig = projectconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask to support
+// partial updates. See
+// https://protobuf.dev/reference/protobuf/google.protobuf/#field-mask for more
+// details.
+func (c *ProjectsLocationsUpdateProjectConfigCall) UpdateMask(updateMask string) *ProjectsLocationsUpdateProjectConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsUpdateProjectConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsUpdateProjectConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsUpdateProjectConfigCall) Context(ctx context.Context) *ProjectsLocationsUpdateProjectConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsUpdateProjectConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsUpdateProjectConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.projectconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "artifactregistry.projects.locations.updateProjectConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.updateProjectConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ProjectConfig.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsUpdateProjectConfigCall) Do(opts ...googleapi.CallOption) (*ProjectConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ProjectConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "artifactregistry.projects.locations.updateProjectConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsUpdateVpcscConfigCall struct {
 	s           *Service
 	name        string
@@ -4421,6 +4732,117 @@ func (c *ProjectsLocationsUpdateVpcscConfigCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "artifactregistry.projects.locations.updateVpcscConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsOperationsCancelCall struct {
+	s                      *Service
+	name                   string
+	canceloperationrequest *CancelOperationRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Cancel: Starts asynchronous cancellation on a long-running operation. The
+// server makes a best effort to cancel the operation, but success is not
+// guaranteed. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or
+// other methods to check whether the cancellation succeeded or whether the
+// operation completed despite cancellation. On successful cancellation, the
+// operation is not deleted; instead, it becomes an operation with an
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
+// `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
+func (r *ProjectsLocationsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsOperationsCancelCall {
+	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.canceloperationrequest = canceloperationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsOperationsCancelCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsOperationsCancelCall) Context(ctx context.Context) *ProjectsLocationsOperationsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.canceloperationrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "artifactregistry.projects.locations.operations.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.operations.cancel" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "artifactregistry.projects.locations.operations.cancel", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

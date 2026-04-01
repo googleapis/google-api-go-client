@@ -2158,9 +2158,9 @@ type ExecuteSqlPayload struct {
 	// the request. This field is used for telemetry. Only alphanumeric characters,
 	// dashes, and underscores are allowed. The maximum length is 32 characters.
 	Application string `json:"application,omitempty"`
-	// AutoIamAuthn: Optional. When set to true, the API caller identity associated
-	// with the request is used for database authentication. The API caller must be
-	// an IAM user in the database.
+	// AutoIamAuthn: Optional. When set to `true`, the API caller identity
+	// associated with the request is used for database authentication. The API
+	// caller must be an IAM user in the database.
 	AutoIamAuthn bool `json:"autoIamAuthn,omitempty"`
 	// Database: Optional. Name of the database on which the statement will be
 	// executed.
@@ -4245,6 +4245,8 @@ type Operation struct {
 	//   "REPAIR_READ_POOL" - Repairs entire read pool or specified read pool nodes
 	// in the read pool.
 	//   "CREATE_READ_POOL" - Creates a Cloud SQL read pool instance.
+	//   "PRE_CHECK_MAJOR_VERSION_UPGRADE" - Pre-checks the major version upgrade
+	// operation.
 	OperationType string `json:"operationType,omitempty"`
 	// PreCheckMajorVersionUpgradeContext: This field is only populated when the
 	// operation_type is PRE_CHECK_MAJOR_VERSION_UPGRADE. The
@@ -4828,8 +4830,8 @@ type PscAutoConnectionConfig struct {
 	// ConsumerNetworkStatus: The connection policy status of the consumer network.
 	ConsumerNetworkStatus string `json:"consumerNetworkStatus,omitempty"`
 	// ConsumerProject: Optional. This is the project ID of consumer service
-	// project of this consumer endpoint. Optional. This is only applicable if
-	// consumer_network is a shared vpc network.
+	// project of this consumer endpoint. This is only applicable if
+	// `consumer_network` is a shared VPC network.
 	ConsumerProject string `json:"consumerProject,omitempty"`
 	// IpAddress: The IP address of the consumer endpoint.
 	IpAddress string `json:"ipAddress,omitempty"`
@@ -4870,8 +4872,22 @@ type PscConfig struct {
 	// Service Connect consumer endpoints that can be used to connect to this Cloud
 	// SQL instance.
 	PscAutoConnections []*PscAutoConnectionConfig `json:"pscAutoConnections,omitempty"`
+	// PscAutoDnsEnabled: Optional. Indicates whether PSC DNS automation is enabled
+	// for this instance. When enabled, Cloud SQL provisions a universal DNS record
+	// across all networks configured with Private Service Connect (PSC)
+	// auto-connections. This will default to true for new instances when Private
+	// Service Connect is enabled.
+	PscAutoDnsEnabled bool `json:"pscAutoDnsEnabled,omitempty"`
 	// PscEnabled: Whether PSC connectivity is enabled for this instance.
 	PscEnabled bool `json:"pscEnabled,omitempty"`
+	// PscWriteEndpointDnsEnabled: Optional. Indicates whether PSC write endpoint
+	// DNS automation is enabled for this instance. When enabled, Cloud SQL
+	// provisions a universal global DNS record across all networks configured with
+	// Private Service Connect (PSC) auto-connections that always points to the
+	// cluster primary instance. This feature is only supported for Enterprise Plus
+	// edition. This will default to true for new Enterprise Plus instances when
+	// `psc_auto_dns_enabled` is enabled.
+	PscWriteEndpointDnsEnabled bool `json:"pscWriteEndpointDnsEnabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowedConsumerProjects") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9745,7 +9761,7 @@ type InstancesCloneCall struct {
 //
 //   - instance: The ID of the Cloud SQL instance to be cloned (source). This
 //     does not include the project ID.
-//   - project: Project ID of the source as well as the clone Cloud SQL instance.
+//   - project: Project ID of the source Cloud SQL instance.
 func (r *InstancesService) Clone(project string, instance string, instancesclonerequest *InstancesCloneRequest) *InstancesCloneCall {
 	c := &InstancesCloneCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project

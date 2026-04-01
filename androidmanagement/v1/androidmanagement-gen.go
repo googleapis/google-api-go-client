@@ -6348,9 +6348,10 @@ type Policy struct {
 	// CreateWindowsDisabled: Whether creating windows besides app windows is
 	// disabled.
 	CreateWindowsDisabled bool `json:"createWindowsDisabled,omitempty"`
-	// CredentialProviderPolicyDefault: Controls which apps are allowed to act as
-	// credential providers on Android 14 and above. These apps store credentials,
-	// see this (https://developer.android.com/training/sign-in/passkeys) and this
+	// CredentialProviderPolicyDefault: Optional. Controls which apps are allowed
+	// to act as credential providers on Android 14 and above. These apps store
+	// credentials, see this
+	// (https://developer.android.com/training/sign-in/passkeys) and this
 	// (https://developer.android.com/reference/androidx/credentials/CredentialManager)
 	// for details. See also credentialProviderPolicy.
 	//

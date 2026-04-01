@@ -367,9 +367,9 @@ func (s GoogleCloudEssentialcontactsV1ListContactsResponse) MarshalJSON() ([]byt
 // the SendTestMessage method.
 type GoogleCloudEssentialcontactsV1SendTestMessageRequest struct {
 	// Contacts: Required. The list of names of the contacts to send a test message
-	// to. Format: organizations/{organization_id}/contacts/{contact_id},
-	// folders/{folder_id}/contacts/{contact_id} or
-	// projects/{project_id}/contacts/{contact_id}
+	// to. Format: organizations/{organization}/contacts/{contact},
+	// folders/{folder}/contacts/{contact} or projects/{project}/contacts/{contact}
+	// (where {project} is the project number)
 	Contacts []string `json:"contacts,omitempty"`
 	// NotificationCategory: Required. The notification category to send the test
 	// message for. All contacts must be subscribed to this category.
@@ -436,8 +436,8 @@ type FoldersContactsComputeCall struct {
 // parent resources.
 //
 //   - parent: The name of the resource to compute contacts for. Format:
-//     organizations/{organization_id}, folders/{folder_id} or
-//     projects/{project_id}.
+//     organizations/{organization}, folders/{folder} or projects/{project}
+//     (where {project} is the project number).
 func (r *FoldersContactsService) Compute(parent string) *FoldersContactsComputeCall {
 	c := &FoldersContactsComputeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -633,8 +633,8 @@ type FoldersContactsCreateCall struct {
 // Create: Adds a new contact for a resource.
 //
 //   - parent: The resource to save this contact for. Format:
-//     organizations/{organization_id}, folders/{folder_id} or
-//     projects/{project_id}.
+//     organizations/{organization}, folders/{folder} or projects/{project}
+//     (where {project} is the project number).
 func (r *FoldersContactsService) Create(parent string, googlecloudessentialcontactsv1contact *GoogleCloudEssentialcontactsV1Contact) *FoldersContactsCreateCall {
 	c := &FoldersContactsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -738,9 +738,10 @@ type FoldersContactsDeleteCall struct {
 // Delete: Deletes a contact.
 //
 //   - name: The name of the contact to delete. Format:
-//     organizations/{organization_id}/contacts/{contact_id},
-//     folders/{folder_id}/contacts/{contact_id} or
-//     projects/{project_id}/contacts/{contact_id}.
+//     organizations/{organization}/contacts/{contact},
+//     folders/{folder}/contacts/{contact} or
+//     projects/{project}/contacts/{contact} (where {project} is the project
+//     number).
 func (r *FoldersContactsService) Delete(name string) *FoldersContactsDeleteCall {
 	c := &FoldersContactsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -840,9 +841,10 @@ type FoldersContactsGetCall struct {
 // Get: Gets a single contact.
 //
 //   - name: The name of the contact to retrieve. Format:
-//     organizations/{organization_id}/contacts/{contact_id},
-//     folders/{folder_id}/contacts/{contact_id} or
-//     projects/{project_id}/contacts/{contact_id}.
+//     organizations/{organization}/contacts/{contact},
+//     folders/{folder}/contacts/{contact} or
+//     projects/{project}/contacts/{contact} (where {project} is the project
+//     number).
 func (r *FoldersContactsService) Get(name string) *FoldersContactsGetCall {
 	c := &FoldersContactsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -952,8 +954,9 @@ type FoldersContactsListCall struct {
 
 // List: Lists the contacts that have been set on a resource.
 //
-//   - parent: The parent resource name. Format: organizations/{organization_id},
-//     folders/{folder_id} or projects/{project_id}.
+//   - parent: The parent resource name. Format: organizations/{organization},
+//     folders/{folder} or projects/{project} (where {project} is the project
+//     number).
 func (r *FoldersContactsService) List(parent string) *FoldersContactsListCall {
 	c := &FoldersContactsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1220,8 +1223,8 @@ type FoldersContactsSendTestMessageCall struct {
 //   - resource: The name of the resource to send the test message for. All
 //     contacts must either be set directly on this resource or inherited from
 //     another resource that is an ancestor of this one. Format:
-//     organizations/{organization_id}, folders/{folder_id} or
-//     projects/{project_id}.
+//     organizations/{organization}, folders/{folder} or projects/{project}
+//     (where {project} is the project number).
 func (r *FoldersContactsService) SendTestMessage(resource string, googlecloudessentialcontactsv1sendtestmessagerequest *GoogleCloudEssentialcontactsV1SendTestMessageRequest) *FoldersContactsSendTestMessageCall {
 	c := &FoldersContactsSendTestMessageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1328,8 +1331,8 @@ type OrganizationsContactsComputeCall struct {
 // parent resources.
 //
 //   - parent: The name of the resource to compute contacts for. Format:
-//     organizations/{organization_id}, folders/{folder_id} or
-//     projects/{project_id}.
+//     organizations/{organization}, folders/{folder} or projects/{project}
+//     (where {project} is the project number).
 func (r *OrganizationsContactsService) Compute(parent string) *OrganizationsContactsComputeCall {
 	c := &OrganizationsContactsComputeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1525,8 +1528,8 @@ type OrganizationsContactsCreateCall struct {
 // Create: Adds a new contact for a resource.
 //
 //   - parent: The resource to save this contact for. Format:
-//     organizations/{organization_id}, folders/{folder_id} or
-//     projects/{project_id}.
+//     organizations/{organization}, folders/{folder} or projects/{project}
+//     (where {project} is the project number).
 func (r *OrganizationsContactsService) Create(parent string, googlecloudessentialcontactsv1contact *GoogleCloudEssentialcontactsV1Contact) *OrganizationsContactsCreateCall {
 	c := &OrganizationsContactsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1630,9 +1633,10 @@ type OrganizationsContactsDeleteCall struct {
 // Delete: Deletes a contact.
 //
 //   - name: The name of the contact to delete. Format:
-//     organizations/{organization_id}/contacts/{contact_id},
-//     folders/{folder_id}/contacts/{contact_id} or
-//     projects/{project_id}/contacts/{contact_id}.
+//     organizations/{organization}/contacts/{contact},
+//     folders/{folder}/contacts/{contact} or
+//     projects/{project}/contacts/{contact} (where {project} is the project
+//     number).
 func (r *OrganizationsContactsService) Delete(name string) *OrganizationsContactsDeleteCall {
 	c := &OrganizationsContactsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1732,9 +1736,10 @@ type OrganizationsContactsGetCall struct {
 // Get: Gets a single contact.
 //
 //   - name: The name of the contact to retrieve. Format:
-//     organizations/{organization_id}/contacts/{contact_id},
-//     folders/{folder_id}/contacts/{contact_id} or
-//     projects/{project_id}/contacts/{contact_id}.
+//     organizations/{organization}/contacts/{contact},
+//     folders/{folder}/contacts/{contact} or
+//     projects/{project}/contacts/{contact} (where {project} is the project
+//     number).
 func (r *OrganizationsContactsService) Get(name string) *OrganizationsContactsGetCall {
 	c := &OrganizationsContactsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1844,8 +1849,9 @@ type OrganizationsContactsListCall struct {
 
 // List: Lists the contacts that have been set on a resource.
 //
-//   - parent: The parent resource name. Format: organizations/{organization_id},
-//     folders/{folder_id} or projects/{project_id}.
+//   - parent: The parent resource name. Format: organizations/{organization},
+//     folders/{folder} or projects/{project} (where {project} is the project
+//     number).
 func (r *OrganizationsContactsService) List(parent string) *OrganizationsContactsListCall {
 	c := &OrganizationsContactsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2112,8 +2118,8 @@ type OrganizationsContactsSendTestMessageCall struct {
 //   - resource: The name of the resource to send the test message for. All
 //     contacts must either be set directly on this resource or inherited from
 //     another resource that is an ancestor of this one. Format:
-//     organizations/{organization_id}, folders/{folder_id} or
-//     projects/{project_id}.
+//     organizations/{organization}, folders/{folder} or projects/{project}
+//     (where {project} is the project number).
 func (r *OrganizationsContactsService) SendTestMessage(resource string, googlecloudessentialcontactsv1sendtestmessagerequest *GoogleCloudEssentialcontactsV1SendTestMessageRequest) *OrganizationsContactsSendTestMessageCall {
 	c := &OrganizationsContactsSendTestMessageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2220,8 +2226,8 @@ type ProjectsContactsComputeCall struct {
 // parent resources.
 //
 //   - parent: The name of the resource to compute contacts for. Format:
-//     organizations/{organization_id}, folders/{folder_id} or
-//     projects/{project_id}.
+//     organizations/{organization}, folders/{folder} or projects/{project}
+//     (where {project} is the project number).
 func (r *ProjectsContactsService) Compute(parent string) *ProjectsContactsComputeCall {
 	c := &ProjectsContactsComputeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2417,8 +2423,8 @@ type ProjectsContactsCreateCall struct {
 // Create: Adds a new contact for a resource.
 //
 //   - parent: The resource to save this contact for. Format:
-//     organizations/{organization_id}, folders/{folder_id} or
-//     projects/{project_id}.
+//     organizations/{organization}, folders/{folder} or projects/{project}
+//     (where {project} is the project number).
 func (r *ProjectsContactsService) Create(parent string, googlecloudessentialcontactsv1contact *GoogleCloudEssentialcontactsV1Contact) *ProjectsContactsCreateCall {
 	c := &ProjectsContactsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2522,9 +2528,10 @@ type ProjectsContactsDeleteCall struct {
 // Delete: Deletes a contact.
 //
 //   - name: The name of the contact to delete. Format:
-//     organizations/{organization_id}/contacts/{contact_id},
-//     folders/{folder_id}/contacts/{contact_id} or
-//     projects/{project_id}/contacts/{contact_id}.
+//     organizations/{organization}/contacts/{contact},
+//     folders/{folder}/contacts/{contact} or
+//     projects/{project}/contacts/{contact} (where {project} is the project
+//     number).
 func (r *ProjectsContactsService) Delete(name string) *ProjectsContactsDeleteCall {
 	c := &ProjectsContactsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2624,9 +2631,10 @@ type ProjectsContactsGetCall struct {
 // Get: Gets a single contact.
 //
 //   - name: The name of the contact to retrieve. Format:
-//     organizations/{organization_id}/contacts/{contact_id},
-//     folders/{folder_id}/contacts/{contact_id} or
-//     projects/{project_id}/contacts/{contact_id}.
+//     organizations/{organization}/contacts/{contact},
+//     folders/{folder}/contacts/{contact} or
+//     projects/{project}/contacts/{contact} (where {project} is the project
+//     number).
 func (r *ProjectsContactsService) Get(name string) *ProjectsContactsGetCall {
 	c := &ProjectsContactsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2736,8 +2744,9 @@ type ProjectsContactsListCall struct {
 
 // List: Lists the contacts that have been set on a resource.
 //
-//   - parent: The parent resource name. Format: organizations/{organization_id},
-//     folders/{folder_id} or projects/{project_id}.
+//   - parent: The parent resource name. Format: organizations/{organization},
+//     folders/{folder} or projects/{project} (where {project} is the project
+//     number).
 func (r *ProjectsContactsService) List(parent string) *ProjectsContactsListCall {
 	c := &ProjectsContactsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3004,8 +3013,8 @@ type ProjectsContactsSendTestMessageCall struct {
 //   - resource: The name of the resource to send the test message for. All
 //     contacts must either be set directly on this resource or inherited from
 //     another resource that is an ancestor of this one. Format:
-//     organizations/{organization_id}, folders/{folder_id} or
-//     projects/{project_id}.
+//     organizations/{organization}, folders/{folder} or projects/{project}
+//     (where {project} is the project number).
 func (r *ProjectsContactsService) SendTestMessage(resource string, googlecloudessentialcontactsv1sendtestmessagerequest *GoogleCloudEssentialcontactsV1SendTestMessageRequest) *ProjectsContactsSendTestMessageCall {
 	c := &ProjectsContactsSendTestMessageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

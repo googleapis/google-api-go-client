@@ -480,7 +480,7 @@ type V2Key struct {
 	// KeyString: Output only. An encrypted and signed value held by this key. This
 	// field can be accessed only through the `GetKeyString` method.
 	KeyString string `json:"keyString,omitempty"`
-	// Name: Output only. The resource name of the key. The `name` has the form:
+	// Name: Identifier. The resource name of the key. The `name` has the form:
 	// `projects//locations/global/keys/`. For example:
 	// `projects/123456867718/locations/global/keys/b7ff1f9f-8275-410a-94dd-3855ee9b
 	// 5dd2` NOTE: Key is a global resource; hence the only supported value for
@@ -871,7 +871,8 @@ type ProjectsLocationsKeysCreateCall struct {
 // Create: Creates a new API key. NOTE: Key is a global resource; hence the
 // only supported value for location is `global`.
 //
-// - parent: The project in which the API key is created.
+//   - parent: The project in which the API key is created. The parent field must
+//     be in format of "projects//locations/global".
 func (r *ProjectsLocationsKeysService) Create(parent string, v2key *V2Key) *ProjectsLocationsKeysCreateCall {
 	c := &ProjectsLocationsKeysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1316,7 +1317,8 @@ type ProjectsLocationsKeysListCall struct {
 // isn't included in the response. NOTE: Key is a global resource; hence the
 // only supported value for location is `global`.
 //
-// - parent: Lists all API keys associated with this project.
+//   - parent: Lists all API keys associated with this project. The parent field
+//     must be in format of "projects//locations/global".
 func (r *ProjectsLocationsKeysService) List(parent string) *ProjectsLocationsKeysListCall {
 	c := &ProjectsLocationsKeysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1470,7 +1472,7 @@ type ProjectsLocationsKeysPatchCall struct {
 // API key isn't included in the response. NOTE: Key is a global resource;
 // hence the only supported value for location is `global`.
 //
-//   - name: Output only. The resource name of the key. The `name` has the form:
+//   - name: Identifier. The resource name of the key. The `name` has the form:
 //     `projects//locations/global/keys/`. For example:
 //     `projects/123456867718/locations/global/keys/b7ff1f9f-8275-410a-94dd-3855ee
 //     9b5dd2` NOTE: Key is a global resource; hence the only supported value for

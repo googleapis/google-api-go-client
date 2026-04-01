@@ -1064,6 +1064,9 @@ type CryptoKey struct {
 	// more allowed justification codes.
 	// https://cloud.google.com/assured-workloads/key-access-justifications/docs/justification-codes
 	// By default, this field is absent, and all justification codes are allowed.
+	// If the `key_access_justifications_policy.allowed_access_reasons` is empty
+	// (zero allowed justification code), all encrypt, decrypt, and sign operations
+	// will fail.
 	KeyAccessJustificationsPolicy *KeyAccessJustificationsPolicy `json:"keyAccessJustificationsPolicy,omitempty"`
 	// Labels: Labels with user-defined metadata. For more information, see
 	// Labeling Keys (https://cloud.google.com/kms/docs/labeling-keys).
@@ -2399,12 +2402,12 @@ func (s ImportJob) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// KeyAccessJustificationsEnrollmentConfig: The configuration of a protection
-// level for a project's Key Access Justifications enrollment.
+// KeyAccessJustificationsEnrollmentConfig: Represents the configuration of a
+// protection level for a project's Key Access Justifications enrollment.
 type KeyAccessJustificationsEnrollmentConfig struct {
-	// AuditLogging: Whether the project has KAJ logging enabled.
+	// AuditLogging: Indicates whether the project has KAJ logging enabled.
 	AuditLogging bool `json:"auditLogging,omitempty"`
-	// PolicyEnforcement: Whether the project is enrolled in KAJ policy
+	// PolicyEnforcement: Indicates whether the project is enrolled in KAJ policy
 	// enforcement.
 	PolicyEnforcement bool `json:"policyEnforcement,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuditLogging") to
@@ -2427,11 +2430,14 @@ func (s KeyAccessJustificationsEnrollmentConfig) MarshalJSON() ([]byte, error) {
 
 // KeyAccessJustificationsPolicy: A KeyAccessJustificationsPolicy specifies
 // zero or more allowed AccessReason values for encrypt, decrypt, and sign
-// operations on a CryptoKey.
+// operations on a CryptoKey or KeyAccessJustificationsPolicyConfig (the
+// default Key Access Justifications policy).
 type KeyAccessJustificationsPolicy struct {
 	// AllowedAccessReasons: The list of allowed reasons for access to a CryptoKey.
-	// Zero allowed access reasons means all encrypt, decrypt, and sign operations
-	// for the CryptoKey associated with this policy will fail.
+	// Note that empty allowed_access_reasons has a different meaning depending on
+	// where this message appears. If this is under
+	// KeyAccessJustificationsPolicyConfig, it means allow-all. If this is under
+	// CryptoKey, it means deny-all.
 	//
 	// Possible values:
 	//   "REASON_UNSPECIFIED" - Unspecified access reason.
@@ -2499,15 +2505,25 @@ func (s KeyAccessJustificationsPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// KeyAccessJustificationsPolicyConfig: A singleton configuration for Key
-// Access Justifications policies.
+// KeyAccessJustificationsPolicyConfig: Represents a singleton configuration
+// for Key Access Justifications policies.
 type KeyAccessJustificationsPolicyConfig struct {
-	// DefaultKeyAccessJustificationPolicy: Optional. The default key access
-	// justification policy used when a CryptoKey is created in this folder. This
-	// is only used when a Key Access Justifications policy is not provided in the
-	// CreateCryptoKeyRequest. This overrides any default policies in its ancestry.
+	// DefaultKeyAccessJustificationPolicy: Optional. Specifies the default key
+	// access justifications (KAJ) policy used when a CryptoKey is created in this
+	// folder. This is only used when a Key Access Justifications policy is not
+	// provided in the CreateCryptoKeyRequest. This overrides any default policies
+	// in its ancestry. If this field is unset, or is set but contains an empty
+	// allowed_access_reasons list, no default Key Access Justifications (KAJ)
+	// policy configuration is active. In this scenario, all newly created keys
+	// will default to an "allow-all" policy.
 	DefaultKeyAccessJustificationPolicy *KeyAccessJustificationsPolicy `json:"defaultKeyAccessJustificationPolicy,omitempty"`
-	// Name: Identifier. The resource name for this
+	// DefaultPolicyAvailable: Output only. Indicates whether this parent resource
+	// is available to default policy feature. Please consult the prerequisite of
+	// default policy feature
+	// (https://cloud.google.com/assured-workloads/key-access-justifications/docs/set-default-policy#before)
+	// for more details.
+	DefaultPolicyAvailable bool `json:"defaultPolicyAvailable,omitempty"`
+	// Name: Identifier. Represents the resource name for this
 	// KeyAccessJustificationsPolicyConfig in the format of
 	// "{organizations|folders|projects}/*/kajPolicyConfig".
 	Name string `json:"name,omitempty"`
@@ -4227,19 +4243,19 @@ func (s ShowEffectiveAutokeyConfigResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ShowEffectiveKeyAccessJustificationsEnrollmentConfigResponse: Response
-// message for
+// ShowEffectiveKeyAccessJustificationsEnrollmentConfigResponse: Represents a
+// response message for
 // KeyAccessJustificationsConfig.ShowEffectiveKeyAccessJustificationsEnrollmentC
 // onfig
 type ShowEffectiveKeyAccessJustificationsEnrollmentConfigResponse struct {
-	// ExternalConfig: The effective KeyAccessJustificationsEnrollmentConfig for
-	// external keys.
+	// ExternalConfig: Contains the effective
+	// KeyAccessJustificationsEnrollmentConfig for external keys.
 	ExternalConfig *KeyAccessJustificationsEnrollmentConfig `json:"externalConfig,omitempty"`
-	// HardwareConfig: The effective KeyAccessJustificationsEnrollmentConfig for
-	// hardware keys.
+	// HardwareConfig: Contains the effective
+	// KeyAccessJustificationsEnrollmentConfig for hardware keys.
 	HardwareConfig *KeyAccessJustificationsEnrollmentConfig `json:"hardwareConfig,omitempty"`
-	// SoftwareConfig: The effective KeyAccessJustificationsEnrollmentConfig for
-	// software keys.
+	// SoftwareConfig: Contains the effective
+	// KeyAccessJustificationsEnrollmentConfig for software keys.
 	SoftwareConfig *KeyAccessJustificationsEnrollmentConfig `json:"softwareConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4262,12 +4278,13 @@ func (s ShowEffectiveKeyAccessJustificationsEnrollmentConfigResponse) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ShowEffectiveKeyAccessJustificationsPolicyConfigResponse: Response message
-// for
+// ShowEffectiveKeyAccessJustificationsPolicyConfigResponse: Represents a
+// response message for
 // KeyAccessJustificationsConfig.ShowEffectiveKeyAccessJustificationsPolicyConfi
 // g.
 type ShowEffectiveKeyAccessJustificationsPolicyConfigResponse struct {
-	// EffectiveKajPolicy: The effective KeyAccessJustificationsPolicyConfig.
+	// EffectiveKajPolicy: Contains the effective
+	// KeyAccessJustificationsPolicyConfig.
 	EffectiveKajPolicy *KeyAccessJustificationsPolicyConfig `json:"effectiveKajPolicy,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4727,7 +4744,8 @@ type FoldersGetKajPolicyConfigCall struct {
 // GetKajPolicyConfig: Gets the KeyAccessJustificationsPolicyConfig for a given
 // organization, folder, or project.
 //
-// - name: The name of the KeyAccessJustificationsPolicyConfig to get.
+//   - name: Specifies the name of the KeyAccessJustificationsPolicyConfig to
+//     get.
 func (r *FoldersService) GetKajPolicyConfig(name string) *FoldersGetKajPolicyConfigCall {
 	c := &FoldersGetKajPolicyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4955,7 +4973,7 @@ type FoldersUpdateKajPolicyConfigCall struct {
 // UpdateKajPolicyConfig: Updates the KeyAccessJustificationsPolicyConfig for a
 // given organization, folder, or project.
 //
-//   - name: Identifier. The resource name for this
+//   - name: Identifier. Represents the resource name for this
 //     KeyAccessJustificationsPolicyConfig in the format of
 //     "{organizations|folders|projects}/*/kajPolicyConfig".
 func (r *FoldersService) UpdateKajPolicyConfig(name string, keyaccessjustificationspolicyconfig *KeyAccessJustificationsPolicyConfig) *FoldersUpdateKajPolicyConfigCall {
@@ -4965,8 +4983,8 @@ func (r *FoldersService) UpdateKajPolicyConfig(name string, keyaccessjustificati
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The list of fields to
-// update.
+// UpdateMask sets the optional parameter "updateMask": Specifies the list of
+// fields to update.
 func (c *FoldersUpdateKajPolicyConfigCall) UpdateMask(updateMask string) *FoldersUpdateKajPolicyConfigCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -5069,7 +5087,8 @@ type OrganizationsGetKajPolicyConfigCall struct {
 // GetKajPolicyConfig: Gets the KeyAccessJustificationsPolicyConfig for a given
 // organization, folder, or project.
 //
-// - name: The name of the KeyAccessJustificationsPolicyConfig to get.
+//   - name: Specifies the name of the KeyAccessJustificationsPolicyConfig to
+//     get.
 func (r *OrganizationsService) GetKajPolicyConfig(name string) *OrganizationsGetKajPolicyConfigCall {
 	c := &OrganizationsGetKajPolicyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5180,7 +5199,7 @@ type OrganizationsUpdateKajPolicyConfigCall struct {
 // UpdateKajPolicyConfig: Updates the KeyAccessJustificationsPolicyConfig for a
 // given organization, folder, or project.
 //
-//   - name: Identifier. The resource name for this
+//   - name: Identifier. Represents the resource name for this
 //     KeyAccessJustificationsPolicyConfig in the format of
 //     "{organizations|folders|projects}/*/kajPolicyConfig".
 func (r *OrganizationsService) UpdateKajPolicyConfig(name string, keyaccessjustificationspolicyconfig *KeyAccessJustificationsPolicyConfig) *OrganizationsUpdateKajPolicyConfigCall {
@@ -5190,8 +5209,8 @@ func (r *OrganizationsService) UpdateKajPolicyConfig(name string, keyaccessjusti
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The list of fields to
-// update.
+// UpdateMask sets the optional parameter "updateMask": Specifies the list of
+// fields to update.
 func (c *OrganizationsUpdateKajPolicyConfigCall) UpdateMask(updateMask string) *OrganizationsUpdateKajPolicyConfigCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -5405,7 +5424,8 @@ type ProjectsGetKajPolicyConfigCall struct {
 // GetKajPolicyConfig: Gets the KeyAccessJustificationsPolicyConfig for a given
 // organization, folder, or project.
 //
-// - name: The name of the KeyAccessJustificationsPolicyConfig to get.
+//   - name: Specifies the name of the KeyAccessJustificationsPolicyConfig to
+//     get.
 func (r *ProjectsService) GetKajPolicyConfig(name string) *ProjectsGetKajPolicyConfigCall {
 	c := &ProjectsGetKajPolicyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5630,7 +5650,7 @@ type ProjectsShowEffectiveKeyAccessJustificationsEnrollmentConfigCall struct {
 // KeyAccessJustificationsEnrollmentConfig of the resource closest to the given
 // project in hierarchy.
 //
-//   - project: The number or id of the project to get the effective
+//   - project: Specifies the number or id of the project to get the effective
 //     KeyAccessJustificationsEnrollmentConfig for.
 func (r *ProjectsService) ShowEffectiveKeyAccessJustificationsEnrollmentConfig(project string) *ProjectsShowEffectiveKeyAccessJustificationsEnrollmentConfigCall {
 	c := &ProjectsShowEffectiveKeyAccessJustificationsEnrollmentConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5743,7 +5763,7 @@ type ProjectsShowEffectiveKeyAccessJustificationsPolicyConfigCall struct {
 // KeyAccessJustificationsPolicyConfig of the resource closest to the given
 // project in hierarchy.
 //
-//   - project: The number or id of the project to get the effective
+//   - project: Specifies the number or id of the project to get the effective
 //     KeyAccessJustificationsPolicyConfig. In the format of "projects/{|}".
 func (r *ProjectsService) ShowEffectiveKeyAccessJustificationsPolicyConfig(project string) *ProjectsShowEffectiveKeyAccessJustificationsPolicyConfigCall {
 	c := &ProjectsShowEffectiveKeyAccessJustificationsPolicyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5972,7 +5992,7 @@ type ProjectsUpdateKajPolicyConfigCall struct {
 // UpdateKajPolicyConfig: Updates the KeyAccessJustificationsPolicyConfig for a
 // given organization, folder, or project.
 //
-//   - name: Identifier. The resource name for this
+//   - name: Identifier. Represents the resource name for this
 //     KeyAccessJustificationsPolicyConfig in the format of
 //     "{organizations|folders|projects}/*/kajPolicyConfig".
 func (r *ProjectsService) UpdateKajPolicyConfig(name string, keyaccessjustificationspolicyconfig *KeyAccessJustificationsPolicyConfig) *ProjectsUpdateKajPolicyConfigCall {
@@ -5982,8 +6002,8 @@ func (r *ProjectsService) UpdateKajPolicyConfig(name string, keyaccessjustificat
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The list of fields to
-// update.
+// UpdateMask sets the optional parameter "updateMask": Specifies the list of
+// fields to update.
 func (c *ProjectsUpdateKajPolicyConfigCall) UpdateMask(updateMask string) *ProjectsUpdateKajPolicyConfigCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -6409,10 +6429,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

@@ -485,7 +485,7 @@ type FlightWithEmissions struct {
 	// Will not be present if emissions could not be computed. For the list of
 	// reasons why emissions could not be computed, see ComputeFlightEmissions.
 	EmissionsGramsPerPax *EmissionsGramsPerPax `json:"emissionsGramsPerPax,omitempty"`
-	// Flight: Required. Matches the flight identifiers in the request. Note: all
+	// Flight: Identifier. Matches the flight identifiers in the request. Note: all
 	// IATA codes are capitalized.
 	Flight *Flight `json:"flight,omitempty"`
 	// Source: Optional. The source of the emissions data.
@@ -576,7 +576,7 @@ func (s ModelVersion) MarshalJSON() ([]byte, error) {
 
 // Scope3FlightEmissions: Scope 3 flight with emission estimates.
 type Scope3FlightEmissions struct {
-	// Flight: Required. Matches the flight identifiers in the request.
+	// Flight: Identifier. Matches the flight identifiers in the request.
 	Flight *Scope3FlightSegment `json:"flight,omitempty"`
 	// Source: Optional. The source of the emissions data.
 	//
@@ -699,7 +699,7 @@ type TypicalFlightEmissions struct {
 	// computed, see GitHub
 	// (https://github.com/google/travel-impact-model/blob/main/projects/typical_flight_emissions.md#step-7-validate-dataset).
 	EmissionsGramsPerPax *EmissionsGramsPerPax `json:"emissionsGramsPerPax,omitempty"`
-	// Market: Required. Matches the flight identifiers in the request. Note: all
+	// Market: Identifier. Matches the flight identifiers in the request. Note: all
 	// IATA codes are capitalized.
 	Market *Market `json:"market,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EmissionsGramsPerPax") to

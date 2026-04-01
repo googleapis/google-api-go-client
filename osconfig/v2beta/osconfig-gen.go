@@ -926,8 +926,8 @@ type GoogleCloudOsconfigV2beta__PolicyOrchestrator struct {
 	OrchestrationScope *GoogleCloudOsconfigV2beta__OrchestrationScope `json:"orchestrationScope,omitempty"`
 	// OrchestrationState: Output only. State of the orchestration.
 	OrchestrationState *GoogleCloudOsconfigV2betaPolicyOrchestratorOrchestrationState `json:"orchestrationState,omitempty"`
-	// Reconciling: Output only. Set to true, if the there are ongoing changes
-	// being applied by the orchestrator.
+	// Reconciling: Output only. Set to true, if there are ongoing changes being
+	// applied by the orchestrator.
 	Reconciling bool `json:"reconciling,omitempty"`
 	// State: Optional. State of the orchestrator. Can be updated to change
 	// orchestrator behaviour. Allowed values: - `ACTIVE` - orchestrator is
@@ -1541,7 +1541,7 @@ func (s OSPolicyResourceFileRemote) MarshalJSON() ([]byte, error) {
 
 // OSPolicyResourceFileResource: A resource that manages the state of a file.
 type OSPolicyResourceFileResource struct {
-	// Content: A a file with this content. The size of the content is limited to
+	// Content: A file with this content. The size of the content is limited to
 	// 32KiB.
 	Content string `json:"content,omitempty"`
 	// File: A remote or local source.

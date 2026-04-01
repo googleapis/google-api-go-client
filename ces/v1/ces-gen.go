@@ -1136,13 +1136,13 @@ func (s BearerTokenConfig) MarshalJSON() ([]byte, error) {
 // BigQueryExportSettings: Settings to describe the BigQuery export behaviors
 // for the app.
 type BigQueryExportSettings struct {
-	// Dataset: Optional. The BigQuery dataset to export the data to.
+	// Dataset: Optional. The BigQuery **dataset ID** to export the data to.
 	Dataset string `json:"dataset,omitempty"`
 	// Enabled: Optional. Indicates whether the BigQuery export is enabled.
 	Enabled bool `json:"enabled,omitempty"`
-	// Project: Optional. The project ID of the BigQuery dataset to export the data
-	// to. Note: If the BigQuery dataset is in a different project from the app,
-	// you should grant `roles/bigquery.admin` role to the CES service agent
+	// Project: Optional. The **project ID** of the BigQuery dataset to export the
+	// data to. Note: If the BigQuery dataset is in a different project from the
+	// app, you should grant `roles/bigquery.admin` role to the CES service agent
 	// `service-@gcp-sa-ces.iam.gserviceaccount.com`.
 	Project string `json:"project,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Dataset") to unconditionally
@@ -2639,6 +2639,8 @@ type ErrorHandlingSettings struct {
 	//   "NONE" - No specific handling is enabled.
 	//   "FALLBACK_RESPONSE" - A fallback message will be returned to the user in
 	// case of system errors (e.g. LLM errors).
+	//   "END_SESSION" - An EndSession signal will be emitted in case of system
+	// errors (e.g. LLM errors).
 	ErrorHandlingStrategy string `json:"errorHandlingStrategy,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ErrorHandlingStrategy") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3794,12 +3796,14 @@ type LanguageSettings struct {
 	// agents in the app will use pre-built instructions to improve handling of
 	// multilingual input.
 	EnableMultilingualSupport bool `json:"enableMultilingualSupport,omitempty"`
-	// FallbackAction: Optional. The action to perform when an agent receives input
-	// in an unsupported language. This can be a predefined action or a custom tool
-	// call. Valid values are: - A tool's full resource name, which triggers a
-	// specific tool execution. - A predefined system action, such as "escalate" or
-	// "exit", which triggers an EndSession signal with corresponding metadata to
-	// terminate the conversation.
+	// FallbackAction: Optional. Deprecated: This feature is no longer supported.
+	// Use `enable_multilingual_support` instead to improve handling of
+	// multilingual input. The action to perform when an agent receives input in an
+	// unsupported language. This can be a predefined action or a custom tool call.
+	// Valid values are: - A tool's full resource name, which triggers a specific
+	// tool execution. - A predefined system action, such as "escalate" or "exit",
+	// which triggers an EndSession signal with corresponding metadata to terminate
+	// the conversation.
 	FallbackAction string `json:"fallbackAction,omitempty"`
 	// SupportedLanguageCodes: Optional. List of languages codes supported by the
 	// app, in addition to the `default_language_code`.
@@ -5359,6 +5363,11 @@ type SessionConfig struct {
 	// Format:
 	// `projects/{project}/locations/{location}/apps/{app}/deployments/{deployment}`
 	Deployment string `json:"deployment,omitempty"`
+	// EnableTextStreaming: Optional. Whether to enable streaming text outputs from
+	// the model. By default, text outputs from the model are collected before
+	// sending to the client. NOTE: This is only supported for text (non-voice)
+	// sessions via StreamRunSession or BidiRunSession.
+	EnableTextStreaming bool `json:"enableTextStreaming,omitempty"`
 	// EntryAgent: Optional. The entry agent to handle the session. If not
 	// specified, the session will be handled by the root agent of the app. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/agents/{agent}`
@@ -6387,9 +6396,10 @@ type WidgetToolDataMapping struct {
 	//   "FIELD_MAPPING" - Use the `field_mappings` map for data transformation.
 	//   "PYTHON_SCRIPT" - Use the `python_script` for data transformation.
 	Mode string `json:"mode,omitempty"`
-	// PythonScript: Optional. A Python script used to transform the source tool's
-	// output into the widget's input format. This is used when the mapping is too
-	// complex for simple field mappings.
+	// PythonFunction: Optional. Configuration for a Python function used to
+	// transform the source tool's output into the widget's input format.
+	PythonFunction *PythonFunction `json:"pythonFunction,omitempty"`
+	// PythonScript: Deprecated: Use `python_function` instead.
 	PythonScript string `json:"pythonScript,omitempty"`
 	// SourceToolName: Optional. The resource name of the tool that provides the
 	// data for the widget (e.g., a search tool or a custom function). Format:
@@ -6532,10 +6542,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
@@ -11132,6 +11148,116 @@ func (c *ProjectsLocationsAppsSessionsRunSessionCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.sessions.runSession", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAppsSessionsStreamRunSessionCall struct {
+	s                 *Service
+	sessionid         string
+	runsessionrequest *RunSessionRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// StreamRunSession: Initiates a single-turn interaction with the CES agent.
+// Uses server-side streaming to deliver incremental results and partial
+// responses as they are generated. By default, complete responses (e.g.,
+// messages from callbacks or full LLM responses) are sent to the client as
+// soon as they are available. To enable streaming individual text chunks
+// directly from the model, set enable_text_streaming to true.
+//
+//   - session: The unique identifier of the session. Format:
+//     `projects/{project}/locations/{location}/apps/{app}/sessions/{session}`.
+func (r *ProjectsLocationsAppsSessionsService) StreamRunSession(sessionid string, runsessionrequest *RunSessionRequest) *ProjectsLocationsAppsSessionsStreamRunSessionCall {
+	c := &ProjectsLocationsAppsSessionsStreamRunSessionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.sessionid = sessionid
+	c.runsessionrequest = runsessionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsSessionsStreamRunSessionCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsSessionsStreamRunSessionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsSessionsStreamRunSessionCall) Context(ctx context.Context) *ProjectsLocationsAppsSessionsStreamRunSessionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsSessionsStreamRunSessionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsSessionsStreamRunSessionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.runsessionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+session}:streamRunSession")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"session": c.sessionid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.sessions.streamRunSession", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.sessions.streamRunSession" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RunSessionResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAppsSessionsStreamRunSessionCall) Do(opts ...googleapi.CallOption) (*RunSessionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RunSessionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.sessions.streamRunSession", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

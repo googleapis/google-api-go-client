@@ -984,7 +984,8 @@ type AutonomousDatabaseProperties struct {
 	// IsAutoScalingEnabled: Optional. Immutable. This field indicates if auto
 	// scaling is enabled for the Autonomous Database CPU core count.
 	IsAutoScalingEnabled bool `json:"isAutoScalingEnabled,omitempty"`
-	// IsLocalDataGuardEnabled: Output only. This field indicates whether the
+	// IsLocalDataGuardEnabled: Output only. Deprecated: Please use
+	// `local_data_guard_enabled` instead. This field indicates whether the
 	// Autonomous Database has local (in-region) Data Guard enabled.
 	IsLocalDataGuardEnabled bool `json:"isLocalDataGuardEnabled,omitempty"`
 	// IsStorageAutoScalingEnabled: Optional. Immutable. This field indicates if
@@ -1001,9 +1002,18 @@ type AutonomousDatabaseProperties struct {
 	// LifecycleDetails: Output only. The details of the current lifestyle state of
 	// the Autonomous Database.
 	LifecycleDetails string `json:"lifecycleDetails,omitempty"`
-	// LocalAdgAutoFailoverMaxDataLossLimit: Output only. This field indicates the
-	// maximum data loss limit for an Autonomous Database, in seconds.
+	// LocalAdgAutoFailoverMaxDataLossLimit: Output only. Deprecated: Please use
+	// `local_adg_auto_failover_max_data_loss_limit_duration` instead. This field
+	// indicates the maximum data loss limit for an Autonomous Database, in
+	// seconds.
 	LocalAdgAutoFailoverMaxDataLossLimit int64 `json:"localAdgAutoFailoverMaxDataLossLimit,omitempty"`
+	// LocalAdgAutoFailoverMaxDataLossLimitDuration: Optional. This field indicates
+	// the maximum data loss limit for an Autonomous Database, in seconds.
+	LocalAdgAutoFailoverMaxDataLossLimitDuration int64 `json:"localAdgAutoFailoverMaxDataLossLimitDuration,omitempty"`
+	// LocalDataGuardEnabled: Optional. Indicates whether the Autonomous Database
+	// has a local (in-region) standby database. Not applicable to cross-region
+	// Data Guard or dedicated Exadata infrastructure.
+	LocalDataGuardEnabled bool `json:"localDataGuardEnabled,omitempty"`
 	// LocalDisasterRecoveryType: Output only. This field indicates the local
 	// disaster recovery (DR) type of an Autonomous Database.
 	//
@@ -1905,7 +1915,7 @@ func (s DataCollectionOptionsDbSystem) MarshalJSON() ([]byte, error) {
 // Database: Details of the Database resource.
 // https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/Database/
 type Database struct {
-	// AdminPassword: Required. The password for the default ADMIN user.
+	// AdminPassword: Optional. The password for the default ADMIN user.
 	AdminPassword string `json:"adminPassword,omitempty"`
 	// CharacterSet: Optional. The character set for the database. The default is
 	// AL32UTF8.
@@ -5079,10 +5089,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

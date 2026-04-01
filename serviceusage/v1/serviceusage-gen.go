@@ -3566,90 +3566,6 @@ func (s *LongRunning) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// McpEnableRule: McpEnableRule contains MCP enablement related rules.
-type McpEnableRule struct {
-	// McpServices: List of enabled MCP services.
-	McpServices []*McpService `json:"mcpServices,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "McpServices") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "McpServices") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s McpEnableRule) MarshalJSON() ([]byte, error) {
-	type NoMethod McpEnableRule
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// McpPolicy: MCP Consumer Policy is a set of rules that define MCP related
-// policy for a cloud resource hierarchy.
-type McpPolicy struct {
-	// CreateTime: Output only. The time the policy was created. For singleton
-	// policies (such as the `default` policy), this is the first touch of the
-	// policy.
-	CreateTime string `json:"createTime,omitempty"`
-	// Etag: An opaque tag indicating the current version of the policy, used for
-	// concurrency control.
-	Etag string `json:"etag,omitempty"`
-	// McpEnableRules: McpEnableRules contains MCP enablement related rules.
-	McpEnableRules []*McpEnableRule `json:"mcpEnableRules,omitempty"`
-	// Name: Output only. The resource name of the policy. Only the `default`
-	// policy is supported. We allow the following formats:
-	// `projects/{PROJECT_NUMBER}/mcpPolicies/default`,
-	// `projects/{PROJECT_ID}/mcpPolicies/default`,
-	// `folders/{FOLDER_ID}/mcpPolicies/default`,
-	// `organizations/{ORG_ID}/mcpPolicies/default`.
-	Name string `json:"name,omitempty"`
-	// UpdateTime: Output only. The time the policy was last updated.
-	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s McpPolicy) MarshalJSON() ([]byte, error) {
-	type NoMethod McpPolicy
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// McpService: McpService contains the service names that are enabled for MCP.
-type McpService struct {
-	// Service: The names of the services that are enabled for MCP. Example:
-	// `services/library-example.googleapis.com`
-	Service string `json:"service,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Service") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Service") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s McpService) MarshalJSON() ([]byte, error) {
-	type NoMethod McpService
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // Method: Method represents a method of an API interface. New usages of this
 // message as an alternative to MethodDescriptorProto are strongly discouraged.
 // This message does not reliability preserve all information necessary to
@@ -5119,10 +5035,6 @@ type UpdateConsumerPolicyMetadata struct {
 // UpdateContentSecurityPolicyMetadata: Metadata for the
 // `UpdateContentSecurityPolicy` method.
 type UpdateContentSecurityPolicyMetadata struct {
-}
-
-// UpdateMcpPolicyMetadata: Metadata for the `UpdateMcpPolicy` method.
-type UpdateMcpPolicyMetadata struct {
 }
 
 // Usage: Configuration controlling usage of a service.

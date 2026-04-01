@@ -2008,10 +2008,10 @@ type GoogleCloudRecaptchaenterpriseV1RiskAnalysis struct {
 	//   "FAILED" - A solution was submitted that was incorrect or otherwise deemed
 	// suspicious.
 	Challenge string `json:"challenge,omitempty"`
-	// ExtendedVerdictReasons: Output only. Advanced reasons contributing to the
+	// ExtendedVerdictReasons: Output only. Additional reasons contributing to the
 	// risk analysis verdict. These reasons are available to Enterprise tier
-	// projects only. Contact sales for more information. The set of possible
-	// reasons is subject to change.
+	// projects only. Contact sales for more information. The set of reasons is
+	// subject to change.
 	ExtendedVerdictReasons []string `json:"extendedVerdictReasons,omitempty"`
 	// Reasons: Output only. Reasons contributing to the risk analysis verdict.
 	//
@@ -2026,10 +2026,14 @@ type GoogleCloudRecaptchaenterpriseV1RiskAnalysis struct {
 	// significantly different than expected patterns.
 	//   "LOW_CONFIDENCE_SCORE" - Too little traffic has been received from this
 	// site thus far to generate quality risk analysis.
-	//   "SUSPECTED_CARDING" - The request matches behavioral characteristics of a
-	// carding attack.
-	//   "SUSPECTED_CHARGEBACK" - The request matches behavioral characteristics of
-	// chargebacks for fraud.
+	//   "SUSPECTED_CARDING" - Deprecated: Use
+	// FraudPreventionAssessment.transaction_risk and
+	// FraudPreventionAssessment.RiskReason.Reason.EXCESSIVE_ENUMERATION_PATTERN
+	// instead.
+	//   "SUSPECTED_CHARGEBACK" - Deprecated: Use
+	// FraudPreventionAssessment.transaction_risk and
+	// FraudPreventionAssessment.RiskReason.Reason.ASSOCIATED_WITH_FRAUD_CLUSTER
+	// instead.
 	Reasons []string `json:"reasons,omitempty"`
 	// Score: Output only. Legitimate event score from 0.0 to 1.0. (1.0 means very
 	// likely legitimate traffic while 0.0 means very likely non-legitimate

@@ -409,6 +409,12 @@ type AwsKinesis struct {
 	// sher)
 	//   "STREAM_NOT_FOUND" - The Kinesis stream does not exist.
 	//   "CONSUMER_NOT_FOUND" - The Kinesis consumer does not exist.
+	//   "CONFLICTING_REGION_CONSTRAINTS" - Indicates an error state where the
+	// ingestion source cannot be processed. This occurs because there is no
+	// overlap between the regions allowed by the topic's `MessageStoragePolicy`
+	// and the regions permitted by the Regional Access Boundary (RAB) restrictions
+	// on the project's Pub/Sub service account. A common, allowed region is
+	// required to determine a valid ingestion region.
 	State string `json:"state,omitempty"`
 	// StreamArn: Required. The Kinesis stream ARN to ingest data from.
 	StreamArn string `json:"streamArn,omitempty"`
@@ -457,6 +463,12 @@ type AwsMsk struct {
 	// publishing to the topic.
 	//   "CLUSTER_NOT_FOUND" - The provided MSK cluster wasn't found.
 	//   "TOPIC_NOT_FOUND" - The provided topic wasn't found.
+	//   "CONFLICTING_REGION_CONSTRAINTS" - Indicates an error state where the
+	// ingestion source cannot be processed. This occurs because there is no
+	// overlap between the regions allowed by the topic's `MessageStoragePolicy`
+	// and the regions permitted by the Regional Access Boundary (RAB) restrictions
+	// on the project's Pub/Sub service account. A common, allowed region is
+	// required to determine a valid ingestion region.
 	State string `json:"state,omitempty"`
 	// Topic: Required. The name of the topic in the Amazon MSK cluster that
 	// Pub/Sub will import from.
@@ -512,6 +524,12 @@ type AzureEventHubs struct {
 	// be found.
 	//   "RESOURCE_GROUP_NOT_FOUND" - The provided Event Hubs resource group
 	// couldn't be found.
+	//   "CONFLICTING_REGION_CONSTRAINTS" - Indicates an error state where the
+	// ingestion source cannot be processed. This occurs because there is no
+	// overlap between the regions allowed by the topic's `MessageStoragePolicy`
+	// and the regions permitted by the Regional Access Boundary (RAB) restrictions
+	// on the project's Pub/Sub service account. A common, allowed region is
+	// required to determine a valid ingestion region.
 	State string `json:"state,omitempty"`
 	// SubscriptionId: Optional. The Azure subscription id.
 	SubscriptionId string `json:"subscriptionId,omitempty"`
@@ -607,6 +625,79 @@ type BigQueryConfig struct {
 
 func (s BigQueryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BigQueryConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BigtableConfig: Configuration for a Bigtable subscription. The Pub/Sub
+// message will be written to a Bigtable row as follows: - row key:
+// subscription name and message ID delimited by #. - columns: message bytes
+// written to a single column family "data" with an empty-string column
+// qualifier. - cell timestamp: the message publish timestamp.
+type BigtableConfig struct {
+	// AppProfileId: Optional. The app profile to use for the Bigtable writes. If
+	// not specified, the "default" application profile will be used. The app
+	// profile must use single-cluster routing.
+	AppProfileId string `json:"appProfileId,omitempty"`
+	// ServiceAccountEmail: Optional. The service account to use to write to
+	// Bigtable. The subscription creator or updater that specifies this field must
+	// have `iam.serviceAccounts.actAs` permission on the service account. If not
+	// specified, the Pub/Sub service agent
+	// (https://cloud.google.com/iam/docs/service-agents),
+	// service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com, is used.
+	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
+	// State: Output only. An output-only field that indicates whether or not the
+	// subscription can receive messages.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "ACTIVE" - The subscription can actively send messages to Bigtable.
+	//   "NOT_FOUND" - Cannot write to Bigtable because the instance, table, or app
+	// profile does not exist.
+	//   "APP_PROFILE_MISCONFIGURED" - Cannot write to Bigtable because the app
+	// profile is not configured for single-cluster routing.
+	//   "PERMISSION_DENIED" - Cannot write to Bigtable because of permission
+	// denied errors. This can happen if: - The Pub/Sub service agent has not been
+	// granted the [appropriate Bigtable IAM permission
+	// bigtable.tables.mutateRows]({$universe.dns_names.final_documentation_domain}/
+	// bigtable/docs/access-control#permissions) - The bigtable.googleapis.com API
+	// is not enabled for the project
+	// ([instructions]({$universe.dns_names.final_documentation_domain}/service-usag
+	// e/docs/enable-disable))
+	//   "SCHEMA_MISMATCH" - Cannot write to Bigtable because of a missing column
+	// family ("data") or if there is no structured row key for the subscription
+	// name + message ID.
+	//   "IN_TRANSIT_LOCATION_RESTRICTION" - Cannot write to the destination
+	// because enforce_in_transit is set to true and the destination locations are
+	// not in the allowed regions.
+	//   "VERTEX_AI_LOCATION_RESTRICTION" - Cannot write to Bigtable because the
+	// table is not in the same location as where Vertex AI models used in
+	// `message_transform`s are deployed.
+	State string `json:"state,omitempty"`
+	// Table: Optional. The unique name of the table to write messages to. Values
+	// are of the form `projects//instances//tables/`.
+	Table string `json:"table,omitempty"`
+	// WriteMetadata: Optional. When true, write the subscription name, message_id,
+	// publish_time, attributes, and ordering_key to additional columns in the
+	// table under the pubsub_metadata column family. The subscription name,
+	// message_id, and publish_time fields are put in their own columns while all
+	// other message properties (other than data) are written to a JSON object in
+	// the attributes column.
+	WriteMetadata bool `json:"writeMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AppProfileId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppProfileId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BigtableConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BigtableConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -750,6 +841,12 @@ type CloudStorage struct {
 	//   "BUCKET_NOT_FOUND" - The provided Cloud Storage bucket doesn't exist.
 	//   "TOO_MANY_OBJECTS" - The Cloud Storage bucket has too many objects,
 	// ingestion will be paused.
+	//   "CONFLICTING_REGION_CONSTRAINTS" - Indicates an error state where the
+	// ingestion source cannot be processed. This occurs because there is no
+	// overlap between the regions allowed by the topic's `MessageStoragePolicy`
+	// and the regions permitted by the Regional Access Boundary (RAB) restrictions
+	// on the project's Pub/Sub service account. A common, allowed region is
+	// required to determine a valid ingestion region.
 	State string `json:"state,omitempty"`
 	// TextFormat: Optional. Data from Cloud Storage will be interpreted as text.
 	TextFormat *TextFormat `json:"textFormat,omitempty"`
@@ -902,6 +999,12 @@ type ConfluentCloud struct {
 	// unreachable.
 	//   "CLUSTER_NOT_FOUND" - The provided cluster wasn't found.
 	//   "TOPIC_NOT_FOUND" - The provided topic wasn't found.
+	//   "CONFLICTING_REGION_CONSTRAINTS" - Indicates an error state where the
+	// ingestion source cannot be processed. This occurs because there is no
+	// overlap between the regions allowed by the topic's `MessageStoragePolicy`
+	// and the regions permitted by the Regional Access Boundary (RAB) restrictions
+	// on the project's Pub/Sub service account. A common, allowed region is
+	// required to determine a valid ingestion region.
 	State string `json:"state,omitempty"`
 	// Topic: Required. The name of the topic in the Confluent Cloud cluster that
 	// Pub/Sub will import from.
@@ -2215,6 +2318,9 @@ type Subscription struct {
 	// BigqueryConfig: Optional. If delivery to BigQuery is used with this
 	// subscription, this field is used to configure it.
 	BigqueryConfig *BigQueryConfig `json:"bigqueryConfig,omitempty"`
+	// BigtableConfig: Optional. If delivery to Bigtable is used with this
+	// subscription, this field is used to configure it.
+	BigtableConfig *BigtableConfig `json:"bigtableConfig,omitempty"`
 	// CloudStorageConfig: Optional. If delivery to Google Cloud Storage is used
 	// with this subscription, this field is used to configure it.
 	CloudStorageConfig *CloudStorageConfig `json:"cloudStorageConfig,omitempty"`

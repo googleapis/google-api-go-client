@@ -17674,6 +17674,13 @@ func (c *TestsInsertCall) ExternalChannelId(externalChannelId string) *TestsInse
 	return c
 }
 
+// OnBehalfOfContentOwnerChannel sets the optional parameter
+// "onBehalfOfContentOwnerChannel":
+func (c *TestsInsertCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *TestsInsertCall {
+	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.

@@ -4252,6 +4252,7 @@ type Operation struct {
 	//   "REPAIR_READ_POOL" - Repairs entire read pool or specified read pool nodes
 	// in the read pool.
 	//   "CREATE_READ_POOL" - Creates a Cloud SQL read pool instance.
+	//   "PRE_CHECK_MAJOR_VERSION_UPGRADE" - Pre-checks for major version upgrade.
 	OperationType string `json:"operationType,omitempty"`
 	// PreCheckMajorVersionUpgradeContext: The context for pre-check major version
 	// upgrade operation, if applicable. This field is only populated when the
@@ -4878,8 +4879,22 @@ type PscConfig struct {
 	// Service Connect consumer endpoints that can be used to connect to this Cloud
 	// SQL instance.
 	PscAutoConnections []*PscAutoConnectionConfig `json:"pscAutoConnections,omitempty"`
+	// PscAutoDnsEnabled: Optional. Indicates whether PSC DNS automation is enabled
+	// for this instance. When enabled, Cloud SQL provisions a universal DNS record
+	// across all networks configured with Private Service Connect (PSC)
+	// auto-connections. This will default to true for new instances when Private
+	// Service Connect is enabled.
+	PscAutoDnsEnabled bool `json:"pscAutoDnsEnabled,omitempty"`
 	// PscEnabled: Whether PSC connectivity is enabled for this instance.
 	PscEnabled bool `json:"pscEnabled,omitempty"`
+	// PscWriteEndpointDnsEnabled: Optional. Indicates whether PSC write endpoint
+	// DNS automation is enabled for this instance. When enabled, Cloud SQL
+	// provisions a universal global DNS record across all networks configured with
+	// Private Service Connect (PSC) auto-connections that always points to the
+	// cluster primary instance. This feature is only supported for Enterprise Plus
+	// edition. This will default to true for new enterprise plus instances when
+	// `psc_auto_dns_enabled` is enabled.
+	PscWriteEndpointDnsEnabled bool `json:"pscWriteEndpointDnsEnabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowedConsumerProjects") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9748,7 +9763,7 @@ type InstancesCloneCall struct {
 //
 //   - instance: The ID of the Cloud SQL instance to be cloned (source). This
 //     does not include the project ID.
-//   - project: Project ID of the source as well as the clone Cloud SQL instance.
+//   - project: Project ID of the source Cloud SQL instance.
 func (r *InstancesService) Clone(project string, instance string, instancesclonerequest *InstancesCloneRequest) *InstancesCloneCall {
 	c := &InstancesCloneCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project

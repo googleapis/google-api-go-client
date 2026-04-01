@@ -1109,17 +1109,6 @@ type RolloutKind struct {
 	// Labels: Optional. The labels on the resource, which can be used for
 	// categorization. similar to Kubernetes resource labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// MaintenancePolicyEnforcement: Optional. Value among strict (enforcing
-	// maintenance policy and only looking at Units with maintenance policy),
-	// ignore (ignoring maintenance policy) and skip (skipping Units with
-	// maintenance policy)
-	//
-	// Possible values:
-	//   "MAINTENANCE_POLICY_ENFORCEMENT_UNSPECIFIED"
-	//   "MAINTENANCE_POLICY_ENFORCEMENT_STRICT"
-	//   "MAINTENANCE_POLICY_ENFORCEMENT_IGNORED"
-	//   "MAINTENANCE_POLICY_ENFORCEMENT_SKIPPED"
-	MaintenancePolicyEnforcement string `json:"maintenancePolicyEnforcement,omitempty"`
 	// Name: Identifier. The resource name (full URI of the resource) following the
 	// standard naming scheme:
 	// "projects/{project}/locations/{location}/rolloutKinds/{rollout_kind_id}"
@@ -1184,6 +1173,9 @@ func (s RolloutKind) MarshalJSON() ([]byte, error) {
 // RolloutStats: RolloutStats contains information about the progress of a
 // rollout.
 type RolloutStats struct {
+	// EstimatedTotalUnitCount: Optional. Output only. Estimated number of units
+	// based. The estimation is computed upon creation of the rollout.
+	EstimatedTotalUnitCount int64 `json:"estimatedTotalUnitCount,omitempty,string"`
 	// OperationsByState: Optional. Output only. Unordered list. A breakdown of the
 	// progress of operations triggered by the rollout. Provides a count of
 	// Operations by their state. This can be used to determine the number of units
@@ -1191,15 +1183,15 @@ type RolloutStats struct {
 	// most one entry per group. Possible values for operation groups are: -
 	// "SCHEDULED" - "PENDING" - "RUNNING" - "SUCCEEDED" - "FAILED" - "CANCELLED"
 	OperationsByState []*Aggregate `json:"operationsByState,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "OperationsByState") to
+	// ForceSendFields is a list of field names (e.g. "EstimatedTotalUnitCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "OperationsByState") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "EstimatedTotalUnitCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1471,6 +1463,11 @@ type Unit struct {
 	PendingOperations []string `json:"pendingOperations,omitempty"`
 	// Release: Optional. Output only. The current Release object for this Unit.
 	Release string `json:"release,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Indicates whether the resource location satisfies
+	// Zone Separation constraints. This is false by default.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ScheduledOperations: Optional. Output only. List of scheduled UnitOperations
 	// for this unit.
 	ScheduledOperations []string `json:"scheduledOperations,omitempty"`

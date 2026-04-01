@@ -376,6 +376,9 @@ type ActivityEvents struct {
 	Parameters []*ActivityEventsParameters `json:"parameters,omitempty"`
 	// ResourceIds: Resource ids associated with the event.
 	ResourceIds []string `json:"resourceIds,omitempty"`
+	// SensitiveParameters: Includes sensitive parameter value pairs for various
+	// applications.
+	SensitiveParameters []*ActivityEventsSensitiveParameters `json:"sensitiveParameters,omitempty"`
 	// Status: Status of the event. Note: Not all events have status.
 	Status *ActivityEventsStatus `json:"status,omitempty"`
 	// Type: Type of event. The Google Workspace service or feature that an
@@ -483,6 +486,90 @@ type ActivityEventsParametersMultiMessageValue struct {
 
 func (s ActivityEventsParametersMultiMessageValue) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityEventsParametersMultiMessageValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type ActivityEventsSensitiveParameters struct {
+	// BoolValue: Boolean value of the parameter.
+	BoolValue bool `json:"boolValue,omitempty"`
+	// IntValue: Integer value of the parameter.
+	IntValue int64 `json:"intValue,omitempty,string"`
+	// MessageValue: Nested parameter value pairs associated with this parameter.
+	// Complex value type for a parameter are returned as a list of parameter
+	// values. For example, the address parameter may have a value as `[{parameter:
+	// [{name: city, value: abc}]}]`
+	MessageValue *ActivityEventsSensitiveParametersMessageValue `json:"messageValue,omitempty"`
+	// MultiIntValue: Integer values of the parameter.
+	MultiIntValue googleapi.Int64s `json:"multiIntValue,omitempty"`
+	// MultiMessageValue: List of `messageValue` objects.
+	MultiMessageValue []*ActivityEventsSensitiveParametersMultiMessageValue `json:"multiMessageValue,omitempty"`
+	// MultiValue: String values of the parameter.
+	MultiValue []string `json:"multiValue,omitempty"`
+	// Name: The name of the parameter.
+	Name string `json:"name,omitempty"`
+	// Value: String value of the parameter.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BoolValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ActivityEventsSensitiveParameters) MarshalJSON() ([]byte, error) {
+	type NoMethod ActivityEventsSensitiveParameters
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ActivityEventsSensitiveParametersMessageValue: Nested parameter value pairs
+// associated with this parameter. Complex value type for a parameter are
+// returned as a list of parameter values. For example, the address parameter
+// may have a value as `[{parameter: [{name: city, value: abc}]}]`
+type ActivityEventsSensitiveParametersMessageValue struct {
+	// Parameter: Parameter values
+	Parameter []*NestedParameter `json:"parameter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Parameter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Parameter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ActivityEventsSensitiveParametersMessageValue) MarshalJSON() ([]byte, error) {
+	type NoMethod ActivityEventsSensitiveParametersMessageValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type ActivityEventsSensitiveParametersMultiMessageValue struct {
+	// Parameter: Parameter values
+	Parameter []*NestedParameter `json:"parameter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Parameter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Parameter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ActivityEventsSensitiveParametersMultiMessageValue) MarshalJSON() ([]byte, error) {
+	type NoMethod ActivityEventsSensitiveParametersMultiMessageValue
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1406,6 +1493,16 @@ func (c *ActivitiesListCall) Filters(filters string) *ActivitiesListCall {
 // (https://support.google.com/a/answer/11482175)
 func (c *ActivitiesListCall) GroupIdFilter(groupIdFilter string) *ActivitiesListCall {
 	c.urlParams_.Set("groupIdFilter", groupIdFilter)
+	return c
+}
+
+// IncludeSensitiveData sets the optional parameter "includeSensitiveData":
+// When set to `true`, this field allows sensitive user-generated content to be
+// included in the returned audit logs. This parameter is supported only for
+// Rules (DLP) and Chat applications; using it with any other application will
+// result in a permission error.
+func (c *ActivitiesListCall) IncludeSensitiveData(includeSensitiveData bool) *ActivitiesListCall {
+	c.urlParams_.Set("includeSensitiveData", fmt.Sprint(includeSensitiveData))
 	return c
 }
 

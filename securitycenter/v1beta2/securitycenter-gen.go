@@ -690,6 +690,41 @@ func (s AffectedResources) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AgentDataAccessEvent: Details about a data access attempt made by an agent
+// principal not authorized under applicable data security policy.
+type AgentDataAccessEvent struct {
+	// EventId: Unique identifier for data access event.
+	EventId string `json:"eventId,omitempty"`
+	// EventTime: Timestamp of data access event.
+	EventTime string `json:"eventTime,omitempty"`
+	// Operation: The operation performed by the principal to access the data.
+	//
+	// Possible values:
+	//   "OPERATION_UNSPECIFIED" - The operation is unspecified.
+	//   "READ" - Represents a read operation.
+	//   "MOVE" - Represents a move operation.
+	//   "COPY" - Represents a copy operation.
+	Operation string `json:"operation,omitempty"`
+	// PrincipalSubject: The agent principal that accessed the data.
+	PrincipalSubject string `json:"principalSubject,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EventId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EventId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AgentDataAccessEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentDataAccessEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AiModel: Contains information about the AI model associated with the
 // finding.
 type AiModel struct {
@@ -2304,6 +2339,50 @@ func (s *Detection) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// DiscoveredWorkload: Represents discovered, customer managed workload that is
+// not registered with the respective GCP service.
+type DiscoveredWorkload struct {
+	// Confidence: The confidence in detection of this workload.
+	//
+	// Possible values:
+	//   "CONFIDENCE_UNSPECIFIED" - Unspecified confidence level.
+	//   "CONFIDENCE_HIGH" - High confidence in detection of a workload.
+	Confidence string `json:"confidence,omitempty"`
+	// DetectedRelevantHardware: A boolean flag set to true if associated hardware
+	// strongly predicts the workload type.
+	DetectedRelevantHardware bool `json:"detectedRelevantHardware,omitempty"`
+	// DetectedRelevantKeywords: A boolean flag set to true if associated keywords
+	// strongly predict the workload type.
+	DetectedRelevantKeywords bool `json:"detectedRelevantKeywords,omitempty"`
+	// DetectedRelevantPackages: A boolean flag set to true if installed packages
+	// strongly predict the workload type.
+	DetectedRelevantPackages bool `json:"detectedRelevantPackages,omitempty"`
+	// WorkloadType: The type of workload.
+	//
+	// Possible values:
+	//   "WORKLOAD_TYPE_UNSPECIFIED" - Unspecified workload type
+	//   "MCP_SERVER" - A workload of type MCP Server
+	//   "AI_INFERENCE" - A workload of type AI Inference
+	//   "AGENT" - A workload of type LLM Agent
+	WorkloadType string `json:"workloadType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Confidence") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Confidence") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DiscoveredWorkload) MarshalJSON() ([]byte, error) {
+	type NoMethod DiscoveredWorkload
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Disk: Contains information about the disk associated with the finding.
 type Disk struct {
 	// Name: The name of the disk, for example,
@@ -2748,6 +2827,8 @@ type Finding struct {
 	Access *Access `json:"access,omitempty"`
 	// AffectedResources: AffectedResources associated with the finding.
 	AffectedResources *AffectedResources `json:"affectedResources,omitempty"`
+	// AgentDataAccessEvents: Agent data access events associated with the finding.
+	AgentDataAccessEvents []*AgentDataAccessEvent `json:"agentDataAccessEvents,omitempty"`
 	// AiModel: The AI model associated with the finding.
 	AiModel *AiModel `json:"aiModel,omitempty"`
 	// Application: Represents an application associated with the finding.
@@ -2815,6 +2896,8 @@ type Finding struct {
 	Database *Database `json:"database,omitempty"`
 	// Description: Contains more details about the finding.
 	Description string `json:"description,omitempty"`
+	// DiscoveredWorkload: DiscoveredWorkload associated with the finding.
+	DiscoveredWorkload *DiscoveredWorkload `json:"discoveredWorkload,omitempty"`
 	// Disk: Disk associated with the finding.
 	Disk *Disk `json:"disk,omitempty"`
 	// EventTime: The time the finding was first detected. If an existing finding
@@ -2940,6 +3023,8 @@ type Finding struct {
 	// finding source such as "Event Threat Detection" or "Security Health
 	// Analytics".
 	ParentDisplayName string `json:"parentDisplayName,omitempty"`
+	// PolicyViolationSummary: PolicyViolationSummary associated with the finding.
+	PolicyViolationSummary *PolicyViolationSummary `json:"policyViolationSummary,omitempty"`
 	// Processes: Represents operating system processes associated with the
 	// Finding.
 	Processes []*Process `json:"processes,omitempty"`
@@ -4611,6 +4696,42 @@ func (s GoogleCloudSecuritycenterV2AffectedResources) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV2AgentDataAccessEvent: Details about a data access
+// attempt made by an agent principal not authorized under applicable data
+// security policy.
+type GoogleCloudSecuritycenterV2AgentDataAccessEvent struct {
+	// EventId: Unique identifier for data access event.
+	EventId string `json:"eventId,omitempty"`
+	// EventTime: Timestamp of data access event.
+	EventTime string `json:"eventTime,omitempty"`
+	// Operation: The operation performed by the principal to access the data.
+	//
+	// Possible values:
+	//   "OPERATION_UNSPECIFIED" - The operation is unspecified.
+	//   "READ" - Represents a read operation.
+	//   "MOVE" - Represents a move operation.
+	//   "COPY" - Represents a copy operation.
+	Operation string `json:"operation,omitempty"`
+	// PrincipalSubject: The agent principal that accessed the data.
+	PrincipalSubject string `json:"principalSubject,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EventId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EventId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2AgentDataAccessEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2AgentDataAccessEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2AiModel: Contains information about the AI model
 // associated with the finding.
 type GoogleCloudSecuritycenterV2AiModel struct {
@@ -6211,6 +6332,51 @@ func (s *GoogleCloudSecuritycenterV2Detection) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
+// GoogleCloudSecuritycenterV2DiscoveredWorkload: Represents discovered,
+// customer managed workload that is not registered with the respective GCP
+// service.
+type GoogleCloudSecuritycenterV2DiscoveredWorkload struct {
+	// Confidence: The confidence in detection of this workload.
+	//
+	// Possible values:
+	//   "CONFIDENCE_UNSPECIFIED" - Unspecified confidence level.
+	//   "CONFIDENCE_HIGH" - High confidence in detection of a workload.
+	Confidence string `json:"confidence,omitempty"`
+	// DetectedRelevantHardware: A boolean flag set to true if associated hardware
+	// strongly predicts the workload type.
+	DetectedRelevantHardware bool `json:"detectedRelevantHardware,omitempty"`
+	// DetectedRelevantKeywords: A boolean flag set to true if associated keywords
+	// strongly predict the workload type.
+	DetectedRelevantKeywords bool `json:"detectedRelevantKeywords,omitempty"`
+	// DetectedRelevantPackages: A boolean flag set to true if installed packages
+	// strongly predict the workload type.
+	DetectedRelevantPackages bool `json:"detectedRelevantPackages,omitempty"`
+	// WorkloadType: The type of workload.
+	//
+	// Possible values:
+	//   "WORKLOAD_TYPE_UNSPECIFIED" - Unspecified workload type
+	//   "MCP_SERVER" - A workload of type MCP Server
+	//   "AI_INFERENCE" - A workload of type AI Inference
+	//   "AGENT" - A workload of type LLM Agent
+	WorkloadType string `json:"workloadType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Confidence") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Confidence") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2DiscoveredWorkload) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2DiscoveredWorkload
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2Disk: Contains information about the disk
 // associated with the finding.
 type GoogleCloudSecuritycenterV2Disk struct {
@@ -6596,6 +6762,8 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	Access *GoogleCloudSecuritycenterV2Access `json:"access,omitempty"`
 	// AffectedResources: AffectedResources associated with the finding.
 	AffectedResources *GoogleCloudSecuritycenterV2AffectedResources `json:"affectedResources,omitempty"`
+	// AgentDataAccessEvents: Agent data access events associated with the finding.
+	AgentDataAccessEvents []*GoogleCloudSecuritycenterV2AgentDataAccessEvent `json:"agentDataAccessEvents,omitempty"`
 	// AiModel: The AI model associated with the finding.
 	AiModel *GoogleCloudSecuritycenterV2AiModel `json:"aiModel,omitempty"`
 	// Application: Represents an application associated with the finding.
@@ -6669,6 +6837,8 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	Database *GoogleCloudSecuritycenterV2Database `json:"database,omitempty"`
 	// Description: Contains more details about the finding.
 	Description string `json:"description,omitempty"`
+	// DiscoveredWorkload: DiscoveredWorkload associated with the finding.
+	DiscoveredWorkload *GoogleCloudSecuritycenterV2DiscoveredWorkload `json:"discoveredWorkload,omitempty"`
 	// Disk: Disk associated with the finding.
 	Disk *GoogleCloudSecuritycenterV2Disk `json:"disk,omitempty"`
 	// EventTime: The time the finding was first detected. If an existing finding
@@ -6805,6 +6975,8 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	// finding source such as "Event Threat Detection" or "Security Health
 	// Analytics".
 	ParentDisplayName string `json:"parentDisplayName,omitempty"`
+	// PolicyViolationSummary: PolicyViolationSummary associated with the finding.
+	PolicyViolationSummary *GoogleCloudSecuritycenterV2PolicyViolationSummary `json:"policyViolationSummary,omitempty"`
 	// Processes: Represents operating system processes associated with the
 	// Finding.
 	Processes []*GoogleCloudSecuritycenterV2Process `json:"processes,omitempty"`
@@ -8899,6 +9071,45 @@ type GoogleCloudSecuritycenterV2PolicyDriftDetails struct {
 
 func (s GoogleCloudSecuritycenterV2PolicyDriftDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2PolicyDriftDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2PolicyViolationSummary: Metadata summarizing
+// policy violations of child resources of the affected resource.
+// `finding_category` and `resource` determine the exact semantics of the
+// counts. For example, when
+// category=DATA_SECURITY_POSTURE_OBJECT_PUBLIC_ACCESS_VIOLATION and
+// resource='storage.googleapis.com/buckets/my-bucket-name' then this counts
+// the number of Cloud Storage objects in my-bucket-name which violate a Public
+// Access control.
+type GoogleCloudSecuritycenterV2PolicyViolationSummary struct {
+	// ConformantResourcesCount: Total number of child resources that conform to
+	// the policy.
+	ConformantResourcesCount int64 `json:"conformantResourcesCount,omitempty,string"`
+	// EvaluationErrorsCount: Number of child resources for which errors during
+	// evaluation occurred. The evaluation result for these child resources is
+	// effectively "unknown".
+	EvaluationErrorsCount int64 `json:"evaluationErrorsCount,omitempty,string"`
+	// OutOfScopeResourcesCount: Total count of child resources which were not in
+	// scope for evaluation.
+	OutOfScopeResourcesCount int64 `json:"outOfScopeResourcesCount,omitempty,string"`
+	// PolicyViolationsCount: Count of child resources in violation of the policy.
+	PolicyViolationsCount int64 `json:"policyViolationsCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "ConformantResourcesCount")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConformantResourcesCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2PolicyViolationSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2PolicyViolationSummary
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11163,6 +11374,44 @@ type PolicyDriftDetails struct {
 
 func (s PolicyDriftDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod PolicyDriftDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyViolationSummary: Metadata summarizing policy violations of child
+// resources of the affected resource. `finding_category` and `resource`
+// determine the exact semantics of the counts. For example, when
+// category=DATA_SECURITY_POSTURE_OBJECT_PUBLIC_ACCESS_VIOLATION and
+// resource='storage.googleapis.com/buckets/my-bucket-name' then this counts
+// the number of Cloud Storage objects in my-bucket-name which violate a Public
+// Access control.
+type PolicyViolationSummary struct {
+	// ConformantResourcesCount: Total number of child resources that conform to
+	// the policy.
+	ConformantResourcesCount int64 `json:"conformantResourcesCount,omitempty,string"`
+	// EvaluationErrorsCount: Number of child resources for which errors during
+	// evaluation occurred. The evaluation result for these child resources is
+	// effectively "unknown".
+	EvaluationErrorsCount int64 `json:"evaluationErrorsCount,omitempty,string"`
+	// OutOfScopeResourcesCount: Total count of child resources which were not in
+	// scope for evaluation.
+	OutOfScopeResourcesCount int64 `json:"outOfScopeResourcesCount,omitempty,string"`
+	// PolicyViolationsCount: Count of child resources in violation of the policy.
+	PolicyViolationsCount int64 `json:"policyViolationsCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "ConformantResourcesCount")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConformantResourcesCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyViolationSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyViolationSummary
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

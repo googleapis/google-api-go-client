@@ -1786,7 +1786,7 @@ type StartWorkstationRequest struct {
 	// Etag: Optional. If set, the request will be rejected if the latest version
 	// of the workstation on the server does not have this ETag.
 	Etag string `json:"etag,omitempty"`
-	// ValidateOnly: Optional. If set, validate the request and preview the review,
+	// ValidateOnly: Optional. If set, validate the request and preview the result,
 	// but do not actually apply it.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BoostConfig") to
@@ -1846,7 +1846,7 @@ type StopWorkstationRequest struct {
 	// Etag: Optional. If set, the request will be rejected if the latest version
 	// of the workstation on the server does not have this ETag.
 	Etag string `json:"etag,omitempty"`
-	// ValidateOnly: Optional. If set, validate the request and preview the review,
+	// ValidateOnly: Optional. If set, validate the request and preview the result,
 	// but do not actually apply it.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
@@ -1991,6 +1991,8 @@ type Workstation struct {
 	//   "STATE_STOPPING" - The workstation is being stopped.
 	//   "STATE_STOPPED" - The workstation is stopped and will not be able to
 	// receive requests until it is started.
+	//   "STATE_SUSPENDING" - The workstation is being suspended.
+	//   "STATE_SUSPENDED" - The workstation is suspended.
 	State string `json:"state,omitempty"`
 	// Uid: Output only. A system-assigned unique identifier for this workstation.
 	Uid string `json:"uid,omitempty"`
@@ -2112,6 +2114,21 @@ type WorkstationCluster struct {
 	// UpdateTime: Output only. Time when this workstation cluster was most
 	// recently updated.
 	UpdateTime string `json:"updateTime,omitempty"`
+	// WorkstationAuthorizationUrl: Optional. Specifies the redirect URL for
+	// unauthorized requests received by workstation VMs in this cluster. Redirects
+	// to this endpoint will send a base64 encoded `state` query param containing
+	// the target workstation name and original request hostname. The endpoint is
+	// responsible for retrieving a token using `GenerateAccessToken` and
+	// redirecting back to the original hostname with the token.
+	WorkstationAuthorizationUrl string `json:"workstationAuthorizationUrl,omitempty"`
+	// WorkstationLaunchUrl: Optional. Specifies the launch URL for workstations in
+	// this cluster. Requests sent to unstarted workstations will be redirected to
+	// this URL. Requests redirected to the launch endpoint will be sent with a
+	// `workstation` and `project` query parameter containing the full workstation
+	// resource name and project ID, respectively. The launch endpoint is
+	// responsible for starting the workstation, polling it until it reaches
+	// `STATE_RUNNING`, and then issuing a redirect to the workstation's host URL.
+	WorkstationLaunchUrl string `json:"workstationLaunchUrl,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2259,8 +2276,9 @@ type WorkstationConfig struct {
 	// configuration is created.
 	ReplicaZones []string `json:"replicaZones,omitempty"`
 	// RunningTimeout: Optional. Number of seconds that a workstation can run until
-	// it is automatically shut down. We recommend that workstations be shut down
-	// daily to reduce costs and so that security updates can be applied upon
+	// it is automatically shut down. This field applies to workstations in both
+	// STATE_RUNNING and STATE_SUSPENDED. We recommend that workstations be shut
+	// down daily to reduce costs and so that security updates can be applied upon
 	// restart. The idle_timeout and running_timeout fields are independent of each
 	// other. Note that the running_timeout field shuts down VMs after the
 	// specified time, regardless of whether or not the VMs are idle. Provide
@@ -2813,7 +2831,7 @@ func (r *ProjectsLocationsWorkstationClustersService) Create(parent string, work
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": If set, validate
-// the request and preview the review, but do not actually apply it.
+// the request and preview the result, but do not actually apply it.
 func (c *ProjectsLocationsWorkstationClustersCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsWorkstationClustersCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -2945,7 +2963,7 @@ func (c *ProjectsLocationsWorkstationClustersDeleteCall) Force(force bool) *Proj
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": If set, validate
-// the request and preview the review, but do not apply it.
+// the request and preview the result, but do not apply it.
 func (c *ProjectsLocationsWorkstationClustersDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsWorkstationClustersDeleteCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -3328,7 +3346,7 @@ func (c *ProjectsLocationsWorkstationClustersPatchCall) UpdateMask(updateMask st
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": If set, validate
-// the request and preview the review, but do not actually apply it.
+// the request and preview the result, but do not actually apply it.
 func (c *ProjectsLocationsWorkstationClustersPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsWorkstationClustersPatchCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -3438,7 +3456,7 @@ func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsService) Create(p
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": If set, validate
-// the request and preview the review, but do not actually apply it.
+// the request and preview the result, but do not actually apply it.
 func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsWorkstationClustersWorkstationConfigsCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -3569,7 +3587,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsDeleteCall) Force
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": If set, validate
-// the request and preview the review, but do not actually apply it.
+// the request and preview the result, but do not actually apply it.
 func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsWorkstationClustersWorkstationConfigsDeleteCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -4227,7 +4245,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsPatchCall) Update
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": If set, validate
-// the request and preview the review, but do not actually apply it.
+// the request and preview the result, but do not actually apply it.
 func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsWorkstationClustersWorkstationConfigsPatchCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -4555,7 +4573,7 @@ func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsServi
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": If set, validate
-// the request and preview the review, but do not actually apply it.
+// the request and preview the result, but do not actually apply it.
 func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -4678,7 +4696,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsDelet
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": If set, validate
-// the request and preview the review, but do not actually apply it.
+// the request and preview the result, but do not actually apply it.
 func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsDeleteCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -5429,22 +5447,22 @@ func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsServi
 }
 
 // AllowMissing sets the optional parameter "allowMissing": If set and the
-// workstation configuration is not found, a new workstation configuration is
-// created. In this situation, update_mask is ignored.
+// workstation is not found, a new workstation is created. In this situation,
+// update_mask is ignored.
 func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatchCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. Mask
-// specifying which fields in the workstation configuration should be updated.
+// specifying which fields in the workstation should be updated.
 func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": If set, validate
-// the request and preview the review, but do not actually apply it.
+// the request and preview the result, but do not actually apply it.
 func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatchCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c

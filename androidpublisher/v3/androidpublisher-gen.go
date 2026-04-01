@@ -1341,7 +1341,7 @@ type ArchiveSubscriptionRequest struct {
 
 // ArtifactSummary: Summary of an artifact.
 type ArtifactSummary struct {
-	// VersionCode: The version code of the artifact.
+	// VersionCode: Artifact's version code
 	VersionCode int64 `json:"versionCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "VersionCode") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5217,8 +5217,8 @@ func (s ListOneTimeProductsResponse) MarshalJSON() ([]byte, error) {
 // track that are either ready to be sent for review, in review, approved, not
 // approved or available.
 type ListReleaseSummariesResponse struct {
-	// Releases: List of releases for this track. There will be a maximum of 20
-	// releases returned.
+	// Releases: List of releases for this track. A maximum of 20 releases can be
+	// returned.
 	Releases []*ReleaseSummary `json:"releases,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -7903,28 +7903,27 @@ func (s RegionsVersion) MarshalJSON() ([]byte, error) {
 
 // ReleaseSummary: Summary of a release.
 type ReleaseSummary struct {
-	// ActiveArtifacts: List of active artifacts on this release.
+	// ActiveArtifacts: List of active artifacts on this release
 	ActiveArtifacts []*ArtifactSummary `json:"activeArtifacts,omitempty"`
 	// ReleaseLifecycleState: The lifecycle state of a release.
 	//
 	// Possible values:
 	//   "RELEASE_LIFECYCLE_STATE_UNSPECIFIED" - Not specified.
-	//   "RELEASE_LIFECYCLE_STATE_DRAFT" - The release is not yet ready and can be
-	// still edited.
+	//   "RELEASE_LIFECYCLE_STATE_DRAFT" - The release is not yet ready and can
+	// still be edited.
 	//   "RELEASE_LIFECYCLE_STATE_NOT_SENT_FOR_REVIEW" - The release is ready to be
-	// sent for review and awaiting developer action.
-	//   "RELEASE_LIFECYCLE_STATE_IN_REVIEW" - Submitted and undergoing the review
-	// process.
+	// sent for review and an action is required from developer
+	//   "RELEASE_LIFECYCLE_STATE_IN_REVIEW" - Submitted and in review
 	//   "RELEASE_LIFECYCLE_STATE_APPROVED_NOT_PUBLISHED" - Passed review and is
-	// ready to be published (due to managed publishing).
-	//   "RELEASE_LIFECYCLE_STATE_NOT_APPROVED" - Failed the review process.
-	//   "RELEASE_LIFECYCLE_STATE_PUBLISHED" - Currently available to users on the
-	// track. This includes fully or partially rolled out releases to users and any
-	// halted release that can be resumed.
+	// ready to be published manually by developer
+	//   "RELEASE_LIFECYCLE_STATE_NOT_APPROVED" - App was rejected in review
+	//   "RELEASE_LIFECYCLE_STATE_PUBLISHED" - Available to users on the track.
+	// This includes fully- or partially-rolled out releases and any halted release
+	// that can be resumed.
 	ReleaseLifecycleState string `json:"releaseLifecycleState,omitempty"`
 	// ReleaseName: Name of the release.
 	ReleaseName string `json:"releaseName,omitempty"`
-	// Track: Identifier of the track. More on track name
+	// Track: Identifier for the track. Learn more about track names.
 	// (https://developers.google.com/android-publisher/tracks).
 	Track string `json:"track,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActiveArtifacts") to

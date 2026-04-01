@@ -1393,8 +1393,8 @@ type ProductInput struct {
 	// if any part of the product identifier (like `offer_id`) contains characters
 	// such as `/`, `%`, or `~`. * Example: To represent the product ID
 	// `en~US~sku/123`, the `{productinput}` segment must be the base64url encoding
-	// of this string, which is `ZW5-VVMtc2t1LzEyMw`. The full resource name for
-	// the product would be `accounts/123/productinputs/ZW5-VVMtc2t1LzEyMw`. 2.
+	// of this string, which is `ZW5-VVN-c2t1LzEyMw`. The full resource name for
+	// the product would be `accounts/123/productInputs/ZW5-VVN-c2t1LzEyMw`. 2.
 	// **Plain Format**: The `{productinput}` segment is the tilde-separated string
 	// `content_language~feed_label~offer_id`. This format is suitable only when
 	// `content_language`, `feed_label`, and `offer_id` do not contain
@@ -1402,9 +1402,7 @@ type ProductInput struct {
 	// **Encoded Format** for all product IDs to ensure correct parsing, especially
 	// those containing special characters. The presence of tilde (`~`) characters
 	// in the `{productinput}` segment is used to differentiate between the two
-	// formats. Note: For calls to the v1beta version, the plain format is
-	// `channel~content_language~feed_label~offer_id`, for example:
-	// `accounts/123/productinputs/online~en~US~sku123`.
+	// formats.
 	Name string `json:"name,omitempty"`
 	// OfferId: Required. Immutable. Your unique identifier for the product. This
 	// is the same for the product input and processed product. Leading and
@@ -2016,9 +2014,9 @@ type AccountsProductInputsDeleteCall struct {
 //     used if any part of the product identifier (like `offer_id`) contains
 //     characters such as `/`, `%`, or `~`. * Example: To represent the product
 //     ID `en~US~sku/123`, the `{productInput}` segment must be the base64url
-//     encoding of this string, which is `ZW5-VVMtc2t1LzEyMw`. The full resource
+//     encoding of this string, which is `ZW5-VVN-c2t1LzEyMw`. The full resource
 //     name for the product would be
-//     `accounts/123/productInputs/ZW5-VVMtc2t1LzEyMw`. 2. **Plain Format**: The
+//     `accounts/123/productInputs/ZW5-VVN-c2t1LzEyMw`. 2. **Plain Format**: The
 //     `{productInput}` segment is the tilde-separated string
 //     `content_language~feed_label~offer_id`. This format is suitable only when
 //     `content_language`, `feed_label`, and `offer_id` do not contain
@@ -2026,9 +2024,7 @@ type AccountsProductInputsDeleteCall struct {
 //     **Encoded Format** for all product IDs to ensure correct parsing,
 //     especially those containing special characters. The presence of tilde
 //     (`~`) characters in the `{productInput}` segment is used to differentiate
-//     between the two formats. Note: For calls to the v1beta version, the plain
-//     format is `channel~content_language~feed_label~offer_id`, for example:
-//     `accounts/123/productinputs/online~en~US~sku123`.
+//     between the two formats.
 func (r *AccountsProductInputsService) Delete(nameid string) *AccountsProductInputsDeleteCall {
 	c := &AccountsProductInputsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -2280,9 +2276,9 @@ type AccountsProductInputsPatchCall struct {
 //     used if any part of the product identifier (like `offer_id`) contains
 //     characters such as `/`, `%`, or `~`. * Example: To represent the product
 //     ID `en~US~sku/123`, the `{productinput}` segment must be the base64url
-//     encoding of this string, which is `ZW5-VVMtc2t1LzEyMw`. The full resource
+//     encoding of this string, which is `ZW5-VVN-c2t1LzEyMw`. The full resource
 //     name for the product would be
-//     `accounts/123/productinputs/ZW5-VVMtc2t1LzEyMw`. 2. **Plain Format**: The
+//     `accounts/123/productInputs/ZW5-VVN-c2t1LzEyMw`. 2. **Plain Format**: The
 //     `{productinput}` segment is the tilde-separated string
 //     `content_language~feed_label~offer_id`. This format is suitable only when
 //     `content_language`, `feed_label`, and `offer_id` do not contain
@@ -2290,9 +2286,7 @@ type AccountsProductInputsPatchCall struct {
 //     **Encoded Format** for all product IDs to ensure correct parsing,
 //     especially those containing special characters. The presence of tilde
 //     (`~`) characters in the `{productinput}` segment is used to differentiate
-//     between the two formats. Note: For calls to the v1beta version, the plain
-//     format is `channel~content_language~feed_label~offer_id`, for example:
-//     `accounts/123/productinputs/online~en~US~sku123`.
+//     between the two formats.
 func (r *AccountsProductInputsService) Patch(nameid string, productinput *ProductInput) *AccountsProductInputsPatchCall {
 	c := &AccountsProductInputsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -2435,10 +2429,10 @@ type AccountsProductsGetCall struct {
 //     `content_language~feed_label~offer_id` structure. This encoding MUST be
 //     used if any part of the product identifier (like `offer_id`) contains
 //     characters such as `/`, `%`, or `~`. * Example: To represent the product
-//     ID `en~US~sku/123`, the `{product}` segment must be the base64url encoding
-//     of this string, which is `ZW5-VVMtc2t1LzEyMw`. The full resource name for
-//     the product would be `accounts/123/products/ZW5-VVMtc2t1LzEyMw`. 2.
-//     **Plain Format**: The `{product}` segment is the tilde-separated string
+//     ID `en~US~sku/123`, the `{product}` segment must be the unpadded base64url
+//     encoding of this string, which is `ZW5-VVN-c2t1LzEyMw`. The full resource
+//     name for the product would be `accounts/123/products/ZW5-VVN-c2t1LzEyMw`.
+//     2. **Plain Format**: The `{product}` segment is the tilde-separated string
 //     `content_language~feed_label~offer_id`. This format is suitable only when
 //     `content_language`, `feed_label`, and `offer_id` do not contain
 //     URL-problematic characters like `/`, `%`, or `~`. We recommend using the

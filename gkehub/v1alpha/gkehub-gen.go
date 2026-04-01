@@ -5966,7 +5966,8 @@ func (s Role) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Rollout: Rollout contains the Rollout metadata and configuration.
+// Rollout: Rollout contains the Rollout metadata and configuration. Next ID:
+// 28
 type Rollout struct {
 	// CompleteTime: Output only. The timestamp at which the Rollout was completed.
 	CompleteTime string `json:"completeTime,omitempty"`
@@ -6006,6 +6007,17 @@ type Rollout struct {
 	// StateReason: Output only. A human-readable description explaining the reason
 	// for the current state.
 	StateReason string `json:"stateReason,omitempty"`
+	// StateReasonType: Output only. StateReasonType specifies the reason type of
+	// the Rollout state.
+	//
+	// Possible values:
+	//   "STATE_REASON_TYPE_UNSPECIFIED" - Unspecified state reason.
+	//   "PAUSED_BY_USER" - Paused by the user.
+	//   "PAUSED_BY_SYSTEM_CONFIG" - Paused by the RSv2 Orchestrator due to system
+	// config(ex. GKE freeze).
+	//   "PAUSED_WAITING_FOR_NEXT_STAGE" - Paused waiting for the next stage to
+	// start.
+	StateReasonType string `json:"stateReasonType,omitempty"`
 	// Uid: Output only. Google-generated UUID for this resource. This is unique
 	// across all Rollout resources. If a Rollout resource is deleted and another
 	// resource with the same name is created, it gets a different uid.
@@ -6118,6 +6130,9 @@ func (s RolloutSequence) MarshalJSON() ([]byte, error) {
 
 // RolloutSequenceState: State and reasons of the Rollout Sequence.
 type RolloutSequenceState struct {
+	// LastStateChangeTime: Output only. The timestamp at which the LifecycleState
+	// was last changed. Used to track how long it has been in the current state.
+	LastStateChangeTime string `json:"lastStateChangeTime,omitempty"`
 	// LifecycleState: Output only. Lifecycle state of the Rollout Sequence.
 	//
 	// Possible values:
@@ -6139,15 +6154,15 @@ type RolloutSequenceState struct {
 	//   "INTERNAL_ERROR" - Internal error, for example when host project is
 	// soft-deleted.
 	StateReasons []string `json:"stateReasons,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "LifecycleState") to
+	// ForceSendFields is a list of field names (e.g. "LastStateChangeTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "LifecycleState") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "LastStateChangeTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -6159,24 +6174,25 @@ func (s RolloutSequenceState) MarshalJSON() ([]byte, error) {
 
 // RolloutStage: Stage represents a single stage in the Rollout.
 type RolloutStage struct {
-	// EndTime: Optional. Output only. The time at which the wave ended.
+	// EndTime: Optional. Output only. The time at which the stage ended.
 	EndTime string `json:"endTime,omitempty"`
-	// SoakDuration: Optional. Duration to soak after this wave before starting the
-	// next wave.
+	// SoakDuration: Optional. Duration to soak after this stage before starting
+	// the next stage.
 	SoakDuration string `json:"soakDuration,omitempty"`
-	// StageNumber: Output only. The wave number to which this status applies.
+	// StageNumber: Output only. The stage number to which this status applies.
 	StageNumber int64 `json:"stageNumber,omitempty"`
-	// StartTime: Optional. Output only. The time at which the wave started.
+	// StartTime: Optional. Output only. The time at which the stage started.
 	StartTime string `json:"startTime,omitempty"`
-	// State: Output only. The state of the wave.
+	// State: Output only. The state of the stage.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Default value.
-	//   "PENDING" - The wave is pending.
-	//   "RUNNING" - The wave is running.
-	//   "SOAKING" - The wave is soaking.
-	//   "COMPLETED" - The wave is completed.
-	//   "FORCED_SOAKING" - The wave is force soaking.
+	//   "PENDING" - The stage is pending.
+	//   "RUNNING" - The stage is running.
+	//   "SOAKING" - The stage is soaking.
+	//   "COMPLETED" - The stage is completed.
+	//   "FORCED_SOAKING" - The stage is force soaking.
+	//   "PAUSED" - The stage is paused.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -7767,10 +7783,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

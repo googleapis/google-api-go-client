@@ -2995,6 +2995,140 @@ func (c *RegionDisksUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	return ret, nil
 }
 
+type RegionDisksUpdateKmsKeyCall struct {
+	s                             *Service
+	project                       string
+	region                        string
+	disk                          string
+	regiondiskupdatekmskeyrequest *RegionDiskUpdateKmsKeyRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// UpdateKmsKey: Rotates the customer-managed
+// encryption key to the latest version for the specified persistent disk.
+//
+// - disk: Name of the Disk resource, should conform to RFC1035.
+// - project: Project ID for this request.
+// - region: The name of the region for this request.
+func (r *RegionDisksService) UpdateKmsKey(project string, region string, disk string, regiondiskupdatekmskeyrequest *RegionDiskUpdateKmsKeyRequest) *RegionDisksUpdateKmsKeyCall {
+	c := &RegionDisksUpdateKmsKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.disk = disk
+	c.regiondiskupdatekmskeyrequest = regiondiskupdatekmskeyrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so
+// that if you must retry your request, the server will know to ignore
+// the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request and
+// the request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This
+// prevents clients from accidentally creating duplicate commitments.
+//
+// The request ID must be
+// a valid UUID with the exception that zero UUID is not
+// supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *RegionDisksUpdateKmsKeyCall) RequestId(requestId string) *RegionDisksUpdateKmsKeyCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *RegionDisksUpdateKmsKeyCall) Fields(s ...googleapi.Field) *RegionDisksUpdateKmsKeyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *RegionDisksUpdateKmsKeyCall) Context(ctx context.Context) *RegionDisksUpdateKmsKeyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *RegionDisksUpdateKmsKeyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RegionDisksUpdateKmsKeyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.regiondiskupdatekmskeyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/regions/{region}/disks/{disk}/updateKmsKey")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"region":  c.region,
+		"disk":    c.disk,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.regionDisks.updateKmsKey", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.regionDisks.updateKmsKey" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *RegionDisksUpdateKmsKeyCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.regionDisks.updateKmsKey", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type RegionHealthAggregationPoliciesAggregatedListCall struct {
 	s            *Service
 	project      string
@@ -6926,6 +7060,125 @@ func (c *RegionHealthSourcesGetCall) Do(opts ...googleapi.CallOption) (*HealthSo
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.regionHealthSources.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type RegionHealthSourcesGetHealthCall struct {
+	s            *Service
+	project      string
+	region       string
+	healthSource string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetHealth: Gets the most recent health check results for this
+// regional HealthSource.
+//
+// - healthSource: Name of the HealthSource resource to get health for.
+// - project: Name of the project scoping this request.
+// - region: Name of the region scoping this request.
+func (r *RegionHealthSourcesService) GetHealth(project string, region string, healthSource string) *RegionHealthSourcesGetHealthCall {
+	c := &RegionHealthSourcesGetHealthCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.healthSource = healthSource
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *RegionHealthSourcesGetHealthCall) Fields(s ...googleapi.Field) *RegionHealthSourcesGetHealthCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RegionHealthSourcesGetHealthCall) IfNoneMatch(entityTag string) *RegionHealthSourcesGetHealthCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *RegionHealthSourcesGetHealthCall) Context(ctx context.Context) *RegionHealthSourcesGetHealthCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *RegionHealthSourcesGetHealthCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RegionHealthSourcesGetHealthCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/regions/{region}/healthSources/{healthSource}/getHealth")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":      c.project,
+		"region":       c.region,
+		"healthSource": c.healthSource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.regionHealthSources.getHealth", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.regionHealthSources.getHealth" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HealthSourceHealth.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *RegionHealthSourcesGetHealthCall) Do(opts ...googleapi.CallOption) (*HealthSourceHealth, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HealthSourceHealth{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.regionHealthSources.getHealth", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -27828,6 +28081,141 @@ func (c *RegionSnapshotsTestIamPermissionsCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.regionSnapshots.testIamPermissions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type RegionSnapshotsUpdateKmsKeyCall struct {
+	s                                 *Service
+	project                           string
+	region                            string
+	snapshot                          string
+	regionsnapshotupdatekmskeyrequest *RegionSnapshotUpdateKmsKeyRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// UpdateKmsKey: Rotates the customer-managed
+// encryption key to the latest version for the specified snapshot.
+//
+//   - project: Project ID for this request.
+//   - region: Name of the region for this request.
+//   - snapshot: Name of the snapshot resource to update. Should conform to
+//     RFC1035.
+func (r *RegionSnapshotsService) UpdateKmsKey(project string, region string, snapshot string, regionsnapshotupdatekmskeyrequest *RegionSnapshotUpdateKmsKeyRequest) *RegionSnapshotsUpdateKmsKeyCall {
+	c := &RegionSnapshotsUpdateKmsKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.snapshot = snapshot
+	c.regionsnapshotupdatekmskeyrequest = regionsnapshotupdatekmskeyrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so
+// that if you must retry your request, the server will know to ignore
+// the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request and
+// the request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This
+// prevents clients from accidentally creating duplicate commitments.
+//
+// The request ID must be
+// a valid UUID with the exception that zero UUID is not
+// supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *RegionSnapshotsUpdateKmsKeyCall) RequestId(requestId string) *RegionSnapshotsUpdateKmsKeyCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *RegionSnapshotsUpdateKmsKeyCall) Fields(s ...googleapi.Field) *RegionSnapshotsUpdateKmsKeyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *RegionSnapshotsUpdateKmsKeyCall) Context(ctx context.Context) *RegionSnapshotsUpdateKmsKeyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *RegionSnapshotsUpdateKmsKeyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RegionSnapshotsUpdateKmsKeyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.regionsnapshotupdatekmskeyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/regions/{region}/snapshots/{snapshot}/updateKmsKey")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"region":   c.region,
+		"snapshot": c.snapshot,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.regionSnapshots.updateKmsKey", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.regionSnapshots.updateKmsKey" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *RegionSnapshotsUpdateKmsKeyCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.regionSnapshots.updateKmsKey", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -52178,6 +52566,137 @@ func (c *SnapshotsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*Tes
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.snapshots.testIamPermissions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type SnapshotsUpdateKmsKeyCall struct {
+	s                           *Service
+	project                     string
+	snapshot                    string
+	snapshotupdatekmskeyrequest *SnapshotUpdateKmsKeyRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// UpdateKmsKey: Rotates the customer-managed
+// encryption key to the latest version for the specified snapshot.
+//
+//   - project: Project ID for this request.
+//   - snapshot: Name of the snapshot resource to update. Should conform to
+//     RFC1035.
+func (r *SnapshotsService) UpdateKmsKey(project string, snapshot string, snapshotupdatekmskeyrequest *SnapshotUpdateKmsKeyRequest) *SnapshotsUpdateKmsKeyCall {
+	c := &SnapshotsUpdateKmsKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.snapshot = snapshot
+	c.snapshotupdatekmskeyrequest = snapshotupdatekmskeyrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so
+// that if you must retry your request, the server will know to ignore
+// the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request and
+// the request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This
+// prevents clients from accidentally creating duplicate commitments.
+//
+// The request ID must be
+// a valid UUID with the exception that zero UUID is not
+// supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *SnapshotsUpdateKmsKeyCall) RequestId(requestId string) *SnapshotsUpdateKmsKeyCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *SnapshotsUpdateKmsKeyCall) Fields(s ...googleapi.Field) *SnapshotsUpdateKmsKeyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *SnapshotsUpdateKmsKeyCall) Context(ctx context.Context) *SnapshotsUpdateKmsKeyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *SnapshotsUpdateKmsKeyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SnapshotsUpdateKmsKeyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.snapshotupdatekmskeyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/global/snapshots/{snapshot}/updateKmsKey")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"snapshot": c.snapshot,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.snapshots.updateKmsKey", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.snapshots.updateKmsKey" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *SnapshotsUpdateKmsKeyCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.snapshots.updateKmsKey", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

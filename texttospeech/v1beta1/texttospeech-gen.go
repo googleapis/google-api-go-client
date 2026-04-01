@@ -221,9 +221,14 @@ type AdvancedVoiceOptions struct {
 	// LowLatencyJourneySynthesis: Only for Journey voices. If false, the synthesis
 	// is context aware and has a higher latency.
 	LowLatencyJourneySynthesis bool `json:"lowLatencyJourneySynthesis,omitempty"`
-	// RelaxSafetyFilters: Optional. Input only. If true, relaxes safety filters
-	// for Gemini TTS.
+	// RelaxSafetyFilters: Optional. Input only. Deprecated, use safety_settings
+	// instead. If true, relaxes safety filters for Gemini TTS.
 	RelaxSafetyFilters bool `json:"relaxSafetyFilters,omitempty"`
+	// SafetySettings: Optional. Input only. This applies to Gemini TTS only. If
+	// set, the category specified in the safety setting will be blocked if the
+	// harm probability is above the threshold. Otherwise, the safety filter will
+	// be disabled by default.
+	SafetySettings *SafetySettings `json:"safetySettings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableTextnorm") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -662,6 +667,75 @@ type Operation struct {
 
 func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SafetySetting: Safety setting for a single harm category.
+type SafetySetting struct {
+	// Category: The harm category to apply the safety setting to.
+	//
+	// Possible values:
+	//   "HARM_CATEGORY_UNSPECIFIED" - Default value. This value is unused.
+	//   "HARM_CATEGORY_HATE_SPEECH" - Content that promotes violence or incites
+	// hatred against individuals or groups based on certain attributes.
+	//   "HARM_CATEGORY_DANGEROUS_CONTENT" - Content that promotes, facilitates, or
+	// enables dangerous activities.
+	//   "HARM_CATEGORY_HARASSMENT" - Abusive, threatening, or content intended to
+	// bully, torment, or ridicule.
+	//   "HARM_CATEGORY_SEXUALLY_EXPLICIT" - Content that contains sexually
+	// explicit material.
+	Category string `json:"category,omitempty"`
+	// Threshold: The harm block threshold for the safety setting.
+	//
+	// Possible values:
+	//   "HARM_BLOCK_THRESHOLD_UNSPECIFIED" - The harm block threshold is
+	// unspecified.
+	//   "BLOCK_LOW_AND_ABOVE" - Block content with a low harm probability or
+	// higher.
+	//   "BLOCK_MEDIUM_AND_ABOVE" - Block content with a medium harm probability or
+	// higher.
+	//   "BLOCK_ONLY_HIGH" - Block content with a high harm probability.
+	//   "BLOCK_NONE" - Do not block any content, regardless of its harm
+	// probability.
+	//   "OFF" - Turn off the safety filter entirely.
+	Threshold string `json:"threshold,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SafetySetting) MarshalJSON() ([]byte, error) {
+	type NoMethod SafetySetting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SafetySettings: Safety settings for the request.
+type SafetySettings struct {
+	// Settings: The safety settings for the request.
+	Settings []*SafetySetting `json:"settings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Settings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Settings") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SafetySettings) MarshalJSON() ([]byte, error) {
+	type NoMethod SafetySettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -135,6 +135,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.BillingAccounts = NewBillingAccountsService(s)
 	s.SkuGroups = NewSkuGroupsService(s)
 	s.Skus = NewSkusService(s)
+	s.V1beta = NewV1betaService(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -164,6 +165,8 @@ type Service struct {
 	SkuGroups *SkuGroupsService
 
 	Skus *SkusService
+
+	V1beta *V1betaService
 }
 
 func (s *Service) userAgent() string {
@@ -308,6 +311,203 @@ type SkusPricesService struct {
 	s *Service
 }
 
+func NewV1betaService(s *Service) *V1betaService {
+	rs := &V1betaService{s: s}
+	return rs
+}
+
+type V1betaService struct {
+	s *Service
+}
+
+// AgenticQueryInfo: A local representation of the query used to fetch the
+// data. This is used instead of the raw QueryBillingDataRequest to avoid
+// pulling in Cloud Policy Enforcement (CPE) resource_type annotations into the
+// response payload, which causes ESF validation failures.
+type AgenticQueryInfo struct {
+	// Columns: The columns queried.
+	Columns string `json:"columns,omitempty"`
+	// Filter: The filter applied to the query.
+	Filter string `json:"filter,omitempty"`
+	// GroupBy: The group-by clause applied to the query.
+	GroupBy string `json:"groupBy,omitempty"`
+	// Limit: The row limit applied to the query.
+	Limit int64 `json:"limit,omitempty"`
+	// OrderBy: The order-by clause applied to the query.
+	OrderBy string `json:"orderBy,omitempty"`
+	// Parents: The parents (e.g. projects, billing accounts) queried.
+	Parents []string `json:"parents,omitempty"`
+	// View: The view queried.
+	View string `json:"view,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Columns") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Columns") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AgenticQueryInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AgenticQueryInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Array: An ordered collection of elements of arbitrary count.
+type Array struct {
+	// Element: The elements of the array.
+	Element []*ValueProto `json:"element,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Element") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Element") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Array) MarshalJSON() ([]byte, error) {
+	type NoMethod Array
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BillingData: Encapsulates billing data.
+type BillingData struct {
+	// ColumnInfo: Information about columns.
+	ColumnInfo []*ColumnInfo `json:"columnInfo,omitempty"`
+	// Rows: Rows.
+	Rows []*Row `json:"rows,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ColumnInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ColumnInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BillingData) MarshalJSON() ([]byte, error) {
+	type NoMethod BillingData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BillingDataResource: Specifies a Billing data resource that can be used for
+// authorization to access billing data.
+type BillingDataResource struct {
+	// BillingAccount: Optional. If not provided the billing account currently
+	// associated with the resource will be used.
+	BillingAccount string `json:"billingAccount,omitempty"`
+	// Resource: Required. Resource name for an entitity that can be used for
+	// authorization to access billing data such as `projects/{project}` or
+	// `billingAccounts/{billing_account}`
+	Resource string `json:"resource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BillingAccount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BillingAccount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BillingDataResource) MarshalJSON() ([]byte, error) {
+	type NoMethod BillingDataResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ColumnInfo: Represents a column header.
+type ColumnInfo struct {
+	// Column: Name of the column.
+	Column string `json:"column,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Column") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Column") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ColumnInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ColumnInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DataSet: A dataset used to support an insight, suitable for UI rendering
+// (tables/charts).
+type DataSet struct {
+	// BillingData: Output only. Actual billing data returned from the Data Mart.
+	// Uses the formal message from the Billing Data Service.
+	BillingData *BillingData `json:"billingData,omitempty"`
+	// QueryInfo: Output only. The query used to fetch this data.
+	QueryInfo *AgenticQueryInfo `json:"queryInfo,omitempty"`
+	// SuggestedChart: Output only. A suggested chart for the data set, used for UI
+	// rendering.
+	SuggestedChart *SuggestedChart `json:"suggestedChart,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BillingData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BillingData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataSet) MarshalJSON() ([]byte, error) {
+	type NoMethod DataSet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Datetime: A datetime value.
+type Datetime struct {
+	// BitFieldDatetimeSeconds: Represents bit field encoding of
+	// year/month/day/hour/minute/second. See class DatetimeValue in civil_time.h
+	// for details of encoding.
+	BitFieldDatetimeSeconds int64 `json:"bitFieldDatetimeSeconds,omitempty,string"`
+	// Nanos: Non-negative fractions of a second at nanosecond resolution.
+	Nanos int64 `json:"nanos,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BitFieldDatetimeSeconds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BitFieldDatetimeSeconds") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Datetime) MarshalJSON() ([]byte, error) {
+	type NoMethod Datetime
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Decimal: A representation of a decimal value, such as 2.5. Clients may
 // convert values into language-native decimal formats, such as Java's
 // BigDecimal
@@ -367,6 +567,112 @@ type Decimal struct {
 
 func (s Decimal) MarshalJSON() ([]byte, error) {
 	type NoMethod Decimal
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FinalResult: Encapsulates all structured data and the completed summary.
+type FinalResult struct {
+	// DataSets: Output only. Data sets used to support the insights, suitable for
+	// UI rendering (tables/charts).
+	DataSets []*DataSet `json:"dataSets,omitempty"`
+	// FullAnalysis: Output only. Contains the full natural language analysis,
+	// including thoughts, reasoning, and references.
+	FullAnalysis string `json:"fullAnalysis,omitempty"`
+	// Insights: Output only. A list of discrete insights gleaned from the data.
+	Insights []*Insight `json:"insights,omitempty"`
+	// InteropLinks: Output only. Links to interoperable tools (e.g., pre-filtered
+	// Cost Reports or BQE queries).
+	InteropLinks []*InteropLink `json:"interopLinks,omitempty"`
+	// SuggestedQueries: Output only. A list of suggested follow-up queries for the
+	// user.
+	SuggestedQueries []*SuggestedQuery `json:"suggestedQueries,omitempty"`
+	// Summary: Output only. The full natural language summary (re-sent for
+	// consistency).
+	Summary string `json:"summary,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataSets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataSets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FinalResult) MarshalJSON() ([]byte, error) {
+	type NoMethod FinalResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenerateInsightsRequest: Request for GenerateInsights.
+type GenerateInsightsRequest struct {
+	// Filter: Optional. Filters cost data by service id. Follows
+	// https://google.aip.dev/160 for the filter syntax. eg. filter: "service =
+	// 'C7E2-9256-1C43'"
+	Filter string `json:"filter,omitempty"`
+	// OverriddenMaxIterationCounts: Optional. Overrides the maximum iterations for
+	// any selected strategy.
+	OverriddenMaxIterationCounts int64 `json:"overriddenMaxIterationCounts,omitempty"`
+	// Parents: Optional. The billing account or projects to analyze.
+	Parents []*BillingDataResource `json:"parents,omitempty"`
+	// Prompt: Required. The natural language prompt from the user.
+	Prompt string `json:"prompt,omitempty"`
+	// UserContext: Optional. Additional context for personalization (e.g., user
+	// persona, role).
+	UserContext *UserContext `json:"userContext,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateInsightsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateInsightsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenerateInsightsResponse: Response for GenerateInsights.
+type GenerateInsightsResponse struct {
+	// FinalResult: Output only. The final structured results and metadata. Usually
+	// sent as the final message in the stream.
+	FinalResult *FinalResult `json:"finalResult,omitempty"`
+	// Rejection: Output only. The request was rejected (e.g. out of scope).
+	Rejection *Rejection `json:"rejection,omitempty"`
+	// SummaryChunk: Output only. A chunk of the natural language summary
+	// (customer-facing). The UI can append these chunks to provide a real-time
+	// "typing" effect.
+	SummaryChunk string `json:"summaryChunk,omitempty"`
+	// ThoughtChunk: Output only. A chunk of the agent's internal reasoning
+	// process. The UI can use this to render a "Thinking..." log or status.
+	ThoughtChunk string `json:"thoughtChunk,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "FinalResult") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FinalResult") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateInsightsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateInsightsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1809,6 +2115,123 @@ func (s GoogleCloudBillingSkugroupskusV1betaTaxonomyCategory) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Insight: e.g. insight: title: "Cost Increase (The Explanation)" description:
+// "Your cost increase was driven by Vertex AI Online Prediction in
+// us-central1..." severity: INFO
+type Insight struct {
+	// Description: Output only. The description of the insight.
+	Description string `json:"description,omitempty"`
+	// Severity: Output only. The severity of the insight, used for UI rendering
+	// (e.g., color-coding).
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Default value. Should not be used.
+	//   "INFO" - The insight is useful, but no action is required.
+	//   "WARNING" - The insight is useful, and some action may be required.
+	//   "CRITICAL" - The insight is useful, and immediate action is required.
+	Severity string `json:"severity,omitempty"`
+	// Title: Output only. The title of the insight.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Insight) MarshalJSON() ([]byte, error) {
+	type NoMethod Insight
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InteropLink: A link to interoperable tools (e.g., pre-filtered Cost Reports,
+// BQE queries).
+type InteropLink struct {
+	// Label: Output only. The label of the link, suitable for UI rendering.
+	Label string `json:"label,omitempty"`
+	// LinkType: Output only. The type of the interop link, e.g., "COST_REPORT",
+	// "BQE_QUERY", etc.
+	//
+	// Possible values:
+	//   "LINK_TYPE_UNSPECIFIED" - Default value. Should not be used.
+	//   "COST_REPORT" - A link to a Cost Report in Google Cloud Console.
+	//   "BQE_QUERY" - A link to a BigQuery Export query.
+	//   "FINOPS_HUB" - A link to a FinOps Hub page.
+	LinkType string `json:"linkType,omitempty"`
+	// Url: Output only. The URL of the link.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Label") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Label") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InteropLink) MarshalJSON() ([]byte, error) {
+	type NoMethod InteropLink
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Map: An unordered mapping from key to value, represented as a collection of
+// map entries.
+type Map struct {
+	// Entry: Represents the map entries in the map.
+	Entry []*MapEntry `json:"entry,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Entry") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Entry") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Map) MarshalJSON() ([]byte, error) {
+	type NoMethod Map
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MapEntry: A single entry in a Map, representing the mapping between `key`
+// and `value`.
+type MapEntry struct {
+	// Key: Represents the serialized map key for the entry.
+	Key *ValueProto `json:"key,omitempty"`
+	// Value: Represents the serialized map value of the entry.
+	Value *ValueProto `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MapEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod MapEntry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Money: Represents an amount of money with its currency type.
 type Money struct {
 	// CurrencyCode: The three-letter currency code defined in ISO 4217.
@@ -1838,6 +2261,318 @@ type Money struct {
 func (s Money) MarshalJSON() ([]byte, error) {
 	type NoMethod Money
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Range: A range of values, bounded by the values 'start' (inclusive) and
+// 'end' (exclusive). A range has an element type, and values must be of this
+// element type. A range is contiguous, ie it contains all values of the given
+// element type starting at 'start' and ending before 'end'. A "null" value on
+// start or end represents an unbounded start or end value respectively. Start
+// and end values must always be present.
+type Range struct {
+	// End: Represents the end of the range.
+	End *ValueProto `json:"end,omitempty"`
+	// Start: Represents the start of the range.
+	Start *ValueProto `json:"start,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "End") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "End") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Range) MarshalJSON() ([]byte, error) {
+	type NoMethod Range
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Rejection: Encapsulates details about why a request was rejected.
+type Rejection struct {
+	// DisplayMessage: Output only. A user-facing message explaining the rejection.
+	DisplayMessage string `json:"displayMessage,omitempty"`
+	// Reason: Output only. The reason for the rejection.
+	//
+	// Possible values:
+	//   "REASON_UNSPECIFIED" - Default value. Should not be used.
+	//   "EXPLICIT_OUT_OF_SCOPE" - The user explicitly asked about a service that
+	// is not Gemini or Vertex AI.
+	Reason string `json:"reason,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayMessage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayMessage") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Rejection) MarshalJSON() ([]byte, error) {
+	type NoMethod Rejection
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Row: Represents a row in the query result.
+type Row struct {
+	// Values: Values for a row in the column order.
+	Values []*ValueProto `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Row) MarshalJSON() ([]byte, error) {
+	type NoMethod Row
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Struct: A collection of fields. The count, order, and type of the fields is
+// determined by the type associated with this value.
+type Struct struct {
+	// Field: The fields in the struct
+	Field []*ValueProto `json:"field,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Field") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Struct) MarshalJSON() ([]byte, error) {
+	type NoMethod Struct
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SuggestedChart: A suggested chart for the data set, used for UI rendering.
+type SuggestedChart struct {
+	// ChartTitle: The title of the chart.
+	ChartTitle string `json:"chartTitle,omitempty"`
+	// ChartType: The type of the chart.
+	//
+	// Possible values:
+	//   "CHART_TYPE_UNSPECIFIED" - Default value. Should not be used.
+	//   "BAR_CHART" - Represents a bar chart.
+	//   "UNCHARTABLE" - The data set cannot be rendered as a chart.
+	//   "LINE_CHART" - Represents a line chart. Suitable for quantitative and
+	// temporal data on the x-axis.
+	//   "AREA_CHART" - Represents an area chart.
+	ChartType string `json:"chartType,omitempty"`
+	// SeriesField: The field used for the series (e.g., color-coding). Optional,
+	// but recommended for time-series data.
+	SeriesField string `json:"seriesField,omitempty"`
+	// XAxisField: The field used for the x-axis.
+	XAxisField string `json:"xAxisField,omitempty"`
+	// XAxisLabel: The label of the x-axis.
+	XAxisLabel string `json:"xAxisLabel,omitempty"`
+	// YAxisField: The field used for the y-axis.
+	YAxisField string `json:"yAxisField,omitempty"`
+	// YAxisLabel: The label of the y-axis.
+	YAxisLabel string `json:"yAxisLabel,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChartTitle") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChartTitle") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SuggestedChart) MarshalJSON() ([]byte, error) {
+	type NoMethod SuggestedChart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SuggestedQuery: A suggested follow-up query for the user.
+type SuggestedQuery struct {
+	// Query: The natural language query.
+	Query string `json:"query,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Query") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Query") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SuggestedQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod SuggestedQuery
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UserContext: Additional context for personalization (e.g., user persona,
+// role).
+type UserContext struct {
+	// Persona: Optional. The user's persona (e.g., FinOps Manager, Developer).
+	//
+	// Possible values:
+	//   "PERSONA_UNSPECIFIED" - Default value. Should not be used.
+	//   "FINOPS_MANAGER" - The user is a FinOps Manager.
+	//   "DEVELOPER" - The user is a Developer.
+	Persona string `json:"persona,omitempty"`
+	// Role: Optional. The user's role (e.g., Billing Admin, Project Owner, etc.).
+	Role string `json:"role,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Persona") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Persona") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UserContext) MarshalJSON() ([]byte, error) {
+	type NoMethod UserContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ValueProto: This is a copy of storage/googlesql/public/value.proto.
+// ValueProto represents the serialized form of the googlesql::Value. The
+// intention is to support multiple languages including Java and C++, so we
+// must be sensitive to the distinction between Java Strings and byte arrays or
+// ByteStrings. We also want to support use-cases which do not want to
+// serialize a copy of the GoogleSQL type for every instance (which might be
+// very repetitive). Therefore, unlike googlesql::Value, ValueProto does not
+// carry full type information with every instance, and can only be fully
+// interpreted with an associated TypeProto.
+type ValueProto struct {
+	// ValueProtoSwitchMustHaveADefault: User code that switches on this oneoff
+	// enum must have a default case so builds won't break when new fields are
+	// added.
+	ValueProtoSwitchMustHaveADefault bool `json:"ValueProtoSwitchMustHaveADefault,omitempty"`
+	// ArrayValue: An array of value
+	ArrayValue *Array `json:"arrayValue,omitempty"`
+	// BignumericValue: Encoded bignumeric value. For the encoding format see
+	// documentation for BigNumericValue::SerializeAsProtoBytes().
+	BignumericValue string `json:"bignumericValue,omitempty"`
+	// BoolValue: Primitive for bool.
+	BoolValue bool `json:"boolValue,omitempty"`
+	// BytesValue: Primitive for bytes.
+	BytesValue string `json:"bytesValue,omitempty"`
+	// DateValue: Primitive for date.
+	DateValue int64 `json:"dateValue,omitempty"`
+	// DatetimeValue: primitive for datetime
+	DatetimeValue *Datetime `json:"datetimeValue,omitempty"`
+	// DoubleValue: Primitive for double.
+	DoubleValue float64 `json:"doubleValue,omitempty"`
+	// EnumValue: Tag 11 was used for specifying micros timestamps as int64, now
+	// obsolete.
+	EnumValue int64 `json:"enumValue,omitempty"`
+	// FloatValue: Primitive for float.
+	FloatValue float64 `json:"floatValue,omitempty"`
+	// GeographyValue: Geography encoded using ::stlib::STGeographyEncoder
+	GeographyValue string `json:"geographyValue,omitempty"`
+	// Int32Value: Primitive value for int32.
+	Int32Value int64 `json:"int32Value,omitempty"`
+	// Int64Value: Primitive for int64.
+	Int64Value int64 `json:"int64Value,omitempty,string"`
+	// IntervalValue: Encoded interval value. For the encoding format see
+	// documentation for IntervalValue::SerializeAsBytes().
+	IntervalValue string `json:"intervalValue,omitempty"`
+	// JsonValue: Tag 22 was used for json value as bytes, now obsolete. Json value
+	// represented as a string document.
+	JsonValue string `json:"jsonValue,omitempty"`
+	// MapValue: Encoded map value. See go/googlesql_map.
+	MapValue *Map `json:"mapValue,omitempty"`
+	// NumericValue: Encoded numeric value. For the encoding format see
+	// documentation for NumericValue::SerializeAsProtoBytes().
+	NumericValue string `json:"numericValue,omitempty"`
+	// ProtoValue: Stores a serialized protocol message.
+	ProtoValue string `json:"protoValue,omitempty"`
+	// RangeValue: Encoded range value. See go/googlesql_range.
+	RangeValue *Range `json:"rangeValue,omitempty"`
+	// StringValue: Primitive for string.
+	StringValue string `json:"stringValue,omitempty"`
+	// StructValue: A struct of values
+	StructValue *Struct `json:"structValue,omitempty"`
+	// TimeValue: Bit field encoding of hour/minute/second/nanos. See TimeValue
+	// class for details.
+	TimeValue int64 `json:"timeValue,omitempty,string"`
+	// TimestampPicoValue: Encoded timestamp_pico value. For the encoding format
+	// see documentation for googlesql::TimestampPico::SerializeAsBytes().
+	TimestampPicoValue string `json:"timestampPicoValue,omitempty"`
+	// TimestampValue: primitive for timestamp
+	TimestampValue string `json:"timestampValue,omitempty"`
+	// TokenlistValue: Encoded tokenlist value.
+	// copybara:strip_begin(internal-comment) See //search/tokens:token_list.
+	// copybara:strip_end
+	TokenlistValue string `json:"tokenlistValue,omitempty"`
+	// Uint32Value: Primitive for uint32.
+	Uint32Value int64 `json:"uint32Value,omitempty"`
+	// Uint64Value: Primitive for uint64.
+	Uint64Value uint64 `json:"uint64Value,omitempty,string"`
+	// UuidValue: Encoded uuid value. For the encoding format see documentation for
+	// UuidValue::SerializeAsBytes().
+	UuidValue string `json:"uuidValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ValueProtoSwitchMustHaveADefault") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "ValueProtoSwitchMustHaveADefault") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ValueProto) MarshalJSON() ([]byte, error) {
+	type NoMethod ValueProto
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *ValueProto) UnmarshalJSON(data []byte) error {
+	type NoMethod ValueProto
+	var s1 struct {
+		DoubleValue gensupport.JSONFloat64 `json:"doubleValue"`
+		FloatValue  gensupport.JSONFloat64 `json:"floatValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DoubleValue = float64(s1.DoubleValue)
+	s.FloatValue = float64(s1.FloatValue)
+	return nil
 }
 
 type BillingAccountsServicesGetCall struct {
@@ -3946,4 +4681,102 @@ func (c *SkusPricesListCall) Pages(ctx context.Context, f func(*GoogleCloudBilli
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type V1betaGenerateInsightsCall struct {
+	s                       *Service
+	generateinsightsrequest *GenerateInsightsRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// GenerateInsights: Analyzes cost data for a billing account and/or specific
+// projects. Returns a natural language summary and supporting datasets.
+func (r *V1betaService) GenerateInsights(generateinsightsrequest *GenerateInsightsRequest) *V1betaGenerateInsightsCall {
+	c := &V1betaGenerateInsightsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.generateinsightsrequest = generateinsightsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *V1betaGenerateInsightsCall) Fields(s ...googleapi.Field) *V1betaGenerateInsightsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *V1betaGenerateInsightsCall) Context(ctx context.Context) *V1betaGenerateInsightsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *V1betaGenerateInsightsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1betaGenerateInsightsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.generateinsightsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta:generateInsights")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudbilling.generateInsights", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudbilling.generateInsights" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenerateInsightsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *V1betaGenerateInsightsCall) Do(opts ...googleapi.CallOption) (*GenerateInsightsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenerateInsightsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudbilling.generateInsights", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }

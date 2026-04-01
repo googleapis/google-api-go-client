@@ -2222,6 +2222,114 @@ func (c *AdviceCapacityCall) Do(opts ...googleapi.CallOption) (*CapacityAdviceRe
 	return ret, nil
 }
 
+type AdviceCapacityHistoryCall struct {
+	s                      *Service
+	project                string
+	region                 string
+	capacityhistoryrequest *CapacityHistoryRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// CapacityHistory: Gets the capacity history for Spot VMs.
+//
+// - project: Project ID for this request.
+// - region: Name of the region for this request.
+func (r *AdviceService) CapacityHistory(project string, region string, capacityhistoryrequest *CapacityHistoryRequest) *AdviceCapacityHistoryCall {
+	c := &AdviceCapacityHistoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.capacityhistoryrequest = capacityhistoryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdviceCapacityHistoryCall) Fields(s ...googleapi.Field) *AdviceCapacityHistoryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdviceCapacityHistoryCall) Context(ctx context.Context) *AdviceCapacityHistoryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdviceCapacityHistoryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdviceCapacityHistoryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.capacityhistoryrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/regions/{region}/advice/capacityHistory")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"region":  c.region,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.advice.capacityHistory", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.advice.capacityHistory" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CapacityHistoryResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdviceCapacityHistoryCall) Do(opts ...googleapi.CallOption) (*CapacityHistoryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CapacityHistoryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.advice.capacityHistory", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type AutoscalersAggregatedListCall struct {
 	s            *Service
 	project      string
@@ -30444,6 +30552,543 @@ func (c *HealthChecksUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, e
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.healthChecks.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type HostsGetCall struct {
+	s            *Service
+	project      string
+	zone         string
+	association  string
+	host         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves information about the specified host.
+//
+//   - association: The parent resource association for the Host. This field
+//     specifies the
+//     hierarchical context (e.g., reservation, block, sub-block) when
+//     accessing the host. For example,
+//     reservations/reservation_name,
+//     reservations/reservation_name/reservationBlocks/reservation_block_name
+//     or
+//     reservations/reservation_name/reservationBlocks/reservation_block_name/rese
+//     rvationSubBlocks/reservation_sub_block_name.
+//   - host: The name of the host, formatted as RFC1035 or a resource ID
+//
+// number.
+// - project: The project ID for this request.
+// - zone: The name of the zone for this request, formatted as RFC1035.
+func (r *HostsService) Get(project string, zone string, association string, host string) *HostsGetCall {
+	c := &HostsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.association = association
+	c.host = host
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *HostsGetCall) Fields(s ...googleapi.Field) *HostsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *HostsGetCall) IfNoneMatch(entityTag string) *HostsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *HostsGetCall) Context(ctx context.Context) *HostsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *HostsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *HostsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/{association}/hosts/{host}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":     c.project,
+		"zone":        c.zone,
+		"association": c.association,
+		"host":        c.host,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.hosts.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.hosts.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Host.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *HostsGetCall) Do(opts ...googleapi.CallOption) (*Host, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Host{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.hosts.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type HostsGetVersionCall struct {
+	s                      *Service
+	project                string
+	zone                   string
+	association            string
+	host                   string
+	hostsgetversionrequest *HostsGetVersionRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// GetVersion: Allows customers to get SBOM versions of a host.
+//
+//   - association: The parent resource association for the Host. This field
+//     specifies the
+//     hierarchical context (e.g., reservation, block, sub-block) when
+//     accessing the host.
+//   - host: The name of the host, formatted as RFC1035 or a resource ID
+//
+// number.
+//   - project: Project ID for this request.
+//   - zone: Name of the zone for this request. Zone name should conform to
+//     RFC1035.
+func (r *HostsService) GetVersion(project string, zone string, association string, host string, hostsgetversionrequest *HostsGetVersionRequest) *HostsGetVersionCall {
+	c := &HostsGetVersionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.association = association
+	c.host = host
+	c.hostsgetversionrequest = hostsgetversionrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so
+// that if you must retry your request, the server will know to ignore
+// the
+// request if it has already been completed.
+func (c *HostsGetVersionCall) RequestId(requestId string) *HostsGetVersionCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *HostsGetVersionCall) Fields(s ...googleapi.Field) *HostsGetVersionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *HostsGetVersionCall) Context(ctx context.Context) *HostsGetVersionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *HostsGetVersionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *HostsGetVersionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.hostsgetversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/{association}/hosts/{host}/getVersion")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":     c.project,
+		"zone":        c.zone,
+		"association": c.association,
+		"host":        c.host,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.hosts.getVersion", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.hosts.getVersion" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *HostsGetVersionCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.hosts.getVersion", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type HostsListCall struct {
+	s            *Service
+	project      string
+	zone         string
+	association  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Retrieves a list of hosts.
+//
+//   - association: The parent resource association for the Host. This field
+//     specifies the
+//     hierarchical context (e.g., reservation, block, sub-block) when
+//     accessing the host. For example,
+//     reservations/reservation_name,
+//     reservations/reservation_name/reservationBlocks/reservation_block_name
+//     or
+//     reservations/reservation_name/reservationBlocks/reservation_block_name/rese
+//     rvationSubBlocks/reservation_sub_block_name.
+//   - project: The project ID for this request.
+//   - zone: The name of the zone for this request, formatted as RFC1035.
+func (r *HostsService) List(project string, zone string, association string) *HostsListCall {
+	c := &HostsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.association = association
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters resources listed in the response. Most
+// Compute resources support two types of filter expressions:
+// expressions that support regular expressions and expressions that follow
+// API improvement proposal AIP-160.
+// These two types of filter expressions cannot be mixed in one request.
+//
+// If you want to use AIP-160, your expression must specify the field name,
+// an
+// operator, and the value that you want to use for filtering. The value
+// must be a string, a number, or a boolean. The operator
+// must be either `=`, `!=`, `>`, `<`, `<=`, `>=` or `:`.
+//
+// For example, if you are filtering Compute Engine instances, you can
+// exclude instances named `example-instance` by specifying
+// `name != example-instance`.
+//
+// The `:*` comparison can be used to test whether a key has been defined.
+// For example, to find all objects with `owner` label
+// use:
+// ```
+// labels.owner:*
+// ```
+//
+// You can also filter nested fields. For example, you could
+// specify
+// `scheduling.automaticRestart = false` to include instances only
+// if they are not scheduled for automatic restarts. You can use filtering
+// on nested fields to filter based onresource labels.
+//
+// To filter on multiple expressions, provide each separate expression
+// within
+// parentheses. For example:
+// ```
+// (scheduling.automaticRestart = true)
+// (cpuPlatform = "Intel Skylake")
+// ```
+// By default, each expression is an `AND` expression. However, you
+// can include `AND` and `OR` expressions explicitly.
+// For example:
+// ```
+// (cpuPlatform = "Intel Skylake") OR
+// (cpuPlatform = "Intel Broadwell") AND
+// (scheduling.automaticRestart = true)
+// ```
+//
+// If you want to use a regular expression, use the `eq` (equal) or `ne`
+// (not equal) operator against a single un-parenthesized expression with
+// or
+// without quotes or against multiple parenthesized expressions.
+// Examples:
+//
+// `fieldname eq unquoted literal`
+// `fieldname eq 'single quoted literal'`
+// `fieldname eq "double quoted literal"
+// `(fieldname1 eq literal) (fieldname2 ne "literal")`
+//
+// The literal value is interpreted as a regular expression using GoogleRE2
+// library syntax.
+// The literal value must match the entire field.
+//
+// For example, to filter for instances that do not end with name
+// "instance",
+// you would use `name ne .*instance`.
+//
+// You cannot combine constraints on multiple fields using regular
+// expressions.
+func (c *HostsListCall) Filter(filter string) *HostsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum number of
+// results per page that should be returned.
+// If the number of available results is larger than `maxResults`,
+// Compute Engine returns a `nextPageToken` that can be used to get
+// the next page of results in subsequent list requests. Acceptable values
+// are
+// `0` to `500`, inclusive. (Default: `500`)
+func (c *HostsListCall) MaxResults(maxResults int64) *HostsListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by a
+// certain order. By default, results
+// are returned in alphanumerical order based on the resource name.
+//
+// You can also sort results in descending order based on the
+// creation
+// timestamp using `orderBy="creationTimestamp desc". This sorts
+// results based on the `creationTimestamp` field in
+// reverse chronological order (newest result first). Use this to
+// sort
+// resources like operations so that the newest operation is returned
+// first.
+//
+// Currently, only sorting by `name` or
+// `creationTimestamp desc` is supported.
+func (c *HostsListCall) OrderBy(orderBy string) *HostsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page token to
+// use. Set `pageToken` to the
+// `nextPageToken` returned by a previous list request to get
+// the next page of results.
+func (c *HostsListCall) PageToken(pageToken string) *HostsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// Opt-in for partial success behavior which provides partial results in
+// case
+// of failure. The default value is false.
+//
+// For example, when partial success behavior is enabled, aggregatedList for
+// a
+// single zone scope either returns all resources in the zone or no
+// resources,
+// with an error code.
+func (c *HostsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *HostsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *HostsListCall) Fields(s ...googleapi.Field) *HostsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *HostsListCall) IfNoneMatch(entityTag string) *HostsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *HostsListCall) Context(ctx context.Context) *HostsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *HostsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *HostsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/{association}/hosts")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":     c.project,
+		"zone":        c.zone,
+		"association": c.association,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.hosts.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.hosts.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HostsListResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *HostsListCall) Do(opts ...googleapi.CallOption) (*HostsListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HostsListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.hosts.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *HostsListCall) Pages(ctx context.Context, f func(*HostsListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type HttpHealthChecksDeleteCall struct {
@@ -80445,13 +81090,6 @@ func (r *OrganizationSnapshotRecycleBinPolicyService) Patch(organization string,
 // (00000000-0000-0000-0000-000000000000).
 func (c *OrganizationSnapshotRecycleBinPolicyPatchCall) RequestId(requestId string) *OrganizationSnapshotRecycleBinPolicyPatchCall {
 	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": update_mask indicates
-// fields to be updated as part of this request.
-func (c *OrganizationSnapshotRecycleBinPolicyPatchCall) UpdateMask(updateMask string) *OrganizationSnapshotRecycleBinPolicyPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 

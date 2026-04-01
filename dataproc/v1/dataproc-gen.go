@@ -1985,6 +1985,35 @@ func (s ClusterToRepair) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CohortInfo: Information about the cohort that the workload belongs to.
+type CohortInfo struct {
+	// Cohort: Output only. Final cohort that was used to tune the workload.
+	Cohort string `json:"cohort,omitempty"`
+	// CohortSource: Output only. Source of the cohort.
+	//
+	// Possible values:
+	//   "COHORT_SOURCE_UNSPECIFIED" - Cohort source is unspecified.
+	//   "USER_PROVIDED" - Indicates that the cohort was explicitly provided.
+	//   "AIRFLOW" - Composed from the labels coming from Airflow/Composer.
+	CohortSource string `json:"cohortSource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Cohort") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Cohort") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CohortInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod CohortInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ConfidentialInstanceConfig: Confidential Instance Config for clusters using
 // Confidential VMs (https://cloud.google.com/compute/confidential-vm/docs)
 type ConfidentialInstanceConfig struct {
@@ -3456,6 +3485,11 @@ func (s InputQuantileMetrics) MarshalJSON() ([]byte, error) {
 // InstanceFlexibilityPolicy: Instance flexibility Policy allowing a mixture of
 // VM shapes and provisioning models.
 type InstanceFlexibilityPolicy struct {
+	// InstanceMachineTypes: Output only. A map of instance short name to machine
+	// type. The key is the short name of the Compute Engine instance, and the
+	// value is the full machine-type name (e.g., 'n1-standard-16'). See Machine
+	// types for more information on valid machine type strings.
+	InstanceMachineTypes map[string]string `json:"instanceMachineTypes,omitempty"`
 	// InstanceSelectionList: Optional. List of instance selection options that the
 	// group will use when creating new VMs.
 	InstanceSelectionList []*InstanceSelection `json:"instanceSelectionList,omitempty"`
@@ -3465,15 +3499,15 @@ type InstanceFlexibilityPolicy struct {
 	// ProvisioningModelMix: Optional. Defines how the Group selects the
 	// provisioning model to ensure required reliability.
 	ProvisioningModelMix *ProvisioningModelMix `json:"provisioningModelMix,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "InstanceSelectionList") to
+	// ForceSendFields is a list of field names (e.g. "InstanceMachineTypes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "InstanceSelectionList") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "InstanceMachineTypes") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -6210,6 +6244,9 @@ type RuntimeInfo struct {
 	// (https://cloud.google.com/dataproc-serverless/docs/release-notes) for
 	// announcements, changes, fixes and other Dataproc developments).
 	ApproximateUsage *UsageMetrics `json:"approximateUsage,omitempty"`
+	// CohortInfo: Output only. Information about the cohort that the workload
+	// belongs to.
+	CohortInfo *CohortInfo `json:"cohortInfo,omitempty"`
 	// CurrentUsage: Output only. Snapshot of current workload resource usage.
 	CurrentUsage *UsageSnapshot `json:"currentUsage,omitempty"`
 	// DiagnosticOutputUri: Output only. A URI pointing to the location of the

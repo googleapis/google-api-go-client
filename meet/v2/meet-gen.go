@@ -446,6 +446,34 @@ type Empty struct {
 type EndActiveConferenceRequest struct {
 }
 
+// GatewaySipAccess: Details how to join the conference via a SIP gateway.
+type GatewaySipAccess struct {
+	// SipAccessCode: Permanent numeric code for manual entry on specially
+	// configured devices.
+	SipAccessCode string `json:"sipAccessCode,omitempty"`
+	// Uri: The SIP URI the conference can be reached through. The string is on one
+	// of the formats: "sip:@" "sips:@" where currently is the 13-digit universal
+	// pin, and is a valid address to be resolved using a DNS SRV lookup, or a
+	// dotted quad.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SipAccessCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SipAccessCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GatewaySipAccess) MarshalJSON() ([]byte, error) {
+	type NoMethod GatewaySipAccess
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListConferenceRecordsResponse: Response of ListConferenceRecords method.
 type ListConferenceRecordsResponse struct {
 	// ConferenceRecords: List of conferences in one page.
@@ -783,6 +811,42 @@ func (s ParticipantSession) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PhoneAccess: Phone access contains information required to dial into a
+// conference using a regional phone number and a PIN that is specific to that
+// phone number.
+type PhoneAccess struct {
+	// LanguageCode: The BCP 47/LDML language code for the language associated with
+	// this phone access. To be parsed by the i18n LanguageCode utility. Examples:
+	// "es-419" for Latin American Spanish, "fr-CA" for Canadian French.
+	LanguageCode string `json:"languageCode,omitempty"`
+	// PhoneNumber: The phone number to dial for this meeting space in E.164
+	// format. Full phone number with a leading '+' character.
+	PhoneNumber string `json:"phoneNumber,omitempty"`
+	// Pin: The PIN that users must enter after dialing the given number. The PIN
+	// consists of only decimal digits and the length may vary.
+	Pin string `json:"pin,omitempty"`
+	// RegionCode: The CLDR/ISO 3166 region code for the country associated with
+	// this phone access. To be parsed by the i18n RegionCode utility. Example:
+	// "SE" for Sweden.
+	RegionCode string `json:"regionCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LanguageCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PhoneAccess) MarshalJSON() ([]byte, error) {
+	type NoMethod PhoneAccess
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PhoneUser: User dialing in from a phone where the user's identity is unknown
 // because they haven't signed in with a Google Account.
 type PhoneUser struct {
@@ -994,6 +1058,9 @@ type Space struct {
 	ActiveConference *ActiveConference `json:"activeConference,omitempty"`
 	// Config: Configuration pertaining to the meeting space.
 	Config *SpaceConfig `json:"config,omitempty"`
+	// GatewaySipAccess: Output only. The SIP based access methods that can be used
+	// to join the conference. Can be empty.
+	GatewaySipAccess []*GatewaySipAccess `json:"gatewaySipAccess,omitempty"`
 	// MeetingCode: Output only. Type friendly unique string used to join the
 	// meeting. Format: `[a-z]+-[a-z]+-[a-z]+`. For example, `abc-mnop-xyz`. The
 	// maximum length is 128 characters. Can only be used as an alias of the space
@@ -1009,6 +1076,9 @@ type Space struct {
 	// more information, see How Meet identifies a meeting space
 	// (https://developers.google.com/workspace/meet/api/guides/meeting-spaces#identify-meeting-space).
 	Name string `json:"name,omitempty"`
+	// PhoneAccess: Output only. All regional phone access methods for this meeting
+	// space. Can be empty.
+	PhoneAccess []*PhoneAccess `json:"phoneAccess,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

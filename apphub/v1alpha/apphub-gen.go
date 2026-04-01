@@ -961,6 +961,7 @@ type FunctionalType struct {
 	//   "TYPE_UNSPECIFIED" - Unspecified type.
 	//   "AGENT" - Agent type.
 	//   "MCP_SERVER" - MCP Server type.
+	//   "ENDPOINT" - Endpoint type.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

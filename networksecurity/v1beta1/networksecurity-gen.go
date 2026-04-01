@@ -771,6 +771,23 @@ type AuthzPolicy struct {
 	// following format:
 	// `projects/{project}/locations/{location}/authzPolicies/{authz_policy}`.
 	Name string `json:"name,omitempty"`
+	// PolicyProfile: Optional. Immutable. Defines the type of authorization being
+	// performed. If not specified, `REQUEST_AUTHZ` is applied. This field cannot
+	// be changed once AuthzPolicy is created.
+	//
+	// Possible values:
+	//   "POLICY_PROFILE_UNSPECIFIED" - Unspecified policy profile.
+	//   "REQUEST_AUTHZ" - Applies to request authorization. `CUSTOM` authorization
+	// policies with Authz extensions will be allowed with `EXT_AUTHZ_GRPC` or
+	// `EXT_PROC_GRPC` protocols. Extensions are invoked only for request header
+	// events.
+	//   "CONTENT_AUTHZ" - Applies to content security, sanitization, etc. Only
+	// `CUSTOM` action is allowed in this policy profile. AuthzExtensions in the
+	// custom provider must support `EXT_PROC_GRPC` protocol only and be capable of
+	// receiving all `EXT_PROC_GRPC` events (REQUEST_HEADERS, REQUEST_BODY,
+	// REQUEST_TRAILERS, RESPONSE_HEADERS, RESPONSE_BODY, RESPONSE_TRAILERS) with
+	// `FULL_DUPLEX_STREAMED` body send mode.
+	PolicyProfile string `json:"policyProfile,omitempty"`
 	// Target: Required. Specifies the set of resources to which this policy should
 	// be applied to.
 	Target *AuthzPolicyTarget `json:"target,omitempty"`
@@ -1137,6 +1154,11 @@ type AuthzPolicyAuthzRuleToRequestOperation struct {
 	// case sensitive unless the ignoreCase is set. Limited to 10 hosts per
 	// Authorization Policy.
 	Hosts []*AuthzPolicyAuthzRuleStringMatch `json:"hosts,omitempty"`
+	// Mcp: Optional. Defines the MCP protocol attributes to match on. If the MCP
+	// payload in the request body cannot be successfully parsed, the request will
+	// be denied. This field can be set only for AuthzPolicies targeting
+	// AgentGateway resources.
+	Mcp *AuthzPolicyAuthzRuleToRequestOperationMCP `json:"mcp,omitempty"`
 	// Methods: Optional. A list of HTTP methods to match against. Each entry must
 	// be a valid HTTP method name (GET, PUT, POST, HEAD, PATCH, DELETE, OPTIONS).
 	// It only allows exact match and is always case sensitive. Limited to 10
@@ -1191,6 +1213,78 @@ type AuthzPolicyAuthzRuleToRequestOperationHeaderSet struct {
 
 func (s AuthzPolicyAuthzRuleToRequestOperationHeaderSet) MarshalJSON() ([]byte, error) {
 	type NoMethod AuthzPolicyAuthzRuleToRequestOperationHeaderSet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuthzPolicyAuthzRuleToRequestOperationMCP: Describes a set of MCP protocol
+// attributes to match against for a given MCP request.
+type AuthzPolicyAuthzRuleToRequestOperationMCP struct {
+	// BaseProtocolMethodsOption: Optional. If specified, matches on the MCP
+	// protocol’s non-access specific methods namely: * initialize * completion/
+	// * logging/ * notifications/ * ping Defaults to SKIP_BASE_PROTOCOL_METHODS if
+	// not specified.
+	//
+	// Possible values:
+	//   "BASE_PROTOCOL_METHODS_OPTION_UNSPECIFIED" - Unspecified option. Defaults
+	// to SKIP_BASE_PROTOCOL_METHODS.
+	//   "SKIP_BASE_PROTOCOL_METHODS" - Skip matching on the base MCP protocol
+	// methods.
+	//   "MATCH_BASE_PROTOCOL_METHODS" - Match on the base MCP protocol methods.
+	BaseProtocolMethodsOption string `json:"baseProtocolMethodsOption,omitempty"`
+	// Methods: Optional. A list of MCP methods and associated parameters to match
+	// on. It is recommended to use this field to match on tools, prompts and
+	// resource accesses while setting the baseProtocolMethodsOption to
+	// MATCH_BASE_PROTOCOL_METHODS to match on all the other MCP protocol methods.
+	// Limited to 10 MCP methods per Authorization Policy.
+	Methods []*AuthzPolicyAuthzRuleToRequestOperationMCPMethod `json:"methods,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseProtocolMethodsOption")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseProtocolMethodsOption") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthzPolicyAuthzRuleToRequestOperationMCP) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthzPolicyAuthzRuleToRequestOperationMCP
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuthzPolicyAuthzRuleToRequestOperationMCPMethod: Describes a set of MCP
+// methods to match against.
+type AuthzPolicyAuthzRuleToRequestOperationMCPMethod struct {
+	// Name: Required. The MCP method to match against. Allowed values are as
+	// follows: 1. `tools`, `prompts`, `resources` - these will match against all
+	// sub methods under the respective methods. 2. `prompts/list`, `tools/list`,
+	// `resources/list`, `resources/templates/list` 3. `prompts/get`, `tools/call`,
+	// `resources/subscribe`, `resources/unsubscribe`, `resources/read` Params
+	// cannot be specified for categories 1 and 2.
+	Name string `json:"name,omitempty"`
+	// Params: Optional. A list of MCP method parameters to match against. The
+	// match can be one of exact, prefix, suffix, or contains (substring match).
+	// Matches are always case sensitive unless the ignoreCase is set. Limited to
+	// 10 MCP method parameters per Authorization Policy.
+	Params []*AuthzPolicyAuthzRuleStringMatch `json:"params,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthzPolicyAuthzRuleToRequestOperationMCPMethod) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthzPolicyAuthzRuleToRequestOperationMCPMethod
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1263,7 +1357,7 @@ type AuthzPolicyCustomProviderCloudIap struct {
 // AuthzPolicyTarget: Specifies the set of targets to which this policy should
 // be applied to.
 type AuthzPolicyTarget struct {
-	// LoadBalancingScheme: Required. All gateways and forwarding rules referenced
+	// LoadBalancingScheme: Optional. All gateways and forwarding rules referenced
 	// by this policy and extensions must share the same load balancing scheme.
 	// Supported values: `INTERNAL_MANAGED` and `EXTERNAL_MANAGED`. For more
 	// information, refer to Backend services overview
@@ -1697,7 +1791,9 @@ type FirewallEndpoint struct {
 	// associated to this endpoint. An association will only appear in this list
 	// after traffic routing is fully configured.
 	Associations []*FirewallEndpointAssociationReference `json:"associations,omitempty"`
-	// BillingProjectId: Required. Project to bill on endpoint uptime usage.
+	// BillingProjectId: Optional. Project to charge for the deployed firewall
+	// endpoint. This field must be specified when creating the endpoint in the
+	// organization scope, and should be omitted otherwise.
 	BillingProjectId string `json:"billingProjectId,omitempty"`
 	// CreateTime: Output only. Create time stamp.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2711,6 +2807,10 @@ type InterceptEndpointGroupAssociation struct {
 	// example: `projects/123456789/global/networks/my-network`. See
 	// https://google.aip.dev/124.
 	Network string `json:"network,omitempty"`
+	// NetworkCookie: Output only. Identifier used by the data-path. See the NSI
+	// GENEVE format for more details:
+	// https://docs.cloud.google.com/network-security-integration/docs/understand-geneve#network_id
+	NetworkCookie int64 `json:"networkCookie,omitempty"`
 	// Reconciling: Output only. The current state of the resource does not match
 	// the user's intended state, and the system is working to reconcile them. This
 	// part of the normal operation (e.g. adding a new location to the target
@@ -8944,10 +9044,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

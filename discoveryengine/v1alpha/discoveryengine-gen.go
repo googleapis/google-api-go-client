@@ -3617,9 +3617,7 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	DynamicTools []*GoogleCloudDiscoveryengineV1DynamicTool `json:"dynamicTools,omitempty"`
 	// EgressFqdns: Output only. The list of FQDNs of the data connector can egress
 	// to. This includes both FQDN derived from the customer provided instance URL
-	// and default per connector type FQDNs. Note: This field is derived from both
-	// the DataConnector.params, and connector source spec. It should only be used
-	// for CAIS and Org Policy evaluation purposes.
+	// and default per connector type FQDNs.
 	EgressFqdns []string `json:"egressFqdns,omitempty"`
 	// EndUserConfig: Optional. Any params and credentials used specifically for
 	// EUA connectors.
@@ -3679,7 +3677,7 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	// data synchronization job will be canceled. - No future data synchronization
 	// runs will be scheduled nor can be triggered.
 	LatestPauseTime string `json:"latestPauseTime,omitempty"`
-	// Name: Output only. The full resource name of the Data Connector. Format:
+	// Name: Identifier. The full resource name of the Data Connector. Format:
 	// `projects/*/locations/*/collections/*/dataConnector`.
 	Name string `json:"name,omitempty"`
 	// NextSyncTime: Defines the scheduled time for the next data synchronization.
@@ -3766,7 +3764,7 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	// UpdateTime: Output only. Timestamp the DataConnector was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// VpcscEnabled: Output only. Whether the connector is created with VPC-SC
-	// enabled. This is only used for CuOP evaluation purpose.
+	// enabled.
 	VpcscEnabled bool `json:"vpcscEnabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AclEnabled") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5897,8 +5895,8 @@ type GoogleCloudDiscoveryengineV1ImportUserEventsMetadata struct {
 	FailureCount int64 `json:"failureCount,omitempty,string"`
 	// SuccessCount: Count of entries that were processed successfully.
 	SuccessCount int64 `json:"successCount,omitempty,string"`
-	// UpdateTime: Operation last update time. If the operation is done, this is
-	// also the finish time.
+	// UpdateTime: Output only. Operation last update time. If the operation is
+	// done, this is also the finish time.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14604,9 +14602,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	DynamicTools []*GoogleCloudDiscoveryengineV1alphaDynamicTool `json:"dynamicTools,omitempty"`
 	// EgressFqdns: Output only. The list of FQDNs of the data connector can egress
 	// to. This includes both FQDN derived from the customer provided instance URL
-	// and default per connector type FQDNs. Note: This field is derived from both
-	// the DataConnector.params, and connector source spec. It should only be used
-	// for CAIS and Org Policy evaluation purposes.
+	// and default per connector type FQDNs.
 	EgressFqdns []string `json:"egressFqdns,omitempty"`
 	// EndUserConfig: Optional. Any params and credentials used specifically for
 	// EUA connectors.
@@ -14666,7 +14662,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// data synchronization job will be canceled. - No future data synchronization
 	// runs will be scheduled nor can be triggered.
 	LatestPauseTime string `json:"latestPauseTime,omitempty"`
-	// Name: Output only. The full resource name of the Data Connector. Format:
+	// Name: Identifier. The full resource name of the Data Connector. Format:
 	// `projects/*/locations/*/collections/*/dataConnector`.
 	Name string `json:"name,omitempty"`
 	// NextSyncTime: Defines the scheduled time for the next data synchronization.
@@ -14753,7 +14749,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// UpdateTime: Output only. Timestamp the DataConnector was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// VpcscEnabled: Output only. Whether the connector is created with VPC-SC
-	// enabled. This is only used for CuOP evaluation purpose.
+	// enabled.
 	VpcscEnabled bool `json:"vpcscEnabled,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -15959,10 +15955,11 @@ type GoogleCloudDiscoveryengineV1alphaDocument struct {
 	// * Otherwise, if document's index is in progress, the pending_message field
 	// is populated.
 	IndexStatus *GoogleCloudDiscoveryengineV1alphaDocumentIndexStatus `json:"indexStatus,omitempty"`
-	// IndexTime: Output only. The last time the document was indexed. If this
-	// field is set, the document could be returned in search results. This field
-	// is OUTPUT_ONLY. If this field is not populated, it means the document has
-	// never been indexed.
+	// IndexTime: Output only. The time when the document was last indexed. If this
+	// field is populated, it means the document has been indexed. While documents
+	// typically become searchable within seconds of indexing, it can sometimes
+	// take up to a few hours. If this field is not populated, it means the
+	// document has never been indexed.
 	IndexTime string `json:"indexTime,omitempty"`
 	// JsonData: The JSON string representation of the document. It should conform
 	// to the registered Schema or an `INVALID_ARGUMENT` error is thrown.
@@ -16113,7 +16110,9 @@ type GoogleCloudDiscoveryengineV1alphaDocumentIndexStatus struct {
 	// this field is populated, the document is not indexed due to errors.
 	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
 	// IndexTime: The time when the document was indexed. If this field is
-	// populated, it means the document has been indexed.
+	// populated, it means the document has been indexed. While documents typically
+	// become searchable within seconds of indexing, it can sometimes take up to a
+	// few hours.
 	IndexTime string `json:"indexTime,omitempty"`
 	// PendingMessage: Immutable. The message indicates the document index is in
 	// progress. If this field is populated, the document index is pending.
@@ -19246,8 +19245,8 @@ type GoogleCloudDiscoveryengineV1alphaImportUserEventsMetadata struct {
 	FailureCount int64 `json:"failureCount,omitempty,string"`
 	// SuccessCount: Count of entries that were processed successfully.
 	SuccessCount int64 `json:"successCount,omitempty,string"`
-	// UpdateTime: Operation last update time. If the operation is done, this is
-	// also the finish time.
+	// UpdateTime: Output only. Operation last update time. If the operation is
+	// done, this is also the finish time.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -31705,8 +31704,8 @@ type GoogleCloudDiscoveryengineV1betaImportUserEventsMetadata struct {
 	FailureCount int64 `json:"failureCount,omitempty,string"`
 	// SuccessCount: Count of entries that were processed successfully.
 	SuccessCount int64 `json:"successCount,omitempty,string"`
-	// UpdateTime: Operation last update time. If the operation is done, this is
-	// also the finish time.
+	// UpdateTime: Output only. Operation last update time. If the operation is
+	// done, this is also the finish time.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -40617,7 +40616,7 @@ type ProjectsLocationsCollectionsUpdateDataConnectorCall struct {
 
 // UpdateDataConnector: Updates a DataConnector.
 //
-//   - name: Output only. The full resource name of the Data Connector. Format:
+//   - name: Identifier. The full resource name of the Data Connector. Format:
 //     `projects/*/locations/*/collections/*/dataConnector`.
 func (r *ProjectsLocationsCollectionsService) UpdateDataConnector(name string, googleclouddiscoveryenginev1alphadataconnector *GoogleCloudDiscoveryengineV1alphaDataConnector) *ProjectsLocationsCollectionsUpdateDataConnectorCall {
 	c := &ProjectsLocationsCollectionsUpdateDataConnectorCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -56439,14 +56438,10 @@ func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsService) List(parent
 // Filter sets the optional parameter "filter": Filters the Agents list.
 // Supported fields: * `display_name`: display name of the agent. Supports `=`,
 // `:`. * `id`: ID of the agent. Supports `=`. * `state`: state of the agent.
-// Supports `=`. * `type`: type of the agent. Supports `=` (e.g.,
-// "GOOGLE_MADE", "OUR_AGENTS"). * `create_time`: timestamp when the agent was
-// created. Supports `=`, `>`, `<`, `>=`, `<=`. * `update_time`: timestamp when
-// the agent was last updated. Supports `=`, `>`, `<`, `>=`, `<=`. *
-// `has_active_iam_proposals`: whether the agent has pending proposals.
-// Supports `=`. Examples: * `display_name = "My Agent" * `type =
-// "GOOGLE_MADE" * `create_time > "2023-01-01T00:00:00Z" *
-// `has_active_iam_proposals = true`
+// Supports `=`. * `create_time`: timestamp when the agent was created.
+// Supports `=`, `>`, `<`, `>=`, `<=`. * `update_time`: timestamp when the
+// agent was last updated. Supports `=`, `>`, `<`, `>=`, `<=`. Examples: *
+// `display_name = "My Agent" * `create_time > "2023-01-01T00:00:00Z"
 func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsListCall) Filter(filter string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -79335,25 +79330,20 @@ func (r *ProjectsLocationsUserStoresUserLicensesService) List(parent string) *Pr
 // UserLicenses are listed. The value must be a comma-separated list of fields.
 // Default sorting order is ascending. To specify descending order for a field,
 // append a " desc" suffix. Redundant space characters in the syntax are
-// insignificant. Supported fields: * `license_assignment_state` *
-// `user_principal` * `user_profile` * `last_login_date` * `update_time` If not
-// set, the default ordering is by `user_principal`. Examples: *
-// `user_principal desc` to order by `user_principal` in descending order. *
-// `license_assignment_state` to order by `license_assignment_state` in
-// ascending order. * `last_login_date desc` to order by `last_login_date` in
-// descending order. * `update_time desc` to order by `update_time` in
-// descending order. * `last_login_date desc, user_principal` to order by
-// `last_login_date` in descending order and then by `user_principal` in
-// ascending order.
+// insignificant. Supported fields (only `user_principal` is supported for
+// now): * `user_principal` If not set, the default ordering is by
+// `user_principal`. Examples: * `user_principal` to order by `user_principal`
+// in ascending order. * `user_principal desc` to order by `user_principal` in
+// descending order.
 func (c *ProjectsLocationsUserStoresUserLicensesListCall) OrderBy(orderBy string) *ProjectsLocationsUserStoresUserLicensesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Server
-// may return fewer items than requested. If unspecified, defaults to 1000. The
-// maximum value is 1000; values above 1000 will be coerced to 1000. If this
-// field is negative, an INVALID_ARGUMENT error is returned.
+// may return fewer items than requested. If unspecified, defaults to 10. The
+// maximum value is 50; values above 50 will be coerced to 50. If this field is
+// negative, an INVALID_ARGUMENT error is returned.
 func (c *ProjectsLocationsUserStoresUserLicensesListCall) PageSize(pageSize int64) *ProjectsLocationsUserStoresUserLicensesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

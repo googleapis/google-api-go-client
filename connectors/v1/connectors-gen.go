@@ -864,17 +864,17 @@ type CancelOperationRequest struct {
 // ConfigVariable: ConfigVariable represents a configuration variable present
 // in a Connection. or AuthConfig.
 type ConfigVariable struct {
-	// BoolValue: Value is a bool.
+	// BoolValue: Optional. Value is a bool.
 	BoolValue bool `json:"boolValue,omitempty"`
-	// EncryptionKeyValue: Value is a Encryption Key.
+	// EncryptionKeyValue: Optional. Value is a Encryption Key.
 	EncryptionKeyValue *EncryptionKey `json:"encryptionKeyValue,omitempty"`
-	// IntValue: Value is an integer
+	// IntValue: Optional. Value is an integer
 	IntValue int64 `json:"intValue,omitempty,string"`
 	// Key: Optional. Key of the config variable.
 	Key string `json:"key,omitempty"`
-	// SecretValue: Value is a secret.
+	// SecretValue: Optional. Value is a secret.
 	SecretValue *Secret `json:"secretValue,omitempty"`
-	// StringValue: Value is a string.
+	// StringValue: Optional. Value is a string.
 	StringValue string `json:"stringValue,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BoolValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1848,7 +1848,7 @@ type DeprecateCustomConnectorVersionRequest struct {
 type Destination struct {
 	// Host: For publicly routable host.
 	Host string `json:"host,omitempty"`
-	// Port: The port is the target port number that is accepted by the
+	// Port: Optional. The port is the target port number that is accepted by the
 	// destination.
 	Port int64 `json:"port,omitempty"`
 	// ServiceAttachment: PSC service attachments. Format:
@@ -1874,10 +1874,10 @@ func (s Destination) MarshalJSON() ([]byte, error) {
 
 // DestinationConfig: Define the Connectors target endpoint.
 type DestinationConfig struct {
-	// Destinations: The destinations for the key.
+	// Destinations: Optional. The destinations for the key.
 	Destinations []*Destination `json:"destinations,omitempty"`
-	// Key: The key is the destination identifier that is supported by the
-	// Connector.
+	// Key: Optional. The key is the destination identifier that is supported by
+	// the Connector.
 	Key string `json:"key,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Destinations") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2077,7 +2077,7 @@ type EncryptionKey struct {
 	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`. Will be empty string if
 	// google managed.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
-	// Type: Type.
+	// Type: Optional. Specifies the type of the encryption key.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Value type is not specified.
@@ -2717,6 +2717,9 @@ type EventSubscription struct {
 	// EventTypeId: Optional. Event type id of the event of current
 	// EventSubscription.
 	EventTypeId string `json:"eventTypeId,omitempty"`
+	// Filter: Optional. Filter for the event subscription. Incoming events are
+	// filtered based on the filter expression.
+	Filter string `json:"filter,omitempty"`
 	// Jms: Optional. JMS is the source for the event listener.
 	Jms *JMS `json:"jms,omitempty"`
 	// Name: Required. Identifier. Resource name of the EventSubscription. Format:
@@ -2871,10 +2874,12 @@ func (s EventType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// EventingConfig: Eventing Configuration of a connection next: 19
+// EventingConfig: Eventing Configuration of a connection next: 20
 type EventingConfig struct {
 	// AdditionalVariables: Optional. Additional eventing related field values
 	AdditionalVariables []*ConfigVariable `json:"additionalVariables,omitempty"`
+	// AllowedEventTypes: Optional. List of allowed event types for the connection.
+	AllowedEventTypes []string `json:"allowedEventTypes,omitempty"`
 	// AuthConfig: Optional. Auth details for the webhook adapter.
 	AuthConfig *AuthConfig `json:"authConfig,omitempty"`
 	// DeadLetterConfig: Optional. Dead letter configuration for eventing of a
@@ -2884,7 +2889,7 @@ type EventingConfig struct {
 	EnrichmentConfig *EnrichmentConfig `json:"enrichmentConfig,omitempty"`
 	// EnrichmentEnabled: Optional. Enrichment Enabled.
 	EnrichmentEnabled bool `json:"enrichmentEnabled,omitempty"`
-	// EventsListenerIngressEndpoint: Optional. Ingress endpoint of the event
+	// EventsListenerIngressEndpoint: Output only. Ingress endpoint of the event
 	// listener. This is used only when private connectivity is enabled.
 	EventsListenerIngressEndpoint string `json:"eventsListenerIngressEndpoint,omitempty"`
 	// ListenerAuthConfig: Optional. Auth details for the event listener.
@@ -3214,6 +3219,56 @@ type FetchAuthSchemaResponse struct {
 
 func (s FetchAuthSchemaResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchAuthSchemaResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FetchConnectionToolspecOverrideRequest: Request message for
+// FetchConnectionToolspecOverride API.
+type FetchConnectionToolspecOverrideRequest struct {
+	// ToolNames: Required. List of tools for which the tool spec override is to be
+	// generated.
+	ToolNames []*ToolName `json:"toolNames,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ToolNames") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ToolNames") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FetchConnectionToolspecOverrideRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchConnectionToolspecOverrideRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FetchConnectionToolspecOverrideResponse: Response message for
+// FetchConnectionToolspecOverride API.
+type FetchConnectionToolspecOverrideResponse struct {
+	// ToolspecOverride: Toolspec overrides for the connection.
+	ToolspecOverride *ToolspecOverride `json:"toolspecOverride,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ToolspecOverride") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ToolspecOverride") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FetchConnectionToolspecOverrideResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchConnectionToolspecOverrideResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3720,6 +3775,10 @@ type JsonSchema struct {
 	// Enum: Possible values for an enumeration. This works in conjunction with
 	// `type` to represent types with a fixed set of legal values
 	Enum []interface{} `json:"enum,omitempty"`
+	// ExclusiveMaximum: Whether the maximum number value is exclusive.
+	ExclusiveMaximum bool `json:"exclusiveMaximum,omitempty"`
+	// ExclusiveMinimum: Whether the minimum number value is exclusive.
+	ExclusiveMinimum bool `json:"exclusiveMinimum,omitempty"`
 	// Format: Format of the value as per
 	// https://json-schema.org/understanding-json-schema/reference/string.html#format
 	Format string `json:"format,omitempty"`
@@ -3777,6 +3836,21 @@ type JsonSchema struct {
 	// instead.
 	//   "DATA_TYPE_TIMESTAMP_WITH_TIMEZONE" - UNSUPPORTED! Use TIMESTAMP instead.
 	JdbcType string `json:"jdbcType,omitempty"`
+	// MaxItems: Maximum number of items in the array field.
+	MaxItems int64 `json:"maxItems,omitempty"`
+	// MaxLength: Maximum length of the string field.
+	MaxLength int64 `json:"maxLength,omitempty"`
+	// Maximum: Maximum value of the number field.
+	Maximum interface{} `json:"maximum,omitempty"`
+	// MinItems: Minimum number of items in the array field.
+	MinItems int64 `json:"minItems,omitempty"`
+	// MinLength: Minimum length of the string field.
+	MinLength int64 `json:"minLength,omitempty"`
+	// Minimum: Minimum value of the number field.
+	Minimum interface{} `json:"minimum,omitempty"`
+	// Pattern: Regex pattern of the string field. This is a string value that
+	// describes the regular expression that the string value should match.
+	Pattern string `json:"pattern,omitempty"`
 	// Properties: The child schemas, applicable only if this is of type `object`.
 	// The key is the name of the property and the value is the json schema that
 	// describes that property
@@ -3785,6 +3859,8 @@ type JsonSchema struct {
 	Required []string `json:"required,omitempty"`
 	// Type: JSON Schema Validation: A Vocabulary for Structural Validation of JSON
 	Type []string `json:"type,omitempty"`
+	// UniqueItems: Whether the items in the array field are unique.
+	UniqueItems bool `json:"uniqueItems,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalDetails") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6624,10 +6700,10 @@ func (s ToolspecOverride) MarshalJSON() ([]byte, error) {
 // quota limit is 10000 calls per day, then the message would be: {
 // quota_limit: 10000 duration: { seconds: 86400 } and so on.
 type TrafficShapingConfig struct {
-	// Duration: Required. * The duration over which the API call quota limits are
-	// calculated. This duration is used to define the time window for evaluating
-	// if the number of API calls made by a user is within the allowed quota
-	// limits. For example: - To define a quota sampled over 16 seconds, set
+	// Duration: Required. Specifies the duration over which the API call quota
+	// limits are calculated. This duration is used to define the time window for
+	// evaluating if the number of API calls made by a user is within the allowed
+	// quota limits. For example: - To define a quota sampled over 16 seconds, set
 	// `seconds` to 16 - To define a quota sampled over 5 minutes, set `seconds` to
 	// 300 (5 * 60) - To define a quota sampled over 1 day, set `seconds` to 86400
 	// (24 * 60 * 60) and so on. It is important to note that this duration is not
@@ -7720,6 +7796,113 @@ func (c *ProjectsLocationsConnectionsDeleteCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectionsFetchToolspecOverrideCall struct {
+	s                                      *Service
+	name                                   string
+	fetchconnectiontoolspecoverriderequest *FetchConnectionToolspecOverrideRequest
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// FetchToolspecOverride: Fetches Toolspec Override for a connection for the
+// given list of tools. Returns results from the db if the tool is already
+// present.
+//
+//   - name: Resource name format:
+//     projects/{project}/locations/{location}/connections/{connection}.
+func (r *ProjectsLocationsConnectionsService) FetchToolspecOverride(name string, fetchconnectiontoolspecoverriderequest *FetchConnectionToolspecOverrideRequest) *ProjectsLocationsConnectionsFetchToolspecOverrideCall {
+	c := &ProjectsLocationsConnectionsFetchToolspecOverrideCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.fetchconnectiontoolspecoverriderequest = fetchconnectiontoolspecoverriderequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsFetchToolspecOverrideCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsFetchToolspecOverrideCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsFetchToolspecOverrideCall) Context(ctx context.Context) *ProjectsLocationsConnectionsFetchToolspecOverrideCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsFetchToolspecOverrideCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsFetchToolspecOverrideCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.fetchconnectiontoolspecoverriderequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:fetchToolspecOverride")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.fetchToolspecOverride", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.fetchToolspecOverride" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FetchConnectionToolspecOverrideResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsFetchToolspecOverrideCall) Do(opts ...googleapi.CallOption) (*FetchConnectionToolspecOverrideResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FetchConnectionToolspecOverrideResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.fetchToolspecOverride", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

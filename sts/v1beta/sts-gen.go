@@ -334,9 +334,9 @@ type GoogleIdentityStsV1Options struct {
 	// AccessBoundary. The access boundary can include up to 10 rules. The size of
 	// the parameter value should not exceed 2048 characters.
 	AccessBoundary *GoogleIdentityStsV1AccessBoundary `json:"accessBoundary,omitempty"`
-	// BindCertFingerprint: The unpadded, base64url-encoded SHA-256 hash of the
-	// certificate's DER encoding and it must be 43 characters long. The resulting
-	// token will be bound to this value.
+	// BindCertFingerprint: The unpadded, url-escaped, base64-encoded SHA-256 hash
+	// of the certificate's DER encoding. It must be 43 characters long. The
+	// resulting token will be bound to this value.
 	BindCertFingerprint string `json:"bindCertFingerprint,omitempty"`
 	// UserProject: A Google project used for quota and billing purposes when the
 	// credential is used to access Google APIs. The provided project overrides the
@@ -480,14 +480,16 @@ type GoogleIdentityStsV1betaExchangeTokenRequest struct {
 	// this field. The document must be formatted according to section 4.2 of the
 	// OIDC 1.0 Discovery specification
 	// (https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfigurationResponse).
-	// - `iat`: The issue time, in seconds, since the Unix epoch. Must be in the
-	// past. - `exp`: The expiration time, in seconds, since the Unix epoch. Must
-	// be less than 48 hours after `iat`. Shorter expiration times are more secure.
-	// If possible, we recommend setting an expiration time less than 6 hours. -
-	// `sub`: The identity asserted in the JWT. - `aud`: For workload identity
-	// pools, this must be a value specified in the allowed audiences for the
-	// workload identity pool provider, or one of the audiences allowed by default
-	// if no audiences were specified. See
+	// - `iat`: The issue time, in seconds, since the Unix epoch. This timestamp
+	// must be in the past and no more than 24 hours in the past, or the token will
+	// be rejected. Note that this implies the token is only acceptable within a
+	// time window of at most 24 hours. - `exp`: The expiration time, in seconds,
+	// since the Unix epoch. Shorter expiration times are more secure. If possible,
+	// we recommend setting an expiration time less than 6 hours. - `sub`: The
+	// identity asserted in the JWT. - `aud`: For workload identity pools, this
+	// must be a value specified in the allowed audiences for the workload identity
+	// pool provider, or one of the audiences allowed by default if no audiences
+	// were specified. See
 	// https://cloud.google.com/iam/docs/reference/rest/v1/projects.locations.workloadIdentityPools.providers#oidc
 	// Example header: ``` { "alg": "RS256", "kid": "us-east-11" } ``` Example
 	// payload: ``` { "iss": "https://accounts.google.com", "iat": 1517963104,

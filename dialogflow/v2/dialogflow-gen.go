@@ -6576,6 +6576,56 @@ func (s GoogleCloudDialogflowV2BatchUpdateIntentsResponse) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type GoogleCloudDialogflowV2CesAppSpec struct {
+	CesApp string `json:"cesApp,omitempty"`
+	// Possible values:
+	//   "CONFIRMATION_REQUIREMENT_UNSPECIFIED"
+	//   "REQUIRED"
+	//   "NOT_REQUIRED"
+	ConfirmationRequirement string `json:"confirmationRequirement,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CesApp") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CesApp") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2CesAppSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2CesAppSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudDialogflowV2CesToolSpec struct {
+	CesTool string `json:"cesTool,omitempty"`
+	// Possible values:
+	//   "CONFIRMATION_REQUIREMENT_UNSPECIFIED"
+	//   "REQUIRED"
+	//   "NOT_REQUIRED"
+	ConfirmationRequirement string `json:"confirmationRequirement,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CesTool") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CesTool") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2CesToolSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2CesToolSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudDialogflowV2ClearSuggestionFeatureConfigOperationMetadata struct {
 	ConversationProfile string `json:"conversationProfile,omitempty"`
 	CreateTime          string `json:"createTime,omitempty"`
@@ -8298,6 +8348,8 @@ func (s GoogleCloudDialogflowV2GenerateSuggestionsResponseGeneratorSuggestionAns
 
 type GoogleCloudDialogflowV2Generator struct {
 	AgentCoachingContext     *GoogleCloudDialogflowV2AgentCoachingContext     `json:"agentCoachingContext,omitempty"`
+	CesAppSpecs              []*GoogleCloudDialogflowV2CesAppSpec             `json:"cesAppSpecs,omitempty"`
+	CesToolSpecs             []*GoogleCloudDialogflowV2CesToolSpec            `json:"cesToolSpecs,omitempty"`
 	CreateTime               string                                           `json:"createTime,omitempty"`
 	Description              string                                           `json:"description,omitempty"`
 	FreeFormContext          *GoogleCloudDialogflowV2FreeFormContext          `json:"freeFormContext,omitempty"`
@@ -8307,6 +8359,7 @@ type GoogleCloudDialogflowV2Generator struct {
 	SuggestionDedupingConfig *GoogleCloudDialogflowV2SuggestionDedupingConfig `json:"suggestionDedupingConfig,omitempty"`
 	SummarizationContext     *GoogleCloudDialogflowV2SummarizationContext     `json:"summarizationContext,omitempty"`
 	Tools                    []string                                         `json:"tools,omitempty"`
+	ToolsetTools             []*GoogleCloudDialogflowV2ToolsetTool            `json:"toolsetTools,omitempty"`
 	// Possible values:
 	//   "TRIGGER_EVENT_UNSPECIFIED"
 	//   "END_OF_UTTERANCE"
@@ -13414,6 +13467,9 @@ func (s GoogleCloudDialogflowV2ToolAuthenticationServiceAgentAuthConfig) Marshal
 type GoogleCloudDialogflowV2ToolCall struct {
 	Action          string               `json:"action,omitempty"`
 	AnswerRecord    string               `json:"answerRecord,omitempty"`
+	CesApp          string               `json:"cesApp,omitempty"`
+	CesTool         string               `json:"cesTool,omitempty"`
+	CesToolset      string               `json:"cesToolset,omitempty"`
 	CreateTime      string               `json:"createTime,omitempty"`
 	InputParameters googleapi.RawMessage `json:"inputParameters,omitempty"`
 	// Possible values:
@@ -13445,6 +13501,9 @@ func (s GoogleCloudDialogflowV2ToolCall) MarshalJSON() ([]byte, error) {
 type GoogleCloudDialogflowV2ToolCallResult struct {
 	Action       string                                      `json:"action,omitempty"`
 	AnswerRecord string                                      `json:"answerRecord,omitempty"`
+	CesApp       string                                      `json:"cesApp,omitempty"`
+	CesTool      string                                      `json:"cesTool,omitempty"`
+	CesToolset   string                                      `json:"cesToolset,omitempty"`
 	Content      string                                      `json:"content,omitempty"`
 	CreateTime   string                                      `json:"createTime,omitempty"`
 	Error        *GoogleCloudDialogflowV2ToolCallResultError `json:"error,omitempty"`
@@ -13690,6 +13749,32 @@ type GoogleCloudDialogflowV2ToolTLSConfigCACert struct {
 
 func (s GoogleCloudDialogflowV2ToolTLSConfigCACert) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2ToolTLSConfigCACert
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudDialogflowV2ToolsetTool struct {
+	// Possible values:
+	//   "CONFIRMATION_REQUIREMENT_UNSPECIFIED"
+	//   "REQUIRED"
+	//   "NOT_REQUIRED"
+	ConfirmationRequirement string `json:"confirmationRequirement,omitempty"`
+	OperationId             string `json:"operationId,omitempty"`
+	Toolset                 string `json:"toolset,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConfirmationRequirement") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConfirmationRequirement") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2ToolsetTool) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ToolsetTool
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -16957,6 +17042,9 @@ func (s GoogleCloudDialogflowV2beta1TelephonyDtmfEvents) MarshalJSON() ([]byte, 
 type GoogleCloudDialogflowV2beta1ToolCall struct {
 	Action          string               `json:"action,omitempty"`
 	AnswerRecord    string               `json:"answerRecord,omitempty"`
+	CesApp          string               `json:"cesApp,omitempty"`
+	CesTool         string               `json:"cesTool,omitempty"`
+	CesToolset      string               `json:"cesToolset,omitempty"`
 	CreateTime      string               `json:"createTime,omitempty"`
 	InputParameters googleapi.RawMessage `json:"inputParameters,omitempty"`
 	// Possible values:
@@ -16988,6 +17076,9 @@ func (s GoogleCloudDialogflowV2beta1ToolCall) MarshalJSON() ([]byte, error) {
 type GoogleCloudDialogflowV2beta1ToolCallResult struct {
 	Action       string                                           `json:"action,omitempty"`
 	AnswerRecord string                                           `json:"answerRecord,omitempty"`
+	CesApp       string                                           `json:"cesApp,omitempty"`
+	CesTool      string                                           `json:"cesTool,omitempty"`
+	CesToolset   string                                           `json:"cesToolset,omitempty"`
 	Content      string                                           `json:"content,omitempty"`
 	CreateTime   string                                           `json:"createTime,omitempty"`
 	Error        *GoogleCloudDialogflowV2beta1ToolCallResultError `json:"error,omitempty"`

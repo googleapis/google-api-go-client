@@ -1339,82 +1339,6 @@ type ProjectsService struct {
 	s *Service
 }
 
-// ApiservingMcpMcpToolDataHandlingProfile: Profile describing the data
-// handling characteristics of an MCP tool. When used within the McpTool.meta
-// field, this message should be packed into a google.protobuf.Any and
-// associated with the key: "google.com/tool.profiles/data_handling"
-type ApiservingMcpMcpToolDataHandlingProfile struct {
-	// InputDataAccessLevel: // The data access level of the tool's inputs.
-	//
-	// Possible values:
-	//   "DATA_ACCESS_LEVEL_UNSPECIFIED" - The default value. This value is unused.
-	//   "DATA_ACCESS_LEVEL_PUBLIC" - Public data.
-	//   "DATA_ACCESS_LEVEL_CONFIDENTIAL" - Confidential data.
-	//   "DATA_ACCESS_LEVEL_NEED_TO_KNOW" - Need-to-know data.
-	//   "DATA_ACCESS_LEVEL_PII" - Personally Identifiable Information (PII) data.
-	//   "DATA_ACCESS_LEVEL_USER" - User data.
-	//   "DATA_ACCESS_LEVEL_NO_DATA_ACCESS" - The tool does not access any data.
-	InputDataAccessLevel string `json:"inputDataAccessLevel,omitempty"`
-	// OutputDataAccessLevel: The data access level of the tool's outputs.
-	//
-	// Possible values:
-	//   "DATA_ACCESS_LEVEL_UNSPECIFIED" - The default value. This value is unused.
-	//   "DATA_ACCESS_LEVEL_PUBLIC" - Public data.
-	//   "DATA_ACCESS_LEVEL_CONFIDENTIAL" - Confidential data.
-	//   "DATA_ACCESS_LEVEL_NEED_TO_KNOW" - Need-to-know data.
-	//   "DATA_ACCESS_LEVEL_PII" - Personally Identifiable Information (PII) data.
-	//   "DATA_ACCESS_LEVEL_USER" - User data.
-	//   "DATA_ACCESS_LEVEL_NO_DATA_ACCESS" - The tool does not access any data.
-	OutputDataAccessLevel string `json:"outputDataAccessLevel,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "InputDataAccessLevel") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "InputDataAccessLevel") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ApiservingMcpMcpToolDataHandlingProfile) MarshalJSON() ([]byte, error) {
-	type NoMethod ApiservingMcpMcpToolDataHandlingProfile
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// ApiservingMcpMcpToolLifecycleProfile: Profile describing the lifecycle stage
-// of an MCP tool. When used within the McpTool.meta field, this message should
-// be packed into a google.protobuf.Any and associated with the key:
-// "google.com/tool.profiles/lifecycle"
-type ApiservingMcpMcpToolLifecycleProfile struct {
-	// LaunchState: Output only. The current launch state of the MCP tool.
-	//
-	// Possible values:
-	//   "LAUNCH_STATE_UNSPECIFIED" - The default value. This value is unused.
-	//   "LAUNCH_STATE_DEVELOPMENT" - The tool is currently in development.
-	//   "LAUNCH_STATE_PRODUCTION_PREVIEW" - The tool is in production preview.
-	//   "LAUNCH_STATE_GENERAL_AVAILABILITY" - The tool is generally available.
-	LaunchState string `json:"launchState,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "LaunchState") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "LaunchState") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ApiservingMcpMcpToolLifecycleProfile) MarshalJSON() ([]byte, error) {
-	type NoMethod ApiservingMcpMcpToolLifecycleProfile
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // EdgeConfigstoreBundleBadBundle: Describes why a bundle is invalid. Intended
 // for use in error details.
 type EdgeConfigstoreBundleBadBundle struct {
@@ -5484,7 +5408,7 @@ type GoogleCloudApigeeV1EnvironmentClientIPResolutionConfigHeaderIndexAlgorithm 
 	// -2, -3 chooses indices from the right (last ips)
 	IpHeaderIndex int64 `json:"ipHeaderIndex,omitempty"`
 	// IpHeaderName: Required. The name of the header to extract the client ip
-	// from. We are currently only supporting the X-Forwarded-For header.
+	// from.
 	IpHeaderName string `json:"ipHeaderName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IpHeaderIndex") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10214,8 +10138,8 @@ func (s GoogleCloudApigeeV1RuntimeConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1RuntimeTraceConfig: NEXT ID: 9 RuntimeTraceConfig defines
-// the configurations for distributed trace in an environment.
+// GoogleCloudApigeeV1RuntimeTraceConfig: NEXT ID: 10 RuntimeTraceConfig
+// defines the configurations for distributed trace in an environment.
 type GoogleCloudApigeeV1RuntimeTraceConfig struct {
 	// Endpoint: Endpoint of the exporter.
 	Endpoint string `json:"endpoint,omitempty"`
@@ -10225,20 +10149,24 @@ type GoogleCloudApigeeV1RuntimeTraceConfig struct {
 	//
 	// Possible values:
 	//   "EXPORTER_UNSPECIFIED" - Exporter unspecified
-	//   "JAEGER" - Jaeger exporter
-	//   "CLOUD_TRACE" - Cloudtrace exporter
-	//   "OPEN_TELEMETRY_COLLECTOR" - Open Telemetry Collector
+	//   "JAEGER" - Exports events to Jaeger. Compatible with OpenCensus protocol.
+	//   "CLOUD_TRACE" - Exports events to Cloud Trace. Compatible with OpenCensus
+	// protocol.
+	//   "OPEN_TELEMETRY_COLLECTOR" - OpenTelemetry Collector. Compatible with
+	// OpenTelemetry protocol.
+	//   "OPEN_TELEMETRY_CLOUD_TRACE" - Exports events to Cloud Trace. Compatible
+	// with OpenTelemetry protocol.
 	Exporter string `json:"exporter,omitempty"`
 	// Name: Name of the trace config in the following format:
 	// `organizations/{org}/environment/{env}/traceConfig`
 	Name string `json:"name,omitempty"`
-	// OpenTelemetryProtocolEnabled: If `true`, the runtime uses OpenTelemetry
-	// Protocol (OTLP) to send trace data. Configuration Requirements (if
-	// `open_telemetry_protocol_enabled` is `true`): - Allowed `Exporter`s:
+	// OpenTelemetryProtocolEnabled: Optional. If `true`, the runtime uses
+	// OpenTelemetry Protocol (OTLP) to send trace data. Configuration Requirements
+	// (if `open_telemetry_protocol_enabled` is `true`): - Allowed `Exporter`s:
 	// `CLOUD_TRACE` or `OPEN_TELEMETRY_COLLECTOR`. - If `Exporter` is
 	// `OPEN_TELEMETRY_COLLECTOR`: - `endpoint` refers to a valid OTLP collector
 	// URL. - If `Exporter` is `CLOUD_TRACE`: - `endpoint` refers to a valid
-	// project ID
+	// project ID Deprecated: Use trace_protocol instead.
 	OpenTelemetryProtocolEnabled bool `json:"openTelemetryProtocolEnabled,omitempty"`
 	// Overrides: List of trace configuration overrides for spicific API proxies.
 	Overrides []*GoogleCloudApigeeV1RuntimeTraceConfigOverride `json:"overrides,omitempty"`
@@ -10249,6 +10177,14 @@ type GoogleCloudApigeeV1RuntimeTraceConfig struct {
 	RevisionId string `json:"revisionId,omitempty"`
 	// SamplingConfig: Trace configuration for all API proxies in an environment.
 	SamplingConfig *GoogleCloudApigeeV1RuntimeTraceSamplingConfig `json:"samplingConfig,omitempty"`
+	// TraceProtocol: Optional. The trace protocol to use.
+	//
+	// Possible values:
+	//   "TRACE_PROTOCOL_UNSPECIFIED" - Protocol unspecified. Defaults to
+	// OPEN_CENSUS.
+	//   "OPEN_CENSUS" - Uses OpenCensus protocol.
+	//   "OTLP" - Uses OpenTelemetry Protocol (OTLP).
+	TraceProtocol string `json:"traceProtocol,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Endpoint") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -10267,7 +10203,7 @@ func (s GoogleCloudApigeeV1RuntimeTraceConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1RuntimeTraceConfigOverride: NEXT ID: 8 Trace
+// GoogleCloudApigeeV1RuntimeTraceConfigOverride: NEXT ID: 9 Trace
 // configuration override for a specific API proxy in an environment.
 type GoogleCloudApigeeV1RuntimeTraceConfigOverride struct {
 	// ApiProxy: Name of the API proxy that will have its trace configuration
@@ -10276,13 +10212,13 @@ type GoogleCloudApigeeV1RuntimeTraceConfigOverride struct {
 	// Name: Name of the trace config override in the following format:
 	// `organizations/{org}/environment/{env}/traceConfig/overrides/{override}`
 	Name string `json:"name,omitempty"`
-	// OpenTelemetryProtocolEnabled: If `true`, the runtime uses OpenTelemetry
-	// Protocol (OTLP) to send trace data. Configuration Requirements (if
-	// `open_telemetry_protocol_enabled` is `true`): - Allowed `Exporter`s:
+	// OpenTelemetryProtocolEnabled: Optional. If `true`, the runtime uses
+	// OpenTelemetry Protocol (OTLP) to send trace data. Configuration Requirements
+	// (if `open_telemetry_protocol_enabled` is `true`): - Allowed `Exporter`s:
 	// `CLOUD_TRACE` or `OPEN_TELEMETRY_COLLECTOR`. - If `Exporter` is
 	// `OPEN_TELEMETRY_COLLECTOR`: - `endpoint` refers to a valid OTLP collector
 	// URL. - If `Exporter` is `CLOUD_TRACE`: - `endpoint` refers to a valid
-	// project ID
+	// project ID Deprecated: Use trace_protocol instead.
 	OpenTelemetryProtocolEnabled bool `json:"openTelemetryProtocolEnabled,omitempty"`
 	// RevisionCreateTime: The timestamp that the revision was created or updated.
 	RevisionCreateTime string `json:"revisionCreateTime,omitempty"`
@@ -10292,6 +10228,14 @@ type GoogleCloudApigeeV1RuntimeTraceConfigOverride struct {
 	// SamplingConfig: Trace configuration override for a specific API proxy in an
 	// environment.
 	SamplingConfig *GoogleCloudApigeeV1RuntimeTraceSamplingConfig `json:"samplingConfig,omitempty"`
+	// TraceProtocol: Optional. The trace protocol to use.
+	//
+	// Possible values:
+	//   "TRACE_PROTOCOL_UNSPECIFIED" - Protocol unspecified. Defaults to
+	// OPEN_CENSUS.
+	//   "OPEN_CENSUS" - Uses OpenCensus protocol.
+	//   "OTLP" - Uses OpenTelemetry Protocol (OTLP).
+	TraceProtocol string `json:"traceProtocol,omitempty"`
 	// Uid: Unique ID for the configuration override. The ID will only change if
 	// the override is deleted and recreated. Corresponds to name's "override"
 	// field.
@@ -12528,15 +12472,19 @@ type GoogleCloudApigeeV1TraceConfig struct {
 	// Endpoint: Required. Endpoint of the exporter.
 	Endpoint string `json:"endpoint,omitempty"`
 	// Exporter: Required. Exporter that is used to view the distributed trace
-	// captured using OpenCensus. An exporter sends traces to any backend that is
-	// capable of consuming them. Recorded spans can be exported by registered
-	// exporters.
+	// captured using the chosen trace protocol. An exporter sends traces to any
+	// backend that is capable of consuming them. Recorded spans can be exported by
+	// registered exporters.
 	//
 	// Possible values:
 	//   "EXPORTER_UNSPECIFIED" - Exporter unspecified
-	//   "JAEGER" - Jaeger exporter
-	//   "CLOUD_TRACE" - Cloudtrace exporter
-	//   "OPEN_TELEMETRY_COLLECTOR" - Open Telemetry Collector
+	//   "JAEGER" - Exports events to Jaeger. Compatible with OpenCensus protocol.
+	//   "CLOUD_TRACE" - Exports events to Cloud Trace. Compatible with OpenCensus
+	// protocol.
+	//   "OPEN_TELEMETRY_COLLECTOR" - OpenTelemetry Collector. Compatible with
+	// OpenTelemetry protocol.
+	//   "OPEN_TELEMETRY_CLOUD_TRACE" - Exports events to Cloud Trace. Compatible
+	// with OpenTelemetry protocol.
 	Exporter string `json:"exporter,omitempty"`
 	// SamplingConfig: Distributed trace configuration for all API proxies in an
 	// environment. You can also override the configuration for a specific API
@@ -26701,7 +26649,8 @@ func (c *OrganizationsDevelopersAppsListCall) Count(count int64) *OrganizationsD
 
 // Expand sets the optional parameter "expand": Specifies whether to expand the
 // results. Set to `true` to expand the results. This query parameter is not
-// valid if you use the `count` or `startKey` query parameters.
+// valid if you use the `count` or `startKey` query parameters. **Note**: If
+// set to `true`, the `apigee.developerapps.get` permission is required.
 func (c *OrganizationsDevelopersAppsListCall) Expand(expand bool) *OrganizationsDevelopersAppsListCall {
 	c.urlParams_.Set("expand", fmt.Sprint(expand))
 	return c
@@ -26709,7 +26658,8 @@ func (c *OrganizationsDevelopersAppsListCall) Expand(expand bool) *Organizations
 
 // ShallowExpand sets the optional parameter "shallowExpand": Specifies whether
 // to expand the results in shallow mode. Set to `true` to expand the results
-// in shallow mode.
+// in shallow mode. **Note**: If set to `true`, the `apigee.developerapps.get`
+// permission is required.
 func (c *OrganizationsDevelopersAppsListCall) ShallowExpand(shallowExpand bool) *OrganizationsDevelopersAppsListCall {
 	c.urlParams_.Set("shallowExpand", fmt.Sprint(shallowExpand))
 	return c

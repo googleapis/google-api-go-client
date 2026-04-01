@@ -462,7 +462,8 @@ type Backup struct {
 	// `projects/{project_id}/locations/{location}/volumes/{volume_id}/snapshots/{sn
 	// apshot_id}`
 	SourceSnapshot string `json:"sourceSnapshot,omitempty"`
-	// SourceVolume: Volume full name of this backup belongs to. Format:
+	// SourceVolume: Volume full name of this backup belongs to. Either
+	// source_volume or ontap_source should be provided. Format:
 	// `projects/{projects_id}/locations/{location}/volumes/{volume_id}`
 	SourceVolume string `json:"sourceVolume,omitempty"`
 	// State: Output only. The backup state.
@@ -664,6 +665,9 @@ type BackupVault struct {
 	BackupsCryptoKeyVersion string `json:"backupsCryptoKeyVersion,omitempty"`
 	// CreateTime: Output only. Create time of the backup vault.
 	CreateTime string `json:"createTime,omitempty"`
+	// CrossProjectVault: Optional. Indicates if the backup vault is a cross
+	// project vault.
+	CrossProjectVault bool `json:"crossProjectVault,omitempty"`
 	// Description: Description of the backup vault.
 	Description string `json:"description,omitempty"`
 	// DestinationBackupVault: Output only. Name of the Backup vault created in
@@ -1554,9 +1558,9 @@ func (s KmsConfig) MarshalJSON() ([]byte, error) {
 }
 
 // LargeCapacityConfig: Configuration for a Large Capacity Volume. A Large
-// Capacity Volume supports sizes ranging from 12 TiB to 20 PiB, it is composed
-// of multiple internal constituents, and must be created in a large capacity
-// pool.
+// Capacity Volume supports sizes ranging from 4.8 TiB to 20 PiB, it is
+// composed of multiple internal constituents, and must be created in a large
+// capacity pool.
 type LargeCapacityConfig struct {
 	// ConstituentCount: Optional. The number of internal constituents (e.g.,
 	// FlexVols) for this large volume. The minimum number of constituents is 2.
@@ -2450,9 +2454,11 @@ func (s RestoreBackupFilesRequest) MarshalJSON() ([]byte, error) {
 // RestoreParameters: The RestoreParameters if volume is created from a
 // snapshot or backup.
 type RestoreParameters struct {
-	// SourceBackup: Full name of the backup resource. Format:
+	// SourceBackup: Full name of the backup resource. Format for standard backup:
 	// projects/{project}/locations/{location}/backupVaults/{backup_vault_id}/backup
-	// s/{backup_id}
+	// s/{backup_id} Format for BackupDR backup:
+	// projects/{project}/locations/{location}/backupVaults/{backup_vault}/dataSourc
+	// es/{data_source}/backups/{backup}
 	SourceBackup string `json:"sourceBackup,omitempty"`
 	// SourceSnapshot: Full name of the snapshot resource. Format:
 	// projects/{project}/locations/{location}/volumes/{volume}/snapshots/{snapshot}
@@ -2812,11 +2818,9 @@ type StoragePool struct {
 	// `DEFAULT`.
 	//
 	// Possible values:
-	//   "MODE_UNSPECIFIED" - The `StoragePool` `Mode` is not specified.
-	//   "DEFAULT" - The `StoragePool` and its resources are managed by the GCNV
-	// APIs.
-	//   "ONTAP" - The `StoragePool` and its resources are managed by the GCNV
-	// ONTAP Mode APIs.
+	//   "MODE_UNSPECIFIED" - The `Mode` is not specified.
+	//   "DEFAULT" - The resource is managed by the GCNV APIs.
+	//   "ONTAP" - The resource is managed by the GCNV ONTAP Mode APIs.
 	Mode string `json:"mode,omitempty"`
 	// Name: Identifier. Name of the storage pool
 	Name string `json:"name,omitempty"`
@@ -2839,17 +2843,28 @@ type StoragePool struct {
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
-	// ScaleTier: Optional. The effective scale tier of the storage pool. If
-	// `scale_tier` is not specified during creation, this defaults to
-	// `SCALE_TIER_STANDARD`.
+	// ScaleTier: Optional. Deprecated: Use scale_type instead. The effective scale
+	// tier of the storage pool. If `scale_tier` is not specified during creation,
+	// this defaults to `SCALE_TIER_STANDARD`.
 	//
 	// Possible values:
-	//   "SCALE_TIER_UNSPECIFIED" - The default value. This value is unused.
-	//   "SCALE_TIER_STANDARD" - The standard capacity and performance tier.
-	// Suitable for general purpose workloads.
-	//   "SCALE_TIER_ENTERPRISE" - A higher capacity and performance tier. Suitable
-	// for more demanding workloads.
+	//   "SCALE_TIER_UNSPECIFIED" - Deprecated: Use ScaleType instead. The default
+	// value. This value is unused.
+	//   "SCALE_TIER_STANDARD" - Deprecated: Use ScaleType instead. The standard
+	// capacity and performance tier. Suitable for general purpose workloads.
+	//   "SCALE_TIER_ENTERPRISE" - Deprecated: Use ScaleType instead. A higher
+	// capacity and performance tier. Suitable for more demanding workloads.
 	ScaleTier string `json:"scaleTier,omitempty"`
+	// ScaleType: Optional. The scale type of the storage pool. Defaults to
+	// `SCALE_TYPE_DEFAULT` if not specified.
+	//
+	// Possible values:
+	//   "SCALE_TYPE_UNSPECIFIED" - Unspecified scale type.
+	//   "SCALE_TYPE_DEFAULT" - Represents standard capacity and performance
+	// scale-type. Suitable for general purpose workloads.
+	//   "SCALE_TYPE_SCALEOUT" - Represents higher capacity and performance
+	// scale-type. Suitable for more demanding workloads.
+	ScaleType string `json:"scaleType,omitempty"`
 	// ServiceLevel: Required. Service level of the storage pool
 	//
 	// Possible values:
@@ -2881,16 +2896,13 @@ type StoragePool struct {
 	TotalThroughputMibps int64 `json:"totalThroughputMibps,omitempty,string"`
 	// Type: Optional. Type of the storage pool. This field is used to control
 	// whether the pool supports `FILE` based volumes only or `UNIFIED` (both
-	// `FILE` and `BLOCK`) volumes or `UNIFIED_LARGE_CAPACITY` (both `FILE` and
-	// `BLOCK`) volumes with large capacity. If not specified during creation, it
-	// defaults to `FILE`.
+	// `FILE` and `BLOCK`) volumes. If not specified during creation, it defaults
+	// to `FILE`.
 	//
 	// Possible values:
 	//   "STORAGE_POOL_TYPE_UNSPECIFIED" - Storage pool type is not specified.
 	//   "FILE" - Storage pool type is file.
 	//   "UNIFIED" - Storage pool type is unified.
-	//   "UNIFIED_LARGE_CAPACITY" - Deprecated: UNIFIED_LARGE_CAPACITY was
-	// previously tag 3.
 	Type string `json:"type,omitempty"`
 	// VolumeCapacityGib: Output only. Allocated size of all volumes in GIB in the
 	// storage pool
@@ -3488,10 +3500,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

@@ -389,6 +389,25 @@ func (s AccountWarning) MarshalJSON() ([]byte, error) {
 
 // ActionInfo: Metadata related to the action.
 type ActionInfo struct {
+	// EvidenceLockerFilePath: Google Cloud Storage location of the content that
+	// violated the rule. This field has format: "/"
+	EvidenceLockerFilePath string `json:"evidenceLockerFilePath,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EvidenceLockerFilePath") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EvidenceLockerFilePath") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ActionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ActionInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivityRule: Alerts from Google Workspace Security Center rules service
@@ -1856,6 +1875,7 @@ type RuleViolationInfo struct {
 	// Possible values:
 	//   "DATA_SOURCE_UNSPECIFIED" - Data source is unspecified.
 	//   "DRIVE" - Drive data source.
+	//   "GMAIL" - Gmail data source.
 	//   "CHROME" - Chrome data source.
 	//   "CHAT" - Chat data source.
 	DataSource string `json:"dataSource,omitempty"`
@@ -1889,8 +1909,14 @@ type RuleViolationInfo struct {
 	// file externally.
 	//   "DRIVE_RESTRICT_DOWNLOAD_PRINT_COPY" - Disable download, print, and copy
 	// for commenters and viewers in drive.
+	//   "DRIVE_RESTRICT_DOWNLOAD_PRINT_COPY_FOR_ALL" - Disable download, print,
+	// and copy for all collaborators in drive.
 	//   "DRIVE_APPLY_DRIVE_LABELS" - Apply customer specified Drive labels to the
 	// file.
+	//   "GMAIL_QUARANTINE_MESSAGE" - Quarantine message.
+	//   "GMAIL_BLOCK_MESSAGE" - Block message.
+	//   "GMAIL_WARN_USERS" - Warn users.
+	//   "GMAIL_APPLY_CLASSIFICATION_LABELS" - Apply classification labels.
 	//   "CHROME_BLOCK_FILE_DOWNLOAD" - Chrome actions. Block file download.
 	//   "CHROME_WARN_FILE_DOWNLOAD" - Warn user about downloaded file.
 	//   "CHROME_BLOCK_FILE_UPLOAD" - Block file upload.
@@ -1899,10 +1925,14 @@ type RuleViolationInfo struct {
 	//   "CHROME_WARN_WEB_CONTENT_UPLOAD" - Warn user about uploaded web content.
 	//   "CHROME_BLOCK_PAGE_PRINT" - Block page print.
 	//   "CHROME_WARN_PAGE_PRINT" - Warn user about printed page.
+	//   "CHROME_BLOCK_FILE_TRANSFER" - Block ChromeOS file transfer.
+	//   "CHROME_WARN_FILE_TRANSFER" - Warn user about ChromeOS file transfer.
 	//   "CHROME_BLOCK_URL_VISITED" - Block Chrome URL visit.
 	//   "CHROME_WARN_URL_VISITED" - Warn user about Chrome URL visited.
 	//   "CHROME_BLOCK_SCREENSHOT" - Block screenshot alert.
 	//   "CHROME_STORE_CONTENT" - Store the content that violated the rule.
+	//   "CHROME_WATERMARK" - Send watermark alert
+	//   "CHROME_FORCE_SAVE_TO_CLOUD" - Force save to cloud storage.
 	//   "DELETE_WEBPROTECT_EVIDENCE" - Delete web protect evidence file
 	//   "CHAT_BLOCK_CONTENT" - Chat actions. Block Chat content to be sent out.
 	//   "CHAT_WARN_USER" - Warn end user about Chat content.
@@ -1915,6 +1945,7 @@ type RuleViolationInfo struct {
 	// Possible values:
 	//   "TRIGGER_UNSPECIFIED" - Trigger is unspecified.
 	//   "DRIVE_SHARE" - A Drive file is shared.
+	//   "MAIL_BEING_SENT" - An email message is sent.
 	//   "CHROME_FILE_DOWNLOAD" - A file being downloaded in a Chrome browser.
 	//   "CHROME_FILE_UPLOAD" - A file being uploaded from a Chrome browser.
 	//   "CHROME_WEB_CONTENT_UPLOAD" - Web content being uploaded from a Chrome
@@ -1923,6 +1954,8 @@ type RuleViolationInfo struct {
 	//   "CHAT_ATTACHMENT_UPLOADED" - A Chat attachment is uploaded.
 	//   "CHROME_PAGE_PRINT" - A page is being printed by Chrome.
 	//   "CHROME_URL_VISITED" - A URL is visited within Chrome.
+	//   "CHROMEOS_FILE_TRANSFER" - A file being transferred (copy or moved)
+	// between different file systems on ChromeOS.
 	Trigger string `json:"trigger,omitempty"`
 	// TriggeredActionInfo: Metadata related to the triggered actions.
 	TriggeredActionInfo []*ActionInfo `json:"triggeredActionInfo,omitempty"`
@@ -1936,8 +1969,14 @@ type RuleViolationInfo struct {
 	// file externally.
 	//   "DRIVE_RESTRICT_DOWNLOAD_PRINT_COPY" - Disable download, print, and copy
 	// for commenters and viewers in drive.
+	//   "DRIVE_RESTRICT_DOWNLOAD_PRINT_COPY_FOR_ALL" - Disable download, print,
+	// and copy for all collaborators in drive.
 	//   "DRIVE_APPLY_DRIVE_LABELS" - Apply customer specified Drive labels to the
 	// file.
+	//   "GMAIL_QUARANTINE_MESSAGE" - Quarantine message.
+	//   "GMAIL_BLOCK_MESSAGE" - Block message.
+	//   "GMAIL_WARN_USERS" - Warn users.
+	//   "GMAIL_APPLY_CLASSIFICATION_LABELS" - Apply classification labels.
 	//   "CHROME_BLOCK_FILE_DOWNLOAD" - Chrome actions. Block file download.
 	//   "CHROME_WARN_FILE_DOWNLOAD" - Warn user about downloaded file.
 	//   "CHROME_BLOCK_FILE_UPLOAD" - Block file upload.
@@ -1946,10 +1985,14 @@ type RuleViolationInfo struct {
 	//   "CHROME_WARN_WEB_CONTENT_UPLOAD" - Warn user about uploaded web content.
 	//   "CHROME_BLOCK_PAGE_PRINT" - Block page print.
 	//   "CHROME_WARN_PAGE_PRINT" - Warn user about printed page.
+	//   "CHROME_BLOCK_FILE_TRANSFER" - Block ChromeOS file transfer.
+	//   "CHROME_WARN_FILE_TRANSFER" - Warn user about ChromeOS file transfer.
 	//   "CHROME_BLOCK_URL_VISITED" - Block Chrome URL visit.
 	//   "CHROME_WARN_URL_VISITED" - Warn user about Chrome URL visited.
 	//   "CHROME_BLOCK_SCREENSHOT" - Block screenshot alert.
 	//   "CHROME_STORE_CONTENT" - Store the content that violated the rule.
+	//   "CHROME_WATERMARK" - Send watermark alert
+	//   "CHROME_FORCE_SAVE_TO_CLOUD" - Force save to cloud storage.
 	//   "DELETE_WEBPROTECT_EVIDENCE" - Delete web protect evidence file
 	//   "CHAT_BLOCK_CONTENT" - Chat actions. Block Chat content to be sent out.
 	//   "CHAT_WARN_USER" - Warn end user about Chat content.

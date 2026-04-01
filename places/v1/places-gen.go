@@ -420,6 +420,9 @@ func (s GoogleMapsPlacesV1AuthorAttribution) MarshalJSON() ([]byte, error) {
 // GoogleMapsPlacesV1AutocompletePlacesRequest: Request proto for
 // AutocompletePlaces.
 type GoogleMapsPlacesV1AutocompletePlacesRequest struct {
+	// IncludeFutureOpeningBusinesses: Optional. If true, include businesses that
+	// are not yet open but will open in the future.
+	IncludeFutureOpeningBusinesses bool `json:"includeFutureOpeningBusinesses,omitempty"`
 	// IncludePureServiceAreaBusinesses: Optional. Include pure service area
 	// businesses if the field is set to true. Pure service area business is a
 	// business that visits or delivers to customers directly but does not serve
@@ -498,17 +501,16 @@ type GoogleMapsPlacesV1AutocompletePlacesRequest struct {
 	// than one session will result in each request being billed individually.
 	SessionToken string `json:"sessionToken,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
-	// "IncludePureServiceAreaBusinesses") to unconditionally include in API
+	// "IncludeFutureOpeningBusinesses") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from
 	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g.
-	// "IncludePureServiceAreaBusinesses") to include in API requests with the JSON
-	// null value. By default, fields with empty values are omitted from API
-	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
-	// more details.
+	// NullFields is a list of field names (e.g. "IncludeFutureOpeningBusinesses")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
@@ -1324,6 +1326,7 @@ type GoogleMapsPlacesV1Place struct {
 	// now.
 	//   "CLOSED_TEMPORARILY" - The establishment is temporarily closed.
 	//   "CLOSED_PERMANENTLY" - The establishment is permanently closed.
+	//   "FUTURE_OPENING" - The establishment will open in the future.
 	BusinessStatus string `json:"businessStatus,omitempty"`
 	// ConsumerAlert: The consumer alert message for the place when we detect
 	// suspicious review activity on a business or a business violates our
@@ -1427,6 +1430,9 @@ type GoogleMapsPlacesV1Place struct {
 	NationalPhoneNumber string `json:"nationalPhoneNumber,omitempty"`
 	// NeighborhoodSummary: A summary of points of interest near the place.
 	NeighborhoodSummary *GoogleMapsPlacesV1PlaceNeighborhoodSummary `json:"neighborhoodSummary,omitempty"`
+	// OpeningDate: The date this place will open in the future. This field is only
+	// populated if the business status is FUTURE_OPENING.
+	OpeningDate *GoogleTypeDate `json:"openingDate,omitempty"`
 	// OutdoorSeating: Place provides outdoor seating.
 	OutdoorSeating bool `json:"outdoorSeating,omitempty"`
 	// ParkingOptions: Options of parking provided by the place.
@@ -2556,6 +2562,9 @@ type GoogleMapsPlacesV1SearchNearbyRequest struct {
 	// places provide "restaurant" related services but do not operate primarily as
 	// "restaurants".
 	ExcludedTypes []string `json:"excludedTypes,omitempty"`
+	// IncludeFutureOpeningBusinesses: Optional. If true, include businesses that
+	// are not yet open but will open in the future.
+	IncludeFutureOpeningBusinesses bool `json:"includeFutureOpeningBusinesses,omitempty"`
 	// IncludedPrimaryTypes: Included primary Place type (e.g. "restaurant" or
 	// "gas_station") from
 	// https://developers.google.com/maps/documentation/places/web-service/place-types.
@@ -2691,6 +2700,9 @@ type GoogleMapsPlacesV1SearchTextRequest struct {
 	// EvOptions: Optional. Set the searchable EV options of a place search
 	// request.
 	EvOptions *GoogleMapsPlacesV1SearchTextRequestEVOptions `json:"evOptions,omitempty"`
+	// IncludeFutureOpeningBusinesses: Optional. If true, include businesses that
+	// are not yet open but will open in the future.
+	IncludeFutureOpeningBusinesses bool `json:"includeFutureOpeningBusinesses,omitempty"`
 	// IncludePureServiceAreaBusinesses: Optional. Include pure service area
 	// businesses if the field is set to true. Pure service area business is a
 	// business that visits or delivers to customers directly but does not serve

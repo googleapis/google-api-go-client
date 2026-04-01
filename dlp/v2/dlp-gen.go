@@ -2482,6 +2482,8 @@ func (s GooglePrivacyDlpV2Container) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2ContentItem struct {
 	// ByteItem: Content data to inspect or redact. Replaces `type` and `data`.
 	ByteItem *GooglePrivacyDlpV2ByteContentItem `json:"byteItem,omitempty"`
+	// ContentMetadata: User provided metadata for the content.
+	ContentMetadata *GooglePrivacyDlpV2ContentMetadata `json:"contentMetadata,omitempty"`
 	// Table: Structured content for inspection. See
 	// https://cloud.google.com/sensitive-data-protection/docs/inspecting-text#inspecting_a_table
 	// to learn more.
@@ -2548,6 +2550,28 @@ type GooglePrivacyDlpV2ContentLocation struct {
 
 func (s GooglePrivacyDlpV2ContentLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ContentLocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2ContentMetadata: Metadata on content to be scanned.
+type GooglePrivacyDlpV2ContentMetadata struct {
+	// Properties: User provided key-value pairs of content metadata.
+	Properties []*GooglePrivacyDlpV2KeyValueMetadataProperty `json:"properties,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Properties") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Properties") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2ContentMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2ContentMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7687,6 +7711,31 @@ func (s GooglePrivacyDlpV2KeyValueMetadataLabel) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2KeyValueMetadataProperty: A key-value pair in the
+// Metadata.
+type GooglePrivacyDlpV2KeyValueMetadataProperty struct {
+	// Key: The key of the property.
+	Key string `json:"key,omitempty"`
+	// Value: The value of the property.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2KeyValueMetadataProperty) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2KeyValueMetadataProperty
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2KindExpression: A representation of a Datastore kind.
 type GooglePrivacyDlpV2KindExpression struct {
 	// Name: The name of the kind.
@@ -8422,6 +8471,7 @@ type GooglePrivacyDlpV2MetadataLocation struct {
 	//   "METADATATYPE_UNSPECIFIED" - Unused
 	//   "STORAGE_METADATA" - General file metadata provided by Cloud Storage.
 	//   "CONTENT_METADATA" - Metadata extracted from the files.
+	//   "CLIENT_PROVIDED_METADATA" - Metadata provided by the client.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "KeyValueMetadataLabel") to
 	// unconditionally include in API requests. By default, fields with empty or

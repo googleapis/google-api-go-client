@@ -3362,10 +3362,7 @@ type AccountTypesAccountsPartnerLinksCreateCall struct {
 // authorizes access for the request: * `login-account`: (Optional) The
 // resource name of the account where the Google Account of the credentials is
 // a user. If not set, defaults to the account of the request. Format:
-// `accountTypes/{loginAccountType}/accounts/{loginAccountId}` *
-// `linked-account`: (Optional) The resource name of the account with an
-// established product link to the `login-account`. Format:
-// `accountTypes/{linkedAccountType}/accounts/{linkedAccountId}`
+// `accountTypes/{loginAccountType}/accounts/{loginAccountId}`
 //
 //   - parent: The parent, which owns this collection of partner links. Format:
 //     accountTypes/{account_type}/accounts/{account}.
@@ -3473,10 +3470,7 @@ type AccountTypesAccountsPartnerLinksDeleteCall struct {
 // authorizes access for the request: * `login-account`: (Optional) The
 // resource name of the account where the Google Account of the credentials is
 // a user. If not set, defaults to the account of the request. Format:
-// `accountTypes/{loginAccountType}/accounts/{loginAccountId}` *
-// `linked-account`: (Optional) The resource name of the account with an
-// established product link to the `login-account`. Format:
-// `accountTypes/{linkedAccountType}/accounts/{linkedAccountId}`
+// `accountTypes/{loginAccountType}/accounts/{loginAccountId}`
 //
 //   - name: The resource name of the partner link to delete. Format:
 //     accountTypes/{account_type}/accounts/{account}/partnerLinks/{partner_link}.
@@ -3580,10 +3574,7 @@ type AccountTypesAccountsPartnerLinksSearchCall struct {
 // to define how the API authorizes access for the request: * `login-account`:
 // (Optional) The resource name of the account where the Google Account of the
 // credentials is a user. If not set, defaults to the account of the request.
-// Format: `accountTypes/{loginAccountType}/accounts/{loginAccountId}` *
-// `linked-account`: (Optional) The resource name of the account with an
-// established product link to the `login-account`. Format:
-// `accountTypes/{linkedAccountType}/accounts/{linkedAccountId}`
+// Format: `accountTypes/{loginAccountType}/accounts/{loginAccountId}`
 //
 //   - parent: Account to search for partner links. If no `filter` is specified,
 //     all partner links where this account is either the `owning_account` or

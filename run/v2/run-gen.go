@@ -841,6 +841,7 @@ type GoogleCloudRunV2EmptyDirVolumeSource struct {
 	//   "MEDIUM_UNSPECIFIED" - When not specified, falls back to the default
 	// implementation which is currently in memory (this may change over time).
 	//   "MEMORY" - Explicitly set the EmptyDir to be in memory. Uses tmpfs.
+	//   "DISK" - Explicitly sets the EmptyDir to be a disk.
 	Medium string `json:"medium,omitempty"`
 	// SizeLimit: Limit on the storage usable by this EmptyDir volume. The size
 	// limit is also applicable for memory medium. The maximum usage on memory
@@ -2514,11 +2515,12 @@ type GoogleCloudRunV2RevisionScaling struct {
 	// ConcurrencyUtilization: Optional. Determines a threshold for concurrency
 	// utilization before scaling begins. Accepted values are between `0.1` and
 	// `0.95` (inclusive) or `0.0` to disable concurrency utilization as threshold
-	// for scaling.
+	// for scaling. CPU and concurrency scaling cannot both be disabled.
 	ConcurrencyUtilization float64 `json:"concurrencyUtilization,omitempty"`
 	// CpuUtilization: Optional. Determines a threshold for CPU utilization before
 	// scaling begins. Accepted values are between `0.1` and `0.95` (inclusive) or
-	// `0.0` to disable CPU utilization as threshold for scaling.
+	// `0.0` to disable CPU utilization as threshold for scaling. CPU and
+	// concurrency scaling cannot both be disabled.
 	CpuUtilization float64 `json:"cpuUtilization,omitempty"`
 	// MaxInstanceCount: Optional. Maximum number of serving instances that this
 	// resource should have. When unspecified, the field is set to the server
@@ -3860,7 +3862,7 @@ type GoogleCloudRunV2WorkerPool struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Creator: Output only. Email address of the authenticated creator.
 	Creator string `json:"creator,omitempty"`
-	// CustomAudiences: Not supported, and ignored by Cloud Run.
+	// CustomAudiences: Deprecated: Not supported, and ignored by Cloud Run.
 	CustomAudiences []string `json:"customAudiences,omitempty"`
 	// DeleteTime: Output only. The deletion time. It is only populated as a
 	// response to a Delete request.

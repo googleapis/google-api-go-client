@@ -267,10 +267,22 @@ type ProjectsLocationsOperationsService struct {
 
 func NewProjectsLocationsStoragePoolsService(s *Service) *ProjectsLocationsStoragePoolsService {
 	rs := &ProjectsLocationsStoragePoolsService{s: s}
+	rs.Ontap = NewProjectsLocationsStoragePoolsOntapService(s)
 	return rs
 }
 
 type ProjectsLocationsStoragePoolsService struct {
+	s *Service
+
+	Ontap *ProjectsLocationsStoragePoolsOntapService
+}
+
+func NewProjectsLocationsStoragePoolsOntapService(s *Service) *ProjectsLocationsStoragePoolsOntapService {
+	rs := &ProjectsLocationsStoragePoolsOntapService{s: s}
+	return rs
+}
+
+type ProjectsLocationsStoragePoolsOntapService struct {
 	s *Service
 }
 
@@ -450,7 +462,8 @@ type Backup struct {
 	// `projects/{project_id}/locations/{location}/volumes/{volume_id}/snapshots/{sn
 	// apshot_id}`
 	SourceSnapshot string `json:"sourceSnapshot,omitempty"`
-	// SourceVolume: Volume full name of this backup belongs to. Format:
+	// SourceVolume: Volume full name of this backup belongs to. Either
+	// source_volume or ontap_source should be provided. Format:
 	// `projects/{projects_id}/locations/{location}/volumes/{volume_id}`
 	SourceVolume string `json:"sourceVolume,omitempty"`
 	// State: Output only. The backup state.
@@ -1081,6 +1094,154 @@ func (s EstablishVolumePeeringRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ExecuteOntapDeleteResponse: Response message for `ExecuteOntapDelete` API.
+type ExecuteOntapDeleteResponse struct {
+	// Body: The raw `JSON` body of the response.
+	Body googleapi.RawMessage `json:"body,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExecuteOntapDeleteResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecuteOntapDeleteResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExecuteOntapGetResponse: Response message for `ExecuteOntapGet` API.
+type ExecuteOntapGetResponse struct {
+	// Body: The raw `JSON` body of the response.
+	Body googleapi.RawMessage `json:"body,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExecuteOntapGetResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecuteOntapGetResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExecuteOntapPatchRequest: Request message for `ExecuteOntapPatch` API.
+type ExecuteOntapPatchRequest struct {
+	// Body: Required. The raw `JSON` body of the request. The body should be in
+	// the format of the ONTAP resource. For example: ``` { "body": { "field1":
+	// "value1", "field2": "value2", } } ```
+	Body googleapi.RawMessage `json:"body,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExecuteOntapPatchRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecuteOntapPatchRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExecuteOntapPatchResponse: Response message for `ExecuteOntapPatch` API.
+type ExecuteOntapPatchResponse struct {
+	// Body: The raw `JSON` body of the response.
+	Body googleapi.RawMessage `json:"body,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExecuteOntapPatchResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecuteOntapPatchResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExecuteOntapPostRequest: Request message for `ExecuteOntapPost` API.
+type ExecuteOntapPostRequest struct {
+	// Body: Required. The raw `JSON` body of the request. The body should be in
+	// the format of the ONTAP resource. For example: ``` { "body": { "field1":
+	// "value1", "field2": "value2", } } ```
+	Body googleapi.RawMessage `json:"body,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExecuteOntapPostRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecuteOntapPostRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExecuteOntapPostResponse: Response message for `ExecuteOntapPost` API.
+type ExecuteOntapPostResponse struct {
+	// Body: The raw `JSON` body of the response.
+	Body googleapi.RawMessage `json:"body,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExecuteOntapPostResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecuteOntapPostResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ExportPolicy: Defines the export policy for the volume.
 type ExportPolicy struct {
 	// Rules: Required. List of export policy rules
@@ -1390,6 +1551,32 @@ type KmsConfig struct {
 
 func (s KmsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod KmsConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LargeCapacityConfig: Configuration for a Large Capacity Volume. A Large
+// Capacity Volume supports sizes ranging from 4.8 TiB to 20 PiB, it is
+// composed of multiple internal constituents, and must be created in a large
+// capacity pool.
+type LargeCapacityConfig struct {
+	// ConstituentCount: Optional. The number of internal constituents (e.g.,
+	// FlexVols) for this large volume. The minimum number of constituents is 2.
+	ConstituentCount int64 `json:"constituentCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConstituentCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConstituentCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LargeCapacityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod LargeCapacityConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2264,9 +2451,11 @@ func (s RestoreBackupFilesRequest) MarshalJSON() ([]byte, error) {
 // RestoreParameters: The RestoreParameters if volume is created from a
 // snapshot or backup.
 type RestoreParameters struct {
-	// SourceBackup: Full name of the backup resource. Format:
+	// SourceBackup: Full name of the backup resource. Format for standard backup:
 	// projects/{project}/locations/{location}/backupVaults/{backup_vault_id}/backup
-	// s/{backup_id}
+	// s/{backup_id} Format for BackupDR backup:
+	// projects/{project}/locations/{location}/backupVaults/{backup_vault}/dataSourc
+	// es/{data_source}/backups/{backup}
 	SourceBackup string `json:"sourceBackup,omitempty"`
 	// SourceSnapshot: Full name of the snapshot resource. Format:
 	// projects/{project}/locations/{location}/volumes/{volume}/snapshots/{snapshot}
@@ -2620,6 +2809,16 @@ type StoragePool struct {
 	// LdapEnabled: Optional. Flag indicating if the pool is NFS LDAP enabled or
 	// not.
 	LdapEnabled bool `json:"ldapEnabled,omitempty"`
+	// Mode: Optional. Mode of the storage pool. This field is used to control
+	// whether the user can perform the ONTAP operations on the storage pool using
+	// the GCNV ONTAP Mode APIs. If not specified during creation, it defaults to
+	// `DEFAULT`.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - The `Mode` is not specified.
+	//   "DEFAULT" - The resource is managed by the GCNV APIs.
+	//   "ONTAP" - The resource is managed by the GCNV ONTAP Mode APIs.
+	Mode string `json:"mode,omitempty"`
 	// Name: Identifier. Name of the storage pool
 	Name string `json:"name,omitempty"`
 	// Network: Required. VPC Network name. Format:
@@ -2641,6 +2840,16 @@ type StoragePool struct {
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+	// ScaleType: Optional. The scale type of the storage pool. Defaults to
+	// `SCALE_TYPE_DEFAULT` if not specified.
+	//
+	// Possible values:
+	//   "SCALE_TYPE_UNSPECIFIED" - Unspecified scale type.
+	//   "SCALE_TYPE_DEFAULT" - Represents standard capacity and performance
+	// scale-type. Suitable for general purpose workloads.
+	//   "SCALE_TYPE_SCALEOUT" - Represents higher capacity and performance
+	// scale-type. Suitable for more demanding workloads.
+	ScaleType string `json:"scaleType,omitempty"`
 	// ServiceLevel: Required. Service level of the storage pool
 	//
 	// Possible values:
@@ -2672,16 +2881,13 @@ type StoragePool struct {
 	TotalThroughputMibps int64 `json:"totalThroughputMibps,omitempty,string"`
 	// Type: Optional. Type of the storage pool. This field is used to control
 	// whether the pool supports `FILE` based volumes only or `UNIFIED` (both
-	// `FILE` and `BLOCK`) volumes or `UNIFIED_LARGE_CAPACITY` (both `FILE` and
-	// `BLOCK`) volumes with large capacity. If not specified during creation, it
-	// defaults to `FILE`.
+	// `FILE` and `BLOCK`) volumes. If not specified during creation, it defaults
+	// to `FILE`.
 	//
 	// Possible values:
 	//   "STORAGE_POOL_TYPE_UNSPECIFIED" - Storage pool type is not specified.
 	//   "FILE" - Storage pool type is file.
 	//   "UNIFIED" - Storage pool type is unified.
-	//   "UNIFIED_LARGE_CAPACITY" - Deprecated: UNIFIED_LARGE_CAPACITY was
-	// previously tag 3.
 	Type string `json:"type,omitempty"`
 	// VolumeCapacityGib: Output only. Allocated size of all volumes in GIB in the
 	// storage pool
@@ -2959,6 +3165,8 @@ type Volume struct {
 	// LargeCapacity: Optional. Flag indicating if the volume will be a large
 	// capacity volume or a regular volume.
 	LargeCapacity bool `json:"largeCapacity,omitempty"`
+	// LargeCapacityConfig: Optional. Large capacity config for the volume.
+	LargeCapacityConfig *LargeCapacityConfig `json:"largeCapacityConfig,omitempty"`
 	// LdapEnabled: Output only. Flag indicating if the volume is NFS LDAP enabled
 	// or not.
 	LdapEnabled bool `json:"ldapEnabled,omitempty"`
@@ -3277,10 +3485,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
@@ -8516,6 +8730,442 @@ func (c *ProjectsLocationsStoragePoolsValidateDirectoryServiceCall) Do(opts ...g
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "netapp.projects.locations.storagePools.validateDirectoryService", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsStoragePoolsOntapExecuteOntapDeleteCall struct {
+	s          *Service
+	ontapPath  string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// ExecuteOntapDelete: `ExecuteOntapDelete` dispatches the ONTAP `DELETE`
+// request to the `StoragePool` cluster.
+//
+//   - ontapPath: The resource path of the ONTAP resource. Format:
+//     `projects/{project_number}/locations/{location_id}/storagePools/{storage_po
+//     ol_id}/ontap/{ontap_resource_path}`. For example:
+//     `projects/123456789/locations/us-central1/storagePools/my-storage-pool/onta
+//     p/api/storage/volumes`.
+func (r *ProjectsLocationsStoragePoolsOntapService) ExecuteOntapDelete(ontapPath string) *ProjectsLocationsStoragePoolsOntapExecuteOntapDeleteCall {
+	c := &ProjectsLocationsStoragePoolsOntapExecuteOntapDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.ontapPath = ontapPath
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsStoragePoolsOntapExecuteOntapDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsStoragePoolsOntapExecuteOntapDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsStoragePoolsOntapExecuteOntapDeleteCall) Context(ctx context.Context) *ProjectsLocationsStoragePoolsOntapExecuteOntapDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsStoragePoolsOntapExecuteOntapDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStoragePoolsOntapExecuteOntapDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+ontapPath}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"ontapPath": c.ontapPath,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "netapp.projects.locations.storagePools.ontap.executeOntapDelete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "netapp.projects.locations.storagePools.ontap.executeOntapDelete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ExecuteOntapDeleteResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsStoragePoolsOntapExecuteOntapDeleteCall) Do(opts ...googleapi.CallOption) (*ExecuteOntapDeleteResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ExecuteOntapDeleteResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "netapp.projects.locations.storagePools.ontap.executeOntapDelete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsStoragePoolsOntapExecuteOntapGetCall struct {
+	s            *Service
+	ontapPath    string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ExecuteOntapGet: `ExecuteOntapGet` dispatches the ONTAP `GET` request to the
+// `StoragePool` cluster.
+//
+//   - ontapPath: The resource path of the ONTAP resource. Format:
+//     `projects/{project_number}/locations/{location_id}/storagePools/{storage_po
+//     ol_id}/ontap/{ontap_resource_path}`. For example:
+//     `projects/123456789/locations/us-central1/storagePools/my-storage-pool/onta
+//     p/api/storage/volumes`.
+func (r *ProjectsLocationsStoragePoolsOntapService) ExecuteOntapGet(ontapPath string) *ProjectsLocationsStoragePoolsOntapExecuteOntapGetCall {
+	c := &ProjectsLocationsStoragePoolsOntapExecuteOntapGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.ontapPath = ontapPath
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsStoragePoolsOntapExecuteOntapGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsStoragePoolsOntapExecuteOntapGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsStoragePoolsOntapExecuteOntapGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsStoragePoolsOntapExecuteOntapGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsStoragePoolsOntapExecuteOntapGetCall) Context(ctx context.Context) *ProjectsLocationsStoragePoolsOntapExecuteOntapGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsStoragePoolsOntapExecuteOntapGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStoragePoolsOntapExecuteOntapGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+ontapPath}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"ontapPath": c.ontapPath,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "netapp.projects.locations.storagePools.ontap.executeOntapGet", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "netapp.projects.locations.storagePools.ontap.executeOntapGet" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ExecuteOntapGetResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsStoragePoolsOntapExecuteOntapGetCall) Do(opts ...googleapi.CallOption) (*ExecuteOntapGetResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ExecuteOntapGetResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "netapp.projects.locations.storagePools.ontap.executeOntapGet", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsStoragePoolsOntapExecuteOntapPatchCall struct {
+	s                        *Service
+	ontapPath                string
+	executeontappatchrequest *ExecuteOntapPatchRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// ExecuteOntapPatch: `ExecuteOntapPatch` dispatches the ONTAP `PATCH` request
+// to the `StoragePool` cluster.
+//
+//   - ontapPath: The resource path of the ONTAP resource. Format:
+//     `projects/{project_number}/locations/{location_id}/storagePools/{storage_po
+//     ol_id}/ontap/{ontap_resource_path}`. For example:
+//     `projects/123456789/locations/us-central1/storagePools/my-storage-pool/onta
+//     p/api/storage/volumes`.
+func (r *ProjectsLocationsStoragePoolsOntapService) ExecuteOntapPatch(ontapPath string, executeontappatchrequest *ExecuteOntapPatchRequest) *ProjectsLocationsStoragePoolsOntapExecuteOntapPatchCall {
+	c := &ProjectsLocationsStoragePoolsOntapExecuteOntapPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.ontapPath = ontapPath
+	c.executeontappatchrequest = executeontappatchrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsStoragePoolsOntapExecuteOntapPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsStoragePoolsOntapExecuteOntapPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsStoragePoolsOntapExecuteOntapPatchCall) Context(ctx context.Context) *ProjectsLocationsStoragePoolsOntapExecuteOntapPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsStoragePoolsOntapExecuteOntapPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStoragePoolsOntapExecuteOntapPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.executeontappatchrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+ontapPath}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"ontapPath": c.ontapPath,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "netapp.projects.locations.storagePools.ontap.executeOntapPatch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "netapp.projects.locations.storagePools.ontap.executeOntapPatch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ExecuteOntapPatchResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsStoragePoolsOntapExecuteOntapPatchCall) Do(opts ...googleapi.CallOption) (*ExecuteOntapPatchResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ExecuteOntapPatchResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "netapp.projects.locations.storagePools.ontap.executeOntapPatch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsStoragePoolsOntapExecuteOntapPostCall struct {
+	s                       *Service
+	ontapPath               string
+	executeontappostrequest *ExecuteOntapPostRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// ExecuteOntapPost: `ExecuteOntapPost` dispatches the ONTAP `POST` request to
+// the `StoragePool` cluster.
+//
+//   - ontapPath: The resource path of the ONTAP resource. Format:
+//     `projects/{project_number}/locations/{location_id}/storagePools/{storage_po
+//     ol_id}/ontap/{ontap_resource_path}`. For example:
+//     `projects/123456789/locations/us-central1/storagePools/my-storage-pool/onta
+//     p/api/storage/volumes`.
+func (r *ProjectsLocationsStoragePoolsOntapService) ExecuteOntapPost(ontapPath string, executeontappostrequest *ExecuteOntapPostRequest) *ProjectsLocationsStoragePoolsOntapExecuteOntapPostCall {
+	c := &ProjectsLocationsStoragePoolsOntapExecuteOntapPostCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.ontapPath = ontapPath
+	c.executeontappostrequest = executeontappostrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsStoragePoolsOntapExecuteOntapPostCall) Fields(s ...googleapi.Field) *ProjectsLocationsStoragePoolsOntapExecuteOntapPostCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsStoragePoolsOntapExecuteOntapPostCall) Context(ctx context.Context) *ProjectsLocationsStoragePoolsOntapExecuteOntapPostCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsStoragePoolsOntapExecuteOntapPostCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStoragePoolsOntapExecuteOntapPostCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.executeontappostrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+ontapPath}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"ontapPath": c.ontapPath,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "netapp.projects.locations.storagePools.ontap.executeOntapPost", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "netapp.projects.locations.storagePools.ontap.executeOntapPost" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ExecuteOntapPostResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsStoragePoolsOntapExecuteOntapPostCall) Do(opts ...googleapi.CallOption) (*ExecuteOntapPostResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ExecuteOntapPostResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "netapp.projects.locations.storagePools.ontap.executeOntapPost", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

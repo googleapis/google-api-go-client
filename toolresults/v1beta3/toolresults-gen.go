@@ -1047,11 +1047,11 @@ func (s FatalException) MarshalJSON() ([]byte, error) {
 // FileReference: A reference to a file.
 type FileReference struct {
 	// FileUri: The URI of a file stored in Google Cloud Storage. For example:
-	// http://storage.googleapis.com/mybucket/path/to/test.xml or in gsutil format:
-	// gs://mybucket/path/to/test.xml with version-specific info,
-	// gs://mybucket/path/to/test.xml#1360383693690000 An INVALID_ARGUMENT error
-	// will be returned if the URI format is not supported. - In response: always
-	// set - In create/update request: always set
+	// `http://storage.googleapis.com/mybucket/path/to/test.xml` or in Cloud
+	// Storage URI format: `gs://mybucket/path/to/test.xml` with version-specific
+	// info, `gs://mybucket/path/to/test.xml#1360383693690000` An INVALID_ARGUMENT
+	// error will be returned if the URI format is not supported. - In response:
+	// always set - In create/update request: always set
 	FileUri string `json:"fileUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FileUri") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2589,6 +2589,9 @@ type SkippedDetail struct {
 	// IncompatibleDevice: If the requested OS version doesn't run on the specific
 	// device model.
 	IncompatibleDevice bool `json:"incompatibleDevice,omitempty"`
+	// PendingTimeout: Indicates that the test could not be scheduled in the
+	// requested time because no suitable device was available.
+	PendingTimeout bool `json:"pendingTimeout,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IncompatibleAppVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

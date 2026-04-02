@@ -6166,6 +6166,34 @@ func (s QuerySource) MarshalJSON() ([]byte, error) {
 // QuerySuggestion: This field does not contain anything as of now and is just
 // used as an indicator that the suggest result was a phrase completion.
 type QuerySuggestion struct {
+	// LastQueryTime: Last query time of the suggestion for query history
+	// suggestions.
+	LastQueryTime string `json:"lastQueryTime,omitempty"`
+	// SourceCorpus: Source corpus of the suggestion.
+	//
+	// Possible values:
+	//   "SOURCE_CORPUS_UNSPECIFIED" - Source corpus is unspecified.
+	//   "GMAIL" - Source corpus is Gmail.
+	//   "DRIVE" - Source corpus is Drive.
+	//   "CHAT" - Source corpus is Chat.
+	//   "CALENDAR" - Source corpus is Calendar.
+	SourceCorpus string `json:"sourceCorpus,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LastQueryTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LastQueryTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s QuerySuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod QuerySuggestion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RemoveActivityRequest: Remove Logged Activity Request.
@@ -6844,7 +6872,7 @@ func (s *SearchQualityMetadata) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// SearchRequest: The search API request. NEXT ID: 24
+// SearchRequest: The search API request. NEXT ID: 25
 type SearchRequest struct {
 	// ContextAttributes: Context attributes for the request which will be used to
 	// adjust ranking of search results. The maximum number of elements is 10.

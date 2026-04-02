@@ -791,6 +791,8 @@ func (s ExecuteToolRequest) MarshalJSON() ([]byte, error) {
 
 // ExecuteToolResponse: Response message for ConnectorAgentService.ExecuteTool
 type ExecuteToolResponse struct {
+	// Meta: Metadata for the tool execution result.
+	Meta googleapi.RawMessage `json:"_meta,omitempty"`
 	// Metadata: Metadata like service latency, etc.
 	Metadata map[string]googleapi.RawMessage `json:"metadata,omitempty"`
 	// Result: Output from the tool execution.
@@ -798,15 +800,15 @@ type ExecuteToolResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Metadata") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Meta") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Metadata") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Meta") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1002,6 +1004,8 @@ func (s GetResourcePostRequest) MarshalJSON() ([]byte, error) {
 }
 
 type GetResourceResponse struct {
+	// Meta: Metadata for the resource.
+	Meta googleapi.RawMessage `json:"_meta,omitempty"`
 	// Data: The content of the resource.
 	Data string `json:"data,omitempty"`
 	// Metadata: Metadata like service latency, etc.
@@ -1011,13 +1015,13 @@ type GetResourceResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Meta") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Data") to include in API requests
+	// NullFields is a list of field names (e.g. "Meta") to include in API requests
 	// with the JSON null value. By default, fields with empty values are omitted
 	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1256,6 +1260,10 @@ type JsonSchema struct {
 	// Enum: Possible values for an enumeration. This works in conjunction with
 	// `type` to represent types with a fixed set of legal values
 	Enum []interface{} `json:"enum,omitempty"`
+	// ExclusiveMaximum: Whether the maximum number value is exclusive.
+	ExclusiveMaximum bool `json:"exclusiveMaximum,omitempty"`
+	// ExclusiveMinimum: Whether the minimum number value is exclusive.
+	ExclusiveMinimum bool `json:"exclusiveMinimum,omitempty"`
 	// Format: Format of the value as per
 	// https://json-schema.org/understanding-json-schema/reference/string.html#format
 	Format string `json:"format,omitempty"`
@@ -1311,6 +1319,21 @@ type JsonSchema struct {
 	//   "TIME_WITH_TIMEZONE" - Time with timezone type.
 	//   "TIMESTAMP_WITH_TIMEZONE" - Timestamp with timezone type.
 	JdbcType string `json:"jdbcType,omitempty"`
+	// MaxItems: Maximum number of items in the array field.
+	MaxItems int64 `json:"maxItems,omitempty"`
+	// MaxLength: Maximum length of the string field.
+	MaxLength int64 `json:"maxLength,omitempty"`
+	// Maximum: Maximum value of the number field.
+	Maximum interface{} `json:"maximum,omitempty"`
+	// MinItems: Minimum number of items in the array field.
+	MinItems int64 `json:"minItems,omitempty"`
+	// MinLength: Minimum length of the string field.
+	MinLength int64 `json:"minLength,omitempty"`
+	// Minimum: Minimum value of the number field.
+	Minimum interface{} `json:"minimum,omitempty"`
+	// Pattern: Regex pattern of the string field. This is a string value that
+	// describes the regular expression that the string value should match.
+	Pattern string `json:"pattern,omitempty"`
 	// Properties: The child schemas, applicable only if this is of type `object`.
 	// The key is the name of the property and the value is the json schema that
 	// describes that property
@@ -1319,6 +1342,8 @@ type JsonSchema struct {
 	Required []string `json:"required,omitempty"`
 	// Type: JSON Schema Validation: A Vocabulary for Structural Validation of JSON
 	Type []string `json:"type,omitempty"`
+	// UniqueItems: Whether the items in the array field are unique.
+	UniqueItems bool `json:"uniqueItems,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalDetails") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2011,6 +2036,8 @@ func (s RefreshAccessTokenResponse) MarshalJSON() ([]byte, error) {
 }
 
 type Resource struct {
+	// Meta: Metadata for the resource.
+	Meta googleapi.RawMessage `json:"_meta,omitempty"`
 	// Description: A description of what this resource represents.
 	Description string `json:"description,omitempty"`
 	// MimeType: The MIME type of this resource, if known.
@@ -2021,15 +2048,15 @@ type Resource struct {
 	Size int64 `json:"size,omitempty,string"`
 	// Uri: The URI of this resource.
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Meta") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Description") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Meta") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2256,6 +2283,8 @@ func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 
 // Tool: Message representing a single tool.
 type Tool struct {
+	// Meta: Metadata for the tool.
+	Meta googleapi.RawMessage `json:"_meta,omitempty"`
 	// Annotations: Annotations for the tool.
 	Annotations *ToolAnnotations `json:"annotations,omitempty"`
 	// DependsOn: List of tool names that this tool depends on.
@@ -2268,15 +2297,15 @@ type Tool struct {
 	Name string `json:"name,omitempty"`
 	// OutputSchema: JSON schema for the output of the tool.
 	OutputSchema *JsonSchema `json:"outputSchema,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Annotations") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Meta") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Annotations") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Meta") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

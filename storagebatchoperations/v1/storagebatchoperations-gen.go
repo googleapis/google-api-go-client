@@ -370,8 +370,22 @@ type CancelOperationRequest struct {
 
 // Counters: Describes details about the progress of the job.
 type Counters struct {
-	// FailedObjectCount: Output only. Number of objects failed.
+	// FailedObjectCount: Output only. The number of objects that failed due to
+	// user errors or service errors.
 	FailedObjectCount int64 `json:"failedObjectCount,omitempty,string"`
+	// ObjectCustomContextsCreated: Output only. Number of object custom contexts
+	// created. This field is only populated for jobs with the
+	// UpdateObjectCustomContext transformation.
+	ObjectCustomContextsCreated int64 `json:"objectCustomContextsCreated,omitempty,string"`
+	// ObjectCustomContextsDeleted: Output only. Number of object custom contexts
+	// deleted. This field is only populated for jobs with the
+	// UpdateObjectCustomContext transformation.
+	ObjectCustomContextsDeleted int64 `json:"objectCustomContextsDeleted,omitempty,string"`
+	// ObjectCustomContextsUpdated: Output only. Number of object custom contexts
+	// updated. This counter tracks custom contexts where the key already existed,
+	// but the payload was modified. This field is only populated for jobs with the
+	// UpdateObjectCustomContext transformation.
+	ObjectCustomContextsUpdated int64 `json:"objectCustomContextsUpdated,omitempty,string"`
 	// SucceededObjectCount: Output only. Number of objects completed.
 	SucceededObjectCount int64 `json:"succeededObjectCount,omitempty,string"`
 	// TotalBytesFound: Output only. Number of bytes found from source. This field
@@ -1378,10 +1392,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

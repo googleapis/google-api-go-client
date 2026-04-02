@@ -107,6 +107,10 @@ const (
 	// members from conversations and spaces
 	ChatAppMembershipsScope = "https://www.googleapis.com/auth/chat.app.memberships"
 
+	// On their own behalf, apps in Google Chat can see members of conversations
+	// and spaces
+	ChatAppMembershipsReadonlyScope = "https://www.googleapis.com/auth/chat.app.memberships.readonly"
+
 	// On their own behalf, apps in Google Chat can see all messages and their
 	// associated reactions and message content
 	ChatAppMessagesReadonlyScope = "https://www.googleapis.com/auth/chat.app.messages.readonly"
@@ -115,6 +119,10 @@ const (
 	// and see or update their metadata (including history settings and access
 	// settings)
 	ChatAppSpacesScope = "https://www.googleapis.com/auth/chat.app.spaces"
+
+	// On their own behalf, apps in Google Chat can see conversations and spaces
+	// and their metadata (including history settings and access settings)
+	ChatAppSpacesReadonlyScope = "https://www.googleapis.com/auth/chat.app.spaces.readonly"
 
 	// Private Service: https://www.googleapis.com/auth/chat.bot
 	ChatBotScope = "https://www.googleapis.com/auth/chat.bot"
@@ -175,8 +183,10 @@ const (
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/chat.app.memberships",
+		"https://www.googleapis.com/auth/chat.app.memberships.readonly",
 		"https://www.googleapis.com/auth/chat.app.messages.readonly",
 		"https://www.googleapis.com/auth/chat.app.spaces",
+		"https://www.googleapis.com/auth/chat.app.spaces.readonly",
 		"https://www.googleapis.com/auth/chat.bot",
 		"https://www.googleapis.com/auth/chat.memberships",
 		"https://www.googleapis.com/auth/chat.memberships.readonly",
@@ -899,6 +909,12 @@ type Subscription struct {
 	// Reconciling: Output only. If `true`, the subscription is in the process of
 	// being updated.
 	Reconciling bool `json:"reconciling,omitempty"`
+	// ServiceAccountAuthority: Output only. The service account that was used to
+	// authorize the creation of the subscription. This service account must be
+	// owned by the same Google Cloud project where you create this subscription.
+	// Format: `projects/{project_id}/serviceAccounts/{service_account_id}`
+	// Developer Preview (https://developers.google.com/workspace/preview).
+	ServiceAccountAuthority string `json:"serviceAccountAuthority,omitempty"`
 	// State: Output only. The state of the subscription. Determines whether the
 	// subscription can receive events and deliver them to the notification
 	// endpoint.
@@ -922,10 +938,16 @@ type Subscription struct {
 	// Workspace, see [Configure the OAuth consent
 	// screen](https://developers.google.com/workspace/guides/configure-oauth-consen
 	// t#choose-scopes).
+	//   "APP_SCOPE_REVOKED" - The domain administrator has revoked the grant of
+	// one or more OAuth scopes for the app. [Developer
+	// Preview](https://developers.google.com/workspace/preview).
 	//   "RESOURCE_DELETED" - The target resource for the subscription no longer
 	// exists.
 	//   "USER_AUTHORIZATION_FAILURE" - The user that authorized the creation of
 	// the subscription no longer has access to the subscription's target resource.
+	//   "APP_AUTHORIZATION_FAILURE" - The app that authorized the creation of the
+	// subscription no longer has access to the subscription's target resource.
+	// [Developer Preview](https://developers.google.com/workspace/preview).
 	//   "ENDPOINT_PERMISSION_DENIED" - The Google Workspace application doesn't
 	// have access to deliver events to your subscription's notification endpoint.
 	//   "ENDPOINT_NOT_FOUND" - The subscription's notification endpoint doesn't
@@ -952,6 +974,13 @@ type Subscription struct {
 	Uid string `json:"uid,omitempty"`
 	// UpdateTime: Output only. The last time that the subscription is updated.
 	UpdateTime string `json:"updateTime,omitempty"`
+	// UserAuthority: Output only. The user who authorized the creation of the
+	// subscription. The user must be able to view the `target_resource`. For
+	// Google Workspace users, the `{user}` value is the `user.id`
+	// (https://developers.google.com/workspace/admin/directory/reference/rest/v1/users#User.FIELDS.id)
+	// field from the Directory API. Format: `users/{user}` Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	UserAuthority string `json:"userAuthority,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

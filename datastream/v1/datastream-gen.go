@@ -1028,13 +1028,13 @@ type FieldViolation struct {
 	// email = 1; repeated EmailType type = 2; } string full_name = 1; repeated
 	// EmailAddress email_addresses = 2; } In this example, in proto `field` could
 	// take one of the following values: * `full_name` for a violation in the
-	// `full_name` value * `email_addresses[1].email` for a violation in the
+	// `full_name` value * `email_addresses[0].email` for a violation in the
 	// `email` field of the first `email_addresses` message *
-	// `email_addresses[3].type[2]` for a violation in the second `type` value in
+	// `email_addresses[2].type[1]` for a violation in the second `type` value in
 	// the third `email_addresses` message. In JSON, the same values are
 	// represented as: * `fullName` for a violation in the `fullName` value *
-	// `emailAddresses[1].email` for a violation in the `email` field of the first
-	// `emailAddresses` message * `emailAddresses[3].type[2]` for a violation in
+	// `emailAddresses[0].email` for a violation in the `email` field of the first
+	// `emailAddresses` message * `emailAddresses[2].type[1]` for a violation in
 	// the second `type` value in the third `emailAddresses` message.
 	Field string `json:"field,omitempty"`
 	// LocalizedMessage: Provides a localized error message for field-level errors
@@ -4927,10 +4927,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

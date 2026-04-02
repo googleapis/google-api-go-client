@@ -433,6 +433,166 @@ func (s AdvanceRolloutRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AlertPolicyCheck: AlertPolicyCheck configures a set of Cloud Monitoring
+// alerting policies that will be periodically polled for alerts. If any of the
+// listed policies have an active alert, the analysis check will fail.
+type AlertPolicyCheck struct {
+	// AlertPolicies: Required. The Cloud Monitoring Alert Policies to check for
+	// active alerts. Format is `projects/{project}/alertPolicies/{alert_policy}`.
+	AlertPolicies []string `json:"alertPolicies,omitempty"`
+	// Id: Required. The ID of the analysis check.
+	Id string `json:"id,omitempty"`
+	// Labels: Optional. A set of labels to filter active alerts. If set, only
+	// alerts having all of the specified labels will be considered. Otherwise, all
+	// active alerts will be considered.
+	Labels map[string]string `json:"labels,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlertPolicies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertPolicies") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AlertPolicyCheck) MarshalJSON() ([]byte, error) {
+	type NoMethod AlertPolicyCheck
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AlertPolicyCheckStatus: AlertPolicyCheckStatus contains information specific
+// to a single run of an alert policy check.
+type AlertPolicyCheckStatus struct {
+	// AlertPolicies: Output only. The alert policies that this analysis monitors.
+	// Format is
+	// `projects/{project}/locations/{location}/alertPolicies/{alertPolicy}`.
+	AlertPolicies []string `json:"alertPolicies,omitempty"`
+	// FailedAlertPolicies: Output only. The alert policies that were found to be
+	// firing during this check. This will be empty if no incidents were found.
+	FailedAlertPolicies []*FailedAlertPolicy `json:"failedAlertPolicies,omitempty"`
+	// FailureMessage: Output only. Additional information about the alert policy
+	// check failure, if available. This will be empty if the alert policy check
+	// succeeded.
+	FailureMessage string `json:"failureMessage,omitempty"`
+	// Id: Output only. The ID of this analysis.
+	Id string `json:"id,omitempty"`
+	// Labels: Output only. The resolved labels used to filter for specific
+	// incidents.
+	Labels map[string]string `json:"labels,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlertPolicies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertPolicies") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AlertPolicyCheckStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod AlertPolicyCheckStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Analysis: Analysis contains the configuration for the set of analyses to be
+// performed on the target.
+type Analysis struct {
+	// CustomChecks: Optional. Custom analysis checks from 3P metric providers.
+	CustomChecks []*CustomCheck `json:"customChecks,omitempty"`
+	// Duration: Required. The amount of time in minutes the analysis on the target
+	// will last. If all analysis checks have successfully completed before the
+	// specified duration, the analysis is successful. If a check is still running
+	// while the specified duration passes, it will wait for that check to complete
+	// to determine if the analysis is successful. The maximum duration is 48
+	// hours.
+	Duration string `json:"duration,omitempty"`
+	// GoogleCloud: Optional. Google Cloud - based analysis checks.
+	GoogleCloud *GoogleCloudAnalysis `json:"googleCloud,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomChecks") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomChecks") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Analysis) MarshalJSON() ([]byte, error) {
+	type NoMethod Analysis
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AnalysisJob: An analysis Job.
+type AnalysisJob struct {
+	// CustomChecks: Output only. Custom analysis checks from 3P metric providers
+	// that are run as part of the analysis Job.
+	CustomChecks []*CustomCheck `json:"customChecks,omitempty"`
+	// Duration: Output only. The amount of time in minutes the analysis Job will
+	// run, up to a maximum of 48 hours. If any check in this Job is still running
+	// when the duration ends, the Job keeps running until that check completes.
+	Duration string `json:"duration,omitempty"`
+	// GoogleCloud: Output only. Google Cloud - based analysis checks that are run
+	// as part of the analysis Job.
+	GoogleCloud *GoogleCloudAnalysis `json:"googleCloud,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomChecks") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomChecks") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AnalysisJob) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalysisJob
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AnalysisJobRun: AnalysisJobRun contains information specific to an analysis
+// `JobRun`.
+type AnalysisJobRun struct {
+	// AlertPolicyAnalyses: Output only. The status of the running alert policy
+	// checks configured for this analysis.
+	AlertPolicyAnalyses []*AlertPolicyCheckStatus `json:"alertPolicyAnalyses,omitempty"`
+	// CustomCheckAnalyses: Output only. The status of the running custom checks
+	// configured for this analysis.
+	CustomCheckAnalyses []*CustomCheckStatus `json:"customCheckAnalyses,omitempty"`
+	// FailedCheckId: Output only. The ID of the configured check that failed. This
+	// will always be blank while the analysis is in progress or if it succeeded.
+	FailedCheckId string `json:"failedCheckId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlertPolicyAnalyses") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertPolicyAnalyses") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AnalysisJobRun) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalysisJobRun
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AnthosCluster: Information specifying an Anthos Cluster.
 type AnthosCluster struct {
 	// Membership: Optional. Membership of the GKE Hub-registered cluster to which
@@ -1128,6 +1288,9 @@ func (s Canary) MarshalJSON() ([]byte, error) {
 // CanaryDeployment: CanaryDeployment represents the canary deployment
 // configuration
 type CanaryDeployment struct {
+	// Analysis: Optional. Configuration for the analysis job. If configured, the
+	// analysis will run after each percentage deployment.
+	Analysis *Analysis `json:"analysis,omitempty"`
 	// Percentages: Required. The percentage based deployments that will occur as a
 	// part of a `Rollout`. List is expected in ascending order and each integer n
 	// is 0 <= n < 100. If the GatewayServiceMesh is configured for Kubernetes,
@@ -1143,13 +1306,16 @@ type CanaryDeployment struct {
 	// Verify: Optional. Whether to run verify tests after each percentage
 	// deployment via `skaffold verify`.
 	Verify bool `json:"verify,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Percentages") to
+	// VerifyConfig: Optional. Configuration for the verify job. Cannot be set if
+	// `verify` is set to true.
+	VerifyConfig *Verify `json:"verifyConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Analysis") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Percentages") to include in API
+	// NullFields is a list of field names (e.g. "Analysis") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1294,6 +1460,14 @@ type CloudRunMetadata struct {
 	// `Rollout`. Format is
 	// `projects/{project}/locations/{location}/jobs/{job_name}`.
 	Job string `json:"job,omitempty"`
+	// PreviousRevision: Output only. The previous Cloud Run Revision name
+	// associated with a `Rollout`. Only set when a canary deployment strategy is
+	// configured. Format for service is
+	// projects/{project}/locations/{location}/services/{service}/revisions/{revisio
+	// n}. Format for worker pool is
+	// projects/{project}/locations/{location}/workerPools/{workerpool}/revisions/{r
+	// evision}.
+	PreviousRevision string `json:"previousRevision,omitempty"`
 	// Revision: Output only. The Cloud Run Revision id associated with a
 	// `Rollout`.
 	Revision string `json:"revision,omitempty"`
@@ -1329,6 +1503,14 @@ func (s CloudRunMetadata) MarshalJSON() ([]byte, error) {
 // CloudRunRenderMetadata: CloudRunRenderMetadata contains Cloud Run
 // information associated with a `Release` render.
 type CloudRunRenderMetadata struct {
+	// Job: Output only. The name of the Cloud Run Job in the rendered manifest.
+	// Format is `projects/{project}/locations/{location}/jobs/{job}`.
+	Job string `json:"job,omitempty"`
+	// Revision: Output only. The name of the Cloud Run Revision in the rendered
+	// manifest. Format is
+	// `projects/{project}/locations/{location}/services/{service}/revisions/{revisi
+	// on}`.
+	Revision string `json:"revision,omitempty"`
 	// Service: Output only. The name of the Cloud Run Service in the rendered
 	// manifest. Format is
 	// `projects/{project}/locations/{location}/services/{service}`.
@@ -1337,15 +1519,15 @@ type CloudRunRenderMetadata struct {
 	// rendered manifest. Format is
 	// `projects/{project}/locations/{location}/workerPools/{worker_pool}`.
 	WorkerPool string `json:"workerPool,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Service") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Job") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Service") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Job") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1385,6 +1567,37 @@ type Config struct {
 
 func (s Config) MarshalJSON() ([]byte, error) {
 	type NoMethod Config
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ContainerTask: This task is represented by a container that is executed in
+// the Cloud Build execution environment.
+type ContainerTask struct {
+	// Args: Optional. Args is the container arguments to use. This overrides the
+	// default arguments defined in the container image.
+	Args []string `json:"args,omitempty"`
+	// Command: Optional. Command is the container entrypoint to use. This
+	// overrides the default entrypoint defined in the container image.
+	Command []string `json:"command,omitempty"`
+	// Env: Optional. Environment variables that are set in the container.
+	Env map[string]string `json:"env,omitempty"`
+	// Image: Required. Image is the container image to use.
+	Image string `json:"image,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Args") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ContainerTask) MarshalJSON() ([]byte, error) {
+	type NoMethod ContainerTask
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1441,6 +1654,89 @@ type CustomCanaryDeployment struct {
 
 func (s CustomCanaryDeployment) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomCanaryDeployment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomCheck: CustomCheck configures a third-party metric provider to run the
+// analysis, via a Task that runs at a specified frequency.
+type CustomCheck struct {
+	// Frequency: Optional. The frequency at which the custom check will be run,
+	// with a minimum and default of 5 minutes.
+	Frequency string `json:"frequency,omitempty"`
+	// Id: Required. The ID of the custom Analysis check.
+	Id string `json:"id,omitempty"`
+	// Task: Required. The Task to be run for this custom check.
+	Task *Task `json:"task,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Frequency") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Frequency") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomCheck) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomCheck
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomCheckStatus: CustomCheckStatus contains information specific to a
+// single iteration of a custom analysis job.
+type CustomCheckStatus struct {
+	// FailureCause: Output only. The reason the analysis failed. This will always
+	// be unspecified while the analysis is in progress or if it succeeded.
+	//
+	// Possible values:
+	//   "FAILURE_CAUSE_UNSPECIFIED" - No reason for failure is specified.
+	//   "CLOUD_BUILD_UNAVAILABLE" - Cloud Build is not available, either because
+	// it is not enabled or because Cloud Deploy has insufficient permissions. See
+	// [required
+	// permission](https://cloud.google.com/deploy/docs/cloud-deploy-service-account
+	// #required_permissions).
+	//   "EXECUTION_FAILED" - The analysis operation did not complete successfully;
+	// check Cloud Build logs.
+	//   "DEADLINE_EXCEEDED" - The analysis job run did not complete within the
+	// alloted time defined in the target's execution environment configuration.
+	//   "CLOUD_BUILD_REQUEST_FAILED" - Cloud Build failed to fulfill Cloud
+	// Deploy's request. See failure_message for additional details.
+	FailureCause string `json:"failureCause,omitempty"`
+	// FailureMessage: Output only. Additional information about the analysis
+	// failure, if available.
+	FailureMessage string `json:"failureMessage,omitempty"`
+	// Frequency: Output only. The frequency in minutes at which the custom check
+	// is run.
+	Frequency string `json:"frequency,omitempty"`
+	// Id: Output only. The ID of the custom check.
+	Id string `json:"id,omitempty"`
+	// LatestBuild: Output only. The resource name of the Cloud Build `Build`
+	// object that was used to execute the latest run of this custom action check.
+	// Format is `projects/{project}/locations/{location}/builds/{build}`.
+	LatestBuild string `json:"latestBuild,omitempty"`
+	// Metadata: Output only. Custom metadata provided by the user-defined custom
+	// check operation. result.
+	Metadata *CustomMetadata `json:"metadata,omitempty"`
+	// Task: Output only. The task that ran for this custom check.
+	Task *Task `json:"task,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FailureCause") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailureCause") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomCheckStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomCheckStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1546,6 +1842,32 @@ func (s CustomTargetSkaffoldActions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CustomTargetTasks: CustomTargetTasks represents the `CustomTargetType`
+// configuration using tasks.
+type CustomTargetTasks struct {
+	// Deploy: Required. The task responsible for deploy operations.
+	Deploy *Task `json:"deploy,omitempty"`
+	// Render: Optional. The task responsible for render operations. If not
+	// provided then Cloud Deploy will perform its default rendering operation.
+	Render *Task `json:"render,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Deploy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Deploy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomTargetTasks) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomTargetTasks
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CustomTargetType: A `CustomTargetType` resource in the Cloud Deploy API. A
 // `CustomTargetType` defines a type of custom target that can be referenced in
 // a `Target` in order to facilitate deploying to other systems besides the
@@ -1584,6 +1906,9 @@ type CustomTargetType struct {
 	// `. The `customTargetType` component must match
 	// `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`
 	Name string `json:"name,omitempty"`
+	// Tasks: Optional. Configures render and deploy for the `CustomTargetType`
+	// using tasks.
+	Tasks *CustomTargetTasks `json:"tasks,omitempty"`
 	// Uid: Output only. Unique identifier of the `CustomTargetType`.
 	Uid string `json:"uid,omitempty"`
 	// UpdateTime: Output only. Most recent time at which the `CustomTargetType`
@@ -2221,6 +2546,9 @@ func (s DeployPolicyResourceSelector) MarshalJSON() ([]byte, error) {
 
 // DeploymentJobs: Deployment job composition.
 type DeploymentJobs struct {
+	// AnalysisJob: Output only. The analysis Job. Runs after a verify if there is
+	// a verify job and the verify job succeeds.
+	AnalysisJob *Job `json:"analysisJob,omitempty"`
 	// DeployJob: Output only. The deploy Job. This is the deploy job in the phase.
 	DeployJob *Job `json:"deployJob,omitempty"`
 	// PostdeployJob: Output only. The postdeploy Job, which is the last job on the
@@ -2232,13 +2560,13 @@ type DeploymentJobs struct {
 	// VerifyJob: Output only. The verify Job. Runs after a deploy if the deploy
 	// succeeds.
 	VerifyJob *Job `json:"verifyJob,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DeployJob") to
+	// ForceSendFields is a list of field names (e.g. "AnalysisJob") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DeployJob") to include in API
+	// NullFields is a list of field names (e.g. "AnalysisJob") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2289,6 +2617,7 @@ type ExecutionConfig struct {
 	//   "VERIFY" - Use for deployment verification.
 	//   "PREDEPLOY" - Use for predeploy job execution.
 	//   "POSTDEPLOY" - Use for postdeploy job execution.
+	//   "ANALYSIS" - Use for analysis job execution.
 	Usages []string `json:"usages,omitempty"`
 	// Verbose: Optional. If true, additional logging will be enabled when running
 	// builds in this execution environment.
@@ -2360,6 +2689,34 @@ type Expr struct {
 
 func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FailedAlertPolicy: FailedAlertPolicy contains information about an alert
+// policy that was found to be firing during an alert policy check.
+type FailedAlertPolicy struct {
+	// AlertPolicy: Output only. The name of the alert policy that was found to be
+	// firing. Format is
+	// `projects/{project}/locations/{location}/alertPolicies/{alertPolicy}`.
+	AlertPolicy string `json:"alertPolicy,omitempty"`
+	// Alerts: Output only. Open alerts for the alerting policies that matched the
+	// alert policy check configuration.
+	Alerts []string `json:"alerts,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlertPolicy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertPolicy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FailedAlertPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod FailedAlertPolicy
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2450,6 +2807,30 @@ func (s GkeCluster) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAnalysis: GoogleCloudAnalysis is a set of Google Cloud-based
+// checks to perform on the deployment.
+type GoogleCloudAnalysis struct {
+	// AlertPolicyChecks: Optional. A list of Cloud Monitoring Alert Policy checks
+	// to perform as part of the analysis.
+	AlertPolicyChecks []*AlertPolicyCheck `json:"alertPolicyChecks,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlertPolicyChecks") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertPolicyChecks") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAnalysis) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAnalysis
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // IgnoreJobRequest: The request object used by `IgnoreJob`.
 type IgnoreJobRequest struct {
 	// JobId: Required. The job ID for the Job to ignore.
@@ -2487,6 +2868,8 @@ type IgnoreJobResponse struct {
 type Job struct {
 	// AdvanceChildRolloutJob: Output only. An advanceChildRollout Job.
 	AdvanceChildRolloutJob *AdvanceChildRolloutJob `json:"advanceChildRolloutJob,omitempty"`
+	// AnalysisJob: Output only. An analysis Job.
+	AnalysisJob *AnalysisJob `json:"analysisJob,omitempty"`
 	// CreateChildRolloutJob: Output only. A createChildRollout Job.
 	CreateChildRolloutJob *CreateChildRolloutJob `json:"createChildRolloutJob,omitempty"`
 	// DeployJob: Output only. A deploy Job.
@@ -2543,6 +2926,8 @@ type JobRun struct {
 	// AdvanceChildRolloutJobRun: Output only. Information specific to an
 	// advanceChildRollout `JobRun`
 	AdvanceChildRolloutJobRun *AdvanceChildRolloutJobRun `json:"advanceChildRolloutJobRun,omitempty"`
+	// AnalysisJobRun: Output only. Information specific to an analysis `JobRun`.
+	AnalysisJobRun *AnalysisJobRun `json:"analysisJobRun,omitempty"`
 	// CreateChildRolloutJobRun: Output only. Information specific to a
 	// createChildRollout `JobRun`.
 	CreateChildRolloutJobRun *CreateChildRolloutJobRun `json:"createChildRolloutJobRun,omitempty"`
@@ -2682,6 +3067,39 @@ type KubernetesConfig struct {
 
 func (s KubernetesConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod KubernetesConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// KubernetesRenderMetadata: KubernetesRenderMetadata contains Kubernetes
+// information associated with a `Release` render.
+type KubernetesRenderMetadata struct {
+	// CanaryDeployment: Output only. Name of the canary version of the Kubernetes
+	// Deployment that will be applied to the GKE cluster. Only set if a canary
+	// deployment strategy was configured.
+	CanaryDeployment string `json:"canaryDeployment,omitempty"`
+	// Deployment: Output only. Name of the Kubernetes Deployment that will be
+	// applied to the GKE cluster. Only set if a single Deployment was provided in
+	// the rendered manifest.
+	Deployment string `json:"deployment,omitempty"`
+	// KubernetesNamespace: Output only. Namespace the Kubernetes resources will be
+	// applied to in the GKE cluster. Only set if applying resources to a single
+	// namespace.
+	KubernetesNamespace string `json:"kubernetesNamespace,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CanaryDeployment") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CanaryDeployment") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s KubernetesRenderMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod KubernetesRenderMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3300,6 +3718,9 @@ func (s PhaseArtifact) MarshalJSON() ([]byte, error) {
 // PhaseConfig: PhaseConfig represents the configuration for a phase in the
 // custom canary deployment.
 type PhaseConfig struct {
+	// Analysis: Optional. Configuration for the analysis job of this phase. If
+	// this is not configured, there will be no analysis job for this phase.
+	Analysis *Analysis `json:"analysis,omitempty"`
 	// Percentage: Required. Percentage deployment for the phase.
 	Percentage int64 `json:"percentage,omitempty"`
 	// PhaseId: Required. The ID to assign to the `Rollout` phase. This value must
@@ -3321,13 +3742,16 @@ type PhaseConfig struct {
 	// Verify: Optional. Whether to run verify tests after the deployment via
 	// `skaffold verify`.
 	Verify bool `json:"verify,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Percentage") to
+	// VerifyConfig: Optional. Configuration for the verify job. Cannot be set if
+	// `verify` is set to true.
+	VerifyConfig *Verify `json:"verifyConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Analysis") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Percentage") to include in API
+	// NullFields is a list of field names (e.g. "Analysis") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3567,6 +3991,10 @@ type Postdeploy struct {
 	// Actions: Optional. A sequence of Skaffold custom actions to invoke during
 	// execution of the postdeploy job.
 	Actions []string `json:"actions,omitempty"`
+	// Tasks: Optional. The tasks that will run as a part of the postdeploy job.
+	// The tasks are executed sequentially in the order specified. Only one of
+	// `actions` or `tasks` can be specified.
+	Tasks []*Task `json:"tasks,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Actions") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3589,6 +4017,9 @@ func (s Postdeploy) MarshalJSON() ([]byte, error) {
 type PostdeployJob struct {
 	// Actions: Output only. The custom actions that the postdeploy Job executes.
 	Actions []string `json:"actions,omitempty"`
+	// Tasks: Output only. The tasks that are executed as part of the postdeploy
+	// Job.
+	Tasks []*Task `json:"tasks,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Actions") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3635,6 +4066,9 @@ type PostdeployJobRun struct {
 	// FailureMessage: Output only. Additional information about the postdeploy
 	// failure, if available.
 	FailureMessage string `json:"failureMessage,omitempty"`
+	// Metadata: Output only. Metadata containing information about the postdeploy
+	// `JobRun`.
+	Metadata *PostdeployJobRunMetadata `json:"metadata,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Build") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3653,11 +4087,39 @@ func (s PostdeployJobRun) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PostdeployJobRunMetadata: PostdeployJobRunMetadata contains metadata about
+// the postdeploy `JobRun`.
+type PostdeployJobRunMetadata struct {
+	// Custom: Output only. Custom metadata provided by user-defined postdeploy
+	// operation.
+	Custom *CustomMetadata `json:"custom,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Custom") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Custom") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PostdeployJobRunMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod PostdeployJobRunMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Predeploy: Predeploy contains the predeploy job configuration information.
 type Predeploy struct {
 	// Actions: Optional. A sequence of Skaffold custom actions to invoke during
 	// execution of the predeploy job.
 	Actions []string `json:"actions,omitempty"`
+	// Tasks: Optional. The tasks that will run as a part of the predeploy job. The
+	// tasks are executed sequentially in the order specified. Only one of
+	// `actions` or `tasks` can be specified.
+	Tasks []*Task `json:"tasks,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Actions") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3680,6 +4142,9 @@ func (s Predeploy) MarshalJSON() ([]byte, error) {
 type PredeployJob struct {
 	// Actions: Output only. The custom actions that the predeploy Job executes.
 	Actions []string `json:"actions,omitempty"`
+	// Tasks: Output only. The tasks that are executed as part of the predeploy
+	// Job.
+	Tasks []*Task `json:"tasks,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Actions") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3725,6 +4190,9 @@ type PredeployJobRun struct {
 	// FailureMessage: Output only. Additional information about the predeploy
 	// failure, if available.
 	FailureMessage string `json:"failureMessage,omitempty"`
+	// Metadata: Output only. Metadata containing information about the predeploy
+	// `JobRun`.
+	Metadata *PredeployJobRunMetadata `json:"metadata,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Build") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3740,6 +4208,30 @@ type PredeployJobRun struct {
 
 func (s PredeployJobRun) MarshalJSON() ([]byte, error) {
 	type NoMethod PredeployJobRun
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PredeployJobRunMetadata: PredeployJobRunMetadata contains metadata about the
+// predeploy `JobRun`.
+type PredeployJobRunMetadata struct {
+	// Custom: Output only. Custom metadata provided by user-defined predeploy
+	// operation.
+	Custom *CustomMetadata `json:"custom,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Custom") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Custom") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PredeployJobRunMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod PredeployJobRunMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4135,6 +4627,9 @@ type RenderMetadata struct {
 	// Custom: Output only. Custom metadata provided by user-defined render
 	// operation.
 	Custom *CustomMetadata `json:"custom,omitempty"`
+	// Kubernetes: Output only. Metadata associated with rendering for a Kubernetes
+	// cluster (GKE or GKE Enterprise target).
+	Kubernetes *KubernetesRenderMetadata `json:"kubernetes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudRun") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5255,6 +5750,9 @@ func (s Stage) MarshalJSON() ([]byte, error) {
 
 // Standard: Standard represents the standard deployment strategy.
 type Standard struct {
+	// Analysis: Optional. Configuration for the analysis job. If this is not
+	// configured, the analysis job will not be present.
+	Analysis *Analysis `json:"analysis,omitempty"`
 	// Postdeploy: Optional. Configuration for the postdeploy job. If this is not
 	// configured, the postdeploy job will not be present.
 	Postdeploy *Postdeploy `json:"postdeploy,omitempty"`
@@ -5263,13 +5761,16 @@ type Standard struct {
 	Predeploy *Predeploy `json:"predeploy,omitempty"`
 	// Verify: Optional. Whether to verify a deployment via `skaffold verify`.
 	Verify bool `json:"verify,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Postdeploy") to
+	// VerifyConfig: Optional. Configuration for the verify job. Cannot be set if
+	// `verify` is set to true.
+	VerifyConfig *Verify `json:"verifyConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Analysis") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Postdeploy") to include in API
+	// NullFields is a list of field names (e.g. "Analysis") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -5675,6 +6176,29 @@ func (s TargetsTypeCondition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Task: A Task represents a unit of work that is executed as part of a Job.
+type Task struct {
+	// Container: Optional. This task is represented by a container that is
+	// executed in the Cloud Build execution environment.
+	Container *ContainerTask `json:"container,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Container") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Container") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Task) MarshalJSON() ([]byte, error) {
+	type NoMethod Task
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TerminateJobRunRequest: The request object used by `TerminateJobRun`.
 type TerminateJobRunRequest struct {
 	// OverrideDeployPolicy: Optional. Deploy policies to override. Format is
@@ -6001,8 +6525,49 @@ func (s ToolVersions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Verify: Verify contains the verify job configuration information.
+type Verify struct {
+	// Tasks: Optional. The tasks that will run as a part of the verify job. The
+	// tasks are executed sequentially in the order specified.
+	Tasks []*Task `json:"tasks,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Tasks") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Tasks") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Verify) MarshalJSON() ([]byte, error) {
+	type NoMethod Verify
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // VerifyJob: A verify Job.
 type VerifyJob struct {
+	// Tasks: Output only. The tasks that are executed as part of the verify Job.
+	Tasks []*Task `json:"tasks,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Tasks") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Tasks") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VerifyJob) MarshalJSON() ([]byte, error) {
+	type NoMethod VerifyJob
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VerifyJobRun: VerifyJobRun contains information specific to a verify
@@ -6040,6 +6605,9 @@ type VerifyJobRun struct {
 	// FailureMessage: Output only. Additional information about the verify
 	// failure, if available.
 	FailureMessage string `json:"failureMessage,omitempty"`
+	// Metadata: Output only. Metadata containing information about the verify
+	// `JobRun`.
+	Metadata *VerifyJobRunMetadata `json:"metadata,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ArtifactUri") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6055,6 +6623,30 @@ type VerifyJobRun struct {
 
 func (s VerifyJobRun) MarshalJSON() ([]byte, error) {
 	type NoMethod VerifyJobRun
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VerifyJobRunMetadata: VerifyJobRunMetadata contains metadata about the
+// verify `JobRun`.
+type VerifyJobRunMetadata struct {
+	// Custom: Output only. Custom metadata provided by user-defined verify
+	// operation.
+	Custom *CustomMetadata `json:"custom,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Custom") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Custom") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VerifyJobRunMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod VerifyJobRunMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -331,6 +331,29 @@ func (s AcceleratorConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AccurateTimeConfig: AccurateTimeConfig contains configuration for the
+// accurate time synchronization feature.
+type AccurateTimeConfig struct {
+	// EnablePtpKvmTimeSync: Enables enhanced time synchronization using PTP-KVM.
+	EnablePtpKvmTimeSync bool `json:"enablePtpKvmTimeSync,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnablePtpKvmTimeSync") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnablePtpKvmTimeSync") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AccurateTimeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AccurateTimeConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AdditionalIPRangesConfig: AdditionalIPRangesConfig is the configuration for
 // individual additional subnetwork attached to the cluster
 type AdditionalIPRangesConfig struct {
@@ -1177,8 +1200,8 @@ func (s CancelOperationRequest) MarshalJSON() ([]byte, error) {
 // certificate.
 type CertificateAuthorityDomainConfig struct {
 	// Fqdns: List of fully qualified domain names (FQDN). Specifying port is
-	// supported. Wildcards are NOT supported. Examples: - my.customdomain.com -
-	// 10.0.1.2:5000
+	// supported. Wildcards are NOT supported. Examples: - `my.customdomain.com` -
+	// `10.0.1.2:5000`
 	Fqdns []string `json:"fqdns,omitempty"`
 	// GcpSecretManagerCertificateConfig: Secret Manager certificate configuration.
 	GcpSecretManagerCertificateConfig *GCPSecretManagerCertificateConfig `json:"gcpSecretManagerCertificateConfig,omitempty"`
@@ -1398,6 +1421,8 @@ type Cluster struct {
 	// ConfidentialNodes: Configuration of Confidential Nodes. All the nodes in the
 	// cluster will be Confidential VM once enabled.
 	ConfidentialNodes *ConfidentialNodes `json:"confidentialNodes,omitempty"`
+	// ControlPlaneEgress: Configuration for control plane egress control.
+	ControlPlaneEgress *ControlPlaneEgress `json:"controlPlaneEgress,omitempty"`
 	// ControlPlaneEndpointsConfig: Configuration for all cluster's control plane
 	// endpoints.
 	ControlPlaneEndpointsConfig *ControlPlaneEndpointsConfig `json:"controlPlaneEndpointsConfig,omitempty"`
@@ -1623,6 +1648,9 @@ type Cluster struct {
 	ScheduleUpgradeConfig *ScheduleUpgradeConfig `json:"scheduleUpgradeConfig,omitempty"`
 	// SecretManagerConfig: Secret CSI driver configuration.
 	SecretManagerConfig *SecretManagerConfig `json:"secretManagerConfig,omitempty"`
+	// SecretSyncConfig: Configuration for sync Secret Manager secrets as k8s
+	// secrets.
+	SecretSyncConfig *SecretSyncConfig `json:"secretSyncConfig,omitempty"`
 	// SecurityPostureConfig: Optional. Enable/Disable Security Posture API
 	// features for the cluster.
 	SecurityPostureConfig *SecurityPostureConfig `json:"securityPostureConfig,omitempty"`
@@ -1852,6 +1880,9 @@ type ClusterUpdate struct {
 	DesiredCompliancePostureConfig *CompliancePostureConfig `json:"desiredCompliancePostureConfig,omitempty"`
 	// DesiredContainerdConfig: The desired containerd config for the cluster.
 	DesiredContainerdConfig *ContainerdConfig `json:"desiredContainerdConfig,omitempty"`
+	// DesiredControlPlaneEgress: The desired control plane egress control config
+	// for the cluster.
+	DesiredControlPlaneEgress *ControlPlaneEgress `json:"desiredControlPlaneEgress,omitempty"`
 	// DesiredControlPlaneEndpointsConfig: Control plane endpoints configuration.
 	DesiredControlPlaneEndpointsConfig *ControlPlaneEndpointsConfig `json:"desiredControlPlaneEndpointsConfig,omitempty"`
 	// DesiredCostManagementConfig: The desired configuration for the fine-grained
@@ -2064,6 +2095,9 @@ type ClusterUpdate struct {
 	DesiredResourceUsageExportConfig *ResourceUsageExportConfig `json:"desiredResourceUsageExportConfig,omitempty"`
 	// DesiredSecretManagerConfig: Enable/Disable Secret Manager Config.
 	DesiredSecretManagerConfig *SecretManagerConfig `json:"desiredSecretManagerConfig,omitempty"`
+	// DesiredSecretSyncConfig: Configuration for sync Secret Manager secrets as
+	// k8s secrets.
+	DesiredSecretSyncConfig *SecretSyncConfig `json:"desiredSecretSyncConfig,omitempty"`
 	// DesiredSecurityPostureConfig: Enable/Disable Security Posture API features
 	// for the cluster.
 	DesiredSecurityPostureConfig *SecurityPostureConfig `json:"desiredSecurityPostureConfig,omitempty"`
@@ -2395,6 +2429,36 @@ type ContainerdConfig struct {
 
 func (s ContainerdConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ContainerdConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ControlPlaneEgress: ControlPlaneEgress defines the settings needed to enable
+// control plane egress control.
+type ControlPlaneEgress struct {
+	// Mode: Defines the mode of control plane egress.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Default value not specified.
+	//   "VIA_CONTROL_PLANE" - Control plane has public IP and no restriction on
+	// egress.
+	//   "NONE" - No public IP on control plane and only internal allowlisted
+	// egress.
+	Mode string `json:"mode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Mode") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Mode") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ControlPlaneEgress) MarshalJSON() ([]byte, error) {
+	type NoMethod ControlPlaneEgress
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3780,8 +3844,10 @@ type HostConfig struct {
 	// Header: Header configures the registry host headers.
 	Header []*RegistryHeader `json:"header,omitempty"`
 	// Host: Host configures the registry host/mirror. It supports fully qualified
-	// domain names (FQDN) and IP addresses: Specifying port is supported.
-	// Wildcards are NOT supported. Examples: - my.customdomain.com - 10.0.1.2:5000
+	// domain names (FQDNs) and IP addresses. Specifying scheme, port or path is
+	// supported. Scheme can only be http or https. Wildcards are NOT supported.
+	// Examples: - `my.customdomain.com` - `https://my.customdomain.com/path` -
+	// `10.0.1.2:5000`
 	Host string `json:"host,omitempty"`
 	// OverridePath: OverridePath is used to indicate the host's API root endpoint
 	// is defined in the URL path rather than by the API specification. This may be
@@ -4270,6 +4336,9 @@ func (s LegacyAbac) MarshalJSON() ([]byte, error) {
 
 // LinuxNodeConfig: Parameters that can be configured on Linux nodes.
 type LinuxNodeConfig struct {
+	// AccurateTimeConfig: Optional. The accurate time configuration for the node
+	// pool.
+	AccurateTimeConfig *AccurateTimeConfig `json:"accurateTimeConfig,omitempty"`
 	// CgroupMode: cgroup_mode specifies the cgroup mode to be used on the node.
 	//
 	// Possible values:
@@ -4358,15 +4427,15 @@ type LinuxNodeConfig struct {
 	//   "TRANSPARENT_HUGEPAGE_ENABLED_NEVER" - Transparent hugepage support for
 	// anonymous memory is disabled.
 	TransparentHugepageEnabled string `json:"transparentHugepageEnabled,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CgroupMode") to
+	// ForceSendFields is a list of field names (e.g. "AccurateTimeConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CgroupMode") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AccurateTimeConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5457,13 +5526,17 @@ type NodeConfig struct {
 	ImageType string `json:"imageType,omitempty"`
 	// KubeletConfig: Node kubelet configs.
 	KubeletConfig *NodeKubeletConfig `json:"kubeletConfig,omitempty"`
-	// Labels: The map of Kubernetes labels (key/value pairs) to be applied to each
-	// node. These will added in addition to any default label(s) that Kubernetes
-	// may apply to the node. In case of conflict in label keys, the applied set
-	// may differ depending on the Kubernetes version -- it's best to assume the
-	// behavior is undefined and conflicts should be avoided. For more information,
-	// including usage and the valid values, see:
-	// https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+	// Labels: The Kubernetes labels (key/value pairs) to apply to each node. The
+	// values in this field are added to the set of default labels Kubernetes
+	// applies to nodes. This field has the following restrictions: * Labels must
+	// use a valid Kubernetes syntax and character set, as defined in
+	// https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#syntax-and-character-set.
+	// * This field supports up to 1,024 total characters in a single request.
+	// Depending on the Kubernetes version, keys in this field might conflict with
+	// the keys of the default labels, which might change which of your labels are
+	// applied to the nodes. Assume that the behavior is unpredictable and avoid
+	// label key conflicts. For more information about the default labels, see:
+	// https://kubernetes.io/docs/reference/labels-annotations-taints/
 	Labels map[string]string `json:"labels,omitempty"`
 	// LinuxNodeConfig: Parameters that can be configured on Linux nodes.
 	LinuxNodeConfig *LinuxNodeConfig `json:"linuxNodeConfig,omitempty"`
@@ -7207,8 +7280,8 @@ type RegistryHostConfig struct {
 	// Server: Defines the host name of the registry server, which will be used to
 	// create configuration file as /etc/containerd/hosts.d//hosts.toml. It
 	// supports fully qualified domain names (FQDN) and IP addresses: Specifying
-	// port is supported. Wildcards are NOT supported. Examples: -
-	// my.customdomain.com - 10.0.1.2:5000
+	// port is supported, while scheme and path are NOT supported. Wildcards are
+	// NOT supported. Examples: - `my.customdomain.com` - `10.0.1.2:5000`
 	Server string `json:"server,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Hosts") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -7642,6 +7715,31 @@ type SecretManagerConfig struct {
 
 func (s SecretManagerConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SecretManagerConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SecretSyncConfig: Configuration for sync Secret Manager secrets as k8s
+// secrets.
+type SecretSyncConfig struct {
+	// Enabled: Enable/Disable Secret Sync Config.
+	Enabled bool `json:"enabled,omitempty"`
+	// RotationConfig: Rotation config for secret manager.
+	RotationConfig *SyncRotationConfig `json:"rotationConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SecretSyncConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SecretSyncConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8706,6 +8804,32 @@ type SwapConfig struct {
 
 func (s SwapConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SwapConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SyncRotationConfig: SyncRotationConfig is config for secret manager auto
+// rotation.
+type SyncRotationConfig struct {
+	// Enabled: Whether the rotation is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// RotationInterval: The interval between two consecutive rotations. Default
+	// rotation interval is 2 minutes.
+	RotationInterval string `json:"rotationInterval,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SyncRotationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SyncRotationConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

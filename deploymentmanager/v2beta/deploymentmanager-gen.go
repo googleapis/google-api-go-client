@@ -1133,6 +1133,51 @@ func (s FirewallPolicyRuleOperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type GetVersionOperationMetadata struct {
+	InlineSbomInfo *GetVersionOperationMetadataSbomInfo `json:"inlineSbomInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InlineSbomInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InlineSbomInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GetVersionOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GetVersionOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GetVersionOperationMetadataSbomInfo struct {
+	// CurrentComponentVersions: SBOM versions currently applied to the resource.
+	// The key is the component name and the value is the version.
+	CurrentComponentVersions map[string]string `json:"currentComponentVersions,omitempty"`
+	// TargetComponentVersions: SBOM versions scheduled for the next maintenance.
+	// The key is the component name and the value is the version.
+	TargetComponentVersions map[string]string `json:"targetComponentVersions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CurrentComponentVersions")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CurrentComponentVersions") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GetVersionOperationMetadataSbomInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GetVersionOperationMetadataSbomInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type GlobalSetPolicyRequest struct {
 	// Bindings: Flatten Policy to create a backward compatible wire-format.
 	// Deprecated. Use 'policy' to specify bindings.
@@ -1430,6 +1475,7 @@ type Operation struct {
 	// operation, this field will be populated.
 	Error                               *OperationError                      `json:"error,omitempty"`
 	FirewallPolicyRuleOperationMetadata *FirewallPolicyRuleOperationMetadata `json:"firewallPolicyRuleOperationMetadata,omitempty"`
+	GetVersionOperationMetadata         *GetVersionOperationMetadata         `json:"getVersionOperationMetadata,omitempty"`
 	// HttpErrorMessage: [Output Only] If the operation fails, this field contains
 	// the HTTP error message that was returned, such as `NOT FOUND`.
 	HttpErrorMessage string `json:"httpErrorMessage,omitempty"`

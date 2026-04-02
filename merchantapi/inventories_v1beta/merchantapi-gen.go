@@ -362,9 +362,9 @@ type LocalInventory struct {
 	// if any part of the product identifier (like `offer_id`) contains characters
 	// such as `/`, `%`, or `~`. * Example: To represent the product ID
 	// `en~US~sku/123` for `store_code` "store123", the `{product}` segment must be
-	// the base64url encoding of this string, which is `ZW5-VVMtc2t1LzEyMw`. The
+	// the base64url encoding of this string, which is `ZW5-VVN-c2t1LzEyMw`. The
 	// full resource name for the local inventory would be
-	// `accounts/123/products/ZW5-VVMtc2t1LzEyMw/localInventories/store123`. 2.
+	// `accounts/123/products/ZW5-VVN-c2t1LzEyMw/localInventories/store123`. 2.
 	// **Plain Format**: The `{product}` segment is the tilde-separated string
 	// `content_language~feed_label~offer_id`. This format is suitable only when
 	// `content_language`, `feed_label`, and `offer_id` do not contain
@@ -372,10 +372,6 @@ type LocalInventory struct {
 	// **Encoded Format** for all product IDs to ensure correct parsing, especially
 	// those containing special characters. The presence of tilde (`~`) characters
 	// in the `{product}` segment is used to differentiate between the two formats.
-	// Note: For calls to the v1beta version, the plain format for the product
-	// segment is `channel~content_language~feed_label~offer_id`. For example, the
-	// full resource name for a local inventory at `store_code` "store123" would
-	// be: `accounts/123/products/online~en~US~sku123/localInventories/store123`.
 	Name string `json:"name,omitempty"`
 	// PickupMethod: Supported pickup method for this product. Unless the value is
 	// "not supported", this field must be submitted together with `pickupSla`.
@@ -617,9 +613,9 @@ type RegionalInventory struct {
 	// if any part of the product identifier (like `offer_id`) contains characters
 	// such as `/`, `%`, or `~`. * Example: To represent the product ID
 	// `en~US~sku/123` for `region` "region123", the `{product}` segment must be
-	// the base64url encoding of this string, which is `ZW5-VVMtc2t1LzEyMw`. The
+	// the base64url encoding of this string, which is `ZW5-VVN-c2t1LzEyMw`. The
 	// full resource name for the regional inventory would be
-	// `accounts/123/products/ZW5-VVMtc2t1LzEyMw/regionalInventories/region123`. 2.
+	// `accounts/123/products/ZW5-VVN-c2t1LzEyMw/regionalInventories/region123`. 2.
 	// **Plain Format**: The `{product}` segment is the tilde-separated string
 	// `content_language~feed_label~offer_id`. This format is suitable only when
 	// `content_language`, `feed_label`, and `offer_id` do not contain
@@ -627,11 +623,6 @@ type RegionalInventory struct {
 	// **Encoded Format** for all product IDs to ensure correct parsing, especially
 	// those containing special characters. The presence of tilde (`~`) characters
 	// in the `{product}` segment is used to differentiate between the two formats.
-	// Note: For calls to the v1beta version, the plain format for the product
-	// segment is `channel~content_language~feed_label~offer_id`. For example, the
-	// full resource name for a regional inventory in `region` "region123" would
-	// be:
-	// `accounts/123/products/online~en~US~sku123/regionalInventories/region123`.
 	Name string `json:"name,omitempty"`
 	// Price: Optional. Price of the product in this region.
 	Price *Price `json:"price,omitempty"`
@@ -697,8 +688,8 @@ type AccountsProductsLocalInventoriesDeleteCall struct {
 //     characters such as `/`, `%`, or `~`. * Example: To represent the product
 //     ID `en~US~sku/123` for `store_code` "store123", the `{product}` segment
 //     must be the base64url encoding of this string, which is
-//     `ZW5-VVMtc2t1LzEyMw`. The full resource name for the local inventory would
-//     be `accounts/123/products/ZW5-VVMtc2t1LzEyMw/localInventories/store123`.
+//     `ZW5-VVN-c2t1LzEyMw`. The full resource name for the local inventory would
+//     be `accounts/123/products/ZW5-VVN-c2t1LzEyMw/localInventories/store123`.
 //     2. **Plain Format**: The `{product}` segment is the tilde-separated string
 //     `content_language~feed_label~offer_id`. This format is suitable only when
 //     `content_language`, `feed_label`, and `offer_id` do not contain
@@ -706,11 +697,7 @@ type AccountsProductsLocalInventoriesDeleteCall struct {
 //     **Encoded Format** for all product IDs to ensure correct parsing,
 //     especially those containing special characters. The presence of tilde
 //     (`~`) characters in the `{product}` segment is used to differentiate
-//     between the two formats. Note: For calls to the v1beta version, the plain
-//     format for the product segment is
-//     `channel~content_language~feed_label~offer_id`. For example, the full
-//     resource name for a local inventory at `store_code` "store123" would be:
-//     `accounts/123/products/online~en~US~sku123/localInventories/store123`.
+//     between the two formats.
 func (r *AccountsProductsLocalInventoriesService) Delete(nameid string) *AccountsProductsLocalInventoriesDeleteCall {
 	c := &AccountsProductsLocalInventoriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -827,8 +814,8 @@ type AccountsProductsLocalInventoriesInsertCall struct {
 //     used if any part of the product identifier (like `offer_id`) contains
 //     characters such as `/`, `%`, or `~`. * Example: To represent the product
 //     ID `en~US~sku/123`, the `{product}` segment must be the base64url encoding
-//     of this string, which is `ZW5-VVMtc2t1LzEyMw`. The full resource name for
-//     the product would be `accounts/123/products/ZW5-VVMtc2t1LzEyMw`. 2.
+//     of this string, which is `ZW5-VVN-c2t1LzEyMw`. The full resource name for
+//     the product would be `accounts/123/products/ZW5-VVN-c2t1LzEyMw`. 2.
 //     **Plain Format**: The `{product}` segment is the tilde-separated string
 //     `content_language~feed_label~offer_id`. This format is suitable only when
 //     `content_language`, `feed_label`, and `offer_id` do not contain
@@ -836,9 +823,7 @@ type AccountsProductsLocalInventoriesInsertCall struct {
 //     **Encoded Format** for all product IDs to ensure correct parsing,
 //     especially those containing special characters. The presence of tilde
 //     (`~`) characters in the `{product}` segment is used to differentiate
-//     between the two formats. Note: For calls to the v1beta version, the plain
-//     format is `channel~content_language~feed_label~offer_id`, for example:
-//     `accounts/123/products/online~en~US~sku123`.
+//     between the two formats.
 func (r *AccountsProductsLocalInventoriesService) Insert(parentid string, localinventory *LocalInventory) *AccountsProductsLocalInventoriesInsertCall {
 	c := &AccountsProductsLocalInventoriesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -960,8 +945,8 @@ type AccountsProductsLocalInventoriesListCall struct {
 //     used if any part of the product identifier (like `offer_id`) contains
 //     characters such as `/`, `%`, or `~`. * Example: To represent the product
 //     ID `en~US~sku/123`, the `{product}` segment must be the base64url encoding
-//     of this string, which is `ZW5-VVMtc2t1LzEyMw`. The full resource name for
-//     the product would be `accounts/123/products/ZW5-VVMtc2t1LzEyMw`. 2.
+//     of this string, which is `ZW5-VVN-c2t1LzEyMw`. The full resource name for
+//     the product would be `accounts/123/products/ZW5-VVN-c2t1LzEyMw`. 2.
 //     **Plain Format**: The `{product}` segment is the tilde-separated string
 //     `content_language~feed_label~offer_id`. This format is suitable only when
 //     `content_language`, `feed_label`, and `offer_id` do not contain
@@ -969,9 +954,7 @@ type AccountsProductsLocalInventoriesListCall struct {
 //     **Encoded Format** for all product IDs to ensure correct parsing,
 //     especially those containing special characters. The presence of tilde
 //     (`~`) characters in the `{product}` segment is used to differentiate
-//     between the two formats. Note: For calls to the v1beta version, the plain
-//     format is `channel~content_language~feed_label~offer_id`, for example:
-//     `accounts/123/products/online~en~US~sku123`.
+//     between the two formats.
 func (r *AccountsProductsLocalInventoriesService) List(parentid string) *AccountsProductsLocalInventoriesListCall {
 	c := &AccountsProductsLocalInventoriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -1141,9 +1124,9 @@ type AccountsProductsRegionalInventoriesDeleteCall struct {
 //     used if any part of the product identifier (like `offer_id`) contains
 //     characters such as `/`, `%`, or `~`. * Example: To represent the product
 //     ID `en~US~sku/123` for `region` "region123", the `{product}` segment must
-//     be the base64url encoding of this string, which is `ZW5-VVMtc2t1LzEyMw`.
+//     be the base64url encoding of this string, which is `ZW5-VVN-c2t1LzEyMw`.
 //     The full resource name for the regional inventory would be
-//     `accounts/123/products/ZW5-VVMtc2t1LzEyMw/regionalInventories/region123`.
+//     `accounts/123/products/ZW5-VVN-c2t1LzEyMw/regionalInventories/region123`.
 //     2. **Plain Format**: The `{product}` segment is the tilde-separated string
 //     `content_language~feed_label~offer_id`. This format is suitable only when
 //     `content_language`, `feed_label`, and `offer_id` do not contain
@@ -1151,11 +1134,7 @@ type AccountsProductsRegionalInventoriesDeleteCall struct {
 //     **Encoded Format** for all product IDs to ensure correct parsing,
 //     especially those containing special characters. The presence of tilde
 //     (`~`) characters in the `{product}` segment is used to differentiate
-//     between the two formats. Note: For calls to the v1beta version, the plain
-//     format for the product segment is
-//     `channel~content_language~feed_label~offer_id`. For example, the full
-//     resource name for a regional inventory in `region` "region123" would be:
-//     `accounts/123/products/online~en~US~sku123/regionalInventories/region123`.
+//     between the two formats.
 func (r *AccountsProductsRegionalInventoriesService) Delete(nameid string) *AccountsProductsRegionalInventoriesDeleteCall {
 	c := &AccountsProductsRegionalInventoriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -1271,8 +1250,8 @@ type AccountsProductsRegionalInventoriesInsertCall struct {
 //     used if any part of the product identifier (like `offer_id`) contains
 //     characters such as `/`, `%`, or `~`. * Example: To represent the product
 //     ID `en~US~sku/123`, the `{product}` segment must be the base64url encoding
-//     of this string, which is `ZW5-VVMtc2t1LzEyMw`. The full resource name for
-//     the product would be `accounts/123/products/ZW5-VVMtc2t1LzEyMw`. 2.
+//     of this string, which is `ZW5-VVN-c2t1LzEyMw`. The full resource name for
+//     the product would be `accounts/123/products/ZW5-VVN-c2t1LzEyMw`. 2.
 //     **Plain Format**: The `{product}` segment is the tilde-separated string
 //     `content_language~feed_label~offer_id`. This format is suitable only when
 //     `content_language`, `feed_label`, and `offer_id` do not contain
@@ -1280,9 +1259,7 @@ type AccountsProductsRegionalInventoriesInsertCall struct {
 //     **Encoded Format** for all product IDs to ensure correct parsing,
 //     especially those containing special characters. The presence of tilde
 //     (`~`) characters in the `{product}` segment is used to differentiate
-//     between the two formats. Note: For calls to the v1beta version, the plain
-//     format is `channel~content_language~feed_label~offer_id`, for example:
-//     `accounts/123/products/online~en~US~sku123`.
+//     between the two formats.
 func (r *AccountsProductsRegionalInventoriesService) Insert(parentid string, regionalinventory *RegionalInventory) *AccountsProductsRegionalInventoriesInsertCall {
 	c := &AccountsProductsRegionalInventoriesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -1405,8 +1382,8 @@ type AccountsProductsRegionalInventoriesListCall struct {
 //     used if any part of the product identifier (like `offer_id`) contains
 //     characters such as `/`, `%`, or `~`. * Example: To represent the product
 //     ID `en~US~sku/123`, the `{product}` segment must be the base64url encoding
-//     of this string, which is `ZW5-VVMtc2t1LzEyMw`. The full resource name for
-//     the product would be `accounts/123/products/ZW5-VVMtc2t1LzEyMw`. 2.
+//     of this string, which is `ZW5-VVN-c2t1LzEyMw`. The full resource name for
+//     the product would be `accounts/123/products/ZW5-VVN-c2t1LzEyMw`. 2.
 //     **Plain Format**: The `{product}` segment is the tilde-separated string
 //     `content_language~feed_label~offer_id`. This format is suitable only when
 //     `content_language`, `feed_label`, and `offer_id` do not contain
@@ -1414,9 +1391,7 @@ type AccountsProductsRegionalInventoriesListCall struct {
 //     **Encoded Format** for all product IDs to ensure correct parsing,
 //     especially those containing special characters. The presence of tilde
 //     (`~`) characters in the `{product}` segment is used to differentiate
-//     between the two formats. Note: For calls to the v1beta version, the plain
-//     format is `channel~content_language~feed_label~offer_id`, for example:
-//     `accounts/123/products/online~en~US~sku123`.
+//     between the two formats.
 func (r *AccountsProductsRegionalInventoriesService) List(parentid string) *AccountsProductsRegionalInventoriesListCall {
 	c := &AccountsProductsRegionalInventoriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid

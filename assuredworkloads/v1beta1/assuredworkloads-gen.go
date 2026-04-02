@@ -416,39 +416,12 @@ type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
 	// the resources managed by the workload.
 	//
 	// Possible values:
-	//   "COMPLIANCE_REGIME_UNSPECIFIED" - Unknown compliance regime.
-	//   "IL4" - Information protection as per DoD IL4 requirements.
-	//   "CJIS" - Criminal Justice Information Services (CJIS) Security policies.
-	//   "FEDRAMP_HIGH" - FedRAMP High data protection controls
-	//   "FEDRAMP_MODERATE" - FedRAMP Moderate data protection controls
-	//   "US_REGIONAL_ACCESS" - Assured Workloads For US Regions data protection
-	// controls
-	//   "HIPAA" - [DEPRECATED] Health Insurance Portability and Accountability Act
-	// controls
-	//   "HITRUST" - [DEPRECATED] Health Information Trust Alliance controls
-	//   "EU_REGIONS_AND_SUPPORT" - Assured Workloads For EU Regions and Support
-	// controls
-	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
-	// Support controls
-	//   "ITAR" - International Traffic in Arms Regulations
-	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia Regions and
-	// Support controls
-	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners;
-	//   "ISR_REGIONS" - Assured Workloads for Israel Regions
-	//   "ISR_REGIONS_AND_SUPPORT" - Assured Workloads for Israel Regions
-	//   "CA_PROTECTED_B" - Assured Workloads for Canada Protected B regime
-	//   "IL5" - Information protection as per DoD IL5 requirements.
-	//   "IL2" - Information protection as per DoD IL2 requirements.
-	//   "JP_REGIONS_AND_SUPPORT" - Assured Workloads for Japan Regions
-	//   "KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS" - Assured Workloads
-	// Sovereign Controls KSA
-	//   "REGIONAL_CONTROLS" - Assured Workloads for Regional Controls
-	//   "HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS" - Healthcare and Life Science
-	// Controls
-	//   "HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS_US_SUPPORT" - Healthcare and Life
-	// Science Controls with US Support
-	//   "IRS_1075" - Internal Revenue Service 1075 controls
-	//   "CANADA_CONTROLLED_GOODS" - Canada Controlled Goods
+	//   "COMPLIANCE_REGIME_UNSPECIFIED" - The default value. This value is used if
+	// the control package is omitted or unknown.
+	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Specifies a [Sovereign Controls by
+	// Partners](https://cloud.google.com/sovereign-controls-by-partners/docs/overvi
+	// ew) control package. To use this control package, you must also specify the
+	// partner field from the list of Sovereign Controls by Partners.
 	//   "AUSTRALIA_DATA_BOUNDARY_AND_SUPPORT" - Australia Data Boundary and
 	// Support
 	//   "CANADA_DATA_BOUNDARY_AND_SUPPORT" - Canada Data Boundary and Support
@@ -456,26 +429,103 @@ type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
 	// Controlled Goods
 	//   "DATA_BOUNDARY_FOR_CANADA_PROTECTED_B" - Data Boundary for Canada
 	// Protected B
-	//   "DATA_BOUNDARY_FOR_CJIS" - Data Boundary for CJIS
+	//   "DATA_BOUNDARY_FOR_CJIS" - Data Boundary for Criminal Justice Information
+	// Systems (CJIS)
 	//   "DATA_BOUNDARY_FOR_FEDRAMP_HIGH" - Data Boundary for FedRAMP High
 	//   "DATA_BOUNDARY_FOR_FEDRAMP_MODERATE" - Data Boundary for FedRAMP Moderate
-	//   "DATA_BOUNDARY_FOR_IL2" - Data Boundary for IL2
-	//   "DATA_BOUNDARY_FOR_IL4" - Data Boundary for IL4
-	//   "DATA_BOUNDARY_FOR_IL5" - Data Boundary for IL5
+	//   "DATA_BOUNDARY_FOR_IL2" - Data Boundary for Impact Level 2 (IL2)
+	//   "DATA_BOUNDARY_FOR_IL4" - Data Boundary for Impact Level 4 (IL4)
+	//   "DATA_BOUNDARY_FOR_IL5" - Data Boundary for Impact Level 5 (IL5)
 	//   "DATA_BOUNDARY_FOR_IRS_PUBLICATION_1075" - Data Boundary for IRS
 	// Publication 1075
-	//   "DATA_BOUNDARY_FOR_ITAR" - Data Boundary for ITAR
-	//   "EU_DATA_BOUNDARY_AND_SUPPORT" - Data Boundary for EU Regions and Support
-	//   "ISRAEL_DATA_BOUNDARY_AND_SUPPORT" - Data Boundary for Israel Regions
-	//   "US_DATA_BOUNDARY_AND_SUPPORT" - Data Boundary for US Regions and Support
-	//   "US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES" - Data Boundary for US
-	// Healthcare and Life Sciences
-	//   "US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES_WITH_SUPPORT" - Data
-	// Boundary for US Healthcare and Life Sciences with Support
-	//   "KSA_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS" - KSA Data Boundary with
-	// Access Justifications
-	//   "REGIONAL_DATA_BOUNDARY" - Regional Data Boundary
-	//   "JAPAN_DATA_BOUNDARY" - JAPAN Data Boundary
+	//   "DATA_BOUNDARY_FOR_ITAR" - Data Boundary for International Traffic in Arms
+	// Regulations (ITAR)
+	//   "EU_DATA_BOUNDARY_AND_SUPPORT" - European Union (EU) Data Boundary and
+	// Support
+	//   "ISRAEL_DATA_BOUNDARY_AND_SUPPORT" - Israel Data Boundary and Support
+	//   "JAPAN_DATA_BOUNDARY" - Japan Data Boundary
+	//   "KSA_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS" - Kingdom of Saudi Arabia
+	// (KSA) Data Boundary with Access Justifications
+	//   "REGIONAL_DATA_BOUNDARY" - Data boundary for one of Assured Workloads'
+	// *Free tier* control packages. Determines the region by specifying the data
+	// location during workload creation.
+	//   "US_DATA_BOUNDARY_AND_SUPPORT" - United States (US) Data Boundary and
+	// Support
+	//   "US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES" - United States (US)
+	// Data Boundary for Healthcare and Life Sciences
+	//   "US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES_WITH_SUPPORT" - United
+	// States (US) Data Boundary for Healthcare and Life Sciences with Support
+	//   "AU_REGIONS_AND_US_SUPPORT" - Use the AUSTRALIA_DATA_BOUNDARY_AND_SUPPORT
+	// enum for this control package instead, as the name of the associated Assured
+	// Workloads control package has changed.
+	//   "CA_PROTECTED_B" - Use the DATA_BOUNDARY_FOR_CANADA_PROTECTED_B enum for
+	// this control package instead, as the name of the associated Assured
+	// Workloads control package has changed.
+	//   "CA_REGIONS_AND_SUPPORT" - Use the CANADA_DATA_BOUNDARY_AND_SUPPORT enum
+	// for this control package instead, as the name of the associated Assured
+	// Workloads control package has changed.
+	//   "CANADA_CONTROLLED_GOODS" - Use the
+	// DATA_BOUNDARY_FOR_CANADA_CONTROLLED_GOODS enum for this control package
+	// instead, as the name of the associated Assured Workloads control package has
+	// changed.
+	//   "CJIS" - Use the DATA_BOUNDARY_FOR_CJIS enum for this control package
+	// instead, as the name of the associated Assured Workloads control package has
+	// changed.
+	//   "EU_REGIONS_AND_SUPPORT" - Use the EU_DATA_BOUNDARY_AND_SUPPORT enum for
+	// this control package instead, as the name of the associated Assured
+	// Workloads control package has changed.
+	//   "FEDRAMP_HIGH" - Use the DATA_BOUNDARY_FOR_FEDRAMP_HIGH enum for this
+	// control package instead, as the name of the associated Assured Workloads
+	// control package has changed.
+	//   "FEDRAMP_MODERATE" - Use the DATA_BOUNDARY_FOR_FEDRAMP_MODERATE enum for
+	// this control package instead, as the name of the associated Assured
+	// Workloads control package has changed.
+	//   "HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS" - Use the
+	// US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES enum for this control
+	// package instead, as the name of the associated Assured Workloads control
+	// package has changed.
+	//   "HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS_US_SUPPORT" - Use the
+	// US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES_WITH_SUPPORT enum for this
+	// control package instead, as the name of the associated Assured Workloads
+	// control package has changed.
+	//   "HIPAA" - Deprecated: Consider using the Data Boundary for US Healthcare
+	// and Life Sciences control package instead.
+	//   "HITRUST" - Deprecated: Consider using the Data Boundary for US Healthcare
+	// and Life Sciences control package instead.
+	//   "IL2" - Use the DATA_BOUNDARY_FOR_IL2 enum for this control package
+	// instead, as the name of the associated Assured Workloads control package has
+	// changed.
+	//   "IL4" - Use the DATA_BOUNDARY_FOR_IL4 enum for this control package
+	// instead, as the name of the associated Assured Workloads control package has
+	// changed.
+	//   "IL5" - Use the DATA_BOUNDARY_FOR_IL5 enum for this control package
+	// instead, as the name of the associated Assured Workloads control package has
+	// changed.
+	//   "IRS_1075" - Use the DATA_BOUNDARY_FOR_IRS_PUBLICATION_1075 enum for this
+	// control package instead, as the name of the associated Assured Workloads
+	// control package has changed.
+	//   "ISR_REGIONS" - Use the ISRAEL_DATA_BOUNDARY_AND_SUPPORT enum for this
+	// control package instead, as the name of the associated Assured Workloads
+	// control package has changed.
+	//   "ISR_REGIONS_AND_SUPPORT" - Use the ISRAEL_DATA_BOUNDARY_AND_SUPPORT enum
+	// for this control package instead, as the name of the associated Assured
+	// Workloads control package has changed.
+	//   "ITAR" - Use the DATA_BOUNDARY_FOR_ITAR enum for this control package
+	// instead, as the name of the associated Assured Workloads control package has
+	// changed.
+	//   "JP_REGIONS_AND_SUPPORT" - Use the JAPAN_DATA_BOUNDARY enum for this
+	// control package instead, as the name of the associated Assured Workloads
+	// control package has changed.
+	//   "KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS" - Use the
+	// KSA_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS enum for this control package
+	// instead, as the name of the associated Assured Workloads control package has
+	// changed.
+	//   "REGIONAL_CONTROLS" - Use the REGIONAL_DATA_BOUNDARY enum for this control
+	// package instead, as the name of the associated Assured Workloads control
+	// package has changed.
+	//   "US_REGIONAL_ACCESS" - Use the US_DATA_BOUNDARY_AND_SUPPORT enum for this
+	// control package instead, as the name of the associated Assured Workloads
+	// control package has changed.
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 	// CreateTime: Optional. Time when the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1143,39 +1193,12 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// this workload.
 	//
 	// Possible values:
-	//   "COMPLIANCE_REGIME_UNSPECIFIED" - Unknown compliance regime.
-	//   "IL4" - Information protection as per DoD IL4 requirements.
-	//   "CJIS" - Criminal Justice Information Services (CJIS) Security policies.
-	//   "FEDRAMP_HIGH" - FedRAMP High data protection controls
-	//   "FEDRAMP_MODERATE" - FedRAMP Moderate data protection controls
-	//   "US_REGIONAL_ACCESS" - Assured Workloads For US Regions data protection
-	// controls
-	//   "HIPAA" - [DEPRECATED] Health Insurance Portability and Accountability Act
-	// controls
-	//   "HITRUST" - [DEPRECATED] Health Information Trust Alliance controls
-	//   "EU_REGIONS_AND_SUPPORT" - Assured Workloads For EU Regions and Support
-	// controls
-	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
-	// Support controls
-	//   "ITAR" - International Traffic in Arms Regulations
-	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia Regions and
-	// Support controls
-	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners;
-	//   "ISR_REGIONS" - Assured Workloads for Israel Regions
-	//   "ISR_REGIONS_AND_SUPPORT" - Assured Workloads for Israel Regions
-	//   "CA_PROTECTED_B" - Assured Workloads for Canada Protected B regime
-	//   "IL5" - Information protection as per DoD IL5 requirements.
-	//   "IL2" - Information protection as per DoD IL2 requirements.
-	//   "JP_REGIONS_AND_SUPPORT" - Assured Workloads for Japan Regions
-	//   "KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS" - Assured Workloads
-	// Sovereign Controls KSA
-	//   "REGIONAL_CONTROLS" - Assured Workloads for Regional Controls
-	//   "HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS" - Healthcare and Life Science
-	// Controls
-	//   "HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS_US_SUPPORT" - Healthcare and Life
-	// Science Controls with US Support
-	//   "IRS_1075" - Internal Revenue Service 1075 controls
-	//   "CANADA_CONTROLLED_GOODS" - Canada Controlled Goods
+	//   "COMPLIANCE_REGIME_UNSPECIFIED" - The default value. This value is used if
+	// the control package is omitted or unknown.
+	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Specifies a [Sovereign Controls by
+	// Partners](https://cloud.google.com/sovereign-controls-by-partners/docs/overvi
+	// ew) control package. To use this control package, you must also specify the
+	// partner field from the list of Sovereign Controls by Partners.
 	//   "AUSTRALIA_DATA_BOUNDARY_AND_SUPPORT" - Australia Data Boundary and
 	// Support
 	//   "CANADA_DATA_BOUNDARY_AND_SUPPORT" - Canada Data Boundary and Support
@@ -1183,26 +1206,103 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// Controlled Goods
 	//   "DATA_BOUNDARY_FOR_CANADA_PROTECTED_B" - Data Boundary for Canada
 	// Protected B
-	//   "DATA_BOUNDARY_FOR_CJIS" - Data Boundary for CJIS
+	//   "DATA_BOUNDARY_FOR_CJIS" - Data Boundary for Criminal Justice Information
+	// Systems (CJIS)
 	//   "DATA_BOUNDARY_FOR_FEDRAMP_HIGH" - Data Boundary for FedRAMP High
 	//   "DATA_BOUNDARY_FOR_FEDRAMP_MODERATE" - Data Boundary for FedRAMP Moderate
-	//   "DATA_BOUNDARY_FOR_IL2" - Data Boundary for IL2
-	//   "DATA_BOUNDARY_FOR_IL4" - Data Boundary for IL4
-	//   "DATA_BOUNDARY_FOR_IL5" - Data Boundary for IL5
+	//   "DATA_BOUNDARY_FOR_IL2" - Data Boundary for Impact Level 2 (IL2)
+	//   "DATA_BOUNDARY_FOR_IL4" - Data Boundary for Impact Level 4 (IL4)
+	//   "DATA_BOUNDARY_FOR_IL5" - Data Boundary for Impact Level 5 (IL5)
 	//   "DATA_BOUNDARY_FOR_IRS_PUBLICATION_1075" - Data Boundary for IRS
 	// Publication 1075
-	//   "DATA_BOUNDARY_FOR_ITAR" - Data Boundary for ITAR
-	//   "EU_DATA_BOUNDARY_AND_SUPPORT" - Data Boundary for EU Regions and Support
-	//   "ISRAEL_DATA_BOUNDARY_AND_SUPPORT" - Data Boundary for Israel Regions
-	//   "US_DATA_BOUNDARY_AND_SUPPORT" - Data Boundary for US Regions and Support
-	//   "US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES" - Data Boundary for US
-	// Healthcare and Life Sciences
-	//   "US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES_WITH_SUPPORT" - Data
-	// Boundary for US Healthcare and Life Sciences with Support
-	//   "KSA_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS" - KSA Data Boundary with
-	// Access Justifications
-	//   "REGIONAL_DATA_BOUNDARY" - Regional Data Boundary
-	//   "JAPAN_DATA_BOUNDARY" - JAPAN Data Boundary
+	//   "DATA_BOUNDARY_FOR_ITAR" - Data Boundary for International Traffic in Arms
+	// Regulations (ITAR)
+	//   "EU_DATA_BOUNDARY_AND_SUPPORT" - European Union (EU) Data Boundary and
+	// Support
+	//   "ISRAEL_DATA_BOUNDARY_AND_SUPPORT" - Israel Data Boundary and Support
+	//   "JAPAN_DATA_BOUNDARY" - Japan Data Boundary
+	//   "KSA_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS" - Kingdom of Saudi Arabia
+	// (KSA) Data Boundary with Access Justifications
+	//   "REGIONAL_DATA_BOUNDARY" - Data boundary for one of Assured Workloads'
+	// *Free tier* control packages. Determines the region by specifying the data
+	// location during workload creation.
+	//   "US_DATA_BOUNDARY_AND_SUPPORT" - United States (US) Data Boundary and
+	// Support
+	//   "US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES" - United States (US)
+	// Data Boundary for Healthcare and Life Sciences
+	//   "US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES_WITH_SUPPORT" - United
+	// States (US) Data Boundary for Healthcare and Life Sciences with Support
+	//   "AU_REGIONS_AND_US_SUPPORT" - Use the AUSTRALIA_DATA_BOUNDARY_AND_SUPPORT
+	// enum for this control package instead, as the name of the associated Assured
+	// Workloads control package has changed.
+	//   "CA_PROTECTED_B" - Use the DATA_BOUNDARY_FOR_CANADA_PROTECTED_B enum for
+	// this control package instead, as the name of the associated Assured
+	// Workloads control package has changed.
+	//   "CA_REGIONS_AND_SUPPORT" - Use the CANADA_DATA_BOUNDARY_AND_SUPPORT enum
+	// for this control package instead, as the name of the associated Assured
+	// Workloads control package has changed.
+	//   "CANADA_CONTROLLED_GOODS" - Use the
+	// DATA_BOUNDARY_FOR_CANADA_CONTROLLED_GOODS enum for this control package
+	// instead, as the name of the associated Assured Workloads control package has
+	// changed.
+	//   "CJIS" - Use the DATA_BOUNDARY_FOR_CJIS enum for this control package
+	// instead, as the name of the associated Assured Workloads control package has
+	// changed.
+	//   "EU_REGIONS_AND_SUPPORT" - Use the EU_DATA_BOUNDARY_AND_SUPPORT enum for
+	// this control package instead, as the name of the associated Assured
+	// Workloads control package has changed.
+	//   "FEDRAMP_HIGH" - Use the DATA_BOUNDARY_FOR_FEDRAMP_HIGH enum for this
+	// control package instead, as the name of the associated Assured Workloads
+	// control package has changed.
+	//   "FEDRAMP_MODERATE" - Use the DATA_BOUNDARY_FOR_FEDRAMP_MODERATE enum for
+	// this control package instead, as the name of the associated Assured
+	// Workloads control package has changed.
+	//   "HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS" - Use the
+	// US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES enum for this control
+	// package instead, as the name of the associated Assured Workloads control
+	// package has changed.
+	//   "HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS_US_SUPPORT" - Use the
+	// US_DATA_BOUNDARY_FOR_HEALTHCARE_AND_LIFE_SCIENCES_WITH_SUPPORT enum for this
+	// control package instead, as the name of the associated Assured Workloads
+	// control package has changed.
+	//   "HIPAA" - Deprecated: Consider using the Data Boundary for US Healthcare
+	// and Life Sciences control package instead.
+	//   "HITRUST" - Deprecated: Consider using the Data Boundary for US Healthcare
+	// and Life Sciences control package instead.
+	//   "IL2" - Use the DATA_BOUNDARY_FOR_IL2 enum for this control package
+	// instead, as the name of the associated Assured Workloads control package has
+	// changed.
+	//   "IL4" - Use the DATA_BOUNDARY_FOR_IL4 enum for this control package
+	// instead, as the name of the associated Assured Workloads control package has
+	// changed.
+	//   "IL5" - Use the DATA_BOUNDARY_FOR_IL5 enum for this control package
+	// instead, as the name of the associated Assured Workloads control package has
+	// changed.
+	//   "IRS_1075" - Use the DATA_BOUNDARY_FOR_IRS_PUBLICATION_1075 enum for this
+	// control package instead, as the name of the associated Assured Workloads
+	// control package has changed.
+	//   "ISR_REGIONS" - Use the ISRAEL_DATA_BOUNDARY_AND_SUPPORT enum for this
+	// control package instead, as the name of the associated Assured Workloads
+	// control package has changed.
+	//   "ISR_REGIONS_AND_SUPPORT" - Use the ISRAEL_DATA_BOUNDARY_AND_SUPPORT enum
+	// for this control package instead, as the name of the associated Assured
+	// Workloads control package has changed.
+	//   "ITAR" - Use the DATA_BOUNDARY_FOR_ITAR enum for this control package
+	// instead, as the name of the associated Assured Workloads control package has
+	// changed.
+	//   "JP_REGIONS_AND_SUPPORT" - Use the JAPAN_DATA_BOUNDARY enum for this
+	// control package instead, as the name of the associated Assured Workloads
+	// control package has changed.
+	//   "KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS" - Use the
+	// KSA_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS enum for this control package
+	// instead, as the name of the associated Assured Workloads control package has
+	// changed.
+	//   "REGIONAL_CONTROLS" - Use the REGIONAL_DATA_BOUNDARY enum for this control
+	// package instead, as the name of the associated Assured Workloads control
+	// package has changed.
+	//   "US_REGIONAL_ACCESS" - Use the US_DATA_BOUNDARY_AND_SUPPORT enum for this
+	// control package instead, as the name of the associated Assured Workloads
+	// control package has changed.
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 	// ComplianceStatus: Output only. Count of active Violations in the Workload.
 	ComplianceStatus *GoogleCloudAssuredworkloadsV1beta1WorkloadComplianceStatus `json:"complianceStatus,omitempty"`
@@ -1282,7 +1382,7 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	PartnerPermissions *GoogleCloudAssuredworkloadsV1beta1WorkloadPartnerPermissions `json:"partnerPermissions,omitempty"`
 	// PartnerServicesBillingAccount: Optional. Billing account necessary for
 	// purchasing services from Sovereign Partners. This field is required for
-	// creating SIA/PSN/CNTXT partner workloads. The caller should have
+	// creating SIA/PSN/CNTXT/Telefonica partner workloads. The caller should have
 	// 'billing.resourceAssociations.create' IAM permission on this
 	// billing-account. The format of this string is
 	// billingAccounts/AAAAAA-BBBBBB-CCCCCC

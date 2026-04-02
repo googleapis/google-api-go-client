@@ -2391,14 +2391,14 @@ func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 type ListLogEntriesRequest struct {
 	// Filter: Optional. A filter that chooses which log entries to return. For
 	// more information, see Logging query language
-	// (https://{$universe.dns_names.final_documentation_domain}/logging/docs/view/logging-query-language).Only
+	// (https://docs.cloud.google.com/logging/docs/view/logging-query-language).Only
 	// log entries that match the filter are returned. An empty filter matches all
 	// log entries in the resources listed in resource_names. Referencing a parent
 	// resource that is not listed in resource_names will cause the filter to
 	// return no results. The maximum length of a filter is 20,000 characters.To
 	// make queries faster, you can make the filter more selective by using
 	// restrictions on indexed fields
-	// (https://{$universe.dns_names.final_documentation_domain}/logging/docs/view/logging-query-language#indexed-fields)
+	// (https://docs.cloud.google.com/logging/docs/view/logging-query-language#indexed-fields)
 	// as well as limit the time range of the query by adding range restrictions on
 	// the timestamp field.
 	Filter string `json:"filter,omitempty"`
@@ -4817,7 +4817,8 @@ type SuppressionInfo struct {
 	//   "REASON_UNSPECIFIED" - Unexpected default.
 	//   "RATE_LIMIT" - Indicates suppression occurred due to relevant entries
 	// being received in excess of rate limits. For quotas and limits, see Logging
-	// API quotas and limits (https://cloud.google.com/logging/quotas#api-limits).
+	// API quotas and limits
+	// (https://docs.cloud.google.com/logging/quotas#api-limits).
 	//   "NOT_CONSUMED" - Indicates suppression occurred due to the client not
 	// consuming responses quickly enough.
 	Reason string `json:"reason,omitempty"`
@@ -4851,7 +4852,7 @@ type TailLogEntriesRequest struct {
 	BufferWindow string `json:"bufferWindow,omitempty"`
 	// Filter: Optional. A filter that chooses which log entries to return. For
 	// more information, see Logging query language
-	// (https://{$universe.dns_names.final_documentation_domain}/logging/docs/view/logging-query-language).Only
+	// (https://docs.cloud.google.com/logging/docs/view/logging-query-language).Only
 	// log entries that match the filter are returned. An empty filter matches all
 	// log entries in the resources listed in resource_names. Referencing a parent
 	// resource that is not listed in resource_names will cause the filter to
@@ -5029,14 +5030,14 @@ type WriteLogEntriesRequest struct {
 	// among the log entries that did not supply their own values, the entries
 	// earlier in the list will sort before the entries later in the list. See the
 	// entries.list method.Log entries with timestamps that are more than the logs
-	// retention period (https://cloud.google.com/logging/quotas) in the past or
-	// more than 24 hours in the future will not be available when calling
+	// retention period (https://docs.cloud.google.com/logging/quotas) in the past
+	// or more than 24 hours in the future will not be available when calling
 	// entries.list. However, those log entries can still be exported with LogSinks
-	// (https://cloud.google.com/logging/docs/api/tasks/exporting-logs).To improve
+	// (https://docs.cloud.google.com/logging/docs/routing/overview).To improve
 	// throughput and to avoid exceeding the quota limit
-	// (https://cloud.google.com/logging/quotas) for calls to entries.write, you
-	// should try to include several log entries in this list, rather than calling
-	// this method for each individual log entry.
+	// (https://docs.cloud.google.com/logging/quotas) for calls to entries.write,
+	// you should try to include several log entries in this list, rather than
+	// calling this method for each individual log entry.
 	Entries []*LogEntry `json:"entries,omitempty"`
 	// Labels: Optional. Default labels that are added to the labels field of all
 	// log entries in entries. If a log entry already has a label with the same key
@@ -10828,8 +10829,8 @@ type EntriesListCall struct {
 
 // List: Lists log entries. Use this method to retrieve log entries that
 // originated from a project/folder/organization/billing account. For ways to
-// export log entries, see Exporting Logs
-// (https://cloud.google.com/logging/docs/export).
+// export log entries, see Routing overview
+// (https://docs.cloud.google.com/logging/docs/routing/overview).
 func (r *EntriesService) List(listlogentriesrequest *ListLogEntriesRequest) *EntriesListCall {
 	c := &EntriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.listlogentriesrequest = listlogentriesrequest

@@ -996,13 +996,13 @@ type DateElementProperties struct {
 	DisplayText string `json:"displayText,omitempty"`
 	// Locale: The language code of the DateElement. For example, `en`. If unset,
 	// the default locale is `en`. Limited to the following locales: `af`, `am`,
-	// `ar`, `az`, `be`, `bg`, `bn`, `ca`, `cs`, `da`, `de`, `el`, `en`, `en-CA`,
-	// `en-GB`, `es`, `es-419`, `et`, `eu`, `fa`, `fi`, `fil`, `fr`, `fr-CA`, `gl`,
-	// `gu`, `hi`, `hr`, `hu`, `hy`, `id`, `is`, `it`, `iw`, `ja`, `ka`, `kk`,
-	// `km`, `kn`, `ko`, `lo`, `lt`, `lv`, `ml`, `mn`, `mr`, `ms`, `ne`, `nl`,
-	// `no`, `pa`, `pl`, `pt-BR`, `pt-PT`, `ro`, `ru`, `si`, `sk`, `sl`, `sr`,
-	// `sv`, `sw`, `ta`, `te`, `th`, `tr`, `uk`, `ur`, `vi`, `zh-CN`, `zh-HK`,
-	// `zh-TW`, `zu`, `cy`, `my`.
+	// `ar`, `as`, `az`, `be`, `bg`, `bn`, `ca`, `cs`, `da`, `de`, `el`, `en`,
+	// `en-CA`, `en-GB`, `es`, `es-419`, `et`, `eu`, `fa`, `fi`, `fil`, `fr`,
+	// `fr-CA`, `gl`, `gu`, `hi`, `hr`, `hu`, `hy`, `id`, `is`, `it`, `iw`, `ja`,
+	// `ka`, `kk`, `km`, `kn`, `ko`, `lo`, `lt`, `lv`, `mk`, `ml`, `mn`, `mr`,
+	// `ms`, `ne`, `nl`, `no`, `or`, `pa`, `pl`, `pt-BR`, `pt-PT`, `ro`, `ru`,
+	// `si`, `sk`, `sl`, `sq`, `sr`, `sv`, `sw`, `ta`, `te`, `th`, `tr`, `uk`,
+	// `ur`, `uz`, `vi`, `zh-CN`, `zh-HK`, `zh-TW`, `zu`, `cy`, `my`.
 	Locale string `json:"locale,omitempty"`
 	// TimeFormat: Determines how the time part of the DateElement will be
 	// displayed in the document. If unset, the default value is

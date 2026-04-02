@@ -170,6 +170,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.AclPolicies = NewProjectsLocationsAclPoliciesService(s)
 	rs.BackupCollections = NewProjectsLocationsBackupCollectionsService(s)
 	rs.Clusters = NewProjectsLocationsClustersService(s)
 	rs.Instances = NewProjectsLocationsInstancesService(s)
@@ -180,6 +181,8 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+	AclPolicies *ProjectsLocationsAclPoliciesService
+
 	BackupCollections *ProjectsLocationsBackupCollectionsService
 
 	Clusters *ProjectsLocationsClustersService
@@ -187,6 +190,15 @@ type ProjectsLocationsService struct {
 	Instances *ProjectsLocationsInstancesService
 
 	Operations *ProjectsLocationsOperationsService
+}
+
+func NewProjectsLocationsAclPoliciesService(s *Service) *ProjectsLocationsAclPoliciesService {
+	rs := &ProjectsLocationsAclPoliciesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAclPoliciesService struct {
+	s *Service
 }
 
 func NewProjectsLocationsBackupCollectionsService(s *Service) *ProjectsLocationsBackupCollectionsService {
@@ -265,6 +277,74 @@ type AOFConfig struct {
 
 func (s AOFConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AOFConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AclPolicy: The ACL policy resource.
+type AclPolicy struct {
+	// Etag: Output only. Etag for the ACL policy.
+	Etag string `json:"etag,omitempty"`
+	// Name: Identifier. Full resource path of the ACL policy.
+	Name string `json:"name,omitempty"`
+	// Rules: Required. The ACL rules within the ACL policy.
+	Rules []*AclRule `json:"rules,omitempty"`
+	// State: Output only. The state of the ACL policy.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not set.
+	//   "ACTIVE" - ACL Policy has been created and is fully usable. Since ACL
+	// Policy creation is synchronous and not an LRO, there is no CREATING state.
+	//   "UPDATING" - ACL Policy is being updated.
+	//   "DELETING" - ACL Policy is being deleted.
+	State string `json:"state,omitempty"`
+	// Version: Output only. The version of the ACL policy. Used in drift
+	// resolution.
+	Version int64 `json:"version,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AclPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod AclPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AclRule: A single ACL rule which defines the policy for a user.
+type AclRule struct {
+	// Rule: Required. The rule to be applied to the username. Ex: "on >password123
+	// ~* +@all" The format of the rule is defined by Redis OSS:
+	// https://redis.io/docs/latest/operate/oss_and_stack/management/security/acl/
+	Rule string `json:"rule,omitempty"`
+	// Username: Required. Specifies the IAM user or service account to be added to
+	// the ACL policy. This username will be directly set on the Redis OSS.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Rule") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Rule") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AclRule) MarshalJSON() ([]byte, error) {
+	type NoMethod AclRule
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -698,6 +778,10 @@ func (s CertificateAuthority) MarshalJSON() ([]byte, error) {
 type Cluster struct {
 	// AclPolicy: Optional. The ACL policy to be applied to the cluster.
 	AclPolicy string `json:"aclPolicy,omitempty"`
+	// AclPolicyInSync: Optional. Output only. Indicates whether the ACL rules
+	// applied to the cluster are in sync with the latest ACL policy rules. This
+	// field is only applicable if the ACL policy is set for the cluster.
+	AclPolicyInSync bool `json:"aclPolicyInSync,omitempty"`
 	// AllowFewerZonesDeployment: Optional. Immutable. Deprecated, do not use.
 	AllowFewerZonesDeployment bool `json:"allowFewerZonesDeployment,omitempty"`
 	// AsyncClusterEndpointsDeletionEnabled: Optional. If true, cluster endpoints
@@ -1696,7 +1780,7 @@ func (s DatabaseResourceId) MarshalJSON() ([]byte, error) {
 }
 
 // DatabaseResourceMetadata: Common model for database resource instance
-// metadata. Next ID: 31
+// metadata. Next ID: 32
 type DatabaseResourceMetadata struct {
 	// AvailabilityConfiguration: Availability configuration for this instance
 	AvailabilityConfiguration *AvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
@@ -1783,6 +1867,13 @@ type DatabaseResourceMetadata struct {
 	MachineConfiguration *MachineConfiguration `json:"machineConfiguration,omitempty"`
 	// MaintenanceInfo: Optional. Maintenance info for the resource.
 	MaintenanceInfo *ResourceMaintenanceInfo `json:"maintenanceInfo,omitempty"`
+	// Modes: Optional. The modes of the database resource.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Default mode.
+	//   "MODE_NATIVE" - Native mode.
+	//   "MODE_MONGODB_COMPATIBLE" - MongoDB compatible mode.
+	Modes []string `json:"modes,omitempty"`
 	// PrimaryResourceId: Identifier for this resource's immediate parent/primary
 	// resource if the current resource is a replica or derived form of another
 	// Database resource. Else it would be NULL. REQUIRED if the immediate parent
@@ -2969,6 +3060,39 @@ type InternalResourceMetadata struct {
 
 func (s InternalResourceMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod InternalResourceMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListAclPoliciesResponse: Response for ListAclPolicies.
+type ListAclPoliciesResponse struct {
+	// AclPolicies: A list of ACL policies in the project in the specified
+	// location, or across all locations. If the `location_id` in the parent field
+	// of the request is "-", all regions available to the project are queried, and
+	// the results aggregated.
+	AclPolicies []*AclPolicy `json:"aclPolicies,omitempty"`
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AclPolicies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AclPolicies") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListAclPoliciesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAclPoliciesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5021,10 +5145,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
@@ -5176,6 +5306,635 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsAclPoliciesCreateCall struct {
+	s          *Service
+	parent     string
+	aclpolicy  *AclPolicy
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates an ACL Policy. The creation is executed synchronously and
+// the policy is available for use immediately after the RPC returns.
+//
+//   - parent: The resource name of the cluster location using the form:
+//     `projects/{project_id}/locations/{location_id}` where `location_id` refers
+//     to a Google Cloud region.
+func (r *ProjectsLocationsAclPoliciesService) Create(parent string, aclpolicy *AclPolicy) *ProjectsLocationsAclPoliciesCreateCall {
+	c := &ProjectsLocationsAclPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.aclpolicy = aclpolicy
+	return c
+}
+
+// AclPolicyId sets the optional parameter "aclPolicyId": Required. The logical
+// name of the ACL Policy in the customer project with the following
+// restrictions: * Must contain only lowercase letters, numbers, and hyphens. *
+// Must start with a letter. * Must be between 1-63 characters. * Must end with
+// a number or a letter. * Must be unique within the customer project /
+// location
+func (c *ProjectsLocationsAclPoliciesCreateCall) AclPolicyId(aclPolicyId string) *ProjectsLocationsAclPoliciesCreateCall {
+	c.urlParams_.Set("aclPolicyId", aclPolicyId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": Idempotent request UUID.
+// .
+func (c *ProjectsLocationsAclPoliciesCreateCall) RequestId(requestId string) *ProjectsLocationsAclPoliciesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAclPoliciesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsAclPoliciesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAclPoliciesCreateCall) Context(ctx context.Context) *ProjectsLocationsAclPoliciesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAclPoliciesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAclPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.aclpolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/aclPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "redis.projects.locations.aclPolicies.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.aclPolicies.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AclPolicy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAclPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*AclPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AclPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "redis.projects.locations.aclPolicies.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAclPoliciesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a specific Acl Policy. This action will delete the Acl
+// Policy and all the rules associated with it. An ACL policy cannot be deleted
+// if it is attached to a cluster.
+//
+//   - name: Redis ACL Policy resource name using the form:
+//     `projects/{project_id}/locations/{location_id}/aclPolicies/{acl_policy_id}`
+//     where `location_id` refers to a GCP region.
+func (r *ProjectsLocationsAclPoliciesService) Delete(name string) *ProjectsLocationsAclPoliciesDeleteCall {
+	c := &ProjectsLocationsAclPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": Etag of the ACL policy. If this is
+// different from the server's etag, the request will fail with an ABORTED
+// error.
+func (c *ProjectsLocationsAclPoliciesDeleteCall) Etag(etag string) *ProjectsLocationsAclPoliciesDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": Idempotent request UUID.
+func (c *ProjectsLocationsAclPoliciesDeleteCall) RequestId(requestId string) *ProjectsLocationsAclPoliciesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAclPoliciesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsAclPoliciesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAclPoliciesDeleteCall) Context(ctx context.Context) *ProjectsLocationsAclPoliciesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAclPoliciesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAclPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "redis.projects.locations.aclPolicies.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.aclPolicies.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAclPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "redis.projects.locations.aclPolicies.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAclPoliciesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the details of a specific Redis Cluster ACL Policy.
+//
+//   - name: Redis ACL Policy resource name using the form:
+//     `projects/{project_id}/locations/{location_id}/aclPolicies/{acl_policy_id}`
+//     where `location_id` refers to a GCP region.
+func (r *ProjectsLocationsAclPoliciesService) Get(name string) *ProjectsLocationsAclPoliciesGetCall {
+	c := &ProjectsLocationsAclPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAclPoliciesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAclPoliciesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAclPoliciesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAclPoliciesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAclPoliciesGetCall) Context(ctx context.Context) *ProjectsLocationsAclPoliciesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAclPoliciesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAclPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "redis.projects.locations.aclPolicies.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.aclPolicies.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AclPolicy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAclPoliciesGetCall) Do(opts ...googleapi.CallOption) (*AclPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AclPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "redis.projects.locations.aclPolicies.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAclPoliciesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all ACL Policies owned by a project in either the specified
+// location (region) or all locations. The location should have the following
+// format: * `projects/{project_id}/locations/{location_id}` If `location_id`
+// is specified as `-` (wildcard), then all regions available to the project
+// are queried, and the results are aggregated.
+//
+//   - parent: The resource name of the cluster location using the form:
+//     `projects/{project_id}/locations/{location_id}` where `location_id` refers
+//     to a Google Cloud region.
+func (r *ProjectsLocationsAclPoliciesService) List(parent string) *ProjectsLocationsAclPoliciesListCall {
+	c := &ProjectsLocationsAclPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return. If not specified, a default value of 1000 will be used by the
+// service. Regardless of the page_size value, the response may include a
+// partial list and a caller should only rely on response's `next_page_token`
+// to determine if there are more ACL policies left to be queried. The maximum
+// value is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsAclPoliciesListCall) PageSize(pageSize int64) *ProjectsLocationsAclPoliciesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The `next_page_token`
+// value returned from a previous ListAclPolicies request, if any.
+func (c *ProjectsLocationsAclPoliciesListCall) PageToken(pageToken string) *ProjectsLocationsAclPoliciesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAclPoliciesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAclPoliciesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAclPoliciesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAclPoliciesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAclPoliciesListCall) Context(ctx context.Context) *ProjectsLocationsAclPoliciesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAclPoliciesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAclPoliciesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/aclPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "redis.projects.locations.aclPolicies.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.aclPolicies.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAclPoliciesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAclPoliciesListCall) Do(opts ...googleapi.CallOption) (*ListAclPoliciesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAclPoliciesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "redis.projects.locations.aclPolicies.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAclPoliciesListCall) Pages(ctx context.Context, f func(*ListAclPoliciesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsAclPoliciesPatchCall struct {
+	s          *Service
+	name       string
+	aclpolicy  *AclPolicy
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates the ACL policy. The operation applies the updated ACL policy
+// to all of the linked clusters. If Memorystore can apply the policy to all
+// clusters, then the operation returns a SUCCESS status. If Memorystore can't
+// apply the policy to all clusters, then to ensure eventual consistency,
+// Memorystore uses reconciliation to apply the policy to the failed clusters.
+// Completed longrunning.Operation will contain the new ACL Policy object in
+// the response field.
+//
+// - name: Identifier. Full resource path of the ACL policy.
+func (r *ProjectsLocationsAclPoliciesService) Patch(name string, aclpolicy *AclPolicy) *ProjectsLocationsAclPoliciesPatchCall {
+	c := &ProjectsLocationsAclPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.aclpolicy = aclpolicy
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": Idempotent request UUID.
+func (c *ProjectsLocationsAclPoliciesPatchCall) RequestId(requestId string) *ProjectsLocationsAclPoliciesPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Mask of fields to be
+// updated. At least one path must be supplied in this field. The elements of
+// the repeated paths field may only include these fields from AclPolicy: *
+// `rules`
+func (c *ProjectsLocationsAclPoliciesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsAclPoliciesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAclPoliciesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsAclPoliciesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAclPoliciesPatchCall) Context(ctx context.Context) *ProjectsLocationsAclPoliciesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAclPoliciesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAclPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.aclpolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "redis.projects.locations.aclPolicies.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.aclPolicies.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAclPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "redis.projects.locations.aclPolicies.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsBackupCollectionsGetCall struct {

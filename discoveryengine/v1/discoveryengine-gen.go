@@ -628,28 +628,73 @@ type ProjectsLocationsCollectionsEnginesAssistantsService struct {
 
 func NewProjectsLocationsCollectionsEnginesAssistantsAgentsService(s *Service) *ProjectsLocationsCollectionsEnginesAssistantsAgentsService {
 	rs := &ProjectsLocationsCollectionsEnginesAssistantsAgentsService{s: s}
-	rs.Message = NewProjectsLocationsCollectionsEnginesAssistantsAgentsMessageService(s)
+	rs.A2a = NewProjectsLocationsCollectionsEnginesAssistantsAgentsA2aService(s)
 	rs.Operations = NewProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsService(s)
-	rs.Tasks = NewProjectsLocationsCollectionsEnginesAssistantsAgentsTasksService(s)
 	return rs
 }
 
 type ProjectsLocationsCollectionsEnginesAssistantsAgentsService struct {
 	s *Service
 
-	Message *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageService
+	A2a *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aService
 
 	Operations *ProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsService
-
-	Tasks *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksService
 }
 
-func NewProjectsLocationsCollectionsEnginesAssistantsAgentsMessageService(s *Service) *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageService {
-	rs := &ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageService{s: s}
+func NewProjectsLocationsCollectionsEnginesAssistantsAgentsA2aService(s *Service) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aService {
+	rs := &ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aService{s: s}
+	rs.V1 = NewProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1Service(s)
 	return rs
 }
 
-type ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageService struct {
+type ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aService struct {
+	s *Service
+
+	V1 *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1Service
+}
+
+func NewProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1Service(s *Service) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1Service {
+	rs := &ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1Service{s: s}
+	rs.Message = NewProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageService(s)
+	rs.Tasks = NewProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksService(s)
+	return rs
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1Service struct {
+	s *Service
+
+	Message *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageService
+
+	Tasks *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksService
+}
+
+func NewProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageService(s *Service) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageService {
+	rs := &ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageService struct {
+	s *Service
+}
+
+func NewProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksService(s *Service) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksService {
+	rs := &ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksService{s: s}
+	rs.PushNotificationConfigs = NewProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsService(s)
+	return rs
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksService struct {
+	s *Service
+
+	PushNotificationConfigs *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsService
+}
+
+func NewProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsService(s *Service) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsService {
+	rs := &ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsService struct {
 	s *Service
 }
 
@@ -659,27 +704,6 @@ func NewProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsService(s *
 }
 
 type ProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsService struct {
-	s *Service
-}
-
-func NewProjectsLocationsCollectionsEnginesAssistantsAgentsTasksService(s *Service) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksService {
-	rs := &ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksService{s: s}
-	rs.PushNotificationConfigs = NewProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsService(s)
-	return rs
-}
-
-type ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksService struct {
-	s *Service
-
-	PushNotificationConfigs *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsService
-}
-
-func NewProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsService(s *Service) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsService {
-	rs := &ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsService{s: s}
-	return rs
-}
-
-type ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsService struct {
 	s *Service
 }
 
@@ -8477,9 +8501,7 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	DynamicTools []*GoogleCloudDiscoveryengineV1DynamicTool `json:"dynamicTools,omitempty"`
 	// EgressFqdns: Output only. The list of FQDNs of the data connector can egress
 	// to. This includes both FQDN derived from the customer provided instance URL
-	// and default per connector type FQDNs. Note: This field is derived from both
-	// the DataConnector.params, and connector source spec. It should only be used
-	// for CAIS and Org Policy evaluation purposes.
+	// and default per connector type FQDNs.
 	EgressFqdns []string `json:"egressFqdns,omitempty"`
 	// EndUserConfig: Optional. Any params and credentials used specifically for
 	// EUA connectors.
@@ -8539,7 +8561,7 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	// data synchronization job will be canceled. - No future data synchronization
 	// runs will be scheduled nor can be triggered.
 	LatestPauseTime string `json:"latestPauseTime,omitempty"`
-	// Name: Output only. The full resource name of the Data Connector. Format:
+	// Name: Identifier. The full resource name of the Data Connector. Format:
 	// `projects/*/locations/*/collections/*/dataConnector`.
 	Name string `json:"name,omitempty"`
 	// NextSyncTime: Defines the scheduled time for the next data synchronization.
@@ -8626,7 +8648,7 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	// UpdateTime: Output only. Timestamp the DataConnector was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// VpcscEnabled: Output only. Whether the connector is created with VPC-SC
-	// enabled. This is only used for CuOP evaluation purpose.
+	// enabled.
 	VpcscEnabled bool `json:"vpcscEnabled,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -9542,10 +9564,11 @@ type GoogleCloudDiscoveryengineV1Document struct {
 	// * Otherwise, if document's index is in progress, the pending_message field
 	// is populated.
 	IndexStatus *GoogleCloudDiscoveryengineV1DocumentIndexStatus `json:"indexStatus,omitempty"`
-	// IndexTime: Output only. The last time the document was indexed. If this
-	// field is set, the document could be returned in search results. This field
-	// is OUTPUT_ONLY. If this field is not populated, it means the document has
-	// never been indexed.
+	// IndexTime: Output only. The time when the document was last indexed. If this
+	// field is populated, it means the document has been indexed. While documents
+	// typically become searchable within seconds of indexing, it can sometimes
+	// take up to a few hours. If this field is not populated, it means the
+	// document has never been indexed.
 	IndexTime string `json:"indexTime,omitempty"`
 	// JsonData: The JSON string representation of the document. It should conform
 	// to the registered Schema or an `INVALID_ARGUMENT` error is thrown.
@@ -9695,7 +9718,9 @@ type GoogleCloudDiscoveryengineV1DocumentIndexStatus struct {
 	// this field is populated, the document is not indexed due to errors.
 	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
 	// IndexTime: The time when the document was indexed. If this field is
-	// populated, it means the document has been indexed.
+	// populated, it means the document has been indexed. While documents typically
+	// become searchable within seconds of indexing, it can sometimes take up to a
+	// few hours.
 	IndexTime string `json:"indexTime,omitempty"`
 	// PendingMessage: Immutable. The message indicates the document index is in
 	// progress. If this field is populated, the document index is pending.
@@ -11680,8 +11705,8 @@ type GoogleCloudDiscoveryengineV1ImportUserEventsMetadata struct {
 	FailureCount int64 `json:"failureCount,omitempty,string"`
 	// SuccessCount: Count of entries that were processed successfully.
 	SuccessCount int64 `json:"successCount,omitempty,string"`
-	// UpdateTime: Operation last update time. If the operation is done, this is
-	// also the finish time.
+	// UpdateTime: Output only. Operation last update time. If the operation is
+	// done, this is also the finish time.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -21195,9 +21220,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	DynamicTools []*GoogleCloudDiscoveryengineV1alphaDynamicTool `json:"dynamicTools,omitempty"`
 	// EgressFqdns: Output only. The list of FQDNs of the data connector can egress
 	// to. This includes both FQDN derived from the customer provided instance URL
-	// and default per connector type FQDNs. Note: This field is derived from both
-	// the DataConnector.params, and connector source spec. It should only be used
-	// for CAIS and Org Policy evaluation purposes.
+	// and default per connector type FQDNs.
 	EgressFqdns []string `json:"egressFqdns,omitempty"`
 	// EndUserConfig: Optional. Any params and credentials used specifically for
 	// EUA connectors.
@@ -21257,7 +21280,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// data synchronization job will be canceled. - No future data synchronization
 	// runs will be scheduled nor can be triggered.
 	LatestPauseTime string `json:"latestPauseTime,omitempty"`
-	// Name: Output only. The full resource name of the Data Connector. Format:
+	// Name: Identifier. The full resource name of the Data Connector. Format:
 	// `projects/*/locations/*/collections/*/dataConnector`.
 	Name string `json:"name,omitempty"`
 	// NextSyncTime: Defines the scheduled time for the next data synchronization.
@@ -21344,7 +21367,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// UpdateTime: Output only. Timestamp the DataConnector was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// VpcscEnabled: Output only. Whether the connector is created with VPC-SC
-	// enabled. This is only used for CuOP evaluation purpose.
+	// enabled.
 	VpcscEnabled bool `json:"vpcscEnabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AclEnabled") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -24249,8 +24272,8 @@ type GoogleCloudDiscoveryengineV1alphaImportUserEventsMetadata struct {
 	FailureCount int64 `json:"failureCount,omitempty,string"`
 	// SuccessCount: Count of entries that were processed successfully.
 	SuccessCount int64 `json:"successCount,omitempty,string"`
-	// UpdateTime: Operation last update time. If the operation is done, this is
-	// also the finish time.
+	// UpdateTime: Output only. Operation last update time. If the operation is
+	// done, this is also the finish time.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -31121,8 +31144,8 @@ type GoogleCloudDiscoveryengineV1betaImportUserEventsMetadata struct {
 	FailureCount int64 `json:"failureCount,omitempty,string"`
 	// SuccessCount: Count of entries that were processed successfully.
 	SuccessCount int64 `json:"successCount,omitempty,string"`
-	// UpdateTime: Operation last update time. If the operation is done, this is
-	// also the finish time.
+	// UpdateTime: Output only. Operation last update time. If the operation is
+	// done, this is also the finish time.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -36438,7 +36461,7 @@ type ProjectsLocationsCollectionsUpdateDataConnectorCall struct {
 
 // UpdateDataConnector: Updates a DataConnector.
 //
-//   - name: Output only. The full resource name of the Data Connector. Format:
+//   - name: Identifier. The full resource name of the Data Connector. Format:
 //     `projects/*/locations/*/collections/*/dataConnector`.
 func (r *ProjectsLocationsCollectionsService) UpdateDataConnector(name string, googleclouddiscoveryenginev1dataconnector *GoogleCloudDiscoveryengineV1DataConnector) *ProjectsLocationsCollectionsUpdateDataConnectorCall {
 	c := &ProjectsLocationsCollectionsUpdateDataConnectorCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -48945,7 +48968,7 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsStreamAssistCall) Do(opts 
 	return ret, nil
 }
 
-type ProjectsLocationsCollectionsEnginesAssistantsAgentsGetCardCall struct {
+type ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1GetCardCall struct {
 	s            *Service
 	tenant       string
 	urlParams_   gensupport.URLParams
@@ -48958,8 +48981,8 @@ type ProjectsLocationsCollectionsEnginesAssistantsAgentsGetCardCall struct {
 //
 //   - tenant: Optional tenant, provided as a path parameter. Experimental, might
 //     still change for 1.0 release.
-func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsService) GetCard(tenant string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsGetCardCall {
-	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsGetCardCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1Service) GetCard(tenant string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1GetCardCall {
+	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1GetCardCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tenant = tenant
 	return c
 }
@@ -48967,7 +48990,7 @@ func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsService) GetCard(ten
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsGetCardCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsAgentsGetCardCall {
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1GetCardCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1GetCardCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -48975,34 +48998,34 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsGetCardCall) Fields(
 // IfNoneMatch sets an optional parameter which makes the operation fail if the
 // object's ETag matches the given value. This is useful for getting updates
 // only after the object has changed since the last request.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsGetCardCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsGetCardCall {
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1GetCardCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1GetCardCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsGetCardCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsAgentsGetCardCall {
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1GetCardCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1GetCardCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsGetCardCall) Header() http.Header {
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1GetCardCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsGetCardCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1GetCardCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/card")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/a2a/v1/card")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
@@ -49012,16 +49035,16 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsGetCardCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"tenant": c.tenant,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.getCard", "request", internallog.HTTPRequest(req, nil))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.getCard", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.agents.getCard" call.
+// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.getCard" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *A2aV1AgentCard.ServerResponse.Header or (if a response was returned at all)
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsGetCardCall) Do(opts ...googleapi.CallOption) (*A2aV1AgentCard, error) {
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1GetCardCall) Do(opts ...googleapi.CallOption) (*A2aV1AgentCard, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -49051,11 +49074,11 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsGetCardCall) Do(opts
 	if err != nil {
 		return nil, err
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.getCard", "response", internallog.HTTPResponse(res, b))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.getCard", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
-type ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageSendCall struct {
+type ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageSendCall struct {
 	s                       *Service
 	tenant                  string
 	a2av1sendmessagerequest *A2aV1SendMessageRequest
@@ -49069,8 +49092,8 @@ type ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageSendCall struct {
 //
 //   - tenant: Optional tenant, provided as a path parameter. Experimental, might
 //     still change for 1.0 release.
-func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageService) Send(tenant string, a2av1sendmessagerequest *A2aV1SendMessageRequest) *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageSendCall {
-	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageSendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageService) Send(tenant string, a2av1sendmessagerequest *A2aV1SendMessageRequest) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageSendCall {
+	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageSendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tenant = tenant
 	c.a2av1sendmessagerequest = a2av1sendmessagerequest
 	return c
@@ -49079,27 +49102,27 @@ func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageService) Send
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageSendCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageSendCall {
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageSendCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageSendCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageSendCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageSendCall {
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageSendCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageSendCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageSendCall) Header() http.Header {
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageSendCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageSendCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageSendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.a2av1sendmessagerequest)
 	if err != nil {
@@ -49107,7 +49130,7 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageSendCall) doR
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/message:send")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/a2a/v1/message:send")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -49117,17 +49140,17 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageSendCall) doR
 	googleapi.Expand(req.URL, map[string]string{
 		"tenant": c.tenant,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.message.send", "request", internallog.HTTPRequest(req, body.Bytes()))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.message.send", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.agents.message.send" call.
+// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.message.send" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *A2aV1SendMessageResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageSendCall) Do(opts ...googleapi.CallOption) (*A2aV1SendMessageResponse, error) {
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageSendCall) Do(opts ...googleapi.CallOption) (*A2aV1SendMessageResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -49157,11 +49180,11 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageSendCall) Do(
 	if err != nil {
 		return nil, err
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.message.send", "response", internallog.HTTPResponse(res, b))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.message.send", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
-type ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageStreamCall struct {
+type ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageStreamCall struct {
 	s                       *Service
 	tenant                  string
 	a2av1sendmessagerequest *A2aV1SendMessageRequest
@@ -49175,8 +49198,8 @@ type ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageStreamCall struct
 //
 //   - tenant: Optional tenant, provided as a path parameter. Experimental, might
 //     still change for 1.0 release.
-func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageService) Stream(tenant string, a2av1sendmessagerequest *A2aV1SendMessageRequest) *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageStreamCall {
-	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageStreamCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageService) Stream(tenant string, a2av1sendmessagerequest *A2aV1SendMessageRequest) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageStreamCall {
+	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageStreamCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tenant = tenant
 	c.a2av1sendmessagerequest = a2av1sendmessagerequest
 	return c
@@ -49185,27 +49208,27 @@ func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageService) Stre
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageStreamCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageStreamCall {
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageStreamCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageStreamCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageStreamCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageStreamCall {
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageStreamCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageStreamCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageStreamCall) Header() http.Header {
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageStreamCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageStreamCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageStreamCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.a2av1sendmessagerequest)
 	if err != nil {
@@ -49213,7 +49236,7 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageStreamCall) d
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/message:stream")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/a2a/v1/message:stream")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -49223,17 +49246,17 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageStreamCall) d
 	googleapi.Expand(req.URL, map[string]string{
 		"tenant": c.tenant,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.message.stream", "request", internallog.HTTPRequest(req, body.Bytes()))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.message.stream", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.agents.message.stream" call.
+// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.message.stream" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *A2aV1StreamResponse.ServerResponse.Header or (if a response was returned at
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageStreamCall) Do(opts ...googleapi.CallOption) (*A2aV1StreamResponse, error) {
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1MessageStreamCall) Do(opts ...googleapi.CallOption) (*A2aV1StreamResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -49263,8 +49286,847 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsMessageStreamCall) D
 	if err != nil {
 		return nil, err
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.message.stream", "response", internallog.HTTPResponse(res, b))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.message.stream", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksCancelCall struct {
+	s                      *Service
+	tenant                 string
+	name                   string
+	a2av1canceltaskrequest *A2aV1CancelTaskRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Cancel: Cancel a task from the agent. If supported one should expect no more
+// task updates for the task.
+//
+//   - name: The resource name of the task to cancel. Format: tasks/{task_id}.
+//   - tenant: Optional tenant, provided as a path parameter. Experimental, might
+//     still change for 1.0 release.
+func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksService) Cancel(tenant string, name string, a2av1canceltaskrequest *A2aV1CancelTaskRequest) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksCancelCall {
+	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.tenant = tenant
+	c.name = name
+	c.a2av1canceltaskrequest = a2av1canceltaskrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksCancelCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksCancelCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.a2av1canceltaskrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/a2a/v1/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"tenant": c.tenant,
+		"name":   c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.tasks.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.tasks.cancel" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *A2aV1Task.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksCancelCall) Do(opts ...googleapi.CallOption) (*A2aV1Task, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &A2aV1Task{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.tasks.cancel", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksGetCall struct {
+	s            *Service
+	tenant       string
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get the current state of a task from the agent.
+//
+//   - name: The resource name of the task. Format: tasks/{task_id}.
+//   - tenant: Optional tenant, provided as a path parameter. Experimental, might
+//     still change for 1.0 release.
+func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksService) Get(tenant string, name string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksGetCall {
+	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.tenant = tenant
+	c.name = name
+	return c
+}
+
+// HistoryLength sets the optional parameter "historyLength": The number of
+// most recent messages from the task's history to retrieve.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksGetCall) HistoryLength(historyLength int64) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksGetCall {
+	c.urlParams_.Set("historyLength", fmt.Sprint(historyLength))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksGetCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/a2a/v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"tenant": c.tenant,
+		"name":   c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.tasks.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.tasks.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *A2aV1Task.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksGetCall) Do(opts ...googleapi.CallOption) (*A2aV1Task, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &A2aV1Task{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.tasks.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksSubscribeCall struct {
+	s            *Service
+	tenant       string
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Subscribe: TaskSubscription is a streaming call that will return a stream of
+// task update events. This attaches the stream to an existing in process task.
+// If the task is complete the stream will return the completed task (like
+// GetTask) and close the stream.
+//
+//   - name: The resource name of the task to subscribe to. Format:
+//     tasks/{task_id}.
+//   - tenant: Optional tenant, provided as a path parameter. Experimental, might
+//     still change for 1.0 release.
+func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksService) Subscribe(tenant string, name string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksSubscribeCall {
+	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksSubscribeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.tenant = tenant
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksSubscribeCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksSubscribeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksSubscribeCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksSubscribeCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksSubscribeCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksSubscribeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksSubscribeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksSubscribeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/a2a/v1/{+name}:subscribe")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"tenant": c.tenant,
+		"name":   c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.tasks.subscribe", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.tasks.subscribe" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *A2aV1StreamResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksSubscribeCall) Do(opts ...googleapi.CallOption) (*A2aV1StreamResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &A2aV1StreamResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.tasks.subscribe", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsCreateCall struct {
+	s                               *Service
+	tenant                          string
+	parent                          string
+	a2av1taskpushnotificationconfig *A2aV1TaskPushNotificationConfig
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// Create: Set a push notification config for a task.
+//
+//   - parent: The parent task resource for this config. Format: tasks/{task_id}.
+//   - tenant: Optional tenant, provided as a path parameter. Experimental, might
+//     still change for 1.0 release.
+func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsService) Create(tenant string, parent string, a2av1taskpushnotificationconfig *A2aV1TaskPushNotificationConfig) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsCreateCall {
+	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.tenant = tenant
+	c.parent = parent
+	c.a2av1taskpushnotificationconfig = a2av1taskpushnotificationconfig
+	return c
+}
+
+// ConfigId sets the optional parameter "configId": Required. The ID for the
+// new config.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsCreateCall) ConfigId(configId string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsCreateCall {
+	c.urlParams_.Set("configId", configId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsCreateCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.a2av1taskpushnotificationconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/a2a/v1/{+parent}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"tenant": c.tenant,
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.tasks.pushNotificationConfigs.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.tasks.pushNotificationConfigs.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *A2aV1TaskPushNotificationConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsCreateCall) Do(opts ...googleapi.CallOption) (*A2aV1TaskPushNotificationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &A2aV1TaskPushNotificationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.tasks.pushNotificationConfigs.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsDeleteCall struct {
+	s          *Service
+	tenant     string
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a push notification config for a task.
+//
+//   - name: The resource name of the config to delete. Format:
+//     tasks/{task_id}/pushNotificationConfigs/{config_id}.
+//   - tenant: Optional tenant, provided as a path parameter. Experimental, might
+//     still change for 1.0 release.
+func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsService) Delete(tenant string, name string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsDeleteCall {
+	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.tenant = tenant
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsDeleteCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/a2a/v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"tenant": c.tenant,
+		"name":   c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.tasks.pushNotificationConfigs.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.tasks.pushNotificationConfigs.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.tasks.pushNotificationConfigs.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsGetCall struct {
+	s            *Service
+	tenant       string
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a push notification config for a task.
+//
+//   - name: The resource name of the config to retrieve. Format:
+//     tasks/{task_id}/pushNotificationConfigs/{config_id}.
+//   - tenant: Optional tenant, provided as a path parameter. Experimental, might
+//     still change for 1.0 release.
+func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsService) Get(tenant string, name string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsGetCall {
+	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.tenant = tenant
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsGetCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/a2a/v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"tenant": c.tenant,
+		"name":   c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.tasks.pushNotificationConfigs.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.tasks.pushNotificationConfigs.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *A2aV1TaskPushNotificationConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsGetCall) Do(opts ...googleapi.CallOption) (*A2aV1TaskPushNotificationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &A2aV1TaskPushNotificationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.tasks.pushNotificationConfigs.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsListCall struct {
+	s            *Service
+	tenant       string
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Get a list of push notifications configured for a task.
+//
+//   - parent: The parent task resource. Format: tasks/{task_id}.
+//   - tenant: Optional tenant, provided as a path parameter. Experimental, might
+//     still change for 1.0 release.
+func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsService) List(tenant string, parent string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsListCall {
+	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.tenant = tenant
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": For AIP-158 these fields
+// are present. Usually not used/needed. The maximum number of configurations
+// to return. If unspecified, all configs will be returned.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsListCall) PageSize(pageSize int64) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token received
+// from a previous ListTaskPushNotificationConfigRequest call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters provided
+// to `ListTaskPushNotificationConfigRequest` must match the call that provided
+// the page token.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsListCall) PageToken(pageToken string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsListCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/a2a/v1/{+parent}/pushNotificationConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"tenant": c.tenant,
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.tasks.pushNotificationConfigs.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.tasks.pushNotificationConfigs.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *A2aV1ListTaskPushNotificationConfigResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsListCall) Do(opts ...googleapi.CallOption) (*A2aV1ListTaskPushNotificationConfigResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &A2aV1ListTaskPushNotificationConfigResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.a2a.v1.tasks.pushNotificationConfigs.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsA2aV1TasksPushNotificationConfigsListCall) Pages(ctx context.Context, f func(*A2aV1ListTaskPushNotificationConfigResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsGetCall struct {
@@ -49377,845 +50239,6 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsGetCall) D
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
-}
-
-type ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksCancelCall struct {
-	s                      *Service
-	tenant                 string
-	name                   string
-	a2av1canceltaskrequest *A2aV1CancelTaskRequest
-	urlParams_             gensupport.URLParams
-	ctx_                   context.Context
-	header_                http.Header
-}
-
-// Cancel: Cancel a task from the agent. If supported one should expect no more
-// task updates for the task.
-//
-//   - name: The resource name of the task to cancel. Format: tasks/{task_id}.
-//   - tenant: Optional tenant, provided as a path parameter. Experimental, might
-//     still change for 1.0 release.
-func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksService) Cancel(tenant string, name string, a2av1canceltaskrequest *A2aV1CancelTaskRequest) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksCancelCall {
-	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.tenant = tenant
-	c.name = name
-	c.a2av1canceltaskrequest = a2av1canceltaskrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksCancelCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksCancelCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksCancelCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksCancelCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksCancelCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksCancelCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.a2av1canceltaskrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/{+name}:cancel")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"tenant": c.tenant,
-		"name":   c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.tasks.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.agents.tasks.cancel" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *A2aV1Task.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksCancelCall) Do(opts ...googleapi.CallOption) (*A2aV1Task, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &A2aV1Task{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.tasks.cancel", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksGetCall struct {
-	s            *Service
-	tenant       string
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Get the current state of a task from the agent.
-//
-//   - name: The resource name of the task. Format: tasks/{task_id}.
-//   - tenant: Optional tenant, provided as a path parameter. Experimental, might
-//     still change for 1.0 release.
-func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksService) Get(tenant string, name string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksGetCall {
-	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.tenant = tenant
-	c.name = name
-	return c
-}
-
-// HistoryLength sets the optional parameter "historyLength": The number of
-// most recent messages from the task's history to retrieve.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksGetCall) HistoryLength(historyLength int64) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksGetCall {
-	c.urlParams_.Set("historyLength", fmt.Sprint(historyLength))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksGetCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"tenant": c.tenant,
-		"name":   c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.tasks.get", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.agents.tasks.get" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *A2aV1Task.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksGetCall) Do(opts ...googleapi.CallOption) (*A2aV1Task, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &A2aV1Task{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.tasks.get", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksSubscribeCall struct {
-	s            *Service
-	tenant       string
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Subscribe: TaskSubscription is a streaming call that will return a stream of
-// task update events. This attaches the stream to an existing in process task.
-// If the task is complete the stream will return the completed task (like
-// GetTask) and close the stream.
-//
-//   - name: The resource name of the task to subscribe to. Format:
-//     tasks/{task_id}.
-//   - tenant: Optional tenant, provided as a path parameter. Experimental, might
-//     still change for 1.0 release.
-func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksService) Subscribe(tenant string, name string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksSubscribeCall {
-	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksSubscribeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.tenant = tenant
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksSubscribeCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksSubscribeCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksSubscribeCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksSubscribeCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksSubscribeCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksSubscribeCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksSubscribeCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksSubscribeCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/{+name}:subscribe")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"tenant": c.tenant,
-		"name":   c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.tasks.subscribe", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.agents.tasks.subscribe" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *A2aV1StreamResponse.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksSubscribeCall) Do(opts ...googleapi.CallOption) (*A2aV1StreamResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &A2aV1StreamResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.tasks.subscribe", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsCreateCall struct {
-	s                               *Service
-	tenant                          string
-	parent                          string
-	a2av1taskpushnotificationconfig *A2aV1TaskPushNotificationConfig
-	urlParams_                      gensupport.URLParams
-	ctx_                            context.Context
-	header_                         http.Header
-}
-
-// Create: Set a push notification config for a task.
-//
-//   - parent: The parent task resource for this config. Format: tasks/{task_id}.
-//   - tenant: Optional tenant, provided as a path parameter. Experimental, might
-//     still change for 1.0 release.
-func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsService) Create(tenant string, parent string, a2av1taskpushnotificationconfig *A2aV1TaskPushNotificationConfig) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsCreateCall {
-	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.tenant = tenant
-	c.parent = parent
-	c.a2av1taskpushnotificationconfig = a2av1taskpushnotificationconfig
-	return c
-}
-
-// ConfigId sets the optional parameter "configId": Required. The ID for the
-// new config.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsCreateCall) ConfigId(configId string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsCreateCall {
-	c.urlParams_.Set("configId", configId)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsCreateCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.a2av1taskpushnotificationconfig)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/{+parent}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"tenant": c.tenant,
-		"parent": c.parent,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.tasks.pushNotificationConfigs.create", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.agents.tasks.pushNotificationConfigs.create" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *A2aV1TaskPushNotificationConfig.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsCreateCall) Do(opts ...googleapi.CallOption) (*A2aV1TaskPushNotificationConfig, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &A2aV1TaskPushNotificationConfig{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.tasks.pushNotificationConfigs.create", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsDeleteCall struct {
-	s          *Service
-	tenant     string
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Delete a push notification config for a task.
-//
-//   - name: The resource name of the config to delete. Format:
-//     tasks/{task_id}/pushNotificationConfigs/{config_id}.
-//   - tenant: Optional tenant, provided as a path parameter. Experimental, might
-//     still change for 1.0 release.
-func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsService) Delete(tenant string, name string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsDeleteCall {
-	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.tenant = tenant
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsDeleteCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"tenant": c.tenant,
-		"name":   c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.tasks.pushNotificationConfigs.delete", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.agents.tasks.pushNotificationConfigs.delete" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleProtobufEmpty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.tasks.pushNotificationConfigs.delete", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsGetCall struct {
-	s            *Service
-	tenant       string
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Get a push notification config for a task.
-//
-//   - name: The resource name of the config to retrieve. Format:
-//     tasks/{task_id}/pushNotificationConfigs/{config_id}.
-//   - tenant: Optional tenant, provided as a path parameter. Experimental, might
-//     still change for 1.0 release.
-func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsService) Get(tenant string, name string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsGetCall {
-	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.tenant = tenant
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsGetCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"tenant": c.tenant,
-		"name":   c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.tasks.pushNotificationConfigs.get", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.agents.tasks.pushNotificationConfigs.get" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *A2aV1TaskPushNotificationConfig.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsGetCall) Do(opts ...googleapi.CallOption) (*A2aV1TaskPushNotificationConfig, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &A2aV1TaskPushNotificationConfig{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.tasks.pushNotificationConfigs.get", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsListCall struct {
-	s            *Service
-	tenant       string
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Get a list of push notifications configured for a task.
-//
-//   - parent: The parent task resource. Format: tasks/{task_id}.
-//   - tenant: Optional tenant, provided as a path parameter. Experimental, might
-//     still change for 1.0 release.
-func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsService) List(tenant string, parent string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsListCall {
-	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.tenant = tenant
-	c.parent = parent
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": For AIP-158 these fields
-// are present. Usually not used/needed. The maximum number of configurations
-// to return. If unspecified, all configs will be returned.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsListCall) PageSize(pageSize int64) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A page token received
-// from a previous ListTaskPushNotificationConfigRequest call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters provided
-// to `ListTaskPushNotificationConfigRequest` must match the call that provided
-// the page token.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsListCall) PageToken(pageToken string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsListCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/{+parent}/pushNotificationConfigs")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"tenant": c.tenant,
-		"parent": c.parent,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.tasks.pushNotificationConfigs.list", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.agents.tasks.pushNotificationConfigs.list" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *A2aV1ListTaskPushNotificationConfigResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsListCall) Do(opts ...googleapi.CallOption) (*A2aV1ListTaskPushNotificationConfigResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &A2aV1ListTaskPushNotificationConfigResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.tasks.pushNotificationConfigs.list", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsTasksPushNotificationConfigsListCall) Pages(ctx context.Context, f func(*A2aV1ListTaskPushNotificationConfigResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken"))
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
 }
 
 type ProjectsLocationsCollectionsEnginesCompletionConfigCompleteQueryCall struct {
@@ -66661,25 +66684,20 @@ func (r *ProjectsLocationsUserStoresUserLicensesService) List(parent string) *Pr
 // UserLicenses are listed. The value must be a comma-separated list of fields.
 // Default sorting order is ascending. To specify descending order for a field,
 // append a " desc" suffix. Redundant space characters in the syntax are
-// insignificant. Supported fields: * `license_assignment_state` *
-// `user_principal` * `user_profile` * `last_login_date` * `update_time` If not
-// set, the default ordering is by `user_principal`. Examples: *
-// `user_principal desc` to order by `user_principal` in descending order. *
-// `license_assignment_state` to order by `license_assignment_state` in
-// ascending order. * `last_login_date desc` to order by `last_login_date` in
-// descending order. * `update_time desc` to order by `update_time` in
-// descending order. * `last_login_date desc, user_principal` to order by
-// `last_login_date` in descending order and then by `user_principal` in
-// ascending order.
+// insignificant. Supported fields (only `user_principal` is supported for
+// now): * `user_principal` If not set, the default ordering is by
+// `user_principal`. Examples: * `user_principal` to order by `user_principal`
+// in ascending order. * `user_principal desc` to order by `user_principal` in
+// descending order.
 func (c *ProjectsLocationsUserStoresUserLicensesListCall) OrderBy(orderBy string) *ProjectsLocationsUserStoresUserLicensesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Server
-// may return fewer items than requested. If unspecified, defaults to 1000. The
-// maximum value is 1000; values above 1000 will be coerced to 1000. If this
-// field is negative, an INVALID_ARGUMENT error is returned.
+// may return fewer items than requested. If unspecified, defaults to 10. The
+// maximum value is 50; values above 50 will be coerced to 50. If this field is
+// negative, an INVALID_ARGUMENT error is returned.
 func (c *ProjectsLocationsUserStoresUserLicensesListCall) PageSize(pageSize int64) *ProjectsLocationsUserStoresUserLicensesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

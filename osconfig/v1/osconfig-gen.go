@@ -2403,7 +2403,7 @@ func (s OSPolicyResourceFileRemote) MarshalJSON() ([]byte, error) {
 
 // OSPolicyResourceFileResource: A resource that manages the state of a file.
 type OSPolicyResourceFileResource struct {
-	// Content: A a file with this content. The size of the content is limited to
+	// Content: A file with this content. The size of the content is limited to
 	// 32KiB.
 	Content string `json:"content,omitempty"`
 	// File: A remote or local source.

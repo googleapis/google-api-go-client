@@ -971,6 +971,8 @@ type ComputeRepositoryAccessTokenStatusResponse struct {
 	// remote.
 	//   "VALID" - The token was used successfully to authenticate against the Git
 	// remote.
+	//   "PERMISSION_DENIED" - The token is not accessible due to permission
+	// issues.
 	TokenStatus string `json:"tokenStatus,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1142,12 +1144,68 @@ func (s Declaration) MarshalJSON() ([]byte, error) {
 type DeleteFile struct {
 }
 
+// DeleteFolderTreeRequest: `DeleteFolderTree` request message.
+type DeleteFolderTreeRequest struct {
+	// Force: Optional. If `false` (default): The operation will fail if any
+	// Repository within the folder hierarchy has associated Release Configs or
+	// Workflow Configs. If `true`: The operation will attempt to delete
+	// everything, including any Release Configs and Workflow Configs linked to
+	// Repositories within the folder hierarchy. This permanently removes schedules
+	// and resources.
+	Force bool `json:"force,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Force") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Force") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeleteFolderTreeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteFolderTreeRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeleteTeamFolderTreeRequest: `DeleteTeamFolderTree` request message.
+type DeleteTeamFolderTreeRequest struct {
+	// Force: Optional. If `false` (default): The operation will fail if any
+	// Repository within the folder hierarchy has associated Release Configs or
+	// Workflow Configs. If `true`: The operation will attempt to delete
+	// everything, including any Release Configs and Workflow Configs linked to
+	// Repositories within the folder hierarchy. This permanently removes schedules
+	// and resources.
+	Force bool `json:"force,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Force") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Force") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeleteTeamFolderTreeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteTeamFolderTreeRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DirectoryEntry: Represents a single entry in a directory.
 type DirectoryEntry struct {
 	// Directory: A child directory in the directory.
 	Directory string `json:"directory,omitempty"`
 	// File: A file in the directory.
 	File string `json:"file,omitempty"`
+	// Metadata: Entry with metadata.
+	Metadata *FilesystemEntryMetadata `json:"metadata,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Directory") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1449,6 +1507,33 @@ type FileSearchResult struct {
 
 func (s FileSearchResult) MarshalJSON() ([]byte, error) {
 	type NoMethod FileSearchResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FilesystemEntryMetadata: Represents metadata for a single entry in a
+// filesystem.
+type FilesystemEntryMetadata struct {
+	// SizeBytes: Output only. Provides the size of the entry in bytes. For
+	// directories, this will be 0.
+	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
+	// UpdateTime: Output only. Represents the time of the last modification of the
+	// entry.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SizeBytes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SizeBytes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FilesystemEntryMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod FilesystemEntryMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4238,10 +4323,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
@@ -4699,8 +4790,10 @@ func (r *ProjectsLocationsFoldersService) Create(parent string, folder *Folder) 
 	return c
 }
 
-// FolderId sets the optional parameter "folderId": The ID to use for the
-// Folder, which will become the final component of the Folder's resource name.
+// FolderId sets the optional parameter "folderId": Deprecated: This field is
+// not used. The resource name is generated automatically. The ID to use for
+// the Folder, which will become the final component of the Folder's resource
+// name.
 func (c *ProjectsLocationsFoldersCreateCall) FolderId(folderId string) *ProjectsLocationsFoldersCreateCall {
 	c.urlParams_.Set("folderId", folderId)
 	return c
@@ -4884,6 +4977,111 @@ func (c *ProjectsLocationsFoldersDeleteCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.folders.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsFoldersDeleteTreeCall struct {
+	s                       *Service
+	name                    string
+	deletefoldertreerequest *DeleteFolderTreeRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// DeleteTree: Deletes a Folder with its contents (Folders, Repositories,
+// Workspaces, ReleaseConfigs, and WorkflowConfigs).
+//
+//   - name: The Folder's name. Format:
+//     projects/{project}/locations/{location}/folders/{folder}.
+func (r *ProjectsLocationsFoldersService) DeleteTree(name string, deletefoldertreerequest *DeleteFolderTreeRequest) *ProjectsLocationsFoldersDeleteTreeCall {
+	c := &ProjectsLocationsFoldersDeleteTreeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.deletefoldertreerequest = deletefoldertreerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFoldersDeleteTreeCall) Fields(s ...googleapi.Field) *ProjectsLocationsFoldersDeleteTreeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFoldersDeleteTreeCall) Context(ctx context.Context) *ProjectsLocationsFoldersDeleteTreeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFoldersDeleteTreeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFoldersDeleteTreeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.deletefoldertreerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:deleteTree")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.folders.deleteTree", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.folders.deleteTree" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsFoldersDeleteTreeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.folders.deleteTree", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12194,6 +12392,30 @@ func (c *ProjectsLocationsRepositoriesWorkspacesQueryDirectoryContentsCall) Path
 	return c
 }
 
+// View sets the optional parameter "view": Specifies the metadata to return
+// for each directory entry. If unspecified, the default is
+// `DIRECTORY_CONTENTS_VIEW_BASIC`. Currently the
+// `DIRECTORY_CONTENTS_VIEW_METADATA` view is not supported by CMEK-protected
+// workspaces.
+//
+// Possible values:
+//
+//	"DIRECTORY_CONTENTS_VIEW_UNSPECIFIED" - The default / unset value.
+//
+// Defaults to DIRECTORY_CONTENTS_VIEW_BASIC.
+//
+//	"DIRECTORY_CONTENTS_VIEW_BASIC" - Includes only the file or directory
+//
+// name. This is the default behavior.
+//
+//	"DIRECTORY_CONTENTS_VIEW_METADATA" - Includes all metadata for each file
+//
+// or directory. Currently not supported by CMEK-protected workspaces.
+func (c *ProjectsLocationsRepositoriesWorkspacesQueryDirectoryContentsCall) View(view string) *ProjectsLocationsRepositoriesWorkspacesQueryDirectoryContentsCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -13244,9 +13466,10 @@ func (r *ProjectsLocationsTeamFoldersService) Create(parent string, teamfolder *
 	return c
 }
 
-// TeamFolderId sets the optional parameter "teamFolderId": The ID to use for
-// the TeamFolder, which will become the final component of the TeamFolder's
-// resource name.
+// TeamFolderId sets the optional parameter "teamFolderId": Deprecated: This
+// field is not used. The resource name is generated automatically. The ID to
+// use for the TeamFolder, which will become the final component of the
+// TeamFolder's resource name.
 func (c *ProjectsLocationsTeamFoldersCreateCall) TeamFolderId(teamFolderId string) *ProjectsLocationsTeamFoldersCreateCall {
 	c.urlParams_.Set("teamFolderId", teamFolderId)
 	return c
@@ -13430,6 +13653,111 @@ func (c *ProjectsLocationsTeamFoldersDeleteCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.teamFolders.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsTeamFoldersDeleteTreeCall struct {
+	s                           *Service
+	name                        string
+	deleteteamfoldertreerequest *DeleteTeamFolderTreeRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// DeleteTree: Deletes a TeamFolder with its contents (Folders, Repositories,
+// Workspaces, ReleaseConfigs, and WorkflowConfigs).
+//
+//   - name: The TeamFolder's name. Format:
+//     projects/{project}/locations/{location}/teamFolders/{team_folder}.
+func (r *ProjectsLocationsTeamFoldersService) DeleteTree(name string, deleteteamfoldertreerequest *DeleteTeamFolderTreeRequest) *ProjectsLocationsTeamFoldersDeleteTreeCall {
+	c := &ProjectsLocationsTeamFoldersDeleteTreeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.deleteteamfoldertreerequest = deleteteamfoldertreerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsTeamFoldersDeleteTreeCall) Fields(s ...googleapi.Field) *ProjectsLocationsTeamFoldersDeleteTreeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsTeamFoldersDeleteTreeCall) Context(ctx context.Context) *ProjectsLocationsTeamFoldersDeleteTreeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsTeamFoldersDeleteTreeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsTeamFoldersDeleteTreeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.deleteteamfoldertreerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:deleteTree")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.teamFolders.deleteTree", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.teamFolders.deleteTree" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsTeamFoldersDeleteTreeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.teamFolders.deleteTree", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

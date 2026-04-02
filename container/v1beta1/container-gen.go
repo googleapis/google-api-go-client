@@ -334,6 +334,29 @@ func (s AcceleratorConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AccurateTimeConfig: AccurateTimeConfig contains configuration for the
+// accurate time synchronization feature.
+type AccurateTimeConfig struct {
+	// EnablePtpKvmTimeSync: Enables enhanced time synchronization using PTP-KVM.
+	EnablePtpKvmTimeSync bool `json:"enablePtpKvmTimeSync,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnablePtpKvmTimeSync") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnablePtpKvmTimeSync") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AccurateTimeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AccurateTimeConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AdditionalIPRangesConfig: AdditionalIPRangesConfig is the configuration for
 // individual additional subnetwork attached to the cluster
 type AdditionalIPRangesConfig struct {
@@ -460,6 +483,8 @@ func (s AdditionalPodRangesConfig) MarshalJSON() ([]byte, error) {
 // AddonsConfig: Configuration for the addons that can be automatically spun up
 // in the cluster, enabling additional functionality.
 type AddonsConfig struct {
+	// AgentSandboxConfig: Optional. Configuration for the AgentSandbox addon.
+	AgentSandboxConfig *AgentSandboxConfig `json:"agentSandboxConfig,omitempty"`
 	// CloudRunConfig: Configuration for the Cloud Run addon. The `IstioConfig`
 	// addon must be enabled in order to enable Cloud Run addon. This option can
 	// only be enabled at cluster creation time.
@@ -521,15 +546,15 @@ type AddonsConfig struct {
 	SliceControllerConfig *SliceControllerConfig `json:"sliceControllerConfig,omitempty"`
 	// StatefulHaConfig: Optional. Configuration for the StatefulHA add-on.
 	StatefulHaConfig *StatefulHAConfig `json:"statefulHaConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CloudRunConfig") to
+	// ForceSendFields is a list of field names (e.g. "AgentSandboxConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CloudRunConfig") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgentSandboxConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -607,6 +632,28 @@ type AdvancedMachineFeatures struct {
 
 func (s AdvancedMachineFeatures) MarshalJSON() ([]byte, error) {
 	type NoMethod AdvancedMachineFeatures
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AgentSandboxConfig: Configuration for the AgentSandbox addon.
+type AgentSandboxConfig struct {
+	// Enabled: Optional. Whether AgentSandbox is enabled for this cluster.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AgentSandboxConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentSandboxConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -747,6 +794,9 @@ func (s AutoUpgradeOptions) MarshalJSON() ([]byte, error) {
 // Autopilot: Autopilot is the configuration for Autopilot settings on the
 // cluster.
 type Autopilot struct {
+	// ClusterPolicyConfig: ClusterPolicyConfig denotes cluster level policies that
+	// are enforced for the cluster.
+	ClusterPolicyConfig *ClusterPolicyConfig `json:"clusterPolicyConfig,omitempty"`
 	// ConversionStatus: Output only. ConversionStatus shows conversion status.
 	ConversionStatus *AutopilotConversionStatus `json:"conversionStatus,omitempty"`
 	// Enabled: Enable Autopilot
@@ -757,15 +807,15 @@ type Autopilot struct {
 	// WorkloadPolicyConfig: WorkloadPolicyConfig is the configuration related to
 	// GCW workload policy
 	WorkloadPolicyConfig *WorkloadPolicyConfig `json:"workloadPolicyConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ConversionStatus") to
+	// ForceSendFields is a list of field names (e.g. "ClusterPolicyConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ConversionStatus") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ClusterPolicyConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1261,8 +1311,8 @@ func (s CancelOperationRequest) MarshalJSON() ([]byte, error) {
 // certificate.
 type CertificateAuthorityDomainConfig struct {
 	// Fqdns: List of fully qualified domain names (FQDN). Specifying port is
-	// supported. Wildcards are NOT supported. Examples: - my.customdomain.com -
-	// 10.0.1.2:5000
+	// supported. Wildcards are NOT supported. Examples: - `my.customdomain.com` -
+	// `10.0.1.2:5000`
 	Fqdns []string `json:"fqdns,omitempty"`
 	// GcpSecretManagerCertificateConfig: Secret Manager certificate configuration.
 	GcpSecretManagerCertificateConfig *GCPSecretManagerCertificateConfig `json:"gcpSecretManagerCertificateConfig,omitempty"`
@@ -1484,6 +1534,8 @@ type Cluster struct {
 	// ConfidentialNodes: Configuration of Confidential Nodes. All the nodes in the
 	// cluster will be Confidential VM once enabled.
 	ConfidentialNodes *ConfidentialNodes `json:"confidentialNodes,omitempty"`
+	// ControlPlaneEgress: Configuration for control plane egress control.
+	ControlPlaneEgress *ControlPlaneEgress `json:"controlPlaneEgress,omitempty"`
 	// ControlPlaneEndpointsConfig: Configuration for all cluster's control plane
 	// endpoints.
 	ControlPlaneEndpointsConfig *ControlPlaneEndpointsConfig `json:"controlPlaneEndpointsConfig,omitempty"`
@@ -1612,6 +1664,9 @@ type Cluster struct {
 	LoggingService string `json:"loggingService,omitempty"`
 	// MaintenancePolicy: Configure the maintenance policy for this cluster.
 	MaintenancePolicy *MaintenancePolicy `json:"maintenancePolicy,omitempty"`
+	// ManagedMachineLearningDiagnosticsConfig: Configuration for managed machine
+	// learning diagnostics.
+	ManagedMachineLearningDiagnosticsConfig *ManagedMachineLearningDiagnosticsConfig `json:"managedMachineLearningDiagnosticsConfig,omitempty"`
 	// ManagedOpentelemetryConfig: Configuration for Managed OpenTelemetry
 	// pipeline.
 	ManagedOpentelemetryConfig *ManagedOpenTelemetryConfig `json:"managedOpentelemetryConfig,omitempty"`
@@ -1727,6 +1782,8 @@ type Cluster struct {
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+	// ScheduleUpgradeConfig: Optional. Configuration for scheduled upgrades.
+	ScheduleUpgradeConfig *ScheduleUpgradeConfig `json:"scheduleUpgradeConfig,omitempty"`
 	// SecretManagerConfig: Secret CSI driver configuration.
 	SecretManagerConfig *SecretManagerConfig `json:"secretManagerConfig,omitempty"`
 	// SecretSyncConfig: Configuration for sync Secret Manager secrets as k8s
@@ -1901,6 +1958,38 @@ func (s ClusterNetworkPerformanceConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ClusterPolicyConfig: ClusterPolicyConfig stores the configuration for
+// cluster wide policies.
+type ClusterPolicyConfig struct {
+	// NoStandardNodePools: Denotes preventing standard node pools and requiring
+	// only autopilot node pools.
+	NoStandardNodePools bool `json:"noStandardNodePools,omitempty"`
+	// NoSystemImpersonation: Denotes preventing impersonation and CSRs for GKE
+	// System users.
+	NoSystemImpersonation bool `json:"noSystemImpersonation,omitempty"`
+	// NoSystemMutation: Denotes that preventing creation and mutation of resources
+	// in GKE managed namespaces and cluster-scoped GKE managed resources .
+	NoSystemMutation bool `json:"noSystemMutation,omitempty"`
+	// NoUnsafeWebhooks: Denotes preventing unsafe webhooks.
+	NoUnsafeWebhooks bool `json:"noUnsafeWebhooks,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NoStandardNodePools") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NoStandardNodePools") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClusterPolicyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterPolicyConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ClusterTelemetry: Telemetry integration for the cluster.
 type ClusterTelemetry struct {
 	// Type: Type of the integration.
@@ -1951,6 +2040,9 @@ type ClusterUpdate struct {
 	// DesiredAutoIpamConfig: AutoIpamConfig contains all information related to
 	// Auto IPAM
 	DesiredAutoIpamConfig *AutoIpamConfig `json:"desiredAutoIpamConfig,omitempty"`
+	// DesiredAutopilotClusterPolicyConfig: The desired autopilot cluster policies
+	// that to be enforced in the cluster.
+	DesiredAutopilotClusterPolicyConfig *ClusterPolicyConfig `json:"desiredAutopilotClusterPolicyConfig,omitempty"`
 	// DesiredAutopilotWorkloadPolicyConfig: WorkloadPolicyConfig is the
 	// configuration related to GCW workload policy
 	DesiredAutopilotWorkloadPolicyConfig *WorkloadPolicyConfig `json:"desiredAutopilotWorkloadPolicyConfig,omitempty"`
@@ -1968,6 +2060,9 @@ type ClusterUpdate struct {
 	DesiredCompliancePostureConfig *CompliancePostureConfig `json:"desiredCompliancePostureConfig,omitempty"`
 	// DesiredContainerdConfig: The desired containerd config for the cluster.
 	DesiredContainerdConfig *ContainerdConfig `json:"desiredContainerdConfig,omitempty"`
+	// DesiredControlPlaneEgress: The desired control plane egress control config
+	// for the cluster.
+	DesiredControlPlaneEgress *ControlPlaneEgress `json:"desiredControlPlaneEgress,omitempty"`
 	// DesiredControlPlaneEndpointsConfig: Control plane endpoints configuration.
 	DesiredControlPlaneEndpointsConfig *ControlPlaneEndpointsConfig `json:"desiredControlPlaneEndpointsConfig,omitempty"`
 	// DesiredCostManagementConfig: The desired configuration for the fine-grained
@@ -2066,6 +2161,9 @@ type ClusterUpdate struct {
 	// cluster. If left as an empty string,`logging.googleapis.com/kubernetes` will
 	// be used for GKE 1.14+ or `logging.googleapis.com` for earlier versions.
 	DesiredLoggingService string `json:"desiredLoggingService,omitempty"`
+	// DesiredManagedMachineLearningDiagnosticsConfig: The desired managed machine
+	// learning diagnostics configuration.
+	DesiredManagedMachineLearningDiagnosticsConfig *ManagedMachineLearningDiagnosticsConfig `json:"desiredManagedMachineLearningDiagnosticsConfig,omitempty"`
 	// DesiredManagedOpentelemetryConfig: The desired managed open telemetry
 	// configuration.
 	DesiredManagedOpentelemetryConfig *ManagedOpenTelemetryConfig `json:"desiredManagedOpentelemetryConfig,omitempty"`
@@ -2189,6 +2287,9 @@ type ClusterUpdate struct {
 	DesiredResourceUsageExportConfig *ResourceUsageExportConfig `json:"desiredResourceUsageExportConfig,omitempty"`
 	// DesiredRollbackSafeUpgrade: The desired rollback safe upgrade configuration.
 	DesiredRollbackSafeUpgrade *RollbackSafeUpgrade `json:"desiredRollbackSafeUpgrade,omitempty"`
+	// DesiredScheduleUpgradeConfig: Optional. The desired scheduled upgrades
+	// configuration for the cluster.
+	DesiredScheduleUpgradeConfig *ScheduleUpgradeConfig `json:"desiredScheduleUpgradeConfig,omitempty"`
 	// DesiredSecretManagerConfig: Enable/Disable Secret Manager Config.
 	DesiredSecretManagerConfig *SecretManagerConfig `json:"desiredSecretManagerConfig,omitempty"`
 	// DesiredSecretSyncConfig: Configuration for sync Secret Manager secrets as
@@ -2596,6 +2697,36 @@ func (s ContainerdConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ControlPlaneEgress: ControlPlaneEgress defines the settings needed to enable
+// control plane egress control.
+type ControlPlaneEgress struct {
+	// Mode: Defines the mode of control plane egress.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Default value not specified.
+	//   "VIA_CONTROL_PLANE" - Control plane has public IP and no restriction on
+	// egress.
+	//   "NONE" - No public IP on control plane and only internal allowlisted
+	// egress.
+	Mode string `json:"mode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Mode") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Mode") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ControlPlaneEgress) MarshalJSON() ([]byte, error) {
+	type NoMethod ControlPlaneEgress
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ControlPlaneEndpointsConfig: Configuration for all of the cluster's control
 // plane endpoints.
 type ControlPlaneEndpointsConfig struct {
@@ -2874,6 +3005,13 @@ type DatabaseEncryption struct {
 	// etcd is in progress.
 	//   "CURRENT_STATE_DECRYPTION_ERROR" - De-crypting Secrets to plain text in
 	// etcd encountered an error.
+	//   "CURRENT_STATE_ALL_OBJECTS_ENCRYPTION_ENABLED" - Encryption of all objects
+	// in the storage is enabled. It does not guarantee that all objects in the
+	// storage are encrypted, but eventually they will be.
+	//   "CURRENT_STATE_ALL_OBJECTS_ENCRYPTION_PENDING" - Enablement of the
+	// encryption of all objects in storage is pending.
+	//   "CURRENT_STATE_ALL_OBJECTS_ENCRYPTION_ERROR" - Enabling encryption of all
+	// objects in storage encountered an error.
 	CurrentState string `json:"currentState,omitempty"`
 	// DecryptionKeys: Output only. Keys in use by the cluster for decrypting
 	// existing objects, in addition to the key in `key_name`. Each item is a
@@ -2892,6 +3030,9 @@ type DatabaseEncryption struct {
 	//   "ENCRYPTED" - Secrets in etcd are encrypted.
 	//   "DECRYPTED" - Secrets in etcd are stored in plain text (at etcd level) -
 	// this is unrelated to Compute Engine level full disk encryption.
+	//   "ALL_OBJECTS_ENCRYPTION_ENABLED" - Encryption of all objects in the
+	// storage is enabled. There is no guarantee that all objects in the storage
+	// are encrypted, but eventually they will be.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CurrentState") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4036,8 +4177,10 @@ type HostConfig struct {
 	// Header: Header configures the registry host headers.
 	Header []*RegistryHeader `json:"header,omitempty"`
 	// Host: Host configures the registry host/mirror. It supports fully qualified
-	// domain names (FQDN) and IP addresses: Specifying port is supported.
-	// Wildcards are NOT supported. Examples: - my.customdomain.com - 10.0.1.2:5000
+	// domain names (FQDNs) and IP addresses. Specifying scheme, port or path is
+	// supported. Scheme can only be http or https. Wildcards are NOT supported.
+	// Examples: - `my.customdomain.com` - `https://my.customdomain.com/path` -
+	// `10.0.1.2:5000`
 	Host string `json:"host,omitempty"`
 	// OverridePath: OverridePath is used to indicate the host's API root endpoint
 	// is defined in the URL path rather than by the API specification. This may be
@@ -4626,6 +4769,9 @@ func (s LegacyAbac) MarshalJSON() ([]byte, error) {
 
 // LinuxNodeConfig: Parameters that can be configured on Linux nodes.
 type LinuxNodeConfig struct {
+	// AccurateTimeConfig: Optional. The accurate time configuration for the node
+	// pool.
+	AccurateTimeConfig *AccurateTimeConfig `json:"accurateTimeConfig,omitempty"`
 	// CgroupMode: cgroup_mode specifies the cgroup mode to be used on the node.
 	//
 	// Possible values:
@@ -4714,15 +4860,15 @@ type LinuxNodeConfig struct {
 	//   "TRANSPARENT_HUGEPAGE_ENABLED_NEVER" - Transparent hugepage support for
 	// anonymous memory is disabled.
 	TransparentHugepageEnabled string `json:"transparentHugepageEnabled,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CgroupMode") to
+	// ForceSendFields is a list of field names (e.g. "AccurateTimeConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CgroupMode") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AccurateTimeConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5036,6 +5182,12 @@ func (s LoggingVariantConfig) MarshalJSON() ([]byte, error) {
 
 // LustreCsiDriverConfig: Configuration for the Lustre CSI driver.
 type LustreCsiDriverConfig struct {
+	// DisableMultiNic: When set to true, this disables multi-NIC support for the
+	// Lustre CSI driver. By default, GKE enables multi-NIC support, which allows
+	// the Lustre CSI driver to automatically detect and configure all suitable
+	// network interfaces on a node to maximize I/O performance for demanding
+	// workloads.
+	DisableMultiNic bool `json:"disableMultiNic,omitempty"`
 	// EnableLegacyLustrePort: If set to true, the Lustre CSI driver will install
 	// Lustre kernel modules using port 6988. This serves as a workaround for a
 	// port conflict with the gke-metadata-server. This field is required ONLY
@@ -5047,15 +5199,15 @@ type LustreCsiDriverConfig struct {
 	EnableLegacyLustrePort bool `json:"enableLegacyLustrePort,omitempty"`
 	// Enabled: Whether the Lustre CSI driver is enabled for this cluster.
 	Enabled bool `json:"enabled,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EnableLegacyLustrePort") to
+	// ForceSendFields is a list of field names (e.g. "DisableMultiNic") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EnableLegacyLustrePort") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DisableMultiNic") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5168,6 +5320,30 @@ type MaintenanceWindow struct {
 
 func (s MaintenanceWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceWindow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ManagedMachineLearningDiagnosticsConfig:
+// ManagedMachineLearningDiagnosticsConfig is the configuration for the GKE
+// Managed Machine Learning Diagnostics pipeline.
+type ManagedMachineLearningDiagnosticsConfig struct {
+	// Enabled: Enable/Disable Managed Machine Learning Diagnostics.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ManagedMachineLearningDiagnosticsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ManagedMachineLearningDiagnosticsConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5886,13 +6062,17 @@ type NodeConfig struct {
 	ImageType string `json:"imageType,omitempty"`
 	// KubeletConfig: Node kubelet configs.
 	KubeletConfig *NodeKubeletConfig `json:"kubeletConfig,omitempty"`
-	// Labels: The map of Kubernetes labels (key/value pairs) to be applied to each
-	// node. These will added in addition to any default label(s) that Kubernetes
-	// may apply to the node. In case of conflict in label keys, the applied set
-	// may differ depending on the Kubernetes version -- it's best to assume the
-	// behavior is undefined and conflicts should be avoided. For more information,
-	// including usage and the valid values, see:
-	// https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+	// Labels: The Kubernetes labels (key/value pairs) to apply to each node. The
+	// values in this field are added to the set of default labels Kubernetes
+	// applies to nodes. This field has the following restrictions: * Labels must
+	// use a valid Kubernetes syntax and character set, as defined in
+	// https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#syntax-and-character-set.
+	// * This field supports up to 1,024 total characters in a single request.
+	// Depending on the Kubernetes version, keys in this field might conflict with
+	// the keys of the default labels, which might change which of your labels are
+	// applied to the nodes. Assume that the behavior is unpredictable and avoid
+	// label key conflicts. For more information about the default labels, see:
+	// https://kubernetes.io/docs/reference/labels-annotations-taints/
 	Labels map[string]string `json:"labels,omitempty"`
 	// LinuxNodeConfig: Parameters that can be configured on Linux nodes.
 	LinuxNodeConfig *LinuxNodeConfig `json:"linuxNodeConfig,omitempty"`
@@ -6005,6 +6185,8 @@ type NodeConfig struct {
 	// the client during cluster or node pool creation. Each tag within the list
 	// must comply with RFC1035.
 	Tags []string `json:"tags,omitempty"`
+	// TaintConfig: Optional. The taint configuration for the node pool.
+	TaintConfig *TaintConfig `json:"taintConfig,omitempty"`
 	// Taints: List of kubernetes taints to be applied to each node. For more
 	// information, including usage and the valid values, see:
 	// https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
@@ -7775,8 +7957,8 @@ type RegistryHostConfig struct {
 	// Server: Defines the host name of the registry server, which will be used to
 	// create configuration file as /etc/containerd/hosts.d//hosts.toml. It
 	// supports fully qualified domain names (FQDN) and IP addresses: Specifying
-	// port is supported. Wildcards are NOT supported. Examples: -
-	// my.customdomain.com - 10.0.1.2:5000
+	// port is supported, while scheme and path are NOT supported. Wildcards are
+	// NOT supported. Examples: - `my.customdomain.com` - `10.0.1.2:5000`
 	Server string `json:"server,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Hosts") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -8192,6 +8374,28 @@ type SandboxConfig struct {
 
 func (s SandboxConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SandboxConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ScheduleUpgradeConfig: Configuration for scheduled upgrades on the cluster.
+type ScheduleUpgradeConfig struct {
+	// Enabled: Optional. Whether or not scheduled upgrades are enabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ScheduleUpgradeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ScheduleUpgradeConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9374,6 +9578,36 @@ func (s SyncRotationConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TaintConfig: TaintConfig contains the configuration for the taints of the
+// node pool.
+type TaintConfig struct {
+	// ArchitectureTaintBehavior: Optional. Controls architecture tainting
+	// behavior.
+	//
+	// Possible values:
+	//   "ARCHITECTURE_TAINT_BEHAVIOR_UNSPECIFIED" - Specifies that the behavior is
+	// unspecified, defaults to ARM.
+	//   "NONE" - Disables default architecture taints on the node pool.
+	//   "ARM" - Taints all the nodes in the node pool with the default ARM taint.
+	ArchitectureTaintBehavior string `json:"architectureTaintBehavior,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ArchitectureTaintBehavior")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ArchitectureTaintBehavior") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TaintConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod TaintConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TimeWindow: Represents an arbitrary window of time.
 type TimeWindow struct {
 	// EndTime: The time that the window ends. The end time should take place after
@@ -9916,6 +10150,7 @@ type UpgradeInfoEvent struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - STATE_UNSPECIFIED indicates the state is
 	// unspecified.
+	//   "SCHEDULED" - SCHEDULED indicates the upgrade was scheduled.
 	//   "STARTED" - STARTED indicates the upgrade has started.
 	//   "SUCCEEDED" - SUCCEEDED indicates the upgrade has completed successfully.
 	//   "FAILED" - FAILED indicates the upgrade has failed.

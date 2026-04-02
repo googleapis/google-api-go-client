@@ -506,8 +506,9 @@ func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 // AuthzExtension: `AuthzExtension` is a resource that allows traffic
 // forwarding to a callout backend service to make an authorization decision.
 type AuthzExtension struct {
-	// Authority: Required. The `:authority` header in the gRPC request sent from
-	// Envoy to the extension service.
+	// Authority: Optional. The `:authority` header in the gRPC request sent from
+	// Envoy to the extension service. It is required when the `service` field
+	// points to a backend service or a wasm plugin.
 	Authority string `json:"authority,omitempty"`
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1040,15 +1041,11 @@ type ExtensionChainExtension struct {
 	// 63 characters. Additionally, the first character must be a letter and the
 	// last a letter or a number. This field is required except for AuthzExtension.
 	Name string `json:"name,omitempty"`
-	// ObservabilityMode: Optional. When set to `TRUE`, enables
-	// `observability_mode` on the `ext_proc` filter. This makes `ext_proc` calls
-	// asynchronous. Envoy doesn't check for the response from `ext_proc` calls.
-	// For more information about the filter, see:
-	// https://www.envoyproxy.io/docs/envoy/v1.32.3/api-v3/extensions/filters/http/ext_proc/v3/ext_proc.proto#extensions-filters-http-ext-proc-v3-externalprocessor
-	// This field is helpful when you want to try out the extension in async
-	// log-only mode. Supported by regional `LbTrafficExtension` and
-	// `LbRouteExtension` resources. Only `STREAMED` (default) body processing mode
-	// is supported.
+	// ObservabilityMode: Optional. When set to `true`, the calls to the extension
+	// backend are performed asynchronously, without pausing the processing of the
+	// ongoing request. In this mode, only `STREAMED` (default) body processing is
+	// supported. Responses, if any, are ignored. Supported by regional
+	// `LbTrafficExtension` and `LbRouteExtension` resources.
 	ObservabilityMode bool `json:"observabilityMode,omitempty"`
 	// RequestBodySendMode: Optional. Configures the send mode for request body
 	// processing. The field can only be set if `supported_events` includes
@@ -1200,6 +1197,10 @@ type Gateway struct {
 	// 'SECURE_WEB_GATEWAY'. Gateways of type 'OPEN_MESH' listen on 0.0.0.0 for
 	// IPv4 and :: for IPv6.
 	Addresses []string `json:"addresses,omitempty"`
+	// AllowGlobalAccess: Optional. If true, the gateway will allow traffic from
+	// clients outside of the region where the gateway is located. This field is
+	// configurable only for gateways of type SECURE_WEB_GATEWAY.
+	AllowGlobalAccess bool `json:"allowGlobalAccess,omitempty"`
 	// CertificateUrls: Optional. A fully-qualified Certificates URL reference. The
 	// proxy presents a Certificate (selected based on SNI) when establishing a TLS
 	// connection. This feature only applies to gateways of type
@@ -4890,10 +4891,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

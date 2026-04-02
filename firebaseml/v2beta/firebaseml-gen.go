@@ -1156,7 +1156,7 @@ type GoogleCloudAiplatformV1beta1FunctionDeclaration struct {
 	Description string `json:"description,omitempty"`
 	// Name: Required. The name of the function to call. Must start with a letter
 	// or an underscore. Must be a-z, A-Z, 0-9, or contain underscores, dots,
-	// colons and dashes, with a maximum length of 64.
+	// colons and dashes, with a maximum length of 128.
 	Name string `json:"name,omitempty"`
 	// Parameters: Optional. Describes the parameters to this function in JSON
 	// Schema Object format. Reflects the Open API 3.03 Parameter Object. string

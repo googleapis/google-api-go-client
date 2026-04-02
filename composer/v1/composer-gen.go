@@ -37,7 +37,7 @@
 // By default, all available scopes (see "Constants") are used to authenticate.
 // To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
-//	composerService, err := composer.NewService(ctx, option.WithScopes(composer.CloudcomposerScope))
+//	composerService, err := composer.NewService(ctx, option.WithScopes(composer.CloudcomposerReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
@@ -110,6 +110,10 @@ const (
 	// See, edit, configure, and delete your Google Cloud Composer data and see the
 	// email address for your Google Account
 	CloudcomposerScope = "https://www.googleapis.com/auth/cloudcomposer"
+
+	// See your Google Cloud Composer data and the email address of your Google
+	// Account
+	CloudcomposerReadonlyScope = "https://www.googleapis.com/auth/cloudcomposer.readonly"
 )
 
 // NewService creates a new Service.
@@ -117,6 +121,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/cloudcomposer",
+		"https://www.googleapis.com/auth/cloudcomposer.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)

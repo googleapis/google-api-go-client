@@ -6,7 +6,7 @@
 
 // Package certificatemanager provides access to the Certificate Manager API.
 //
-// For product documentation, see: https://cloud.google.com/certificate-manager
+// For product documentation, see: https://docs.cloud.google.com/certificate-manager/docs/overview
 //
 // # Library status
 //

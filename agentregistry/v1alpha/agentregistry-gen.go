@@ -974,6 +974,12 @@ type Service struct {
 	// Name: Identifier. The resource name of the Service. Format:
 	// `projects/{project}/locations/{location}/services/{service}`.
 	Name string `json:"name,omitempty"`
+	// RegistryResource: Output only. The resource name of the resulting Agent, MCP
+	// Server, or Endpoint. Format: *
+	// `projects/{project}/locations/{location}/mcpServers/{mcp_server}` *
+	// `projects/{project}/locations/{location}/agents/{agent}` *
+	// `projects/{project}/locations/{location}/endpoints/{endpoint}`
+	RegistryResource string `json:"registryResource,omitempty"`
 	// UpdateTime: Output only. Update time.
 	UpdateTime string `json:"updateTime,omitempty"`
 

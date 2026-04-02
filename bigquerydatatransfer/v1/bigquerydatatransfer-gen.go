@@ -223,6 +223,7 @@ type ProjectsLocationsDataSourcesService struct {
 func NewProjectsLocationsTransferConfigsService(s *Service) *ProjectsLocationsTransferConfigsService {
 	rs := &ProjectsLocationsTransferConfigsService{s: s}
 	rs.Runs = NewProjectsLocationsTransferConfigsRunsService(s)
+	rs.TransferResources = NewProjectsLocationsTransferConfigsTransferResourcesService(s)
 	return rs
 }
 
@@ -230,6 +231,8 @@ type ProjectsLocationsTransferConfigsService struct {
 	s *Service
 
 	Runs *ProjectsLocationsTransferConfigsRunsService
+
+	TransferResources *ProjectsLocationsTransferConfigsTransferResourcesService
 }
 
 func NewProjectsLocationsTransferConfigsRunsService(s *Service) *ProjectsLocationsTransferConfigsRunsService {
@@ -253,9 +256,19 @@ type ProjectsLocationsTransferConfigsRunsTransferLogsService struct {
 	s *Service
 }
 
+func NewProjectsLocationsTransferConfigsTransferResourcesService(s *Service) *ProjectsLocationsTransferConfigsTransferResourcesService {
+	rs := &ProjectsLocationsTransferConfigsTransferResourcesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsTransferConfigsTransferResourcesService struct {
+	s *Service
+}
+
 func NewProjectsTransferConfigsService(s *Service) *ProjectsTransferConfigsService {
 	rs := &ProjectsTransferConfigsService{s: s}
 	rs.Runs = NewProjectsTransferConfigsRunsService(s)
+	rs.TransferResources = NewProjectsTransferConfigsTransferResourcesService(s)
 	return rs
 }
 
@@ -263,6 +276,8 @@ type ProjectsTransferConfigsService struct {
 	s *Service
 
 	Runs *ProjectsTransferConfigsRunsService
+
+	TransferResources *ProjectsTransferConfigsTransferResourcesService
 }
 
 func NewProjectsTransferConfigsRunsService(s *Service) *ProjectsTransferConfigsRunsService {
@@ -283,6 +298,15 @@ func NewProjectsTransferConfigsRunsTransferLogsService(s *Service) *ProjectsTran
 }
 
 type ProjectsTransferConfigsRunsTransferLogsService struct {
+	s *Service
+}
+
+func NewProjectsTransferConfigsTransferResourcesService(s *Service) *ProjectsTransferConfigsTransferResourcesService {
+	rs := &ProjectsTransferConfigsTransferResourcesService{s: s}
+	return rs
+}
+
+type ProjectsTransferConfigsTransferResourcesService struct {
 	s *Service
 }
 
@@ -610,6 +634,30 @@ func (s EventDrivenSchedule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// HierarchyDetail: Details about the hierarchy.
+type HierarchyDetail struct {
+	// PartitionDetail: Optional. Partition details related to hierarchy.
+	PartitionDetail *PartitionDetail `json:"partitionDetail,omitempty"`
+	// TableDetail: Optional. Table details related to hierarchy.
+	TableDetail *TableDetail `json:"tableDetail,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PartitionDetail") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PartitionDetail") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HierarchyDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod HierarchyDetail
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListDataSourcesResponse: Returns list of supported data sources and their
 // metadata.
 type ListDataSourcesResponse struct {
@@ -729,6 +777,35 @@ func (s ListTransferLogsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListTransferResourcesResponse: Response for the ListTransferResources RPC.
+type ListTransferResourcesResponse struct {
+	// NextPageToken: Output only. A token, which can be sent as `page_token` to
+	// retrieve the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// TransferResources: Output only. The transfer resources.
+	TransferResources []*TransferResource `json:"transferResources,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListTransferResourcesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListTransferResourcesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListTransferRunsResponse: The returned list of pipelines in the project.
 type ListTransferRunsResponse struct {
 	// NextPageToken: Output only. The next-pagination token. For multiple-page
@@ -799,6 +876,28 @@ func (s Location) MarshalJSON() ([]byte, error) {
 
 // ManualSchedule: Options customizing manual transfers schedule.
 type ManualSchedule struct {
+}
+
+// PartitionDetail: Partition details related to hierarchy.
+type PartitionDetail struct {
+	// Table: Optional. Name of the table which has the partitions.
+	Table string `json:"table,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Table") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Table") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PartitionDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod PartitionDetail
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScheduleOptions: Options customizing the data transfer schedule.
@@ -1010,6 +1109,29 @@ type Status struct {
 
 func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TableDetail: Table details related to hierarchy.
+type TableDetail struct {
+	// PartitionCount: Optional. Total number of partitions being tracked within
+	// the table.
+	PartitionCount int64 `json:"partitionCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "PartitionCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PartitionCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TableDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod TableDetail
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1243,6 +1365,110 @@ func (s TransferMessage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TransferResource: Resource(table/partition) that is being transferred.
+type TransferResource struct {
+	// Destination: Optional. Resource destination.
+	//
+	// Possible values:
+	//   "RESOURCE_DESTINATION_UNSPECIFIED" - Default value.
+	//   "RESOURCE_DESTINATION_BIGQUERY" - BigQuery.
+	//   "RESOURCE_DESTINATION_DATAPROC_METASTORE" - Dataproc Metastore.
+	//   "RESOURCE_DESTINATION_BIGLAKE_METASTORE" - BigLake Metastore.
+	//   "RESOURCE_DESTINATION_BIGLAKE_REST_CATALOG" - BigLake REST Catalog.
+	//   "RESOURCE_DESTINATION_BIGLAKE_HIVE_CATALOG" - BigLake Hive Catalog.
+	Destination string `json:"destination,omitempty"`
+	// HierarchyDetail: Optional. Details about the hierarchy.
+	HierarchyDetail *HierarchyDetail `json:"hierarchyDetail,omitempty"`
+	// LastSuccessfulRun: Output only. Run details for the last successful run.
+	LastSuccessfulRun *TransferRunBrief `json:"lastSuccessfulRun,omitempty"`
+	// LatestRun: Optional. Run details for the latest run.
+	LatestRun *TransferRunBrief `json:"latestRun,omitempty"`
+	// LatestStatusDetail: Optional. Status details for the latest run.
+	LatestStatusDetail *TransferResourceStatusDetail `json:"latestStatusDetail,omitempty"`
+	// Name: Identifier. Resource name.
+	Name string `json:"name,omitempty"`
+	// Type: Optional. Resource type.
+	//
+	// Possible values:
+	//   "RESOURCE_TYPE_UNSPECIFIED" - Default value.
+	//   "RESOURCE_TYPE_TABLE" - Table resource type.
+	//   "RESOURCE_TYPE_PARTITION" - Partition resource type.
+	Type string `json:"type,omitempty"`
+	// UpdateTime: Output only. Time when the resource was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Destination") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Destination") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TransferResource) MarshalJSON() ([]byte, error) {
+	type NoMethod TransferResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TransferResourceStatusDetail: Status details of the resource being
+// transferred.
+type TransferResourceStatusDetail struct {
+	// CompletedPercentage: Output only. Percentage of the transfer completed.
+	// Valid values: 0-100.
+	CompletedPercentage float64 `json:"completedPercentage,omitempty"`
+	// Error: Optional. Transfer error details for the resource.
+	Error *Status `json:"error,omitempty"`
+	// State: Optional. Transfer state of the resource.
+	//
+	// Possible values:
+	//   "RESOURCE_TRANSFER_STATE_UNSPECIFIED" - Default value.
+	//   "RESOURCE_TRANSFER_PENDING" - Resource is waiting to be transferred.
+	//   "RESOURCE_TRANSFER_RUNNING" - Resource transfer is running.
+	//   "RESOURCE_TRANSFER_SUCCEEDED" - Resource transfer is a success.
+	//   "RESOURCE_TRANSFER_FAILED" - Resource transfer failed.
+	//   "RESOURCE_TRANSFER_CANCELLED" - Resource transfer was cancelled.
+	State string `json:"state,omitempty"`
+	// Summary: Optional. Transfer status summary of the resource.
+	Summary *TransferStatusSummary `json:"summary,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CompletedPercentage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CompletedPercentage") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TransferResourceStatusDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod TransferResourceStatusDetail
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *TransferResourceStatusDetail) UnmarshalJSON(data []byte) error {
+	type NoMethod TransferResourceStatusDetail
+	var s1 struct {
+		CompletedPercentage gensupport.JSONFloat64 `json:"completedPercentage"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.CompletedPercentage = float64(s1.CompletedPercentage)
+	return nil
+}
+
 // TransferRun: Represents a data transfer run.
 type TransferRun struct {
 	// DataSourceId: Output only. Data source id.
@@ -1320,6 +1546,96 @@ type TransferRun struct {
 
 func (s TransferRun) MarshalJSON() ([]byte, error) {
 	type NoMethod TransferRun
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TransferRunBrief: Basic information about a transfer run.
+type TransferRunBrief struct {
+	// Run: Optional. Run URI. Format
+	// projects/{project}/locations/{location}/transferConfigs/{config}/run/{run}
+	Run string `json:"run,omitempty"`
+	// StartTime: Optional. Start time of the transfer run.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Run") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Run") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TransferRunBrief) MarshalJSON() ([]byte, error) {
+	type NoMethod TransferRunBrief
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TransferStatusMetric: Metrics for tracking the transfer status.
+type TransferStatusMetric struct {
+	// Completed: Optional. Number of units transferred successfully.
+	Completed int64 `json:"completed,omitempty,string"`
+	// Failed: Optional. Number of units that failed to transfer.
+	Failed int64 `json:"failed,omitempty,string"`
+	// Pending: Optional. Number of units pending transfer.
+	Pending int64 `json:"pending,omitempty,string"`
+	// Total: Optional. Total number of units for the transfer.
+	Total int64 `json:"total,omitempty,string"`
+	// Unit: Optional. Unit for measuring progress (e.g., BYTES).
+	//
+	// Possible values:
+	//   "TRANSFER_STATUS_UNIT_UNSPECIFIED" - Default value.
+	//   "TRANSFER_STATUS_UNIT_BYTES" - Bytes.
+	//   "TRANSFER_STATUS_UNIT_OBJECTS" - Objects.
+	Unit string `json:"unit,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Completed") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Completed") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TransferStatusMetric) MarshalJSON() ([]byte, error) {
+	type NoMethod TransferStatusMetric
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TransferStatusSummary: Status summary of the resource being transferred.
+type TransferStatusSummary struct {
+	// Metrics: Optional. List of transfer status metrics.
+	Metrics []*TransferStatusMetric `json:"metrics,omitempty"`
+	// ProgressUnit: Input only. Unit based on which transfer status progress
+	// should be calculated.
+	//
+	// Possible values:
+	//   "TRANSFER_STATUS_UNIT_UNSPECIFIED" - Default value.
+	//   "TRANSFER_STATUS_UNIT_BYTES" - Bytes.
+	//   "TRANSFER_STATUS_UNIT_OBJECTS" - Objects.
+	ProgressUnit string `json:"progressUnit,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Metrics") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Metrics") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TransferStatusSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod TransferStatusSummary
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2082,10 +2398,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
@@ -4209,6 +4531,287 @@ func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) Pages(ctx con
 	}
 }
 
+type ProjectsLocationsTransferConfigsTransferResourcesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns a transfer resource.
+//
+//   - name: The name of the transfer resource in the form of: *
+//     `projects/{project}/transferConfigs/{transfer_config}/transferResources/{tr
+//     ansfer_resource}` *
+//     `projects/{project}/locations/{location}/transferConfigs/{transfer_config}/
+//     transferResources/{transfer_resource}`.
+func (r *ProjectsLocationsTransferConfigsTransferResourcesService) Get(name string) *ProjectsLocationsTransferConfigsTransferResourcesGetCall {
+	c := &ProjectsLocationsTransferConfigsTransferResourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsTransferConfigsTransferResourcesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransferConfigsTransferResourcesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsTransferConfigsTransferResourcesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsTransferConfigsTransferResourcesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsTransferConfigsTransferResourcesGetCall) Context(ctx context.Context) *ProjectsLocationsTransferConfigsTransferResourcesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsTransferConfigsTransferResourcesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsTransferConfigsTransferResourcesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "bigquerydatatransfer.projects.locations.transferConfigs.transferResources.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigquerydatatransfer.projects.locations.transferConfigs.transferResources.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TransferResource.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsTransferConfigsTransferResourcesGetCall) Do(opts ...googleapi.CallOption) (*TransferResource, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TransferResource{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigquerydatatransfer.projects.locations.transferConfigs.transferResources.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsTransferConfigsTransferResourcesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns information about transfer resources.
+//
+//   - parent: Name of transfer configuration for which transfer resources should
+//     be retrieved. The name should be in one of the following form: *
+//     `projects/{project_id}/transferConfigs/{config_id}` *
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.
+func (r *ProjectsLocationsTransferConfigsTransferResourcesService) List(parent string) *ProjectsLocationsTransferConfigsTransferResourcesListCall {
+	c := &ProjectsLocationsTransferConfigsTransferResourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter for the transfer
+// resources. Currently supported filters include: * Resource name: `name` -
+// Wildcard supported * Resource type: `type` * Resource destination:
+// `destination` * Latest resource state: `latest_status_detail.state` * Last
+// update time: `update_time` - RFC-3339 format * Parent table name:
+// `hierarchy_detail.partition_detail.table` Multiple filters can be applied
+// using the `AND/OR` operator. Examples: * `name="*123" AND (type="TABLE" OR
+// latest_status_detail.state="SUCCEEDED")` * `update_time >=
+// "2012-04-21T11:30:00-04:00` * `hierarchy_detail.partition_detail.table =
+// "table1"
+func (c *ProjectsLocationsTransferConfigsTransferResourcesListCall) Filter(filter string) *ProjectsLocationsTransferConfigsTransferResourcesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// transfer resources to return. The maximum value is 1000; values above 1000
+// will be coerced to 1000. The default page size is the maximum value of 1000
+// results.
+func (c *ProjectsLocationsTransferConfigsTransferResourcesListCall) PageSize(pageSize int64) *ProjectsLocationsTransferConfigsTransferResourcesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListTransferResources` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListTransferResources` must match the call that provided the page token.
+func (c *ProjectsLocationsTransferConfigsTransferResourcesListCall) PageToken(pageToken string) *ProjectsLocationsTransferConfigsTransferResourcesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsTransferConfigsTransferResourcesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransferConfigsTransferResourcesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsTransferConfigsTransferResourcesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsTransferConfigsTransferResourcesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsTransferConfigsTransferResourcesListCall) Context(ctx context.Context) *ProjectsLocationsTransferConfigsTransferResourcesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsTransferConfigsTransferResourcesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsTransferConfigsTransferResourcesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/transferResources")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "bigquerydatatransfer.projects.locations.transferConfigs.transferResources.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigquerydatatransfer.projects.locations.transferConfigs.transferResources.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListTransferResourcesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsTransferConfigsTransferResourcesListCall) Do(opts ...googleapi.CallOption) (*ListTransferResourcesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListTransferResourcesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigquerydatatransfer.projects.locations.transferConfigs.transferResources.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsTransferConfigsTransferResourcesListCall) Pages(ctx context.Context, f func(*ListTransferResourcesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 type ProjectsTransferConfigsCreateCall struct {
 	s              *Service
 	parent         string
@@ -5680,6 +6283,287 @@ func (c *ProjectsTransferConfigsRunsTransferLogsListCall) Do(opts ...googleapi.C
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsTransferConfigsRunsTransferLogsListCall) Pages(ctx context.Context, f func(*ListTransferLogsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsTransferConfigsTransferResourcesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns a transfer resource.
+//
+//   - name: The name of the transfer resource in the form of: *
+//     `projects/{project}/transferConfigs/{transfer_config}/transferResources/{tr
+//     ansfer_resource}` *
+//     `projects/{project}/locations/{location}/transferConfigs/{transfer_config}/
+//     transferResources/{transfer_resource}`.
+func (r *ProjectsTransferConfigsTransferResourcesService) Get(name string) *ProjectsTransferConfigsTransferResourcesGetCall {
+	c := &ProjectsTransferConfigsTransferResourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsTransferConfigsTransferResourcesGetCall) Fields(s ...googleapi.Field) *ProjectsTransferConfigsTransferResourcesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsTransferConfigsTransferResourcesGetCall) IfNoneMatch(entityTag string) *ProjectsTransferConfigsTransferResourcesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsTransferConfigsTransferResourcesGetCall) Context(ctx context.Context) *ProjectsTransferConfigsTransferResourcesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsTransferConfigsTransferResourcesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsTransferConfigsTransferResourcesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "bigquerydatatransfer.projects.transferConfigs.transferResources.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigquerydatatransfer.projects.transferConfigs.transferResources.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TransferResource.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsTransferConfigsTransferResourcesGetCall) Do(opts ...googleapi.CallOption) (*TransferResource, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TransferResource{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigquerydatatransfer.projects.transferConfigs.transferResources.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsTransferConfigsTransferResourcesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns information about transfer resources.
+//
+//   - parent: Name of transfer configuration for which transfer resources should
+//     be retrieved. The name should be in one of the following form: *
+//     `projects/{project_id}/transferConfigs/{config_id}` *
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.
+func (r *ProjectsTransferConfigsTransferResourcesService) List(parent string) *ProjectsTransferConfigsTransferResourcesListCall {
+	c := &ProjectsTransferConfigsTransferResourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter for the transfer
+// resources. Currently supported filters include: * Resource name: `name` -
+// Wildcard supported * Resource type: `type` * Resource destination:
+// `destination` * Latest resource state: `latest_status_detail.state` * Last
+// update time: `update_time` - RFC-3339 format * Parent table name:
+// `hierarchy_detail.partition_detail.table` Multiple filters can be applied
+// using the `AND/OR` operator. Examples: * `name="*123" AND (type="TABLE" OR
+// latest_status_detail.state="SUCCEEDED")` * `update_time >=
+// "2012-04-21T11:30:00-04:00` * `hierarchy_detail.partition_detail.table =
+// "table1"
+func (c *ProjectsTransferConfigsTransferResourcesListCall) Filter(filter string) *ProjectsTransferConfigsTransferResourcesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// transfer resources to return. The maximum value is 1000; values above 1000
+// will be coerced to 1000. The default page size is the maximum value of 1000
+// results.
+func (c *ProjectsTransferConfigsTransferResourcesListCall) PageSize(pageSize int64) *ProjectsTransferConfigsTransferResourcesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListTransferResources` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListTransferResources` must match the call that provided the page token.
+func (c *ProjectsTransferConfigsTransferResourcesListCall) PageToken(pageToken string) *ProjectsTransferConfigsTransferResourcesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsTransferConfigsTransferResourcesListCall) Fields(s ...googleapi.Field) *ProjectsTransferConfigsTransferResourcesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsTransferConfigsTransferResourcesListCall) IfNoneMatch(entityTag string) *ProjectsTransferConfigsTransferResourcesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsTransferConfigsTransferResourcesListCall) Context(ctx context.Context) *ProjectsTransferConfigsTransferResourcesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsTransferConfigsTransferResourcesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsTransferConfigsTransferResourcesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/transferResources")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "bigquerydatatransfer.projects.transferConfigs.transferResources.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigquerydatatransfer.projects.transferConfigs.transferResources.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListTransferResourcesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsTransferConfigsTransferResourcesListCall) Do(opts ...googleapi.CallOption) (*ListTransferResourcesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListTransferResourcesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigquerydatatransfer.projects.transferConfigs.transferResources.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsTransferConfigsTransferResourcesListCall) Pages(ctx context.Context, f func(*ListTransferResourcesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

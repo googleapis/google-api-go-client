@@ -2176,6 +2176,30 @@ func (s GoogleBigtableAdminV2TypeArray) MarshalJSON() ([]byte, error) {
 // GoogleBigtableAdminV2TypeBool: bool Values of type `Bool` are stored in
 // `Value.bool_value`.
 type GoogleBigtableAdminV2TypeBool struct {
+	// Encoding: Specifies the encoding to use when converting to or from lower
+	// level types.
+	Encoding *GoogleBigtableAdminV2TypeBoolEncoding `json:"encoding,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Encoding") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Encoding") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleBigtableAdminV2TypeBool) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeBool
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeBoolEncoding: Defines rules used to convert to or
+// from lower level types.
+type GoogleBigtableAdminV2TypeBoolEncoding struct {
 }
 
 // GoogleBigtableAdminV2TypeBytes: Bytes Values of type `Bytes` are stored in
@@ -2781,6 +2805,19 @@ type Instance struct {
 	// in UIs. Can be changed at any time, but should be kept globally unique to
 	// avoid confusion.
 	DisplayName string `json:"displayName,omitempty"`
+	// Edition: Optional. The edition of the instance. See Edition for details.
+	//
+	// Possible values:
+	//   "EDITION_UNSPECIFIED" - The edition is unspecified. This is treated as
+	// `ENTERPRISE`.
+	//   "ENTERPRISE" - The Enterprise edition. This is the default offering that
+	// is designed to meet the needs of most enterprise workloads.
+	//   "ENTERPRISE_PLUS" - The Enterprise Plus edition. This is a premium tier
+	// that is designed for demanding, multi-tenant workloads requiring the highest
+	// levels of performance, scale, and global availability. The nodes in the
+	// Enterprise Plus tier come at a higher cost than the Enterprise tier. Any
+	// Enterprise Plus features must be disabled before downgrading to Enterprise.
+	Edition string `json:"edition,omitempty"`
 	// Labels: Labels are a flexible and lightweight mechanism for organizing cloud
 	// resources into groups that reflect a customer's organizational needs and
 	// deployment strategies. They can be used to filter resources and aggregate

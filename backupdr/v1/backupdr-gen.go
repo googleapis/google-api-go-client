@@ -906,6 +906,9 @@ type Backup struct {
 	Etag string `json:"etag,omitempty"`
 	// ExpireTime: Optional. When this backup is automatically expired.
 	ExpireTime string `json:"expireTime,omitempty"`
+	// FilestoreInstanceBackupProperties: Output only. Filestore specific backup
+	// properties.
+	FilestoreInstanceBackupProperties *FilestoreInstanceBackupProperties `json:"filestoreInstanceBackupProperties,omitempty"`
 	// GcpBackupPlanInfo: Output only. Configuration for a Google Cloud resource.
 	GcpBackupPlanInfo *GCPBackupPlanInfo `json:"gcpBackupPlanInfo,omitempty"`
 	// GcpResource: Output only. Unique identifier of the GCP resource that is
@@ -1378,6 +1381,10 @@ type BackupPlan struct {
 	// be used by the BackupVault for taking backups. Specify the email address of
 	// the Backup Vault Service Account.
 	BackupVaultServiceAccount string `json:"backupVaultServiceAccount,omitempty"`
+	// ComputeInstanceBackupPlanProperties: Optional. Defines optional properties
+	// specific to backups of disk-based resources, such as Compute Engine. This
+	// includes settings like whether to perform a guest flush.
+	ComputeInstanceBackupPlanProperties *ComputeInstanceBackupPlanProperties `json:"computeInstanceBackupPlanProperties,omitempty"`
 	// CreateTime: Output only. When the `BackupPlan` was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. The description of the `BackupPlan` resource. The
@@ -2026,6 +2033,31 @@ func (s CloudSqlInstanceInitializationConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ComputeInstanceBackupPlanProperties: --- ComputeInstanceBackupPlanProperties
+// Message ---
+type ComputeInstanceBackupPlanProperties struct {
+	// GuestFlush: Optional. Indicates whether to perform a guest flush operation
+	// before taking a compute backup. When set to false, the system will create
+	// crash-consistent backups. Default value is false.
+	GuestFlush bool `json:"guestFlush,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GuestFlush") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GuestFlush") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ComputeInstanceBackupPlanProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod ComputeInstanceBackupPlanProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ComputeInstanceBackupProperties: ComputeInstanceBackupProperties represents
 // Compute Engine instance backup properties.
 type ComputeInstanceBackupProperties struct {
@@ -2046,6 +2078,10 @@ type ComputeInstanceBackupProperties struct {
 	// GuestAccelerator: A list of guest accelerator cards' type and count to use
 	// for instances created from these properties.
 	GuestAccelerator []*AcceleratorConfig `json:"guestAccelerator,omitempty"`
+	// GuestFlush: Optional. Indicates whether to perform a guest flush operation
+	// before taking a compute backup. When set to false, the system will create
+	// crash-consistent backups. Default value is false.
+	GuestFlush bool `json:"guestFlush,omitempty"`
 	// KeyRevocationActionType: KeyRevocationActionType of the instance. Supported
 	// options are "STOP" and "NONE". The default value is "NONE" if it is not
 	// specified.
@@ -2517,6 +2553,10 @@ type DataSourceGcpResource struct {
 	// DiskDatasourceProperties: DiskDataSourceProperties has a subset of Disk
 	// properties that are useful at the Datasource level.
 	DiskDatasourceProperties *DiskDataSourceProperties `json:"diskDatasourceProperties,omitempty"`
+	// FilestoreInstanceDatasourceProperties: Output only.
+	// FilestoreInstanceDataSourceProperties has a subset of FileStore instance
+	// properties that are useful at the Datasource level.
+	FilestoreInstanceDatasourceProperties *FilestoreInstanceDataSourceProperties `json:"filestoreInstanceDatasourceProperties,omitempty"`
 	// GcpResourcename: Output only. Full resource pathname URL of the source
 	// Google Cloud resource.
 	GcpResourcename string `json:"gcpResourcename,omitempty"`
@@ -2554,6 +2594,9 @@ type DataSourceGcpResourceInfo struct {
 	// CloudSqlInstanceProperties: Output only. The properties of the Cloud SQL
 	// instance.
 	CloudSqlInstanceProperties *CloudSqlInstanceDataSourceReferenceProperties `json:"cloudSqlInstanceProperties,omitempty"`
+	// FilestoreInstanceProperties: Output only. The properties of the Filestore
+	// instance.
+	FilestoreInstanceProperties *FilestoreInstanceDataSourceReferenceProperties `json:"filestoreInstanceProperties,omitempty"`
 	// GcpResourcename: Output only. The resource name of the Google Cloud
 	// resource. Ex: projects/{project}/zones/{zone}/instances/{instance}
 	GcpResourcename string `json:"gcpResourcename,omitempty"`
@@ -3282,6 +3325,84 @@ type FilestoreInstanceBackupPlanAssociationProperties struct {
 
 func (s FilestoreInstanceBackupPlanAssociationProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod FilestoreInstanceBackupPlanAssociationProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FilestoreInstanceBackupProperties: FilestoreInstanceBackupProperties
+// represents the properties of a Filestore instance that are backed up by the
+// datasource. .
+type FilestoreInstanceBackupProperties struct {
+	// SourceInstance: Output only. The source instance of the backup.
+	SourceInstance string `json:"sourceInstance,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SourceInstance") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SourceInstance") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FilestoreInstanceBackupProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod FilestoreInstanceBackupProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FilestoreInstanceDataSourceProperties: FilestoreInstanceDataSourceProperties
+// represents the properties of a Filestore resource that are stored in the
+// DataSource. .
+type FilestoreInstanceDataSourceProperties struct {
+	// InstanceCreateTime: Output only. The instance creation timestamp.
+	InstanceCreateTime string `json:"instanceCreateTime,omitempty"`
+	// Name: Output only. Name of the Filestore instance backed up by the
+	// datasource.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InstanceCreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InstanceCreateTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FilestoreInstanceDataSourceProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod FilestoreInstanceDataSourceProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FilestoreInstanceDataSourceReferenceProperties:
+// FilestoreInstanceDataSourceReferenceProperties represents the properties of
+// a Filestore resource that are stored in the DataSourceReference. .
+type FilestoreInstanceDataSourceReferenceProperties struct {
+	// InstanceCreateTime: Output only. The instance creation timestamp.
+	InstanceCreateTime string `json:"instanceCreateTime,omitempty"`
+	// Name: Output only. Name of the Filestore instance backed up by the
+	// datasource. Format: projects/{project}/instances/{instance}
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InstanceCreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InstanceCreateTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FilestoreInstanceDataSourceReferenceProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod FilestoreInstanceDataSourceReferenceProperties
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4103,7 +4224,11 @@ type LocationMetadata struct {
 	//   "CLOUD_SQL"
 	//   "ALLOY_DB"
 	//   "FILESTORE"
-	//   "SAAS_PLATFORM"
+	//   "BV_AF"
+	//   "CEP_MONITORING_COMPUTE_INSTANCE"
+	//   "CEP_MONITORING_DISK"
+	//   "BV_CUSTOM_PROBERS" - Remove once parity achieved between BV_AF and
+	// BV_CUSTOM_PROBERS.
 	UnsupportedFeatures []string `json:"unsupportedFeatures,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "UnsupportedFeatures") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4691,6 +4816,7 @@ type ResourceBackupConfig struct {
 	//   "COMPUTE_ENGINE_VM" - Compute Engine VM.
 	//   "COMPUTE_ENGINE_DISK" - Compute Engine Disk.
 	//   "COMPUTE_ENGINE_REGIONAL_DISK" - Compute Engine Regional Disk.
+	//   "FILESTORE_INSTANCE" - Filestore Instance.
 	TargetResourceType string `json:"targetResourceType,omitempty"`
 	// Uid: Output only. The unique identifier of the resource backup config.
 	Uid string `json:"uid,omitempty"`
@@ -5707,10 +5833,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

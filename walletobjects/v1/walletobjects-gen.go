@@ -3397,22 +3397,28 @@ type GenericObject struct {
 	//
 	// Possible values:
 	//   "GENERIC_TYPE_UNSPECIFIED" - Unspecified generic type.
-	//   "GENERIC_SEASON_PASS" - Season pass
-	//   "GENERIC_UTILITY_BILLS" - Utility bills
-	//   "GENERIC_PARKING_PASS" - Parking pass
-	//   "GENERIC_VOUCHER" - Voucher
-	//   "GENERIC_GYM_MEMBERSHIP" - Gym membership cards
-	//   "GENERIC_LIBRARY_MEMBERSHIP" - Library membership cards
-	//   "GENERIC_RESERVATIONS" - Reservations
-	//   "GENERIC_AUTO_INSURANCE" - Auto-insurance cards
-	//   "GENERIC_HOME_INSURANCE" - Home-insurance cards
-	//   "GENERIC_ENTRY_TICKET" - Entry tickets
-	//   "GENERIC_RECEIPT" - Receipts
-	//   "GENERIC_LOYALTY_CARD" - Loyalty cards. Please note that it is advisable
-	// to use a dedicated Loyalty card pass type instead of this generic type. A
-	// dedicated loyalty card pass type offers more features and functionality than
-	// a generic pass type.
-	//   "GENERIC_OTHER" - Other type
+	//   "GENERIC_SEASON_PASS" - Represents a season pass.
+	//   "GENERIC_UTILITY_BILLS" - Represents a utility bill.
+	//   "GENERIC_PARKING_PASS" - Represents a parking pass.
+	//   "GENERIC_VOUCHER" - Represents a voucher.
+	//   "GENERIC_GYM_MEMBERSHIP" - Represents a gym membership card.
+	//   "GENERIC_LIBRARY_MEMBERSHIP" - Represents a library card.
+	//   "GENERIC_RESERVATIONS" - Represents a reservation.
+	//   "GENERIC_AUTO_INSURANCE" - Represents an auto-insurance card.
+	//   "GENERIC_HOME_INSURANCE" - Represents a home-insurance card.
+	//   "GENERIC_ENTRY_TICKET" - Represents an entry ticket.
+	//   "GENERIC_RECEIPT" - Represents a receipt.
+	//   "GENERIC_LOYALTY_CARD" - Represents a loyalty card. Please note that it is
+	// advisable to use a dedicated Loyalty card pass type instead of this generic
+	// type. A dedicated loyalty card pass type offers more features and
+	// functionality than a generic pass type.
+	//   "GENERIC_BUSINESS_CARD" - Represents a business card.
+	//   "GENERIC_BARCODE_PASS" - Represents a barcode pass.
+	//   "GENERIC_MEMBERSHIP_CARD" - Represents a membership card.
+	//   "GENERIC_STUDENT_CARD" - Represents a student card.
+	//   "GENERIC_TRANSIT_PASS" - Represents a transit pass.
+	//   "GENERIC_VEHICLE_REGISTRATION" - Represents a vehicle registration.
+	//   "GENERIC_OTHER" - Represents another type of generic pass.
 	GenericType string `json:"genericType,omitempty"`
 	// GroupingInfo: Information that controls how passes are grouped together.
 	GroupingInfo *GroupingInfo `json:"groupingInfo,omitempty"`

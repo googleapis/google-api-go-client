@@ -12874,6 +12874,9 @@ func (s GoogleCloudDialogflowV2SummarySuggestionSummarySection) MarshalJSON() ([
 type GoogleCloudDialogflowV2ToolCall struct {
 	Action          string               `json:"action,omitempty"`
 	AnswerRecord    string               `json:"answerRecord,omitempty"`
+	CesApp          string               `json:"cesApp,omitempty"`
+	CesTool         string               `json:"cesTool,omitempty"`
+	CesToolset      string               `json:"cesToolset,omitempty"`
 	CreateTime      string               `json:"createTime,omitempty"`
 	InputParameters googleapi.RawMessage `json:"inputParameters,omitempty"`
 	// Possible values:
@@ -12905,6 +12908,9 @@ func (s GoogleCloudDialogflowV2ToolCall) MarshalJSON() ([]byte, error) {
 type GoogleCloudDialogflowV2ToolCallResult struct {
 	Action       string                                      `json:"action,omitempty"`
 	AnswerRecord string                                      `json:"answerRecord,omitempty"`
+	CesApp       string                                      `json:"cesApp,omitempty"`
+	CesTool      string                                      `json:"cesTool,omitempty"`
+	CesToolset   string                                      `json:"cesToolset,omitempty"`
 	Content      string                                      `json:"content,omitempty"`
 	CreateTime   string                                      `json:"createTime,omitempty"`
 	Error        *GoogleCloudDialogflowV2ToolCallResultError `json:"error,omitempty"`
@@ -16097,6 +16103,9 @@ func (s GoogleCloudDialogflowV2beta1TelephonyDtmfEvents) MarshalJSON() ([]byte, 
 type GoogleCloudDialogflowV2beta1ToolCall struct {
 	Action          string               `json:"action,omitempty"`
 	AnswerRecord    string               `json:"answerRecord,omitempty"`
+	CesApp          string               `json:"cesApp,omitempty"`
+	CesTool         string               `json:"cesTool,omitempty"`
+	CesToolset      string               `json:"cesToolset,omitempty"`
 	CreateTime      string               `json:"createTime,omitempty"`
 	InputParameters googleapi.RawMessage `json:"inputParameters,omitempty"`
 	// Possible values:
@@ -16128,6 +16137,9 @@ func (s GoogleCloudDialogflowV2beta1ToolCall) MarshalJSON() ([]byte, error) {
 type GoogleCloudDialogflowV2beta1ToolCallResult struct {
 	Action       string                                           `json:"action,omitempty"`
 	AnswerRecord string                                           `json:"answerRecord,omitempty"`
+	CesApp       string                                           `json:"cesApp,omitempty"`
+	CesTool      string                                           `json:"cesTool,omitempty"`
+	CesToolset   string                                           `json:"cesToolset,omitempty"`
 	Content      string                                           `json:"content,omitempty"`
 	CreateTime   string                                           `json:"createTime,omitempty"`
 	Error        *GoogleCloudDialogflowV2beta1ToolCallResultError `json:"error,omitempty"`

@@ -3568,6 +3568,8 @@ type GoogleCloudContactcenterinsightsV1Dimension struct {
 	//   "LABEL_KEY" - The dimension is keyed by label keys.
 	//   "LABEL_VALUE" - The dimension is keyed by label values.
 	//   "LABEL_KEY_AND_VALUE" - The dimension is keyed by label key-value pairs.
+	//   "LAST_TRANSFER_SUB_AGENT_NAME" - The dimension is keyed by the last
+	// transfer sub agent name.
 	DimensionKey string `json:"dimensionKey,omitempty"`
 	// IssueDimensionMetadata: Output only. Metadata about the issue dimension.
 	IssueDimensionMetadata *GoogleCloudContactcenterinsightsV1DimensionIssueDimensionMetadata `json:"issueDimensionMetadata,omitempty"`
@@ -11258,6 +11260,8 @@ type GoogleCloudContactcenterinsightsV1alpha1Dimension struct {
 	//   "LABEL_KEY" - The dimension is keyed by label keys.
 	//   "LABEL_VALUE" - The dimension is keyed by label values.
 	//   "LABEL_KEY_AND_VALUE" - The dimension is keyed by label key-value pairs.
+	//   "LAST_TRANSFER_SUB_AGENT_NAME" - The dimension is keyed by the last
+	// transfer sub agent name.
 	DimensionKey string `json:"dimensionKey,omitempty"`
 	// IssueDimensionMetadata: Output only. Metadata about the issue dimension.
 	IssueDimensionMetadata *GoogleCloudContactcenterinsightsV1alpha1DimensionIssueDimensionMetadata `json:"issueDimensionMetadata,omitempty"`
@@ -16969,6 +16973,8 @@ type GoogleCloudContactcenterinsightsV1mainDimension struct {
 	//   "LABEL_KEY" - The dimension is keyed by label keys.
 	//   "LABEL_VALUE" - The dimension is keyed by label values.
 	//   "LABEL_KEY_AND_VALUE" - The dimension is keyed by label key-value pairs.
+	//   "LAST_TRANSFER_SUB_AGENT_NAME" - The dimension is keyed by the last
+	// transfer sub agent name.
 	DimensionKey string `json:"dimensionKey,omitempty"`
 	// IssueDimensionMetadata: Output only. Metadata about the issue dimension.
 	IssueDimensionMetadata *GoogleCloudContactcenterinsightsV1mainDimensionIssueDimensionMetadata `json:"issueDimensionMetadata,omitempty"`

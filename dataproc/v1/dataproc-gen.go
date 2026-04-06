@@ -36,6 +36,11 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	dataprocService, err := dataproc.NewService(ctx, option.WithScopes(dataproc.DataprocReadOnlyScope))
+//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -103,12 +108,22 @@ const (
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// See, edit, configure, and delete your Google Cloud Dataproc data and see the
+	// email address for your Google Account
+	DataprocScope = "https://www.googleapis.com/auth/dataproc"
+
+	// See your Google Cloud Dataproc data and the email address of your Google
+	// Account
+	DataprocReadOnlyScope = "https://www.googleapis.com/auth/dataproc.read-only"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
+		"https://www.googleapis.com/auth/dataproc",
+		"https://www.googleapis.com/auth/dataproc.read-only",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -1678,6 +1693,14 @@ type ClusterConfig struct {
 	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
 	// EndpointConfig: Optional. Port/endpoint configuration for this cluster
 	EndpointConfig *EndpointConfig `json:"endpointConfig,omitempty"`
+	// Engine: Optional. The cluster engine.
+	//
+	// Possible values:
+	//   "ENGINE_UNSPECIFIED" - The engine is not specified. Works the same as
+	// ENGINE_DEFAULT.
+	//   "DEFAULT" - The cluster is a default engine cluster.
+	//   "LIGHTNING" - The cluster is a lightning engine cluster.
+	Engine string `json:"engine,omitempty"`
 	// GceClusterConfig: Optional. The shared Compute Engine config settings for
 	// all instances in a cluster.
 	GceClusterConfig *GceClusterConfig `json:"gceClusterConfig,omitempty"`
@@ -7609,7 +7632,9 @@ func (s SparkPlanGraph) MarshalJSON() ([]byte, error) {
 
 // SparkPlanGraphCluster: Represents a tree of spark plan.
 type SparkPlanGraphCluster struct {
-	Desc                    string                       `json:"desc,omitempty"`
+	Desc string `json:"desc,omitempty"`
+	// Metadata: Optional. Additional metadata for the spark plan graph cluster.
+	Metadata                map[string]string            `json:"metadata,omitempty"`
 	Metrics                 []*SqlPlanMetric             `json:"metrics,omitempty"`
 	Name                    string                       `json:"name,omitempty"`
 	Nodes                   []*SparkPlanGraphNodeWrapper `json:"nodes,omitempty"`
@@ -7657,10 +7682,12 @@ func (s SparkPlanGraphEdge) MarshalJSON() ([]byte, error) {
 
 // SparkPlanGraphNode: Represents a node in the spark plan tree.
 type SparkPlanGraphNode struct {
-	Desc                 string           `json:"desc,omitempty"`
-	Metrics              []*SqlPlanMetric `json:"metrics,omitempty"`
-	Name                 string           `json:"name,omitempty"`
-	SparkPlanGraphNodeId int64            `json:"sparkPlanGraphNodeId,omitempty,string"`
+	Desc string `json:"desc,omitempty"`
+	// Metadata: Optional. Additional metadata for the spark plan graph cluster.
+	Metadata             map[string]string `json:"metadata,omitempty"`
+	Metrics              []*SqlPlanMetric  `json:"metrics,omitempty"`
+	Name                 string            `json:"name,omitempty"`
+	SparkPlanGraphNodeId int64             `json:"sparkPlanGraphNodeId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Desc") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -21751,15 +21778,17 @@ func (c *ProjectsRegionsClustersListCall) Filter(filter string) *ProjectsRegions
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard List page
-// size.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// clusters to return in each response. The service may return fewer than this
+// value. If unspecified, the default value is 200. The maximum value is 1000.
 func (c *ProjectsRegionsClustersListCall) PageSize(pageSize int64) *ProjectsRegionsClustersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard List page
-// token.
+// PageToken sets the optional parameter "pageToken": A page token received
+// from a previous ListClusters call. Provide this token to retrieve the
+// subsequent page.
 func (c *ProjectsRegionsClustersListCall) PageToken(pageToken string) *ProjectsRegionsClustersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c

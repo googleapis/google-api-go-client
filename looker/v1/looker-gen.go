@@ -549,10 +549,65 @@ func (s ImportInstanceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// IngressIpAllowlistConfig: Ingress IP allowlist configuration.
+type IngressIpAllowlistConfig struct {
+	// AllowlistRules: Optional. List of IP range rules to allow ingress traffic.
+	AllowlistRules []*IngressIpAllowlistRule `json:"allowlistRules,omitempty"`
+	// Enabled: Optional. Whether ingress IP allowlist functionality is enabled on
+	// the Looker instance.
+	Enabled bool `json:"enabled,omitempty"`
+	// GoogleServicesEnabled: Optional. Whether google service connections are
+	// enabled for the instance.
+	GoogleServicesEnabled bool `json:"googleServicesEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowlistRules") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowlistRules") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IngressIpAllowlistConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IngressIpAllowlistConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IngressIpAllowlistRule: Ingress IP allowlist rule.
+type IngressIpAllowlistRule struct {
+	// Description: Optional. Description for the IP range.
+	Description string `json:"description,omitempty"`
+	// IpRange: Optional. The IP range to allow ingress traffic from.
+	IpRange string `json:"ipRange,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IngressIpAllowlistRule) MarshalJSON() ([]byte, error) {
+	type NoMethod IngressIpAllowlistRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Instance: A Looker instance.
 type Instance struct {
 	// AdminSettings: Looker Instance Admin settings.
 	AdminSettings *AdminSettings `json:"adminSettings,omitempty"`
+	// CatalogIntegrationOptOut: Optional. Indicates whether catalog integration is
+	// disabled for the Looker instance.
+	CatalogIntegrationOptOut bool `json:"catalogIntegrationOptOut,omitempty"`
 	// ClassType: Optional. Storage class of the instance.
 	//
 	// Possible values:
@@ -587,6 +642,9 @@ type Instance struct {
 	// GeminiEnabled: Optional. Whether Gemini feature is enabled on the Looker
 	// instance or not.
 	GeminiEnabled bool `json:"geminiEnabled,omitempty"`
+	// IngressIpAllowlistConfig: Optional. Ingress IP allowlist configuration for
+	// the Looker instance.
+	IngressIpAllowlistConfig *IngressIpAllowlistConfig `json:"ingressIpAllowlistConfig,omitempty"`
 	// IngressPrivateIp: Output only. Private Ingress IP (IPv4).
 	IngressPrivateIp string `json:"ingressPrivateIp,omitempty"`
 	// IngressPublicIp: Output only. Public Ingress IP (IPv4).
@@ -1415,10 +1473,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

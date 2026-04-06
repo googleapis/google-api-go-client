@@ -280,6 +280,7 @@ func NewProjectsInstancesClustersService(s *Service) *ProjectsInstancesClustersS
 	rs := &ProjectsInstancesClustersService{s: s}
 	rs.Backups = NewProjectsInstancesClustersBackupsService(s)
 	rs.HotTablets = NewProjectsInstancesClustersHotTabletsService(s)
+	rs.MemoryLayers = NewProjectsInstancesClustersMemoryLayersService(s)
 	return rs
 }
 
@@ -289,6 +290,8 @@ type ProjectsInstancesClustersService struct {
 	Backups *ProjectsInstancesClustersBackupsService
 
 	HotTablets *ProjectsInstancesClustersHotTabletsService
+
+	MemoryLayers *ProjectsInstancesClustersMemoryLayersService
 }
 
 func NewProjectsInstancesClustersBackupsService(s *Service) *ProjectsInstancesClustersBackupsService {
@@ -306,6 +309,15 @@ func NewProjectsInstancesClustersHotTabletsService(s *Service) *ProjectsInstance
 }
 
 type ProjectsInstancesClustersHotTabletsService struct {
+	s *Service
+}
+
+func NewProjectsInstancesClustersMemoryLayersService(s *Service) *ProjectsInstancesClustersMemoryLayersService {
+	rs := &ProjectsInstancesClustersMemoryLayersService{s: s}
+	return rs
+}
+
+type ProjectsInstancesClustersMemoryLayersService struct {
 	s *Service
 }
 
@@ -548,6 +560,12 @@ type AutomatedBackupPolicy struct {
 	// value at this time is 24 hours. An undefined frequency is treated as 24
 	// hours.
 	Frequency string `json:"frequency,omitempty"`
+	// Locations: Optional. A list of Cloud Bigtable zones where automated backups
+	// are allowed to be created. If empty, automated backups will be created in
+	// all zones of the instance. Locations are in the format
+	// `projects/{project}/locations/{zone}`. This field can only set for tables in
+	// Enterprise Plus instances.
+	Locations []string `json:"locations,omitempty"`
 	// RetentionPeriod: Required. How long the automated backups should be
 	// retained. Values must be at least 3 days and at most 90 days.
 	RetentionPeriod string `json:"retentionPeriod,omitempty"`
@@ -2087,6 +2105,30 @@ func (s GoogleBigtableAdminV2MaterializedViewClusterState) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleBigtableAdminV2MemoryLayerMemoryConfig: Configuration of a memory
+// layer.
+type GoogleBigtableAdminV2MemoryLayerMemoryConfig struct {
+	// StorageSizeGib: Output only. Reporting the current size of the memory layer
+	// in GiB.
+	StorageSizeGib int64 `json:"storageSizeGib,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StorageSizeGib") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StorageSizeGib") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleBigtableAdminV2MemoryLayerMemoryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2MemoryLayerMemoryConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleBigtableAdminV2TypeAggregate: A value that combines incremental
 // updates into a summarized value. Data is never directly written or read
 // using type `Aggregate`. Writes provide either the `input_type` or
@@ -2318,6 +2360,69 @@ type GoogleBigtableAdminV2TypeFloat64 struct {
 // or region on Earth. The value is stored in `Value.bytes_value` as Well-Known
 // Binary (WKB) bytes.
 type GoogleBigtableAdminV2TypeGeography struct {
+}
+
+// GoogleBigtableAdminV2TypeInt32: Int32 Values of type `Int32` are stored in
+// `Value.int_value`.
+type GoogleBigtableAdminV2TypeInt32 struct {
+	// Encoding: The encoding to use when converting to or from lower level types.
+	Encoding *GoogleBigtableAdminV2TypeInt32Encoding `json:"encoding,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Encoding") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Encoding") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleBigtableAdminV2TypeInt32) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeInt32
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeInt32Encoding: Rules used to convert to or from
+// lower level types.
+type GoogleBigtableAdminV2TypeInt32Encoding struct {
+	// BigEndianBytes: Use `BigEndianBytes` encoding.
+	BigEndianBytes *GoogleBigtableAdminV2TypeInt32EncodingBigEndianBytes `json:"bigEndianBytes,omitempty"`
+	// OrderedCodeBytes: Use `OrderedCodeBytes` encoding.
+	OrderedCodeBytes *GoogleBigtableAdminV2TypeInt32EncodingOrderedCodeBytes `json:"orderedCodeBytes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BigEndianBytes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BigEndianBytes") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleBigtableAdminV2TypeInt32Encoding) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeInt32Encoding
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeInt32EncodingBigEndianBytes: Encodes the value as a
+// 4-byte big-endian two's complement value. Sorted mode: non-negative values
+// are supported. Distinct mode: all values are supported. Compatible with: -
+// BigQuery `BINARY` encoding - HBase `Bytes.toBytes` - Java
+// `ByteBuffer.putInt()` with `ByteOrder.BIG_ENDIAN`
+type GoogleBigtableAdminV2TypeInt32EncodingBigEndianBytes struct {
+}
+
+// GoogleBigtableAdminV2TypeInt32EncodingOrderedCodeBytes: Encodes the value in
+// a variable length binary format of up to 5 bytes. Values that are closer to
+// zero use fewer bytes. Sorted mode: all values are supported. Distinct mode:
+// all values are supported.
+type GoogleBigtableAdminV2TypeInt32EncodingOrderedCodeBytes struct {
 }
 
 // GoogleBigtableAdminV2TypeInt64: Int64 Values of type `Int64` are stored in
@@ -3186,6 +3291,40 @@ func (s ListMaterializedViewsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListMemoryLayersResponse: Response message for
+// BigtableInstanceAdmin.ListMemoryLayers.
+type ListMemoryLayersResponse struct {
+	// FailedLocations: Locations from which MemoryLayer information could not be
+	// retrieved, due to an outage or some other transient condition. MemoryLayers
+	// from these locations may be missing from `memory_layers`, or may only have
+	// partial information returned. Values are of the form `projects//locations/`
+	FailedLocations []string `json:"failedLocations,omitempty"`
+	// MemoryLayers: The list of requested memory layers.
+	MemoryLayers []*MemoryLayer `json:"memoryLayers,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "FailedLocations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailedLocations") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListMemoryLayersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListMemoryLayersResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListOperationsResponse: The response message for Operations.ListOperations.
 type ListOperationsResponse struct {
 	// NextPageToken: The standard List next-page token.
@@ -3390,6 +3529,66 @@ type MaterializedView struct {
 
 func (s MaterializedView) MarshalJSON() ([]byte, error) {
 	type NoMethod MaterializedView
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MemoryConfig: If set, eligible single-row requests (currently limited to
+// ReadRows) using this app profile will be routed to the memory layer. All
+// eligible writes populate the memory layer. MemoryConfig can only be set if
+// the AppProfile uses single cluster routing and the configured cluster has a
+// memory layer enabled.
+type MemoryConfig struct {
+}
+
+// MemoryLayer: The memory layer of a cluster. A memory layer serves reads from
+// memory without hitting the backing persistent data store.
+type MemoryLayer struct {
+	// Etag: Optional. The etag for this memory layer. This may be sent on update
+	// requests to ensure that the client has an up-to-date value before
+	// proceeding. The server returns an ABORTED error on a mismatched etag.
+	Etag string `json:"etag,omitempty"`
+	// MemoryConfig: The configuration of this memory layer. Set an empty
+	// `memory_config` to enable the memory layer. Unset this to disable the memory
+	// layer.
+	MemoryConfig *GoogleBigtableAdminV2MemoryLayerMemoryConfig `json:"memoryConfig,omitempty"`
+	// Name: Identifier. Name of the memory layer. This is always:
+	// "projects/{project}/instances/{instance}/clusters/{cluster}/memoryLayer".
+	Name string `json:"name,omitempty"`
+	// State: Output only. The current state of the memory layer.
+	//
+	// Possible values:
+	//   "STATE_NOT_KNOWN" - The state of the memory layer could not be determined.
+	//   "READY" - The memory layer has been successfully enabled and is ready to
+	// serve requests.
+	//   "ENABLING" - The memory layer is currently being enabled, and may be
+	// disabled if the enablement process encounters an error. A cluster may not be
+	// able to serve requests from the memory layer while being enabled.
+	//   "RESIZING" - The memory layer is currently being resized, and may revert
+	// to its previous storage size if the process encounters an error. The memory
+	// layer is still capable of serving requests while being resized, but may
+	// exhibit performance as if its number of allocated nodes is between the
+	// starting and requested states.
+	//   "DISABLED" - The memory layer is disabled. The default state for a cluster
+	// without a memory layer.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MemoryLayer) MarshalJSON() ([]byte, error) {
+	type NoMethod MemoryLayer
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4021,6 +4220,9 @@ func (s Split) MarshalJSON() ([]byte, error) {
 // StandardIsolation: Standard options for isolating this app profile's traffic
 // from other use cases.
 type StandardIsolation struct {
+	// MemoryConfig: Optional. The memory config to use for requests sent using
+	// this app profile.
+	MemoryConfig *MemoryConfig `json:"memoryConfig,omitempty"`
 	// Priority: The priority of requests sent using this app profile.
 	//
 	// Possible values:
@@ -4030,13 +4232,13 @@ type StandardIsolation struct {
 	//   "PRIORITY_MEDIUM"
 	//   "PRIORITY_HIGH"
 	Priority string `json:"priority,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Priority") to
+	// ForceSendFields is a list of field names (e.g. "MemoryConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Priority") to include in API
+	// NullFields is a list of field names (e.g. "MemoryConfig") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -4429,6 +4631,8 @@ type Type struct {
 	Float64Type *GoogleBigtableAdminV2TypeFloat64 `json:"float64Type,omitempty"`
 	// GeographyType: Geography
 	GeographyType *GoogleBigtableAdminV2TypeGeography `json:"geographyType,omitempty"`
+	// Int32Type: Int32
+	Int32Type *GoogleBigtableAdminV2TypeInt32 `json:"int32Type,omitempty"`
 	// Int64Type: Int64
 	Int64Type *GoogleBigtableAdminV2TypeInt64 `json:"int64Type,omitempty"`
 	// MapType: Map
@@ -4705,6 +4909,62 @@ type UpdateLogicalViewRequest struct {
 
 func (s UpdateLogicalViewRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateLogicalViewRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpdateMemoryLayerMetadata: The metadata for the Operation returned by
+// UpdateMemoryLayer.
+type UpdateMemoryLayerMetadata struct {
+	// FinishTime: The time at which the operation failed or was completed
+	// successfully.
+	FinishTime string `json:"finishTime,omitempty"`
+	// OriginalRequest: The request that prompted the initiation of this
+	// UpdateMemoryLayer operation.
+	OriginalRequest *UpdateMemoryLayerRequest `json:"originalRequest,omitempty"`
+	// RequestTime: The time at which the original request was received.
+	RequestTime string `json:"requestTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FinishTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FinishTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateMemoryLayerMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateMemoryLayerMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpdateMemoryLayerRequest: Request message for
+// BigtableInstanceAdmin.UpdateMemoryLayer.
+type UpdateMemoryLayerRequest struct {
+	// MemoryLayer: Required. The memory layer to update. The memory layer's `name`
+	// format is as follows:
+	// `projects/{project}/instances/{instance}/clusters/{cluster}/memoryLayer`.
+	MemoryLayer *MemoryLayer `json:"memoryLayer,omitempty"`
+	// UpdateMask: Optional. The list of fields to update.
+	UpdateMask string `json:"updateMask,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MemoryLayer") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MemoryLayer") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateMemoryLayerRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateMemoryLayerRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6977,6 +7237,117 @@ func (c *ProjectsInstancesClustersGetCall) Do(opts ...googleapi.CallOption) (*Cl
 	return ret, nil
 }
 
+type ProjectsInstancesClustersGetMemoryLayerCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetMemoryLayer: Gets information about the memory layer of a cluster.
+//
+//   - name: The unique name of the requested cluster's memory layer. Values are
+//     of the form
+//     `projects/{project}/instances/{instance}/clusters/{cluster}/memoryLayer`.
+func (r *ProjectsInstancesClustersService) GetMemoryLayer(name string) *ProjectsInstancesClustersGetMemoryLayerCall {
+	c := &ProjectsInstancesClustersGetMemoryLayerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesClustersGetMemoryLayerCall) Fields(s ...googleapi.Field) *ProjectsInstancesClustersGetMemoryLayerCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsInstancesClustersGetMemoryLayerCall) IfNoneMatch(entityTag string) *ProjectsInstancesClustersGetMemoryLayerCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesClustersGetMemoryLayerCall) Context(ctx context.Context) *ProjectsInstancesClustersGetMemoryLayerCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesClustersGetMemoryLayerCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesClustersGetMemoryLayerCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "bigtableadmin.projects.instances.clusters.getMemoryLayer", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.clusters.getMemoryLayer" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *MemoryLayer.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsInstancesClustersGetMemoryLayerCall) Do(opts ...googleapi.CallOption) (*MemoryLayer, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &MemoryLayer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigtableadmin.projects.instances.clusters.getMemoryLayer", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsInstancesClustersListCall struct {
 	s            *Service
 	parent       string
@@ -7341,6 +7712,119 @@ func (c *ProjectsInstancesClustersUpdateCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigtableadmin.projects.instances.clusters.update", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsInstancesClustersUpdateMemoryLayerCall struct {
+	s           *Service
+	name        string
+	memorylayer *MemoryLayer
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// UpdateMemoryLayer: Updates the memory layer of a cluster. To enable the
+// memory layer, set the memory_config. To disable the memory layer, unset the
+// memory_config.
+//
+//   - name: Identifier. Name of the memory layer. This is always:
+//     "projects/{project}/instances/{instance}/clusters/{cluster}/memoryLayer".
+func (r *ProjectsInstancesClustersService) UpdateMemoryLayer(name string, memorylayer *MemoryLayer) *ProjectsInstancesClustersUpdateMemoryLayerCall {
+	c := &ProjectsInstancesClustersUpdateMemoryLayerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.memorylayer = memorylayer
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update.
+func (c *ProjectsInstancesClustersUpdateMemoryLayerCall) UpdateMask(updateMask string) *ProjectsInstancesClustersUpdateMemoryLayerCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesClustersUpdateMemoryLayerCall) Fields(s ...googleapi.Field) *ProjectsInstancesClustersUpdateMemoryLayerCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesClustersUpdateMemoryLayerCall) Context(ctx context.Context) *ProjectsInstancesClustersUpdateMemoryLayerCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesClustersUpdateMemoryLayerCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesClustersUpdateMemoryLayerCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.memorylayer)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "bigtableadmin.projects.instances.clusters.updateMemoryLayer", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.clusters.updateMemoryLayer" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsInstancesClustersUpdateMemoryLayerCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigtableadmin.projects.instances.clusters.updateMemoryLayer", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8569,6 +9053,157 @@ func (c *ProjectsInstancesClustersHotTabletsListCall) Do(opts ...googleapi.CallO
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsInstancesClustersHotTabletsListCall) Pages(ctx context.Context, f func(*ListHotTabletsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsInstancesClustersMemoryLayersListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists information about memory layers.
+//
+//   - parent: The unique name of the cluster for which a list of memory layers
+//     is requested. Values are of the form
+//     `projects/{project}/instances/{instance}/clusters/{cluster}`. Use
+//     `{cluster} = '-'` to list MemoryLayers for all Clusters in an instance,
+//     e.g., `projects/myproject/instances/myinstance/clusters/-`.
+func (r *ProjectsInstancesClustersMemoryLayersService) List(parent string) *ProjectsInstancesClustersMemoryLayersListCall {
+	c := &ProjectsInstancesClustersMemoryLayersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// memory layers to return. The service may return fewer than this value.
+func (c *ProjectsInstancesClustersMemoryLayersListCall) PageSize(pageSize int64) *ProjectsInstancesClustersMemoryLayersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListMemoryLayers` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListMemoryLayers` must match the call that provided the page token.
+func (c *ProjectsInstancesClustersMemoryLayersListCall) PageToken(pageToken string) *ProjectsInstancesClustersMemoryLayersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesClustersMemoryLayersListCall) Fields(s ...googleapi.Field) *ProjectsInstancesClustersMemoryLayersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsInstancesClustersMemoryLayersListCall) IfNoneMatch(entityTag string) *ProjectsInstancesClustersMemoryLayersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesClustersMemoryLayersListCall) Context(ctx context.Context) *ProjectsInstancesClustersMemoryLayersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesClustersMemoryLayersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesClustersMemoryLayersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/memoryLayers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "bigtableadmin.projects.instances.clusters.memoryLayers.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.clusters.memoryLayers.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListMemoryLayersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesClustersMemoryLayersListCall) Do(opts ...googleapi.CallOption) (*ListMemoryLayersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListMemoryLayersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigtableadmin.projects.instances.clusters.memoryLayers.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsInstancesClustersMemoryLayersListCall) Pages(ctx context.Context, f func(*ListMemoryLayersResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
@@ -14016,10 +14651,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

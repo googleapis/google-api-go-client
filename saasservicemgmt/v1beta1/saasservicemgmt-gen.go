@@ -297,6 +297,35 @@ func (s Aggregate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AppParams: AppParams contains the parameters for creating an AppHub
+// Application.
+type AppParams struct {
+	// Group: Grouping used to construct the name of the AppHub Application.
+	// Multiple UnitKinds can specify the same group to use the same Application
+	// across their respective units. Corresponds to the app_boundary_id in the ADC
+	// composite ApplicationTemplate. Defaults to UnitKind.name
+	Group string `json:"group,omitempty"`
+	// Scope: Corresponds to the scope in the ADC composite ApplicationTemplate.
+	// Defaults to REGIONAL.
+	Scope *Scope `json:"scope,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Group") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Group") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AppParams) MarshalJSON() ([]byte, error) {
+	type NoMethod AppParams
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Blueprint: Blueprints are OCI Images that contain all of the artifacts
 // needed to provision a unit. Metadata such as, type of the engine used to
 // actuate the blueprint (e.g. terraform, helm etc) and version will come from
@@ -326,6 +355,67 @@ type Blueprint struct {
 
 func (s Blueprint) MarshalJSON() ([]byte, error) {
 	type NoMethod Blueprint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ComponentRef: ComponentRef represents a reference to a component resource.
+// Next ID: 4
+type ComponentRef struct {
+	// Component: Name of the component in composite.Components
+	Component string `json:"component,omitempty"`
+	// CompositeRef: Reference to the Composite ApplicationTemplate.
+	CompositeRef *CompositeRef `json:"compositeRef,omitempty"`
+	// Revision: Revision of the component. If the component does not have a
+	// revision, this field will be explicitly set to the revision of the composite
+	// ApplicationTemplate.
+	Revision string `json:"revision,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Component") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Component") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ComponentRef) MarshalJSON() ([]byte, error) {
+	type NoMethod ComponentRef
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CompositeRef: CompositeRef represents a reference to a composite resource.
+// Next ID: 4
+type CompositeRef struct {
+	// ApplicationTemplate: Required. Reference to the ApplicationTemplate
+	// resource.
+	ApplicationTemplate string `json:"applicationTemplate,omitempty"`
+	// Revision: Revision of the ApplicationTemplate to use. Changes to revision
+	// will trigger manual resynchronization. If empty, ApplicationTemplate will be
+	// ignored.
+	Revision string `json:"revision,omitempty"`
+	// SyncOperation: Output only. Reference to on-going AppTemplate import and
+	// replication operation (i.e. the operation_id for the long-running
+	// operation). This field is opaque for external usage.
+	SyncOperation string `json:"syncOperation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApplicationTemplate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApplicationTemplate") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CompositeRef) MarshalJSON() ([]byte, error) {
+	type NoMethod CompositeRef
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -827,6 +917,9 @@ type Release struct {
 	// modifying objects. More info:
 	// https://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
+	// ApplicationTemplateComponent: Output only. Reference to component and
+	// revision in a composite ApplicationTemplate.
+	ApplicationTemplateComponent *ComponentRef `json:"applicationTemplateComponent,omitempty"`
 	// Blueprint: Optional. Blueprints are OCI Images that contain all of the
 	// artifacts needed to provision a unit.
 	Blueprint *Blueprint `json:"blueprint,omitempty"`
@@ -966,7 +1059,7 @@ type Rollout struct {
 	// Release: Optional. Immutable. Name of the Release that gets rolled out to
 	// target Units. Required if no other type of release is specified.
 	Release string `json:"release,omitempty"`
-	// RolloutKind: Optional. Immutable. Name of the RolloutKind this rollout is
+	// RolloutKind: Required. Immutable. Name of the RolloutKind this rollout is
 	// stemming from and adhering to.
 	RolloutKind string `json:"rolloutKind,omitempty"`
 	// RolloutOrchestrationStrategy: Optional. The strategy used for executing this
@@ -1234,8 +1327,24 @@ type Saas struct {
 	// modifying objects. More info:
 	// https://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
+	// ApplicationTemplate: Reference to composite ApplicationTemplate. When
+	// specified, the template components will be imported into their equivalent
+	// UnitKind, Release and Blueprint resources. Deleted references will not
+	// delete imported resources. Should only be specified on source regions, and
+	// be unspecified on replica regions.
+	ApplicationTemplate *CompositeRef `json:"applicationTemplate,omitempty"`
+	// BlueprintRepo: Output only. Name of repository in Artifact Registry for
+	// system-generated Blueprints, eg. Blueprints of imported
+	// ApplicationTemplates.
+	BlueprintRepo string `json:"blueprintRepo,omitempty"`
+	// Conditions: Output only. A set of conditions which indicate the various
+	// conditions this resource can have.
+	Conditions []*SaasCondition `json:"conditions,omitempty"`
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// Error: Output only. If the state is FAILED, the corresponding error code and
+	// message. Defaults to code=OK for all other states.
+	Error *Status `json:"error,omitempty"`
 	// Etag: Output only. An opaque value that uniquely identifies a version or
 	// generation of a resource. It can be used to confirm that the client and
 	// server agree on the ordering of a resource being written.
@@ -1250,6 +1359,20 @@ type Saas struct {
 	// standard naming scheme:
 	// "projects/{project}/locations/{location}/saas/{saas}"
 	Name string `json:"name,omitempty"`
+	// State: Output only. State of the Saas. It is always in ACTIVE state if the
+	// application_template is empty.
+	//
+	// Possible values:
+	//   "STATE_TYPE_UNSPECIFIED" - State type is unspecified.
+	//   "ACTIVE" - Deprecated: Use STATE_ACTIVE.
+	//   "RUNNING" - Deprecated: Use STATE_RUNNING.
+	//   "FAILED" - Deprecated: Use STATE_FAILED.
+	//   "STATE_ACTIVE" - The Saas is ready
+	//   "STATE_RUNNING" - In the process of importing, synchronizing or
+	// replicating ApplicationTemplates
+	//   "STATE_FAILED" - Failure during process of importing, synchronizing or
+	// replicating ApplicationTemplate processing
+	State string `json:"state,omitempty"`
 	// Uid: Output only. The unique identifier of the resource. UID is unique in
 	// the time and space for this resource within the scope of the service. It is
 	// typically generated by the server on successful creation of a resource and
@@ -1281,6 +1404,49 @@ func (s Saas) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SaasCondition: SaasCondition describes the status of a Saas.
+type SaasCondition struct {
+	// LastTransitionTime: Required. Last time the condition transited from one
+	// status to another.
+	LastTransitionTime string `json:"lastTransitionTime,omitempty"`
+	// Message: Required. Human readable message indicating details about the last
+	// transition.
+	Message string `json:"message,omitempty"`
+	// Reason: Required. Brief reason for the condition's last transition.
+	Reason string `json:"reason,omitempty"`
+	// Status: Required. Status of the condition.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Condition status is unspecified.
+	//   "STATUS_UNKNOWN" - Condition is unknown.
+	//   "STATUS_TRUE" - Condition is true.
+	//   "STATUS_FALSE" - Condition is false.
+	Status string `json:"status,omitempty"`
+	// Type: Required. Type of the condition.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Condition type is unspecified.
+	//   "TYPE_READY" - Condition type is ready.
+	//   "TYPE_SYNCHRONIZED" - Condition type is synchronized.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LastTransitionTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LastTransitionTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SaasCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod SaasCondition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Schedule: A time specification to schedule the maintenance.
 type Schedule struct {
 	// StartTime: Optional. Start of operation. If not set, will be set to the
@@ -1301,6 +1467,69 @@ type Schedule struct {
 
 func (s Schedule) MarshalJSON() ([]byte, error) {
 	type NoMethod Schedule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Scope: Scope of an application.
+type Scope struct {
+	// Type: Required. Scope Type.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified type.
+	//   "REGIONAL" - Deprecated: Use TYPE_REGIONAL.
+	//   "GLOBAL" - Deprecated: Use TYPE_GLOBAL.
+	//   "TYPE_REGIONAL" - Regional type.
+	//   "TYPE_GLOBAL" - Global type.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Type") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Scope) MarshalJSON() ([]byte, error) {
+	type NoMethod Scope
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Status: The `Status` type defines a logical error model that is suitable for
+// different programming environments, including REST APIs and RPC APIs. It is
+// used by gRPC (https://github.com/grpc). Each `Status` message contains three
+// pieces of data: error code, error message, and error details. You can find
+// out more about this error model and how to work with it in the API Design
+// Guide (https://cloud.google.com/apis/design/errors).
+type Status struct {
+	// Code: The status code, which should be an enum value of google.rpc.Code.
+	Code int64 `json:"code,omitempty"`
+	// Details: A list of messages that carry the error details. There is a common
+	// set of message types for APIs to use.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+	// Message: A developer-facing error message, which should be in English. Any
+	// user-facing error message should be localized and sent in the
+	// google.rpc.Status.details field, or localized by the client.
+	Message string `json:"message,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Status) MarshalJSON() ([]byte, error) {
+	type NoMethod Status
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1410,6 +1639,10 @@ type Unit struct {
 	// modifying objects. More info:
 	// https://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
+	// Application: Optional. Reference to the AppHub Application this unit belongs
+	// to. All resources deployed in this Unit will be associated with the
+	// specified Application.
+	Application string `json:"application,omitempty"`
 	// Conditions: Optional. Output only. A set of conditions which indicate the
 	// various conditions this resource can have.
 	Conditions []*UnitCondition `json:"conditions,omitempty"`
@@ -1620,6 +1853,12 @@ type UnitKind struct {
 	// modifying objects. More info:
 	// https://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
+	// AppParams: AppParams contains the parameters for creating an AppHub
+	// Application.
+	AppParams *AppParams `json:"appParams,omitempty"`
+	// ApplicationTemplateComponent: Output only. Reference to component and
+	// revision in a composite ApplicationTemplate.
+	ApplicationTemplateComponent *ComponentRef `json:"applicationTemplateComponent,omitempty"`
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DefaultRelease: Optional. A reference to the Release object to use as
@@ -2060,10 +2299,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

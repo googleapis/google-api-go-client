@@ -5988,6 +5988,11 @@ func (s NodeManagement) MarshalJSON() ([]byte, error) {
 
 // NodeNetworkConfig: Parameters for node pool-level network config.
 type NodeNetworkConfig struct {
+	// AcceleratorNetworkProfile: Immutable. The accelerator network profile for
+	// the node pool. For now the only valid value is "auto". If specified, the
+	// network configuration of the nodes in this node pool will be managed by this
+	// profile for the supported machine types, zone, etc.
+	AcceleratorNetworkProfile string `json:"acceleratorNetworkProfile,omitempty"`
 	// AdditionalNodeNetworkConfigs: We specify the additional node networks for
 	// this node pool using this list. Each node network corresponds to an
 	// additional interface
@@ -6053,13 +6058,13 @@ type NodeNetworkConfig struct {
 	// subnetwork path picked based on the IP utilization during node pool creation
 	// and is immutable.
 	Subnetwork string `json:"subnetwork,omitempty"`
-	// ForceSendFields is a list of field names (e.g.
-	// "AdditionalNodeNetworkConfigs") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
-	// for more details.
+	// ForceSendFields is a list of field names (e.g. "AcceleratorNetworkProfile")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AdditionalNodeNetworkConfigs") to
+	// NullFields is a list of field names (e.g. "AcceleratorNetworkProfile") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

@@ -497,7 +497,15 @@ func (s AllConnectionStrings) MarshalJSON() ([]byte, error) {
 // https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/AutonomousDatabase/
 type AutonomousDatabase struct {
 	// AdminPassword: Optional. Immutable. The password for the default ADMIN user.
+	// Note: Only one of `admin_password_secret_version` or `admin_password` can be
+	// populated.
 	AdminPassword string `json:"adminPassword,omitempty"`
+	// AdminPasswordSecretVersion: Optional. Immutable. The resource name of a
+	// secret version in Secret Manager which contains the database admin user's
+	// password. Format: projects/{project}/secrets/{secret}/versions/{version}.
+	// Note: Only one of `admin_password_secret_version` or `admin_password` can be
+	// populated.
+	AdminPasswordSecretVersion string `json:"adminPasswordSecretVersion,omitempty"`
 	// Cidr: Optional. Immutable. The subnet CIDR range for the Autonomous
 	// Database.
 	Cidr string `json:"cidr,omitempty"`
@@ -1021,6 +1029,7 @@ type AutonomousDatabaseProperties struct {
 	//   "LOCAL_DISASTER_RECOVERY_TYPE_UNSPECIFIED" - Default unspecified value.
 	//   "ADG" - Autonomous Data Guard recovery.
 	//   "BACKUP_BASED" - Backup based recovery.
+	//   "NOT_AVAILABLE" - Local disaster recovery is not available.
 	LocalDisasterRecoveryType string `json:"localDisasterRecoveryType,omitempty"`
 	// LocalStandbyDb: Output only. The details of the Autonomous Data Guard
 	// standby database.
@@ -1915,8 +1924,14 @@ func (s DataCollectionOptionsDbSystem) MarshalJSON() ([]byte, error) {
 // Database: Details of the Database resource.
 // https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/Database/
 type Database struct {
-	// AdminPassword: Optional. The password for the default ADMIN user.
+	// AdminPassword: Optional. The password for the default ADMIN user. Note: Only
+	// one of `admin_password_secret_version` or `admin_password` can be populated.
 	AdminPassword string `json:"adminPassword,omitempty"`
+	// AdminPasswordSecretVersion: Optional. The resource name of a secret version
+	// in Secret Manager which contains the database admin user's password. Format:
+	// projects/{project}/secrets/{secret}/versions/{version}. Note: Only one of
+	// `admin_password_secret_version` or `admin_password` can be populated.
+	AdminPasswordSecretVersion string `json:"adminPasswordSecretVersion,omitempty"`
 	// CharacterSet: Optional. The character set for the database. The default is
 	// AL32UTF8.
 	CharacterSet string `json:"characterSet,omitempty"`
@@ -1969,8 +1984,16 @@ type Database struct {
 	PluggableDatabaseName string `json:"pluggableDatabaseName,omitempty"`
 	// Properties: Optional. The properties of the Database.
 	Properties *DatabaseProperties `json:"properties,omitempty"`
-	// TdeWalletPassword: Optional. The TDE wallet password for the database.
+	// TdeWalletPassword: Optional. The TDE wallet password for the database. Note:
+	// Only one of `tde_wallet_password_secret_version` or `tde_wallet_password`
+	// can be populated.
 	TdeWalletPassword string `json:"tdeWalletPassword,omitempty"`
+	// TdeWalletPasswordSecretVersion: Optional. The resource name of a secret
+	// version in Secret Manager which contains the TDE wallet password for the
+	// database. Format: projects/{project}/secrets/{secret}/versions/{version}.
+	// Note: Only one of `tde_wallet_password_secret_version` or
+	// `tde_wallet_password` can be populated.
+	TdeWalletPasswordSecretVersion string `json:"tdeWalletPasswordSecretVersion,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

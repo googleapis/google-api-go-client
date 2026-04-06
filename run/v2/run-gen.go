@@ -4236,6 +4236,10 @@ func (s GoogleDevtoolsCloudbuildV1ArtifactObjects) MarshalJSON() ([]byte, error)
 // GoogleDevtoolsCloudbuildV1Artifacts: Artifacts produced by a build that
 // should be uploaded upon successful completion of all build steps.
 type GoogleDevtoolsCloudbuildV1Artifacts struct {
+	// GenericArtifacts: Optional. A list of generic artifacts to be uploaded to
+	// Artifact Registry upon successful completion of all build steps. If any
+	// artifacts fail to be pushed, the build is marked FAILURE.
+	GenericArtifacts []*GoogleDevtoolsCloudbuildV1GenericArtifact `json:"genericArtifacts,omitempty"`
 	// GoModules: Optional. A list of Go modules to be uploaded to Artifact
 	// Registry upon successful completion of all build steps. If any objects fail
 	// to be pushed, the build is marked FAILURE.
@@ -4277,15 +4281,15 @@ type GoogleDevtoolsCloudbuildV1Artifacts struct {
 	// account credentials will be used to perform the upload. If any objects fail
 	// to be pushed, the build is marked FAILURE.
 	PythonPackages []*GoogleDevtoolsCloudbuildV1PythonPackage `json:"pythonPackages,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GoModules") to
+	// ForceSendFields is a list of field names (e.g. "GenericArtifacts") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GoModules") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "GenericArtifacts") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4830,6 +4834,8 @@ type GoogleDevtoolsCloudbuildV1Dependency struct {
 	// Empty: If set to true disable all dependency fetching (ignoring the default
 	// source as well).
 	Empty bool `json:"empty,omitempty"`
+	// GenericArtifact: Represents a generic artifact as a build dependency.
+	GenericArtifact *GoogleDevtoolsCloudbuildV1GenericArtifactDependency `json:"genericArtifact,omitempty"`
 	// GitSource: Represents a git repository as a build dependency.
 	GitSource *GoogleDevtoolsCloudbuildV1GitSourceDependency `json:"gitSource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Empty") to unconditionally
@@ -4935,6 +4941,61 @@ type GoogleDevtoolsCloudbuildV1FileHashes struct {
 
 func (s GoogleDevtoolsCloudbuildV1FileHashes) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDevtoolsCloudbuildV1FileHashes
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsCloudbuildV1GenericArtifact: Generic artifact to upload to
+// Artifact Registry upon successful completion of all build steps.
+type GoogleDevtoolsCloudbuildV1GenericArtifact struct {
+	// Folder: Required. Path to the generic artifact in the build's workspace to
+	// be uploaded to Artifact Registry.
+	Folder string `json:"folder,omitempty"`
+	// RegistryPath: Required. Registry path to upload the generic artifact to, in
+	// the form
+	// projects/$PROJECT/locations/$LOCATION/repositories/$REPO/packages/$PACKAGE/ve
+	// rsions/$VERSION
+	RegistryPath string `json:"registryPath,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Folder") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Folder") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleDevtoolsCloudbuildV1GenericArtifact) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsCloudbuildV1GenericArtifact
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsCloudbuildV1GenericArtifactDependency: Represents a generic
+// artifact as a build dependency.
+type GoogleDevtoolsCloudbuildV1GenericArtifactDependency struct {
+	// DestPath: Required. Where the artifact files should be placed on the worker.
+	DestPath string `json:"destPath,omitempty"`
+	// Resource: Required. The location to download the artifact files from. Ex:
+	// projects/p1/locations/us/repositories/r1/packages/p1/versions/v1
+	Resource string `json:"resource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DestPath") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DestPath") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleDevtoolsCloudbuildV1GenericArtifactDependency) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsCloudbuildV1GenericArtifactDependency
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5415,6 +5476,9 @@ type GoogleDevtoolsCloudbuildV1Results struct {
 	// is stored. Note that the `$BUILDER_OUTPUT` variable is read-only and can't
 	// be substituted.
 	BuildStepOutputs []string `json:"buildStepOutputs,omitempty"`
+	// GenericArtifacts: Output only. Generic artifacts uploaded to Artifact
+	// Registry at the end of the build.
+	GenericArtifacts []*GoogleDevtoolsCloudbuildV1UploadedGenericArtifact `json:"genericArtifacts,omitempty"`
 	// GoModules: Optional. Go module artifacts uploaded to Artifact Registry at
 	// the end of the build.
 	GoModules []*GoogleDevtoolsCloudbuildV1UploadedGoModule `json:"goModules,omitempty"`
@@ -5716,6 +5780,40 @@ type GoogleDevtoolsCloudbuildV1TimeSpan struct {
 
 func (s GoogleDevtoolsCloudbuildV1TimeSpan) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDevtoolsCloudbuildV1TimeSpan
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsCloudbuildV1UploadedGenericArtifact: A generic artifact
+// uploaded to Artifact Registry using the GenericArtifact directive.
+type GoogleDevtoolsCloudbuildV1UploadedGenericArtifact struct {
+	// ArtifactFingerprint: Output only. The hash of the whole artifact.
+	ArtifactFingerprint *GoogleDevtoolsCloudbuildV1FileHashes `json:"artifactFingerprint,omitempty"`
+	// ArtifactRegistryPackage: Output only. Path to the artifact in Artifact
+	// Registry.
+	ArtifactRegistryPackage string `json:"artifactRegistryPackage,omitempty"`
+	// FileHashes: Output only. The file hashes that make up the generic artifact.
+	FileHashes map[string]GoogleDevtoolsCloudbuildV1FileHashes `json:"fileHashes,omitempty"`
+	// PushTiming: Output only. Stores timing information for pushing the specified
+	// artifact.
+	PushTiming *GoogleDevtoolsCloudbuildV1TimeSpan `json:"pushTiming,omitempty"`
+	// Uri: Output only. URI of the uploaded artifact. Ex:
+	// projects/p1/locations/us/repositories/r1/packages/p1/versions/v1
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ArtifactFingerprint") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ArtifactFingerprint") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleDevtoolsCloudbuildV1UploadedGenericArtifact) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsCloudbuildV1UploadedGenericArtifact
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

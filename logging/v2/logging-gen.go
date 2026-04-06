@@ -2999,6 +2999,12 @@ type LogEntry struct {
 	// Operation: Optional. Information about an operation associated with the log
 	// entry, if applicable.
 	Operation *LogEntryOperation `json:"operation,omitempty"`
+	// Otel: Optional. The structured OpenTelemetry protocol payload. Contains the
+	// OpenTelemetry Resource, Instrumentation Scope, and Entities attributes for
+	// this log as they are defined in the OTLP specification, and any other fields
+	// that do not have a direct analog in the LogEntry. See
+	// https://opentelemetry.io/docs/specs/otel/logs/data-model/
+	Otel googleapi.RawMessage `json:"otel,omitempty"`
 	// ProtoPayload: The log entry payload, represented as a protocol buffer. Some
 	// Google Cloud Platform services use this field for their log entry
 	// payloads.The following protocol buffer types are supported; user-defined
@@ -6049,11 +6055,17 @@ type BillingAccountsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service. This
-// method can be called in two ways: List all public locations: Use the path
-// GET /v1/locations. List project-visible locations: Use the path GET
-// /v1/projects/{project_id}/locations. This may include public locations as
-// well as private or other locations specifically visible to the project.
+// List: Lists information about the supported locations for this service.This
+// method lists locations based on the resource scope provided in the
+// ListLocationsRequest.name field: Global locations: If name is empty, the
+// method lists the public locations available to all projects.
+// Project-specific locations: If name follows the format projects/{project},
+// the method lists locations visible to that specific project. This includes
+// public, private, or other project-specific locations enabled for the
+// project.For gRPC and client library implementations, the resource name is
+// passed as the name field. For direct service calls, the resource name is
+// incorporated into the request path based on the specific service
+// implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *BillingAccountsLocationsService) List(name string) *BillingAccountsLocationsListCall {
@@ -12816,11 +12828,17 @@ type FoldersLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service. This
-// method can be called in two ways: List all public locations: Use the path
-// GET /v1/locations. List project-visible locations: Use the path GET
-// /v1/projects/{project_id}/locations. This may include public locations as
-// well as private or other locations specifically visible to the project.
+// List: Lists information about the supported locations for this service.This
+// method lists locations based on the resource scope provided in the
+// ListLocationsRequest.name field: Global locations: If name is empty, the
+// method lists the public locations available to all projects.
+// Project-specific locations: If name follows the format projects/{project},
+// the method lists locations visible to that specific project. This includes
+// public, private, or other project-specific locations enabled for the
+// project.For gRPC and client library implementations, the resource name is
+// passed as the name field. For direct service calls, the resource name is
+// incorporated into the request path based on the specific service
+// implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *FoldersLocationsService) List(name string) *FoldersLocationsListCall {
@@ -18527,11 +18545,17 @@ type LocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service. This
-// method can be called in two ways: List all public locations: Use the path
-// GET /v1/locations. List project-visible locations: Use the path GET
-// /v1/projects/{project_id}/locations. This may include public locations as
-// well as private or other locations specifically visible to the project.
+// List: Lists information about the supported locations for this service.This
+// method lists locations based on the resource scope provided in the
+// ListLocationsRequest.name field: Global locations: If name is empty, the
+// method lists the public locations available to all projects.
+// Project-specific locations: If name follows the format projects/{project},
+// the method lists locations visible to that specific project. This includes
+// public, private, or other project-specific locations enabled for the
+// project.For gRPC and client library implementations, the resource name is
+// passed as the name field. For direct service calls, the resource name is
+// incorporated into the request path based on the specific service
+// implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *LocationsService) List(name string) *LocationsListCall {
@@ -23077,11 +23101,17 @@ type OrganizationsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service. This
-// method can be called in two ways: List all public locations: Use the path
-// GET /v1/locations. List project-visible locations: Use the path GET
-// /v1/projects/{project_id}/locations. This may include public locations as
-// well as private or other locations specifically visible to the project.
+// List: Lists information about the supported locations for this service.This
+// method lists locations based on the resource scope provided in the
+// ListLocationsRequest.name field: Global locations: If name is empty, the
+// method lists the public locations available to all projects.
+// Project-specific locations: If name follows the format projects/{project},
+// the method lists locations visible to that specific project. This includes
+// public, private, or other project-specific locations enabled for the
+// project.For gRPC and client library implementations, the resource name is
+// passed as the name field. For direct service calls, the resource name is
+// incorporated into the request path based on the specific service
+// implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *OrganizationsLocationsService) List(name string) *OrganizationsLocationsListCall {
@@ -29625,11 +29655,17 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this service. This
-// method can be called in two ways: List all public locations: Use the path
-// GET /v1/locations. List project-visible locations: Use the path GET
-// /v1/projects/{project_id}/locations. This may include public locations as
-// well as private or other locations specifically visible to the project.
+// List: Lists information about the supported locations for this service.This
+// method lists locations based on the resource scope provided in the
+// ListLocationsRequest.name field: Global locations: If name is empty, the
+// method lists the public locations available to all projects.
+// Project-specific locations: If name follows the format projects/{project},
+// the method lists locations visible to that specific project. This includes
+// public, private, or other project-specific locations enabled for the
+// project.For gRPC and client library implementations, the resource name is
+// passed as the name field. For direct service calls, the resource name is
+// incorporated into the request path based on the specific service
+// implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

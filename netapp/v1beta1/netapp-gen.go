@@ -3178,9 +3178,14 @@ type Volume struct {
 	// Labels: Optional. Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
 	// LargeCapacity: Optional. Flag indicating if the volume will be a large
-	// capacity volume or a regular volume.
+	// capacity volume or a regular volume. This field is used for legacy FILE
+	// pools. For Unified pools, use the `large_capacity_config` field instead.
+	// This field and `large_capacity_config` are mutually exclusive.
 	LargeCapacity bool `json:"largeCapacity,omitempty"`
-	// LargeCapacityConfig: Optional. Large capacity config for the volume.
+	// LargeCapacityConfig: Optional. Large capacity config for the volume. Enables
+	// and configures large capacity for volumes in Unified pools with File
+	// protocols. Not applicable for Block protocols in Unified pools. This field
+	// and the legacy `large_capacity` boolean field are mutually exclusive.
 	LargeCapacityConfig *LargeCapacityConfig `json:"largeCapacityConfig,omitempty"`
 	// LdapEnabled: Output only. Flag indicating if the volume is NFS LDAP enabled
 	// or not.

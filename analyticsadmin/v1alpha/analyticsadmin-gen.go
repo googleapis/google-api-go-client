@@ -1139,7 +1139,7 @@ type GoogleAnalyticsAdminV1alphaAccount struct {
 	// organization. Format:
 	// marketingplatformadmin.googleapis.com/organizations/{org_id}
 	GmpOrganization string `json:"gmpOrganization,omitempty"`
-	// Name: Output only. Resource name of this account. Format: accounts/{account}
+	// Name: Identifier. Resource name of this account. Format: accounts/{account}
 	// Example: "accounts/100"
 	Name string `json:"name,omitempty"`
 	// RegionCode: Country of business. Must be a Unicode CLDR region code.
@@ -1176,7 +1176,7 @@ type GoogleAnalyticsAdminV1alphaAccountSummary struct {
 	// DisplayName: Display name for the account referred to in this account
 	// summary.
 	DisplayName string `json:"displayName,omitempty"`
-	// Name: Resource name for this account summary. Format:
+	// Name: Identifier. Resource name for this account summary. Format:
 	// accountSummaries/{account_id} Example: "accountSummaries/1000"
 	Name string `json:"name,omitempty"`
 	// PropertySummaries: List of summaries for child accounts of this account.
@@ -2209,7 +2209,7 @@ type GoogleAnalyticsAdminV1alphaCalculatedMetric struct {
 	//   "MINUTES" - This metric measures minutes.
 	//   "HOURS" - This metric measures hours.
 	MetricUnit string `json:"metricUnit,omitempty"`
-	// Name: Output only. Resource name for this CalculatedMetric. Format:
+	// Name: Identifier. Resource name for this CalculatedMetric. Format:
 	// 'properties/{property_id}/calculatedMetrics/{calculated_metric_id}'
 	Name string `json:"name,omitempty"`
 	// RestrictedMetricType: Output only. Types of restricted data that this metric
@@ -2650,7 +2650,7 @@ type GoogleAnalyticsAdminV1alphaConversionEvent struct {
 	// EventName: Immutable. The event name for this conversion event. Examples:
 	// 'click', 'purchase'
 	EventName string `json:"eventName,omitempty"`
-	// Name: Output only. Resource name of this conversion event. Format:
+	// Name: Identifier. Resource name of this conversion event. Format:
 	// properties/{property}/conversionEvents/{conversion_event}
 	Name string `json:"name,omitempty"`
 
@@ -2861,7 +2861,7 @@ type GoogleAnalyticsAdminV1alphaCustomDimension struct {
 	// contain square brackets, but updates to this field will never permit square
 	// brackets.
 	DisplayName string `json:"displayName,omitempty"`
-	// Name: Output only. Resource name for this CustomDimension resource. Format:
+	// Name: Identifier. Resource name for this CustomDimension resource. Format:
 	// properties/{property}/customDimensions/{customDimension}
 	Name string `json:"name,omitempty"`
 	// ParameterName: Required. Immutable. Tagging parameter name for this custom
@@ -2928,7 +2928,7 @@ type GoogleAnalyticsAdminV1alphaCustomMetric struct {
 	//   "MINUTES" - This metric measures minutes.
 	//   "HOURS" - This metric measures hours.
 	MeasurementUnit string `json:"measurementUnit,omitempty"`
-	// Name: Output only. Resource name for this CustomMetric resource. Format:
+	// Name: Identifier. Resource name for this CustomMetric resource. Format:
 	// properties/{property}/customMetrics/{customMetric}
 	Name string `json:"name,omitempty"`
 	// ParameterName: Required. Immutable. Tagging name for this custom metric. If
@@ -3032,7 +3032,7 @@ type GoogleAnalyticsAdminV1alphaDataRetentionSettings struct {
 	//   "FIFTY_MONTHS" - The data retention time duration is 50 months. Available
 	// to 360 properties only. Available for event data only.
 	EventDataRetention string `json:"eventDataRetention,omitempty"`
-	// Name: Output only. Resource name for this DataRetentionSetting resource.
+	// Name: Identifier. Resource name for this DataRetentionSetting resource.
 	// Format: properties/{property}/dataRetentionSettings
 	Name string `json:"name,omitempty"`
 	// ResetUserDataOnNewActivity: If true, reset the retention period for the user
@@ -3077,7 +3077,7 @@ func (s GoogleAnalyticsAdminV1alphaDataRetentionSettings) MarshalJSON() ([]byte,
 // GoogleAnalyticsAdminV1alphaDataSharingSettings: A resource message
 // representing data sharing settings of a Google Analytics account.
 type GoogleAnalyticsAdminV1alphaDataSharingSettings struct {
-	// Name: Output only. Resource name. Format:
+	// Name: Identifier. Resource name. Format:
 	// accounts/{account}/dataSharingSettings Example:
 	// "accounts/1000/dataSharingSettings"
 	Name string `json:"name,omitempty"`
@@ -3146,7 +3146,7 @@ type GoogleAnalyticsAdminV1alphaDataStream struct {
 	// IosAppStreamData: Data specific to iOS app streams. Must be populated if
 	// type is IOS_APP_DATA_STREAM.
 	IosAppStreamData *GoogleAnalyticsAdminV1alphaDataStreamIosAppStreamData `json:"iosAppStreamData,omitempty"`
-	// Name: Output only. Resource name of this Data Stream. Format:
+	// Name: Identifier. Resource name of this Data Stream. Format:
 	// properties/{property_id}/dataStreams/{stream_id} Example:
 	// "properties/1000/dataStreams/2000"
 	Name string `json:"name,omitempty"`
@@ -3315,7 +3315,7 @@ type GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLink struct {
 	// this can only be updated from the Display & Video 360 product. If this field
 	// is not set on create, it will be defaulted to true.
 	CostDataSharingEnabled bool `json:"costDataSharingEnabled,omitempty"`
-	// Name: Output only. The resource name for this DisplayVideo360AdvertiserLink
+	// Name: Identifier. The resource name for this DisplayVideo360AdvertiserLink
 	// resource. Format:
 	// properties/{propertyId}/displayVideo360AdvertiserLinks/{linkId} Note: linkId
 	// is not the Display & Video 360 Advertiser ID
@@ -3369,7 +3369,7 @@ type GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLinkProposal struct {
 	// LinkProposalStatusDetails: Output only. The status information for this link
 	// proposal.
 	LinkProposalStatusDetails *GoogleAnalyticsAdminV1alphaLinkProposalStatusDetails `json:"linkProposalStatusDetails,omitempty"`
-	// Name: Output only. The resource name for this
+	// Name: Identifier. The resource name for this
 	// DisplayVideo360AdvertiserLinkProposal resource. Format:
 	// properties/{propertyId}/displayVideo360AdvertiserLinkProposals/{proposalId}
 	// Note: proposalId is not the Display & Video 360 Advertiser ID
@@ -3821,7 +3821,7 @@ func (s GoogleAnalyticsAdminV1alphaExpandedDataSetFilterStringFilter) MarshalJSO
 type GoogleAnalyticsAdminV1alphaFirebaseLink struct {
 	// CreateTime: Output only. Time when this FirebaseLink was originally created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Name: Output only. Example format: properties/1234/firebaseLinks/5678
+	// Name: Identifier. Example format: properties/1234/firebaseLinks/5678
 	Name string `json:"name,omitempty"`
 	// Project: Immutable. Firebase project resource name. When creating a
 	// FirebaseLink, you may provide this resource name using either a project
@@ -3854,7 +3854,7 @@ func (s GoogleAnalyticsAdminV1alphaFirebaseLink) MarshalJSON() ([]byte, error) {
 // for sending data from a website to a DataStream. Only present for web
 // DataStream resources.
 type GoogleAnalyticsAdminV1alphaGlobalSiteTag struct {
-	// Name: Output only. Resource name for this GlobalSiteTag resource. Format:
+	// Name: Identifier. Resource name for this GlobalSiteTag resource. Format:
 	// properties/{property_id}/dataStreams/{stream_id}/globalSiteTag Example:
 	// "properties/123/dataStreams/456/globalSiteTag"
 	Name string `json:"name,omitempty"`
@@ -3902,7 +3902,7 @@ type GoogleAnalyticsAdminV1alphaGoogleAdsLink struct {
 	CreatorEmailAddress string `json:"creatorEmailAddress,omitempty"`
 	// CustomerId: Immutable. Google Ads customer ID.
 	CustomerId string `json:"customerId,omitempty"`
-	// Name: Output only. Format:
+	// Name: Identifier. Format:
 	// properties/{propertyId}/googleAdsLinks/{googleAdsLinkId} Note:
 	// googleAdsLinkId is not the Google Ads customer ID.
 	Name string `json:"name,omitempty"`
@@ -5042,7 +5042,7 @@ func (s GoogleAnalyticsAdminV1alphaMatchingCondition) MarshalJSON() ([]byte, err
 type GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret struct {
 	// DisplayName: Required. Human-readable display name for this secret.
 	DisplayName string `json:"displayName,omitempty"`
-	// Name: Output only. Resource name of this secret. This secret may be a child
+	// Name: Identifier. Resource name of this secret. This secret may be a child
 	// of any type of stream. Format:
 	// properties/{property}/dataStreams/{dataStream}/measurementProtocolSecrets/{me
 	// asurementProtocolSecret}
@@ -5230,7 +5230,7 @@ type GoogleAnalyticsAdminV1alphaProperty struct {
 	//   "JOBS_AND_EDUCATION" - Jobs and education
 	//   "SHOPPING" - Shopping
 	IndustryCategory string `json:"industryCategory,omitempty"`
-	// Name: Output only. Resource name of this property. Format:
+	// Name: Identifier. Resource name of this property. Format:
 	// properties/{property_id} Example: "properties/1000"
 	Name string `json:"name,omitempty"`
 	// Parent: Immutable. Resource name of this property's logical parent. Note:
@@ -5763,8 +5763,8 @@ type GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema struct {
 	// automatically set conversion values, and also the schema will not be
 	// exported to Ads.
 	ApplyConversionValues bool `json:"applyConversionValues,omitempty"`
-	// Name: Output only. Resource name of the schema. This will be child of ONLY
-	// an iOS stream, and there can be at most one such child under an iOS stream.
+	// Name: Identifier. Resource name of the schema. This will be child of ONLY an
+	// iOS stream, and there can be at most one such child under an iOS stream.
 	// Format:
 	// properties/{property}/dataStreams/{dataStream}/sKAdNetworkConversionValueSche
 	// ma
@@ -5833,7 +5833,7 @@ type GoogleAnalyticsAdminV1alphaSearchAds360Link struct {
 	// be updated from the Search Ads 360 product. If this field is not set on
 	// create, it will be defaulted to true.
 	CostDataSharingEnabled bool `json:"costDataSharingEnabled,omitempty"`
-	// Name: Output only. The resource name for this SearchAds360Link resource.
+	// Name: Identifier. The resource name for this SearchAds360Link resource.
 	// Format: properties/{propertyId}/searchAds360Links/{linkId} Note: linkId is
 	// not the Search Ads 360 advertiser ID
 	Name string `json:"name,omitempty"`
@@ -7000,7 +7000,7 @@ type AccountsPatchCall struct {
 
 // Patch: Updates an account.
 //
-//   - name: Output only. Resource name of this account. Format:
+//   - name: Identifier. Resource name of this account. Format:
 //     accounts/{account} Example: "accounts/100".
 func (r *AccountsService) Patch(name string, googleanalyticsadminv1alphaaccount *GoogleAnalyticsAdminV1alphaAccount) *AccountsPatchCall {
 	c := &AccountsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9618,7 +9618,7 @@ type PropertiesPatchCall struct {
 
 // Patch: Updates a property.
 //
-//   - name: Output only. Resource name of this property. Format:
+//   - name: Identifier. Resource name of this property. Format:
 //     properties/{property_id} Example: "properties/1000".
 func (r *PropertiesService) Patch(name string, googleanalyticsadminv1alphaproperty *GoogleAnalyticsAdminV1alphaProperty) *PropertiesPatchCall {
 	c := &PropertiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10175,7 +10175,7 @@ type PropertiesUpdateDataRetentionSettingsCall struct {
 // UpdateDataRetentionSettings: Updates the singleton data retention settings
 // for this property.
 //
-//   - name: Output only. Resource name for this DataRetentionSetting resource.
+//   - name: Identifier. Resource name for this DataRetentionSetting resource.
 //     Format: properties/{property}/dataRetentionSettings.
 func (r *PropertiesService) UpdateDataRetentionSettings(name string, googleanalyticsadminv1alphadataretentionsettings *GoogleAnalyticsAdminV1alphaDataRetentionSettings) *PropertiesUpdateDataRetentionSettingsCall {
 	c := &PropertiesUpdateDataRetentionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -13527,7 +13527,7 @@ type PropertiesCalculatedMetricsPatchCall struct {
 
 // Patch: Updates a CalculatedMetric on a property.
 //
-//   - name: Output only. Resource name for this CalculatedMetric. Format:
+//   - name: Identifier. Resource name for this CalculatedMetric. Format:
 //     'properties/{property_id}/calculatedMetrics/{calculated_metric_id}'.
 func (r *PropertiesCalculatedMetricsService) Patch(name string, googleanalyticsadminv1alphacalculatedmetric *GoogleAnalyticsAdminV1alphaCalculatedMetric) *PropertiesCalculatedMetricsPatchCall {
 	c := &PropertiesCalculatedMetricsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -14690,7 +14690,7 @@ type PropertiesConversionEventsPatchCall struct {
 // Patch: Deprecated: Use `UpdateKeyEvent` instead. Updates a conversion event
 // with the specified attributes.
 //
-//   - name: Output only. Resource name of this conversion event. Format:
+//   - name: Identifier. Resource name of this conversion event. Format:
 //     properties/{property}/conversionEvents/{conversion_event}.
 func (r *PropertiesConversionEventsService) Patch(name string, googleanalyticsadminv1alphaconversionevent *GoogleAnalyticsAdminV1alphaConversionEvent) *PropertiesConversionEventsPatchCall {
 	c := &PropertiesConversionEventsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -15272,8 +15272,8 @@ type PropertiesCustomDimensionsPatchCall struct {
 
 // Patch: Updates a CustomDimension on a property.
 //
-//   - name: Output only. Resource name for this CustomDimension resource.
-//     Format: properties/{property}/customDimensions/{customDimension}.
+//   - name: Identifier. Resource name for this CustomDimension resource. Format:
+//     properties/{property}/customDimensions/{customDimension}.
 func (r *PropertiesCustomDimensionsService) Patch(name string, googleanalyticsadminv1alphacustomdimension *GoogleAnalyticsAdminV1alphaCustomDimension) *PropertiesCustomDimensionsPatchCall {
 	c := &PropertiesCustomDimensionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15853,7 +15853,7 @@ type PropertiesCustomMetricsPatchCall struct {
 
 // Patch: Updates a CustomMetric on a property.
 //
-//   - name: Output only. Resource name for this CustomMetric resource. Format:
+//   - name: Identifier. Resource name for this CustomMetric resource. Format:
 //     properties/{property}/customMetrics/{customMetric}.
 func (r *PropertiesCustomMetricsService) Patch(name string, googleanalyticsadminv1alphacustommetric *GoogleAnalyticsAdminV1alphaCustomMetric) *PropertiesCustomMetricsPatchCall {
 	c := &PropertiesCustomMetricsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -16770,7 +16770,7 @@ type PropertiesDataStreamsPatchCall struct {
 
 // Patch: Updates a DataStream on a property.
 //
-//   - name: Output only. Resource name of this Data Stream. Format:
+//   - name: Identifier. Resource name of this Data Stream. Format:
 //     properties/{property_id}/dataStreams/{stream_id} Example:
 //     "properties/1000/dataStreams/2000".
 func (r *PropertiesDataStreamsService) Patch(name string, googleanalyticsadminv1alphadatastream *GoogleAnalyticsAdminV1alphaDataStream) *PropertiesDataStreamsPatchCall {
@@ -18846,8 +18846,8 @@ type PropertiesDataStreamsMeasurementProtocolSecretsPatchCall struct {
 
 // Patch: Updates a measurement protocol secret.
 //
-//   - name: Output only. Resource name of this secret. This secret may be a
-//     child of any type of stream. Format:
+//   - name: Identifier. Resource name of this secret. This secret may be a child
+//     of any type of stream. Format:
 //     properties/{property}/dataStreams/{dataStream}/measurementProtocolSecrets/{
 //     measurementProtocolSecret}.
 func (r *PropertiesDataStreamsMeasurementProtocolSecretsService) Patch(name string, googleanalyticsadminv1alphameasurementprotocolsecret *GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret) *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall {
@@ -19432,7 +19432,7 @@ type PropertiesDataStreamsSKAdNetworkConversionValueSchemaPatchCall struct {
 
 // Patch: Updates a SKAdNetworkConversionValueSchema.
 //
-//   - name: Output only. Resource name of the schema. This will be child of ONLY
+//   - name: Identifier. Resource name of the schema. This will be child of ONLY
 //     an iOS stream, and there can be at most one such child under an iOS
 //     stream. Format:
 //     properties/{property}/dataStreams/{dataStream}/sKAdNetworkConversionValueSc
@@ -20697,8 +20697,8 @@ type PropertiesDisplayVideo360AdvertiserLinksPatchCall struct {
 
 // Patch: Updates a DisplayVideo360AdvertiserLink on a property.
 //
-//   - name: Output only. The resource name for this
-//     DisplayVideo360AdvertiserLink resource. Format:
+//   - name: Identifier. The resource name for this DisplayVideo360AdvertiserLink
+//     resource. Format:
 //     properties/{propertyId}/displayVideo360AdvertiserLinks/{linkId} Note:
 //     linkId is not the Display & Video 360 Advertiser ID.
 func (r *PropertiesDisplayVideo360AdvertiserLinksService) Patch(name string, googleanalyticsadminv1alphadisplayvideo360advertiserlink *GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLink) *PropertiesDisplayVideo360AdvertiserLinksPatchCall {
@@ -22092,7 +22092,7 @@ type PropertiesGoogleAdsLinksPatchCall struct {
 
 // Patch: Updates a GoogleAdsLink on a property
 //
-//   - name: Output only. Format:
+//   - name: Identifier. Format:
 //     properties/{propertyId}/googleAdsLinks/{googleAdsLinkId} Note:
 //     googleAdsLinkId is not the Google Ads customer ID.
 func (r *PropertiesGoogleAdsLinksService) Patch(name string, googleanalyticsadminv1alphagoogleadslink *GoogleAnalyticsAdminV1alphaGoogleAdsLink) *PropertiesGoogleAdsLinksPatchCall {
@@ -24334,7 +24334,7 @@ type PropertiesSearchAds360LinksPatchCall struct {
 
 // Patch: Updates a SearchAds360Link on a property.
 //
-//   - name: Output only. The resource name for this SearchAds360Link resource.
+//   - name: Identifier. The resource name for this SearchAds360Link resource.
 //     Format: properties/{propertyId}/searchAds360Links/{linkId} Note: linkId is
 //     not the Search Ads 360 advertiser ID.
 func (r *PropertiesSearchAds360LinksService) Patch(name string, googleanalyticsadminv1alphasearchads360link *GoogleAnalyticsAdminV1alphaSearchAds360Link) *PropertiesSearchAds360LinksPatchCall {

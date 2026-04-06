@@ -489,7 +489,6 @@ type ProjectsLocationsGovernanceRulesService struct {
 func NewProjectsLocationsLakesService(s *Service) *ProjectsLocationsLakesService {
 	rs := &ProjectsLocationsLakesService{s: s}
 	rs.Actions = NewProjectsLocationsLakesActionsService(s)
-	rs.Environments = NewProjectsLocationsLakesEnvironmentsService(s)
 	rs.Tasks = NewProjectsLocationsLakesTasksService(s)
 	rs.Zones = NewProjectsLocationsLakesZonesService(s)
 	return rs
@@ -499,8 +498,6 @@ type ProjectsLocationsLakesService struct {
 	s *Service
 
 	Actions *ProjectsLocationsLakesActionsService
-
-	Environments *ProjectsLocationsLakesEnvironmentsService
 
 	Tasks *ProjectsLocationsLakesTasksService
 
@@ -513,15 +510,6 @@ func NewProjectsLocationsLakesActionsService(s *Service) *ProjectsLocationsLakes
 }
 
 type ProjectsLocationsLakesActionsService struct {
-	s *Service
-}
-
-func NewProjectsLocationsLakesEnvironmentsService(s *Service) *ProjectsLocationsLakesEnvironmentsService {
-	rs := &ProjectsLocationsLakesEnvironmentsService{s: s}
-	return rs
-}
-
-type ProjectsLocationsLakesEnvironmentsService struct {
 	s *Service
 }
 
@@ -888,8 +876,8 @@ type GoogleCloudDataplexV1ActionMissingResource struct {
 type GoogleCloudDataplexV1ActionUnauthorizedResource struct {
 }
 
-// GoogleCloudDataplexV1Aspect: An aspect is a single piece of metadata
-// describing an entry.
+// GoogleCloudDataplexV1Aspect: Represents a single piece of metadata
+// describing an entry or entry link.
 type GoogleCloudDataplexV1Aspect struct {
 	// AspectSource: Optional. Information related to the source system of the
 	// aspect.
@@ -2110,6 +2098,9 @@ type GoogleCloudDataplexV1DataDiscoverySpecStorageConfig struct {
 	IncludePatterns []string `json:"includePatterns,omitempty"`
 	// JsonOptions: Optional. Configuration for JSON data.
 	JsonOptions *GoogleCloudDataplexV1DataDiscoverySpecStorageConfigJsonOptions `json:"jsonOptions,omitempty"`
+	// UnstructuredDataOptions: Optional. Specifies configuration for unstructured
+	// data discovery.
+	UnstructuredDataOptions *GoogleCloudDataplexV1DataDiscoverySpecStorageConfigUnstructuredDataOptions `json:"unstructuredDataOptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CsvOptions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2193,6 +2184,34 @@ func (s GoogleCloudDataplexV1DataDiscoverySpecStorageConfigJsonOptions) MarshalJ
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1DataDiscoverySpecStorageConfigUnstructuredDataOptions:
+// Describes options for unstructured data discovery.
+type GoogleCloudDataplexV1DataDiscoverySpecStorageConfigUnstructuredDataOptions struct {
+	// EntityInferenceEnabled: Optional. Deprecated: Use semantic_inference_enabled
+	// instead. Specifies whether deeper entity inference over the objects'
+	// contents using GenAI is enabled.
+	EntityInferenceEnabled bool `json:"entityInferenceEnabled,omitempty"`
+	// SemanticInferenceEnabled: Optional. Specifies whether deeper semantic
+	// inference over the objects' contents using GenAI is enabled.
+	SemanticInferenceEnabled bool `json:"semanticInferenceEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EntityInferenceEnabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EntityInferenceEnabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataDiscoverySpecStorageConfigUnstructuredDataOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataDiscoverySpecStorageConfigUnstructuredDataOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1DataDocumentationResult: The output of a
 // DataDocumentation scan.
 type GoogleCloudDataplexV1DataDocumentationResult struct {
@@ -2228,9 +2247,6 @@ type GoogleCloudDataplexV1DataDocumentationResultDatasetResult struct {
 	// SchemaRelationships: Output only. Relationships suggesting how tables in the
 	// dataset are related to each other, based on their schema.
 	SchemaRelationships []*GoogleCloudDataplexV1DataDocumentationResultSchemaRelationship `json:"schemaRelationships,omitempty"`
-	// TableResults: Output only. Generated table and column descriptions for each
-	// table in the dataset.
-	TableResults []*GoogleCloudDataplexV1DataDocumentationResultTableResult `json:"tableResults,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Overview") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3033,6 +3049,18 @@ type GoogleCloudDataplexV1DataProfileSpec struct {
 	// specified, all fields at the time of profile scan job execution are
 	// included, except for ones listed in exclude_fields.
 	IncludeFields *GoogleCloudDataplexV1DataProfileSpecSelectedFields `json:"includeFields,omitempty"`
+	// Mode: Optional. The execution mode for the profile scan.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Default value. This value is unused.
+	//   "STANDARD" - Performs standard profiling. The behavior is controlled by
+	// other fields such as sampling_percent, row_filter, and column filters. This
+	// mode allows for full scans or custom sampling.
+	//   "LIGHTWEIGHT" - Specifies lightweight profiling mode. This mode is
+	// optimized for low-latency low-fidelity profiling.When this mode is selected,
+	// the following fields must not be set: - sampling_percent - row_filter -
+	// include_fields - exclude_fields
+	Mode string `json:"mode,omitempty"`
 	// PostScanActions: Optional. Actions to take upon job completion..
 	PostScanActions *GoogleCloudDataplexV1DataProfileSpecPostScanActions `json:"postScanActions,omitempty"`
 	// RowFilter: Optional. A filter applied to all rows in a single DataScan job.
@@ -4240,6 +4268,9 @@ type GoogleCloudDataplexV1DataScan struct {
 	// DisplayName: Optional. User friendly display name. Must be between 1-256
 	// characters.
 	DisplayName string `json:"displayName,omitempty"`
+	// ExecutionIdentity: Optional. Immutable. The identity to run the datascan. If
+	// not specified, defaults to the Dataplex Service Agent.
+	ExecutionIdentity *GoogleCloudDataplexV1ExecutionIdentity `json:"executionIdentity,omitempty"`
 	// ExecutionSpec: Optional. DataScan execution settings.If not specified, the
 	// fields in it will use their default values.
 	ExecutionSpec *GoogleCloudDataplexV1DataScanExecutionSpec `json:"executionSpec,omitempty"`
@@ -4718,6 +4749,9 @@ type GoogleCloudDataplexV1DataScanJob struct {
 	// id}, where project refers to a project_id or project_number and location_id
 	// refers to a Google Cloud region.
 	Name string `json:"name,omitempty"`
+	// PartialFailureMessage: Output only. A message indicating partial failure
+	// details.
+	PartialFailureMessage string `json:"partialFailureMessage,omitempty"`
 	// StartTime: Output only. The time when the DataScanJob was started.
 	StartTime string `json:"startTime,omitempty"`
 	// State: Output only. Execution state for the DataScanJob.
@@ -4730,6 +4764,7 @@ type GoogleCloudDataplexV1DataScanJob struct {
 	//   "SUCCEEDED" - The DataScanJob completed successfully.
 	//   "FAILED" - The DataScanJob is no longer running due to an error.
 	//   "PENDING" - The DataScanJob has been created but not started to run yet.
+	//   "SUCCEEDED_WITH_ERRORS" - The DataScanJob succeeded with errors.
 	State string `json:"state,omitempty"`
 	// Type: Output only. The type of the parent DataScan.
 	//
@@ -5715,6 +5750,70 @@ type GoogleCloudDataplexV1EntryTypeAuthorization struct {
 func (s GoogleCloudDataplexV1EntryTypeAuthorization) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1EntryTypeAuthorization
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1ExecutionIdentity: The identity to run the datascan.
+type GoogleCloudDataplexV1ExecutionIdentity struct {
+	// DataplexServiceAgent: Optional. The Dataplex service agent associated with
+	// the user's project.
+	DataplexServiceAgent *GoogleCloudDataplexV1ExecutionIdentityDataplexServiceAgent `json:"dataplexServiceAgent,omitempty"`
+	// ServiceAccount: Optional. The provided service account.
+	ServiceAccount *GoogleCloudDataplexV1ExecutionIdentityServiceAccount `json:"serviceAccount,omitempty"`
+	// UserCredential: Optional. The credential of the calling user. Supports only
+	// ONE_TIME trigger type.
+	UserCredential *GoogleCloudDataplexV1ExecutionIdentityUserCredential `json:"userCredential,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataplexServiceAgent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataplexServiceAgent") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1ExecutionIdentity) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1ExecutionIdentity
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1ExecutionIdentityDataplexServiceAgent: The Dataplex
+// service agent associated with the user's project.
+type GoogleCloudDataplexV1ExecutionIdentityDataplexServiceAgent struct {
+}
+
+// GoogleCloudDataplexV1ExecutionIdentityServiceAccount: The service account
+type GoogleCloudDataplexV1ExecutionIdentityServiceAccount struct {
+	// Email: Required. Service account email. The datascan will execute with this
+	// service account's credentials. The user calling this API must have
+	// permissions to act as this service account. Dataplex service agent must be
+	// granted iam.serviceAccounts.getAccessToken permission on this service
+	// account, for example, through the iam.serviceAccountTokenCreator role .
+	Email string `json:"email,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Email") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1ExecutionIdentityServiceAccount) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1ExecutionIdentityServiceAccount
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1ExecutionIdentityUserCredential: The credential of the
+// calling user.
+type GoogleCloudDataplexV1ExecutionIdentityUserCredential struct {
 }
 
 // GoogleCloudDataplexV1GenerateDataQualityRulesRequest: Request details for
@@ -7065,7 +7164,11 @@ func (s GoogleCloudDataplexV1ListZonesResponse) MarshalJSON() ([]byte, error) {
 // GoogleCloudDataplexV1LookupContextRequest: Lookup Context using permissions
 // in the source system.
 type GoogleCloudDataplexV1LookupContextRequest struct {
-	// Options: Optional. Allows to configure the context.
+	// Options: Optional. Allows to configure the context.Supported options: format
+	// - The format of the context (one of yaml, xml, json, default is yaml).
+	// context_budget - If provided, the output will be intelligently truncated on
+	// a best-effort basis to contain approximately the desired amount of
+	// characters. There is no guarantee to achieve the specific amount.
 	Options map[string]string `json:"options,omitempty"`
 	// Resources: Required. The entry names to look up the context for. The maximum
 	// number of resources for a request is limited to
@@ -7092,7 +7195,8 @@ func (s GoogleCloudDataplexV1LookupContextRequest) MarshalJSON() ([]byte, error)
 
 // GoogleCloudDataplexV1LookupContextResponse: Lookup Context response.
 type GoogleCloudDataplexV1LookupContextResponse struct {
-	// Context: LLM generated context for the resources.
+	// Context: Pre-formatted block of text containing the context for the
+	// requested resources.
 	Context string `json:"context,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -7696,6 +7800,47 @@ type GoogleCloudDataplexV1MetadataJobStatus struct {
 
 func (s GoogleCloudDataplexV1MetadataJobStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1MetadataJobStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1ModifyEntryRequest: Modify Entry request using
+// permissions in the source system.
+type GoogleCloudDataplexV1ModifyEntryRequest struct {
+	// AspectKeys: Optional. The aspect keys which the service should modify. It
+	// supports the following syntaxes: - matches an aspect of the given type and
+	// empty path. @path - matches an aspect of the given type and specified path.
+	// For example, to attach an aspect to a field that is specified by the schema
+	// aspect, the path should have the format Schema.. @* - matches aspects of the
+	// given type for all paths. *@path - matches aspects of all types on the given
+	// path.The service will not remove existing aspects matching the syntax unless
+	// delete_missing_aspects is set to true.If this field is left empty, the
+	// service treats it as specifying exactly those Aspects present in the
+	// request.
+	AspectKeys []string `json:"aspectKeys,omitempty"`
+	// DeleteMissingAspects: Optional. If set to true, any aspects not specified in
+	// the request will be deleted. The default is false.
+	DeleteMissingAspects bool `json:"deleteMissingAspects,omitempty"`
+	// Entry: Required. The entry to modify.
+	Entry *GoogleCloudDataplexV1Entry `json:"entry,omitempty"`
+	// UpdateMask: Optional. Mask of fields to update. To update Aspects, the
+	// update_mask must contain the value "aspects".If the update_mask is empty,
+	// the service will update all modifiable fields present in the request.
+	UpdateMask string `json:"updateMask,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AspectKeys") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AspectKeys") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1ModifyEntryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1ModifyEntryRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11887,6 +12032,111 @@ func (c *ProjectsLocationsLookupEntryLinksCall) Pages(ctx context.Context, f fun
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsModifyEntryCall struct {
+	s                                       *Service
+	name                                    string
+	googleclouddataplexv1modifyentryrequest *GoogleCloudDataplexV1ModifyEntryRequest
+	urlParams_                              gensupport.URLParams
+	ctx_                                    context.Context
+	header_                                 http.Header
+}
+
+// ModifyEntry: Modifies an entry using the permission on the source system.
+//
+//   - name: The project to which the request should be attributed in the
+//     following form: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsService) ModifyEntry(name string, googleclouddataplexv1modifyentryrequest *GoogleCloudDataplexV1ModifyEntryRequest) *ProjectsLocationsModifyEntryCall {
+	c := &ProjectsLocationsModifyEntryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddataplexv1modifyentryrequest = googleclouddataplexv1modifyentryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsModifyEntryCall) Fields(s ...googleapi.Field) *ProjectsLocationsModifyEntryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsModifyEntryCall) Context(ctx context.Context) *ProjectsLocationsModifyEntryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsModifyEntryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsModifyEntryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddataplexv1modifyentryrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:modifyEntry")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.modifyEntry", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.modifyEntry" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1Entry.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsModifyEntryCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1Entry, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1Entry{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.modifyEntry", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsSearchEntriesCall struct {
@@ -27717,355 +27967,6 @@ func (c *ProjectsLocationsLakesActionsListCall) Pages(ctx context.Context, f fun
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-type ProjectsLocationsLakesEnvironmentsGetIamPolicyCall struct {
-	s            *Service
-	resource     string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// GetIamPolicy: Gets the access control policy for a resource. Returns an
-// empty policy if the resource exists and does not have a policy set.
-//
-//   - resource: REQUIRED: The resource for which the policy is being requested.
-//     See Resource names (https://cloud.google.com/apis/design/resource_names)
-//     for the appropriate value for this field.
-func (r *ProjectsLocationsLakesEnvironmentsService) GetIamPolicy(resource string) *ProjectsLocationsLakesEnvironmentsGetIamPolicyCall {
-	c := &ProjectsLocationsLakesEnvironmentsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	return c
-}
-
-// OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The maximum policy version that will be
-// used to format the policy.Valid values are 0, 1, and 3. Requests specifying
-// an invalid value will be rejected.Requests for policies with any conditional
-// role bindings must specify version 3. Policies with no conditional role
-// bindings may specify any valid value or leave the field unset.The policy in
-// the response might use the policy version that you specified, or it might
-// use a lower policy version. For example, if you specify version 3, but the
-// policy has no conditional role bindings, the response uses version 1.To
-// learn which resources support conditions in their IAM policies, see the IAM
-// documentation
-// (https://cloud.google.com/iam/help/conditions/resource-policies).
-func (c *ProjectsLocationsLakesEnvironmentsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsLakesEnvironmentsGetIamPolicyCall {
-	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsLakesEnvironmentsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsLakesEnvironmentsGetIamPolicyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsLakesEnvironmentsGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsLakesEnvironmentsGetIamPolicyCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsLakesEnvironmentsGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsLakesEnvironmentsGetIamPolicyCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsLakesEnvironmentsGetIamPolicyCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsLakesEnvironmentsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.lakes.environments.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dataplex.projects.locations.lakes.environments.getIamPolicy" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleIamV1Policy.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsLakesEnvironmentsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleIamV1Policy{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.lakes.environments.getIamPolicy", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsLakesEnvironmentsSetIamPolicyCall struct {
-	s                              *Service
-	resource                       string
-	googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest
-	urlParams_                     gensupport.URLParams
-	ctx_                           context.Context
-	header_                        http.Header
-}
-
-// SetIamPolicy: Sets the access control policy on the specified resource.
-// Replaces any existing policy.Can return NOT_FOUND, INVALID_ARGUMENT, and
-// PERMISSION_DENIED errors.
-//
-//   - resource: REQUIRED: The resource for which the policy is being specified.
-//     See Resource names (https://cloud.google.com/apis/design/resource_names)
-//     for the appropriate value for this field.
-func (r *ProjectsLocationsLakesEnvironmentsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsLakesEnvironmentsSetIamPolicyCall {
-	c := &ProjectsLocationsLakesEnvironmentsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	c.googleiamv1setiampolicyrequest = googleiamv1setiampolicyrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsLakesEnvironmentsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsLakesEnvironmentsSetIamPolicyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsLakesEnvironmentsSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsLakesEnvironmentsSetIamPolicyCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsLakesEnvironmentsSetIamPolicyCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsLakesEnvironmentsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1setiampolicyrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.lakes.environments.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dataplex.projects.locations.lakes.environments.setIamPolicy" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleIamV1Policy.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsLakesEnvironmentsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleIamV1Policy{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.lakes.environments.setIamPolicy", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsLakesEnvironmentsTestIamPermissionsCall struct {
-	s                                    *Service
-	resource                             string
-	googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest
-	urlParams_                           gensupport.URLParams
-	ctx_                                 context.Context
-	header_                              http.Header
-}
-
-// TestIamPermissions: Returns permissions that a caller has on the specified
-// resource. If the resource does not exist, this will return an empty set of
-// permissions, not a NOT_FOUND error.Note: This operation is designed to be
-// used for building permission-aware UIs and command-line tools, not for
-// authorization checking. This operation may "fail open" without warning.
-//
-//   - resource: REQUIRED: The resource for which the policy detail is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
-//     value for this field.
-func (r *ProjectsLocationsLakesEnvironmentsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsLakesEnvironmentsTestIamPermissionsCall {
-	c := &ProjectsLocationsLakesEnvironmentsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	c.googleiamv1testiampermissionsrequest = googleiamv1testiampermissionsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsLakesEnvironmentsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsLakesEnvironmentsTestIamPermissionsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsLakesEnvironmentsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsLakesEnvironmentsTestIamPermissionsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsLakesEnvironmentsTestIamPermissionsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsLakesEnvironmentsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1testiampermissionsrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.lakes.environments.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dataplex.projects.locations.lakes.environments.testIamPermissions" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleIamV1TestIamPermissionsResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsLakesEnvironmentsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1TestIamPermissionsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleIamV1TestIamPermissionsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.lakes.environments.testIamPermissions", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
 }
 
 type ProjectsLocationsLakesTasksCreateCall struct {

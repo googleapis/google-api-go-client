@@ -2504,7 +2504,7 @@
       }
     }
   },
-  "revision": "20260330",
+  "revision": "20260402",
   "rootUrl": "https://oracledatabase.googleapis.com/",
   "schemas": {
     "AllConnectionStrings": {
@@ -2534,7 +2534,11 @@
       "id": "AutonomousDatabase",
       "properties": {
         "adminPassword": {
-          "description": "Optional. Immutable. The password for the default ADMIN user.",
+          "description": "Optional. Immutable. The password for the default ADMIN user. Note: Only one of `admin_password_secret_version` or `admin_password` can be populated.",
+          "type": "string"
+        },
+        "adminPasswordSecretVersion": {
+          "description": "Optional. Immutable. The resource name of a secret version in Secret Manager which contains the database admin user's password. Format: projects/{project}/secrets/{secret}/versions/{version}. Note: Only one of `admin_password_secret_version` or `admin_password` can be populated.",
           "type": "string"
         },
         "cidr": {
@@ -3168,12 +3172,14 @@
           "enum": [
             "LOCAL_DISASTER_RECOVERY_TYPE_UNSPECIFIED",
             "ADG",
-            "BACKUP_BASED"
+            "BACKUP_BASED",
+            "NOT_AVAILABLE"
           ],
           "enumDescriptions": [
             "Default unspecified value.",
             "Autonomous Data Guard recovery.",
-            "Backup based recovery."
+            "Backup based recovery.",
+            "Local disaster recovery is not available."
           ],
           "readOnly": true,
           "type": "string"
@@ -4257,7 +4263,11 @@
       "id": "Database",
       "properties": {
         "adminPassword": {
-          "description": "Optional. The password for the default ADMIN user.",
+          "description": "Optional. The password for the default ADMIN user. Note: Only one of `admin_password_secret_version` or `admin_password` can be populated.",
+          "type": "string"
+        },
+        "adminPasswordSecretVersion": {
+          "description": "Optional. The resource name of a secret version in Secret Manager which contains the database admin user's password. Format: projects/{project}/secrets/{secret}/versions/{version}. Note: Only one of `admin_password_secret_version` or `admin_password` can be populated.",
           "type": "string"
         },
         "characterSet": {
@@ -4340,7 +4350,11 @@
           "description": "Optional. The properties of the Database."
         },
         "tdeWalletPassword": {
-          "description": "Optional. The TDE wallet password for the database.",
+          "description": "Optional. The TDE wallet password for the database. Note: Only one of `tde_wallet_password_secret_version` or `tde_wallet_password` can be populated.",
+          "type": "string"
+        },
+        "tdeWalletPasswordSecretVersion": {
+          "description": "Optional. The resource name of a secret version in Secret Manager which contains the TDE wallet password for the database. Format: projects/{project}/secrets/{secret}/versions/{version}. Note: Only one of `tde_wallet_password_secret_version` or `tde_wallet_password` can be populated.",
           "type": "string"
         }
       },

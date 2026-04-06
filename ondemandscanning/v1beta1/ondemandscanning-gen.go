@@ -211,6 +211,31 @@ type ProjectsLocationsScansVulnerabilitiesService struct {
 	s *Service
 }
 
+// AISkillAnalysisOccurrence: AISkillAnalysisOccurrence provides the results of
+// an AI-based skill analysis.
+type AISkillAnalysisOccurrence struct {
+	// Findings: Findings produced by the analysis.
+	Findings []*Finding `json:"findings,omitempty"`
+	// SkillName: Name of the skill that produced this analysis.
+	SkillName string `json:"skillName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Findings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Findings") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AISkillAnalysisOccurrence) MarshalJSON() ([]byte, error) {
+	type NoMethod AISkillAnalysisOccurrence
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AliasContext: An alias to a repo revision.
 type AliasContext struct {
 	// Kind: The alias kind.
@@ -1278,6 +1303,41 @@ func (s FileLocation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Finding: Finding provides details for a single finding within an
+// AISkillAnalysisOccurrence.
+type Finding struct {
+	// Category: Category of the finding.
+	Category string `json:"category,omitempty"`
+	// Description: Detailed description of the finding.
+	Description string `json:"description,omitempty"`
+	// FilePath: Path to the file where the finding was detected.
+	FilePath string `json:"filePath,omitempty"`
+	// RuleId: Unique identifier of the rule that produced this finding.
+	RuleId string `json:"ruleId,omitempty"`
+	// Severity: Severity of the finding.
+	Severity string `json:"severity,omitempty"`
+	// Snippet: Code snippet relevant to the finding.
+	Snippet string `json:"snippet,omitempty"`
+	// Title: Title of the finding.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Finding) MarshalJSON() ([]byte, error) {
+	type NoMethod Finding
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Fingerprint: A set of properties that uniquely identify a given Docker
 // image.
 type Fingerprint struct {
@@ -2146,6 +2206,8 @@ func (s NonCompliantFile) MarshalJSON() ([]byte, error) {
 type Occurrence struct {
 	// AdvisoryPublishTime: The time this advisory was published by the source.
 	AdvisoryPublishTime string `json:"advisoryPublishTime,omitempty"`
+	// AiSkillAnalysis: Describes an AI skill analysis.
+	AiSkillAnalysis *AISkillAnalysisOccurrence `json:"aiSkillAnalysis,omitempty"`
 	// Attestation: Describes an attestation of an artifact.
 	Attestation *AttestationOccurrence `json:"attestation,omitempty"`
 	// Build: Describes a verifiable build.
@@ -2186,6 +2248,7 @@ type Occurrence struct {
 	//   "VULNERABILITY_ASSESSMENT" - This represents a Vulnerability Assessment.
 	//   "SBOM_REFERENCE" - This represents an SBOM Reference.
 	//   "SECRET" - This represents a secret.
+	//   "AI_SKILL_ANALYSIS" - This represents an AI skill analysis.
 	Kind string `json:"kind,omitempty"`
 	// Name: Output only. The name of the occurrence in the form of
 	// `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]`.

@@ -2613,6 +2613,10 @@ type GoogleFirestoreAdminV1Index struct {
 	//   "COLLECTION_RECURSIVE" - Include all the collections's ancestor in the
 	// index. Only available for Datastore Mode databases.
 	QueryScope string `json:"queryScope,omitempty"`
+	// SearchIndexOptions: Optional. Options for search indexes that are at the
+	// index definition level. This field is only currently supported for indexes
+	// with MONGODB_COMPATIBLE_API ApiScope.
+	SearchIndexOptions *GoogleFirestoreAdminV1SearchIndexOptions `json:"searchIndexOptions,omitempty"`
 	// ShardCount: Optional. The number of shards for the index.
 	ShardCount int64 `json:"shardCount,omitempty"`
 	// State: Output only. The serving state of the index.
@@ -2747,6 +2751,10 @@ type GoogleFirestoreAdminV1IndexField struct {
 	//   "ASCENDING" - The field is ordered by ascending field value.
 	//   "DESCENDING" - The field is ordered by descending field value.
 	Order string `json:"order,omitempty"`
+	// SearchConfig: Indicates that this field supports search operations. This
+	// field is only currently supported for indexes with MONGODB_COMPATIBLE_API
+	// ApiScope.
+	SearchConfig *GoogleFirestoreAdminV1SearchConfig `json:"searchConfig,omitempty"`
 	// VectorConfig: Indicates that this field supports nearest neighbor and
 	// distance operations on vector.
 	VectorConfig *GoogleFirestoreAdminV1VectorConfig `json:"vectorConfig,omitempty"`
@@ -3175,6 +3183,196 @@ func (s GoogleFirestoreAdminV1RestoreDatabaseRequest) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirestoreAdminV1SearchConfig: The configuration for how to index a
+// field for search.
+type GoogleFirestoreAdminV1SearchConfig struct {
+	// GeoSpec: Optional. The specification for building a geo search index for a
+	// field.
+	GeoSpec *GoogleFirestoreAdminV1SearchGeoSpec `json:"geoSpec,omitempty"`
+	// NumberSpec: Optional. The specification for building a number search index
+	// for a field.
+	NumberSpec *GoogleFirestoreAdminV1SearchNumberSpec `json:"numberSpec,omitempty"`
+	// TextSpec: Optional. The specification for building a text search index for a
+	// field.
+	TextSpec *GoogleFirestoreAdminV1SearchTextSpec `json:"textSpec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GeoSpec") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GeoSpec") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirestoreAdminV1SearchConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1SearchConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1SearchGeoSpec: The specification for how to build a
+// geo search index for a field.
+type GoogleFirestoreAdminV1SearchGeoSpec struct {
+	// GeoJsonIndexingDisabled: Optional. Disables geoJSON indexing for the field.
+	// By default, geoJSON points are indexed.
+	GeoJsonIndexingDisabled bool `json:"geoJsonIndexingDisabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GeoJsonIndexingDisabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GeoJsonIndexingDisabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirestoreAdminV1SearchGeoSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1SearchGeoSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1SearchIndexOptions: Options for search indexes at the
+// definition level.
+type GoogleFirestoreAdminV1SearchIndexOptions struct {
+	// CustomPartitionFieldPaths: Optional. Custom partition fields to use for the
+	// search index. If unspecified, all indexed fields will be in the same default
+	// partition. If a search index is created specifying custom partition fields,
+	// all search queries using that index will be required to filter on the
+	// partition. For indexes with MONGODB_COMPATIBLE_API ApiScope: This must refer
+	// to a top level field name.
+	CustomPartitionFieldPaths []string `json:"customPartitionFieldPaths,omitempty"`
+	// TextLanguage: Optional. The language to use for text search indexes. Used as
+	// the default language if not overridden at the document level by specifying
+	// the `text_language_override_field`. The language is specified as a BCP 47
+	// language code. For indexes with MONGODB_COMPATIBLE_API ApiScope: If
+	// unspecified, the default language is English. For indexes with `ANY_API`
+	// ApiScope: If unspecified, the default behavior is autodetect.
+	TextLanguage string `json:"textLanguage,omitempty"`
+	// TextLanguageOverrideFieldPath: Optional. The field in the document that
+	// specifies which language to use for that specific document. For indexes with
+	// MONGODB_COMPATIBLE_API ApiScope: if unspecified, the language is taken from
+	// the "language" field if it exists or from `text_language` if it does not.
+	TextLanguageOverrideFieldPath string `json:"textLanguageOverrideFieldPath,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomPartitionFieldPaths")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomPartitionFieldPaths") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirestoreAdminV1SearchIndexOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1SearchIndexOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1SearchNumberSpec: The specification for how to build a
+// number search index for a field.
+type GoogleFirestoreAdminV1SearchNumberSpec struct {
+	// IndexType: Required. How to index the number field value.
+	//
+	// Possible values:
+	//   "NUMBER_INDEX_TYPE_UNSPECIFIED" - The index type is unspecified. Not a
+	// valid option.
+	//   "FLOAT64" - A floating point index.
+	//   "INT32_LOG_TREE" - A log tree index for int32 values.
+	//   "INT64_LOG_TREE" - A log tree index for int64 values.
+	//   "INT32_PREFIX_TREE" - A prefix tree index for int32 values.
+	//   "INT64_PREFIX_TREE" - A prefix tree index for int64 values.
+	IndexType string `json:"indexType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IndexType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IndexType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirestoreAdminV1SearchNumberSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1SearchNumberSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1SearchTextIndexSpec: Specification of how the field
+// should be indexed for search text indexes.
+type GoogleFirestoreAdminV1SearchTextIndexSpec struct {
+	// IndexType: Required. How to index the text field value.
+	//
+	// Possible values:
+	//   "TEXT_INDEX_TYPE_UNSPECIFIED" - The index type is unspecified. Not a valid
+	// option.
+	//   "TOKENIZED" - Field values are tokenized. This is the only way currently
+	// supported for MONGODB_COMPATIBLE_API.
+	//   "NGRAMS" - Field values are indexed as n-grams.
+	//   "EXACT_MATCH" - Field values are indexed to allow fast equality checks.
+	IndexType string `json:"indexType,omitempty"`
+	// MatchType: Required. How to match the text field value.
+	//
+	// Possible values:
+	//   "TEXT_MATCH_TYPE_UNSPECIFIED" - The match type is unspecified. Not a valid
+	// option.
+	//   "MATCH_GLOBALLY" - Match on any indexed field. This is the only way
+	// currently supported for MONGODB_COMPATIBLE_API.
+	//   "MATCH_FIELD" - Match on a specific field.
+	MatchType string `json:"matchType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IndexType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IndexType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirestoreAdminV1SearchTextIndexSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1SearchTextIndexSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1SearchTextSpec: The specification for how to build a
+// text search index for a field.
+type GoogleFirestoreAdminV1SearchTextSpec struct {
+	// IndexSpecs: Required. Specifications for how the field should be indexed.
+	// Repeated so that the field can be indexed in multiple ways.
+	IndexSpecs []*GoogleFirestoreAdminV1SearchTextIndexSpec `json:"indexSpecs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IndexSpecs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IndexSpecs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirestoreAdminV1SearchTextSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1SearchTextSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1SourceEncryptionOptions: The configuration options for
 // using the same encryption method as the source.
 type GoogleFirestoreAdminV1SourceEncryptionOptions struct {
@@ -3238,14 +3436,22 @@ func (s GoogleFirestoreAdminV1Stats) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleFirestoreAdminV1TtlConfig: The TTL (time-to-live) configuration for
-// documents that have this `Field` set. Storing a timestamp value into a
-// TTL-enabled field will be treated as the document's absolute expiration
-// time. For Enterprise edition databases, the timestamp value may also be
-// stored in an array value in the TTL-enabled field. Timestamp values in the
-// past indicate that the document is eligible for immediate expiration. Using
-// any other data type or leaving the field absent will disable expiration for
-// the individual document.
+// documents that have this `Field` set. A timestamp stored in a TTL-enabled
+// field will be used to determine the expiration time of the document. The
+// expiration time is the sum of the timestamp value and the
+// `expiration_offset`. For Enterprise edition databases, the timestamp value
+// may alternatively be stored in an array value in the TTL-enabled field. An
+// expiration time in the past indicates that the document is eligible for
+// immediate expiration. Using any other data type or leaving the field absent
+// will disable expiration for the individual document.
 type GoogleFirestoreAdminV1TtlConfig struct {
+	// ExpirationOffset: Optional. The offset, relative to the timestamp value from
+	// the TTL-enabled field, used to determine the document's expiration time.
+	// `expiration_offset.seconds` must be between 0 and 2,147,483,647 inclusive.
+	// Values more precise than seconds are rejected. If unset, defaults to 0, in
+	// which case the expiration time is the same as the timestamp value from the
+	// TTL-enabled field.
+	ExpirationOffset string `json:"expirationOffset,omitempty"`
 	// State: Output only. The state of the TTL configuration.
 	//
 	// Possible values:
@@ -3261,15 +3467,15 @@ type GoogleFirestoreAdminV1TtlConfig struct {
 	// applied. The LRO returned when last attempting to enable TTL for this
 	// `Field` has failed, and may have more details.
 	State string `json:"state,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "ExpirationOffset") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "State") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ExpirationOffset") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3289,6 +3495,9 @@ type GoogleFirestoreAdminV1TtlConfigDelta struct {
 	//   "ADD" - The TTL config is being added.
 	//   "REMOVE" - The TTL config is being removed.
 	ChangeType string `json:"changeType,omitempty"`
+	// ExpirationOffset: The offset, relative to the timestamp value in the
+	// TTL-enabled field, used determine the document's expiration time.
+	ExpirationOffset string `json:"expirationOffset,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChangeType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

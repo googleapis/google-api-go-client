@@ -877,7 +877,7 @@ type GoogleAnalyticsAdminV1betaAccount struct {
 	// organization. Format:
 	// marketingplatformadmin.googleapis.com/organizations/{org_id}
 	GmpOrganization string `json:"gmpOrganization,omitempty"`
-	// Name: Output only. Resource name of this account. Format: accounts/{account}
+	// Name: Identifier. Resource name of this account. Format: accounts/{account}
 	// Example: "accounts/100"
 	Name string `json:"name,omitempty"`
 	// RegionCode: Country of business. Must be a Unicode CLDR region code.
@@ -914,7 +914,7 @@ type GoogleAnalyticsAdminV1betaAccountSummary struct {
 	// DisplayName: Display name for the account referred to in this account
 	// summary.
 	DisplayName string `json:"displayName,omitempty"`
-	// Name: Resource name for this account summary. Format:
+	// Name: Identifier. Resource name for this account summary. Format:
 	// accountSummaries/{account_id} Example: "accountSummaries/1000"
 	Name string `json:"name,omitempty"`
 	// PropertySummaries: List of summaries for child accounts of this account.
@@ -1138,7 +1138,7 @@ type GoogleAnalyticsAdminV1betaConversionEvent struct {
 	// EventName: Immutable. The event name for this conversion event. Examples:
 	// 'click', 'purchase'
 	EventName string `json:"eventName,omitempty"`
-	// Name: Output only. Resource name of this conversion event. Format:
+	// Name: Identifier. Resource name of this conversion event. Format:
 	// properties/{property}/conversionEvents/{conversion_event}
 	Name string `json:"name,omitempty"`
 
@@ -1222,7 +1222,7 @@ type GoogleAnalyticsAdminV1betaCustomDimension struct {
 	// contain square brackets, but updates to this field will never permit square
 	// brackets.
 	DisplayName string `json:"displayName,omitempty"`
-	// Name: Output only. Resource name for this CustomDimension resource. Format:
+	// Name: Identifier. Resource name for this CustomDimension resource. Format:
 	// properties/{property}/customDimensions/{customDimension}
 	Name string `json:"name,omitempty"`
 	// ParameterName: Required. Immutable. Tagging parameter name for this custom
@@ -1289,7 +1289,7 @@ type GoogleAnalyticsAdminV1betaCustomMetric struct {
 	//   "MINUTES" - This metric measures minutes.
 	//   "HOURS" - This metric measures hours.
 	MeasurementUnit string `json:"measurementUnit,omitempty"`
-	// Name: Output only. Resource name for this CustomMetric resource. Format:
+	// Name: Identifier. Resource name for this CustomMetric resource. Format:
 	// properties/{property}/customMetrics/{customMetric}
 	Name string `json:"name,omitempty"`
 	// ParameterName: Required. Immutable. Tagging name for this custom metric. If
@@ -1351,7 +1351,7 @@ type GoogleAnalyticsAdminV1betaDataRetentionSettings struct {
 	//   "FIFTY_MONTHS" - The data retention time duration is 50 months. Available
 	// to 360 properties only. Available for event data only.
 	EventDataRetention string `json:"eventDataRetention,omitempty"`
-	// Name: Output only. Resource name for this DataRetentionSetting resource.
+	// Name: Identifier. Resource name for this DataRetentionSetting resource.
 	// Format: properties/{property}/dataRetentionSettings
 	Name string `json:"name,omitempty"`
 	// ResetUserDataOnNewActivity: If true, reset the retention period for the user
@@ -1396,7 +1396,7 @@ func (s GoogleAnalyticsAdminV1betaDataRetentionSettings) MarshalJSON() ([]byte, 
 // GoogleAnalyticsAdminV1betaDataSharingSettings: A resource message
 // representing data sharing settings of a Google Analytics account.
 type GoogleAnalyticsAdminV1betaDataSharingSettings struct {
-	// Name: Output only. Resource name. Format:
+	// Name: Identifier. Resource name. Format:
 	// accounts/{account}/dataSharingSettings Example:
 	// "accounts/1000/dataSharingSettings"
 	Name string `json:"name,omitempty"`
@@ -1465,7 +1465,7 @@ type GoogleAnalyticsAdminV1betaDataStream struct {
 	// IosAppStreamData: Data specific to iOS app streams. Must be populated if
 	// type is IOS_APP_DATA_STREAM.
 	IosAppStreamData *GoogleAnalyticsAdminV1betaDataStreamIosAppStreamData `json:"iosAppStreamData,omitempty"`
-	// Name: Output only. Resource name of this Data Stream. Format:
+	// Name: Identifier. Resource name of this Data Stream. Format:
 	// properties/{property_id}/dataStreams/{stream_id} Example:
 	// "properties/1000/dataStreams/2000"
 	Name string `json:"name,omitempty"`
@@ -1592,7 +1592,7 @@ func (s GoogleAnalyticsAdminV1betaDataStreamWebStreamData) MarshalJSON() ([]byte
 type GoogleAnalyticsAdminV1betaFirebaseLink struct {
 	// CreateTime: Output only. Time when this FirebaseLink was originally created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Name: Output only. Example format: properties/1234/firebaseLinks/5678
+	// Name: Identifier. Example format: properties/1234/firebaseLinks/5678
 	Name string `json:"name,omitempty"`
 	// Project: Immutable. Firebase project resource name. When creating a
 	// FirebaseLink, you may provide this resource name using either a project
@@ -1641,7 +1641,7 @@ type GoogleAnalyticsAdminV1betaGoogleAdsLink struct {
 	CreatorEmailAddress string `json:"creatorEmailAddress,omitempty"`
 	// CustomerId: Immutable. Google Ads customer ID.
 	CustomerId string `json:"customerId,omitempty"`
-	// Name: Output only. Format:
+	// Name: Identifier. Format:
 	// properties/{propertyId}/googleAdsLinks/{googleAdsLinkId} Note:
 	// googleAdsLinkId is not the Google Ads customer ID.
 	Name string `json:"name,omitempty"`
@@ -2094,7 +2094,7 @@ func (s GoogleAnalyticsAdminV1betaListPropertiesResponse) MarshalJSON() ([]byte,
 type GoogleAnalyticsAdminV1betaMeasurementProtocolSecret struct {
 	// DisplayName: Required. Human-readable display name for this secret.
 	DisplayName string `json:"displayName,omitempty"`
-	// Name: Output only. Resource name of this secret. This secret may be a child
+	// Name: Identifier. Resource name of this secret. This secret may be a child
 	// of any type of stream. Format:
 	// properties/{property}/dataStreams/{dataStream}/measurementProtocolSecrets/{me
 	// asurementProtocolSecret}
@@ -2215,7 +2215,7 @@ type GoogleAnalyticsAdminV1betaProperty struct {
 	//   "JOBS_AND_EDUCATION" - Jobs and education
 	//   "SHOPPING" - Shopping
 	IndustryCategory string `json:"industryCategory,omitempty"`
-	// Name: Output only. Resource name of this property. Format:
+	// Name: Identifier. Resource name of this property. Format:
 	// properties/{property_id} Example: "properties/1000"
 	Name string `json:"name,omitempty"`
 	// Parent: Immutable. Resource name of this property's logical parent. Note:
@@ -3249,7 +3249,7 @@ type AccountsPatchCall struct {
 
 // Patch: Updates an account.
 //
-//   - name: Output only. Resource name of this account. Format:
+//   - name: Identifier. Resource name of this account. Format:
 //     accounts/{account} Example: "accounts/100".
 func (r *AccountsService) Patch(name string, googleanalyticsadminv1betaaccount *GoogleAnalyticsAdminV1betaAccount) *AccountsPatchCall {
 	c := &AccountsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4418,7 +4418,7 @@ type PropertiesPatchCall struct {
 
 // Patch: Updates a property.
 //
-//   - name: Output only. Resource name of this property. Format:
+//   - name: Identifier. Resource name of this property. Format:
 //     properties/{property_id} Example: "properties/1000".
 func (r *PropertiesService) Patch(name string, googleanalyticsadminv1betaproperty *GoogleAnalyticsAdminV1betaProperty) *PropertiesPatchCall {
 	c := &PropertiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4658,7 +4658,7 @@ type PropertiesUpdateDataRetentionSettingsCall struct {
 // UpdateDataRetentionSettings: Updates the singleton data retention settings
 // for this property.
 //
-//   - name: Output only. Resource name for this DataRetentionSetting resource.
+//   - name: Identifier. Resource name for this DataRetentionSetting resource.
 //     Format: properties/{property}/dataRetentionSettings.
 func (r *PropertiesService) UpdateDataRetentionSettings(name string, googleanalyticsadminv1betadataretentionsettings *GoogleAnalyticsAdminV1betaDataRetentionSettings) *PropertiesUpdateDataRetentionSettingsCall {
 	c := &PropertiesUpdateDataRetentionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5246,7 +5246,7 @@ type PropertiesConversionEventsPatchCall struct {
 // Patch: Deprecated: Use `UpdateKeyEvent` instead. Updates a conversion event
 // with the specified attributes.
 //
-//   - name: Output only. Resource name of this conversion event. Format:
+//   - name: Identifier. Resource name of this conversion event. Format:
 //     properties/{property}/conversionEvents/{conversion_event}.
 func (r *PropertiesConversionEventsService) Patch(name string, googleanalyticsadminv1betaconversionevent *GoogleAnalyticsAdminV1betaConversionEvent) *PropertiesConversionEventsPatchCall {
 	c := &PropertiesConversionEventsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5830,8 +5830,8 @@ type PropertiesCustomDimensionsPatchCall struct {
 
 // Patch: Updates a CustomDimension on a property.
 //
-//   - name: Output only. Resource name for this CustomDimension resource.
-//     Format: properties/{property}/customDimensions/{customDimension}.
+//   - name: Identifier. Resource name for this CustomDimension resource. Format:
+//     properties/{property}/customDimensions/{customDimension}.
 func (r *PropertiesCustomDimensionsService) Patch(name string, googleanalyticsadminv1betacustomdimension *GoogleAnalyticsAdminV1betaCustomDimension) *PropertiesCustomDimensionsPatchCall {
 	c := &PropertiesCustomDimensionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6411,7 +6411,7 @@ type PropertiesCustomMetricsPatchCall struct {
 
 // Patch: Updates a CustomMetric on a property.
 //
-//   - name: Output only. Resource name for this CustomMetric resource. Format:
+//   - name: Identifier. Resource name for this CustomMetric resource. Format:
 //     properties/{property}/customMetrics/{customMetric}.
 func (r *PropertiesCustomMetricsService) Patch(name string, googleanalyticsadminv1betacustommetric *GoogleAnalyticsAdminV1betaCustomMetric) *PropertiesCustomMetricsPatchCall {
 	c := &PropertiesCustomMetricsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6986,7 +6986,7 @@ type PropertiesDataStreamsPatchCall struct {
 
 // Patch: Updates a DataStream on a property.
 //
-//   - name: Output only. Resource name of this Data Stream. Format:
+//   - name: Identifier. Resource name of this Data Stream. Format:
 //     properties/{property_id}/dataStreams/{stream_id} Example:
 //     "properties/1000/dataStreams/2000".
 func (r *PropertiesDataStreamsService) Patch(name string, googleanalyticsadminv1betadatastream *GoogleAnalyticsAdminV1betaDataStream) *PropertiesDataStreamsPatchCall {
@@ -7568,8 +7568,8 @@ type PropertiesDataStreamsMeasurementProtocolSecretsPatchCall struct {
 
 // Patch: Updates a measurement protocol secret.
 //
-//   - name: Output only. Resource name of this secret. This secret may be a
-//     child of any type of stream. Format:
+//   - name: Identifier. Resource name of this secret. This secret may be a child
+//     of any type of stream. Format:
 //     properties/{property}/dataStreams/{dataStream}/measurementProtocolSecrets/{
 //     measurementProtocolSecret}.
 func (r *PropertiesDataStreamsMeasurementProtocolSecretsService) Patch(name string, googleanalyticsadminv1betameasurementprotocolsecret *GoogleAnalyticsAdminV1betaMeasurementProtocolSecret) *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall {
@@ -8387,7 +8387,7 @@ type PropertiesGoogleAdsLinksPatchCall struct {
 
 // Patch: Updates a GoogleAdsLink on a property
 //
-//   - name: Output only. Format:
+//   - name: Identifier. Format:
 //     properties/{propertyId}/googleAdsLinks/{googleAdsLinkId} Note:
 //     googleAdsLinkId is not the Google Ads customer ID.
 func (r *PropertiesGoogleAdsLinksService) Patch(name string, googleanalyticsadminv1betagoogleadslink *GoogleAnalyticsAdminV1betaGoogleAdsLink) *PropertiesGoogleAdsLinksPatchCall {

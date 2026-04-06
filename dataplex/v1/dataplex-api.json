@@ -1004,6 +1004,35 @@
                 "https://www.googleapis.com/auth/dataplex.read-write"
               ]
             },
+            "modifyEntry": {
+              "description": "Modifies an entry using the permission on the source system.",
+              "flatPath": "v1/projects/{projectsId}/locations/{locationsId}:modifyEntry",
+              "httpMethod": "POST",
+              "id": "dataplex.projects.locations.modifyEntry",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. The project to which the request should be attributed in the following form: projects/{project}/locations/{location}.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/locations/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}:modifyEntry",
+              "request": {
+                "$ref": "GoogleCloudDataplexV1ModifyEntryRequest"
+              },
+              "response": {
+                "$ref": "GoogleCloudDataplexV1Entry"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/dataplex.read-write"
+              ]
+            },
             "searchEntries": {
               "description": "Searches for Entries matching the given query and scope.",
               "flatPath": "v1/projects/{projectsId}/locations/{locationsId}:searchEntries",
@@ -5574,100 +5603,6 @@
                     }
                   }
                 },
-                "environments": {
-                  "methods": {
-                    "getIamPolicy": {
-                      "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
-                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/lakes/{lakesId}/environments/{environmentsId}:getIamPolicy",
-                      "httpMethod": "GET",
-                      "id": "dataplex.projects.locations.lakes.environments.getIamPolicy",
-                      "parameterOrder": [
-                        "resource"
-                      ],
-                      "parameters": {
-                        "options.requestedPolicyVersion": {
-                          "description": "Optional. The maximum policy version that will be used to format the policy.Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected.Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset.The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1.To learn which resources support conditions in their IAM policies, see the IAM documentation (https://cloud.google.com/iam/help/conditions/resource-policies).",
-                          "format": "int32",
-                          "location": "query",
-                          "type": "integer"
-                        },
-                        "resource": {
-                          "description": "REQUIRED: The resource for which the policy is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/environments/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1/{+resource}:getIamPolicy",
-                      "response": {
-                        "$ref": "GoogleIamV1Policy"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/dataplex.read-write"
-                      ]
-                    },
-                    "setIamPolicy": {
-                      "description": "Sets the access control policy on the specified resource. Replaces any existing policy.Can return NOT_FOUND, INVALID_ARGUMENT, and PERMISSION_DENIED errors.",
-                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/lakes/{lakesId}/environments/{environmentsId}:setIamPolicy",
-                      "httpMethod": "POST",
-                      "id": "dataplex.projects.locations.lakes.environments.setIamPolicy",
-                      "parameterOrder": [
-                        "resource"
-                      ],
-                      "parameters": {
-                        "resource": {
-                          "description": "REQUIRED: The resource for which the policy is being specified. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/environments/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1/{+resource}:setIamPolicy",
-                      "request": {
-                        "$ref": "GoogleIamV1SetIamPolicyRequest"
-                      },
-                      "response": {
-                        "$ref": "GoogleIamV1Policy"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/dataplex.read-write"
-                      ]
-                    },
-                    "testIamPermissions": {
-                      "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a NOT_FOUND error.Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
-                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/lakes/{lakesId}/environments/{environmentsId}:testIamPermissions",
-                      "httpMethod": "POST",
-                      "id": "dataplex.projects.locations.lakes.environments.testIamPermissions",
-                      "parameterOrder": [
-                        "resource"
-                      ],
-                      "parameters": {
-                        "resource": {
-                          "description": "REQUIRED: The resource for which the policy detail is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/environments/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1/{+resource}:testIamPermissions",
-                      "request": {
-                        "$ref": "GoogleIamV1TestIamPermissionsRequest"
-                      },
-                      "response": {
-                        "$ref": "GoogleIamV1TestIamPermissionsResponse"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/dataplex.read-write"
-                      ]
-                    }
-                  }
-                },
                 "tasks": {
                   "methods": {
                     "create": {
@@ -7620,7 +7555,7 @@
       }
     }
   },
-  "revision": "20260324",
+  "revision": "20260402",
   "rootUrl": "https://dataplex.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -7839,7 +7774,7 @@
       "type": "object"
     },
     "GoogleCloudDataplexV1Aspect": {
-      "description": "An aspect is a single piece of metadata describing an entry.",
+      "description": "Represents a single piece of metadata describing an entry or entry link.",
       "id": "GoogleCloudDataplexV1Aspect",
       "properties": {
         "aspectSource": {
@@ -8927,6 +8862,10 @@
         "jsonOptions": {
           "$ref": "GoogleCloudDataplexV1DataDiscoverySpecStorageConfigJsonOptions",
           "description": "Optional. Configuration for JSON data."
+        },
+        "unstructuredDataOptions": {
+          "$ref": "GoogleCloudDataplexV1DataDiscoverySpecStorageConfigUnstructuredDataOptions",
+          "description": "Optional. Specifies configuration for unstructured data discovery."
         }
       },
       "type": "object"
@@ -8974,6 +8913,22 @@
       },
       "type": "object"
     },
+    "GoogleCloudDataplexV1DataDiscoverySpecStorageConfigUnstructuredDataOptions": {
+      "description": "Describes options for unstructured data discovery.",
+      "id": "GoogleCloudDataplexV1DataDiscoverySpecStorageConfigUnstructuredDataOptions",
+      "properties": {
+        "entityInferenceEnabled": {
+          "deprecated": true,
+          "description": "Optional. Deprecated: Use semantic_inference_enabled instead. Specifies whether deeper entity inference over the objects' contents using GenAI is enabled.",
+          "type": "boolean"
+        },
+        "semanticInferenceEnabled": {
+          "description": "Optional. Specifies whether deeper semantic inference over the objects' contents using GenAI is enabled.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDataplexV1DataDocumentationResult": {
       "description": "The output of a DataDocumentation scan.",
       "id": "GoogleCloudDataplexV1DataDocumentationResult",
@@ -9012,14 +8967,6 @@
           "description": "Output only. Relationships suggesting how tables in the dataset are related to each other, based on their schema.",
           "items": {
             "$ref": "GoogleCloudDataplexV1DataDocumentationResultSchemaRelationship"
-          },
-          "readOnly": true,
-          "type": "array"
-        },
-        "tableResults": {
-          "description": "Output only. Generated table and column descriptions for each table in the dataset.",
-          "items": {
-            "$ref": "GoogleCloudDataplexV1DataDocumentationResultTableResult"
           },
           "readOnly": true,
           "type": "array"
@@ -9619,6 +9566,20 @@
         "includeFields": {
           "$ref": "GoogleCloudDataplexV1DataProfileSpecSelectedFields",
           "description": "Optional. The fields to include in data profile.If not specified, all fields at the time of profile scan job execution are included, except for ones listed in exclude_fields."
+        },
+        "mode": {
+          "description": "Optional. The execution mode for the profile scan.",
+          "enum": [
+            "MODE_UNSPECIFIED",
+            "STANDARD",
+            "LIGHTWEIGHT"
+          ],
+          "enumDescriptions": [
+            "Default value. This value is unused.",
+            "Performs standard profiling. The behavior is controlled by other fields such as sampling_percent, row_filter, and column filters. This mode allows for full scans or custom sampling.",
+            "Specifies lightweight profiling mode. This mode is optimized for low-latency low-fidelity profiling.When this mode is selected, the following fields must not be set: - sampling_percent - row_filter - include_fields - exclude_fields"
+          ],
+          "type": "string"
         },
         "postScanActions": {
           "$ref": "GoogleCloudDataplexV1DataProfileSpecPostScanActions",
@@ -10478,6 +10439,10 @@
           "description": "Optional. User friendly display name. Must be between 1-256 characters.",
           "type": "string"
         },
+        "executionIdentity": {
+          "$ref": "GoogleCloudDataplexV1ExecutionIdentity",
+          "description": "Optional. Immutable. The identity to run the datascan. If not specified, defaults to the Dataplex Service Agent."
+        },
         "executionSpec": {
           "$ref": "GoogleCloudDataplexV1DataScanExecutionSpec",
           "description": "Optional. DataScan execution settings.If not specified, the fields in it will use their default values."
@@ -10936,6 +10901,11 @@
           "readOnly": true,
           "type": "string"
         },
+        "partialFailureMessage": {
+          "description": "Output only. A message indicating partial failure details.",
+          "readOnly": true,
+          "type": "string"
+        },
         "startTime": {
           "description": "Output only. The time when the DataScanJob was started.",
           "format": "google-datetime",
@@ -10951,7 +10921,8 @@
             "CANCELLED",
             "SUCCEEDED",
             "FAILED",
-            "PENDING"
+            "PENDING",
+            "SUCCEEDED_WITH_ERRORS"
           ],
           "enumDescriptions": [
             "The DataScanJob state is unspecified.",
@@ -10960,7 +10931,8 @@
             "The DataScanJob cancellation was successful.",
             "The DataScanJob completed successfully.",
             "The DataScanJob is no longer running due to an error.",
-            "The DataScanJob has been created but not started to run yet."
+            "The DataScanJob has been created but not started to run yet.",
+            "The DataScanJob succeeded with errors."
           ],
           "readOnly": true,
           "type": "string"
@@ -11867,6 +11839,48 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "GoogleCloudDataplexV1ExecutionIdentity": {
+      "description": "The identity to run the datascan.",
+      "id": "GoogleCloudDataplexV1ExecutionIdentity",
+      "properties": {
+        "dataplexServiceAgent": {
+          "$ref": "GoogleCloudDataplexV1ExecutionIdentityDataplexServiceAgent",
+          "description": "Optional. The Dataplex service agent associated with the user's project."
+        },
+        "serviceAccount": {
+          "$ref": "GoogleCloudDataplexV1ExecutionIdentityServiceAccount",
+          "description": "Optional. The provided service account."
+        },
+        "userCredential": {
+          "$ref": "GoogleCloudDataplexV1ExecutionIdentityUserCredential",
+          "description": "Optional. The credential of the calling user. Supports only ONE_TIME trigger type."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDataplexV1ExecutionIdentityDataplexServiceAgent": {
+      "description": "The Dataplex service agent associated with the user's project.",
+      "id": "GoogleCloudDataplexV1ExecutionIdentityDataplexServiceAgent",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudDataplexV1ExecutionIdentityServiceAccount": {
+      "description": "The service account",
+      "id": "GoogleCloudDataplexV1ExecutionIdentityServiceAccount",
+      "properties": {
+        "email": {
+          "description": "Required. Service account email. The datascan will execute with this service account's credentials. The user calling this API must have permissions to act as this service account. Dataplex service agent must be granted iam.serviceAccounts.getAccessToken permission on this service account, for example, through the iam.serviceAccountTokenCreator role .",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDataplexV1ExecutionIdentityUserCredential": {
+      "description": "The credential of the calling user.",
+      "id": "GoogleCloudDataplexV1ExecutionIdentityUserCredential",
+      "properties": {},
       "type": "object"
     },
     "GoogleCloudDataplexV1GenerateDataQualityRulesRequest": {
@@ -13056,7 +13070,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional. Allows to configure the context.",
+          "description": "Optional. Allows to configure the context.Supported options: format - The format of the context (one of yaml, xml, json, default is yaml). context_budget - If provided, the output will be intelligently truncated on a best-effort basis to contain approximately the desired amount of characters. There is no guarantee to achieve the specific amount.",
           "type": "object"
         },
         "resources": {
@@ -13074,7 +13088,7 @@
       "id": "GoogleCloudDataplexV1LookupContextResponse",
       "properties": {
         "context": {
-          "description": "LLM generated context for the resources.",
+          "description": "Pre-formatted block of text containing the context for the requested resources.",
           "type": "string"
         }
       },
@@ -13575,6 +13589,33 @@
           "description": "Output only. The time when the status was updated.",
           "format": "google-datetime",
           "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDataplexV1ModifyEntryRequest": {
+      "description": "Modify Entry request using permissions in the source system.",
+      "id": "GoogleCloudDataplexV1ModifyEntryRequest",
+      "properties": {
+        "aspectKeys": {
+          "description": "Optional. The aspect keys which the service should modify. It supports the following syntaxes: - matches an aspect of the given type and empty path. @path - matches an aspect of the given type and specified path. For example, to attach an aspect to a field that is specified by the schema aspect, the path should have the format Schema.. @* - matches aspects of the given type for all paths. *@path - matches aspects of all types on the given path.The service will not remove existing aspects matching the syntax unless delete_missing_aspects is set to true.If this field is left empty, the service treats it as specifying exactly those Aspects present in the request.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "deleteMissingAspects": {
+          "description": "Optional. If set to true, any aspects not specified in the request will be deleted. The default is false.",
+          "type": "boolean"
+        },
+        "entry": {
+          "$ref": "GoogleCloudDataplexV1Entry",
+          "description": "Required. The entry to modify."
+        },
+        "updateMask": {
+          "description": "Optional. Mask of fields to update. To update Aspects, the update_mask must contain the value \"aspects\".If the update_mask is empty, the service will update all modifiable fields present in the request.",
+          "format": "google-fieldmask",
           "type": "string"
         }
       },

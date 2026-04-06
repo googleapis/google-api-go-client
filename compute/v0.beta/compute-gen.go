@@ -10513,7 +10513,9 @@ type BulkInsertDiskResource struct {
 	// InstantSnapshotGroupParameters: The parameters for the instant snapshot
 	// group.
 	InstantSnapshotGroupParameters *InstantSnapshotGroupParameters `json:"instantSnapshotGroupParameters,omitempty"`
-	// SnapshotGroupParameters: The parameters for the snapshot group.
+	// SnapshotGroupParameters: The parameters for the snapshot group. The usage of
+	// snapshot group feature
+	// is restricted.
 	SnapshotGroupParameters *SnapshotGroupParameters `json:"snapshotGroupParameters,omitempty"`
 	// SourceConsistencyGroupPolicy: The URL of the DiskConsistencyGroupPolicy for
 	// the group of disks to clone.
@@ -72106,10 +72108,11 @@ type Snapshot struct {
 	SnapshotEncryptionKey *CustomerEncryptionKey `json:"snapshotEncryptionKey,omitempty"`
 	// SnapshotGroupId: Output only. [Output Only] The unique ID of the snapshot
 	// group that this snapshot
-	// belongs to.
+	// belongs to. The usage of snapshot group feature is restricted.
 	SnapshotGroupId string `json:"snapshotGroupId,omitempty"`
 	// SnapshotGroupName: Output only. [Output only] The snapshot group that this
-	// snapshot belongs to.
+	// snapshot belongs to. The usage
+	// of snapshot group feature is restricted.
 	SnapshotGroupName string `json:"snapshotGroupName,omitempty"`
 	// SnapshotType: Indicates the type of the snapshot.
 	//

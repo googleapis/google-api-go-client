@@ -2362,6 +2362,9 @@ type Node struct {
 	Id string `json:"id,omitempty"`
 	// Ip: Output only. The private IP address of the VM e.g. "10.57.0.34".
 	Ip string `json:"ip,omitempty"`
+	// IsHotStandby: Output only. Indicates whether the node set up to be
+	// configured as a hot standby.
+	IsHotStandby bool `json:"isHotStandby,omitempty"`
 	// State: Output only. Determined by state of the compute VM and
 	// postgres-service health. Compute VM state can have values listed in
 	// https://cloud.google.com/compute/docs/instances/instance-life-cycle and
@@ -3980,7 +3983,7 @@ func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceId) MarshalJSON() (
 }
 
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata: Common model
-// for database resource instance metadata. Next ID: 31
+// for database resource instance metadata. Next ID: 32
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// AvailabilityConfiguration: Availability configuration for this instance
 	AvailabilityConfiguration *StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
@@ -4054,6 +4057,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	//   "SUB_RESOURCE_TYPE_EXTERNAL_PRIMARY" - An instance acting as an external
 	// primary.
 	//   "SUB_RESOURCE_TYPE_READ_POOL" - An instance acting as Read Pool.
+	//   "SUB_RESOURCE_TYPE_RESERVATION" - Represents a reservation resource.
+	//   "SUB_RESOURCE_TYPE_DATASET" - Represents a dataset resource.
 	//   "SUB_RESOURCE_TYPE_OTHER" - For rest of the other categories.
 	InstanceType string `json:"instanceType,omitempty"`
 	// IsDeletionProtectionEnabled: Optional. Whether deletion protection is
@@ -4065,6 +4070,13 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	MachineConfiguration *StorageDatabasecenterPartnerapiV1mainMachineConfiguration `json:"machineConfiguration,omitempty"`
 	// MaintenanceInfo: Optional. Maintenance info for the resource.
 	MaintenanceInfo *StorageDatabasecenterPartnerapiV1mainResourceMaintenanceInfo `json:"maintenanceInfo,omitempty"`
+	// Modes: Optional. The modes of the database resource.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Default mode.
+	//   "MODE_NATIVE" - Native mode.
+	//   "MODE_MONGODB_COMPATIBLE" - MongoDB compatible mode.
+	Modes []string `json:"modes,omitempty"`
 	// PrimaryResourceId: Identifier for this resource's immediate parent/primary
 	// resource if the current resource is a replica or derived form of another
 	// Database resource. Else it would be NULL. REQUIRED if the immediate parent
@@ -4431,7 +4443,7 @@ func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSigna
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceSignalData: Database
 // resource signal data. This is used to send signals to Condor which are based
 // on the DB/Instance/Fleet level configurations. These will be used to send
-// signals for all inventory types. Next ID: 9
+// signals for all inventory types. Next ID: 10
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceSignalData struct {
 	// BackupRun: Deprecated: Use signal_metadata_list instead.
 	BackupRun *StorageDatabasecenterPartnerapiV1mainBackupRun `json:"backupRun,omitempty"`
@@ -4439,6 +4451,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceSignalData struct {
 	FullResourceName string `json:"fullResourceName,omitempty"`
 	// LastRefreshTime: Required. Last time signal was refreshed
 	LastRefreshTime string `json:"lastRefreshTime,omitempty"`
+	// Location: Resource location.
+	Location string `json:"location,omitempty"`
 	// ResourceId: Database resource id.
 	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
 	// SignalBoolValue: Deprecated: Use signal_metadata_list instead.
@@ -5733,10 +5747,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

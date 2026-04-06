@@ -888,6 +888,10 @@ type Gateway struct {
 	// 'SECURE_WEB_GATEWAY'. Gateways of type 'OPEN_MESH' listen on 0.0.0.0 for
 	// IPv4 and :: for IPv6.
 	Addresses []string `json:"addresses,omitempty"`
+	// AllPorts: Optional. If true, the Gateway will listen on all ports. This is
+	// mutually exclusive with the `ports` field. This field only applies to
+	// gateways of type 'SECURE_WEB_GATEWAY'.
+	AllPorts bool `json:"allPorts,omitempty"`
 	// AllowGlobalAccess: Optional. If true, the gateway will allow traffic from
 	// clients outside of the region where the gateway is located. This field is
 	// configurable only for gateways of type SECURE_WEB_GATEWAY.

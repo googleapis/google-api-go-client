@@ -170,6 +170,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Backups = NewProjectsLocationsBackupsService(s)
 	rs.Clusters = NewProjectsLocationsClustersService(s)
+	rs.Endpoints = NewProjectsLocationsEndpointsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.SupportedDatabaseFlags = NewProjectsLocationsSupportedDatabaseFlagsService(s)
 	return rs
@@ -181,6 +182,8 @@ type ProjectsLocationsService struct {
 	Backups *ProjectsLocationsBackupsService
 
 	Clusters *ProjectsLocationsClustersService
+
+	Endpoints *ProjectsLocationsEndpointsService
 
 	Operations *ProjectsLocationsOperationsService
 
@@ -226,6 +229,15 @@ func NewProjectsLocationsClustersUsersService(s *Service) *ProjectsLocationsClus
 }
 
 type ProjectsLocationsClustersUsersService struct {
+	s *Service
+}
+
+func NewProjectsLocationsEndpointsService(s *Service) *ProjectsLocationsEndpointsService {
+	rs := &ProjectsLocationsEndpointsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsEndpointsService struct {
 	s *Service
 }
 
@@ -885,6 +897,7 @@ type Cluster struct {
 	//   "SWITCHOVER" - The cluster has entered switchover state. All updates on
 	// cluster and its associated instances are restricted while the cluster is in
 	// this state.
+	//   "RECREATING" - The cluster is being recreated.
 	State string `json:"state,omitempty"`
 	// SubscriptionType: Optional. Subscription type of the cluster.
 	//
@@ -1277,6 +1290,32 @@ func (s CsvImportOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DNSConfig: The DNS config for the endpoint, containing the DNS record name,
+// type and targets.
+type DNSConfig struct {
+	// DnsName: The fully qualified domain name (FQDN) of the DNS record, e.g.,
+	// ".location.alloydb-psa.goog".
+	DnsName string `json:"dnsName,omitempty"`
+	// DnsRecordType: The type of the DNS record, e.g., "A", "AAAA", "CNAME".
+	DnsRecordType string `json:"dnsRecordType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DnsName") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DnsName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DNSConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DNSConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DataplexConfig: Configuration for Dataplex integration.
 type DataplexConfig struct {
 	// Enabled: Dataplex is enabled by default for resources such as clusters and
@@ -1401,6 +1440,105 @@ type EncryptionInfo struct {
 
 func (s EncryptionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod EncryptionInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Endpoint: Endpoint resource.
+type Endpoint struct {
+	// Annotations: Annotations to allow client tools to store small amount of
+	// arbitrary data. This is distinct from labels. https://google.aip.dev/128
+	Annotations map[string]string `json:"annotations,omitempty"`
+	// CreateTime: Output only. Create time stamp
+	CreateTime string `json:"createTime,omitempty"`
+	// DeleteTime: Output only. Delete time stamp
+	DeleteTime string `json:"deleteTime,omitempty"`
+	// DisplayName: User-settable and human-readable display name for the Endpoint.
+	DisplayName string `json:"displayName,omitempty"`
+	// DnsConfig: Output only. The DNS config for the endpoint. Each endpoint is
+	// associated with a specific DNS name and the DNS type. The DNS targets are
+	// the IP addresses of the target instances. The dns_type is the type of the
+	// DNS record, eg. Type "A" or Type "CNAME". This field is not configurable by
+	// the user, and it is updated when user specifies the target instances.
+	DnsConfig *DNSConfig `json:"dnsConfig,omitempty"`
+	// EffectiveTargetInstances: Output only. The effective target instances that
+	// the endpoint is associated with. This is a list of target instance names,
+	// e.g.
+	// projects/{project_number}/locations/{location}/clusters/{cluster_id}/instance
+	// s/{instance_id} For write endpoint, there is only one effective target
+	// instance which has to be a primary instance. Effective target instances are
+	// only different from target instances after a switchover or cross-region
+	// failover operation. Otherwise, effective_target_instances are the same as
+	// target_instances. Note that after a cross-region failover operation, the
+	// effective_target_instances can be stale until the operation to update the
+	// endpoint is complete.
+	EffectiveTargetInstances []string `json:"effectiveTargetInstances,omitempty"`
+	// EndpointType: The type of the endpoint, either write or read.
+	//
+	// Possible values:
+	//   "ENDPOINT_TYPE_UNSPECIFIED" - Unspecified endpoint type
+	//   "WRITE_ENDPOINT" - Write endpoint, which is associated with a primary
+	// instance.
+	//   "READ_ENDPOINT" - Read endpoint, which is associated with read or
+	// secondary instances.
+	EndpointType string `json:"endpointType,omitempty"`
+	// Etag: For Resource freshness validation (https://google.aip.dev/154)
+	Etag string `json:"etag,omitempty"`
+	// Name: Output only. Identifier. The name of the endpoint resource with the
+	// format: * projects/{project}/locations/{region}/endpoints/{endpoint_id}
+	// where the endpoint ID segment should satisfy the regex expression
+	// `[a-z0-9-]+`. For more details see https://google.aip.dev/122. The prefix of
+	// the endpoint resource name is the name of the parent resource: *
+	// projects/{project}/locations/{region}
+	Name string `json:"name,omitempty"`
+	// Reconciling: Output only. Reconciling
+	// (https://google.aip.dev/128#reconciliation). Set to true if the current
+	// state of Endpoint does not match the user's intended state, and the service
+	// is actively updating the Endpoint to reconcile them. This can happen due to
+	// user-triggered updates or system actions like failover or maintenance.
+	Reconciling bool `json:"reconciling,omitempty"`
+	// State: Output only. The state of the endpoint.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state
+	//   "READY" - The endpoint is active and ready to use.
+	//   "CREATING" - The endpoint is being created.
+	//   "UPDATING" - The endpoint is being updated.
+	//   "DELETING" - The endpoint is being deleted.
+	State string `json:"state,omitempty"`
+	// TargetInstances: The names of the target instances for the endpoint, should
+	// be of format
+	// projects/{project}/locations/{region}/clusters/{cluster}/instances/{instance}
+	// . For write endpoint, there is only one target instance which has to be a
+	// primary instance. For read endpoint, there can be multiple target instances
+	// which can be read or secondary instances. After a cross-region failover or
+	// switchover operation, the endpoint will be associated with a different
+	// target instance. This change will be reflected in the
+	// effective_target_instances field.
+	TargetInstances []string `json:"targetInstances,omitempty"`
+	// Uid: Output only. The system-generated UID of the resource. The UID is
+	// assigned when the resource is created, and it is retained until it is
+	// deleted.
+	Uid string `json:"uid,omitempty"`
+	// UpdateTime: Output only. Update time stamp
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Endpoint) MarshalJSON() ([]byte, error) {
+	type NoMethod Endpoint
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2177,6 +2315,36 @@ func (s ListClustersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListEndpointsResponse: Message for response to listing Endpoints
+type ListEndpointsResponse struct {
+	// Endpoints: The list of Endpoints
+	Endpoints []*Endpoint `json:"endpoints,omitempty"`
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Endpoints") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Endpoints") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListEndpointsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListEndpointsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListInstancesResponse: Message for response to listing Instances
 type ListInstancesResponse struct {
 	// Instances: The list of Instance
@@ -2489,6 +2657,9 @@ type Node struct {
 	Id string `json:"id,omitempty"`
 	// Ip: Output only. The private IP address of the VM e.g. "10.57.0.34".
 	Ip string `json:"ip,omitempty"`
+	// IsHotStandby: Output only. Indicates whether the node set up to be
+	// configured as a hot standby.
+	IsHotStandby bool `json:"isHotStandby,omitempty"`
 	// State: Output only. Determined by state of the compute VM and
 	// postgres-service health. Compute VM state can have values listed in
 	// https://cloud.google.com/compute/docs/instances/instance-life-cycle and
@@ -2720,6 +2891,11 @@ type PromoteClusterRequest struct {
 	// does not match the current etag of the Cluster, deletion will be blocked and
 	// an ABORTED error will be returned.
 	Etag string `json:"etag,omitempty"`
+	// Failover: Optional. If set, the promote operation will attempt to recreate
+	// the original primary cluster as a secondary cluster when it comes back
+	// online. Otherwise, the promoted cluster will be a standalone cluster.
+	// Currently only supported when there is a single secondary cluster.
+	Failover bool `json:"failover,omitempty"`
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server ignores
 	// the request if it has already been completed. The server guarantees that for
@@ -4188,7 +4364,7 @@ func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceId) MarshalJSON() (
 }
 
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata: Common model
-// for database resource instance metadata. Next ID: 31
+// for database resource instance metadata. Next ID: 32
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// AvailabilityConfiguration: Availability configuration for this instance
 	AvailabilityConfiguration *StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
@@ -4262,6 +4438,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	//   "SUB_RESOURCE_TYPE_EXTERNAL_PRIMARY" - An instance acting as an external
 	// primary.
 	//   "SUB_RESOURCE_TYPE_READ_POOL" - An instance acting as Read Pool.
+	//   "SUB_RESOURCE_TYPE_RESERVATION" - Represents a reservation resource.
+	//   "SUB_RESOURCE_TYPE_DATASET" - Represents a dataset resource.
 	//   "SUB_RESOURCE_TYPE_OTHER" - For rest of the other categories.
 	InstanceType string `json:"instanceType,omitempty"`
 	// IsDeletionProtectionEnabled: Optional. Whether deletion protection is
@@ -4273,6 +4451,13 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	MachineConfiguration *StorageDatabasecenterPartnerapiV1mainMachineConfiguration `json:"machineConfiguration,omitempty"`
 	// MaintenanceInfo: Optional. Maintenance info for the resource.
 	MaintenanceInfo *StorageDatabasecenterPartnerapiV1mainResourceMaintenanceInfo `json:"maintenanceInfo,omitempty"`
+	// Modes: Optional. The modes of the database resource.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Default mode.
+	//   "MODE_NATIVE" - Native mode.
+	//   "MODE_MONGODB_COMPATIBLE" - MongoDB compatible mode.
+	Modes []string `json:"modes,omitempty"`
 	// PrimaryResourceId: Identifier for this resource's immediate parent/primary
 	// resource if the current resource is a replica or derived form of another
 	// Database resource. Else it would be NULL. REQUIRED if the immediate parent
@@ -4639,7 +4824,7 @@ func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSigna
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceSignalData: Database
 // resource signal data. This is used to send signals to Condor which are based
 // on the DB/Instance/Fleet level configurations. These will be used to send
-// signals for all inventory types. Next ID: 9
+// signals for all inventory types. Next ID: 10
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceSignalData struct {
 	// BackupRun: Deprecated: Use signal_metadata_list instead.
 	BackupRun *StorageDatabasecenterPartnerapiV1mainBackupRun `json:"backupRun,omitempty"`
@@ -4647,6 +4832,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceSignalData struct {
 	FullResourceName string `json:"fullResourceName,omitempty"`
 	// LastRefreshTime: Required. Last time signal was refreshed
 	LastRefreshTime string `json:"lastRefreshTime,omitempty"`
+	// Location: Resource location.
+	Location string `json:"location,omitempty"`
 	// ResourceId: Database resource id.
 	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
 	// SignalBoolValue: Deprecated: Use signal_metadata_list instead.
@@ -5969,10 +6156,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
@@ -10381,6 +10574,693 @@ func (c *ProjectsLocationsClustersUsersPatchCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "alloydb.projects.locations.clusters.users.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsEndpointsCreateCall struct {
+	s          *Service
+	parent     string
+	endpoint   *Endpoint
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new Endpoint in a given project and location.
+//
+//   - parent: The location of the new endpoint. For the required format, see the
+//     comment on the Endpoint.name field.
+func (r *ProjectsLocationsEndpointsService) Create(parent string, endpoint *Endpoint) *ProjectsLocationsEndpointsCreateCall {
+	c := &ProjectsLocationsEndpointsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.endpoint = endpoint
+	return c
+}
+
+// EndpointId sets the optional parameter "endpointId": Required. ID of the
+// requesting object.
+func (c *ProjectsLocationsEndpointsCreateCall) EndpointId(endpointId string) *ProjectsLocationsEndpointsCreateCall {
+	c.urlParams_.Set("endpointId", endpointId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server ignores the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsEndpointsCreateCall) RequestId(requestId string) *ProjectsLocationsEndpointsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set, the backend
+// validates the request, but doesn't actually execute it.
+func (c *ProjectsLocationsEndpointsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsEndpointsCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsEndpointsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsEndpointsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsEndpointsCreateCall) Context(ctx context.Context) *ProjectsLocationsEndpointsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsEndpointsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEndpointsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.endpoint)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/endpoints")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "alloydb.projects.locations.endpoints.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "alloydb.projects.locations.endpoints.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEndpointsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "alloydb.projects.locations.endpoints.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsEndpointsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single Endpoint.
+//
+//   - name: The name of the resource. For the required format, see the comment
+//     on the Endpoint.name field.
+func (r *ProjectsLocationsEndpointsService) Delete(name string) *ProjectsLocationsEndpointsDeleteCall {
+	c := &ProjectsLocationsEndpointsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": The current etag of the Endpoint.
+// If an etag is provided and does not match the current etag of the Endpoint,
+// deletion will be blocked and an ABORTED error will be returned.
+func (c *ProjectsLocationsEndpointsDeleteCall) Etag(etag string) *ProjectsLocationsEndpointsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server ignores the request if it has already been
+// completed. The server guarantees that for at least 60 minutes after the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsEndpointsDeleteCall) RequestId(requestId string) *ProjectsLocationsEndpointsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set, the backend
+// validates the request, but doesn't actually execute it.
+func (c *ProjectsLocationsEndpointsDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsEndpointsDeleteCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsEndpointsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsEndpointsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsEndpointsDeleteCall) Context(ctx context.Context) *ProjectsLocationsEndpointsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsEndpointsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEndpointsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "alloydb.projects.locations.endpoints.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "alloydb.projects.locations.endpoints.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEndpointsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "alloydb.projects.locations.endpoints.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsEndpointsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single Endpoint.
+//
+//   - name: The name of the resource. For the required format, see the comment
+//     on the Endpoint.name field.
+func (r *ProjectsLocationsEndpointsService) Get(name string) *ProjectsLocationsEndpointsGetCall {
+	c := &ProjectsLocationsEndpointsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsEndpointsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsEndpointsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsEndpointsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsEndpointsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsEndpointsGetCall) Context(ctx context.Context) *ProjectsLocationsEndpointsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsEndpointsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEndpointsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "alloydb.projects.locations.endpoints.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "alloydb.projects.locations.endpoints.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Endpoint.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEndpointsGetCall) Do(opts ...googleapi.CallOption) (*Endpoint, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Endpoint{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "alloydb.projects.locations.endpoints.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsEndpointsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Endpoints in a given project and location.
+//
+//   - parent: The name of the parent resource. For the required format, see the
+//     comment on the Endpoint.name field. Additionally, you can perform an
+//     aggregated list operation by specifying a value with the following format:
+//   - projects/{project}/locations/-.
+func (r *ProjectsLocationsEndpointsService) List(parent string) *ProjectsLocationsEndpointsListCall {
+	c := &ProjectsLocationsEndpointsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filtering results. This field
+// is currently not supported, its value will be ignored if passed.
+func (c *ProjectsLocationsEndpointsListCall) Filter(filter string) *ProjectsLocationsEndpointsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Hint for how to order the
+// results
+func (c *ProjectsLocationsEndpointsListCall) OrderBy(orderBy string) *ProjectsLocationsEndpointsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *ProjectsLocationsEndpointsListCall) PageSize(pageSize int64) *ProjectsLocationsEndpointsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListEndpoints` call. This should be provided to retrieve
+// the subsequent page. This field is currently not supported, its value will
+// be ignored if passed.
+func (c *ProjectsLocationsEndpointsListCall) PageToken(pageToken string) *ProjectsLocationsEndpointsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsEndpointsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsEndpointsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsEndpointsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsEndpointsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsEndpointsListCall) Context(ctx context.Context) *ProjectsLocationsEndpointsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsEndpointsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEndpointsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/endpoints")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "alloydb.projects.locations.endpoints.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "alloydb.projects.locations.endpoints.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListEndpointsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsEndpointsListCall) Do(opts ...googleapi.CallOption) (*ListEndpointsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListEndpointsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "alloydb.projects.locations.endpoints.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsEndpointsListCall) Pages(ctx context.Context, f func(*ListEndpointsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsEndpointsPatchCall struct {
+	s          *Service
+	name       string
+	endpoint   *Endpoint
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates the parameters of a single Endpoint.
+//
+//   - name: Output only. Identifier. The name of the endpoint resource with the
+//     format: * projects/{project}/locations/{region}/endpoints/{endpoint_id}
+//     where the endpoint ID segment should satisfy the regex expression
+//     `[a-z0-9-]+`. For more details see https://google.aip.dev/122. The prefix
+//     of the endpoint resource name is the name of the parent resource: *
+//     projects/{project}/locations/{region}.
+func (r *ProjectsLocationsEndpointsService) Patch(name string, endpoint *Endpoint) *ProjectsLocationsEndpointsPatchCall {
+	c := &ProjectsLocationsEndpointsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.endpoint = endpoint
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to true,
+// update succeeds even if endpoint is not found. In that case, a new endpoint
+// is created and `update_mask` is ignored.
+func (c *ProjectsLocationsEndpointsPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsEndpointsPatchCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server ignores the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsEndpointsPatchCall) RequestId(requestId string) *ProjectsLocationsEndpointsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask is used to
+// specify the fields to be overwritten in the Endpoint resource by the update.
+// The fields specified in the update_mask are relative to the resource, not
+// the full request. A field will be overwritten if it is in the mask. If the
+// user does not provide a mask then all fields will be overwritten.
+func (c *ProjectsLocationsEndpointsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsEndpointsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set, the backend
+// validates the request, but doesn't actually execute it.
+func (c *ProjectsLocationsEndpointsPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsEndpointsPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsEndpointsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsEndpointsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsEndpointsPatchCall) Context(ctx context.Context) *ProjectsLocationsEndpointsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsEndpointsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEndpointsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.endpoint)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "alloydb.projects.locations.endpoints.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "alloydb.projects.locations.endpoints.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEndpointsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "alloydb.projects.locations.endpoints.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

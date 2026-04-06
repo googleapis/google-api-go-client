@@ -36,6 +36,11 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	redisService, err := redis.NewService(ctx, option.WithScopes(redis.RedisReadWriteScope))
+//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -103,12 +108,22 @@ const (
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// See your Google Cloud Memorystore for Redis data and the email address of
+	// your Google Account
+	RedisReadOnlyScope = "https://www.googleapis.com/auth/redis.read-only"
+
+	// See, edit, configure, and delete your Google Cloud Memorystore for Redis
+	// data and see the email address for your Google Account
+	RedisReadWriteScope = "https://www.googleapis.com/auth/redis.read-write"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
+		"https://www.googleapis.com/auth/redis.read-only",
+		"https://www.googleapis.com/auth/redis.read-write",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -224,10 +239,34 @@ type ProjectsLocationsBackupCollectionsBackupsService struct {
 
 func NewProjectsLocationsClustersService(s *Service) *ProjectsLocationsClustersService {
 	rs := &ProjectsLocationsClustersService{s: s}
+	rs.TokenAuthUsers = NewProjectsLocationsClustersTokenAuthUsersService(s)
 	return rs
 }
 
 type ProjectsLocationsClustersService struct {
+	s *Service
+
+	TokenAuthUsers *ProjectsLocationsClustersTokenAuthUsersService
+}
+
+func NewProjectsLocationsClustersTokenAuthUsersService(s *Service) *ProjectsLocationsClustersTokenAuthUsersService {
+	rs := &ProjectsLocationsClustersTokenAuthUsersService{s: s}
+	rs.AuthTokens = NewProjectsLocationsClustersTokenAuthUsersAuthTokensService(s)
+	return rs
+}
+
+type ProjectsLocationsClustersTokenAuthUsersService struct {
+	s *Service
+
+	AuthTokens *ProjectsLocationsClustersTokenAuthUsersAuthTokensService
+}
+
+func NewProjectsLocationsClustersTokenAuthUsersAuthTokensService(s *Service) *ProjectsLocationsClustersTokenAuthUsersAuthTokensService {
+	rs := &ProjectsLocationsClustersTokenAuthUsersAuthTokensService{s: s}
+	return rs
+}
+
+type ProjectsLocationsClustersTokenAuthUsersAuthTokensService struct {
 	s *Service
 }
 
@@ -345,6 +384,90 @@ type AclRule struct {
 
 func (s AclRule) MarshalJSON() ([]byte, error) {
 	type NoMethod AclRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AddAuthTokenRequest: Request message for AddAuthToken.
+type AddAuthTokenRequest struct {
+	// AuthToken: Required. The auth token to add.
+	AuthToken *AuthToken `json:"authToken,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AddAuthTokenRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AddAuthTokenRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AddTokenAuthUserRequest: Request message for AddTokenAuthUser.
+type AddTokenAuthUserRequest struct {
+	// TokenAuthUser: Required. The id of the token auth user to add.
+	TokenAuthUser string `json:"tokenAuthUser,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TokenAuthUser") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TokenAuthUser") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AddTokenAuthUserRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AddTokenAuthUserRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuthToken: Auth token for the cluster.
+type AuthToken struct {
+	// CreateTime: Output only. Create time of the auth token.
+	CreateTime string `json:"createTime,omitempty"`
+	// Name: Identifier. Name of the auth token. Format:
+	// projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{to
+	// ken_auth_user}/authTokens/{auth_token}
+	Name string `json:"name,omitempty"`
+	// State: Output only. State of the auth token.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not set.
+	//   "ACTIVE" - The auth token is active.
+	//   "CREATING" - The auth token is being created.
+	//   "DELETING" - The auth token is being deleted.
+	State string `json:"state,omitempty"`
+	// Token: Output only. The service generated authentication token used to
+	// connect to the Redis cluster.
+	Token string `json:"token,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthToken) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthToken
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -796,6 +919,7 @@ type Cluster struct {
 	//   "AUTH_MODE_UNSPECIFIED" - Not set.
 	//   "AUTH_MODE_IAM_AUTH" - IAM basic authorization mode
 	//   "AUTH_MODE_DISABLED" - Authorization disabled mode
+	//   "AUTH_MODE_TOKEN_AUTH" - Token based authorization mode
 	AuthorizationMode string `json:"authorizationMode,omitempty"`
 	// AutomatedBackupConfig: Optional. The automated backup config for the
 	// cluster.
@@ -3096,6 +3220,36 @@ func (s ListAclPoliciesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListAuthTokensResponse: Response message for ListAuthTokens.
+type ListAuthTokensResponse struct {
+	// AuthTokens: A list of auth tokens in the project.
+	AuthTokens []*AuthToken `json:"authTokens,omitempty"`
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unordered list. Auth tokens that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AuthTokens") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthTokens") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListAuthTokensResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAuthTokensResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListBackupCollectionsResponse: Response for [ListBackupCollections].
 type ListBackupCollectionsResponse struct {
 	// BackupCollections: A list of backupCollections in the project. If the
@@ -3298,6 +3452,36 @@ type ListOperationsResponse struct {
 
 func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListTokenAuthUsersResponse: Response message for ListTokenAuthUsers.
+type ListTokenAuthUsersResponse struct {
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// TokenAuthUsers: A list of token auth users in the project.
+	TokenAuthUsers []*TokenAuthUser `json:"tokenAuthUsers,omitempty"`
+	// Unreachable: Unordered list. Token auth users that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListTokenAuthUsersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListTokenAuthUsersResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4690,6 +4874,42 @@ type TlsCertificate struct {
 
 func (s TlsCertificate) MarshalJSON() ([]byte, error) {
 	type NoMethod TlsCertificate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TokenAuthUser: Represents a token based auth user for the cluster.
+type TokenAuthUser struct {
+	// Name: Identifier. The resource name of the token based auth user. Format:
+	// projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{to
+	// ken_auth_user}
+	Name string `json:"name,omitempty"`
+	// State: Output only. The state of the token based auth user.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not set.
+	//   "ACTIVE" - The auth user is active.
+	//   "CREATING" - The auth user is being created.
+	//   "UPDATING" - The auth user is being updated.
+	//   "DELETING" - The auth user is being deleted.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TokenAuthUser) MarshalJSON() ([]byte, error) {
+	type NoMethod TokenAuthUser
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6673,6 +6893,111 @@ func (c *ProjectsLocationsBackupCollectionsBackupsListCall) Pages(ctx context.Co
 	}
 }
 
+type ProjectsLocationsClustersAddTokenAuthUserCall struct {
+	s                       *Service
+	cluster                 string
+	addtokenauthuserrequest *AddTokenAuthUserRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// AddTokenAuthUser: Adds a token auth user for a token based auth enabled
+// cluster.
+//
+//   - cluster: The cluster resource that this token auth user will be added for.
+//     Format: projects/{project}/locations/{location}/clusters/{cluster}.
+func (r *ProjectsLocationsClustersService) AddTokenAuthUser(cluster string, addtokenauthuserrequest *AddTokenAuthUserRequest) *ProjectsLocationsClustersAddTokenAuthUserCall {
+	c := &ProjectsLocationsClustersAddTokenAuthUserCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.cluster = cluster
+	c.addtokenauthuserrequest = addtokenauthuserrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersAddTokenAuthUserCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersAddTokenAuthUserCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersAddTokenAuthUserCall) Context(ctx context.Context) *ProjectsLocationsClustersAddTokenAuthUserCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersAddTokenAuthUserCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersAddTokenAuthUserCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addtokenauthuserrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+cluster}:addTokenAuthUser")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"cluster": c.cluster,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "redis.projects.locations.clusters.addTokenAuthUser", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.clusters.addTokenAuthUser" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersAddTokenAuthUserCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "redis.projects.locations.clusters.addTokenAuthUser", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsClustersBackupCall struct {
 	s                    *Service
 	name                 string
@@ -7626,6 +7951,891 @@ func (c *ProjectsLocationsClustersRescheduleClusterMaintenanceCall) Do(opts ...g
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "redis.projects.locations.clusters.rescheduleClusterMaintenance", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsClustersTokenAuthUsersAddAuthTokenCall struct {
+	s                   *Service
+	tokenAuthUser       string
+	addauthtokenrequest *AddAuthTokenRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// AddAuthToken: Adds a auth token for a user of a token based auth enabled
+// cluster.
+//
+//   - tokenAuthUser: The name of the token auth user resource that this auth
+//     token will be added for. Format:
+//     projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{
+//     token_auth_user}.
+func (r *ProjectsLocationsClustersTokenAuthUsersService) AddAuthToken(tokenAuthUser string, addauthtokenrequest *AddAuthTokenRequest) *ProjectsLocationsClustersTokenAuthUsersAddAuthTokenCall {
+	c := &ProjectsLocationsClustersTokenAuthUsersAddAuthTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.tokenAuthUser = tokenAuthUser
+	c.addauthtokenrequest = addauthtokenrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersTokenAuthUsersAddAuthTokenCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersTokenAuthUsersAddAuthTokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersTokenAuthUsersAddAuthTokenCall) Context(ctx context.Context) *ProjectsLocationsClustersTokenAuthUsersAddAuthTokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersTokenAuthUsersAddAuthTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersTokenAuthUsersAddAuthTokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addauthtokenrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+tokenAuthUser}:addAuthToken")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"tokenAuthUser": c.tokenAuthUser,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "redis.projects.locations.clusters.tokenAuthUsers.addAuthToken", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.clusters.tokenAuthUsers.addAuthToken" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersTokenAuthUsersAddAuthTokenCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "redis.projects.locations.clusters.tokenAuthUsers.addAuthToken", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsClustersTokenAuthUsersDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a token auth user for a token based auth enabled cluster.
+//
+//   - name: The name of the token auth user to delete. Format:
+//     projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{
+//     token_auth_user}.
+func (r *ProjectsLocationsClustersTokenAuthUsersService) Delete(name string) *ProjectsLocationsClustersTokenAuthUsersDeleteCall {
+	c := &ProjectsLocationsClustersTokenAuthUsersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Force sets the optional parameter "force": If set to true, any child auth
+// tokens of this user will also be deleted. Otherwise, the request will only
+// work if the user has no auth tokens.
+func (c *ProjectsLocationsClustersTokenAuthUsersDeleteCall) Force(force bool) *ProjectsLocationsClustersTokenAuthUsersDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes after
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsClustersTokenAuthUsersDeleteCall) RequestId(requestId string) *ProjectsLocationsClustersTokenAuthUsersDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersTokenAuthUsersDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersTokenAuthUsersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersTokenAuthUsersDeleteCall) Context(ctx context.Context) *ProjectsLocationsClustersTokenAuthUsersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersTokenAuthUsersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersTokenAuthUsersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "redis.projects.locations.clusters.tokenAuthUsers.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.clusters.tokenAuthUsers.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersTokenAuthUsersDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "redis.projects.locations.clusters.tokenAuthUsers.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsClustersTokenAuthUsersGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a specific token auth user for a basic auth enabled cluster.
+//
+//   - name: The name of token auth user for a token based auth enabled cluster.
+//     Format:
+//     projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{
+//     token_auth_user}.
+func (r *ProjectsLocationsClustersTokenAuthUsersService) Get(name string) *ProjectsLocationsClustersTokenAuthUsersGetCall {
+	c := &ProjectsLocationsClustersTokenAuthUsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersTokenAuthUsersGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersTokenAuthUsersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsClustersTokenAuthUsersGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsClustersTokenAuthUsersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersTokenAuthUsersGetCall) Context(ctx context.Context) *ProjectsLocationsClustersTokenAuthUsersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersTokenAuthUsersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersTokenAuthUsersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "redis.projects.locations.clusters.tokenAuthUsers.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.clusters.tokenAuthUsers.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TokenAuthUser.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersTokenAuthUsersGetCall) Do(opts ...googleapi.CallOption) (*TokenAuthUser, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TokenAuthUser{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "redis.projects.locations.clusters.tokenAuthUsers.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsClustersTokenAuthUsersListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the token auth users for a token based auth enabled cluster.
+//
+//   - parent: The parent resource that this token based auth user will be listed
+//     for. Format: projects/{project}/locations/{location}/clusters/{cluster}.
+func (r *ProjectsLocationsClustersTokenAuthUsersService) List(parent string) *ProjectsLocationsClustersTokenAuthUsersListCall {
+	c := &ProjectsLocationsClustersTokenAuthUsersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Expression for filtering
+// results.
+func (c *ProjectsLocationsClustersTokenAuthUsersListCall) Filter(filter string) *ProjectsLocationsClustersTokenAuthUsersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sort results by a defined
+// order.
+func (c *ProjectsLocationsClustersTokenAuthUsersListCall) OrderBy(orderBy string) *ProjectsLocationsClustersTokenAuthUsersListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return. If not specified, a default value of 1000 will be used by the
+// service. Regardless of the page_size value, the response may include a
+// partial list and a caller should only rely on response's The maximum value
+// is 1000; values above 1000 will be coerced to 1000. `next_page_token` to
+// determine if there are more clusters left to be queried.
+func (c *ProjectsLocationsClustersTokenAuthUsersListCall) PageSize(pageSize int64) *ProjectsLocationsClustersTokenAuthUsersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The `next_page_token`
+// value returned from a previous [ListTokenAuthUsers] request, if any.
+func (c *ProjectsLocationsClustersTokenAuthUsersListCall) PageToken(pageToken string) *ProjectsLocationsClustersTokenAuthUsersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersTokenAuthUsersListCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersTokenAuthUsersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsClustersTokenAuthUsersListCall) IfNoneMatch(entityTag string) *ProjectsLocationsClustersTokenAuthUsersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersTokenAuthUsersListCall) Context(ctx context.Context) *ProjectsLocationsClustersTokenAuthUsersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersTokenAuthUsersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersTokenAuthUsersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/tokenAuthUsers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "redis.projects.locations.clusters.tokenAuthUsers.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.clusters.tokenAuthUsers.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListTokenAuthUsersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersTokenAuthUsersListCall) Do(opts ...googleapi.CallOption) (*ListTokenAuthUsersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListTokenAuthUsersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "redis.projects.locations.clusters.tokenAuthUsers.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsClustersTokenAuthUsersListCall) Pages(ctx context.Context, f func(*ListTokenAuthUsersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsClustersTokenAuthUsersAuthTokensDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Removes a auth token for a user of a token based auth enabled
+// instance.
+//
+//   - name: The name of the token auth user resource that this auth token will
+//     be deleted from. Format:
+//     projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{
+//     token_auth_user}/authTokens/{auth_token}.
+func (r *ProjectsLocationsClustersTokenAuthUsersAuthTokensService) Delete(name string) *ProjectsLocationsClustersTokenAuthUsersAuthTokensDeleteCall {
+	c := &ProjectsLocationsClustersTokenAuthUsersAuthTokensDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersTokenAuthUsersAuthTokensDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersTokenAuthUsersAuthTokensDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersTokenAuthUsersAuthTokensDeleteCall) Context(ctx context.Context) *ProjectsLocationsClustersTokenAuthUsersAuthTokensDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersTokenAuthUsersAuthTokensDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersTokenAuthUsersAuthTokensDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "redis.projects.locations.clusters.tokenAuthUsers.authTokens.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.clusters.tokenAuthUsers.authTokens.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersTokenAuthUsersAuthTokensDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "redis.projects.locations.clusters.tokenAuthUsers.authTokens.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsClustersTokenAuthUsersAuthTokensGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a specific auth token for a specific token auth user.
+//
+//   - name: The name of auth token for a token based auth enabled cluster.
+//     Format:
+//     projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{
+//     token_auth_user}/authTokens/{auth_token}.
+func (r *ProjectsLocationsClustersTokenAuthUsersAuthTokensService) Get(name string) *ProjectsLocationsClustersTokenAuthUsersAuthTokensGetCall {
+	c := &ProjectsLocationsClustersTokenAuthUsersAuthTokensGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersTokenAuthUsersAuthTokensGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersTokenAuthUsersAuthTokensGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsClustersTokenAuthUsersAuthTokensGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsClustersTokenAuthUsersAuthTokensGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersTokenAuthUsersAuthTokensGetCall) Context(ctx context.Context) *ProjectsLocationsClustersTokenAuthUsersAuthTokensGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersTokenAuthUsersAuthTokensGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersTokenAuthUsersAuthTokensGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "redis.projects.locations.clusters.tokenAuthUsers.authTokens.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.clusters.tokenAuthUsers.authTokens.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AuthToken.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersTokenAuthUsersAuthTokensGetCall) Do(opts ...googleapi.CallOption) (*AuthToken, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AuthToken{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "redis.projects.locations.clusters.tokenAuthUsers.authTokens.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsClustersTokenAuthUsersAuthTokensListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the auth tokens for a specific token auth user.
+//
+//   - parent: The parent resource that this auth token will be listed for.
+//     Format:
+//     projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{
+//     token_auth_user}.
+func (r *ProjectsLocationsClustersTokenAuthUsersAuthTokensService) List(parent string) *ProjectsLocationsClustersTokenAuthUsersAuthTokensListCall {
+	c := &ProjectsLocationsClustersTokenAuthUsersAuthTokensListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Expression for filtering
+// results.
+func (c *ProjectsLocationsClustersTokenAuthUsersAuthTokensListCall) Filter(filter string) *ProjectsLocationsClustersTokenAuthUsersAuthTokensListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sort results by a defined
+// order.
+func (c *ProjectsLocationsClustersTokenAuthUsersAuthTokensListCall) OrderBy(orderBy string) *ProjectsLocationsClustersTokenAuthUsersAuthTokensListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return. The maximum value is 1000; values above 1000 will be coerced to
+// 1000. If not specified, a default value of 1000 will be used by the service.
+// Regardless of the page_size value, the response may include a partial list
+// and a caller should only rely on response's `next_page_token` to determine
+// if there are more clusters left to be queried.
+func (c *ProjectsLocationsClustersTokenAuthUsersAuthTokensListCall) PageSize(pageSize int64) *ProjectsLocationsClustersTokenAuthUsersAuthTokensListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The `next_page_token`
+// value returned from a previous [ListTokenAuthUsers] request, if any.
+func (c *ProjectsLocationsClustersTokenAuthUsersAuthTokensListCall) PageToken(pageToken string) *ProjectsLocationsClustersTokenAuthUsersAuthTokensListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersTokenAuthUsersAuthTokensListCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersTokenAuthUsersAuthTokensListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsClustersTokenAuthUsersAuthTokensListCall) IfNoneMatch(entityTag string) *ProjectsLocationsClustersTokenAuthUsersAuthTokensListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersTokenAuthUsersAuthTokensListCall) Context(ctx context.Context) *ProjectsLocationsClustersTokenAuthUsersAuthTokensListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersTokenAuthUsersAuthTokensListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersTokenAuthUsersAuthTokensListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/authTokens")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "redis.projects.locations.clusters.tokenAuthUsers.authTokens.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.clusters.tokenAuthUsers.authTokens.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAuthTokensResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsClustersTokenAuthUsersAuthTokensListCall) Do(opts ...googleapi.CallOption) (*ListAuthTokensResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAuthTokensResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "redis.projects.locations.clusters.tokenAuthUsers.authTokens.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsClustersTokenAuthUsersAuthTokensListCall) Pages(ctx context.Context, f func(*ListAuthTokensResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsInstancesCreateCall struct {

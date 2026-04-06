@@ -908,6 +908,11 @@ type AdGroupAd struct {
 	// (//support.google.com/displayvideo/answer/6274216), equal to or less than 6
 	// seconds, used for reach.
 	BumperAd *BumperAd `json:"bumperAd,omitempty"`
+	// DcmTrackingInfo: Optional. The DCM tracking ad info. Only valid for Demand
+	// Gen ads. To remove the DCM tracking ad info, please leave this field empty.
+	// Retrieval and management of Demand Gen resources is currently in beta. This
+	// field is only available to allowlisted users.
+	DcmTrackingInfo *DcmTrackingInfo `json:"dcmTrackingInfo,omitempty"`
 	// DemandGenCarouselAd: Details of a Demand Gen carousel ad
 	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
 	// -NC#CarouselAd).
@@ -7729,6 +7734,32 @@ func (s DayAndTimeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DcmTrackingInfo: Details on the DCM tracking.
+type DcmTrackingInfo struct {
+	// CreativeId: Required. The DCM creative id.
+	CreativeId int64 `json:"creativeId,omitempty,string"`
+	// PlacementId: Required. The DCM placement id.
+	PlacementId int64 `json:"placementId,omitempty,string"`
+	// TrackingAdId: Required. The DCM tracking ad id.
+	TrackingAdId int64 `json:"trackingAdId,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "CreativeId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreativeId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DcmTrackingInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod DcmTrackingInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DeleteAssignedTargetingOptionsRequest: A request listing which assigned
 // targeting options of a given targeting type should be deleted.
 type DeleteAssignedTargetingOptionsRequest struct {
@@ -7907,6 +7938,7 @@ type DemandGenBiddingStrategy struct {
 	// Value: Optional. The value used by the bidding strategy. This can be set at
 	// the line item and ad group level. This field is only applicable for the
 	// following strategy types: * `DEMAND_GEN_BIDDING_STRATEGY_TYPE_TARGET_CPA` *
+	// `DEMAND_GEN_BIDDING_STRATEGY_TYPE_TARGET_CPC` *
 	// `DEMAND_GEN_BIDDING_STRATEGY_TYPE_TARGET_ROAS` Value of this field is in
 	// micros of the advertiser's currency or ROAS value. For example, 1000000
 	// represents 1.0 standard units of the currency or 100% ROAS value. If not

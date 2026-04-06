@@ -1984,6 +1984,8 @@ func (s GoogleCloudContactcenterinsightsV1CallAnnotation) MarshalJSON() ([]byte,
 // GoogleCloudContactcenterinsightsV1Chart: Configurable dashboard's widget
 // that displays data as a chart.
 type GoogleCloudContactcenterinsightsV1Chart struct {
+	// Action: Optional action to be taken when the chart is clicked.
+	Action *GoogleCloudContactcenterinsightsV1ChartAction `json:"action,omitempty"`
 	// ChartType: Output only. Chart type.
 	//
 	// Possible values:
@@ -2031,13 +2033,13 @@ type GoogleCloudContactcenterinsightsV1Chart struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ChartType") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ChartType") to include in API
+	// NullFields is a list of field names (e.g. "Action") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2046,6 +2048,29 @@ type GoogleCloudContactcenterinsightsV1Chart struct {
 
 func (s GoogleCloudContactcenterinsightsV1Chart) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1Chart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ChartAction: The action to be taken when
+// the chart is clicked.
+type GoogleCloudContactcenterinsightsV1ChartAction struct {
+	// RedirectAction: Redirect action.
+	RedirectAction *GoogleCloudContactcenterinsightsV1RedirectAction `json:"redirectAction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RedirectAction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RedirectAction") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ChartAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ChartAction
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2629,6 +2654,8 @@ type GoogleCloudContactcenterinsightsV1ConversationQualityMetadataAgentInfo stru
 	// DispositionCode: A user-provided string indicating the outcome of the
 	// agent's segment of the call.
 	DispositionCode string `json:"dispositionCode,omitempty"`
+	// EntrySubagentDisplayName: The entry subagent's display name.
+	EntrySubagentDisplayName string `json:"entrySubagentDisplayName,omitempty"`
 	// Location: The agent's location.
 	Location string `json:"location,omitempty"`
 	// Team: A user-specified string representing the agent's team. Deprecated in
@@ -8199,6 +8226,29 @@ func (s GoogleCloudContactcenterinsightsV1RedactionConfig) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudContactcenterinsightsV1RedirectAction: The redirect action to be
+// taken when the chart is clicked.
+type GoogleCloudContactcenterinsightsV1RedirectAction struct {
+	// RelativePath: The relative path to redirect to.
+	RelativePath string `json:"relativePath,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RelativePath") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RelativePath") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1RedirectAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1RedirectAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudContactcenterinsightsV1RegexMatchConfig: Regex match
 // configuration.
 type GoogleCloudContactcenterinsightsV1RegexMatchConfig struct {
@@ -10530,6 +10580,8 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationQualityMetadataAgentInf
 	// DispositionCode: A user-provided string indicating the outcome of the
 	// agent's segment of the call.
 	DispositionCode string `json:"dispositionCode,omitempty"`
+	// EntrySubagentDisplayName: The entry subagent's display name.
+	EntrySubagentDisplayName string `json:"entrySubagentDisplayName,omitempty"`
 	// Location: The agent's location.
 	Location string `json:"location,omitempty"`
 	// Team: A user-specified string representing the agent's team. Deprecated in
@@ -16243,6 +16295,8 @@ type GoogleCloudContactcenterinsightsV1mainConversationQualityMetadataAgentInfo 
 	// DispositionCode: A user-provided string indicating the outcome of the
 	// agent's segment of the call.
 	DispositionCode string `json:"dispositionCode,omitempty"`
+	// EntrySubagentDisplayName: The entry subagent's display name.
+	EntrySubagentDisplayName string `json:"entrySubagentDisplayName,omitempty"`
 	// Location: The agent's location.
 	Location string `json:"location,omitempty"`
 	// Team: A user-specified string representing the agent's team. Deprecated in

@@ -667,7 +667,7 @@ type Empty struct {
 
 // FreeFormServiceItem: Represents a free-form service offered by the merchant.
 // These are services that are not exposed as part of our structure service
-// data. The merchant manually enters the names for of such services via a
+// data. The merchant manually enters the names for such services using a
 // geomerchant surface.
 type FreeFormServiceItem struct {
 	// Category: Required. This field represents the category name (i.e. the
@@ -677,7 +677,7 @@ type FreeFormServiceItem struct {
 	// Label: Required. Language-tagged labels for the item. We recommend that item
 	// names be 140 characters or less, and descriptions 250 characters or less.
 	// This field should only be set if the input is a custom service item.
-	// Standardized service types should be updated via service_type_id.
+	// Standardized service types should be updated using service_type_id.
 	Label *Label `json:"label,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Category") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -729,14 +729,20 @@ func (s GoogleLocation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleUpdatedLocation: Represents a location that was modified by Google.
+// GoogleUpdatedLocation: Represents the view of a location as it appears to
+// consumers, which includes updates that are currently serving on Google Maps
+// and Search.
 type GoogleUpdatedLocation struct {
-	// DiffMask: The fields that Google updated.
+	// DiffMask: The fields where the values in the view as it appears to consumers
+	// are different than the merchant's information. To accept these changes,
+	// patch the location. To reject, patch with your preferred values.
 	DiffMask string `json:"diffMask,omitempty"`
 	// Location: The Google-updated version of this location.
 	Location *Location `json:"location,omitempty"`
-	// PendingMask: The fields that have pending edits that haven't yet been pushed
-	// to Maps and Search.
+	// PendingMask: The fields where the merchant has provided an update that is
+	// currently in flight and hasn't yet been published to Maps and Search. This
+	// mask only tracks the status of the merchant's own edits, not external
+	// changes.
 	PendingMask string `json:"pendingMask,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1064,7 +1070,7 @@ type Metadata struct {
 	// HasGoogleUpdated: Output only. Indicates whether the place ID associated
 	// with this location has updates that need to be updated or rejected by the
 	// client. If this boolean is set, you should call the `getGoogleUpdated`
-	// method to lookup information that's needs to be verified.
+	// method to look up information that's needs to be verified.
 	HasGoogleUpdated bool `json:"hasGoogleUpdated,omitempty"`
 	// HasPendingEdits: Output only. Indicates whether any of this Location's
 	// properties are in the edit pending state.
@@ -3406,7 +3412,10 @@ type LocationsGetGoogleUpdatedCall struct {
 	header_      http.Header
 }
 
-// GetGoogleUpdated: Gets the Google-updated version of the specified location.
+// GetGoogleUpdated: Gets the version of the specified location, returning a
+// `GoogleUpdatedLocation` that provides the location view as it appears to
+// consumers and masks indicating which fields are different than the
+// merchant's information.
 //
 // - name: The name of the location to fetch.
 func (r *LocationsService) GetGoogleUpdated(name string) *LocationsGetGoogleUpdatedCall {
@@ -3762,7 +3771,9 @@ type LocationsAttributesGetGoogleUpdatedCall struct {
 	header_      http.Header
 }
 
-// GetGoogleUpdated: Gets the Google-updated version of the specified location.
+// GetGoogleUpdated: Gets the version of the specified location, returning an
+// `Attributes` message that provides the attributes view as it appears to
+// consumers, which may be different than the merchant's information.
 //
 //   - name: Google identifier for this location in the form of
 //     `locations/{location_id}/attributes`.

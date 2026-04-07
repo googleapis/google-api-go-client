@@ -2785,18 +2785,22 @@ func (s GoogleCloudAiplatformV1beta1PrebuiltVoiceConfig) MarshalJSON() ([]byte, 
 // GoogleCloudAiplatformV1beta1RagChunk: A RagChunk includes the content of a
 // chunk of a RagFile, and associated metadata.
 type GoogleCloudAiplatformV1beta1RagChunk struct {
+	// ChunkId: The ID of the chunk.
+	ChunkId string `json:"chunkId,omitempty"`
+	// FileId: The ID of the file that the chunk belongs to.
+	FileId string `json:"fileId,omitempty"`
 	// PageSpan: If populated, represents where the chunk starts and ends in the
 	// document.
 	PageSpan *GoogleCloudAiplatformV1beta1RagChunkPageSpan `json:"pageSpan,omitempty"`
 	// Text: The content of the chunk.
 	Text string `json:"text,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "PageSpan") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "ChunkId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PageSpan") to include in API
+	// NullFields is a list of field names (e.g. "ChunkId") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

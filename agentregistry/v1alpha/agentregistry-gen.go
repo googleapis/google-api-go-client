@@ -950,6 +950,172 @@ func (s Protocol) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SearchAgentsRequest: Message for searching Agents
+type SearchAgentsRequest struct {
+	// PageSize: Optional. The maximum number of search results to return per page.
+	// The page size is capped at `100`, even if a larger value is specified. A
+	// negative value will result in an `INVALID_ARGUMENT` error. If unspecified or
+	// set to `0`, a default value of `20` will be used. The server may return
+	// fewer results than requested.
+	PageSize int64 `json:"pageSize,omitempty"`
+	// PageToken: Optional. If present, retrieve the next batch of results from the
+	// preceding call to this method. `page_token` must be the value of
+	// `next_page_token` from the previous response. The values of all other method
+	// parameters, must be identical to those in the previous call.
+	PageToken string `json:"pageToken,omitempty"`
+	// SearchString: Optional. Search criteria used to select the Agents to return.
+	// If no search criteria is specified then all accessible Agents will be
+	// returned. Search expressions can be used to restrict results based upon
+	// searchable fields, where the operators can be used along with the suffix
+	// wildcard symbol `*`. See instructions
+	// (https://docs.cloud.google.com/agent-registry/search-agents-and-tools) for
+	// more details. Allowed operators: `=`, `:`, `NOT`, `AND`, `OR`, and `()`.
+	// Searchable fields: | Field | `=` | `:` | `*` | Keyword Search |
+	// |--------------------|-----|-----|-----|----------------| | agentId | Yes |
+	// Yes | Yes | Included | | name | No | Yes | Yes | Included | | displayName |
+	// No | Yes | Yes | Included | | description | No | Yes | No | Included | |
+	// skills | No | Yes | No | Included | | skills.id | No | Yes | No | Included |
+	// | skills.name | No | Yes | No | Included | | skills.description | No | Yes |
+	// No | Included | | skills.tags | No | Yes | No | Included | | skills.examples
+	// | No | Yes | No | Included | Examples: *
+	// `agentId=urn:agent:projects-123:projects:123:locations:us-central1:reasoningE
+	// ngines:1234` to find the agent with the specified agent ID. *
+	// `name:important` to find agents whose name contains `important` as a word. *
+	// `displayName:works*` to find agents whose display name contains words that
+	// start with `works`. * `skills.tags:test` to find agents whose skills tags
+	// contain `test`. * `planner OR booking` to find agents whose metadata
+	// contains the words `planner` or `booking`.
+	SearchString string `json:"searchString,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PageSize") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PageSize") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SearchAgentsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchAgentsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SearchAgentsResponse: Message for response to searching Agents
+type SearchAgentsResponse struct {
+	// Agents: A list of Agents that match the `search_string`.
+	Agents []*Agent `json:"agents,omitempty"`
+	// NextPageToken: If there are more results than those appearing in this
+	// response, then `next_page_token` is included. To get the next set of
+	// results, call this method again using the value of `next_page_token` as
+	// `page_token`.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Agents") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Agents") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SearchAgentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchAgentsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SearchMcpServersRequest: Message for searching MCP Servers
+type SearchMcpServersRequest struct {
+	// PageSize: Optional. The maximum number of search results to return per page.
+	// The page size is capped at `100`, even if a larger value is specified. A
+	// negative value will result in an `INVALID_ARGUMENT` error. If unspecified or
+	// set to `0`, a default value of `20` will be used. The server may return
+	// fewer results than requested.
+	PageSize int64 `json:"pageSize,omitempty"`
+	// PageToken: Optional. If present, retrieve the next batch of results from the
+	// preceding call to this method. `page_token` must be the value of
+	// `next_page_token` from the previous response. The values of all other method
+	// parameters, must be identical to those in the previous call.
+	PageToken string `json:"pageToken,omitempty"`
+	// SearchString: Optional. Search criteria used to select the MCP Servers to
+	// return. If no search criteria is specified then all accessible MCP Servers
+	// will be returned. Search expressions can be used to restrict results based
+	// upon searchable fields, where the operators can be used along with the
+	// suffix wildcard symbol `*`. See instructions
+	// (https://docs.cloud.google.com/agent-registry/search-agents-and-tools) for
+	// more details. Allowed operators: `=`, `:`, `NOT`, `AND`, `OR`, and `()`.
+	// Searchable fields: | Field | `=` | `:` | `*` | Keyword Search |
+	// |--------------------|-----|-----|-----|----------------| | mcpServerId |
+	// Yes | Yes | Yes | Included | | name | No | Yes | Yes | Included | |
+	// displayName | No | Yes | Yes | Included | Examples: *
+	// `mcpServerId=urn:mcp:projects-123:projects:123:locations:us-central1:agentreg
+	// istry:services:service-id` to find the MCP Server with the specified MCP
+	// Server ID. * `name:important` to find MCP Servers whose name contains
+	// `important` as a word. * `displayName:works*` to find MCP Servers whose
+	// display name contains words that start with `works`. * `planner OR booking`
+	// to find MCP Servers whose metadata contains the words `planner` or
+	// `booking`. * `mcpServerId:service-id AND (displayName:planner OR
+	// displayName:booking)` to find MCP Servers whose MCP Server ID contains
+	// `service-id` and whose display name contains `planner` or `booking`.
+	SearchString string `json:"searchString,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PageSize") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PageSize") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SearchMcpServersRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchMcpServersRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SearchMcpServersResponse: Message for response to searching MCP Servers
+type SearchMcpServersResponse struct {
+	// McpServers: A list of McpServers that match the `search_string`.
+	McpServers []*McpServer `json:"mcpServers,omitempty"`
+	// NextPageToken: If there are more results than those appearing in this
+	// response, then `next_page_token` is included. To get the next set of
+	// results, call this method again using the value of `next_page_token` as
+	// `page_token`.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "McpServers") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "McpServers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SearchMcpServersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchMcpServersResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Service: Represents a user-defined Service.
 type Service struct {
 	// AgentSpec: Optional. The spec of the Agent. When `agent_spec` is set, the
@@ -1643,6 +1809,132 @@ func (c *ProjectsLocationsAgentsListCall) Pages(ctx context.Context, f func(*Lis
 	}
 }
 
+type ProjectsLocationsAgentsSearchCall struct {
+	s                   *APIService
+	parent              string
+	searchagentsrequest *SearchAgentsRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Search: Searches Agents in a given project and location.
+//
+//   - parent: Parent value for SearchAgentsRequest. Format:
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsAgentsService) Search(parent string, searchagentsrequest *SearchAgentsRequest) *ProjectsLocationsAgentsSearchCall {
+	c := &ProjectsLocationsAgentsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.searchagentsrequest = searchagentsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAgentsSearchCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAgentsSearchCall) Context(ctx context.Context) *ProjectsLocationsAgentsSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAgentsSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentsSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.searchagentsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/agents:search")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "agentregistry.projects.locations.agents.search", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "agentregistry.projects.locations.agents.search" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SearchAgentsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAgentsSearchCall) Do(opts ...googleapi.CallOption) (*SearchAgentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SearchAgentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "agentregistry.projects.locations.agents.search", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAgentsSearchCall) Pages(ctx context.Context, f func(*SearchAgentsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.searchagentsrequest.PageToken = pt }(c.searchagentsrequest.PageToken)
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.searchagentsrequest.PageToken = x.NextPageToken
+	}
+}
+
 type ProjectsLocationsEndpointsGetCall struct {
 	s            *APIService
 	name         string
@@ -2178,6 +2470,132 @@ func (c *ProjectsLocationsMcpServersListCall) Pages(ctx context.Context, f func(
 			return nil
 		}
 		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsMcpServersSearchCall struct {
+	s                       *APIService
+	parent                  string
+	searchmcpserversrequest *SearchMcpServersRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Search: Searches McpServers in a given project and location.
+//
+//   - parent: Parent value for SearchMcpServersRequest. Format:
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsMcpServersService) Search(parent string, searchmcpserversrequest *SearchMcpServersRequest) *ProjectsLocationsMcpServersSearchCall {
+	c := &ProjectsLocationsMcpServersSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.searchmcpserversrequest = searchmcpserversrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMcpServersSearchCall) Fields(s ...googleapi.Field) *ProjectsLocationsMcpServersSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMcpServersSearchCall) Context(ctx context.Context) *ProjectsLocationsMcpServersSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMcpServersSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMcpServersSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.searchmcpserversrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/mcpServers:search")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "agentregistry.projects.locations.mcpServers.search", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "agentregistry.projects.locations.mcpServers.search" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SearchMcpServersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMcpServersSearchCall) Do(opts ...googleapi.CallOption) (*SearchMcpServersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SearchMcpServersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "agentregistry.projects.locations.mcpServers.search", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsMcpServersSearchCall) Pages(ctx context.Context, f func(*SearchMcpServersResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.searchmcpserversrequest.PageToken = pt }(c.searchmcpserversrequest.PageToken)
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.searchmcpserversrequest.PageToken = x.NextPageToken
 	}
 }
 

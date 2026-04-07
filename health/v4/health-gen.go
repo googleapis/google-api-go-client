@@ -489,14 +489,24 @@ func (s AltitudeRollupValue) MarshalJSON() ([]byte, error) {
 
 // Application: Optional metadata for the application that provided this data.
 type Application struct {
-	// GoogleWebClientId: Output only. Captures the client ID of the entity that
-	// recorded the data.
+	// GoogleWebClientId: Output only. The Google OAuth 2.0 client ID of the web
+	// application or service that recorded the data. This is the client ID used
+	// during the Google OAuth flow to obtain user credentials. This field is
+	// system-populated when the data is uploaded from Google Web API.
 	GoogleWebClientId string `json:"googleWebClientId,omitempty"`
-	// PackageName: Output only. A unique ID from an external data source. A unique
-	// identifier of the mobile application, e.g. `com.google.fitbit`
+	// PackageName: Output only. A unique identifier for the mobile application
+	// that was the source of the data. This is typically the application's package
+	// name on Android (e.g., `com.google.fitbit`) or the bundle ID on iOS. This
+	// field is informational and helps trace data origin. This field is
+	// system-populated when the data is uploaded from the Fitbit mobile
+	// application, Health Connect or Health Kit.
 	PackageName string `json:"packageName,omitempty"`
-	// WebClientId: Output only. Captures the client ID of the web application that
-	// recorded the data.
+	// WebClientId: Output only. The client ID of the application that recorded the
+	// data. This ID is a legacy Fitbit API client ID, which is different from a
+	// Google OAuth client ID. Example format: `ABC123`. This field is
+	// system-populated and used for tracing data from legacy Fitbit API
+	// integrations. This field is system-populated when the data is uploaded from
+	// a legacy Fitbit API integration.
 	WebClientId string `json:"webClientId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GoogleWebClientId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1322,7 +1332,7 @@ type DataPoint struct {
 	// `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` Example:
 	// `users/abcd1234/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcd
 	// ef` The `{user}` ID is a system-generated identifier, as described in
-	// Profile.encoded_id. The `{data_type}` ID corresponds to the kebab-case
+	// Identity.health_user_id. The `{data_type}` ID corresponds to the kebab-case
 	// version of the field names in the DataPoint data union field, e.g.
 	// `total-calories` for the `total_calories` field. The `{data_point}` ID can
 	// be client-provided or system-generated. If client-provided, it must be a
@@ -2675,7 +2685,7 @@ type ReconciledDataPoint struct {
 	// `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` Example:
 	// `users/abcd1234/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcd
 	// ef` The `{user}` ID is a system-generated identifier, as described in
-	// Profile.encoded_id. The `{data_type}` ID corresponds to the kebab-case
+	// Identity.health_user_id. The `{data_type}` ID corresponds to the kebab-case
 	// version of the field names in the DataPoint data union field, e.g.
 	// `total-calories` for the `total_calories` field. The `{data_point}` ID can
 	// be client-provided or system-generated. If client-provided, it must be a
@@ -3270,9 +3280,8 @@ type Settings struct {
 	// This follows the IANA Time Zone Database (https://www.iana.org/time-zones).
 	// Updates to this field are currently not supported.
 	TimeZone string `json:"timeZone,omitempty"`
-	// UtcOffset: Optional. The duration of the offset from UTC in milliseconds.
-	// This offset is the difference between the user's current local time and UTC.
-	// Updates to this field are currently not supported.
+	// UtcOffset: Optional. The user's timezone offset relative to UTC. Updates to
+	// this field are currently not supported.
 	UtcOffset string `json:"utcOffset,omitempty"`
 	// WaterUnit: Optional. The measurement unit defined in the user's account
 	// settings.
@@ -5361,23 +5370,16 @@ type UsersDataTypesDataPointsPatchCall struct {
 //     Example:
 //     `users/abcd1234/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890ab
 //     cdef` The `{user}` ID is a system-generated identifier, as described in
-//     Profile.encoded_id. The `{data_type}` ID corresponds to the kebab-case
-//     version of the field names in the DataPoint data union field, e.g.
-//     `total-calories` for the `total_calories` field. The `{data_point}` ID can
-//     be client-provided or system-generated. If client-provided, it must be a
-//     string of 4-63 characters, containing only lowercase letters, numbers, and
-//     hyphens.
+//     Identity.health_user_id. The `{data_type}` ID corresponds to the
+//     kebab-case version of the field names in the DataPoint data union field,
+//     e.g. `total-calories` for the `total_calories` field. The `{data_point}`
+//     ID can be client-provided or system-generated. If client-provided, it must
+//     be a string of 4-63 characters, containing only lowercase letters,
+//     numbers, and hyphens.
 func (r *UsersDataTypesDataPointsService) Patch(nameid string, datapoint *DataPoint) *UsersDataTypesDataPointsPatchCall {
 	c := &UsersDataTypesDataPointsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
 	c.datapoint = datapoint
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": The list of fields to
-// update.
-func (c *UsersDataTypesDataPointsPatchCall) UpdateMask(updateMask string) *UsersDataTypesDataPointsPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 

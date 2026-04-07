@@ -384,16 +384,10 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Identifier. Data point name, only supported for the subset of identifiable data types. For the majority of the data types, individual data points do not need to be identified and this field would be empty. Format: `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` Example: `users/abcd1234/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef` The `{user}` ID is a system-generated identifier, as described in Profile.encoded_id. The `{data_type}` ID corresponds to the kebab-case version of the field names in the DataPoint data union field, e.g. `total-calories` for the `total_calories` field. The `{data_point}` ID can be client-provided or system-generated. If client-provided, it must be a string of 4-63 characters, containing only lowercase letters, numbers, and hyphens.",
+                      "description": "Identifier. Data point name, only supported for the subset of identifiable data types. For the majority of the data types, individual data points do not need to be identified and this field would be empty. Format: `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` Example: `users/abcd1234/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef` The `{user}` ID is a system-generated identifier, as described in Identity.health_user_id. The `{data_type}` ID corresponds to the kebab-case version of the field names in the DataPoint data union field, e.g. `total-calories` for the `total_calories` field. The `{data_point}` ID can be client-provided or system-generated. If client-provided, it must be a string of 4-63 characters, containing only lowercase letters, numbers, and hyphens.",
                       "location": "path",
                       "pattern": "^users/[^/]+/dataTypes/[^/]+/dataPoints/[^/]+$",
                       "required": true,
-                      "type": "string"
-                    },
-                    "updateMask": {
-                      "description": "Optional. The list of fields to update.",
-                      "format": "google-fieldmask",
-                      "location": "query",
                       "type": "string"
                     }
                   },
@@ -480,7 +474,7 @@
       }
     }
   },
-  "revision": "20260402",
+  "revision": "20260405",
   "rootUrl": "https://health.googleapis.com/",
   "schemas": {
     "ActiveMinutes": {
@@ -731,17 +725,17 @@
       "id": "Application",
       "properties": {
         "googleWebClientId": {
-          "description": "Output only. Captures the client ID of the entity that recorded the data.",
+          "description": "Output only. The Google OAuth 2.0 client ID of the web application or service that recorded the data. This is the client ID used during the Google OAuth flow to obtain user credentials. This field is system-populated when the data is uploaded from Google Web API.",
           "readOnly": true,
           "type": "string"
         },
         "packageName": {
-          "description": "Output only. A unique ID from an external data source. A unique identifier of the mobile application, e.g. `com.google.fitbit`",
+          "description": "Output only. A unique identifier for the mobile application that was the source of the data. This is typically the application's package name on Android (e.g., `com.google.fitbit`) or the bundle ID on iOS. This field is informational and helps trace data origin. This field is system-populated when the data is uploaded from the Fitbit mobile application, Health Connect or Health Kit.",
           "readOnly": true,
           "type": "string"
         },
         "webClientId": {
-          "description": "Output only. Captures the client ID of the web application that recorded the data.",
+          "description": "Output only. The client ID of the application that recorded the data. This ID is a legacy Fitbit API client ID, which is different from a Google OAuth client ID. Example format: `ABC123`. This field is system-populated and used for tracing data from legacy Fitbit API integrations. This field is system-populated when the data is uploaded from a legacy Fitbit API integration.",
           "readOnly": true,
           "type": "string"
         }
@@ -1285,7 +1279,7 @@
           "description": "Optional. Data for points in the `hydration-log` session data type collection."
         },
         "name": {
-          "description": "Identifier. Data point name, only supported for the subset of identifiable data types. For the majority of the data types, individual data points do not need to be identified and this field would be empty. Format: `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` Example: `users/abcd1234/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef` The `{user}` ID is a system-generated identifier, as described in Profile.encoded_id. The `{data_type}` ID corresponds to the kebab-case version of the field names in the DataPoint data union field, e.g. `total-calories` for the `total_calories` field. The `{data_point}` ID can be client-provided or system-generated. If client-provided, it must be a string of 4-63 characters, containing only lowercase letters, numbers, and hyphens.",
+          "description": "Identifier. Data point name, only supported for the subset of identifiable data types. For the majority of the data types, individual data points do not need to be identified and this field would be empty. Format: `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` Example: `users/abcd1234/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef` The `{user}` ID is a system-generated identifier, as described in Identity.health_user_id. The `{data_type}` ID corresponds to the kebab-case version of the field names in the DataPoint data union field, e.g. `total-calories` for the `total_calories` field. The `{data_point}` ID can be client-provided or system-generated. If client-provided, it must be a string of 4-63 characters, containing only lowercase letters, numbers, and hyphens.",
           "type": "string"
         },
         "oxygenSaturation": {
@@ -2326,7 +2320,7 @@
           "description": "Data for points in the `daily-vo2-max` daily data type collection."
         },
         "dataPointName": {
-          "description": "Identifier. Data point name, only supported for the subset of identifiable data types. For the majority of the data types, individual data points do not need to be identified and this field would be empty. Format: `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` Example: `users/abcd1234/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef` The `{user}` ID is a system-generated identifier, as described in Profile.encoded_id. The `{data_type}` ID corresponds to the kebab-case version of the field names in the DataPoint data union field, e.g. `total-calories` for the `total_calories` field. The `{data_point}` ID can be client-provided or system-generated. If client-provided, it must be a string of 4-63 characters, containing only lowercase letters, numbers, and hyphens.",
+          "description": "Identifier. Data point name, only supported for the subset of identifiable data types. For the majority of the data types, individual data points do not need to be identified and this field would be empty. Format: `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` Example: `users/abcd1234/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef` The `{user}` ID is a system-generated identifier, as described in Identity.health_user_id. The `{data_type}` ID corresponds to the kebab-case version of the field names in the DataPoint data union field, e.g. `total-calories` for the `total_calories` field. The `{data_point}` ID can be client-provided or system-generated. If client-provided, it must be a string of 4-63 characters, containing only lowercase letters, numbers, and hyphens.",
           "type": "string"
         },
         "distance": {
@@ -2807,7 +2801,7 @@
           "type": "string"
         },
         "utcOffset": {
-          "description": "Optional. The duration of the offset from UTC in milliseconds. This offset is the difference between the user's current local time and UTC. Updates to this field are currently not supported.",
+          "description": "Optional. The user's timezone offset relative to UTC. Updates to this field are currently not supported.",
           "format": "google-duration",
           "type": "string"
         },

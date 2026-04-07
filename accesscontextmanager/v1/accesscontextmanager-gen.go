@@ -977,8 +977,8 @@ func (s DevicePolicy) MarshalJSON() ([]byte, error) {
 type EgressFrom struct {
 	// Identities: A list of identities that are allowed access through
 	// [EgressPolicy]. Identities can be an individual user, service account,
-	// Google group, or third-party identity. For the list of supported identity
-	// types, see
+	// Google group, third-party identity, or agent identity. For the list of
+	// supported identity types, see
 	// https://docs.cloud.google.com/vpc-service-controls/docs/supported-identities.
 	Identities []string `json:"identities,omitempty"`
 	// IdentityType: Specifies the type of identities that are allowed access to
@@ -1338,8 +1338,8 @@ func (s GetPolicyOptions) MarshalJSON() ([]byte, error) {
 type IngressFrom struct {
 	// Identities: A list of identities that are allowed access through
 	// [IngressPolicy]. Identities can be an individual user, service account,
-	// Google group, or third-party identity. For the list of supported identity
-	// types, see
+	// Google group, third-party identity, or agent identity. For the list of
+	// supported identity types, see
 	// https://docs.cloud.google.com/vpc-service-controls/docs/supported-identities.
 	Identities []string `json:"identities,omitempty"`
 	// IdentityType: Specifies the type of identities that are allowed access from

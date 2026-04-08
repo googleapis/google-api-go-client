@@ -1956,6 +1956,7 @@ type RuleViolationInfo struct {
 	//   "CHROME_URL_VISITED" - A URL is visited within Chrome.
 	//   "CHROMEOS_FILE_TRANSFER" - A file being transferred (copy or moved)
 	// between different file systems on ChromeOS.
+	//   "GEMINI_ACCESS" - Gemini access.
 	Trigger string `json:"trigger,omitempty"`
 	// TriggeredActionInfo: Metadata related to the triggered actions.
 	TriggeredActionInfo []*ActionInfo `json:"triggeredActionInfo,omitempty"`

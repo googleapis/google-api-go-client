@@ -6890,7 +6890,8 @@ type AccountsDeveloperRegistrationRegisterGcpCall struct {
 //
 //   - name: The name of the developer registration to be created for the
 //     merchant account that the GCP will be registered with. Format:
-//     `accounts/{account}/developerRegistration`.
+//     `accounts/{account}/developerRegistration` The {account} used must be the
+//     same account where user calling this API method is directly added to.
 func (r *AccountsDeveloperRegistrationService) RegisterGcp(name string, registergcprequest *RegisterGcpRequest) *AccountsDeveloperRegistrationRegisterGcpCall {
 	c := &AccountsDeveloperRegistrationRegisterGcpCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

@@ -1392,10 +1392,11 @@ type ProductInput struct {
 	// `content_language~feed_label~offer_id` structure. This encoding MUST be used
 	// if any part of the product identifier (like `offer_id`) contains characters
 	// such as `/`, `%`, or `~`. * Example: To represent the product ID
-	// `en~US~sku/123`, the `{productinput}` segment must be the base64url encoding
-	// of this string, which is `ZW5-VVN-c2t1LzEyMw`. The full resource name for
-	// the product would be `accounts/123/productInputs/ZW5-VVN-c2t1LzEyMw`. 2.
-	// **Plain Format**: The `{productinput}` segment is the tilde-separated string
+	// `en~US~sku/123`, the `{productinput}` segment must be the unpadded base64url
+	// encoding of this string, which is `ZW5-VVN-c2t1LzEyMw`. The full resource
+	// name for the product would be
+	// `accounts/123/productInputs/ZW5-VVN-c2t1LzEyMw`. 2. **Plain Format**: The
+	// `{productinput}` segment is the tilde-separated string
 	// `content_language~feed_label~offer_id`. This format is suitable only when
 	// `content_language`, `feed_label`, and `offer_id` do not contain
 	// URL-problematic characters like `/`, `%`, or `~`. We recommend using the
@@ -2013,9 +2014,9 @@ type AccountsProductInputsDeleteCall struct {
 //     `content_language~feed_label~offer_id` structure. This encoding MUST be
 //     used if any part of the product identifier (like `offer_id`) contains
 //     characters such as `/`, `%`, or `~`. * Example: To represent the product
-//     ID `en~US~sku/123`, the `{productInput}` segment must be the base64url
-//     encoding of this string, which is `ZW5-VVN-c2t1LzEyMw`. The full resource
-//     name for the product would be
+//     ID `en~US~sku/123`, the `{productInput}` segment must be the unpadded
+//     base64url encoding of this string, which is `ZW5-VVN-c2t1LzEyMw`. The full
+//     resource name for the product would be
 //     `accounts/123/productInputs/ZW5-VVN-c2t1LzEyMw`. 2. **Plain Format**: The
 //     `{productInput}` segment is the tilde-separated string
 //     `content_language~feed_label~offer_id`. This format is suitable only when
@@ -2275,9 +2276,9 @@ type AccountsProductInputsPatchCall struct {
 //     `content_language~feed_label~offer_id` structure. This encoding MUST be
 //     used if any part of the product identifier (like `offer_id`) contains
 //     characters such as `/`, `%`, or `~`. * Example: To represent the product
-//     ID `en~US~sku/123`, the `{productinput}` segment must be the base64url
-//     encoding of this string, which is `ZW5-VVN-c2t1LzEyMw`. The full resource
-//     name for the product would be
+//     ID `en~US~sku/123`, the `{productinput}` segment must be the unpadded
+//     base64url encoding of this string, which is `ZW5-VVN-c2t1LzEyMw`. The full
+//     resource name for the product would be
 //     `accounts/123/productInputs/ZW5-VVN-c2t1LzEyMw`. 2. **Plain Format**: The
 //     `{productinput}` segment is the tilde-separated string
 //     `content_language~feed_label~offer_id`. This format is suitable only when

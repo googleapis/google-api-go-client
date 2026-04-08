@@ -616,7 +616,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The name of the developer registration to be created for the merchant account that the GCP will be registered with. Format: `accounts/{account}/developerRegistration`",
+                  "description": "Required. The name of the developer registration to be created for the merchant account that the GCP will be registered with. Format: `accounts/{account}/developerRegistration` The {account} used must be the same account where user calling this API method is directly added to.",
                   "location": "path",
                   "pattern": "^accounts/[^/]+/developerRegistration$",
                   "required": true,
@@ -2388,7 +2388,7 @@
       }
     }
   },
-  "revision": "20260318",
+  "revision": "20260402",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "About": {

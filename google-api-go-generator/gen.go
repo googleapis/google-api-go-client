@@ -81,6 +81,7 @@ var skipAPIGeneration = map[string]bool{
 	"datalineage:v1":          true,
 	"aiplatform:v1beta1":      true,
 	"discoveryengine:v1alpha": true,
+	"discoveryengine:v1":      true,
 }
 
 var apisToSplit = map[string]bool{

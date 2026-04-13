@@ -1622,6 +1622,18 @@ func (s GoogleCloudDataplexV1BusinessGlossaryEvent) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1CancelDataScanJobRequest: Request message for the
+// CancelDataScanJob method.
+type GoogleCloudDataplexV1CancelDataScanJobRequest struct {
+}
+
+// GoogleCloudDataplexV1CancelDataScanJobResponse: Response message for the
+// CancelDataScanJob method.
+type GoogleCloudDataplexV1CancelDataScanJobResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // GoogleCloudDataplexV1CancelJobRequest: Cancel task jobs.
 type GoogleCloudDataplexV1CancelJobRequest struct {
 }
@@ -3452,6 +3464,10 @@ func (s GoogleCloudDataplexV1DataQualityResultPostScanActionsResultBigQueryExpor
 // GoogleCloudDataplexV1DataQualityRule: A rule captures data quality intent
 // about a data source.
 type GoogleCloudDataplexV1DataQualityRule struct {
+	// Attributes: Optional. Map of attribute name and value linked to the rule.
+	// The rules to evaluate can be filtered based on attributes provided here and
+	// a filter expression provided in the DataQualitySpec.filter field.
+	Attributes map[string]string `json:"attributes,omitempty"`
 	// Column: Optional. The unnested column which this rule is evaluated against.
 	Column string `json:"column,omitempty"`
 	// DebugQueries: Optional. Specifies the debug queries for this rule.
@@ -3486,6 +3502,9 @@ type GoogleCloudDataplexV1DataQualityRule struct {
 	// RowConditionExpectation: Row-level rule which evaluates whether each row in
 	// a table passes the specified condition.
 	RowConditionExpectation *GoogleCloudDataplexV1DataQualityRuleRowConditionExpectation `json:"rowConditionExpectation,omitempty"`
+	// RuleSource: Output only. Contains information about the source of the rule
+	// and its relationship with the BigQuery table, where applicable.
+	RuleSource *GoogleCloudDataplexV1DataQualityRuleRuleSource `json:"ruleSource,omitempty"`
 	// SetExpectation: Row-level rule which evaluates whether each column value is
 	// contained by a specified set.
 	SetExpectation *GoogleCloudDataplexV1DataQualityRuleSetExpectation `json:"setExpectation,omitempty"`
@@ -3501,6 +3520,10 @@ type GoogleCloudDataplexV1DataQualityRule struct {
 	// TableConditionExpectation: Aggregate rule which evaluates whether the
 	// provided expression is true for a table.
 	TableConditionExpectation *GoogleCloudDataplexV1DataQualityRuleTableConditionExpectation `json:"tableConditionExpectation,omitempty"`
+	// TemplateReference: Aggregate rule which references a rule template and
+	// provides the parameters to be substituted in the template. If any rows are
+	// returned, this rule fails.
+	TemplateReference *GoogleCloudDataplexV1DataQualityRuleTemplateReference `json:"templateReference,omitempty"`
 	// Threshold: Optional. The minimum ratio of passing_rows / total_rows required
 	// to pass this rule, with a range of 0.0, 1.0.0 indicates default value (i.e.
 	// 1.0).This field is only valid for row-level type rules.
@@ -3508,13 +3531,13 @@ type GoogleCloudDataplexV1DataQualityRule struct {
 	// UniquenessExpectation: Row-level rule which evaluates whether each column
 	// value is unique.
 	UniquenessExpectation *GoogleCloudDataplexV1DataQualityRuleUniquenessExpectation `json:"uniquenessExpectation,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Column") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Column") to include in API
+	// NullFields is a list of field names (e.g. "Attributes") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3790,6 +3813,126 @@ func (s GoogleCloudDataplexV1DataQualityRuleRowConditionExpectation) MarshalJSON
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1DataQualityRuleRuleSource: Represents the rule source
+// information from Catalog.
+type GoogleCloudDataplexV1DataQualityRuleRuleSource struct {
+	// RulePathElements: Output only. Rule path elements represent information
+	// about the individual items in the relationship path between the scan
+	// resource and rule origin in that order.
+	RulePathElements []*GoogleCloudDataplexV1DataQualityRuleRuleSourceRulePathElement `json:"rulePathElements,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RulePathElements") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RulePathElements") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataQualityRuleRuleSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualityRuleRuleSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataQualityRuleRuleSourceRulePathElement: Path Element
+// represents the direct relationship between the rule origin (aspects) to the
+// BigQuery Entry. Ordering of the rule relationship will be maintained such
+// that the first entry in the list is the closest ancestor (BigQuery table
+// itself). A blank source denotes that the rule is derived directly from the
+// DataScan itself.
+type GoogleCloudDataplexV1DataQualityRuleRuleSourceRulePathElement struct {
+	// EntryLinkSource: Output only. Entry link source represents information about
+	// the entry link.
+	EntryLinkSource *GoogleCloudDataplexV1DataQualityRuleRuleSourceRulePathElementEntryLinkSource `json:"entryLinkSource,omitempty"`
+	// EntrySource: Output only. Entry source represents information about the
+	// related source entry.
+	EntrySource *GoogleCloudDataplexV1DataQualityRuleRuleSourceRulePathElementEntrySource `json:"entrySource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EntryLinkSource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EntryLinkSource") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataQualityRuleRuleSourceRulePathElement) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualityRuleRuleSourceRulePathElement
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataQualityRuleRuleSourceRulePathElementEntryLinkSource:
+//
+//	Entry link source represents information about the entry link.
+type GoogleCloudDataplexV1DataQualityRuleRuleSourceRulePathElementEntryLinkSource struct {
+	// EntryLink: Output only. The entry link name in the form of:
+	// projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_gr
+	// oup_id}/entryLinks/{entry_link_id}
+	EntryLink string `json:"entryLink,omitempty"`
+	// EntryLinkType: Output only. The entry link type to represent the current
+	// relationship between the entry and the next entry in the path. In the form
+	// of:
+	// projects/{project_id_or_number}/locations/{location_id}/entryLinkTypes/{entry
+	// _link_type_id}
+	EntryLinkType string `json:"entryLinkType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EntryLink") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EntryLink") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataQualityRuleRuleSourceRulePathElementEntryLinkSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualityRuleRuleSourceRulePathElementEntryLinkSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataQualityRuleRuleSourceRulePathElementEntrySource:
+// Entry source represents information about the related source entry.
+type GoogleCloudDataplexV1DataQualityRuleRuleSourceRulePathElementEntrySource struct {
+	// DisplayName: Output only. The display name of the entry.
+	DisplayName string `json:"displayName,omitempty"`
+	// Entry: Output only. The entry name in the form of:
+	// projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_gr
+	// oup_id}/entries/{entry_id}
+	Entry string `json:"entry,omitempty"`
+	// EntryType: Output only. The entry type to represent the current
+	// characteristics of the entry in the form of:
+	// projects/{project_id_or_number}/locations/{location_id}/entryTypes/{entry-typ
+	// e-id}.
+	EntryType string `json:"entryType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataQualityRuleRuleSourceRulePathElementEntrySource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualityRuleRuleSourceRulePathElementEntrySource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1DataQualityRuleSetExpectation: Evaluates whether each
 // column value is contained by a specified set.
 type GoogleCloudDataplexV1DataQualityRuleSetExpectation struct {
@@ -3916,6 +4059,160 @@ func (s GoogleCloudDataplexV1DataQualityRuleTableConditionExpectation) MarshalJS
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1DataQualityRuleTemplate: DataQualityRuleTemplate
+// represents a template which can be reused across multiple data quality
+// rules.
+type GoogleCloudDataplexV1DataQualityRuleTemplate struct {
+	// Capabilities: Output only. A list of features or properties supported by
+	// this rule template.
+	Capabilities []string `json:"capabilities,omitempty"`
+	// Dimension: Output only. The dimension a rule template belongs to. Rule level
+	// results are also aggregated at the dimension level.
+	Dimension string `json:"dimension,omitempty"`
+	// InputParameters: Output only. Description for input parameters
+	InputParameters map[string]GoogleCloudDataplexV1DataQualityRuleTemplateParameterDescription `json:"inputParameters,omitempty"`
+	// Name: Output only. The name of the rule template in the format:
+	// projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_gr
+	// oup_id}/entries/{entry_id}
+	Name string `json:"name,omitempty"`
+	// SqlCollection: Output only. Collection of SQLs for data quality rules.
+	// Currently only one SQL is supported.
+	SqlCollection []*GoogleCloudDataplexV1DataQualityRuleTemplateSql `json:"sqlCollection,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Capabilities") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Capabilities") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataQualityRuleTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualityRuleTemplate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataQualityRuleTemplateParameterDescription:
+// Description of the input parameter. It can include the type(s) supported by
+// the parameter and intended usage. It is for information purposes only and
+// does not affect the behavior of the rule template.
+type GoogleCloudDataplexV1DataQualityRuleTemplateParameterDescription struct {
+	// DefaultValue: Output only. The default value for the parameter if no value
+	// is provided.
+	DefaultValue string `json:"defaultValue,omitempty"`
+	// Description: Output only. Description of the input parameter. It can include
+	// the type(s) supported by the parameter and intended usage. It is for
+	// information purposes only and does not affect the behavior of the rule
+	// template.
+	Description string `json:"description,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DefaultValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefaultValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataQualityRuleTemplateParameterDescription) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualityRuleTemplateParameterDescription
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataQualityRuleTemplateReference: A rule that
+// constructs a SQL statement to evaluate using a rule template and parameter
+// values. If the constructed statement returns any rows, this rule fails
+type GoogleCloudDataplexV1DataQualityRuleTemplateReference struct {
+	// Name: Required. The template entry name. Entry must be of EntryType
+	// projects/dataplex-types/locations/global/entryTypes/data-quality-rule-templat
+	// e and contains top-level aspect of AspectType
+	// projects/dataplex-types/locations/global/aspectTypes/data-quality-rule-templa
+	// te. The format is:
+	// projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_gr
+	// oup_id}/entries/{entry_id}
+	Name string `json:"name,omitempty"`
+	// ResolvedSql: Output only. The resolved SQL statement generated from the
+	// template with parameters substituted. It is only populated in the result.
+	ResolvedSql string `json:"resolvedSql,omitempty"`
+	// RuleTemplate: Output only. The rule template used to resolve the rule. It is
+	// only populated in the result.
+	RuleTemplate *GoogleCloudDataplexV1DataQualityRuleTemplate `json:"ruleTemplate,omitempty"`
+	// Values: Optional. Provides the map of parameter name and value. The maximum
+	// size of the field is 120KB (encoded as UTF-8).
+	Values map[string]GoogleCloudDataplexV1DataQualityRuleTemplateReferenceParameterValue `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataQualityRuleTemplateReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualityRuleTemplateReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataQualityRuleTemplateReferenceParameterValue:
+// Represents a parameter value.
+type GoogleCloudDataplexV1DataQualityRuleTemplateReferenceParameterValue struct {
+	// Value: Required. Represents the string value of the parameter.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataQualityRuleTemplateReferenceParameterValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualityRuleTemplateReferenceParameterValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataQualityRuleTemplateSql: Templatized SQL query for
+// data quality rules. It can have parameters that can be substituted with
+// values when a rule is created using this template.
+type GoogleCloudDataplexV1DataQualityRuleTemplateSql struct {
+	// Query: Output only. Templatized SQL query for data quality rules.
+	Query string `json:"query,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Query") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Query") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataQualityRuleTemplateSql) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualityRuleTemplateSql
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1DataQualityRuleUniquenessExpectation: Evaluates whether
 // the column has duplicates.
 type GoogleCloudDataplexV1DataQualityRuleUniquenessExpectation struct {
@@ -3975,6 +4272,7 @@ type GoogleCloudDataplexV1DataQualityScanRuleResult struct {
 	// DataQualityRule.TableConditionExpectation.
 	//   "UNIQUENESS_EXPECTATION" - See DataQualityRule.UniquenessExpectation.
 	//   "SQL_ASSERTION" - See DataQualityRule.SqlAssertion.
+	//   "TEMPLATE_REFERENCE" - See DataQualityRule.TemplateReference.
 	RuleType string `json:"ruleType,omitempty"`
 	// ThresholdPercent: The passing threshold (0.0, 100.0) of the data quality
 	// rule.
@@ -4016,6 +4314,26 @@ type GoogleCloudDataplexV1DataQualitySpec struct {
 	// CatalogPublishingEnabled: Optional. If set, the latest DataScan job result
 	// will be published as Dataplex Universal Catalog metadata.
 	CatalogPublishingEnabled bool `json:"catalogPublishingEnabled,omitempty"`
+	// EnableCatalogBasedRules: Optional. If enabled, the data scan will retrieve
+	// rules defined in the dataplex-types.global.data-rules aspect on all paths of
+	// the catalog entry corresponding to the BigQuery table resource and all
+	// attached glossary terms. The path that data-rules aspect is attached on the
+	// table entry defines the column that the rule will be evaluated against. For
+	// glossary terms, the path that the terms are attached on the table entry
+	// defines the column that the rule will be evaluated against. At the start of
+	// scan execution, the rules reflect the latest state retrieved from the
+	// catalog entry and any updates on the rules thereafter are ignored for that
+	// execution. The updates will be reflected from the next execution. Rules
+	// defined in the datascan must be empty if this field is enabled.
+	EnableCatalogBasedRules bool `json:"enableCatalogBasedRules,omitempty"`
+	// Filter: Optional. Filter for selectively running a subset of rules. You can
+	// filter the request by the name or attribute key-value pairs defined on the
+	// rule. If not specified, all rules are run. The filter is applicable to both,
+	// the rules retrieved from catalog and explicitly defined rules in the scan.
+	// Please see filter syntax
+	// (https://docs.cloud.google.com/dataplex/docs/auto-data-quality-overview#rule-filtering)
+	// for more details.
+	Filter string `json:"filter,omitempty"`
 	// PostScanActions: Optional. Actions to take upon job completion.
 	PostScanActions *GoogleCloudDataplexV1DataQualitySpecPostScanActions `json:"postScanActions,omitempty"`
 	// RowFilter: Optional. A filter applied to all rows in a single DataScan job.
@@ -17804,6 +18122,114 @@ func (c *ProjectsLocationsDataScansTestIamPermissionsCall) Do(opts ...googleapi.
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.dataScans.testIamPermissions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDataScansJobsCancelCall struct {
+	s                                             *Service
+	name                                          string
+	googleclouddataplexv1canceldatascanjobrequest *GoogleCloudDataplexV1CancelDataScanJobRequest
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// Cancel: Cancels a running/pending DataScan job.
+//
+//   - name: The resource name of the DataScanJob:
+//     projects/{project_id_or_number}/locations/{location_id}/dataScans/{data_sca
+//     n_id}/jobs/{data_scan_job_id} where project_id_or_number refers to a
+//     project_id or project_number and location_id refers to a Google Cloud
+//     region.
+func (r *ProjectsLocationsDataScansJobsService) Cancel(name string, googleclouddataplexv1canceldatascanjobrequest *GoogleCloudDataplexV1CancelDataScanJobRequest) *ProjectsLocationsDataScansJobsCancelCall {
+	c := &ProjectsLocationsDataScansJobsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddataplexv1canceldatascanjobrequest = googleclouddataplexv1canceldatascanjobrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataScansJobsCancelCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataScansJobsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataScansJobsCancelCall) Context(ctx context.Context) *ProjectsLocationsDataScansJobsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataScansJobsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataScansJobsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddataplexv1canceldatascanjobrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.dataScans.jobs.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.dataScans.jobs.cancel" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1CancelDataScanJobResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataScansJobsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1CancelDataScanJobResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1CancelDataScanJobResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.dataScans.jobs.cancel", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

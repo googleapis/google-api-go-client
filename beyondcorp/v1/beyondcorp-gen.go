@@ -533,13 +533,13 @@ type Empty struct {
 // AppConnection resource represents a BeyondCorp protected AppConnection to a
 // remote application. It creates all the necessary GCP components needed for
 // creating a BeyondCorp protected AppConnection. Multiple connectors can be
-// authorised for a single AppConnection.
+// authorized for a single AppConnection.
 type GoogleCloudBeyondcorpAppconnectionsV1AppConnection struct {
 	// ApplicationEndpoint: Required. Address of the remote application endpoint
 	// for the BeyondCorp AppConnection.
 	ApplicationEndpoint *GoogleCloudBeyondcorpAppconnectionsV1AppConnectionApplicationEndpoint `json:"applicationEndpoint,omitempty"`
 	// Connectors: Optional. List of
-	// [google.cloud.beyondcorp.v1main.Connector.name] that are authorised to be
+	// [google.cloud.beyondcorp.v1main.Connector.name] that are authorized to be
 	// associated with this AppConnection.
 	Connectors []string `json:"connectors,omitempty"`
 	// CreateTime: Output only. Timestamp when the resource was created.
@@ -1220,9 +1220,10 @@ func (s GoogleCloudBeyondcorpAppconnectorsV1ResolveInstanceConfigResponse) Marsh
 }
 
 // GoogleCloudBeyondcorpAppconnectorsV1ResourceInfo: ResourceInfo represents
-// the information/status of an app connector resource. Such as: - remote_agent
-// - container - runtime - appgateway - appconnector - appconnection - tunnel -
-// logagent
+// the information or status of an app connector resource component that's used
+// to report on various parts of the system. For example, ResourceInfo can be
+// used to convey the status of a remote_agent, including the status of an
+// appgateway for an runtime environment in a container instance.
 type GoogleCloudBeyondcorpAppconnectorsV1ResourceInfo struct {
 	// Id: Required. Unique Id for the resource.
 	Id string `json:"id,omitempty"`
@@ -2149,7 +2150,7 @@ func (s GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGatewayOperationMetadata)
 // GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscovery: Settings related to
 // the Service Discovery.
 type GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscovery struct {
-	// ApiGateway: Required. External API configuration.
+	// ApiGateway: Optional. External API configuration.
 	ApiGateway *GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscoveryApiGateway `json:"apiGateway,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApiGateway") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2172,7 +2173,7 @@ func (s GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscovery) MarshalJSON() (
 // GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscoveryApiGateway: If
 // Service Discovery is done through API, defines its settings.
 type GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscoveryApiGateway struct {
-	// ResourceOverride: Required. Enables fetching resource model updates to alter
+	// ResourceOverride: Optional. Enables fetching resource model updates to alter
 	// service behavior per Chrome profile.
 	ResourceOverride *GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscoveryApiGatewayOperationDescriptor `json:"resourceOverride,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ResourceOverride") to
@@ -2196,7 +2197,7 @@ func (s GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscoveryApiGateway) Marsh
 // GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscoveryApiGatewayOperationDes
 // criptor: API operation descriptor.
 type GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscoveryApiGatewayOperationDescriptor struct {
-	// Path: Required. Contains the URI path fragment where HTTP request is sent.
+	// Path: Optional. Contains the URI path fragment where HTTP request is sent.
 	Path string `json:"path,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Path") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3542,10 +3543,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
@@ -3733,11 +3740,11 @@ func (c *ProjectsLocationsAppConnectionsCreateCall) AppConnectionId(appConnectio
 // been completed. The server will guarantee that for at least 60 minutes since
 // the first request. For example, consider a situation where you make an
 // initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// with the same request ID, the server can check if the original operation
+// with the same request ID was received, and if so, will ignore the second
+// request. This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception that
+// zero UUID is not supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsAppConnectionsCreateCall) RequestId(requestId string) *ProjectsLocationsAppConnectionsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -3861,11 +3868,11 @@ func (r *ProjectsLocationsAppConnectionsService) Delete(name string) *ProjectsLo
 // been completed. The server will guarantee that for at least 60 minutes after
 // the first request. For example, consider a situation where you make an
 // initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// with the same request ID, the server can check if the original operation
+// with the same request ID was received, and if so, will ignore the second
+// request. This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception that
+// zero UUID is not supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsAppConnectionsDeleteCall) RequestId(requestId string) *ProjectsLocationsAppConnectionsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -4400,11 +4407,11 @@ func (c *ProjectsLocationsAppConnectionsPatchCall) AllowMissing(allowMissing boo
 // been completed. The server will guarantee that for at least 60 minutes since
 // the first request. For example, consider a situation where you make an
 // initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// with the same request ID, the server can check if the original operation
+// with the same request ID was received, and if so, will ignore the second
+// request. This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception that
+// zero UUID is not supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsAppConnectionsPatchCall) RequestId(requestId string) *ProjectsLocationsAppConnectionsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -8546,9 +8553,9 @@ func (c *ProjectsLocationsSecurityGatewaysApplicationsCreateCall) ApplicationId(
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore request if it has already been
-// completed. The server will guarantee that for at least 60 minutes since the
-// first request.
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request.
 func (c *ProjectsLocationsSecurityGatewaysApplicationsCreateCall) RequestId(requestId string) *ProjectsLocationsSecurityGatewaysApplicationsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c

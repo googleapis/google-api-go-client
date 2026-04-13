@@ -766,7 +766,9 @@ type BackendRule struct {
 	// OverridesByRequestProtocol: The map between request protocol and the backend
 	// address.
 	OverridesByRequestProtocol map[string]BackendRule `json:"overridesByRequestProtocol,omitempty"`
-	// PathTranslation: no-lint
+	// PathTranslation: Path translation specifies how to combine the backend
+	// address with the request path in order to produce the appropriate forwarding
+	// URL for the request. See PathTranslation for more details.
 	//
 	// Possible values:
 	//   "PATH_TRANSLATION_UNSPECIFIED"
@@ -1220,7 +1222,7 @@ type CommonLanguageSettings struct {
 	// Example: https://cloud.google.com/nodejs/docs/reference/asset/latest
 	ReferenceDocsUri string `json:"referenceDocsUri,omitempty"`
 	// SelectiveGapicGeneration: Configuration for which RPCs should be generated
-	// in the GAPIC client.
+	// in the GAPIC client. Note: This field should not be used in most cases.
 	SelectiveGapicGeneration *SelectiveGapicGeneration `json:"selectiveGapicGeneration,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Destinations") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2345,13 +2347,7 @@ type GoogleApiService struct {
 	Documentation *Documentation `json:"documentation,omitempty"`
 	// Endpoints: Configuration for network endpoints. If this is empty, then an
 	// endpoint with the same name as the service is automatically generated to
-	// service all defined APIs. WARNING: Defining any entries in the `endpoints`
-	// list disables the automatic generation of default endpoint variations (e.g.,
-	// `{service}.clients6.google.com`, `content-{service}.googleapis.com`, and
-	// mTLS variants like `{service}.mtls.googleapis.com`). To retain these default
-	// variations, you are required to explicitly include your main service
-	// endpoint (e.g., `myservice.googleapis.com`) in this list alongside any other
-	// custom endpoints (like REP, GFE, etc.).
+	// service all defined APIs.
 	Endpoints []*Endpoint `json:"endpoints,omitempty"`
 	// Enums: A list of all enum types included in this API service. Enums
 	// referenced directly or indirectly by the `apis` are automatically included.
@@ -5145,7 +5141,8 @@ func (s RubySettings) MarshalJSON() ([]byte, error) {
 }
 
 // SelectiveGapicGeneration: This message is used to configure the generation
-// of a subset of the RPCs in a service for client libraries.
+// of a subset of the RPCs in a service for client libraries. Note: This
+// feature should not be used in most cases.
 type SelectiveGapicGeneration struct {
 	// GenerateOmittedAsInternal: Setting this to true indicates to the client
 	// generators that methods that would be excluded from the generation should
@@ -5572,7 +5569,7 @@ func (s Usage) MarshalJSON() ([]byte, error) {
 
 // UsageRule: Usage configuration rules for the service.
 type UsageRule struct {
-	// AllowUnregisteredCalls:  Use this rule to configure unregistered calls for
+	// AllowUnregisteredCalls: Use this rule to configure unregistered calls for
 	// the service. Unregistered calls are calls that do not contain consumer
 	// project identity. (Example: calls that do not contain an API key). WARNING:
 	// By default, API methods do not allow unregistered calls, and each method

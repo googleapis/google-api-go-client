@@ -1364,6 +1364,8 @@ type Batch struct {
 	Operation string `json:"operation,omitempty"`
 	// PysparkBatch: Optional. PySpark batch config.
 	PysparkBatch *PySparkBatch `json:"pysparkBatch,omitempty"`
+	// PysparkNotebookBatch: Optional. PySpark notebook batch config.
+	PysparkNotebookBatch *PySparkNotebookBatch `json:"pysparkNotebookBatch,omitempty"`
 	// RuntimeConfig: Optional. Runtime configuration for the batch execution.
 	RuntimeConfig *RuntimeConfig `json:"runtimeConfig,omitempty"`
 	// RuntimeInfo: Output only. Runtime information about batch execution.
@@ -5712,6 +5714,44 @@ type PySparkJob struct {
 
 func (s PySparkJob) MarshalJSON() ([]byte, error) {
 	type NoMethod PySparkJob
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PySparkNotebookBatch: A configuration for running a PySpark Notebook batch
+// workload.
+type PySparkNotebookBatch struct {
+	// ArchiveUris: Optional. HCFS URIs of archives to be extracted into the
+	// working directory of each executor. Supported file types: .jar, .tar,
+	// .tar.gz, .tgz, and .zip.
+	ArchiveUris []string `json:"archiveUris,omitempty"`
+	// FileUris: Optional. HCFS URIs of files to be placed in the working directory
+	// of each executor
+	FileUris []string `json:"fileUris,omitempty"`
+	// JarFileUris: Optional. HCFS URIs of jar files to be added to the Spark
+	// CLASSPATH.
+	JarFileUris []string `json:"jarFileUris,omitempty"`
+	// NotebookFileUri: Required. The HCFS URI of the notebook file to execute.
+	NotebookFileUri string `json:"notebookFileUri,omitempty"`
+	// Params: Optional. The parameters to pass to the notebook.
+	Params map[string]string `json:"params,omitempty"`
+	// PythonFileUris: Optional. HCFS URIs of Python files to pass to the PySpark
+	// framework.
+	PythonFileUris []string `json:"pythonFileUris,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ArchiveUris") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ArchiveUris") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PySparkNotebookBatch) MarshalJSON() ([]byte, error) {
+	type NoMethod PySparkNotebookBatch
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

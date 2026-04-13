@@ -6440,8 +6440,7 @@ type Policy struct {
 	//
 	// Possible values:
 	//   "ENTERPRISE_DISPLAY_NAME_VISIBILITY_UNSPECIFIED" - Unspecified. Defaults
-	// to displaying the enterprise name that's set at the time of device setup. In
-	// future, this will default to ENTERPRISE_DISPLAY_NAME_VISIBLE.
+	// to ENTERPRISE_DISPLAY_NAME_VISIBLE.
 	//   "ENTERPRISE_DISPLAY_NAME_VISIBLE" - The enterprise display name is visible
 	// on the device. Supported on work profiles on Android 7 and above. Supported
 	// on fully managed devices on Android 8 and above. A NonComplianceDetail with

@@ -308,10 +308,14 @@ type GdataContentTypeInfo struct {
 	FromBytes string `json:"fromBytes,omitempty"`
 	// FromFileName: gdata
 	FromFileName string `json:"fromFileName,omitempty"`
+	// FromFusionId: gdata
+	FromFusionId string `json:"fromFusionId,omitempty"`
 	// FromHeader: gdata
 	FromHeader string `json:"fromHeader,omitempty"`
 	// FromUrlPath: gdata
 	FromUrlPath string `json:"fromUrlPath,omitempty"`
+	// FusionIdDetectionMetadata: gdata
+	FusionIdDetectionMetadata string `json:"fusionIdDetectionMetadata,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BestGuess") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

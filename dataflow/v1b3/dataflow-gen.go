@@ -2055,8 +2055,8 @@ type FlexTemplateRuntimeEnvironment struct {
 	// KmsKeyName: Name for the Cloud KMS key for the job. Key format is:
 	// projects//locations//keyRings//cryptoKeys/
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
-	// LauncherMachineType: The machine type to use for launching the job. The
-	// default is n1-standard-1.
+	// LauncherMachineType: The machine type to use for launching the job. If not
+	// set, Dataflow will select a default machine type.
 	LauncherMachineType string `json:"launcherMachineType,omitempty"`
 	// MachineType: The machine type to use for the job. Defaults to the value from
 	// the template if not specified.
@@ -4826,13 +4826,17 @@ func (s RuntimeMetadata) MarshalJSON() ([]byte, error) {
 // during runtime using the projects.jobs.update method. These fields have no
 // effect when specified during job creation.
 type RuntimeUpdatableParams struct {
-	// AcceptableBacklogDuration: Optional. Deprecated: Use `autoscaling_tier`
-	// instead. The backlog threshold duration in seconds for autoscaling. Value
-	// must be non-negative.
+	// AcceptableBacklogDuration: Optional. Deprecated: Use `latency_tier` instead.
+	// The backlog threshold duration in seconds for autoscaling. Value must be
+	// non-negative.
 	AcceptableBacklogDuration string `json:"acceptableBacklogDuration,omitempty"`
-	// AutoscalingTier: Optional. The backlog threshold tier for autoscaling. Value
-	// must be one of "low-latency", "medium-latency", or "high-latency".
+	// AutoscalingTier: Optional. Deprecated: Use `latency_tier` instead. The
+	// backlog threshold tier for autoscaling. Value must be one of "low-latency",
+	// "medium-latency", or "high-latency".
 	AutoscalingTier string `json:"autoscalingTier,omitempty"`
+	// LatencyTier: Optional. The backlog threshold tier for autoscaling. Value
+	// must be one of "low-latency", "medium-latency", or "high-latency".
+	LatencyTier string `json:"latencyTier,omitempty"`
 	// MaxNumWorkers: The maximum number of workers to cap autoscaling at. This
 	// field is currently only supported for Streaming Engine jobs.
 	MaxNumWorkers int64 `json:"maxNumWorkers,omitempty"`

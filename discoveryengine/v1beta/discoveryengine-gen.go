@@ -37,7 +37,7 @@
 // By default, all available scopes (see "Constants") are used to authenticate.
 // To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
-//	discoveryengineService, err := discoveryengine.NewService(ctx, option.WithScopes(discoveryengine.DiscoveryengineReadwriteScope))
+//	discoveryengineService, err := discoveryengine.NewService(ctx, option.WithScopes(discoveryengine.DiscoveryengineServingReadwriteScope))
 //
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
@@ -120,6 +120,12 @@ const (
 	// Enterprise, including both end user data and administration or configuration
 	// data.
 	DiscoveryengineReadwriteScope = "https://www.googleapis.com/auth/discoveryengine.readwrite"
+
+	// Interact with Discovery Engine API products, such as Agentspace, Vertex AI
+	// Search, or NotebookLM Enterprise, on your behalf. It will also allow the app
+	// to view all data that you have access to when you use or interact with a
+	// Discovery Engine API product.
+	DiscoveryengineServingReadwriteScope = "https://www.googleapis.com/auth/discoveryengine.serving.readwrite"
 )
 
 // NewService creates a new Service.
@@ -129,6 +135,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/cloud_search.query",
 		"https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
 		"https://www.googleapis.com/auth/discoveryengine.readwrite",
+		"https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -141,6 +148,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		return nil, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
+	s.BillingAccounts = NewBillingAccountsService(s)
 	s.Projects = NewProjectsService(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
@@ -166,6 +174,8 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	BillingAccounts *BillingAccountsService
+
 	Projects *ProjectsService
 }
 
@@ -174,6 +184,27 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewBillingAccountsService(s *Service) *BillingAccountsService {
+	rs := &BillingAccountsService{s: s}
+	rs.BillingAccountLicenseConfigs = NewBillingAccountsBillingAccountLicenseConfigsService(s)
+	return rs
+}
+
+type BillingAccountsService struct {
+	s *Service
+
+	BillingAccountLicenseConfigs *BillingAccountsBillingAccountLicenseConfigsService
+}
+
+func NewBillingAccountsBillingAccountLicenseConfigsService(s *Service) *BillingAccountsBillingAccountLicenseConfigsService {
+	rs := &BillingAccountsBillingAccountLicenseConfigsService{s: s}
+	return rs
+}
+
+type BillingAccountsBillingAccountLicenseConfigsService struct {
+	s *Service
 }
 
 func NewProjectsService(s *Service) *ProjectsService {
@@ -1889,6 +1920,9 @@ func (s GoogleCloudDiscoveryengineV1AclConfig) MarshalJSON() ([]byte, error) {
 type GoogleCloudDiscoveryengineV1ActionConfig struct {
 	// ActionParams: Optional. Action parameters in structured json format.
 	ActionParams googleapi.RawMessage `json:"actionParams,omitempty"`
+	// CreateBapConnection: Optional. Whether to create a BAP connection for the
+	// connector.
+	CreateBapConnection bool `json:"createBapConnection,omitempty"`
 	// IsActionConfigured: Output only. The connector contains the necessary
 	// parameters and is configured to support actions.
 	IsActionConfigured bool `json:"isActionConfigured,omitempty"`
@@ -4719,7 +4753,7 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// `disable-agent-sharing` * `disable-image-generation` *
 	// `disable-video-generation` * `disable-onedrive-upload` *
 	// `disable-talk-to-content` * `disable-google-drive-upload` *
-	// `disable-welcome-emails`
+	// `disable-welcome-emails` * `disable-canvas` * `disable-canvas-workspace`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -5723,6 +5757,8 @@ type GoogleCloudDiscoveryengineV1LicenseConfig struct {
 	// license config. Format:
 	// `projects/{project}/locations/{location}/licenseConfigs/{license_config}`
 	Name string `json:"name,omitempty"`
+	// ScheduledUpdate: Optional. Scheduled update configuration.
+	ScheduledUpdate *GoogleCloudDiscoveryengineV1LicenseConfigScheduledUpdate `json:"scheduledUpdate,omitempty"`
 	// StartDate: Required. The start date.
 	StartDate *GoogleTypeDate `json:"startDate,omitempty"`
 	// State: Output only. The state of the license config.
@@ -5788,6 +5824,31 @@ type GoogleCloudDiscoveryengineV1LicenseConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1LicenseConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1LicenseConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1LicenseConfigScheduledUpdate: Message containing
+// data for a scheduled update.
+type GoogleCloudDiscoveryengineV1LicenseConfigScheduledUpdate struct {
+	// EffectiveDate: The effective date for the next update.
+	EffectiveDate *GoogleTypeDate `json:"effectiveDate,omitempty"`
+	// SeatCount: The seat count scheduled for the next update.
+	SeatCount int64 `json:"seatCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "EffectiveDate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EffectiveDate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1LicenseConfigScheduledUpdate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1LicenseConfigScheduledUpdate
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7448,6 +7509,9 @@ func (s GoogleCloudDiscoveryengineV1alphaAclConfig) MarshalJSON() ([]byte, error
 type GoogleCloudDiscoveryengineV1alphaActionConfig struct {
 	// ActionParams: Optional. Action parameters in structured json format.
 	ActionParams googleapi.RawMessage `json:"actionParams,omitempty"`
+	// CreateBapConnection: Optional. Whether to create a BAP connection for the
+	// connector.
+	CreateBapConnection bool `json:"createBapConnection,omitempty"`
 	// IsActionConfigured: Output only. The connector contains the necessary
 	// parameters and is configured to support actions.
 	IsActionConfigured bool `json:"isActionConfigured,omitempty"`
@@ -7793,7 +7857,7 @@ type GoogleCloudDiscoveryengineV1alphaAnswer struct {
 	AnswerSkippedReasons []string `json:"answerSkippedReasons,omitempty"`
 	// AnswerText: The textual answer.
 	AnswerText string `json:"answerText,omitempty"`
-	// BlobAttachments: List of blob attachments in the answer.
+	// BlobAttachments: Output only. List of blob attachments in the answer.
 	BlobAttachments []*GoogleCloudDiscoveryengineV1alphaAnswerBlobAttachment `json:"blobAttachments,omitempty"`
 	// Citations: Citations.
 	Citations []*GoogleCloudDiscoveryengineV1alphaAnswerCitation `json:"citations,omitempty"`
@@ -8676,6 +8740,8 @@ func (s GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementRe
 // GoogleCloudDiscoveryengineV1alphaAssistAnswerReply: One part of the
 // multi-part response of the assist call.
 type GoogleCloudDiscoveryengineV1alphaAssistAnswerReply struct {
+	// CreateTime: The time when the reply was created.
+	CreateTime string `json:"createTime,omitempty"`
 	// GroundedContent: Possibly grounded response text or media from the
 	// assistant.
 	GroundedContent *GoogleCloudDiscoveryengineV1alphaAssistantGroundedContent `json:"groundedContent,omitempty"`
@@ -8685,15 +8751,15 @@ type GoogleCloudDiscoveryengineV1alphaAssistAnswerReply struct {
 	// stream (across multiple StreamAssistResponse messages). These represent
 	// parts of a single `Reply` message in the final `AssistAnswer` resource.
 	ReplyId string `json:"replyId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GroundedContent") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GroundedContent") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -10697,6 +10763,9 @@ type GoogleCloudDiscoveryengineV1alphaDataStore struct {
 	ContentConfig string `json:"contentConfig,omitempty"`
 	// CreateTime: Output only. Timestamp the DataStore was created at.
 	CreateTime string `json:"createTime,omitempty"`
+	// DataProtectionPolicy: Optional. Specifies the data protection policy for the
+	// data store.
+	DataProtectionPolicy *GoogleCloudDiscoveryengineV1alphaDataProtectionPolicy `json:"dataProtectionPolicy,omitempty"`
 	// DefaultSchemaId: Output only. The id of the default Schema associated to
 	// this data store.
 	DefaultSchemaId string `json:"defaultSchemaId,omitempty"`
@@ -11818,7 +11887,7 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// `disable-agent-sharing` * `disable-image-generation` *
 	// `disable-video-generation` * `disable-onedrive-upload` *
 	// `disable-talk-to-content` * `disable-google-drive-upload` *
-	// `disable-welcome-emails`
+	// `disable-welcome-emails` * `disable-canvas` * `disable-canvas-workspace`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -13471,6 +13540,8 @@ type GoogleCloudDiscoveryengineV1alphaLicenseConfig struct {
 	// license config. Format:
 	// `projects/{project}/locations/{location}/licenseConfigs/{license_config}`
 	Name string `json:"name,omitempty"`
+	// ScheduledUpdate: Optional. Scheduled update configuration.
+	ScheduledUpdate *GoogleCloudDiscoveryengineV1alphaLicenseConfigScheduledUpdate `json:"scheduledUpdate,omitempty"`
 	// StartDate: Required. The start date.
 	StartDate *GoogleTypeDate `json:"startDate,omitempty"`
 	// State: Output only. The state of the license config.
@@ -13536,6 +13607,31 @@ type GoogleCloudDiscoveryengineV1alphaLicenseConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaLicenseConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaLicenseConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaLicenseConfigScheduledUpdate: Message
+// containing data for a scheduled update.
+type GoogleCloudDiscoveryengineV1alphaLicenseConfigScheduledUpdate struct {
+	// EffectiveDate: The effective date for the next update.
+	EffectiveDate *GoogleTypeDate `json:"effectiveDate,omitempty"`
+	// SeatCount: The seat count scheduled for the next update.
+	SeatCount int64 `json:"seatCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "EffectiveDate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EffectiveDate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaLicenseConfigScheduledUpdate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaLicenseConfigScheduledUpdate
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -15021,6 +15117,9 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// CustomFineTuningSpec: Custom fine tuning configs. If set, it has higher
 	// priority than the configs set in ServingConfig.custom_fine_tuning_spec.
 	CustomFineTuningSpec *GoogleCloudDiscoveryengineV1alphaCustomFineTuningSpec `json:"customFineTuningSpec,omitempty"`
+	// CustomRankingParams: Optional. Optional configuration for the Custom Ranking
+	// feature.
+	CustomRankingParams *GoogleCloudDiscoveryengineV1alphaSearchRequestCustomRankingParams `json:"customRankingParams,omitempty"`
 	// DataStoreSpecs: Specifications that define the specific DataStores to be
 	// searched, along with configurations for those data stores. This is only
 	// considered for Engines with multiple data stores. For engines with a single
@@ -15037,6 +15136,12 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// SearchRequest.EmbeddingSpec.EmbeddingVector.field_path is not provided, it
 	// will use ServingConfig.EmbeddingConfig.field_path.
 	EmbeddingSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestEmbeddingSpec `json:"embeddingSpec,omitempty"`
+	// Entity: Optional. The entity for customers that may run multiple different
+	// entities, domains, sites or regions, for example, "Google US", "Google Ads",
+	// "Waymo", "google.com", "youtube.com", etc. If this is set, it should be
+	// exactly matched with UserEvent.entity to get search results boosted by
+	// entity.
+	Entity string `json:"entity,omitempty"`
 	// FacetSpecs: Facet specifications for faceted search. If empty, no facets are
 	// returned. A maximum of 100 values are allowed. Otherwise, an
 	// `INVALID_ARGUMENT` error is returned.
@@ -15888,6 +15993,33 @@ func (s GoogleCloudDiscoveryengineV1alphaSearchRequestCrowdingSpec) MarshalJSON(
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaSearchRequestCustomRankingParams:
+// Configuration parameters for the Custom Ranking feature.
+type GoogleCloudDiscoveryengineV1alphaSearchRequestCustomRankingParams struct {
+	// ExpressionsToPrecompute: Optional. A list of ranking expressions (see
+	// `ranking_expression` for the syntax documentation) to evaluate. The
+	// evaluation results will be returned in
+	// `SearchResponse.SearchResult.rank_signals.precomputed_expression_values`
+	// field.
+	ExpressionsToPrecompute []string `json:"expressionsToPrecompute,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExpressionsToPrecompute") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExpressionsToPrecompute") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaSearchRequestCustomRankingParams) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchRequestCustomRankingParams
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaSearchRequestDataStoreSpec: A struct to
 // define data stores to filter on in a search call and configurations for
 // those data stores. Otherwise, an `INVALID_ARGUMENT` error is returned.
@@ -16227,8 +16359,6 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestNaturalLanguageQueryUnderstan
 	// GeoSearchQueryDetectionFieldNames: Field names used for location-based
 	// filtering, where geolocation filters are detected in natural language search
 	// queries. Only valid when the FilterExtractionCondition is set to `ENABLED`.
-	// If this field is set, it overrides the field names set in
-	// ServingConfig.geo_search_query_detection_field_names.
 	GeoSearchQueryDetectionFieldNames []string `json:"geoSearchQueryDetectionFieldNames,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowedFieldNames") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -17207,6 +17337,10 @@ func (s GoogleCloudDiscoveryengineV1alphaUpdateTargetSiteMetadata) MarshalJSON()
 
 // GoogleCloudDiscoveryengineV1alphaUserInfo: Information of an end user.
 type GoogleCloudDiscoveryengineV1alphaUserInfo struct {
+	// PreciseLocation: Optional. Input only. Precise location of the user. It is
+	// used in Custom Ranking to calculate the distance between the user and the
+	// relevant documents.
+	PreciseLocation *GoogleCloudDiscoveryengineV1alphaUserInfoPreciseLocation `json:"preciseLocation,omitempty"`
 	// TimeZone: Optional. IANA time zone, e.g. Europe/Budapest.
 	TimeZone string `json:"timeZone,omitempty"`
 	// UserAgent: User agent as included in the HTTP header. The field must be a
@@ -17226,21 +17360,48 @@ type GoogleCloudDiscoveryengineV1alphaUserInfo struct {
 	// doesn't interpret the value in any way. This field is used to associate
 	// events with a user across sessions if the events are being uploaded.
 	UserId string `json:"userId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "TimeZone") to
+	// ForceSendFields is a list of field names (e.g. "PreciseLocation") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "TimeZone") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "PreciseLocation") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudDiscoveryengineV1alphaUserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaUserInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaUserInfoPreciseLocation: Precise location
+// info with multiple representation options. Currently only latitude and
+// longitude point is supported.
+type GoogleCloudDiscoveryengineV1alphaUserInfoPreciseLocation struct {
+	// Address: Optional. Location represented by a natural language address. Will
+	// later be geocoded and converted to either a point or a polygon.
+	Address string `json:"address,omitempty"`
+	// Point: Optional. Location represented by a latitude/longitude point.
+	Point *GoogleTypeLatLng `json:"point,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Address") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Address") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaUserInfoPreciseLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaUserInfoPreciseLocation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -17962,7 +18123,7 @@ type GoogleCloudDiscoveryengineV1betaAnswer struct {
 	AnswerSkippedReasons []string `json:"answerSkippedReasons,omitempty"`
 	// AnswerText: The textual answer.
 	AnswerText string `json:"answerText,omitempty"`
-	// BlobAttachments: List of blob attachments in the answer.
+	// BlobAttachments: Output only. List of blob attachments in the answer.
 	BlobAttachments []*GoogleCloudDiscoveryengineV1betaAnswerBlobAttachment `json:"blobAttachments,omitempty"`
 	// Citations: Citations.
 	Citations []*GoogleCloudDiscoveryengineV1betaAnswerCitation `json:"citations,omitempty"`
@@ -19827,18 +19988,20 @@ func (s GoogleCloudDiscoveryengineV1betaAssistAnswerCustomerPolicyEnforcementRes
 // GoogleCloudDiscoveryengineV1betaAssistAnswerReply: One part of the
 // multi-part response of the assist call.
 type GoogleCloudDiscoveryengineV1betaAssistAnswerReply struct {
+	// CreateTime: The time when the reply was created.
+	CreateTime string `json:"createTime,omitempty"`
 	// GroundedContent: Possibly grounded response text or media from the
 	// assistant.
 	GroundedContent *GoogleCloudDiscoveryengineV1betaAssistantGroundedContent `json:"groundedContent,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GroundedContent") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GroundedContent") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -23258,6 +23421,65 @@ type GoogleCloudDiscoveryengineV1betaDisableAdvancedSiteSearchRequest struct {
 type GoogleCloudDiscoveryengineV1betaDisableAdvancedSiteSearchResponse struct {
 }
 
+// GoogleCloudDiscoveryengineV1betaDistributeLicenseConfigRequest: Request
+// message for LicenseConfigService.DistributeLicenseConfig method.
+type GoogleCloudDiscoveryengineV1betaDistributeLicenseConfigRequest struct {
+	// LicenseConfigId: Optional. Distribute seats to this license config instead
+	// of creating a new one. If not specified, a new license config will be
+	// created from the billing account license config.
+	LicenseConfigId string `json:"licenseConfigId,omitempty"`
+	// LicenseCount: Required. The number of licenses to distribute.
+	LicenseCount int64 `json:"licenseCount,omitempty,string"`
+	// Location: Required. The target GCP project region to distribute the license
+	// config to.
+	Location string `json:"location,omitempty"`
+	// ProjectNumber: Required. The target GCP project number to distribute the
+	// license config to.
+	ProjectNumber int64 `json:"projectNumber,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "LicenseConfigId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LicenseConfigId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaDistributeLicenseConfigRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaDistributeLicenseConfigRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaDistributeLicenseConfigResponse: Response
+// message for LicenseConfigService.DistributeLicenseConfig method.
+type GoogleCloudDiscoveryengineV1betaDistributeLicenseConfigResponse struct {
+	// LicenseConfig: The updated or created LicenseConfig.
+	LicenseConfig *GoogleCloudDiscoveryengineV1betaLicenseConfig `json:"licenseConfig,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "LicenseConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LicenseConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaDistributeLicenseConfigResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaDistributeLicenseConfigResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaDocument: Document captures all raw metadata
 // information of items to be recommended or searched.
 type GoogleCloudDiscoveryengineV1betaDocument struct {
@@ -23882,7 +24104,7 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// `disable-agent-sharing` * `disable-image-generation` *
 	// `disable-video-generation` * `disable-onedrive-upload` *
 	// `disable-talk-to-content` * `disable-google-drive-upload` *
-	// `disable-welcome-emails`
+	// `disable-welcome-emails` * `disable-canvas` * `disable-canvas-workspace`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -25825,6 +26047,8 @@ type GoogleCloudDiscoveryengineV1betaLicenseConfig struct {
 	// license config. Format:
 	// `projects/{project}/locations/{location}/licenseConfigs/{license_config}`
 	Name string `json:"name,omitempty"`
+	// ScheduledUpdate: Optional. Scheduled update configuration.
+	ScheduledUpdate *GoogleCloudDiscoveryengineV1betaLicenseConfigScheduledUpdate `json:"scheduledUpdate,omitempty"`
 	// StartDate: Required. The start date.
 	StartDate *GoogleTypeDate `json:"startDate,omitempty"`
 	// State: Output only. The state of the license config.
@@ -25893,6 +26117,31 @@ type GoogleCloudDiscoveryengineV1betaLicenseConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1betaLicenseConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaLicenseConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaLicenseConfigScheduledUpdate: Message
+// containing data for a scheduled update.
+type GoogleCloudDiscoveryengineV1betaLicenseConfigScheduledUpdate struct {
+	// EffectiveDate: The effective date for the next update.
+	EffectiveDate *GoogleTypeDate `json:"effectiveDate,omitempty"`
+	// SeatCount: The seat count scheduled for the next update.
+	SeatCount int64 `json:"seatCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "EffectiveDate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EffectiveDate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaLicenseConfigScheduledUpdate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaLicenseConfigScheduledUpdate
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -28134,6 +28383,62 @@ func (s GoogleCloudDiscoveryengineV1betaReplyReference) MarshalJSON() ([]byte, e
 type GoogleCloudDiscoveryengineV1betaResumeEngineRequest struct {
 }
 
+// GoogleCloudDiscoveryengineV1betaRetractLicenseConfigRequest: Request message
+// for LicenseConfigService.RetractLicenseConfig method.
+type GoogleCloudDiscoveryengineV1betaRetractLicenseConfigRequest struct {
+	// FullRetract: Optional. If set to true, retract the entire license config.
+	// Otherwise, retract the specified license count.
+	FullRetract bool `json:"fullRetract,omitempty"`
+	// LicenseConfig: Required. Full resource name of LicenseConfig. Format:
+	// `projects/{project}/locations/{location}/licenseConfigs/{license_config_id}`.
+	LicenseConfig string `json:"licenseConfig,omitempty"`
+	// LicenseCount: Optional. The number of licenses to retract. Only used when
+	// full_retract is false.
+	LicenseCount int64 `json:"licenseCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "FullRetract") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FullRetract") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaRetractLicenseConfigRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaRetractLicenseConfigRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaRetractLicenseConfigResponse: Response
+// message for LicenseConfigService.RetractLicenseConfig method.
+type GoogleCloudDiscoveryengineV1betaRetractLicenseConfigResponse struct {
+	// LicenseConfig: The updated LicenseConfig.
+	LicenseConfig *GoogleCloudDiscoveryengineV1betaLicenseConfig `json:"licenseConfig,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "LicenseConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LicenseConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaRetractLicenseConfigResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaRetractLicenseConfigResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaSafetyRating: Safety rating corresponding to
 // the generated content.
 type GoogleCloudDiscoveryengineV1betaSafetyRating struct {
@@ -28494,6 +28799,9 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// then after 3 documents that share the same color AND size have been
 	// returned, subsequent ones should be removed or demoted.
 	CrowdingSpecs []*GoogleCloudDiscoveryengineV1betaSearchRequestCrowdingSpec `json:"crowdingSpecs,omitempty"`
+	// CustomRankingParams: Optional. Optional configuration for the Custom Ranking
+	// feature.
+	CustomRankingParams *GoogleCloudDiscoveryengineV1betaSearchRequestCustomRankingParams `json:"customRankingParams,omitempty"`
 	// DataStoreSpecs: Specifications that define the specific DataStores to be
 	// searched, along with configurations for those data stores. This is only
 	// considered for Engines with multiple data stores. For engines with a single
@@ -28510,6 +28818,12 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// SearchRequest.EmbeddingSpec.EmbeddingVector.field_path is not provided, it
 	// will use ServingConfig.EmbeddingConfig.field_path.
 	EmbeddingSpec *GoogleCloudDiscoveryengineV1betaSearchRequestEmbeddingSpec `json:"embeddingSpec,omitempty"`
+	// Entity: Optional. The entity for customers that may run multiple different
+	// entities, domains, sites or regions, for example, "Google US", "Google Ads",
+	// "Waymo", "google.com", "youtube.com", etc. If this is set, it should be
+	// exactly matched with UserEvent.entity to get search results boosted by
+	// entity.
+	Entity string `json:"entity,omitempty"`
 	// FacetSpecs: Facet specifications for faceted search. If empty, no facets are
 	// returned. A maximum of 100 values are allowed. Otherwise, an
 	// `INVALID_ARGUMENT` error is returned.
@@ -29356,6 +29670,33 @@ func (s GoogleCloudDiscoveryengineV1betaSearchRequestCrowdingSpec) MarshalJSON()
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaSearchRequestCustomRankingParams:
+// Configuration parameters for the Custom Ranking feature.
+type GoogleCloudDiscoveryengineV1betaSearchRequestCustomRankingParams struct {
+	// ExpressionsToPrecompute: Optional. A list of ranking expressions (see
+	// `ranking_expression` for the syntax documentation) to evaluate. The
+	// evaluation results will be returned in
+	// `SearchResponse.SearchResult.rank_signals.precomputed_expression_values`
+	// field.
+	ExpressionsToPrecompute []string `json:"expressionsToPrecompute,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExpressionsToPrecompute") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExpressionsToPrecompute") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaSearchRequestCustomRankingParams) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchRequestCustomRankingParams
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaSearchRequestDataStoreSpec: A struct to
 // define data stores to filter on in a search call and configurations for
 // those data stores. Otherwise, an `INVALID_ARGUMENT` error is returned.
@@ -29695,8 +30036,6 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestNaturalLanguageQueryUnderstand
 	// GeoSearchQueryDetectionFieldNames: Field names used for location-based
 	// filtering, where geolocation filters are detected in natural language search
 	// queries. Only valid when the FilterExtractionCondition is set to `ENABLED`.
-	// If this field is set, it overrides the field names set in
-	// ServingConfig.geo_search_query_detection_field_names.
 	GeoSearchQueryDetectionFieldNames []string `json:"geoSearchQueryDetectionFieldNames,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowedFieldNames") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -30620,6 +30959,10 @@ type GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignals struc
 	KeywordSimilarityScore float64 `json:"keywordSimilarityScore,omitempty"`
 	// PctrRank: Optional. Predicted conversion rate adjustment as a rank.
 	PctrRank float64 `json:"pctrRank,omitempty"`
+	// PrecomputedExpressionValues: Optional. A list of precomputed expression
+	// results for a given document, in the same order as requested in
+	// `SearchRequest.custom_ranking_params.expressions_to_precompute`.
+	PrecomputedExpressionValues []float64 `json:"precomputedExpressionValues,omitempty"`
 	// RelevanceScore: Optional. Semantic relevance adjustment.
 	RelevanceScore float64 `json:"relevanceScore,omitempty"`
 	// SemanticSimilarityScore: Optional. Semantic similarity adjustment.
@@ -30647,14 +30990,15 @@ func (s GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignals) M
 func (s *GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignals) UnmarshalJSON(data []byte) error {
 	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignals
 	var s1 struct {
-		BoostingFactor          gensupport.JSONFloat64 `json:"boostingFactor"`
-		DefaultRank             gensupport.JSONFloat64 `json:"defaultRank"`
-		DocumentAge             gensupport.JSONFloat64 `json:"documentAge"`
-		KeywordSimilarityScore  gensupport.JSONFloat64 `json:"keywordSimilarityScore"`
-		PctrRank                gensupport.JSONFloat64 `json:"pctrRank"`
-		RelevanceScore          gensupport.JSONFloat64 `json:"relevanceScore"`
-		SemanticSimilarityScore gensupport.JSONFloat64 `json:"semanticSimilarityScore"`
-		TopicalityRank          gensupport.JSONFloat64 `json:"topicalityRank"`
+		BoostingFactor              gensupport.JSONFloat64   `json:"boostingFactor"`
+		DefaultRank                 gensupport.JSONFloat64   `json:"defaultRank"`
+		DocumentAge                 gensupport.JSONFloat64   `json:"documentAge"`
+		KeywordSimilarityScore      gensupport.JSONFloat64   `json:"keywordSimilarityScore"`
+		PctrRank                    gensupport.JSONFloat64   `json:"pctrRank"`
+		PrecomputedExpressionValues []gensupport.JSONFloat64 `json:"precomputedExpressionValues"`
+		RelevanceScore              gensupport.JSONFloat64   `json:"relevanceScore"`
+		SemanticSimilarityScore     gensupport.JSONFloat64   `json:"semanticSimilarityScore"`
+		TopicalityRank              gensupport.JSONFloat64   `json:"topicalityRank"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -30666,6 +31010,10 @@ func (s *GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignals) 
 	s.DocumentAge = float64(s1.DocumentAge)
 	s.KeywordSimilarityScore = float64(s1.KeywordSimilarityScore)
 	s.PctrRank = float64(s1.PctrRank)
+	s.PrecomputedExpressionValues = make([]float64, len(s1.PrecomputedExpressionValues))
+	for i := range s1.PrecomputedExpressionValues {
+		s.PrecomputedExpressionValues[i] = float64(s1.PrecomputedExpressionValues[i])
+	}
 	s.RelevanceScore = float64(s1.RelevanceScore)
 	s.SemanticSimilarityScore = float64(s1.SemanticSimilarityScore)
 	s.TopicalityRank = float64(s1.TopicalityRank)
@@ -32528,6 +32876,10 @@ func (s GoogleCloudDiscoveryengineV1betaUserEvent) MarshalJSON() ([]byte, error)
 
 // GoogleCloudDiscoveryengineV1betaUserInfo: Information of an end user.
 type GoogleCloudDiscoveryengineV1betaUserInfo struct {
+	// PreciseLocation: Optional. Input only. Precise location of the user. It is
+	// used in Custom Ranking to calculate the distance between the user and the
+	// relevant documents.
+	PreciseLocation *GoogleCloudDiscoveryengineV1betaUserInfoPreciseLocation `json:"preciseLocation,omitempty"`
 	// TimeZone: Optional. IANA time zone, e.g. Europe/Budapest.
 	TimeZone string `json:"timeZone,omitempty"`
 	// UserAgent: User agent as included in the HTTP header. The field must be a
@@ -32547,21 +32899,48 @@ type GoogleCloudDiscoveryengineV1betaUserInfo struct {
 	// doesn't interpret the value in any way. This field is used to associate
 	// events with a user across sessions if the events are being uploaded.
 	UserId string `json:"userId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "TimeZone") to
+	// ForceSendFields is a list of field names (e.g. "PreciseLocation") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "TimeZone") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "PreciseLocation") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudDiscoveryengineV1betaUserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaUserInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaUserInfoPreciseLocation: Precise location
+// info with multiple representation options. Currently only latitude and
+// longitude point is supported.
+type GoogleCloudDiscoveryengineV1betaUserInfoPreciseLocation struct {
+	// Address: Optional. Location represented by a natural language address. Will
+	// later be geocoded and converted to either a point or a polygon.
+	Address string `json:"address,omitempty"`
+	// Point: Optional. Location represented by a latitude/longitude point.
+	Point *GoogleTypeLatLng `json:"point,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Address") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Address") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaUserInfoPreciseLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaUserInfoPreciseLocation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -33397,6 +33776,50 @@ func (s GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleTypeLatLng: An object that represents a latitude/longitude pair. This
+// is expressed as a pair of doubles to represent degrees latitude and degrees
+// longitude. Unless specified otherwise, this object must conform to the WGS84
+// standard. Values must be within normalized ranges.
+type GoogleTypeLatLng struct {
+	// Latitude: The latitude in degrees. It must be in the range [-90.0, +90.0].
+	Latitude float64 `json:"latitude,omitempty"`
+	// Longitude: The longitude in degrees. It must be in the range [-180.0,
+	// +180.0].
+	Longitude float64 `json:"longitude,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Latitude") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Latitude") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleTypeLatLng) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleTypeLatLng
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleTypeLatLng) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleTypeLatLng
+	var s1 struct {
+		Latitude  gensupport.JSONFloat64 `json:"latitude"`
+		Longitude gensupport.JSONFloat64 `json:"longitude"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Latitude = float64(s1.Latitude)
+	s.Longitude = float64(s1.Longitude)
+	return nil
+}
+
 // GoogleTypeTimeZone: Represents a time zone from the IANA Time Zone Database
 // (https://www.iana.org/time-zones).
 type GoogleTypeTimeZone struct {
@@ -33421,6 +33844,223 @@ type GoogleTypeTimeZone struct {
 func (s GoogleTypeTimeZone) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeTimeZone
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type BillingAccountsBillingAccountLicenseConfigsDistributeLicenseConfigCall struct {
+	s                                                              *Service
+	billingAccountLicenseConfig                                    string
+	googleclouddiscoveryenginev1betadistributelicenseconfigrequest *GoogleCloudDiscoveryengineV1betaDistributeLicenseConfigRequest
+	urlParams_                                                     gensupport.URLParams
+	ctx_                                                           context.Context
+	header_                                                        http.Header
+}
+
+// DistributeLicenseConfig: Distributes a LicenseConfig from billing account
+// level to project level.
+//
+//   - billingAccountLicenseConfig: Full resource name of
+//     BillingAccountLicenseConfig. Format:
+//     `billingAccounts/{billing_account}/billingAccountLicenseConfigs/{billing_ac
+//     count_license_config_id}`.
+func (r *BillingAccountsBillingAccountLicenseConfigsService) DistributeLicenseConfig(billingAccountLicenseConfig string, googleclouddiscoveryenginev1betadistributelicenseconfigrequest *GoogleCloudDiscoveryengineV1betaDistributeLicenseConfigRequest) *BillingAccountsBillingAccountLicenseConfigsDistributeLicenseConfigCall {
+	c := &BillingAccountsBillingAccountLicenseConfigsDistributeLicenseConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.billingAccountLicenseConfig = billingAccountLicenseConfig
+	c.googleclouddiscoveryenginev1betadistributelicenseconfigrequest = googleclouddiscoveryenginev1betadistributelicenseconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *BillingAccountsBillingAccountLicenseConfigsDistributeLicenseConfigCall) Fields(s ...googleapi.Field) *BillingAccountsBillingAccountLicenseConfigsDistributeLicenseConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *BillingAccountsBillingAccountLicenseConfigsDistributeLicenseConfigCall) Context(ctx context.Context) *BillingAccountsBillingAccountLicenseConfigsDistributeLicenseConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *BillingAccountsBillingAccountLicenseConfigsDistributeLicenseConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsBillingAccountLicenseConfigsDistributeLicenseConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1betadistributelicenseconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+billingAccountLicenseConfig}:distributeLicenseConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"billingAccountLicenseConfig": c.billingAccountLicenseConfig,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.billingAccounts.billingAccountLicenseConfigs.distributeLicenseConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.billingAccounts.billingAccountLicenseConfigs.distributeLicenseConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaDistributeLicenseConfigResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *BillingAccountsBillingAccountLicenseConfigsDistributeLicenseConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaDistributeLicenseConfigResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaDistributeLicenseConfigResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.billingAccounts.billingAccountLicenseConfigs.distributeLicenseConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type BillingAccountsBillingAccountLicenseConfigsRetractLicenseConfigCall struct {
+	s                                                           *Service
+	billingAccountLicenseConfig                                 string
+	googleclouddiscoveryenginev1betaretractlicenseconfigrequest *GoogleCloudDiscoveryengineV1betaRetractLicenseConfigRequest
+	urlParams_                                                  gensupport.URLParams
+	ctx_                                                        context.Context
+	header_                                                     http.Header
+}
+
+// RetractLicenseConfig: This method is called from the billing account side to
+// retract the LicenseConfig from the given project back to the billing
+// account.
+//
+//   - billingAccountLicenseConfig: Full resource name of
+//     BillingAccountLicenseConfig. Format:
+//     `billingAccounts/{billing_account}/billingAccountLicenseConfigs/{billing_ac
+//     count_license_config_id}`.
+func (r *BillingAccountsBillingAccountLicenseConfigsService) RetractLicenseConfig(billingAccountLicenseConfig string, googleclouddiscoveryenginev1betaretractlicenseconfigrequest *GoogleCloudDiscoveryengineV1betaRetractLicenseConfigRequest) *BillingAccountsBillingAccountLicenseConfigsRetractLicenseConfigCall {
+	c := &BillingAccountsBillingAccountLicenseConfigsRetractLicenseConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.billingAccountLicenseConfig = billingAccountLicenseConfig
+	c.googleclouddiscoveryenginev1betaretractlicenseconfigrequest = googleclouddiscoveryenginev1betaretractlicenseconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *BillingAccountsBillingAccountLicenseConfigsRetractLicenseConfigCall) Fields(s ...googleapi.Field) *BillingAccountsBillingAccountLicenseConfigsRetractLicenseConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *BillingAccountsBillingAccountLicenseConfigsRetractLicenseConfigCall) Context(ctx context.Context) *BillingAccountsBillingAccountLicenseConfigsRetractLicenseConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *BillingAccountsBillingAccountLicenseConfigsRetractLicenseConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsBillingAccountLicenseConfigsRetractLicenseConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1betaretractlicenseconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+billingAccountLicenseConfig}:retractLicenseConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"billingAccountLicenseConfig": c.billingAccountLicenseConfig,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.billingAccounts.billingAccountLicenseConfigs.retractLicenseConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.billingAccounts.billingAccountLicenseConfigs.retractLicenseConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaRetractLicenseConfigResponse.ServerResponse.
+// Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *BillingAccountsBillingAccountLicenseConfigsRetractLicenseConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaRetractLicenseConfigResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaRetractLicenseConfigResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.billingAccounts.billingAccountLicenseConfigs.retractLicenseConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsProvisionCall struct {
@@ -40607,8 +41247,13 @@ type ProjectsLocationsCollectionsDataStoresServingConfigsAnswerCall struct {
 //     `projects/*/locations/global/collections/default_collection/engines/*/servi
 //     ngConfigs/default_serving_config`, or
 //     `projects/*/locations/global/collections/default_collection/dataStores/*/se
-//     rvingConfigs/default_serving_config`. This field is used to identify the
-//     serving configuration name, set of models used to make the search.
+//     rvingConfigs/default_serving_config`. Or the resource name of the agent
+//     engine serving config, such as:
+//     `projects/*/locations/global/collections/default_collection/engines/*/servi
+//     ngConfigs/default_agent_answer`. (use when `enable_agent_invocation` set
+//     to true, and you have custom `AI_MODE` agent engine configured) This field
+//     is used to identify the serving configuration name, set of models used to
+//     make the search.
 func (r *ProjectsLocationsCollectionsDataStoresServingConfigsService) Answer(servingConfig string, googleclouddiscoveryenginev1betaanswerqueryrequest *GoogleCloudDiscoveryengineV1betaAnswerQueryRequest) *ProjectsLocationsCollectionsDataStoresServingConfigsAnswerCall {
 	c := &ProjectsLocationsCollectionsDataStoresServingConfigsAnswerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.servingConfig = servingConfig
@@ -41695,8 +42340,13 @@ type ProjectsLocationsCollectionsDataStoresServingConfigsStreamAnswerCall struct
 //     `projects/*/locations/global/collections/default_collection/engines/*/servi
 //     ngConfigs/default_serving_config`, or
 //     `projects/*/locations/global/collections/default_collection/dataStores/*/se
-//     rvingConfigs/default_serving_config`. This field is used to identify the
-//     serving configuration name, set of models used to make the search.
+//     rvingConfigs/default_serving_config`. Or the resource name of the agent
+//     engine serving config, such as:
+//     `projects/*/locations/global/collections/default_collection/engines/*/servi
+//     ngConfigs/default_agent_answer`. (use when `enable_agent_invocation` set
+//     to true, and you have custom `AI_MODE` agent engine configured) This field
+//     is used to identify the serving configuration name, set of models used to
+//     make the search.
 func (r *ProjectsLocationsCollectionsDataStoresServingConfigsService) StreamAnswer(servingConfig string, googleclouddiscoveryenginev1betaanswerqueryrequest *GoogleCloudDiscoveryengineV1betaAnswerQueryRequest) *ProjectsLocationsCollectionsDataStoresServingConfigsStreamAnswerCall {
 	c := &ProjectsLocationsCollectionsDataStoresServingConfigsStreamAnswerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.servingConfig = servingConfig
@@ -41808,6 +42458,15 @@ func (r *ProjectsLocationsCollectionsDataStoresSessionsService) Create(parent st
 	c := &ProjectsLocationsCollectionsDataStoresSessionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.googleclouddiscoveryenginev1betasession = googleclouddiscoveryenginev1betasession
+	return c
+}
+
+// SessionId sets the optional parameter "sessionId": The ID to use for the
+// session, which will become the final component of the session's resource
+// name. This value should be 1-63 characters, and valid characters are
+// /a-z0-9{0,61}[a-z0-9]/. If not specified, a unique ID will be generated.
+func (c *ProjectsLocationsCollectionsDataStoresSessionsCreateCall) SessionId(sessionId string) *ProjectsLocationsCollectionsDataStoresSessionsCreateCall {
+	c.urlParams_.Set("sessionId", sessionId)
 	return c
 }
 
@@ -49167,8 +49826,13 @@ type ProjectsLocationsCollectionsEnginesServingConfigsAnswerCall struct {
 //     `projects/*/locations/global/collections/default_collection/engines/*/servi
 //     ngConfigs/default_serving_config`, or
 //     `projects/*/locations/global/collections/default_collection/dataStores/*/se
-//     rvingConfigs/default_serving_config`. This field is used to identify the
-//     serving configuration name, set of models used to make the search.
+//     rvingConfigs/default_serving_config`. Or the resource name of the agent
+//     engine serving config, such as:
+//     `projects/*/locations/global/collections/default_collection/engines/*/servi
+//     ngConfigs/default_agent_answer`. (use when `enable_agent_invocation` set
+//     to true, and you have custom `AI_MODE` agent engine configured) This field
+//     is used to identify the serving configuration name, set of models used to
+//     make the search.
 func (r *ProjectsLocationsCollectionsEnginesServingConfigsService) Answer(servingConfig string, googleclouddiscoveryenginev1betaanswerqueryrequest *GoogleCloudDiscoveryengineV1betaAnswerQueryRequest) *ProjectsLocationsCollectionsEnginesServingConfigsAnswerCall {
 	c := &ProjectsLocationsCollectionsEnginesServingConfigsAnswerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.servingConfig = servingConfig
@@ -50255,8 +50919,13 @@ type ProjectsLocationsCollectionsEnginesServingConfigsStreamAnswerCall struct {
 //     `projects/*/locations/global/collections/default_collection/engines/*/servi
 //     ngConfigs/default_serving_config`, or
 //     `projects/*/locations/global/collections/default_collection/dataStores/*/se
-//     rvingConfigs/default_serving_config`. This field is used to identify the
-//     serving configuration name, set of models used to make the search.
+//     rvingConfigs/default_serving_config`. Or the resource name of the agent
+//     engine serving config, such as:
+//     `projects/*/locations/global/collections/default_collection/engines/*/servi
+//     ngConfigs/default_agent_answer`. (use when `enable_agent_invocation` set
+//     to true, and you have custom `AI_MODE` agent engine configured) This field
+//     is used to identify the serving configuration name, set of models used to
+//     make the search.
 func (r *ProjectsLocationsCollectionsEnginesServingConfigsService) StreamAnswer(servingConfig string, googleclouddiscoveryenginev1betaanswerqueryrequest *GoogleCloudDiscoveryengineV1betaAnswerQueryRequest) *ProjectsLocationsCollectionsEnginesServingConfigsStreamAnswerCall {
 	c := &ProjectsLocationsCollectionsEnginesServingConfigsStreamAnswerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.servingConfig = servingConfig
@@ -50368,6 +51037,15 @@ func (r *ProjectsLocationsCollectionsEnginesSessionsService) Create(parent strin
 	c := &ProjectsLocationsCollectionsEnginesSessionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.googleclouddiscoveryenginev1betasession = googleclouddiscoveryenginev1betasession
+	return c
+}
+
+// SessionId sets the optional parameter "sessionId": The ID to use for the
+// session, which will become the final component of the session's resource
+// name. This value should be 1-63 characters, and valid characters are
+// /a-z0-9{0,61}[a-z0-9]/. If not specified, a unique ID will be generated.
+func (c *ProjectsLocationsCollectionsEnginesSessionsCreateCall) SessionId(sessionId string) *ProjectsLocationsCollectionsEnginesSessionsCreateCall {
+	c.urlParams_.Set("sessionId", sessionId)
 	return c
 }
 
@@ -56433,8 +57111,13 @@ type ProjectsLocationsDataStoresServingConfigsAnswerCall struct {
 //     `projects/*/locations/global/collections/default_collection/engines/*/servi
 //     ngConfigs/default_serving_config`, or
 //     `projects/*/locations/global/collections/default_collection/dataStores/*/se
-//     rvingConfigs/default_serving_config`. This field is used to identify the
-//     serving configuration name, set of models used to make the search.
+//     rvingConfigs/default_serving_config`. Or the resource name of the agent
+//     engine serving config, such as:
+//     `projects/*/locations/global/collections/default_collection/engines/*/servi
+//     ngConfigs/default_agent_answer`. (use when `enable_agent_invocation` set
+//     to true, and you have custom `AI_MODE` agent engine configured) This field
+//     is used to identify the serving configuration name, set of models used to
+//     make the search.
 func (r *ProjectsLocationsDataStoresServingConfigsService) Answer(servingConfig string, googleclouddiscoveryenginev1betaanswerqueryrequest *GoogleCloudDiscoveryengineV1betaAnswerQueryRequest) *ProjectsLocationsDataStoresServingConfigsAnswerCall {
 	c := &ProjectsLocationsDataStoresServingConfigsAnswerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.servingConfig = servingConfig
@@ -57521,8 +58204,13 @@ type ProjectsLocationsDataStoresServingConfigsStreamAnswerCall struct {
 //     `projects/*/locations/global/collections/default_collection/engines/*/servi
 //     ngConfigs/default_serving_config`, or
 //     `projects/*/locations/global/collections/default_collection/dataStores/*/se
-//     rvingConfigs/default_serving_config`. This field is used to identify the
-//     serving configuration name, set of models used to make the search.
+//     rvingConfigs/default_serving_config`. Or the resource name of the agent
+//     engine serving config, such as:
+//     `projects/*/locations/global/collections/default_collection/engines/*/servi
+//     ngConfigs/default_agent_answer`. (use when `enable_agent_invocation` set
+//     to true, and you have custom `AI_MODE` agent engine configured) This field
+//     is used to identify the serving configuration name, set of models used to
+//     make the search.
 func (r *ProjectsLocationsDataStoresServingConfigsService) StreamAnswer(servingConfig string, googleclouddiscoveryenginev1betaanswerqueryrequest *GoogleCloudDiscoveryengineV1betaAnswerQueryRequest) *ProjectsLocationsDataStoresServingConfigsStreamAnswerCall {
 	c := &ProjectsLocationsDataStoresServingConfigsStreamAnswerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.servingConfig = servingConfig
@@ -57634,6 +58322,15 @@ func (r *ProjectsLocationsDataStoresSessionsService) Create(parent string, googl
 	c := &ProjectsLocationsDataStoresSessionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.googleclouddiscoveryenginev1betasession = googleclouddiscoveryenginev1betasession
+	return c
+}
+
+// SessionId sets the optional parameter "sessionId": The ID to use for the
+// session, which will become the final component of the session's resource
+// name. This value should be 1-63 characters, and valid characters are
+// /a-z0-9{0,61}[a-z0-9]/. If not specified, a unique ID will be generated.
+func (c *ProjectsLocationsDataStoresSessionsCreateCall) SessionId(sessionId string) *ProjectsLocationsDataStoresSessionsCreateCall {
+	c.urlParams_.Set("sessionId", sessionId)
 	return c
 }
 
@@ -65358,6 +66055,20 @@ type ProjectsLocationsUserStoresUserLicensesListCall struct {
 func (r *ProjectsLocationsUserStoresUserLicensesService) List(parent string) *ProjectsLocationsUserStoresUserLicensesListCall {
 	c := &ProjectsLocationsUserStoresUserLicensesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter for the list request.
+// Supported fields: * `license_assignment_state` * `user_principal` *
+// Examples: * `license_assignment_state = ASSIGNED` to list assigned user
+// licenses. * `license_assignment_state = NO_LICENSE` to list not licensed
+// users. * `license_assignment_state = NO_LICENSE_ATTEMPTED_LOGIN` to list
+// users who attempted login but no license assigned. *
+// `license_assignment_state != NO_LICENSE_ATTEMPTED_LOGIN` to filter out users
+// who attempted login but no license assigned. * `user_principal =
+// user1@abc.com` to list user license for `user1@abc.com`.
+func (c *ProjectsLocationsUserStoresUserLicensesListCall) Filter(filter string) *ProjectsLocationsUserStoresUserLicensesListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 

@@ -1336,7 +1336,9 @@ type GooglePubsubV1Subscription struct {
 	RetryPolicy *RetryPolicy `json:"retryPolicy,omitempty"`
 	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
 	// this resource. For example: "123/environment": "production",
-	// "123/costCenter": "marketing"
+	// "123/costCenter": "marketing" See
+	// https://{$universe.dns_names.final_documentation_domain}/pubsub/docs/tags
+	// for more information on using tags with Pub/Sub resources.
 	Tags map[string]string `json:"tags,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AckDeadlineSeconds") to
 	// unconditionally include in API requests. By default, fields with empty or

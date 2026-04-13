@@ -911,9 +911,8 @@ type Subscription struct {
 	Reconciling bool `json:"reconciling,omitempty"`
 	// ServiceAccountAuthority: Output only. The service account that was used to
 	// authorize the creation of the subscription. This service account must be
-	// owned by the same Google Cloud project where you create this subscription.
+	// owned by the same Google Cloud project where you created this subscription.
 	// Format: `projects/{project_id}/serviceAccounts/{service_account_id}`
-	// Developer Preview (https://developers.google.com/workspace/preview).
 	ServiceAccountAuthority string `json:"serviceAccountAuthority,omitempty"`
 	// State: Output only. The state of the subscription. Determines whether the
 	// subscription can receive events and deliver them to the notification
@@ -939,15 +938,13 @@ type Subscription struct {
 	// screen](https://developers.google.com/workspace/guides/configure-oauth-consen
 	// t#choose-scopes).
 	//   "APP_SCOPE_REVOKED" - The domain administrator has revoked the grant of
-	// one or more OAuth scopes for the app. [Developer
-	// Preview](https://developers.google.com/workspace/preview).
+	// one or more OAuth scopes for the app.
 	//   "RESOURCE_DELETED" - The target resource for the subscription no longer
 	// exists.
 	//   "USER_AUTHORIZATION_FAILURE" - The user that authorized the creation of
 	// the subscription no longer has access to the subscription's target resource.
 	//   "APP_AUTHORIZATION_FAILURE" - The app that authorized the creation of the
 	// subscription no longer has access to the subscription's target resource.
-	// [Developer Preview](https://developers.google.com/workspace/preview).
 	//   "ENDPOINT_PERMISSION_DENIED" - The Google Workspace application doesn't
 	// have access to deliver events to your subscription's notification endpoint.
 	//   "ENDPOINT_NOT_FOUND" - The subscription's notification endpoint doesn't
@@ -978,8 +975,7 @@ type Subscription struct {
 	// subscription. The user must be able to view the `target_resource`. For
 	// Google Workspace users, the `{user}` value is the `user.id`
 	// (https://developers.google.com/workspace/admin/directory/reference/rest/v1/users#User.FIELDS.id)
-	// field from the Directory API. Format: `users/{user}` Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// field from the Directory API. Format: `users/{user}`
 	UserAuthority string `json:"userAuthority,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1405,8 +1401,7 @@ type SubscriptionsCreateCall struct {
 // For a subscription on a Chat target resource
 // (https://developers.google.com/workspace/events/guides/events-chat), you can
 // create a subscription as: - A Chat app by specifying an authorization scope
-// that begins with `chat.app` and getting one-time administrator approval
-// (Developer Preview (https://developers.google.com/workspace/preview)). To
+// that begins with `chat.app` and getting one-time administrator approval. To
 // learn more, see Authorize as a Chat app with administrator approval
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app).
 // - A user by specifying an authorization scope that doesn't include `app` in
@@ -1922,8 +1917,7 @@ type SubscriptionsPatchCall struct {
 // For a subscription on a Chat target resource
 // (https://developers.google.com/workspace/events/guides/events-chat), you can
 // update a subscription as: - A Chat app by specifying an authorization scope
-// that begins with `chat.app` andgetting one-time administrator approval
-// (Developer Preview (https://developers.google.com/workspace/preview)). To
+// that begins with `chat.app` and getting one-time administrator approval. To
 // learn more, see Authorize as a Chat app with administrator approval
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app).
 // - A user by specifying an authorization scope that doesn't include `app` in
@@ -2061,9 +2055,9 @@ type SubscriptionsReactivateCall struct {
 // For a subscription on a Chat target resource
 // (https://developers.google.com/workspace/events/guides/events-chat), you can
 // reactivate a subscription as: - A Chat app by specifying an authorization
-// scope that begins with `chat.app` andgetting one-time administrator approval
-// (Developer Preview (https://developers.google.com/workspace/preview)). To
-// learn more, see Authorize as a Chat app with administrator approval
+// scope that begins with `chat.app` and getting one-time administrator
+// approval. To learn more, see Authorize as a Chat app with administrator
+// approval
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app).
 // - A user by specifying an authorization scope that doesn't include `app` in
 // its name. To learn more, see Authorize as a Chat user

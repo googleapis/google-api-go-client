@@ -288,6 +288,9 @@ type AccountConnector struct {
 	ProviderOauthConfig *ProviderOAuthConfig `json:"providerOauthConfig,omitempty"`
 	// ProxyConfig: Optional. Configuration for the http and git proxy features.
 	ProxyConfig *ProxyConfig `json:"proxyConfig,omitempty"`
+	// Uid: Output only. A system-assigned unique identifier for the Account
+	// Connector.
+	Uid string `json:"uid,omitempty"`
 	// UpdateTime: Output only. The timestamp when the accountConnector was
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -2287,6 +2290,11 @@ type ProxyConfig struct {
 	// perform actions on behalf of the user configured under the account
 	// connector.
 	Enabled bool `json:"enabled,omitempty"`
+	// HttpProxyBaseUri: Output only. The base URI for the HTTP proxy endpoint. Has
+	// the format `https://{generatedID}-a-h-{shortRegion}.developerconnect.dev`
+	// Populated only when `enabled` is set to `true`. This endpoint is used by
+	// other Google services that integrate with Developer Connect.
+	HttpProxyBaseUri string `json:"httpProxyBaseUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

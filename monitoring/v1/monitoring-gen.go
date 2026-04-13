@@ -1032,9 +1032,13 @@ type DataSet struct {
 	Measures []*Measure `json:"measures,omitempty"`
 	// MinAlignmentPeriod: Optional. The lower bound on data point frequency for
 	// this data set, implemented by specifying the minimum alignment period to use
-	// in a time series query For example, if the data is published once every 10
+	// in a time series query. For example, if the data is published once every 10
 	// minutes, the min_alignment_period should be at least 10 minutes. It would
-	// not make sense to fetch and align data at one minute intervals.
+	// not make sense to fetch and align data at one minute intervals.For PromQL
+	// queries, this field is used to set the minimum interval for the query step,
+	// controlling data granularity. Larger values can improve performance on long
+	// time ranges. See Querying Basics and Range Queries for more details on the
+	// PromQL step.
 	MinAlignmentPeriod string `json:"minAlignmentPeriod,omitempty"`
 	// PlotType: How this data should be plotted on the chart.
 	//
@@ -2563,7 +2567,10 @@ type SparkChartView struct {
 	// implemented by specifying the minimum alignment period to use in a time
 	// series query. For example, if the data is published once every 10 minutes it
 	// would not make sense to fetch and align data at one minute intervals. This
-	// field is optional and exists only as a hint.
+	// field is optional and exists only as a hint.For PromQL queries, this field
+	// is used to set the minimum interval for the query step, controlling data
+	// granularity. Larger values can improve performance on long time ranges. See
+	// Querying Basics and Range Queries for more details on the PromQL step.
 	MinAlignmentPeriod string `json:"minAlignmentPeriod,omitempty"`
 	// SparkChartType: Required. The type of sparkchart to show in this chartView.
 	//

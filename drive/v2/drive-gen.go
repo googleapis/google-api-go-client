@@ -1048,6 +1048,32 @@ func (s ChildReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ClientEncryptionDetails: Details about the client-side encryption applied to
+// the file.
+type ClientEncryptionDetails struct {
+	// DecryptionMetadata: The metadata used for client-side operations.
+	DecryptionMetadata *DecryptionMetadata `json:"decryptionMetadata,omitempty"`
+	// EncryptionState: The encryption state of the file. The values expected here
+	// are: - encrypted - unencrypted
+	EncryptionState string `json:"encryptionState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DecryptionMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DecryptionMetadata") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClientEncryptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ClientEncryptionDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Comment: A comment on a file in Google Drive.
 type Comment struct {
 	// Anchor: A region of the document represented as a JSON string. For details
@@ -1301,6 +1327,46 @@ type ContentRestriction struct {
 
 func (s ContentRestriction) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentRestriction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DecryptionMetadata: Representation of the CSE DecryptionMetadata.
+type DecryptionMetadata struct {
+	// Aes256GcmChunkSize: Chunk size used if content was encrypted with the AES
+	// 256 GCM Cipher. Possible values are: - default - small
+	Aes256GcmChunkSize string `json:"aes256GcmChunkSize,omitempty"`
+	// EncryptionResourceKeyHash: The URL-safe Base64 encoded HMAC-SHA256 digest of
+	// the resource metadata with its DEK (Data Encryption Key); see
+	// https://developers.google.com/workspace/cse/reference
+	EncryptionResourceKeyHash string `json:"encryptionResourceKeyHash,omitempty"`
+	// Jwt: The signed JSON Web Token (JWT) which can be used to authorize the
+	// requesting user with the Key ACL Service (KACLS). The JWT asserts that the
+	// requesting user has at least read permissions on the file.
+	Jwt string `json:"jwt,omitempty"`
+	// KaclsId: The ID of the KACLS (Key ACL Service) used to encrypt the file.
+	KaclsId int64 `json:"kaclsId,omitempty,string"`
+	// KaclsName: The name of the KACLS (Key ACL Service) used to encrypt the file.
+	KaclsName string `json:"kaclsName,omitempty"`
+	// KeyFormat: Key format for the unwrapped key. Must be `tinkAesGcmKey`.
+	KeyFormat string `json:"keyFormat,omitempty"`
+	// WrappedKey: The URL-safe Base64 encoded wrapped key used to encrypt the
+	// contents of the file.
+	WrappedKey string `json:"wrappedKey,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Aes256GcmChunkSize") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Aes256GcmChunkSize") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DecryptionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod DecryptionMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1609,6 +1675,12 @@ type File struct {
 	// Capabilities: Output only. Capabilities the current user has on this file.
 	// Each capability corresponds to a fine-grained action that a user may take.
 	Capabilities *FileCapabilities `json:"capabilities,omitempty"`
+	// ClientEncryptionDetails: Client Side Encryption related details. Contains
+	// details about the encryption state of the file and details regarding the
+	// encryption mechanism that clients need to use when decrypting the contents
+	// of this item. This will only be present on files and not on folders or
+	// shortcuts.
+	ClientEncryptionDetails *ClientEncryptionDetails `json:"clientEncryptionDetails,omitempty"`
 	// ContentRestrictions: Restrictions for accessing the content of the file.
 	// Only populated if such a restriction exists.
 	ContentRestrictions []*ContentRestriction `json:"contentRestrictions,omitempty"`
@@ -2398,6 +2470,42 @@ type FileList struct {
 
 func (s FileList) MarshalJSON() ([]byte, error) {
 	type NoMethod FileList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenerateCseTokenResponse: JWT and associated metadata used to generate CSE
+// files.
+type GenerateCseTokenResponse struct {
+	// CurrentKaclsId: The current Key ACL Service (KACLS) ID associated with the
+	// JWT.
+	CurrentKaclsId int64 `json:"currentKaclsId,omitempty,string"`
+	// CurrentKaclsName: Name of the KACLs that the returned KACLs ID points to.
+	CurrentKaclsName string `json:"currentKaclsName,omitempty"`
+	// FileId: The fileId for which the JWT was generated.
+	FileId string `json:"fileId,omitempty"`
+	// Jwt: The signed JSON Web Token (JWT) for the file.
+	Jwt string `json:"jwt,omitempty"`
+	// Kind: Output only. Identifies what kind of resource this is. Value: the
+	// fixed string "drive#generateCseTokenResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CurrentKaclsId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CurrentKaclsId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateCseTokenResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateCseTokenResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7090,6 +7198,127 @@ func (c *FilesExportCall) Do(opts ...googleapi.CallOption) error {
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "drive.files.export", "response", internallog.HTTPResponse(res, nil))
 	return nil
+}
+
+type FilesGenerateCseTokenCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GenerateCseToken: Generates a CSE token which can be used to create or
+// update CSE files.
+func (r *FilesService) GenerateCseToken() *FilesGenerateCseTokenCall {
+	c := &FilesGenerateCseTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// FileId sets the optional parameter "fileId": The ID of the file for which
+// the JWT should be generated. If not provided, an id will be generated.
+func (c *FilesGenerateCseTokenCall) FileId(fileId string) *FilesGenerateCseTokenCall {
+	c.urlParams_.Set("fileId", fileId)
+	return c
+}
+
+// Parent sets the optional parameter "parent": The ID of the expected parent
+// of the file. Used when generating a JWT for a new CSE file. If specified,
+// the parent will be fetched, and if the parent is a shared drive item, the
+// shared drive's policy will be used to determine the KACLS that should be
+// used. It is invalid to specify both file_id and parent in a single request.
+func (c *FilesGenerateCseTokenCall) Parent(parent string) *FilesGenerateCseTokenCall {
+	c.urlParams_.Set("parent", parent)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FilesGenerateCseTokenCall) Fields(s ...googleapi.Field) *FilesGenerateCseTokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FilesGenerateCseTokenCall) IfNoneMatch(entityTag string) *FilesGenerateCseTokenCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FilesGenerateCseTokenCall) Context(ctx context.Context) *FilesGenerateCseTokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FilesGenerateCseTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FilesGenerateCseTokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "files/generateCseToken")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "drive.files.generateCseToken", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drive.files.generateCseToken" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenerateCseTokenResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FilesGenerateCseTokenCall) Do(opts ...googleapi.CallOption) (*GenerateCseTokenResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenerateCseTokenResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "drive.files.generateCseToken", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type FilesGenerateIdsCall struct {

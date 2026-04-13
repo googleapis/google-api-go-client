@@ -658,21 +658,24 @@ func (s AgentRemoteDialogflowAgent) MarshalJSON() ([]byte, error) {
 
 // AgentTool: Represents a tool that allows the agent to call another agent.
 type AgentTool struct {
+	// Agent: Optional. The resource name of the agent that is the entry point of
+	// the tool. Format: `projects/{project}/locations/{location}/agents/{agent}`
+	Agent string `json:"agent,omitempty"`
 	// Description: Optional. Description of the tool's purpose.
 	Description string `json:"description,omitempty"`
 	// Name: Required. The name of the agent tool.
 	Name string `json:"name,omitempty"`
-	// RootAgent: Optional. The resource name of the root agent that is the entry
-	// point of the tool. Format:
+	// RootAgent: Optional. Deprecated: Use `agent` instead. The resource name of
+	// the root agent that is the entry point of the tool. Format:
 	// `projects/{project}/locations/{location}/agents/{agent}`
 	RootAgent string `json:"rootAgent,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Agent") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Description") to include in API
+	// NullFields is a list of field names (e.g. "Agent") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2128,6 +2131,9 @@ type Conversation struct {
 	//   "LIVE" - The conversation is from the live end user.
 	//   "SIMULATOR" - The conversation is from the simulator.
 	//   "EVAL" - The conversation is from the evaluation.
+	//   "AGENT_TOOL" - The conversation is from an agent tool. Agent tool runs the
+	// agent in a separate session, which is persisted for testing and debugging
+	// purposes.
 	Source string `json:"source,omitempty"`
 	// StartTime: Output only. Timestamp when the conversation was created.
 	StartTime string `json:"startTime,omitempty"`
@@ -2162,6 +2168,9 @@ type ConversationLoggingSettings struct {
 	// DisableConversationLogging: Optional. Whether to disable conversation
 	// logging for the sessions.
 	DisableConversationLogging bool `json:"disableConversationLogging,omitempty"`
+	// RetentionWindow: Optional. Controls the retention window for the
+	// conversation. If not set, the conversation will be retained for 365 days.
+	RetentionWindow string `json:"retentionWindow,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisableConversationLogging")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2990,6 +2999,9 @@ func (s EndpointControlPolicy) MarshalJSON() ([]byte, error) {
 // ErrorHandlingSettings: Settings to describe how errors should be handled in
 // the app.
 type ErrorHandlingSettings struct {
+	// EndSessionConfig: Optional. Configuration for ending the session in case of
+	// system errors (e.g. LLM errors).
+	EndSessionConfig *ErrorHandlingSettingsEndSessionConfig `json:"endSessionConfig,omitempty"`
 	// ErrorHandlingStrategy: Optional. The strategy to use for error handling.
 	//
 	// Possible values:
@@ -3001,21 +3013,79 @@ type ErrorHandlingSettings struct {
 	//   "END_SESSION" - An EndSession signal will be emitted in case of system
 	// errors (e.g. LLM errors).
 	ErrorHandlingStrategy string `json:"errorHandlingStrategy,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ErrorHandlingStrategy") to
+	// FallbackResponseConfig: Optional. Configuration for handling fallback
+	// responses.
+	FallbackResponseConfig *ErrorHandlingSettingsFallbackResponseConfig `json:"fallbackResponseConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndSessionConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ErrorHandlingStrategy") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "EndSessionConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s ErrorHandlingSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ErrorHandlingSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ErrorHandlingSettingsEndSessionConfig: Configuration for ending the session
+// in case of system errors (e.g. LLM errors).
+type ErrorHandlingSettingsEndSessionConfig struct {
+	// EscalateSession: Optional. Whether to escalate the session in EndSession. If
+	// session is escalated, metadata in EndSession will contain `session_escalated
+	// = true`. See
+	// https://docs.cloud.google.com/customer-engagement-ai/conversational-agents/ps/deploy/google-telephony-platform#transfer_a_call_to_a_human_agent
+	// for details.
+	EscalateSession bool `json:"escalateSession,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EscalateSession") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EscalateSession") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ErrorHandlingSettingsEndSessionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ErrorHandlingSettingsEndSessionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ErrorHandlingSettingsFallbackResponseConfig: Configuration for handling
+// fallback responses.
+type ErrorHandlingSettingsFallbackResponseConfig struct {
+	// CustomFallbackMessages: Optional. The fallback messages in case of system
+	// errors (e.g. LLM errors), mapped by supported language code
+	// (https://docs.cloud.google.com/customer-engagement-ai/conversational-agents/ps/reference/language).
+	CustomFallbackMessages map[string]string `json:"customFallbackMessages,omitempty"`
+	// MaxFallbackAttempts: Optional. The maximum number of fallback attempts to
+	// make before the agent emitting EndSession Signal.
+	MaxFallbackAttempts int64 `json:"maxFallbackAttempts,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomFallbackMessages") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomFallbackMessages") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ErrorHandlingSettingsFallbackResponseConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ErrorHandlingSettingsFallbackResponseConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3728,6 +3798,7 @@ type EvaluationResult struct {
 	// means that all expectations were met.
 	//   "FAIL" - Evaluation/Expectation failed. In the case of an evaluation, this
 	// means that at least one expectation was not met.
+	//   "SKIPPED" - Evaluation/Expectation was skipped.
 	EvaluationStatus string `json:"evaluationStatus,omitempty"`
 	// ExecutionState: Output only. The state of the evaluation result execution.
 	//
@@ -3799,6 +3870,7 @@ type EvaluationResultEvaluationExpectationResult struct {
 	// means that all expectations were met.
 	//   "FAIL" - Evaluation/Expectation failed. In the case of an evaluation, this
 	// means that at least one expectation was not met.
+	//   "SKIPPED" - Evaluation/Expectation was skipped.
 	Outcome string `json:"outcome,omitempty"`
 	// Prompt: Output only. The prompt that was used for the evaluation.
 	Prompt string `json:"prompt,omitempty"`
@@ -3844,6 +3916,7 @@ type EvaluationResultGoldenExpectationOutcome struct {
 	// means that all expectations were met.
 	//   "FAIL" - Evaluation/Expectation failed. In the case of an evaluation, this
 	// means that at least one expectation was not met.
+	//   "SKIPPED" - Evaluation/Expectation was skipped.
 	Outcome string `json:"outcome,omitempty"`
 	// SemanticSimilarityResult: Output only. The result of the semantic similarity
 	// check.
@@ -3885,6 +3958,7 @@ type EvaluationResultGoldenExpectationOutcomeToolInvocationResult struct {
 	// means that all expectations were met.
 	//   "FAIL" - Evaluation/Expectation failed. In the case of an evaluation, this
 	// means that at least one expectation was not met.
+	//   "SKIPPED" - Evaluation/Expectation was skipped.
 	Outcome string `json:"outcome,omitempty"`
 	// ParameterCorrectnessScore: Output only. The tool invocation parameter
 	// correctness score. This indicates the percent of parameters from the
@@ -4057,6 +4131,7 @@ type EvaluationResultOverallToolInvocationResult struct {
 	// means that all expectations were met.
 	//   "FAIL" - Evaluation/Expectation failed. In the case of an evaluation, this
 	// means that at least one expectation was not met.
+	//   "SKIPPED" - Evaluation/Expectation was skipped.
 	Outcome string `json:"outcome,omitempty"`
 	// ToolInvocationScore: The overall tool invocation score for this turn. This
 	// indicates the overall percent of tools from the expected turn that were
@@ -4111,6 +4186,7 @@ type EvaluationResultScenarioExpectationOutcome struct {
 	// means that all expectations were met.
 	//   "FAIL" - Evaluation/Expectation failed. In the case of an evaluation, this
 	// means that at least one expectation was not met.
+	//   "SKIPPED" - Evaluation/Expectation was skipped.
 	Outcome string `json:"outcome,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Expectation") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4273,6 +4349,7 @@ type EvaluationResultSemanticSimilarityResult struct {
 	// means that all expectations were met.
 	//   "FAIL" - Evaluation/Expectation failed. In the case of an evaluation, this
 	// means that at least one expectation was not met.
+	//   "SKIPPED" - Evaluation/Expectation was skipped.
 	Outcome string `json:"outcome,omitempty"`
 	// Score: Output only. The semantic similarity score. Can be 0, 1, 2, 3, or 4.
 	Score int64 `json:"score,omitempty"`
@@ -4923,6 +5000,10 @@ type ExecuteToolRequest struct {
 	// (https://docs.cloud.google.com/customer-engagement-ai/conversational-agents/ps/tool/python#environment
 	// for details) to be passed to the Python tool.
 	Context googleapi.RawMessage `json:"context,omitempty"`
+	// MockConfig: Optional. Mock configuration for the tool execution. If this
+	// field is set, tools that call other tools will be mocked based on the
+	// provided patterns and responses.
+	MockConfig *MockConfig `json:"mockConfig,omitempty"`
 	// Tool: Optional. The name of the tool to execute. Format:
 	// projects/{project}/locations/{location}/apps/{app}/tools/{tool}
 	Tool string `json:"tool,omitempty"`
@@ -5043,6 +5124,100 @@ type ExportAppResponse struct {
 
 func (s ExportAppResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportAppResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExportEvaluationsRequest: Request message for
+// EvaluationService.ExportEvaluations.
+type ExportEvaluationsRequest struct {
+	// ExportOptions: Optional. The export options for the evaluations.
+	ExportOptions *ExportOptions `json:"exportOptions,omitempty"`
+	// IncludeEvaluationResults: Optional. Includes evaluation results in the
+	// export. At least one of include_evaluation_results or include_evaluations
+	// must be set.
+	IncludeEvaluationResults bool `json:"includeEvaluationResults,omitempty"`
+	// IncludeEvaluations: Optional. Includes evaluations in the export. At least
+	// one of include_evaluation_results or include_evaluations must be set.
+	IncludeEvaluations bool `json:"includeEvaluations,omitempty"`
+	// Names: Required. The resource names of the evaluations to export.
+	Names []string `json:"names,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExportOptions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExportOptions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExportEvaluationsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportEvaluationsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExportEvaluationsResponse: Response message for
+// EvaluationService.ExportEvaluations.
+type ExportEvaluationsResponse struct {
+	// EvaluationsContent: The content of the exported Evaluations. This will be
+	// populated if gcs_uri was not specified in the request.
+	EvaluationsContent string `json:"evaluationsContent,omitempty"`
+	// EvaluationsUri: The Google Cloud Storage URI folder where the exported
+	// evaluations were written. This will be populated if gcs_uri was specified in
+	// the request.
+	EvaluationsUri string `json:"evaluationsUri,omitempty"`
+	// FailedEvaluations: Output only. A map of evaluation resource names that
+	// could not be exported, to the reason why they failed.
+	FailedEvaluations map[string]string `json:"failedEvaluations,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EvaluationsContent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EvaluationsContent") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExportEvaluationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportEvaluationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExportOptions: Options for exporting CES evaluation resources.
+type ExportOptions struct {
+	// ExportFormat: Optional. The format to export the evaluation results in.
+	// Defaults to JSON if not specified.
+	//
+	// Possible values:
+	//   "EXPORT_FORMAT_UNSPECIFIED" - Unspecified format.
+	//   "JSON" - JSON format.
+	//   "YAML" - YAML format.
+	ExportFormat string `json:"exportFormat,omitempty"`
+	// GcsUri: Optional. The Google Cloud Storage URI to write the exported
+	// Evaluation Results to.
+	GcsUri string `json:"gcsUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExportFormat") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExportOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportOptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5657,6 +5832,9 @@ type GenerateEvaluationRequest struct {
 	//   "LIVE" - The conversation is from the live end user.
 	//   "SIMULATOR" - The conversation is from the simulator.
 	//   "EVAL" - The conversation is from the evaluation.
+	//   "AGENT_TOOL" - The conversation is from an agent tool. Agent tool runs the
+	// agent in a separate session, which is persisted for testing and debugging
+	// purposes.
 	Source string `json:"source,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Source") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6354,10 +6532,22 @@ type ImportEvaluationsResponse struct {
 	// ErrorMessages: Optional. A list of error messages associated with
 	// evaluations that failed to be imported.
 	ErrorMessages []string `json:"errorMessages,omitempty"`
+	// EvaluationResultImportFailureCount: The number of evaluation results that
+	// either failed to import entirely or completed import with one or more
+	// errors.
+	EvaluationResultImportFailureCount int64 `json:"evaluationResultImportFailureCount,omitempty"`
+	// EvaluationResults: The list of evaluation results that were imported into
+	// the app.
+	EvaluationResults []*EvaluationResult `json:"evaluationResults,omitempty"`
+	// EvaluationRunImportFailureCount: The number of evaluation runs that either
+	// failed to import entirely or completed import with one or more errors.
+	EvaluationRunImportFailureCount int64 `json:"evaluationRunImportFailureCount,omitempty"`
+	// EvaluationRuns: The list of evaluation runs that were imported into the app.
+	EvaluationRuns []*EvaluationRun `json:"evaluationRuns,omitempty"`
 	// Evaluations: The list of evaluations that were imported into the app.
 	Evaluations []*Evaluation `json:"evaluations,omitempty"`
-	// ImportFailureCount: The number of evaluations that were not imported due to
-	// errors.
+	// ImportFailureCount: The number of evaluations that either failed to import
+	// entirely or completed import with one or more errors.
 	ImportFailureCount int64 `json:"importFailureCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ErrorMessages") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7381,6 +7571,76 @@ type MetricAnalysisSettings struct {
 
 func (s MetricAnalysisSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod MetricAnalysisSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MockConfig: Mock tool calls configuration for the session.
+type MockConfig struct {
+	// MockedToolCalls: Optional. All tool calls to mock for the duration of the
+	// session.
+	MockedToolCalls []*MockedToolCall `json:"mockedToolCalls,omitempty"`
+	// UnmatchedToolCallBehavior: Required. Beavhior for tool calls that don't
+	// match any args patterns in mocked_tool_calls.
+	//
+	// Possible values:
+	//   "UNMATCHED_TOOL_CALL_BEHAVIOR_UNSPECIFIED" - Default value. This value is
+	// unused.
+	//   "FAIL" - Throw an error for any tool calls that don't match a mock
+	// expected input pattern.
+	//   "PASS_THROUGH" - For unmatched tool calls, pass the tool call through to
+	// real tool.
+	UnmatchedToolCallBehavior string `json:"unmatchedToolCallBehavior,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MockedToolCalls") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MockedToolCalls") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MockConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod MockConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MockedToolCall: A mocked tool call. Expresses the target tool + a pattern to
+// match against that tool's args / inputs. If the pattern matches, then the
+// mock response will be returned.
+type MockedToolCall struct {
+	// ExpectedArgsPattern: Required. A pattern to match against the args / inputs
+	// of all dispatched tool calls. If the tool call inputs match this pattern,
+	// then mock output will be returned.
+	ExpectedArgsPattern googleapi.RawMessage `json:"expectedArgsPattern,omitempty"`
+	// MockResponse: Optional. The mock response / output to return if the tool
+	// call args / inputs match the pattern.
+	MockResponse googleapi.RawMessage `json:"mockResponse,omitempty"`
+	// Tool: Required. Deprecated. Use tool_identifier instead.
+	Tool string `json:"tool,omitempty"`
+	// ToolId: Optional. The name of the tool to mock. Format:
+	// `projects/{project}/locations/{location}/apps/{app}/tools/{tool}`
+	ToolId string `json:"toolId,omitempty"`
+	// Toolset: Optional. The toolset to mock.
+	Toolset *ToolsetTool `json:"toolset,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExpectedArgsPattern") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExpectedArgsPattern") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MockedToolCall) MarshalJSON() ([]byte, error) {
+	type NoMethod MockedToolCall
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12788,6 +13048,10 @@ func (r *ProjectsLocationsAppsConversationsService) Delete(name string) *Project
 //	"LIVE" - The conversation is from the live end user.
 //	"SIMULATOR" - The conversation is from the simulator.
 //	"EVAL" - The conversation is from the evaluation.
+//	"AGENT_TOOL" - The conversation is from an agent tool. Agent tool runs the
+//
+// agent in a separate session, which is persisted for testing and debugging
+// purposes.
 func (c *ProjectsLocationsAppsConversationsDeleteCall) Source(source string) *ProjectsLocationsAppsConversationsDeleteCall {
 	c.urlParams_.Set("source", source)
 	return c
@@ -13006,6 +13270,10 @@ func (r *ProjectsLocationsAppsConversationsService) Get(name string) *ProjectsLo
 //	"LIVE" - The conversation is from the live end user.
 //	"SIMULATOR" - The conversation is from the simulator.
 //	"EVAL" - The conversation is from the evaluation.
+//	"AGENT_TOOL" - The conversation is from an agent tool. Agent tool runs the
+//
+// agent in a separate session, which is persisted for testing and debugging
+// purposes.
 func (c *ProjectsLocationsAppsConversationsGetCall) Source(source string) *ProjectsLocationsAppsConversationsGetCall {
 	c.urlParams_.Set("source", source)
 	return c
@@ -13152,6 +13420,10 @@ func (c *ProjectsLocationsAppsConversationsListCall) PageToken(pageToken string)
 //	"LIVE" - The conversation is from the live end user.
 //	"SIMULATOR" - The conversation is from the simulator.
 //	"EVAL" - The conversation is from the evaluation.
+//	"AGENT_TOOL" - The conversation is from an agent tool. Agent tool runs the
+//
+// agent in a separate session, which is persisted for testing and debugging
+// purposes.
 func (c *ProjectsLocationsAppsConversationsListCall) Source(source string) *ProjectsLocationsAppsConversationsListCall {
 	c.urlParams_.Set("source", source)
 	return c
@@ -13166,6 +13438,10 @@ func (c *ProjectsLocationsAppsConversationsListCall) Source(source string) *Proj
 //	"LIVE" - The conversation is from the live end user.
 //	"SIMULATOR" - The conversation is from the simulator.
 //	"EVAL" - The conversation is from the evaluation.
+//	"AGENT_TOOL" - The conversation is from an agent tool. Agent tool runs the
+//
+// agent in a separate session, which is persisted for testing and debugging
+// purposes.
 func (c *ProjectsLocationsAppsConversationsListCall) Sources(sources ...string) *ProjectsLocationsAppsConversationsListCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
@@ -15703,6 +15979,110 @@ func (c *ProjectsLocationsAppsEvaluationsDeleteCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.evaluations.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAppsEvaluationsExportCall struct {
+	s                        *Service
+	parent                   string
+	exportevaluationsrequest *ExportEvaluationsRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Export: Exports evaluations.
+//
+//   - parent: The resource name of the app to export evaluations from. Format:
+//     `projects/{project}/locations/{location}/apps/{app}`.
+func (r *ProjectsLocationsAppsEvaluationsService) Export(parent string, exportevaluationsrequest *ExportEvaluationsRequest) *ProjectsLocationsAppsEvaluationsExportCall {
+	c := &ProjectsLocationsAppsEvaluationsExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.exportevaluationsrequest = exportevaluationsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsEvaluationsExportCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsEvaluationsExportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsEvaluationsExportCall) Context(ctx context.Context) *ProjectsLocationsAppsEvaluationsExportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsEvaluationsExportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsEvaluationsExportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.exportevaluationsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/evaluations:export")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.evaluations.export", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.evaluations.export" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAppsEvaluationsExportCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.evaluations.export", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

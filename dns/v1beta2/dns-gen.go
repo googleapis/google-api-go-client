@@ -5896,14 +5896,15 @@ func (r *ResourceRecordSetsService) List(project string, managedZone string) *Re
 }
 
 // Filter sets the optional parameter "filter": Specify a filter expression to
-// view records that exactly match the specified domain. Both the name and type
-// parameters are not supported when you use filter and must be omitted. Your
-// filter expression must conform to AIP-160 and you must specify a domain in
-// the name field. Optionally, you can include the type field to filter records
-// by type. You can also include the has_suffix function to view records that
-// match by domain suffix. Examples: - name="example.com." -
-// name="example.com." AND type="A" - name=has_suffix("example.com.") -
-// name=has_suffix("example.com.") AND type="A"
+// view records that exactly match the specified domain. Both the `name` and
+// `type` parameters are not supported and must be omitted when you use
+// `filter`. Your `filter` expression must conform to AIP-160 and you must
+// specify a domain in the `name` field. Optionally, you can include the `type`
+// field to filter records by type. You can also include the `has_suffix`
+// function to view records that match by domain suffix. Examples: *
+// `name`="example.com." * `name`="example.com." AND type="A" *
+// `name`=`has_suffix`("example.com.") * `name`=`has_suffix`("example.com.")
+// AND type="A"
 func (c *ResourceRecordSetsListCall) Filter(filter string) *ResourceRecordSetsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5918,8 +5919,8 @@ func (c *ResourceRecordSetsListCall) MaxResults(maxResults int64) *ResourceRecor
 }
 
 // Name sets the optional parameter "name": Specify a fully qualified domain
-// name to view only those records. The name parameter is not supported and
-// must be omitted when you use filter.
+// name to view only those records. The `name` parameter is not supported and
+// must be omitted when you use `filter`.
 func (c *ResourceRecordSetsListCall) Name(name string) *ResourceRecordSetsListCall {
 	c.urlParams_.Set("name", name)
 	return c
@@ -5934,8 +5935,8 @@ func (c *ResourceRecordSetsListCall) PageToken(pageToken string) *ResourceRecord
 }
 
 // Type sets the optional parameter "type": Specify a record type to view only
-// those records. You must also specify the name parameter. The type parameter
-// is not supported and must be omitted when you use filter.
+// those records. You must also specify the `name` parameter. The `type`
+// parameter is not supported and must be omitted when you use `filter`.
 func (c *ResourceRecordSetsListCall) Type(type_ string) *ResourceRecordSetsListCall {
 	c.urlParams_.Set("type", type_)
 	return c

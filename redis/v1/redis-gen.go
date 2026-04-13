@@ -587,6 +587,9 @@ type Backup struct {
 	//   "REDIS_HIGHMEM_MEDIUM" - Redis highmem medium node_type.
 	//   "REDIS_HIGHMEM_XLARGE" - Redis highmem xlarge node_type.
 	//   "REDIS_STANDARD_SMALL" - Redis standard small node_type.
+	//   "REDIS_HIGHCPU_MEDIUM" - Redis highcpu medium node_type.
+	//   "REDIS_STANDARD_LARGE" - Redis standard large node_type.
+	//   "REDIS_HIGHMEM_2XLARGE" - Redis highmem 2xlarge node_type.
 	NodeType string `json:"nodeType,omitempty"`
 	// ReplicaCount: Output only. Number of replicas for the cluster.
 	ReplicaCount int64 `json:"replicaCount,omitempty"`
@@ -627,7 +630,7 @@ func (s Backup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BackupClusterRequest: Request for [BackupCluster].
+// BackupClusterRequest: Request for `BackupCluster`.
 type BackupClusterRequest struct {
 	// BackupId: Optional. The id of the backup to be created. If not specified,
 	// the default value ([YYYYMMDDHHMMSS]_[Shortened Cluster UID] is used.
@@ -986,6 +989,9 @@ type Cluster struct {
 	//   "REDIS_HIGHMEM_MEDIUM" - Redis highmem medium node_type.
 	//   "REDIS_HIGHMEM_XLARGE" - Redis highmem xlarge node_type.
 	//   "REDIS_STANDARD_SMALL" - Redis standard small node_type.
+	//   "REDIS_HIGHCPU_MEDIUM" - Redis highcpu medium node_type.
+	//   "REDIS_STANDARD_LARGE" - Redis standard large node_type.
+	//   "REDIS_HIGHMEM_2XLARGE" - Redis highmem 2xlarge node_type.
 	NodeType string `json:"nodeType,omitempty"`
 	// OndemandMaintenance: Optional. Input only. Ondemand maintenance for the
 	// cluster. This field can be used to trigger ondemand critical update on the
@@ -2602,7 +2608,7 @@ func (s Entitlement) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ExportBackupRequest: Request for [ExportBackup].
+// ExportBackupRequest: Request for `ExportBackup`.
 type ExportBackupRequest struct {
 	// GcsBucket: Google Cloud Storage bucket, like "my-bucket".
 	GcsBucket string `json:"gcsBucket,omitempty"`
@@ -3183,7 +3189,7 @@ func (s InternalResourceMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListAclPoliciesResponse: Response for ListAclPolicies.
+// ListAclPoliciesResponse: Response for `ListAclPolicies`.
 type ListAclPoliciesResponse struct {
 	// AclPolicies: A list of ACL policies in the project in the specified
 	// location, or across all locations. If the `location_id` in the parent field
@@ -3246,7 +3252,7 @@ func (s ListAuthTokensResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListBackupCollectionsResponse: Response for [ListBackupCollections].
+// ListBackupCollectionsResponse: Response for `ListBackupCollections`.
 type ListBackupCollectionsResponse struct {
 	// BackupCollections: A list of backupCollections in the project. If the
 	// `location_id` in the parent field of the request is "-", all regions
@@ -3284,7 +3290,7 @@ func (s ListBackupCollectionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListBackupsResponse: Response for [ListBackups].
+// ListBackupsResponse: Response for `ListBackups`.
 type ListBackupsResponse struct {
 	// Backups: A list of backups in the project.
 	Backups []*Backup `json:"backups,omitempty"`
@@ -3314,7 +3320,7 @@ func (s ListBackupsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListClustersResponse: Response for ListClusters.
+// ListClustersResponse: Response for `ListClusters`.
 type ListClustersResponse struct {
 	// Clusters: A list of Redis clusters in the project in the specified location,
 	// or across all locations. If the `location_id` in the parent field of the
@@ -4987,6 +4993,9 @@ type UpdateInfo struct {
 	//   "REDIS_HIGHMEM_MEDIUM" - Redis highmem medium node_type.
 	//   "REDIS_HIGHMEM_XLARGE" - Redis highmem xlarge node_type.
 	//   "REDIS_STANDARD_SMALL" - Redis standard small node_type.
+	//   "REDIS_HIGHCPU_MEDIUM" - Redis highcpu medium node_type.
+	//   "REDIS_STANDARD_LARGE" - Redis standard large node_type.
+	//   "REDIS_HIGHMEM_2XLARGE" - Redis highmem 2xlarge node_type.
 	TargetNodeType string `json:"targetNodeType,omitempty"`
 	// TargetReplicaCount: Target number of replica nodes per shard.
 	TargetReplicaCount int64 `json:"targetReplicaCount,omitempty"`
@@ -5910,7 +5919,7 @@ func (c *ProjectsLocationsAclPoliciesListCall) PageSize(pageSize int64) *Project
 }
 
 // PageToken sets the optional parameter "pageToken": The `next_page_token`
-// value returned from a previous ListAclPolicies request, if any.
+// value returned from a previous `ListAclPolicies` request, if any.
 func (c *ProjectsLocationsAclPoliciesListCall) PageToken(pageToken string) *ProjectsLocationsAclPoliciesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6062,7 +6071,7 @@ func (c *ProjectsLocationsAclPoliciesPatchCall) RequestId(requestId string) *Pro
 
 // UpdateMask sets the optional parameter "updateMask": Mask of fields to be
 // updated. At least one path must be supplied in this field. The elements of
-// the repeated paths field may only include these fields from AclPolicy: *
+// the repeated paths field may only include these fields from `AclPolicy`: *
 // `rules`
 func (c *ProjectsLocationsAclPoliciesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsAclPoliciesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -7602,7 +7611,7 @@ func (c *ProjectsLocationsClustersListCall) PageSize(pageSize int64) *ProjectsLo
 }
 
 // PageToken sets the optional parameter "pageToken": The `next_page_token`
-// value returned from a previous ListClusters request, if any.
+// value returned from a previous `ListClusters` request, if any.
 func (c *ProjectsLocationsClustersListCall) PageToken(pageToken string) *ProjectsLocationsClustersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c

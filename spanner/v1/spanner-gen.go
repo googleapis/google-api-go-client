@@ -5924,7 +5924,7 @@ type ReadWrite struct {
 	// transaction ID of the previous transaction attempt that was aborted if this
 	// transaction is being executed on a multiplexed session.
 	MultiplexedSessionPreviousTransactionId string `json:"multiplexedSessionPreviousTransactionId,omitempty"`
-	// ReadLockMode: Read lock mode for the transaction.
+	// ReadLockMode: The read lock mode for the transaction.
 	//
 	// Possible values:
 	//   "READ_LOCK_MODE_UNSPECIFIED" - Default value. * If isolation level is

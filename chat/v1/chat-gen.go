@@ -1954,6 +1954,36 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// FindGroupChatsResponse: A response containing group chat spaces with exactly
+// the calling user and the requested users. Developer Preview
+// (https://developers.google.com/workspace/preview):
+type FindGroupChatsResponse struct {
+	// NextPageToken: A token that you can send as `pageToken` to retrieve the next
+	// page of results. If empty, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Spaces: List of spaces in the requested (or first) page.
+	Spaces []*Space `json:"spaces,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FindGroupChatsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FindGroupChatsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // FormAction: A form action describes the behavior when the form is submitted.
 // For example, you can invoke Apps Script to handle the form.
 type FormAction struct {
@@ -4360,8 +4390,7 @@ func (s GoogleAppsCardV1Widgets) MarshalJSON() ([]byte, error) {
 // `users/{user}/sections/default-apps` 2. **Custom Sections:** These are
 // sections created and managed by the user. Creating a custom section using
 // `CreateSection` **requires** a `display_name`. Custom sections can be
-// updated using `UpdateSection` and deleted using `DeleteSection`. Developer
-// Preview (https://developers.google.com/workspace/preview).
+// updated using `UpdateSection` and deleted using `DeleteSection`.
 type GoogleChatV1Section struct {
 	// DisplayName: Optional. The section's display name. Only populated for
 	// sections of type `CUSTOM_SECTION`. Supports up to 80 characters. Required
@@ -4811,7 +4840,6 @@ func (s ListReactionsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ListSectionItemsResponse: Response message for listing section items.
-// Developer Preview (https://developers.google.com/workspace/preview).
 type ListSectionItemsResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
 	// next page. If this field is omitted, there are no subsequent pages.
@@ -4839,8 +4867,7 @@ func (s ListSectionItemsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListSectionsResponse: Response message for listing sections. Developer
-// Preview (https://developers.google.com/workspace/preview).
+// ListSectionsResponse: Response message for listing sections.
 type ListSectionsResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
 	// next page. If this field is omitted, there are no subsequent pages.
@@ -5595,8 +5622,7 @@ func (s MessageUpdatedEventData) MarshalJSON() ([]byte, error) {
 }
 
 // MoveSectionItemRequest: Request message for moving a section item across
-// sections. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// sections.
 type MoveSectionItemRequest struct {
 	// TargetSection: Required. The resource name of the section to move the
 	// section item to. Format: `users/{user}/sections/{section}`
@@ -5620,7 +5646,6 @@ func (s MoveSectionItemRequest) MarshalJSON() ([]byte, error) {
 }
 
 // MoveSectionItemResponse: Response message for moving a section item.
-// Developer Preview (https://developers.google.com/workspace/preview).
 type MoveSectionItemResponse struct {
 	// SectionItem: The updated section item.
 	SectionItem *SectionItem `json:"sectionItem,omitempty"`
@@ -5761,8 +5786,7 @@ func (s PermissionSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PositionSectionRequest: Request message for positioning a section. Developer
-// Preview (https://developers.google.com/workspace/preview).
+// PositionSectionRequest: Request message for positioning a section.
 type PositionSectionRequest struct {
 	// RelativePosition: Optional. The relative position of the section in the list
 	// of sections.
@@ -5798,7 +5822,6 @@ func (s PositionSectionRequest) MarshalJSON() ([]byte, error) {
 }
 
 // PositionSectionResponse: Response message for positioning a section.
-// Developer Preview (https://developers.google.com/workspace/preview).
 type PositionSectionResponse struct {
 	// Section: The updated section.
 	Section *GoogleChatV1Section `json:"section,omitempty"`
@@ -6144,8 +6167,7 @@ func (s Section) MarshalJSON() ([]byte, error) {
 }
 
 // SectionItem: A user's defined section item. This is used to represent
-// section items, such as spaces, grouped under a section. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// section items, such as spaces, grouped under a section.
 type SectionItem struct {
 	// Name: Identifier. The resource name of the section item. Format:
 	// `users/{user}/sections/{section}/items/{item}`
@@ -8564,6 +8586,205 @@ func (c *SpacesFindDirectMessageCall) Do(opts ...googleapi.CallOption) (*Space, 
 	return ret, nil
 }
 
+type SpacesFindGroupChatsCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FindGroupChats: Developer Preview
+// (https://developers.google.com/workspace/preview): Returns all spaces with
+// `spaceType == GROUP_CHAT`, whose human memberships contain exactly the
+// calling user, and the users specified in `FindGroupChatsRequest.users`. Only
+// members that have joined the conversation are supported. For an example, see
+// Find group chats
+// (https://developers.google.com/workspace/chat/find-group-chats). If the
+// calling user blocks, or is blocked by, some users, and no spaces with the
+// entire specified set of users are found, this method returns spaces that
+// don't include the blocked or blocking users. The specified set of users must
+// contain only human (non-app) memberships. A request that contains non-human
+// users doesn't return any spaces. Requires user authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with one of the following authorization scopes
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.memberships.readonly` -
+// `https://www.googleapis.com/auth/chat.memberships`
+func (r *SpacesService) FindGroupChats() *SpacesFindGroupChatsCall {
+	c := &SpacesFindGroupChatsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// spaces to return. The service might return fewer than this value. If
+// unspecified, at most 10 spaces are returned. The maximum value is 30. If you
+// use a value more than 30, it's automatically changed to 30. Negative values
+// return an `INVALID_ARGUMENT` error.
+func (c *SpacesFindGroupChatsCall) PageSize(pageSize int64) *SpacesFindGroupChatsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous call to find group chats. Provide this parameter to retrieve
+// the subsequent page. When paginating, all other parameters provided should
+// match the call that provided the token. Passing different values may lead to
+// unexpected results.
+func (c *SpacesFindGroupChatsCall) PageToken(pageToken string) *SpacesFindGroupChatsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// SpaceView sets the optional parameter "spaceView": Requested space view
+// type. If unset, defaults to `SPACE_VIEW_RESOURCE_NAME_ONLY`. Requests that
+// specify `SPACE_VIEW_EXPANDED` must include scopes that allow reading space
+// data, for example, https://www.googleapis.com/auth/chat.spaces or
+// https://www.googleapis.com/auth/chat.spaces.readonly.
+//
+// Possible values:
+//
+//	"SPACE_VIEW_UNSPECIFIED" - The default / unset value.
+//	"SPACE_VIEW_RESOURCE_NAME_ONLY" - Populates only the Space resource name.
+//	"SPACE_VIEW_EXPANDED" - Populates Space resource fields. Note: the
+//
+// `permissionSettings` field will not be populated. Requests that specify
+// SPACE_VIEW_EXPANDED must include scopes that allow reading space data, for
+// example, https://www.googleapis.com/auth/chat.spaces or
+// https://www.googleapis.com/auth/chat.spaces.readonly.
+func (c *SpacesFindGroupChatsCall) SpaceView(spaceView string) *SpacesFindGroupChatsCall {
+	c.urlParams_.Set("spaceView", spaceView)
+	return c
+}
+
+// Users sets the optional parameter "users": Resource names of all human users
+// in group chat with the calling user. Chat apps can't be included in the
+// request. The maximum number of users that can be specified in a single
+// request is `49`. Format: `users/{user}`, where `{user}` is either the `id`
+// for the person (https://developers.google.com/people/api/rest/v1/people)
+// from the People API, or the `id` for the user
+// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/users)
+// in the Directory API. For example, to find all group chats with the calling
+// user and two other users, with People API profile IDs `123456789` and
+// `987654321`, you can use `users/123456789` and `users/987654321`. You can
+// also use the email as an alias for `{user}`. For example,
+// `users/example@gmail.com` where `example@gmail.com` is the email of the
+// Google Chat user.
+func (c *SpacesFindGroupChatsCall) Users(users ...string) *SpacesFindGroupChatsCall {
+	c.urlParams_.SetMulti("users", append([]string{}, users...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *SpacesFindGroupChatsCall) Fields(s ...googleapi.Field) *SpacesFindGroupChatsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *SpacesFindGroupChatsCall) IfNoneMatch(entityTag string) *SpacesFindGroupChatsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *SpacesFindGroupChatsCall) Context(ctx context.Context) *SpacesFindGroupChatsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *SpacesFindGroupChatsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SpacesFindGroupChatsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/spaces:findGroupChats")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chat.spaces.findGroupChats", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.spaces.findGroupChats" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FindGroupChatsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *SpacesFindGroupChatsCall) Do(opts ...googleapi.CallOption) (*FindGroupChatsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FindGroupChatsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.spaces.findGroupChats", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *SpacesFindGroupChatsCall) Pages(ctx context.Context, f func(*FindGroupChatsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 type SpacesGetCall struct {
 	s            *Service
 	name         string
@@ -10602,11 +10823,9 @@ type SpacesMessagesGetCall struct {
 // to, like direct messages and slash commands
 // (https://developers.google.com/workspace/chat/slash-commands) that invoke
 // the Chat app. - `https://www.googleapis.com/auth/chat.app.messages.readonly`
-// with administrator approval (https://support.google.com/a?p=chat-app-auth)
-// (available in Developer Preview
-// (https://developers.google.com/workspace/preview)). When using this
-// authentication scope, this method returns details about a public message in
-// a space. - User authentication
+// with administrator approval (https://support.google.com/a?p=chat-app-auth).
+// When using this authentication scope, this method returns details about a
+// public message in a space. - User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 // with one of the following authorization scopes: -
 // `https://www.googleapis.com/auth/chat.messages.readonly` -
@@ -10736,8 +10955,7 @@ type SpacesMessagesListCall struct {
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
 // with administrator approval (https://support.google.com/a?p=chat-app-auth)
-// in Developer Preview (https://developers.google.com/workspace/preview) with
-// the authorization scope: -
+// with the authorization scope: -
 // `https://www.googleapis.com/auth/chat.app.messages.readonly`. When using
 // this authentication scope, this method only returns public messages in a
 // space. It doesn't include private messages. - User authentication
@@ -11784,11 +12002,13 @@ type SpacesSpaceEventsGetCall struct {
 // appropriate for reading the requested data: - App authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
 // with administrator approval (https://support.google.com/a?p=chat-app-auth)
-// in Developer Preview (https://developers.google.com/workspace/preview) with
-// one of the following authorization scopes: -
+// with one of the following authorization scopes: -
 // `https://www.googleapis.com/auth/chat.app.spaces` -
+// `https://www.googleapis.com/auth/chat.app.spaces.readonly` -
 // `https://www.googleapis.com/auth/chat.app.messages.readonly` -
-// `https://www.googleapis.com/auth/chat.app.memberships` - User authentication
+// `https://www.googleapis.com/auth/chat.app.memberships` -
+// `https://www.googleapis.com/auth/chat.app.memberships.readonly` - User
+// authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 // with one of the following authorization scopes: -
 // `https://www.googleapis.com/auth/chat.spaces.readonly` -
@@ -11924,11 +12144,13 @@ type SpacesSpaceEventsListCall struct {
 // appropriate for reading the requested data: - App authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
 // with administrator approval (https://support.google.com/a?p=chat-app-auth)
-// in Developer Preview (https://developers.google.com/workspace/preview) with
-// one of the following authorization scopes: -
+// with one of the following authorization scopes: -
 // `https://www.googleapis.com/auth/chat.app.spaces` -
+// `https://www.googleapis.com/auth/chat.app.spaces.readonly` -
 // `https://www.googleapis.com/auth/chat.app.messages.readonly` -
-// `https://www.googleapis.com/auth/chat.app.memberships` - User authentication
+// `https://www.googleapis.com/auth/chat.app.memberships` -
+// `https://www.googleapis.com/auth/chat.app.memberships.readonly` - User
+// authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 // with one of the following authorization scopes: -
 // `https://www.googleapis.com/auth/chat.spaces.readonly` -
@@ -12126,11 +12348,10 @@ type UsersSectionsCreateCall struct {
 	header_             http.Header
 }
 
-// Create: Developer Preview (https://developers.google.com/workspace/preview):
-// Creates a section in Google Chat. Sections help users group conversations
-// and customize the list of spaces displayed in Chat navigation panel. Only
-// sections of type `CUSTOM_SECTION` can be created. For details, see Create
-// and organize sections in Google Chat
+// Create: Creates a section in Google Chat. Sections help users group
+// conversations and customize the list of spaces displayed in Chat navigation
+// panel. Only sections of type `CUSTOM_SECTION` can be created. For details,
+// see Create and organize sections in Google Chat
 // (https://support.google.com/chat/answer/16059854). Requires user
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
@@ -12240,10 +12461,9 @@ type UsersSectionsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Developer Preview (https://developers.google.com/workspace/preview):
-// Deletes a section of type `CUSTOM_SECTION`. If the section contains items,
-// such as spaces, the items are moved to Google Chat's default sections and
-// are not deleted. For details, see Create and organize sections in Google
+// Delete: Deletes a section of type `CUSTOM_SECTION`. If the section contains
+// items, such as spaces, the items are moved to Google Chat's default sections
+// and are not deleted. For details, see Create and organize sections in Google
 // Chat (https://support.google.com/chat/answer/16059854). Requires user
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
@@ -12348,11 +12568,10 @@ type UsersSectionsListCall struct {
 	header_      http.Header
 }
 
-// List: Developer Preview (https://developers.google.com/workspace/preview):
-// Lists sections available to the Chat user. Sections help users group their
-// conversations and customize the list of spaces displayed in Chat navigation
-// panel. For details, see Create and organize sections in Google Chat
-// (https://support.google.com/chat/answer/16059854). Requires user
+// List: Lists sections available to the Chat user. Sections help users group
+// their conversations and customize the list of spaces displayed in Chat
+// navigation panel. For details, see Create and organize sections in Google
+// Chat (https://support.google.com/chat/answer/16059854). Requires user
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 // with the authorization scope
@@ -12514,9 +12733,8 @@ type UsersSectionsPatchCall struct {
 	header_             http.Header
 }
 
-// Patch: Developer Preview (https://developers.google.com/workspace/preview):
-// Updates a section. Only sections of type `CUSTOM_SECTION` can be updated.
-// For details, see Create and organize sections in Google Chat
+// Patch: Updates a section. Only sections of type `CUSTOM_SECTION` can be
+// updated. For details, see Create and organize sections in Google Chat
 // (https://support.google.com/chat/answer/16059854). Requires user
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
@@ -12639,9 +12857,8 @@ type UsersSectionsPositionCall struct {
 	header_                http.Header
 }
 
-// Position: Developer Preview
-// (https://developers.google.com/workspace/preview): Changes the sort order of
-// a section. For details, see Create and organize sections in Google Chat
+// Position: Changes the sort order of a section. For details, see Create and
+// organize sections in Google Chat
 // (https://support.google.com/chat/answer/16059854). Requires user
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
@@ -12752,9 +12969,8 @@ type UsersSectionsItemsListCall struct {
 	header_      http.Header
 }
 
-// List: Developer Preview (https://developers.google.com/workspace/preview):
-// Lists items in a section. Only spaces can be section items. For details, see
-// Create and organize sections in Google Chat
+// List: Lists items in a section. Only spaces can be section items. For
+// details, see Create and organize sections in Google Chat
 // (https://support.google.com/chat/answer/16059854). Requires user
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
@@ -12924,8 +13140,7 @@ type UsersSectionsItemsMoveCall struct {
 	header_                http.Header
 }
 
-// Move: Developer Preview (https://developers.google.com/workspace/preview):
-// Moves an item from one section to another. For example, if a section
+// Move: Moves an item from one section to another. For example, if a section
 // contains spaces, this method can be used to move a space to a different
 // section. For details, see Create and organize sections in Google Chat
 // (https://support.google.com/chat/answer/16059854). Requires user

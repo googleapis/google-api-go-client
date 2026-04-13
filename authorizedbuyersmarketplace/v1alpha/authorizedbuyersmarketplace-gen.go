@@ -3456,7 +3456,7 @@ func (r *BiddersFinalizedDealsService) List(parent string) *BiddersFinalizedDeal
 // (https://developers.google.com/authorized-buyers/apis/guides/list-filters)
 // Supported columns for filtering are: * deal.displayName * deal.dealType *
 // deal.createTime * deal.updateTime * deal.flightStartTime *
-// deal.flightEndTime * deal.eligibleSeatIds * dealServingStatus
+// deal.flightEndTime * deal.eligibleSeatIds * dealServingStatus * readyToServe
 func (c *BiddersFinalizedDealsListCall) Filter(filter string) *BiddersFinalizedDealsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6755,7 +6755,7 @@ func (r *BuyersFinalizedDealsService) List(parent string) *BuyersFinalizedDealsL
 // (https://developers.google.com/authorized-buyers/apis/guides/list-filters)
 // Supported columns for filtering are: * deal.displayName * deal.dealType *
 // deal.createTime * deal.updateTime * deal.flightStartTime *
-// deal.flightEndTime * deal.eligibleSeatIds * dealServingStatus
+// deal.flightEndTime * deal.eligibleSeatIds * dealServingStatus * readyToServe
 func (c *BuyersFinalizedDealsListCall) Filter(filter string) *BuyersFinalizedDealsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

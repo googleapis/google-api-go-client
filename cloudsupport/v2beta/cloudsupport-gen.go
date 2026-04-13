@@ -581,10 +581,15 @@ type ContentTypeInfo struct {
 	FromBytes string `json:"fromBytes,omitempty"`
 	// FromFileName: # gdata.* are outside protos with mising documentation
 	FromFileName string `json:"fromFileName,omitempty"`
+	// FromFusionId: # gdata.* are outside protos with mising documentation
+	FromFusionId string `json:"fromFusionId,omitempty"`
 	// FromHeader: # gdata.* are outside protos with mising documentation
 	FromHeader string `json:"fromHeader,omitempty"`
 	// FromUrlPath: # gdata.* are outside protos with mising documentation
 	FromUrlPath string `json:"fromUrlPath,omitempty"`
+	// FusionIdDetectionMetadata: # gdata.* are outside protos with mising
+	// documentation
+	FusionIdDetectionMetadata string `json:"fusionIdDetectionMetadata,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BestGuess") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2269,18 +2274,26 @@ func (c *CasesSearchCall) Parent(parent string) *CasesSearchCall {
 
 // Query sets the optional parameter "query": An expression used to filter
 // cases. Expressions use the following fields separated by `AND` and specified
-// with `=`: - `organization`: An organization name in the form
-// `organizations/`. - `project`: A project name in the form `projects/`. -
-// `state`: Can be `OPEN` or `CLOSED`. - `priority`: Can be `P0`, `P1`, `P2`,
-// `P3`, or `P4`. You can specify multiple values for priority using the `OR`
-// operator. For example, `priority=P1 OR priority=P2`. - `creator.email`: The
-// email address of the case creator. You must specify either `organization` or
-// `project`. To search across `displayName`, `description`, and comments, use
-// a global restriction with no keyword or operator. For example, "my
-// search". To search only cases updated after a certain date, use
-// `update_time` restricted with that particular date, time, and timezone in
-// ISO datetime format. For example, `update_time>"2020-01-01T00:00:00-05:00".
-// `update_time` only supports the greater than operator (`>`). Examples: -
+// with `=`: - `state`: Can be `OPEN` or `CLOSED`. - `priority`: Can be `P0`,
+// `P1`, `P2`, `P3`, or `P4`. You can specify multiple values for priority
+// using the `OR` operator. For example, `priority=P1 OR priority=P2`. -
+// `creator.email`: The email address of the case creator. To search across
+// `displayName`, `description`, and comments, use a global restriction with no
+// keyword or operator. For example, "my search". To search only cases
+// updated after a certain date, use `update_time` restricted with that
+// particular date, time, and timezone in ISO datetime format. For example,
+// `update_time>"2020-01-01T00:00:00-05:00". `update_time` only supports the
+// greater than operator (`>`). If you are using the `v2` version of the API,
+// you must specify the case parent in the `parent` field. If you provide an
+// empty `query`, all cases under the parent resource will be returned. If you
+// are using the `v2beta` version of the API, you must specify the case parent
+// in the `query` field using one of the two fields below, which are only
+// available for `v2beta`. The `parent` field will be ignored. -
+// `organization`: An organization name in the form `organizations/`. -
+// `project`: A project name in the form `projects/`. Examples: For `v2`: -
+// `state=CLOSED` - `state=OPEN AND creator.email="tester@example.com" -
+// `state=OPEN AND (priority=P0 OR priority=P1)` -
+// `update_time>"2020-01-01T00:00:00-05:00" For `v2beta`: -
 // `organization="organizations/123456789" -
 // `project="projects/my-project-id" - `project="projects/123456789" -
 // `organization="organizations/123456789" AND state=CLOSED` -

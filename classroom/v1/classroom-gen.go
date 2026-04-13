@@ -4014,7 +4014,7 @@ func (c *CoursesListCall) PageToken(pageToken string) *CoursesListCall {
 // courses to those having a student with the specified identifier. The
 // identifier can be one of the following: * the numeric identifier for the
 // user * the email address of the user * the string literal "me", indicating
-// the requesting user
+// the requesting user If specified, `teacher_id` must be empty.
 func (c *CoursesListCall) StudentId(studentId string) *CoursesListCall {
 	c.urlParams_.Set("studentId", studentId)
 	return c
@@ -4024,7 +4024,7 @@ func (c *CoursesListCall) StudentId(studentId string) *CoursesListCall {
 // courses to those having a teacher with the specified identifier. The
 // identifier can be one of the following: * the numeric identifier for the
 // user * the email address of the user * the string literal "me", indicating
-// the requesting user
+// the requesting user If specified, `student_id` must be empty.
 func (c *CoursesListCall) TeacherId(teacherId string) *CoursesListCall {
 	c.urlParams_.Set("teacherId", teacherId)
 	return c

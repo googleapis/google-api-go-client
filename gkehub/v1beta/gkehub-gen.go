@@ -5789,6 +5789,9 @@ type RolloutSequence struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Etag: Output only. etag of the Rollout Sequence Ex. abc1234
 	Etag string `json:"etag,omitempty"`
+	// IgnoredClustersSelector: Optional. Selector for clusters to exclude from the
+	// Rollout Sequence.
+	IgnoredClustersSelector *ClusterSelector `json:"ignoredClustersSelector,omitempty"`
 	// Labels: Optional. Labels for this Rollout Sequence.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. Name of the rollout sequence in the format of:

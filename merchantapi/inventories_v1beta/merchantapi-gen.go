@@ -607,14 +607,15 @@ type RegionalInventory struct {
 	// `local~content_language~feed_label~offer_id`. Example: `local~en~US~sku123`
 	// The format of the `{product}` segment in the URL is automatically detected
 	// by the server, supporting two options: 1. **Encoded Format**: The
-	// `{product}` segment is an unpadded base64url encoded string (RFC 4648
+	// `{product}` segment is an **unpadded base64url** encoded string (RFC 4648
 	// Section 5). The decoded string must result in the
 	// `content_language~feed_label~offer_id` structure. This encoding MUST be used
 	// if any part of the product identifier (like `offer_id`) contains characters
 	// such as `/`, `%`, or `~`. * Example: To represent the product ID
 	// `en~US~sku/123` for `region` "region123", the `{product}` segment must be
-	// the base64url encoding of this string, which is `ZW5-VVN-c2t1LzEyMw`. The
-	// full resource name for the regional inventory would be
+	// the unpadded base64url encoding of this string, which is
+	// `ZW5-VVN-c2t1LzEyMw`. The full resource name for the regional inventory
+	// would be
 	// `accounts/123/products/ZW5-VVN-c2t1LzEyMw/regionalInventories/region123`. 2.
 	// **Plain Format**: The `{product}` segment is the tilde-separated string
 	// `content_language~feed_label~offer_id`. This format is suitable only when
@@ -687,7 +688,7 @@ type AccountsProductsLocalInventoriesDeleteCall struct {
 //     used if any part of the product identifier (like `offer_id`) contains
 //     characters such as `/`, `%`, or `~`. * Example: To represent the product
 //     ID `en~US~sku/123` for `store_code` "store123", the `{product}` segment
-//     must be the base64url encoding of this string, which is
+//     must be the unpadded base64url encoding of this string, which is
 //     `ZW5-VVN-c2t1LzEyMw`. The full resource name for the local inventory would
 //     be `accounts/123/products/ZW5-VVN-c2t1LzEyMw/localInventories/store123`.
 //     2. **Plain Format**: The `{product}` segment is the tilde-separated string
@@ -813,10 +814,10 @@ type AccountsProductsLocalInventoriesInsertCall struct {
 //     `content_language~feed_label~offer_id` structure. This encoding MUST be
 //     used if any part of the product identifier (like `offer_id`) contains
 //     characters such as `/`, `%`, or `~`. * Example: To represent the product
-//     ID `en~US~sku/123`, the `{product}` segment must be the base64url encoding
-//     of this string, which is `ZW5-VVN-c2t1LzEyMw`. The full resource name for
-//     the product would be `accounts/123/products/ZW5-VVN-c2t1LzEyMw`. 2.
-//     **Plain Format**: The `{product}` segment is the tilde-separated string
+//     ID `en~US~sku/123`, the `{product}` segment must be the unpadded base64url
+//     encoding of this string, which is `ZW5-VVN-c2t1LzEyMw`. The full resource
+//     name for the product would be `accounts/123/products/ZW5-VVN-c2t1LzEyMw`.
+//     2. **Plain Format**: The `{product}` segment is the tilde-separated string
 //     `content_language~feed_label~offer_id`. This format is suitable only when
 //     `content_language`, `feed_label`, and `offer_id` do not contain
 //     URL-problematic characters like `/`, `%`, or `~`. We recommend using the
@@ -944,10 +945,10 @@ type AccountsProductsLocalInventoriesListCall struct {
 //     `content_language~feed_label~offer_id` structure. This encoding MUST be
 //     used if any part of the product identifier (like `offer_id`) contains
 //     characters such as `/`, `%`, or `~`. * Example: To represent the product
-//     ID `en~US~sku/123`, the `{product}` segment must be the base64url encoding
-//     of this string, which is `ZW5-VVN-c2t1LzEyMw`. The full resource name for
-//     the product would be `accounts/123/products/ZW5-VVN-c2t1LzEyMw`. 2.
-//     **Plain Format**: The `{product}` segment is the tilde-separated string
+//     ID `en~US~sku/123`, the `{product}` segment must be the unpadded base64url
+//     encoding of this string, which is `ZW5-VVN-c2t1LzEyMw`. The full resource
+//     name for the product would be `accounts/123/products/ZW5-VVN-c2t1LzEyMw`.
+//     2. **Plain Format**: The `{product}` segment is the tilde-separated string
 //     `content_language~feed_label~offer_id`. This format is suitable only when
 //     `content_language`, `feed_label`, and `offer_id` do not contain
 //     URL-problematic characters like `/`, `%`, or `~`. We recommend using the
@@ -1118,14 +1119,15 @@ type AccountsProductsRegionalInventoriesDeleteCall struct {
 //     `local~content_language~feed_label~offer_id`. Example:
 //     `local~en~US~sku123` The format of the `{product}` segment in the URL is
 //     automatically detected by the server, supporting two options: 1. **Encoded
-//     Format**: The `{product}` segment is an unpadded base64url encoded string
-//     (RFC 4648 Section 5). The decoded string must result in the
+//     Format**: The `{product}` segment is an **unpadded base64url** encoded
+//     string (RFC 4648 Section 5). The decoded string must result in the
 //     `content_language~feed_label~offer_id` structure. This encoding MUST be
 //     used if any part of the product identifier (like `offer_id`) contains
 //     characters such as `/`, `%`, or `~`. * Example: To represent the product
 //     ID `en~US~sku/123` for `region` "region123", the `{product}` segment must
-//     be the base64url encoding of this string, which is `ZW5-VVN-c2t1LzEyMw`.
-//     The full resource name for the regional inventory would be
+//     be the unpadded base64url encoding of this string, which is
+//     `ZW5-VVN-c2t1LzEyMw`. The full resource name for the regional inventory
+//     would be
 //     `accounts/123/products/ZW5-VVN-c2t1LzEyMw/regionalInventories/region123`.
 //     2. **Plain Format**: The `{product}` segment is the tilde-separated string
 //     `content_language~feed_label~offer_id`. This format is suitable only when
@@ -1244,15 +1246,15 @@ type AccountsProductsRegionalInventoriesInsertCall struct {
 //     `local~content_language~feed_label~offer_id`. Example:
 //     `local~en~US~sku123` The format of the `{product}` segment in the URL is
 //     automatically detected by the server, supporting two options: 1. **Encoded
-//     Format**: The `{product}` segment is an unpadded base64url encoded string
-//     (RFC 4648 Section 5). The decoded string must result in the
+//     Format**: The `{product}` segment is an **unpadded base64url** encoded
+//     string (RFC 4648 Section 5). The decoded string must result in the
 //     `content_language~feed_label~offer_id` structure. This encoding MUST be
 //     used if any part of the product identifier (like `offer_id`) contains
 //     characters such as `/`, `%`, or `~`. * Example: To represent the product
-//     ID `en~US~sku/123`, the `{product}` segment must be the base64url encoding
-//     of this string, which is `ZW5-VVN-c2t1LzEyMw`. The full resource name for
-//     the product would be `accounts/123/products/ZW5-VVN-c2t1LzEyMw`. 2.
-//     **Plain Format**: The `{product}` segment is the tilde-separated string
+//     ID `en~US~sku/123`, the `{product}` segment must be the unpadded base64url
+//     encoding of this string, which is `ZW5-VVN-c2t1LzEyMw`. The full resource
+//     name for the product would be `accounts/123/products/ZW5-VVN-c2t1LzEyMw`.
+//     2. **Plain Format**: The `{product}` segment is the tilde-separated string
 //     `content_language~feed_label~offer_id`. This format is suitable only when
 //     `content_language`, `feed_label`, and `offer_id` do not contain
 //     URL-problematic characters like `/`, `%`, or `~`. We recommend using the
@@ -1376,15 +1378,15 @@ type AccountsProductsRegionalInventoriesListCall struct {
 //     `local~content_language~feed_label~offer_id`. Example:
 //     `local~en~US~sku123` The format of the `{product}` segment in the URL is
 //     automatically detected by the server, supporting two options: 1. **Encoded
-//     Format**: The `{product}` segment is an unpadded base64url encoded string
-//     (RFC 4648 Section 5). The decoded string must result in the
+//     Format**: The `{product}` segment is an **unpadded base64url** encoded
+//     string (RFC 4648 Section 5). The decoded string must result in the
 //     `content_language~feed_label~offer_id` structure. This encoding MUST be
 //     used if any part of the product identifier (like `offer_id`) contains
 //     characters such as `/`, `%`, or `~`. * Example: To represent the product
-//     ID `en~US~sku/123`, the `{product}` segment must be the base64url encoding
-//     of this string, which is `ZW5-VVN-c2t1LzEyMw`. The full resource name for
-//     the product would be `accounts/123/products/ZW5-VVN-c2t1LzEyMw`. 2.
-//     **Plain Format**: The `{product}` segment is the tilde-separated string
+//     ID `en~US~sku/123`, the `{product}` segment must be the unpadded base64url
+//     encoding of this string, which is `ZW5-VVN-c2t1LzEyMw`. The full resource
+//     name for the product would be `accounts/123/products/ZW5-VVN-c2t1LzEyMw`.
+//     2. **Plain Format**: The `{product}` segment is the tilde-separated string
 //     `content_language~feed_label~offer_id`. This format is suitable only when
 //     `content_language`, `feed_label`, and `offer_id` do not contain
 //     URL-problematic characters like `/`, `%`, or `~`. We recommend using the

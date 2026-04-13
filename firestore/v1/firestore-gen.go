@@ -3189,9 +3189,6 @@ type GoogleFirestoreAdminV1SearchConfig struct {
 	// GeoSpec: Optional. The specification for building a geo search index for a
 	// field.
 	GeoSpec *GoogleFirestoreAdminV1SearchGeoSpec `json:"geoSpec,omitempty"`
-	// NumberSpec: Optional. The specification for building a number search index
-	// for a field.
-	NumberSpec *GoogleFirestoreAdminV1SearchNumberSpec `json:"numberSpec,omitempty"`
 	// TextSpec: Optional. The specification for building a text search index for a
 	// field.
 	TextSpec *GoogleFirestoreAdminV1SearchTextSpec `json:"textSpec,omitempty"`
@@ -3240,13 +3237,6 @@ func (s GoogleFirestoreAdminV1SearchGeoSpec) MarshalJSON() ([]byte, error) {
 // GoogleFirestoreAdminV1SearchIndexOptions: Options for search indexes at the
 // definition level.
 type GoogleFirestoreAdminV1SearchIndexOptions struct {
-	// CustomPartitionFieldPaths: Optional. Custom partition fields to use for the
-	// search index. If unspecified, all indexed fields will be in the same default
-	// partition. If a search index is created specifying custom partition fields,
-	// all search queries using that index will be required to filter on the
-	// partition. For indexes with MONGODB_COMPATIBLE_API ApiScope: This must refer
-	// to a top level field name.
-	CustomPartitionFieldPaths []string `json:"customPartitionFieldPaths,omitempty"`
 	// TextLanguage: Optional. The language to use for text search indexes. Used as
 	// the default language if not overridden at the document level by specifying
 	// the `text_language_override_field`. The language is specified as a BCP 47
@@ -3259,53 +3249,21 @@ type GoogleFirestoreAdminV1SearchIndexOptions struct {
 	// MONGODB_COMPATIBLE_API ApiScope: if unspecified, the language is taken from
 	// the "language" field if it exists or from `text_language` if it does not.
 	TextLanguageOverrideFieldPath string `json:"textLanguageOverrideFieldPath,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CustomPartitionFieldPaths")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CustomPartitionFieldPaths") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleFirestoreAdminV1SearchIndexOptions) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleFirestoreAdminV1SearchIndexOptions
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleFirestoreAdminV1SearchNumberSpec: The specification for how to build a
-// number search index for a field.
-type GoogleFirestoreAdminV1SearchNumberSpec struct {
-	// IndexType: Required. How to index the number field value.
-	//
-	// Possible values:
-	//   "NUMBER_INDEX_TYPE_UNSPECIFIED" - The index type is unspecified. Not a
-	// valid option.
-	//   "FLOAT64" - A floating point index.
-	//   "INT32_LOG_TREE" - A log tree index for int32 values.
-	//   "INT64_LOG_TREE" - A log tree index for int64 values.
-	//   "INT32_PREFIX_TREE" - A prefix tree index for int32 values.
-	//   "INT64_PREFIX_TREE" - A prefix tree index for int64 values.
-	IndexType string `json:"indexType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "IndexType") to
+	// ForceSendFields is a list of field names (e.g. "TextLanguage") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "IndexType") to include in API
+	// NullFields is a list of field names (e.g. "TextLanguage") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleFirestoreAdminV1SearchNumberSpec) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleFirestoreAdminV1SearchNumberSpec
+func (s GoogleFirestoreAdminV1SearchIndexOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1SearchIndexOptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3319,8 +3277,6 @@ type GoogleFirestoreAdminV1SearchTextIndexSpec struct {
 	// option.
 	//   "TOKENIZED" - Field values are tokenized. This is the only way currently
 	// supported for MONGODB_COMPATIBLE_API.
-	//   "NGRAMS" - Field values are indexed as n-grams.
-	//   "EXACT_MATCH" - Field values are indexed to allow fast equality checks.
 	IndexType string `json:"indexType,omitempty"`
 	// MatchType: Required. How to match the text field value.
 	//
@@ -3329,7 +3285,6 @@ type GoogleFirestoreAdminV1SearchTextIndexSpec struct {
 	// option.
 	//   "MATCH_GLOBALLY" - Match on any indexed field. This is the only way
 	// currently supported for MONGODB_COMPATIBLE_API.
-	//   "MATCH_FIELD" - Match on a specific field.
 	MatchType string `json:"matchType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IndexType") to
 	// unconditionally include in API requests. By default, fields with empty or

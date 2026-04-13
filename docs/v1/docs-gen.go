@@ -1017,8 +1017,8 @@ type DateElementProperties struct {
 	// minute, and timezone. For example, "Jan 1, 1970 12:00 PM UTC".
 	TimeFormat string `json:"timeFormat,omitempty"`
 	// TimeZoneId: The time zone of the DateElement, as defined by the Unicode
-	// Common Locale Data Repository (CLDR) project. For example, `America/New
-	// York`. If unset, the default time zone is `etc/UTC`.
+	// Common Locale Data Repository (CLDR) project. For example,
+	// `America/New_York`. If unset, the default time zone is `etc/UTC`.
 	TimeZoneId string `json:"timeZoneId,omitempty"`
 	// Timestamp: The point in time to represent, in seconds and nanoseconds since
 	// Unix epoch: January 1, 1970 at midnight UTC. Timestamp is expected to be in
@@ -1026,7 +1026,7 @@ type DateElementProperties struct {
 	// zone. For example, a timestamp of `18000` with a date format of
 	// `DATE_FORMAT_ISO8601` and time format of `TIME_FORMAT_HOUR_MINUTE` would be
 	// displayed as `1970-01-01 5:00 AM`. A timestamp of `18000` with date format
-	// of `DATE_FORMAT_8SO8601`, time format of `TIME_FORMAT_HOUR_MINUTE`, and time
+	// of `DATE_FORMAT_ISO8601`, time format of `TIME_FORMAT_HOUR_MINUTE`, and time
 	// zone set to `America/New_York` will instead be `1970-01-01 12:00 AM`.
 	Timestamp string `json:"timestamp,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DateFormat") to

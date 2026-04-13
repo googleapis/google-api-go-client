@@ -525,6 +525,8 @@ type AddonsConfig struct {
 	// ParallelstoreCsiDriverConfig: Configuration for the Cloud Storage
 	// Parallelstore CSI driver.
 	ParallelstoreCsiDriverConfig *ParallelstoreCsiDriverConfig `json:"parallelstoreCsiDriverConfig,omitempty"`
+	// PodSnapshotConfig: Optional. Configuration for the Pod Snapshot feature.
+	PodSnapshotConfig *PodSnapshotConfig `json:"podSnapshotConfig,omitempty"`
 	// RayOperatorConfig: Optional. Configuration for Ray Operator addon.
 	RayOperatorConfig *RayOperatorConfig `json:"rayOperatorConfig,omitempty"`
 	// SliceControllerConfig: Optional. Configuration for the slice controller
@@ -832,7 +834,7 @@ func (s AutopilotCompatibilityIssue) MarshalJSON() ([]byte, error) {
 }
 
 // AutopilotConfig: AutopilotConfig contains configuration of autopilot feature
-// for this nodepool.
+// for this node pool.
 type AutopilotConfig struct {
 	// Enabled: Denotes that nodes belonging to this node pool are Autopilot nodes.
 	Enabled bool `json:"enabled,omitempty"`
@@ -1103,7 +1105,7 @@ func (s BlueGreenSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BootDisk: BootDisk specifies the boot disk configuration for nodepools.
+// BootDisk: BootDisk specifies the boot disk configuration for node pools.
 type BootDisk struct {
 	// DiskType: Disk type of the boot disk. (i.e. Hyperdisk-Balanced, PD-Balanced,
 	// etc.)
@@ -5709,7 +5711,7 @@ func (s NodeConfigDefaults) MarshalJSON() ([]byte, error) {
 }
 
 // NodeDrainConfig: NodeDrainConfig contains the node drain related
-// configurations for this nodepool.
+// configurations for this node pool.
 type NodeDrainConfig struct {
 	// RespectPdbDuringNodePoolDeletion: Whether to respect PDB during node pool
 	// deletion.
@@ -6020,7 +6022,7 @@ type NodeNetworkConfig struct {
 	// throughout the node pool's lifecycle, including during upgrades.
 	NetworkTierConfig *NetworkTierConfig `json:"networkTierConfig,omitempty"`
 	// PodCidrOverprovisionConfig: [PRIVATE FIELD] Pod CIDR size overprovisioning
-	// config for the nodepool. Pod CIDR size per node depends on
+	// config for the node pool. Pod CIDR size per node depends on
 	// max_pods_per_node. By default, the value of max_pods_per_node is rounded off
 	// to next power of 2 and we then double that to get the size of pod CIDR block
 	// per node. Example: max_pods_per_node of 30 would result in 64 IPs (/26).
@@ -6252,7 +6254,7 @@ type NodePoolAutoscaling struct {
 	Autoprovisioned bool `json:"autoprovisioned,omitempty"`
 	// Enabled: Is autoscaling enabled for this node pool.
 	Enabled bool `json:"enabled,omitempty"`
-	// LocationPolicy: Location policy used when scaling up a nodepool.
+	// LocationPolicy: Location policy used when scaling up a node pool.
 	//
 	// Possible values:
 	//   "LOCATION_POLICY_UNSPECIFIED" - Not set.
@@ -6318,7 +6320,7 @@ func (s NodePoolDefaults) MarshalJSON() ([]byte, error) {
 }
 
 // NodePoolLoggingConfig: NodePoolLoggingConfig specifies logging configuration
-// for nodepools.
+// for node pools.
 type NodePoolLoggingConfig struct {
 	// VariantConfig: Logging variant configuration.
 	VariantConfig *LoggingVariantConfig `json:"variantConfig,omitempty"`
@@ -6341,7 +6343,7 @@ func (s NodePoolLoggingConfig) MarshalJSON() ([]byte, error) {
 }
 
 // NodePoolUpgradeInfo: NodePoolUpgradeInfo contains the upgrade information of
-// a nodepool.
+// a node pool.
 type NodePoolUpgradeInfo struct {
 	// AutoUpgradeStatus: The auto upgrade status.
 	//
@@ -6352,11 +6354,11 @@ type NodePoolUpgradeInfo struct {
 	// upgrade is paused.
 	//   "UPGRADE_PAUSED" - UPGRADE_PAUSED indicates the upgrade is paused.
 	AutoUpgradeStatus []string `json:"autoUpgradeStatus,omitempty"`
-	// EndOfExtendedSupportTimestamp: The nodepool's current minor version's end of
-	// extended support timestamp.
+	// EndOfExtendedSupportTimestamp: The node pool's current minor version's end
+	// of extended support timestamp.
 	EndOfExtendedSupportTimestamp string `json:"endOfExtendedSupportTimestamp,omitempty"`
-	// EndOfStandardSupportTimestamp: The nodepool's current minor version's end of
-	// standard support timestamp.
+	// EndOfStandardSupportTimestamp: The node pool's current minor version's end
+	// of standard support timestamp.
 	EndOfStandardSupportTimestamp string `json:"endOfStandardSupportTimestamp,omitempty"`
 	// MinorTargetVersion: minor_target_version indicates the target version for
 	// minor upgrade.
@@ -6879,6 +6881,29 @@ func (s PodCIDROverprovisionConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PodSnapshotConfig: PodSnapshotConfig is the configuration for GKE Pod
+// Snapshots feature.
+type PodSnapshotConfig struct {
+	// Enabled: Whether or not the Pod Snapshots feature is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PodSnapshotConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PodSnapshotConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PrivateClusterConfig: Configuration options for private clusters.
 type PrivateClusterConfig struct {
 	// EnablePrivateEndpoint: Whether the master's internal IP address is used as
@@ -7047,7 +7072,7 @@ func (s PubSub) MarshalJSON() ([]byte, error) {
 // QueuedProvisioning: QueuedProvisioning defines the queued provisioning used
 // by the node pool.
 type QueuedProvisioning struct {
-	// Enabled: Denotes that this nodepool is QRM specific, meaning nodes can be
+	// Enabled: Denotes that this node pool is QRM specific, meaning nodes can be
 	// only obtained through queuing via the Cluster Autoscaler ProvisioningRequest
 	// API.
 	Enabled bool `json:"enabled,omitempty"`
@@ -9449,7 +9474,7 @@ type UpgradeSettings struct {
 	//   "SURGE" - SURGE is the traditional way of upgrade a node pool. max_surge
 	// and max_unavailable determines the level of upgrade parallelism.
 	//   "SHORT_LIVED" - SHORT_LIVED is the dedicated upgrade strategy for
-	// QueuedProvisioning and flex start nodepools scaled up only by enqueueing to
+	// QueuedProvisioning and flex start node pools scaled up only by enqueueing to
 	// the Dynamic Workload Scheduler (DWS).
 	Strategy string `json:"strategy,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BlueGreenSettings") to
@@ -12637,9 +12662,9 @@ type ProjectsLocationsClustersNodePoolsFetchNodePoolUpgradeInfoCall struct {
 	header_      http.Header
 }
 
-// FetchNodePoolUpgradeInfo: Fetch upgrade information of a specific nodepool.
+// FetchNodePoolUpgradeInfo: Fetch upgrade information of a specific node pool.
 //
-//   - name: The name (project, location, cluster, nodepool) of the nodepool to
+//   - name: The name (project, location, cluster, node pool) of the node pool to
 //     get. Specified in the format
 //     `projects/*/locations/*/clusters/*/nodePools/*` or
 //     `projects/*/zones/*/clusters/*/nodePools/*`.
@@ -16704,9 +16729,9 @@ type ProjectsZonesClustersNodePoolsFetchNodePoolUpgradeInfoCall struct {
 	header_      http.Header
 }
 
-// FetchNodePoolUpgradeInfo: Fetch upgrade information of a specific nodepool.
+// FetchNodePoolUpgradeInfo: Fetch upgrade information of a specific node pool.
 //
-//   - name: The name (project, location, cluster, nodepool) of the nodepool to
+//   - name: The name (project, location, cluster, node pool) of the node pool to
 //     get. Specified in the format
 //     `projects/*/locations/*/clusters/*/nodePools/*` or
 //     `projects/*/zones/*/clusters/*/nodePools/*`.

@@ -586,21 +586,24 @@ func (s AgentRemoteDialogflowAgent) MarshalJSON() ([]byte, error) {
 
 // AgentTool: Represents a tool that allows the agent to call another agent.
 type AgentTool struct {
+	// Agent: Optional. The resource name of the agent that is the entry point of
+	// the tool. Format: `projects/{project}/locations/{location}/agents/{agent}`
+	Agent string `json:"agent,omitempty"`
 	// Description: Optional. Description of the tool's purpose.
 	Description string `json:"description,omitempty"`
 	// Name: Required. The name of the agent tool.
 	Name string `json:"name,omitempty"`
-	// RootAgent: Optional. The resource name of the root agent that is the entry
-	// point of the tool. Format:
+	// RootAgent: Optional. Deprecated: Use `agent` instead. The resource name of
+	// the root agent that is the entry point of the tool. Format:
 	// `projects/{project}/locations/{location}/agents/{agent}`
 	RootAgent string `json:"rootAgent,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Agent") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Description") to include in API
+	// NullFields is a list of field names (e.g. "Agent") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1774,6 +1777,9 @@ type Conversation struct {
 	//   "LIVE" - The conversation is from the live end user.
 	//   "SIMULATOR" - The conversation is from the simulator.
 	//   "EVAL" - The conversation is from the evaluation.
+	//   "AGENT_TOOL" - The conversation is from an agent tool. Agent tool runs the
+	// agent in a separate session, which is persisted for testing and debugging
+	// purposes.
 	Source string `json:"source,omitempty"`
 	// StartTime: Output only. Timestamp when the conversation was created.
 	StartTime string `json:"startTime,omitempty"`
@@ -1808,6 +1814,9 @@ type ConversationLoggingSettings struct {
 	// DisableConversationLogging: Optional. Whether to disable conversation
 	// logging for the sessions.
 	DisableConversationLogging bool `json:"disableConversationLogging,omitempty"`
+	// RetentionWindow: Optional. Controls the retention window for the
+	// conversation. If not set, the conversation will be retained for 365 days.
+	RetentionWindow string `json:"retentionWindow,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisableConversationLogging")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2631,6 +2640,9 @@ func (s EndpointControlPolicy) MarshalJSON() ([]byte, error) {
 // ErrorHandlingSettings: Settings to describe how errors should be handled in
 // the app.
 type ErrorHandlingSettings struct {
+	// EndSessionConfig: Optional. Configuration for ending the session in case of
+	// system errors (e.g. LLM errors).
+	EndSessionConfig *ErrorHandlingSettingsEndSessionConfig `json:"endSessionConfig,omitempty"`
 	// ErrorHandlingStrategy: Optional. The strategy to use for error handling.
 	//
 	// Possible values:
@@ -2642,21 +2654,79 @@ type ErrorHandlingSettings struct {
 	//   "END_SESSION" - An EndSession signal will be emitted in case of system
 	// errors (e.g. LLM errors).
 	ErrorHandlingStrategy string `json:"errorHandlingStrategy,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ErrorHandlingStrategy") to
+	// FallbackResponseConfig: Optional. Configuration for handling fallback
+	// responses.
+	FallbackResponseConfig *ErrorHandlingSettingsFallbackResponseConfig `json:"fallbackResponseConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndSessionConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ErrorHandlingStrategy") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "EndSessionConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s ErrorHandlingSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ErrorHandlingSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ErrorHandlingSettingsEndSessionConfig: Configuration for ending the session
+// in case of system errors (e.g. LLM errors).
+type ErrorHandlingSettingsEndSessionConfig struct {
+	// EscalateSession: Optional. Whether to escalate the session in EndSession. If
+	// session is escalated, metadata in EndSession will contain `session_escalated
+	// = true`. See
+	// https://docs.cloud.google.com/customer-engagement-ai/conversational-agents/ps/deploy/google-telephony-platform#transfer_a_call_to_a_human_agent
+	// for details.
+	EscalateSession bool `json:"escalateSession,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EscalateSession") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EscalateSession") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ErrorHandlingSettingsEndSessionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ErrorHandlingSettingsEndSessionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ErrorHandlingSettingsFallbackResponseConfig: Configuration for handling
+// fallback responses.
+type ErrorHandlingSettingsFallbackResponseConfig struct {
+	// CustomFallbackMessages: Optional. The fallback messages in case of system
+	// errors (e.g. LLM errors), mapped by supported language code
+	// (https://docs.cloud.google.com/customer-engagement-ai/conversational-agents/ps/reference/language).
+	CustomFallbackMessages map[string]string `json:"customFallbackMessages,omitempty"`
+	// MaxFallbackAttempts: Optional. The maximum number of fallback attempts to
+	// make before the agent emitting EndSession Signal.
+	MaxFallbackAttempts int64 `json:"maxFallbackAttempts,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomFallbackMessages") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomFallbackMessages") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ErrorHandlingSettingsFallbackResponseConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ErrorHandlingSettingsFallbackResponseConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2952,6 +3022,10 @@ type ExecuteToolRequest struct {
 	// (https://docs.cloud.google.com/customer-engagement-ai/conversational-agents/ps/tool/python#environment
 	// for details) to be passed to the Python tool.
 	Context googleapi.RawMessage `json:"context,omitempty"`
+	// MockConfig: Optional. Mock configuration for the tool execution. If this
+	// field is set, tools that call other tools will be mocked based on the
+	// provided patterns and responses.
+	MockConfig *MockConfig `json:"mockConfig,omitempty"`
 	// Tool: Optional. The name of the tool to execute. Format:
 	// projects/{project}/locations/{location}/apps/{app}/tools/{tool}
 	Tool string `json:"tool,omitempty"`
@@ -4409,6 +4483,76 @@ type MetricAnalysisSettings struct {
 
 func (s MetricAnalysisSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod MetricAnalysisSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MockConfig: Mock tool calls configuration for the session.
+type MockConfig struct {
+	// MockedToolCalls: Optional. All tool calls to mock for the duration of the
+	// session.
+	MockedToolCalls []*MockedToolCall `json:"mockedToolCalls,omitempty"`
+	// UnmatchedToolCallBehavior: Required. Beavhior for tool calls that don't
+	// match any args patterns in mocked_tool_calls.
+	//
+	// Possible values:
+	//   "UNMATCHED_TOOL_CALL_BEHAVIOR_UNSPECIFIED" - Default value. This value is
+	// unused.
+	//   "FAIL" - Throw an error for any tool calls that don't match a mock
+	// expected input pattern.
+	//   "PASS_THROUGH" - For unmatched tool calls, pass the tool call through to
+	// real tool.
+	UnmatchedToolCallBehavior string `json:"unmatchedToolCallBehavior,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MockedToolCalls") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MockedToolCalls") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MockConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod MockConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MockedToolCall: A mocked tool call. Expresses the target tool + a pattern to
+// match against that tool's args / inputs. If the pattern matches, then the
+// mock response will be returned.
+type MockedToolCall struct {
+	// ExpectedArgsPattern: Required. A pattern to match against the args / inputs
+	// of all dispatched tool calls. If the tool call inputs match this pattern,
+	// then mock output will be returned.
+	ExpectedArgsPattern googleapi.RawMessage `json:"expectedArgsPattern,omitempty"`
+	// MockResponse: Optional. The mock response / output to return if the tool
+	// call args / inputs match the pattern.
+	MockResponse googleapi.RawMessage `json:"mockResponse,omitempty"`
+	// Tool: Required. Deprecated. Use tool_identifier instead.
+	Tool string `json:"tool,omitempty"`
+	// ToolId: Optional. The name of the tool to mock. Format:
+	// `projects/{project}/locations/{location}/apps/{app}/tools/{tool}`
+	ToolId string `json:"toolId,omitempty"`
+	// Toolset: Optional. The toolset to mock.
+	Toolset *ToolsetTool `json:"toolset,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExpectedArgsPattern") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExpectedArgsPattern") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MockedToolCall) MarshalJSON() ([]byte, error) {
+	type NoMethod MockedToolCall
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8738,6 +8882,10 @@ func (r *ProjectsLocationsAppsConversationsService) Delete(name string) *Project
 //	"LIVE" - The conversation is from the live end user.
 //	"SIMULATOR" - The conversation is from the simulator.
 //	"EVAL" - The conversation is from the evaluation.
+//	"AGENT_TOOL" - The conversation is from an agent tool. Agent tool runs the
+//
+// agent in a separate session, which is persisted for testing and debugging
+// purposes.
 func (c *ProjectsLocationsAppsConversationsDeleteCall) Source(source string) *ProjectsLocationsAppsConversationsDeleteCall {
 	c.urlParams_.Set("source", source)
 	return c
@@ -8850,6 +8998,10 @@ func (r *ProjectsLocationsAppsConversationsService) Get(name string) *ProjectsLo
 //	"LIVE" - The conversation is from the live end user.
 //	"SIMULATOR" - The conversation is from the simulator.
 //	"EVAL" - The conversation is from the evaluation.
+//	"AGENT_TOOL" - The conversation is from an agent tool. Agent tool runs the
+//
+// agent in a separate session, which is persisted for testing and debugging
+// purposes.
 func (c *ProjectsLocationsAppsConversationsGetCall) Source(source string) *ProjectsLocationsAppsConversationsGetCall {
 	c.urlParams_.Set("source", source)
 	return c
@@ -8996,6 +9148,10 @@ func (c *ProjectsLocationsAppsConversationsListCall) PageToken(pageToken string)
 //	"LIVE" - The conversation is from the live end user.
 //	"SIMULATOR" - The conversation is from the simulator.
 //	"EVAL" - The conversation is from the evaluation.
+//	"AGENT_TOOL" - The conversation is from an agent tool. Agent tool runs the
+//
+// agent in a separate session, which is persisted for testing and debugging
+// purposes.
 func (c *ProjectsLocationsAppsConversationsListCall) Source(source string) *ProjectsLocationsAppsConversationsListCall {
 	c.urlParams_.Set("source", source)
 	return c
@@ -9010,6 +9166,10 @@ func (c *ProjectsLocationsAppsConversationsListCall) Source(source string) *Proj
 //	"LIVE" - The conversation is from the live end user.
 //	"SIMULATOR" - The conversation is from the simulator.
 //	"EVAL" - The conversation is from the evaluation.
+//	"AGENT_TOOL" - The conversation is from an agent tool. Agent tool runs the
+//
+// agent in a separate session, which is persisted for testing and debugging
+// purposes.
 func (c *ProjectsLocationsAppsConversationsListCall) Sources(sources ...string) *ProjectsLocationsAppsConversationsListCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c

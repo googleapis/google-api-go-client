@@ -396,7 +396,17 @@ type BootDisk struct {
 	//   "PD_SSD" - SSD persistent disk type.
 	//   "PD_BALANCED" - Balanced persistent disk type.
 	//   "PD_EXTREME" - Extreme persistent disk type.
-	//   "HYPERDISK_BALANCED" - Hyperdisk Balanced persistent disk type.
+	//   "HYPERDISK_BALANCED" - Represents the Hyperdisk Balanced persistent disk
+	// type. Can be used as a boot disk or data disk.
+	//   "HYPERDISK_EXTREME" - Represents the Hyperdisk Extreme persistent disk
+	// type. Can only be used as a data disk.
+	//   "HYPERDISK_THROUGHPUT" - Represents the Hyperdisk Throughput persistent
+	// disk type. Can only be used as a data disk.
+	//   "HYPERDISK_BALANCED_HIGH_AVAILABILITY" - Represents the Hyperdisk Balanced
+	// High Availability persistent disk type. Can be used as a boot disk or data
+	// disk.
+	//   "HYPERDISK_ML" - Represents the Hyperdisk ML persistent disk type. Can be
+	// used as a boot disk or data disk.
 	DiskType string `json:"diskType,omitempty"`
 	// KmsKey: Optional. Input only. The KMS key used to encrypt the disks, only
 	// applicable if disk_encryption is CMEK. Format:
@@ -629,7 +639,17 @@ type DataDisk struct {
 	//   "PD_SSD" - SSD persistent disk type.
 	//   "PD_BALANCED" - Balanced persistent disk type.
 	//   "PD_EXTREME" - Extreme persistent disk type.
-	//   "HYPERDISK_BALANCED" - Hyperdisk Balanced persistent disk type.
+	//   "HYPERDISK_BALANCED" - Represents the Hyperdisk Balanced persistent disk
+	// type. Can be used as a boot disk or data disk.
+	//   "HYPERDISK_EXTREME" - Represents the Hyperdisk Extreme persistent disk
+	// type. Can only be used as a data disk.
+	//   "HYPERDISK_THROUGHPUT" - Represents the Hyperdisk Throughput persistent
+	// disk type. Can only be used as a data disk.
+	//   "HYPERDISK_BALANCED_HIGH_AVAILABILITY" - Represents the Hyperdisk Balanced
+	// High Availability persistent disk type. Can be used as a boot disk or data
+	// disk.
+	//   "HYPERDISK_ML" - Represents the Hyperdisk ML persistent disk type. Can be
+	// used as a boot disk or data disk.
 	DiskType string `json:"diskType,omitempty"`
 	// KmsKey: Optional. Input only. The KMS key used to encrypt the disks, only
 	// applicable if disk_encryption is CMEK. Format:
@@ -2098,10 +2118,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

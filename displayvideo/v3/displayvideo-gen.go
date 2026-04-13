@@ -816,13 +816,15 @@ type AdGroup struct {
 	// in-stream and bumper ads.
 	//   "AD_GROUP_FORMAT_MASTHEAD" - Masthead Ad that is surfaced on the top slot
 	// on the YouTube homepage.
-	//   "AD_GROUP_FORMAT_DEMAND_GEN" - Demand Gen ads.
+	//   "AD_GROUP_FORMAT_DEMAND_GEN" - Demand Gen ads. Retrieval and management of
+	// Demand Gen resources is currently in beta. This enum value is only available
+	// to allowlisted users.
 	AdGroupFormat string `json:"adGroupFormat,omitempty"`
 	// AdGroupId: Output only. The unique ID of the ad group. Assigned by the
 	// system.
 	AdGroupId int64 `json:"adGroupId,omitempty,string"`
-	// AdGroupInventoryControl: Optional. Specifies the inventory control of the ad
-	// group. This field is required for Demand Gen ad groups.
+	// AdGroupInventoryControl: Optional. Required for Demand Gen ad groups.
+	// Specifies the inventory control of the ad group.
 	AdGroupInventoryControl *AdGroupInventoryControl `json:"adGroupInventoryControl,omitempty"`
 	// AdvertiserId: Output only. The unique ID of the advertiser the ad group
 	// belongs to.
@@ -915,19 +917,23 @@ type AdGroupAd struct {
 	DcmTrackingInfo *DcmTrackingInfo `json:"dcmTrackingInfo,omitempty"`
 	// DemandGenCarouselAd: Details of a Demand Gen carousel ad
 	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
-	// -NC#CarouselAd).
+	// -NC#CarouselAd). Retrieval and management of Demand Gen resources is
+	// currently in beta. This field is only available to allowlisted users.
 	DemandGenCarouselAd *DemandGenCarouselAd `json:"demandGenCarouselAd,omitempty"`
 	// DemandGenImageAd: Details of a Demand Gen image ad
 	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
-	// -NC#ImageAd).
+	// -NC#ImageAd). Retrieval and management of Demand Gen resources is currently
+	// in beta. This field is only available to allowlisted users.
 	DemandGenImageAd *DemandGenImageAd `json:"demandGenImageAd,omitempty"`
 	// DemandGenProductAd: Details of a Demand Gen product ad
 	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
-	// -NC#Product-onlyAd).
+	// -NC#Product-onlyAd). Retrieval and management of Demand Gen resources is
+	// currently in beta. This field is only available to allowlisted users.
 	DemandGenProductAd *DemandGenProductAd `json:"demandGenProductAd,omitempty"`
 	// DemandGenVideoAd: Details of a Demand Gen video ad
 	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
-	// -NC#VideoAd).
+	// -NC#VideoAd). Retrieval and management of Demand Gen resources is currently
+	// in beta. This field is only available to allowlisted users.
 	DemandGenVideoAd *DemandGenVideoAd `json:"demandGenVideoAd,omitempty"`
 	// DisplayName: Required. The display name of the ad. Must be UTF-8 encoded
 	// with a maximum size of 255 bytes.
@@ -4276,15 +4282,13 @@ type BulkEditAdvertiserAssignedTargetingOptionsRequest struct {
 	// as a list of `CreateAssignedTargetingOptionsRequest`. Supported targeting
 	// types: * `TARGETING_TYPE_CHANNEL` *
 	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
-	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD` *
-	// `TARGETING_TYPE_INVENTORY_MODE`
+	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD`
 	CreateRequests []*CreateAssignedTargetingOptionsRequest `json:"createRequests,omitempty"`
 	// DeleteRequests: The assigned targeting options to delete in batch, specified
 	// as a list of `DeleteAssignedTargetingOptionsRequest`. Supported targeting
 	// types: * `TARGETING_TYPE_CHANNEL` *
 	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
-	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD` *
-	// `TARGETING_TYPE_INVENTORY_MODE`
+	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD`
 	DeleteRequests []*DeleteAssignedTargetingOptionsRequest `json:"deleteRequests,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateRequests") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5338,8 +5342,8 @@ func (s CampaignGoal) MarshalJSON() ([]byte, error) {
 
 // CarouselCard: Details for a Demand Gen carousel card.
 type CarouselCard struct {
-	// CallToAction: Required. The call-to-action button shown on the card. Must
-	// use 10 characters or less.
+	// CallToAction: Required. The text on the call-to-action button shown on the
+	// card. Must use 10 characters or less.
 	CallToAction string `json:"callToAction,omitempty"`
 	// FinalMobileUrl: Optional. The URL address of the webpage that people reach
 	// after they click the card on a mobile device.
@@ -6381,7 +6385,8 @@ type ConversionCountingConfig struct {
 	// conversions are counted. The Primary model can be set by you for a
 	// floodlight config or group. More details here
 	// (https://support.google.com/displayvideo/answer/7409983). Only applicable to
-	// Demand Gen line items.
+	// Demand Gen line items. Retrieval and management of Demand Gen resources is
+	// currently in beta. This field is only available to allowlisted users.
 	PrimaryAttributionModelId int64 `json:"primaryAttributionModelId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "FloodlightActivityConfigs")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -7705,8 +7710,8 @@ type DayAndTimeAssignedTargetingOptionDetails struct {
 	// between 0 (start of day) and 23 (1 hour before end of day).
 	StartHour int64 `json:"startHour,omitempty"`
 	// TimeZoneResolution: Required. The mechanism used to determine which timezone
-	// to use for this day and time targeting setting. For demand gen line items,
-	// this field is always TIME_ZONE_RESOLUTION_ADVERTISER.
+	// to use for this day and time targeting setting. For Demand Gen line items,
+	// this field is always `TIME_ZONE_RESOLUTION_ADVERTISER`.
 	//
 	// Possible values:
 	//   "TIME_ZONE_RESOLUTION_UNSPECIFIED" - Time zone resolution is either
@@ -7903,10 +7908,12 @@ func (s DeleteAssignedTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
 // DemandGenBiddingStrategy: Settings that control the bid strategy for Demand
 // Gen resources.
 type DemandGenBiddingStrategy struct {
-	// EffectiveBiddingValue: Output only. If AG doesn't set value for tCPA or
-	// tROAS, line item bidding value will be the effective_bidding_value, if the
-	// bidding strategy type is not tCPA or tROAS, effective_bidding_value is
-	// always 0. For line item, it will be the same as the value field.
+	// EffectiveBiddingValue: Output only. The value effectively used by the
+	// bidding strategy. This field will be the same as value if set. If value is
+	// not set and the strategy is assigned to an ad group, this field will be
+	// inherited from the line item's bidding strategy. If type is not
+	// `DEMAND_GEN_BIDDING_STRATEGY_TYPE_TARGET_CPA` or
+	// `DEMAND_GEN_BIDDING_STRATEGY_TYPE_TARGET_ROAS`, this field will be 0.
 	EffectiveBiddingValue int64 `json:"effectiveBiddingValue,omitempty,string"`
 	// EffectiveBiddingValueSource: Output only. Source of the effective bidding
 	// value.
@@ -7917,8 +7924,9 @@ type DemandGenBiddingStrategy struct {
 	// item.
 	//   "BIDDING_SOURCE_AD_GROUP" - Bidding value is defined in the ad group.
 	EffectiveBiddingValueSource string `json:"effectiveBiddingValueSource,omitempty"`
-	// Type: Optional. The type of the bidding strategy. This can only be set at
-	// the line item level.
+	// Type: Optional. The type of the bidding strategy. This can only be set when
+	// assigned to a line item. Ad groups will inherit this value from their line
+	// item.
 	//
 	// Possible values:
 	//   "DEMAND_GEN_BIDDING_STRATEGY_TYPE_UNSPECIFIED" - Type is not specified or
@@ -7935,9 +7943,10 @@ type DemandGenBiddingStrategy struct {
 	//   "DEMAND_GEN_BIDDING_STRATEGY_TYPE_MAXIMIZE_CLICKS" - A bidding strategy
 	// that automatically maximizes clicks within a given budget.
 	Type string `json:"type,omitempty"`
-	// Value: Optional. The value used by the bidding strategy. This can be set at
-	// the line item and ad group level. This field is only applicable for the
-	// following strategy types: * `DEMAND_GEN_BIDDING_STRATEGY_TYPE_TARGET_CPA` *
+	// Value: Optional. The value used by the bidding strategy. This can be set
+	// when assigned to line items or ad groups. This field is only applicable for
+	// the following strategy types: *
+	// `DEMAND_GEN_BIDDING_STRATEGY_TYPE_TARGET_CPA` *
 	// `DEMAND_GEN_BIDDING_STRATEGY_TYPE_TARGET_CPC` *
 	// `DEMAND_GEN_BIDDING_STRATEGY_TYPE_TARGET_ROAS` Value of this field is in
 	// micros of the advertiser's currency or ROAS value. For example, 1000000
@@ -7968,8 +7977,8 @@ type DemandGenCarouselAd struct {
 	BusinessName string `json:"businessName,omitempty"`
 	// Cards: Required. The list of cards shown on the ad.
 	Cards []*CarouselCard `json:"cards,omitempty"`
-	// CustomParameters: Optional. The custom parameters to pass custom values to
-	// tracking URL template.
+	// CustomParameters: Optional. The custom parameters and accompanying values to
+	// add to the tracking URL.
 	CustomParameters map[string]string `json:"customParameters,omitempty"`
 	// Description: Required. The description of the ad.
 	Description string `json:"description,omitempty"`
@@ -8012,8 +8021,8 @@ type DemandGenImageAd struct {
 	BusinessName string `json:"businessName,omitempty"`
 	// CallToAction: Required. The call-to-action button shown on the ad.
 	CallToAction string `json:"callToAction,omitempty"`
-	// CustomParameters: Optional. The custom parameters to pass custom values to
-	// tracking URL template.
+	// CustomParameters: Optional. The custom parameters and accompanying values to
+	// add to the tracking URL.
 	CustomParameters map[string]string `json:"customParameters,omitempty"`
 	// Descriptions: Required. The list of descriptions shown on the ad.
 	Descriptions []string `json:"descriptions,omitempty"`
@@ -8090,8 +8099,8 @@ type DemandGenProductAd struct {
 	//   "VISIT_SITE" - Visit site.
 	//   "WATCH_NOW" - Watch now.
 	CallToAction string `json:"callToAction,omitempty"`
-	// CustomParameters: Optional. The custom parameters to pass custom values to
-	// tracking URL template.
+	// CustomParameters: Optional. The custom parameters and accompanying values to
+	// add to the tracking URL.
 	CustomParameters map[string]string `json:"customParameters,omitempty"`
 	// Description: Required. The description of the ad.
 	Description string `json:"description,omitempty"`
@@ -8138,10 +8147,11 @@ func (s DemandGenProductAd) MarshalJSON() ([]byte, error) {
 type DemandGenSettings struct {
 	// GeoLanguageTargetingEnabled: Optional. Immutable. Whether location and
 	// language targeting can be set at the line item level. Otherwise, relevant
-	// targeting types must be assigned directly to the ad groups.
+	// targeting types must be assigned directly to ad groups.
 	GeoLanguageTargetingEnabled bool `json:"geoLanguageTargetingEnabled,omitempty"`
-	// LinkedMerchantId: Optional. The ID of the merchant which is linked to the
-	// line item for product feed.
+	// LinkedMerchantId: Optional. The ID of the Merchant Center account used to
+	// provide a product feed. This Merchant Center account must already be linked
+	// to the advertiser.
 	LinkedMerchantId int64 `json:"linkedMerchantId,omitempty,string"`
 	// ThirdPartyMeasurementConfigs: Optional. The third party measurement settings
 	// for the Demand Gen line item.
@@ -8197,8 +8207,8 @@ type DemandGenVideoAd struct {
 	CallToAction string `json:"callToAction,omitempty"`
 	// CompanionBanner: Optional. The companion banner used by this ad.
 	CompanionBanner *ImageAsset `json:"companionBanner,omitempty"`
-	// CustomParameters: Optional. The custom parameters to pass custom values to
-	// tracking URL template.
+	// CustomParameters: Optional. The custom parameters and accompanying values to
+	// add to the tracking URL.
 	CustomParameters map[string]string `json:"customParameters,omitempty"`
 	// Descriptions: Required. The list of descriptions shown on the ad.
 	Descriptions []string `json:"descriptions,omitempty"`
@@ -8220,7 +8230,7 @@ type DemandGenVideoAd struct {
 	Headlines []string `json:"headlines,omitempty"`
 	// Logo: Required. The logo image used by this ad.
 	Logo *ImageAsset `json:"logo,omitempty"`
-	// LongHeadlines: Required. The list of lone headlines shown on the ad.
+	// LongHeadlines: Required. The list of long headlines shown on the ad.
 	LongHeadlines []string `json:"longHeadlines,omitempty"`
 	// TrackingUrl: Output only. The URL address loaded in the background for
 	// tracking purposes.
@@ -10898,8 +10908,8 @@ func (s ImageAsset) MarshalJSON() ([]byte, error) {
 type InStreamAd struct {
 	// CommonInStreamAttribute: Common ad attributes.
 	CommonInStreamAttribute *CommonInStreamAttribute `json:"commonInStreamAttribute,omitempty"`
-	// CustomParameters: The custom parameters to pass custom values to tracking
-	// URL template.
+	// CustomParameters: The custom parameters and accompanying values to add to
+	// the tracking URL.
 	CustomParameters map[string]string `json:"customParameters,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CommonInStreamAttribute") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -11309,7 +11319,7 @@ func (s IntegrationDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// InventorySource: An inventory source. Next ID: 22
+// InventorySource: An inventory source.
 type InventorySource struct {
 	// Commitment: Whether the inventory source has a guaranteed or non-guaranteed
 	// delivery.
@@ -11949,8 +11959,12 @@ func (s Invoice) MarshalJSON() ([]byte, error) {
 // AssignedTargetingOption when targeting_type is `TARGETING_TYPE_KEYWORD`.
 type KeywordAssignedTargetingOptionDetails struct {
 	// ExemptedPolicyNames: Optional. The policy names to exempt the keyword from.
-	// This field is only applicable for Demand Gen keywords, which are positively
-	// targeted.
+	// When attempting to target a keyword that violates a policy, the error
+	// returned will include the name of the relevant policy. Use that name in this
+	// field to exempt the targeted keyword from the policy. This field is only
+	// applicable for positively-targeted keywords assigned to Demand Gen
+	// resources. Retrieval and management of Demand Gen resources is currently in
+	// beta. This field is only available to allowlisted users.
 	ExemptedPolicyNames []string `json:"exemptedPolicyNames,omitempty"`
 	// Keyword: Required. The keyword, for example `car insurance`. Positive
 	// keyword cannot be offensive word. Must be UTF-8 encoded with a maximum size
@@ -12174,10 +12188,10 @@ type LineItem struct {
 	ExcludeNewExchanges bool `json:"excludeNewExchanges,omitempty"`
 	// Flight: Required. The start and end time of the line item's flight.
 	Flight *LineItemFlight `json:"flight,omitempty"`
-	// FrequencyCap: Optional. The impression frequency cap settings of the line
-	// item. The max_impressions field in this settings object must be used if
-	// assigning a limited cap. This field is REQUIRED for all line item types
-	// excluding LINE_ITEM_TYPE_DEMAND_GEN.
+	// FrequencyCap: Optional. Required if the line item type is not
+	// `LINE_ITEM_TYPE_DEMAND_GEN`. The impression frequency cap settings of the
+	// line item. The max_impressions field in this settings object must be used if
+	// assigning a limited cap.
 	FrequencyCap *FrequencyCap `json:"frequencyCap,omitempty"`
 	// InsertionOrderId: Required. Immutable. The unique ID of the insertion order
 	// that the line item belongs to.
@@ -12257,7 +12271,9 @@ type LineItem struct {
 	//   "LINE_ITEM_TYPE_VIDEO_OUT_OF_HOME" - Video ads served on
 	// digital-out-of-home inventory. Line items of this type and their targeting
 	// cannot be created or updated using the API.
-	//   "LINE_ITEM_TYPE_DEMAND_GEN" - Demand Gen ads.
+	//   "LINE_ITEM_TYPE_DEMAND_GEN" - Demand Gen ads. Retrieval and management of
+	// Demand Gen resources is currently in beta. This enum value is only available
+	// to allowlisted users.
 	LineItemType string `json:"lineItemType,omitempty"`
 	// MobileApp: The mobile app promoted by the line item. This is applicable only
 	// when line_item_type is either `LINE_ITEM_TYPE_DISPLAY_MOBILE_APP_INSTALL` or
@@ -12380,10 +12396,9 @@ func (s LineItemAssignedTargetingOption) MarshalJSON() ([]byte, error) {
 type LineItemBudget struct {
 	// BudgetAllocationType: Required. The type of the budget allocation.
 	// `LINE_ITEM_BUDGET_ALLOCATION_TYPE_AUTOMATIC` is only applicable when
-	// automatic budget allocation is enabled for the parent insertion order. For
-	// demand gen line items, budget allocation type must be
-	// `LINE_ITEM_BUDGET_ALLOCATION_TYPE_FIXED`. Demand Gen line items do not
-	// support other budget allocation types.
+	// automatic budget allocation is enabled for the parent insertion order. This
+	// field must be set to `LINE_ITEM_BUDGET_ALLOCATION_TYPE_FIXED` for Demand Gen
+	// line items.
 	//
 	// Possible values:
 	//   "LINE_ITEM_BUDGET_ALLOCATION_TYPE_UNSPECIFIED" - Type value is not
@@ -13962,8 +13977,8 @@ func (s NegativeKeywordListAssignedTargetingOptionDetails) MarshalJSON() ([]byte
 type NonSkippableAd struct {
 	// CommonInStreamAttribute: Common ad attributes.
 	CommonInStreamAttribute *CommonInStreamAttribute `json:"commonInStreamAttribute,omitempty"`
-	// CustomParameters: The custom parameters to pass custom values to tracking
-	// URL template.
+	// CustomParameters: The custom parameters and accompanying values to add to
+	// the tracking URL.
 	CustomParameters map[string]string `json:"customParameters,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CommonInStreamAttribute") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14776,9 +14791,10 @@ type PartnerRevenueModel struct {
 	// represents the total media cost percent markup in millis. For example, 100
 	// represents 0.1% (decimal 0.001).
 	MarkupAmount int64 `json:"markupAmount,omitempty,string"`
-	// MarkupType: Required. The markup type of the partner revenue model. Demand
-	// Gen line items only support
-	// `PARTNER_REVENUE_MODEL_MARKUP_TYPE_TOTAL_MEDIA_COST_MARKUP`.
+	// MarkupType: Required. The markup type of the partner revenue model. This
+	// field must be set to
+	// `PARTNER_REVENUE_MODEL_MARKUP_TYPE_TOTAL_MEDIA_COST_MARKUP` for Demand Gen
+	// line items.
 	//
 	// Possible values:
 	//   "PARTNER_REVENUE_MODEL_MARKUP_TYPE_UNSPECIFIED" - Type value is not
@@ -15834,7 +15850,8 @@ type SelectedInventories struct {
 	// AllowYoutubeShorts: Whether the ad group is opted-in to YouTube shorts
 	// inventory.
 	AllowYoutubeShorts bool `json:"allowYoutubeShorts,omitempty"`
-	// AllowYoutubeStream: Whether the ad group is opted-in to YouTube in-stream.
+	// AllowYoutubeStream: Whether the ad group is opted-in to YouTube in-stream
+	// inventory.
 	AllowYoutubeStream bool `json:"allowYoutubeStream,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowDiscover") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -16241,8 +16258,9 @@ type TargetingExpansionConfig struct {
 	// `INSERTION_ORDER_AUTOMATION_TYPE_BID_BUDGET`.
 	EnableOptimizedTargeting bool `json:"enableOptimizedTargeting,omitempty"`
 	// ExcludeDemographicExpansion: Optional. Whether to exclude demographic
-	// expansion for Optimized Targeting. This field only applies to Demand Gen ad
-	// groups.
+	// expansion for Optimized Targeting. This field can only be set for Demand Gen
+	// ad groups. Retrieval and management of Demand Gen resources is currently in
+	// beta. This field is only available to allowlisted users.
 	ExcludeDemographicExpansion bool `json:"excludeDemographicExpansion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudienceExpansionLevel") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -16485,8 +16503,8 @@ type ThirdPartyMeasurementConfigs struct {
 	BrandLiftVendorConfigs []*ThirdPartyVendorConfig `json:"brandLiftVendorConfigs,omitempty"`
 	// BrandSafetyVendorConfigs: Optional. The third-party vendors measuring brand
 	// safety. The following third-party vendors are applicable: *
-	// `THIRD_PARTY_VENDOR_DOUBLE_VERIFY` *
-	// `THIRD_PARTY_VENDOR_INTEGRAL_AD_SCIENCE` * `THIRD_PARTY_VENDOR_ZEFR`
+	// `THIRD_PARTY_VENDOR_ZEFR` * `THIRD_PARTY_VENDOR_DOUBLE_VERIFY` *
+	// `THIRD_PARTY_VENDOR_INTEGRAL_AD_SCIENCE`
 	BrandSafetyVendorConfigs []*ThirdPartyVendorConfig `json:"brandSafetyVendorConfigs,omitempty"`
 	// ReachVendorConfigs: Optional. The third-party vendors measuring reach. The
 	// following third-party vendors are applicable: * `THIRD_PARTY_VENDOR_NIELSEN`
@@ -17138,8 +17156,8 @@ type VideoPerformanceAd struct {
 	ActionButtonLabels []string `json:"actionButtonLabels,omitempty"`
 	// CompanionBanners: The list of companion banners used by this ad.
 	CompanionBanners []*ImageAsset `json:"companionBanners,omitempty"`
-	// CustomParameters: The custom parameters to pass custom values to tracking
-	// URL template.
+	// CustomParameters: The custom parameters and accompanying values to add to
+	// the tracking URL.
 	CustomParameters map[string]string `json:"customParameters,omitempty"`
 	// Descriptions: The list of descriptions shown on the call-to-action banner.
 	Descriptions []string `json:"descriptions,omitempty"`
@@ -17154,7 +17172,7 @@ type VideoPerformanceAd struct {
 	FinalUrl string `json:"finalUrl,omitempty"`
 	// Headlines: The list of headlines shown on the call-to-action banner.
 	Headlines []string `json:"headlines,omitempty"`
-	// LongHeadlines: The list of lone headlines shown on the call-to-action
+	// LongHeadlines: The list of long headlines shown on the call-to-action
 	// banner.
 	LongHeadlines []string `json:"longHeadlines,omitempty"`
 	// TrackingUrl: The URL address loaded in the background for tracking purposes.
@@ -17507,8 +17525,9 @@ type YoutubeAndPartnersSettings struct {
 	InventorySourceSettings *YoutubeAndPartnersInventorySourceConfig `json:"inventorySourceSettings,omitempty"`
 	// LeadFormId: Optional. The ID of the form to generate leads.
 	LeadFormId int64 `json:"leadFormId,omitempty,string"`
-	// LinkedMerchantId: Optional. The ID of the merchant which is linked to the
-	// line item for product feed.
+	// LinkedMerchantId: Optional. The ID of the Merchant Center account used to
+	// provide a product feed. This Merchant Center account must already be linked
+	// to the advertiser.
 	LinkedMerchantId int64 `json:"linkedMerchantId,omitempty,string"`
 	// RelatedVideoIds: Optional. The IDs of the videos appear below the primary
 	// video ad when the ad is playing in the YouTube app on mobile devices.
@@ -17613,8 +17632,8 @@ type YoutubeVideoDetails struct {
 	//   "VIDEO_UNAVAILABLE_REASON_PRIVATE" - The video is private.
 	//   "VIDEO_UNAVAILABLE_REASON_DELETED" - The video is deleted.
 	UnavailableReason string `json:"unavailableReason,omitempty"`
-	// VideoAssetId: Required. The YouTube video asset id. This is
-	// ad_asset.ad_asset_id.
+	// VideoAssetId: Required. The YouTube video asset id. This is the adAssetId of
+	// an AdAsset resource.
 	VideoAssetId int64 `json:"videoAssetId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -18651,7 +18670,9 @@ type AdvertisersAdGroupAdsCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Creates an ad group ad.
+// Create: Creates an ad group ad. This method is only supported for Demand Gen
+// ads. Retrieval and management of Demand Gen resources is currently in beta.
+// This method is only available to allowlisted users.
 //
 //   - advertiserId: Output only. The unique ID of the advertiser the ad belongs
 //     to.
@@ -18755,10 +18776,13 @@ type AdvertisersAdGroupAdsDeleteCall struct {
 	header_      http.Header
 }
 
-// Delete: Deletes an ad group ad.
+// Delete: Deletes an ad group ad. This method is only supported for Demand Gen
+// ads. Retrieval and management of Demand Gen resources is currently in beta.
+// This method is only available to allowlisted users.
 //
-// - adGroupAdId: The ID of the ad to delete.
-// - advertiserId: The ID of the advertiser the ad belongs to.
+//   - adGroupAdId: The ID of the ad to delete. Only Demand Gen ads are
+//     supported.
+//   - advertiserId: The ID of the advertiser the ad belongs to.
 func (r *AdvertisersAdGroupAdsService) Delete(advertiserId int64, adGroupAdId int64) *AdvertisersAdGroupAdsDeleteCall {
 	c := &AdvertisersAdGroupAdsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -19147,7 +19171,9 @@ type AdvertisersAdGroupAdsPatchCall struct {
 	header_      http.Header
 }
 
-// Patch: Updates an ad group ad.
+// Patch: Updates an ad group ad. This method is only supported for Demand Gen
+// ads. Retrieval and management of Demand Gen resources is currently in beta.
+// This method is only available to allowlisted users.
 //
 //   - adGroupAdId: Output only. The unique ID of the ad. Assigned by the system.
 //   - advertiserId: Output only. The unique ID of the advertiser the ad belongs
@@ -19267,9 +19293,10 @@ type AdvertisersAdGroupsBulkEditAssignedTargetingOptionsCall struct {
 // targeting options provided in
 // BulkEditAdGroupAssignedTargetingOptionsRequest.delete_requests from each ad
 // group, and then create the assigned targeting options provided in
-// BulkEditAdGroupAssignedTargetingOptionsRequest.create_requests. Only ad
-// groups under a line item of line_item_type `LINE_ITEM_TYPE_DEMAND_GEN` are
-// supported for this method.
+// BulkEditAdGroupAssignedTargetingOptionsRequest.create_requests. This method
+// is only supported for Demand Gen ad groups. Retrieval and management of
+// Demand Gen resources is currently in beta. This method is only available to
+// allowlisted users.
 //
 // - advertiserId: The ID of the advertiser the ad groups belong to.
 func (r *AdvertisersAdGroupsService) BulkEditAssignedTargetingOptions(advertiserId int64, bulkeditadgroupassignedtargetingoptionsrequest *BulkEditAdGroupAssignedTargetingOptionsRequest) *AdvertisersAdGroupsBulkEditAssignedTargetingOptionsCall {
@@ -19563,7 +19590,9 @@ type AdvertisersAdGroupsCreateCall struct {
 }
 
 // Create: Creates a new ad group. Returns the newly created ad group if
-// successful.
+// successful. This method is only supported for Demand Gen ad groups.
+// Retrieval and management of Demand Gen resources is currently in beta. This
+// method is only available to allowlisted users.
 //
 //   - advertiserId: Output only. The unique ID of the advertiser the ad group
 //     belongs to.
@@ -19668,7 +19697,9 @@ type AdvertisersAdGroupsDeleteCall struct {
 }
 
 // Delete: Deletes a AdGroup. Returns error code `NOT_FOUND` if the ad group
-// does not exist.
+// does not exist. This method is only supported for Demand Gen ad groups.
+// Retrieval and management of Demand Gen resources is currently in beta. This
+// method is only available to allowlisted users.
 //
 // - adGroupId: The ID of the ad group to delete.
 // - advertiserId: The ID of the advertiser this ad group belongs to.
@@ -20061,7 +20092,9 @@ type AdvertisersAdGroupsPatchCall struct {
 }
 
 // Patch: Updates an existing ad group. Returns the updated ad group if
-// successful.
+// successful. This method is only supported for Demand Gen ad groups.
+// Retrieval and management of Demand Gen resources is currently in beta. This
+// method is only available to allowlisted users.
 //
 //   - adGroupId: Output only. The unique ID of the ad group. Assigned by the
 //     system.
@@ -20179,8 +20212,9 @@ type AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsCreateCall struct 
 }
 
 // Create: Assigns a targeting option to an ad group. Returns the assigned
-// targeting option if successful. Only ad groups under a line item of
-// line_item_type `LINE_ITEM_TYPE_DEMAND_GEN` are supported for this method.
+// targeting option if successful. This method is only supported for Demand Gen
+// ad groups. Retrieval and management of Demand Gen resources is currently in
+// beta. This method is only available to allowlisted users.
 //
 //   - adGroupId: The ID of the ad group the assigned targeting option will
 //     belong to.
@@ -20301,9 +20335,11 @@ type AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsDeleteCall struct 
 	header_                   http.Header
 }
 
-// Delete: Deletes an assigned targeting option from an ad group. Only ad
-// groups under a line item of line_item_type `LINE_ITEM_TYPE_DEMAND_GEN` are
-// supported for this method.
+// Delete: Deletes an assigned targeting option from an ad group. This method
+// is only supported for Demand Gen ad groups with the AdGroupFormat
+// `AD_GROUP_FORMAT_DEMAND_GEN`. Retrieval and management of Demand Gen
+// resources is currently in beta. This method is only available to allowlisted
+// users.
 //
 //   - adGroupId: The ID of the ad group the assigned targeting option belongs
 //     to.
@@ -25744,8 +25780,8 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall struct {
 //     `TARGETING_TYPE_SUB_EXCHANGE` * `TARGETING_TYPE_THIRD_PARTY_VERIFIER` *
 //     `TARGETING_TYPE_URL` * `TARGETING_TYPE_USER_REWARDED_CONTENT` *
 //     `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_VIEWABILITY` *
-//     `TARGETING_TYPE_INVENTORY_MODE` * `TARGETING_TYPE_YOUTUBE_CHANNEL` (only
-//     for `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items) *
+//     `TARGETING_TYPE_YOUTUBE_CHANNEL` (only for
+//     `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items) *
 //     `TARGETING_TYPE_YOUTUBE_VIDEO` (only for
 //     `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items).
 func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, lineItemId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall {
@@ -25895,8 +25931,8 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall struct {
 //     `TARGETING_TYPE_SUB_EXCHANGE` * `TARGETING_TYPE_THIRD_PARTY_VERIFIER` *
 //     `TARGETING_TYPE_URL` * `TARGETING_TYPE_USER_REWARDED_CONTENT` *
 //     `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_VIEWABILITY` *
-//     `TARGETING_TYPE_INVENTORY_MODE` * `TARGETING_TYPE_YOUTUBE_CHANNEL` (only
-//     for `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items) *
+//     `TARGETING_TYPE_YOUTUBE_CHANNEL` (only for
+//     `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items) *
 //     `TARGETING_TYPE_YOUTUBE_VIDEO` (only for
 //     `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items).
 func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, lineItemId int64, targetingType string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall {
@@ -28318,8 +28354,7 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall struct {
 //   - targetingType: Identifies the type of this assigned targeting option.
 //     Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
-//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD` *
-//     `TARGETING_TYPE_INVENTORY_MODE`.
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Create(advertiserId int64, targetingType string, assignedtargetingoption *AssignedTargetingOption) *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -28432,8 +28467,7 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall struct {
 //   - targetingType: Identifies the type of this assigned targeting option.
 //     Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
-//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD` *
-//     `TARGETING_TYPE_INVENTORY_MODE`.
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Delete(advertiserId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId

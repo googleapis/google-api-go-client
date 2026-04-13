@@ -1635,6 +1635,7 @@ type GoogleCloudAiplatformV1beta1GenerationConfig struct {
 	//   "TEXT" - Text modality.
 	//   "IMAGE" - Image modality.
 	//   "AUDIO" - Audio modality.
+	//   "VIDEO" - Video modality.
 	ResponseModalities []string `json:"responseModalities,omitempty"`
 	// ResponseSchema: Optional. Lets you to specify a schema for the model's
 	// response, ensuring that the output conforms to a particular structure. This

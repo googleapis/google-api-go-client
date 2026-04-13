@@ -967,6 +967,16 @@ type Product struct {
 	// AutomatedDiscounts: Output only. The automated discounts information for the
 	// product.
 	AutomatedDiscounts *AutomatedDiscounts `json:"automatedDiscounts,omitempty"`
+	// Base64EncodedName: Output only. The **unpadded base64url encoded name** of
+	// the product. Format: `accounts/{account}/products/{product}` where the last
+	// section `product` is the unpadded base64url encoding of the
+	// `content_language~feed_label~offer_id` name. Example:
+	// `accounts/123/products/ZW5-VVN-c2t1LzEyMw` for the decoded product name
+	// `accounts/123/products/en~US~sku/123`. This field can be used directly as
+	// input to the API methods that require the product name to be encoded if it
+	// contains special characters, for example `GetProduct`
+	// (https://developers.google.com/merchant/api/reference/rest/products_v1/accounts.products/get).
+	Base64EncodedName string `json:"base64EncodedName,omitempty"`
 	// ContentLanguage: Output only. The two-letter ISO 639-1
 	// (http://en.wikipedia.org/wiki/ISO_639-1) language code for the product.
 	ContentLanguage string `json:"contentLanguage,omitempty"`
@@ -1787,6 +1797,27 @@ func (s *ProductDimension) UnmarshalJSON(data []byte) error {
 // style while the Products Data Specification lists the names in the
 // **snake_case** casing style.
 type ProductInput struct {
+	// Base64EncodedName: Output only. The **unpadded base64url encoded name** of
+	// the product input. Format: `accounts/{account}/productInputs/{productinput}`
+	// where the last section `productinput` is the unpadded base64url encoding of
+	// the `content_language~feed_label~offer_id` name. Example:
+	// `accounts/123/productInputs/ZW5-VVN-c2t1LzEyMw` for the decoded product
+	// input name `accounts/123/productInputs/en~US~sku/123`. This field can be
+	// used directly as input to the API methods that require the product input
+	// name to be encoded if it contains special characters, for example
+	// `GetProductInput`
+	// (https://developers.google.com/merchant/api/reference/rest/products_v1/accounts.productInputs/get).
+	Base64EncodedName string `json:"base64EncodedName,omitempty"`
+	// Base64EncodedProduct: Output only. The **unpadded base64url encoded name**
+	// of the processed product. Format: `accounts/{account}/products/{product}`
+	// where the last section `product` is the unpadded base64url encoding of the
+	// `content_language~feed_label~offer_id` name. Example:
+	// `accounts/123/products/ZW5-VVN-c2t1LzEyMw` for the decoded product name
+	// `accounts/123/products/en~US~sku/123`. This field can be used directly as
+	// input to the API methods that require the product name to be encoded if it
+	// contains special characters, for example `GetProduct`
+	// (https://developers.google.com/merchant/api/reference/rest/products_v1/accounts.products/get).
+	Base64EncodedProduct string `json:"base64EncodedProduct,omitempty"`
 	// ContentLanguage: Required. Immutable. The two-letter ISO 639-1
 	// (http://en.wikipedia.org/wiki/ISO_639-1) language code for the product.
 	ContentLanguage string `json:"contentLanguage,omitempty"`
@@ -1863,13 +1894,13 @@ type ProductInput struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ContentLanguage") to
+	// ForceSendFields is a list of field names (e.g. "Base64EncodedName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ContentLanguage") to include in
+	// NullFields is a list of field names (e.g. "Base64EncodedName") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

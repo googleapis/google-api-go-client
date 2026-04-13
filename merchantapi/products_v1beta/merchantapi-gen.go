@@ -1113,6 +1113,16 @@ type Product struct {
 	// AutomatedDiscounts: Output only. The automated discounts information for the
 	// product.
 	AutomatedDiscounts *AutomatedDiscounts `json:"automatedDiscounts,omitempty"`
+	// Base64EncodedName: Output only. The **unpadded base64url encoded name** of
+	// the product. Format: `accounts/{account}/products/{product}` where the last
+	// section `product` is the unpadded base64url encoding of the
+	// `content_language~feed_label~offer_id` name. Example:
+	// `accounts/123/products/ZW5-VVN-c2t1LzEyMw` for the decoded product name
+	// `accounts/123/products/en~US~sku/123`. This field can be used directly as
+	// input to the API methods that require the product name to be encoded if it
+	// contains special characters, for example `GetProduct`
+	// (https://developers.google.com/merchant/api/reference/rest/products_v1beta/accounts.products/get).
+	Base64EncodedName string `json:"base64EncodedName,omitempty"`
 	// Channel: Output only. The channel
 	// (https://support.google.com/merchants/answer/7361332) of the product.
 	//
@@ -1352,6 +1362,27 @@ func (s *ProductDimension) UnmarshalJSON(data []byte) error {
 type ProductInput struct {
 	// Attributes: Optional. A list of product attributes.
 	Attributes *Attributes `json:"attributes,omitempty"`
+	// Base64EncodedName: Output only. The **unpadded base64url encoded name** of
+	// the product input. Format: `accounts/{account}/productInputs/{productinput}`
+	// where the last section `productinput` is the unpadded base64url encoding of
+	// the `content_language~feed_label~offer_id` name. Example:
+	// `accounts/123/productInputs/ZW5-VVN-c2t1LzEyMw` for the decoded product
+	// input name `accounts/123/productInputs/en~US~sku/123`. This field can be
+	// used directly as input to the API methods that require the product input
+	// name to be encoded if it contains special characters, for example
+	// `GetProductInput`
+	// (https://developers.google.com/merchant/api/reference/rest/products_v1beta/accounts.productInputs/get).
+	Base64EncodedName string `json:"base64EncodedName,omitempty"`
+	// Base64EncodedProduct: Output only. The **unpadded base64url encoded name**
+	// of the processed product. Format: `accounts/{account}/products/{product}`
+	// where the last section `product` is the unpadded base64url encoding of the
+	// `content_language~feed_label~offer_id` name. Example:
+	// `accounts/123/products/ZW5-VVN-c2t1LzEyMw` for the decoded product name
+	// `accounts/123/products/en~US~sku/123`. This field can be used directly as
+	// input to the API methods that require the product name to be encoded if it
+	// contains special characters, for example `GetProduct`
+	// (https://developers.google.com/merchant/api/reference/rest/products_v1beta/accounts.products/get).
+	Base64EncodedProduct string `json:"base64EncodedProduct,omitempty"`
 	// Channel: Immutable. The channel
 	// (https://support.google.com/merchants/answer/7361332) of the product.
 	//

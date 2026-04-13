@@ -287,7 +287,7 @@ type Cluster struct {
 	// `projects/{project}/locations/{location}/clusters/{cluster}`.
 	Name string `json:"name,omitempty"`
 	// NetworkResources: Optional. Network resources available to the cluster. Must
-	// contain at most one value. Keys specify the ID of the network resource by
+	// contain exactly one value. Keys specify the ID of the network resource by
 	// which it can be referenced elsewhere, and must conform to RFC-1034
 	// (https://datatracker.ietf.org/doc/html/rfc1034) (lower-case, alphanumeric,
 	// and at most 63 characters).
@@ -1154,7 +1154,7 @@ type NetworkResource struct {
 	// network resource should be made via the resource's API and will not be
 	// reflected in the configuration.
 	Config *NetworkResourceConfig `json:"config,omitempty"`
-	// Network: Reference to a network in Google Compute Engine.
+	// Network: Output only. Reference to a network in Google Compute Engine.
 	Network *NetworkReference `json:"network,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Config") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1776,7 +1776,7 @@ func (s SlurmLoginNodes) MarshalJSON() ([]byte, error) {
 // groups of compute nodes used by Slurm that are responsible for running
 // workloads submitted to the cluster.
 type SlurmNodeSet struct {
-	// ComputeId: Optional. ID of the compute resource on which this nodeset will
+	// ComputeId: Required. ID of the compute resource on which this nodeset will
 	// run. Must match a key in the cluster's compute_resources.
 	ComputeId string `json:"computeId,omitempty"`
 	// ComputeInstance: Optional. If set, indicates that the nodeset should be
@@ -1958,8 +1958,9 @@ func (s StorageConfig) MarshalJSON() ([]byte, error) {
 // StorageResource: A resource representing a form of persistent storage that
 // is accessible to compute resources in the cluster.
 type StorageResource struct {
-	// Bucket: Reference to a Google Cloud Storage bucket. Populated if and only if
-	// the storage resource was configured to use Google Cloud Storage.
+	// Bucket: Output only. Reference to a Google Cloud Storage bucket. Populated
+	// if and only if the storage resource was configured to use Google Cloud
+	// Storage.
 	Bucket *BucketReference `json:"bucket,omitempty"`
 	// Config: Required. Immutable. Configuration for this storage resource, which
 	// describes how it should be created or imported. This field only controls how
@@ -1967,11 +1968,11 @@ type StorageResource struct {
 	// the storage resource should be made via the resource's API and will not be
 	// reflected in the configuration.
 	Config *StorageResourceConfig `json:"config,omitempty"`
-	// Filestore: Reference to a Filestore instance. Populated if and only if the
-	// storage resource was configured to use Filestore.
+	// Filestore: Output only. Reference to a Filestore instance. Populated if and
+	// only if the storage resource was configured to use Filestore.
 	Filestore *FilestoreReference `json:"filestore,omitempty"`
-	// Lustre: Reference to a Managed Lustre instance. Populated if and only if the
-	// storage resource was configured to use Managed Lustre.
+	// Lustre: Output only. Reference to a Managed Lustre instance. Populated if
+	// and only if the storage resource was configured to use Managed Lustre.
 	Lustre *LustreReference `json:"lustre,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

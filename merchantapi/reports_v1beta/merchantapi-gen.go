@@ -1333,6 +1333,15 @@ type ProductPerformanceView struct {
 	// (https://developers.google.com/shopping-content/guides/reports/segmentation#category_and_product_type)
 	// in merchant's own product taxonomy. Segment.
 	ProductTypeL5 string `json:"productTypeL5,omitempty"`
+	// StoreType: Store type to which metrics apply. Can be `ONLINE_STORE` or
+	// `LOCAL_STORES`. Segment. For `LOCAL_STORES` store type, further segmentation
+	// by a specific store is not available.
+	//
+	// Possible values:
+	//   "STORE_TYPE_ENUM_UNSPECIFIED" - Not specified.
+	//   "ONLINE_STORE" - Online store.
+	//   "LOCAL_STORES" - Local (physical) stores.
+	StoreType string `json:"storeType,omitempty"`
 	// Title: Title of the product. Segment.
 	Title string `json:"title,omitempty"`
 	// Week: First day of the week (Monday) of the metrics date in the merchant

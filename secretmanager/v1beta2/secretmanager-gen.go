@@ -868,10 +868,14 @@ func (s Operation) MarshalJSON() ([]byte, error) {
 type OperationMetadata struct {
 	// ApiVersion: Output only. API version used to start the operation.
 	ApiVersion string `json:"apiVersion,omitempty"`
-	// CreateTime: Output only. The time the operation was created.
+	// CreateTime: Output only. Time the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// EndTime: Output only. The time the operation finished running.
+	// EndTime: Output only. Time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
+	// Progress: Output only. Represents the progress of the operation. This field
+	// is populated for operations that involve processing multiple secret
+	// versions.
+	Progress *Progress `json:"progress,omitempty"`
 	// RequestedCancellation: Output only. Identifies whether the user has
 	// requested cancellation of the operation. Operations that have been cancelled
 	// successfully have google.longrunning.Operation.error value with a
@@ -991,6 +995,36 @@ type Policy struct {
 
 func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Progress: Represents progress information for operations involving multiple
+// secret versions.
+type Progress struct {
+	// CompletedVersionCount: Output only. Number of secret versions that have been
+	// successfully processed so far.
+	CompletedVersionCount int64 `json:"completedVersionCount,omitempty"`
+	// FailedVersionCount: Output only. Number of secret versions that failed to
+	// process.
+	FailedVersionCount int64 `json:"failedVersionCount,omitempty"`
+	// TotalVersionCount: Output only. Provides the total number of secret versions
+	// to be processed by the operation.
+	TotalVersionCount int64 `json:"totalVersionCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CompletedVersionCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CompletedVersionCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Progress) MarshalJSON() ([]byte, error) {
+	type NoMethod Progress
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1634,10 +1668,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
+// empty, the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {

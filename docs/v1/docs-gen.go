@@ -2611,6 +2611,37 @@ func (s InsertPersonRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InsertRichLinkRequest: Inserts a RichLink at the specified location.
+type InsertRichLinkRequest struct {
+	// EndOfSegmentLocation: Inserts the rich link at the end of a header, footer,
+	// footnote or the document body.
+	EndOfSegmentLocation *EndOfSegmentLocation `json:"endOfSegmentLocation,omitempty"`
+	// Location: Inserts the rich link at a specific index in the document. The
+	// rich link must be inserted inside the bounds of an existing Paragraph. For
+	// instance, it cannot be inserted at a table's start index (i.e. between the
+	// table and its preceding paragraph). The rich link cannot be inserted inside
+	// an equation.
+	Location *Location `json:"location,omitempty"`
+	// RichLinkProperties: The properties of the rich link to insert.
+	RichLinkProperties *RichLinkProperties `json:"richLinkProperties,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndOfSegmentLocation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndOfSegmentLocation") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InsertRichLinkRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InsertRichLinkRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // InsertSectionBreakRequest: Inserts a section break at the given location. A
 // newline character will be inserted before the section break.
 type InsertSectionBreakRequest struct {
@@ -4296,6 +4327,8 @@ type Request struct {
 	InsertPageBreak *InsertPageBreakRequest `json:"insertPageBreak,omitempty"`
 	// InsertPerson: Inserts a person mention.
 	InsertPerson *InsertPersonRequest `json:"insertPerson,omitempty"`
+	// InsertRichLink: Insert a rich link.
+	InsertRichLink *InsertRichLinkRequest `json:"insertRichLink,omitempty"`
 	// InsertSectionBreak: Inserts a section break at the specified location.
 	InsertSectionBreak *InsertSectionBreakRequest `json:"insertSectionBreak,omitempty"`
 	// InsertTable: Inserts a table at the specified location.

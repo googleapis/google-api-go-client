@@ -1946,7 +1946,7 @@ func (s GetAccountForGcpRegistrationResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Handshake: The current status of establishing of the service. (for example,
-// pending approval or approved).
+// pending approval, approved, established).
 type Handshake struct {
 	// Actor: Output only. The most recent account to modify the account service's
 	// `approval_status`.
@@ -1962,6 +1962,8 @@ type Handshake struct {
 	// Possible values:
 	//   "APPROVAL_STATE_UNSPECIFIED" - Unspecified approval status.
 	//   "PENDING" - The service was proposed and is waiting to be confirmed.
+	//   "WAITING" - Indicates that the service proposal has been accepted and will
+	// be established after a fixed delay set by the service provider.
 	//   "ESTABLISHED" - Both parties have confirmed the service.
 	//   "REJECTED" - The service proposal was rejected.
 	ApprovalState string `json:"approvalState,omitempty"`

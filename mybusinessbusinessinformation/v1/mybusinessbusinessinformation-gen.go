@@ -973,7 +973,7 @@ type Location struct {
 	PhoneNumbers *PhoneNumbers `json:"phoneNumbers,omitempty"`
 	// Profile: Optional. Describes your business in your own voice and shares with
 	// users the unique story of your business and offerings. This field is
-	// required for all categories except lodging categories (e.g. hotels, motels,
+	// required for all categories except lodging categories (e.g., hotels, motels,
 	// inns).
 	Profile *Profile `json:"profile,omitempty"`
 	// RegularHours: Optional. Operating hours for the business.
@@ -1489,7 +1489,7 @@ type RelevantLocation struct {
 	// Costco Pharmacy is a department in Costco Wholesale.
 	//   "INDEPENDENT_ESTABLISHMENT_IN" - This represents the cases where 2
 	// locations are co-located in the same physical location, but from different
-	// companies (e.g. Starbucks in a Safeway, shops in a mall).
+	// companies (e.g., Starbucks in a Safeway, shops in a mall).
 	RelationType string `json:"relationType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PlaceId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

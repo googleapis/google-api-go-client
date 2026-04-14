@@ -2198,6 +2198,9 @@ func (s *GoogleCloudDiscoveryengineV1AnswerGenerationSpecUserDefinedClassifierSp
 
 // GoogleCloudDiscoveryengineV1Assistant: Discovery Engine Assistant resource.
 type GoogleCloudDiscoveryengineV1Assistant struct {
+	// CreateTime: Output only. Represents the time when this Assistant was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
 	// CustomerPolicy: Optional. Customer policy for the assistant.
 	CustomerPolicy *GoogleCloudDiscoveryengineV1AssistantCustomerPolicy `json:"customerPolicy,omitempty"`
 	// DefaultWebGroundingToggleOff: Optional. This field controls the default web
@@ -2234,6 +2237,9 @@ type GoogleCloudDiscoveryengineV1Assistant struct {
 	// gine}/assistants/{assistant}` It must be a UTF-8 encoded string with a
 	// length limit of 1024 characters.
 	Name string `json:"name,omitempty"`
+	// UpdateTime: Output only. Represents the time when this Assistant was most
+	// recently updated.
+	UpdateTime string `json:"updateTime,omitempty"`
 	// WebGroundingType: Optional. The type of web grounding to use.
 	//
 	// Possible values:
@@ -2245,15 +2251,15 @@ type GoogleCloudDiscoveryengineV1Assistant struct {
 	//   "WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH" - Grounding with Enterprise Web
 	// Search is enabled.
 	WebGroundingType string `json:"webGroundingType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CustomerPolicy") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CustomerPolicy") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2618,6 +2624,30 @@ type GoogleCloudDiscoveryengineV1BatchUpdateUserLicensesResponse struct {
 
 func (s GoogleCloudDiscoveryengineV1BatchUpdateUserLicensesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1BatchUpdateUserLicensesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1CliConfig: The configuration for the CLI
+// execution based connectors.
+type GoogleCloudDiscoveryengineV1CliConfig struct {
+	// EnabledActions: Optional. The actions enabled on the associated CLI
+	// connection.
+	EnabledActions []string `json:"enabledActions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnabledActions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnabledActions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1CliConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1CliConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3334,6 +3364,8 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	//   "ALLOWLIST_SERVICE_ACCOUNT" - Connector requires customer to allowlist
 	// service account in their project.
 	BlockingReasons []string `json:"blockingReasons,omitempty"`
+	// CliConfig: Optional. The configuration for establishing a CLI connection.
+	CliConfig *GoogleCloudDiscoveryengineV1CliConfig `json:"cliConfig,omitempty"`
 	// ConnectorModes: Optional. The modes enabled for this connector. Default
 	// state is CONNECTOR_MODE_UNSPECIFIED.
 	//
@@ -4753,7 +4785,8 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// `disable-agent-sharing` * `disable-image-generation` *
 	// `disable-video-generation` * `disable-onedrive-upload` *
 	// `disable-talk-to-content` * `disable-google-drive-upload` *
-	// `disable-welcome-emails` * `disable-canvas` * `disable-canvas-workspace`
+	// `disable-welcome-emails` * `disable-canvas` * `disable-canvas-workspace` *
+	// `disable-skills`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -5757,8 +5790,6 @@ type GoogleCloudDiscoveryengineV1LicenseConfig struct {
 	// license config. Format:
 	// `projects/{project}/locations/{location}/licenseConfigs/{license_config}`
 	Name string `json:"name,omitempty"`
-	// ScheduledUpdate: Optional. Scheduled update configuration.
-	ScheduledUpdate *GoogleCloudDiscoveryengineV1LicenseConfigScheduledUpdate `json:"scheduledUpdate,omitempty"`
 	// StartDate: Required. The start date.
 	StartDate *GoogleTypeDate `json:"startDate,omitempty"`
 	// State: Output only. The state of the license config.
@@ -5824,31 +5855,6 @@ type GoogleCloudDiscoveryengineV1LicenseConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1LicenseConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1LicenseConfig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDiscoveryengineV1LicenseConfigScheduledUpdate: Message containing
-// data for a scheduled update.
-type GoogleCloudDiscoveryengineV1LicenseConfigScheduledUpdate struct {
-	// EffectiveDate: The effective date for the next update.
-	EffectiveDate *GoogleTypeDate `json:"effectiveDate,omitempty"`
-	// SeatCount: The seat count scheduled for the next update.
-	SeatCount int64 `json:"seatCount,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "EffectiveDate") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EffectiveDate") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1LicenseConfigScheduledUpdate) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1LicenseConfigScheduledUpdate
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9270,6 +9276,30 @@ func (s GoogleCloudDiscoveryengineV1alphaCitationMetadata) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaCliConfig: The configuration for the CLI
+// execution based connectors.
+type GoogleCloudDiscoveryengineV1alphaCliConfig struct {
+	// EnabledActions: Optional. The actions enabled on the associated CLI
+	// connection.
+	EnabledActions []string `json:"enabledActions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnabledActions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnabledActions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaCliConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaCliConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaCmekConfig: Configurations used to enable
 // CMEK data encryption with Cloud KMS keys.
 type GoogleCloudDiscoveryengineV1alphaCmekConfig struct {
@@ -10254,6 +10284,8 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	//   "ALLOWLIST_SERVICE_ACCOUNT" - Connector requires customer to allowlist
 	// service account in their project.
 	BlockingReasons []string `json:"blockingReasons,omitempty"`
+	// CliConfig: Optional. The configuration for establishing a CLI connection.
+	CliConfig *GoogleCloudDiscoveryengineV1alphaCliConfig `json:"cliConfig,omitempty"`
 	// ConnectorModes: Optional. The modes enabled for this connector. Default
 	// state is CONNECTOR_MODE_UNSPECIFIED.
 	//
@@ -11887,7 +11919,8 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// `disable-agent-sharing` * `disable-image-generation` *
 	// `disable-video-generation` * `disable-onedrive-upload` *
 	// `disable-talk-to-content` * `disable-google-drive-upload` *
-	// `disable-welcome-emails` * `disable-canvas` * `disable-canvas-workspace`
+	// `disable-welcome-emails` * `disable-canvas` * `disable-canvas-workspace` *
+	// `disable-skills`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -13540,8 +13573,6 @@ type GoogleCloudDiscoveryengineV1alphaLicenseConfig struct {
 	// license config. Format:
 	// `projects/{project}/locations/{location}/licenseConfigs/{license_config}`
 	Name string `json:"name,omitempty"`
-	// ScheduledUpdate: Optional. Scheduled update configuration.
-	ScheduledUpdate *GoogleCloudDiscoveryengineV1alphaLicenseConfigScheduledUpdate `json:"scheduledUpdate,omitempty"`
 	// StartDate: Required. The start date.
 	StartDate *GoogleTypeDate `json:"startDate,omitempty"`
 	// State: Output only. The state of the license config.
@@ -13607,31 +13638,6 @@ type GoogleCloudDiscoveryengineV1alphaLicenseConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaLicenseConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaLicenseConfig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDiscoveryengineV1alphaLicenseConfigScheduledUpdate: Message
-// containing data for a scheduled update.
-type GoogleCloudDiscoveryengineV1alphaLicenseConfigScheduledUpdate struct {
-	// EffectiveDate: The effective date for the next update.
-	EffectiveDate *GoogleTypeDate `json:"effectiveDate,omitempty"`
-	// SeatCount: The seat count scheduled for the next update.
-	SeatCount int64 `json:"seatCount,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "EffectiveDate") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EffectiveDate") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1alphaLicenseConfigScheduledUpdate) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1alphaLicenseConfigScheduledUpdate
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -20041,6 +20047,9 @@ func (s GoogleCloudDiscoveryengineV1betaAssistUserMetadata) MarshalJSON() ([]byt
 // GoogleCloudDiscoveryengineV1betaAssistant: Discovery Engine Assistant
 // resource.
 type GoogleCloudDiscoveryengineV1betaAssistant struct {
+	// CreateTime: Output only. Represents the time when this Assistant was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
 	// CustomerPolicy: Optional. Customer policy for the assistant.
 	CustomerPolicy *GoogleCloudDiscoveryengineV1betaAssistantCustomerPolicy `json:"customerPolicy,omitempty"`
 	// DefaultWebGroundingToggleOff: Optional. This field controls the default web
@@ -20077,6 +20086,9 @@ type GoogleCloudDiscoveryengineV1betaAssistant struct {
 	// gine}/assistants/{assistant}` It must be a UTF-8 encoded string with a
 	// length limit of 1024 characters.
 	Name string `json:"name,omitempty"`
+	// UpdateTime: Output only. Represents the time when this Assistant was most
+	// recently updated.
+	UpdateTime string `json:"updateTime,omitempty"`
 	// WebGroundingType: Optional. The type of web grounding to use.
 	//
 	// Possible values:
@@ -20091,15 +20103,15 @@ type GoogleCloudDiscoveryengineV1betaAssistant struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CustomerPolicy") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CustomerPolicy") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -24104,7 +24116,8 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// `disable-agent-sharing` * `disable-image-generation` *
 	// `disable-video-generation` * `disable-onedrive-upload` *
 	// `disable-talk-to-content` * `disable-google-drive-upload` *
-	// `disable-welcome-emails` * `disable-canvas` * `disable-canvas-workspace`
+	// `disable-welcome-emails` * `disable-canvas` * `disable-canvas-workspace` *
+	// `disable-skills`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -26047,8 +26060,6 @@ type GoogleCloudDiscoveryengineV1betaLicenseConfig struct {
 	// license config. Format:
 	// `projects/{project}/locations/{location}/licenseConfigs/{license_config}`
 	Name string `json:"name,omitempty"`
-	// ScheduledUpdate: Optional. Scheduled update configuration.
-	ScheduledUpdate *GoogleCloudDiscoveryengineV1betaLicenseConfigScheduledUpdate `json:"scheduledUpdate,omitempty"`
 	// StartDate: Required. The start date.
 	StartDate *GoogleTypeDate `json:"startDate,omitempty"`
 	// State: Output only. The state of the license config.
@@ -26117,31 +26128,6 @@ type GoogleCloudDiscoveryengineV1betaLicenseConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1betaLicenseConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaLicenseConfig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDiscoveryengineV1betaLicenseConfigScheduledUpdate: Message
-// containing data for a scheduled update.
-type GoogleCloudDiscoveryengineV1betaLicenseConfigScheduledUpdate struct {
-	// EffectiveDate: The effective date for the next update.
-	EffectiveDate *GoogleTypeDate `json:"effectiveDate,omitempty"`
-	// SeatCount: The seat count scheduled for the next update.
-	SeatCount int64 `json:"seatCount,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "EffectiveDate") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EffectiveDate") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1betaLicenseConfigScheduledUpdate) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1betaLicenseConfigScheduledUpdate
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

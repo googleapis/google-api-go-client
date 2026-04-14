@@ -1335,9 +1335,11 @@ type AuthzPolicyCustomProviderCloudIap struct {
 type AuthzPolicyTarget struct {
 	// LoadBalancingScheme: Optional. All gateways and forwarding rules referenced
 	// by this policy and extensions must share the same load balancing scheme.
-	// Supported values: `INTERNAL_MANAGED` and `EXTERNAL_MANAGED`. For more
-	// information, refer to Backend services overview
-	// (https://cloud.google.com/load-balancing/docs/backend-service).
+	// Required only when targeting forwarding rules. If targeting Secure Web
+	// Proxy, this field must be `INTERNAL_MANAGED` or not specified. Must not be
+	// specified when targeting Agent Gateway. Supported values: `INTERNAL_MANAGED`
+	// and `EXTERNAL_MANAGED`. For more information, refer to Backend services
+	// overview (https://cloud.google.com/load-balancing/docs/backend-service).
 	//
 	// Possible values:
 	//   "LOAD_BALANCING_SCHEME_UNSPECIFIED" - Default value. Do not use.
@@ -1348,8 +1350,8 @@ type AuthzPolicyTarget struct {
 	//   "INTERNAL_SELF_MANAGED" - Signifies that this is used for Cloud Service
 	// Mesh. Meant for use by CSM GKE controller only.
 	LoadBalancingScheme string `json:"loadBalancingScheme,omitempty"`
-	// Resources: Required. A list of references to the Forwarding Rules on which
-	// this policy will be applied.
+	// Resources: Required. A list of references to the Forwarding Rules, Secure
+	// Web Proxy Gateways, or Agent Gateways on which this policy will be applied.
 	Resources []string `json:"resources,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LoadBalancingScheme") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -6405,6 +6405,7 @@ func (c *PresentationsPagesGetThumbnailCall) ThumbnailPropertiesMimeType(thumbna
 //	"LARGE" - The thumbnail image width of 1600px.
 //	"MEDIUM" - The thumbnail image width of 800px.
 //	"SMALL" - The thumbnail image width of 200px.
+//	"WIDTH2000_PX" - The thumbnail image width of 2000px.
 func (c *PresentationsPagesGetThumbnailCall) ThumbnailPropertiesThumbnailSize(thumbnailPropertiesThumbnailSize string) *PresentationsPagesGetThumbnailCall {
 	c.urlParams_.Set("thumbnailProperties.thumbnailSize", thumbnailPropertiesThumbnailSize)
 	return c

@@ -8156,6 +8156,8 @@ type DemandGenBiddingStrategy struct {
 	// strategy that automatically maximizes revenue while spending your budget.
 	//   "DEMAND_GEN_BIDDING_STRATEGY_TYPE_MAXIMIZE_CLICKS" - A bidding strategy
 	// that automatically maximizes clicks within a given budget.
+	//   "DEMAND_GEN_BIDDING_STRATEGY_TYPE_TARGET_CPC" - A bidding strategy that
+	// automatically optimizes cost per click.
 	Type string `json:"type,omitempty"`
 	// Value: Optional. The value used by the bidding strategy. This can be set
 	// when assigned to line items or ad groups. This field is only applicable for
@@ -12500,6 +12502,14 @@ type LineItem struct {
 	MobileApp *MobileApp `json:"mobileApp,omitempty"`
 	// Name: Output only. The resource name of the line item.
 	Name string `json:"name,omitempty"`
+	// OptimizeFixedBidding: Optional. Whether to enable DV360's bid optimization
+	// for fixed bid line items. By default, DV360 optimizes your fixed bid by
+	// automatically lowering bids for impressions that are less likely to perform
+	// well. This optimization is enabled by default (value is true). When this
+	// field is set to `false`, this optimization is disabled, and the bid will not
+	// be lowered for any reason. This setting only applies to line items with a
+	// `bidding_strategy` of type `FIXED_BID`.
+	OptimizeFixedBidding bool `json:"optimizeFixedBidding,omitempty"`
 	// Pacing: Required. The budget spending speed setting of the line item.
 	Pacing *Pacing `json:"pacing,omitempty"`
 	// PartnerCosts: The partner costs associated with the line item. If absent or

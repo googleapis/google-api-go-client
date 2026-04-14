@@ -221,7 +221,7 @@
       }
     }
   },
-  "revision": "20260406",
+  "revision": "20260408",
   "rootUrl": "https://docs.googleapis.com/",
   "schemas": {
     "AddDocumentTabRequest": {
@@ -1984,6 +1984,25 @@
       },
       "type": "object"
     },
+    "InsertRichLinkRequest": {
+      "description": "Inserts a RichLink at the specified location.",
+      "id": "InsertRichLinkRequest",
+      "properties": {
+        "endOfSegmentLocation": {
+          "$ref": "EndOfSegmentLocation",
+          "description": "Inserts the rich link at the end of a header, footer, footnote or the document body."
+        },
+        "location": {
+          "$ref": "Location",
+          "description": "Inserts the rich link at a specific index in the document. The rich link must be inserted inside the bounds of an existing Paragraph. For instance, it cannot be inserted at a table's start index (i.e. between the table and its preceding paragraph). The rich link cannot be inserted inside an equation."
+        },
+        "richLinkProperties": {
+          "$ref": "RichLinkProperties",
+          "description": "The properties of the rich link to insert."
+        }
+      },
+      "type": "object"
+    },
     "InsertSectionBreakRequest": {
       "description": "Inserts a section break at the given location. A newline character will be inserted before the section break.",
       "id": "InsertSectionBreakRequest",
@@ -3325,6 +3344,10 @@
         "insertPerson": {
           "$ref": "InsertPersonRequest",
           "description": "Inserts a person mention."
+        },
+        "insertRichLink": {
+          "$ref": "InsertRichLinkRequest",
+          "description": "Insert a rich link."
         },
         "insertSectionBreak": {
           "$ref": "InsertSectionBreakRequest",

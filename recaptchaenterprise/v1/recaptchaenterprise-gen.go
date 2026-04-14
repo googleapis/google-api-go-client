@@ -2321,6 +2321,10 @@ type GoogleCloudRecaptchaenterpriseV1TokenProperties struct {
 	// the following are true: - your `site_key` has the POLICY_BASED_CHALLENGE
 	// integration type - you set an action score threshold higher than 0.0 - you
 	// provided a non-empty `expected_action`
+	//   "KEY_MISMATCH" - The key used to generate the token does not match the
+	// `site_key`.
+	//   "DOMAIN_MISMATCH" - The domain of the page on which the token was
+	// generated does not match the `allowed_domains` configured in the `site_key`.
 	InvalidReason string `json:"invalidReason,omitempty"`
 	// IosBundleId: Output only. The ID of the iOS bundle with which the token was
 	// generated (iOS keys only).

@@ -10478,6 +10478,305 @@ func (s CacheKeyPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CachePolicy: Message containing CachePolicy configuration for URL Map's
+// Route Action.
+type CachePolicy struct {
+	// CacheBypassRequestHeaderNames: Bypass the cache when the specified request
+	// headers are matched by name,
+	// e.g. Pragma or Authorization headers. Values are case-insensitive. Up to
+	// 5
+	// header names can be specified. The cache is bypassed for all
+	// `cacheMode`
+	// values.
+	CacheBypassRequestHeaderNames []string `json:"cacheBypassRequestHeaderNames,omitempty"`
+	// CacheKeyPolicy: The cache key configuration. If not specified, the default
+	// behavior depends
+	// on the backend type: for Backend Services, the complete request URI is
+	// used; for Backend Buckets, the request URI is used without the protocol
+	// or
+	// host, and only query parameters known to Cloud Storage are included.
+	CacheKeyPolicy *CachePolicyCacheKeyPolicy `json:"cacheKeyPolicy,omitempty"`
+	// CacheMode: Specifies the cache setting for all responses from this route. If
+	// not
+	// specified, Cloud CDN uses `CACHE_ALL_STATIC` mode.
+	//
+	// Possible values:
+	//   "CACHE_ALL_STATIC" - Automatically cache static content, including common
+	// image formats,
+	// media (video and audio), and web assets (JavaScript and CSS).
+	// Requests and responses that are marked as uncacheable, as well as
+	// dynamic content (including HTML), will not be cached.
+	//   "FORCE_CACHE_ALL" - Cache all content, ignoring any "private", "no-store"
+	// or "no-cache"
+	// directives in Cache-Control response headers.
+	// Warning: this may result in Cloud CDN caching private,
+	// per-user (user identifiable) content.
+	//   "USE_ORIGIN_HEADERS" - Requires the origin to set valid caching headers to
+	// cache content.
+	// Responses without these headers will not be cached at the edge, and
+	// will
+	// require a full trip to the origin on every request, potentially
+	// impacting
+	// performance and increasing load on the origin server.
+	CacheMode string `json:"cacheMode,omitempty"`
+	// ClientTtl: Specifies a separate client (e.g. browser client) maximum TTL for
+	// cached
+	// content. This is used to clamp the max-age (or Expires) value sent to
+	// the
+	// client. With `FORCE_CACHE_ALL`, the lesser of `clientTtl` and
+	// `defaultTtl`
+	// is used for the response max-age directive, along with a "public"
+	// directive. For cacheable content in `CACHE_ALL_STATIC` mode,
+	// `clientTtl`
+	// clamps the max-age from the origin (if specified), or else sets the
+	// response max-age directive to the lesser of the `clientTtl`
+	// and
+	// `defaultTtl`, and also ensures a "public" cache-control directive
+	// is
+	// present. The maximum allowed value is 31,622,400s (1 year). If
+	// not
+	// specified, Cloud CDN uses 3600s (1 hour) for `CACHE_ALL_STATIC` mode.
+	// Cannot exceed `maxTtl`. Cannot be specified when `cacheMode`
+	// is
+	// `USE_ORIGIN_HEADERS`.
+	ClientTtl *Duration `json:"clientTtl,omitempty"`
+	// DefaultTtl: Specifies the default TTL for cached content for responses that
+	// do not have
+	// an existing valid TTL (max-age or s-maxage). Setting a TTL of "0"
+	// means
+	// "always revalidate". The value of `defaultTtl` cannot be set to a
+	// value
+	// greater than that of `maxTtl`. When the `cacheMode` is set
+	// to
+	// `FORCE_CACHE_ALL`, the `defaultTtl` will overwrite the TTL set in
+	// all
+	// responses. The maximum allowed value is 31,622,400s (1 year).
+	// Infrequently
+	// accessed objects may be evicted from the cache before the defined TTL.
+	// If
+	// not specified, Cloud CDN uses 3600s (1 hour) for `CACHE_ALL_STATIC`
+	// and
+	// `FORCE_CACHE_ALL` modes. Cannot be specified when `cacheMode`
+	// is
+	// `USE_ORIGIN_HEADERS`.
+	DefaultTtl *Duration `json:"defaultTtl,omitempty"`
+	// MaxTtl: Specifies the maximum allowed TTL for cached content. Cache
+	// directives that
+	// attempt to set a max-age or s-maxage higher than this, or an Expires
+	// header
+	// more than `maxTtl` seconds in the future will be capped at the value
+	// of
+	// `maxTtl`, as if it were the value of an s-maxage Cache-Control
+	// directive.
+	// Headers sent to the client will not be modified. Setting a TTL of "0"
+	// means
+	// "always revalidate". The maximum allowed value is 31,622,400s (1
+	// year).
+	// Infrequently accessed objects may be evicted from the cache before
+	// the
+	// defined TTL. If not specified, Cloud CDN uses 86400s (1 day)
+	// for
+	// `CACHE_ALL_STATIC` mode. Can be specified only for `CACHE_ALL_STATIC`
+	// cache
+	// mode.
+	MaxTtl *Duration `json:"maxTtl,omitempty"`
+	// NegativeCaching: Negative caching allows per-status code TTLs to be set, in
+	// order
+	// to apply fine-grained caching for common errors or redirects.
+	// This can reduce the load on your origin and improve end-user
+	// experience by reducing response latency.
+	// When the `cacheMode` is set to `CACHE_ALL_STATIC` or
+	// `USE_ORIGIN_HEADERS`, negative caching applies to responses with
+	// the specified response code that lack any Cache-Control, Expires, or
+	// Pragma: no-cache directives. When the `cacheMode` is set
+	// to
+	// `FORCE_CACHE_ALL`, negative caching applies to all responses
+	// with the specified response code, and overrides any caching headers.
+	// By
+	// default, Cloud CDN applies the following TTLs to these HTTP status codes:
+	//
+	// * 300 (Multiple Choice), 301, 308 (Permanent Redirects): 10m
+	// * 404 (Not Found), 410 (Gone), 451 (Unavailable For Legal Reasons): 120s
+	// * 405 (Method Not Found), 501 (Not Implemented): 60s
+	//
+	// These defaults can be overridden in `negativeCachingPolicy`.
+	// If not specified, Cloud CDN applies negative caching by default.
+	NegativeCaching bool `json:"negativeCaching,omitempty"`
+	// NegativeCachingPolicy: Sets a cache TTL for the specified HTTP status
+	// code.
+	// `negativeCaching` must be enabled to configure
+	// `negativeCachingPolicy`.
+	// Omitting the policy and leaving `negativeCaching` enabled will use
+	// Cloud
+	// CDN's default cache TTLs. Note that when specifying an
+	// explicit
+	// `negativeCachingPolicy`, you should take care to specify a cache TTL for
+	// all response codes that you wish to cache. Cloud CDN will not apply
+	// any
+	// default negative caching when a policy exists.
+	NegativeCachingPolicy []*CachePolicyNegativeCachingPolicy `json:"negativeCachingPolicy,omitempty"`
+	// RequestCoalescing: If true then Cloud CDN will combine multiple concurrent
+	// cache fill
+	// requests into a small number of requests to the origin. If not
+	// specified,
+	// Cloud CDN applies request coalescing by default.
+	RequestCoalescing bool `json:"requestCoalescing,omitempty"`
+	// ServeWhileStale: Serve existing content from the cache (if available) when
+	// revalidating
+	// content with the origin, or when an error is encountered when refreshing
+	// the cache.
+	// This setting defines the default "max-stale" duration for any
+	// cached
+	// responses that do not specify a max-stale directive. Stale responses
+	// that
+	// exceed the TTL configured here will not be served. The default
+	// limit
+	// (max-stale) is 86400s (1 day), which will allow stale content to be
+	// served up to this limit beyond the max-age (or s-maxage) of a
+	// cached
+	// response.
+	// The maximum allowed value is 604800 (1 week).
+	// Set this to zero (0) to disable serve-while-stale.
+	ServeWhileStale *Duration `json:"serveWhileStale,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "CacheBypassRequestHeaderNames") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CacheBypassRequestHeaderNames")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CachePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod CachePolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CachePolicyCacheKeyPolicy: Message containing what to include in the cache
+// key for a request for Cache
+// Policy defined on Route Action.
+type CachePolicyCacheKeyPolicy struct {
+	// ExcludedQueryParameters: Names of query string parameters to exclude in
+	// cache keys. All other
+	// parameters will be included. Either specify `excludedQueryParameters`
+	// or `includedQueryParameters`, not both. '&' and '=' will be percent
+	// encoded and not treated as delimiters.
+	//
+	// Note: This field applies to routes that use backend services. Attempting
+	// to set it on a route that points exclusively to Backend Buckets will
+	// result in a configuration error. For routes that point to a Backend
+	// Bucket, use `includedQueryParameters` to define which parameters should
+	// be part of the cache key.
+	ExcludedQueryParameters []string `json:"excludedQueryParameters,omitempty"`
+	// IncludeHost: If true, requests to different hosts will be cached
+	// separately.
+	//
+	// Note: This setting is only applicable to routes that use a Backend
+	// Service. It does not affect requests served by a Backend Bucket, as the
+	// host is never included in a Backend Bucket's cache key. Attempting to set
+	// it on a route that points exclusively to Backend Buckets will result in
+	// a
+	// configuration error.
+	IncludeHost bool `json:"includeHost,omitempty"`
+	// IncludeProtocol: If true, http and https requests will be cached
+	// separately.
+	//
+	// Note: This setting is only applicable to routes that use a Backend
+	// Service. It does not affect requests served by a Backend Bucket, as
+	// the
+	// protocol is never included in a Backend Bucket's cache key. Attempting
+	// to
+	// set on a route that points exclusively to Backend Buckets will result in
+	// a configuration error.
+	IncludeProtocol bool `json:"includeProtocol,omitempty"`
+	// IncludeQueryString: If true, include query string parameters in the cache
+	// key according to
+	// `includedQueryParameters` and `excludedQueryParameters`. If neither
+	// is set, the entire query string will be included. If false, the query
+	// string will be excluded from the cache key entirely.
+	//
+	// Note: This field applies to routes that use backend services. Attempting
+	// to set it on a route that points exclusively to Backend Buckets will
+	// result in a configuration error. For routes that point to a Backend
+	// Bucket, use `includedQueryParameters` to define which parameters should
+	// be part of the cache key.
+	IncludeQueryString bool `json:"includeQueryString,omitempty"`
+	// IncludedCookieNames: Allows HTTP cookies (by name) to be used in the cache
+	// key.
+	// The name=value pair will be used in the cache key Cloud CDN
+	// generates.
+	//
+	// Note: This setting is only applicable to routes that use a Backend
+	// Service. It does not affect requests served by a Backend Bucket.
+	// Attempting to set it on a route that points exclusively to Backend
+	// Buckets will result in a configuration error. Up to 5 cookie names can
+	// be
+	// specified.
+	IncludedCookieNames []string `json:"includedCookieNames,omitempty"`
+	// IncludedHeaderNames: Allows HTTP request headers (by name) to be used in the
+	// cache key.
+	IncludedHeaderNames []string `json:"includedHeaderNames,omitempty"`
+	// IncludedQueryParameters: Names of query string parameters to include in
+	// cache keys. All other
+	// parameters will be excluded. Either specify `includedQueryParameters`
+	// or `excludedQueryParameters`, not both. '&' and '=' will be percent
+	// encoded and not treated as delimiters.
+	IncludedQueryParameters []string `json:"includedQueryParameters,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExcludedQueryParameters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExcludedQueryParameters") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CachePolicyCacheKeyPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod CachePolicyCacheKeyPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CachePolicyNegativeCachingPolicy: Specify CDN TTLs for response error codes.
+type CachePolicyNegativeCachingPolicy struct {
+	// Code: The HTTP status code to define a TTL against. Only HTTP status
+	// codes
+	// 300, 301, 302, 307, 308, 404, 405, 410, 421, 451 and 501 can be
+	// specified as values, and you cannot specify a status code more than
+	// once.
+	Code int64 `json:"code,omitempty"`
+	// Ttl: The TTL (in seconds) for which to cache responses with
+	// the
+	// corresponding status code.
+	// The maximum allowed value is 1800s (30 minutes). Infrequently
+	// accessed
+	// objects may be evicted from the cache before the defined TTL.
+	Ttl *Duration `json:"ttl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CachePolicyNegativeCachingPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod CachePolicyNegativeCachingPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CalendarModeAdviceRequest: A request to recommend the best way to consume
 // the specified resources in the
 // future.
@@ -24632,6 +24931,14 @@ func (s HttpRetryPolicy) MarshalJSON() ([]byte, error) {
 }
 
 type HttpRouteAction struct {
+	// CachePolicy: Specifies the cache policy configuration for matched traffic.
+	// Available
+	// only for Global `EXTERNAL_MANAGED` load balancer schemes. At least
+	// one
+	// property must be specified. This policy cannot be specified if any
+	// target
+	// backend has Identity-Aware Proxy enabled.
+	CachePolicy *CachePolicy `json:"cachePolicy,omitempty"`
 	// CorsPolicy: The specification for allowing client-side cross-origin
 	// requests. For more
 	// information about the W3C recommendation for cross-origin resource
@@ -24730,13 +25037,13 @@ type HttpRouteAction struct {
 	// settings
 	// specified in this HttpRouteAction.
 	WeightedBackendServices []*WeightedBackendService `json:"weightedBackendServices,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CorsPolicy") to
+	// ForceSendFields is a list of field names (e.g. "CachePolicy") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CorsPolicy") to include in API
+	// NullFields is a list of field names (e.g. "CachePolicy") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

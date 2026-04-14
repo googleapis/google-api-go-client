@@ -340,6 +340,18 @@ type LocalInventory struct {
 	// attribute values, see the local product inventory data specification
 	// (https://support.google.com/merchants/answer/3061342)
 	Availability string `json:"availability,omitempty"`
+	// Base64EncodedName: Output only. The unpadded base64url encoded name of the
+	// `LocalInventory` resource. Format:
+	// `accounts/{account}/products/{product}/localInventories/{store_code}` where
+	// the `{product}` segment is the unpadded base64url encoded value of the
+	// identifier of the form `content_language~feed_label~offer_id`. Example:
+	// `accounts/123/products/ZW5-VVN-c2t1LzEyMw/localInventories/store123` for the
+	// decoded product ID `en~US~sku/123` and `store_code` "store123". Can be used
+	// directly as input to the API methods that require the local product
+	// identifier within the local inventory name to be encoded if it contains
+	// special characters, for example `GetLocalInventory`
+	// (https://developers.google.com/merchant/api/reference/rest/inventories_v1beta/accounts.products.localInventories/get).
+	Base64EncodedName string `json:"base64EncodedName,omitempty"`
 	// CustomAttributes: A list of custom (merchant-provided) attributes. You can
 	// also use `CustomAttribute` to submit any attribute of the data specification
 	// in its generic form.
@@ -594,6 +606,18 @@ type RegionalInventory struct {
 	// attribute values, see the regional product inventory data specification
 	// (https://support.google.com/merchants/answer/14644124).
 	Availability string `json:"availability,omitempty"`
+	// Base64EncodedName: Output only. The unpadded base64url encoded name of the
+	// `RegionalInventory` resource. Format:
+	// `accounts/{account}/products/{product}/regionalInventories/{region}` where
+	// the `{product}` segment is the unpadded base64url encoded value of the
+	// identifier of the form `content_language~feed_label~offer_id`. Example:
+	// `accounts/123/products/ZW5-VVN-c2t1LzEyMw/regionalInventories/region123` for
+	// the decoded product ID `en~US~sku/123` and `region` "region123". Can be used
+	// directly as input to the API methods that require the product identifier
+	// within the regional inventory name to be encoded if it contains special
+	// characters, for example `GetRegionalInventory`
+	// (https://developers.google.com/merchant/api/reference/rest/inventories_v1beta/accounts.products.regionalInventories/get).
+	Base64EncodedName string `json:"base64EncodedName,omitempty"`
 	// CustomAttributes: A list of custom (merchant-provided) attributes. You can
 	// also use `CustomAttribute` to submit any attribute of the data specification
 	// in its generic form.

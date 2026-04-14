@@ -777,7 +777,7 @@ func (s ListTransferLogsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListTransferResourcesResponse: Response for the ListTransferResources RPC.
+// ListTransferResourcesResponse: Response for the `ListTransferResources` RPC.
 type ListTransferResourcesResponse struct {
 	// NextPageToken: Output only. A token, which can be sent as `page_token` to
 	// retrieve the next page. If this field is omitted, there are no subsequent
@@ -1365,7 +1365,7 @@ func (s TransferMessage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// TransferResource: Resource(table/partition) that is being transferred.
+// TransferResource: Resource (table/partition) that is being transferred.
 type TransferResource struct {
 	// Destination: Optional. Resource destination.
 	//
@@ -1551,8 +1551,9 @@ func (s TransferRun) MarshalJSON() ([]byte, error) {
 
 // TransferRunBrief: Basic information about a transfer run.
 type TransferRunBrief struct {
-	// Run: Optional. Run URI. Format
-	// projects/{project}/locations/{location}/transferConfigs/{config}/run/{run}
+	// Run: Optional. Run URI. The format must be:
+	// `projects/{project}/locations/{location}/transferConfigs/{transfer_config}/ru
+	// n/{run}`
 	Run string `json:"run,omitempty"`
 	// StartTime: Optional. Start time of the transfer run.
 	StartTime string `json:"startTime,omitempty"`
@@ -4657,9 +4658,10 @@ type ProjectsLocationsTransferConfigsTransferResourcesListCall struct {
 // List: Returns information about transfer resources.
 //
 //   - parent: Name of transfer configuration for which transfer resources should
-//     be retrieved. The name should be in one of the following form: *
-//     `projects/{project_id}/transferConfigs/{config_id}` *
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.
+//     be retrieved. The name should be in one of the following forms: *
+//     `projects/{project}/transferConfigs/{transfer_config}` *
+//     `projects/{project}/locations/{location_id}/transferConfigs/{transfer_confi
+//     g}`.
 func (r *ProjectsLocationsTransferConfigsTransferResourcesService) List(parent string) *ProjectsLocationsTransferConfigsTransferResourcesListCall {
 	c := &ProjectsLocationsTransferConfigsTransferResourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4674,7 +4676,7 @@ func (r *ProjectsLocationsTransferConfigsTransferResourcesService) List(parent s
 // `hierarchy_detail.partition_detail.table` Multiple filters can be applied
 // using the `AND/OR` operator. Examples: * `name="*123" AND (type="TABLE" OR
 // latest_status_detail.state="SUCCEEDED")` * `update_time >=
-// "2012-04-21T11:30:00-04:00` * `hierarchy_detail.partition_detail.table =
+// "2012-04-21T11:30:00-04:00" * `hierarchy_detail.partition_detail.table =
 // "table1"
 func (c *ProjectsLocationsTransferConfigsTransferResourcesListCall) Filter(filter string) *ProjectsLocationsTransferConfigsTransferResourcesListCall {
 	c.urlParams_.Set("filter", filter)
@@ -6426,9 +6428,10 @@ type ProjectsTransferConfigsTransferResourcesListCall struct {
 // List: Returns information about transfer resources.
 //
 //   - parent: Name of transfer configuration for which transfer resources should
-//     be retrieved. The name should be in one of the following form: *
-//     `projects/{project_id}/transferConfigs/{config_id}` *
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.
+//     be retrieved. The name should be in one of the following forms: *
+//     `projects/{project}/transferConfigs/{transfer_config}` *
+//     `projects/{project}/locations/{location_id}/transferConfigs/{transfer_confi
+//     g}`.
 func (r *ProjectsTransferConfigsTransferResourcesService) List(parent string) *ProjectsTransferConfigsTransferResourcesListCall {
 	c := &ProjectsTransferConfigsTransferResourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6443,7 +6446,7 @@ func (r *ProjectsTransferConfigsTransferResourcesService) List(parent string) *P
 // `hierarchy_detail.partition_detail.table` Multiple filters can be applied
 // using the `AND/OR` operator. Examples: * `name="*123" AND (type="TABLE" OR
 // latest_status_detail.state="SUCCEEDED")` * `update_time >=
-// "2012-04-21T11:30:00-04:00` * `hierarchy_detail.partition_detail.table =
+// "2012-04-21T11:30:00-04:00" * `hierarchy_detail.partition_detail.table =
 // "table1"
 func (c *ProjectsTransferConfigsTransferResourcesListCall) Filter(filter string) *ProjectsTransferConfigsTransferResourcesListCall {
 	c.urlParams_.Set("filter", filter)

@@ -10881,14 +10881,20 @@ type CachePolicy struct {
 	// headers are matched by name,
 	// e.g. Pragma or Authorization headers. Values are case-insensitive. Up to
 	// 5
-	// header names can be specified. The cache is bypassed for
-	// all
-	// cachePolicy.cacheMode settings.
+	// header names can be specified. The cache is bypassed for all
+	// `cacheMode`
+	// values.
 	CacheBypassRequestHeaderNames []string `json:"cacheBypassRequestHeaderNames,omitempty"`
-	// CacheKeyPolicy: The CacheKeyPolicy for this CachePolicy.
+	// CacheKeyPolicy: The cache key configuration. If not specified, the default
+	// behavior depends
+	// on the backend type: for Backend Services, the complete request URI is
+	// used; for Backend Buckets, the request URI is used without the protocol
+	// or
+	// host, and only query parameters known to Cloud Storage are included.
 	CacheKeyPolicy *CachePolicyCacheKeyPolicy `json:"cacheKeyPolicy,omitempty"`
-	// CacheMode: Specifies the cache setting for all responses from this route.
-	// If not specified, the default value is CACHE_ALL_STATIC.
+	// CacheMode: Specifies the cache setting for all responses from this route. If
+	// not
+	// specified, Cloud CDN uses `CACHE_ALL_STATIC` mode.
 	//
 	// Possible values:
 	//   "CACHE_ALL_STATIC" - Automatically cache static content, including common
@@ -10909,82 +10915,107 @@ type CachePolicy struct {
 	// impacting
 	// performance and increasing load on the origin server.
 	CacheMode string `json:"cacheMode,omitempty"`
-	// ClientTtl: Specifies a separate client (e.g. browser client) maximum TTL.
-	// This is
-	// used to clamp the max-age (or Expires) value sent to the client.
-	// With
-	// FORCE_CACHE_ALL, the lesser of client_ttl and default_ttl is used for
+	// ClientTtl: Specifies a separate client (e.g. browser client) maximum TTL for
+	// cached
+	// content. This is used to clamp the max-age (or Expires) value sent to
 	// the
-	// response max-age directive, along with a "public" directive.  For
-	// cacheable content in CACHE_ALL_STATIC mode, client_ttl clamps the
-	// max-age
-	// from the origin (if specified), or else sets the response max-age
-	// directive to the lesser of the client_ttl and default_ttl, and also
-	// ensures a "public" cache-control directive is present.
-	// If a client TTL is not specified, a default value (1 hour) will be used.
-	// The maximum allowed value is 31,622,400s (1 year).
-	ClientTtl *Duration `json:"clientTtl,omitempty"`
-	// DefaultTtl: Specifies the default TTL for cached content served by this
-	// origin for
-	// responses that do not have an existing valid TTL (max-age or
-	// s-maxage).
-	// Setting a TTL of "0" means "always revalidate".
-	// The value of defaultTTL cannot be set to a value greater than that
-	// of
-	// maxTTL.
-	// When the cacheMode is set to FORCE_CACHE_ALL, the defaultTTL
-	// will overwrite the TTL set in all responses. The maximum allowed value
+	// client. With `FORCE_CACHE_ALL`, the lesser of `clientTtl` and
+	// `defaultTtl`
+	// is used for the response max-age directive, along with a "public"
+	// directive. For cacheable content in `CACHE_ALL_STATIC` mode,
+	// `clientTtl`
+	// clamps the max-age from the origin (if specified), or else sets the
+	// response max-age directive to the lesser of the `clientTtl`
+	// and
+	// `defaultTtl`, and also ensures a "public" cache-control directive
 	// is
-	// 31,622,400s (1 year). Infrequently accessed objects may be evicted from
-	// the cache before the defined TTL.
+	// present. The maximum allowed value is 31,622,400s (1 year). If
+	// not
+	// specified, Cloud CDN uses 3600s (1 hour) for `CACHE_ALL_STATIC` mode.
+	// Cannot exceed `maxTtl`. Cannot be specified when `cacheMode`
+	// is
+	// `USE_ORIGIN_HEADERS`.
+	ClientTtl *Duration `json:"clientTtl,omitempty"`
+	// DefaultTtl: Specifies the default TTL for cached content for responses that
+	// do not have
+	// an existing valid TTL (max-age or s-maxage). Setting a TTL of "0"
+	// means
+	// "always revalidate". The value of `defaultTtl` cannot be set to a
+	// value
+	// greater than that of `maxTtl`. When the `cacheMode` is set
+	// to
+	// `FORCE_CACHE_ALL`, the `defaultTtl` will overwrite the TTL set in
+	// all
+	// responses. The maximum allowed value is 31,622,400s (1 year).
+	// Infrequently
+	// accessed objects may be evicted from the cache before the defined TTL.
+	// If
+	// not specified, Cloud CDN uses 3600s (1 hour) for `CACHE_ALL_STATIC`
+	// and
+	// `FORCE_CACHE_ALL` modes. Cannot be specified when `cacheMode`
+	// is
+	// `USE_ORIGIN_HEADERS`.
 	DefaultTtl *Duration `json:"defaultTtl,omitempty"`
-	// MaxTtl: Specifies the maximum allowed TTL for cached content served by
-	// this
-	// origin.
-	// Cache directives that attempt to set a max-age or s-maxage higher than
-	// this, or an Expires header more than maxTTL seconds in the future will
-	// be capped at the value of maxTTL, as if it were the value of an
-	// s-maxage Cache-Control directive.
-	// Headers sent to the client will not be modified.
-	// Setting a TTL of "0" means "always revalidate".
-	// The maximum allowed value is 31,622,400s (1 year). Infrequently
-	// accessed
-	// objects may be evicted from the cache before the defined TTL.
+	// MaxTtl: Specifies the maximum allowed TTL for cached content. Cache
+	// directives that
+	// attempt to set a max-age or s-maxage higher than this, or an Expires
+	// header
+	// more than `maxTtl` seconds in the future will be capped at the value
+	// of
+	// `maxTtl`, as if it were the value of an s-maxage Cache-Control
+	// directive.
+	// Headers sent to the client will not be modified. Setting a TTL of "0"
+	// means
+	// "always revalidate". The maximum allowed value is 31,622,400s (1
+	// year).
+	// Infrequently accessed objects may be evicted from the cache before
+	// the
+	// defined TTL. If not specified, Cloud CDN uses 86400s (1 day)
+	// for
+	// `CACHE_ALL_STATIC` mode. Can be specified only for `CACHE_ALL_STATIC`
+	// cache
+	// mode.
 	MaxTtl *Duration `json:"maxTtl,omitempty"`
 	// NegativeCaching: Negative caching allows per-status code TTLs to be set, in
 	// order
 	// to apply fine-grained caching for common errors or redirects.
 	// This can reduce the load on your origin and improve end-user
 	// experience by reducing response latency.
-	// When the cache mode is set to CACHE_ALL_STATIC or
-	// USE_ORIGIN_HEADERS,
-	// negative caching applies to responses with the specified response code
-	// that lack any Cache-Control, Expires, or Pragma: no-cache directives.
-	// When the cache mode is set to FORCE_CACHE_ALL, negative caching applies
-	// to all responses with the specified response code, and override any
-	// caching headers.
-	// By default, Cloud CDN will apply the following default TTLs to these
-	// status codes:
-	// HTTP 300 (Multiple Choice), 301, 308 (Permanent Redirects): 10m
-	// HTTP 404 (Not Found), 410 (Gone),
-	// 451 (Unavailable For Legal Reasons): 120s
-	// HTTP 405 (Method Not Found), 501 (Not Implemented): 60s.
-	// These defaults can be overridden in negative_caching_policy.
+	// When the `cacheMode` is set to `CACHE_ALL_STATIC` or
+	// `USE_ORIGIN_HEADERS`, negative caching applies to responses with
+	// the specified response code that lack any Cache-Control, Expires, or
+	// Pragma: no-cache directives. When the `cacheMode` is set
+	// to
+	// `FORCE_CACHE_ALL`, negative caching applies to all responses
+	// with the specified response code, and overrides any caching headers.
+	// By
+	// default, Cloud CDN applies the following TTLs to these HTTP status codes:
+	//
+	// * 300 (Multiple Choice), 301, 308 (Permanent Redirects): 10m
+	// * 404 (Not Found), 410 (Gone), 451 (Unavailable For Legal Reasons): 120s
+	// * 405 (Method Not Found), 501 (Not Implemented): 60s
+	//
+	// These defaults can be overridden in `negativeCachingPolicy`.
+	// If not specified, Cloud CDN applies negative caching by default.
 	NegativeCaching bool `json:"negativeCaching,omitempty"`
 	// NegativeCachingPolicy: Sets a cache TTL for the specified HTTP status
 	// code.
-	// negative_caching must be enabled to configure
-	// negative_caching_policy.
-	// Omitting the policy and leaving negative_caching enabled will use
-	// Cloud CDN's default cache TTLs.
-	// Note that when specifying an explicit negative_caching_policy, you
-	// should take care to specify a cache TTL for all response codes
-	// that you wish to cache. Cloud CDN will not apply any default
-	// negative caching when a policy exists.
+	// `negativeCaching` must be enabled to configure
+	// `negativeCachingPolicy`.
+	// Omitting the policy and leaving `negativeCaching` enabled will use
+	// Cloud
+	// CDN's default cache TTLs. Note that when specifying an
+	// explicit
+	// `negativeCachingPolicy`, you should take care to specify a cache TTL for
+	// all response codes that you wish to cache. Cloud CDN will not apply
+	// any
+	// default negative caching when a policy exists.
 	NegativeCachingPolicy []*CachePolicyNegativeCachingPolicy `json:"negativeCachingPolicy,omitempty"`
 	// RequestCoalescing: If true then Cloud CDN will combine multiple concurrent
 	// cache fill
-	// requests into a small number of requests to the origin.
+	// requests into a small number of requests to the origin. If not
+	// specified,
+	// Cloud CDN applies request coalescing by default.
 	RequestCoalescing bool `json:"requestCoalescing,omitempty"`
 	// ServeWhileStale: Serve existing content from the cache (if available) when
 	// revalidating
@@ -11027,16 +11058,15 @@ func (s CachePolicy) MarshalJSON() ([]byte, error) {
 type CachePolicyCacheKeyPolicy struct {
 	// ExcludedQueryParameters: Names of query string parameters to exclude in
 	// cache keys. All other
-	// parameters will be included. Either specify excluded_query_parameters
-	// or
-	// included_query_parameters, not both. '&' and '=' will be percent encoded
-	// and not treated as delimiters.
+	// parameters will be included. Either specify `excludedQueryParameters`
+	// or `includedQueryParameters`, not both. '&' and '=' will be percent
+	// encoded and not treated as delimiters.
 	//
 	// Note: This field applies to routes that use backend services. Attempting
 	// to set it on a route that points exclusively to Backend Buckets will
 	// result in a configuration error. For routes that point to a Backend
-	// Bucket, use includedQueryParameters to define which parameters should
-	// be a part of the cache key.
+	// Bucket, use `includedQueryParameters` to define which parameters should
+	// be part of the cache key.
 	ExcludedQueryParameters []string `json:"excludedQueryParameters,omitempty"`
 	// IncludeHost: If true, requests to different hosts will be cached
 	// separately.
@@ -11061,16 +11091,15 @@ type CachePolicyCacheKeyPolicy struct {
 	IncludeProtocol bool `json:"includeProtocol,omitempty"`
 	// IncludeQueryString: If true, include query string parameters in the cache
 	// key according to
-	// included_query_parameters and excluded_query_parameters. If neither is
-	// set, the entire query string will be included. If false, the query
-	// string
-	// will be excluded from the cache key entirely.
+	// `includedQueryParameters` and `excludedQueryParameters`. If neither
+	// is set, the entire query string will be included. If false, the query
+	// string will be excluded from the cache key entirely.
 	//
 	// Note: This field applies to routes that use backend services. Attempting
 	// to set it on a route that points exclusively to Backend Buckets will
-	// result in a configuration error.  For routes that point to a Backend
-	// Bucket, use includedQueryParameters to define which parameters should
-	// be a part of the cache key.
+	// result in a configuration error. For routes that point to a Backend
+	// Bucket, use `includedQueryParameters` to define which parameters should
+	// be part of the cache key.
 	IncludeQueryString bool `json:"includeQueryString,omitempty"`
 	// IncludedCookieNames: Allows HTTP cookies (by name) to be used in the cache
 	// key.
@@ -11089,10 +11118,9 @@ type CachePolicyCacheKeyPolicy struct {
 	IncludedHeaderNames []string `json:"includedHeaderNames,omitempty"`
 	// IncludedQueryParameters: Names of query string parameters to include in
 	// cache keys. All other
-	// parameters will be excluded. Either specify included_query_parameters
-	// or
-	// excluded_query_parameters, not both. '&' and '=' will be percent encoded
-	// and not treated as delimiters.
+	// parameters will be excluded. Either specify `includedQueryParameters`
+	// or `excludedQueryParameters`, not both. '&' and '=' will be percent
+	// encoded and not treated as delimiters.
 	IncludedQueryParameters []string `json:"includedQueryParameters,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExcludedQueryParameters") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -26178,9 +26206,13 @@ func (s HttpRetryPolicy) MarshalJSON() ([]byte, error) {
 }
 
 type HttpRouteAction struct {
-	// CachePolicy: Cache policy for this URL Map’s route. Available only for
-	// Global
-	// EXTERNAL_MANAGED load balancer schemes.
+	// CachePolicy: Specifies the cache policy configuration for matched traffic.
+	// Available
+	// only for Global `EXTERNAL_MANAGED` load balancer schemes. At least
+	// one
+	// property must be specified. This policy cannot be specified if any
+	// target
+	// backend has Identity-Aware Proxy enabled.
 	CachePolicy *CachePolicy `json:"cachePolicy,omitempty"`
 	// CorsPolicy: The specification for allowing client-side cross-origin
 	// requests. For more

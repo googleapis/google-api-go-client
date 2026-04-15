@@ -3696,6 +3696,9 @@ type InitializeServiceRequest struct {
 	// config will be applied. Examples include, "compute.googleapis.com/Instance"
 	// and "storage.googleapis.com/Bucket".
 	ResourceType string `json:"resourceType,omitempty"`
+	// ValidateOnly: Optional. If set, validates the request and returns the
+	// result, but does not actually run it.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackupPlanLocation") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4229,6 +4232,7 @@ type LocationMetadata struct {
 	//   "CEP_MONITORING_DISK"
 	//   "BV_CUSTOM_PROBERS" - Remove once parity achieved between BV_AF and
 	// BV_CUSTOM_PROBERS.
+	//   "FT_CUSTOM_PROBERS"
 	UnsupportedFeatures []string `json:"unsupportedFeatures,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "UnsupportedFeatures") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -1195,6 +1195,48 @@ func (s DomainWideTakeoutInitiated) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DriveSyncStateChanged: Alerts for when a user is restricted from syncing
+// content from clients such as Drive for Desktop.
+type DriveSyncStateChanged struct {
+	// Email: Email of the user affected.
+	Email string `json:"email,omitempty"`
+	// SyncPauseStartTime: Time at which sync was paused.
+	SyncPauseStartTime string `json:"syncPauseStartTime,omitempty"`
+	// SyncState: The current sync state.
+	//
+	// Possible values:
+	//   "SYNC_STATE_UNSPECIFIED" - Unspecified state
+	//   "PAUSED" - Sync is paused
+	//   "RESUMED" - Sync is resumed
+	SyncState string `json:"syncState,omitempty"`
+	// SyncStateChangeReason: The reason for the sync state change.
+	//
+	// Possible values:
+	//   "SYNC_STATE_CHANGE_REASON_UNSPECIFIED" - Unspecified state change reason
+	//   "UNUSUAL_ACTIVITY" - Sync state change reason is unusual activity
+	//   "USER_FEEDBACK_TRUE_POSITIVE" - Sync state change reason is user feedback
+	// true positive
+	//   "USER_FEEDBACK_FALSE_POSITIVE" - Sync state change reason is user feedback
+	// false positive
+	SyncStateChangeReason string `json:"syncStateChangeReason,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Email") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DriveSyncStateChanged) MarshalJSON() ([]byte, error) {
+	type NoMethod DriveSyncStateChanged
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo

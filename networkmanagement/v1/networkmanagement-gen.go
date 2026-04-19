@@ -3251,7 +3251,9 @@ type RouteInfo struct {
 	Protocols []string `json:"protocols,omitempty"`
 	// Region: Region of the route. DYNAMIC, PEERING_DYNAMIC, POLICY_BASED and
 	// ADVERTISED routes only. If set for POLICY_BASED route, this is a region of
-	// VLAN attachments for Cloud Interconnect the route applies to.
+	// VLAN attachments for Cloud Interconnect the route applies to. If set to
+	// "all" for POLICY_BASED route, the route applies to VLAN attachments of Cloud
+	// Interconnect in all regions.
 	Region string `json:"region,omitempty"`
 	// RouteScope: Indicates where route is applicable. Deprecated, routes with
 	// NCC_HUB scope are not included in the trace in new tests.
@@ -4192,8 +4194,8 @@ type OrganizationsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this service. This
 // method lists locations based on the resource scope provided in the
-// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
-// empty, the method lists the public locations available to all projects. *
+// ListLocationsRequest.name field: * **Global locations**: If `name` is empty,
+// the method lists the public locations available to all projects. *
 // **Project-specific locations**: If `name` follows the format
 // `projects/{project}`, the method lists locations visible to that specific
 // project. This includes public, private, or other project-specific locations
@@ -5588,8 +5590,8 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this service. This
 // method lists locations based on the resource scope provided in the
-// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
-// empty, the method lists the public locations available to all projects. *
+// ListLocationsRequest.name field: * **Global locations**: If `name` is empty,
+// the method lists the public locations available to all projects. *
 // **Project-specific locations**: If `name` follows the format
 // `projects/{project}`, the method lists locations visible to that specific
 // project. This includes public, private, or other project-specific locations

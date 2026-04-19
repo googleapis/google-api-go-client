@@ -185,6 +185,7 @@ func NewCustomersService(s *Service) *CustomersService {
 	rs := &CustomersService{s: s}
 	rs.Apps = NewCustomersAppsService(s)
 	rs.CertificateProvisioningProcesses = NewCustomersCertificateProvisioningProcessesService(s)
+	rs.ConnectorConfigs = NewCustomersConnectorConfigsService(s)
 	rs.Profiles = NewCustomersProfilesService(s)
 	rs.Reports = NewCustomersReportsService(s)
 	rs.Telemetry = NewCustomersTelemetryService(s)
@@ -198,6 +199,8 @@ type CustomersService struct {
 	Apps *CustomersAppsService
 
 	CertificateProvisioningProcesses *CustomersCertificateProvisioningProcessesService
+
+	ConnectorConfigs *CustomersConnectorConfigsService
 
 	Profiles *CustomersProfilesService
 
@@ -271,6 +274,15 @@ func NewCustomersCertificateProvisioningProcessesOperationsService(s *Service) *
 }
 
 type CustomersCertificateProvisioningProcessesOperationsService struct {
+	s *Service
+}
+
+func NewCustomersConnectorConfigsService(s *Service) *CustomersConnectorConfigsService {
+	rs := &CustomersConnectorConfigsService{s: s}
+	return rs
+}
+
+type CustomersConnectorConfigsService struct {
 	s *Service
 }
 
@@ -432,6 +444,10 @@ type GoogleChromeManagementV1AppDetails struct {
 	// "gmbmikajjgmnabiglmofipeabaddhgne" for the Save to Google Drive Chrome
 	// extension, "com.google.android.apps.docs" for the Google Drive Android app.
 	AppId string `json:"appId,omitempty"`
+	// CategoryIds: Output only. The category IDs of the app, which are the same as
+	// stored in the Web Store item. It's expected that there is only one category
+	// ID.
+	CategoryIds []string `json:"categoryIds,omitempty"`
 	// ChromeAppInfo: Output only. Chrome Web Store app information.
 	ChromeAppInfo *GoogleChromeManagementV1ChromeAppInfo `json:"chromeAppInfo,omitempty"`
 	// Description: Output only. App's description.
@@ -4745,6 +4761,221 @@ type GoogleChromeManagementVersionsV1ClaimCertificateProvisioningProcessResponse
 	googleapi.ServerResponse `json:"-"`
 }
 
+// GoogleChromeManagementVersionsV1ConnectorConfig: A representation of a
+// connector config.
+type GoogleChromeManagementVersionsV1ConnectorConfig struct {
+	// Details: Required. The details of the connector config.
+	Details *GoogleChromeManagementVersionsV1ConnectorConfigDetails `json:"details,omitempty"`
+	// DisplayName: Required. The display name of the config.
+	DisplayName string `json:"displayName,omitempty"`
+	// Etag: Optional. This checksum is computed by the server based on the value
+	// of other fields, and may be sent on update and delete requests to ensure the
+	// client has an up-to-date value before proceeding.
+	Etag string `json:"etag,omitempty"`
+	// Name: Identifier. Format:
+	// customers/{customer}/connectorConfigs/{connector_config}
+	Name string `json:"name,omitempty"`
+	// Status: Output only. The status of the connector config.
+	Status *GoogleChromeManagementVersionsV1ConnectorConfigStatus `json:"status,omitempty"`
+	// Type: Required. The type of the connector.
+	//
+	// Possible values:
+	//   "CONNECTOR_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "REPORTING" - Reporting connector.
+	//   "DEVICE_TRUST" - Device trust connector.
+	//   "XDR" - XDR connector.
+	//   "IDENTITY_BASED_ENROLLMENT" - Authentication connector.
+	//   "CERTIFICATE_AUTHORITY" - Certificate authority connector. Not yet
+	// supported in the API.
+	//   "ROOT_STORE" - Root certificate connector.
+	Type string `json:"type,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Details") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Details") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1ConnectorConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1ConnectorConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1ConnectorConfigDetails: The details of the
+// connector config. LINT.IfChange
+type GoogleChromeManagementVersionsV1ConnectorConfigDetails struct {
+	// CrowdStrikeConfig: CrowdStrike connector config.
+	CrowdStrikeConfig *GoogleChromeManagementVersionsV1CrowdStrikeConfig `json:"crowdStrikeConfig,omitempty"`
+	// CrowdStrikeFalconNextGenConfig: CrowdStrike Falcon Next Gen connector
+	// config.
+	CrowdStrikeFalconNextGenConfig *GoogleChromeManagementVersionsV1CrowdStrikeFalconNextGenConfig `json:"crowdStrikeFalconNextGenConfig,omitempty"`
+	// CrowdStrikeXdrConfig: CrowdStrike XDR connector config.
+	CrowdStrikeXdrConfig *GoogleChromeManagementVersionsV1CrowdStrikeXdrConfig `json:"crowdStrikeXdrConfig,omitempty"`
+	// DeviceTrustConfig: Device trust connector config.
+	DeviceTrustConfig *GoogleChromeManagementVersionsV1DeviceTrustConfig `json:"deviceTrustConfig,omitempty"`
+	// GoogleSecOpsConfig: Google SecOps connector config.
+	GoogleSecOpsConfig *GoogleChromeManagementVersionsV1GoogleSecOpsConfig `json:"googleSecOpsConfig,omitempty"`
+	// PaloAltoNetworksConfig: Palo Alto Networks connector config.
+	PaloAltoNetworksConfig *GoogleChromeManagementVersionsV1PaloAltoNetworksConfig `json:"paloAltoNetworksConfig,omitempty"`
+	// PubSubConfig: Pub/Sub connector config.
+	PubSubConfig *GoogleChromeManagementVersionsV1PubSubConfig `json:"pubSubConfig,omitempty"`
+	// PubSubXdrConfig: Pub/Sub XDR connector config.
+	PubSubXdrConfig *GoogleChromeManagementVersionsV1PubSubXdrConfig `json:"pubSubXdrConfig,omitempty"`
+	// SplunkConfig: Splunk connector config.
+	SplunkConfig *GoogleChromeManagementVersionsV1SplunkConfig `json:"splunkConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CrowdStrikeConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CrowdStrikeConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1ConnectorConfigDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1ConnectorConfigDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1ConnectorConfigStatus: The status of the
+// connector config.
+type GoogleChromeManagementVersionsV1ConnectorConfigStatus struct {
+	// FailureStartTime: Output only. Field recording time of the earliest failure
+	// since the last success event. This field is only set when the state is
+	// `DISABLED_BY_FAILURES`.
+	FailureStartTime string `json:"failureStartTime,omitempty"`
+	// State: Output only. The state of the connector config. The connector state
+	// is disabled if the connector has not successfully sent an event in the last
+	// 24 hours.
+	//
+	// Possible values:
+	//   "CONFIG_STATE_UNKNOWN" - Default value.
+	//   "ENABLED" - The connector config is enabled.
+	//   "DISABLED_BY_FAILURES" - The connector config is transiently disabled due
+	// to failures.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. Field recording time of most recent modification of
+	// the status. For ENABLED, this is the time the status was changed to ENABLED.
+	// For DISABLED_BY_FAILURES, this is the time of the most recent failed attempt
+	// to send an event to this config.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FailureStartTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailureStartTime") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1ConnectorConfigStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1ConnectorConfigStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1CrowdStrikeConfig: CrowdStrike connector
+// config.
+type GoogleChromeManagementVersionsV1CrowdStrikeConfig struct {
+	// ApiKey: Required. Input only. API key to use on the ingestion API.
+	ApiKey string `json:"apiKey,omitempty"`
+	// Host: Required. Host to identify the customer specific server to receive the
+	// events.
+	Host string `json:"host,omitempty"`
+	// ReportingSettings: Required. The reporting settings for the CrowdStrike
+	// config.
+	ReportingSettings *GoogleChromeManagementVersionsV1ReportingSettings `json:"reportingSettings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1CrowdStrikeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1CrowdStrikeConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1CrowdStrikeFalconNextGenConfig: CrowdStrike
+// Falcon Next Gen connector config.
+type GoogleChromeManagementVersionsV1CrowdStrikeFalconNextGenConfig struct {
+	// ApiKey: Required. Input only. API key to use on the ingestion API.
+	ApiKey string `json:"apiKey,omitempty"`
+	// Host: Required. Host to identify the customer specific server to receive the
+	// events.
+	Host string `json:"host,omitempty"`
+	// ReportingSettings: Required. The reporting settings for the CrowdStrike
+	// Falcon Next Gen config.
+	ReportingSettings *GoogleChromeManagementVersionsV1ReportingSettings `json:"reportingSettings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1CrowdStrikeFalconNextGenConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1CrowdStrikeFalconNextGenConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1CrowdStrikeXdrConfig: CrowdStrike XDR
+// connector config.
+type GoogleChromeManagementVersionsV1CrowdStrikeXdrConfig struct {
+	// ApiKey: Required. Input only. API key to use on the ingestion API.
+	ApiKey string `json:"apiKey,omitempty"`
+	// Host: Required. Host to identify the customer specific server to receive the
+	// events.
+	Host string `json:"host,omitempty"`
+	// XdrSettings: Required. The XDR settings for the CrowdStrike XDR config.
+	XdrSettings *GoogleChromeManagementVersionsV1XdrSettings `json:"xdrSettings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1CrowdStrikeXdrConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1CrowdStrikeXdrConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementVersionsV1DeviceInfo: Information of a device that
 // runs a Chrome browser profile.
 type GoogleChromeManagementVersionsV1DeviceInfo struct {
@@ -4781,6 +5012,61 @@ type GoogleChromeManagementVersionsV1DeviceInfo struct {
 
 func (s GoogleChromeManagementVersionsV1DeviceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementVersionsV1DeviceInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1DeviceTrustConfig: Device trust config for
+// device trust connectors.
+type GoogleChromeManagementVersionsV1DeviceTrustConfig struct {
+	// Scope: Required. The scope at which this configuration will be applied. Note
+	// that this only applies to Chrome browser, as in ChromeOS it's always
+	// applied.
+	//
+	// Possible values:
+	//   "BROWSER_ENFORCEMENT_SCOPE_UNSPECIFIED" - Default value. This value is
+	// unused.
+	//   "BROWSERS_ONLY" - Only browsers are enforced.
+	//   "PROFILES_ONLY" - Only profiles are enforced.
+	//   "BROWSERS_AND_PROFILES" - Both browsers and profiles are enforced.
+	Scope string `json:"scope,omitempty"`
+	// ServiceAccounts: Required. A list of email addresses of the service accounts
+	// which are allowed to call the Verified Access API with full access.
+	ServiceAccounts []string `json:"serviceAccounts,omitempty"`
+	// ServiceProvider: Optional. The service provider for the device trust
+	// connector.
+	//
+	// Possible values:
+	//   "SERVICE_PROVIDER_UNSPECIFIED" - Default value.
+	//   "UNIVERSAL_DEVICE_TRUST" - Universal device trust connector.
+	//   "OKTA" - Okta service provider.
+	//   "PING_IDENTITY" - Ping Identity service provider.
+	//   "ONELOGIN" - OneLogin service provider.
+	//   "DUO" - Duo service provider.
+	//   "ZSCALER" - Zscaler service provider.
+	//   "OMNISSA" - Omnissa service provider.
+	//   "JUMPCLOUD" - JumpCloud service provider.
+	ServiceProvider string `json:"serviceProvider,omitempty"`
+	// UrlMatchers: Required. List of URLs allowed to be part of the attestation
+	// flow to get the set of signals from the machine. URLs must have HTTPS
+	// scheme, e.g. "https://example.com". Wildcards, *, are allowed. For detailed
+	// information on valid URL patterns, please see
+	// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
+	UrlMatchers []string `json:"urlMatchers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Scope") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Scope") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1DeviceTrustConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1DeviceTrustConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4833,6 +5119,36 @@ type GoogleChromeManagementVersionsV1GenericProfile struct {
 
 func (s GoogleChromeManagementVersionsV1GenericProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementVersionsV1GenericProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1GoogleSecOpsConfig: Google SecOps connector
+// config.
+type GoogleChromeManagementVersionsV1GoogleSecOpsConfig struct {
+	// ApiKey: Required. Input only. API key to use on the ingestion API.
+	ApiKey string `json:"apiKey,omitempty"`
+	// Host: Required. Host of ingestion API endpoint. Allows customer to upload
+	// events to servers in specific geographical regions. Existing configs that
+	// don't have this setting default to US.
+	Host string `json:"host,omitempty"`
+	// ReportingSettings: Required. The reporting settings for the Google SecOps
+	// config.
+	ReportingSettings *GoogleChromeManagementVersionsV1ReportingSettings `json:"reportingSettings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1GoogleSecOpsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1GoogleSecOpsConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4897,6 +5213,37 @@ func (s GoogleChromeManagementVersionsV1ListChromeBrowserProfilesResponse) Marsh
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementVersionsV1ListConnectorConfigsResponse: Response to
+// ListConnectorConfigs method.
+type GoogleChromeManagementVersionsV1ListConnectorConfigsResponse struct {
+	// ConnectorConfigs: The list of connector configs returned.
+	ConnectorConfigs []*GoogleChromeManagementVersionsV1ConnectorConfig `json:"connectorConfigs,omitempty"`
+	// NextPageToken: The page token used to retrieve the next page of the listing
+	// request. If the token is empty, there are no more pages to retrieve.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// TotalSize: The total size of the connector configs list.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ConnectorConfigs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConnectorConfigs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1ListConnectorConfigsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1ListConnectorConfigsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementVersionsV1MoveThirdPartyProfileUserRequest: Request to
 // MoveThirdPartyProfileUser method.
 type GoogleChromeManagementVersionsV1MoveThirdPartyProfileUserRequest struct {
@@ -4944,6 +5291,84 @@ type GoogleChromeManagementVersionsV1MoveThirdPartyProfileUserResponse struct {
 
 func (s GoogleChromeManagementVersionsV1MoveThirdPartyProfileUserResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementVersionsV1MoveThirdPartyProfileUserResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1PaloAltoNetworksConfig: Palo Alto Networks
+// connector config.
+type GoogleChromeManagementVersionsV1PaloAltoNetworksConfig struct {
+	// ApiKey: Required. Input only. API key to use on the ingestion API.
+	ApiKey string `json:"apiKey,omitempty"`
+	// Host: Required. Host to identify the customer specific server to receive the
+	// events.
+	Host string `json:"host,omitempty"`
+	// ReportingSettings: Required. The reporting settings for the Palo Alto
+	// Networks config.
+	ReportingSettings *GoogleChromeManagementVersionsV1ReportingSettings `json:"reportingSettings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1PaloAltoNetworksConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1PaloAltoNetworksConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1PubSubConfig: Pub/Sub connector config.
+type GoogleChromeManagementVersionsV1PubSubConfig struct {
+	// ReportingSettings: Required. The reporting settings for the Pub/Sub config.
+	ReportingSettings *GoogleChromeManagementVersionsV1ReportingSettings `json:"reportingSettings,omitempty"`
+	// TopicFullPath: Required. The full path to the topic to send the event to.
+	TopicFullPath string `json:"topicFullPath,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ReportingSettings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ReportingSettings") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1PubSubConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1PubSubConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1PubSubXdrConfig: Pub/Sub XDR connector
+// config.
+type GoogleChromeManagementVersionsV1PubSubXdrConfig struct {
+	// TopicFullPath: Required. The full path to the topic to send the event to.
+	TopicFullPath string `json:"topicFullPath,omitempty"`
+	// XdrSettings: Required. The XDR settings for the Pub/Sub XDR config.
+	XdrSettings *GoogleChromeManagementVersionsV1XdrSettings `json:"xdrSettings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TopicFullPath") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TopicFullPath") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1PubSubXdrConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1PubSubXdrConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5146,6 +5571,71 @@ func (s GoogleChromeManagementVersionsV1ReportingDataPolicyData) MarshalJSON() (
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementVersionsV1ReportingSettings: Reporting settings for
+// connector configs.
+type GoogleChromeManagementVersionsV1ReportingSettings struct {
+	// EnabledDefaultEvents: Optional. The list of user and browser events that are
+	// enabled for this connector. An empty list disables all default events, and
+	// using `ALL_DEFAULT_EVENTS` will enable all default events.
+	//
+	// Possible values:
+	//   "DEFAULT_EVENT_UNSPECIFIED" - Default value. This value is unused.
+	//   "ALL_DEFAULT_EVENTS" - All default events.
+	//   "BROWSER_CRASH_EVENT" - Browser crash event.
+	//   "BROWSER_EXTENSION_INSTALL_EVENT" - Browser extension install event.
+	//   "CONTENT_TRANSFER_EVENT" - Content transfer event.
+	//   "CONTENT_UNSCANNED_EVENT" - Content unscanned event.
+	//   "DATA_ACCESS_CONTROL_EVENT" - Data access control event.
+	//   "MALWARE_TRANSFER_EVENT" - Malware transfer event.
+	//   "PASSWORD_CHANGED_EVENT" - Password changed event.
+	//   "PASSWORD_REUSE_EVENT" - Password reuse event.
+	//   "SENSITIVE_DATA_TRANSFER_EVENT" - Sensitive data transfer event.
+	//   "SUSPICIOUS_URL_EVENT" - Suspicious URL event.
+	//   "UNSAFE_SITE_VISIT_EVENT" - Unsafe site visit event.
+	//   "URL_FILTERING_INTERSTITIAL_EVENT" - URL filtering interstitial event.
+	EnabledDefaultEvents []string `json:"enabledDefaultEvents,omitempty"`
+	// EnabledDeviceEvents: Optional. The list of device events that are enabled
+	// for this config. An empty list disables all device events, and using
+	// `ALL_DEVICE_EVENTS` will enable all device events.
+	//
+	// Possible values:
+	//   "DEVICE_EVENT_UNSPECIFIED" - Default value. This value is unused.
+	//   "ALL_DEVICE_EVENTS" - All device events.
+	//   "ADD_REMOVE_USER_EVENT" - Add/remove user event.
+	//   "LOGIN_LOGOUT_EVENT" - Login/logout event.
+	//   "CRD_EVENT" - CRD event.
+	//   "PERIPHERAL_EVENT" - Peripheral event.
+	EnabledDeviceEvents []string `json:"enabledDeviceEvents,omitempty"`
+	// EnabledOptInEvents: Optional. The list of opt-in events that are enabled for
+	// this config. An empty list disables all opt-in events, and using
+	// `ALL_OPT_IN_EVENTS` will enable all opt-in events.
+	//
+	// Possible values:
+	//   "OPT_IN_EVENT_UNSPECIFIED" - Default value. This value is unused.
+	//   "ALL_OPT_IN_EVENTS" - All opt-in events.
+	//   "LOGIN_EVENT" - Login event.
+	//   "PASSWORD_BREACH_EVENT" - Password breach event.
+	//   "URL_NAVIGATION_EVENT" - URL navigation event.
+	//   "EXTENSION_TELEMETRY_EVENT" - Extension telemetry event.
+	EnabledOptInEvents []string `json:"enabledOptInEvents,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnabledDefaultEvents") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnabledDefaultEvents") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1ReportingSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1ReportingSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementVersionsV1ScepCaConnection: Describes a SCEP
 // Certificate Authority Connection.
 type GoogleChromeManagementVersionsV1ScepCaConnection struct {
@@ -5338,6 +5828,43 @@ func (s GoogleChromeManagementVersionsV1SignDataResponse) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementVersionsV1SplunkConfig: Splunk connector config.
+type GoogleChromeManagementVersionsV1SplunkConfig struct {
+	// HecToken: Required. Input only. The data input's HTTP Event Collector token
+	// to use as an Authorization header.
+	HecToken string `json:"hecToken,omitempty"`
+	// Host: Required. Host to identify the customer specific server to receive the
+	// events.
+	Host string `json:"host,omitempty"`
+	// PortNumber: Optional. The port number to use. If not set, the default Splunk
+	// port is used.
+	PortNumber int64 `json:"portNumber,omitempty"`
+	// ReportingSettings: Required. The reporting settings for the Splunk config.
+	ReportingSettings *GoogleChromeManagementVersionsV1ReportingSettings `json:"reportingSettings,omitempty"`
+	// Source: Optional. Optional source name to override the default one set in
+	// the Splunk admin console.
+	Source string `json:"source,omitempty"`
+	// UnsecureScheme: Optional. Whether to use an unsecure HTTP scheme. Defaults
+	// to false (HTTPS).
+	UnsecureScheme bool `json:"unsecureScheme,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HecToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HecToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1SplunkConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1SplunkConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementVersionsV1SubjectAltName: Describes a subject
 // alternative name.
 type GoogleChromeManagementVersionsV1SubjectAltName struct {
@@ -5432,6 +5959,29 @@ func (s GoogleChromeManagementVersionsV1UploadCertificateRequest) MarshalJSON() 
 type GoogleChromeManagementVersionsV1UploadCertificateResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// GoogleChromeManagementVersionsV1XdrSettings: XDR settings for connector
+// configs.
+type GoogleChromeManagementVersionsV1XdrSettings struct {
+	// EnableAllXdrEvents: Required. Whether to enable all XDR events.
+	EnableAllXdrEvents bool `json:"enableAllXdrEvents,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableAllXdrEvents") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableAllXdrEvents") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1XdrSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1XdrSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningCancelOperationRequest: The request message for
@@ -7098,6 +7648,486 @@ func (c *CustomersCertificateProvisioningProcessesOperationsGetCall) Do(opts ...
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.certificateProvisioningProcesses.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type CustomersConnectorConfigsCreateCall struct {
+	s                                               *Service
+	parent                                          string
+	googlechromemanagementversionsv1connectorconfig *GoogleChromeManagementVersionsV1ConnectorConfig
+	urlParams_                                      gensupport.URLParams
+	ctx_                                            context.Context
+	header_                                         http.Header
+}
+
+// Create: Creates a connector config.
+//
+// - parent: Format: customers/{customer}.
+func (r *CustomersConnectorConfigsService) Create(parent string, googlechromemanagementversionsv1connectorconfig *GoogleChromeManagementVersionsV1ConnectorConfig) *CustomersConnectorConfigsCreateCall {
+	c := &CustomersConnectorConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlechromemanagementversionsv1connectorconfig = googlechromemanagementversionsv1connectorconfig
+	return c
+}
+
+// ConnectorConfigId sets the optional parameter "connectorConfigId": ID to use
+// for the connector config, which becomes the final component of the connector
+// config's resource name. If provided, the ID must be 1-63 characters long,
+// and contain only lowercase letters, digits, and hyphens. It must start with
+// a letter, and end with a letter or number. If not provided, the connector
+// config will be assigned a random UUID.
+func (c *CustomersConnectorConfigsCreateCall) ConnectorConfigId(connectorConfigId string) *CustomersConnectorConfigsCreateCall {
+	c.urlParams_.Set("connectorConfigId", connectorConfigId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersConnectorConfigsCreateCall) Fields(s ...googleapi.Field) *CustomersConnectorConfigsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersConnectorConfigsCreateCall) Context(ctx context.Context) *CustomersConnectorConfigsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersConnectorConfigsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersConnectorConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlechromemanagementversionsv1connectorconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/connectorConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.connectorConfigs.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.connectorConfigs.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementVersionsV1ConnectorConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomersConnectorConfigsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementVersionsV1ConnectorConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementVersionsV1ConnectorConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.connectorConfigs.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomersConnectorConfigsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a connector config.
+//
+// - name: Format: customers/{customer}/connectorConfigs/{connector_config}.
+func (r *CustomersConnectorConfigsService) Delete(name string) *CustomersConnectorConfigsDeleteCall {
+	c := &CustomersConnectorConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": The etag of the connector config.
+// If an etag is provided and does not match the current etag of the connector
+// config, deletion will be blocked and an ABORTED error will be returned.
+func (c *CustomersConnectorConfigsDeleteCall) Etag(etag string) *CustomersConnectorConfigsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersConnectorConfigsDeleteCall) Fields(s ...googleapi.Field) *CustomersConnectorConfigsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersConnectorConfigsDeleteCall) Context(ctx context.Context) *CustomersConnectorConfigsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersConnectorConfigsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersConnectorConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.connectorConfigs.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.connectorConfigs.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *CustomersConnectorConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.connectorConfigs.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomersConnectorConfigsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a connector config with customer ID and config ID.
+//
+// - name: Format: customers/{customer}/connectorConfigs/{connector_config}.
+func (r *CustomersConnectorConfigsService) Get(name string) *CustomersConnectorConfigsGetCall {
+	c := &CustomersConnectorConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersConnectorConfigsGetCall) Fields(s ...googleapi.Field) *CustomersConnectorConfigsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CustomersConnectorConfigsGetCall) IfNoneMatch(entityTag string) *CustomersConnectorConfigsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersConnectorConfigsGetCall) Context(ctx context.Context) *CustomersConnectorConfigsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersConnectorConfigsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersConnectorConfigsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.connectorConfigs.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.connectorConfigs.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementVersionsV1ConnectorConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomersConnectorConfigsGetCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementVersionsV1ConnectorConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementVersionsV1ConnectorConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.connectorConfigs.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomersConnectorConfigsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists connector configs of a customer.
+//
+// - parent: Format: customers/{customer}.
+func (r *CustomersConnectorConfigsService) List(parent string) *CustomersConnectorConfigsListCall {
+	c := &CustomersConnectorConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// connector configs to return. The default page size is 50 if page_size is
+// unspecified, and the maximum page size allowed is 100. Values above 100 will
+// be capped at 100.
+func (c *CustomersConnectorConfigsListCall) PageSize(pageSize int64) *CustomersConnectorConfigsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListConnectorConfigs` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListConnectorConfigs` must match the call that provided the page token.
+func (c *CustomersConnectorConfigsListCall) PageToken(pageToken string) *CustomersConnectorConfigsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersConnectorConfigsListCall) Fields(s ...googleapi.Field) *CustomersConnectorConfigsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CustomersConnectorConfigsListCall) IfNoneMatch(entityTag string) *CustomersConnectorConfigsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersConnectorConfigsListCall) Context(ctx context.Context) *CustomersConnectorConfigsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersConnectorConfigsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersConnectorConfigsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/connectorConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.connectorConfigs.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.connectorConfigs.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementVersionsV1ListConnectorConfigsResponse.ServerResponse.
+// Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CustomersConnectorConfigsListCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementVersionsV1ListConnectorConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementVersionsV1ListConnectorConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.connectorConfigs.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CustomersConnectorConfigsListCall) Pages(ctx context.Context, f func(*GoogleChromeManagementVersionsV1ListConnectorConfigsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type CustomersProfilesDeleteCall struct {

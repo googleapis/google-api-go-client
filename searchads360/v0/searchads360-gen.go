@@ -402,12 +402,6 @@ type GoogleAdsSearchads360V0Common__AssetUsage struct {
 	//   "LEAD_FORM" - The asset is used as a lead form.
 	//   "BUSINESS_LOGO" - The asset is used as a business logo.
 	//   "DESCRIPTION_PREFIX" - The asset is used as a description prefix.
-	//   "APP_ICON" - The asset is used as an app icon.
-	//   "APP_TITLE" - The asset is used as an app title.
-	//   "APP_SCREENSHOT" - The asset is used as an app screenshot.
-	//   "APP_COVER_PHOTO" - The asset is used as an app cover photo.
-	//   "APP_SHORT_DESCRIPTION" - The asset is used as an app short description.
-	//   "APP_DEVELOPER_NAME" - The asset is used as an app developer name.
 	//   "HEADLINE_AS_SITELINK_POSITION_ONE" - A headline asset used as a sitelink
 	// in position 1.
 	//   "HEADLINE_AS_SITELINK_POSITION_TWO" - A headline asset used as a sitelink
@@ -2207,8 +2201,6 @@ type GoogleAdsSearchads360V0Common__Segments struct {
 	//   "CONVERTED_LEAD" - A lead conversion imported from an external source into
 	// Google Ads, that has further completed a chosen stage as defined by the lead
 	// gen advertiser.
-	//   "YOUTUBE_FOLLOW_ON_VIEWS" - User watches an ad from a channel and later
-	// watches either the same video or a video from the same channel as the ad.
 	ConversionActionCategory string `json:"conversionActionCategory,omitempty"`
 	// ConversionActionName: Conversion action name.
 	ConversionActionName string `json:"conversionActionName,omitempty"`
@@ -4807,10 +4799,7 @@ type GoogleAdsSearchads360V0Resources__Ad struct {
 	//   "VIDEO_RESPONSIVE_AD" - Video responsive ad.
 	//   "SMART_CAMPAIGN_AD" - Smart campaign ad.
 	//   "APP_PRE_REGISTRATION_AD" - Universal app pre-registration ad.
-	//   "DISCOVERY_MULTI_ASSET_AD" - Discovery multi asset ad.
-	//   "DISCOVERY_CAROUSEL_AD" - Discovery carousel ad.
 	//   "TRAVEL_AD" - Travel ad.
-	//   "DISCOVERY_VIDEO_RESPONSIVE_AD" - Discovery video responsive ad.
 	//   "MULTIMEDIA_AD" - Multimedia ad.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayUrl") to
@@ -4941,8 +4930,6 @@ type GoogleAdsSearchads360V0Resources__AdGroup struct {
 	//   "DISPLAY_STANDARD" - The default ad group type for Display campaigns.
 	//   "SHOPPING_PRODUCT_ADS" - The ad group type for Shopping campaigns serving
 	// standard product ads.
-	//   "SHOPPING_SHOWCASE_ADS" - The type for ad groups that are limited to
-	// serving Showcase or Merchant ads in Shopping results.
 	//   "HOTEL_ADS" - The default ad group type for Hotel campaigns.
 	//   "SHOPPING_SMART_ADS" - The type for ad groups in Smart Shopping campaigns.
 	//   "VIDEO_BUMPER" - Short unskippable in-stream video ads.
@@ -7395,8 +7382,6 @@ type GoogleAdsSearchads360V0Resources__ConversionAction struct {
 	//   "CONVERTED_LEAD" - A lead conversion imported from an external source into
 	// Google Ads, that has further completed a chosen stage as defined by the lead
 	// gen advertiser.
-	//   "YOUTUBE_FOLLOW_ON_VIEWS" - User watches an ad from a channel and later
-	// watches either the same video or a video from the same channel as the ad.
 	Category string `json:"category,omitempty"`
 	// ClickThroughLookbackWindowDays: The maximum number of days that may elapse
 	// between an interaction (for example, a click) and a conversion event.
@@ -9398,6 +9383,6364 @@ func (s GoogleAdsSearchads360V0Services__SearchSearchAds360Response) MarshalJSON
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V23CommonPolicyTopicConstraintCountryConstraint:
+// Indicates that a resource's ability to serve in a particular country is
+// constrained.
+type GoogleAdsSearchads360V23CommonPolicyTopicConstraintCountryConstraint struct {
+	// CountryCriterion: Geo target constant resource name of the country in which
+	// serving is constrained.
+	CountryCriterion string `json:"countryCriterion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CountryCriterion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CountryCriterion") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23CommonPolicyTopicConstraintCountryConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23CommonPolicyTopicConstraintCountryConstraint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23CommonPolicyTopicConstraintCountryConstraintList: A
+// list of countries where a resource's serving is constrained.
+type GoogleAdsSearchads360V23CommonPolicyTopicConstraintCountryConstraintList struct {
+	// Countries: Countries in which serving is restricted.
+	Countries []*GoogleAdsSearchads360V23CommonPolicyTopicConstraintCountryConstraint `json:"countries,omitempty"`
+	// TotalTargetedCountries: Total number of countries targeted by the resource.
+	TotalTargetedCountries int64 `json:"totalTargetedCountries,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Countries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Countries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23CommonPolicyTopicConstraintCountryConstraintList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23CommonPolicyTopicConstraintCountryConstraintList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23CommonPolicyTopicConstraintResellerConstraint:
+// Indicates that a policy topic was constrained due to disapproval of the
+// website for reseller purposes.
+type GoogleAdsSearchads360V23CommonPolicyTopicConstraintResellerConstraint struct {
+}
+
+// GoogleAdsSearchads360V23CommonPolicyTopicEvidenceDestinationMismatch:
+// Evidence of mismatches between the URLs of a resource.
+type GoogleAdsSearchads360V23CommonPolicyTopicEvidenceDestinationMismatch struct {
+	// UrlTypes: The set of URLs that did not match each other.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - No value has been specified.
+	//   "UNKNOWN" - The received value is not known in this version. This is a
+	// response-only value.
+	//   "DISPLAY_URL" - The display url.
+	//   "FINAL_URL" - The final url.
+	//   "FINAL_MOBILE_URL" - The final mobile url.
+	//   "TRACKING_URL" - The tracking url template, with substituted desktop url.
+	//   "MOBILE_TRACKING_URL" - The tracking url template, with substituted mobile
+	// url.
+	UrlTypes []string `json:"urlTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UrlTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UrlTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23CommonPolicyTopicEvidenceDestinationMismatch) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23CommonPolicyTopicEvidenceDestinationMismatch
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23CommonPolicyTopicEvidenceDestinationNotWorking:
+// Evidence details when the destination is returning an HTTP error code or
+// isn't functional in all locations for commonly used devices.
+type GoogleAdsSearchads360V23CommonPolicyTopicEvidenceDestinationNotWorking struct {
+	// Device: The type of device that failed to load the URL.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - No value has been specified.
+	//   "UNKNOWN" - The received value is not known in this version. This is a
+	// response-only value.
+	//   "DESKTOP" - Landing page doesn't work on desktop device.
+	//   "ANDROID" - Landing page doesn't work on Android device.
+	//   "IOS" - Landing page doesn't work on iOS device.
+	Device string `json:"device,omitempty"`
+	// DnsErrorType: The type of DNS error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - No value has been specified.
+	//   "UNKNOWN" - The received value is not known in this version. This is a
+	// response-only value.
+	//   "HOSTNAME_NOT_FOUND" - Host name not found in DNS when fetching landing
+	// page.
+	//   "GOOGLE_CRAWLER_DNS_ISSUE" - Google internal crawler issue when
+	// communicating with DNS. This error doesn't mean the landing page doesn't
+	// work. Google will recrawl the landing page.
+	DnsErrorType string `json:"dnsErrorType,omitempty"`
+	// ExpandedUrl: The full URL that didn't work.
+	ExpandedUrl string `json:"expandedUrl,omitempty"`
+	// HttpErrorCode: The HTTP error code.
+	HttpErrorCode int64 `json:"httpErrorCode,omitempty,string"`
+	// LastCheckedDateTime: The time the URL was last checked. The format is
+	// "YYYY-MM-DD HH:MM:SS". Examples: "2018-03-05 09:15:00" or "2018-02-01
+	// 14:34:30"
+	LastCheckedDateTime string `json:"lastCheckedDateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Device") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Device") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23CommonPolicyTopicEvidenceDestinationNotWorking) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23CommonPolicyTopicEvidenceDestinationNotWorking
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23CommonPolicyTopicEvidenceDestinationTextList: A list
+// of strings found in a destination page that caused a policy finding.
+type GoogleAdsSearchads360V23CommonPolicyTopicEvidenceDestinationTextList struct {
+	// DestinationTexts: List of text found in the resource's destination page.
+	DestinationTexts []string `json:"destinationTexts,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DestinationTexts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DestinationTexts") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23CommonPolicyTopicEvidenceDestinationTextList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23CommonPolicyTopicEvidenceDestinationTextList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23CommonPolicyTopicEvidenceTextList: A list of
+// fragments of text that violated a policy.
+type GoogleAdsSearchads360V23CommonPolicyTopicEvidenceTextList struct {
+	// Texts: The fragments of text from the resource that caused the policy
+	// finding.
+	Texts []string `json:"texts,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Texts") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Texts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23CommonPolicyTopicEvidenceTextList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23CommonPolicyTopicEvidenceTextList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23CommonPolicyTopicEvidenceWebsiteList: A list of
+// websites that caused a policy finding. Used for ONE_WEBSITE_PER_AD_GROUP
+// policy topic, for example. In case there are more than five websites, only
+// the top five (those that appear in resources the most) will be listed here.
+type GoogleAdsSearchads360V23CommonPolicyTopicEvidenceWebsiteList struct {
+	// Websites: Websites that caused the policy finding.
+	Websites []string `json:"websites,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Websites") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Websites") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23CommonPolicyTopicEvidenceWebsiteList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23CommonPolicyTopicEvidenceWebsiteList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Common__PolicyTopicConstraint: Describes the effect
+// on serving that a policy topic entry will have.
+type GoogleAdsSearchads360V23Common__PolicyTopicConstraint struct {
+	// CertificateDomainMismatchInCountryList: Countries where the resource's
+	// domain is not covered by the certificates associated with it.
+	CertificateDomainMismatchInCountryList *GoogleAdsSearchads360V23CommonPolicyTopicConstraintCountryConstraintList `json:"certificateDomainMismatchInCountryList,omitempty"`
+	// CertificateMissingInCountryList: Countries where a certificate is required
+	// for serving.
+	CertificateMissingInCountryList *GoogleAdsSearchads360V23CommonPolicyTopicConstraintCountryConstraintList `json:"certificateMissingInCountryList,omitempty"`
+	// CountryConstraintList: Countries where the resource cannot serve.
+	CountryConstraintList *GoogleAdsSearchads360V23CommonPolicyTopicConstraintCountryConstraintList `json:"countryConstraintList,omitempty"`
+	// ResellerConstraint: Reseller constraint.
+	ResellerConstraint *GoogleAdsSearchads360V23CommonPolicyTopicConstraintResellerConstraint `json:"resellerConstraint,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "CertificateDomainMismatchInCountryList") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "CertificateDomainMismatchInCountryList") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted from
+	// API requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields
+	// for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Common__PolicyTopicConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Common__PolicyTopicConstraint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Common__PolicyTopicEntry: Policy finding attached to
+// a resource (for example, alcohol policy associated with a site that sells
+// alcohol). Each PolicyTopicEntry has a topic that indicates the specific ads
+// policy the entry is about and a type to indicate the effect that the entry
+// will have on serving. It may optionally have one or more evidences that
+// indicate the reason for the finding. It may also optionally have one or more
+// constraints that provide details about how serving may be restricted.
+type GoogleAdsSearchads360V23Common__PolicyTopicEntry struct {
+	// Constraints: Indicates how serving of this resource may be affected (for
+	// example, not serving in a country).
+	Constraints []*GoogleAdsSearchads360V23Common__PolicyTopicConstraint `json:"constraints,omitempty"`
+	// Evidences: Additional information that explains policy finding (for example,
+	// the brand name for a trademark finding).
+	Evidences []*GoogleAdsSearchads360V23Common__PolicyTopicEvidence `json:"evidences,omitempty"`
+	// Topic: Policy topic this finding refers to. For example, "ALCOHOL",
+	// "TRADEMARKS_IN_AD_TEXT", or "DESTINATION_NOT_WORKING". The set of possible
+	// policy topics is not fixed for a particular API version and may change at
+	// any time.
+	Topic string `json:"topic,omitempty"`
+	// Type: Describes the negative or positive effect this policy will have on
+	// serving.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - No value has been specified.
+	//   "UNKNOWN" - The received value is not known in this version. This is a
+	// response-only value.
+	//   "PROHIBITED" - The resource will not be served.
+	//   "LIMITED" - The resource will not be served under some circumstances.
+	//   "FULLY_LIMITED" - The resource cannot serve at all because of the current
+	// targeting criteria.
+	//   "DESCRIPTIVE" - May be of interest, but does not limit how the resource is
+	// served.
+	//   "BROADENING" - Could increase coverage beyond normal.
+	//   "AREA_OF_INTEREST_ONLY" - Constrained for all targeted countries, but may
+	// serve in other countries through area of interest.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Constraints") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Constraints") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Common__PolicyTopicEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Common__PolicyTopicEntry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Common__PolicyTopicEvidence: Additional information
+// that explains a policy finding.
+type GoogleAdsSearchads360V23Common__PolicyTopicEvidence struct {
+	// DestinationMismatch: Mismatch between the destinations of a resource's URLs.
+	DestinationMismatch *GoogleAdsSearchads360V23CommonPolicyTopicEvidenceDestinationMismatch `json:"destinationMismatch,omitempty"`
+	// DestinationNotWorking: Details when the destination is returning an HTTP
+	// error code or isn't functional in all locations for commonly used devices.
+	DestinationNotWorking *GoogleAdsSearchads360V23CommonPolicyTopicEvidenceDestinationNotWorking `json:"destinationNotWorking,omitempty"`
+	// DestinationTextList: The text in the destination of the resource that is
+	// causing a policy finding.
+	DestinationTextList *GoogleAdsSearchads360V23CommonPolicyTopicEvidenceDestinationTextList `json:"destinationTextList,omitempty"`
+	// LanguageCode: The language the resource was detected to be written in. This
+	// is an IETF language tag such as "en-US".
+	LanguageCode string `json:"languageCode,omitempty"`
+	// TextList: List of evidence found in the text of a resource.
+	TextList *GoogleAdsSearchads360V23CommonPolicyTopicEvidenceTextList `json:"textList,omitempty"`
+	// WebsiteList: List of websites linked with this resource.
+	WebsiteList *GoogleAdsSearchads360V23CommonPolicyTopicEvidenceWebsiteList `json:"websiteList,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DestinationMismatch") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DestinationMismatch") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Common__PolicyTopicEvidence) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Common__PolicyTopicEvidence
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Common__PolicyViolationKey: Key of the violation.
+// The key is used for referring to a violation when filing an exemption
+// request.
+type GoogleAdsSearchads360V23Common__PolicyViolationKey struct {
+	// PolicyName: Unique ID of the violated policy.
+	PolicyName string `json:"policyName,omitempty"`
+	// ViolatingText: The text that violates the policy if specified. Otherwise,
+	// refers to the policy in general (for example, when requesting to be exempt
+	// from the whole policy). If not specified for criterion exemptions, the whole
+	// policy is implied. Must be specified for ad exemptions.
+	ViolatingText string `json:"violatingText,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PolicyName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PolicyName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Common__PolicyViolationKey) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Common__PolicyViolationKey
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Common__Value: A generic data container.
+type GoogleAdsSearchads360V23Common__Value struct {
+	// BooleanValue: A boolean.
+	BooleanValue bool `json:"booleanValue,omitempty"`
+	// DoubleValue: A double.
+	DoubleValue float64 `json:"doubleValue,omitempty"`
+	// FloatValue: A float.
+	FloatValue float64 `json:"floatValue,omitempty"`
+	// Int64Value: An int64.
+	Int64Value int64 `json:"int64Value,omitempty,string"`
+	// StringValue: A string.
+	StringValue string `json:"stringValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BooleanValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BooleanValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Common__Value) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Common__Value
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleAdsSearchads360V23Common__Value) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleAdsSearchads360V23Common__Value
+	var s1 struct {
+		DoubleValue gensupport.JSONFloat64 `json:"doubleValue"`
+		FloatValue  gensupport.JSONFloat64 `json:"floatValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DoubleValue = float64(s1.DoubleValue)
+	s.FloatValue = float64(s1.FloatValue)
+	return nil
+}
+
+// GoogleAdsSearchads360V23ErrorsErrorLocationFieldPathElement: A part of a
+// field path.
+type GoogleAdsSearchads360V23ErrorsErrorLocationFieldPathElement struct {
+	// FieldName: The name of a field or a oneof
+	FieldName string `json:"fieldName,omitempty"`
+	// Index: If field_name is a repeated field, this is the element that failed
+	Index int64 `json:"index,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23ErrorsErrorLocationFieldPathElement) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23ErrorsErrorLocationFieldPathElement
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Errors__BudgetPerDayMinimumErrorDetails: Error
+// details for a budget below per-day minimum error.
+type GoogleAdsSearchads360V23Errors__BudgetPerDayMinimumErrorDetails struct {
+	// BudgetPerDayMinimumMicros: The minimum budget required by the campaign per
+	// day, in micros of the advertiser currency. Applies to both daily and custom
+	// budgets.
+	BudgetPerDayMinimumMicros int64 `json:"budgetPerDayMinimumMicros,omitempty,string"`
+	// CurrencyCode: The advertiser's currency, represented as a three-letter ISO
+	// 4217 currency code (such as "USD").
+	CurrencyCode string `json:"currencyCode,omitempty"`
+	// FailedBudgetAmountMicros: The budget amount value that was rejected as too
+	// low, in micros of the advertiser currency. Only set if this error is caused
+	// by the amount field value.
+	FailedBudgetAmountMicros int64 `json:"failedBudgetAmountMicros,omitempty,string"`
+	// FailedBudgetTotalAmountMicros: The budget total_amount value that was
+	// rejected as too low, in micros of the advertiser currency. Only set if this
+	// error is caused by the total_amount field value.
+	FailedBudgetTotalAmountMicros int64 `json:"failedBudgetTotalAmountMicros,omitempty,string"`
+	// MinimumBudgetAmountMicros: The minimum value for the budget's amount field
+	// required by the campaign, in micros of the advertiser currency. Only set if
+	// this error is caused by the amount field value.
+	MinimumBudgetAmountMicros int64 `json:"minimumBudgetAmountMicros,omitempty,string"`
+	// MinimumBudgetTotalAmountMicros: The minimum value for the budget's
+	// total_amount field required by the campaign given its configured start and
+	// end time, in micros of the advertiser currency. Only set if this error is
+	// caused by the total_amount field value.
+	MinimumBudgetTotalAmountMicros int64 `json:"minimumBudgetTotalAmountMicros,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "BudgetPerDayMinimumMicros")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BudgetPerDayMinimumMicros") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Errors__BudgetPerDayMinimumErrorDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Errors__BudgetPerDayMinimumErrorDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Errors__ErrorCode: The error reason represented by
+// type and enum.
+type GoogleAdsSearchads360V23Errors__ErrorCode struct {
+	// AccessInvitationError: The reasons for the access invitation error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_EMAIL_ADDRESS" - The email address is invalid for sending an
+	// invitation.
+	//   "EMAIL_ADDRESS_ALREADY_HAS_ACCESS" - Email address already has access to
+	// this customer.
+	//   "INVALID_INVITATION_STATUS" - Invalid invitation status for the operation.
+	//   "GOOGLE_CONSUMER_ACCOUNT_NOT_ALLOWED" - Email address cannot be like
+	// abc+foo@google.com.
+	//   "INVALID_INVITATION_ID" - Invalid invitation ID.
+	//   "EMAIL_ADDRESS_ALREADY_HAS_PENDING_INVITATION" - Email address already has
+	// a pending invitation.
+	//   "PENDING_INVITATIONS_LIMIT_EXCEEDED" - Pending invitation limit exceeded
+	// for the customer.
+	//   "EMAIL_DOMAIN_POLICY_VIOLATED" - Email address doesn't conform to the
+	// email domain policy. See
+	// https://support.google.com/google-ads/answer/2375456
+	AccessInvitationError string `json:"accessInvitationError,omitempty"`
+	// AccountBudgetProposalError: The reasons for account budget proposal errors.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "FIELD_MASK_NOT_ALLOWED" - The field mask must be empty for
+	// create/end/remove proposals.
+	//   "IMMUTABLE_FIELD" - The field cannot be set because of the proposal type.
+	//   "REQUIRED_FIELD_MISSING" - The field is required because of the proposal
+	// type.
+	//   "CANNOT_CANCEL_APPROVED_PROPOSAL" - Proposals that have been approved
+	// cannot be cancelled.
+	//   "CANNOT_REMOVE_UNAPPROVED_BUDGET" - Budgets that haven't been approved
+	// cannot be removed.
+	//   "CANNOT_REMOVE_RUNNING_BUDGET" - Budgets that are currently running cannot
+	// be removed.
+	//   "CANNOT_END_UNAPPROVED_BUDGET" - Budgets that haven't been approved cannot
+	// be truncated.
+	//   "CANNOT_END_INACTIVE_BUDGET" - Only budgets that are currently running can
+	// be truncated.
+	//   "BUDGET_NAME_REQUIRED" - All budgets must have names.
+	//   "CANNOT_UPDATE_OLD_BUDGET" - Expired budgets cannot be edited after a
+	// sufficient amount of time has passed.
+	//   "CANNOT_END_IN_PAST" - It is not permissible a propose a new budget that
+	// ends in the past.
+	//   "CANNOT_EXTEND_END_TIME" - An expired budget cannot be extended to overlap
+	// with the running budget.
+	//   "PURCHASE_ORDER_NUMBER_REQUIRED" - A purchase order number is required.
+	//   "PENDING_UPDATE_PROPOSAL_EXISTS" - Budgets that have a pending update
+	// cannot be updated.
+	//   "MULTIPLE_BUDGETS_NOT_ALLOWED_FOR_UNAPPROVED_BILLING_SETUP" - Cannot
+	// propose more than one budget when the corresponding billing setup hasn't
+	// been approved.
+	//   "CANNOT_UPDATE_START_TIME_FOR_STARTED_BUDGET" - Cannot update the start
+	// time of a budget that has already started.
+	//   "SPENDING_LIMIT_LOWER_THAN_ACCRUED_COST_NOT_ALLOWED" - Cannot update the
+	// spending limit of a budget with an amount lower than what has already been
+	// spent.
+	//   "UPDATE_IS_NO_OP" - Cannot propose a budget update without actually
+	// changing any fields.
+	//   "END_TIME_MUST_FOLLOW_START_TIME" - The end time must come after the start
+	// time.
+	//   "BUDGET_DATE_RANGE_INCOMPATIBLE_WITH_BILLING_SETUP" - The budget's date
+	// range must fall within the date range of its billing setup.
+	//   "NOT_AUTHORIZED" - The user is not authorized to mutate budgets for the
+	// given billing setup.
+	//   "INVALID_BILLING_SETUP" - Mutates are not allowed for the given billing
+	// setup.
+	//   "OVERLAPS_EXISTING_BUDGET" - Budget creation failed as it overlaps with a
+	// pending budget proposal or an approved budget.
+	//   "CANNOT_CREATE_BUDGET_THROUGH_API" - The control setting in user's
+	// payments profile doesn't allow budget creation through API. Log in to Google
+	// Ads to create budget.
+	//   "INVALID_MASTER_SERVICE_AGREEMENT" - Master service agreement has not been
+	// signed yet for the Payments Profile.
+	//   "CANCELED_BILLING_SETUP" - Budget mutates are not allowed because the
+	// given billing setup is canceled.
+	AccountBudgetProposalError string `json:"accountBudgetProposalError,omitempty"`
+	// AccountLinkError: The reasons for the account link status change error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_STATUS" - The new link status is invalid.
+	//   "PERMISSION_DENIED" - The authenticated user doesn't have the permission
+	// to do the change.
+	AccountLinkError string `json:"accountLinkError,omitempty"`
+	// AdCustomizerError: The reasons for the ad customizer error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "COUNTDOWN_INVALID_DATE_FORMAT" - Invalid date argument in countdown
+	// function.
+	//   "COUNTDOWN_DATE_IN_PAST" - Countdown end date is in the past.
+	//   "COUNTDOWN_INVALID_LOCALE" - Invalid locale string in countdown function.
+	//   "COUNTDOWN_INVALID_START_DAYS_BEFORE" - Days-before argument to countdown
+	// function is not positive.
+	//   "UNKNOWN_USER_LIST" - A user list referenced in an IF function does not
+	// exist.
+	AdCustomizerError string `json:"adCustomizerError,omitempty"`
+	// AdError: An error with an Ad Group Ad mutate.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "AD_CUSTOMIZERS_NOT_SUPPORTED_FOR_AD_TYPE" - Ad customizers are not
+	// supported for ad type.
+	//   "APPROXIMATELY_TOO_LONG" - Estimating character sizes the string is too
+	// long.
+	//   "APPROXIMATELY_TOO_SHORT" - Estimating character sizes the string is too
+	// short.
+	//   "BAD_SNIPPET" - There is a problem with the snippet.
+	//   "CANNOT_MODIFY_AD" - Cannot modify an ad.
+	//   "CANNOT_SET_BUSINESS_NAME_IF_URL_SET" - business name and url cannot be
+	// set at the same time
+	//   "CANNOT_SET_FIELD" - The specified field is incompatible with this ad's
+	// type or settings.
+	//   "CANNOT_SET_FIELD_WITH_ORIGIN_AD_ID_SET" - Cannot set field when
+	// originAdId is set.
+	//   "CANNOT_SET_FIELD_WITH_AD_ID_SET_FOR_SHARING" - Cannot set field when an
+	// existing ad id is set for sharing.
+	//   "CANNOT_SET_ALLOW_FLEXIBLE_COLOR_FALSE" - Cannot set allowFlexibleColor
+	// false if no color is provided by user.
+	//   "CANNOT_SET_COLOR_CONTROL_WHEN_NATIVE_FORMAT_SETTING" - When user select
+	// native, no color control is allowed because we will always respect publisher
+	// color for native format serving.
+	//   "CANNOT_SET_URL" - Cannot specify a url for the ad type
+	//   "CANNOT_SET_WITHOUT_FINAL_URLS" - Cannot specify a tracking or mobile url
+	// without also setting final urls
+	//   "CANNOT_SET_WITH_FINAL_URLS" - Cannot specify a legacy url and a final url
+	// simultaneously
+	//   "CANNOT_SET_WITH_URL_DATA" - Cannot specify a urls in UrlData and in
+	// template fields simultaneously.
+	//   "CANNOT_USE_AD_SUBCLASS_FOR_OPERATOR" - This operator cannot be used with
+	// a subclass of Ad.
+	//   "CUSTOMER_NOT_APPROVED_MOBILEADS" - Customer is not approved for mobile
+	// ads.
+	//   "CUSTOMER_NOT_APPROVED_THIRDPARTY_ADS" - Customer is not approved for 3PAS
+	// richmedia ads.
+	//   "CUSTOMER_NOT_APPROVED_THIRDPARTY_REDIRECT_ADS" - Customer is not approved
+	// for 3PAS redirect richmedia (Ad Exchange) ads.
+	//   "CUSTOMER_NOT_ELIGIBLE" - Not an eligible customer
+	//   "CUSTOMER_NOT_ELIGIBLE_FOR_UPDATING_BEACON_URL" - Customer is not eligible
+	// for updating beacon url
+	//   "DIMENSION_ALREADY_IN_UNION" - There already exists an ad with the same
+	// dimensions in the union.
+	//   "DIMENSION_MUST_BE_SET" - Ad's dimension must be set before setting union
+	// dimension.
+	//   "DIMENSION_NOT_IN_UNION" - Ad's dimension must be included in the union
+	// dimensions.
+	//   "DISPLAY_URL_CANNOT_BE_SPECIFIED" - Display Url cannot be specified
+	// (applies to Ad Exchange Ads)
+	//   "DOMESTIC_PHONE_NUMBER_FORMAT" - Telephone number contains invalid
+	// characters or invalid format. Re-enter your number using digits (0-9),
+	// dashes (-), and parentheses only.
+	//   "EMERGENCY_PHONE_NUMBER" - Emergency telephone numbers are not allowed.
+	// Enter a valid domestic phone number to connect customers to your business.
+	//   "EMPTY_FIELD" - A required field was not specified or is an empty string.
+	//   "FEED_ATTRIBUTE_MUST_HAVE_MAPPING_FOR_TYPE_ID" - A feed attribute
+	// referenced in an ad customizer tag is not in the ad customizer mapping for
+	// the feed.
+	//   "FEED_ATTRIBUTE_MAPPING_TYPE_MISMATCH" - The ad customizer field mapping
+	// for the feed attribute does not match the expected field type.
+	//   "ILLEGAL_AD_CUSTOMIZER_TAG_USE" - The use of ad customizer tags in the ad
+	// text is disallowed. Details in trigger.
+	//   "ILLEGAL_TAG_USE" - Tags of the form {PH_x}, where x is a number, are
+	// disallowed in ad text.
+	//   "INCONSISTENT_DIMENSIONS" - The dimensions of the ad are specified or
+	// derived in multiple ways and are not consistent.
+	//   "INCONSISTENT_STATUS_IN_TEMPLATE_UNION" - The status cannot differ among
+	// template ads of the same union.
+	//   "INCORRECT_LENGTH" - The length of the string is not valid.
+	//   "INELIGIBLE_FOR_UPGRADE" - The ad is ineligible for upgrade.
+	//   "INVALID_AD_ADDRESS_CAMPAIGN_TARGET" - User cannot create mobile ad for
+	// countries targeted in specified campaign.
+	//   "INVALID_AD_TYPE" - Invalid Ad type. A specific type of Ad is required.
+	//   "INVALID_ATTRIBUTES_FOR_MOBILE_IMAGE" - Headline, description or phone
+	// cannot be present when creating mobile image ad.
+	//   "INVALID_ATTRIBUTES_FOR_MOBILE_TEXT" - Image cannot be present when
+	// creating mobile text ad.
+	//   "INVALID_CALL_TO_ACTION_TEXT" - Invalid call to action text.
+	//   "INVALID_CHARACTER_FOR_URL" - Invalid character in URL.
+	//   "INVALID_COUNTRY_CODE" - Creative's country code is not valid.
+	//   "INVALID_EXPANDED_DYNAMIC_SEARCH_AD_TAG" - Invalid use of Expanded Dynamic
+	// Search Ads tags ({lpurl} etc.)
+	//   "INVALID_INPUT" - An input error whose real reason was not properly mapped
+	// (should not happen).
+	//   "INVALID_MARKUP_LANGUAGE" - An invalid markup language was entered.
+	//   "INVALID_MOBILE_CARRIER" - An invalid mobile carrier was entered.
+	//   "INVALID_MOBILE_CARRIER_TARGET" - Specified mobile carriers target a
+	// country not targeted by the campaign.
+	//   "INVALID_NUMBER_OF_ELEMENTS" - Wrong number of elements for given element
+	// type
+	//   "INVALID_PHONE_NUMBER_FORMAT" - The format of the telephone number is
+	// incorrect. Re-enter the number using the correct format.
+	//   "INVALID_RICH_MEDIA_CERTIFIED_VENDOR_FORMAT_ID" - The certified vendor
+	// format id is incorrect.
+	//   "INVALID_TEMPLATE_DATA" - The template ad data contains validation errors.
+	//   "INVALID_TEMPLATE_ELEMENT_FIELD_TYPE" - The template field doesn't have
+	// have the correct type.
+	//   "INVALID_TEMPLATE_ID" - Invalid template id.
+	//   "LINE_TOO_WIDE" - After substituting replacement strings, the line is too
+	// wide.
+	//   "MISSING_AD_CUSTOMIZER_MAPPING" - The feed referenced must have ad
+	// customizer mapping to be used in a customizer tag.
+	//   "MISSING_ADDRESS_COMPONENT" - Missing address component in template
+	// element address field.
+	//   "MISSING_ADVERTISEMENT_NAME" - An ad name must be entered.
+	//   "MISSING_BUSINESS_NAME" - Business name must be entered.
+	//   "MISSING_DESCRIPTION1" - Description (line 2) must be entered.
+	//   "MISSING_DESCRIPTION2" - Description (line 3) must be entered.
+	//   "MISSING_DESTINATION_URL_TAG" - The destination url must contain at least
+	// one tag (for example, {lpurl})
+	//   "MISSING_LANDING_PAGE_URL_TAG" - The tracking url template of
+	// ExpandedDynamicSearchAd must contain at least one tag. (for example,
+	// {lpurl})
+	//   "MISSING_DIMENSION" - A valid dimension must be specified for this ad.
+	//   "MISSING_DISPLAY_URL" - A display URL must be entered.
+	//   "MISSING_HEADLINE" - Headline must be entered.
+	//   "MISSING_HEIGHT" - A height must be entered.
+	//   "MISSING_IMAGE" - An image must be entered.
+	//   "MISSING_MARKETING_IMAGE_OR_PRODUCT_VIDEOS" - Marketing image or product
+	// videos are required.
+	//   "MISSING_MARKUP_LANGUAGES" - The markup language in which your site is
+	// written must be entered.
+	//   "MISSING_MOBILE_CARRIER" - A mobile carrier must be entered.
+	//   "MISSING_PHONE" - Phone number must be entered.
+	//   "MISSING_REQUIRED_TEMPLATE_FIELDS" - Missing required template fields
+	//   "MISSING_TEMPLATE_FIELD_VALUE" - Missing a required field value
+	//   "MISSING_TEXT" - The ad must have text.
+	//   "MISSING_VISIBLE_URL" - A visible URL must be entered.
+	//   "MISSING_WIDTH" - A width must be entered.
+	//   "MULTIPLE_DISTINCT_FEEDS_UNSUPPORTED" - Only 1 feed can be used as the
+	// source of ad customizer substitutions in a single ad.
+	//   "MUST_USE_TEMP_AD_UNION_ID_ON_ADD" - TempAdUnionId must be use when adding
+	// template ads.
+	//   "TOO_LONG" - The string has too many characters.
+	//   "TOO_SHORT" - The string has too few characters.
+	//   "UNION_DIMENSIONS_CANNOT_CHANGE" - Ad union dimensions cannot change for
+	// saved ads.
+	//   "UNKNOWN_ADDRESS_COMPONENT" - Address component is not {country, lat,
+	// lng}.
+	//   "UNKNOWN_FIELD_NAME" - Unknown unique field name
+	//   "UNKNOWN_UNIQUE_NAME" - Unknown unique name (template element type
+	// specifier)
+	//   "UNSUPPORTED_DIMENSIONS" - Unsupported ad dimension
+	//   "URL_INVALID_SCHEME" - URL starts with an invalid scheme.
+	//   "URL_INVALID_TOP_LEVEL_DOMAIN" - URL ends with an invalid top-level domain
+	// name.
+	//   "URL_MALFORMED" - URL contains illegal characters.
+	//   "URL_NO_HOST" - URL must contain a host name.
+	//   "URL_NOT_EQUIVALENT" - URL not equivalent during upgrade.
+	//   "URL_HOST_NAME_TOO_LONG" - URL host name too long to be stored as visible
+	// URL (applies to Ad Exchange ads)
+	//   "URL_NO_SCHEME" - URL must start with a scheme.
+	//   "URL_NO_TOP_LEVEL_DOMAIN" - URL should end in a valid domain extension,
+	// such as .com or .net.
+	//   "URL_PATH_NOT_ALLOWED" - URL must not end with a path.
+	//   "URL_PORT_NOT_ALLOWED" - URL must not specify a port.
+	//   "URL_QUERY_NOT_ALLOWED" - URL must not contain a query.
+	//   "URL_SCHEME_BEFORE_EXPANDED_DYNAMIC_SEARCH_AD_TAG" - A url scheme is not
+	// allowed in front of tag in tracking url template (for example,
+	// http://{lpurl})
+	//   "USER_DOES_NOT_HAVE_ACCESS_TO_TEMPLATE" - The user does not have
+	// permissions to create a template ad for the given template.
+	//   "INCONSISTENT_EXPANDABLE_SETTINGS" - Expandable setting is
+	// inconsistent/wrong. For example, an AdX ad is invalid if it has a expandable
+	// vendor format but no expanding directions specified, or expanding directions
+	// is specified, but the vendor format is not expandable.
+	//   "INVALID_FORMAT" - Format is invalid
+	//   "INVALID_FIELD_TEXT" - The text of this field did not match a pattern of
+	// allowed values.
+	//   "ELEMENT_NOT_PRESENT" - Template element is mising
+	//   "IMAGE_ERROR" - Error occurred during image processing
+	//   "VALUE_NOT_IN_RANGE" - The value is not within the valid range
+	//   "FIELD_NOT_PRESENT" - Template element field is not present
+	//   "ADDRESS_NOT_COMPLETE" - Address is incomplete
+	//   "ADDRESS_INVALID" - Invalid address
+	//   "VIDEO_RETRIEVAL_ERROR" - Error retrieving specified video
+	//   "AUDIO_ERROR" - Error processing audio
+	//   "INVALID_YOUTUBE_DISPLAY_URL" - Display URL is incorrect for YouTube PYV
+	// ads
+	//   "TOO_MANY_PRODUCT_IMAGES" - Too many product Images in GmailAd
+	//   "TOO_MANY_PRODUCT_VIDEOS" - Too many product Videos in GmailAd
+	//   "INCOMPATIBLE_AD_TYPE_AND_DEVICE_PREFERENCE" - The device preference is
+	// not compatible with the ad type
+	//   "CALLTRACKING_NOT_SUPPORTED_FOR_COUNTRY" - Call tracking is not supported
+	// for specified country.
+	//   "CARRIER_SPECIFIC_SHORT_NUMBER_NOT_ALLOWED" - Carrier specific short
+	// number is not allowed.
+	//   "DISALLOWED_NUMBER_TYPE" - Specified phone number type is disallowed.
+	//   "PHONE_NUMBER_NOT_SUPPORTED_FOR_COUNTRY" - Phone number not supported for
+	// country.
+	//   "PHONE_NUMBER_NOT_SUPPORTED_WITH_CALLTRACKING_FOR_COUNTRY" - Phone number
+	// not supported with call tracking enabled for country.
+	//   "PREMIUM_RATE_NUMBER_NOT_ALLOWED" - Premium rate phone number is not
+	// allowed.
+	//   "VANITY_PHONE_NUMBER_NOT_ALLOWED" - Vanity phone number is not allowed.
+	//   "INVALID_CALL_CONVERSION_TYPE_ID" - Invalid call conversion type id.
+	//   "CANNOT_DISABLE_CALL_CONVERSION_AND_SET_CONVERSION_TYPE_ID" - Cannot
+	// disable call conversion and set conversion type id.
+	//   "CANNOT_SET_PATH2_WITHOUT_PATH1" - Cannot set path2 without path1.
+	//   "MISSING_DYNAMIC_SEARCH_ADS_SETTING_DOMAIN_NAME" - Missing domain name in
+	// campaign setting when adding expanded dynamic search ad.
+	//   "INCOMPATIBLE_WITH_RESTRICTION_TYPE" - The associated ad is not compatible
+	// with restriction type.
+	//   "CUSTOMER_CONSENT_FOR_CALL_RECORDING_REQUIRED" - Consent for call
+	// recording is required for creating/updating call only ads. See
+	// https://support.google.com/google-ads/answer/7412639.
+	//   "MISSING_IMAGE_OR_MEDIA_BUNDLE" - Either an image or a media bundle is
+	// required in a display upload ad.
+	//   "PRODUCT_TYPE_NOT_SUPPORTED_IN_THIS_CAMPAIGN" - The display upload product
+	// type is not supported in this campaign.
+	//   "PLACEHOLDER_CANNOT_HAVE_EMPTY_DEFAULT_VALUE" - The default value of an ad
+	// placeholder can not be the empty string.
+	//   "PLACEHOLDER_COUNTDOWN_FUNCTION_CANNOT_HAVE_DEFAULT_VALUE" - Ad
+	// placeholders with countdown functions must not have a default value.
+	//   "PLACEHOLDER_DEFAULT_VALUE_MISSING" - A previous ad placeholder that had a
+	// default value was found which means that all (non-countdown) placeholders
+	// must have a default value. This ad placeholder does not have a default
+	// value.
+	//   "UNEXPECTED_PLACEHOLDER_DEFAULT_VALUE" - A previous ad placeholder that
+	// did not have a default value was found which means that no placeholders may
+	// have a default value. This ad placeholder does have a default value.
+	//   "AD_CUSTOMIZERS_MAY_NOT_BE_ADJACENT" - Two ad customizers may not be
+	// directly adjacent in an ad text. They must be separated by at least one
+	// character.
+	//   "UPDATING_AD_WITH_NO_ENABLED_ASSOCIATION" - The ad is not associated with
+	// any enabled AdGroupAd, and cannot be updated.
+	//   "CALL_AD_VERIFICATION_URL_FINAL_URL_DOES_NOT_HAVE_SAME_DOMAIN" - Call Ad
+	// verification url and final url don't have same domain.
+	//   "CALL_AD_FINAL_URL_AND_VERIFICATION_URL_CANNOT_BOTH_BE_EMPTY" - Final url
+	// and verification url cannot both be empty for call ads.
+	//   "TOO_MANY_AD_CUSTOMIZERS" - Too many ad customizers in one asset.
+	//   "INVALID_AD_CUSTOMIZER_FORMAT" - The ad customizer tag is recognized, but
+	// the format is invalid.
+	//   "NESTED_AD_CUSTOMIZER_SYNTAX" - Customizer tags cannot be nested.
+	//   "UNSUPPORTED_AD_CUSTOMIZER_SYNTAX" - The ad customizer syntax used in the
+	// ad is not supported.
+	//   "UNPAIRED_BRACE_IN_AD_CUSTOMIZER_TAG" - There exists unpaired brace in the
+	// ad customizer tag.
+	//   "MORE_THAN_ONE_COUNTDOWN_TAG_TYPE_EXISTS" - More than one type of
+	// countdown tag exists among all text lines.
+	//   "DATE_TIME_IN_COUNTDOWN_TAG_IS_INVALID" - Date time in the countdown tag
+	// is invalid.
+	//   "DATE_TIME_IN_COUNTDOWN_TAG_IS_PAST" - Date time in the countdown tag is
+	// in the past.
+	//   "UNRECOGNIZED_AD_CUSTOMIZER_TAG_FOUND" - Cannot recognize the ad
+	// customizer tag.
+	//   "CUSTOMIZER_TYPE_FORBIDDEN_FOR_FIELD" - Customizer type forbidden for this
+	// field.
+	//   "INVALID_CUSTOMIZER_ATTRIBUTE_NAME" - Customizer attribute name is
+	// invalid.
+	//   "STORE_MISMATCH" - App store value does not match the value of the app
+	// store in the app specified in the campaign.
+	//   "MISSING_REQUIRED_IMAGE_ASPECT_RATIO" - Missing required image aspect
+	// ratio.
+	//   "MISMATCHED_ASPECT_RATIOS" - Aspect ratios mismatch between different
+	// assets.
+	//   "DUPLICATE_IMAGE_ACROSS_CAROUSEL_CARDS" - Images must be unique between
+	// different carousel card assets.
+	//   "INVALID_YOUTUBE_VIDEO_ASSET_ID_FOR_VIDEO_ADS_SEQUENCING" - For video ads
+	// sequencing, YouTube video asset ID has to be defined in
+	// `campaign.video_campaign_settings.video_ad_sequence.steps.asset_id`.
+	AdError string `json:"adError,omitempty"`
+	// AdGroupAdError: The reasons for the ad group ad error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "AD_GROUP_AD_LABEL_DOES_NOT_EXIST" - No link found between the adgroup ad
+	// and the label.
+	//   "AD_GROUP_AD_LABEL_ALREADY_EXISTS" - The label has already been attached
+	// to the adgroup ad.
+	//   "AD_NOT_UNDER_ADGROUP" - The specified ad was not found in the adgroup
+	//   "CANNOT_OPERATE_ON_REMOVED_ADGROUPAD" - Removed ads may not be modified
+	//   "CANNOT_CREATE_DEPRECATED_ADS" - An ad of this type is deprecated and
+	// cannot be created. Only deletions are permitted.
+	//   "CANNOT_CREATE_TEXT_ADS" - Text ads are deprecated and cannot be created.
+	// Use expanded text ads instead.
+	//   "EMPTY_FIELD" - A required field was not specified or is an empty string.
+	//   "RESOURCE_REFERENCED_IN_MULTIPLE_OPS" - An ad may only be modified once
+	// per call
+	//   "AD_TYPE_CANNOT_BE_PAUSED" - AdGroupAds with the given ad type cannot be
+	// paused.
+	//   "AD_TYPE_CANNOT_BE_REMOVED" - AdGroupAds with the given ad type cannot be
+	// removed.
+	//   "CANNOT_UPDATE_DEPRECATED_ADS" - An ad of this type is deprecated and
+	// cannot be updated. Only removals are permitted.
+	//   "AD_SHARING_NOT_ALLOWED" - Ad sharing is not allowed.
+	AdGroupAdError string `json:"adGroupAdError,omitempty"`
+	// AdGroupBidModifierError: The reasons for the ad group bid modifier error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CRITERION_ID_NOT_SUPPORTED" - The criterion ID does not support bid
+	// modification.
+	//   "CANNOT_OVERRIDE_OPTED_OUT_CAMPAIGN_CRITERION_BID_MODIFIER" - Cannot
+	// override the bid modifier for the given criterion ID if the parent campaign
+	// is opted out of the same criterion.
+	AdGroupBidModifierError string `json:"adGroupBidModifierError,omitempty"`
+	// AdGroupCriterionCustomizerError: The reasons for the ad group criterion
+	// customizer error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CRITERION_IS_NOT_KEYWORD" - Only keyword type criterion is allowed to
+	// link customizer attribute.
+	AdGroupCriterionCustomizerError string `json:"adGroupCriterionCustomizerError,omitempty"`
+	// AdGroupCriterionError: Indicates failure to properly authenticate user.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "AD_GROUP_CRITERION_LABEL_DOES_NOT_EXIST" - No link found between the
+	// AdGroupCriterion and the label.
+	//   "AD_GROUP_CRITERION_LABEL_ALREADY_EXISTS" - The label has already been
+	// attached to the AdGroupCriterion.
+	//   "CANNOT_ADD_LABEL_TO_NEGATIVE_CRITERION" - Negative AdGroupCriterion
+	// cannot have labels.
+	//   "TOO_MANY_OPERATIONS" - Too many operations for a single call.
+	//   "CANT_UPDATE_NEGATIVE" - Negative ad group criteria are not updateable.
+	//   "CONCRETE_TYPE_REQUIRED" - Concrete type of criterion (keyword v.s.
+	// placement) is required for ADD and SET operations.
+	//   "BID_INCOMPATIBLE_WITH_ADGROUP" - Bid is incompatible with ad group's
+	// bidding settings.
+	//   "CANNOT_TARGET_AND_EXCLUDE" - Cannot target and exclude the same criterion
+	// at once.
+	//   "ILLEGAL_URL" - The URL of a placement is invalid.
+	//   "INVALID_KEYWORD_TEXT" - Keyword text was invalid.
+	//   "INVALID_DESTINATION_URL" - Destination URL was invalid.
+	//   "MISSING_DESTINATION_URL_TAG" - The destination url must contain at least
+	// one tag (for example, {lpurl})
+	//   "KEYWORD_LEVEL_BID_NOT_SUPPORTED_FOR_MANUALCPM" - Keyword-level cpm bid is
+	// not supported
+	//   "INVALID_USER_STATUS" - For example, cannot add a biddable ad group
+	// criterion that had been removed.
+	//   "CANNOT_ADD_CRITERIA_TYPE" - Criteria type cannot be targeted for the ad
+	// group. Either the account is restricted to keywords only, the criteria type
+	// is incompatible with the campaign's bidding strategy, or the criteria type
+	// can only be applied to campaigns.
+	//   "CANNOT_EXCLUDE_CRITERIA_TYPE" - Criteria type cannot be excluded for the
+	// ad group. Refer to the documentation for a specific criterion to check if it
+	// is excludable.
+	//   "CAMPAIGN_TYPE_NOT_COMPATIBLE_WITH_PARTIAL_FAILURE" - Partial failure is
+	// not supported for shopping campaign mutate operations.
+	//   "OPERATIONS_FOR_TOO_MANY_SHOPPING_ADGROUPS" - Operations in the mutate
+	// request changes too many shopping ad groups. Split requests for multiple
+	// shopping ad groups across multiple requests.
+	//   "CANNOT_MODIFY_URL_FIELDS_WITH_DUPLICATE_ELEMENTS" - Not allowed to modify
+	// url fields of an ad group criterion if there are duplicate elements for that
+	// ad group criterion in the request.
+	//   "CANNOT_SET_WITHOUT_FINAL_URLS" - Cannot set url fields without also
+	// setting final urls.
+	//   "CANNOT_CLEAR_FINAL_URLS_IF_FINAL_MOBILE_URLS_EXIST" - Cannot clear final
+	// urls if final mobile urls exist.
+	//   "CANNOT_CLEAR_FINAL_URLS_IF_FINAL_APP_URLS_EXIST" - Cannot clear final
+	// urls if final app urls exist.
+	//   "CANNOT_CLEAR_FINAL_URLS_IF_TRACKING_URL_TEMPLATE_EXISTS" - Cannot clear
+	// final urls if tracking url template exists.
+	//   "CANNOT_CLEAR_FINAL_URLS_IF_URL_CUSTOM_PARAMETERS_EXIST" - Cannot clear
+	// final urls if url custom parameters exist.
+	//   "CANNOT_SET_BOTH_DESTINATION_URL_AND_FINAL_URLS" - Cannot set both
+	// destination url and final urls.
+	//   "CANNOT_SET_BOTH_DESTINATION_URL_AND_TRACKING_URL_TEMPLATE" - Cannot set
+	// both destination url and tracking url template.
+	//   "FINAL_URLS_NOT_SUPPORTED_FOR_CRITERION_TYPE" - Final urls are not
+	// supported for this criterion type.
+	//   "FINAL_MOBILE_URLS_NOT_SUPPORTED_FOR_CRITERION_TYPE" - Final mobile urls
+	// are not supported for this criterion type.
+	AdGroupCriterionError string `json:"adGroupCriterionError,omitempty"`
+	// AdGroupCustomizerError: The reasons for the ad group customizer error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	AdGroupCustomizerError string `json:"adGroupCustomizerError,omitempty"`
+	// AdGroupError: An error with an Ad Group mutate.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "DUPLICATE_ADGROUP_NAME" - AdGroup with the same name already exists for
+	// the campaign.
+	//   "INVALID_ADGROUP_NAME" - AdGroup name is not valid.
+	//   "ADVERTISER_NOT_ON_CONTENT_NETWORK" - Advertiser is not allowed to target
+	// sites or set site bids that are not on the Google Search Network.
+	//   "BID_TOO_BIG" - Bid amount is too big.
+	//   "BID_TYPE_AND_BIDDING_STRATEGY_MISMATCH" - AdGroup bid does not match the
+	// campaign's bidding strategy.
+	//   "MISSING_ADGROUP_NAME" - AdGroup name is required for Add.
+	//   "ADGROUP_LABEL_DOES_NOT_EXIST" - No link found between the ad group and
+	// the label.
+	//   "ADGROUP_LABEL_ALREADY_EXISTS" - The label has already been attached to
+	// the ad group.
+	//   "INVALID_CONTENT_BID_CRITERION_TYPE_GROUP" - The CriterionTypeGroup is not
+	// supported for the content bid dimension.
+	//   "AD_GROUP_TYPE_NOT_VALID_FOR_ADVERTISING_CHANNEL_TYPE" - The ad group type
+	// is not compatible with the campaign channel type.
+	//   "ADGROUP_TYPE_NOT_SUPPORTED_FOR_CAMPAIGN_SALES_COUNTRY" - The ad group
+	// type is not supported in the country of sale of the campaign.
+	//   "CANNOT_ADD_ADGROUP_OF_TYPE_DSA_TO_CAMPAIGN_WITHOUT_DSA_SETTING" - Ad
+	// groups of AdGroupType.SEARCH_DYNAMIC_ADS can only be added to campaigns that
+	// have DynamicSearchAdsSetting attached.
+	//   "PROMOTED_HOTEL_AD_GROUPS_NOT_AVAILABLE_FOR_CUSTOMER" - Promoted hotels ad
+	// groups are only available to customers on the allow-list.
+	//   "INVALID_EXCLUDED_PARENT_ASSET_FIELD_TYPE" - The field type cannot be
+	// excluded because an active ad group-asset link of this type exists.
+	//   "INVALID_EXCLUDED_PARENT_ASSET_SET_TYPE" - The asset set type is invalid
+	// for setting the excluded_parent_asset_set_types field.
+	//   "CANNOT_ADD_AD_GROUP_FOR_CAMPAIGN_TYPE" - Cannot add ad groups for the
+	// campaign type.
+	//   "INVALID_STATUS" - Invalid status for the ad group.
+	//   "INVALID_STEP_ID_FOR_VIDEO_ADS_SEQUENCING" - For video ads sequencing,
+	// AdGroup `step_id` has to use a `step_id` defined in
+	// `campaign.video_campaign_settings.video_ad_sequence`.
+	//   "INVALID_AD_GROUP_TYPE_FOR_VIDEO_ADS_SEQUENCING" - For video ads
+	// sequencing, AdGroup type has to use a type defined in
+	// `campaign.video_campaign_settings.video_ad_sequence`.
+	//   "DUPLICATE_STEP_ID" - Only one AdGroup is allowed for each step ID in
+	// video ads sequencing.
+	//   "INVALID_VERTICAL_ADS_FORMAT_SETTING" - At least one Vertical Ads format
+	// must be enabled for a campaign under Travel Ads in Search Campaigns.
+	//   "VERTICAL_ADS_FORMAT_SETTING_NOT_SUPPORTED_FOR_CAMPAIGNS_WITHOUT_AI_MAX" -
+	// AI max setting must be enabled to enable Vertical Ads formats for a campaign
+	// under Travel Ads in Search Campaigns.
+	//
+	// "VERTICAL_ADS_FORMAT_SETTING_NOT_SUPPORTED_FOR_CAMPAIGNS_WITHOUT_ENABLED_TRAV
+	// EL_FEED" - An enabled travel feed must be linked to enable Vertical Ads
+	// formats for a campaign under Travel Ads in Search Campaigns.
+	AdGroupError string `json:"adGroupError,omitempty"`
+	// AdGroupFeedError: The reasons for the ad group feed error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "FEED_ALREADY_EXISTS_FOR_PLACEHOLDER_TYPE" - An active feed already exists
+	// for this ad group and place holder type.
+	//   "CANNOT_CREATE_FOR_REMOVED_FEED" - The specified feed is removed.
+	//   "ADGROUP_FEED_ALREADY_EXISTS" - The AdGroupFeed already exists. UPDATE
+	// operation should be used to modify the existing AdGroupFeed.
+	//   "CANNOT_OPERATE_ON_REMOVED_ADGROUP_FEED" - Cannot operate on removed
+	// AdGroupFeed.
+	//   "INVALID_PLACEHOLDER_TYPE" - Invalid placeholder type.
+	//   "MISSING_FEEDMAPPING_FOR_PLACEHOLDER_TYPE" - Feed mapping for this
+	// placeholder type does not exist.
+	//   "NO_EXISTING_LOCATION_CUSTOMER_FEED" - Location AdGroupFeeds cannot be
+	// created unless there is a location CustomerFeed for the specified feed.
+	AdGroupFeedError string `json:"adGroupFeedError,omitempty"`
+	// AdParameterError: The reasons for the ad parameter error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "AD_GROUP_CRITERION_MUST_BE_KEYWORD" - The ad group criterion must be a
+	// keyword criterion.
+	//   "INVALID_INSERTION_TEXT_FORMAT" - The insertion text is invalid.
+	AdParameterError string `json:"adParameterError,omitempty"`
+	// AdSharingError: The reasons for the ad sharing error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "AD_GROUP_ALREADY_CONTAINS_AD" - Error resulting in attempting to add an
+	// Ad to an AdGroup that already contains the Ad.
+	//   "INCOMPATIBLE_AD_UNDER_AD_GROUP" - Ad is not compatible with the AdGroup
+	// it is being shared with.
+	//   "CANNOT_SHARE_INACTIVE_AD" - Cannot add AdGroupAd on inactive Ad.
+	AdSharingError string `json:"adSharingError,omitempty"`
+	// AdxError: The reasons for the adx error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "UNSUPPORTED_FEATURE" - Attempt to use non-AdX feature by AdX customer.
+	AdxError string `json:"adxError,omitempty"`
+	// AssetError: The reasons for the asset error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CUSTOMER_NOT_ON_ALLOWLIST_FOR_ASSET_TYPE" - The customer is not on the
+	// allow-list for this asset type.
+	//   "DUPLICATE_ASSET" - Assets are duplicated across operations.
+	//   "DUPLICATE_ASSET_NAME" - The asset name is duplicated, either across
+	// operations or with an existing asset.
+	//   "ASSET_DATA_IS_MISSING" - The `Asset.asset_data` oneof is empty.
+	//   "CANNOT_MODIFY_ASSET_NAME" - The asset has a name which is different from
+	// an existing duplicate that represents the same content.
+	//   "FIELD_INCOMPATIBLE_WITH_ASSET_TYPE" - The field cannot be set for this
+	// asset type.
+	//   "INVALID_CALL_TO_ACTION_TEXT" - Call to action must come from the list of
+	// supported values.
+	//   "LEAD_FORM_INVALID_FIELDS_COMBINATION" - A lead form asset is created with
+	// an invalid combination of input fields.
+	//   "LEAD_FORM_MISSING_AGREEMENT" - Lead forms require that the Terms of
+	// Service have been agreed to before mutates can be executed.
+	//   "INVALID_ASSET_STATUS" - Asset status is invalid in this operation.
+	//   "FIELD_CANNOT_BE_MODIFIED_FOR_ASSET_TYPE" - The field cannot be modified
+	// by this asset type.
+	//   "SCHEDULES_CANNOT_OVERLAP" - Ad schedules for the same asset cannot
+	// overlap.
+	//   "PROMOTION_CANNOT_SET_PERCENT_OFF_AND_MONEY_AMOUNT_OFF" - Cannot set both
+	// percent off and money amount off fields of promotion asset.
+	//   "PROMOTION_CANNOT_SET_PROMOTION_CODE_AND_ORDERS_OVER_AMOUNT" - Cannot set
+	// both promotion code and orders over amount fields of promotion asset.
+	//   "TOO_MANY_DECIMAL_PLACES_SPECIFIED" - The field has too many decimal
+	// places specified.
+	//   "DUPLICATE_ASSETS_WITH_DIFFERENT_FIELD_VALUE" - Duplicate assets across
+	// operations, which have identical `Asset.asset_data` oneof, cannot have
+	// different asset level fields for asset types which are deduped.
+	//   "CALL_CARRIER_SPECIFIC_SHORT_NUMBER_NOT_ALLOWED" - Carrier-specific short
+	// number is not allowed.
+	//   "CALL_CUSTOMER_CONSENT_FOR_CALL_RECORDING_REQUIRED" - Customer consent
+	// required for call recording Terms of Service.
+	//   "CALL_DISALLOWED_NUMBER_TYPE" - The type of the specified phone number is
+	// not allowed.
+	//   "CALL_INVALID_CONVERSION_ACTION" - If the default `call_conversion_action`
+	// is not used, the customer must have a `ConversionAction` with the same id
+	// and the `ConversionAction` must be call conversion type.
+	//   "CALL_INVALID_COUNTRY_CODE" - The country code of the phone number is
+	// invalid.
+	//   "CALL_INVALID_DOMESTIC_PHONE_NUMBER_FORMAT" - The format of the phone
+	// number is incorrect.
+	//   "CALL_INVALID_PHONE_NUMBER" - The input phone number is not a valid phone
+	// number.
+	//   "CALL_PHONE_NUMBER_NOT_SUPPORTED_FOR_COUNTRY" - The phone number is not
+	// supported for this country.
+	//   "CALL_PREMIUM_RATE_NUMBER_NOT_ALLOWED" - Premium rate phone number is not
+	// allowed.
+	//   "CALL_VANITY_PHONE_NUMBER_NOT_ALLOWED" - Vanity phone number is not
+	// allowed.
+	//   "PRICE_HEADER_SAME_AS_DESCRIPTION" - `PriceOffering` cannot have the same
+	// value for header and description.
+	//   "MOBILE_APP_INVALID_APP_ID" - `AppId` is invalid.
+	//   "MOBILE_APP_INVALID_FINAL_URL_FOR_APP_DOWNLOAD_URL" - Invalid App download
+	// URL in final URLs.
+	//   "NAME_REQUIRED_FOR_ASSET_TYPE" - Asset name is required for the asset
+	// type.
+	//   "LEAD_FORM_LEGACY_QUALIFYING_QUESTIONS_DISALLOWED" - Legacy qualifying
+	// questions cannot be in the same Lead Form as custom questions.
+	//   "NAME_CONFLICT_FOR_ASSET_TYPE" - Unique name is required for this asset
+	// type.
+	//   "CANNOT_MODIFY_ASSET_SOURCE" - Cannot modify asset source.
+	//   "CANNOT_MODIFY_AUTOMATICALLY_CREATED_ASSET" - User can not modify the
+	// automatically created asset.
+	//   "LEAD_FORM_LOCATION_ANSWER_TYPE_DISALLOWED" - Lead Form is disallowed to
+	// use `LOCATION` answer type.
+	//   "PAGE_FEED_INVALID_LABEL_TEXT" - Page Feed label text contains invalid
+	// characters.
+	//   "CUSTOMER_NOT_ON_ALLOWLIST_FOR_WHATSAPP_MESSAGE_ASSETS" - The customer is
+	// not in the allow-list for whatsapp message asset type.
+	//   "CUSTOMER_NOT_ON_ALLOWLIST_FOR_APP_DEEP_LINK_ASSETS" - Only customers on
+	// the allowlist can create `AppDeepLinkAsset`.
+	//   "PROMOTION_BARCODE_CANNOT_CONTAIN_LINKS" - Promotion barcode cannot
+	// contain links.
+	//   "PROMOTION_BARCODE_INVALID_FORMAT" - Failed to encode promotion barcode:
+	// Invalid format.
+	//   "UNSUPPORTED_BARCODE_TYPE" - Barcode type is not supported.
+	//   "PROMOTION_QR_CODE_CANNOT_CONTAIN_LINKS" - Promotion QR code cannot
+	// contain links.
+	//   "PROMOTION_QR_CODE_INVALID_FORMAT" - Failed to encode promotion QR code:
+	// Invalid format.
+	//   "CUSTOMER_NOT_ON_ALLOWLIST_FOR_MESSAGE_ASSETS" - The customer is not in
+	// the allow-list for Business message asset type.
+	AssetError string `json:"assetError,omitempty"`
+	// AssetGenerationError: The reasons for the GenAI asset generation error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "NO_ASSETS_GENERATED" - No assets were generated for the given request.
+	//   "FINAL_URL_REQUIRED" - A final URL is required but was not provided, and
+	// could not be sourced from the existing generation context because no
+	// existing generation context was provided.
+	//   "GENERATION_CONTEXT_MISSING_FINAL_URL" - A final URL is required but was
+	// not provided, and could not be sourced from the provided existing generation
+	// context.
+	//   "FINAL_URL_SENSITIVE" - The provided final URL is considered sensitive,
+	// and assets cannot be generated.
+	//   "FINAL_URL_UNSUPPORTED_LANGUAGE" - The language of the provided final URL
+	// is not supported.
+	//   "FINAL_URL_UNAVAILABLE" - The provided final URL was not indexed or could
+	// otherwise not be processed.
+	//   "CAMPAIGN_TYPE_REQUIRED" - Campaign type is required but was not provided,
+	// and could not be sourced from the existing generation context because no
+	// existing generation context was provided.
+	//   "UNSUPPORTED_CAMPAIGN_TYPE" - The provided campaign type is not supported
+	// for this asset generation operation.
+	//   "UNSUPPORTED_FIELD_TYPE" - The provided field type is not supported for
+	// this asset generation operation.
+	//   "UNSUPPORTED_FIELD_TYPE_FOR_CAMPAIGN_TYPE" - The provided field type is
+	// not supported for the given campaign type.
+	//   "FREEFORM_PROMPT_UNSUPPORTED_LANGUAGE" - The language of the provided
+	// freeform prompt is not supported.
+	//   "FREEFORM_PROMPT_SENSITIVE" - The provided freeform prompt is considered
+	// sensitive, and assets cannot be generated.
+	//   "INPUT_IMAGE_FILE_SIZE_TOO_LARGE" - The provided image file size exceeds
+	// the limit.
+	//   "INPUT_IMAGE_EMPTY" - The provided image is empty.
+	//   "GENERATION_TYPE_REQUIRED" - Exactly one generation type must be provided.
+	//   "TOO_MANY_KEYWORDS" - Too many keywords provided in request.
+	//   "KEYWORD_INVALID_LENGTH" - A provided keyword does not have a valid
+	// length.
+	//   "NO_VALID_KEYWORDS" - All keywords were filtered out.
+	//   "FREEFORM_PROMPT_INVALID_LENGTH" - The provided freeform prompt does not
+	// have a valid length.
+	//   "FREEFORM_PROMPT_REFERENCES_CHILDREN" - The provided freeform prompt
+	// references children.
+	//   "FREEFORM_PROMPT_REFERENCES_SPECIFIC_PEOPLE" - The provided freeform
+	// prompt references specific people.
+	//   "FREEFORM_PROMPT_VIOLATES_ADS_POLICY" - The provided freeform prompt
+	// violates Ads Policy.
+	//   "FREEFORM_PROMPT_BRAND_CONTENT" - The provided freeform prompt contains
+	// brand content.
+	//   "INPUT_IMAGE_DEPICTS_CHILDREN" - The provided image depicts children.
+	//   "INPUT_IMAGE_CONTAINS_BRAND_CONTENT" - The provided image contains brand
+	// content.
+	//   "INPUT_IMAGE_SENSITIVE" - The provided image contains sensitive subject
+	// matter.
+	//   "INPUT_IMAGE_VIOLATES_POLICY" - The provided image may violate Google Ads
+	// policies.
+	//   "ALL_OUTPUT_IMAGES_FILTERED_OUT_CHILDREN_DEPICTION" - All output images
+	// were filtered out because they included depictions of children.
+	//   "ALL_OUTPUT_IMAGES_FILTERED_OUT_SPECIFIC_PEOPLE" - All output images were
+	// filtered out because they included depictions of specific people.
+	//   "ALL_OUTPUT_IMAGES_FILTERED_OUT" - All output images were filtered out for
+	// a reason not covered by a more specific error code.
+	//   "INPUT_IMAGE_REQUIRED" - At least one input image is required for certain
+	// requests.
+	//   "INPUT_IMAGE_UNSUPPORTED_IMAGE_TYPE" - The provided image is of an
+	// unsupported type.
+	//   "CONTEXT_ASSET_GROUP_NOT_FOUND" - Asset Group could not be found with the
+	// provided ID.
+	//   "CONTEXT_AD_GROUP_AD_NOT_FOUND" - Ad Group Ad could not be found with the
+	// provided ID combination.
+	//   "CONTEXT_CAMPAIGN_NOT_FOUND" - Could not find Campaign associated with the
+	// provided generation context.
+	AssetGenerationError string `json:"assetGenerationError,omitempty"`
+	// AssetGroupAssetError: The reasons for the asset group asset error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "DUPLICATE_RESOURCE" - Cannot add duplicated asset group asset.
+	//   "EXPANDABLE_TAGS_NOT_ALLOWED_IN_DESCRIPTION" - Expandable tags are not
+	// allowed in description assets.
+	//   "AD_CUSTOMIZER_NOT_SUPPORTED" - Ad customizers are not supported in
+	// assetgroup's text assets.
+	//   "HOTEL_PROPERTY_ASSET_NOT_LINKED_TO_CAMPAIGN" - Cannot add a
+	// HotelPropertyAsset to an AssetGroup that isn't linked to the parent
+	// campaign's hotel_property_asset_set field.
+	AssetGroupAssetError string `json:"assetGroupAssetError,omitempty"`
+	// AssetGroupError: The reasons for the asset group error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "DUPLICATE_NAME" - Each asset group in a single campaign must have a
+	// unique name.
+	//   "CANNOT_ADD_ASSET_GROUP_FOR_CAMPAIGN_TYPE" - Cannot add asset group for
+	// the campaign type.
+	//   "NOT_ENOUGH_HEADLINE_ASSET" - Not enough headline asset for a valid asset
+	// group.
+	//   "NOT_ENOUGH_LONG_HEADLINE_ASSET" - Not enough long headline asset for a
+	// valid asset group.
+	//   "NOT_ENOUGH_DESCRIPTION_ASSET" - Not enough description headline asset for
+	// a valid asset group.
+	//   "NOT_ENOUGH_BUSINESS_NAME_ASSET" - Not enough business name asset for a
+	// valid asset group.
+	//   "NOT_ENOUGH_MARKETING_IMAGE_ASSET" - Not enough marketing image asset for
+	// a valid asset group.
+	//   "NOT_ENOUGH_SQUARE_MARKETING_IMAGE_ASSET" - Not enough square marketing
+	// image asset for a valid asset group.
+	//   "NOT_ENOUGH_LOGO_ASSET" - Not enough logo asset for a valid asset group.
+	//   "FINAL_URL_SHOPPING_MERCHANT_HOME_PAGE_URL_DOMAINS_DIFFER" - Final url and
+	// shopping merchant url does not have the same domain.
+	//   "PATH1_REQUIRED_WHEN_PATH2_IS_SET" - Path1 required when path2 is set.
+	//   "SHORT_DESCRIPTION_REQUIRED" - At least one short description asset is
+	// required for a valid asset group.
+	//   "FINAL_URL_REQUIRED" - Final url field is required for asset group.
+	//   "FINAL_URL_CONTAINS_INVALID_DOMAIN_NAME" - Final url contains invalid
+	// domain name.
+	//   "AD_CUSTOMIZER_NOT_SUPPORTED" - Ad customizers are not supported in asset
+	// group's text field.
+	//   "CANNOT_MUTATE_ASSET_GROUP_FOR_REMOVED_CAMPAIGN" - Cannot mutate asset
+	// group for campaign with removed status.
+	AssetGroupError string `json:"assetGroupError,omitempty"`
+	// AssetGroupListingGroupFilterError: The reasons for the asset group listing
+	// group filter error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "TREE_TOO_DEEP" - Listing group tree is too deep.
+	//   "UNIT_CANNOT_HAVE_CHILDREN" - Listing Group UNIT node cannot have
+	// children.
+	//   "SUBDIVISION_MUST_HAVE_EVERYTHING_ELSE_CHILD" - Listing Group SUBDIVISION
+	// node must have everything else child.
+	//   "DIFFERENT_DIMENSION_TYPE_BETWEEN_SIBLINGS" - Dimension type of Listing
+	// Group must be the same as that of its siblings.
+	//   "SAME_DIMENSION_VALUE_BETWEEN_SIBLINGS" - The sibling Listing Groups
+	// target exactly the same dimension value.
+	//   "SAME_DIMENSION_TYPE_BETWEEN_ANCESTORS" - The dimension type is the same
+	// as one of the ancestor Listing Groups.
+	//   "MULTIPLE_ROOTS" - Each Listing Group tree must have a single root.
+	//   "INVALID_DIMENSION_VALUE" - Invalid Listing Group dimension value.
+	//   "MUST_REFINE_HIERARCHICAL_PARENT_TYPE" - Hierarchical dimension must
+	// refine a dimension of the same type.
+	//   "INVALID_PRODUCT_BIDDING_CATEGORY" - Invalid Product Bidding Category.
+	//   "CHANGING_CASE_VALUE_WITH_CHILDREN" - Modifying case value is allowed only
+	// while updating the entire subtree at the same time.
+	//   "SUBDIVISION_HAS_CHILDREN" - Subdivision node has children which must be
+	// removed first.
+	//   "CANNOT_REFINE_HIERARCHICAL_EVERYTHING_ELSE" - Dimension can't subdivide
+	// everything-else node in its own hierarchy.
+	//   "DIMENSION_TYPE_NOT_ALLOWED" - This dimension type is not allowed in this
+	// context.
+	//   "DUPLICATE_WEBPAGE_FILTER_UNDER_ASSET_GROUP" - All the webpage filters
+	// under an AssetGroup should be distinct.
+	//   "LISTING_SOURCE_NOT_ALLOWED" - Filter of the listing source type is not
+	// allowed in the context.
+	//   "FILTER_EXCLUSION_NOT_ALLOWED" - Exclusion filters are not allowed in the
+	// context.
+	//   "MULTIPLE_LISTING_SOURCES" - All the filters under an AssetGroup should
+	// have the same listing source.
+	//   "MULTIPLE_WEBPAGE_CONDITION_TYPES_NOT_ALLOWED" - All the conditions in a
+	// webpage needs to be of same type.
+	//   "MULTIPLE_WEBPAGE_TYPES_PER_ASSET_GROUP" - All the webpage types of the
+	// filters under an AssetGroup should be of same type. Example: All the webpage
+	// types can be of type custom_label or url_contains but not both.
+	//   "PAGE_FEED_FILTER_HAS_PARENT" - All page feed filter nodes are root nodes
+	// and they can't have a parent.
+	//   "MULTIPLE_OPERATIONS_ON_ONE_NODE" - There cannot be more than one mutate
+	// operation per request that targets a single asset group listing group
+	// filter.
+	//   "TREE_WAS_INVALID_BEFORE_MUTATION" - The tree is in an invalid state in
+	// the database. Any changes that don't fix its issues will fail validation.
+	AssetGroupListingGroupFilterError string `json:"assetGroupListingGroupFilterError,omitempty"`
+	// AssetGroupSignalError: The reasons for the asset group hint error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "TOO_MANY_WORDS" - The number of words in the Search Theme signal exceed
+	// the allowed maximum. You can add up to 10 words in a keyword. See
+	// https://support.google.com/google-ads/answer/7476658 for details.
+	//   "SEARCH_THEME_POLICY_VIOLATION" - The search theme requested to be added
+	// violates certain policy. See
+	// https://support.google.com/adspolicy/answer/6008942.
+	//   "AUDIENCE_WITH_WRONG_ASSET_GROUP_ID" - The asset group referenced by the
+	// asset group signal does not match the asset group referenced by the audience
+	// being used in the asset group signal.
+	AssetGroupSignalError string `json:"assetGroupSignalError,omitempty"`
+	// AssetLinkError: The reasons for the asset link error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "PINNING_UNSUPPORTED" - Pinning is not supported for the given asset link
+	// field.
+	//   "UNSUPPORTED_FIELD_TYPE" - The given field type is not supported to be
+	// added directly through asset links.
+	//   "FIELD_TYPE_INCOMPATIBLE_WITH_ASSET_TYPE" - The given asset's type and the
+	// specified field type are incompatible.
+	//   "FIELD_TYPE_INCOMPATIBLE_WITH_CAMPAIGN_TYPE" - The specified field type is
+	// incompatible with the given campaign type.
+	//   "INCOMPATIBLE_ADVERTISING_CHANNEL_TYPE" - The campaign advertising channel
+	// type cannot be associated with the given asset due to channel-based
+	// restrictions on the asset's fields.
+	//   "IMAGE_NOT_WITHIN_SPECIFIED_DIMENSION_RANGE" - The image asset provided is
+	// not within the dimension constraints specified for the submitted asset
+	// field.
+	//   "INVALID_PINNED_FIELD" - The pinned field is not valid for the submitted
+	// asset field.
+	//   "MEDIA_BUNDLE_ASSET_FILE_SIZE_TOO_LARGE" - The media bundle asset provided
+	// is too large for the submitted asset field.
+	//   "NOT_ENOUGH_AVAILABLE_ASSET_LINKS_FOR_VALID_COMBINATION" - Not enough
+	// assets are available for use with other fields since other assets are pinned
+	// to specific fields.
+	//   "NOT_ENOUGH_AVAILABLE_ASSET_LINKS_WITH_FALLBACK" - Not enough assets with
+	// fallback are available. When validating the minimum number of assets, assets
+	// without fallback (for example, assets that contain location tag without
+	// default value "{LOCATION(City)}") will not be counted.
+	//   "NOT_ENOUGH_AVAILABLE_ASSET_LINKS_WITH_FALLBACK_FOR_VALID_COMBINATION" -
+	// This is a combination of the
+	// NOT_ENOUGH_AVAILABLE_ASSET_LINKS_FOR_VALID_COMBINATION and
+	// NOT_ENOUGH_AVAILABLE_ASSET_LINKS_WITH_FALLBACK errors. Not enough assets
+	// with fallback are available since some assets are pinned.
+	//   "YOUTUBE_VIDEO_REMOVED" - The YouTube video referenced in the provided
+	// asset has been removed.
+	//   "YOUTUBE_VIDEO_TOO_LONG" - The YouTube video referenced in the provided
+	// asset is too long for the field submitted.
+	//   "YOUTUBE_VIDEO_TOO_SHORT" - The YouTube video referenced in the provided
+	// asset is too short for the field submitted.
+	//   "EXCLUDED_PARENT_FIELD_TYPE" - The specified field type is excluded for
+	// given campaign or ad group.
+	//   "INVALID_STATUS" - The status is invalid for the operation specified.
+	//   "YOUTUBE_VIDEO_DURATION_NOT_DEFINED" - The YouTube video referenced in the
+	// provided asset has unknown duration. This might be the case for a livestream
+	// video or a video being currently uploaded to YouTube. In both cases, the
+	// video duration should eventually get resolved.
+	//   "CANNOT_CREATE_AUTOMATICALLY_CREATED_LINKS" - User cannot create
+	// automatically created links.
+	//   "CANNOT_LINK_TO_AUTOMATICALLY_CREATED_ASSET" - Advertiser links cannot
+	// link to automatically created asset.
+	//   "CANNOT_MODIFY_ASSET_LINK_SOURCE" - Automatically created links cannot be
+	// changed into advertiser links or the reverse.
+	//   "CANNOT_LINK_LOCATION_LEAD_FORM_WITHOUT_LOCATION_ASSET" - Lead Form asset
+	// with Location answer type can't be linked to the Customer/Campaign because
+	// there are no Location assets.
+	//   "CUSTOMER_NOT_VERIFIED" - Customer is not verified.
+	//   "UNSUPPORTED_CALL_TO_ACTION" - Call to action value is not supported.
+	//   "BRAND_ASSETS_NOT_LINKED_AT_ASSET_GROUP_LEVEL" - For Performance Max
+	// campaigns where brand_guidelines_enabled is false, business name and logo
+	// assets must be linked as AssetGroupAssets.
+	//   "BRAND_ASSETS_NOT_LINKED_AT_CAMPAIGN_LEVEL" - For Performance Max
+	// campaigns where brand_guidelines_enabled is true, business name and logo
+	// assets must be linked as CampaignAssets.
+	AssetLinkError string `json:"assetLinkError,omitempty"`
+	// AssetSetAssetError: The reasons for the asset set asset error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_ASSET_TYPE" - The asset type is not eligible to be linked to the
+	// specific type of asset set.
+	//   "INVALID_ASSET_SET_TYPE" - The asset set type is not eligible to contain
+	// the specified type of assets.
+	//   "DUPLICATE_EXTERNAL_KEY" - The asset contains duplicate external key with
+	// another asset in the asset set.
+	//   "PARENT_LINKAGE_DOES_NOT_EXIST" - When attaching a Location typed Asset to
+	// a LocationGroup typed AssetSet, the AssetSetAsset linkage between the parent
+	// LocationSync AssetSet and the Asset doesn't exist.
+	AssetSetAssetError string `json:"assetSetAssetError,omitempty"`
+	// AssetSetError: The reasons for the asset set error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "DUPLICATE_ASSET_SET_NAME" - The asset set name matches that of another
+	// enabled asset set.
+	//   "INVALID_PARENT_ASSET_SET_TYPE" - The type of AssetSet.asset_set_source
+	// does not match the type of AssetSet.location_set.source in its parent
+	// AssetSet.
+	//   "ASSET_SET_SOURCE_INCOMPATIBLE_WITH_PARENT_ASSET_SET" - The asset set
+	// source doesn't match its parent AssetSet's data.
+	//   "ASSET_SET_TYPE_CANNOT_BE_LINKED_TO_CUSTOMER" - This AssetSet type cannot
+	// be linked to CustomerAssetSet.
+	//   "INVALID_CHAIN_IDS" - The chain id(s) in ChainSet of a LOCATION_SYNC typed
+	// AssetSet is invalid.
+	//   "LOCATION_SYNC_ASSET_SET_DOES_NOT_SUPPORT_RELATIONSHIP_TYPE" - The
+	// relationship type in ChainSet of a LOCATION_SYNC typed AssetSet is not
+	// supported.
+	//   "NOT_UNIQUE_ENABLED_LOCATION_SYNC_TYPED_ASSET_SET" - There is more than
+	// one enabled LocationSync typed AssetSet under one customer.
+	//   "INVALID_PLACE_IDS" - The place id(s) in a LocationSync typed AssetSet is
+	// invalid and can't be decoded.
+	//   "OAUTH_INFO_INVALID" - The Google Business Profile OAuth info is invalid.
+	//   "OAUTH_INFO_MISSING" - The Google Business Profile OAuth info is missing.
+	//   "CANNOT_DELETE_AS_ENABLED_LINKAGES_EXIST" - Can't delete an AssetSet if it
+	// has any enabled linkages (e.g. CustomerAssetSet), or AssetSet is a parent
+	// AssetSet and has enabled child AssetSet associated.
+	AssetSetError string `json:"assetSetError,omitempty"`
+	// AssetSetLinkError: The reasons for the asset set link error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INCOMPATIBLE_ADVERTISING_CHANNEL_TYPE" - Advertising channel type cannot
+	// be attached to the asset set due to channel-based restrictions.
+	//   "DUPLICATE_FEED_LINK" - For this asset set type, only one campaign to feed
+	// linkage is allowed.
+	//   "INCOMPATIBLE_ASSET_SET_TYPE_WITH_CAMPAIGN_TYPE" - The asset set type and
+	// campaign type are incompatible.
+	//   "DUPLICATE_ASSET_SET_LINK" - Cannot link duplicate asset sets to the same
+	// campaign.
+	//   "ASSET_SET_LINK_CANNOT_BE_REMOVED" - Cannot remove the asset set link. If
+	// a campaign is linked with only one asset set and you attempt to unlink them,
+	// this error will be triggered.
+	AssetSetLinkError string `json:"assetSetLinkError,omitempty"`
+	// AudienceError: The reasons for the audience error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "NAME_ALREADY_IN_USE" - An audience with this name already exists.
+	//   "DIMENSION_INVALID" - A dimension within the audience definition is not
+	// valid.
+	//   "AUDIENCE_SEGMENT_NOT_FOUND" - One of the audience segment added is not
+	// found.
+	//   "AUDIENCE_SEGMENT_TYPE_NOT_SUPPORTED" - One of the audience segment type
+	// is not supported.
+	//   "DUPLICATE_AUDIENCE_SEGMENT" - The same segment already exists in this
+	// audience.
+	//   "TOO_MANY_SEGMENTS" - Audience can't have more than allowed number
+	// segments.
+	//   "TOO_MANY_DIMENSIONS_OF_SAME_TYPE" - Audience can't have multiple
+	// dimensions of same type.
+	//   "IN_USE" - The audience cannot be removed, because it is currently used in
+	// an ad group criterion or asset group signal in an (enabled or paused) ad
+	// group or campaign.
+	//   "MISSING_ASSET_GROUP_ID" - Asset Group scoped audience requires an asset
+	// group ID.
+	//   "CANNOT_CHANGE_FROM_CUSTOMER_TO_ASSET_GROUP_SCOPE" - Audience scope may
+	// not be changed from Customer to AssetGroup.
+	AudienceError string `json:"audienceError,omitempty"`
+	// AudienceInsightsError: The reasons for the Audience Insights error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "DIMENSION_INCOMPATIBLE_WITH_TOPIC_AUDIENCE_COMBINATIONS" - The dimensions
+	// cannot be used with topic audience combinations.
+	AudienceInsightsError string `json:"audienceInsightsError,omitempty"`
+	// AuthenticationError: Indicates failure to properly authenticate user.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "AUTHENTICATION_ERROR" - Authentication of the request failed.
+	//   "CLIENT_CUSTOMER_ID_INVALID" - Client customer ID is not a number.
+	//   "CUSTOMER_NOT_FOUND" - No customer found for the provided customer ID.
+	//   "GOOGLE_ACCOUNT_DELETED" - Client's Google account is deleted.
+	//   "GOOGLE_ACCOUNT_COOKIE_INVALID" - Account login token in the cookie is
+	// invalid.
+	//   "GOOGLE_ACCOUNT_AUTHENTICATION_FAILED" - A problem occurred during Google
+	// account authentication.
+	//   "GOOGLE_ACCOUNT_USER_AND_ADS_USER_MISMATCH" - The user in the Google
+	// account login token does not match the user ID in the cookie.
+	//   "LOGIN_COOKIE_REQUIRED" - Login cookie is required for authentication.
+	//   "NOT_ADS_USER" - The Google account that generated the OAuth access token
+	// is not associated with a Search Ads 360 account. Create a new account, or
+	// add the Google account to an existing Search Ads 360 account.
+	//   "OAUTH_TOKEN_INVALID" - OAuth token in the header is not valid.
+	//   "OAUTH_TOKEN_EXPIRED" - OAuth token in the header has expired.
+	//   "OAUTH_TOKEN_DISABLED" - OAuth token in the header has been disabled.
+	//   "OAUTH_TOKEN_REVOKED" - OAuth token in the header has been revoked.
+	//   "OAUTH_TOKEN_HEADER_INVALID" - OAuth token HTTP header is malformed.
+	//   "LOGIN_COOKIE_INVALID" - Login cookie is not valid.
+	//   "INVALID_EMAIL_ADDRESS" - The email address provided is invalid or does
+	// not exist.
+	//   "USER_ID_INVALID" - User ID in the header is not a valid ID.
+	//   "TWO_STEP_VERIFICATION_NOT_ENROLLED" - An account administrator changed
+	// this account's authentication settings. To access this account, enable
+	// 2-Step Verification in your Google account at
+	// https://www.google.com/landing/2step.
+	//   "ADVANCED_PROTECTION_NOT_ENROLLED" - An account administrator changed this
+	// account's authentication settings. To access this account, enable Advanced
+	// Protection in your Google account at
+	// https://landing.google.com/advancedprotection.
+	//   "ORGANIZATION_NOT_RECOGNIZED" - The Cloud organization associated with the
+	// project is not recognized.
+	//   "ORGANIZATION_NOT_APPROVED" - The Cloud organization associated with the
+	// project is not approved for prod access.
+	//   "ORGANIZATION_NOT_ASSOCIATED_WITH_DEVELOPER_TOKEN" - The Cloud
+	// organization associated with the project is not associated with the
+	// developer token.
+	//   "DEVELOPER_TOKEN_INVALID" - The developer token is not valid.
+	AuthenticationError string `json:"authenticationError,omitempty"`
+	// AuthorizationError: An error encountered when trying to authorize a user.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "USER_PERMISSION_DENIED" - User doesn't have permission to access
+	// customer. Note: If you're accessing a client customer, the manager's
+	// customer ID must be set in the `login-customer-id` header. Learn more at
+	// https://developers.google.com/search-ads/reporting/concepts/call-structure#login_customer_id_header
+	//   "DEVELOPER_TOKEN_NOT_ON_ALLOWLIST" - The developer token is not on the
+	// allow-list.
+	//   "DEVELOPER_TOKEN_PROHIBITED" - The developer token is not allowed with the
+	// project sent in the request.
+	//   "PROJECT_DISABLED" - The Google Cloud project sent in the request does not
+	// have permission to access the api.
+	//   "AUTHORIZATION_ERROR" - Authorization of the client failed.
+	//   "ACTION_NOT_PERMITTED" - The user does not have permission to perform this
+	// action (for example, ADD, UPDATE, REMOVE) on the resource or call a method.
+	//   "INCOMPLETE_SIGNUP" - Signup not complete.
+	//   "CUSTOMER_NOT_ENABLED" - The customer account can't be accessed because it
+	// is not yet enabled or has been deactivated.
+	//   "MISSING_TOS" - The developer must sign the terms of service. They can be
+	// found here: https://developers.google.com/terms
+	//   "DEVELOPER_TOKEN_NOT_APPROVED" - The developer token is only approved for
+	// use with test accounts. To access non-test accounts, apply for Basic or
+	// Standard access.
+	//   "INVALID_LOGIN_CUSTOMER_ID_SERVING_CUSTOMER_ID_COMBINATION" - The login
+	// customer specified does not have access to the account specified, so the
+	// request is invalid.
+	//   "SERVICE_ACCESS_DENIED" - The developer specified does not have access to
+	// the service.
+	//   "ACCESS_DENIED_FOR_ACCOUNT_TYPE" - The customer (or login customer) isn't
+	// allowed in Search Ads 360 API. It belongs to another ads system.
+	//   "METRIC_ACCESS_DENIED" - The developer does not have access to the metrics
+	// queried.
+	//   "CLOUD_PROJECT_NOT_UNDER_ORGANIZATION" - The Google Cloud project is not
+	// under the required organization.
+	//   "ACTION_NOT_PERMITTED_FOR_SUSPENDED_ACCOUNT" - The user does not have
+	// permission to perform this action on the resource or method because the
+	// Google Ads account is suspended.
+	AuthorizationError string `json:"authorizationError,omitempty"`
+	// AutomaticallyCreatedAssetRemovalError: The reasons for error in
+	// automatically created asset removal action.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "AD_DOES_NOT_EXIST" - The ad does not exist.
+	//   "INVALID_AD_TYPE" - Ad type is not supported. Only Responsive Search Ad
+	// type is supported.
+	//   "ASSET_DOES_NOT_EXIST" - The asset does not exist.
+	//   "ASSET_FIELD_TYPE_DOES_NOT_MATCH" - The asset field type does not match.
+	//   "NOT_AN_AUTOMATICALLY_CREATED_ASSET" - Not an automatically created asset.
+	AutomaticallyCreatedAssetRemovalError string `json:"automaticallyCreatedAssetRemovalError,omitempty"`
+	// BatchJobError: The reasons for the batch job error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CANNOT_MODIFY_JOB_AFTER_JOB_STARTS_RUNNING" - The batch job cannot add
+	// more operations or run after it has started running.
+	//   "EMPTY_OPERATIONS" - The operations for an AddBatchJobOperations request
+	// were empty.
+	//   "INVALID_SEQUENCE_TOKEN" - The sequence token for an AddBatchJobOperations
+	// request was invalid.
+	//   "RESULTS_NOT_READY" - Batch job results can only be retrieved once the job
+	// is finished.
+	//   "INVALID_PAGE_SIZE" - The page size for ListBatchJobResults was invalid.
+	//   "CAN_ONLY_REMOVE_PENDING_JOB" - The batch job cannot be removed because it
+	// has started running.
+	//   "CANNOT_LIST_RESULTS" - The batch job cannot be listed due to unexpected
+	// errors such as duplicate checkpoints.
+	//   "ASSET_GROUP_AND_ASSET_GROUP_ASSET_TRANSACTION_FAILURE" - The request
+	// contains interdependent AssetGroup and AssetGroupAsset operations that are
+	// treated atomically as a single transaction, and one or more of the
+	// operations in that transaction failed, which caused the entire transaction,
+	// and therefore this mutate operation, to fail. The operations that caused the
+	// transaction to fail can be found in the consecutive AssetGroup or
+	// AssetGroupAsset results with the same asset group id. The mutate operation
+	// will be successful once the remaining errors in the transaction are fixed.
+	//   "ASSET_GROUP_LISTING_GROUP_FILTER_TRANSACTION_FAILURE" - The request
+	// contains interdependent AssetGroupListingGroupFilter operations that are
+	// treated atomically as a single transaction, and one or more of the
+	// operations in that transaction failed, which caused the entire transaction,
+	// and therefore this mutate operation, to fail. The operations that caused the
+	// transaction to fail can be found in the consecutive
+	// AssetGroupListingGroupFilter results with the same asset group id. The
+	// mutate operation will be successful once the remaining errors in the
+	// transaction are fixed.
+	//   "REQUEST_TOO_LARGE" - The AddBatchJobOperationsRequest is too large. Split
+	// the request into smaller requests. The maximum allowed request size is
+	// 10484504 bytes.
+	//   "CAMPAIGN_AND_CAMPAIGN_ASSET_TRANSACTION_FAILURE" - This error indicates a
+	// failed transaction involving interdependent Campaign and CampaignAsset
+	// operations that are treated atomically as a single transaction. Because some
+	// operations within the transaction failed, the entire set of changes was
+	// rejected. Related error details are found in the results for the Campaign
+	// and CampaignAssets sharing the same Campaign ID. The transaction will
+	// succeed after all associated errors are resolved.
+	BatchJobError string `json:"batchJobError,omitempty"`
+	// BenchmarksError: The reasons for the Benchmarks error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "MAX_QUERY_COMPLEXITY_EXCEEDED" - The combination of inputs to generate
+	// benchmarks is too complex. To reduce complexity, try selecting a more
+	// granular benchmarks source, a smaller date range, or a smaller set of
+	// products.
+	BenchmarksError string `json:"benchmarksError,omitempty"`
+	// BiddingError: The reasons for the bidding errors
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "BIDDING_STRATEGY_TRANSITION_NOT_ALLOWED" - Cannot transition to new
+	// bidding strategy.
+	//   "CANNOT_ATTACH_BIDDING_STRATEGY_TO_CAMPAIGN" - Cannot attach bidding
+	// strategy to campaign.
+	//   "INVALID_ANONYMOUS_BIDDING_STRATEGY_TYPE" - Bidding strategy is not
+	// supported or cannot be used as anonymous.
+	//   "INVALID_BIDDING_STRATEGY_TYPE" - The type does not match the named
+	// strategy's type.
+	//   "INVALID_BID" - The bid is invalid.
+	//   "BIDDING_STRATEGY_NOT_AVAILABLE_FOR_ACCOUNT_TYPE" - Bidding strategy is
+	// not available for the account type.
+	//   "CANNOT_CREATE_CAMPAIGN_WITH_BIDDING_STRATEGY" - Campaign can not be
+	// created with given bidding strategy. It can be transitioned to the strategy,
+	// once eligible.
+	//
+	// "CANNOT_TARGET_CONTENT_NETWORK_ONLY_WITH_CAMPAIGN_LEVEL_POP_BIDDING_STRATEGY"
+	//  - Cannot target content network only as campaign uses Page One Promoted
+	// bidding strategy.
+	//   "BIDDING_STRATEGY_NOT_SUPPORTED_WITH_AD_SCHEDULE" - Budget Optimizer and
+	// Target Spend bidding strategies are not supported for campaigns with
+	// AdSchedule targeting.
+	//   "PAY_PER_CONVERSION_NOT_AVAILABLE_FOR_CUSTOMER" - Pay per conversion is
+	// not available to all the customer, only few customers on the allow-list can
+	// use this.
+	//   "PAY_PER_CONVERSION_NOT_ALLOWED_WITH_TARGET_CPA" - Pay per conversion is
+	// not allowed with Target CPA.
+	//   "BIDDING_STRATEGY_NOT_ALLOWED_FOR_SEARCH_ONLY_CAMPAIGNS" - Cannot set
+	// bidding strategy to Manual CPM for search network only campaigns.
+	//   "BIDDING_STRATEGY_NOT_SUPPORTED_IN_DRAFTS_OR_EXPERIMENTS" - The bidding
+	// strategy is not supported for use in drafts or experiments.
+	//   "BIDDING_STRATEGY_TYPE_DOES_NOT_SUPPORT_PRODUCT_TYPE_ADGROUP_CRITERION" -
+	// Bidding strategy type does not support product type ad group criterion.
+	//   "BID_TOO_SMALL" - Bid amount is too small.
+	//   "BID_TOO_BIG" - Bid amount is too big.
+	//   "BID_TOO_MANY_FRACTIONAL_DIGITS" - Bid has too many fractional digit
+	// precision.
+	//   "INVALID_DOMAIN_NAME" - Invalid domain name specified.
+	//   "NOT_COMPATIBLE_WITH_PAYMENT_MODE" - The field is not compatible with the
+	// payment mode.
+	//   "BIDDING_STRATEGY_TYPE_INCOMPATIBLE_WITH_SHARED_BUDGET" - Bidding strategy
+	// type is incompatible with shared budget.
+	//   "BIDDING_STRATEGY_AND_BUDGET_MUST_BE_ALIGNED" - The attached bidding
+	// strategy and budget must be aligned with each other if alignment is
+	// specified on either entity.
+	//
+	// "BIDDING_STRATEGY_AND_BUDGET_MUST_BE_ATTACHED_TO_THE_SAME_CAMPAIGNS_TO_ALIGN"
+	//  - The attached bidding strategy and budget must be attached to the same
+	// campaigns to become aligned.
+	//   "BIDDING_STRATEGY_AND_BUDGET_MUST_BE_REMOVED_TOGETHER" - The aligned
+	// bidding strategy and budget must be removed at the same time.
+	//   "CPC_BID_FLOOR_MICROS_GREATER_THAN_CPC_BID_CEILING_MICROS" -
+	// cpc_bid_floor_micros is greater than cpc_bid_ceiling_micros.
+	//   "TARGET_ROAS_TOLERANCE_PERCENT_MILLIS_MUST_BE_INTEGER" -
+	// target_roas_tolerance_percent_millis must be integer.
+	BiddingError string `json:"biddingError,omitempty"`
+	// BiddingStrategyError: An error with a Bidding Strategy mutate.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "DUPLICATE_NAME" - Each bidding strategy must have a unique name.
+	//   "CANNOT_CHANGE_BIDDING_STRATEGY_TYPE" - Bidding strategy type is
+	// immutable.
+	//   "CANNOT_REMOVE_ASSOCIATED_STRATEGY" - Only bidding strategies not linked
+	// to campaigns, adgroups or adgroup criteria can be removed.
+	//   "BIDDING_STRATEGY_NOT_SUPPORTED" - The specified bidding strategy is not
+	// supported.
+	//   "INCOMPATIBLE_BIDDING_STRATEGY_AND_BIDDING_STRATEGY_GOAL_TYPE" - The
+	// bidding strategy is incompatible with the campaign's bidding strategy goal
+	// type.
+	BiddingStrategyError string `json:"biddingStrategyError,omitempty"`
+	// BillingSetupError: The reasons for the billing setup error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CANNOT_USE_EXISTING_AND_NEW_ACCOUNT" - Cannot specify both an existing
+	// payments account and a new payments account when setting up billing.
+	//   "CANNOT_REMOVE_STARTED_BILLING_SETUP" - Cannot cancel an approved billing
+	// setup whose start time has passed.
+	//   "CANNOT_CHANGE_BILLING_TO_SAME_PAYMENTS_ACCOUNT" - Cannot perform a Change
+	// of Bill-To (CBT) to the same payments account.
+	//   "BILLING_SETUP_NOT_PERMITTED_FOR_CUSTOMER_STATUS" - Billing setups can
+	// only be used by customers with ENABLED or DRAFT status.
+	//   "INVALID_PAYMENTS_ACCOUNT" - Billing setups must either include a
+	// correctly formatted existing payments account id, or a non-empty new
+	// payments account name.
+	//   "BILLING_SETUP_NOT_PERMITTED_FOR_CUSTOMER_CATEGORY" - Only billable and
+	// third-party customers can create billing setups.
+	//   "INVALID_START_TIME_TYPE" - Billing setup creations can only use NOW for
+	// start time type.
+	//   "THIRD_PARTY_ALREADY_HAS_BILLING" - Billing setups can only be created for
+	// a third-party customer if they do not already have a setup.
+	//   "BILLING_SETUP_IN_PROGRESS" - Billing setups cannot be created if there is
+	// already a pending billing in progress.
+	//   "NO_SIGNUP_PERMISSION" - Billing setups can only be created by customers
+	// who have permission to setup billings. Users can contact a representative
+	// for help setting up permissions.
+	//   "CHANGE_OF_BILL_TO_IN_PROGRESS" - Billing setups cannot be created if
+	// there is already a future-approved billing.
+	//   "PAYMENTS_PROFILE_NOT_FOUND" - Requested payments profile not found.
+	//   "PAYMENTS_ACCOUNT_NOT_FOUND" - Requested payments account not found.
+	//   "PAYMENTS_PROFILE_INELIGIBLE" - Billing setup creation failed because the
+	// payments profile is ineligible.
+	//   "PAYMENTS_ACCOUNT_INELIGIBLE" - Billing setup creation failed because the
+	// payments account is ineligible.
+	//   "CUSTOMER_NEEDS_INTERNAL_APPROVAL" - Billing setup creation failed because
+	// the payments profile needs internal approval.
+	//   "PAYMENTS_PROFILE_NEEDS_SERVICE_AGREEMENT_ACCEPTANCE" - Billing setup
+	// creation failed because the user needs to accept master service agreement on
+	// the payments profile.
+	//   "PAYMENTS_ACCOUNT_INELIGIBLE_CURRENCY_CODE_MISMATCH" - Payments account
+	// has different currency code than the current customer and hence cannot be
+	// used to setup billing.
+	//   "FUTURE_START_TIME_PROHIBITED" - A start time in the future cannot be used
+	// because there is currently no active billing setup for this customer.
+	//   "TOO_MANY_BILLING_SETUPS_FOR_PAYMENTS_ACCOUNT" - The payments account has
+	// maximum number of billing setups.
+	BillingSetupError string `json:"billingSetupError,omitempty"`
+	// BrandGuidelinesMigrationError: The reasons for the brand guidelines
+	// migration error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "BRAND_GUIDELINES_ALREADY_ENABLED" - This campaign is already enabled for
+	// Brand Guidelines.
+	//   "CANNOT_ENABLE_BRAND_GUIDELINES_FOR_REMOVED_CAMPAIGN" - Brand Guidelines
+	// can only be enabled for active or suspended campaigns.
+	//   "BRAND_GUIDELINES_LOGO_LIMIT_EXCEEDED" - Maximum of 5 square and landscape
+	// logos can be specified for Brand Guidelines.
+	//   "CANNOT_AUTO_POPULATE_BRAND_ASSETS_WHEN_BRAND_ASSETS_PROVIDED" - Either
+	// auto_populate_brand_assets must be true or brand_assets must be provided,
+	// but not both.
+	//   "AUTO_POPULATE_BRAND_ASSETS_REQUIRED_WHEN_BRAND_ASSETS_OMITTED" - Either
+	// auto_populate_brand_assets can be false or brand_assets can be omitted, but
+	// not both.
+	//   "TOO_MANY_ENABLE_OPERATIONS" - A maximum of 10 enable operations can be
+	// executed in a request.
+	BrandGuidelinesMigrationError string `json:"brandGuidelinesMigrationError,omitempty"`
+	// CampaignBudgetError: An error with a Campaign Budget mutate.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CAMPAIGN_BUDGET_CANNOT_BE_SHARED" - The campaign budget cannot be shared.
+	//   "CAMPAIGN_BUDGET_REMOVED" - The requested campaign budget no longer
+	// exists.
+	//   "CAMPAIGN_BUDGET_IN_USE" - The campaign budget is associated with at least
+	// one campaign, and so the campaign budget cannot be removed.
+	//   "CAMPAIGN_BUDGET_PERIOD_NOT_AVAILABLE" - Customer is not on the allow-list
+	// for this campaign budget period.
+	//   "CANNOT_MODIFY_FIELD_OF_IMPLICITLY_SHARED_CAMPAIGN_BUDGET" - This field is
+	// not mutable on implicitly shared campaign budgets
+	//   "CANNOT_UPDATE_CAMPAIGN_BUDGET_TO_IMPLICITLY_SHARED" - Cannot change
+	// explicitly shared campaign budgets back to implicitly shared ones.
+	//   "CANNOT_UPDATE_CAMPAIGN_BUDGET_TO_EXPLICITLY_SHARED_WITHOUT_NAME" - An
+	// implicit campaign budget without a name cannot be changed to explicitly
+	// shared campaign budget.
+	//   "CANNOT_UPDATE_CAMPAIGN_BUDGET_TO_EXPLICITLY_SHARED" - Cannot change an
+	// implicitly shared campaign budget to an explicitly shared one.
+	//   "CANNOT_USE_IMPLICITLY_SHARED_CAMPAIGN_BUDGET_WITH_MULTIPLE_CAMPAIGNS" -
+	// Only explicitly shared campaign budgets can be used with multiple campaigns.
+	//   "DUPLICATE_NAME" - A campaign budget with this name already exists.
+	//   "MONEY_AMOUNT_IN_WRONG_CURRENCY" - A money amount was not in the expected
+	// currency.
+	//   "MONEY_AMOUNT_LESS_THAN_CURRENCY_MINIMUM_CPC" - A money amount was less
+	// than the minimum CPC for currency.
+	//   "MONEY_AMOUNT_TOO_LARGE" - A money amount was greater than the maximum
+	// allowed.
+	//   "NEGATIVE_MONEY_AMOUNT" - A money amount was negative.
+	//   "NON_MULTIPLE_OF_MINIMUM_CURRENCY_UNIT" - A money amount was not a
+	// multiple of a minimum unit.
+	//   "TOTAL_BUDGET_AMOUNT_MUST_BE_UNSET_FOR_BUDGET_PERIOD_DAILY" - Total budget
+	// amount must be unset when BudgetPeriod is DAILY.
+	//   "INVALID_PERIOD" - The period of the budget is not allowed.
+	//   "CANNOT_USE_ACCELERATED_DELIVERY_MODE" - Cannot use accelerated delivery
+	// method on this budget.
+	//   "BUDGET_AMOUNT_MUST_BE_UNSET_FOR_CUSTOM_BUDGET_PERIOD" - Budget amount
+	// must be unset when BudgetPeriod is CUSTOM.
+	//   "BUDGET_BELOW_PER_DAY_MINIMUM" - Budget amount or total amount must be
+	// above this campaign's per-day minimum. See the error's
+	// details.budget_per_day_minimum_error_details field for more information.
+	CampaignBudgetError string `json:"campaignBudgetError,omitempty"`
+	// CampaignConversionGoalError: The reasons for the campaign conversion goal
+	// error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CANNOT_USE_CAMPAIGN_GOAL_FOR_SEARCH_ADS_360_MANAGED_CAMPAIGN" - Campaign
+	// is managed by Search Ads 360 but uses Unified Goal.
+	//   "CANNOT_USE_STORE_SALE_GOAL_FOR_PERFORMANCE_MAX_CAMPAIGN" - Performance
+	// Max campaign cannot use an included store sale campaign goal.
+	CampaignConversionGoalError string `json:"campaignConversionGoalError,omitempty"`
+	// CampaignCriterionError: The reasons for the campaign criterion error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CONCRETE_TYPE_REQUIRED" - Concrete type of criterion (keyword v.s.
+	// placement) is required for CREATE and UPDATE operations.
+	//   "INVALID_PLACEMENT_URL" - Invalid placement URL.
+	//   "CANNOT_EXCLUDE_CRITERIA_TYPE" - Criteria type can not be excluded for the
+	// campaign by the customer. like AOL account type cannot target site type
+	// criteria
+	//   "CANNOT_SET_STATUS_FOR_CRITERIA_TYPE" - Cannot set the campaign criterion
+	// status for this criteria type.
+	//   "CANNOT_SET_STATUS_FOR_EXCLUDED_CRITERIA" - Cannot set the campaign
+	// criterion status for an excluded criteria.
+	//   "CANNOT_TARGET_AND_EXCLUDE" - Cannot target and exclude the same
+	// criterion.
+	//   "TOO_MANY_OPERATIONS" - The mutate contained too many operations.
+	//   "OPERATOR_NOT_SUPPORTED_FOR_CRITERION_TYPE" - This operator cannot be
+	// applied to a criterion of this type.
+	//   "SHOPPING_CAMPAIGN_SALES_COUNTRY_NOT_SUPPORTED_FOR_SALES_CHANNEL" - The
+	// Shopping campaign sales country is not supported for ProductSalesChannel
+	// targeting.
+	//   "CANNOT_ADD_EXISTING_FIELD" - The existing field can't be updated with
+	// CREATE operation. It can be updated with UPDATE operation only.
+	//   "CANNOT_UPDATE_NEGATIVE_CRITERION" - Negative criteria are immutable, so
+	// updates are not allowed.
+	//   "CANNOT_SET_NEGATIVE_KEYWORD_THEME_CONSTANT_CRITERION" - Only free form
+	// names are allowed for negative Smart campaign keyword theme.
+	//   "INVALID_KEYWORD_THEME_CONSTANT" - Invalid Smart campaign keyword theme
+	// constant criterion.
+	//   "MISSING_KEYWORD_THEME_CONSTANT_OR_FREE_FORM_KEYWORD_THEME" - A Smart
+	// campaign keyword theme constant or free-form Smart campaign keyword theme is
+	// required.
+	//   "CANNOT_TARGET_BOTH_PROXIMITY_AND_LOCATION_CRITERIA_FOR_SMART_CAMPAIGN" -
+	// A Smart campaign may not target proximity and location criteria
+	// simultaneously.
+	//   "CANNOT_TARGET_MULTIPLE_PROXIMITY_CRITERIA_FOR_SMART_CAMPAIGN" - A Smart
+	// campaign may not target multiple proximity criteria.
+	//   "LOCATION_NOT_LAUNCHED_FOR_LOCAL_SERVICES_CAMPAIGN" - Location is not
+	// launched for Local Services Campaigns.
+	//   "LOCATION_INVALID_FOR_LOCAL_SERVICES_CAMPAIGN" - A Local Services campaign
+	// may not target certain criteria types.
+	//   "CANNOT_TARGET_COUNTRY_FOR_LOCAL_SERVICES_CAMPAIGN" - Country locations
+	// are not supported for Local Services campaign.
+	//   "LOCATION_NOT_IN_HOME_COUNTRY_FOR_LOCAL_SERVICES_CAMPAIGN" - Location is
+	// not within the home country of Local Services campaign.
+	//   "CANNOT_ADD_OR_REMOVE_LOCATION_FOR_LOCAL_SERVICES_CAMPAIGN" - Local
+	// Services profile does not exist for a particular Local Services campaign.
+	//   "AT_LEAST_ONE_POSITIVE_LOCATION_REQUIRED_FOR_LOCAL_SERVICES_CAMPAIGN" -
+	// Local Services campaign must have at least one target location.
+	//
+	// "AT_LEAST_ONE_LOCAL_SERVICE_ID_CRITERION_REQUIRED_FOR_LOCAL_SERVICES_CAMPAIGN
+	// " - At least one positive local service ID criterion is required for a Local
+	// Services campaign.
+	//   "LOCAL_SERVICE_ID_NOT_FOUND_FOR_CATEGORY" - Local service ID is not found
+	// under selected categories in local services campaign setting.
+	//   "CANNOT_ATTACH_BRAND_LIST_TO_NON_QUALIFIED_SEARCH_CAMPAIGN" - For search
+	// advertising channel, brand lists can only be applied to exclusive targeting,
+	// broad match campaigns for inclusive targeting or PMax generated campaigns.
+	//   "CANNOT_REMOVE_ALL_LOCATIONS_DUE_TO_TOO_MANY_COUNTRY_EXCLUSIONS" -
+	// Campaigns that target all countries and territories are limited to a certain
+	// number of top-level location exclusions. If removing a criterion causes the
+	// campaign to target all countries and territories and the campaign has more
+	// top-level location exclusions than the limit allows, then this error is
+	// returned.
+	//   "INVALID_VIDEO_LINEUP_ID" - Video lineup ID does not exist.
+	CampaignCriterionError string `json:"campaignCriterionError,omitempty"`
+	// CampaignCustomizerError: The reasons for the campaign customizer error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	CampaignCustomizerError string `json:"campaignCustomizerError,omitempty"`
+	// CampaignDraftError: The reasons for the campaign draft error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "DUPLICATE_DRAFT_NAME" - A draft with this name already exists for this
+	// campaign.
+	//   "INVALID_STATUS_TRANSITION_FROM_REMOVED" - The draft is removed and cannot
+	// be transitioned to another status.
+	//   "INVALID_STATUS_TRANSITION_FROM_PROMOTED" - The draft has been promoted
+	// and cannot be transitioned to the specified status.
+	//   "INVALID_STATUS_TRANSITION_FROM_PROMOTE_FAILED" - The draft has failed to
+	// be promoted and cannot be transitioned to the specified status.
+	//   "CUSTOMER_CANNOT_CREATE_DRAFT" - This customer is not allowed to create
+	// drafts.
+	//   "CAMPAIGN_CANNOT_CREATE_DRAFT" - This campaign is not allowed to create
+	// drafts.
+	//   "INVALID_DRAFT_CHANGE" - This modification cannot be made on a draft.
+	//   "INVALID_STATUS_TRANSITION" - The draft cannot be transitioned to the
+	// specified status from its current status.
+	//   "MAX_NUMBER_OF_DRAFTS_PER_CAMPAIGN_REACHED" - The campaign has reached the
+	// maximum number of drafts that can be created for a campaign throughout its
+	// lifetime. No additional drafts can be created for this campaign. Removed
+	// drafts also count towards this limit.
+	//   "LIST_ERRORS_FOR_PROMOTED_DRAFT_ONLY" - ListAsyncErrors was called without
+	// first promoting the draft.
+	CampaignDraftError string `json:"campaignDraftError,omitempty"`
+	// CampaignError: An error with a Campaign mutate.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CANNOT_TARGET_CONTENT_NETWORK" - Cannot target content network.
+	//   "CANNOT_TARGET_SEARCH_NETWORK" - Cannot target search network.
+	//   "CANNOT_TARGET_SEARCH_NETWORK_WITHOUT_GOOGLE_SEARCH" - Cannot cover search
+	// network without google search network.
+	//   "CANNOT_TARGET_GOOGLE_SEARCH_FOR_CPM_CAMPAIGN" - Cannot target Google
+	// Search network for a CPM campaign.
+	//   "CAMPAIGN_MUST_TARGET_AT_LEAST_ONE_NETWORK" - Must target at least one
+	// network.
+	//   "CANNOT_TARGET_PARTNER_SEARCH_NETWORK" - Only some Google partners are
+	// allowed to target partner search network.
+	//   "CANNOT_TARGET_CONTENT_NETWORK_ONLY_WITH_CRITERIA_LEVEL_BIDDING_STRATEGY"
+	// - Cannot target content network only as campaign has criteria-level bidding
+	// strategy.
+	//   "CAMPAIGN_DURATION_MUST_CONTAIN_ALL_RUNNABLE_TRIALS" - Cannot modify the
+	// start or end date such that the campaign duration would not contain the
+	// durations of all runnable trials.
+	//   "CANNOT_MODIFY_FOR_TRIAL_CAMPAIGN" - Cannot modify dates, budget or status
+	// of a trial campaign.
+	//   "DUPLICATE_CAMPAIGN_NAME" - Trying to modify the name of an active or
+	// paused campaign, where the name is already assigned to another active or
+	// paused campaign.
+	//   "INCOMPATIBLE_CAMPAIGN_FIELD" - Two fields are in conflicting modes.
+	//   "INVALID_CAMPAIGN_NAME" - Campaign name cannot be used.
+	//   "INVALID_AD_SERVING_OPTIMIZATION_STATUS" - Given status is invalid.
+	//   "INVALID_TRACKING_URL" - Error in the campaign level tracking URL.
+	//   "CANNOT_SET_BOTH_TRACKING_URL_TEMPLATE_AND_TRACKING_SETTING" - Cannot set
+	// both tracking URL template and tracking setting. A user has to clear legacy
+	// tracking setting in order to add tracking URL template.
+	//   "MAX_IMPRESSIONS_NOT_IN_RANGE" - The maximum number of impressions for
+	// Frequency Cap should be an integer greater than 0.
+	//   "TIME_UNIT_NOT_SUPPORTED" - Only the Day, Week and Month time units are
+	// supported.
+	//   "INVALID_OPERATION_IF_SERVING_STATUS_HAS_ENDED" - Operation not allowed on
+	// a campaign whose serving status has ended
+	//   "BUDGET_CANNOT_BE_SHARED" - This budget is exclusively linked to a
+	// Campaign that is using experiments so it cannot be shared.
+	//   "CAMPAIGN_CANNOT_USE_SHARED_BUDGET" - Campaigns using experiments cannot
+	// use a shared budget.
+	//   "CANNOT_CHANGE_BUDGET_ON_CAMPAIGN_WITH_TRIALS" - A different budget cannot
+	// be assigned to a campaign when there are running or scheduled trials.
+	//   "CAMPAIGN_LABEL_DOES_NOT_EXIST" - No link found between the campaign and
+	// the label.
+	//   "CAMPAIGN_LABEL_ALREADY_EXISTS" - The label has already been attached to
+	// the campaign.
+	//   "MISSING_SHOPPING_SETTING" - A ShoppingSetting was not found when creating
+	// a shopping campaign.
+	//   "INVALID_SHOPPING_SALES_COUNTRY" - The country in shopping setting is not
+	// an allowed country.
+	//   "ADVERTISING_CHANNEL_TYPE_NOT_AVAILABLE_FOR_ACCOUNT_TYPE" - The requested
+	// channel type is not available according to the customer's account setting.
+	//   "INVALID_ADVERTISING_CHANNEL_SUB_TYPE" - The AdvertisingChannelSubType is
+	// not a valid subtype of the primary channel type.
+	//   "AT_LEAST_ONE_CONVERSION_MUST_BE_SELECTED" - At least one conversion must
+	// be selected.
+	//   "CANNOT_SET_AD_ROTATION_MODE" - Setting ad rotation mode for a campaign is
+	// not allowed. Ad rotation mode at campaign is deprecated.
+	//   "CANNOT_MODIFY_START_DATE_IF_ALREADY_STARTED" - Trying to change start
+	// date on a campaign that has started.
+	//   "CANNOT_SET_DATE_TO_PAST" - Trying to modify a date into the past.
+	//   "MISSING_HOTEL_CUSTOMER_LINK" - Hotel center id in the hotel setting does
+	// not match any customer links.
+	//   "INVALID_HOTEL_CUSTOMER_LINK" - Hotel center id in the hotel setting must
+	// match an active customer link.
+	//   "MISSING_HOTEL_SETTING" - Hotel setting was not found when creating a
+	// hotel ads campaign.
+	//   "CANNOT_USE_SHARED_CAMPAIGN_BUDGET_WHILE_PART_OF_CAMPAIGN_GROUP" - A
+	// Campaign cannot use shared campaign budgets and be part of a campaign group.
+	//   "APP_NOT_FOUND" - The app ID was not found.
+	//   "SHOPPING_ENABLE_LOCAL_NOT_SUPPORTED_FOR_CAMPAIGN_TYPE" -
+	// Campaign.shopping_setting.enable_local is not supported for the specified
+	// campaign type.
+	//   "MERCHANT_NOT_ALLOWED_FOR_COMPARISON_LISTING_ADS" - The merchant does not
+	// support the creation of campaigns for Shopping Comparison Listing Ads.
+	//   "INSUFFICIENT_APP_INSTALLS_COUNT" - The App campaign for engagement cannot
+	// be created because there aren't enough installs.
+	//   "SENSITIVE_CATEGORY_APP" - The App campaign for engagement cannot be
+	// created because the app is sensitive.
+	//   "HEC_AGREEMENT_REQUIRED" - Customers with Housing, Employment, or Credit
+	// ads must accept updated personalized ads policy to continue creating
+	// campaigns.
+	//   "NOT_COMPATIBLE_WITH_VIEW_THROUGH_CONVERSION_OPTIMIZATION" - The field is
+	// not compatible with view through conversion optimization.
+	//   "INVALID_EXCLUDED_PARENT_ASSET_FIELD_TYPE" - The field type cannot be
+	// excluded because an active campaign-asset link of this type exists.
+	//   "CANNOT_CREATE_APP_PRE_REGISTRATION_FOR_NON_ANDROID_APP" - The app
+	// pre-registration campaign cannot be created for non-Android applications.
+	//   "APP_NOT_AVAILABLE_TO_CREATE_APP_PRE_REGISTRATION_CAMPAIGN" - The campaign
+	// cannot be created since the app is not available for pre-registration in any
+	// country.
+	//   "INCOMPATIBLE_BUDGET_TYPE" - The type of the Budget is not compatible with
+	// this Campaign.
+	//   "LOCAL_SERVICES_DUPLICATE_CATEGORY_BID" - Category bid list in the local
+	// services campaign setting contains multiple bids for the same category ID.
+	//   "LOCAL_SERVICES_INVALID_CATEGORY_BID" - Category bid list in the local
+	// services campaign setting contains a bid for an invalid category ID.
+	//   "LOCAL_SERVICES_MISSING_CATEGORY_BID" - Category bid list in the local
+	// services campaign setting is missing a bid for a category ID that must be
+	// present.
+	//   "INVALID_STATUS_CHANGE" - The requested change in status is not supported.
+	//   "MISSING_TRAVEL_CUSTOMER_LINK" - Travel Campaign's travel_account_id does
+	// not match any customer links.
+	//   "INVALID_TRAVEL_CUSTOMER_LINK" - Travel Campaign's travel_account_id
+	// matches an existing customer link but the customer link is not active.
+	//   "INVALID_EXCLUDED_PARENT_ASSET_SET_TYPE" - The asset set type is invalid
+	// to be set in excluded_parent_asset_set_types field.
+	//   "ASSET_SET_NOT_A_HOTEL_PROPERTY_ASSET_SET" -
+	// Campaign.hotel_property_asset_set must point to an asset set of type
+	// HOTEL_PROPERTY.
+	//   "HOTEL_PROPERTY_ASSET_SET_ONLY_FOR_PERFORMANCE_MAX_FOR_TRAVEL_GOALS" - The
+	// hotel property asset set can only be set on Performance Max for travel goals
+	// campaigns.
+	//   "AVERAGE_DAILY_SPEND_TOO_HIGH" - Customer's average daily spend is too
+	// high to enable this feature.
+	//   "CANNOT_ATTACH_TO_REMOVED_CAMPAIGN_GROUP" - Cannot attach the campaign to
+	// a deleted campaign group.
+	//   "CANNOT_ATTACH_TO_BIDDING_STRATEGY" - Cannot attach the campaign to this
+	// bidding strategy.
+	//   "CANNOT_CHANGE_BUDGET_PERIOD" - A budget with a different period cannot be
+	// assigned to the campaign.
+	//   "NOT_ENOUGH_CONVERSIONS" - Customer does not have enough conversions to
+	// enable this feature.
+	//   "CANNOT_SET_MORE_THAN_ONE_CONVERSION_ACTION" - This campaign type can only
+	// have one conversion action.
+	//   "NOT_COMPATIBLE_WITH_BUDGET_TYPE" - The field is not compatible with the
+	// budget type.
+	//   "NOT_COMPATIBLE_WITH_UPLOAD_CLICKS_CONVERSION" - The feature is
+	// incompatible with ConversionActionType.UPLOAD_CLICKS.
+	//   "APP_ID_MUST_MATCH_CONVERSION_ACTION_APP_ID" - App campaign setting app ID
+	// must match selective optimization conversion action app ID.
+	//   "CONVERSION_ACTION_WITH_DOWNLOAD_CATEGORY_NOT_ALLOWED" - Selective
+	// optimization conversion action with Download category is not allowed.
+	//   "CONVERSION_ACTION_WITH_DOWNLOAD_CATEGORY_REQUIRED" - One software
+	// download for selective optimization conversion action is required for this
+	// campaign conversion action.
+	//   "CONVERSION_TRACKING_NOT_ENABLED" - Conversion tracking is not enabled and
+	// is required for this feature.
+	//   "NOT_COMPATIBLE_WITH_BIDDING_STRATEGY_TYPE" - The field is not compatible
+	// with the bidding strategy type.
+	//   "NOT_COMPATIBLE_WITH_GOOGLE_ATTRIBUTION_CONVERSIONS" - Campaign is not
+	// compatible with a conversion tracker that has Google attribution enabled.
+	//   "CONVERSION_LAG_TOO_HIGH" - Customer level conversion lag is too high.
+	//   "NOT_LINKED_ADVERTISING_PARTNER" - The advertiser set as an advertising
+	// partner is not an actively linked advertiser to this customer.
+	//   "INVALID_NUMBER_OF_ADVERTISING_PARTNER_IDS" - Invalid number of
+	// advertising partner IDs.
+	//   "CANNOT_TARGET_DISPLAY_NETWORK_WITHOUT_YOUTUBE" - Cannot target the
+	// display network without also targeting YouTube.
+	//   "CANNOT_LINK_TO_COMPARISON_SHOPPING_SERVICE_ACCOUNT" - This campaign type
+	// cannot be linked to a Comparison Shopping Service account.
+	//   "CANNOT_TARGET_NETWORK_FOR_COMPARISON_SHOPPING_SERVICE_LINKED_ACCOUNTS" -
+	// Standard Shopping campaigns that are linked to a Comparison Shopping Service
+	// account cannot target this network.
+	//   "CANNOT_MODIFY_TEXT_ASSET_AUTOMATION_WITH_ENABLED_TRIAL" - Text asset
+	// automation settings can not be modified when there is an active Performance
+	// Max optimization automatically created assets experiment. End the experiment
+	// to modify these settings.
+	//   "DYNAMIC_TEXT_ASSET_CANNOT_OPT_OUT_WITH_FINAL_URL_EXPANSION_OPT_IN" -
+	// Dynamic text asset cannot be opted out when final URL expansion is opted in.
+	//   "CANNOT_SET_CAMPAIGN_KEYWORD_MATCH_TYPE" - Can not set a campaign level
+	// match type.
+	//   "CANNOT_DISABLE_BROAD_MATCH_WHEN_KEYWORD_CONVERSION_IN_PROCESS" - The
+	// campaign level keyword match type cannot be switched to non-broad when
+	// keyword conversion to broad match is in process.
+	//   "CANNOT_DISABLE_BROAD_MATCH_WHEN_TARGETING_BRANDS" - The campaign level
+	// keyword match type cannot be switched to non-broad when the campaign has any
+	// attached brand list or when a brand hint shared set is attached to the
+	// campaign.
+	//   "CANNOT_ENABLE_BROAD_MATCH_FOR_BASE_CAMPAIGN_WITH_PROMOTING_TRIAL" -
+	// Cannot set campaign level keyword match type to BROAD if the campaign is a
+	// base campaign with an associated trial that is currently promoting.
+	//   "CANNOT_ENABLE_BROAD_MATCH_FOR_PROMOTING_TRIAL_CAMPAIGN" - Cannot set
+	// campaign level keyword match type to BROAD if the campaign is a trial
+	// currently promoting.
+	//   "REQUIRED_BUSINESS_NAME_ASSET_NOT_LINKED" - Performance Max campaigns with
+	// Brand Guidelines enabled require at least one business name to be linked as
+	// a CampaignAsset. Performance Max campaigns for online sales with a product
+	// feed must meet this requirement only when there are assets that are linked
+	// to the campaign's asset groups.
+	//   "REQUIRED_LOGO_ASSET_NOT_LINKED" - Performance Max campaigns with Brand
+	// Guidelines enabled require at least one square logo to be linked as a
+	// CampaignAsset. Performance Max campaigns for online sales with a product
+	// feed must meet this requirement only when there are assets that are linked
+	// to the campaign's asset groups.
+	//   "BRAND_TARGETING_OVERRIDES_NOT_SUPPORTED" - This campaign does not support
+	// brand targeting overrides. Brand targeting overrides are only supported for
+	// Performance Max campaigns that have a product feed.
+	//   "BRAND_GUIDELINES_NOT_ENABLED_FOR_CAMPAIGN" - Brand Guideline fields can
+	// only be set for campaigns that have Brand Guidelines enabled.
+	//   "BRAND_GUIDELINES_MAIN_AND_ACCENT_COLORS_REQUIRED" - When a Brand
+	// Guidelines color field is set, both main color and accent color are
+	// required.
+	//   "BRAND_GUIDELINES_COLOR_INVALID_FORMAT" - Brand Guidelines colors must be
+	// hex colors matching the regular expression '#[0-9a-fA-F]{6}', for example
+	// '#abc123'
+	//   "BRAND_GUIDELINES_UNSUPPORTED_FONT_FAMILY" - Brand Guidelines font family
+	// must be one of the supported Google Fonts. See
+	// Campaign.brand_guidelines.predefined_font_family for the list of supported
+	// fonts.
+	//   "BRAND_GUIDELINES_UNSUPPORTED_CHANNEL" - Brand Guidelines cannot be set
+	// for this channel type. Brand Guidelines supports Performance Max campaigns.
+	//   "CANNOT_ENABLE_BRAND_GUIDELINES_FOR_TRAVEL_GOALS" - Brand Guidelines
+	// cannot be enabled for Performance Max for travel goals campaigns.
+	//   "CUSTOMER_NOT_ALLOWLISTED_FOR_BRAND_GUIDELINES" - This customer is not
+	// allowlisted for enabling Brand Guidelines.
+	//   "THIRD_PARTY_INTEGRATION_PARTNER_NOT_ALLOWED" - Using campaign third-party
+	// integration partners that are not set at the customer level is not allowed.
+	//   "THIRD_PARTY_INTEGRATION_PARTNER_SHARE_COST_NOT_ALLOWED" - Campaign
+	// third-party integration partners are not allowed to share cost if it is not
+	// enabled at the customer level.
+	//   "DUPLICATE_INTERACTION_TYPE" - Each `previous_step_interaction_type` can
+	// be used at most once for the same `previous_step_id`
+	//   "INVALID_INTERACTION_TYPE" - Previous step interaction type cannot happen
+	// for previous step AdGroup type. For example, `SKIP` interaction type is not
+	// valid for non-skippable formats.
+	//   "VIDEO_SEQUENCE_ERROR_SEQUENCE_DEFINITION_REQUIRED" - Campaign video ads
+	// sequence is required for `VIDEO_SEQUENCE` advertising channel sub type.
+	//   "AI_MAX_MUST_BE_ENABLED" - This feature is only available for campaigns
+	// with AI Max enabled.
+	//   "DURATION_TOO_LONG_FOR_TOTAL_BUDGET" - Duration too long for total budget.
+	//   "END_DATE_TIME_REQUIRED_FOR_TOTAL_BUDGET" - Campaigns with total budgets
+	// must have end date/time specified.
+	CampaignError string `json:"campaignError,omitempty"`
+	// CampaignExperimentError: The reasons for the campaign experiment error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "DUPLICATE_NAME" - An active campaign or experiment with this name already
+	// exists.
+	//   "INVALID_TRANSITION" - Experiment cannot be updated from the current state
+	// to the requested target state. For example, an experiment can only graduate
+	// if its status is ENABLED.
+	//   "CANNOT_CREATE_EXPERIMENT_WITH_SHARED_BUDGET" - Cannot create an
+	// experiment from a campaign using an explicitly shared budget.
+	//   "CANNOT_CREATE_EXPERIMENT_FOR_REMOVED_BASE_CAMPAIGN" - Cannot create an
+	// experiment for a removed base campaign.
+	//   "CANNOT_CREATE_EXPERIMENT_FOR_NON_PROPOSED_DRAFT" - Cannot create an
+	// experiment from a draft, which has a status other than proposed.
+	//   "CUSTOMER_CANNOT_CREATE_EXPERIMENT" - This customer is not allowed to
+	// create an experiment.
+	//   "CAMPAIGN_CANNOT_CREATE_EXPERIMENT" - This campaign is not allowed to
+	// create an experiment.
+	//   "EXPERIMENT_DURATIONS_MUST_NOT_OVERLAP" - Trying to set an experiment
+	// duration which overlaps with another experiment.
+	//   "EXPERIMENT_DURATION_MUST_BE_WITHIN_CAMPAIGN_DURATION" - All non-removed
+	// experiments must start and end within their campaign's duration.
+	//   "CANNOT_MUTATE_EXPERIMENT_DUE_TO_STATUS" - The experiment cannot be
+	// modified because its status is in a terminal state, such as REMOVED.
+	CampaignExperimentError string `json:"campaignExperimentError,omitempty"`
+	// CampaignFeedError: The reasons for the campaign feed error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "FEED_ALREADY_EXISTS_FOR_PLACEHOLDER_TYPE" - An active feed already exists
+	// for this campaign and placeholder type.
+	//   "CANNOT_CREATE_FOR_REMOVED_FEED" - The specified feed is removed.
+	//   "CANNOT_CREATE_ALREADY_EXISTING_CAMPAIGN_FEED" - The CampaignFeed already
+	// exists. UPDATE should be used to modify the existing CampaignFeed.
+	//   "CANNOT_MODIFY_REMOVED_CAMPAIGN_FEED" - Cannot update removed campaign
+	// feed.
+	//   "INVALID_PLACEHOLDER_TYPE" - Invalid placeholder type.
+	//   "MISSING_FEEDMAPPING_FOR_PLACEHOLDER_TYPE" - Feed mapping for this
+	// placeholder type does not exist.
+	//   "NO_EXISTING_LOCATION_CUSTOMER_FEED" - Location CampaignFeeds cannot be
+	// created unless there is a location CustomerFeed for the specified feed.
+	//   "LEGACY_FEED_TYPE_READ_ONLY" - Feed is read only.
+	CampaignFeedError string `json:"campaignFeedError,omitempty"`
+	// CampaignGoalConfigError: The reasons for the campaign goal config error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "GOAL_NOT_FOUND" - Goal is either removed or does not exist for this
+	// account.
+	//   "CAMPAIGN_NOT_FOUND" - Campaign is either removed or does not exist.
+	//   "HIGH_LIFETIME_VALUE_PRESENT_BUT_VALUE_ABSENT" - If high lifetime value is
+	// present then value should be present.
+	//   "HIGH_LIFETIME_VALUE_LESS_THAN_OR_EQUAL_TO_VALUE" - High lifetime value
+	// should be greater than value.
+	//   "CUSTOMER_LIFECYCLE_OPTIMIZATION_CAMPAIGN_TYPE_NOT_SUPPORTED" - When using
+	// customer lifecycle optimization goal, campaign type should be supported.
+	//   "CUSTOMER_NOT_ALLOWLISTED_FOR_RETENTION_ONLY" - Customer must be
+	// allowlisted to use retention only goal.
+	CampaignGoalConfigError string `json:"campaignGoalConfigError,omitempty"`
+	// CampaignLifecycleGoalError: The reasons for the campaign lifecycle goal
+	// error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CAMPAIGN_MISSING" - Campaign is not specified.
+	//   "INVALID_CAMPAIGN" - Cannot find the specified campaign.
+	//   "CUSTOMER_ACQUISITION_INVALID_OPTIMIZATION_MODE" - Optimization mode is
+	// unspecified or invalid.
+	//   "INCOMPATIBLE_BIDDING_STRATEGY" - The configured lifecycle goal setting is
+	// not compatible with the bidding strategy the campaign is using.
+	// Specifically, BID_HIGHER_FOR_NEW_CUSTOMER requires conversion-value based
+	// bidding strategy type such as MAXIMIZE_CONVERSION_VALUE.
+	//   "MISSING_PURCHASE_GOAL" - Lifecycle goals require the campaign to optimize
+	// towards purchase conversion goal.
+	//   "CUSTOMER_ACQUISITION_INVALID_HIGH_LIFETIME_VALUE" -
+	// CampaignLifecycleGoal.customer_acquisition_goal_settings.value_settings.high_
+	// lifetime_value is invalid or not allowed, such as when the specified value
+	// is smaller than 0.01, when the optimization mode is not
+	// BID_HIGHER_FOR_NEW_CUSTOMER, or when
+	// CampaignLifecycleGoal.customer_acquisition_goal_settings.value_settings.high_
+	// lifetime_value is specified smaller than/without
+	// CampaignLifecycleGoal.customer_acquisition_goal_settings.value_settings.value
+	// .
+	//   "CUSTOMER_ACQUISITION_UNSUPPORTED_CAMPAIGN_TYPE" - Customer acquisition
+	// goal is not supported on this campaign type.
+	//   "CUSTOMER_ACQUISITION_INVALID_VALUE" -
+	// CampaignLifecycleGoal.customer_acquisition_goal_settings.value_settings.value
+	//  is invalid or not allowed, such as when the specified value is smaller than
+	// 0.01, or when the optimization mode is not BID_HIGHER_FOR_NEW_CUSTOMER.
+	//   "CUSTOMER_ACQUISITION_VALUE_MISSING" - To use BID_HIGHER_FOR_NEW_CUSTOMER
+	// mode, either
+	// CampaignLifecycleGoal.customer_acquisition_goal_settings.value_settings.value
+	//  or CustomerLifecycleGoal.customer_acquisition_goal_value_settings.value
+	// must have been specified. If a manager account is managing your account's
+	// conversion tracking, then only the CustomerLifecycleGoal of that manager
+	// account is used.
+	//   "CUSTOMER_ACQUISITION_MISSING_EXISTING_CUSTOMER_DEFINITION" - In order for
+	// a campaign to adopt the customer acquisition goal,
+	// CustomerLifecycleGoal.lifecycle_goal_customer_definition_settings.existing_us
+	// er_lists must include active and accessible userlist with more than 1000
+	// members in the Search/Youtube network. If a manager account is managing your
+	// account's conversion tracking, then only the CustomerLifecycleGoal of that
+	// manager account is used. Also make sure that the manager account shares
+	// audience segments with sub-accounts with continuous audience sharing.
+	//   "CUSTOMER_ACQUISITION_MISSING_HIGH_VALUE_CUSTOMER_DEFINITION" - In order
+	// for a campaign to adopt the customer acquisition goal with high lifetime
+	// value optimization,
+	// CustomerLifecycleGoal.lifecycle_goal_customer_definition_settings.high_lifeti
+	// me_value_user_lists must include active and accessible userlist with more
+	// than 1000 members in the Search/Youtube network. If a manager account is
+	// managing your account's conversion tracking, then only the
+	// CustomerLifecycleGoal of that manager account is used. Also make sure that
+	// the manager account shares audience segments with sub-accounts using
+	// continuous audience sharing.
+	CampaignLifecycleGoalError string `json:"campaignLifecycleGoalError,omitempty"`
+	// CampaignSharedSetError: The reasons for the campaign shared set error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "SHARED_SET_ACCESS_DENIED" - The shared set belongs to another customer
+	// and permission isn't granted.
+	CampaignSharedSetError string `json:"campaignSharedSetError,omitempty"`
+	// ChangeEventError: The reasons for the change event error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "START_DATE_TOO_OLD" - The requested start date is too old. It cannot be
+	// older than 30 days.
+	//   "CHANGE_DATE_RANGE_INFINITE" - The change_event search request must
+	// specify a finite range filter on change_date_time.
+	//   "CHANGE_DATE_RANGE_NEGATIVE" - The change event search request has
+	// specified invalid date time filters that can never logically produce any
+	// valid results (for example, start time after end time).
+	//   "LIMIT_NOT_SPECIFIED" - The change_event search request must specify a
+	// LIMIT.
+	//   "INVALID_LIMIT_CLAUSE" - The LIMIT specified by change_event request
+	// should be less than or equal to 10K.
+	ChangeEventError string `json:"changeEventError,omitempty"`
+	// ChangeStatusError: The reasons for the change status error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "START_DATE_TOO_OLD" - The requested start date is too old.
+	//   "CHANGE_DATE_RANGE_INFINITE" - The change_status search request must
+	// specify a finite range filter on last_change_date_time.
+	//   "CHANGE_DATE_RANGE_NEGATIVE" - The change status search request has
+	// specified invalid date time filters that can never logically produce any
+	// valid results (for example, start time after end time).
+	//   "LIMIT_NOT_SPECIFIED" - The change_status search request must specify a
+	// LIMIT.
+	//   "INVALID_LIMIT_CLAUSE" - The LIMIT specified by change_status request
+	// should be less than or equal to 10K.
+	ChangeStatusError string `json:"changeStatusError,omitempty"`
+	// ClickViewError: The reasons for the click view error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "EXPECTED_FILTER_ON_A_SINGLE_DAY" - Missing filter on a single day.
+	//   "DATE_TOO_OLD" - The requested date is too old.
+	ClickViewError string `json:"clickViewError,omitempty"`
+	// CollectionSizeError: The reasons for the collection size error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "TOO_FEW" - Too few.
+	//   "TOO_MANY" - Too many.
+	CollectionSizeError string `json:"collectionSizeError,omitempty"`
+	// ContextError: The reasons for the context error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "OPERATION_NOT_PERMITTED_FOR_CONTEXT" - The operation is not allowed for
+	// the given context.
+	//   "OPERATION_NOT_PERMITTED_FOR_REMOVED_RESOURCE" - The operation is not
+	// allowed for removed resources.
+	ContextError string `json:"contextError,omitempty"`
+	// ConversionActionError: The reasons for the conversion action error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "DUPLICATE_NAME" - The specified conversion action name already exists.
+	//   "DUPLICATE_APP_ID" - Another conversion action with the specified app id
+	// already exists.
+	//   "TWO_CONVERSION_ACTIONS_BIDDING_ON_SAME_APP_DOWNLOAD" - Android first open
+	// action conflicts with Google play codeless download action tracking the same
+	// app.
+	//   "BIDDING_ON_SAME_APP_DOWNLOAD_AS_GLOBAL_ACTION" - Android first open
+	// action conflicts with Google play codeless download action tracking the same
+	// app.
+	//   "DATA_DRIVEN_MODEL_WAS_NEVER_GENERATED" - The attribution model cannot be
+	// set to DATA_DRIVEN because a data-driven model has never been generated.
+	//   "DATA_DRIVEN_MODEL_EXPIRED" - The attribution model cannot be set to
+	// DATA_DRIVEN because the data-driven model is expired.
+	//   "DATA_DRIVEN_MODEL_STALE" - The attribution model cannot be set to
+	// DATA_DRIVEN because the data-driven model is stale.
+	//   "DATA_DRIVEN_MODEL_UNKNOWN" - The attribution model cannot be set to
+	// DATA_DRIVEN because the data-driven model is unavailable or the conversion
+	// action was newly added.
+	//   "CREATION_NOT_SUPPORTED" - Creation of this conversion action type isn't
+	// supported by Google Ads API.
+	//   "UPDATE_NOT_SUPPORTED" - Update of this conversion action isn't supported
+	// by Google Ads API.
+	//   "CANNOT_SET_RULE_BASED_ATTRIBUTION_MODELS" - Rule-based attribution models
+	// are deprecated and not allowed to be set by conversion action.
+	ConversionActionError string `json:"conversionActionError,omitempty"`
+	// ConversionAdjustmentUploadError: The reasons for the conversion adjustment
+	// upload error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in this
+	// version.
+	//   "TOO_RECENT_CONVERSION_ACTION" - Can't import events to a conversion
+	// action that was just created. Try importing again in 6 hours.
+	//   "CONVERSION_ALREADY_RETRACTED" - The conversion was already retracted.
+	// This adjustment was not processed.
+	//   "CONVERSION_NOT_FOUND" - The conversion for this conversion action and
+	// conversion identifier can't be found. Make sure your conversion identifiers
+	// are associated with the correct conversion action and try again.
+	//   "CONVERSION_EXPIRED" - Adjustment can't be made to a conversion that
+	// occurred more than 54 days ago.
+	//   "ADJUSTMENT_PRECEDES_CONVERSION" - Adjustment has an
+	// `adjustment_date_time` that occurred before the associated conversion. Make
+	// sure your `adjustment_date_time` is correct and try again.
+	//   "MORE_RECENT_RESTATEMENT_FOUND" - More recent adjustment
+	// `adjustment_date_time` has already been reported for the associated
+	// conversion. Make sure your adjustment `adjustment_date_time` is correct and
+	// try again.
+	//   "TOO_RECENT_CONVERSION" - Adjustment can't be recorded because the
+	// conversion occurred too recently. Try adjusting a conversion that occurred
+	// at least 24 hours ago.
+	//
+	// "CANNOT_RESTATE_CONVERSION_ACTION_THAT_ALWAYS_USES_DEFAULT_CONVERSION_VALUE"
+	// - Can't make an adjustment to a conversion that is set up to use the default
+	// value. Check your conversion action value setting and try again.
+	//   "TOO_MANY_ADJUSTMENTS_IN_REQUEST" - Try uploading fewer than 2001
+	// adjustments in a single API request.
+	//   "TOO_MANY_ADJUSTMENTS" - The conversion has already been adjusted the
+	// maximum number of times. Make sure you're only making necessary adjustment
+	// to existing conversion.
+	//   "RESTATEMENT_ALREADY_EXISTS" - The conversion has prior a restatement with
+	// the same `adjustment_date_time`. Make sure your adjustment has the correct
+	// and unique `adjustment_date_time` and try again.
+	//   "DUPLICATE_ADJUSTMENT_IN_REQUEST" - Imported adjustment has a duplicate
+	// conversion adjustment with same `adjustment_date_time`. Make sure your
+	// adjustment has the correct `adjustment_date_time` and try again.
+	//   "CUSTOMER_NOT_ACCEPTED_CUSTOMER_DATA_TERMS" - Make sure you agree to the
+	// customer data processing terms in conversion settings and try again.
+	//   "CONVERSION_ACTION_NOT_ELIGIBLE_FOR_ENHANCEMENT" - Can't use enhanced
+	// conversions with the specified conversion action.
+	//   "INVALID_USER_IDENTIFIER" - Make sure you hash user provided data using
+	// SHA-256 and ensure you are normalizing according to the guidelines.
+	//   "UNSUPPORTED_USER_IDENTIFIER" - Use user provided data such as emails or
+	// phone numbers hashed using SHA-256 and try again.
+	//   "GCLID_DATE_TIME_PAIR_AND_ORDER_ID_BOTH_SET" - Cannot set both
+	// gclid_date_time_pair and order_id. Use only 1 type and try again.
+	//   "CONVERSION_ALREADY_ENHANCED" - Conversion already has enhancements with
+	// the same Order ID and conversion action. Make sure your data is correctly
+	// configured and try again.
+	//   "DUPLICATE_ENHANCEMENT_IN_REQUEST" - Multiple enhancements have the same
+	// conversion action and Order ID. Make sure your data is correctly configured
+	// and try again.
+	//   "CUSTOMER_DATA_POLICY_PROHIBITS_ENHANCEMENT" - Enhanced conversions can't
+	// be used for this account because of Google customer data policies. Contact
+	// your Google representative.
+	//   "MISSING_ORDER_ID_FOR_WEBPAGE" - Adjustment for website conversion
+	// requires Order ID (ie, transaction ID). Make sure your website tags capture
+	// Order IDs and you send the same Order IDs with your adjustment.
+	//   "ORDER_ID_CONTAINS_PII" - Can't use adjustment with Order IDs containing
+	// personally-identifiable information (PII).
+	//   "INVALID_JOB_ID" - The provided job id in the request is not within the
+	// allowed range. A job ID must be a positive integer in the range [1, 2^31).
+	//   "NO_CONVERSION_ACTION_FOUND" - The conversion action specified in the
+	// adjustment request cannot be found. Make sure it's available in this
+	// account.
+	//   "INVALID_CONVERSION_ACTION_TYPE" - The type of the conversion action
+	// specified in the adjustment request isn't supported for uploading
+	// adjustments. A conversion adjustment of type `RETRACTION` or `RESTATEMENT`
+	// is only permitted for conversion actions of type `SALESFORCE`,
+	// `UPLOAD_CLICK` or `WEBPAGE`. A conversion adjustment of type `ENHANCEMENT`
+	// is only permitted for conversion actions of type `WEBPAGE`.
+	ConversionAdjustmentUploadError string `json:"conversionAdjustmentUploadError,omitempty"`
+	// ConversionCustomVariableError: The reasons for the conversion custom
+	// variable error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "DUPLICATE_NAME" - A conversion custom variable with the specified name
+	// already exists.
+	//   "DUPLICATE_TAG" - A conversion custom variable with the specified tag
+	// already exists.
+	//   "RESERVED_TAG" - A conversion custom variable with the specified tag is
+	// reserved for other uses.
+	ConversionCustomVariableError string `json:"conversionCustomVariableError,omitempty"`
+	// ConversionGoalCampaignConfigError: The reasons for the conversion goal
+	// campaign config error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CANNOT_USE_CAMPAIGN_GOAL_FOR_SEARCH_ADS_360_MANAGED_CAMPAIGN" - Campaign
+	// is managed by Search Ads 360 but uses Unified Goal.
+	//   "CUSTOM_GOAL_DOES_NOT_BELONG_TO_GOOGLE_ADS_CONVERSION_CUSTOMER" - The
+	// campaign is using a custom goal that does not belong to its Google Ads
+	// conversion customer (conversion tracking customer).
+	//   "CAMPAIGN_CANNOT_USE_UNIFIED_GOALS" - The campaign is not allowed to use
+	// unified goals.
+	//   "EMPTY_CONVERSION_GOALS" - The campaign is using campaign override goals
+	// but has no goals configured.
+	//   "STORE_SALE_STORE_VISIT_CANNOT_BE_BOTH_INCLUDED" - STORE_SALE and
+	// STORE_VISIT conversion types cannot be both included in campaign level goal.
+	//   "PERFORMANCE_MAX_CAMPAIGN_CANNOT_USE_CUSTOM_GOAL_WITH_STORE_SALES" -
+	// Performance Max campaign is not allowed to use custom goal with store sales
+	// conversion type.
+	ConversionGoalCampaignConfigError string `json:"conversionGoalCampaignConfigError,omitempty"`
+	// ConversionUploadError: The reasons for the conversion upload error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in this
+	// version.
+	//   "TOO_MANY_CONVERSIONS_IN_REQUEST" - Upload fewer than 2001 events in a
+	// single request.
+	//   "UNPARSEABLE_GCLID" - The imported gclid could not be decoded.
+	//   "CONVERSION_PRECEDES_EVENT" - The imported event has a
+	// `conversion_date_time` that precedes the click. Make sure your
+	// `conversion_date_time` is correct and try again.
+	//   "EXPIRED_EVENT" - The imported event can't be recorded because its click
+	// occurred before this conversion's click-through window. Make sure you import
+	// the most recent data.
+	//   "TOO_RECENT_EVENT" - The click associated with the given identifier or iOS
+	// URL parameter occurred less than 6 hours ago. Retry after 6 hours have
+	// passed.
+	//   "EVENT_NOT_FOUND" - The imported event could not be attributed to a click.
+	// This may be because the event did not come from a Google Ads campaign.
+	//   "UNAUTHORIZED_CUSTOMER" - The click ID or call is associated with an Ads
+	// account you don't have access to. Make sure you import conversions for
+	// accounts managed by your manager account.
+	//   "TOO_RECENT_CONVERSION_ACTION" - Can't import events to a conversion
+	// action that was just created. Try importing again in 6 hours.
+	//   "CONVERSION_TRACKING_NOT_ENABLED_AT_IMPRESSION_TIME" - At the time of the
+	// click, conversion tracking was not enabled in the effective conversion
+	// account of the click's Google Ads account.
+	//
+	// "EXTERNAL_ATTRIBUTION_DATA_SET_FOR_NON_EXTERNALLY_ATTRIBUTED_CONVERSION_ACTIO
+	// N" - The imported event includes external attribution data, but the
+	// conversion action isn't set up to use an external attribution model. Make
+	// sure the conversion action is correctly configured and try again.
+	//
+	// "EXTERNAL_ATTRIBUTION_DATA_NOT_SET_FOR_EXTERNALLY_ATTRIBUTED_CONVERSION_ACTIO
+	// N" - The conversion action is set up to use an external attribution model,
+	// but the imported event is missing data. Make sure imported events include
+	// the external attribution credit and all necessary fields.
+	//   "ORDER_ID_NOT_PERMITTED_FOR_EXTERNALLY_ATTRIBUTED_CONVERSION_ACTION" -
+	// Order IDs can't be used for a conversion measured with an external
+	// attribution model. Make sure the conversion is correctly configured and
+	// imported events include only necessary data and try again.
+	//   "ORDER_ID_ALREADY_IN_USE" - The imported event includes an order ID that
+	// was previously recorded, so the event was not processed.
+	//   "DUPLICATE_ORDER_ID" - Imported events include multiple conversions with
+	// the same order ID and were not processed. Make sure order IDs are unique and
+	// try again.
+	//   "TOO_RECENT_CALL" - Can't import calls that occurred less than 6 hours
+	// ago. Try uploading again in 6 hours.
+	//   "EXPIRED_CALL" - The call can't be recorded because it occurred before
+	// this conversion action's lookback window. Make sure your import is
+	// configured to get the most recent data.
+	//   "CALL_NOT_FOUND" - The call or click leading to the imported event can't
+	// be found. Make sure your data source is set up to include correct
+	// identifiers.
+	//   "CONVERSION_PRECEDES_CALL" - The call has a `conversion_date_time` that
+	// precedes the associated click. Make sure your `conversion_date_time` is
+	// correct.
+	//   "CONVERSION_TRACKING_NOT_ENABLED_AT_CALL_TIME" - At the time of the
+	// imported call, conversion tracking was not enabled in the effective
+	// conversion account of the click's Google Ads account.
+	//   "UNPARSEABLE_CALLERS_PHONE_NUMBER" - Make sure phone numbers are formatted
+	// as E.164 (+16502531234), International (+64 3-331 6005), or US national
+	// number (6502531234).
+	//   "CLICK_CONVERSION_ALREADY_EXISTS" - The imported event has the same click
+	// and `conversion_date_time` as an existing conversion. Use a unique
+	// `conversion_date_time` or order ID for each unique event and try again.
+	//   "CALL_CONVERSION_ALREADY_EXISTS" - The imported call has the same
+	// `conversion_date_time` as an existing conversion. Make sure your
+	// `conversion_date_time` correctly configured and try again.
+	//   "DUPLICATE_CLICK_CONVERSION_IN_REQUEST" - Multiple events have the same
+	// click and `conversion_date_time`. Make sure your `conversion_date_time` is
+	// correctly configured and try again.
+	//   "DUPLICATE_CALL_CONVERSION_IN_REQUEST" - Multiple events have the same
+	// call and `conversion_date_time`. Make sure your `conversion_date_time` is
+	// correctly configured and try again.
+	//   "CUSTOM_VARIABLE_NOT_ENABLED" - Enable the custom variable in your
+	// conversion settings and try again.
+	//   "CUSTOM_VARIABLE_VALUE_CONTAINS_PII" - Can't import events with custom
+	// variables containing personally-identifiable information (PII). Remove these
+	// variables and try again.
+	//   "INVALID_CUSTOMER_FOR_CLICK" - The click from the imported event is
+	// associated with a different Google Ads account. Make sure you're importing
+	// to the correct account.
+	//   "INVALID_CUSTOMER_FOR_CALL" - The click from the call is associated with a
+	// different Google Ads account. Make sure you're importing to the correct
+	// account. Query conversion_tracking_setting.google_ads_conversion_customer on
+	// Customer to identify the correct account.
+	//   "CONVERSION_NOT_COMPLIANT_WITH_ATT_POLICY" - The connversion can't be
+	// imported because the conversion source didn't comply with Apple App
+	// Transparency Tracking (ATT) policies or because the customer didn't consent
+	// to tracking.
+	//   "CLICK_NOT_FOUND" - The email address or phone number for this event can't
+	// be matched to a click. This may be because it didn't come from a Google Ads
+	// campaign, and you can safely ignore this warning. If this includes more
+	// imported events than is expected, you may need to check your setup.
+	//   "INVALID_USER_IDENTIFIER" - Make sure you hash user provided data using
+	// SHA-256 and ensure you are normalizing according to the guidelines.
+	//
+	// "EXTERNALLY_ATTRIBUTED_CONVERSION_ACTION_NOT_PERMITTED_WITH_USER_IDENTIFIER"
+	// - User provided data can't be used with external attribution models. Use a
+	// different attribution model or omit user identifiers and try again.
+	//   "UNSUPPORTED_USER_IDENTIFIER" - The provided user identifiers are not
+	// supported. Use only hashed email or phone number and try again.
+	//   "GBRAID_WBRAID_BOTH_SET" - Can't use both gbraid and wbraid parameters.
+	// Use only 1 and try again.
+	//   "UNPARSEABLE_WBRAID" - Can't parse event import data. Check if your wbraid
+	// parameter was not modified and try again.
+	//   "UNPARSEABLE_GBRAID" - Can't parse event import data. Check if your gbraid
+	// parameter was not modified and try again.
+	//   "ONE_PER_CLICK_CONVERSION_ACTION_NOT_PERMITTED_WITH_BRAID" - Conversion
+	// actions that use one-per-click counting can't be used with gbraid or wbraid
+	// parameters.
+	//   "CUSTOMER_DATA_POLICY_PROHIBITS_ENHANCED_CONVERSIONS" - Enhanced
+	// conversions can't be used for this account because of Google customer data
+	// policies. Contact your Google representative.
+	//   "CUSTOMER_NOT_ACCEPTED_CUSTOMER_DATA_TERMS" - Make sure you agree to the
+	// customer data processing terms in conversion settings and try again. You can
+	// check your setting by querying
+	// conversion_tracking_setting.accepted_customer_data_terms on Customer.
+	//   "ORDER_ID_CONTAINS_PII" - Can't import events with order IDs containing
+	// personally-identifiable information (PII).
+	//   "CUSTOMER_NOT_ENABLED_ENHANCED_CONVERSIONS_FOR_LEADS" - Make sure you've
+	// turned on enhanced conversions for leads in conversion settings and try
+	// again. You can check your setting by querying
+	// conversion_tracking_setting.enhanced_conversions_for_leads_enabled on
+	// Customer.
+	//   "INVALID_JOB_ID" - The provided job id in the request is not within the
+	// allowed range. A job ID must be a positive integer in the range [1, 2^31).
+	//   "NO_CONVERSION_ACTION_FOUND" - The conversion action specified in the
+	// upload request cannot be found. Make sure it's available in this account.
+	//   "INVALID_CONVERSION_ACTION_TYPE" - The conversion action specified in the
+	// upload request isn't set up for uploading conversions.
+	ConversionUploadError string `json:"conversionUploadError,omitempty"`
+	// ConversionValueRuleError: The reasons for the conversion value rule error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_GEO_TARGET_CONSTANT" - The value rule's geo location condition
+	// contains invalid geo target constant(s), for example, there's no matching
+	// geo target.
+	//   "CONFLICTING_INCLUDED_AND_EXCLUDED_GEO_TARGET" - The value rule's geo
+	// location condition contains conflicting included and excluded geo targets.
+	// Specifically, some of the excluded geo target(s) are the same as or contain
+	// some of the included geo target(s). For example, the geo location condition
+	// includes California but excludes U.S.
+	//   "CONFLICTING_CONDITIONS" - User specified conflicting conditions for two
+	// value rules in the same value rule set.
+	//   "CANNOT_REMOVE_IF_INCLUDED_IN_VALUE_RULE_SET" - The value rule cannot be
+	// removed because it's still included in some value rule set.
+	//   "CONDITION_NOT_ALLOWED" - The value rule contains a condition that's not
+	// allowed by the value rule set including this value rule.
+	//   "FIELD_MUST_BE_UNSET" - The value rule contains a field that should be
+	// unset.
+	//   "CANNOT_PAUSE_UNLESS_VALUE_RULE_SET_IS_PAUSED" - Pausing the value rule
+	// requires pausing the value rule set because the value rule is (one of) the
+	// last enabled in the value rule set.
+	//   "UNTARGETABLE_GEO_TARGET" - The value rule's geo location condition
+	// contains untargetable geo target constant(s).
+	//   "INVALID_AUDIENCE_USER_LIST" - The value rule's audience condition
+	// contains invalid user list(s). In another word, there's no matching user
+	// list.
+	//   "INACCESSIBLE_USER_LIST" - The value rule's audience condition contains
+	// inaccessible user list(s).
+	//   "INVALID_AUDIENCE_USER_INTEREST" - The value rule's audience condition
+	// contains invalid user_interest(s). This might be because there is no
+	// matching user interest, or the user interest is not visible.
+	//   "CANNOT_ADD_RULE_WITH_STATUS_REMOVED" - When a value rule is created, it
+	// shouldn't have REMOVED status.
+	//   "NO_DAY_OF_WEEK_SELECTED" - The value rule's itinerary condition contains
+	// invalid travel start day, it contains no day of week.
+	ConversionValueRuleError string `json:"conversionValueRuleError,omitempty"`
+	// ConversionValueRuleSetError: The reasons for the conversion value rule set
+	// error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CONFLICTING_VALUE_RULE_CONDITIONS" - Two value rules in this value rule
+	// set contain conflicting conditions.
+	//   "INVALID_VALUE_RULE" - This value rule set includes a value rule that
+	// cannot be found, has been permanently removed or belongs to a different
+	// customer.
+	//   "DIMENSIONS_UPDATE_ONLY_ALLOW_APPEND" - An error that's thrown when a
+	// mutate operation is trying to replace/remove some existing elements in the
+	// dimensions field. In other words, ADD op is always fine and UPDATE op is
+	// fine if it's only appending new elements into dimensions list.
+	//   "CONDITION_TYPE_NOT_ALLOWED" - An error that's thrown when a mutate is
+	// adding new value rule(s) into a value rule set and the added value rule(s)
+	// include conditions that are not specified in the dimensions of the value
+	// rule set.
+	//   "DUPLICATE_DIMENSIONS" - The dimensions field contains duplicate elements.
+	//   "INVALID_CAMPAIGN_ID" - This value rule set is attached to an invalid
+	// campaign id. Either a campaign with this campaign id doesn't exist or it
+	// belongs to a different customer.
+	//   "CANNOT_PAUSE_UNLESS_ALL_VALUE_RULES_ARE_PAUSED" - When a mutate request
+	// tries to pause a value rule set, the enabled value rules in this set must be
+	// paused in the same command, or this error will be thrown.
+	//   "SHOULD_PAUSE_WHEN_ALL_VALUE_RULES_ARE_PAUSED" - When a mutate request
+	// tries to pause all the value rules in a value rule set, the value rule set
+	// must be paused, or this error will be thrown.
+	//   "VALUE_RULES_NOT_SUPPORTED_FOR_CAMPAIGN_TYPE" - This value rule set is
+	// attached to a campaign that does not support value rules. Currently,
+	// campaign level value rule sets can only be created on Search, or Display
+	// campaigns.
+	//   "INELIGIBLE_CONVERSION_ACTION_CATEGORIES" - To add a value rule set that
+	// applies on Store Visits/Store Sales conversion action categories, the
+	// customer must have valid Store Visits/ Store Sales conversion actions.
+	//   "DIMENSION_NO_CONDITION_USED_WITH_OTHER_DIMENSIONS" - If NO_CONDITION is
+	// used as a dimension of a value rule set, it must be the only dimension.
+	//   "DIMENSION_NO_CONDITION_NOT_ALLOWED" - Dimension NO_CONDITION can only be
+	// used by Store Visits/Store Sales value rule set.
+	//   "UNSUPPORTED_CONVERSION_ACTION_CATEGORIES" - Value rule sets defined on
+	// the specified conversion action categories are not supported. The list of
+	// conversion action categories must be an empty list, only STORE_VISIT, or
+	// only STORE_SALE.
+	//   "DIMENSION_NOT_SUPPORTED_FOR_CAMPAIGN_TYPE" - Dimension ITINERARY can only
+	// be used on campaigns with an advertising channel type of PERFORMANCE_MAX or
+	// HOTEL.
+	ConversionValueRuleSetError string `json:"conversionValueRuleSetError,omitempty"`
+	// CountryCodeError: The reasons for the country code error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_COUNTRY_CODE" - The country code is invalid.
+	CountryCodeError string `json:"countryCodeError,omitempty"`
+	// CriterionError: The reasons for the criterion error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CONCRETE_TYPE_REQUIRED" - Concrete type of criterion is required for
+	// CREATE and UPDATE operations.
+	//   "INVALID_EXCLUDED_CATEGORY" - The category requested for exclusion is
+	// invalid.
+	//   "INVALID_KEYWORD_TEXT" - Invalid keyword criteria text.
+	//   "KEYWORD_TEXT_TOO_LONG" - Keyword text should be less than 80 chars.
+	//   "KEYWORD_HAS_TOO_MANY_WORDS" - Keyword text has too many words.
+	//   "KEYWORD_HAS_INVALID_CHARS" - Keyword text has invalid characters or
+	// symbols.
+	//   "INVALID_PLACEMENT_URL" - Invalid placement URL.
+	//   "INVALID_USER_LIST" - Invalid user list criterion.
+	//   "INVALID_USER_INTEREST" - Invalid user interest criterion.
+	//   "INVALID_FORMAT_FOR_PLACEMENT_URL" - Placement URL has wrong format.
+	//   "PLACEMENT_URL_IS_TOO_LONG" - Placement URL is too long.
+	//   "PLACEMENT_URL_HAS_ILLEGAL_CHAR" - Indicates the URL contains an illegal
+	// character.
+	//   "PLACEMENT_URL_HAS_MULTIPLE_SITES_IN_LINE" - Indicates the URL contains
+	// multiple comma separated URLs.
+	//   "PLACEMENT_IS_NOT_AVAILABLE_FOR_TARGETING_OR_EXCLUSION" - Indicates the
+	// domain is blocked.
+	//   "INVALID_TOPIC_PATH" - Invalid topic path.
+	//   "INVALID_YOUTUBE_CHANNEL_ID" - The YouTube Channel Id is invalid.
+	//   "INVALID_YOUTUBE_VIDEO_ID" - The YouTube Video Id is invalid.
+	//   "YOUTUBE_VERTICAL_CHANNEL_DEPRECATED" - Indicates the placement is a
+	// YouTube vertical channel, which is no longer supported.
+	//   "YOUTUBE_DEMOGRAPHIC_CHANNEL_DEPRECATED" - Indicates the placement is a
+	// YouTube demographic channel, which is no longer supported.
+	//   "YOUTUBE_URL_UNSUPPORTED" - YouTube urls are not supported in Placement
+	// criterion. Use YouTubeChannel and YouTubeVideo criterion instead.
+	//   "CANNOT_EXCLUDE_CRITERIA_TYPE" - Criteria type can not be excluded by the
+	// customer, like AOL account type cannot target site type criteria.
+	//   "CANNOT_ADD_CRITERIA_TYPE" - Criteria type can not be targeted.
+	//   "CANNOT_EXCLUDE_SIMILAR_USER_LIST" - Not allowed to exclude similar user
+	// list.
+	//   "CANNOT_ADD_CLOSED_USER_LIST" - Not allowed to target a closed user list.
+	//   "CANNOT_ADD_DISPLAY_ONLY_LISTS_TO_SEARCH_ONLY_CAMPAIGNS" - Not allowed to
+	// add display only UserLists to search only campaigns.
+	//   "CANNOT_ADD_DISPLAY_ONLY_LISTS_TO_SEARCH_CAMPAIGNS" - Not allowed to add
+	// display only UserLists to search plus campaigns.
+	//   "CANNOT_ADD_DISPLAY_ONLY_LISTS_TO_SHOPPING_CAMPAIGNS" - Not allowed to add
+	// display only UserLists to shopping campaigns.
+	//   "CANNOT_ADD_USER_INTERESTS_TO_SEARCH_CAMPAIGNS" - Not allowed to add User
+	// interests to search only campaigns.
+	//   "CANNOT_SET_BIDS_ON_CRITERION_TYPE_IN_SEARCH_CAMPAIGNS" - Not allowed to
+	// set bids for this criterion type in search campaigns
+	//   "CANNOT_ADD_URLS_TO_CRITERION_TYPE_FOR_CAMPAIGN_TYPE" - Final URLs, URL
+	// Templates and CustomParameters cannot be set for the criterion types of
+	// Gender, AgeRange, UserList, Placement, MobileApp, and MobileAppCategory in
+	// search campaigns and shopping campaigns.
+	//   "INVALID_COMBINED_AUDIENCE" - Invalid combined audience criterion.
+	//   "INVALID_CUSTOM_AFFINITY" - Invalid custom affinity criterion.
+	//   "INVALID_CUSTOM_INTENT" - Invalid custom intent criterion.
+	//   "INVALID_CUSTOM_AUDIENCE" - Invalid custom audience criterion.
+	//   "INVALID_IP_ADDRESS" - IP address is not valid.
+	//   "INVALID_IP_FORMAT" - IP format is not valid.
+	//   "INVALID_MOBILE_APP" - Mobile application is not valid.
+	//   "INVALID_MOBILE_APP_CATEGORY" - Mobile application category is not valid.
+	//   "INVALID_CRITERION_ID" - The CriterionId does not exist or is of the
+	// incorrect type.
+	//   "CANNOT_TARGET_CRITERION" - The Criterion is not allowed to be targeted.
+	//   "CANNOT_TARGET_OBSOLETE_CRITERION" - The criterion is not allowed to be
+	// targeted as it is deprecated.
+	//   "CRITERION_ID_AND_TYPE_MISMATCH" - The CriterionId is not valid for the
+	// type.
+	//   "INVALID_PROXIMITY_RADIUS" - Distance for the radius for the proximity
+	// criterion is invalid.
+	//   "INVALID_PROXIMITY_RADIUS_UNITS" - Units for the distance for the radius
+	// for the proximity criterion is invalid.
+	//   "INVALID_STREETADDRESS_LENGTH" - Street address in the address is not
+	// valid.
+	//   "INVALID_CITYNAME_LENGTH" - City name in the address is not valid.
+	//   "INVALID_REGIONCODE_LENGTH" - Region code in the address is not valid.
+	//   "INVALID_REGIONNAME_LENGTH" - Region name in the address is not valid.
+	//   "INVALID_POSTALCODE_LENGTH" - Postal code in the address is not valid.
+	//   "INVALID_COUNTRY_CODE" - Country code in the address is not valid.
+	//   "INVALID_LATITUDE" - Latitude for the GeoPoint is not valid.
+	//   "INVALID_LONGITUDE" - Longitude for the GeoPoint is not valid.
+	//   "PROXIMITY_GEOPOINT_AND_ADDRESS_BOTH_CANNOT_BE_NULL" - The Proximity input
+	// is not valid. Both address and geoPoint cannot be null.
+	//   "INVALID_PROXIMITY_ADDRESS" - The Proximity address cannot be geocoded to
+	// a valid lat/long.
+	//   "INVALID_USER_DOMAIN_NAME" - User domain name is not valid.
+	//   "CRITERION_PARAMETER_TOO_LONG" - Length of serialized criterion parameter
+	// exceeded size limit.
+	//   "AD_SCHEDULE_TIME_INTERVALS_OVERLAP" - Time interval in the AdSchedule
+	// overlaps with another AdSchedule.
+	//   "AD_SCHEDULE_INTERVAL_CANNOT_SPAN_MULTIPLE_DAYS" - AdSchedule time
+	// interval cannot span multiple days.
+	//   "AD_SCHEDULE_INVALID_TIME_INTERVAL" - AdSchedule time interval specified
+	// is invalid, endTime cannot be earlier than startTime.
+	//   "AD_SCHEDULE_EXCEEDED_INTERVALS_PER_DAY_LIMIT" - The number of AdSchedule
+	// entries in a day exceeds the limit.
+	//   "AD_SCHEDULE_CRITERION_ID_MISMATCHING_FIELDS" - CriteriaId does not match
+	// the interval of the AdSchedule specified.
+	//   "CANNOT_BID_MODIFY_CRITERION_TYPE" - Cannot set bid modifier for this
+	// criterion type.
+	//   "CANNOT_BID_MODIFY_CRITERION_CAMPAIGN_OPTED_OUT" - Cannot bid modify
+	// criterion, since it is opted out of the campaign.
+	//   "CANNOT_BID_MODIFY_NEGATIVE_CRITERION" - Cannot set bid modifier for a
+	// negative criterion.
+	//   "BID_MODIFIER_ALREADY_EXISTS" - Bid Modifier already exists. Use SET
+	// operation to update.
+	//   "FEED_ID_NOT_ALLOWED" - Feed Id is not allowed in these Location Groups.
+	//   "ACCOUNT_INELIGIBLE_FOR_CRITERIA_TYPE" - The account may not use the
+	// requested criteria type. For example, some accounts are restricted to
+	// keywords only.
+	//   "CRITERIA_TYPE_INVALID_FOR_BIDDING_STRATEGY" - The requested criteria type
+	// cannot be used with campaign or ad group bidding strategy.
+	//   "CANNOT_EXCLUDE_CRITERION" - The Criterion is not allowed to be excluded.
+	//   "CANNOT_REMOVE_CRITERION" - The criterion is not allowed to be removed.
+	// For example, we cannot remove any of the device criterion.
+	//   "INVALID_PRODUCT_BIDDING_CATEGORY" - Bidding categories do not form a
+	// valid path in the Shopping bidding category taxonomy.
+	//   "MISSING_SHOPPING_SETTING" - ShoppingSetting must be added to the campaign
+	// before ProductScope criteria can be added.
+	//   "INVALID_MATCHING_FUNCTION" - Matching function is invalid.
+	//   "LOCATION_FILTER_NOT_ALLOWED" - Filter parameters not allowed for location
+	// groups targeting.
+	//   "INVALID_FEED_FOR_LOCATION_FILTER" - Feed not found, or the feed is not an
+	// enabled location feed.
+	//   "LOCATION_FILTER_INVALID" - Given location filter parameter is invalid for
+	// location groups targeting.
+	//   "CANNOT_SET_GEO_TARGET_CONSTANTS_WITH_FEED_ITEM_SETS" - Cannot set geo
+	// target constants and feed item sets at the same time.
+	//   "CANNOT_SET_BOTH_ASSET_SET_AND_FEED" - Cannot set both assetset and feed
+	// at the same time.
+	//   "CANNOT_SET_FEED_OR_FEED_ITEM_SETS_FOR_CUSTOMER" - Cannot set feed or feed
+	// item sets for Customer.
+	//   "CANNOT_SET_ASSET_SET_FIELD_FOR_CUSTOMER" - Cannot set AssetSet criteria
+	// for customer.
+	//   "CANNOT_SET_GEO_TARGET_CONSTANTS_WITH_ASSET_SETS" - Cannot set geo target
+	// constants and asset sets at the same time.
+	//   "CANNOT_SET_ASSET_SETS_WITH_FEED_ITEM_SETS" - Cannot set asset sets and
+	// feed item sets at the same time.
+	//   "INVALID_LOCATION_GROUP_ASSET_SET" - The location group asset set id is
+	// invalid
+	//   "INVALID_LOCATION_GROUP_RADIUS" - The location group radius is in the
+	// range but not at the valid increment.
+	//   "INVALID_LOCATION_GROUP_RADIUS_UNIT" - The location group radius unit is
+	// invalid.
+	//   "CANNOT_ATTACH_CRITERIA_AT_CAMPAIGN_AND_ADGROUP" - Criteria type cannot be
+	// associated with a campaign and its ad group(s) simultaneously.
+	//   "HOTEL_LENGTH_OF_STAY_OVERLAPS_WITH_EXISTING_CRITERION" - Range
+	// represented by hotel length of stay's min nights and max nights overlaps
+	// with an existing criterion.
+	//   "HOTEL_ADVANCE_BOOKING_WINDOW_OVERLAPS_WITH_EXISTING_CRITERION" - Range
+	// represented by hotel advance booking window's min days and max days overlaps
+	// with an existing criterion.
+	//   "FIELD_INCOMPATIBLE_WITH_NEGATIVE_TARGETING" - The field is not allowed to
+	// be set when the negative field is set to true, for example, we don't allow
+	// bids in negative ad group or campaign criteria.
+	//   "INVALID_WEBPAGE_CONDITION" - The combination of operand and operator in
+	// webpage condition is invalid.
+	//   "INVALID_WEBPAGE_CONDITION_URL" - The URL of webpage condition is invalid.
+	//   "WEBPAGE_CONDITION_URL_CANNOT_BE_EMPTY" - The URL of webpage condition
+	// cannot be empty or contain white space.
+	//   "WEBPAGE_CONDITION_URL_UNSUPPORTED_PROTOCOL" - The URL of webpage
+	// condition contains an unsupported protocol.
+	//   "WEBPAGE_CONDITION_URL_CANNOT_BE_IP_ADDRESS" - The URL of webpage
+	// condition cannot be an IP address.
+	//   "WEBPAGE_CONDITION_URL_DOMAIN_NOT_CONSISTENT_WITH_CAMPAIGN_SETTING" - The
+	// domain of the URL is not consistent with the domain in campaign setting.
+	//   "WEBPAGE_CONDITION_URL_CANNOT_BE_PUBLIC_SUFFIX" - The URL of webpage
+	// condition cannot be a public suffix itself.
+	//   "WEBPAGE_CONDITION_URL_INVALID_PUBLIC_SUFFIX" - The URL of webpage
+	// condition has an invalid public suffix.
+	//   "WEBPAGE_CONDITION_URL_VALUE_TRACK_VALUE_NOT_SUPPORTED" - Value track
+	// parameter is not supported in webpage condition URL.
+	//   "WEBPAGE_CRITERION_URL_EQUALS_CAN_HAVE_ONLY_ONE_CONDITION" - Only one
+	// URL-EQUALS webpage condition is allowed in a webpage criterion and it cannot
+	// be combined with other conditions.
+	//   "WEBPAGE_CRITERION_NOT_SUPPORTED_ON_NON_DSA_AD_GROUP" - A webpage
+	// criterion cannot be added to a non-DSA ad group.
+	//   "CANNOT_TARGET_USER_LIST_FOR_SMART_DISPLAY_CAMPAIGNS" - Cannot add
+	// positive user list criteria in Smart Display campaigns.
+	//   "CANNOT_TARGET_PLACEMENTS_FOR_SEARCH_CAMPAIGNS" - Cannot add positive
+	// placement criterion types in search campaigns.
+	//   "LISTING_SCOPE_TOO_MANY_DIMENSION_TYPES" - Listing scope contains too many
+	// dimension types.
+	//   "LISTING_SCOPE_TOO_MANY_IN_OPERATORS" - Listing scope has too many IN
+	// operators.
+	//   "LISTING_SCOPE_IN_OPERATOR_NOT_SUPPORTED" - Listing scope contains IN
+	// operator on an unsupported dimension type.
+	//   "DUPLICATE_LISTING_DIMENSION_TYPE" - There are dimensions with duplicate
+	// dimension type.
+	//   "DUPLICATE_LISTING_DIMENSION_VALUE" - There are dimensions with duplicate
+	// dimension value.
+	//   "CANNOT_SET_BIDS_ON_LISTING_GROUP_SUBDIVISION" - Listing group SUBDIVISION
+	// nodes cannot have bids.
+	//   "LISTING_GROUP_ERROR_IN_ANOTHER_OPERATION" - Product group operation is
+	// invalid because another operation targeting the same AdGroupId is failing.
+	//   "INVALID_LISTING_GROUP_HIERARCHY" - Ad group is invalid due to the listing
+	// groups it contains.
+	//   "LISTING_GROUP_TREE_WAS_INVALID_BEFORE_MUTATION" - Tree was invalid before
+	// the mutation.
+	//   "LISTING_GROUP_UNIT_CANNOT_HAVE_CHILDREN" - Listing group unit cannot have
+	// children.
+	//   "LISTING_GROUP_SUBDIVISION_REQUIRES_OTHERS_CASE" - Subdivided listing
+	// groups must have an "others" case.
+	//   "LISTING_GROUP_REQUIRES_SAME_DIMENSION_TYPE_AS_SIBLINGS" - Dimension type
+	// of listing group must be the same as that of its siblings.
+	//   "LISTING_GROUP_ALREADY_EXISTS" - Listing group cannot be added to the ad
+	// group because it already exists.
+	//   "LISTING_GROUP_DOES_NOT_EXIST" - Listing group referenced in the operation
+	// was not found in the ad group.
+	//   "LISTING_GROUP_CANNOT_BE_REMOVED" - Recursive removal failed because
+	// listing group subdivision is being created or modified in this request.
+	//   "INVALID_LISTING_GROUP_TYPE" - Listing group type is not allowed for
+	// specified ad group criterion type.
+	//   "LISTING_GROUP_ADD_MAY_ONLY_USE_TEMP_ID" - Listing group in an ADD
+	// operation specifies a non temporary criterion id.
+	//   "LISTING_SCOPE_TOO_LONG" - The combined length of dimension values of the
+	// Listing scope criterion is too long.
+	//   "LISTING_SCOPE_TOO_MANY_DIMENSIONS" - Listing scope contains too many
+	// dimensions.
+	//   "LISTING_GROUP_TOO_LONG" - The combined length of dimension values of the
+	// Listing group criterion is too long.
+	//   "LISTING_GROUP_TREE_TOO_DEEP" - Listing group tree is too deep.
+	//   "INVALID_LISTING_DIMENSION" - Listing dimension is invalid (for example,
+	// dimension contains illegal value, dimension type is represented with wrong
+	// class, etc). Listing dimension value can not contain "==" or "&+".
+	//   "INVALID_LISTING_DIMENSION_TYPE" - Listing dimension type is either
+	// invalid for campaigns of this type or cannot be used in the current context.
+	// BIDDING_CATEGORY_Lx and PRODUCT_TYPE_Lx dimensions must be used in ascending
+	// order of their levels: L1, L2, L3, L4, L5... The levels must be specified
+	// sequentially and start from L1. Furthermore, an "others" Listing group
+	// cannot be subdivided with a dimension of the same type but of a higher level
+	// ("others" BIDDING_CATEGORY_L3 can be subdivided with BRAND but not with
+	// BIDDING_CATEGORY_L4).
+	//   "ADVERTISER_NOT_ON_ALLOWLIST_FOR_COMBINED_AUDIENCE_ON_DISPLAY" - Customer
+	// is not on allowlist for composite audience in display campaigns.
+	//   "CANNOT_TARGET_REMOVED_COMBINED_AUDIENCE" - Cannot target on a removed
+	// combined audience.
+	//   "INVALID_COMBINED_AUDIENCE_ID" - Combined audience ID is invalid.
+	//   "CANNOT_TARGET_REMOVED_CUSTOM_AUDIENCE" - Can not target removed combined
+	// audience.
+	//   "HOTEL_CHECK_IN_DATE_RANGE_OVERLAPS_WITH_EXISTING_CRITERION" - Range
+	// represented by hotel check-in date's start date and end date overlaps with
+	// an existing criterion.
+	//   "HOTEL_CHECK_IN_DATE_RANGE_START_DATE_TOO_EARLY" - Start date is earlier
+	// than earliest allowed value of yesterday UTC.
+	//   "HOTEL_CHECK_IN_DATE_RANGE_END_DATE_TOO_LATE" - End date later is than
+	// latest allowed day of 330 days in the future UTC.
+	//   "HOTEL_CHECK_IN_DATE_RANGE_REVERSED" - Start date is after end date.
+	//   "BROAD_MATCH_MODIFIER_KEYWORD_NOT_ALLOWED" - Broad match modifier (BMM)
+	// keywords can no longer be created. See
+	// https://ads-developers.googleblog.com/2021/06/broad-match-modifier-upcoming-changes.html.
+	//   "ONE_AUDIENCE_ALLOWED_PER_ASSET_GROUP" - Only one audience is allowed in
+	// an asset group.
+	//   "AUDIENCE_NOT_ELIGIBLE_FOR_CAMPAIGN_TYPE" - Audience is not supported for
+	// the specified campaign type.
+	//   "AUDIENCE_NOT_ALLOWED_TO_ATTACH_WHEN_AUDIENCE_GROUPED_SET_TO_FALSE" -
+	// Audience is not allowed to attach when use_audience_grouped bit is set to
+	// false.
+	//   "CANNOT_TARGET_CUSTOMER_MATCH_USER_LIST" - Targeting is not allowed for
+	// Customer Match lists as per Customer Match policy. See
+	// https://support.google.com/google-ads/answer/6299717.
+	//   "NEGATIVE_KEYWORD_SHARED_SET_DOES_NOT_EXIST" - Cannot create a negative
+	// keyword list criterion with a shared set that does not exist.
+	//   "CANNOT_ADD_REMOVED_NEGATIVE_KEYWORD_SHARED_SET" - Cannot create a
+	// negative keyword list with deleted shared set.
+	//   "CANNOT_HAVE_MULTIPLE_NEGATIVE_KEYWORD_LIST_PER_ACCOUNT" - Can only have
+	// one Negative Keyword List per account.
+	//   "CUSTOMER_CANNOT_ADD_CRITERION_OF_THIS_TYPE" - Only allowlisted customers
+	// can add criteria of this type.
+	//   "CANNOT_TARGET_SIMILAR_USER_LIST" - Targeting for Similar audiences is not
+	// supported, since this feature has been deprecated. See
+	// https://support.google.com/google-ads/answer/12463119 to learn more.
+	//   "CANNOT_ADD_AUDIENCE_SEGMENT_CRITERION_WHEN_AUDIENCE_GROUPED_IS_SET" -
+	// Audience segment criteria cannot be added when use_audience_grouped bit is
+	// set.
+	//   "ONE_AUDIENCE_ALLOWED_PER_AD_GROUP" - Only one audience is allowed in an
+	// ad group.
+	//   "INVALID_DETAILED_DEMOGRAPHIC" - Invalid detailed demographics criterion.
+	//   "CANNOT_RECOGNIZE_BRAND" - The brand criteria has a brand input that is
+	// not recognized as a valid brand.
+	//   "BRAND_SHARED_SET_DOES_NOT_EXIST" - The brand_list.shared_set_id
+	// references a shared set that does not exist.
+	//   "CANNOT_ADD_REMOVED_BRAND_SHARED_SET" - Cannot create a brand list with
+	// deleted shared set.
+	//   "ONLY_EXCLUSION_BRAND_LIST_ALLOWED_FOR_CAMPAIGN_TYPE" - Brand list can
+	// only be negatively targeted for the campaign type.
+	//   "LOCATION_TARGETING_NOT_ELIGIBLE_FOR_RESTRICTED_CAMPAIGN" - Cannot
+	// positively target locations outside of restricted area for campaign.
+	//   "ONLY_INCLUSION_BRAND_LIST_ALLOWED_FOR_AD_GROUPS" - Ad group level brand
+	// list criteria only support inclusionary targeting. Negative targeting at
+	// this level is not supported.
+	//   "CANNOT_ADD_REMOVED_PLACEMENT_LIST_SHARED_SET" - Cannot create a placement
+	// list with deleted shared set.
+	//   "PLACEMENT_LIST_SHARED_SET_DOES_NOT_EXIST" - The
+	// placement_list.shared_set_id references a shared set that does not exist.
+	//   "AI_MAX_MUST_BE_ENABLED" - This feature is only available for AI Max
+	// campaigns.
+	//   "NOT_AVAILABLE_FOR_AI_MAX_CAMPAIGNS" - This feature is not available for
+	// AI Max campaigns.
+	//   "MISSING_EU_POLITICAL_ADVERTISING_SELF_DECLARATION" - The operation failed
+	// because the campaign is missing the self-declaration on political
+	// advertising status in the EU.
+	//   "INVALID_CAMPAIGN_TYPE_FOR_THIRD_PARTY_PARTNER_DATA_LIST" - Targeting this
+	// UserList is not allowed for this campaign type.
+	//   "CANNOT_ADD_USER_LIST_PENDING_PRIVACY_REVIEW" - The user list cannot be
+	// used while it is pending privacy review.
+	//   "VERTICAL_ADS_ITEM_GROUP_RULE_LIST_DOES_NOT_EXIST" - The referenced
+	// Vertical Ads item group rule list shared set does not exist.
+	//   "CANNOT_ADD_REMOVED_VERTICAL_ADS_ITEM_GROUP_RULE_LIST_SHARED_SET" - Cannot
+	// add Vertical Ads Item Group Rule List with deleted shared set.
+	//
+	// "VERTICAL_ADS_ITEM_GROUP_RULE_LIST_NOT_SUPPORTED_FOR_CAMPAIGNS_WITHOUT_ENABLE
+	// D_TRAVEL_FEED" - Vertical Ads Item Group Rule List is not supported for
+	// campaigns that do not have an active travel feed.
+	//
+	// "VERTICAL_ADS_ITEM_GROUP_RULE_LIST_NOT_SUPPORTED_FOR_CAMPAIGNS_WITHOUT_AI_MAX
+	// " - Vertical Ads Item Group Rule List is not supported for campaigns that do
+	// not have AI max enabled.
+	//   "VERTICAL_ADS_ITEM_GROUP_RULE_NOT_SUPPORTED_FOR_THE_VERTICAL_TYPE" - The
+	// dimension of the Vertical Ads Item Group Rule criterion is not supported for
+	// the shared set vertical type.
+	CriterionError string `json:"criterionError,omitempty"`
+	// CurrencyCodeError: The reasons for the currency code error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "UNSUPPORTED" - The currency code is not supported.
+	CurrencyCodeError string `json:"currencyCodeError,omitempty"`
+	// CurrencyError: The reasons for the currency errors.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "VALUE_NOT_MULTIPLE_OF_BILLABLE_UNIT" - Bid must be a multiple of billable
+	// unit.
+	CurrencyError string `json:"currencyError,omitempty"`
+	// CustomAudienceError: The reasons for the custom audience error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "NAME_ALREADY_USED" - New name in the custom audience is duplicated
+	// ignoring cases.
+	//   "CANNOT_REMOVE_WHILE_IN_USE" - Cannot remove a custom audience while it's
+	// still being used as targeting.
+	//   "RESOURCE_ALREADY_REMOVED" - Cannot update or remove a custom audience
+	// that is already removed.
+	//   "MEMBER_TYPE_AND_PARAMETER_ALREADY_EXISTED" - The pair of [type, value]
+	// already exists in members.
+	//   "INVALID_MEMBER_TYPE" - Member type is invalid.
+	//   "MEMBER_TYPE_AND_VALUE_DOES_NOT_MATCH" - Member type does not have
+	// associated value.
+	//   "POLICY_VIOLATION" - Custom audience contains a member that violates
+	// policy.
+	//   "INVALID_TYPE_CHANGE" - Change in custom audience type is not allowed.
+	CustomAudienceError string `json:"customAudienceError,omitempty"`
+	// CustomColumnError: The reasons for the custom column error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CUSTOM_COLUMN_NOT_FOUND" - The custom column has not been found.
+	//   "CUSTOM_COLUMN_NOT_AVAILABLE" - The custom column is not available.
+	CustomColumnError string `json:"customColumnError,omitempty"`
+	// CustomConversionGoalError: The reasons for the custom conversion goal error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_CONVERSION_ACTION" - Cannot find a conversion action with the
+	// specified id.
+	//   "CONVERSION_ACTION_NOT_ENABLED" - The conversion action is not enabled so
+	// it cannot be included in a custom conversion goal.
+	//   "CANNOT_REMOVE_LINKED_CUSTOM_CONVERSION_GOAL" - The custom conversion goal
+	// cannot be removed because it's linked to a campaign.
+	//   "CUSTOM_GOAL_DUPLICATE_NAME" - Custom goal with the same name already
+	// exists.
+	//   "DUPLICATE_CONVERSION_ACTION_LIST" - Custom goal with the same conversion
+	// action list already exists.
+	//   "NON_BIDDABLE_CONVERSION_ACTION_NOT_ELIGIBLE_FOR_CUSTOM_GOAL" - Conversion
+	// types that cannot be biddable should not be included in custom goal.
+	CustomConversionGoalError string `json:"customConversionGoalError,omitempty"`
+	// CustomInterestError: The reasons for the custom interest error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "NAME_ALREADY_USED" - Duplicate custom interest name ignoring case.
+	//   "CUSTOM_INTEREST_MEMBER_ID_AND_TYPE_PARAMETER_NOT_PRESENT_IN_REMOVE" - In
+	// the remove custom interest member operation, both member ID and pair [type,
+	// parameter] are not present.
+	//   "TYPE_AND_PARAMETER_NOT_FOUND" - The pair of [type, parameter] does not
+	// exist.
+	//   "TYPE_AND_PARAMETER_ALREADY_EXISTED" - The pair of [type, parameter]
+	// already exists.
+	//   "INVALID_CUSTOM_INTEREST_MEMBER_TYPE" - Unsupported custom interest member
+	// type.
+	//   "CANNOT_REMOVE_WHILE_IN_USE" - Cannot remove a custom interest while it's
+	// still being targeted.
+	//   "CANNOT_CHANGE_TYPE" - Cannot mutate custom interest type.
+	CustomInterestError string `json:"customInterestError,omitempty"`
+	// CustomerClientLinkError: The reasons for the customer client link error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CLIENT_ALREADY_INVITED_BY_THIS_MANAGER" - Trying to manage a client that
+	// already in being managed by customer.
+	//   "CLIENT_ALREADY_MANAGED_IN_HIERARCHY" - Already managed by some other
+	// manager in the hierarchy.
+	//   "CYCLIC_LINK_NOT_ALLOWED" - Attempt to create a cycle in the hierarchy.
+	//   "CUSTOMER_HAS_TOO_MANY_ACCOUNTS" - Managed accounts has the maximum number
+	// of linked accounts.
+	//   "CLIENT_HAS_TOO_MANY_INVITATIONS" - Invitor has the maximum pending
+	// invitations.
+	//   "CANNOT_HIDE_OR_UNHIDE_MANAGER_ACCOUNTS" - Attempt to change hidden status
+	// of a link that is not active.
+	//   "CUSTOMER_HAS_TOO_MANY_ACCOUNTS_AT_MANAGER" - Parent manager account has
+	// the maximum number of linked accounts.
+	//   "CLIENT_HAS_TOO_MANY_MANAGERS" - Client has too many managers.
+	CustomerClientLinkError string `json:"customerClientLinkError,omitempty"`
+	// CustomerCustomizerError: The reasons for the customer customizer error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	CustomerCustomizerError string `json:"customerCustomizerError,omitempty"`
+	// CustomerError: The reasons for the customer error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "STATUS_CHANGE_DISALLOWED" - Customer status is not allowed to be changed
+	// from DRAFT and CLOSED. Currency code and at least one of country code and
+	// time zone needs to be set when status is changed to ENABLED.
+	//   "ACCOUNT_NOT_SET_UP" - CustomerService cannot get a customer that has not
+	// been fully set up.
+	//   "CREATION_DENIED_FOR_POLICY_VIOLATION" - Customer creation is denied for
+	// policy violation.
+	//   "CREATION_DENIED_INELIGIBLE_MCC" - Manager account is ineligible to create
+	// new accounts.
+	CustomerError string `json:"customerError,omitempty"`
+	// CustomerFeedError: The reasons for the customer feed error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "FEED_ALREADY_EXISTS_FOR_PLACEHOLDER_TYPE" - An active feed already exists
+	// for this customer and place holder type.
+	//   "CANNOT_CREATE_FOR_REMOVED_FEED" - The specified feed is removed.
+	//   "CANNOT_CREATE_ALREADY_EXISTING_CUSTOMER_FEED" - The CustomerFeed already
+	// exists. Update should be used to modify the existing CustomerFeed.
+	//   "CANNOT_MODIFY_REMOVED_CUSTOMER_FEED" - Cannot update removed customer
+	// feed.
+	//   "INVALID_PLACEHOLDER_TYPE" - Invalid placeholder type.
+	//   "MISSING_FEEDMAPPING_FOR_PLACEHOLDER_TYPE" - Feed mapping for this
+	// placeholder type does not exist.
+	//   "PLACEHOLDER_TYPE_NOT_ALLOWED_ON_CUSTOMER_FEED" - Placeholder not allowed
+	// at the account level.
+	CustomerFeedError string `json:"customerFeedError,omitempty"`
+	// CustomerLifecycleGoalError: The reasons for the customer lifecycle goal
+	// error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CUSTOMER_ACQUISITION_VALUE_MISSING" -
+	// CustomerLifecycleGoal.customer_acquisition_goal_value_settings.value must be
+	// set.
+	//   "CUSTOMER_ACQUISITION_INVALID_VALUE" -
+	// CustomerLifecycleGoal.customer_acquisition_goal_value_settings.value must be
+	// no less than 0.01.
+	//   "CUSTOMER_ACQUISITION_INVALID_HIGH_LIFETIME_VALUE" -
+	// CustomerLifecycleGoal.customer_acquisition_goal_value_settings.high_lifetime_
+	// value must be no less than 0.01. Also, to set this field,
+	// CustomerLifecycleGoal.customer_acquisition_goal_value_settings.value must
+	// also be present, and high_lifetime_value must be greater than value.
+	//   "CUSTOMER_ACQUISITION_VALUE_CANNOT_BE_CLEARED" -
+	// CustomerLifecycleGoal.customer_acquisition_goal_value_settings.value cannot
+	// be cleared. This value would have no effect as long as none of your
+	// campaigns adopt the customer acquisitiong goal.
+	//   "CUSTOMER_ACQUISITION_HIGH_LIFETIME_VALUE_CANNOT_BE_CLEARED" -
+	// CustomerLifecycleGoal.customer_acquisition_goal_value_settings.high_lifetime_
+	// value cannot be cleared. This value would have no effect as long as none of
+	// your campaigns adopt the high value optimization of customer acquisitiong
+	// goal.
+	//   "INVALID_EXISTING_USER_LIST" - Found invalid value in
+	// CustomerLifecycleGoal.lifecycle_goal_customer_definition_settings.existing_us
+	// er_lists. The userlist must be accessible, active and belong to one of the
+	// following types: CRM_BASED, RULE_BASED, REMARKETING.
+	//   "INVALID_HIGH_LIFETIME_VALUE_USER_LIST" - Found invalid value in
+	// CustomerLifecycleGoal.lifecycle_goal_customer_definition_settings.high_lifeti
+	// me_value_user_lists. The userlist must be accessible, active and belong to
+	// one of the following types: CRM_BASED, RULE_BASED, REMARKETING.
+	CustomerLifecycleGoalError string `json:"customerLifecycleGoalError,omitempty"`
+	// CustomerManagerLinkError: The reasons for the customer manager link error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "NO_PENDING_INVITE" - No pending invitation.
+	//   "SAME_CLIENT_MORE_THAN_ONCE_PER_CALL" - Attempt to operate on the same
+	// client more than once in the same call.
+	//   "MANAGER_HAS_MAX_NUMBER_OF_LINKED_ACCOUNTS" - Manager account has the
+	// maximum number of linked accounts.
+	//   "CANNOT_UNLINK_ACCOUNT_WITHOUT_ACTIVE_USER" - If no active user on account
+	// it cannot be unlinked from its manager.
+	//   "CANNOT_REMOVE_LAST_CLIENT_ACCOUNT_OWNER" - Account should have at least
+	// one active owner on it before being unlinked.
+	//   "CANNOT_CHANGE_ROLE_BY_NON_ACCOUNT_OWNER" - Only account owners may change
+	// their permission role.
+	//   "CANNOT_CHANGE_ROLE_FOR_NON_ACTIVE_LINK_ACCOUNT" - When a client's link to
+	// its manager is not active, the link role cannot be changed.
+	//   "DUPLICATE_CHILD_FOUND" - Attempt to link a child to a parent that
+	// contains or will contain duplicate children.
+	//   "TEST_ACCOUNT_LINKS_TOO_MANY_CHILD_ACCOUNTS" - The authorized customer is
+	// a test account. It can add no more than the allowed number of accounts
+	CustomerManagerLinkError string `json:"customerManagerLinkError,omitempty"`
+	// CustomerSkAdNetworkConversionValueSchemaError: The reasons for the customer
+	// SK Ad network conversion value schema error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_LINK_ID" - The customer link ID provided is invalid.
+	//   "INVALID_APP_ID" - The app ID provided is invalid.
+	//   "INVALID_SCHEMA" - The conversion value schema provided is invalid.
+	//   "LINK_CODE_NOT_FOUND" - The customer link id provided could not be found.
+	//   "INVALID_EVENT_COUNTER" - The SkAdNetwork event counter provided is
+	// invalid.
+	//   "INVALID_EVENT_NAME" - The SkAdNetwork event name provided is invalid.
+	CustomerSkAdNetworkConversionValueSchemaError string `json:"customerSkAdNetworkConversionValueSchemaError,omitempty"`
+	// CustomerUserAccessError: The reasons for the customer user access mutate
+	// error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_USER_ID" - There is no user associated with the user id
+	// specified.
+	//   "REMOVAL_DISALLOWED" - Unable to remove the access between the user and
+	// customer.
+	//   "DISALLOWED_ACCESS_ROLE" - Unable to add or update the access role as
+	// specified.
+	//   "LAST_ADMIN_USER_OF_SERVING_CUSTOMER" - The user can't remove itself from
+	// an active serving customer if it's the last admin user and the customer
+	// doesn't have any owner manager
+	//   "LAST_ADMIN_USER_OF_MANAGER" - Last admin user cannot be removed from a
+	// manager.
+	CustomerUserAccessError string `json:"customerUserAccessError,omitempty"`
+	// CustomizerAttributeError: The reasons for the customizer attribute error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "DUPLICATE_CUSTOMIZER_ATTRIBUTE_NAME" - CustomizerAttribute name matches
+	// that of another active CustomizerAttribute.
+	CustomizerAttributeError string `json:"customizerAttributeError,omitempty"`
+	// DataLinkError: The reasons for the data link error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "YOUTUBE_CHANNEL_ID_INVALID" - The requested YouTube Channel ID is
+	// invalid.
+	//   "YOUTUBE_VIDEO_ID_INVALID" - The requested YouTube Video ID is invalid.
+	//   "YOUTUBE_VIDEO_FROM_DIFFERENT_CHANNEL" - The requested YouTube Video ID
+	// doesn't belong to the requested YouTube Channel ID.
+	//   "PERMISSION_DENIED" - A link cannot be created because the customer
+	// doesn't have the permission.
+	//   "INVALID_STATUS" - A link can not be removed or updated because the status
+	// is invalid.
+	//   "INVALID_UPDATE_STATUS" - The input status in the update request is
+	// invalid.
+	//   "INVALID_RESOURCE_NAME" - The input resource name is invalid.
+	DataLinkError string `json:"dataLinkError,omitempty"`
+	// DatabaseError: The reasons for the database error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CONCURRENT_MODIFICATION" - Multiple requests were attempting to modify
+	// the same resource at once. Retry the request.
+	//   "DATA_CONSTRAINT_VIOLATION" - The request conflicted with existing data.
+	// This error will usually be replaced with a more specific error if the
+	// request is retried.
+	//   "REQUEST_TOO_LARGE" - The data written is too large. Split the request
+	// into smaller requests.
+	DatabaseError string `json:"databaseError,omitempty"`
+	// DateError: The reasons for the date error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_FIELD_VALUES_IN_DATE" - Given field values do not correspond to a
+	// valid date.
+	//   "INVALID_FIELD_VALUES_IN_DATE_TIME" - Given field values do not correspond
+	// to a valid date time.
+	//   "INVALID_STRING_DATE" - The string date's format should be yyyy-mm-dd.
+	//   "INVALID_STRING_DATE_TIME_MICROS" - The string date time's format should
+	// be yyyy-mm-dd hh:mm:ss.ssssss.
+	//   "INVALID_STRING_DATE_TIME_SECONDS" - The string date time's format should
+	// be yyyy-mm-dd hh:mm:ss.
+	//   "INVALID_STRING_DATE_TIME_SECONDS_WITH_OFFSET" - The string date time's
+	// format should be yyyy-mm-dd hh:mm:ss+|-hh:mm.
+	//   "EARLIER_THAN_MINIMUM_DATE" - Date is before allowed minimum.
+	//   "LATER_THAN_MAXIMUM_DATE" - Date is after allowed maximum.
+	//   "DATE_RANGE_MINIMUM_DATE_LATER_THAN_MAXIMUM_DATE" - Date range bounds are
+	// not in order.
+	//   "DATE_RANGE_MINIMUM_AND_MAXIMUM_DATES_BOTH_NULL" - Both dates in range are
+	// null.
+	//   "DATE_RANGE_ERROR_START_TIME_MUST_BE_THE_START_OF_A_DAY" - This campaign
+	// type doesn't support a start date time that isn't the start of the day.
+	//   "DATE_RANGE_ERROR_END_TIME_MUST_BE_THE_END_OF_A_DAY" - This campaign type
+	// doesn't support an end date time that isn't the end of the day.
+	DateError string `json:"dateError,omitempty"`
+	// DateRangeError: The reasons for the date range error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_DATE" - Invalid date.
+	//   "START_DATE_AFTER_END_DATE" - The start date was after the end date.
+	//   "CANNOT_SET_DATE_TO_PAST" - Cannot set date to past time
+	//   "AFTER_MAXIMUM_ALLOWABLE_DATE" - A date was used that is past the system
+	// "last" date.
+	//   "CANNOT_MODIFY_START_DATE_IF_ALREADY_STARTED" - Trying to change start
+	// date on a resource that has started.
+	DateRangeError string `json:"dateRangeError,omitempty"`
+	// DistinctError: The reasons for the distinct error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "DUPLICATE_ELEMENT" - Duplicate element.
+	//   "DUPLICATE_TYPE" - Duplicate type.
+	DistinctError string `json:"distinctError,omitempty"`
+	// EnumError: The reason for enum error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "ENUM_VALUE_NOT_PERMITTED" - The enum value is not permitted.
+	EnumError string `json:"enumError,omitempty"`
+	// ExperimentArmError: The reasons for the experiment arm error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "EXPERIMENT_ARM_COUNT_LIMIT_EXCEEDED" - Number of experiment arms is above
+	// limit.
+	//   "INVALID_CAMPAIGN_STATUS" - Cannot add campaign with invalid status to the
+	// experiment arm.
+	//   "DUPLICATE_EXPERIMENT_ARM_NAME" - Cannot add duplicate experiment arm name
+	// in one experiment.
+	//   "CANNOT_SET_TREATMENT_ARM_CAMPAIGN" - Cannot set campaigns of treatment
+	// experiment arm.
+	//   "CANNOT_MODIFY_CAMPAIGN_IDS" - Cannot edit campaign ids in trial arms in
+	// non SETUP experiment.
+	//   "CANNOT_MODIFY_CAMPAIGN_WITHOUT_SUFFIX_SET" - Cannot modify the campaigns
+	// in the control arm if there is not a suffix set in the trial.
+	//   "CANNOT_MUTATE_TRAFFIC_SPLIT_AFTER_START" - Traffic split related settings
+	// (like traffic share bounds) can't be modified after the trial has started.
+	//   "CANNOT_ADD_CAMPAIGN_WITH_SHARED_BUDGET" - Cannot use shared budget on
+	// experiment's control campaign.
+	//   "CANNOT_ADD_CAMPAIGN_WITH_CUSTOM_BUDGET" - Cannot use custom budget on
+	// experiment's control campaigns.
+	//   "CANNOT_ADD_CAMPAIGNS_WITH_DYNAMIC_ASSETS_ENABLED" - Cannot have
+	// enable_dynamic_assets turned on in experiment's campaigns.
+	//   "UNSUPPORTED_CAMPAIGN_ADVERTISING_CHANNEL_SUB_TYPE" - Cannot use
+	// campaign's advertising channel sub type in experiment.
+	//   "CANNOT_ADD_BASE_CAMPAIGN_WITH_DATE_RANGE" - Experiment date range must be
+	// within base campaign's date range.
+	//   "BIDDING_STRATEGY_NOT_SUPPORTED_IN_EXPERIMENTS" - Bidding strategy is not
+	// supported in experiments.
+	//   "TRAFFIC_SPLIT_NOT_SUPPORTED_FOR_CHANNEL_TYPE" - Traffic split is not
+	// supported for some channel types.
+	ExperimentArmError string `json:"experimentArmError,omitempty"`
+	// ExperimentError: The reasons for the experiment error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CANNOT_SET_START_DATE_IN_PAST" - The start date of an experiment cannot
+	// be set in the past. Use a start date in the future.
+	//   "END_DATE_BEFORE_START_DATE" - The end date of an experiment is before its
+	// start date. Use an end date after the start date.
+	//   "START_DATE_TOO_FAR_IN_FUTURE" - The start date of an experiment is too
+	// far in the future. Use a start date no more than 1 year in the future.
+	//   "DUPLICATE_EXPERIMENT_NAME" - The experiment has the same name as an
+	// existing active experiment.
+	//   "CANNOT_MODIFY_REMOVED_EXPERIMENT" - Experiments can only be modified when
+	// they are ENABLED.
+	//   "START_DATE_ALREADY_PASSED" - The start date of an experiment cannot be
+	// modified if the existing start date has already passed.
+	//   "CANNOT_SET_END_DATE_IN_PAST" - The end date of an experiment cannot be
+	// set in the past.
+	//   "CANNOT_SET_STATUS_TO_REMOVED" - The status of an experiment cannot be set
+	// to REMOVED.
+	//   "CANNOT_MODIFY_PAST_END_DATE" - The end date of an expired experiment
+	// cannot be modified.
+	//   "INVALID_STATUS" - The status is invalid.
+	//   "INVALID_CAMPAIGN_CHANNEL_TYPE" - Experiment arm contains campaigns with
+	// invalid advertising channel type.
+	//   "OVERLAPPING_MEMBERS_AND_DATE_RANGE" - A pair of trials share members and
+	// have overlapping date ranges.
+	//   "INVALID_TRIAL_ARM_TRAFFIC_SPLIT" - Experiment arm contains invalid
+	// traffic split.
+	//   "TRAFFIC_SPLIT_OVERLAPPING" - Experiment contains trial arms with
+	// overlapping traffic split.
+	//   "SUM_TRIAL_ARM_TRAFFIC_UNEQUALS_TO_TRIAL_TRAFFIC_SPLIT_DENOMINATOR" - The
+	// total traffic split of trial arms is not equal to 100.
+	//   "CANNOT_MODIFY_TRAFFIC_SPLIT_AFTER_START" - Traffic split related settings
+	// (like traffic share bounds) can't be modified after the experiment has
+	// started.
+	//   "EXPERIMENT_NOT_FOUND" - The experiment could not be found.
+	//   "EXPERIMENT_NOT_YET_STARTED" - Experiment has not begun.
+	//   "CANNOT_HAVE_MULTIPLE_CONTROL_ARMS" - The experiment cannot have more than
+	// one control arm.
+	//   "IN_DESIGN_CAMPAIGNS_NOT_SET" - The experiment doesn't set in-design
+	// campaigns.
+	//   "CANNOT_SET_STATUS_TO_GRADUATED" - Clients must use the graduate action to
+	// graduate experiments and cannot set the status to GRADUATED directly.
+	//   "CANNOT_CREATE_EXPERIMENT_CAMPAIGN_WITH_SHARED_BUDGET" - Cannot use shared
+	// budget on base campaign when scheduling an experiment.
+	//   "CANNOT_CREATE_EXPERIMENT_CAMPAIGN_WITH_CUSTOM_BUDGET" - Cannot use custom
+	// budget on base campaign when scheduling an experiment.
+	//   "STATUS_TRANSITION_INVALID" - Invalid status transition.
+	//   "DUPLICATE_EXPERIMENT_CAMPAIGN_NAME" - The experiment campaign name
+	// conflicts with a pre-existing campaign.
+	//   "CANNOT_REMOVE_IN_CREATION_EXPERIMENT" - Cannot remove in creation
+	// experiments.
+	//   "CANNOT_ADD_CAMPAIGN_WITH_DEPRECATED_AD_TYPES" - Cannot add campaign with
+	// deprecated ad types. Deprecated ad types: ENHANCED_DISPLAY, GALLERY, GMAIL,
+	// KEYWORDLESS, TEXT.
+	//   "CANNOT_ENABLE_SYNC_FOR_UNSUPPORTED_EXPERIMENT_TYPE" - Sync can only be
+	// enabled for supported experiment types. Supported experiment types:
+	// SEARCH_CUSTOM, DISPLAY_CUSTOM, DISPLAY_AUTOMATED_BIDDING_STRATEGY,
+	// SEARCH_AUTOMATED_BIDDING_STRATEGY.
+	//   "INVALID_DURATION_FOR_AN_EXPERIMENT" - Experiment length cannot be longer
+	// than max length.
+	//   "MISSING_EU_POLITICAL_ADVERTISING_SELF_DECLARATION" - The experiment's
+	// campaigns must self-declare whether they contain political advertising that
+	// targets the European Union.
+	ExperimentError string `json:"experimentError,omitempty"`
+	// ExtensionFeedItemError: The reasons for the extension feed item error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "VALUE_OUT_OF_RANGE" - Value is not within the accepted range.
+	//   "URL_LIST_TOO_LONG" - Url list is too long.
+	//   "CANNOT_HAVE_RESTRICTION_ON_EMPTY_GEO_TARGETING" - Cannot have a geo
+	// targeting restriction without having geo targeting.
+	//   "CANNOT_SET_WITH_FINAL_URLS" - Cannot simultaneously set sitelink field
+	// with final urls.
+	//   "CANNOT_SET_WITHOUT_FINAL_URLS" - Must set field with final urls.
+	//   "INVALID_PHONE_NUMBER" - Phone number for a call extension is invalid.
+	//   "PHONE_NUMBER_NOT_SUPPORTED_FOR_COUNTRY" - Phone number for a call
+	// extension is not supported for the given country code.
+	//   "CARRIER_SPECIFIC_SHORT_NUMBER_NOT_ALLOWED" - A carrier specific number in
+	// short format is not allowed for call extensions.
+	//   "PREMIUM_RATE_NUMBER_NOT_ALLOWED" - Premium rate numbers are not allowed
+	// for call extensions.
+	//   "DISALLOWED_NUMBER_TYPE" - Phone number type for a call extension is not
+	// allowed. For example, personal number is not allowed for a call extension in
+	// most regions.
+	//   "INVALID_DOMESTIC_PHONE_NUMBER_FORMAT" - Phone number for a call extension
+	// does not meet domestic format requirements.
+	//   "VANITY_PHONE_NUMBER_NOT_ALLOWED" - Vanity phone numbers (for example,
+	// those including letters) are not allowed for call extensions.
+	//   "INVALID_CALL_CONVERSION_ACTION" - Call conversion action provided for a
+	// call extension is invalid.
+	//   "CUSTOMER_NOT_ON_ALLOWLIST_FOR_CALLTRACKING" - For a call extension, the
+	// customer is not on the allow-list for call tracking.
+	//   "CALLTRACKING_NOT_SUPPORTED_FOR_COUNTRY" - Call tracking is not supported
+	// for the given country for a call extension.
+	//   "CUSTOMER_CONSENT_FOR_CALL_RECORDING_REQUIRED" - Customer hasn't consented
+	// for call recording, which is required for creating/updating call feed items.
+	// See https://support.google.com/google-ads/answer/7412639.
+	//   "INVALID_APP_ID" - App id provided for an app extension is invalid.
+	//   "QUOTES_IN_REVIEW_EXTENSION_SNIPPET" - Quotation marks present in the
+	// review text for a review extension.
+	//   "HYPHENS_IN_REVIEW_EXTENSION_SNIPPET" - Hyphen character present in the
+	// review text for a review extension.
+	//   "REVIEW_EXTENSION_SOURCE_INELIGIBLE" - A denylisted review source name or
+	// url was provided for a review extension.
+	//   "SOURCE_NAME_IN_REVIEW_EXTENSION_TEXT" - Review source name should not be
+	// found in the review text.
+	//   "INCONSISTENT_CURRENCY_CODES" - Inconsistent currency codes.
+	//   "PRICE_EXTENSION_HAS_DUPLICATED_HEADERS" - Price extension cannot have
+	// duplicated headers.
+	//   "PRICE_ITEM_HAS_DUPLICATED_HEADER_AND_DESCRIPTION" - Price item cannot
+	// have duplicated header and description.
+	//   "PRICE_EXTENSION_HAS_TOO_FEW_ITEMS" - Price extension has too few items.
+	//   "PRICE_EXTENSION_HAS_TOO_MANY_ITEMS" - Price extension has too many items.
+	//   "UNSUPPORTED_VALUE" - The input value is not currently supported.
+	//   "UNSUPPORTED_VALUE_IN_SELECTED_LANGUAGE" - The input value is not
+	// currently supported in the selected language of an extension.
+	//   "INVALID_DEVICE_PREFERENCE" - Unknown or unsupported device preference.
+	//   "INVALID_SCHEDULE_END" - Invalid feed item schedule end time (for example,
+	// endHour = 24 and endMinute != 0).
+	//   "DATE_TIME_MUST_BE_IN_ACCOUNT_TIME_ZONE" - Date time zone does not match
+	// the account's time zone.
+	//   "INVALID_SNIPPETS_HEADER" - Invalid structured snippet header.
+	//   "CANNOT_OPERATE_ON_REMOVED_FEED_ITEM" - Cannot operate on removed feed
+	// item.
+	//   "PHONE_NUMBER_NOT_SUPPORTED_WITH_CALLTRACKING_FOR_COUNTRY" - Phone number
+	// not supported when call tracking enabled for country.
+	//   "CONFLICTING_CALL_CONVERSION_SETTINGS" - Cannot set call_conversion_action
+	// while call_conversion_tracking_enabled is set to true.
+	//   "EXTENSION_TYPE_MISMATCH" - The type of the input extension feed item
+	// doesn't match the existing extension feed item.
+	//   "EXTENSION_SUBTYPE_REQUIRED" - The oneof field extension for example,
+	// subtype of extension feed item is required.
+	//   "EXTENSION_TYPE_UNSUPPORTED" - The referenced feed item is not mapped to a
+	// supported extension type.
+	//   "CANNOT_OPERATE_ON_FEED_WITH_MULTIPLE_MAPPINGS" - Cannot operate on a Feed
+	// with more than one active FeedMapping.
+	//   "CANNOT_OPERATE_ON_FEED_WITH_KEY_ATTRIBUTES" - Cannot operate on a Feed
+	// that has key attributes.
+	//   "INVALID_PRICE_FORMAT" - Input price is not in a valid format.
+	//   "PROMOTION_INVALID_TIME" - The promotion time is invalid.
+	//   "TOO_MANY_DECIMAL_PLACES_SPECIFIED" - This field has too many decimal
+	// places specified.
+	//   "CONCRETE_EXTENSION_TYPE_REQUIRED" - Concrete sub type of
+	// ExtensionFeedItem is required for this operation.
+	//   "SCHEDULE_END_NOT_AFTER_START" - Feed item schedule end time must be after
+	// start time.
+	ExtensionFeedItemError string `json:"extensionFeedItemError,omitempty"`
+	// ExtensionSettingError: The reasons for the extension setting error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "EXTENSIONS_REQUIRED" - A platform restriction was provided without input
+	// extensions or existing extensions.
+	//   "FEED_TYPE_EXTENSION_TYPE_MISMATCH" - The provided feed type does not
+	// correspond to the provided extensions.
+	//   "INVALID_FEED_TYPE" - The provided feed type cannot be used.
+	//   "INVALID_FEED_TYPE_FOR_CUSTOMER_EXTENSION_SETTING" - The provided feed
+	// type cannot be used at the customer level.
+	//   "CANNOT_CHANGE_FEED_ITEM_ON_CREATE" - Cannot change a feed item field on a
+	// CREATE operation.
+	//   "CANNOT_UPDATE_NEWLY_CREATED_EXTENSION" - Cannot update an extension that
+	// is not already in this setting.
+	//   "NO_EXISTING_AD_GROUP_EXTENSION_SETTING_FOR_TYPE" - There is no existing
+	// AdGroupExtensionSetting for this type.
+	//   "NO_EXISTING_CAMPAIGN_EXTENSION_SETTING_FOR_TYPE" - There is no existing
+	// CampaignExtensionSetting for this type.
+	//   "NO_EXISTING_CUSTOMER_EXTENSION_SETTING_FOR_TYPE" - There is no existing
+	// CustomerExtensionSetting for this type.
+	//   "AD_GROUP_EXTENSION_SETTING_ALREADY_EXISTS" - The AdGroupExtensionSetting
+	// already exists. UPDATE should be used to modify the existing
+	// AdGroupExtensionSetting.
+	//   "CAMPAIGN_EXTENSION_SETTING_ALREADY_EXISTS" - The CampaignExtensionSetting
+	// already exists. UPDATE should be used to modify the existing
+	// CampaignExtensionSetting.
+	//   "CUSTOMER_EXTENSION_SETTING_ALREADY_EXISTS" - The CustomerExtensionSetting
+	// already exists. UPDATE should be used to modify the existing
+	// CustomerExtensionSetting.
+	//   "AD_GROUP_FEED_ALREADY_EXISTS_FOR_PLACEHOLDER_TYPE" - An active ad group
+	// feed already exists for this place holder type.
+	//   "CAMPAIGN_FEED_ALREADY_EXISTS_FOR_PLACEHOLDER_TYPE" - An active campaign
+	// feed already exists for this place holder type.
+	//   "CUSTOMER_FEED_ALREADY_EXISTS_FOR_PLACEHOLDER_TYPE" - An active customer
+	// feed already exists for this place holder type.
+	//   "VALUE_OUT_OF_RANGE" - Value is not within the accepted range.
+	//   "CANNOT_SET_FIELD_WITH_FINAL_URLS" - Cannot simultaneously set specified
+	// field with final urls.
+	//   "FINAL_URLS_NOT_SET" - Must set field with final urls.
+	//   "INVALID_PHONE_NUMBER" - Phone number for a call extension is invalid.
+	//   "PHONE_NUMBER_NOT_SUPPORTED_FOR_COUNTRY" - Phone number for a call
+	// extension is not supported for the given country code.
+	//   "CARRIER_SPECIFIC_SHORT_NUMBER_NOT_ALLOWED" - A carrier specific number in
+	// short format is not allowed for call extensions.
+	//   "PREMIUM_RATE_NUMBER_NOT_ALLOWED" - Premium rate numbers are not allowed
+	// for call extensions.
+	//   "DISALLOWED_NUMBER_TYPE" - Phone number type for a call extension is not
+	// allowed.
+	//   "INVALID_DOMESTIC_PHONE_NUMBER_FORMAT" - Phone number for a call extension
+	// does not meet domestic format requirements.
+	//   "VANITY_PHONE_NUMBER_NOT_ALLOWED" - Vanity phone numbers (for example,
+	// those including letters) are not allowed for call extensions.
+	//   "INVALID_COUNTRY_CODE" - Country code provided for a call extension is
+	// invalid.
+	//   "INVALID_CALL_CONVERSION_TYPE_ID" - Call conversion type id provided for a
+	// call extension is invalid.
+	//   "CUSTOMER_NOT_IN_ALLOWLIST_FOR_CALLTRACKING" - For a call extension, the
+	// customer is not on the allow-list for call tracking.
+	//   "CALLTRACKING_NOT_SUPPORTED_FOR_COUNTRY" - Call tracking is not supported
+	// for the given country for a call extension.
+	//   "INVALID_APP_ID" - App id provided for an app extension is invalid.
+	//   "QUOTES_IN_REVIEW_EXTENSION_SNIPPET" - Quotation marks present in the
+	// review text for a review extension.
+	//   "HYPHENS_IN_REVIEW_EXTENSION_SNIPPET" - Hyphen character present in the
+	// review text for a review extension.
+	//   "REVIEW_EXTENSION_SOURCE_NOT_ELIGIBLE" - A blocked review source name or
+	// url was provided for a review extension.
+	//   "SOURCE_NAME_IN_REVIEW_EXTENSION_TEXT" - Review source name should not be
+	// found in the review text.
+	//   "MISSING_FIELD" - Field must be set.
+	//   "INCONSISTENT_CURRENCY_CODES" - Inconsistent currency codes.
+	//   "PRICE_EXTENSION_HAS_DUPLICATED_HEADERS" - Price extension cannot have
+	// duplicated headers.
+	//   "PRICE_ITEM_HAS_DUPLICATED_HEADER_AND_DESCRIPTION" - Price item cannot
+	// have duplicated header and description.
+	//   "PRICE_EXTENSION_HAS_TOO_FEW_ITEMS" - Price extension has too few items
+	//   "PRICE_EXTENSION_HAS_TOO_MANY_ITEMS" - Price extension has too many items
+	//   "UNSUPPORTED_VALUE" - The input value is not currently supported.
+	//   "INVALID_DEVICE_PREFERENCE" - Unknown or unsupported device preference.
+	//   "INVALID_SCHEDULE_END" - Invalid feed item schedule end time (for example,
+	// endHour = 24 and endMinute != 0).
+	//   "DATE_TIME_MUST_BE_IN_ACCOUNT_TIME_ZONE" - Date time zone does not match
+	// the account's time zone.
+	//   "OVERLAPPING_SCHEDULES_NOT_ALLOWED" - Overlapping feed item schedule times
+	// (for example, 7-10AM and 8-11AM) are not allowed.
+	//   "SCHEDULE_END_NOT_AFTER_START" - Feed item schedule end time must be after
+	// start time.
+	//   "TOO_MANY_SCHEDULES_PER_DAY" - There are too many feed item schedules per
+	// day.
+	//   "DUPLICATE_EXTENSION_FEED_ITEM_EDIT" - Cannot edit the same extension feed
+	// item more than once in the same request.
+	//   "INVALID_SNIPPETS_HEADER" - Invalid structured snippet header.
+	//   "PHONE_NUMBER_NOT_SUPPORTED_WITH_CALLTRACKING_FOR_COUNTRY" - Phone number
+	// with call tracking enabled is not supported for the specified country.
+	//   "CAMPAIGN_TARGETING_MISMATCH" - The targeted adgroup must belong to the
+	// targeted campaign.
+	//   "CANNOT_OPERATE_ON_REMOVED_FEED" - The feed used by the ExtensionSetting
+	// is removed and cannot be operated on. Remove the ExtensionSetting to allow a
+	// new one to be created using an active feed.
+	//   "EXTENSION_TYPE_REQUIRED" - The ExtensionFeedItem type is required for
+	// this operation.
+	//   "INCOMPATIBLE_UNDERLYING_MATCHING_FUNCTION" - The matching function that
+	// links the extension feed to the customer, campaign, or ad group is not
+	// compatible with the ExtensionSetting services.
+	//   "START_DATE_AFTER_END_DATE" - Start date must be before end date.
+	//   "INVALID_PRICE_FORMAT" - Input price is not in a valid format.
+	//   "PROMOTION_INVALID_TIME" - The promotion time is invalid.
+	//   "PROMOTION_CANNOT_SET_PERCENT_DISCOUNT_AND_MONEY_DISCOUNT" - Cannot set
+	// both percent discount and money discount fields.
+	//   "PROMOTION_CANNOT_SET_PROMOTION_CODE_AND_ORDERS_OVER_AMOUNT" - Cannot set
+	// both promotion code and orders over amount fields.
+	//   "TOO_MANY_DECIMAL_PLACES_SPECIFIED" - This field has too many decimal
+	// places specified.
+	//   "INVALID_LANGUAGE_CODE" - The language code is not valid.
+	//   "UNSUPPORTED_LANGUAGE" - The language is not supported.
+	//   "CUSTOMER_CONSENT_FOR_CALL_RECORDING_REQUIRED" - Customer hasn't consented
+	// for call recording, which is required for adding/updating call extensions.
+	// See https://support.google.com/google-ads/answer/7412639.
+	//   "EXTENSION_SETTING_UPDATE_IS_A_NOOP" - The UPDATE operation does not
+	// specify any fields other than the resource name in the update mask.
+	//   "DISALLOWED_TEXT" - The extension contains text which has been prohibited
+	// on policy grounds.
+	ExtensionSettingError string `json:"extensionSettingError,omitempty"`
+	// FeedAttributeReferenceError: The reasons for the feed attribute reference
+	// error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CANNOT_REFERENCE_REMOVED_FEED" - A feed referenced by ID has been
+	// removed.
+	//   "INVALID_FEED_NAME" - There is no enabled feed with the given name.
+	//   "INVALID_FEED_ATTRIBUTE_NAME" - There is no feed attribute in an enabled
+	// feed with the given name.
+	FeedAttributeReferenceError string `json:"feedAttributeReferenceError,omitempty"`
+	// FeedError: The reasons for the feed error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "ATTRIBUTE_NAMES_NOT_UNIQUE" - The names of the FeedAttributes must be
+	// unique.
+	//   "ATTRIBUTES_DO_NOT_MATCH_EXISTING_ATTRIBUTES" - The attribute list must be
+	// an exact copy of the existing list if the attribute ID's are present.
+	//   "CANNOT_SPECIFY_USER_ORIGIN_FOR_SYSTEM_FEED" - Cannot specify USER origin
+	// for a system generated feed.
+	//   "CANNOT_SPECIFY_GOOGLE_ORIGIN_FOR_NON_SYSTEM_FEED" - Cannot specify GOOGLE
+	// origin for a non-system generated feed.
+	//   "CANNOT_SPECIFY_FEED_ATTRIBUTES_FOR_SYSTEM_FEED" - Cannot specify feed
+	// attributes for system feed.
+	//   "CANNOT_UPDATE_FEED_ATTRIBUTES_WITH_ORIGIN_GOOGLE" - Cannot update
+	// FeedAttributes on feed with origin GOOGLE.
+	//   "FEED_REMOVED" - The given ID refers to a removed Feed. Removed Feeds are
+	// immutable.
+	//   "INVALID_ORIGIN_VALUE" - The origin of the feed is not valid for the
+	// client.
+	//   "FEED_ORIGIN_IS_NOT_USER" - A user can only create and modify feeds with
+	// USER origin.
+	//   "INVALID_AUTH_TOKEN_FOR_EMAIL" - Invalid auth token for the given email.
+	//   "INVALID_EMAIL" - Invalid email specified.
+	//   "DUPLICATE_FEED_NAME" - Feed name matches that of another active Feed.
+	//   "INVALID_FEED_NAME" - Name of feed is not allowed.
+	//   "MISSING_OAUTH_INFO" - Missing OAuthInfo.
+	//   "NEW_ATTRIBUTE_CANNOT_BE_PART_OF_UNIQUE_KEY" - New FeedAttributes must not
+	// affect the unique key.
+	//   "TOO_MANY_ATTRIBUTES" - Too many FeedAttributes for a Feed.
+	//   "INVALID_BUSINESS_ACCOUNT" - The business account is not valid.
+	//   "BUSINESS_ACCOUNT_CANNOT_ACCESS_LOCATION_ACCOUNT" - Business account
+	// cannot access Business Profile.
+	//   "INVALID_AFFILIATE_CHAIN_ID" - Invalid chain ID provided for affiliate
+	// location feed.
+	//   "DUPLICATE_SYSTEM_FEED" - There is already a feed with the given system
+	// feed generation data.
+	//   "GMB_ACCESS_ERROR" - An error occurred accessing Business Profile.
+	//   "CANNOT_HAVE_LOCATION_AND_AFFILIATE_LOCATION_FEEDS" - A customer cannot
+	// have both LOCATION and AFFILIATE_LOCATION feeds.
+	//   "LEGACY_EXTENSION_TYPE_READ_ONLY" - Feed-based extension is read-only for
+	// this extension type.
+	FeedError string `json:"feedError,omitempty"`
+	// FeedItemError: The reasons for the feed item error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CANNOT_CONVERT_ATTRIBUTE_VALUE_FROM_STRING" - Cannot convert the feed
+	// attribute value from string to its real type.
+	//   "CANNOT_OPERATE_ON_REMOVED_FEED_ITEM" - Cannot operate on removed feed
+	// item.
+	//   "DATE_TIME_MUST_BE_IN_ACCOUNT_TIME_ZONE" - Date time zone does not match
+	// the account's time zone.
+	//   "KEY_ATTRIBUTES_NOT_FOUND" - Feed item with the key attributes could not
+	// be found.
+	//   "INVALID_URL" - Url feed attribute value is not valid.
+	//   "MISSING_KEY_ATTRIBUTES" - Some key attributes are missing.
+	//   "KEY_ATTRIBUTES_NOT_UNIQUE" - Feed item has same key attributes as another
+	// feed item.
+	//   "CANNOT_MODIFY_KEY_ATTRIBUTE_VALUE" - Cannot modify key attributes on an
+	// existing feed item.
+	//   "SIZE_TOO_LARGE_FOR_MULTI_VALUE_ATTRIBUTE" - The feed attribute value is
+	// too large.
+	//   "LEGACY_FEED_TYPE_READ_ONLY" - Feed is read only.
+	FeedItemError string `json:"feedItemError,omitempty"`
+	// FeedItemSetError: The reasons for the feed item set error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "FEED_ITEM_SET_REMOVED" - The given ID refers to a removed FeedItemSet.
+	//   "CANNOT_CLEAR_DYNAMIC_FILTER" - The dynamic filter of a feed item set
+	// cannot be cleared on UPDATE if it exists. A set is either static or dynamic
+	// once added, and that cannot change.
+	//   "CANNOT_CREATE_DYNAMIC_FILTER" - The dynamic filter of a feed item set
+	// cannot be created on UPDATE if it does not exist. A set is either static or
+	// dynamic once added, and that cannot change.
+	//   "INVALID_FEED_TYPE" - FeedItemSets can only be made for location or
+	// affiliate location feeds.
+	//   "DUPLICATE_NAME" - FeedItemSets duplicate name. Name should be unique
+	// within an account.
+	//   "WRONG_DYNAMIC_FILTER_FOR_FEED_TYPE" - The feed type of the parent Feed is
+	// not compatible with the type of dynamic filter being set. For example, you
+	// can only set dynamic_location_set_filter for LOCATION feed item sets.
+	//   "DYNAMIC_FILTER_INVALID_CHAIN_IDS" - Chain ID specified for
+	// AffiliateLocationFeedData is invalid.
+	FeedItemSetError string `json:"feedItemSetError,omitempty"`
+	// FeedItemSetLinkError: The reasons for the feed item set link error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "FEED_ID_MISMATCH" - The feed IDs of the FeedItemSet and FeedItem do not
+	// match. Only FeedItems in a given Feed can be linked to a FeedItemSet in that
+	// Feed.
+	//   "NO_MUTATE_ALLOWED_FOR_DYNAMIC_SET" - Cannot add or remove links to a
+	// dynamic set.
+	FeedItemSetLinkError string `json:"feedItemSetLinkError,omitempty"`
+	// FeedItemTargetError: The reasons for the feed item target error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "MUST_SET_TARGET_ONEOF_ON_CREATE" - On CREATE, the FeedItemTarget must
+	// have a populated field in the oneof target.
+	//   "FEED_ITEM_TARGET_ALREADY_EXISTS" - The specified feed item target already
+	// exists, so it cannot be added.
+	//   "FEED_ITEM_SCHEDULES_CANNOT_OVERLAP" - The schedules for a given feed item
+	// cannot overlap.
+	//   "TARGET_LIMIT_EXCEEDED_FOR_GIVEN_TYPE" - Too many targets of a given type
+	// were added for a single feed item.
+	//   "TOO_MANY_SCHEDULES_PER_DAY" - Too many AdSchedules are enabled for the
+	// feed item for the given day.
+	//   "CANNOT_HAVE_ENABLED_CAMPAIGN_AND_ENABLED_AD_GROUP_TARGETS" - A feed item
+	// may either have an enabled campaign target or an enabled ad group target.
+	//   "DUPLICATE_AD_SCHEDULE" - Duplicate ad schedules aren't allowed.
+	//   "DUPLICATE_KEYWORD" - Duplicate keywords aren't allowed.
+	FeedItemTargetError string `json:"feedItemTargetError,omitempty"`
+	// FeedItemValidationError: The reasons for the feed item validation error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - No value has been specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in this
+	// version.
+	//   "STRING_TOO_SHORT" - String is too short.
+	//   "STRING_TOO_LONG" - String is too long.
+	//   "VALUE_NOT_SPECIFIED" - Value is not provided.
+	//   "INVALID_DOMESTIC_PHONE_NUMBER_FORMAT" - Phone number format is invalid
+	// for region.
+	//   "INVALID_PHONE_NUMBER" - String does not represent a phone number.
+	//   "PHONE_NUMBER_NOT_SUPPORTED_FOR_COUNTRY" - Phone number format is not
+	// compatible with country code.
+	//   "PREMIUM_RATE_NUMBER_NOT_ALLOWED" - Premium rate number is not allowed.
+	//   "DISALLOWED_NUMBER_TYPE" - Phone number type is not allowed.
+	//   "VALUE_OUT_OF_RANGE" - Specified value is outside of the valid range.
+	//   "CALLTRACKING_NOT_SUPPORTED_FOR_COUNTRY" - Call tracking is not supported
+	// in the selected country.
+	//   "CUSTOMER_NOT_IN_ALLOWLIST_FOR_CALLTRACKING" - Customer is not on the
+	// allow-list for call tracking.
+	//   "INVALID_COUNTRY_CODE" - Country code is invalid.
+	//   "INVALID_APP_ID" - The specified mobile app id is invalid.
+	//   "MISSING_ATTRIBUTES_FOR_FIELDS" - Some required field attributes are
+	// missing.
+	//   "INVALID_TYPE_ID" - Invalid email button type for email extension.
+	//   "INVALID_EMAIL_ADDRESS" - Email address is invalid.
+	//   "INVALID_HTTPS_URL" - The HTTPS URL in email extension is invalid.
+	//   "MISSING_DELIVERY_ADDRESS" - Delivery address is missing from email
+	// extension.
+	//   "START_DATE_AFTER_END_DATE" - FeedItem scheduling start date comes after
+	// end date.
+	//   "MISSING_FEED_ITEM_START_TIME" - FeedItem scheduling start time is
+	// missing.
+	//   "MISSING_FEED_ITEM_END_TIME" - FeedItem scheduling end time is missing.
+	//   "MISSING_FEED_ITEM_ID" - Cannot compute system attributes on a FeedItem
+	// that has no FeedItemId.
+	//   "VANITY_PHONE_NUMBER_NOT_ALLOWED" - Call extension vanity phone numbers
+	// are not supported.
+	//   "INVALID_REVIEW_EXTENSION_SNIPPET" - Invalid review text.
+	//   "INVALID_NUMBER_FORMAT" - Invalid format for numeric value in ad
+	// parameter.
+	//   "INVALID_DATE_FORMAT" - Invalid format for date value in ad parameter.
+	//   "INVALID_PRICE_FORMAT" - Invalid format for price value in ad parameter.
+	//   "UNKNOWN_PLACEHOLDER_FIELD" - Unrecognized type given for value in ad
+	// parameter.
+	//   "MISSING_ENHANCED_SITELINK_DESCRIPTION_LINE" - Enhanced sitelinks must
+	// have both description lines specified.
+	//   "REVIEW_EXTENSION_SOURCE_INELIGIBLE" - Review source is ineligible.
+	//   "HYPHENS_IN_REVIEW_EXTENSION_SNIPPET" - Review text cannot contain hyphens
+	// or dashes.
+	//   "DOUBLE_QUOTES_IN_REVIEW_EXTENSION_SNIPPET" - Review text cannot contain
+	// double quote characters.
+	//   "QUOTES_IN_REVIEW_EXTENSION_SNIPPET" - Review text cannot contain quote
+	// characters.
+	//   "INVALID_FORM_ENCODED_PARAMS" - Parameters are encoded in the wrong
+	// format.
+	//   "INVALID_URL_PARAMETER_NAME" - URL parameter name must contain only
+	// letters, numbers, underscores, and dashes.
+	//   "NO_GEOCODING_RESULT" - Cannot find address location.
+	//   "SOURCE_NAME_IN_REVIEW_EXTENSION_TEXT" - Review extension text has source
+	// name.
+	//   "CARRIER_SPECIFIC_SHORT_NUMBER_NOT_ALLOWED" - Some phone numbers can be
+	// shorter than usual. Some of these short numbers are carrier-specific, and we
+	// disallow those in ad extensions because they will not be available to all
+	// users.
+	//   "INVALID_PLACEHOLDER_FIELD_ID" - Triggered when a request references a
+	// placeholder field id that does not exist.
+	//   "INVALID_URL_TAG" - URL contains invalid ValueTrack tags or format.
+	//   "LIST_TOO_LONG" - Provided list exceeds acceptable size.
+	//   "INVALID_ATTRIBUTES_COMBINATION" - Certain combinations of attributes
+	// aren't allowed to be specified in the same feed item.
+	//   "DUPLICATE_VALUES" - An attribute has the same value repeatedly.
+	//   "INVALID_CALL_CONVERSION_ACTION_ID" - Advertisers can link a conversion
+	// action with a phone number to indicate that sufficiently long calls
+	// forwarded to that phone number should be counted as conversions of the
+	// specified type. This is an error message indicating that the conversion
+	// action specified is invalid (for example, the conversion action does not
+	// exist within the appropriate Google Ads account, or it is a type of
+	// conversion not appropriate to phone call conversions).
+	//   "CANNOT_SET_WITHOUT_FINAL_URLS" - Tracking template requires final url to
+	// be set.
+	//   "APP_ID_DOESNT_EXIST_IN_APP_STORE" - An app id was provided that doesn't
+	// exist in the given app store.
+	//   "INVALID_FINAL_URL" - Invalid U2 final url.
+	//   "INVALID_TRACKING_URL" - Invalid U2 tracking url.
+	//   "INVALID_FINAL_URL_FOR_APP_DOWNLOAD_URL" - Final URL should start from App
+	// download URL.
+	//   "LIST_TOO_SHORT" - List provided is too short.
+	//   "INVALID_USER_ACTION" - User Action field has invalid value.
+	//   "INVALID_TYPE_NAME" - Type field has invalid value.
+	//   "INVALID_EVENT_CHANGE_STATUS" - Change status for event is invalid.
+	//   "INVALID_SNIPPETS_HEADER" - The header of a structured snippets extension
+	// is not one of the valid headers.
+	//   "INVALID_ANDROID_APP_LINK" - Android app link is not formatted correctly
+	//   "NUMBER_TYPE_WITH_CALLTRACKING_NOT_SUPPORTED_FOR_COUNTRY" - Phone number
+	// incompatible with call tracking for country.
+	//   "RESERVED_KEYWORD_OTHER" - The input is identical to a reserved keyword
+	//   "DUPLICATE_OPTION_LABELS" - Each option label in the message extension
+	// must be unique.
+	//   "DUPLICATE_OPTION_PREFILLS" - Each option prefill in the message extension
+	// must be unique.
+	//   "UNEQUAL_LIST_LENGTHS" - In message extensions, the number of optional
+	// labels and optional prefills must be the same.
+	//   "INCONSISTENT_CURRENCY_CODES" - All currency codes in an ad extension must
+	// be the same.
+	//   "PRICE_EXTENSION_HAS_DUPLICATED_HEADERS" - Headers in price extension are
+	// not unique.
+	//   "ITEM_HAS_DUPLICATED_HEADER_AND_DESCRIPTION" - Header and description in
+	// an item are the same.
+	//   "PRICE_EXTENSION_HAS_TOO_FEW_ITEMS" - Price extension has too few items.
+	//   "UNSUPPORTED_VALUE" - The given value is not supported.
+	//   "INVALID_FINAL_MOBILE_URL" - Invalid final mobile url.
+	//   "INVALID_KEYWORDLESS_AD_RULE_LABEL" - The given string value of Label
+	// contains invalid characters
+	//   "VALUE_TRACK_PARAMETER_NOT_SUPPORTED" - The given URL contains value track
+	// parameters.
+	//   "UNSUPPORTED_VALUE_IN_SELECTED_LANGUAGE" - The given value is not
+	// supported in the selected language of an extension.
+	//   "INVALID_IOS_APP_LINK" - The iOS app link is not formatted correctly.
+	//   "MISSING_IOS_APP_LINK_OR_IOS_APP_STORE_ID" - iOS app link or iOS app store
+	// id is missing.
+	//   "PROMOTION_INVALID_TIME" - Promotion time is invalid.
+	//   "PROMOTION_CANNOT_SET_PERCENT_OFF_AND_MONEY_AMOUNT_OFF" - Both the percent
+	// off and money amount off fields are set.
+	//   "PROMOTION_CANNOT_SET_PROMOTION_CODE_AND_ORDERS_OVER_AMOUNT" - Both the
+	// promotion code and orders over amount fields are set.
+	//   "TOO_MANY_DECIMAL_PLACES_SPECIFIED" - Too many decimal places are
+	// specified.
+	//   "AD_CUSTOMIZERS_NOT_ALLOWED" - Ad Customizers are present and not allowed.
+	//   "INVALID_LANGUAGE_CODE" - Language code is not valid.
+	//   "UNSUPPORTED_LANGUAGE" - Language is not supported.
+	//   "IF_FUNCTION_NOT_ALLOWED" - IF Function is present and not allowed.
+	//   "INVALID_FINAL_URL_SUFFIX" - Final url suffix is not valid.
+	//   "INVALID_TAG_IN_FINAL_URL_SUFFIX" - Final url suffix contains an invalid
+	// tag.
+	//   "INVALID_FINAL_URL_SUFFIX_FORMAT" - Final url suffix is formatted
+	// incorrectly.
+	//   "CUSTOMER_CONSENT_FOR_CALL_RECORDING_REQUIRED" - Consent for call
+	// recording, which is required for the use of call extensions, was not
+	// provided by the advertiser. See
+	// https://support.google.com/google-ads/answer/7412639.
+	//   "ONLY_ONE_DELIVERY_OPTION_IS_ALLOWED" - Multiple message delivery options
+	// are set.
+	//   "NO_DELIVERY_OPTION_IS_SET" - No message delivery option is set.
+	//   "INVALID_CONVERSION_REPORTING_STATE" - String value of conversion
+	// reporting state field is not valid.
+	//   "IMAGE_SIZE_WRONG" - Image size is not right.
+	//   "EMAIL_DELIVERY_NOT_AVAILABLE_IN_COUNTRY" - Email delivery is not
+	// supported in the country specified in the country code field.
+	//   "AUTO_REPLY_NOT_AVAILABLE_IN_COUNTRY" - Auto reply is not supported in the
+	// country specified in the country code field.
+	//   "INVALID_LATITUDE_VALUE" - Invalid value specified for latitude.
+	//   "INVALID_LONGITUDE_VALUE" - Invalid value specified for longitude.
+	//   "TOO_MANY_LABELS" - Too many label fields provided.
+	//   "INVALID_IMAGE_URL" - Invalid image url.
+	//   "MISSING_LATITUDE_VALUE" - Latitude value is missing.
+	//   "MISSING_LONGITUDE_VALUE" - Longitude value is missing.
+	//   "ADDRESS_NOT_FOUND" - Unable to find address.
+	//   "ADDRESS_NOT_TARGETABLE" - Cannot target provided address.
+	//   "INVALID_ASSET_ID" - The specified asset ID does not exist.
+	//   "INCOMPATIBLE_ASSET_TYPE" - The asset type cannot be set for the field.
+	//   "IMAGE_ERROR_UNEXPECTED_SIZE" - The image has unexpected size.
+	//   "IMAGE_ERROR_ASPECT_RATIO_NOT_ALLOWED" - The image aspect ratio is not
+	// allowed.
+	//   "IMAGE_ERROR_FILE_TOO_LARGE" - The image file is too large.
+	//   "IMAGE_ERROR_FORMAT_NOT_ALLOWED" - The image format is unsupported.
+	//   "IMAGE_ERROR_CONSTRAINTS_VIOLATED" - Image violates constraints without
+	// more details.
+	//   "IMAGE_ERROR_SERVER_ERROR" - An error occurred when validating image.
+	FeedItemValidationError string `json:"feedItemValidationError,omitempty"`
+	// FeedMappingError: The reasons for the feed mapping error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_PLACEHOLDER_FIELD" - The given placeholder field does not exist.
+	//   "INVALID_CRITERION_FIELD" - The given criterion field does not exist.
+	//   "INVALID_PLACEHOLDER_TYPE" - The given placeholder type does not exist.
+	//   "INVALID_CRITERION_TYPE" - The given criterion type does not exist.
+	//   "NO_ATTRIBUTE_FIELD_MAPPINGS" - A feed mapping must contain at least one
+	// attribute field mapping.
+	//   "FEED_ATTRIBUTE_TYPE_MISMATCH" - The type of the feed attribute referenced
+	// in the attribute field mapping must match the type of the placeholder field.
+	//   "CANNOT_OPERATE_ON_MAPPINGS_FOR_SYSTEM_GENERATED_FEED" - A feed mapping
+	// for a system generated feed cannot be operated on.
+	//   "MULTIPLE_MAPPINGS_FOR_PLACEHOLDER_TYPE" - Only one feed mapping for a
+	// placeholder type is allowed per feed or customer (depending on the
+	// placeholder type).
+	//   "MULTIPLE_MAPPINGS_FOR_CRITERION_TYPE" - Only one feed mapping for a
+	// criterion type is allowed per customer.
+	//   "MULTIPLE_MAPPINGS_FOR_PLACEHOLDER_FIELD" - Only one feed attribute
+	// mapping for a placeholder field is allowed (depending on the placeholder
+	// type).
+	//   "MULTIPLE_MAPPINGS_FOR_CRITERION_FIELD" - Only one feed attribute mapping
+	// for a criterion field is allowed (depending on the criterion type).
+	//   "UNEXPECTED_ATTRIBUTE_FIELD_MAPPINGS" - This feed mapping may not contain
+	// any explicit attribute field mappings.
+	//   "LOCATION_PLACEHOLDER_ONLY_FOR_PLACES_FEEDS" - Location placeholder feed
+	// mappings can only be created for Places feeds.
+	//   "CANNOT_MODIFY_MAPPINGS_FOR_TYPED_FEED" - Mappings for typed feeds cannot
+	// be modified.
+	//   "INVALID_PLACEHOLDER_TYPE_FOR_NON_SYSTEM_GENERATED_FEED" - The given
+	// placeholder type can only be mapped to system generated feeds.
+	//   "INVALID_PLACEHOLDER_TYPE_FOR_SYSTEM_GENERATED_FEED_TYPE" - The given
+	// placeholder type cannot be mapped to a system generated feed with the given
+	// type.
+	//   "ATTRIBUTE_FIELD_MAPPING_MISSING_FIELD" - The "field" oneof was not set in
+	// an AttributeFieldMapping.
+	//   "LEGACY_FEED_TYPE_READ_ONLY" - Feed is read only.
+	FeedMappingError string `json:"feedMappingError,omitempty"`
+	// FieldError: The reasons for the field error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "REQUIRED" - The required field was not present.
+	//   "IMMUTABLE_FIELD" - The field attempted to be mutated is immutable.
+	//   "INVALID_VALUE" - The field's value is invalid.
+	//   "VALUE_MUST_BE_UNSET" - The field cannot be set.
+	//   "REQUIRED_NONEMPTY_LIST" - The required repeated field was empty.
+	//   "FIELD_CANNOT_BE_CLEARED" - The field cannot be cleared.
+	//   "BLOCKED_VALUE" - The field's value is on a deny-list for this field.
+	//   "FIELD_CAN_ONLY_BE_CLEARED" - The field's value cannot be modified, except
+	// for clearing.
+	FieldError string `json:"fieldError,omitempty"`
+	// FieldMaskError: An error with a field mask
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "FIELD_MASK_MISSING" - The field mask must be provided for update
+	// operations.
+	//   "FIELD_MASK_NOT_ALLOWED" - The field mask must be empty for create and
+	// remove operations.
+	//   "FIELD_NOT_FOUND" - The field mask contained an invalid field.
+	//   "FIELD_HAS_SUBFIELDS" - The field mask updated a field with subfields.
+	// Fields with subfields may be cleared, but not updated. To fix this, the
+	// field mask should select all the subfields of the invalid field.
+	FieldMaskError string `json:"fieldMaskError,omitempty"`
+	// FinalUrlExpansionAssetViewError: The reasons for the final url expansion
+	// asset view error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Name unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "MISSING_REQUIRED_FILTER" - At least one required filter has to be applied
+	// in the query.
+	//   "REQUIRES_ADVERTISING_CHANNEL_TYPE_FILTER" - Advertising channel type
+	// filter is required.
+	//   "INVALID_ADVERTISING_CHANNEL_TYPE_IN_FILTER" - Advertising channel type
+	// filter has an invalid value.
+	//   "CANNOT_SELECT_ASSET_GROUP" - Asset group cannot be selected in the query.
+	//   "CANNOT_SELECT_AD_GROUP" - Ad group cannot be selected in the query.
+	//   "REQUIRES_FILTER_BY_SINGLE_RESOURCE" - A selected field/resource requires
+	// filtering by a single resource.
+	//   "CANNOT_SELECT_BOTH_AD_GROUP_AND_ASSET_GROUP" - Both ad group and asset
+	// group cannot be selected in the query.
+	//   "CANNOT_FILTER_BY_BOTH_AD_GROUP_AND_ASSET_GROUP" - Both ad group and asset
+	// group cannot be filtered in the query.
+	FinalUrlExpansionAssetViewError string `json:"finalUrlExpansionAssetViewError,omitempty"`
+	// FunctionError: The reasons for the function error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_FUNCTION_FORMAT" - The format of the function is not recognized
+	// as a supported function format.
+	//   "DATA_TYPE_MISMATCH" - Operand data types do not match.
+	//   "INVALID_CONJUNCTION_OPERANDS" - The operands cannot be used together in a
+	// conjunction.
+	//   "INVALID_NUMBER_OF_OPERANDS" - Invalid numer of Operands.
+	//   "INVALID_OPERAND_TYPE" - Operand Type not supported.
+	//   "INVALID_OPERATOR" - Operator not supported.
+	//   "INVALID_REQUEST_CONTEXT_TYPE" - Request context type not supported.
+	//   "INVALID_FUNCTION_FOR_CALL_PLACEHOLDER" - The matching function is not
+	// allowed for call placeholders
+	//   "INVALID_FUNCTION_FOR_PLACEHOLDER" - The matching function is not allowed
+	// for the specified placeholder
+	//   "INVALID_OPERAND" - Invalid operand.
+	//   "MISSING_CONSTANT_OPERAND_VALUE" - Missing value for the constant operand.
+	//   "INVALID_CONSTANT_OPERAND_VALUE" - The value of the constant operand is
+	// invalid.
+	//   "INVALID_NESTING" - Invalid function nesting.
+	//   "MULTIPLE_FEED_IDS_NOT_SUPPORTED" - The Feed ID was different from another
+	// Feed ID in the same function.
+	//   "INVALID_FUNCTION_FOR_FEED_WITH_FIXED_SCHEMA" - The matching function is
+	// invalid for use with a feed with a fixed schema.
+	//   "INVALID_ATTRIBUTE_NAME" - Invalid attribute name.
+	FunctionError string `json:"functionError,omitempty"`
+	// FunctionParsingError: The reasons for the function parsing error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "NO_MORE_INPUT" - Unexpected end of function string.
+	//   "EXPECTED_CHARACTER" - Could not find an expected character.
+	//   "UNEXPECTED_SEPARATOR" - Unexpected separator character.
+	//   "UNMATCHED_LEFT_BRACKET" - Unmatched left bracket or parenthesis.
+	//   "UNMATCHED_RIGHT_BRACKET" - Unmatched right bracket or parenthesis.
+	//   "TOO_MANY_NESTED_FUNCTIONS" - Functions are nested too deeply.
+	//   "MISSING_RIGHT_HAND_OPERAND" - Missing right-hand-side operand.
+	//   "INVALID_OPERATOR_NAME" - Invalid operator/function name.
+	//   "FEED_ATTRIBUTE_OPERAND_ARGUMENT_NOT_INTEGER" - Feed attribute operand's
+	// argument is not an integer.
+	//   "NO_OPERANDS" - Missing function operands.
+	//   "TOO_MANY_OPERANDS" - Function had too many operands.
+	FunctionParsingError string `json:"functionParsingError,omitempty"`
+	// GeoTargetConstantSuggestionError: The reasons for the geo target constant
+	// suggestion error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "LOCATION_NAME_SIZE_LIMIT" - A location name cannot be greater than 300
+	// characters.
+	//   "LOCATION_NAME_LIMIT" - At most 25 location names can be specified in a
+	// SuggestGeoTargetConstants method.
+	//   "INVALID_COUNTRY_CODE" - The country code is invalid.
+	//   "REQUEST_PARAMETERS_UNSET" - Geo target constant resource names or
+	// location names must be provided in the request.
+	GeoTargetConstantSuggestionError string `json:"geoTargetConstantSuggestionError,omitempty"`
+	// GoalError: The reasons for the goal error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "RETENTION_GOAL_ALREADY_EXISTS" - Retention goal already exists.
+	//   "HIGH_LIFETIME_VALUE_PRESENT_BUT_VALUE_ABSENT" - When using customer
+	// lifecycle optimization goal, if high lifetime value is present then value
+	// should be present.
+	//   "HIGH_LIFETIME_VALUE_LESS_THAN_OR_EQUAL_TO_VALUE" - When using customer
+	// lifecycle optimization goal, high lifetime value should be greater than
+	// value.
+	//   "CUSTOMER_LIFECYCLE_OPTIMIZATION_ACCOUNT_TYPE_NOT_ALLOWED" - Only Google
+	// Ads account can have customer lifecycle optimization goal.
+	GoalError string `json:"goalError,omitempty"`
+	// HeaderError: The reasons for the header error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_LOGIN_CUSTOMER_ID" - The login customer ID could not be
+	// validated.
+	//   "INVALID_LINKED_CUSTOMER_ID" - The linked customer ID could not be
+	// validated.
+	HeaderError string `json:"headerError,omitempty"`
+	// IdError: The reasons for the id error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "NOT_FOUND" - ID not found
+	IdError string `json:"idError,omitempty"`
+	// IdentityVerificationError: The reasons for an identity verification error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "NO_EFFECTIVE_BILLING" - No effective billing linked to this customer.
+	//   "BILLING_NOT_ON_MONTHLY_INVOICING" - Customer is not on monthly invoicing.
+	//   "VERIFICATION_ALREADY_STARTED" - Verification for this program type was
+	// already started.
+	IdentityVerificationError string `json:"identityVerificationError,omitempty"`
+	// ImageError: The reasons for the image error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_IMAGE" - The image is not valid.
+	//   "STORAGE_ERROR" - The image could not be stored.
+	//   "BAD_REQUEST" - There was a problem with the request.
+	//   "UNEXPECTED_SIZE" - The image is not of legal dimensions.
+	//   "ANIMATED_NOT_ALLOWED" - Animated image are not permitted.
+	//   "ANIMATION_TOO_LONG" - Animation is too long.
+	//   "SERVER_ERROR" - There was an error on the server.
+	//   "CMYK_JPEG_NOT_ALLOWED" - Image cannot be in CMYK color format.
+	//   "FLASH_NOT_ALLOWED" - Flash images are not permitted.
+	//   "FLASH_WITHOUT_CLICKTAG" - Flash images must support clickTag.
+	//   "FLASH_ERROR_AFTER_FIXING_CLICK_TAG" - A flash error has occurred after
+	// fixing the click tag.
+	//   "ANIMATED_VISUAL_EFFECT" - Unacceptable visual effects.
+	//   "FLASH_ERROR" - There was a problem with the flash image.
+	//   "LAYOUT_PROBLEM" - Incorrect image layout.
+	//   "PROBLEM_READING_IMAGE_FILE" - There was a problem reading the image file.
+	//   "ERROR_STORING_IMAGE" - There was an error storing the image.
+	//   "ASPECT_RATIO_NOT_ALLOWED" - The aspect ratio of the image is not allowed.
+	//   "FLASH_HAS_NETWORK_OBJECTS" - Flash cannot have network objects.
+	//   "FLASH_HAS_NETWORK_METHODS" - Flash cannot have network methods.
+	//   "FLASH_HAS_URL" - Flash cannot have a Url.
+	//   "FLASH_HAS_MOUSE_TRACKING" - Flash cannot use mouse tracking.
+	//   "FLASH_HAS_RANDOM_NUM" - Flash cannot have a random number.
+	//   "FLASH_SELF_TARGETS" - Ad click target cannot be '_self'.
+	//   "FLASH_BAD_GETURL_TARGET" - GetUrl method should only use '_blank'.
+	//   "FLASH_VERSION_NOT_SUPPORTED" - Flash version is not supported.
+	//   "FLASH_WITHOUT_HARD_CODED_CLICK_URL" - Flash movies need to have hard
+	// coded click URL or clickTAG
+	//   "INVALID_FLASH_FILE" - Uploaded flash file is corrupted.
+	//   "FAILED_TO_FIX_CLICK_TAG_IN_FLASH" - Uploaded flash file can be parsed,
+	// but the click tag can not be fixed properly.
+	//   "FLASH_ACCESSES_NETWORK_RESOURCES" - Flash movie accesses network
+	// resources
+	//   "FLASH_EXTERNAL_JS_CALL" - Flash movie attempts to call external
+	// javascript code
+	//   "FLASH_EXTERNAL_FS_CALL" - Flash movie attempts to call flash system
+	// commands
+	//   "FILE_TOO_LARGE" - Image file is too large.
+	//   "IMAGE_DATA_TOO_LARGE" - Image data is too large.
+	//   "IMAGE_PROCESSING_ERROR" - Error while processing the image.
+	//   "IMAGE_TOO_SMALL" - Image is too small.
+	//   "INVALID_INPUT" - Input was invalid.
+	//   "PROBLEM_READING_FILE" - There was a problem reading the image file.
+	//   "IMAGE_CONSTRAINTS_VIOLATED" - Image constraints are violated, but details
+	// like ASPECT_RATIO_NOT_ALLOWED can't be provided. This happens when asset
+	// spec contains more than one constraint and different criteria of different
+	// constraints are violated.
+	//   "FORMAT_NOT_ALLOWED" - Image format is not allowed.
+	ImageError string `json:"imageError,omitempty"`
+	// IncentiveError: The reasons for the incentive error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_INCENTIVE_ID" - The incentive ID is either invalid or not
+	// supported for the given country.
+	IncentiveError string `json:"incentiveError,omitempty"`
+	// InternalError: An unexpected server-side error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INTERNAL_ERROR" - API encountered unexpected internal error.
+	//   "ERROR_CODE_NOT_PUBLISHED" - The intended error code doesn't exist in
+	// specified API version. It will be released in a future API version.
+	//   "TRANSIENT_ERROR" - API encountered an unexpected transient error. The
+	// user should retry their request in these cases.
+	//   "DEADLINE_EXCEEDED" - The request took longer than a deadline.
+	InternalError string `json:"internalError,omitempty"`
+	// InvalidParameterError: The reasons for invalid parameter errors.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_CURRENCY_CODE" - The specified currency code is invalid.
+	InvalidParameterError string `json:"invalidParameterError,omitempty"`
+	// InvoiceError: The reasons for the invoice error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "YEAR_MONTH_TOO_OLD" - Cannot request invoices issued before 2019-01-01.
+	//   "NOT_INVOICED_CUSTOMER" - Cannot request invoices for customer who doesn't
+	// receive invoices.
+	//   "BILLING_SETUP_NOT_APPROVED" - Cannot request invoices for a non approved
+	// billing setup.
+	//   "BILLING_SETUP_NOT_ON_MONTHLY_INVOICING" - Cannot request invoices for a
+	// billing setup that is not on monthly invoicing.
+	//   "NON_SERVING_CUSTOMER" - Cannot request invoices for a non serving
+	// customer.
+	InvoiceError string `json:"invoiceError,omitempty"`
+	// KeywordPlanAdGroupError: The reason for keyword plan ad group error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_NAME" - The keyword plan ad group name is missing, empty, longer
+	// than allowed limit or contains invalid chars.
+	//   "DUPLICATE_NAME" - The keyword plan ad group name is duplicate to an
+	// existing keyword plan AdGroup name or other keyword plan AdGroup name in the
+	// request.
+	KeywordPlanAdGroupError string `json:"keywordPlanAdGroupError,omitempty"`
+	// KeywordPlanAdGroupKeywordError: The reason for keyword plan ad group keyword
+	// error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_KEYWORD_MATCH_TYPE" - A keyword or negative keyword has invalid
+	// match type.
+	//   "DUPLICATE_KEYWORD" - A keyword or negative keyword with same text and
+	// match type already exists.
+	//   "KEYWORD_TEXT_TOO_LONG" - Keyword or negative keyword text exceeds the
+	// allowed limit.
+	//   "KEYWORD_HAS_INVALID_CHARS" - Keyword or negative keyword text has invalid
+	// characters or symbols.
+	//   "KEYWORD_HAS_TOO_MANY_WORDS" - Keyword or negative keyword text has too
+	// many words.
+	//   "INVALID_KEYWORD_TEXT" - Keyword or negative keyword has invalid text.
+	//   "NEGATIVE_KEYWORD_HAS_CPC_BID" - Cpc Bid set for negative keyword.
+	//   "NEW_BMM_KEYWORDS_NOT_ALLOWED" - New broad match modifier (BMM)
+	// KpAdGroupKeywords are not allowed.
+	KeywordPlanAdGroupKeywordError string `json:"keywordPlanAdGroupKeywordError,omitempty"`
+	// KeywordPlanCampaignError: The reason for keyword plan campaign error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_NAME" - A keyword plan campaign name is missing, empty, longer
+	// than allowed limit or contains invalid chars.
+	//   "INVALID_LANGUAGES" - A keyword plan campaign contains one or more
+	// untargetable languages.
+	//   "INVALID_GEOS" - A keyword plan campaign contains one or more invalid geo
+	// targets.
+	//   "DUPLICATE_NAME" - The keyword plan campaign name is duplicate to an
+	// existing keyword plan campaign name or other keyword plan campaign name in
+	// the request.
+	//   "MAX_GEOS_EXCEEDED" - The number of geo targets in the keyword plan
+	// campaign exceeds limits.
+	//   "MAX_LANGUAGES_EXCEEDED" - The number of languages in the keyword plan
+	// campaign exceeds limits.
+	KeywordPlanCampaignError string `json:"keywordPlanCampaignError,omitempty"`
+	// KeywordPlanCampaignKeywordError: The reason for keyword plan campaign
+	// keyword error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CAMPAIGN_KEYWORD_IS_POSITIVE" - Keyword plan campaign keyword is
+	// positive.
+	KeywordPlanCampaignKeywordError string `json:"keywordPlanCampaignKeywordError,omitempty"`
+	// KeywordPlanError: The reason for keyword plan error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "BID_MULTIPLIER_OUT_OF_RANGE" - The plan's bid multiplier value is outside
+	// the valid range.
+	//   "BID_TOO_HIGH" - The plan's bid value is too high.
+	//   "BID_TOO_LOW" - The plan's bid value is too low.
+	//   "BID_TOO_MANY_FRACTIONAL_DIGITS" - The plan's cpc bid is not a multiple of
+	// the minimum billable unit.
+	//   "DAILY_BUDGET_TOO_LOW" - The plan's daily budget value is too low.
+	//   "DAILY_BUDGET_TOO_MANY_FRACTIONAL_DIGITS" - The plan's daily budget is not
+	// a multiple of the minimum billable unit.
+	//   "INVALID_VALUE" - The input has an invalid value.
+	//   "KEYWORD_PLAN_HAS_NO_KEYWORDS" - The plan has no keyword.
+	//   "KEYWORD_PLAN_NOT_ENABLED" - The plan is not enabled and API cannot
+	// provide mutation, forecast or stats.
+	//   "KEYWORD_PLAN_NOT_FOUND" - The requested plan cannot be found for
+	// providing forecast or stats.
+	//   "MISSING_BID" - The plan is missing a cpc bid.
+	//   "MISSING_FORECAST_PERIOD" - The plan is missing required forecast_period
+	// field.
+	//   "INVALID_FORECAST_DATE_RANGE" - The plan's forecast_period has invalid
+	// forecast date range.
+	//   "INVALID_NAME" - The plan's name is invalid.
+	KeywordPlanError string `json:"keywordPlanError,omitempty"`
+	// KeywordPlanIdeaError: The reason for keyword idea error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "URL_CRAWL_ERROR" - Error when crawling the input URL.
+	//   "INVALID_VALUE" - The input has an invalid value.
+	KeywordPlanIdeaError string `json:"keywordPlanIdeaError,omitempty"`
+	// LabelError: The reason for the label error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CANNOT_APPLY_INACTIVE_LABEL" - An inactive label cannot be applied.
+	//   "CANNOT_APPLY_LABEL_TO_DISABLED_AD_GROUP_CRITERION" - A label cannot be
+	// applied to a disabled ad group criterion.
+	//   "CANNOT_APPLY_LABEL_TO_NEGATIVE_AD_GROUP_CRITERION" - A label cannot be
+	// applied to a negative ad group criterion.
+	//   "EXCEEDED_LABEL_LIMIT_PER_TYPE" - Cannot apply more than 50 labels per
+	// resource.
+	//   "INVALID_RESOURCE_FOR_MANAGER_LABEL" - Labels from a manager account
+	// cannot be applied to campaign, ad group, ad group ad, or ad group criterion
+	// resources.
+	//   "DUPLICATE_NAME" - Label names must be unique.
+	//   "INVALID_LABEL_NAME" - Label names cannot be empty.
+	//   "CANNOT_ATTACH_LABEL_TO_DRAFT" - Labels cannot be applied to a draft.
+	//   "CANNOT_ATTACH_NON_MANAGER_LABEL_TO_CUSTOMER" - Labels not from a manager
+	// account cannot be applied to the customer resource.
+	LabelError string `json:"labelError,omitempty"`
+	// LanguageCodeError: The reasons for the language code error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "LANGUAGE_CODE_NOT_FOUND" - The input language code is not recognized.
+	//   "INVALID_LANGUAGE_CODE" - The language code is not supported.
+	LanguageCodeError string `json:"languageCodeError,omitempty"`
+	// ListOperationError: An error with a list operation.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "REQUIRED_FIELD_MISSING" - Field required in value is missing.
+	//   "DUPLICATE_VALUES" - Duplicate or identical value is sent in multiple list
+	// operations.
+	ListOperationError string `json:"listOperationError,omitempty"`
+	// ManagerLinkError: The reasons for the manager link error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "ACCOUNTS_NOT_COMPATIBLE_FOR_LINKING" - The manager and client have
+	// incompatible account types.
+	//   "TOO_MANY_MANAGERS" - Client is already linked to too many managers.
+	//   "TOO_MANY_INVITES" - Manager has too many pending invitations.
+	//   "ALREADY_INVITED_BY_THIS_MANAGER" - Client is already invited by this
+	// manager.
+	//   "ALREADY_MANAGED_BY_THIS_MANAGER" - The client is already managed by this
+	// manager.
+	//   "ALREADY_MANAGED_IN_HIERARCHY" - Client is already managed in hierarchy.
+	//   "DUPLICATE_CHILD_FOUND" - Manager and sub-manager to be linked have
+	// duplicate client.
+	//   "CLIENT_HAS_NO_ADMIN_USER" - Client has no active user that can access the
+	// client account.
+	//   "MAX_DEPTH_EXCEEDED" - Adding this link would exceed the maximum hierarchy
+	// depth.
+	//   "CYCLE_NOT_ALLOWED" - Adding this link will create a cycle.
+	//   "TOO_MANY_ACCOUNTS" - Manager account has the maximum number of linked
+	// clients.
+	//   "TOO_MANY_ACCOUNTS_AT_MANAGER" - Parent manager account has the maximum
+	// number of linked clients.
+	//   "NON_OWNER_USER_CANNOT_MODIFY_LINK" - The account is not authorized owner.
+	//   "SUSPENDED_ACCOUNT_CANNOT_ADD_CLIENTS" - Your manager account is
+	// suspended, and you are no longer allowed to link to clients.
+	//   "CLIENT_OUTSIDE_TREE" - You are not allowed to move a client to a manager
+	// that is not under your current hierarchy.
+	//   "INVALID_STATUS_CHANGE" - The changed status for mutate link is invalid.
+	//   "INVALID_CHANGE" - The change for mutate link is invalid.
+	//   "CUSTOMER_CANNOT_MANAGE_SELF" - You are not allowed to link a manager
+	// account to itself.
+	//   "CREATING_ENABLED_LINK_NOT_ALLOWED" - The link was created with status
+	// ACTIVE and not PENDING.
+	ManagerLinkError string `json:"managerLinkError,omitempty"`
+	// MediaBundleError: The reasons for the media bundle error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "BAD_REQUEST" - There was a problem with the request.
+	//   "DOUBLECLICK_BUNDLE_NOT_ALLOWED" - HTML5 ads using DoubleClick Studio
+	// created ZIP files are not supported.
+	//   "EXTERNAL_URL_NOT_ALLOWED" - Cannot reference URL external to the media
+	// bundle.
+	//   "FILE_TOO_LARGE" - Media bundle file is too large.
+	//   "GOOGLE_WEB_DESIGNER_ZIP_FILE_NOT_PUBLISHED" - ZIP file from Google Web
+	// Designer is not published.
+	//   "INVALID_INPUT" - Input was invalid.
+	//   "INVALID_MEDIA_BUNDLE" - There was a problem with the media bundle.
+	//   "INVALID_MEDIA_BUNDLE_ENTRY" - There was a problem with one or more of the
+	// media bundle entries.
+	//   "INVALID_MIME_TYPE" - The media bundle contains a file with an unknown
+	// mime type
+	//   "INVALID_PATH" - The media bundle contain an invalid asset path.
+	//   "INVALID_URL_REFERENCE" - HTML5 ad is trying to reference an asset not in
+	// .ZIP file
+	//   "MEDIA_DATA_TOO_LARGE" - Media data is too large.
+	//   "MISSING_PRIMARY_MEDIA_BUNDLE_ENTRY" - The media bundle contains no
+	// primary entry.
+	//   "SERVER_ERROR" - There was an error on the server.
+	//   "STORAGE_ERROR" - The image could not be stored.
+	//   "SWIFFY_BUNDLE_NOT_ALLOWED" - Media bundle created with the Swiffy tool is
+	// not allowed.
+	//   "TOO_MANY_FILES" - The media bundle contains too many files.
+	//   "UNEXPECTED_SIZE" - The media bundle is not of legal dimensions.
+	//   "UNSUPPORTED_GOOGLE_WEB_DESIGNER_ENVIRONMENT" - Google Web Designer not
+	// created for "Google Ads" environment.
+	//   "UNSUPPORTED_HTML5_FEATURE" - Unsupported HTML5 feature in HTML5 asset.
+	//   "URL_IN_MEDIA_BUNDLE_NOT_SSL_COMPLIANT" - URL in HTML5 entry is not ssl
+	// compliant.
+	//   "CUSTOM_EXIT_NOT_ALLOWED" - Custom exits not allowed in HTML5 entry.
+	MediaBundleError string `json:"mediaBundleError,omitempty"`
+	// MediaFileError: The reasons for the media file error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CANNOT_CREATE_STANDARD_ICON" - Cannot create a standard icon type.
+	//   "CANNOT_SELECT_STANDARD_ICON_WITH_OTHER_TYPES" - May only select Standard
+	// Icons alone.
+	//   "CANNOT_SPECIFY_MEDIA_FILE_ID_AND_DATA" - Image contains both a media file
+	// ID and data.
+	//   "DUPLICATE_MEDIA" - A media file with given type and reference ID already
+	// exists.
+	//   "EMPTY_FIELD" - A required field was not specified or is an empty string.
+	//   "RESOURCE_REFERENCED_IN_MULTIPLE_OPS" - A media file may only be modified
+	// once per call.
+	//   "FIELD_NOT_SUPPORTED_FOR_MEDIA_SUB_TYPE" - Field is not supported for the
+	// media sub type.
+	//   "INVALID_MEDIA_FILE_ID" - The media file ID is invalid.
+	//   "INVALID_MEDIA_SUB_TYPE" - The media subtype is invalid.
+	//   "INVALID_MEDIA_FILE_TYPE" - The media file type is invalid.
+	//   "INVALID_MIME_TYPE" - The mimetype is invalid.
+	//   "INVALID_REFERENCE_ID" - The media reference ID is invalid.
+	//   "INVALID_YOU_TUBE_ID" - The YouTube video ID is invalid.
+	//   "MEDIA_FILE_FAILED_TRANSCODING" - Media file has failed transcoding
+	//   "MEDIA_NOT_TRANSCODED" - Media file has not been transcoded.
+	//   "MEDIA_TYPE_DOES_NOT_MATCH_MEDIA_FILE_TYPE" - The media type does not
+	// match the actual media file's type.
+	//   "NO_FIELDS_SPECIFIED" - None of the fields have been specified.
+	//   "NULL_REFERENCE_ID_AND_MEDIA_ID" - One of reference ID or media file ID
+	// must be specified.
+	//   "TOO_LONG" - The string has too many characters.
+	//   "UNSUPPORTED_TYPE" - The specified type is not supported.
+	//   "YOU_TUBE_SERVICE_UNAVAILABLE" - YouTube is unavailable for requesting
+	// video data.
+	//   "YOU_TUBE_VIDEO_HAS_NON_POSITIVE_DURATION" - The YouTube video has a non
+	// positive duration.
+	//   "YOU_TUBE_VIDEO_NOT_FOUND" - The YouTube video ID is syntactically valid
+	// but the video was not found.
+	MediaFileError string `json:"mediaFileError,omitempty"`
+	// MediaUploadError: The reasons for media uploading errors.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "FILE_TOO_BIG" - The uploaded file is too big.
+	//   "UNPARSEABLE_IMAGE" - Image data is unparseable.
+	//   "ANIMATED_IMAGE_NOT_ALLOWED" - Animated images are not allowed.
+	//   "FORMAT_NOT_ALLOWED" - The image or media bundle format is not allowed.
+	//   "EXTERNAL_URL_NOT_ALLOWED" - Cannot reference URL external to the media
+	// bundle.
+	//   "INVALID_URL_REFERENCE" - HTML5 ad is trying to reference an asset not in
+	// .ZIP file.
+	//   "MISSING_PRIMARY_MEDIA_BUNDLE_ENTRY" - The media bundle contains no
+	// primary entry.
+	//   "ANIMATED_VISUAL_EFFECT" - Animation has disallowed visual effects.
+	//   "ANIMATION_TOO_LONG" - Animation longer than the allowed 30 second limit.
+	//   "ASPECT_RATIO_NOT_ALLOWED" - The aspect ratio of the image does not match
+	// the expected aspect ratios provided in the asset spec.
+	//   "AUDIO_NOT_ALLOWED_IN_MEDIA_BUNDLE" - Audio files are not allowed in
+	// bundle.
+	//   "CMYK_JPEG_NOT_ALLOWED" - CMYK jpegs are not supported.
+	//   "FLASH_NOT_ALLOWED" - Flash movies are not allowed.
+	//   "FRAME_RATE_TOO_HIGH" - The frame rate of the video is higher than the
+	// allowed 5fps.
+	//   "GOOGLE_WEB_DESIGNER_ZIP_FILE_NOT_PUBLISHED" - ZIP file from Google Web
+	// Designer is not published.
+	//   "IMAGE_CONSTRAINTS_VIOLATED" - Image constraints are violated, but more
+	// details (like DIMENSIONS_NOT_ALLOWED or ASPECT_RATIO_NOT_ALLOWED) can not be
+	// provided. This happens when asset spec contains more than one constraint and
+	// criteria of different constraints are violated.
+	//   "INVALID_MEDIA_BUNDLE" - Media bundle data is unrecognizable.
+	//   "INVALID_MEDIA_BUNDLE_ENTRY" - There was a problem with one or more of the
+	// media bundle entries.
+	//   "INVALID_MIME_TYPE" - The asset has an invalid mime type.
+	//   "INVALID_PATH" - The media bundle contains an invalid asset path.
+	//   "LAYOUT_PROBLEM" - Image has layout problem.
+	//   "MALFORMED_URL" - An asset had a URL reference that is malformed per RFC
+	// 1738 convention.
+	//   "MEDIA_BUNDLE_NOT_ALLOWED" - The uploaded media bundle format is not
+	// allowed.
+	//   "MEDIA_BUNDLE_NOT_COMPATIBLE_TO_PRODUCT_TYPE" - The media bundle is not
+	// compatible with the asset spec product type. (For example, Gmail, dynamic
+	// remarketing, etc.)
+	//   "MEDIA_BUNDLE_REJECTED_BY_MULTIPLE_ASSET_SPECS" - A bundle being uploaded
+	// that is incompatible with multiple assets for different reasons.
+	//   "TOO_MANY_FILES_IN_MEDIA_BUNDLE" - The media bundle contains too many
+	// files.
+	//   "UNSUPPORTED_GOOGLE_WEB_DESIGNER_ENVIRONMENT" - Google Web Designer not
+	// created for "Google Ads" environment.
+	//   "UNSUPPORTED_HTML5_FEATURE" - Unsupported HTML5 feature in HTML5 asset.
+	//   "URL_IN_MEDIA_BUNDLE_NOT_SSL_COMPLIANT" - URL in HTML5 entry is not SSL
+	// compliant.
+	//   "VIDEO_FILE_NAME_TOO_LONG" - Video file name is longer than the 50 allowed
+	// characters.
+	//   "VIDEO_MULTIPLE_FILES_WITH_SAME_NAME" - Multiple videos with same name in
+	// a bundle.
+	//   "VIDEO_NOT_ALLOWED_IN_MEDIA_BUNDLE" - Videos are not allowed in media
+	// bundle.
+	//   "CANNOT_UPLOAD_MEDIA_TYPE_THROUGH_API" - This type of media cannot be
+	// uploaded through the Google Ads API.
+	//   "DIMENSIONS_NOT_ALLOWED" - The dimensions of the image are not allowed.
+	MediaUploadError string `json:"mediaUploadError,omitempty"`
+	// MerchantCenterError: Container for enum describing possible merchant center
+	// errors.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "MERCHANT_ID_CANNOT_BE_ACCESSED" - Merchant ID is either not found or not
+	// linked to the Google Ads customer.
+	//   "CUSTOMER_NOT_ALLOWED_FOR_SHOPPING_PERFORMANCE_MAX" - Customer not
+	// allowlisted for Shopping in Performance Max Campaign.
+	MerchantCenterError string `json:"merchantCenterError,omitempty"`
+	// MultiplierError: The reasons for the multiplier error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "MULTIPLIER_TOO_HIGH" - Multiplier value is too high
+	//   "MULTIPLIER_TOO_LOW" - Multiplier value is too low
+	//   "TOO_MANY_FRACTIONAL_DIGITS" - Too many fractional digits
+	//   "MULTIPLIER_NOT_ALLOWED_FOR_BIDDING_STRATEGY" - A multiplier cannot be set
+	// for this bidding strategy
+	//   "MULTIPLIER_NOT_ALLOWED_WHEN_BASE_BID_IS_MISSING" - A multiplier cannot be
+	// set when there is no base bid (for example, content max cpc)
+	//   "NO_MULTIPLIER_SPECIFIED" - A bid multiplier must be specified
+	//   "MULTIPLIER_CAUSES_BID_TO_EXCEED_DAILY_BUDGET" - Multiplier causes bid to
+	// exceed daily budget
+	//   "MULTIPLIER_CAUSES_BID_TO_EXCEED_MONTHLY_BUDGET" - Multiplier causes bid
+	// to exceed monthly budget
+	//   "MULTIPLIER_CAUSES_BID_TO_EXCEED_CUSTOM_BUDGET" - Multiplier causes bid to
+	// exceed custom budget
+	//   "MULTIPLIER_CAUSES_BID_TO_EXCEED_MAX_ALLOWED_BID" - Multiplier causes bid
+	// to exceed maximum allowed bid
+	//   "BID_LESS_THAN_MIN_ALLOWED_BID_WITH_MULTIPLIER" - Multiplier causes bid to
+	// become less than the minimum bid allowed
+	//   "MULTIPLIER_AND_BIDDING_STRATEGY_TYPE_MISMATCH" - Multiplier type (cpc
+	// versus cpm) needs to match campaign's bidding strategy
+	MultiplierError string `json:"multiplierError,omitempty"`
+	// MutateError: An error with a mutate
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "RESOURCE_NOT_FOUND" - Requested resource was not found.
+	//   "ID_EXISTS_IN_MULTIPLE_MUTATES" - Cannot mutate the same resource twice in
+	// one request.
+	//   "INCONSISTENT_FIELD_VALUES" - The field's contents don't match another
+	// field that represents the same data.
+	//   "MUTATE_NOT_ALLOWED" - Mutates are not allowed for the requested resource.
+	//   "RESOURCE_NOT_IN_GOOGLE_ADS" - The resource isn't in Google Ads. It
+	// belongs to another ads system.
+	//   "RESOURCE_ALREADY_EXISTS" - The resource being created already exists.
+	//   "RESOURCE_DOES_NOT_SUPPORT_VALIDATE_ONLY" - This resource cannot be used
+	// with "validate_only".
+	//   "OPERATION_DOES_NOT_SUPPORT_PARTIAL_FAILURE" - This operation cannot be
+	// used with "partial_failure".
+	//   "RESOURCE_READ_ONLY" - Attempt to write to read-only fields.
+	//   "EU_POLITICAL_ADVERTISING_DECLARATION_REQUIRED" - Mutates are generally
+	// not allowed if the customer contains non-exempt campaigns without the EU
+	// political advertising declaration.
+	MutateError string `json:"mutateError,omitempty"`
+	// NewResourceCreationError: The reasons for the new resource creation error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CANNOT_SET_ID_FOR_CREATE" - Do not set the id field while creating new
+	// resources.
+	//   "DUPLICATE_TEMP_IDS" - Creating more than one resource with the same temp
+	// ID is not allowed.
+	//   "TEMP_ID_RESOURCE_HAD_ERRORS" - Parent resource with specified temp ID
+	// failed validation, so no validation will be done for this child resource.
+	NewResourceCreationError string `json:"newResourceCreationError,omitempty"`
+	// NotAllowlistedError: The reasons for the not allowlisted error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CUSTOMER_NOT_ALLOWLISTED_FOR_THIS_FEATURE" - Customer is not allowlisted
+	// for accessing this feature.
+	NotAllowlistedError string `json:"notAllowlistedError,omitempty"`
+	// NotEmptyError: The reasons for the not empty error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "EMPTY_LIST" - Empty list.
+	NotEmptyError string `json:"notEmptyError,omitempty"`
+	// NullError: The reasons for the null error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "NULL_CONTENT" - Specified list/container must not contain any null
+	// elements
+	NullError string `json:"nullError,omitempty"`
+	// OfflineUserDataJobError: The reasons for the offline user data job error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_USER_LIST_ID" - The user list ID provided for the job is invalid.
+	//   "INVALID_USER_LIST_TYPE" - Type of the user list is not applicable for the
+	// job.
+	//   "NOT_ON_ALLOWLIST_FOR_USER_ID" - Customer is not allowisted for using user
+	// ID in upload data.
+	//   "INCOMPATIBLE_UPLOAD_KEY_TYPE" - Upload data is not compatible with the
+	// upload key type of the associated user list.
+	//   "MISSING_USER_IDENTIFIER" - The user identifier is missing valid data.
+	//   "INVALID_MOBILE_ID_FORMAT" - The mobile ID is malformed.
+	//   "TOO_MANY_USER_IDENTIFIERS" - Maximum number of user identifiers allowed
+	// per request is 100,000 and per operation is 20.
+	//   "NOT_ON_ALLOWLIST_FOR_STORE_SALES_DIRECT" - Customer is not on the
+	// allow-list for store sales direct data.
+	//   "NOT_ON_ALLOWLIST_FOR_UNIFIED_STORE_SALES" - Customer is not on the
+	// allow-list for unified store sales data.
+	//   "INVALID_PARTNER_ID" - The partner ID in store sales direct metadata is
+	// invalid.
+	//   "INVALID_ENCODING" - The data in user identifier should not be encoded.
+	//   "INVALID_COUNTRY_CODE" - The country code is invalid.
+	//   "INCOMPATIBLE_USER_IDENTIFIER" - Incompatible user identifier when using
+	// third_party_user_id for store sales direct first party data or not using
+	// third_party_user_id for store sales third party data.
+	//   "FUTURE_TRANSACTION_TIME" - A transaction time in the future is not
+	// allowed.
+	//   "INVALID_CONVERSION_ACTION" - The conversion_action specified in
+	// transaction_attributes is used to report conversions to a conversion action
+	// configured in Google Ads. This error indicates there is no such conversion
+	// action in the account.
+	//   "MOBILE_ID_NOT_SUPPORTED" - Mobile ID is not supported for store sales
+	// direct data.
+	//   "INVALID_OPERATION_ORDER" - When a remove-all operation is provided, it
+	// has to be the first operation of the operation list.
+	//   "CONFLICTING_OPERATION" - Mixing creation and removal of offline data in
+	// the same job is not allowed.
+	//   "EXTERNAL_UPDATE_ID_ALREADY_EXISTS" - The external update ID already
+	// exists.
+	//   "JOB_ALREADY_STARTED" - Once the upload job is started, new operations
+	// cannot be added.
+	//   "REMOVE_NOT_SUPPORTED" - Remove operation is not allowed for store sales
+	// direct updates.
+	//   "REMOVE_ALL_NOT_SUPPORTED" - Remove-all is not supported for certain
+	// offline user data job types.
+	//   "INVALID_SHA256_FORMAT" - The SHA256 encoded value is malformed.
+	//   "CUSTOM_KEY_DISABLED" - The custom key specified is not enabled for the
+	// unified store sales upload.
+	//   "CUSTOM_KEY_NOT_PREDEFINED" - The custom key specified is not predefined
+	// through the Google Ads UI.
+	//   "CUSTOM_KEY_NOT_SET" - The custom key specified is not set in the upload.
+	//   "CUSTOMER_NOT_ACCEPTED_CUSTOMER_DATA_TERMS" - The customer has not
+	// accepted the customer data terms in the conversion settings page.
+	//   "ATTRIBUTES_NOT_APPLICABLE_FOR_CUSTOMER_MATCH_USER_LIST" - User attributes
+	// cannot be uploaded into a user list.
+	//   "LIFETIME_VALUE_BUCKET_NOT_IN_RANGE" - Lifetime bucket value must be a
+	// number from 0 to 10; 0 is only accepted for remove operations
+	//   "INCOMPATIBLE_USER_IDENTIFIER_FOR_ATTRIBUTES" - Identifiers not supported
+	// for Customer Match attributes. User attributes can only be provided with
+	// contact info (email, phone, address) user identifiers.
+	//   "FUTURE_TIME_NOT_ALLOWED" - A time in the future is not allowed.
+	//   "LAST_PURCHASE_TIME_LESS_THAN_ACQUISITION_TIME" - Last purchase date time
+	// cannot be less than acquisition date time.
+	//   "CUSTOMER_IDENTIFIER_NOT_ALLOWED" - Only emails are accepted as user
+	// identifiers for shopping loyalty match. {-- api.dev/not-precedent: The
+	// identifier is not limited to ids, but also include other user info eg. phone
+	// numbers.}
+	//   "INVALID_ITEM_ID" - Provided item ID is invalid.
+	//   "FIRST_PURCHASE_TIME_GREATER_THAN_LAST_PURCHASE_TIME" - First purchase
+	// date time cannot be greater than the last purchase date time.
+	//   "INVALID_LIFECYCLE_STAGE" - Provided lifecycle stage is invalid.
+	//   "INVALID_EVENT_VALUE" - The event value of the Customer Match user
+	// attribute is invalid.
+	//   "EVENT_ATTRIBUTE_ALL_FIELDS_ARE_REQUIRED" - All the fields are not present
+	// in the EventAttribute of the Customer Match.
+	//   "OPERATION_LEVEL_CONSENT_PROVIDED" - Consent was provided at the operation
+	// level for an OfflineUserDataJobType that expects it at the job level. The
+	// provided operation-level consent will be ignored.
+	OfflineUserDataJobError string `json:"offlineUserDataJobError,omitempty"`
+	// OperationAccessDeniedError: The reasons for the operation access denied
+	// error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "ACTION_NOT_PERMITTED" - Unauthorized invocation of a service's method
+	// (get, mutate, etc.)
+	//   "CREATE_OPERATION_NOT_PERMITTED" - Unauthorized CREATE operation in
+	// invoking a service's mutate method.
+	//   "REMOVE_OPERATION_NOT_PERMITTED" - Unauthorized REMOVE operation in
+	// invoking a service's mutate method.
+	//   "UPDATE_OPERATION_NOT_PERMITTED" - Unauthorized UPDATE operation in
+	// invoking a service's mutate method.
+	//   "MUTATE_ACTION_NOT_PERMITTED_FOR_CLIENT" - A mutate action is not allowed
+	// on this resource, from this client.
+	//   "OPERATION_NOT_PERMITTED_FOR_CAMPAIGN_TYPE" - This operation is not
+	// permitted on this campaign type
+	//   "CREATE_AS_REMOVED_NOT_PERMITTED" - A CREATE operation may not set status
+	// to REMOVED.
+	//   "OPERATION_NOT_PERMITTED_FOR_REMOVED_RESOURCE" - This operation is not
+	// allowed because the resource is removed.
+	//   "OPERATION_NOT_PERMITTED_FOR_AD_GROUP_TYPE" - This operation is not
+	// permitted on this ad group type.
+	//   "MUTATE_NOT_PERMITTED_FOR_CUSTOMER" - The mutate is not allowed for this
+	// customer.
+	OperationAccessDeniedError string `json:"operationAccessDeniedError,omitempty"`
+	// OperatorError: The reasons for the operator error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "OPERATOR_NOT_SUPPORTED" - Operator not supported.
+	OperatorError string `json:"operatorError,omitempty"`
+	// PartialFailureError: The reasons for the mutate job error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "PARTIAL_FAILURE_MODE_REQUIRED" - The partial failure field was false in
+	// the request. This method requires this field be set to true.
+	PartialFailureError string `json:"partialFailureError,omitempty"`
+	// PaymentsAccountError: The reasons for errors in payments accounts service
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "NOT_SUPPORTED_FOR_MANAGER_CUSTOMER" - Manager customers are not supported
+	// for payments account service.
+	PaymentsAccountError string `json:"paymentsAccountError,omitempty"`
+	// PolicyFindingError: The reasons for the policy finding error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "POLICY_FINDING" - The resource has been disapproved since the policy
+	// summary includes policy topics of type PROHIBITED.
+	//   "POLICY_TOPIC_NOT_FOUND" - The given policy topic does not exist.
+	PolicyFindingError string `json:"policyFindingError,omitempty"`
+	// PolicyValidationParameterError: The reasons for the policy validation
+	// parameter error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "UNSUPPORTED_AD_TYPE_FOR_IGNORABLE_POLICY_TOPICS" - Ignorable policy
+	// topics are not supported for the ad type.
+	//   "UNSUPPORTED_AD_TYPE_FOR_EXEMPT_POLICY_VIOLATION_KEYS" - Exempt policy
+	// violation keys are not supported for the ad type.
+	//   "CANNOT_SET_BOTH_IGNORABLE_POLICY_TOPICS_AND_EXEMPT_POLICY_VIOLATION_KEYS"
+	// - Cannot set ignorable policy topics and exempt policy violation keys in the
+	// same policy violation parameter.
+	PolicyValidationParameterError string `json:"policyValidationParameterError,omitempty"`
+	// PolicyViolationError: The reasons for the policy violation error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "POLICY_ERROR" - A policy was violated. See PolicyViolationDetails for
+	// more detail.
+	PolicyViolationError string `json:"policyViolationError,omitempty"`
+	// ProductLinkError: The reasons for the product link error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_OPERATION" - The requested operation is invalid. For example, you
+	// are not allowed to remove a link from a partner account.
+	//   "CREATION_NOT_PERMITTED" - The creation request is not permitted.
+	//   "INVITATION_EXISTS" - A link cannot be created because a pending link
+	// already exists.
+	//   "LINK_EXISTS" - A link cannot be created because an active link already
+	// exists.
+	ProductLinkError string `json:"productLinkError,omitempty"`
+	// ProductLinkInvitationError: The reasons for the product link invitation
+	// error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in the version.
+	//   "INVALID_STATUS" - The invitation status is invalid.
+	//   "PERMISSION_DENIED" - The customer doesn't have the permission to perform
+	// this action
+	//   "NO_INVITATION_REQUIRED" - An invitation could not be created, since the
+	// user already has admin access to the invited account. Use the
+	// ProductLinkService to directly create an active link.
+	//   "CUSTOMER_NOT_PERMITTED_TO_CREATE_INVITATION" - The customer is not
+	// permitted to create the invitation.
+	ProductLinkInvitationError string `json:"productLinkInvitationError,omitempty"`
+	// QueryError: An error with the query
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Name unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "QUERY_ERROR" - Returned if all other query error reasons are not
+	// applicable.
+	//   "BAD_ENUM_CONSTANT" - A condition used in the query references an invalid
+	// enum constant.
+	//   "BAD_ESCAPE_SEQUENCE" - Query contains an invalid escape sequence.
+	//   "BAD_FIELD_NAME" - Field name is invalid.
+	//   "BAD_LIMIT_VALUE" - Limit value is invalid (for example, not a number)
+	//   "BAD_NUMBER" - Encountered number can not be parsed.
+	//   "BAD_OPERATOR" - Invalid operator encountered.
+	//   "BAD_PARAMETER_NAME" - Parameter unknown or not supported.
+	//   "BAD_PARAMETER_VALUE" - Parameter have invalid value.
+	//   "BAD_RESOURCE_TYPE_IN_FROM_CLAUSE" - Invalid resource type was specified
+	// in the FROM clause.
+	//   "BAD_SYMBOL" - Non-ASCII symbol encountered outside of strings.
+	//   "BAD_VALUE" - Value is invalid.
+	//   "DATE_RANGE_TOO_WIDE" - Date filters fail to restrict date to a range
+	// smaller than 31 days. Applicable if the query is segmented by date.
+	//   "DATE_RANGE_TOO_NARROW" - Filters on date/week/month/quarter have a start
+	// date after end date.
+	//   "EXPECTED_AND" - Expected AND between values with BETWEEN operator.
+	//   "EXPECTED_BY" - Expecting ORDER BY to have BY.
+	//   "EXPECTED_DIMENSION_FIELD_IN_SELECT_CLAUSE" - There was no dimension field
+	// selected.
+	//   "EXPECTED_FILTERS_ON_DATE_RANGE" - Missing filters on date related fields.
+	//   "EXPECTED_FROM" - Missing FROM clause.
+	//   "EXPECTED_LIST" - The operator used in the conditions requires the value
+	// to be a list.
+	//   "EXPECTED_REFERENCED_FIELD_IN_SELECT_CLAUSE" - Fields used in WHERE or
+	// ORDER BY clauses are missing from the SELECT clause.
+	//   "EXPECTED_SELECT" - SELECT is missing at the beginning of query.
+	//   "EXPECTED_SINGLE_VALUE" - A list was passed as a value to a condition
+	// whose operator expects a single value.
+	//   "EXPECTED_VALUE_WITH_BETWEEN_OPERATOR" - Missing one or both values with
+	// BETWEEN operator.
+	//   "INVALID_DATE_FORMAT" - Invalid date format. Expected 'YYYY-MM-DD'.
+	//   "MISALIGNED_DATE_FOR_FILTER" - Misaligned date value for the filter. The
+	// date should be the start of a week/month/quarter if the filtered field is
+	// segments.week/segments.month/segments.quarter.
+	//   "INVALID_STRING_VALUE" - Value passed was not a string when it should have
+	// been. For example, it was a number or unquoted literal.
+	//   "INVALID_VALUE_WITH_BETWEEN_OPERATOR" - A String value passed to the
+	// BETWEEN operator does not parse as a date.
+	//   "INVALID_VALUE_WITH_DURING_OPERATOR" - The value passed to the DURING
+	// operator is not a Date range literal
+	//   "INVALID_VALUE_WITH_LIKE_OPERATOR" - A value was passed to the LIKE
+	// operator.
+	//   "OPERATOR_FIELD_MISMATCH" - An operator was provided that is inapplicable
+	// to the field being filtered.
+	//   "PROHIBITED_EMPTY_LIST_IN_CONDITION" - A Condition was found with an empty
+	// list.
+	//   "PROHIBITED_ENUM_CONSTANT" - A condition used in the query references an
+	// unsupported enum constant.
+	//   "PROHIBITED_FIELD_COMBINATION_IN_SELECT_CLAUSE" - Fields that are not
+	// allowed to be selected together were included in the SELECT clause.
+	//   "PROHIBITED_FIELD_IN_ORDER_BY_CLAUSE" - A field that is not orderable was
+	// included in the ORDER BY clause.
+	//   "PROHIBITED_FIELD_IN_SELECT_CLAUSE" - A field that is not selectable was
+	// included in the SELECT clause.
+	//   "PROHIBITED_FIELD_IN_WHERE_CLAUSE" - A field that is not filterable was
+	// included in the WHERE clause.
+	//   "PROHIBITED_RESOURCE_TYPE_IN_FROM_CLAUSE" - Resource type specified in the
+	// FROM clause is not supported by this service.
+	//   "PROHIBITED_RESOURCE_TYPE_IN_SELECT_CLAUSE" - A field that comes from an
+	// incompatible resource was included in the SELECT clause.
+	//   "PROHIBITED_RESOURCE_TYPE_IN_WHERE_CLAUSE" - A field that comes from an
+	// incompatible resource was included in the WHERE clause.
+	//   "PROHIBITED_METRIC_IN_SELECT_OR_WHERE_CLAUSE" - A metric incompatible with
+	// the main resource or other selected segmenting resources was included in the
+	// SELECT or WHERE clause.
+	//   "PROHIBITED_SEGMENT_IN_SELECT_OR_WHERE_CLAUSE" - A segment incompatible
+	// with the main resource or other selected segmenting resources was included
+	// in the SELECT or WHERE clause.
+	//   "PROHIBITED_SEGMENT_WITH_METRIC_IN_SELECT_OR_WHERE_CLAUSE" - A segment in
+	// the SELECT clause is incompatible with a metric in the SELECT or WHERE
+	// clause.
+	//   "PROHIBITED_FIELD_OR_SEGMENT_WITH_METRIC" - A metric may not be selected
+	// with one of the selected resource fields, or segmented by one of the
+	// selected segment fields.
+	//   "LIMIT_VALUE_TOO_LOW" - The value passed to the limit clause is too low.
+	//   "PROHIBITED_NEWLINE_IN_STRING" - Query has a string containing a newline
+	// character.
+	//   "PROHIBITED_VALUE_COMBINATION_IN_LIST" - List contains values of different
+	// types.
+	//   "PROHIBITED_VALUE_COMBINATION_WITH_BETWEEN_OPERATOR" - The values passed
+	// to the BETWEEN operator are not of the same type.
+	//   "STRING_NOT_TERMINATED" - Query contains unterminated string.
+	//   "TOO_MANY_SEGMENTS" - Too many segments are specified in SELECT clause.
+	//   "UNEXPECTED_END_OF_QUERY" - Query is incomplete and cannot be parsed.
+	//   "UNEXPECTED_FROM_CLAUSE" - FROM clause cannot be specified in this query.
+	//   "UNRECOGNIZED_FIELD" - Query contains one or more unrecognized fields.
+	//   "UNEXPECTED_INPUT" - Query has an unexpected extra part.
+	//   "REQUESTED_METRICS_FOR_MANAGER" - Metrics cannot be requested for a
+	// manager account. To retrieve metrics, issue separate requests against each
+	// client account under the manager account.
+	//   "FILTER_HAS_TOO_MANY_VALUES" - The number of values (right-hand-side
+	// operands) in a filter exceeds the limit.
+	//   "REQUIRED_SEGMENT_FIELD_MISSING" - Required segment field is missing.
+	QueryError string `json:"queryError,omitempty"`
+	// QuotaError: An error with the amount of quota remaining.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "RESOURCE_EXHAUSTED" - Too many requests.
+	//   "ACCESS_PROHIBITED" - Access is prohibited.
+	//   "RESOURCE_TEMPORARILY_EXHAUSTED" - Too many requests in a short amount of
+	// time.
+	//   "EXCESSIVE_SHORT_TERM_QUERY_RESOURCE_CONSUMPTION" - Too many expensive
+	// requests from query pattern over a short amount of time.
+	//   "EXCESSIVE_LONG_TERM_QUERY_RESOURCE_CONSUMPTION" - Too many expensive
+	// requests from query pattern over an extended duration of time.
+	//   "PAYMENTS_PROFILE_ACTIVATION_RATE_LIMIT_EXCEEDED" - To activate ad serving
+	// in a customer account, it has to be linked with a payment profile (also
+	// known as a Billing Customer Number, or BCN), which is then billed for the
+	// costs incurred by that customer account. This error will be thrown if too
+	// many customer accounts are activated in a short period of time for the same
+	// payment profile. Once this rate limit is exceeded, the customer should wait
+	// for a week before trying again, or contact Google Ads customer support to
+	// reset the rate limits. See
+	// https://support.google.com/google-ads/answer/6372658 to learn more about
+	// this limit.
+	QuotaError string `json:"quotaError,omitempty"`
+	// RangeError: The reasons for the range error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "TOO_LOW" - Too low.
+	//   "TOO_HIGH" - Too high.
+	RangeError string `json:"rangeError,omitempty"`
+	// ReachPlanError: The reasons for the reach plan error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "NOT_FORECASTABLE_MISSING_RATE" - Not forecastable due to missing rate
+	// card data.
+	//   "NOT_FORECASTABLE_NOT_ENOUGH_INVENTORY" - Not forecastable due to not
+	// enough inventory.
+	//   "NOT_FORECASTABLE_ACCOUNT_NOT_ENABLED" - Not forecastable due to account
+	// not being enabled.
+	ReachPlanError string `json:"reachPlanError,omitempty"`
+	// RecommendationError: The reasons for error in applying a recommendation
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "BUDGET_AMOUNT_TOO_SMALL" - The specified budget amount is too low for
+	// example, lower than minimum currency unit or lower than ad group minimum
+	// cost-per-click.
+	//   "BUDGET_AMOUNT_TOO_LARGE" - The specified budget amount is too large.
+	//   "INVALID_BUDGET_AMOUNT" - The specified budget amount is not a valid
+	// amount, for example, not a multiple of minimum currency unit.
+	//   "POLICY_ERROR" - The specified keyword or ad violates ad policy.
+	//   "INVALID_BID_AMOUNT" - The specified bid amount is not valid, for example,
+	// too many fractional digits, or negative amount.
+	//   "ADGROUP_KEYWORD_LIMIT" - The number of keywords in ad group have reached
+	// the maximum allowed.
+	//   "RECOMMENDATION_ALREADY_APPLIED" - The recommendation requested to apply
+	// has already been applied.
+	//   "RECOMMENDATION_INVALIDATED" - The recommendation requested to apply has
+	// been invalidated.
+	//   "TOO_MANY_OPERATIONS" - The number of operations in a single request
+	// exceeds the maximum allowed.
+	//   "NO_OPERATIONS" - There are no operations in the request.
+	//   "DIFFERENT_TYPES_NOT_SUPPORTED" - Operations with multiple recommendation
+	// types are not supported when partial failure mode is not enabled.
+	//   "DUPLICATE_RESOURCE_NAME" - Request contains multiple operations with the
+	// same resource_name.
+	//   "RECOMMENDATION_ALREADY_DISMISSED" - The recommendation requested to
+	// dismiss has already been dismissed.
+	//   "INVALID_APPLY_REQUEST" - The recommendation apply request was malformed
+	// and invalid.
+	//   "RECOMMENDATION_TYPE_APPLY_NOT_SUPPORTED" - The type of recommendation
+	// requested to apply is not supported.
+	//   "INVALID_MULTIPLIER" - The target multiplier specified is invalid.
+	//   "ADVERTISING_CHANNEL_TYPE_GENERATE_NOT_SUPPORTED" - The passed in
+	// advertising_channel_type is not supported.
+	//   "RECOMMENDATION_TYPE_GENERATE_NOT_SUPPORTED" - The passed in
+	// recommendation_type is not supported.
+	//   "RECOMMENDATION_TYPES_CANNOT_BE_EMPTY" - One or more recommendation_types
+	// need to be passed into the generate recommendations request.
+	//   "CAMPAIGN_BUDGET_RECOMMENDATION_TYPE_REQUIRES_BIDDING_INFO" - Bidding info
+	// is required for the CAMPAIGN_BUDGET recommendation type.
+	//   "CAMPAIGN_BUDGET_RECOMMENDATION_TYPE_REQUIRES_BIDDING_STRATEGY_TYPE" -
+	// Bidding strategy type is required for the CAMPAIGN_BUDGET recommendation
+	// type.
+	//   "CAMPAIGN_BUDGET_RECOMMENDATION_TYPE_REQUIRES_ASSET_GROUP_INFO" - Asset
+	// group info is required for the campaign budget recommendation type.
+	//
+	// "CAMPAIGN_BUDGET_RECOMMENDATION_TYPE_REQUIRES_ASSET_GROUP_INFO_WITH_FINAL_URL
+	// " - Asset group info with final url is required for the CAMPAIGN_BUDGET
+	// recommendation type.
+	//
+	// "CAMPAIGN_BUDGET_RECOMMENDATION_TYPE_REQUIRES_COUNTRY_CODES_FOR_SEARCH_CHANNE
+	// L" - Country codes are required for the CAMPAIGN_BUDGET recommendation type
+	// for SEARCH channel.
+	//
+	// "CAMPAIGN_BUDGET_RECOMMENDATION_TYPE_INVALID_COUNTRY_CODE_FOR_SEARCH_CHANNEL"
+	//  - Country code is invalid for the CAMPAIGN_BUDGET recommendation type for
+	// SEARCH channel.
+	//
+	// "CAMPAIGN_BUDGET_RECOMMENDATION_TYPE_REQUIRES_LANGUAGE_CODES_FOR_SEARCH_CHANN
+	// EL" - Language codes are required for the CAMPAIGN_BUDGET recommendation
+	// type for SEARCH channel.
+	//
+	// "CAMPAIGN_BUDGET_RECOMMENDATION_TYPE_REQUIRES_EITHER_POSITIVE_OR_NEGATIVE_LOC
+	// ATION_IDS_FOR_SEARCH_CHANNEL" - Either positive or negative location ids are
+	// required for the CAMPAIGN_BUDGET recommendation type for SEARCH channel.
+	//
+	// "CAMPAIGN_BUDGET_RECOMMENDATION_TYPE_REQUIRES_AD_GROUP_INFO_FOR_SEARCH_CHANNE
+	// L" - Ad group info is required for the CAMPAIGN_BUDGET recommendation type
+	// for SEARCH channel.
+	//   "CAMPAIGN_BUDGET_RECOMMENDATION_TYPE_REQUIRES_KEYWORDS_FOR_SEARCH_CHANNEL"
+	// - Keywords are required for the CAMPAIGN_BUDGET recommendation type for
+	// SEARCH channel.
+	//
+	// "CAMPAIGN_BUDGET_RECOMMENDATION_TYPE_WITH_CHANNEL_TYPE_SEARCH_AND_BIDDING_STR
+	// ATEGY_TYPE_TARGET_IMPRESSION_SHARE_REQUIRES_LOCATION" - Location is required
+	// for the CAMPAIGN_BUDGET recommendation type for bidding strategy type
+	// TARGET_IMPRESSION_SHARE.
+	//
+	// "CAMPAIGN_BUDGET_RECOMMENDATION_TYPE_WITH_CHANNEL_TYPE_SEARCH_AND_BIDDING_STR
+	// ATEGY_TYPE_TARGET_IMPRESSION_SHARE_REQUIRES_TARGET_IMPRESSION_SHARE_MICROS"
+	// - Target impression share micros are required for the CAMPAIGN_BUDGET
+	// recommendation type for bidding strategy type TARGET_IMPRESSION_SHARE.
+	//
+	// "CAMPAIGN_BUDGET_RECOMMENDATION_TYPE_TARGET_IMPRESSION_SHARE_MICROS_BETWEEN_1
+	// _AND_1000000" - Target impression share micros are required to be between 1
+	// and 1000000 for the CAMPAIGN_BUDGET recommendation type for bidding strategy
+	// type TARGET_IMPRESSION_SHARE.
+	//
+	// "CAMPAIGN_BUDGET_RECOMMENDATION_TYPE_WITH_CHANNEL_TYPE_SEARCH_AND_BIDDING_STR
+	// ATEGY_TYPE_TARGET_IMPRESSION_SHARE_REQUIRES_TARGET_IMPRESSION_SHARE_INFO" -
+	// Target impression share info is required for the CAMPAIGN_BUDGET
+	// recommendation type for bidding strategy type TARGET_IMPRESSION_SHARE.
+	//   "MERCHANT_CENTER_ACCOUNT_ID_NOT_SUPPORTED_ADVERTISING_CHANNEL_TYPE" -
+	// Merchant Center Account ID is only supported for advertising_channel_type
+	// PERFORMANCE_MAX.
+	RecommendationError string `json:"recommendationError,omitempty"`
+	// RecommendationSubscriptionError: The reasons for the recommendation
+	// subscription error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	RecommendationSubscriptionError string `json:"recommendationSubscriptionError,omitempty"`
+	// RegionCodeError: The reasons for the region code error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_REGION_CODE" - Invalid region code.
+	RegionCodeError string `json:"regionCodeError,omitempty"`
+	// RequestError: An error caused by the request
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "RESOURCE_NAME_MISSING" - Resource name is required for this request.
+	//   "RESOURCE_NAME_MALFORMED" - Resource name provided is malformed.
+	//   "BAD_RESOURCE_ID" - Resource name provided is malformed.
+	//   "INVALID_CUSTOMER_ID" - Customer ID is invalid.
+	//   "OPERATION_REQUIRED" - Mutate operation should have either create, update,
+	// or remove specified.
+	//   "RESOURCE_NOT_FOUND" - Requested resource not found.
+	//   "INVALID_PAGE_TOKEN" - Next page token specified in user request is
+	// invalid.
+	//   "EXPIRED_PAGE_TOKEN" - Next page token specified in user request has
+	// expired.
+	//   "INVALID_PAGE_SIZE" - Page size specified in user request is invalid.
+	//   "PAGE_SIZE_NOT_SUPPORTED" - Setting the page size is not supported, and
+	// will be unavailable in a future version.
+	//   "REQUIRED_FIELD_MISSING" - Required field is missing.
+	//   "IMMUTABLE_FIELD" - The field cannot be modified because it's immutable.
+	// It's also possible that the field can be modified using 'create' operation
+	// but not 'update'.
+	//   "TOO_MANY_MUTATE_OPERATIONS" - Received too many entries in request.
+	//   "CANNOT_BE_EXECUTED_BY_MANAGER_ACCOUNT" - Request cannot be executed by a
+	// manager account.
+	//   "CANNOT_MODIFY_FOREIGN_FIELD" - Mutate request was attempting to modify a
+	// readonly field. For instance, Budget fields can be requested for Ad Group,
+	// but are read-only for adGroups:mutate.
+	//   "INVALID_ENUM_VALUE" - Enum value is not permitted.
+	//   "DEVELOPER_TOKEN_PARAMETER_MISSING" - The developer-token parameter is
+	// required for all requests.
+	//   "LOGIN_CUSTOMER_ID_PARAMETER_MISSING" - The login-customer-id parameter is
+	// required for this request.
+	//   "VALIDATE_ONLY_REQUEST_HAS_PAGE_TOKEN" - page_token is set in the validate
+	// only request
+	//   "CANNOT_RETURN_SUMMARY_ROW_FOR_REQUEST_WITHOUT_METRICS" -
+	// return_summary_row cannot be enabled if request did not select any metrics
+	// field.
+	//   "CANNOT_RETURN_SUMMARY_ROW_FOR_VALIDATE_ONLY_REQUESTS" -
+	// return_summary_row should not be enabled for validate only requests.
+	//   "INCONSISTENT_RETURN_SUMMARY_ROW_VALUE" - return_summary_row parameter
+	// value should be the same between requests with page_token field set and
+	// their original request.
+	//   "TOTAL_RESULTS_COUNT_NOT_ORIGINALLY_REQUESTED" - The total results count
+	// cannot be returned if it was not requested in the original request.
+	//   "RPC_DEADLINE_TOO_SHORT" - Deadline specified by the client was too short.
+	//   "UNSUPPORTED_VERSION" - This API version has been sunset and is no longer
+	// supported.
+	//   "CLOUD_PROJECT_NOT_FOUND" - The Google Cloud project in the request was
+	// not found.
+	RequestError string `json:"requestError,omitempty"`
+	// ResourceAccessDeniedError: The reasons for the resource access denied error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "WRITE_ACCESS_DENIED" - User did not have write access.
+	ResourceAccessDeniedError string `json:"resourceAccessDeniedError,omitempty"`
+	// ResourceCountLimitExceededError: The reasons for the resource count limit
+	// exceeded error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "ACCOUNT_LIMIT" - Indicates that this request would exceed the number of
+	// allowed resources for the Google Ads account. The exact resource type and
+	// limit being checked can be inferred from accountLimitType.
+	//   "CAMPAIGN_LIMIT" - Indicates that this request would exceed the number of
+	// allowed resources in a Campaign. The exact resource type and limit being
+	// checked can be inferred from accountLimitType, and the numeric id of the
+	// Campaign involved is given by enclosingId.
+	//   "ADGROUP_LIMIT" - Indicates that this request would exceed the number of
+	// allowed resources in an ad group. The exact resource type and limit being
+	// checked can be inferred from accountLimitType, and the numeric id of the ad
+	// group involved is given by enclosingId.
+	//   "AD_GROUP_AD_LIMIT" - Indicates that this request would exceed the number
+	// of allowed resources in an ad group ad. The exact resource type and limit
+	// being checked can be inferred from accountLimitType, and the enclosingId
+	// contains the ad group id followed by the ad id, separated by a single comma
+	// (,).
+	//   "AD_GROUP_CRITERION_LIMIT" - Indicates that this request would exceed the
+	// number of allowed resources in an ad group criterion. The exact resource
+	// type and limit being checked can be inferred from accountLimitType, and the
+	// enclosingId contains the ad group id followed by the criterion id, separated
+	// by a single comma (,).
+	//   "SHARED_SET_LIMIT" - Indicates that this request would exceed the number
+	// of allowed resources in this shared set. The exact resource type and limit
+	// being checked can be inferred from accountLimitType, and the numeric id of
+	// the shared set involved is given by enclosingId.
+	//   "MATCHING_FUNCTION_LIMIT" - Exceeds a limit related to a matching
+	// function.
+	//   "RESPONSE_ROW_LIMIT_EXCEEDED" - The response for this request would exceed
+	// the maximum number of rows that can be returned.
+	//   "RESOURCE_LIMIT" - This request would exceed a limit on the number of
+	// allowed resources. The details of which type of limit was exceeded will
+	// eventually be returned in ErrorDetails.
+	ResourceCountLimitExceededError string `json:"resourceCountLimitExceededError,omitempty"`
+	// SearchTermInsightError: The reasons for the Search term insight error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Name unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "FILTERING_NOT_ALLOWED_WITH_SEGMENTS" - Search term insights cannot be
+	// filtered by metrics when segmenting.
+	//   "LIMIT_NOT_ALLOWED_WITH_SEGMENTS" - Search term insights cannot have a
+	// LIMIT when segmenting.
+	//   "MISSING_FIELD_IN_SELECT_CLAUSE" - A selected field requires another field
+	// to be selected with it.
+	//   "REQUIRES_FILTER_BY_SINGLE_RESOURCE" - A selected field/resource requires
+	// filtering by a single resource.
+	//   "SORTING_NOT_ALLOWED_WITH_SEGMENTS" - Search term insights cannot be
+	// sorted when segmenting.
+	//   "SUMMARY_ROW_NOT_ALLOWED_WITH_SEGMENTS" - Search term insights cannot have
+	// a summary row when segmenting.
+	SearchTermInsightError string `json:"searchTermInsightError,omitempty"`
+	// SettingError: The reasons for the setting error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "SETTING_TYPE_IS_NOT_AVAILABLE" - The campaign setting is not available
+	// for this Google Ads account.
+	//   "SETTING_TYPE_IS_NOT_COMPATIBLE_WITH_CAMPAIGN" - The setting is not
+	// compatible with the campaign.
+	//   "TARGETING_SETTING_CONTAINS_INVALID_CRITERION_TYPE_GROUP" - The supplied
+	// TargetingSetting contains an invalid CriterionTypeGroup. See
+	// CriterionTypeGroup documentation for CriterionTypeGroups allowed in Campaign
+	// or AdGroup TargetingSettings.
+	//
+	// "TARGETING_SETTING_DEMOGRAPHIC_CRITERION_TYPE_GROUPS_MUST_BE_SET_TO_TARGET_AL
+	// L" - TargetingSetting must not explicitly set any of the Demographic
+	// CriterionTypeGroups (AGE_RANGE, GENDER, PARENT, INCOME_RANGE) to false (it's
+	// okay to not set them at all, in which case the system will set them to true
+	// automatically).
+	//
+	// "TARGETING_SETTING_CANNOT_CHANGE_TARGET_ALL_TO_FALSE_FOR_DEMOGRAPHIC_CRITERIO
+	// N_TYPE_GROUP" - TargetingSetting cannot change any of the Demographic
+	// CriterionTypeGroups (AGE_RANGE, GENDER, PARENT, INCOME_RANGE) from true to
+	// false.
+	//   "DYNAMIC_SEARCH_ADS_SETTING_AT_LEAST_ONE_FEED_ID_MUST_BE_PRESENT" - At
+	// least one feed id should be present.
+	//   "DYNAMIC_SEARCH_ADS_SETTING_CONTAINS_INVALID_DOMAIN_NAME" - The supplied
+	// DynamicSearchAdsSetting contains an invalid domain name.
+	//   "DYNAMIC_SEARCH_ADS_SETTING_CONTAINS_SUBDOMAIN_NAME" - The supplied
+	// DynamicSearchAdsSetting contains a subdomain name.
+	//   "DYNAMIC_SEARCH_ADS_SETTING_CONTAINS_INVALID_LANGUAGE_CODE" - The supplied
+	// DynamicSearchAdsSetting contains an invalid language code.
+	//   "TARGET_ALL_IS_NOT_ALLOWED_FOR_PLACEMENT_IN_SEARCH_CAMPAIGN" -
+	// TargetingSettings in search campaigns should not have
+	// CriterionTypeGroup.PLACEMENT set to targetAll.
+	//   "SETTING_VALUE_NOT_COMPATIBLE_WITH_CAMPAIGN" - The setting value is not
+	// compatible with the campaign type.
+	//   "BID_ONLY_IS_NOT_ALLOWED_TO_BE_MODIFIED_WITH_CUSTOMER_MATCH_TARGETING" -
+	// Switching from observation setting to targeting setting is not allowed for
+	// Customer Match lists. See
+	// https://support.google.com/google-ads/answer/6299717.
+	SettingError string `json:"settingError,omitempty"`
+	// ShareablePreviewError: The reasons for the shareable preview error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in this
+	// version.
+	//   "TOO_MANY_ASSET_GROUPS_IN_REQUEST" - The maximum of 10 asset groups was
+	// exceeded.
+	//   "ASSET_GROUP_DOES_NOT_EXIST_UNDER_THIS_CUSTOMER" - asset group does not
+	// exist under this customer.
+	ShareablePreviewError string `json:"shareablePreviewError,omitempty"`
+	// SharedCriterionError: The reasons for the shared criterion error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CRITERION_TYPE_NOT_ALLOWED_FOR_SHARED_SET_TYPE" - The criterion is not
+	// appropriate for the shared set type.
+	SharedCriterionError string `json:"sharedCriterionError,omitempty"`
+	// SharedSetError: The reasons for the shared set error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CUSTOMER_CANNOT_CREATE_SHARED_SET_OF_THIS_TYPE" - The customer cannot
+	// create this type of shared set.
+	//   "DUPLICATE_NAME" - A shared set with this name already exists.
+	//   "SHARED_SET_REMOVED" - Removed shared sets cannot be mutated.
+	//   "SHARED_SET_IN_USE" - The shared set cannot be removed because it is in
+	// use.
+	SharedSetError string `json:"sharedSetError,omitempty"`
+	// ShoppingProductError: The reasons for error in querying shopping product.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "MISSING_CAMPAIGN_FILTER" - A filter on the `campaign` resource name is
+	// missing.
+	//   "MISSING_AD_GROUP_FILTER" - A filter on the `ad_group` resource name is
+	// missing.
+	//   "UNSUPPORTED_DATE_SEGMENTATION" - Date segmentation is not supported.
+	ShoppingProductError string `json:"shoppingProductError,omitempty"`
+	// SizeLimitError: The reasons for the size limit error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "REQUEST_SIZE_LIMIT_EXCEEDED" - The number of entries in the request
+	// exceeds the system limit, or the contents of the operations exceed
+	// transaction limits due to their size or complexity. Try reducing the number
+	// of entries per request.
+	//   "RESPONSE_SIZE_LIMIT_EXCEEDED" - The number of entries in the response
+	// exceeds the system limit.
+	SizeLimitError string `json:"sizeLimitError,omitempty"`
+	// SmartCampaignError: The reasons for the Smart campaign error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_BUSINESS_LOCATION_ID" - The business location id is invalid.
+	//   "INVALID_CAMPAIGN" - The SmartCampaignSetting resource is only applicable
+	// for campaigns with advertising channel type SMART.
+	//   "BUSINESS_NAME_OR_BUSINESS_LOCATION_ID_MISSING" - The business name or
+	// business location id is required.
+	//   "REQUIRED_SUGGESTION_FIELD_MISSING" - A Smart campaign suggestion request
+	// field is required.
+	//   "GEO_TARGETS_REQUIRED" - A location list or proximity is required.
+	//   "CANNOT_DETERMINE_SUGGESTION_LOCALE" - The locale could not be determined.
+	//   "FINAL_URL_NOT_CRAWLABLE" - The final URL could not be crawled.
+	SmartCampaignError string `json:"smartCampaignError,omitempty"`
+	// StringFormatError: The reasons for the string format error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "ILLEGAL_CHARS" - The input string value contains disallowed characters.
+	//   "INVALID_FORMAT" - The input string value is invalid for the associated
+	// field.
+	StringFormatError string `json:"stringFormatError,omitempty"`
+	// StringLengthError: The reasons for the string length error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "EMPTY" - The specified field should have a least one non-whitespace
+	// character in it.
+	//   "TOO_SHORT" - Too short.
+	//   "TOO_LONG" - Too long.
+	StringLengthError string `json:"stringLengthError,omitempty"`
+	// ThirdPartyAppAnalyticsLinkError: The reasons for the third party app
+	// analytics link mutate error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_ANALYTICS_PROVIDER_ID" - The provided analytics provider ID is
+	// invalid.
+	//   "INVALID_MOBILE_APP_ID" - The provided mobile app ID is invalid.
+	//   "MOBILE_APP_IS_NOT_ENABLED" - The mobile app corresponding to the provided
+	// app ID is not active/enabled.
+	//   "CANNOT_REGENERATE_SHAREABLE_LINK_ID_FOR_REMOVED_LINK" - Regenerating
+	// shareable link ID is only allowed on active links
+	ThirdPartyAppAnalyticsLinkError string `json:"thirdPartyAppAnalyticsLinkError,omitempty"`
+	// TimeZoneError: The reasons for the time zone error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_TIME_ZONE" - Time zone is not valid.
+	TimeZoneError string `json:"timeZoneError,omitempty"`
+	// UrlFieldError: An error with a URL field mutate.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "INVALID_TRACKING_URL_TEMPLATE" - The tracking url template is invalid.
+	//   "INVALID_TAG_IN_TRACKING_URL_TEMPLATE" - The tracking url template
+	// contains invalid tag.
+	//   "MISSING_TRACKING_URL_TEMPLATE_TAG" - The tracking url template must
+	// contain at least one tag (for example, {lpurl}), This applies only to
+	// tracking url template associated with website ads or product ads.
+	//   "MISSING_PROTOCOL_IN_TRACKING_URL_TEMPLATE" - The tracking url template
+	// must start with a valid protocol (or lpurl tag).
+	//   "INVALID_PROTOCOL_IN_TRACKING_URL_TEMPLATE" - The tracking url template
+	// starts with an invalid protocol.
+	//   "MALFORMED_TRACKING_URL_TEMPLATE" - The tracking url template contains
+	// illegal characters.
+	//   "MISSING_HOST_IN_TRACKING_URL_TEMPLATE" - The tracking url template must
+	// contain a host name (or lpurl tag).
+	//   "INVALID_TLD_IN_TRACKING_URL_TEMPLATE" - The tracking url template has an
+	// invalid or missing top level domain extension.
+	//   "REDUNDANT_NESTED_TRACKING_URL_TEMPLATE_TAG" - The tracking url template
+	// contains nested occurrences of the same conditional tag (for example,
+	// {ifmobile:{ifmobile:x}}).
+	//   "INVALID_FINAL_URL" - The final url is invalid.
+	//   "INVALID_TAG_IN_FINAL_URL" - The final url contains invalid tag.
+	//   "REDUNDANT_NESTED_FINAL_URL_TAG" - The final url contains nested
+	// occurrences of the same conditional tag (for example,
+	// {ifmobile:{ifmobile:x}}).
+	//   "MISSING_PROTOCOL_IN_FINAL_URL" - The final url must start with a valid
+	// protocol.
+	//   "INVALID_PROTOCOL_IN_FINAL_URL" - The final url starts with an invalid
+	// protocol.
+	//   "MALFORMED_FINAL_URL" - The final url contains illegal characters.
+	//   "MISSING_HOST_IN_FINAL_URL" - The final url must contain a host name.
+	//   "INVALID_TLD_IN_FINAL_URL" - The tracking url template has an invalid or
+	// missing top level domain extension.
+	//   "INVALID_FINAL_MOBILE_URL" - The final mobile url is invalid.
+	//   "INVALID_TAG_IN_FINAL_MOBILE_URL" - The final mobile url contains invalid
+	// tag.
+	//   "REDUNDANT_NESTED_FINAL_MOBILE_URL_TAG" - The final mobile url contains
+	// nested occurrences of the same conditional tag (for example,
+	// {ifmobile:{ifmobile:x}}).
+	//   "MISSING_PROTOCOL_IN_FINAL_MOBILE_URL" - The final mobile url must start
+	// with a valid protocol.
+	//   "INVALID_PROTOCOL_IN_FINAL_MOBILE_URL" - The final mobile url starts with
+	// an invalid protocol.
+	//   "MALFORMED_FINAL_MOBILE_URL" - The final mobile url contains illegal
+	// characters.
+	//   "MISSING_HOST_IN_FINAL_MOBILE_URL" - The final mobile url must contain a
+	// host name.
+	//   "INVALID_TLD_IN_FINAL_MOBILE_URL" - The tracking url template has an
+	// invalid or missing top level domain extension.
+	//   "INVALID_FINAL_APP_URL" - The final app url is invalid.
+	//   "INVALID_TAG_IN_FINAL_APP_URL" - The final app url contains invalid tag.
+	//   "REDUNDANT_NESTED_FINAL_APP_URL_TAG" - The final app url contains nested
+	// occurrences of the same conditional tag (for example,
+	// {ifmobile:{ifmobile:x}}).
+	//   "MULTIPLE_APP_URLS_FOR_OSTYPE" - More than one app url found for the same
+	// OS type.
+	//   "INVALID_OSTYPE" - The OS type given for an app url is not valid.
+	//   "INVALID_PROTOCOL_FOR_APP_URL" - The protocol given for an app url is not
+	// valid. (For example, "android-app://")
+	//   "INVALID_PACKAGE_ID_FOR_APP_URL" - The package id (app id) given for an
+	// app url is not valid.
+	//   "URL_CUSTOM_PARAMETERS_COUNT_EXCEEDS_LIMIT" - The number of url custom
+	// parameters for an resource exceeds the maximum limit allowed.
+	//   "INVALID_CHARACTERS_IN_URL_CUSTOM_PARAMETER_KEY" - An invalid character
+	// appears in the parameter key.
+	//   "INVALID_CHARACTERS_IN_URL_CUSTOM_PARAMETER_VALUE" - An invalid character
+	// appears in the parameter value.
+	//   "INVALID_TAG_IN_URL_CUSTOM_PARAMETER_VALUE" - The url custom parameter
+	// value fails url tag validation.
+	//   "REDUNDANT_NESTED_URL_CUSTOM_PARAMETER_TAG" - The custom parameter
+	// contains nested occurrences of the same conditional tag (for example,
+	// {ifmobile:{ifmobile:x}}).
+	//   "MISSING_PROTOCOL" - The protocol (http:// or https://) is missing.
+	//   "INVALID_PROTOCOL" - Unsupported protocol in URL. Only http and https are
+	// supported.
+	//   "INVALID_URL" - The url is invalid.
+	//   "DESTINATION_URL_DEPRECATED" - Destination Url is deprecated.
+	//   "INVALID_TAG_IN_URL" - The url contains invalid tag.
+	//   "MISSING_URL_TAG" - The url must contain at least one tag (for example,
+	// {lpurl}).
+	//   "DUPLICATE_URL_ID" - Duplicate url id.
+	//   "INVALID_URL_ID" - Invalid url id.
+	//   "FINAL_URL_SUFFIX_MALFORMED" - The final url suffix cannot begin with '?'
+	// or '&' characters and must be a valid query string.
+	//   "INVALID_TAG_IN_FINAL_URL_SUFFIX" - The final url suffix cannot contain
+	// {lpurl} related or {ignore} tags.
+	//   "INVALID_TOP_LEVEL_DOMAIN" - The top level domain is invalid, for example,
+	// not a public top level domain listed in publicsuffix.org.
+	//   "MALFORMED_TOP_LEVEL_DOMAIN" - Malformed top level domain in URL.
+	//   "MALFORMED_URL" - Malformed URL.
+	//   "MISSING_HOST" - No host found in URL.
+	//   "NULL_CUSTOM_PARAMETER_VALUE" - Custom parameter value cannot be null.
+	//   "VALUE_TRACK_PARAMETER_NOT_SUPPORTED" - Track parameter is not supported.
+	//   "UNSUPPORTED_APP_STORE" - The app store connected to the url is not
+	// supported.
+	UrlFieldError string `json:"urlFieldError,omitempty"`
+	// UserDataError: The reasons for the user data error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "OPERATIONS_FOR_CUSTOMER_MATCH_NOT_ALLOWED" - Customer is not allowed to
+	// perform operations related to Customer Match.
+	//   "TOO_MANY_USER_IDENTIFIERS" - Maximum number of user identifiers allowed
+	// for each request is 100 and for each operation is 20.
+	//   "USER_LIST_NOT_APPLICABLE" - Current user list is not applicable for the
+	// given customer.
+	UserDataError string `json:"userDataError,omitempty"`
+	// UserListCustomerTypeError: The reasons for a user list customer type error.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "CONFLICTING_CUSTOMER_TYPES" - Cannot add the conflicting customer types
+	// to the same user list. Conflicting labels: 1. Purchasers - Converted Leads
+	// 2. Purchasers - Qualified Leads 3. Purchasers - Cart Abandoners 4. Qualified
+	// Leads - Converted Leads 5. Disengaged customers - Converted Leads 6.
+	// Disengaged customers - Qualified Leads 7. Disengaged customers - Cart
+	// Abandoners 8. Converted Leads - Loyalty Tier X Members (X = 1..7) 9.
+	// Qualified Leads - Loyalty Tier X Members (X = 1..7) 10. Loyalty Tier X
+	// Members - Loyalty Tier Y Members (X != Y)
+	//   "NO_ACCESS_TO_USER_LIST" - The account does not have access to the user
+	// list.
+	//   "USERLIST_NOT_ELIGIBLE" - The given user list is not eligible for applying
+	// customer types. The user list must belong to one of the following types:
+	// CRM_BASED, RULE_BASED, ADVERTISER_DATA_MODEL_BASED, GCN.
+	//   "CONVERSION_TRACKING_NOT_ENABLED_OR_NOT_MCC_MANAGER_ACCOUNT" - To edit the
+	// user list customer type, conversion tracking must be enabled in your
+	// account. If cross-tracking is enabled, your account must be a MCC manager
+	// account to modify user list customer types. More info at
+	// https://support.google.com/google-ads/answer/3030657
+	//   "TOO_MANY_USER_LISTS_FOR_THE_CUSTOMER_TYPE" - Too many user lists for the
+	// customer type.
+	UserListCustomerTypeError string `json:"userListCustomerTypeError,omitempty"`
+	// UserListError: The reasons for the user list error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "EXTERNAL_REMARKETING_USER_LIST_MUTATE_NOT_SUPPORTED" - Creating and
+	// updating external remarketing user lists is not supported.
+	//   "CONCRETE_TYPE_REQUIRED" - Concrete type of user list is required.
+	//   "CONVERSION_TYPE_ID_REQUIRED" - Creating/updating user list conversion
+	// types requires specifying the conversion type Id.
+	//   "DUPLICATE_CONVERSION_TYPES" - Remarketing user list cannot have duplicate
+	// conversion types.
+	//   "INVALID_CONVERSION_TYPE" - Conversion type is invalid/unknown.
+	//   "INVALID_DESCRIPTION" - User list description is empty or invalid.
+	//   "INVALID_NAME" - User list name is empty or invalid.
+	//   "INVALID_TYPE" - Type of the UserList does not match.
+	//   "CAN_NOT_ADD_LOGICAL_LIST_AS_LOGICAL_LIST_OPERAND" - Embedded logical user
+	// lists are not allowed.
+	//   "INVALID_USER_LIST_LOGICAL_RULE_OPERAND" - User list rule operand is
+	// invalid.
+	//   "NAME_ALREADY_USED" - Name is already being used for another user list for
+	// the account.
+	//   "NEW_CONVERSION_TYPE_NAME_REQUIRED" - Name is required when creating a new
+	// conversion type.
+	//   "CONVERSION_TYPE_NAME_ALREADY_USED" - The given conversion type name has
+	// been used.
+	//   "OWNERSHIP_REQUIRED_FOR_SET" - Only an owner account may edit a user list.
+	//   "USER_LIST_MUTATE_NOT_SUPPORTED" - Creating user list without setting type
+	// in oneof user_list field, or creating/updating read-only user list types is
+	// not allowed.
+	//   "INVALID_RULE" - Rule is invalid.
+	//   "INVALID_DATE_RANGE" - The specified date range is empty.
+	//   "CAN_NOT_MUTATE_SENSITIVE_USERLIST" - A UserList which is privacy
+	// sensitive or legal rejected cannot be mutated by external users.
+	//   "MAX_NUM_RULEBASED_USERLISTS" - Maximum number of rulebased user lists a
+	// customer can have.
+	//   "CANNOT_MODIFY_BILLABLE_RECORD_COUNT" - BasicUserList's billable record
+	// field cannot be modified once it is set.
+	//   "APP_ID_NOT_SET" - crm_based_user_list.app_id field must be set when
+	// upload_key_type is MOBILE_ADVERTISING_ID.
+	//   "USERLIST_NAME_IS_RESERVED_FOR_SYSTEM_LIST" - Name of the user list is
+	// reserved for system generated lists and cannot be used.
+	//   "ADVERTISER_NOT_ON_ALLOWLIST_FOR_USING_UPLOADED_DATA" - Advertiser needs
+	// to be on the allow-list to use remarketing lists created from advertiser
+	// uploaded data (for example, Customer Match lists).
+	//   "RULE_TYPE_IS_NOT_SUPPORTED" - The provided rule_type is not supported for
+	// the user list.
+	//   "CAN_NOT_ADD_A_SIMILAR_USERLIST_AS_LOGICAL_LIST_OPERAND" - Similar user
+	// list cannot be used as a logical user list operand.
+	//   "CAN_NOT_MIX_CRM_BASED_IN_LOGICAL_LIST_WITH_OTHER_LISTS" - Logical user
+	// list should not have a mix of CRM based user list and other types of lists
+	// in its rules.
+	//   "APP_ID_NOT_ALLOWED" - crm_based_user_list.app_id field can only be set
+	// when upload_key_type is MOBILE_ADVERTISING_ID.
+	//   "CANNOT_MUTATE_SYSTEM_LIST" - Google system generated user lists cannot be
+	// mutated.
+	//   "MOBILE_APP_IS_SENSITIVE" - The mobile app associated with the remarketing
+	// list is sensitive.
+	//   "SEED_LIST_DOES_NOT_EXIST" - One or more given seed lists do not exist.
+	//   "INVALID_SEED_LIST_ACCESS_REASON" - One or more given seed lists are not
+	// accessible to the current user.
+	//   "INVALID_SEED_LIST_TYPE" - One or more given seed lists have an
+	// unsupported type.
+	//   "INVALID_COUNTRY_CODES" - One or more invalid country codes are added to
+	// Lookalike UserList.
+	//   "PARTNER_AUDIENCE_SOURCE_NOT_SUPPORTED_FOR_USER_LIST_TYPE" - The partner
+	// audience source is not supported for the user list type.
+	//   "COMMERCE_PARTNER_NOT_ALLOWED" - The commerce partner is only supported
+	// for COMMERCE_AUDIENCE.
+	//   "PARTNER_AUDIENCE_INFO_NOT_SUPPORTED_FOR_USER_LIST_TYPE" - The partner
+	// audience info is not supported for the user list type.
+	//   "PARTNER_MANAGER_ACCOUNT_DISALLOWED" - Manager account is not allowed to
+	// create this UserList.
+	//   "PARTNER_NOT_ALLOWLISTED_FOR_THIRD_PARTY_PARTNER_DATA" - This UserList can
+	// only be created by allowlisted partners.
+	//   "ADVERTISER_TOS_NOT_ACCEPTED" - The advertiser must accept the Terms of
+	// Service to create this UserList.
+	//   "ADVERTISER_PARTNER_LINK_MISSING" - The advertiser must have an active
+	// link to the partner to create this UserList.
+	//   "ADVERTISER_NOT_ALLOWLISTED_FOR_THIRD_PARTY_PARTNER_DATA" - This UserList
+	// can only be created for allowlisted advertisers.
+	//   "ACCOUNT_SETTING_TYPE_NOT_ALLOWED" - This UserList is not allowed for this
+	// account type.
+	UserListError string `json:"userListError,omitempty"`
+	// VideoCampaignError: An error with a Video Campaign mutate.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "MUTATE_REQUIRES_RESERVATION" - Cannot modify the video campaign without
+	// reservation. See https://support.google.com/google-ads/answer/9547606.
+	VideoCampaignError string `json:"videoCampaignError,omitempty"`
+	// YoutubeVideoRegistrationError: The reasons for YouTube video registration
+	// errors.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "VIDEO_NOT_FOUND" - Video to be registered wasn't found.
+	//   "VIDEO_NOT_ACCESSIBLE" - Video to be registered is not accessible (for
+	// example, private).
+	//   "VIDEO_NOT_ELIGIBLE" - Video to be registered is not eligible (for
+	// example, mature content).
+	YoutubeVideoRegistrationError string `json:"youtubeVideoRegistrationError,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccessInvitationError") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessInvitationError") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Errors__ErrorCode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Errors__ErrorCode
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Errors__ErrorDetails: Additional error details.
+type GoogleAdsSearchads360V23Errors__ErrorDetails struct {
+	// BudgetPerDayMinimumErrorDetails: Details for a budget below per-day minimum
+	// error.
+	BudgetPerDayMinimumErrorDetails *GoogleAdsSearchads360V23Errors__BudgetPerDayMinimumErrorDetails `json:"budgetPerDayMinimumErrorDetails,omitempty"`
+	// PolicyFindingDetails: Describes policy violation findings.
+	PolicyFindingDetails *GoogleAdsSearchads360V23Errors__PolicyFindingDetails `json:"policyFindingDetails,omitempty"`
+	// PolicyViolationDetails: Describes an ad policy violation.
+	PolicyViolationDetails *GoogleAdsSearchads360V23Errors__PolicyViolationDetails `json:"policyViolationDetails,omitempty"`
+	// QuotaErrorDetails: Details on the quota error, including the scope (account
+	// or developer), the rate bucket name and the retry delay.
+	QuotaErrorDetails *GoogleAdsSearchads360V23Errors__QuotaErrorDetails `json:"quotaErrorDetails,omitempty"`
+	// ResourceCountDetails: Details for a resource count limit exceeded error.
+	ResourceCountDetails *GoogleAdsSearchads360V23Errors__ResourceCountDetails `json:"resourceCountDetails,omitempty"`
+	// UnpublishedErrorCode: The error code that should have been returned, but
+	// wasn't. This is used when the error code is not published in the client
+	// specified version.
+	UnpublishedErrorCode string `json:"unpublishedErrorCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "BudgetPerDayMinimumErrorDetails") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BudgetPerDayMinimumErrorDetails")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Errors__ErrorDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Errors__ErrorDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Errors__ErrorLocation: Describes the part of the
+// request proto that caused the error.
+type GoogleAdsSearchads360V23Errors__ErrorLocation struct {
+	// FieldPathElements: A field path that indicates which field was invalid in
+	// the request.
+	FieldPathElements []*GoogleAdsSearchads360V23ErrorsErrorLocationFieldPathElement `json:"fieldPathElements,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldPathElements") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldPathElements") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Errors__ErrorLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Errors__ErrorLocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Errors__PolicyFindingDetails: Error returned as part
+// of a mutate response. This error indicates one or more policy findings in
+// the fields of a resource.
+type GoogleAdsSearchads360V23Errors__PolicyFindingDetails struct {
+	// PolicyTopicEntries: The list of policy topics for the resource. Contains the
+	// PROHIBITED or FULLY_LIMITED policy topic entries that prevented the resource
+	// from being saved (among any other entries the resource may also have).
+	PolicyTopicEntries []*GoogleAdsSearchads360V23Common__PolicyTopicEntry `json:"policyTopicEntries,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PolicyTopicEntries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PolicyTopicEntries") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Errors__PolicyFindingDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Errors__PolicyFindingDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Errors__PolicyViolationDetails: Error returned as
+// part of a mutate response. This error indicates single policy violation by
+// some text in one of the fields.
+type GoogleAdsSearchads360V23Errors__PolicyViolationDetails struct {
+	// ExternalPolicyDescription: Human readable description of policy violation.
+	ExternalPolicyDescription string `json:"externalPolicyDescription,omitempty"`
+	// ExternalPolicyName: Human readable name of the policy.
+	ExternalPolicyName string `json:"externalPolicyName,omitempty"`
+	// IsExemptible: Whether user can file an exemption request for this violation.
+	IsExemptible bool `json:"isExemptible,omitempty"`
+	// Key: Unique identifier for this violation. If policy is exemptible, this key
+	// may be used to request exemption.
+	Key *GoogleAdsSearchads360V23Common__PolicyViolationKey `json:"key,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExternalPolicyDescription")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExternalPolicyDescription") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Errors__PolicyViolationDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Errors__PolicyViolationDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Errors__QuotaErrorDetails: Additional quota error
+// details when there is QuotaError.
+type GoogleAdsSearchads360V23Errors__QuotaErrorDetails struct {
+	// RateName: The high level description of the quota bucket. Examples are "Get
+	// requests for standard access" or "Requests per account".
+	RateName string `json:"rateName,omitempty"`
+	// RateScope: The rate scope of the quota limit.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Unspecified enum
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in this
+	// version.
+	//   "ACCOUNT" - Per customer account quota
+	//   "DEVELOPER" - Per project quota
+	RateScope string `json:"rateScope,omitempty"`
+	// RetryDelay: Backoff period that customers should wait before sending next
+	// request.
+	RetryDelay string `json:"retryDelay,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RateName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RateName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Errors__QuotaErrorDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Errors__QuotaErrorDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Errors__ResourceCountDetails: Error details returned
+// when an resource count limit was exceeded.
+type GoogleAdsSearchads360V23Errors__ResourceCountDetails struct {
+	// EnclosingId: The ID of the resource whose limit was exceeded. External
+	// customer ID if the limit is for a customer.
+	EnclosingId string `json:"enclosingId,omitempty"`
+	// EnclosingResource: The name of the resource ( etc.) whose limit was
+	// exceeded.
+	EnclosingResource string `json:"enclosingResource,omitempty"`
+	// ExistingCount: The count of existing entities.
+	ExistingCount int64 `json:"existingCount,omitempty"`
+	// Limit: The limit which was exceeded.
+	Limit int64 `json:"limit,omitempty"`
+	// LimitType: The resource limit type which was exceeded.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - No value has been specified.
+	//   "UNKNOWN" - Used for return value only. Represents an unclassified
+	// operation unknown in this version.
+	//   "CAMPAIGNS_PER_CUSTOMER" - Number of ENABLED and PAUSED campaigns per
+	// customer.
+	//   "BASE_CAMPAIGNS_PER_CUSTOMER" - Number of ENABLED and PAUSED base
+	// campaigns per customer.
+	//   "EXPERIMENT_CAMPAIGNS_PER_CUSTOMER" - Number of ENABLED and PAUSED
+	// experiment campaigns per customer.
+	//   "HOTEL_CAMPAIGNS_PER_CUSTOMER" - Number of ENABLED and PAUSED Hotel
+	// campaigns per customer.
+	//   "SMART_SHOPPING_CAMPAIGNS_PER_CUSTOMER" - Number of ENABLED and PAUSED
+	// Smart Shopping campaigns per customer.
+	//   "AD_GROUPS_PER_CAMPAIGN" - Number of ENABLED ad groups per campaign.
+	//   "AD_GROUPS_PER_SHOPPING_CAMPAIGN" - Number of ENABLED ad groups per
+	// Shopping campaign.
+	//   "AD_GROUPS_PER_HOTEL_CAMPAIGN" - Number of ENABLED ad groups per Hotel
+	// campaign.
+	//   "REPORTING_AD_GROUPS_PER_LOCAL_CAMPAIGN" - Number of ENABLED reporting ad
+	// groups per local campaign.
+	//   "REPORTING_AD_GROUPS_PER_APP_CAMPAIGN" - Number of ENABLED reporting ad
+	// groups per App campaign. It includes app campaign and app campaign for
+	// engagement.
+	//   "MANAGED_AD_GROUPS_PER_SMART_CAMPAIGN" - Number of ENABLED managed ad
+	// groups per smart campaign.
+	//   "AD_GROUP_CRITERIA_PER_CUSTOMER" - Number of ENABLED ad group criteria per
+	// customer. An ad group criterion is considered as ENABLED if: 1. it's not
+	// REMOVED 2. its ad group is not REMOVED 3. its campaign is not REMOVED.
+	//   "BASE_AD_GROUP_CRITERIA_PER_CUSTOMER" - Number of ad group criteria across
+	// all base campaigns for a customer.
+	//   "EXPERIMENT_AD_GROUP_CRITERIA_PER_CUSTOMER" - Number of ad group criteria
+	// across all experiment campaigns for a customer.
+	//   "AD_GROUP_CRITERIA_PER_CAMPAIGN" - Number of ENABLED ad group criteria per
+	// campaign. An ad group criterion is considered as ENABLED if: 1. it's not
+	// REMOVED 2. its ad group is not REMOVED.
+	//   "CAMPAIGN_CRITERIA_PER_CUSTOMER" - Number of ENABLED campaign criteria per
+	// customer.
+	//   "BASE_CAMPAIGN_CRITERIA_PER_CUSTOMER" - Number of ENABLED campaign
+	// criteria across all base campaigns for a customer.
+	//   "EXPERIMENT_CAMPAIGN_CRITERIA_PER_CUSTOMER" - Number of ENABLED campaign
+	// criteria across all experiment campaigns for a customer.
+	//   "WEBPAGE_CRITERIA_PER_CUSTOMER" - Number of ENABLED webpage criteria per
+	// customer, including campaign level and ad group level.
+	//   "BASE_WEBPAGE_CRITERIA_PER_CUSTOMER" - Number of ENABLED webpage criteria
+	// across all base campaigns for a customer.
+	//   "EXPERIMENT_WEBPAGE_CRITERIA_PER_CUSTOMER" - Meximum number of ENABLED
+	// webpage criteria across all experiment campaigns for a customer.
+	//   "COMBINED_AUDIENCE_CRITERIA_PER_AD_GROUP" - Number of combined audience
+	// criteria per ad group.
+	//   "CUSTOMER_NEGATIVE_PLACEMENT_CRITERIA_PER_CUSTOMER" - Limit for placement
+	// criterion type group in customer negative criterion.
+	//   "CUSTOMER_NEGATIVE_YOUTUBE_CHANNEL_CRITERIA_PER_CUSTOMER" - Limit for
+	// YouTube TV channels in customer negative criterion.
+	//   "CRITERIA_PER_AD_GROUP" - Number of ENABLED criteria per ad group.
+	//   "LISTING_GROUPS_PER_AD_GROUP" - Number of listing group criteria per ad
+	// group.
+	//   "EXPLICITLY_SHARED_BUDGETS_PER_CUSTOMER" - Number of ENABLED explicitly
+	// shared budgets per customer.
+	//   "IMPLICITLY_SHARED_BUDGETS_PER_CUSTOMER" - Number of ENABLED implicitly
+	// shared budgets per customer.
+	//   "COMBINED_AUDIENCE_CRITERIA_PER_CAMPAIGN" - Number of combined audience
+	// criteria per campaign.
+	//   "NEGATIVE_KEYWORDS_PER_CAMPAIGN" - Number of negative keywords per
+	// campaign.
+	//   "NEGATIVE_PLACEMENTS_PER_CAMPAIGN" - Number of excluded campaign criteria
+	// in placement dimension, for example, placement, mobile application, YouTube
+	// channel, etc. The API criterion type is NOT limited to placement only, and
+	// this does not include exclusions at the ad group or other levels.
+	//   "GEO_TARGETS_PER_CAMPAIGN" - Number of geo targets per campaign.
+	//   "NEGATIVE_IP_BLOCKS_PER_CAMPAIGN" - Number of negative IP blocks per
+	// campaign.
+	//   "PROXIMITIES_PER_CAMPAIGN" - Number of proximity targets per campaign.
+	//   "LISTING_SCOPES_PER_SHOPPING_CAMPAIGN" - Number of listing scopes per
+	// Shopping campaign.
+	//   "LISTING_SCOPES_PER_NON_SHOPPING_CAMPAIGN" - Number of listing scopes per
+	// non-Shopping campaign.
+	//   "NEGATIVE_KEYWORDS_PER_SHARED_SET" - Number of criteria per negative
+	// keyword shared set.
+	//   "NEGATIVE_PLACEMENTS_PER_SHARED_SET" - Number of criteria per negative
+	// placement shared set.
+	//   "SHARED_SETS_PER_CUSTOMER_FOR_TYPE_DEFAULT" - Default number of shared
+	// sets allowed per type per customer.
+	//   "SHARED_SETS_PER_CUSTOMER_FOR_NEGATIVE_PLACEMENT_LIST_LOWER" - Number of
+	// shared sets of negative placement list type for a manager customer.
+	//   "HOTEL_ADVANCE_BOOKING_WINDOW_BID_MODIFIERS_PER_AD_GROUP" - Number of
+	// hotel_advance_booking_window bid modifiers per ad group.
+	//   "BIDDING_STRATEGIES_PER_CUSTOMER" - Number of ENABLED shared bidding
+	// strategies per customer.
+	//   "BASIC_USER_LISTS_PER_CUSTOMER" - Number of open basic user lists per
+	// customer.
+	//   "LOGICAL_USER_LISTS_PER_CUSTOMER" - Number of open logical user lists per
+	// customer.
+	//   "RULE_BASED_USER_LISTS_PER_CUSTOMER" - Number of open rule based user
+	// lists per customer.
+	//   "BASE_AD_GROUP_ADS_PER_CUSTOMER" - Number of ENABLED and PAUSED ad group
+	// ads across all base campaigns for a customer.
+	//   "EXPERIMENT_AD_GROUP_ADS_PER_CUSTOMER" - Number of ENABLED and PAUSED ad
+	// group ads across all experiment campaigns for a customer.
+	//   "AD_GROUP_ADS_PER_CAMPAIGN" - Number of ENABLED and PAUSED ad group ads
+	// per campaign.
+	//   "TEXT_AND_OTHER_ADS_PER_AD_GROUP" - Number of ENABLED ads per ad group
+	// that do not fall in to other buckets. Includes text and many other types.
+	//   "IMAGE_ADS_PER_AD_GROUP" - Number of ENABLED image ads per ad group.
+	//   "SHOPPING_SMART_ADS_PER_AD_GROUP" - Number of ENABLED shopping smart ads
+	// per ad group.
+	//   "RESPONSIVE_SEARCH_ADS_PER_AD_GROUP" - Number of ENABLED responsive search
+	// ads per ad group.
+	//   "APP_ADS_PER_AD_GROUP" - Number of ENABLED app ads per ad group.
+	//   "APP_ENGAGEMENT_ADS_PER_AD_GROUP" - Number of ENABLED app engagement ads
+	// per ad group.
+	//   "LOCAL_ADS_PER_AD_GROUP" - Number of ENABLED local ads per ad group.
+	//   "VIDEO_ADS_PER_AD_GROUP" - Number of ENABLED video ads per ad group.
+	//   "LEAD_FORM_CAMPAIGN_ASSETS_PER_CAMPAIGN" - Number of ENABLED lead form
+	// CampaignAssets per campaign.
+	//   "PROMOTION_CUSTOMER_ASSETS_PER_CUSTOMER" - Number of ENABLED promotion
+	// CustomerAssets per customer.
+	//   "PROMOTION_CAMPAIGN_ASSETS_PER_CAMPAIGN" - Number of ENABLED promotion
+	// CampaignAssets per campaign.
+	//   "PROMOTION_AD_GROUP_ASSETS_PER_AD_GROUP" - Number of ENABLED promotion
+	// AdGroupAssets per ad group.
+	//   "CALLOUT_CUSTOMER_ASSETS_PER_CUSTOMER" - Number of ENABLED callout
+	// CustomerAssets per customer.
+	//   "CALLOUT_CAMPAIGN_ASSETS_PER_CAMPAIGN" - Number of ENABLED callout
+	// CampaignAssets per campaign.
+	//   "CALLOUT_AD_GROUP_ASSETS_PER_AD_GROUP" - Number of ENABLED callout
+	// AdGroupAssets per ad group.
+	//   "SITELINK_CUSTOMER_ASSETS_PER_CUSTOMER" - Number of ENABLED sitelink
+	// CustomerAssets per customer.
+	//   "SITELINK_CAMPAIGN_ASSETS_PER_CAMPAIGN" - Number of ENABLED sitelink
+	// CampaignAssets per campaign.
+	//   "SITELINK_AD_GROUP_ASSETS_PER_AD_GROUP" - Number of ENABLED sitelink
+	// AdGroupAssets per ad group.
+	//   "STRUCTURED_SNIPPET_CUSTOMER_ASSETS_PER_CUSTOMER" - Number of ENABLED
+	// structured snippet CustomerAssets per customer.
+	//   "STRUCTURED_SNIPPET_CAMPAIGN_ASSETS_PER_CAMPAIGN" - Number of ENABLED
+	// structured snippet CampaignAssets per campaign.
+	//   "STRUCTURED_SNIPPET_AD_GROUP_ASSETS_PER_AD_GROUP" - Number of ENABLED
+	// structured snippet AdGroupAssets per ad group.
+	//   "MOBILE_APP_CUSTOMER_ASSETS_PER_CUSTOMER" - Number of ENABLED mobile app
+	// CustomerAssets per customer.
+	//   "MOBILE_APP_CAMPAIGN_ASSETS_PER_CAMPAIGN" - Number of ENABLED mobile app
+	// CampaignAssets per campaign.
+	//   "MOBILE_APP_AD_GROUP_ASSETS_PER_AD_GROUP" - Number of ENABLED mobile app
+	// AdGroupAssets per ad group.
+	//   "HOTEL_CALLOUT_CUSTOMER_ASSETS_PER_CUSTOMER" - Number of ENABLED hotel
+	// callout CustomerAssets per customer.
+	//   "HOTEL_CALLOUT_CAMPAIGN_ASSETS_PER_CAMPAIGN" - Number of ENABLED hotel
+	// callout CampaignAssets per campaign.
+	//   "HOTEL_CALLOUT_AD_GROUP_ASSETS_PER_AD_GROUP" - Number of ENABLED hotel
+	// callout AdGroupAssets per ad group.
+	//   "CALL_CUSTOMER_ASSETS_PER_CUSTOMER" - Number of ENABLED call
+	// CustomerAssets per customer.
+	//   "CALL_CAMPAIGN_ASSETS_PER_CAMPAIGN" - Number of ENABLED call
+	// CampaignAssets per campaign.
+	//   "CALL_AD_GROUP_ASSETS_PER_AD_GROUP" - Number of ENABLED call AdGroupAssets
+	// per ad group.
+	//   "PRICE_CUSTOMER_ASSETS_PER_CUSTOMER" - Number of ENABLED price
+	// CustomerAssets per customer.
+	//   "PRICE_CAMPAIGN_ASSETS_PER_CAMPAIGN" - Number of ENABLED price
+	// CampaignAssets per campaign.
+	//   "PRICE_AD_GROUP_ASSETS_PER_AD_GROUP" - Number of ENABLED price
+	// AdGroupAssets per ad group.
+	//   "AD_IMAGE_CAMPAIGN_ASSETS_PER_CAMPAIGN" - Number of ENABLED ad image
+	// CampaignAssets per campaign.
+	//   "AD_IMAGE_AD_GROUP_ASSETS_PER_AD_GROUP" - Number of ENABLED ad image
+	// AdGroupAssets per ad group.
+	//   "PAGE_FEED_ASSET_SETS_PER_CUSTOMER" - Number of ENABLED page feed asset
+	// sets per customer.
+	//   "DYNAMIC_EDUCATION_FEED_ASSET_SETS_PER_CUSTOMER" - Number of ENABLED
+	// dynamic education feed asset sets per customer.
+	//   "ASSETS_PER_PAGE_FEED_ASSET_SET" - Number of ENABLED assets per page feed
+	// asset set.
+	//   "ASSETS_PER_DYNAMIC_EDUCATION_FEED_ASSET_SET" - Number of ENABLED assets
+	// per dynamic education asset set.
+	//   "DYNAMIC_REAL_ESTATE_ASSET_SETS_PER_CUSTOMER" - Number of ENABLED dynamic
+	// real estate asset sets per customer.
+	//   "ASSETS_PER_DYNAMIC_REAL_ESTATE_ASSET_SET" - Number of ENABLED assets per
+	// dynamic real estate asset set.
+	//   "DYNAMIC_CUSTOM_ASSET_SETS_PER_CUSTOMER" - Number of ENABLED dynamic
+	// custom asset sets per customer.
+	//   "ASSETS_PER_DYNAMIC_CUSTOM_ASSET_SET" - Number of ENABLED assets per
+	// dynamic custom asset set.
+	//   "DYNAMIC_HOTELS_AND_RENTALS_ASSET_SETS_PER_CUSTOMER" - Number of ENABLED
+	// dynamic hotels and rentals asset sets per customer.
+	//   "ASSETS_PER_DYNAMIC_HOTELS_AND_RENTALS_ASSET_SET" - Number of ENABLED
+	// assets per dynamic hotels and rentals asset set.
+	//   "DYNAMIC_LOCAL_ASSET_SETS_PER_CUSTOMER" - Number of ENABLED dynamic local
+	// asset sets per customer.
+	//   "ASSETS_PER_DYNAMIC_LOCAL_ASSET_SET" - Number of ENABLED assets per
+	// dynamic local asset set.
+	//   "DYNAMIC_FLIGHTS_ASSET_SETS_PER_CUSTOMER" - Number of ENABLED dynamic
+	// flights asset sets per customer.
+	//   "ASSETS_PER_DYNAMIC_FLIGHTS_ASSET_SET" - Number of ENABLED assets per
+	// dynamic flights asset set.
+	//   "DYNAMIC_TRAVEL_ASSET_SETS_PER_CUSTOMER" - Number of ENABLED dynamic
+	// travel asset sets per customer.
+	//   "ASSETS_PER_DYNAMIC_TRAVEL_ASSET_SET" - Number of ENABLED assets per
+	// dynamic travel asset set.
+	//   "DYNAMIC_JOBS_ASSET_SETS_PER_CUSTOMER" - Number of ENABLED dynamic jobs
+	// asset sets per customer.
+	//   "ASSETS_PER_DYNAMIC_JOBS_ASSET_SET" - Number of ENABLED assets per dynamic
+	// jobs asset set.
+	//   "BUSINESS_NAME_CAMPAIGN_ASSETS_PER_CAMPAIGN" - Number of ENABLED business
+	// name CampaignAssets per campaign.
+	//   "BUSINESS_LOGO_CAMPAIGN_ASSETS_PER_CAMPAIGN" - Number of ENABLED business
+	// logo CampaignAssets per campaign.
+	//   "VERSIONS_PER_AD" - Number of versions per ad.
+	//   "USER_FEEDS_PER_CUSTOMER" - Number of ENABLED user feeds per customer.
+	//   "SYSTEM_FEEDS_PER_CUSTOMER" - Number of ENABLED system feeds per customer.
+	//   "FEED_ATTRIBUTES_PER_FEED" - Number of feed attributes per feed.
+	//   "FEED_ITEMS_PER_CUSTOMER" - Number of ENABLED feed items per customer.
+	//   "CAMPAIGN_FEEDS_PER_CUSTOMER" - Number of ENABLED campaign feeds per
+	// customer.
+	//   "BASE_CAMPAIGN_FEEDS_PER_CUSTOMER" - Number of ENABLED campaign feeds
+	// across all base campaigns for a customer.
+	//   "EXPERIMENT_CAMPAIGN_FEEDS_PER_CUSTOMER" - Number of ENABLED campaign
+	// feeds across all experiment campaigns for a customer.
+	//   "AD_GROUP_FEEDS_PER_CUSTOMER" - Number of ENABLED ad group feeds per
+	// customer.
+	//   "BASE_AD_GROUP_FEEDS_PER_CUSTOMER" - Number of ENABLED ad group feeds
+	// across all base campaigns for a customer.
+	//   "EXPERIMENT_AD_GROUP_FEEDS_PER_CUSTOMER" - Number of ENABLED ad group
+	// feeds across all experiment campaigns for a customer.
+	//   "AD_GROUP_FEEDS_PER_CAMPAIGN" - Number of ENABLED ad group feeds per
+	// campaign.
+	//   "FEED_ITEM_SETS_PER_CUSTOMER" - Number of ENABLED feed items per customer.
+	//   "FEED_ITEMS_PER_FEED_ITEM_SET" - Number of feed items per feed item set.
+	//   "CAMPAIGN_EXPERIMENTS_PER_CUSTOMER" - Number of ENABLED campaign
+	// experiments per customer.
+	//   "EXPERIMENT_ARMS_PER_VIDEO_EXPERIMENT" - Number of video experiment arms
+	// per experiment.
+	//   "OWNED_LABELS_PER_CUSTOMER" - Number of owned labels per customer.
+	//   "LABELS_PER_CAMPAIGN" - Number of applied labels per campaign.
+	//   "LABELS_PER_AD_GROUP" - Number of applied labels per ad group.
+	//   "LABELS_PER_AD_GROUP_AD" - Number of applied labels per ad group ad.
+	//   "LABELS_PER_AD_GROUP_CRITERION" - Number of applied labels per ad group
+	// criterion.
+	//   "TARGET_CUSTOMERS_PER_LABEL" - Number of customers with a single label
+	// applied.
+	//   "KEYWORD_PLANS_PER_USER_PER_CUSTOMER" - Number of ENABLED keyword plans
+	// per user per customer. The limit is applied per pair because by default a
+	// plan is private to a user of a customer. Each user of a customer has their
+	// own independent limit.
+	//   "KEYWORD_PLAN_AD_GROUP_KEYWORDS_PER_KEYWORD_PLAN" - Number of keyword plan
+	// ad group keywords per keyword plan.
+	//   "KEYWORD_PLAN_AD_GROUPS_PER_KEYWORD_PLAN" - Number of keyword plan ad
+	// groups per keyword plan.
+	//   "KEYWORD_PLAN_NEGATIVE_KEYWORDS_PER_KEYWORD_PLAN" - Number of keyword plan
+	// negative keywords (both campaign and ad group) per keyword plan.
+	//   "KEYWORD_PLAN_CAMPAIGNS_PER_KEYWORD_PLAN" - Number of keyword plan
+	// campaigns per keyword plan.
+	//   "CONVERSION_ACTIONS_PER_CUSTOMER" - Number of ENABLED conversion actions
+	// per customer.
+	//   "BATCH_JOB_OPERATIONS_PER_JOB" - Number of operations in a single batch
+	// job.
+	//   "BATCH_JOBS_PER_CUSTOMER" - Number of PENDING or ENABLED batch jobs per
+	// customer.
+	//   "HOTEL_CHECK_IN_DATE_RANGE_BID_MODIFIERS_PER_AD_GROUP" - Number of hotel
+	// check-in date range bid modifiers per ad agroup.
+	//   "SHARED_SETS_PER_ACCOUNT_FOR_ACCOUNT_LEVEL_NEGATIVE_KEYWORDS" - Number of
+	// shared sets of type ACCOUNT_LEVEL_NEGATIVE_KEYWORDS per account.
+	//   "ACCOUNT_LEVEL_NEGATIVE_KEYWORDS_PER_SHARED_SET" - Number of keywords per
+	// ACCOUNT_LEVEL_NEGATIVE_KEYWORDS shared set.
+	//   "ENABLED_ASSET_PER_HOTEL_PROPERTY_ASSET_SET" - Maximum number of asset per
+	// hotel property asset set.
+	//   "ENABLED_HOTEL_PROPERTY_ASSET_LINKS_PER_ASSET_GROUP" - Maximum number of
+	// enabled hotel property assets per asset group.
+	//   "BRANDS_PER_SHARED_SET" - Number of criteria per brand shared set.
+	//   "ENABLED_BRAND_LIST_CRITERIA_PER_CAMPAIGN" - Number of active brand list
+	// criteria per campaign.
+	//   "SHARED_SETS_PER_ACCOUNT_FOR_BRAND" - Maximum number of shared sets of
+	// brand type for an account.
+	//   "LOOKALIKE_USER_LISTS_PER_CUSTOMER" - Maximum number of lookalike lists
+	// per customer.
+	//   "LOGO_CAMPAIGN_ASSETS_PER_CAMPAIGN" - Total number of enabled IMAGE
+	// CampaignAssets with LOGO and LANDSCAPE_LOGO field types per campaign.
+	//   "BUSINESS_MESSAGE_ASSET_LINKS_PER_CUSTOMER" - Maximum number of active
+	// business message asset links at customer level.
+	//   "WHATSAPP_BUSINESS_MESSAGE_ASSET_LINKS_PER_CAMPAIGN" - Maximum number of
+	// active WhatsApp business message asset links at campaign level.
+	//   "WHATSAPP_BUSINESS_MESSAGE_ASSET_LINKS_PER_AD_GROUP" - Maximum number of
+	// active WhatsApp business message asset links at ad group level.
+	//   "BRAND_LIST_CRITERIA_PER_AD_GROUP" - Number of ENABLED brand list criteria
+	// per ad group.
+	LimitType string `json:"limitType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnclosingId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnclosingId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Errors__ResourceCountDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Errors__ResourceCountDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Errors__SearchAds360Error: Search Ads 360-specific
+// error.
+type GoogleAdsSearchads360V23Errors__SearchAds360Error struct {
+	// Details: Additional error details, which are returned by certain error
+	// codes. Most error codes do not include details.
+	Details *GoogleAdsSearchads360V23Errors__ErrorDetails `json:"details,omitempty"`
+	// ErrorCode: An enum value that indicates which error occurred.
+	ErrorCode *GoogleAdsSearchads360V23Errors__ErrorCode `json:"errorCode,omitempty"`
+	// Location: Describes the part of the request proto that caused the error.
+	Location *GoogleAdsSearchads360V23Errors__ErrorLocation `json:"location,omitempty"`
+	// Message: A human-readable description of the error.
+	Message string `json:"message,omitempty"`
+	// Trigger: The value that triggered the error.
+	Trigger *GoogleAdsSearchads360V23Common__Value `json:"trigger,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Details") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Details") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Errors__SearchAds360Error) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Errors__SearchAds360Error
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Errors__SearchAds360Failure: Describes how a Search
+// Ads 360 API call failed. It's returned inside google.rpc.Status.details when
+// a call fails.
+type GoogleAdsSearchads360V23Errors__SearchAds360Failure struct {
+	// Errors: The list of errors that occurred.
+	Errors []*GoogleAdsSearchads360V23Errors__SearchAds360Error `json:"errors,omitempty"`
+	// RequestId: The unique ID of the request that is used for debugging purposes.
+	RequestId string `json:"requestId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Errors") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Errors__SearchAds360Failure) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Errors__SearchAds360Failure
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23ResourcesBatchJobBatchJobMetadata: Additional
+// information about the batch job. This message is also used as metadata
+// returned in batch job Long Running Operations.
+type GoogleAdsSearchads360V23ResourcesBatchJobBatchJobMetadata struct {
+	// CompletionDateTime: Output only. The time when this batch job was completed.
+	// Formatted as yyyy-MM-dd HH:mm:ss. Example: "2018-03-05 09:16:00"
+	CompletionDateTime string `json:"completionDateTime,omitempty"`
+	// CreationDateTime: Output only. The time when this batch job was created.
+	// Formatted as yyyy-mm-dd hh:mm:ss. Example: "2018-03-05 09:15:00"
+	CreationDateTime string `json:"creationDateTime,omitempty"`
+	// EstimatedCompletionRatio: Output only. The fraction (between 0.0 and 1.0) of
+	// mutates that have been processed. This is empty if the job hasn't started
+	// running yet.
+	EstimatedCompletionRatio float64 `json:"estimatedCompletionRatio,omitempty"`
+	// ExecutedOperationCount: Output only. The number of mutate operations
+	// executed by the batch job. Present only if the job has started running.
+	ExecutedOperationCount int64 `json:"executedOperationCount,omitempty,string"`
+	// ExecutionLimitSeconds: Immutable. The approximate upper bound for how long a
+	// batch job can be executed, in seconds. If the job runs more than the given
+	// upper bound, the job will be canceled.
+	ExecutionLimitSeconds int64 `json:"executionLimitSeconds,omitempty"`
+	// OperationCount: Output only. The number of mutate operations in the batch
+	// job.
+	OperationCount int64 `json:"operationCount,omitempty,string"`
+	// StartDateTime: Output only. The time when this batch job started running.
+	// Formatted as yyyy-mm-dd hh:mm:ss. Example: "2018-03-05 09:15:30"
+	StartDateTime string `json:"startDateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CompletionDateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CompletionDateTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23ResourcesBatchJobBatchJobMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23ResourcesBatchJobBatchJobMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleAdsSearchads360V23ResourcesBatchJobBatchJobMetadata) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleAdsSearchads360V23ResourcesBatchJobBatchJobMetadata
+	var s1 struct {
+		EstimatedCompletionRatio gensupport.JSONFloat64 `json:"estimatedCompletionRatio"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.EstimatedCompletionRatio = float64(s1.EstimatedCompletionRatio)
+	return nil
+}
+
+// GoogleAdsSearchads360V23Resources__OfflineUserDataJobMetadata: Metadata of
+// offline user data job.
+type GoogleAdsSearchads360V23Resources__OfflineUserDataJobMetadata struct {
+	// MatchRateRange: Output only. Match rate of the Customer Match user list
+	// upload. Describes the estimated match rate when the status of the job is
+	// "RUNNING" and final match rate when the final match rate is available after
+	// the status of the job is "SUCCESS/FAILED".
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Default value for match rate range.
+	//   "MATCH_RANGE_LESS_THAN_20" - Match rate range for offline data upload
+	// entity is between 0% and 19%.
+	//   "MATCH_RANGE_20_TO_30" - Match rate range for offline data upload entity
+	// is between 20% and 30%.
+	//   "MATCH_RANGE_31_TO_40" - Match rate range for offline data upload entity
+	// is between 31% and 40%.
+	//   "MATCH_RANGE_41_TO_50" - Match rate range for offline data upload entity
+	// is between 41% and 50%.
+	//   "MATCH_RANGE_51_TO_60" - Match rate range for offline data upload entity
+	// is between 51% and 60%.
+	//   "MATCH_RANGE_61_TO_70" - Match rate range for offline data upload entity
+	// is between 61% and 70%.
+	//   "MATCH_RANGE_71_TO_80" - Match rate range for offline data upload entity
+	// is between 71% and 80%.
+	//   "MATCH_RANGE_81_TO_90" - Match rate range for offline data upload entity
+	// is between 81% and 90%.
+	//   "MATCH_RANGE_91_TO_100" - Match rate range for offline data upload entity
+	// is more than or equal to 91%.
+	MatchRateRange string `json:"matchRateRange,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MatchRateRange") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MatchRateRange") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Resources__OfflineUserDataJobMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Resources__OfflineUserDataJobMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Services__PromoteExperimentMetadata: The metadata of
+// the promoted experiment.
+type GoogleAdsSearchads360V23Services__PromoteExperimentMetadata struct {
+	// Experiment: Required. The promoted experiment.
+	Experiment string `json:"experiment,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Experiment") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Experiment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__PromoteExperimentMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__PromoteExperimentMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Services__ScheduleExperimentMetadata: The metadata
+// of the scheduled experiment.
+type GoogleAdsSearchads360V23Services__ScheduleExperimentMetadata struct {
+	// Experiment: Required. The scheduled experiment.
+	Experiment string `json:"experiment,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Experiment") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Experiment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__ScheduleExperimentMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__ScheduleExperimentMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type CustomersListAccessibleCustomersCall struct {
 	s            *Service
 	urlParams_   gensupport.URLParams
@@ -9736,8 +16079,9 @@ type CustomersSearchAds360SearchCall struct {
 }
 
 // Search: Returns all rows that match the search query. List of thrown errors:
-// AuthenticationError () [AuthorizationError]() HeaderError ()
-// [InternalError]() QueryError () [QuotaError]() RequestError ()
+// AuthenticationError () [AuthorizationError]() ChangeEventError ()
+// [ChangeStatusError]() ClickViewError () [HeaderError]() InternalError ()
+// [QueryError]() QuotaError () [RequestError]()
 //
 // - customerId: The ID of the customer being queried.
 func (r *CustomersSearchAds360Service) Search(customerId string, googleadssearchads360v0services__searchsearchads360request *GoogleAdsSearchads360V0Services__SearchSearchAds360Request) *CustomersSearchAds360SearchCall {

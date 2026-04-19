@@ -544,6 +544,8 @@ type AddonsConfig struct {
 	// SliceControllerConfig: Optional. Configuration for the slice controller
 	// add-on.
 	SliceControllerConfig *SliceControllerConfig `json:"sliceControllerConfig,omitempty"`
+	// SlurmOperatorConfig: Configuration for the Slurm Operator.
+	SlurmOperatorConfig *SlurmOperatorConfig `json:"slurmOperatorConfig,omitempty"`
 	// StatefulHaConfig: Optional. Configuration for the StatefulHA add-on.
 	StatefulHaConfig *StatefulHAConfig `json:"statefulHaConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AgentSandboxConfig") to
@@ -9227,6 +9229,28 @@ type SliceControllerConfig struct {
 
 func (s SliceControllerConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SliceControllerConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SlurmOperatorConfig: Configuration for the Slurm Operator.
+type SlurmOperatorConfig struct {
+	// Enabled: Whether the Slurm Operator is enabled in the cluster.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SlurmOperatorConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SlurmOperatorConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

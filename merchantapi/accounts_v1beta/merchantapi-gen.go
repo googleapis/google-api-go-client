@@ -519,10 +519,10 @@ func (s Accepted) MarshalJSON() ([]byte, error) {
 }
 
 // Account: The `Account` message represents a business's account within
-// Shopping Ads. It's the primary entity for managing product data, settings,
-// and interactions with Google's services and external providers. Accounts can
-// operate as standalone entities or be part of a advanced account structure.
-// In an advanced account setup the parent account manages multiple
+// Merchant Center. It's the primary entity for managing product data,
+// settings, and interactions with Google's services and external providers.
+// Accounts can operate as standalone entities or be part of a advanced account
+// structure. In an advanced account setup the parent account manages multiple
 // sub-accounts. Establishing an account involves configuring attributes like
 // the account name, time zone, and language preferences. The `Account` message
 // is the parent entity for many other resources, for example,
@@ -3651,7 +3651,7 @@ type ProductsManagement struct {
 // enables products from a business's store to be shown across Google for free.
 // The following list is the available set of program resource IDs accessible
 // through the API: * `checkout` * `free-listings` * `product-ratings` *
-// `shopping-ads` * `youtube-shopping-checkout`
+// `shopping-ads` * `youtube-affiliate` * `youtube-shopping-checkout`
 type Program struct {
 	// ActiveRegionCodes: Output only. The regions in which the account is actively
 	// participating in the program. Active regions are defined as those where all

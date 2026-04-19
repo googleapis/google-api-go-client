@@ -1542,9 +1542,8 @@ func (s FilesystemEntryMetadata) MarshalJSON() ([]byte, error) {
 type Folder struct {
 	// ContainingFolder: Optional. The containing Folder resource name. This should
 	// take the format: projects/{project}/locations/{location}/folders/{folder},
-	// projects/{project}/locations/{location}/teamFolders/{teamFolder}, or just
-	// projects/{project}/locations/{location} if this is a root Folder. This field
-	// can only be updated through MoveFolder.
+	// projects/{project}/locations/{location}/teamFolders/{teamFolder}, or just ""
+	// if this is a root Folder. This field can only be updated through MoveFolder.
 	ContainingFolder string `json:"containingFolder,omitempty"`
 	// CreateTime: Output only. The timestamp of when the Folder was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1617,7 +1616,8 @@ type GitRemoteSettings struct {
 	// secret version to use as an authentication token for Git operations. Must be
 	// in the format `projects/*/secrets/*/versions/*`.
 	AuthenticationTokenSecretVersion string `json:"authenticationTokenSecretVersion,omitempty"`
-	// DefaultBranch: Required. The Git remote's default branch name.
+	// DefaultBranch: Required. The Git remote's default branch name. If not set,
+	// `main` will be used and stored for the repository.
 	DefaultBranch string `json:"defaultBranch,omitempty"`
 	// SshAuthenticationConfig: Optional. Authentication fields for remote uris
 	// using SSH protocol.
@@ -4499,7 +4499,7 @@ type ProjectsLocationsQueryUserRootContentsCall struct {
 // given location. The root folder contains all resources that are created by
 // the user and not contained in any other folder.
 //
-//   - location: Location of the user root folder whose contents to list. Format:
+//   - location: Location of the user root folder to list contents for. Format:
 //     projects/*/locations/*.
 func (r *ProjectsLocationsService) QueryUserRootContents(location string) *ProjectsLocationsQueryUserRootContentsCall {
 	c := &ProjectsLocationsQueryUserRootContentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4509,7 +4509,7 @@ func (r *ProjectsLocationsService) QueryUserRootContents(location string) *Proje
 
 // Filter sets the optional parameter "filter": Optional filtering for the
 // returned list. Filtering is currently only supported on the `display_name`
-// field. Example: - `filter="display_name="MyFolder""
+// field. Example: * `filter="display_name="MyFolder""
 func (c *ProjectsLocationsQueryUserRootContentsCall) Filter(filter string) *ProjectsLocationsQueryUserRootContentsCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4518,7 +4518,7 @@ func (c *ProjectsLocationsQueryUserRootContentsCall) Filter(filter string) *Proj
 // OrderBy sets the optional parameter "orderBy": Field to additionally sort
 // results by. Will order Folders before Repositories, and then by `order_by`
 // in ascending order. Supported keywords: display_name (default), created_at,
-// last_modified_at. Examples: - `orderBy="display_name" -
+// last_modified_at. Examples: * `orderBy="display_name" *
 // `orderBy="display_name desc"
 func (c *ProjectsLocationsQueryUserRootContentsCall) OrderBy(orderBy string) *ProjectsLocationsQueryUserRootContentsCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -5549,7 +5549,7 @@ type ProjectsLocationsFoldersQueryFolderContentsCall struct {
 
 // QueryFolderContents: Returns the contents of a given Folder.
 //
-//   - folder: Name of the folder whose contents to list. Format:
+//   - folder: Resource name of the Folder to list contents for. Format:
 //     projects/*/locations/*/folders/*.
 func (r *ProjectsLocationsFoldersService) QueryFolderContents(folder string) *ProjectsLocationsFoldersQueryFolderContentsCall {
 	c := &ProjectsLocationsFoldersQueryFolderContentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5559,7 +5559,7 @@ func (r *ProjectsLocationsFoldersService) QueryFolderContents(folder string) *Pr
 
 // Filter sets the optional parameter "filter": Optional filtering for the
 // returned list. Filtering is currently only supported on the `display_name`
-// field. Example: - `filter="display_name="MyFolder""
+// field. Example: * `filter="display_name="MyFolder""
 func (c *ProjectsLocationsFoldersQueryFolderContentsCall) Filter(filter string) *ProjectsLocationsFoldersQueryFolderContentsCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5568,7 +5568,7 @@ func (c *ProjectsLocationsFoldersQueryFolderContentsCall) Filter(filter string) 
 // OrderBy sets the optional parameter "orderBy": Field to additionally sort
 // results by. Will order Folders before Repositories, and then by `order_by`
 // in ascending order. Supported keywords: display_name (default), create_time,
-// last_modified_time. Examples: - `orderBy="display_name" -
+// last_modified_time. Examples: * `orderBy="display_name" *
 // `orderBy="display_name desc"
 func (c *ProjectsLocationsFoldersQueryFolderContentsCall) OrderBy(orderBy string) *ProjectsLocationsFoldersQueryFolderContentsCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -12400,9 +12400,9 @@ func (c *ProjectsLocationsRepositoriesWorkspacesQueryDirectoryContentsCall) Path
 //
 // Possible values:
 //
-//	"DIRECTORY_CONTENTS_VIEW_UNSPECIFIED" - The default / unset value.
+//	"DIRECTORY_CONTENTS_VIEW_UNSPECIFIED" - The default unset value. Defaults
 //
-// Defaults to DIRECTORY_CONTENTS_VIEW_BASIC.
+// to DIRECTORY_CONTENTS_VIEW_BASIC.
 //
 //	"DIRECTORY_CONTENTS_VIEW_BASIC" - Includes only the file or directory
 //
@@ -14120,7 +14120,7 @@ type ProjectsLocationsTeamFoldersQueryContentsCall struct {
 
 // QueryContents: Returns the contents of a given TeamFolder.
 //
-//   - teamFolder: Name of the team_folder whose contents to list. Format:
+//   - teamFolder: Resource name of the TeamFolder to list contents for. Format:
 //     `projects/*/locations/*/teamFolders/*`.
 func (r *ProjectsLocationsTeamFoldersService) QueryContents(teamFolder string) *ProjectsLocationsTeamFoldersQueryContentsCall {
 	c := &ProjectsLocationsTeamFoldersQueryContentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -14130,7 +14130,7 @@ func (r *ProjectsLocationsTeamFoldersService) QueryContents(teamFolder string) *
 
 // Filter sets the optional parameter "filter": Optional filtering for the
 // returned list. Filtering is currently only supported on the `display_name`
-// field. Example: - `filter="display_name="MyFolder""
+// field. Example: * `filter="display_name="MyFolder""
 func (c *ProjectsLocationsTeamFoldersQueryContentsCall) Filter(filter string) *ProjectsLocationsTeamFoldersQueryContentsCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -14139,7 +14139,7 @@ func (c *ProjectsLocationsTeamFoldersQueryContentsCall) Filter(filter string) *P
 // OrderBy sets the optional parameter "orderBy": Field to additionally sort
 // results by. Will order Folders before Repositories, and then by `order_by`
 // in ascending order. Supported keywords: `display_name` (default),
-// `create_time`, last_modified_time. Examples: - `orderBy="display_name" -
+// `create_time`, last_modified_time. Examples: * `orderBy="display_name" *
 // `orderBy="display_name desc"
 func (c *ProjectsLocationsTeamFoldersQueryContentsCall) OrderBy(orderBy string) *ProjectsLocationsTeamFoldersQueryContentsCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -14299,7 +14299,7 @@ func (r *ProjectsLocationsTeamFoldersService) Search(location string) *ProjectsL
 
 // Filter sets the optional parameter "filter": Optional filtering for the
 // returned list. Filtering is currently only supported on the `display_name`
-// field. Example: - `filter="display_name="MyFolder""
+// field. Example: * `filter="display_name="MyFolder""
 func (c *ProjectsLocationsTeamFoldersSearchCall) Filter(filter string) *ProjectsLocationsTeamFoldersSearchCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -14307,7 +14307,7 @@ func (c *ProjectsLocationsTeamFoldersSearchCall) Filter(filter string) *Projects
 
 // OrderBy sets the optional parameter "orderBy": Field to additionally sort
 // results by. Supported keywords: `display_name` (default), `create_time`,
-// `last_modified_time`. Examples: - `orderBy="display_name" -
+// `last_modified_time`. Examples: * `orderBy="display_name" *
 // `orderBy="display_name desc"
 func (c *ProjectsLocationsTeamFoldersSearchCall) OrderBy(orderBy string) *ProjectsLocationsTeamFoldersSearchCall {
 	c.urlParams_.Set("orderBy", orderBy)

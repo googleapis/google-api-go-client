@@ -281,7 +281,7 @@
       }
     }
   },
-  "revision": "20260408",
+  "revision": "20260415",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "Attributes": {
@@ -455,14 +455,14 @@
         },
         "gtin": {
           "deprecated": true,
-          "description": "Global Trade Item Numbers ([GTIN](https://support.google.com/merchants/answer/188494#gtin)) of the item. You can provide up to 10 GTINs. Deprecated: Use `gtins` instead.",
+          "description": "Global Trade Item Numbers ([GTIN](https://support.google.com/merchants/answer/6324461)) of the item. You can provide up to 10 GTINs. Deprecated: Use `gtins` instead.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "gtins": {
-          "description": "A list of Global Trade Item Numbers ([GTIN](https://support.google.com/merchants/answer/188494#gtin)) of the item. You can provide up to 10 GTINs.",
+          "description": "A list of Global Trade Item Numbers ([GTIN](https://support.google.com/merchants/answer/6324461)) of the item. You can provide up to 10 GTINs.",
           "items": {
             "type": "string"
           },
@@ -556,7 +556,7 @@
           "type": "string"
         },
         "mpn": {
-          "description": "Manufacturer Part Number ([MPN](https://support.google.com/merchants/answer/188494#mpn)) of the item.",
+          "description": "Manufacturer Part Number ([MPN](https://support.google.com/merchants/answer/6324482)) of the item.",
           "type": "string"
         },
         "multipack": {

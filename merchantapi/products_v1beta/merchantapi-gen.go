@@ -315,12 +315,12 @@ type Attributes struct {
 	// through the API.
 	GoogleProductCategory string `json:"googleProductCategory,omitempty"`
 	// Gtin: Global Trade Item Numbers (GTIN
-	// (https://support.google.com/merchants/answer/188494#gtin)) of the item. You
-	// can provide up to 10 GTINs. Deprecated: Use `gtins` instead.
+	// (https://support.google.com/merchants/answer/6324461)) of the item. You can
+	// provide up to 10 GTINs. Deprecated: Use `gtins` instead.
 	Gtin []string `json:"gtin,omitempty"`
 	// Gtins: A list of Global Trade Item Numbers (GTIN
-	// (https://support.google.com/merchants/answer/188494#gtin)) of the item. You
-	// can provide up to 10 GTINs.
+	// (https://support.google.com/merchants/answer/6324461)) of the item. You can
+	// provide up to 10 GTINs.
 	Gtins []string `json:"gtins,omitempty"`
 	// IdentifierExists: Set this value to false when the item does not have unique
 	// product identifiers appropriate to its category, such as GTIN, MPN, and
@@ -387,7 +387,7 @@ type Attributes struct {
 	// local storefront optimized for mobile devices.
 	MobileLinkTemplate string `json:"mobileLinkTemplate,omitempty"`
 	// Mpn: Manufacturer Part Number (MPN
-	// (https://support.google.com/merchants/answer/188494#mpn)) of the item.
+	// (https://support.google.com/merchants/answer/6324482)) of the item.
 	Mpn string `json:"mpn,omitempty"`
 	// Multipack: The number of identical products in a business-defined multipack.
 	Multipack int64 `json:"multipack,omitempty,string"`

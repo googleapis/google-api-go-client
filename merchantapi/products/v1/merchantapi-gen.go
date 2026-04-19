@@ -1249,8 +1249,8 @@ type ProductAttributes struct {
 	// through the API.
 	GoogleProductCategory string `json:"googleProductCategory,omitempty"`
 	// Gtins: Global Trade Item Numbers (GTIN
-	// (https://support.google.com/merchants/answer/188494#gtin)) of the item. You
-	// can provide up to 10 GTINs.
+	// (https://support.google.com/merchants/answer/6324461)) of the item. You can
+	// provide up to 10 GTINs.
 	Gtins []string `json:"gtins,omitempty"`
 	// HandlingCutoffTimes: The handling cutoff times for shipping.
 	HandlingCutoffTimes []*HandlingCutoffTime `json:"handlingCutoffTimes,omitempty"`
@@ -1374,7 +1374,7 @@ type ProductAttributes struct {
 	// local storefront optimized for mobile devices.
 	MobileLinkTemplate string `json:"mobileLinkTemplate,omitempty"`
 	// Mpn: Manufacturer Part Number (MPN
-	// (https://support.google.com/merchants/answer/188494#mpn)) of the item.
+	// (https://support.google.com/merchants/answer/6324482)) of the item.
 	Mpn string `json:"mpn,omitempty"`
 	// Multipack: The number of identical products in a business-defined multipack.
 	Multipack int64 `json:"multipack,omitempty,string"`
@@ -1547,6 +1547,11 @@ type ProductAttributes struct {
 	UnitPricingBaseMeasure *UnitPricingBaseMeasure `json:"unitPricingBaseMeasure,omitempty"`
 	// UnitPricingMeasure: The measure and dimension of an item.
 	UnitPricingMeasure *UnitPricingMeasure `json:"unitPricingMeasure,omitempty"`
+	// VideoLinks: Optional. A list of video URLs for the item. Use this attribute
+	// to provide more visuals for your product beyond your image attributes. See
+	// the Help Center article
+	// (https://support.google.com/merchants/answer/15216925) for more information.
+	VideoLinks []string `json:"videoLinks,omitempty"`
 	// VirtualModelLink: URL of the 3D image of the item. See the Help Center
 	// article (https://support.google.com/merchants/answer/13674896) for more
 	// information.
@@ -1916,6 +1921,9 @@ func (s ProductInput) MarshalJSON() ([]byte, error) {
 type ProductInstallment struct {
 	// Amount: The amount the buyer has to pay per month.
 	Amount *Price `json:"amount,omitempty"`
+	// AnnualPercentageRate: Optional. Annual percentage rate for `credit_type`
+	// finance
+	AnnualPercentageRate float64 `json:"annualPercentageRate,omitempty"`
 	// CreditType: Type of installment payments.
 	//
 	// Possible values:
@@ -1943,6 +1951,20 @@ type ProductInstallment struct {
 func (s ProductInstallment) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductInstallment
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *ProductInstallment) UnmarshalJSON(data []byte) error {
+	type NoMethod ProductInstallment
+	var s1 struct {
+		AnnualPercentageRate gensupport.JSONFloat64 `json:"annualPercentageRate"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AnnualPercentageRate = float64(s1.AnnualPercentageRate)
+	return nil
 }
 
 // ProductStatus: The status of a product, data validation issues, that is,

@@ -4325,6 +4325,11 @@ type SingleTenantHsmInstance struct {
 	// SingleTenantHsmInstanceProposal before this time otherwise the
 	// SingleTenantHsmInstance will become disabled.
 	DisableTime string `json:"disableTime,omitempty"`
+	// KeyPortabilityEnabled: Optional. Immutable. Indicates whether key
+	// portability is enabled for the SingleTenantHsmInstance. This can only be set
+	// at creation time. Key portability features are disabled by default and not
+	// yet available in GA.
+	KeyPortabilityEnabled bool `json:"keyPortabilityEnabled,omitempty"`
 	// Name: Identifier. The resource name for this SingleTenantHsmInstance in the
 	// format `projects/*/locations/*/singleTenantHsmInstances/*`.
 	Name string `json:"name,omitempty"`

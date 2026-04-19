@@ -120,6 +120,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Documents = NewDocumentsService(s)
+	s.V1alpha = NewV1alphaService(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -145,6 +146,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Documents *DocumentsService
+
+	V1alpha *V1alphaService
 }
 
 func (s *Service) userAgent() string {
@@ -163,10 +166,88 @@ type DocumentsService struct {
 	s *Service
 }
 
+func NewV1alphaService(s *Service) *V1alphaService {
+	rs := &V1alphaService{s: s}
+	return rs
+}
+
+type V1alphaService struct {
+	s *Service
+}
+
+// Answer: An answer to a query.
+type Answer struct {
+	// AnswerText: The text of the answer.
+	AnswerText string `json:"answerText,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnswerText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnswerText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Answer) MarshalJSON() ([]byte, error) {
+	type NoMethod Answer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AnswerQueryRequest: Request message for DeveloperKnowledge.AnswerQuery.
+type AnswerQueryRequest struct {
+	// Query: Required. The query to answer.
+	Query string `json:"query,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Query") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Query") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AnswerQueryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AnswerQueryRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AnswerQueryResponse: Response message for DeveloperKnowledge.AnswerQuery.
+type AnswerQueryResponse struct {
+	// Answer: The answer to the query.
+	Answer *Answer `json:"answer,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Answer") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Answer") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AnswerQueryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AnswerQueryResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BatchGetDocumentsResponse: Response message for
 // DeveloperKnowledge.BatchGetDocuments.
 type BatchGetDocumentsResponse struct {
-	// Documents: Documents requested.
+	// Documents: Contains the documents requested.
 	Documents []*Document `json:"documents,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -192,17 +273,39 @@ func (s BatchGetDocumentsResponse) MarshalJSON() ([]byte, error) {
 // Document: A Document represents a piece of content from the Developer
 // Knowledge corpus.
 type Document struct {
-	// Content: Output only. The full content of the document in Markdown format.
+	// Content: Output only. Contains the full content of the document in Markdown
+	// format.
 	Content string `json:"content,omitempty"`
-	// Description: Output only. A description of the document.
+	// DataSource: Output only. Specifies the data source of the document. Example
+	// data source: `firebase.google.com`
+	DataSource string `json:"dataSource,omitempty"`
+	// Description: Output only. Provides a description of the document.
 	Description string `json:"description,omitempty"`
-	// Name: Identifier. The resource name of the document. Format:
+	// Name: Identifier. Contains the resource name of the document. Format:
 	// `documents/{uri_without_scheme}` Example:
 	// `documents/docs.cloud.google.com/storage/docs/creating-buckets`
 	Name string `json:"name,omitempty"`
-	// Uri: Output only. The URI of the content, such as
+	// Title: Output only. Provides the title of the document.
+	Title string `json:"title,omitempty"`
+	// UpdateTime: Output only. Represents the timestamp when the content or
+	// metadata of the document was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// Uri: Output only. Provides the URI of the content, such as
 	// `docs.cloud.google.com/storage/docs/creating-buckets`.
 	Uri string `json:"uri,omitempty"`
+	// View: Output only. Specifies the DocumentView of the document.
+	//
+	// Possible values:
+	//   "DOCUMENT_VIEW_UNSPECIFIED" - The default / unset value. See each API
+	// method for its default value if DocumentView is not specified.
+	//   "DOCUMENT_VIEW_BASIC" - Includes only the basic metadata fields: - `name`
+	// - `uri` - `data_source` - `title` - `description` - `update_time` - `view`
+	// This is the default of view for DeveloperKnowledge.SearchDocumentChunks.
+	//   "DOCUMENT_VIEW_FULL" - Includes all Document fields.
+	//   "DOCUMENT_VIEW_CONTENT" - Includes the `DOCUMENT_VIEW_BASIC` fields and
+	// the `content` field. This is the default of view for
+	// DeveloperKnowledge.GetDocument and DeveloperKnowledge.BatchGetDocuments.
+	View string `json:"view,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -229,14 +332,22 @@ func (s Document) MarshalJSON() ([]byte, error) {
 // the `parent` to DeveloperKnowledge.GetDocument or
 // DeveloperKnowledge.BatchGetDocuments.
 type DocumentChunk struct {
-	// Content: Output only. The content of the document chunk.
+	// Content: Output only. Contains the content of the document chunk.
 	Content string `json:"content,omitempty"`
-	// Id: Output only. The ID of this chunk within the document. The chunk ID is
-	// unique within a document, but not globally unique across documents. The
-	// chunk ID is not stable and may change over time.
+	// Document: Output only. Represents metadata about the Document this chunk is
+	// from. The DocumentView of this Document message will be set to
+	// `DOCUMENT_VIEW_BASIC`. It is included here for convenience so that clients
+	// do not need to call DeveloperKnowledge.GetDocument or
+	// DeveloperKnowledge.BatchGetDocuments if they only need the metadata fields.
+	// Otherwise, clients should use DeveloperKnowledge.GetDocument or
+	// DeveloperKnowledge.BatchGetDocuments to fetch the full document content.
+	Document *Document `json:"document,omitempty"`
+	// Id: Output only. Specifies the ID of this chunk within the document. The
+	// chunk ID is unique within a document, but not globally unique across
+	// documents. The chunk ID is not stable and may change over time.
 	Id string `json:"id,omitempty"`
-	// Parent: Output only. The resource name of the document this chunk is from.
-	// Format: `documents/{uri_without_scheme}` Example:
+	// Parent: Output only. Contains the resource name of the document this chunk
+	// is from. Format: `documents/{uri_without_scheme}` Example:
 	// `documents/docs.cloud.google.com/storage/docs/creating-buckets`
 	Parent string `json:"parent,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
@@ -260,13 +371,13 @@ func (s DocumentChunk) MarshalJSON() ([]byte, error) {
 // SearchDocumentChunksResponse: Response message for
 // DeveloperKnowledge.SearchDocumentChunks.
 type SearchDocumentChunksResponse struct {
-	// NextPageToken: Optional. A token that can be sent as `page_token` to
-	// retrieve the next page. If this field is omitted, there are no subsequent
+	// NextPageToken: Optional. Provides a token that can be sent as `page_token`
+	// to retrieve the next page. If this field is omitted, there are no subsequent
 	// pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Results: The search results for the given query. Each DocumentChunk in this
-	// list contains a snippet of content relevant to the search query. Use the
-	// DocumentChunk.parent field of each result with
+	// Results: Contains the search results for the given query. Each DocumentChunk
+	// in this list contains a snippet of content relevant to the search query. Use
+	// the DocumentChunk.parent field of each result with
 	// DeveloperKnowledge.GetDocument or DeveloperKnowledge.BatchGetDocuments to
 	// retrieve the full document content.
 	Results []*DocumentChunk `json:"results,omitempty"`
@@ -305,13 +416,38 @@ func (r *DocumentsService) BatchGet() *DocumentsBatchGetCall {
 	return c
 }
 
-// Names sets the optional parameter "names": Required. The names of the
-// documents to retrieve. A maximum of 20 documents can be retrieved in a
+// Names sets the optional parameter "names": Required. Specifies the names of
+// the documents to retrieve. A maximum of 20 documents can be retrieved in a
 // batch. The documents are returned in the same order as the `names` in the
 // request. Format: `documents/{uri_without_scheme}` Example:
 // `documents/docs.cloud.google.com/storage/docs/creating-buckets`
 func (c *DocumentsBatchGetCall) Names(names ...string) *DocumentsBatchGetCall {
 	c.urlParams_.SetMulti("names", append([]string{}, names...))
+	return c
+}
+
+// View sets the optional parameter "view": Specifies the DocumentView of the
+// document. If unspecified, DeveloperKnowledge.BatchGetDocuments defaults to
+// `DOCUMENT_VIEW_CONTENT`.
+//
+// Possible values:
+//
+//	"DOCUMENT_VIEW_UNSPECIFIED" - The default / unset value. See each API
+//
+// method for its default value if DocumentView is not specified.
+//
+//	"DOCUMENT_VIEW_BASIC" - Includes only the basic metadata fields: - `name`
+//
+// - `uri` - `data_source` - `title` - `description` - `update_time` - `view`
+// This is the default of view for DeveloperKnowledge.SearchDocumentChunks.
+//
+//	"DOCUMENT_VIEW_FULL" - Includes all Document fields.
+//	"DOCUMENT_VIEW_CONTENT" - Includes the `DOCUMENT_VIEW_BASIC` fields and
+//
+// the `content` field. This is the default of view for
+// DeveloperKnowledge.GetDocument and DeveloperKnowledge.BatchGetDocuments.
+func (c *DocumentsBatchGetCall) View(view string) *DocumentsBatchGetCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 
@@ -415,12 +551,37 @@ type DocumentsGetCall struct {
 
 // Get: Retrieves a single document with its full Markdown content.
 //
-//   - name: The name of the document to retrieve. Format:
+//   - name: Specifies the name of the document to retrieve. Format:
 //     `documents/{uri_without_scheme}` Example:
 //     `documents/docs.cloud.google.com/storage/docs/creating-buckets`.
 func (r *DocumentsService) Get(name string) *DocumentsGetCall {
 	c := &DocumentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// View sets the optional parameter "view": Specifies the DocumentView of the
+// document. If unspecified, DeveloperKnowledge.GetDocument defaults to
+// `DOCUMENT_VIEW_CONTENT`.
+//
+// Possible values:
+//
+//	"DOCUMENT_VIEW_UNSPECIFIED" - The default / unset value. See each API
+//
+// method for its default value if DocumentView is not specified.
+//
+//	"DOCUMENT_VIEW_BASIC" - Includes only the basic metadata fields: - `name`
+//
+// - `uri` - `data_source` - `title` - `description` - `update_time` - `view`
+// This is the default of view for DeveloperKnowledge.SearchDocumentChunks.
+//
+//	"DOCUMENT_VIEW_FULL" - Includes all Document fields.
+//	"DOCUMENT_VIEW_CONTENT" - Includes the `DOCUMENT_VIEW_BASIC` fields and
+//
+// the `content` field. This is the default of view for
+// DeveloperKnowledge.GetDocument and DeveloperKnowledge.BatchGetDocuments.
+func (c *DocumentsGetCall) View(view string) *DocumentsGetCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 
@@ -524,35 +685,67 @@ type DocumentsSearchDocumentChunksCall struct {
 }
 
 // SearchDocumentChunks: Searches for developer knowledge across Google's
-// developer documentation. This method returns document chunks based on the
-// user's query. There can be many chunks of the same Document. To retrieve
-// full documents, use DeveloperKnowledge.GetDocument or
-// DeveloperKnowledge.BatchGetDocuments with the DocumentChunk.parent returned
-// in the SearchDocumentChunksResponse.results.
+// developer documentation. Returns DocumentChunks based on the user's query.
+// There may be many chunks from the same Document. To retrieve full documents,
+// use DeveloperKnowledge.GetDocument or DeveloperKnowledge.BatchGetDocuments
+// with the DocumentChunk.parent returned in the
+// SearchDocumentChunksResponse.results.
 func (r *DocumentsService) SearchDocumentChunks() *DocumentsSearchDocumentChunksCall {
 	c := &DocumentsSearchDocumentChunksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number of
-// results to return. The service may return fewer than this value. If
-// unspecified, at most 5 results will be returned. The maximum value is 20;
+// Filter sets the optional parameter "filter": Applies a strict filter to the
+// search results. The expression supports a subset of the syntax described at
+// https://google.aip.dev/160. While `SearchDocumentChunks` returns
+// DocumentChunks, the filter is applied to `DocumentChunk.document` fields.
+// Supported fields for filtering: * `data_source` (STRING): The source of the
+// document, e.g. `docs.cloud.google.com`. See
+// https://developers.google.com/knowledge/reference/corpus-reference for the
+// complete list of data sources in the corpus. * `update_time` (TIMESTAMP):
+// The timestamp of when the document was last meaningfully updated. A
+// meaningful update is one that changes document's markdown content or
+// metadata. * `uri` (STRING): The document URI, e.g.
+// `https://docs.cloud.google.com/bigquery/docs/tables`. STRING fields support
+// `=` (equals) and `!=` (not equals) operators for **exact match** on the
+// whole string. Partial match, prefix match, and regexp match are not
+// supported. TIMESTAMP fields support `=`, `<`, `<=`, `>`, and `>=` operators.
+// Timestamps must be in RFC-3339 format, e.g., "2025-01-01T00:00:00Z". You
+// can combine expressions using `AND`, `OR`, and `NOT` (or `-`) logical
+// operators. `OR` has higher precedence than `AND`. Use parentheses for
+// explicit precedence grouping. Examples: * `data_source =
+// "docs.cloud.google.com" OR data_source = "firebase.google.com" *
+// `data_source != "firebase.google.com" * `update_time <
+// "2024-01-01T00:00:00Z" * `update_time >= "2025-01-22T00:00:00Z" AND
+// (data_source = "developer.chrome.com" OR data_source = "web.dev")` * `uri =
+// "https://docs.cloud.google.com/release-notes" The `filter` string must not
+// exceed 500 characters; values longer than 500 characters will result in an
+// `INVALID_ARGUMENT` error.
+func (c *DocumentsSearchDocumentChunksCall) Filter(filter string) *DocumentsSearchDocumentChunksCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Specifies the maximum
+// number of results to return. The service may return fewer than this value.
+// If unspecified, at most 5 results will be returned. The maximum value is 20;
 // values above 20 will result in an INVALID_ARGUMENT error.
 func (c *DocumentsSearchDocumentChunksCall) PageSize(pageSize int64) *DocumentsSearchDocumentChunksCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token, received
-// from a previous `SearchDocumentChunks` call. Provide this to retrieve the
-// subsequent page.
+// PageToken sets the optional parameter "pageToken": Contains a page token,
+// received from a previous `SearchDocumentChunks` call. Provide this to
+// retrieve the subsequent page.
 func (c *DocumentsSearchDocumentChunksCall) PageToken(pageToken string) *DocumentsSearchDocumentChunksCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Query sets the optional parameter "query": Required. The raw query string
-// provided by the user, such as "How to create a Cloud Storage bucket?".
+// Query sets the optional parameter "query": Required. Provides the raw query
+// string provided by the user, such as "How to create a Cloud Storage
+// bucket?".
 func (c *DocumentsSearchDocumentChunksCall) Query(query string) *DocumentsSearchDocumentChunksCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -666,4 +859,101 @@ func (c *DocumentsSearchDocumentChunksCall) Pages(ctx context.Context, f func(*S
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type V1alphaAnswerQueryCall struct {
+	s                  *Service
+	answerqueryrequest *AnswerQueryRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// AnswerQuery: Answers a query using grounded generation.
+func (r *V1alphaService) AnswerQuery(answerqueryrequest *AnswerQueryRequest) *V1alphaAnswerQueryCall {
+	c := &V1alphaAnswerQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.answerqueryrequest = answerqueryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *V1alphaAnswerQueryCall) Fields(s ...googleapi.Field) *V1alphaAnswerQueryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *V1alphaAnswerQueryCall) Context(ctx context.Context) *V1alphaAnswerQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *V1alphaAnswerQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1alphaAnswerQueryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.answerqueryrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha:answerQuery")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "developerknowledge.answerQuery", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "developerknowledge.answerQuery" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AnswerQueryResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *V1alphaAnswerQueryCall) Do(opts ...googleapi.CallOption) (*AnswerQueryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AnswerQueryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "developerknowledge.answerQuery", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }

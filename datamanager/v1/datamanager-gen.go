@@ -774,6 +774,9 @@ type ErrorCount struct {
 	//   "PROCESSING_ERROR_OPERATING_ACCOUNT_MISMATCH_FOR_AD_IDENTIFIER" - The user
 	// attempted to ingest events with an ad identifier that isn't from the
 	// operating account's ads.
+	//
+	// "PROCESSING_ERROR_REASON_ONE_PER_CLICK_CONVERSION_ACTION_NOT_PERMITTED_WITH_B
+	// RAID" - One-per-click conversion actions cannot be used with BRAIDs.
 	Reason string `json:"reason,omitempty"`
 	// RecordCount: The count of records that failed to upload for a given reason.
 	RecordCount int64 `json:"recordCount,omitempty,string"`

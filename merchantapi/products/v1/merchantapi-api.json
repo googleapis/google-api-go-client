@@ -281,7 +281,7 @@
       }
     }
   },
-  "revision": "20260415",
+  "revision": "20260419",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "AutomatedDiscounts": {
@@ -1560,6 +1560,13 @@
           "format": "int64",
           "type": "string"
         },
+        "minimumOrderValues": {
+          "description": "The [minimum value](https://support.google.com/merchants/answer/16989009) in the cart before a customer can initiate checkout. Supports multiple minimum order values. Different minimum order values can be specified per country, service and surface. Maximum entries: 100.",
+          "items": {
+            "$ref": "ProductMinimumOrderValue"
+          },
+          "type": "array"
+        },
         "mobileLink": {
           "description": "URL for the mobile-optimized version of your item's landing page.",
           "type": "string"
@@ -2138,6 +2145,41 @@
       },
       "type": "object"
     },
+    "ProductMinimumOrderValue": {
+      "description": "The minimum order value in the cart before the checkout is permitted.",
+      "id": "ProductMinimumOrderValue",
+      "properties": {
+        "country": {
+          "description": "Required. The [CLDR territory code](http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml) of the country to which an item will ship.",
+          "type": "string"
+        },
+        "price": {
+          "$ref": "Price",
+          "description": "Required. The minimum cart or basket value before the checkout is permitted."
+        },
+        "service": {
+          "description": "A free-form description of the service class or delivery speed. This should match the service value set for the Shipping attribute. See service.",
+          "type": "string"
+        },
+        "surface": {
+          "description": "The surface to which the minimum order value applies. Defaults to `ONLINE_LOCAL` if not configured.",
+          "enum": [
+            "SURFACE_UNSPECIFIED",
+            "ONLINE",
+            "LOCAL",
+            "ONLINE_LOCAL"
+          ],
+          "enumDescriptions": [
+            "Surface is unspecified.",
+            "Surface value to indicate online purchases.",
+            "Surface value to indicate local purchases.",
+            "Surface value to indicate online and local purchases."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ProductStatus": {
       "description": "The status of a product, data validation issues, that is, information about a product computed asynchronously.",
       "id": "ProductStatus",
@@ -2307,6 +2349,14 @@
         "locationId": {
           "description": "The numeric ID of a location that the shipping rate applies to as defined in the [AdWords API](https://developers.google.com/adwords/api/docs/appendix/geotargeting).",
           "format": "int64",
+          "type": "string"
+        },
+        "loyaltyProgramLabel": {
+          "description": "Optional. The label of the [loyalty program](https://support.google.com/merchants/answer/6324484). Must match one of the program labels set in loyalty_programs. When set (in combination with [loyalty_tier_label](https://support.google.com/merchants/answer/6324484)), this shipping option is only applicable to loyalty program members of the specified tier.",
+          "type": "string"
+        },
+        "loyaltyTierLabel": {
+          "description": "Optional. The label of the [loyalty tier](https://support.google.com/merchants/answer/6324484) within the loyalty program. Must match one of the tiers set in the loyalty_programs. When set (in combination with [loyalty_program_label](https://support.google.com/merchants/answer/6324484)), this shipping option is only applicable to loyalty program members of the specified tier.",
           "type": "string"
         },
         "maxHandlingTime": {

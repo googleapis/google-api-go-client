@@ -201,7 +201,7 @@ type EnterprisesStructuresRoomsService struct {
 // GoogleHomeEnterpriseSdmV1Device: Device resource represents an instance of
 // enterprise managed device in the property.
 type GoogleHomeEnterpriseSdmV1Device struct {
-	// GhpName: Output only. The GHP device ID of the device.
+	// GhpName: Output only. The Home APIs device ID of the device.
 	GhpName string `json:"ghpName,omitempty"`
 	// Name: Required. The resource name of the device. For example:
 	// "enterprises/XYZ/devices/123".
@@ -372,8 +372,8 @@ type GoogleHomeEnterpriseSdmV1ParentRelation struct {
 	// DisplayName: Output only. The custom name of the relation -- e.g.,
 	// structure/room where the device is assigned to.
 	DisplayName string `json:"displayName,omitempty"`
-	// GhpParent: Output only. The GHP name of the relation -- e.g., structure/room
-	// where the device is assigned to. For example:
+	// GhpParent: Output only. The Home APIs name of the relation -- e.g.,
+	// structure/room where the device is assigned to. For example:
 	// "homegraph.googleapis.com/Structure/ABC" or
 	// "homegraph.googleapis.com/Room/ABC"
 	GhpParent string `json:"ghpParent,omitempty"`

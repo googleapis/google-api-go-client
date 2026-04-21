@@ -1738,6 +1738,20 @@ type Shipping struct {
 	// as defined in the AdWords API
 	// (https://developers.google.com/adwords/api/docs/appendix/geotargeting).
 	LocationId int64 `json:"locationId,omitempty,string"`
+	// LoyaltyProgramLabel: Optional. The label of the loyalty program
+	// (https://support.google.com/merchants/answer/6324484). Must match one of the
+	// program labels set in loyalty_programs. When set (in combination with
+	// loyalty_tier_label (https://support.google.com/merchants/answer/6324484)),
+	// this shipping option is only applicable to loyalty program members of the
+	// specified tier.
+	LoyaltyProgramLabel string `json:"loyaltyProgramLabel,omitempty"`
+	// LoyaltyTierLabel: Optional. The label of the loyalty tier
+	// (https://support.google.com/merchants/answer/6324484) within the loyalty
+	// program. Must match one of the tiers set in the loyalty_programs. When set
+	// (in combination with loyalty_program_label
+	// (https://support.google.com/merchants/answer/6324484)), this shipping option
+	// is only applicable to loyalty program members of the specified tier.
+	LoyaltyTierLabel string `json:"loyaltyTierLabel,omitempty"`
 	// MaxHandlingTime: Maximum handling time (inclusive) between when the order is
 	// received and shipped in business days. 0 means that the order is shipped on
 	// the same day as it is received if it happens before the cut-off time. Both

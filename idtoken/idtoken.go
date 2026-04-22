@@ -231,7 +231,19 @@ func tokenSourceFromBytes(ctx context.Context, data []byte, audience string, ds 
 			TargetPrincipal: account,
 			IncludeEmail:    true,
 		}
-		ts, err := impersonate.IDTokenSource(ctx, config, option.WithAuthCredentialsJSON(credType, data))
+
+		baseData, err := baseDataForImpersonation(credType, data)
+		if err != nil {
+			return nil, err
+		}
+
+		var opts []option.ClientOption
+		opts = append(opts, option.WithCredentialsJSON(baseData))
+		if ds.HTTPClient != nil {
+			opts = append(opts, option.WithHTTPClient(ds.HTTPClient))
+		}
+
+		ts, err := impersonate.IDTokenSource(ctx, config, opts...)
 		if err != nil {
 			return nil, err
 		}
@@ -239,6 +251,42 @@ func tokenSourceFromBytes(ctx context.Context, data []byte, audience string, ds 
 	default:
 		return nil, fmt.Errorf("idtoken: unsupported credentials type: %q", credType)
 	}
+}
+
+// baseDataForImpersonation extracts or recreates non-impersonated credentials
+// from the provided JSON data to avoid double impersonation. The problem is
+// that passing the entire credential JSON causes the lower layers to
+// automatically build an authenticated HTTP client that is already impersonated.
+// To fix this, we extract the non-impersonated source credentials or remove the
+// impersonation instructions before creating the client. This avoids leaky
+// abstractions and respects the separation of concerns by letting the lower
+// layers act as general loaders while handling the specific needs of idtoken
+// generation here.
+func baseDataForImpersonation(credType credentialstype.CredType, data []byte) ([]byte, error) {
+	var baseData []byte
+	if credType == ImpersonatedServiceAccount {
+		type source struct {
+			SourceCredentials json.RawMessage `json:"source_credentials"`
+		}
+		var s source
+		if err := json.Unmarshal(data, &s); err != nil {
+			return nil, err
+		}
+		baseData = s.SourceCredentials
+	} else {
+		// For ExternalAccount, we remove the service_account_impersonation_url
+		var m map[string]interface{}
+		if err := json.Unmarshal(data, &m); err != nil {
+			return nil, err
+		}
+		delete(m, "service_account_impersonation_url")
+		var err error
+		baseData, err = json.Marshal(m)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return baseData, nil
 }
 
 // WithCustomClaims optionally specifies custom private claims for an ID token.

@@ -120,6 +120,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Anomalies = NewAnomaliesService(s)
 	s.Apps = NewAppsService(s)
+	s.Ratings = NewRatingsService(s)
 	s.Vitals = NewVitalsService(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
@@ -149,6 +150,8 @@ type Service struct {
 
 	Apps *AppsService
 
+	Ratings *RatingsService
+
 	Vitals *VitalsService
 }
 
@@ -174,6 +177,15 @@ func NewAppsService(s *Service) *AppsService {
 }
 
 type AppsService struct {
+	s *Service
+}
+
+func NewRatingsService(s *Service) *RatingsService {
+	rs := &RatingsService{s: s}
+	return rs
+}
+
+type RatingsService struct {
 	s *Service
 }
 
@@ -1972,6 +1984,94 @@ func (s GooglePlayDeveloperReportingV1beta1QueryLmkRateMetricSetResponse) Marsha
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePlayDeveloperReportingV1beta1QueryRatingsMetricSetRequest: Request
+// message for [QueryRatingsMetricSet].
+type GooglePlayDeveloperReportingV1beta1QueryRatingsMetricSetRequest struct {
+	// Dimensions: Optional. **Supported dimensions:** * `apiLevel` (string): The
+	// API level of Android that was running on the user's device. * `deviceModel`
+	// (string): Unique identifier of the user's device model. The form of the
+	// identifier is 'deviceBrand/device', where deviceBrand corresponds to
+	// Build.BRAND and device corresponds to Build.DEVICE, e.g., google/coral. *
+	// `deviceBrand` (string): unique identifier of the user's device brand, e.g.,
+	// google. * `deviceType` (string): The form factor of the user's device (e.g.,
+	// PHONE, TABLET, CHROMEBOOK). * `language` (string): The user's device
+	// language, represented as a BCP-47 language tag (e.g. en-US for English as
+	// used in the United States). * `regionCode` (string): The country or region
+	// of the user's device, represented as a 2-letter Unicode CLDR region code
+	// (e.g. US for the United States). * `versionCode` (int64): The version of the
+	// app that was running on the user's device. * `carrier` (string): The mobile
+	// carrier or network of the user's device
+	Dimensions []string `json:"dimensions,omitempty"`
+	// Filter: Optional. Filters to apply to data. The filtering expression follows
+	// AIP-160 (https://google.aip.dev/160) standard and supports filtering by
+	// equality of all breakdown dimensions.
+	Filter string `json:"filter,omitempty"`
+	// Metrics: Optional. Metrics to aggregate. **Supported metrics:** *
+	// `dailyAvgRating` (`google.type.Decimal`): The average rating of the app on a
+	// given day. * `dailyGooglePlayAvgRating` (`google.type.Decimal`): The average
+	// rating of the app shown to users on Google Play. * `totalAvgRating`
+	// (`google.type.Decimal`): The average rating of the app.
+	Metrics []string `json:"metrics,omitempty"`
+	// PageSize: Optional. Maximum size of the returned data. If unspecified, at
+	// most 1000 rows will be returned. The maximum value is 100,000; values above
+	// 100,000 will be coerced to 100,000.
+	PageSize int64 `json:"pageSize,omitempty"`
+	// PageToken: Optional. A page token, received from a previous call. Provide
+	// this to retrieve the subsequent page. When paginating, all other parameters
+	// provided to the request must match the call that provided the page token.
+	PageToken string `json:"pageToken,omitempty"`
+	// TimelineSpec: Optional. Specification of the timeline aggregation
+	// parameters. **Supported aggregation periods:** * DAILY: metrics are
+	// aggregated in calendar date intervals in the Google Standard Time Zone
+	// (America/Los_Angeles).
+	TimelineSpec *GooglePlayDeveloperReportingV1beta1TimelineSpec `json:"timelineSpec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Dimensions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Dimensions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePlayDeveloperReportingV1beta1QueryRatingsMetricSetRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1beta1QueryRatingsMetricSetRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePlayDeveloperReportingV1beta1QueryRatingsMetricSetResponse: Response
+// message for [QueryRatingsMetricSet].
+type GooglePlayDeveloperReportingV1beta1QueryRatingsMetricSetResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Rows: The returned rows of metrics.
+	Rows []*GooglePlayDeveloperReportingV1beta1MetricsRow `json:"rows,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePlayDeveloperReportingV1beta1QueryRatingsMetricSetResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1beta1QueryRatingsMetricSetResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePlayDeveloperReportingV1beta1QuerySlowRenderingRateMetricSetRequest:
 // Request message for QuerySlowRenderingRateMetricSet.
 type GooglePlayDeveloperReportingV1beta1QuerySlowRenderingRateMetricSetRequest struct {
@@ -2352,6 +2452,54 @@ type GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMetricSe
 
 func (s GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMetricSetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMetricSetResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePlayDeveloperReportingV1beta1RatingsMetricSet: Singleton resource
+// representing the set of Ratings metrics. **Supported aggregation periods:**
+// * DAILY: metrics are aggregated in calendar date intervals in the Google
+// Standard Time Zone (America/Los_Angeles). **Supported metrics:** *
+// `dailyAvgRating` (`google.type.Decimal`): The average rating of the app on
+// each day. * `dailyGooglePlayAvgRating` (`google.type.Decimal`): The average
+// rating of the app shown to users on Google Play. * `totalAvgRating`
+// (`google.type.Decimal`): The average rating of the app. **Supported
+// dimensions:** * `apiLevel` (string): The API level of Android that was
+// running on the user's device. * `deviceModel` (string): Unique identifier of
+// the user's device model. The form of the identifier is 'deviceBrand/device',
+// where deviceBrand corresponds to Build.BRAND and device corresponds to
+// Build.DEVICE, e.g., google/coral. * `deviceBrand` (string): unique
+// identifier of the user's device brand, e.g., google. * `deviceType`
+// (string): The form factor of the user's device (e.g., PHONE, TABLET,
+// CHROMEBOOK). * `language` (string): The user's device language, represented
+// as a BCP-47 language tag (e.g. en-US for English as used in the United
+// States). * `regionCode` (string): The country or region of the user's
+// device, represented as a 2-letter Unicode CLDR region code (e.g. US for the
+// United States). * `versionCode` (int64): The version of the app that was
+// running on the user's device. * `carrier` (string): The mobile carrier or
+// network of the user's device
+type GooglePlayDeveloperReportingV1beta1RatingsMetricSet struct {
+	// FreshnessInfo: Output only. Summary about data freshness in this resource.
+	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
+	// Name: Identifier. The resource name.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "FreshnessInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FreshnessInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePlayDeveloperReportingV1beta1RatingsMetricSet) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1beta1RatingsMetricSet
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3390,6 +3538,241 @@ func (c *AppsSearchCall) Pages(ctx context.Context, f func(*GooglePlayDeveloperR
 			return nil
 		}
 		c.PageToken(x.NextPageToken)
+	}
+}
+
+type RatingsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Describes the properties of the metric set.
+//
+// - name: The resource name. Format: apps/{app}/ratingsMetricSet.
+func (r *RatingsService) Get(name string) *RatingsGetCall {
+	c := &RatingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *RatingsGetCall) Fields(s ...googleapi.Field) *RatingsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RatingsGetCall) IfNoneMatch(entityTag string) *RatingsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *RatingsGetCall) Context(ctx context.Context) *RatingsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *RatingsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RatingsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.ratings.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "playdeveloperreporting.ratings.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1RatingsMetricSet.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *RatingsGetCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1RatingsMetricSet, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePlayDeveloperReportingV1beta1RatingsMetricSet{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.ratings.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type RatingsQueryCall struct {
+	s                                                               *Service
+	name                                                            string
+	googleplaydeveloperreportingv1beta1queryratingsmetricsetrequest *GooglePlayDeveloperReportingV1beta1QueryRatingsMetricSetRequest
+	urlParams_                                                      gensupport.URLParams
+	ctx_                                                            context.Context
+	header_                                                         http.Header
+}
+
+// Query: Queries the metrics in the metric set.
+//
+// - name: The resource name.
+func (r *RatingsService) Query(name string, googleplaydeveloperreportingv1beta1queryratingsmetricsetrequest *GooglePlayDeveloperReportingV1beta1QueryRatingsMetricSetRequest) *RatingsQueryCall {
+	c := &RatingsQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleplaydeveloperreportingv1beta1queryratingsmetricsetrequest = googleplaydeveloperreportingv1beta1queryratingsmetricsetrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *RatingsQueryCall) Fields(s ...googleapi.Field) *RatingsQueryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *RatingsQueryCall) Context(ctx context.Context) *RatingsQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *RatingsQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RatingsQueryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleplaydeveloperreportingv1beta1queryratingsmetricsetrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:query")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.ratings.query", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "playdeveloperreporting.ratings.query" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1QueryRatingsMetricSetResponse.ServerRespo
+// nse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *RatingsQueryCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1QueryRatingsMetricSetResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePlayDeveloperReportingV1beta1QueryRatingsMetricSetResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.ratings.query", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *RatingsQueryCall) Pages(ctx context.Context, f func(*GooglePlayDeveloperReportingV1beta1QueryRatingsMetricSetResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.googleplaydeveloperreportingv1beta1queryratingsmetricsetrequest.PageToken = pt }(c.googleplaydeveloperreportingv1beta1queryratingsmetricsetrequest.PageToken)
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.googleplaydeveloperreportingv1beta1queryratingsmetricsetrequest.PageToken = x.NextPageToken
 	}
 }
 

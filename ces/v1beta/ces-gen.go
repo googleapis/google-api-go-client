@@ -2108,13 +2108,13 @@ type Conversation struct {
 	//
 	// Possible values:
 	//   "INPUT_TYPE_UNSPECIFIED" - Unspecified input type.
-	//   "INPUT_TYPE_TEXT" - The input message is text.
-	//   "INPUT_TYPE_AUDIO" - The input message is audio.
-	//   "INPUT_TYPE_IMAGE" - The input message is image.
-	//   "INPUT_TYPE_BLOB" - The input message is blob file.
-	//   "INPUT_TYPE_TOOL_RESPONSE" - The input message is client function tool
-	// response.
-	//   "INPUT_TYPE_VARIABLES" - The input message are variables.
+	//   "INPUT_TYPE_TEXT" - Text input.
+	//   "INPUT_TYPE_EVENT" - Event input.
+	//   "INPUT_TYPE_AUDIO" - Audio input.
+	//   "INPUT_TYPE_IMAGE" - Image input.
+	//   "INPUT_TYPE_BLOB" - Blob input.
+	//   "INPUT_TYPE_TOOL_RESPONSE" - Client function tool response input.
+	//   "INPUT_TYPE_VARIABLES" - Variables input.
 	InputTypes []string `json:"inputTypes,omitempty"`
 	// LanguageCode: Output only. The language code of the conversation.
 	LanguageCode string `json:"languageCode,omitempty"`
@@ -2815,6 +2815,8 @@ type Deployment struct {
 	// read-modify-write operation. If the etag is empty, the update will overwrite
 	// any concurrent changes.
 	Etag string `json:"etag,omitempty"`
+	// ExperimentConfig: Optional. Experiment configuration for the deployment.
+	ExperimentConfig *ExperimentConfig `json:"experimentConfig,omitempty"`
 	// Name: Identifier. The resource name of the deployment. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/deployments/{deployment}`
 	Name string `json:"name,omitempty"`
@@ -5066,6 +5068,89 @@ func (s ExecuteToolResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ExperimentConfig: Experiment for the deployment.
+type ExperimentConfig struct {
+	// VersionRelease: Optional. Version release for the experiment.
+	VersionRelease *ExperimentConfigVersionRelease `json:"versionRelease,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "VersionRelease") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "VersionRelease") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExperimentConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ExperimentConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExperimentConfigVersionRelease: Version release for the experiment.
+type ExperimentConfigVersionRelease struct {
+	// State: Optional. State of the version release.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "PENDING" - Pending state. Experiment is pending and not valid.
+	//   "RUNNING" - Running state. Experiment is running and valid.
+	//   "DONE" - Done state. Experiment is done and no longer valid.
+	//   "EXPIRED" - Expired state. Experiment is expired and no longer valid.
+	State string `json:"state,omitempty"`
+	// TrafficAllocations: Optional. Traffic allocations for the version release.
+	TrafficAllocations []*ExperimentConfigVersionReleaseTrafficAllocation `json:"trafficAllocations,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExperimentConfigVersionRelease) MarshalJSON() ([]byte, error) {
+	type NoMethod ExperimentConfigVersionRelease
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExperimentConfigVersionReleaseTrafficAllocation: Traffic allocation for the
+// version release.
+type ExperimentConfigVersionReleaseTrafficAllocation struct {
+	// AppVersion: Optional. App version of the traffic allocation. Format:
+	// `projects/{project}/locations/{location}/apps/{app}/versions/{version}`
+	AppVersion string `json:"appVersion,omitempty"`
+	// Id: Optional. Id of the traffic allocation. Free format string, up to 128
+	// characters.
+	Id string `json:"id,omitempty"`
+	// TrafficPercentage: Optional. Traffic percentage of the traffic allocation.
+	// Must be between 0 and 100.
+	TrafficPercentage int64 `json:"trafficPercentage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AppVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExperimentConfigVersionReleaseTrafficAllocation) MarshalJSON() ([]byte, error) {
+	type NoMethod ExperimentConfigVersionReleaseTrafficAllocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ExportAppRequest: Request message for AgentService.ExportApp.
 type ExportAppRequest struct {
 	// AppVersion: Optional. The resource name of the app version to export.
@@ -5124,6 +5209,62 @@ type ExportAppResponse struct {
 
 func (s ExportAppResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportAppResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExportEvaluationResultsResponse: Response message for
+// EvaluationService.ExportEvaluationResults.
+type ExportEvaluationResultsResponse struct {
+	// EvaluationResultsContent: The content of the exported Evaluation Results.
+	// This will be populated if gcs_uri was not specified in the request.
+	EvaluationResultsContent string `json:"evaluationResultsContent,omitempty"`
+	// EvaluationResultsUri: The Google Cloud Storage URI folder where the exported
+	// Evaluation Results were written. This will be populated if gcs_uri was
+	// specified in the request.
+	EvaluationResultsUri string `json:"evaluationResultsUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EvaluationResultsContent")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EvaluationResultsContent") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExportEvaluationResultsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportEvaluationResultsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExportEvaluationRunsResponse: Response message for
+// EvaluationService.ExportEvaluationRuns.
+type ExportEvaluationRunsResponse struct {
+	// EvaluationRunsContent: The content of the exported Evaluation Runs. This
+	// will be populated if gcs_uri was not specified in the request.
+	EvaluationRunsContent string `json:"evaluationRunsContent,omitempty"`
+	// EvaluationRunsUri: The Google Cloud Storage URI folder where the exported
+	// Evaluation Runs were written. This will be populated if gcs_uri was
+	// specified in the request.
+	EvaluationRunsUri string `json:"evaluationRunsUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EvaluationRunsContent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EvaluationRunsContent") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExportEvaluationRunsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportEvaluationRunsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7404,6 +7545,10 @@ type LoggingSettings struct {
 	// RedactionConfig: Optional. Configuration for how sensitive data should be
 	// redacted.
 	RedactionConfig *RedactionConfig `json:"redactionConfig,omitempty"`
+	// UnredactedAudioRecordingConfig: Optional. Configures recording of unredacted
+	// audio. Use this to maintain a raw backup with restricted access when audio
+	// redaction is enabled, typically for auditing or monitoring purposes.
+	UnredactedAudioRecordingConfig *AudioRecordingConfig `json:"unredactedAudioRecordingConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudioRecordingConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7619,7 +7764,7 @@ type MockedToolCall struct {
 	// MockResponse: Optional. The mock response / output to return if the tool
 	// call args / inputs match the pattern.
 	MockResponse googleapi.RawMessage `json:"mockResponse,omitempty"`
-	// Tool: Required. Deprecated. Use tool_identifier instead.
+	// Tool: Optional. Deprecated. Use tool_identifier instead.
 	Tool string `json:"tool,omitempty"`
 	// ToolId: Optional. The name of the tool to mock. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/tools/{tool}`
@@ -10011,6 +10156,9 @@ type WidgetTool struct {
 	Name string `json:"name,omitempty"`
 	// Parameters: Optional. The input parameters of the widget tool.
 	Parameters *Schema `json:"parameters,omitempty"`
+	// TextResponseConfig: Optional. Configuration for always-included text
+	// responses.
+	TextResponseConfig *WidgetToolTextResponseConfig `json:"textResponseConfig,omitempty"`
 	// UiConfig: Optional. Configuration for rendering the widget.
 	UiConfig googleapi.RawMessage `json:"uiConfig,omitempty"`
 	// WidgetType: Optional. The type of the widget tool. If not specified, the
@@ -10086,6 +10234,44 @@ type WidgetToolDataMapping struct {
 
 func (s WidgetToolDataMapping) MarshalJSON() ([]byte, error) {
 	type NoMethod WidgetToolDataMapping
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WidgetToolTextResponseConfig: Configuration for the text response returned
+// with the widget.
+type WidgetToolTextResponseConfig struct {
+	// StaticText: Optional. The static text response to return when type is
+	// STATIC.
+	StaticText string `json:"staticText,omitempty"`
+	// TextResponseInstruction: Optional. Instruction for the LLM on how to
+	// generate the text response. Used as the description for the text response
+	// parameter if type is LLM_GENERATED.
+	TextResponseInstruction string `json:"textResponseInstruction,omitempty"`
+	// Type: Optional. The strategy for providing the text response.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified type.
+	//   "NONE" - The LLM dynamically decides whether to generate a text response
+	// alongside the widget based on the conversation context.
+	//   "LLM_GENERATED" - The LLM is explicitly required to generate a text
+	// response.
+	//   "STATIC" - A pre-defined static text response is always used.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StaticText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StaticText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WidgetToolTextResponseConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod WidgetToolTextResponseConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10321,8 +10507,8 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this service. This
 // method lists locations based on the resource scope provided in the
-// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
-// empty, the method lists the public locations available to all projects. *
+// ListLocationsRequest.name field: * **Global locations**: If `name` is empty,
+// the method lists the public locations available to all projects. *
 // **Project-specific locations**: If `name` follows the format
 // `projects/{project}`, the method lists locations visible to that specific
 // project. This includes public, private, or other project-specific locations
@@ -10339,8 +10525,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

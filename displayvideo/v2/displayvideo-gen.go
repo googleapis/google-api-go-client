@@ -8677,6 +8677,9 @@ type LineItem struct {
 	// CreativeIds: The IDs of the creatives associated with the line item.
 	CreativeIds googleapi.Int64s `json:"creativeIds,omitempty"`
 	// DemandGenSettings: Optional. Settings specific to Demand Gen line items.
+	// Only applicable to Demand Gen line items. Retrieval and management of Demand
+	// Gen resources is currently in beta. This field is only available to
+	// allowlisted users.
 	DemandGenSettings *DemandGenSettings `json:"demandGenSettings,omitempty"`
 	// DisplayName: Required. The display name of the line item. Must be UTF-8
 	// encoded with a maximum size of 240 bytes.
@@ -13347,6 +13350,9 @@ type VideoAdInventoryControl struct {
 	AllowInFeed bool `json:"allowInFeed,omitempty"`
 	// AllowInStream: Optional. Whether ads can serve as in-stream format.
 	AllowInStream bool `json:"allowInStream,omitempty"`
+	// AllowNonSkippableInStream: Optional. Indicates whether ads can serve as
+	// non-skippable in-stream format.
+	AllowNonSkippableInStream bool `json:"allowNonSkippableInStream,omitempty"`
 	// AllowShorts: Optional. Whether ads can serve as shorts format.
 	AllowShorts bool `json:"allowShorts,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowInFeed") to
@@ -13938,10 +13944,9 @@ type YoutubeAndPartnersBiddingStrategy struct {
 	// assigned at the line item level, this field is only applicable for the
 	// following strategy types: *
 	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_CPA` *
-	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_ROAS` *
-	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_RESERVE_SHARE_OF_VOICE` When the
-	// bidding strategy is assigned at the ad group level, this field is only
-	// applicable for the following strategy types: *
+	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_ROAS` When the bidding
+	// strategy is assigned at the ad group level, this field is only applicable
+	// for the following strategy types: *
 	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_MANUAL_CPM` *
 	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_MANUAL_CPV` *
 	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_CPA` *

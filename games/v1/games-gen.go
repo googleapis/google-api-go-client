@@ -321,6 +321,18 @@ type StatsService struct {
 
 // AchievementDefinition: An achievement definition object.
 type AchievementDefinition struct {
+	// AchievementLifecycleState: Output only. The lifecycle state of the
+	// achievement.
+	//
+	// Possible values:
+	//   "ACHIEVEMENT_LIFECYCLE_STATE_UNSPECIFIED" - Default value. Should not be
+	// used.
+	//   "ACHIEVEMENT_LIFECYCLE_STATE_ACTIVE" - The achievement is active and
+	// published, and can be earned by players.
+	//   "ACHIEVEMENT_LIFECYCLE_STATE_ARCHIVED" - The achievement is archived. It
+	// cannot be earned by players, and is hidden from players who have not already
+	// unlocked it. from players who haven't unlocked it.
+	AchievementLifecycleState string `json:"achievementLifecycleState,omitempty"`
 	// AchievementType: The type of the achievement.
 	//
 	// Possible values:
@@ -361,15 +373,15 @@ type AchievementDefinition struct {
 	TotalSteps int64 `json:"totalSteps,omitempty"`
 	// UnlockedIconUrl: The image URL for the unlocked achievement icon.
 	UnlockedIconUrl string `json:"unlockedIconUrl,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AchievementType") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AchievementLifecycleState")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AchievementType") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AchievementLifecycleState") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

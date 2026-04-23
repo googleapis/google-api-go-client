@@ -4396,9 +4396,8 @@ type BulkEditAdGroupAssignedTargetingOptionsRequest struct {
 	// `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_GENDER` *
 	// `TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_HOUSEHOLD_INCOME` *
 	// `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` *
-	// `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_REGIONAL_LOCATION_LIST` *
-	// `TARGETING_TYPE_URL` * `TARGETING_TYPE_YOUTUBE_CHANNEL` *
-	// `TARGETING_TYPE_YOUTUBE_VIDEO`
+	// `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_URL` *
+	// `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`
 	CreateRequests []*CreateAssignedTargetingOptionsRequest `json:"createRequests,omitempty"`
 	// DeleteRequests: Optional. The assigned targeting options to delete in batch,
 	// specified as a list of `DeleteAssignedTargetingOptionsRequest`. Supported
@@ -4407,9 +4406,8 @@ type BulkEditAdGroupAssignedTargetingOptionsRequest struct {
 	// `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_GENDER` *
 	// `TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_HOUSEHOLD_INCOME` *
 	// `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` *
-	// `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_REGIONAL_LOCATION_LIST` *
-	// `TARGETING_TYPE_URL` * `TARGETING_TYPE_YOUTUBE_CHANNEL` *
-	// `TARGETING_TYPE_YOUTUBE_VIDEO`
+	// `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_URL` *
+	// `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`
 	DeleteRequests []*DeleteAssignedTargetingOptionsRequest `json:"deleteRequests,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdGroupIds") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -12377,6 +12375,9 @@ type LineItem struct {
 	// CreativeIds: The IDs of the creatives associated with the line item.
 	CreativeIds googleapi.Int64s `json:"creativeIds,omitempty"`
 	// DemandGenSettings: Optional. Settings specific to Demand Gen line items.
+	// Only applicable to Demand Gen line items. Retrieval and management of Demand
+	// Gen resources is currently in beta. This field is only available to
+	// allowlisted users.
 	DemandGenSettings *DemandGenSettings `json:"demandGenSettings,omitempty"`
 	// DisplayName: Required. The display name of the line item. Must be UTF-8
 	// encoded with a maximum size of 240 bytes.
@@ -17337,6 +17338,9 @@ type VideoAdInventoryControl struct {
 	AllowInFeed bool `json:"allowInFeed,omitempty"`
 	// AllowInStream: Optional. Whether ads can serve as in-stream format.
 	AllowInStream bool `json:"allowInStream,omitempty"`
+	// AllowNonSkippableInStream: Optional. Indicates whether ads can serve as
+	// non-skippable in-stream format.
+	AllowNonSkippableInStream bool `json:"allowNonSkippableInStream,omitempty"`
 	// AllowShorts: Optional. Whether ads can serve as shorts format.
 	AllowShorts bool `json:"allowShorts,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowInFeed") to
@@ -17734,10 +17738,9 @@ type YoutubeAndPartnersBiddingStrategy struct {
 	// assigned at the line item level, this field is only applicable for the
 	// following strategy types: *
 	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_CPA` *
-	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_ROAS` *
-	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_RESERVE_SHARE_OF_VOICE` When the
-	// bidding strategy is assigned at the ad group level, this field is only
-	// applicable for the following strategy types: *
+	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_ROAS` When the bidding
+	// strategy is assigned at the ad group level, this field is only applicable
+	// for the following strategy types: *
 	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_MANUAL_CPM` *
 	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_MANUAL_CPV` *
 	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_CPA` *
@@ -21494,8 +21497,8 @@ type AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsCreateCall struct 
 //     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
 //     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_KEYWORD` *
 //     `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_PARENTAL_STATUS` *
-//     `TARGETING_TYPE_REGIONAL_LOCATION_LIST` * `TARGETING_TYPE_URL` *
-//     `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`.
+//     `TARGETING_TYPE_URL` * `TARGETING_TYPE_YOUTUBE_CHANNEL` *
+//     `TARGETING_TYPE_YOUTUBE_VIDEO`.
 func (r *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsService) Create(advertiserId int64, adGroupId int64, targetingType string, assignedtargetingoption *AssignedTargetingOption) *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsCreateCall {
 	c := &AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -21618,8 +21621,9 @@ type AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsDeleteCall struct 
 //     Supported targeting types: * `TARGETING_TYPE_AGE_RANGE` *
 //     `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` *
 //     `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_CATEGORY` *
-//     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_HOUSEHOLD_INCOME` *
-//     `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_PARENTAL_STATUS` *
+//     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
+//     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_KEYWORD` *
+//     `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_PARENTAL_STATUS` *
 //     `TARGETING_TYPE_SESSION_POSITION` * `TARGETING_TYPE_URL` *
 //     `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`.
 func (r *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsService) Delete(advertiserId int64, adGroupId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsDeleteCall {
@@ -21739,8 +21743,9 @@ type AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsGetCall struct {
 //     Supported targeting types include: * `TARGETING_TYPE_AGE_RANGE` *
 //     `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` *
 //     `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_CATEGORY` *
-//     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_HOUSEHOLD_INCOME` *
-//     `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_PARENTAL_STATUS` *
+//     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
+//     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_KEYWORD` *
+//     `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_PARENTAL_STATUS` *
 //     `TARGETING_TYPE_SESSION_POSITION` * `TARGETING_TYPE_URL` *
 //     `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`.
 func (r *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, adGroupId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsGetCall {
@@ -21867,8 +21872,9 @@ type AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsListCall struct {
 //     Supported targeting types include: * `TARGETING_TYPE_AGE_RANGE` *
 //     `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` *
 //     `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_CATEGORY` *
-//     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_HOUSEHOLD_INCOME` *
-//     `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_PARENTAL_STATUS` *
+//     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
+//     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_KEYWORD` *
+//     `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_PARENTAL_STATUS` *
 //     `TARGETING_TYPE_SESSION_POSITION` * `TARGETING_TYPE_URL` *
 //     `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`.
 func (r *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, adGroupId int64, targetingType string) *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsListCall {

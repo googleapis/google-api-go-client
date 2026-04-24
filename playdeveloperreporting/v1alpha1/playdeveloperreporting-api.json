@@ -206,63 +206,6 @@
         }
       }
     },
-    "ratings": {
-      "methods": {
-        "get": {
-          "description": "Describes the properties of the metric set.",
-          "flatPath": "v1alpha1/apps/{appsId}/ratingsMetricSet",
-          "httpMethod": "GET",
-          "id": "playdeveloperreporting.ratings.get",
-          "parameterOrder": [
-            "name"
-          ],
-          "parameters": {
-            "name": {
-              "description": "Required. The resource name. Format: apps/{app}/ratingsMetricSet",
-              "location": "path",
-              "pattern": "^apps/[^/]+/ratingsMetricSet$",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "v1alpha1/{+name}",
-          "response": {
-            "$ref": "GooglePlayDeveloperReportingV1alpha1RatingsMetricSet"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/playdeveloperreporting"
-          ]
-        },
-        "query": {
-          "description": "Queries the metrics in the metric set.",
-          "flatPath": "v1alpha1/apps/{appsId}/ratingsMetricSet:query",
-          "httpMethod": "POST",
-          "id": "playdeveloperreporting.ratings.query",
-          "parameterOrder": [
-            "name"
-          ],
-          "parameters": {
-            "name": {
-              "description": "Required. The resource name.",
-              "location": "path",
-              "pattern": "^apps/[^/]+/ratingsMetricSet$",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "v1alpha1/{+name}:query",
-          "request": {
-            "$ref": "GooglePlayDeveloperReportingV1alpha1QueryRatingsMetricSetRequest"
-          },
-          "response": {
-            "$ref": "GooglePlayDeveloperReportingV1alpha1QueryRatingsMetricSetResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/playdeveloperreporting"
-          ]
-        }
-      }
-    },
     "vitals": {
       "resources": {
         "anrrate": {
@@ -1061,7 +1004,7 @@
       }
     }
   },
-  "revision": "20260421",
+  "revision": "20260423",
   "rootUrl": "https://playdeveloperreporting.googleapis.com/",
   "schemas": {
     "GooglePlayDeveloperReportingV1alpha1Anomaly": {
@@ -1912,62 +1855,6 @@
       },
       "type": "object"
     },
-    "GooglePlayDeveloperReportingV1alpha1QueryRatingsMetricSetRequest": {
-      "description": "Request message for [QueryRatingsMetricSet].",
-      "id": "GooglePlayDeveloperReportingV1alpha1QueryRatingsMetricSetRequest",
-      "properties": {
-        "dimensions": {
-          "description": "Optional. **Supported dimensions:** * `apiLevel` (string): The API level of Android that was running on the user's device. * `deviceModel` (string): Unique identifier of the user's device model. The form of the identifier is 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND and device corresponds to Build.DEVICE, e.g., google/coral. * `deviceBrand` (string): unique identifier of the user's device brand, e.g., google. * `deviceType` (string): The form factor of the user's device (e.g., PHONE, TABLET, CHROMEBOOK). * `language` (string): The user's device language, represented as a BCP-47 language tag (e.g. en-US for English as used in the United States). * `regionCode` (string): The country or region of the user's device, represented as a 2-letter Unicode CLDR region code (e.g. US for the United States). * `versionCode` (int64): The version of the app that was running on the user's device. * `carrier` (string): The mobile carrier or network of the user's device",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "filter": {
-          "description": "Optional. Filters to apply to data. The filtering expression follows [AIP-160](https://google.aip.dev/160) standard and supports filtering by equality of all breakdown dimensions.",
-          "type": "string"
-        },
-        "metrics": {
-          "description": "Optional. Metrics to aggregate. **Supported metrics:** * `dailyAvgRating` (`google.type.Decimal`): The average rating of the app on a given day. * `dailyGooglePlayAvgRating` (`google.type.Decimal`): The average rating of the app shown to users on Google Play. * `totalAvgRating` (`google.type.Decimal`): The average rating of the app.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "pageSize": {
-          "description": "Optional. Maximum size of the returned data. If unspecified, at most 1000 rows will be returned. The maximum value is 100,000; values above 100,000 will be coerced to 100,000.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "pageToken": {
-          "description": "Optional. A page token, received from a previous call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to the request must match the call that provided the page token.",
-          "type": "string"
-        },
-        "timelineSpec": {
-          "$ref": "GooglePlayDeveloperReportingV1alpha1TimelineSpec",
-          "description": "Optional. Specification of the timeline aggregation parameters. **Supported aggregation periods:** * DAILY: metrics are aggregated in calendar date intervals in the Google Standard Time Zone (America/Los_Angeles)."
-        }
-      },
-      "type": "object"
-    },
-    "GooglePlayDeveloperReportingV1alpha1QueryRatingsMetricSetResponse": {
-      "description": "Response message for [QueryRatingsMetricSet].",
-      "id": "GooglePlayDeveloperReportingV1alpha1QueryRatingsMetricSetResponse",
-      "properties": {
-        "nextPageToken": {
-          "description": "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.",
-          "type": "string"
-        },
-        "rows": {
-          "description": "The returned rows of metrics.",
-          "items": {
-            "$ref": "GooglePlayDeveloperReportingV1alpha1MetricsRow"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
     "GooglePlayDeveloperReportingV1alpha1QuerySlowRenderingRateMetricSetRequest": {
       "description": "Request message for QuerySlowRenderingRateMetricSet.",
       "id": "GooglePlayDeveloperReportingV1alpha1QuerySlowRenderingRateMetricSetRequest",
@@ -2180,22 +2067,6 @@
             "$ref": "GooglePlayDeveloperReportingV1alpha1MetricsRow"
           },
           "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "GooglePlayDeveloperReportingV1alpha1RatingsMetricSet": {
-      "description": "Singleton resource representing the set of Ratings metrics. **Supported aggregation periods:** * DAILY: metrics are aggregated in calendar date intervals in the Google Standard Time Zone (America/Los_Angeles). **Supported metrics:** * `dailyAvgRating` (`google.type.Decimal`): The average rating of the app on each day. * `dailyGooglePlayAvgRating` (`google.type.Decimal`): The average rating of the app shown to users on Google Play. * `totalAvgRating` (`google.type.Decimal`): The average rating of the app. **Supported dimensions:** * `apiLevel` (string): The API level of Android that was running on the user's device. * `deviceModel` (string): Unique identifier of the user's device model. The form of the identifier is 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND and device corresponds to Build.DEVICE, e.g., google/coral. * `deviceBrand` (string): unique identifier of the user's device brand, e.g., google. * `deviceType` (string): The form factor of the user's device (e.g., PHONE, TABLET, CHROMEBOOK). * `language` (string): The user's device language, represented as a BCP-47 language tag (e.g. en-US for English as used in the United States). * `regionCode` (string): The country or region of the user's device, represented as a 2-letter Unicode CLDR region code (e.g. US for the United States). * `versionCode` (int64): The version of the app that was running on the user's device. * `carrier` (string): The mobile carrier or network of the user's device",
-      "id": "GooglePlayDeveloperReportingV1alpha1RatingsMetricSet",
-      "properties": {
-        "freshnessInfo": {
-          "$ref": "GooglePlayDeveloperReportingV1alpha1FreshnessInfo",
-          "description": "Output only. Summary about data freshness in this resource.",
-          "readOnly": true
-        },
-        "name": {
-          "description": "Identifier. The resource name.",
-          "type": "string"
         }
       },
       "type": "object"

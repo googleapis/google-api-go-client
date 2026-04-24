@@ -155,6 +155,12 @@ const (
 	// View chat and spaces in Google Chat
 	ChatSpacesReadonlyScope = "https://www.googleapis.com/auth/chat.spaces.readonly"
 
+	// View and modify last read time for Google Chat conversations
+	ChatUsersReadstateScope = "https://www.googleapis.com/auth/chat.users.readstate"
+
+	// View last read time for Google Chat conversations
+	ChatUsersReadstateReadonlyScope = "https://www.googleapis.com/auth/chat.users.readstate.readonly"
+
 	// See, edit, create, and delete all of your Google Drive files
 	DriveScope = "https://www.googleapis.com/auth/drive"
 
@@ -196,6 +202,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/chat.messages.readonly",
 		"https://www.googleapis.com/auth/chat.spaces",
 		"https://www.googleapis.com/auth/chat.spaces.readonly",
+		"https://www.googleapis.com/auth/chat.users.readstate",
+		"https://www.googleapis.com/auth/chat.users.readstate.readonly",
 		"https://www.googleapis.com/auth/drive",
 		"https://www.googleapis.com/auth/drive.file",
 		"https://www.googleapis.com/auth/drive.metadata",

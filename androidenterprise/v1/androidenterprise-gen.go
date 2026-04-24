@@ -2986,7 +2986,8 @@ func (s ServiceAccount) MarshalJSON() ([]byte, error) {
 type ServiceAccountKey struct {
 	// Data: The body of the private key credentials file, in string format. This
 	// is only populated when the ServiceAccountKey is created, and is not stored
-	// by Google.
+	// by Google. When type is "pkcs12", the contents of the data field is base64
+	// encoded and has the password "notasecret".
 	Data string `json:"data,omitempty"`
 	// Id: An opaque, unique identifier for this ServiceAccountKey. Assigned by the
 	// server.

@@ -4768,10 +4768,6 @@ type GoogleChromeManagementVersionsV1ConnectorConfig struct {
 	Details *GoogleChromeManagementVersionsV1ConnectorConfigDetails `json:"details,omitempty"`
 	// DisplayName: Required. The display name of the config.
 	DisplayName string `json:"displayName,omitempty"`
-	// Etag: Optional. This checksum is computed by the server based on the value
-	// of other fields, and may be sent on update and delete requests to ensure the
-	// client has an up-to-date value before proceeding.
-	Etag string `json:"etag,omitempty"`
 	// Name: Identifier. Format:
 	// customers/{customer}/connectorConfigs/{connector_config}
 	Name string `json:"name,omitempty"`
@@ -4811,7 +4807,7 @@ func (s GoogleChromeManagementVersionsV1ConnectorConfig) MarshalJSON() ([]byte, 
 }
 
 // GoogleChromeManagementVersionsV1ConnectorConfigDetails: The details of the
-// connector config. LINT.IfChange
+// connector config.
 type GoogleChromeManagementVersionsV1ConnectorConfigDetails struct {
 	// CrowdStrikeConfig: CrowdStrike connector config.
 	CrowdStrikeConfig *GoogleChromeManagementVersionsV1CrowdStrikeConfig `json:"crowdStrikeConfig,omitempty"`
@@ -4868,9 +4864,9 @@ type GoogleChromeManagementVersionsV1ConnectorConfigStatus struct {
 	// to failures.
 	State string `json:"state,omitempty"`
 	// UpdateTime: Output only. Field recording time of most recent modification of
-	// the status. For ENABLED, this is the time the status was changed to ENABLED.
-	// For DISABLED_BY_FAILURES, this is the time of the most recent failed attempt
-	// to send an event to this config.
+	// the status. For `ENABLED`, this is the time the status was changed to
+	// `ENABLED`. For `DISABLED_BY_FAILURES`, this is the time of the most recent
+	// failed attempt to send an event to this config.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FailureStartTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5221,8 +5217,6 @@ type GoogleChromeManagementVersionsV1ListConnectorConfigsResponse struct {
 	// NextPageToken: The page token used to retrieve the next page of the listing
 	// request. If the token is empty, there are no more pages to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// TotalSize: The total size of the connector configs list.
-	TotalSize int64 `json:"totalSize,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -7782,14 +7776,6 @@ func (r *CustomersConnectorConfigsService) Delete(name string) *CustomersConnect
 	return c
 }
 
-// Etag sets the optional parameter "etag": The etag of the connector config.
-// If an etag is provided and does not match the current etag of the connector
-// config, deletion will be blocked and an ABORTED error will be returned.
-func (c *CustomersConnectorConfigsDeleteCall) Etag(etag string) *CustomersConnectorConfigsDeleteCall {
-	c.urlParams_.Set("etag", etag)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -8128,6 +8114,118 @@ func (c *CustomersConnectorConfigsListCall) Pages(ctx context.Context, f func(*G
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type CustomersConnectorConfigsPatchCall struct {
+	s                                               *Service
+	name                                            string
+	googlechromemanagementversionsv1connectorconfig *GoogleChromeManagementVersionsV1ConnectorConfig
+	urlParams_                                      gensupport.URLParams
+	ctx_                                            context.Context
+	header_                                         http.Header
+}
+
+// Patch: Updates a connector config.
+//
+//   - name: Identifier. Format:
+//     customers/{customer}/connectorConfigs/{connector_config}.
+func (r *CustomersConnectorConfigsService) Patch(name string, googlechromemanagementversionsv1connectorconfig *GoogleChromeManagementVersionsV1ConnectorConfig) *CustomersConnectorConfigsPatchCall {
+	c := &CustomersConnectorConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlechromemanagementversionsv1connectorconfig = googlechromemanagementversionsv1connectorconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The update mask that
+// can be used to specify which fields to update.
+func (c *CustomersConnectorConfigsPatchCall) UpdateMask(updateMask string) *CustomersConnectorConfigsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersConnectorConfigsPatchCall) Fields(s ...googleapi.Field) *CustomersConnectorConfigsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersConnectorConfigsPatchCall) Context(ctx context.Context) *CustomersConnectorConfigsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersConnectorConfigsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersConnectorConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlechromemanagementversionsv1connectorconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.connectorConfigs.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.connectorConfigs.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementVersionsV1ConnectorConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomersConnectorConfigsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementVersionsV1ConnectorConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementVersionsV1ConnectorConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.connectorConfigs.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type CustomersProfilesDeleteCall struct {

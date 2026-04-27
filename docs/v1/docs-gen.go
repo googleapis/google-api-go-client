@@ -4355,6 +4355,8 @@ type Request struct {
 	UpdateDocumentStyle *UpdateDocumentStyleRequest `json:"updateDocumentStyle,omitempty"`
 	// UpdateDocumentTabProperties: Updates the properties of a document tab.
 	UpdateDocumentTabProperties *UpdateDocumentTabPropertiesRequest `json:"updateDocumentTabProperties,omitempty"`
+	// UpdateNamedStyle: Updates a named style.
+	UpdateNamedStyle *UpdateNamedStyleRequest `json:"updateNamedStyle,omitempty"`
 	// UpdateParagraphStyle: Updates the paragraph style at the specified range.
 	UpdateParagraphStyle *UpdateParagraphStyleRequest `json:"updateParagraphStyle,omitempty"`
 	// UpdateSectionStyle: Updates the section style of the specified range.
@@ -6132,6 +6134,42 @@ type UpdateDocumentTabPropertiesRequest struct {
 
 func (s UpdateDocumentTabPropertiesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateDocumentTabPropertiesRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpdateNamedStyleRequest: Updates a named style.
+type UpdateNamedStyleRequest struct {
+	// Fields: The NamedStyle fields that should be updated. At least
+	// `named_style_type must be specified. The root `named_style` is implied and
+	// should not be specified. A single "*" can be used as short-hand for
+	// listing every field. For example, to update the text style to bold, set
+	// `fields` to include "text_style" and "text_style.bold". To update the
+	// paragraph style's alignment property, set `fields` to include
+	// "paragraph_style" and "paragraph_style.alignment". To reset a property
+	// to its default value, include its field name in the field mask but leave the
+	// field itself unset. Specifying "text_style" or "paragraph_style" with an
+	// empty TextStyle or ParagraphStyle will reset all of its nested fields.
+	Fields string `json:"fields,omitempty"`
+	// NamedStyle: The document style to update.
+	NamedStyle *NamedStyle `json:"namedStyle,omitempty"`
+	// TabId: The document tab to update. By default, the update is applied to the
+	// first tab.
+	TabId string `json:"tabId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Fields") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Fields") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateNamedStyleRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateNamedStyleRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

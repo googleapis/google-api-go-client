@@ -220,6 +220,30 @@ func (s AgentOtherDeviceId) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ComponentTraitUpdates: Contains the set of updates for a component.
+type ComponentTraitUpdates struct {
+	// ComponentId: Required. ID of the component from the device provider.
+	ComponentId string `json:"componentId,omitempty"`
+	// TraitData: Required. The updated trait data for the component.
+	TraitData []*TraitData `json:"traitData,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ComponentId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ComponentId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ComponentTraitUpdates) MarshalJSON() ([]byte, error) {
+	type NoMethod ComponentTraitUpdates
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Device: Third-party device definition.
 type Device struct {
 	// Attributes: Attributes for the traits supported by the device.
@@ -345,6 +369,106 @@ func (s DeviceNames) MarshalJSON() ([]byte, error) {
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// EventData: Contains the details for a single event.
+type EventData struct {
+	// Event: Required. The actual event payload.
+	Event googleapi.RawMessage `json:"event,omitempty"`
+	// EventId: Required. The unique event ID from the device provider.
+	EventId string `json:"eventId,omitempty"`
+	// EventTime: Required. The timestamp of the event.
+	EventTime string `json:"eventTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Event") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Event") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EventData) MarshalJSON() ([]byte, error) {
+	type NoMethod EventData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Events: Contains a set of events for a specific component.
+type Events struct {
+	// ComponentId: Optional. The ID of the provider component if the events are
+	// associated with a specific component. Optional for WHDM events, required for
+	// UDDM events.
+	ComponentId string `json:"componentId,omitempty"`
+	// Events: Required. List of events associated with the component.
+	Events []*EventData `json:"events,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ComponentId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ComponentId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Events) MarshalJSON() ([]byte, error) {
+	type NoMethod Events
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// HomeEvents: Contains the set of events for an item.
+type HomeEvents struct {
+	// DeviceId: Required. / Unique identifier for the device.
+	DeviceId string `json:"deviceId,omitempty"`
+	// Events: Required. List of events for the item.
+	Events []*Events `json:"events,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeviceId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeviceId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HomeEvents) MarshalJSON() ([]byte, error) {
+	type NoMethod HomeEvents
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// HomeTraitUpdates: Contains the set of updates for a device.
+type HomeTraitUpdates struct {
+	// Components: Required. Trait updates for each component.
+	Components []*ComponentTraitUpdates `json:"components,omitempty"`
+	// DeviceId: Required. Unique identifier for the device.
+	DeviceId string `json:"deviceId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Components") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Components") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HomeTraitUpdates) MarshalJSON() ([]byte, error) {
+	type NoMethod HomeTraitUpdates
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryRequest: Request type for the `Query`
@@ -479,6 +603,10 @@ func (s QueryResponsePayload) MarshalJSON() ([]byte, error) {
 // ReportStateAndNotificationDevice: The states and notifications specific to a
 // device.
 type ReportStateAndNotificationDevice struct {
+	// HomeEvents: Optional. UDDM/WHDM trait events
+	HomeEvents []*HomeEvents `json:"homeEvents,omitempty"`
+	// HomeTraits: Optional. UDDM/WHDM trait updates.
+	HomeTraits []*HomeTraitUpdates `json:"homeTraits,omitempty"`
 	// Notifications: Notifications metadata for devices. See the **Device
 	// NOTIFICATIONS** section of the individual trait reference guides
 	// (https://developers.home.google.com/cloud-to-cloud/traits).
@@ -487,13 +615,13 @@ type ReportStateAndNotificationDevice struct {
 	// the individual trait reference guides
 	// (https://developers.home.google.com/cloud-to-cloud/traits).
 	States googleapi.RawMessage `json:"states,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Notifications") to
+	// ForceSendFields is a list of field names (e.g. "HomeEvents") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Notifications") to include in API
+	// NullFields is a list of field names (e.g. "HomeEvents") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -714,6 +842,28 @@ type SyncResponsePayload struct {
 
 func (s SyncResponsePayload) MarshalJSON() ([]byte, error) {
 	type NoMethod SyncResponsePayload
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TraitData: Contains the trait payload for a single trait.
+type TraitData struct {
+	// Trait: Optional. The Home API trait payload.
+	Trait googleapi.RawMessage `json:"trait,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Trait") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Trait") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TraitData) MarshalJSON() ([]byte, error) {
+	type NoMethod TraitData
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -910,9 +910,8 @@ type DataLeakAlertDetail struct {
 	// DiscoveryDocumentIds: Required. Array of ids to accommodate multiple
 	// discovery documents
 	DiscoveryDocumentIds []string `json:"discoveryDocumentIds,omitempty"`
-	// Severity: Required. Data Leak specific severity This will be the string
-	// representation of the DataLeakFindingDetail.Severityenum. (e.g., "LOW",
-	// "MEDIUM", "HIGH", "CRITICAL")
+	// Severity: Required. The severity of the Data Leak alert. Allowed values are:
+	// * `LOW` * `MEDIUM` * `HIGH` * `CRITICAL`
 	Severity string `json:"severity,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DiscoveryDocumentIds") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1233,7 +1232,8 @@ type InitialAccessBrokerAlertDetail struct {
 	// DiscoveryDocumentIds: Required. Array of ids to accommodate multiple
 	// discovery documents
 	DiscoveryDocumentIds []string `json:"discoveryDocumentIds,omitempty"`
-	// Severity: Required. IAB specific severity
+	// Severity: Required. The severity of the Initial Access Broker (IAB) alert.
+	// Allowed values are: * `LOW` * `MEDIUM` * `HIGH` * `CRITICAL`
 	Severity string `json:"severity,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DiscoveryDocumentIds") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1312,9 +1312,8 @@ type InsiderThreatAlertDetail struct {
 	// DiscoveryDocumentIds: Required. Array of ids to accommodate multiple
 	// discovery documents
 	DiscoveryDocumentIds []string `json:"discoveryDocumentIds,omitempty"`
-	// Severity: Required. InsiderThreat specific severity This will be the string
-	// representation of the InsiderThreatFindingDetail.Severityenum. (e.g., "LOW",
-	// "MEDIUM", "HIGH", "CRITICAL")
+	// Severity: Required. The severity of the Insider Threat alert. Allowed values
+	// are: * `LOW` * `MEDIUM` * `HIGH` * `CRITICAL`
 	Severity string `json:"severity,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DiscoveryDocumentIds") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2582,26 +2581,47 @@ func (r *ProjectsAlertsService) List(parent string) *ProjectsAlertsListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter criteria.
+// Filter sets the optional parameter "filter": Filter criteria. Supported
+// fields for filtering include: * `audit.create_time` * `audit.creator` *
+// `audit.update_time` * `audit.updater` *
+// `detail.data_leak.discovery_document_ids` * `detail.data_leak.severity` *
+// `detail.detail_type` * `detail.initial_access_broker.discovery_document_ids`
+// * `detail.initial_access_broker.severity` *
+// `detail.insider_threat.discovery_document_ids` *
+// `detail.insider_threat.severity` * `finding_count` *
+// `priority_analysis.priority_level` * `relevance_analysis.confidence` *
+// `relevance_analysis.relevance_level` * `relevance_analysis.relevant` *
+// `severity_analysis.severity_level` * `state` Examples: * `detail.detail_type
+// = "initial_access_broker" * `detail.detail_type != "data_leak" *
+// `detail.insider_threat.severity = "HIGH" * `audit.create_time >=
+// "2026-04-03T00:00:00Z" AND audit.create_time < "2026-04-06T00:00:00Z" *
+// `state = "NEW" OR state = "TRIAGED" * `severity_analysis.severity_level =
+// "SEVERITY_LEVEL_CRITICAL"
 func (c *ProjectsAlertsListCall) Filter(filter string) *ProjectsAlertsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Order by criteria in the csv
-// format: "field1,field2 desc" or "field1,field2" or "field1 asc, field2".
+// format: "field1, field2 desc" or "field1, field2" or "field1 asc, field2".
+// If a field is specified without `asc` or `desc`, ascending order is used by
+// default. Supported fields for ordering are identical to those supported for
+// filtering. Examples: * `audit.create_time desc` * `audit.update_time asc` *
+// `audit.create_time desc, severity_analysis.severity_level desc`
 func (c *ProjectsAlertsListCall) OrderBy(orderBy string) *ProjectsAlertsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Page size.
+// PageSize sets the optional parameter "pageSize": Page size. Default to 100
+// alerts per page. Maximum is 1000 alerts per page.
 func (c *ProjectsAlertsListCall) PageSize(pageSize int64) *ProjectsAlertsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token.
+// PageToken sets the optional parameter "pageToken": Page token to retrieve
+// the next page of results.
 func (c *ProjectsAlertsListCall) PageToken(pageToken string) *ProjectsAlertsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c

@@ -653,7 +653,6 @@ type Verification struct {
 	// The PIN is used to complete verification with Google.
 	//   "AUTO" - Verify the location without additional user action. This option
 	// may not be available for all locations.
-	//   "VETTED_PARTNER" - This option may not be available for all locations.
 	//   "TRUSTED_PARTNER" - Verify the location via a trusted partner.
 	Method string `json:"method,omitempty"`
 	// Name: Resource name of the verification.
@@ -711,7 +710,6 @@ type VerificationOption struct {
 	// The PIN is used to complete verification with Google.
 	//   "AUTO" - Verify the location without additional user action. This option
 	// may not be available for all locations.
-	//   "VETTED_PARTNER" - This option may not be available for all locations.
 	//   "TRUSTED_PARTNER" - Verify the location via a trusted partner.
 	VerificationMethod string `json:"verificationMethod,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AddressData") to
@@ -815,7 +813,6 @@ type VerifyLocationRequest struct {
 	// The PIN is used to complete verification with Google.
 	//   "AUTO" - Verify the location without additional user action. This option
 	// may not be available for all locations.
-	//   "VETTED_PARTNER" - This option may not be available for all locations.
 	//   "TRUSTED_PARTNER" - Verify the location via a trusted partner.
 	Method string `json:"method,omitempty"`
 	// PhoneNumber: Optional. The input for PHONE_CALL/SMS method The phone number

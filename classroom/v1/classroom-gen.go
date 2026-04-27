@@ -3957,8 +3957,8 @@ func (r *CoursesService) List() *CoursesListCall {
 }
 
 // CourseStates sets the optional parameter "courseStates": Restricts returned
-// courses to those in one of the specified states The default value is ACTIVE,
-// ARCHIVED, PROVISIONED, DECLINED.
+// courses to those in one of the specified states. If unspecified, Courses in
+// any state are returned.
 //
 // Possible values:
 //

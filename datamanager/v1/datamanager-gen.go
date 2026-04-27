@@ -34,6 +34,11 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	datamanagerService, err := datamanager.NewService(ctx, option.WithScopes(datamanager.DatamanagerPartnerlinkScope))
+//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -102,12 +107,17 @@ const (
 	// Google Marketing Platform (Campaign Manager 360, Search Ads 360, Display &
 	// Video 360), and Google Analytics
 	DatamanagerScope = "https://www.googleapis.com/auth/datamanager"
+
+	// View, create, or delete your partner links in Google Ads, Marketing Platform
+	// (Campaign Manager 360, Search Ads 360, Display & Video 360), and Analytics
+	DatamanagerPartnerlinkScope = "https://www.googleapis.com/auth/datamanager.partnerlink"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/datamanager",
+		"https://www.googleapis.com/auth/datamanager.partnerlink",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -774,6 +784,9 @@ type ErrorCount struct {
 	//   "PROCESSING_ERROR_OPERATING_ACCOUNT_MISMATCH_FOR_AD_IDENTIFIER" - The user
 	// attempted to ingest events with an ad identifier that isn't from the
 	// operating account's ads.
+	//
+	// "PROCESSING_ERROR_REASON_ONE_PER_CLICK_CONVERSION_ACTION_NOT_PERMITTED_WITH_B
+	// RAID" - One-per-click conversion actions cannot be used with BRAIDs.
 	Reason string `json:"reason,omitempty"`
 	// RecordCount: The count of records that failed to upload for a given reason.
 	RecordCount int64 `json:"recordCount,omitempty,string"`

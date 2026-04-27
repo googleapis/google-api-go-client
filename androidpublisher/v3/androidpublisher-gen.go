@@ -8765,7 +8765,7 @@ type SubscriptionListing struct {
 	// Ordered list of at most four benefits.
 	Benefits []string `json:"benefits,omitempty"`
 	// Description: The description of this subscription in the language of this
-	// listing. Maximum length - 80 characters. Plain text.
+	// listing. Maximum length - 200 characters. Plain text.
 	Description string `json:"description,omitempty"`
 	// LanguageCode: Required. The language of this listing, as defined by BCP-47,
 	// e.g. "en-US".

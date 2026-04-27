@@ -96,8 +96,20 @@ const basePath = "https://health.googleapis.com/"
 const basePathTemplate = "https://health.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://health.mtls.googleapis.com/"
 
+// OAuth2 scopes used by this API.
+const (
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
+	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+)
+
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/cloud-platform",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
@@ -107,6 +119,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		return nil, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
+	s.Projects = NewProjectsService(s)
 	s.Users = NewUsersService(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
@@ -132,6 +145,8 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	Projects *ProjectsService
+
 	Users *UsersService
 }
 
@@ -140,6 +155,27 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewProjectsService(s *Service) *ProjectsService {
+	rs := &ProjectsService{s: s}
+	rs.Subscribers = NewProjectsSubscribersService(s)
+	return rs
+}
+
+type ProjectsService struct {
+	s *Service
+
+	Subscribers *ProjectsSubscribersService
+}
+
+func NewProjectsSubscribersService(s *Service) *ProjectsSubscribersService {
+	rs := &ProjectsSubscribersService{s: s}
+	return rs
+}
+
+type ProjectsSubscribersService struct {
+	s *Service
 }
 
 func NewUsersService(s *Service) *UsersService {
@@ -746,6 +782,37 @@ func (s CivilTimeInterval) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CreateSubscriberPayload: Payload for creating a subscriber.
+type CreateSubscriberPayload struct {
+	// EndpointAuthorization: Required. Authorization mechanism for the subscriber
+	// endpoint. The `secret` within this message is crucial for endpoint
+	// verification and for securing webhook notifications.
+	EndpointAuthorization *EndpointAuthorization `json:"endpointAuthorization,omitempty"`
+	// EndpointUri: Required. The full HTTPS URI where update notifications will be
+	// sent. The URI must be a valid URL and use HTTPS as the scheme. This endpoint
+	// will be verified during the `CreateSubscriber` call. See CreateSubscriber
+	// RPC documentation for verification details.
+	EndpointUri string `json:"endpointUri,omitempty"`
+	// SubscriberConfigs: Optional. Configuration for the subscriber.
+	SubscriberConfigs []*SubscriberConfig `json:"subscriberConfigs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndpointAuthorization") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndpointAuthorization") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateSubscriberPayload) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateSubscriberPayload
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DailyHeartRateVariability: Represents the daily heart rate variability data
 // type. At least one of the following fields must be set: -
 // `average_heart_rate_variability_milliseconds` -
@@ -1125,6 +1192,10 @@ type DailyRollupDataPoint struct {
 	// Steps: Returned by default when rolling up data points from the `steps` data
 	// type, or when requested explicitly using the `steps` rollup type identifier.
 	Steps *StepsRollupValue `json:"steps,omitempty"`
+	// SwimLengthsData: Returned by default when rolling up data points from the
+	// `swim-lengths-data` data type, or when requested explicitly using the
+	// `swim-lengths-data` rollup type identifier.
+	SwimLengthsData *SwimLengthsDataRollupValue `json:"swimLengthsData,omitempty"`
 	// TimeInHeartRateZone: Returned by default when rolling up data points from
 	// the `time-in-heart-rate-zone` data type, or when requested explicitly using
 	// the `time-in-heart-rate-zone` rollup type identifier.
@@ -1323,6 +1394,9 @@ type DataPoint struct {
 	// HeartRateVariability: Optional. Data for points in the
 	// `heart-rate-variability` sample data type collection.
 	HeartRateVariability *HeartRateVariability `json:"heartRateVariability,omitempty"`
+	// Height: Optional. Data for points in the `height` sample data type
+	// collection.
+	Height *Height `json:"height,omitempty"`
 	// HydrationLog: Optional. Data for points in the `hydration-log` session data
 	// type collection.
 	HydrationLog *HydrationLog `json:"hydrationLog,omitempty"`
@@ -1357,6 +1431,9 @@ type DataPoint struct {
 	// Steps: Optional. Data for points in the `steps` interval data type
 	// collection.
 	Steps *Steps `json:"steps,omitempty"`
+	// SwimLengthsData: Optional. Data for points in the `swim-lengths-data`
+	// interval data type collection.
+	SwimLengthsData *SwimLengthsData `json:"swimLengthsData,omitempty"`
 	// TimeInHeartRateZone: Optional. Data for points in the
 	// `time-in-heart-rate-zone` interval data type collection.
 	TimeInHeartRateZone *TimeInHeartRateZone `json:"timeInHeartRateZone,omitempty"`
@@ -1366,6 +1443,9 @@ type DataPoint struct {
 	// Weight: Optional. Data for points in the `weight` sample data type
 	// collection.
 	Weight *Weight `json:"weight,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 	// ForceSendFields is a list of field names (e.g. "ActiveMinutes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1622,6 +1702,42 @@ type DistanceRollupValue struct {
 
 func (s DistanceRollupValue) MarshalJSON() ([]byte, error) {
 	type NoMethod DistanceRollupValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EndpointAuthorization: Authorization mechanism for a subscriber endpoint.
+// For all requests sent by the Webhooks service, the JSON payload is
+// cryptographically signed. The signature is delivered in the
+// `X-HEALTHAPI-SIGNATURE` HTTP header. This is an ECDSA (NIST P256) signature
+// of the JSON payload. Clients must verify this signature using Google Health
+// API's public key to confirm the payload was sent by the Health API.
+type EndpointAuthorization struct {
+	// Secret: Required. Input only. Provides a client-provided secret that will be
+	// sent with each notification to the subscriber endpoint using the
+	// "Authorization" header. The value must include the authorization scheme,
+	// e.g., "Bearer " or "Basic ", as it will be used as the full Authorization
+	// header value. This secret is used by the API to test the endpoint during
+	// `CreateSubscriber` and `UpdateSubscriber` calls, and will be sent in the
+	// `Authorization` header for all subsequent webhook notifications to this
+	// endpoint.
+	Secret string `json:"secret,omitempty"`
+	// SecretSet: Output only. Whether the secret is set.
+	SecretSet bool `json:"secretSet,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Secret") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Secret") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EndpointAuthorization) MarshalJSON() ([]byte, error) {
+	type NoMethod EndpointAuthorization
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2096,6 +2212,85 @@ func (s HeartRateZone) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Height: Body height measurement.
+type Height struct {
+	// HeightMillimeters: Required. Height of the user in millimeters.
+	HeightMillimeters int64 `json:"heightMillimeters,omitempty,string"`
+	// SampleTime: Required. The time at which the height was recorded.
+	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HeightMillimeters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HeightMillimeters") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Height) MarshalJSON() ([]byte, error) {
+	type NoMethod Height
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// HttpHeader: Represents an HTTP header.
+type HttpHeader struct {
+	// Key: The HTTP header key. It is case insensitive.
+	Key string `json:"key,omitempty"`
+	// Value: The HTTP header value.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HttpHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod HttpHeader
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// HttpResponse: Represents an HTTP response.
+type HttpResponse struct {
+	// Body: The HTTP response body. If the body is not expected, it should be
+	// empty.
+	Body string `json:"body,omitempty"`
+	// Headers: The HTTP response headers. The ordering of the headers is
+	// significant. Multiple headers with the same key may present for the
+	// response.
+	Headers []*HttpHeader `json:"headers,omitempty"`
+	// Reason: The HTTP reason phrase, such as "OK" or "Not Found".
+	Reason string `json:"reason,omitempty"`
+	// Status: The HTTP status code, such as 200 or 404.
+	Status int64 `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HttpResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod HttpResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // HydrationLog: Holds information about a user logged hydration.
 type HydrationLog struct {
 	// AmountConsumed: Required. Amount of liquid (ex. water) consumed.
@@ -2239,6 +2434,36 @@ type ListDataPointsResponse struct {
 
 func (s ListDataPointsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDataPointsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListSubscribersResponse: Response message for ListSubscribers.
+type ListSubscribersResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Subscribers: Subscribers from the specified project.
+	Subscribers []*Subscriber `json:"subscribers,omitempty"`
+	// TotalSize: The total number of subscribers matching the request.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListSubscribersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSubscribersResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2703,6 +2928,8 @@ type ReconciledDataPoint struct {
 	// HeartRateVariability: Data for points in the `heart-rate-variability` sample
 	// data type collection.
 	HeartRateVariability *HeartRateVariability `json:"heartRateVariability,omitempty"`
+	// Height: Data for points in the `height` sample data type collection.
+	Height *Height `json:"height,omitempty"`
 	// HydrationLog: Data for points in the `hydration-log` session data type
 	// collection.
 	HydrationLog *HydrationLog `json:"hydrationLog,omitempty"`
@@ -2721,6 +2948,9 @@ type ReconciledDataPoint struct {
 	Sleep *Sleep `json:"sleep,omitempty"`
 	// Steps: Data for points in the `steps` interval data type collection.
 	Steps *Steps `json:"steps,omitempty"`
+	// SwimLengthsData: Data for points in the `swim-lengths-data` interval data
+	// type collection.
+	SwimLengthsData *SwimLengthsData `json:"swimLengthsData,omitempty"`
 	// TimeInHeartRateZone: Data for points in the `time-in-heart-rate-zone`
 	// interval data type collection.
 	TimeInHeartRateZone *TimeInHeartRateZone `json:"timeInHeartRateZone,omitempty"`
@@ -2997,6 +3227,10 @@ type RollupDataPoint struct {
 	// Steps: Returned by default when rolling up data points from the `steps` data
 	// type, or when requested explicitly using the `steps` rollup type identifier.
 	Steps *StepsRollupValue `json:"steps,omitempty"`
+	// SwimLengthsData: Returned by default when rolling up data points from the
+	// `swim-lengths-data` data type, or when requested explicitly using the
+	// `swim-lengths-data` rollup type identifier.
+	SwimLengthsData *SwimLengthsDataRollupValue `json:"swimLengthsData,omitempty"`
 	// TimeInHeartRateZone: Returned by default when rolling up data points from
 	// the `time-in-heart-rate-zone` data type, or when requested explicitly using
 	// the `time-in-heart-rate-zone` rollup type identifier.
@@ -3669,6 +3903,158 @@ func (s StepsRollupValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Subscriber: -- Resource Messages -- A subscriber receives notifications from
+// Google Health API.
+type Subscriber struct {
+	// CreateTime: Output only. The time at which the subscriber was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// EndpointAuthorization: Required. Authorization mechanism for a subscriber
+	// endpoint. This is required to ensure the endpoint can be verified.
+	EndpointAuthorization *EndpointAuthorization `json:"endpointAuthorization,omitempty"`
+	// EndpointUri: Required. The full HTTPS URI where update notifications will be
+	// sent. The URI must be a valid URL and use HTTPS as the scheme. This endpoint
+	// will be verified during CreateSubscriber and UpdateSubscriber calls. See RPC
+	// documentation for verification details.
+	EndpointUri string `json:"endpointUri,omitempty"`
+	// Name: Identifier. The resource name of the Subscriber. Format:
+	// projects/{project}/subscribers/{subscriber} The {project} ID is a Google
+	// Cloud Project ID or Project Number. The {subscriber} ID is user-settable
+	// (4-36 characters, matching /a-z ([a-z0-9-]{2,34}[a-z0-9])/) if provided
+	// during creation, or system-generated otherwise (e.g., a UUID). Example
+	// (User-settable subscriber ID): projects/my-project/subscribers/my-sub-123
+	// Example (System-generated subscriber ID):
+	// projects/my-project/subscribers/a1b2c3d4-e5f6-7890-1234-567890abcdef
+	Name string `json:"name,omitempty"`
+	// State: Output only. The state of the subscriber.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Represents an unspecified subscriber state.
+	//   "UNVERIFIED" - Represents an unverified subscriber. This is the initial
+	// state of the subscriber when it is created. The backend will verify the
+	// subscriber's endpoint_uri.
+	//   "ACTIVE" - Represents an active subscriber. The endpoint has been
+	// verified.
+	//   "INACTIVE" - Represents an inactive subscriber.
+	State string `json:"state,omitempty"`
+	// SubscriberConfigs: Optional. Configuration for the subscriber.
+	SubscriberConfigs []*SubscriberConfig `json:"subscriberConfigs,omitempty"`
+	// UpdateTime: Output only. The time at which the subscriber was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Subscriber) MarshalJSON() ([]byte, error) {
+	type NoMethod Subscriber
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SubscriberConfig: Configuration for a subscriber. A notification is sent to
+// a subscription ONLY if the subscriber has a config for the data type.
+type SubscriberConfig struct {
+	// DataTypes: Required. Supported data types are: "altitude", "distance",
+	// "floors", "sleep", "steps", "weight". Values should be in kebab-case.
+	DataTypes []string `json:"dataTypes,omitempty"`
+	// SubscriptionCreatePolicy: Required. Policy for subscription creation.
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_CREATE_POLICY_UNSPECIFIED" - Represents an unspecified
+	// policy.
+	//   "AUTOMATIC" - When using `AUTOMATIC`, individual subscriptions are not
+	// created or stored. Instead, eligibility for notifications is computed
+	// dynamically. When a data update occurs for a given data type, notifications
+	// are sent to all subscribers with an `AUTOMATIC` policy for that data type,
+	// provided the user has granted the necessary consents. This means you do not
+	// need to call `CreateSubscription` for each user; notifications are managed
+	// automatically based on user consents. As `Subscription` resources are not
+	// stored, they cannot be retrieved or managed through `GetSubscription`,
+	// `ListSubscriptions`, `UpdateSubscription`, or `DeleteSubscription`.
+	//   "MANUAL" - Requires subscriptions to be created manually for new users.
+	// The developer needs to call CreateSubscription for new users.
+	SubscriptionCreatePolicy string `json:"subscriptionCreatePolicy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SubscriberConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SubscriberConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SwimLengthsData: Swim lengths data over the time interval.
+type SwimLengthsData struct {
+	// Interval: Required. Observed interval.
+	Interval *ObservationTimeInterval `json:"interval,omitempty"`
+	// StrokeCount: Required. Number of strokes in the lap.
+	StrokeCount int64 `json:"strokeCount,omitempty,string"`
+	// SwimStrokeType: Required. Swim stroke type.
+	//
+	// Possible values:
+	//   "SWIM_STROKE_TYPE_UNSPECIFIED" - Swim stroke type is unspecified.
+	//   "FREESTYLE" - Freestyle swim stroke type.
+	//   "BACKSTROKE" - Backstroke swim stroke type.
+	//   "BREASTSTROKE" - Breaststroke swim stroke type.
+	//   "BUTTERFLY" - Butterfly swim stroke type.
+	SwimStrokeType string `json:"swimStrokeType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Interval") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Interval") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SwimLengthsData) MarshalJSON() ([]byte, error) {
+	type NoMethod SwimLengthsData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SwimLengthsDataRollupValue: Represents the result of the rollup of the swim
+// lengths data type.
+type SwimLengthsDataRollupValue struct {
+	// StrokeCountSum: Total number of swim strokes in the interval.
+	StrokeCountSum int64 `json:"strokeCountSum,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "StrokeCountSum") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StrokeCountSum") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SwimLengthsDataRollupValue) MarshalJSON() ([]byte, error) {
+	type NoMethod SwimLengthsDataRollupValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TimeInHeartRateZone: Time in heart rate zone record. It's an interval spent
 // in specific heart rate zone.
 type TimeInHeartRateZone struct {
@@ -4044,6 +4430,31 @@ func (s *VolumeQuantityRollup) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// WebhookNotificationCloudLog: Log message for a webhook notification sent by
+// the Google Health API to a subscriber's endpoint. Includes the HTTP response
+// received from the endpoint.
+type WebhookNotificationCloudLog struct {
+	// HttpResponse: Required. Represents the HTTP response. This message includes
+	// the status code, reason phrase, headers, and body.
+	HttpResponse *HttpResponse `json:"httpResponse,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HttpResponse") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HttpResponse") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WebhookNotificationCloudLog) MarshalJSON() ([]byte, error) {
+	type NoMethod WebhookNotificationCloudLog
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Weight: Body weight measurement.
 type Weight struct {
 	// Notes: Optional. Standard free-form notes captured at manual logging.
@@ -4119,6 +4530,526 @@ func (s *WeightRollupValue) UnmarshalJSON(data []byte) error {
 	}
 	s.WeightGramsAvg = float64(s1.WeightGramsAvg)
 	return nil
+}
+
+type ProjectsSubscribersCreateCall struct {
+	s                       *Service
+	parent                  string
+	createsubscriberpayload *CreateSubscriberPayload
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Create: Registers a new subscriber endpoint to receive notifications. A
+// subscriber represents an application or service that wishes to receive data
+// change notifications for users who have granted consent. **Endpoint
+// Verification:** For a subscriber to be successfully created, the provided
+// `endpoint_uri` must be a valid HTTPS endpoint and must pass an automated
+// verification check. The backend will send two HTTP POST requests to the
+// `endpoint_uri`: 1. **Verification with Authorization:** * **Headers:**
+// Includes `Content-Type: application/json` and `Authorization` (with the
+// exact value from `CreateSubscriberPayload.endpoint_authorization.secret`). *
+// **Body:** `{"type": "verification"}` * **Expected Response:** HTTP `201
+// Created`. 2. **Verification without Authorization:** * **Headers:** Includes
+// `Content-Type: application/json`. The `Authorization` header is OMITTED. *
+// **Body:** `{"type": "verification"}` * **Expected Response:** HTTP `401
+// Unauthorized` or `403 Forbidden`. Both tests must pass for the subscriber
+// creation to succeed. If verification fails, the operation will not be
+// completed and an error will be returned. This process ensures the endpoint
+// is reachable and correctly validates the `Authorization` header.
+//
+//   - parent: The parent resource where this subscriber will be created. Format:
+//     projects/{project} Example: projects/my-project-123.
+func (r *ProjectsSubscribersService) Create(parent string, createsubscriberpayload *CreateSubscriberPayload) *ProjectsSubscribersCreateCall {
+	c := &ProjectsSubscribersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.createsubscriberpayload = createsubscriberpayload
+	return c
+}
+
+// SubscriberId sets the optional parameter "subscriberId": The ID to use for
+// the subscriber, which will become the final component of the subscriber's
+// resource name. This value should be 4-36 characters, and valid characters
+// are /a-z ([a-z0-9-]{2,34}[a-z0-9])/.
+func (c *ProjectsSubscribersCreateCall) SubscriberId(subscriberId string) *ProjectsSubscribersCreateCall {
+	c.urlParams_.Set("subscriberId", subscriberId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsSubscribersCreateCall) Fields(s ...googleapi.Field) *ProjectsSubscribersCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsSubscribersCreateCall) Context(ctx context.Context) *ProjectsSubscribersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsSubscribersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSubscribersCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.createsubscriberpayload)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/{+parent}/subscribers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "health.projects.subscribers.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "health.projects.subscribers.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsSubscribersCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "health.projects.subscribers.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsSubscribersDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a subscriber registration. This will stop all notifications
+// to the subscriber's endpoint.
+//
+//   - name: The name of the subscriber to delete. Format:
+//     projects/{project}/subscribers/{subscriber} Example:
+//     projects/my-project/subscribers/my-subscriber-123 The {subscriber} ID is
+//     user-settable (4-36 characters, matching /a-z ([a-z0-9-]{2,34}[a-z0-9])/)
+//     or system-generated if not provided during creation.
+func (r *ProjectsSubscribersService) Delete(name string) *ProjectsSubscribersDeleteCall {
+	c := &ProjectsSubscribersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Force sets the optional parameter "force": If set to true, any child
+// resources (e.g., subscriptions) will also be deleted. If false (default) and
+// child resources exist, the request will fail.
+func (c *ProjectsSubscribersDeleteCall) Force(force bool) *ProjectsSubscribersDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsSubscribersDeleteCall) Fields(s ...googleapi.Field) *ProjectsSubscribersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsSubscribersDeleteCall) Context(ctx context.Context) *ProjectsSubscribersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsSubscribersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSubscribersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "health.projects.subscribers.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "health.projects.subscribers.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsSubscribersDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "health.projects.subscribers.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsSubscribersListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all subscribers registered within the owned Google Cloud
+// Project.
+//
+//   - parent: The parent, which owns this collection of subscribers. Format:
+//     projects/{project}.
+func (r *ProjectsSubscribersService) List(parent string) *ProjectsSubscribersListCall {
+	c := &ProjectsSubscribersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// subscribers to return. The service may return fewer than this value. If
+// unspecified, at most 50 subscribers will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsSubscribersListCall) PageSize(pageSize int64) *ProjectsSubscribersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListSubscribers` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListSubscribers` must match the call that provided the page token.
+func (c *ProjectsSubscribersListCall) PageToken(pageToken string) *ProjectsSubscribersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsSubscribersListCall) Fields(s ...googleapi.Field) *ProjectsSubscribersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsSubscribersListCall) IfNoneMatch(entityTag string) *ProjectsSubscribersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsSubscribersListCall) Context(ctx context.Context) *ProjectsSubscribersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsSubscribersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSubscribersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/{+parent}/subscribers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "health.projects.subscribers.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "health.projects.subscribers.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListSubscribersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsSubscribersListCall) Do(opts ...googleapi.CallOption) (*ListSubscribersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSubscribersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "health.projects.subscribers.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsSubscribersListCall) Pages(ctx context.Context, f func(*ListSubscribersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsSubscribersPatchCall struct {
+	s          *Service
+	name       string
+	subscriber *Subscriber
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates the configuration of an existing subscriber, such as the
+// endpoint URI or the data types it's interested in. **Endpoint
+// Verification:** If the `endpoint_uri` or `endpoint_authorization` field is
+// included in the `update_mask`, the backend will re-verify the endpoint. The
+// verification process is the same as described in `CreateSubscriber`: 1.
+// **Verification with Authorization:** POST to the new or existing
+// `endpoint_uri` with the new or existing `Authorization` secret. Expects HTTP
+// `201 Created`. 2. **Verification without Authorization:** POST to the
+// `endpoint_uri` without the `Authorization` header. Expects HTTP `401
+// Unauthorized` or `403 Forbidden`. Both tests must pass using the potentially
+// updated values for the subscriber update to succeed. If verification fails,
+// the update will not be applied, and an error will be returned.
+//
+//   - name: Identifier. The resource name of the Subscriber. Format:
+//     projects/{project}/subscribers/{subscriber} The {project} ID is a Google
+//     Cloud Project ID or Project Number. The {subscriber} ID is user-settable
+//     (4-36 characters, matching /a-z ([a-z0-9-]{2,34}[a-z0-9])/) if provided
+//     during creation, or system-generated otherwise (e.g., a UUID). Example
+//     (User-settable subscriber ID): projects/my-project/subscribers/my-sub-123
+//     Example (System-generated subscriber ID):
+//     projects/my-project/subscribers/a1b2c3d4-e5f6-7890-1234-567890abcdef.
+func (r *ProjectsSubscribersService) Patch(name string, subscriber *Subscriber) *ProjectsSubscribersPatchCall {
+	c := &ProjectsSubscribersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.subscriber = subscriber
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": A field mask that
+// specifies which fields of the Subscriber message are to be updated. This
+// allows for partial updates. Supported fields: - endpoint_uri -
+// subscriber_configs - endpoint_authorization
+func (c *ProjectsSubscribersPatchCall) UpdateMask(updateMask string) *ProjectsSubscribersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsSubscribersPatchCall) Fields(s ...googleapi.Field) *ProjectsSubscribersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsSubscribersPatchCall) Context(ctx context.Context) *ProjectsSubscribersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsSubscribersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSubscribersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.subscriber)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "health.projects.subscribers.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "health.projects.subscribers.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsSubscribersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "health.projects.subscribers.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type UsersGetIdentityCall struct {
@@ -5140,6 +6071,117 @@ func (c *UsersDataTypesDataPointsExportExerciseTcxCall) Do(opts ...googleapi.Cal
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "health.users.dataTypes.dataPoints.exportExerciseTcx", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type UsersDataTypesDataPointsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a single identifyable data point.
+//
+//   - name: The name of the data point to retrieve. Format:
+//     `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` See
+//     DataPoint.name for examples and possible values.
+func (r *UsersDataTypesDataPointsService) Get(name string) *UsersDataTypesDataPointsGetCall {
+	c := &UsersDataTypesDataPointsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *UsersDataTypesDataPointsGetCall) Fields(s ...googleapi.Field) *UsersDataTypesDataPointsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *UsersDataTypesDataPointsGetCall) IfNoneMatch(entityTag string) *UsersDataTypesDataPointsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *UsersDataTypesDataPointsGetCall) Context(ctx context.Context) *UsersDataTypesDataPointsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *UsersDataTypesDataPointsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersDataTypesDataPointsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "health.users.dataTypes.dataPoints.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "health.users.dataTypes.dataPoints.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DataPoint.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *UsersDataTypesDataPointsGetCall) Do(opts ...googleapi.CallOption) (*DataPoint, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DataPoint{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "health.users.dataTypes.dataPoints.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

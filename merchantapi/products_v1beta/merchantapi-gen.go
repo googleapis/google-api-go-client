@@ -315,12 +315,12 @@ type Attributes struct {
 	// through the API.
 	GoogleProductCategory string `json:"googleProductCategory,omitempty"`
 	// Gtin: Global Trade Item Numbers (GTIN
-	// (https://support.google.com/merchants/answer/188494#gtin)) of the item. You
-	// can provide up to 10 GTINs. Deprecated: Use `gtins` instead.
+	// (https://support.google.com/merchants/answer/6324461)) of the item. You can
+	// provide up to 10 GTINs. Deprecated: Use `gtins` instead.
 	Gtin []string `json:"gtin,omitempty"`
 	// Gtins: A list of Global Trade Item Numbers (GTIN
-	// (https://support.google.com/merchants/answer/188494#gtin)) of the item. You
-	// can provide up to 10 GTINs.
+	// (https://support.google.com/merchants/answer/6324461)) of the item. You can
+	// provide up to 10 GTINs.
 	Gtins []string `json:"gtins,omitempty"`
 	// IdentifierExists: Set this value to false when the item does not have unique
 	// product identifiers appropriate to its category, such as GTIN, MPN, and
@@ -387,7 +387,7 @@ type Attributes struct {
 	// local storefront optimized for mobile devices.
 	MobileLinkTemplate string `json:"mobileLinkTemplate,omitempty"`
 	// Mpn: Manufacturer Part Number (MPN
-	// (https://support.google.com/merchants/answer/188494#mpn)) of the item.
+	// (https://support.google.com/merchants/answer/6324482)) of the item.
 	Mpn string `json:"mpn,omitempty"`
 	// Multipack: The number of identical products in a business-defined multipack.
 	Multipack int64 `json:"multipack,omitempty,string"`
@@ -1738,6 +1738,20 @@ type Shipping struct {
 	// as defined in the AdWords API
 	// (https://developers.google.com/adwords/api/docs/appendix/geotargeting).
 	LocationId int64 `json:"locationId,omitempty,string"`
+	// LoyaltyProgramLabel: Optional. The label of the loyalty program
+	// (https://support.google.com/merchants/answer/6324484). Must match one of the
+	// program labels set in loyalty_programs. When set (in combination with
+	// loyalty_tier_label (https://support.google.com/merchants/answer/6324484)),
+	// this shipping option is only applicable to loyalty program members of the
+	// specified tier.
+	LoyaltyProgramLabel string `json:"loyaltyProgramLabel,omitempty"`
+	// LoyaltyTierLabel: Optional. The label of the loyalty tier
+	// (https://support.google.com/merchants/answer/6324484) within the loyalty
+	// program. Must match one of the tiers set in the loyalty_programs. When set
+	// (in combination with loyalty_program_label
+	// (https://support.google.com/merchants/answer/6324484)), this shipping option
+	// is only applicable to loyalty program members of the specified tier.
+	LoyaltyTierLabel string `json:"loyaltyTierLabel,omitempty"`
 	// MaxHandlingTime: Maximum handling time (inclusive) between when the order is
 	// received and shipped in business days. 0 means that the order is shipped on
 	// the same day as it is received if it happens before the cut-off time. Both

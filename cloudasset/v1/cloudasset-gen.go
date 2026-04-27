@@ -1487,8 +1487,8 @@ func (s FeedOutputConfig) MarshalJSON() ([]byte, error) {
 // GcsDestination: A Cloud Storage location.
 type GcsDestination struct {
 	// Uri: The URI of the Cloud Storage object. It's the same URI that is used by
-	// gsutil. Example: "gs://bucket_name/object_name". See Viewing and Editing
-	// Object Metadata
+	// gcloud storage. Example: "gs://bucket_name/object_name". See Viewing and
+	// Editing Object Metadata
 	// (https://cloud.google.com/storage/docs/viewing-editing-metadata) for more
 	// information. If the specified Cloud Storage object already exists and there
 	// is no hold (https://cloud.google.com/storage/docs/object-holds), it will be
@@ -1921,8 +1921,8 @@ func (s GoogleCloudAssetV1Edge) MarshalJSON() ([]byte, error) {
 // GoogleCloudAssetV1GcsDestination: A Cloud Storage location.
 type GoogleCloudAssetV1GcsDestination struct {
 	// Uri: Required. The URI of the Cloud Storage object. It's the same URI that
-	// is used by gsutil. Example: "gs://bucket_name/object_name". See Viewing and
-	// Editing Object Metadata
+	// is used by gcloud storage. Example: "gs://bucket_name/object_name". See
+	// Viewing and Editing Object Metadata
 	// (https://cloud.google.com/storage/docs/viewing-editing-metadata) for more
 	// information. If the specified Cloud Storage object already exists and there
 	// is no hold (https://cloud.google.com/storage/docs/object-holds), it will be
@@ -2999,8 +2999,8 @@ func (s GoogleIdentityAccesscontextmanagerV1DevicePolicy) MarshalJSON() ([]byte,
 type GoogleIdentityAccesscontextmanagerV1EgressFrom struct {
 	// Identities: A list of identities that are allowed access through
 	// [EgressPolicy]. Identities can be an individual user, service account,
-	// Google group, or third-party identity. For the list of supported identity
-	// types, see
+	// Google group, third-party identity, or agent identity. For the list of
+	// supported identity types, see
 	// https://docs.cloud.google.com/vpc-service-controls/docs/supported-identities.
 	Identities []string `json:"identities,omitempty"`
 	// IdentityType: Specifies the type of identities that are allowed access to
@@ -3186,8 +3186,8 @@ func (s GoogleIdentityAccesscontextmanagerV1EgressTo) MarshalJSON() ([]byte, err
 type GoogleIdentityAccesscontextmanagerV1IngressFrom struct {
 	// Identities: A list of identities that are allowed access through
 	// [IngressPolicy]. Identities can be an individual user, service account,
-	// Google group, or third-party identity. For the list of supported identity
-	// types, see
+	// Google group, third-party identity, or agent identity. For the list of
+	// supported identity types, see
 	// https://docs.cloud.google.com/vpc-service-controls/docs/supported-identities.
 	Identities []string `json:"identities,omitempty"`
 	// IdentityType: Specifies the type of identities that are allowed access from

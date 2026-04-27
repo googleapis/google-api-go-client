@@ -656,7 +656,8 @@ func (s PostalAddress) MarshalJSON() ([]byte, error) {
 
 // TargetLocation: Represents a target location for a pending invitation.
 type TargetLocation struct {
-	// Address: The address of the location to which the user is invited.
+	// Address: The address of the location to which the user is invited. Not
+	// always populated.
 	Address string `json:"address,omitempty"`
 	// LocationName: The name of the location to which the user is invited.
 	LocationName string `json:"locationName,omitempty"`

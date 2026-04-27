@@ -912,9 +912,8 @@ type ConnectCluster struct {
 	// CapacityConfig: Required. Capacity configuration for the Kafka Connect
 	// cluster.
 	CapacityConfig *CapacityConfig `json:"capacityConfig,omitempty"`
-	// Config: Optional. Configurations for the worker that are overridden from the
-	// defaults. The key of the map is a Kafka Connect worker property name, for
-	// example: `exactly.once.source.support`.
+	// Config: Optional. Reserved for future use. This field is meant for worker
+	// config overrides, but is unsupported for now.
 	Config map[string]string `json:"config,omitempty"`
 	// CreateTime: Output only. The time when the cluster was created.
 	CreateTime string `json:"createTime,omitempty"`

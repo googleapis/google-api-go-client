@@ -1249,8 +1249,8 @@ type ProductAttributes struct {
 	// through the API.
 	GoogleProductCategory string `json:"googleProductCategory,omitempty"`
 	// Gtins: Global Trade Item Numbers (GTIN
-	// (https://support.google.com/merchants/answer/188494#gtin)) of the item. You
-	// can provide up to 10 GTINs.
+	// (https://support.google.com/merchants/answer/6324461)) of the item. You can
+	// provide up to 10 GTINs.
 	Gtins []string `json:"gtins,omitempty"`
 	// HandlingCutoffTimes: The handling cutoff times for shipping.
 	HandlingCutoffTimes []*HandlingCutoffTime `json:"handlingCutoffTimes,omitempty"`
@@ -1366,6 +1366,12 @@ type ProductAttributes struct {
 	MinEnergyEfficiencyClass string `json:"minEnergyEfficiencyClass,omitempty"`
 	// MinHandlingTime: Minimal product handling time (in business days).
 	MinHandlingTime int64 `json:"minHandlingTime,omitempty,string"`
+	// MinimumOrderValues: The minimum value
+	// (https://support.google.com/merchants/answer/16989009) in the cart before a
+	// customer can initiate checkout. Supports multiple minimum order values.
+	// Different minimum order values can be specified per country, service and
+	// surface. Maximum entries: 100.
+	MinimumOrderValues []*ProductMinimumOrderValue `json:"minimumOrderValues,omitempty"`
 	// MobileLink: URL for the mobile-optimized version of your item's landing
 	// page.
 	MobileLink string `json:"mobileLink,omitempty"`
@@ -1374,7 +1380,7 @@ type ProductAttributes struct {
 	// local storefront optimized for mobile devices.
 	MobileLinkTemplate string `json:"mobileLinkTemplate,omitempty"`
 	// Mpn: Manufacturer Part Number (MPN
-	// (https://support.google.com/merchants/answer/188494#mpn)) of the item.
+	// (https://support.google.com/merchants/answer/6324482)) of the item.
 	Mpn string `json:"mpn,omitempty"`
 	// Multipack: The number of identical products in a business-defined multipack.
 	Multipack int64 `json:"multipack,omitempty,string"`
@@ -1547,6 +1553,11 @@ type ProductAttributes struct {
 	UnitPricingBaseMeasure *UnitPricingBaseMeasure `json:"unitPricingBaseMeasure,omitempty"`
 	// UnitPricingMeasure: The measure and dimension of an item.
 	UnitPricingMeasure *UnitPricingMeasure `json:"unitPricingMeasure,omitempty"`
+	// VideoLinks: Optional. A list of video URLs for the item. Use this attribute
+	// to provide more visuals for your product beyond your image attributes. See
+	// the Help Center article
+	// (https://support.google.com/merchants/answer/15216925) for more information.
+	VideoLinks []string `json:"videoLinks,omitempty"`
 	// VirtualModelLink: URL of the 3D image of the item. See the Help Center
 	// article (https://support.google.com/merchants/answer/13674896) for more
 	// information.
@@ -1916,6 +1927,9 @@ func (s ProductInput) MarshalJSON() ([]byte, error) {
 type ProductInstallment struct {
 	// Amount: The amount the buyer has to pay per month.
 	Amount *Price `json:"amount,omitempty"`
+	// AnnualPercentageRate: Optional. Annual percentage rate for `credit_type`
+	// finance
+	AnnualPercentageRate float64 `json:"annualPercentageRate,omitempty"`
 	// CreditType: Type of installment payments.
 	//
 	// Possible values:
@@ -1942,6 +1956,61 @@ type ProductInstallment struct {
 
 func (s ProductInstallment) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductInstallment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *ProductInstallment) UnmarshalJSON(data []byte) error {
+	type NoMethod ProductInstallment
+	var s1 struct {
+		AnnualPercentageRate gensupport.JSONFloat64 `json:"annualPercentageRate"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AnnualPercentageRate = float64(s1.AnnualPercentageRate)
+	return nil
+}
+
+// ProductMinimumOrderValue: The minimum order value in the cart before the
+// checkout is permitted.
+type ProductMinimumOrderValue struct {
+	// Country: Required. The CLDR territory code
+	// (http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml) of the
+	// country to which an item will ship.
+	Country string `json:"country,omitempty"`
+	// Price: Required. The minimum cart or basket value before the checkout is
+	// permitted.
+	Price *Price `json:"price,omitempty"`
+	// Service: A free-form description of the service class or delivery speed.
+	// This should match the service value set for the Shipping attribute. See
+	// service.
+	Service string `json:"service,omitempty"`
+	// Surface: The surface to which the minimum order value applies. Defaults to
+	// `ONLINE_LOCAL` if not configured.
+	//
+	// Possible values:
+	//   "SURFACE_UNSPECIFIED" - Surface is unspecified.
+	//   "ONLINE" - Surface value to indicate online purchases.
+	//   "LOCAL" - Surface value to indicate local purchases.
+	//   "ONLINE_LOCAL" - Surface value to indicate online and local purchases.
+	Surface string `json:"surface,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Country") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Country") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProductMinimumOrderValue) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductMinimumOrderValue
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2151,6 +2220,20 @@ type Shipping struct {
 	// as defined in the AdWords API
 	// (https://developers.google.com/adwords/api/docs/appendix/geotargeting).
 	LocationId int64 `json:"locationId,omitempty,string"`
+	// LoyaltyProgramLabel: Optional. The label of the loyalty program
+	// (https://support.google.com/merchants/answer/6324484). Must match one of the
+	// program labels set in loyalty_programs. When set (in combination with
+	// loyalty_tier_label (https://support.google.com/merchants/answer/6324484)),
+	// this shipping option is only applicable to loyalty program members of the
+	// specified tier.
+	LoyaltyProgramLabel string `json:"loyaltyProgramLabel,omitempty"`
+	// LoyaltyTierLabel: Optional. The label of the loyalty tier
+	// (https://support.google.com/merchants/answer/6324484) within the loyalty
+	// program. Must match one of the tiers set in the loyalty_programs. When set
+	// (in combination with loyalty_program_label
+	// (https://support.google.com/merchants/answer/6324484)), this shipping option
+	// is only applicable to loyalty program members of the specified tier.
+	LoyaltyTierLabel string `json:"loyaltyTierLabel,omitempty"`
 	// MaxHandlingTime: Maximum handling time (inclusive) between when the order is
 	// received and shipped in business days. 0 means that the order is shipped on
 	// the same day as it is received if it happens before the cut-off time. Both

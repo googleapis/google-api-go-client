@@ -1462,6 +1462,18 @@ type Endpoint struct {
 	CloudRunRevision *CloudRunRevisionEndpoint `json:"cloudRunRevision,omitempty"`
 	// CloudSqlInstance: A Cloud SQL (https://cloud.google.com/sql) instance URI.
 	CloudSqlInstance string `json:"cloudSqlInstance,omitempty"`
+	// DatastreamPrivateConnection: A Datastream Private Connection
+	// (https://docs.cloud.google.com/datastream/docs/reference/rest/v1/projects.locations.privateConnections)
+	// name format:
+	// projects/{project}/locations/{location}/privateConnections/{privateConnection
+	// }.
+	DatastreamPrivateConnection string `json:"datastreamPrivateConnection,omitempty"`
+	// DmsPrivateConnection: A DMS Private Connection
+	// (https://docs.cloud.google.com/database-migration/docs/reference/rest/v1/projects.locations.privateConnections)
+	// name format:
+	// projects/{project}/locations/{location}/privateConnections/{privateConnection
+	// }.
+	DmsPrivateConnection string `json:"dmsPrivateConnection,omitempty"`
 	// ForwardingRule: A forwarding rule and its corresponding IP address represent
 	// the frontend configuration of a Google Cloud load balancer. Forwarding rules
 	// are also used for protocol forwarding, Private Service Connect and other
@@ -3249,7 +3261,9 @@ type RouteInfo struct {
 	Protocols []string `json:"protocols,omitempty"`
 	// Region: Region of the route. DYNAMIC, PEERING_DYNAMIC, POLICY_BASED and
 	// ADVERTISED routes only. If set for POLICY_BASED route, this is a region of
-	// VLAN attachments for Cloud Interconnect the route applies to.
+	// VLAN attachments for Cloud Interconnect the route applies to. If set to
+	// "all" for POLICY_BASED route, the route applies to VLAN attachments of Cloud
+	// Interconnect in all regions.
 	Region string `json:"region,omitempty"`
 	// RouteScope: Indicates where route is applicable. Deprecated, routes with
 	// NCC_HUB scope are not included in the trace in new tests.
@@ -4192,8 +4206,8 @@ type OrganizationsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this service. This
 // method lists locations based on the resource scope provided in the
-// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
-// empty, the method lists the public locations available to all projects. *
+// ListLocationsRequest.name field: * **Global locations**: If `name` is empty,
+// the method lists the public locations available to all projects. *
 // **Project-specific locations**: If `name` follows the format
 // `projects/{project}`, the method lists locations visible to that specific
 // project. This includes public, private, or other project-specific locations
@@ -5588,8 +5602,8 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this service. This
 // method lists locations based on the resource scope provided in the
-// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
-// empty, the method lists the public locations available to all projects. *
+// ListLocationsRequest.name field: * **Global locations**: If `name` is empty,
+// the method lists the public locations available to all projects. *
 // **Project-specific locations**: If `name` follows the format
 // `projects/{project}`, the method lists locations visible to that specific
 // project. This includes public, private, or other project-specific locations

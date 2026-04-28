@@ -2304,6 +2304,10 @@ type GoogleIamV3PrincipalAccessBoundaryPolicyRule struct {
 	//   "EFFECT_UNSPECIFIED" - Effect unspecified.
 	//   "ALLOW" - Allows access to the resources in this rule.
 	Effect string `json:"effect,omitempty"`
+	// Operation: Optional. The operation attributes that determine whether this
+	// rule applies to a request. If this field is not specified, the rule applies
+	// to all operations.
+	Operation *GoogleIamV3PrincipalAccessBoundaryPolicyRuleOperation `json:"operation,omitempty"`
 	// Resources: Required. A list of Resource Manager resources. If a resource is
 	// listed in the rule, then the rule applies for that resource and its
 	// descendants. The number of resources in a policy is limited to 500 across
@@ -2329,6 +2333,51 @@ type GoogleIamV3PrincipalAccessBoundaryPolicyRule struct {
 
 func (s GoogleIamV3PrincipalAccessBoundaryPolicyRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV3PrincipalAccessBoundaryPolicyRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIamV3PrincipalAccessBoundaryPolicyRuleOperation: An operation
+// attribute that defines the permissions applicable to this rule.
+type GoogleIamV3PrincipalAccessBoundaryPolicyRuleOperation struct {
+	// ExcludedPermissions: Optional. Specifies the permissions that this rule
+	// excludes from the set of affected permissions given by `permissions`. The
+	// number of excluded permission strings in this field is limited to 50. If a
+	// permission appears in both `permissions` and `excluded_permissions` then it
+	// will _not_ be subject to the policy effect. The excluded permissions can be
+	// specified using the same syntax as `permissions`.
+	ExcludedPermissions []string `json:"excludedPermissions,omitempty"`
+	// Permissions: Optional. The permissions that are explicitly affected by this
+	// rule. The number of permission strings in this field is limited to 50. Each
+	// permission uses the format `{service_fqdn}/{resource}.{verb}`, where
+	// `{service_fqdn}` is the fully qualified domain name for the service. `*` can
+	// be used as a wildcard to match all permissions for a specific service,
+	// resource type, or verb. The following formats are supported: *
+	// `{service_fqdn}/{resource}.{verb}`: A specific permission. *
+	// `{service_fqdn}/{resource}.*`: All permissions for a specific resource type.
+	// * `{service_fqdn}/*.*`: All permissions for all resource types under a
+	// specific service. * `{service_fqdn}/*.{verb}`: All permissions with a
+	// specific verb under a specific service. * `*`: All permissions across all
+	// services. For example, `compute.googleapis.com/*.setIamPolicy` refers to all
+	// setIamPolicy permissions for any compute resource. Wildcards expand only to
+	// the permissions specified in the `enforcement_version` of the policy. If the
+	// `enforcement_version` is updated, the wildcard will automatically expand to
+	// include new permissions in the updated version.
+	Permissions []string `json:"permissions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExcludedPermissions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExcludedPermissions") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleIamV3PrincipalAccessBoundaryPolicyRuleOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIamV3PrincipalAccessBoundaryPolicyRuleOperation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

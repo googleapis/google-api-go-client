@@ -3186,7 +3186,9 @@ type LocationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns the specified location.
+// Get: Returns the specified location as last set by the merchant. It may not
+// reflect updates from Google or user-generated content that are live on
+// Google Maps.
 //
 // - name: The name of the location to fetch.
 func (r *LocationsService) Get(name string) *LocationsGetCall {
@@ -3302,7 +3304,9 @@ type LocationsGetAttributesCall struct {
 	header_      http.Header
 }
 
-// GetAttributes: Looks up all the attributes set for a given location.
+// GetAttributes: Retrieves attributes for a location as last set by the
+// merchant. It may not reflect updates from Google or user-generated content
+// that are live on Google Maps.
 //
 //   - name: Google identifier for this location in the form of
 //     `locations/{location_id}/attributes`.
@@ -3412,10 +3416,11 @@ type LocationsGetGoogleUpdatedCall struct {
 	header_      http.Header
 }
 
-// GetGoogleUpdated: Gets the version of the specified location, returning a
-// `GoogleUpdatedLocation` that provides the location view as it appears to
-// consumers and masks indicating which fields are different than the
-// merchant's information.
+// GetGoogleUpdated: Returns the specified location as it appears live on
+// Google Maps and Search. This consumer-facing view may have been updated by
+// Google or user-generated content and may differ from the merchant's version.
+// The returned GoogleUpdatedLocation contains masks that indicate which fields
+// differ from the merchant's information.
 //
 // - name: The name of the location to fetch.
 func (r *LocationsService) GetGoogleUpdated(name string) *LocationsGetGoogleUpdatedCall {
@@ -3771,9 +3776,9 @@ type LocationsAttributesGetGoogleUpdatedCall struct {
 	header_      http.Header
 }
 
-// GetGoogleUpdated: Gets the version of the specified location, returning an
-// `Attributes` message that provides the attributes view as it appears to
-// consumers, which may be different than the merchant's information.
+// GetGoogleUpdated: Retrieves attributes for a location as they appear live on
+// Google Maps and Search. This consumer-facing view may have been updated by
+// Google or user-generated content and may differ from the merchant's version.
 //
 //   - name: Google identifier for this location in the form of
 //     `locations/{location_id}/attributes`.

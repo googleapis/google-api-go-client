@@ -1213,11 +1213,12 @@ type DriveSyncStateChanged struct {
 	//
 	// Possible values:
 	//   "SYNC_STATE_CHANGE_REASON_UNSPECIFIED" - Unspecified state change reason
-	//   "UNUSUAL_ACTIVITY" - Sync state change reason is unusual activity
-	//   "USER_FEEDBACK_TRUE_POSITIVE" - Sync state change reason is user feedback
-	// true positive
-	//   "USER_FEEDBACK_FALSE_POSITIVE" - Sync state change reason is user feedback
-	// false positive
+	//   "UNUSUAL_ACTIVITY" - Sync state was changed due to unusual activity, such
+	// as potential ransomware
+	//   "USER_FEEDBACK_TRUE_POSITIVE" - The user provided feedback indicating that
+	// the initial sync state change may have been caused by unexpected activity
+	//   "USER_FEEDBACK_FALSE_POSITIVE" - The user provided feedback indicating
+	// that the initial sync state change may have been caused by a false positive
 	SyncStateChangeReason string `json:"syncStateChangeReason,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Email") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

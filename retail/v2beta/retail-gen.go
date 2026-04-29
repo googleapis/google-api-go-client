@@ -8731,9 +8731,11 @@ type GoogleCloudRetailV2betaSearchResponse struct {
 	// that is needed on client side for UI rendering of conversational retail
 	// search.
 	ConversationalSearchResult *GoogleCloudRetailV2betaSearchResponseConversationalSearchResult `json:"conversationalSearchResult,omitempty"`
-	// CorrectedQuery: Contains the spell corrected query, if found. If the spell
-	// correction type is AUTOMATIC, then the search results are based on
-	// corrected_query. Otherwise the original query is used for search.
+	// CorrectedQuery: Contains the spell corrected query, if found. The search
+	// results are based on corrected_query by default. However, if
+	// SearchRequest.SpellCorrectionSpec.mode is set to
+	// SearchRequest.SpellCorrectionSpec.Mode.SUGGESTION_ONLY, the original query
+	// is used for search.
 	CorrectedQuery string `json:"correctedQuery,omitempty"`
 	// ExperimentInfo: Metadata related to A/B testing experiment associated with
 	// this response. Only exists when an experiment is triggered.

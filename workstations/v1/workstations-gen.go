@@ -968,6 +968,13 @@ func (s GcePersistentDisk) MarshalJSON() ([]byte, error) {
 // the session ends. If this field is empty, workstations created with this
 // configuration do not have a persistent home directory.
 type GceRegionalPersistentDisk struct {
+	// ArchiveTimeout: Optional. Number of seconds to wait after initially creating
+	// or subsequently shutting down the workstation before converting its disk
+	// into a snapshot. This generally saves costs at the expense of greater
+	// startup time on next workstation start, as the service will need to create a
+	// disk from the archival snapshot. A value of "0s" indicates that the disk
+	// will never be archived.
+	ArchiveTimeout string `json:"archiveTimeout,omitempty"`
 	// DiskType: Optional. The type of the persistent disk
 	// (https://cloud.google.com/compute/docs/disks#disk-types) for the home
 	// directory. Defaults to "pd-standard".
@@ -996,15 +1003,15 @@ type GceRegionalPersistentDisk struct {
 	// disk. If set, size_gb and fs_type must be empty. Must be formatted as ext4
 	// file system with no partitions.
 	SourceSnapshot string `json:"sourceSnapshot,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DiskType") to
+	// ForceSendFields is a list of field names (e.g. "ArchiveTimeout") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DiskType") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ArchiveTimeout") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1931,8 +1938,6 @@ type Workstation struct {
 	//   "STATE_STOPPING" - The workstation is being stopped.
 	//   "STATE_STOPPED" - The workstation is stopped and will not be able to
 	// receive requests until it is started.
-	//   "STATE_SUSPENDING" - The workstation is being suspended.
-	//   "STATE_SUSPENDED" - The workstation is suspended.
 	State string `json:"state,omitempty"`
 	// Uid: Output only. A system-assigned unique identifier for this workstation.
 	Uid string `json:"uid,omitempty"`
@@ -2183,9 +2188,8 @@ type WorkstationConfig struct {
 	// configuration is created.
 	ReplicaZones []string `json:"replicaZones,omitempty"`
 	// RunningTimeout: Optional. Number of seconds that a workstation can run until
-	// it is automatically shut down. This field applies to workstations in both
-	// STATE_RUNNING and STATE_SUSPENDED. We recommend that workstations be shut
-	// down daily to reduce costs and so that security updates can be applied upon
+	// it is automatically shut down. We recommend that workstations be shut down
+	// daily to reduce costs and so that security updates can be applied upon
 	// restart. The idle_timeout and running_timeout fields are independent of each
 	// other. Note that the running_timeout field shuts down VMs after the
 	// specified time, regardless of whether or not the VMs are idle. Provide

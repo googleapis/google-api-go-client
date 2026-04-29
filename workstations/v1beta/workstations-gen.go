@@ -1395,6 +1395,38 @@ func (s ListWorkstationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// OAuthToken: OAuth token.
+type OAuthToken struct {
+	// AccessToken: Required. The OAuth token.
+	AccessToken string `json:"accessToken,omitempty"`
+	// Email: Optional. The email address encapsulated in the OAuth token.
+	Email string `json:"email,omitempty"`
+	// ExpireTime: Optional. The time the OAuth access token will expire. This
+	// should be the time the access token was generated plus the expires_in offset
+	// returned from the Access Token Response.
+	ExpireTime string `json:"expireTime,omitempty"`
+	// Scopes: Optional. The scopes encapsulated in the OAuth token. See
+	// https://developers.google.com/identity/protocols/oauth2/scopes for more
+	// information.
+	Scopes string `json:"scopes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccessToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OAuthToken) MarshalJSON() ([]byte, error) {
+	type NoMethod OAuthToken
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is the
 // result of a network API call.
 type Operation struct {
@@ -1662,6 +1694,31 @@ type PrivateClusterConfig struct {
 
 func (s PrivateClusterConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PrivateClusterConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PushCredentialsRequest: Request message for PushCredentials.
+type PushCredentialsRequest struct {
+	// ApplicationDefaultCredentials: Optional. Credentials used by Cloud Client
+	// Libraries, Google API Client Libraries, and other tooling within the user
+	// conainer:
+	// https://cloud.google.com/docs/authentication/application-default-credentials
+	ApplicationDefaultCredentials *OAuthToken `json:"applicationDefaultCredentials,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ApplicationDefaultCredentials") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApplicationDefaultCredentials")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PushCredentialsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod PushCredentialsRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1991,8 +2048,6 @@ type Workstation struct {
 	//   "STATE_STOPPING" - The workstation is being stopped.
 	//   "STATE_STOPPED" - The workstation is stopped and will not be able to
 	// receive requests until it is started.
-	//   "STATE_SUSPENDING" - The workstation is being suspended.
-	//   "STATE_SUSPENDED" - The workstation is suspended.
 	State string `json:"state,omitempty"`
 	// Uid: Output only. A system-assigned unique identifier for this workstation.
 	Uid string `json:"uid,omitempty"`
@@ -2203,6 +2258,14 @@ type WorkstationConfig struct {
 	// (https://cloud.google.com/logging/docs) console by querying:
 	// resource.type="gce_instance" log_name:"/logs/linux-auditd"
 	EnableAuditAgent bool `json:"enableAuditAgent,omitempty"`
+	// EnablePushingCredentials: Optional. Enables pushing user provided
+	// credentials to Workstations by calling workstations.pushCredentials. If
+	// application_default_credentials are supplied to pushCredentials, the
+	// provided token is returned when tools and applications running in the user
+	// container make a request for Default Application Credentials. Please note
+	// that any credentials supplied are made available to all users with access to
+	// the workstation.
+	EnablePushingCredentials bool `json:"enablePushingCredentials,omitempty"`
 	// EncryptionKey: Immutable. Encrypts resources of this workstation
 	// configuration using a customer-managed encryption key (CMEK). If specified,
 	// the boot disk of the Compute Engine instance and the persistent disk are
@@ -2276,9 +2339,8 @@ type WorkstationConfig struct {
 	// configuration is created.
 	ReplicaZones []string `json:"replicaZones,omitempty"`
 	// RunningTimeout: Optional. Number of seconds that a workstation can run until
-	// it is automatically shut down. This field applies to workstations in both
-	// STATE_RUNNING and STATE_SUSPENDED. We recommend that workstations be shut
-	// down daily to reduce costs and so that security updates can be applied upon
+	// it is automatically shut down. We recommend that workstations be shut down
+	// daily to reduce costs and so that security updates can be applied upon
 	// restart. The idle_timeout and running_timeout fields are independent of each
 	// other. Note that the running_timeout field shuts down VMs after the
 	// specified time, regardless of whether or not the VMs are idle. Provide
@@ -5549,6 +5611,113 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatch
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "workstations.projects.locations.workstationClusters.workstationConfigs.workstations.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPushCredentialsCall struct {
+	s                      *Service
+	workstation            string
+	pushcredentialsrequest *PushCredentialsRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// PushCredentials: Pushes credentials to a running workstation on behalf of a
+// user. Once complete, supported credential types
+// (application_default_credentials) are made available to processes running in
+// the user container.
+//
+//   - workstation: Name of the workstation for which the credentials should be
+//     pushed.
+func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsService) PushCredentials(workstation string, pushcredentialsrequest *PushCredentialsRequest) *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPushCredentialsCall {
+	c := &ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPushCredentialsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.workstation = workstation
+	c.pushcredentialsrequest = pushcredentialsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPushCredentialsCall) Fields(s ...googleapi.Field) *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPushCredentialsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPushCredentialsCall) Context(ctx context.Context) *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPushCredentialsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPushCredentialsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPushCredentialsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.pushcredentialsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+workstation}:pushCredentials")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"workstation": c.workstation,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "workstations.projects.locations.workstationClusters.workstationConfigs.workstations.pushCredentials", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "workstations.projects.locations.workstationClusters.workstationConfigs.workstations.pushCredentials" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPushCredentialsCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "workstations.projects.locations.workstationClusters.workstationConfigs.workstations.pushCredentials", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

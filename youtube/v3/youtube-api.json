@@ -2114,6 +2114,66 @@
         }
       }
     },
+    "media": {
+      "methods": {
+        "upload": {
+          "description": "Inserts a new AudioTrack for a video.",
+          "flatPath": "youtube/v3/audiotracks",
+          "httpMethod": "POST",
+          "id": "youtube.media.upload",
+          "mediaUpload": {
+            "accept": [
+              "audio/*",
+              "application/octet-stream",
+              "*/*"
+            ],
+            "protocols": {
+              "resumable": {
+                "multipart": true,
+                "path": "/resumable/upload/youtube/v3/audiotracks"
+              },
+              "simple": {
+                "multipart": true,
+                "path": "/upload/youtube/v3/audiotracks"
+              }
+            }
+          },
+          "parameterOrder": [],
+          "parameters": {
+            "language": {
+              "description": "Required. The BCP-47 language code of the AudioTrack (e.g., \"es-ES\").",
+              "location": "query",
+              "type": "string"
+            },
+            "part": {
+              "description": "Optional. The `part` parameter specifies the `AudioTrack` resource parts that the API response will include. The `part` names that you can include in the parameter value are `id` and `snippet`.",
+              "location": "query",
+              "repeated": true,
+              "type": "string"
+            },
+            "videoId": {
+              "description": "Required. The external YouTube video ID.",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "youtube/v3/audiotracks",
+          "request": {
+            "$ref": "AudioTrack"
+          },
+          "response": {
+            "$ref": "AudioTrack"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/youtube",
+            "https://www.googleapis.com/auth/youtube.force-ssl",
+            "https://www.googleapis.com/auth/youtube.upload",
+            "https://www.googleapis.com/auth/youtubepartner"
+          ],
+          "supportsMediaUpload": true
+        }
+      }
+    },
     "members": {
       "methods": {
         "list": {
@@ -4083,6 +4143,37 @@
       "resources": {
         "v3": {
           "methods": {
+            "deleteAudiotracks": {
+              "description": "Deletes one or more AudioTracks from a video.",
+              "flatPath": "youtube/v3/audiotracks",
+              "httpMethod": "DELETE",
+              "id": "youtube.youtube.v3.deleteAudiotracks",
+              "parameterOrder": [],
+              "parameters": {
+                "audioTrackId": {
+                  "description": "Required. The audio track ID of the AudioTrack to be deleted (e.g., \"v1234567890\").",
+                  "location": "query",
+                  "type": "string"
+                },
+                "part": {
+                  "description": "Optional. The `part` parameter specifies the `AudioTrack` resource parts that the API response will include. The `part` names that you can include in the parameter value are `id` and `snippet`.",
+                  "location": "query",
+                  "repeated": true,
+                  "type": "string"
+                },
+                "videoId": {
+                  "description": "Required. The external YouTube video ID.",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "youtube/v3/audiotracks",
+              "scopes": [
+                "https://www.googleapis.com/auth/youtube",
+                "https://www.googleapis.com/auth/youtube.force-ssl",
+                "https://www.googleapis.com/auth/youtubepartner"
+              ]
+            },
             "updateCommentThreads": {
               "description": "Updates an existing resource.",
               "flatPath": "youtube/v3/commentThreads",
@@ -4107,6 +4198,46 @@
             }
           },
           "resources": {
+            "audiotracks": {
+              "methods": {
+                "list": {
+                  "description": "Retrieves a list of AudioTracks for a video.",
+                  "flatPath": "youtube/v3/audiotracks",
+                  "httpMethod": "GET",
+                  "id": "youtube.youtube.v3.audiotracks.list",
+                  "parameterOrder": [],
+                  "parameters": {
+                    "language": {
+                      "description": "Required. Filter by specific BCP-47 language codes.",
+                      "location": "query",
+                      "repeated": true,
+                      "type": "string"
+                    },
+                    "part": {
+                      "description": "Optional. The `part` parameter specifies a comma-separated list of one or more `AudioTrack` resource parts that the API response will include. The `part` names that you can include in the parameter value are `id` and `snippet`.",
+                      "location": "query",
+                      "repeated": true,
+                      "type": "string"
+                    },
+                    "videoId": {
+                      "description": "Required. The external YouTube video ID.",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "youtube/v3/audiotracks",
+                  "response": {
+                    "$ref": "ListAudioTracksResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/youtube",
+                    "https://www.googleapis.com/auth/youtube.force-ssl",
+                    "https://www.googleapis.com/auth/youtube.readonly",
+                    "https://www.googleapis.com/auth/youtubepartner"
+                  ]
+                }
+              }
+            },
             "liveChat": {
               "resources": {
                 "messages": {
@@ -4176,7 +4307,7 @@
       }
     }
   },
-  "revision": "20260412",
+  "revision": "20260427",
   "rootUrl": "https://youtube.googleapis.com/",
   "schemas": {
     "AbuseReport": {
@@ -4646,6 +4777,76 @@
             "",
             ""
           ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AudioTrack": {
+      "description": "Represents an AudioTrack for a YouTube video.",
+      "id": "AudioTrack",
+      "properties": {
+        "etag": {
+          "description": "Etag of this resource.",
+          "type": "string"
+        },
+        "id": {
+          "description": "The ID that YouTube uses to uniquely identify the AudioTrack. This could be a generated AudioTrack ID.",
+          "type": "string"
+        },
+        "kind": {
+          "description": "Identifies what kind of resource this is. Value: the fixed string youtube#audiotrack.",
+          "type": "string"
+        },
+        "snippet": {
+          "$ref": "AudioTrackSnippet",
+          "description": "The `snippet` object contains basic details about the AudioTrack."
+        }
+      },
+      "type": "object"
+    },
+    "AudioTrackSnippet": {
+      "description": "Basic details about an AudioTrack, such as its video, language, and status.",
+      "id": "AudioTrackSnippet",
+      "properties": {
+        "contentType": {
+          "description": "The content type of the audio (e.g., \"dubbed\", \"descriptive\").",
+          "type": "string"
+        },
+        "failureReason": {
+          "description": "If the status is \"FAILED\", this provides a reason for the failure.",
+          "type": "string"
+        },
+        "language": {
+          "description": "The BCP-47 language code of this AudioTrack.",
+          "type": "string"
+        },
+        "status": {
+          "description": "The current status of this AudioTrack.",
+          "enum": [
+            "audioTrackStatusUnspecified",
+            "processing",
+            "succeeded",
+            "failed",
+            "rejected"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Output only. Timestamp of the last update.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "videoId": {
+          "description": "The external YouTube video ID this AudioTrack belongs to.",
           "type": "string"
         }
       },
@@ -8319,6 +8520,31 @@
       "properties": {
         "displayName": {
           "description": "The name that should be used when referring to this level.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ListAudioTracksResponse": {
+      "description": "Response for listing AudioTracks.",
+      "id": "ListAudioTracksResponse",
+      "properties": {
+        "audioTracks": {
+          "description": "Output only. A list of AudioTracks that match the request criteria.",
+          "items": {
+            "$ref": "AudioTrack"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "etag": {
+          "description": "Output only. Etag of this response.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "kind": {
+          "description": "Output only. Identifies what kind of resource this is. Value: the fixed string youtube#audiotrackList.",
+          "readOnly": true,
           "type": "string"
         }
       },

@@ -456,7 +456,7 @@ type ProjectsLocationsReplaysOperationsService struct {
 // for dry-run.
 type GoogleCloudOrgpolicyV2AlternatePolicySpec struct {
 	// Launch: Reference to the launch that will be used while audit logging and to
-	// control the launch. Should be set only in the alternate policy.
+	// control the launch. Set only in the alternate policy.
 	Launch string `json:"launch,omitempty"`
 	// Spec: Specify constraint for configurations of Google Cloud resources.
 	Spec *GoogleCloudOrgpolicyV2PolicySpec `json:"spec,omitempty"`
@@ -488,7 +488,7 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	//
 	// Possible values:
 	//   "ACTION_TYPE_UNSPECIFIED" - This is only used for distinguishing unset
-	// values and should never be used. Results in an error.
+	// values, and results in an error if used.
 	//   "ALLOW" - Allowed action type.
 	//   "DENY" - Deny action type.
 	ActionType string `json:"actionType,omitempty"`
@@ -508,16 +508,15 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	//
 	// Possible values:
 	//   "METHOD_TYPE_UNSPECIFIED" - This is only used for distinguishing unset
-	// values and should never be used. Results in an error.
+	// values, and results in an error if used.
 	//   "CREATE" - Constraint applied when creating the resource.
 	//   "UPDATE" - Constraint applied when updating the resource.
-	//   "DELETE" - Constraint applied when deleting the resource. Not currently
-	// supported.
+	//   "DELETE" - Constraint applied when deleting the resource. Not supported.
 	//   "REMOVE_GRANT" - Constraint applied when removing an IAM grant.
 	//   "GOVERN_TAGS" - Constraint applied when enforcing forced tagging.
 	MethodTypes []string `json:"methodTypes,omitempty"`
 	// Name: Immutable. Name of the constraint. This is unique within the
-	// organization. Format of the name should be *
+	// organization. The name must be of the form: *
 	// `organizations/{organization_id}/customConstraints/{custom_constraint_id}`
 	// Example: `organizations/123/customConstraints/custom.createOnlyE2TypeVms`
 	// The max length is 71 characters and the minimum length is 1. Note that the

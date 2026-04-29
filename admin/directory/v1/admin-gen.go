@@ -5086,8 +5086,8 @@ func (s UserLanguage) MarshalJSON() ([]byte, error) {
 
 // UserLocation: JSON template for a location entry.
 type UserLocation struct {
-	// Area: Textual location. This is most useful for display purposes to
-	// concisely describe the location. For example 'Mountain View, CA', 'Near
+	// Area: Required. Textual location. This is most useful for display purposes
+	// to concisely describe the location. For example 'Mountain View, CA', 'Near
 	// Seattle', 'US-NYC-9TH 9A209A.''
 	Area string `json:"area,omitempty"`
 	// BuildingId: Building Identifier.

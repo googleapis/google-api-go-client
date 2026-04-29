@@ -3522,6 +3522,9 @@ type ListAutonomousDatabasesResponse struct {
 	// NextPageToken: A token identifying a page of results the server should
 	// return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unreachable locations when listing resources across all
+	// locations using wildcard location '-'.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -3579,6 +3582,9 @@ type ListCloudExadataInfrastructuresResponse struct {
 	CloudExadataInfrastructures []*CloudExadataInfrastructure `json:"cloudExadataInfrastructures,omitempty"`
 	// NextPageToken: A token for fetching next page of response.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unreachable locations when listing resources across all
+	// locations using wildcard location '-'.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -3606,6 +3612,9 @@ type ListCloudVmClustersResponse struct {
 	CloudVmClusters []*CloudVmCluster `json:"cloudVmClusters,omitempty"`
 	// NextPageToken: A token to fetch the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unreachable locations when listing resources across all
+	// locations using wildcard location '-'.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -3803,6 +3812,9 @@ type ListDbSystemsResponse struct {
 	// NextPageToken: A token identifying a page of results the server should
 	// return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unreachable locations when listing resources across all
+	// locations using wildcard location '-'.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -3887,6 +3899,9 @@ type ListExadbVmClustersResponse struct {
 	// NextPageToken: A token identifying a page of results the server should
 	// return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unreachable locations when listing resources across all
+	// locations using wildcard location '-'.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -3918,6 +3933,9 @@ type ListExascaleDbStorageVaultsResponse struct {
 	// ListExascaleDbStorageVaults call to list the next page. If empty, there are
 	// no more pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unreachable locations when listing resources across all
+	// locations using wildcard location '-'.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -5131,8 +5149,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

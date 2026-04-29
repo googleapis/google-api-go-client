@@ -4782,11 +4782,11 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
 	// `bi-directional-audio` * `feedback` * `session-sharing` *
 	// `personalization-memory` * `personalization-suggested-highlights` *
-	// `disable-agent-sharing` * `disable-image-generation` *
-	// `disable-video-generation` * `disable-onedrive-upload` *
-	// `disable-talk-to-content` * `disable-google-drive-upload` *
-	// `disable-welcome-emails` * `disable-canvas` * `disable-canvas-workspace` *
-	// `disable-skills`
+	// `disable-mobile-app-access` * `disable-agent-sharing` *
+	// `disable-image-generation` * `disable-video-generation` *
+	// `disable-onedrive-upload` * `disable-talk-to-content` *
+	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
+	// * `disable-canvas-workspace` * `disable-skills`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -8952,6 +8952,8 @@ type GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetad
 	References []*GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadataReference `json:"references,omitempty"`
 	// Segments: Grounding information for parts of the text.
 	Segments []*GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadataSegment `json:"segments,omitempty"`
+	// VisualSegments: Grounding information for parts of the visual content.
+	VisualSegments []*GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadataVisualSegment `json:"visualSegments,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "References") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -8973,17 +8975,19 @@ func (s GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMe
 // GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadat
 // aReference: Referenced content and related document metadata.
 type GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadataReference struct {
+	// CodeSnippet: Chunk of code snippet from the referenced document.
+	CodeSnippet string `json:"codeSnippet,omitempty"`
 	// Content: Referenced text content.
 	Content string `json:"content,omitempty"`
 	// DocumentMetadata: Document metadata.
 	DocumentMetadata *GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadataReferenceDocumentMetadata `json:"documentMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "CodeSnippet") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Content") to include in API
+	// NullFields is a list of field names (e.g. "CodeSnippet") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -9004,6 +9008,11 @@ type GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetad
 	// contain a URL that redirects to the actual website, in which case this will
 	// contain the domain name of the target site.
 	Domain string `json:"domain,omitempty"`
+	// Possible values:
+	//   "LANGUAGE_UNSPECIFIED"
+	//   "PYTHON"
+	//   "SQL"
+	Language string `json:"language,omitempty"`
 	// MimeType: The mime type of the document.
 	// https://www.iana.org/assignments/media-types/media-types.xhtml.
 	MimeType string `json:"mimeType,omitempty"`
@@ -9077,6 +9086,33 @@ func (s *GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingM
 	}
 	s.GroundingScore = float64(s1.GroundingScore)
 	return nil
+}
+
+// GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadat
+// aVisualSegment: Grounding information for a visual segment.
+type GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadataVisualSegment struct {
+	// ContentId: The content id of the visual segment. In order to display the
+	// citation of the visual element, this content_id needs to match with the
+	// `grounded_content.content_metadata.content_id` field.
+	ContentId string `json:"contentId,omitempty"`
+	// ReferenceIndices: References for the visual segment.
+	ReferenceIndices []int64 `json:"referenceIndices,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContentId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadataVisualSegment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadataVisualSegment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDiscoveryengineV1alphaBAPConfig: The configuration for the BAP
@@ -11916,11 +11952,11 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
 	// `bi-directional-audio` * `feedback` * `session-sharing` *
 	// `personalization-memory` * `personalization-suggested-highlights` *
-	// `disable-agent-sharing` * `disable-image-generation` *
-	// `disable-video-generation` * `disable-onedrive-upload` *
-	// `disable-talk-to-content` * `disable-google-drive-upload` *
-	// `disable-welcome-emails` * `disable-canvas` * `disable-canvas-workspace` *
-	// `disable-skills`
+	// `disable-mobile-app-access` * `disable-agent-sharing` *
+	// `disable-image-generation` * `disable-video-generation` *
+	// `disable-onedrive-upload` * `disable-talk-to-content` *
+	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
+	// * `disable-canvas-workspace` * `disable-skills`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -16747,6 +16783,8 @@ type GoogleCloudDiscoveryengineV1alphaSessionTurn struct {
 	// API, if GetSessionRequest.include_answer_details is set to true, this field
 	// will be populated when getting assistant session.
 	DetailedAssistAnswer *GoogleCloudDiscoveryengineV1alphaAssistAnswer `json:"detailedAssistAnswer,omitempty"`
+	// Live: Optional. Indicates whether this turn is a live turn.
+	Live bool `json:"live,omitempty"`
 	// Query: Optional. The user query. May not be set if this turn is merely
 	// regenerating an answer to a different turn
 	Query *GoogleCloudDiscoveryengineV1alphaQuery `json:"query,omitempty"`
@@ -20464,6 +20502,8 @@ type GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetada
 	References []*GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataReference `json:"references,omitempty"`
 	// Segments: Grounding information for parts of the text.
 	Segments []*GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataSegment `json:"segments,omitempty"`
+	// VisualSegments: Grounding information for parts of the visual content.
+	VisualSegments []*GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataVisualSegment `json:"visualSegments,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "References") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -20485,17 +20525,19 @@ func (s GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMet
 // GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadata
 // Reference: Referenced content and related document metadata.
 type GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataReference struct {
+	// CodeSnippet: Chunk of code snippet from the referenced document.
+	CodeSnippet string `json:"codeSnippet,omitempty"`
 	// Content: Referenced text content.
 	Content string `json:"content,omitempty"`
 	// DocumentMetadata: Document metadata.
 	DocumentMetadata *GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataReferenceDocumentMetadata `json:"documentMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "CodeSnippet") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Content") to include in API
+	// NullFields is a list of field names (e.g. "CodeSnippet") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -20516,6 +20558,11 @@ type GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetada
 	// contain a URL that redirects to the actual website, in which case this will
 	// contain the domain name of the target site.
 	Domain string `json:"domain,omitempty"`
+	// Possible values:
+	//   "LANGUAGE_UNSPECIFIED"
+	//   "PYTHON"
+	//   "SQL"
+	Language string `json:"language,omitempty"`
 	// MimeType: The mime type of the document.
 	// https://www.iana.org/assignments/media-types/media-types.xhtml.
 	MimeType string `json:"mimeType,omitempty"`
@@ -20589,6 +20636,33 @@ func (s *GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMe
 	}
 	s.GroundingScore = float64(s1.GroundingScore)
 	return nil
+}
+
+// GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadata
+// VisualSegment: Grounding information for a visual segment.
+type GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataVisualSegment struct {
+	// ContentId: The content id of the visual segment. In order to display the
+	// citation of the visual element, this content_id needs to match with the
+	// `grounded_content.content_metadata.content_id` field.
+	ContentId string `json:"contentId,omitempty"`
+	// ReferenceIndices: References for the visual segment.
+	ReferenceIndices []int64 `json:"referenceIndices,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContentId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataVisualSegment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataVisualSegment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDiscoveryengineV1betaAssistantToolInfo: Information to identify a
@@ -24113,11 +24187,11 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
 	// `bi-directional-audio` * `feedback` * `session-sharing` *
 	// `personalization-memory` * `personalization-suggested-highlights` *
-	// `disable-agent-sharing` * `disable-image-generation` *
-	// `disable-video-generation` * `disable-onedrive-upload` *
-	// `disable-talk-to-content` * `disable-google-drive-upload` *
-	// `disable-welcome-emails` * `disable-canvas` * `disable-canvas-workspace` *
-	// `disable-skills`
+	// `disable-mobile-app-access` * `disable-agent-sharing` *
+	// `disable-image-generation` * `disable-video-generation` *
+	// `disable-onedrive-upload` * `disable-talk-to-content` *
+	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
+	// * `disable-canvas-workspace` * `disable-skills`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -27954,8 +28028,8 @@ type GoogleCloudDiscoveryengineV1betaRankingRecord struct {
 	// Id: The unique ID to represent the record.
 	Id string `json:"id,omitempty"`
 	// Score: The score of this record based on the given query and selected model.
-	// The score will be rounded to 2 decimal places. If the score is close to 0,
-	// it will be rounded to 0.0001 to avoid returning unset.
+	// The score will be rounded to 4 decimal places. If the score is close to 0,
+	// it will be rounded to 0.00001 to avoid returning unset.
 	Score float64 `json:"score,omitempty"`
 	// Title: The title of the record. Empty by default. At least one of title or
 	// content should be set otherwise an INVALID_ARGUMENT error is thrown.
@@ -31701,6 +31775,8 @@ type GoogleCloudDiscoveryengineV1betaSessionTurn struct {
 	// API, if GetSessionRequest.include_answer_details is set to true, this field
 	// will be populated when getting assistant session.
 	DetailedAssistAnswer *GoogleCloudDiscoveryengineV1betaAssistAnswer `json:"detailedAssistAnswer,omitempty"`
+	// Live: Optional. Indicates whether this turn is a live turn.
+	Live bool `json:"live,omitempty"`
 	// Query: Optional. The user query. May not be set if this turn is merely
 	// regenerating an answer to a different turn
 	Query *GoogleCloudDiscoveryengineV1betaQuery `json:"query,omitempty"`
@@ -66052,7 +66128,7 @@ func (r *ProjectsLocationsUserStoresUserLicensesService) List(parent string) *Pr
 // users who attempted login but no license assigned. *
 // `license_assignment_state != NO_LICENSE_ATTEMPTED_LOGIN` to filter out users
 // who attempted login but no license assigned. * `user_principal =
-// user1@abc.com` to list user license for `user1@abc.com`.
+// user1@example.com` to list user license for `user1@example.com`.
 func (c *ProjectsLocationsUserStoresUserLicensesListCall) Filter(filter string) *ProjectsLocationsUserStoresUserLicensesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

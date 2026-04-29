@@ -446,15 +446,17 @@ type Empty struct {
 type EndActiveConferenceRequest struct {
 }
 
-// GatewaySipAccess: Details how to join the conference via a SIP gateway.
+// GatewaySipAccess: Details how to join the conference through a SIP gateway.
 type GatewaySipAccess struct {
-	// SipAccessCode: Permanent numeric code for manual entry on specially
+	// SipAccessCode: The permanent numeric code for manual entry on specially
 	// configured devices.
 	SipAccessCode string `json:"sipAccessCode,omitempty"`
-	// Uri: The SIP URI the conference can be reached through. The string is on one
-	// of the formats: "sip:@" "sips:@" where currently is the 13-digit universal
-	// pin, and is a valid address to be resolved using a DNS SRV lookup, or a
-	// dotted quad.
+	// Uri: The Session Initiation Protocol (SIP) URI the conference can be reached
+	// through. The string is in one of these formats: *
+	// "sip:USER_ID@GATEWAY_ADDRESS" * "sips:USER_ID@GATEWAY_ADDRESS" where USER_ID
+	// is the 13-digit universal pin (with the future option to support using a
+	// Meet meeting code as well), and GATEWAY_ADDRESS is a valid address to be
+	// resolved using a DNS SRV lookup, or a dotted quad.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SipAccessCode") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1058,7 +1060,7 @@ type Space struct {
 	ActiveConference *ActiveConference `json:"activeConference,omitempty"`
 	// Config: Configuration pertaining to the meeting space.
 	Config *SpaceConfig `json:"config,omitempty"`
-	// GatewaySipAccess: Output only. The SIP based access methods that can be used
+	// GatewaySipAccess: Output only. The SIP-based access methods that can be used
 	// to join the conference. Can be empty.
 	GatewaySipAccess []*GatewaySipAccess `json:"gatewaySipAccess,omitempty"`
 	// MeetingCode: Output only. Type friendly unique string used to join the

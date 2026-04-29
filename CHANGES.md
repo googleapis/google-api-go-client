@@ -1,5 +1,25 @@
 # Changes
 
+## [0.277.0](https://github.com/googleapis/google-api-go-client/compare/v0.276.0...v0.277.0) (2026-04-29)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#3567](https://github.com/googleapis/google-api-go-client/issues/3567)) ([3958295](https://github.com/googleapis/google-api-go-client/commit/39582952e4eac1b744499f8a8063a4a5f1ce7d6b))
+* **all:** Auto-regenerate discovery clients ([#3571](https://github.com/googleapis/google-api-go-client/issues/3571)) ([ca9851e](https://github.com/googleapis/google-api-go-client/commit/ca9851efc573231ca1ed9c6fea4bc77d6052d0bb))
+* **all:** Auto-regenerate discovery clients ([#3574](https://github.com/googleapis/google-api-go-client/issues/3574)) ([8efb1af](https://github.com/googleapis/google-api-go-client/commit/8efb1afa0e5d9cc454f721124bba3881f3935e3c))
+* **all:** Auto-regenerate discovery clients ([#3575](https://github.com/googleapis/google-api-go-client/issues/3575)) ([de49bb5](https://github.com/googleapis/google-api-go-client/commit/de49bb519cab881f74e5b9ba11e263a2b9a4ad2e))
+* **all:** Auto-regenerate discovery clients ([#3577](https://github.com/googleapis/google-api-go-client/issues/3577)) ([ce68c87](https://github.com/googleapis/google-api-go-client/commit/ce68c87d9dc6c144b6df578df725470b30cf83d6))
+* **all:** Auto-regenerate discovery clients ([#3578](https://github.com/googleapis/google-api-go-client/issues/3578)) ([8be033e](https://github.com/googleapis/google-api-go-client/commit/8be033e24e0c6ddb08a3df72c0a8997d21623a22))
+* **all:** Auto-regenerate discovery clients ([#3579](https://github.com/googleapis/google-api-go-client/issues/3579)) ([bc6990e](https://github.com/googleapis/google-api-go-client/commit/bc6990e20803f2ff2fd1b77995f6e9180ab2302b))
+* **all:** Auto-regenerate discovery clients ([#3580](https://github.com/googleapis/google-api-go-client/issues/3580)) ([2de1a5a](https://github.com/googleapis/google-api-go-client/commit/2de1a5aff3f3b6e53dff00da297c5d249ac8d791))
+* **all:** Auto-regenerate discovery clients ([#3581](https://github.com/googleapis/google-api-go-client/issues/3581)) ([0c219d9](https://github.com/googleapis/google-api-go-client/commit/0c219d90e90899c93215558f3ea309c9732bf7ea))
+
+
+### Bug Fixes
+
+* **idtoken:** Avoid double impersonation in tokenSourceFromBytes ([#3576](https://github.com/googleapis/google-api-go-client/issues/3576)) ([75172cf](https://github.com/googleapis/google-api-go-client/commit/75172cf5cb7bfc260c22e481323355306f684a09)), refs [#2301](https://github.com/googleapis/google-api-go-client/issues/2301)
+
 ## [0.276.0](https://github.com/googleapis/google-api-go-client/compare/v0.275.0...v0.276.0) (2026-04-14)
 
 

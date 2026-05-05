@@ -1601,6 +1601,10 @@ type NodeConfig struct {
 	// within the list must comply with RFC1035
 	// (https://www.ietf.org/rfc/rfc1035.txt). Cannot be updated.
 	Tags []string `json:"tags,omitempty"`
+	// TrafficRoutingConfig: Optional. Configures how the environment routes
+	// traffic to other services. This field is supported for Cloud Composer
+	// environments in versions composer-3-airflow-*.*.*-build.* and newer.
+	TrafficRoutingConfig *TrafficRoutingConfig `json:"trafficRoutingConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "ComposerInternalIpv4CidrBlock") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -2289,6 +2293,40 @@ type TaskLogsRetentionConfig struct {
 
 func (s TaskLogsRetentionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod TaskLogsRetentionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TrafficRoutingConfig: Configuration for network traffic routing from the
+// Cloud Composer environment to other services.
+type TrafficRoutingConfig struct {
+	// CloudRunFunctionsRouting: Optional. Controls how network traffic to Cloud
+	// Run functions is routed.
+	//
+	// Possible values:
+	//   "ROUTING_MODE_UNSPECIFIED" - Unspecified routing mode. When provided in a
+	// create environment request, this value will be treated as `DIRECT`. When
+	// provided in an update environment request, this value will be ignored and
+	// the existing routing mode will be preserved.
+	//   "DIRECT" - Route traffic directly to the destination service.
+	//   "VIA_NETWORK_ATTACHMENT" - Route traffic via connected network attachment.
+	// This mode requires that the environment has connectivity to the user's VPC
+	// network.
+	CloudRunFunctionsRouting string `json:"cloudRunFunctionsRouting,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudRunFunctionsRouting")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudRunFunctionsRouting") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TrafficRoutingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod TrafficRoutingConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

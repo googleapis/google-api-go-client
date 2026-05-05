@@ -569,7 +569,7 @@
       }
     }
   },
-  "revision": "20260422",
+  "revision": "20260429",
   "rootUrl": "https://storagebatchoperations.googleapis.com/",
   "schemas": {
     "Bucket": {
@@ -759,6 +759,12 @@
         },
         "totalBytesFound": {
           "description": "Output only. Number of bytes found from source. This field is only populated for jobs with a prefix list object configuration.",
+          "format": "int64",
+          "readOnly": true,
+          "type": "string"
+        },
+        "totalBytesTransformed": {
+          "description": "Output only. The total number of bytes affected by the transformation. For example, this counts bytes deleted for `DeleteObject` operations and bytes rewritten for `RewriteObject` operations.",
           "format": "int64",
           "readOnly": true,
           "type": "string"

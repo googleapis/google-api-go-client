@@ -562,6 +562,46 @@ func (s Application) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BasalEnergyBurned: Number of calories burned due to basal metabolic rate
+// (BMR) over a period of time.
+type BasalEnergyBurned struct {
+	// Interval: Required. Observed interval.
+	Interval *ObservationTimeInterval `json:"interval,omitempty"`
+	// Kcal: Required. Number of calories burned due to basal metabolic rate in
+	// kilocalories over the observed interval.
+	Kcal float64 `json:"kcal,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Interval") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Interval") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BasalEnergyBurned) MarshalJSON() ([]byte, error) {
+	type NoMethod BasalEnergyBurned
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *BasalEnergyBurned) UnmarshalJSON(data []byte) error {
+	type NoMethod BasalEnergyBurned
+	var s1 struct {
+		Kcal gensupport.JSONFloat64 `json:"kcal"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Kcal = float64(s1.Kcal)
+	return nil
+}
+
 // BatchDeleteDataPointsRequest: Request to delete a batch of identifiable data
 // points.
 type BatchDeleteDataPointsRequest struct {
@@ -1353,6 +1393,9 @@ type DataPoint struct {
 	// Altitude: Optional. Data for points in the `altitude` interval data type
 	// collection.
 	Altitude *Altitude `json:"altitude,omitempty"`
+	// BasalEnergyBurned: Optional. Data for points in the `basal-energy-burned`
+	// interval data type collection.
+	BasalEnergyBurned *BasalEnergyBurned `json:"basalEnergyBurned,omitempty"`
 	// BodyFat: Optional. Data for points in the `body-fat` sample data type
 	// collection.
 	BodyFat *BodyFat `json:"bodyFat,omitempty"`
@@ -1966,6 +2009,31 @@ type GoogleDevicesandservicesHealthV4DataType struct {
 
 func (s GoogleDevicesandservicesHealthV4DataType) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDevicesandservicesHealthV4DataType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevicesandservicesHealthV4WebhookNotificationCloudLog: Log message for
+// a webhook notification sent by the Google Health API to a subscriber's
+// endpoint. Includes the HTTP response received from the endpoint.
+type GoogleDevicesandservicesHealthV4WebhookNotificationCloudLog struct {
+	// HttpResponse: Required. Represents the HTTP response. This message includes
+	// the status code, reason phrase, headers, and body.
+	HttpResponse *HttpResponse `json:"httpResponse,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HttpResponse") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HttpResponse") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleDevicesandservicesHealthV4WebhookNotificationCloudLog) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevicesandservicesHealthV4WebhookNotificationCloudLog
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2881,6 +2949,9 @@ type ReconciledDataPoint struct {
 	ActivityLevel *ActivityLevel `json:"activityLevel,omitempty"`
 	// Altitude: Data for points in the `altitude` interval data type collection.
 	Altitude *Altitude `json:"altitude,omitempty"`
+	// BasalEnergyBurned: Data for points in the `basal-energy-burned` interval
+	// data type collection.
+	BasalEnergyBurned *BasalEnergyBurned `json:"basalEnergyBurned,omitempty"`
 	// BodyFat: Data for points in the `body-fat` sample data type collection.
 	BodyFat *BodyFat `json:"bodyFat,omitempty"`
 	// DailyHeartRateVariability: Data for points in the
@@ -4428,31 +4499,6 @@ func (s *VolumeQuantityRollup) UnmarshalJSON(data []byte) error {
 	}
 	s.MillilitersSum = float64(s1.MillilitersSum)
 	return nil
-}
-
-// WebhookNotificationCloudLog: Log message for a webhook notification sent by
-// the Google Health API to a subscriber's endpoint. Includes the HTTP response
-// received from the endpoint.
-type WebhookNotificationCloudLog struct {
-	// HttpResponse: Required. Represents the HTTP response. This message includes
-	// the status code, reason phrase, headers, and body.
-	HttpResponse *HttpResponse `json:"httpResponse,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "HttpResponse") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "HttpResponse") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s WebhookNotificationCloudLog) MarshalJSON() ([]byte, error) {
-	type NoMethod WebhookNotificationCloudLog
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Weight: Body weight measurement.
@@ -6238,7 +6284,6 @@ func (r *UsersDataTypesDataPointsService) List(parent string) *UsersDataTypesDat
 // date: - Pattern: `{daily_summary_data_type}.date` - Supported comparison
 // operators: `>=`, `<` - Date literal expected in ISO 8601 `YYYY-MM-DD` format
 // - Supported logical operators: `AND` - Example: -
-// `daily_resting_heart_rate.date >= "2024-08-14" -
 // `daily_heart_rate_variability.date < "2024-08-15" - Session civil start
 // time (**Excluding Sleep**): - Pattern:
 // `{session_data_type}.interval.civil_start_time` - Supported comparison

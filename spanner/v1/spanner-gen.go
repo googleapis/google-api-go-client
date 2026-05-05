@@ -781,7 +781,8 @@ type Backup struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Database: Required for the CreateBackup operation. Name of the database from
 	// which this backup was created. This needs to be in the same instance as the
-	// backup. Values are of the form `projects//instances//databases/`.
+	// backup. Values are of the form
+	// `projects/{project}/instances/{instance}/databases/{database}`.
 	Database string `json:"database,omitempty"`
 	// DatabaseDialect: Output only. The database dialect information for the
 	// backup.
@@ -853,11 +854,11 @@ type Backup struct {
 	// Name: Output only for the CreateBackup operation. Required for the
 	// UpdateBackup operation. A globally unique identifier for the backup which
 	// cannot be changed. Values are of the form
-	// `projects//instances//backups/a-z*[a-z0-9]` The final segment of the name
-	// must be between 2 and 60 characters in length. The backup is stored in the
-	// location(s) specified in the instance configuration of the instance
-	// containing the backup, identified by the prefix of the backup name of the
-	// form `projects//instances/`.
+	// `projects/{project}/instances/{instance}/backups/a-z*[a-z0-9]` The final
+	// segment of the name must be between 2 and 60 characters in length. The
+	// backup is stored in the location(s) specified in the instance configuration
+	// of the instance containing the backup, identified by the prefix of the
+	// backup name of the form `projects/{project}/instances/{instance}`.
 	Name string `json:"name,omitempty"`
 	// OldestVersionTime: Output only. Data deleted at a time older than this is
 	// guaranteed not to be retained in order to support this backup. For a backup
@@ -868,18 +869,19 @@ type Backup struct {
 	OldestVersionTime string `json:"oldestVersionTime,omitempty"`
 	// ReferencingBackups: Output only. The names of the destination backups being
 	// created by copying this source backup. The backup names are of the form
-	// `projects//instances//backups/`. Referencing backups may exist in different
-	// instances. The existence of any referencing backup prevents the backup from
-	// being deleted. When the copy operation is done (either successfully
-	// completed or cancelled or the destination backup is deleted), the reference
-	// to the backup is removed.
+	// `projects/{project}/instances/{instance}/backups/{backup}`. Referencing
+	// backups may exist in different instances. The existence of any referencing
+	// backup prevents the backup from being deleted. When the copy operation is
+	// done (either successfully completed or cancelled or the destination backup
+	// is deleted), the reference to the backup is removed.
 	ReferencingBackups []string `json:"referencingBackups,omitempty"`
 	// ReferencingDatabases: Output only. The names of the restored databases that
 	// reference the backup. The database names are of the form
-	// `projects//instances//databases/`. Referencing databases may exist in
-	// different instances. The existence of any referencing database prevents the
-	// backup from being deleted. When a restored database from the backup enters
-	// the `READY` state, the reference to the backup is removed.
+	// `projects/{project}/instances/{instance}/databases/{database}`. Referencing
+	// databases may exist in different instances. The existence of any referencing
+	// database prevents the backup from being deleted. When a restored database
+	// from the backup enters the `READY` state, the reference to the backup is
+	// removed.
 	ReferencingDatabases []string `json:"referencingDatabases,omitempty"`
 	// SizeBytes: Output only. Size of the backup in bytes. For a backup in an
 	// incremental backup chain, this is the sum of the `exclusive_size_bytes` of
@@ -953,7 +955,9 @@ func (s BackupInfo) MarshalJSON() ([]byte, error) {
 // BackupInstancePartition: Instance partition information for the backup.
 type BackupInstancePartition struct {
 	// InstancePartition: A unique identifier for the instance partition. Values
-	// are of the form `projects//instances//instancePartitions/`
+	// are of the form
+	// `projects/{project}/instances/{instance}/instancePartitions/{instance_partiti
+	// on_id}`
 	InstancePartition string `json:"instancePartition,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "InstancePartition") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1708,21 +1712,23 @@ type CopyBackupEncryptionConfig struct {
 	// be in `us-central1` or `nam3`. The Cloud KMS key that is used to encrypt and
 	// decrypt the restored database. Set this field only when encryption_type is
 	// `CUSTOMER_MANAGED_ENCRYPTION`. Values are of the form
-	// `projects//locations//keyRings//cryptoKeys/`.
+	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{kms_
+	// key_name}`.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// KmsKeyNames: Optional. Specifies the KMS configuration for the one or more
 	// keys used to protect the backup. Values are of the form
-	// `projects//locations//keyRings//cryptoKeys/`. KMS keys specified can be in
-	// any order. The keys referenced by `kms_key_names` must fully cover all
-	// regions of the backup's instance configuration. Some examples: * For
-	// regional (single-region) instance configurations, specify a regional
-	// location KMS key. * For multi-region instance configurations of type
-	// `GOOGLE_MANAGED`, either specify a multi-region location KMS key or multiple
-	// regional location KMS keys that cover all regions in the instance
-	// configuration. * For an instance configuration of type `USER_MANAGED`,
-	// specify only regional location KMS keys to cover each region in the instance
-	// configuration. Multi-region location KMS keys aren't supported for
-	// `USER_MANAGED` type instance configurations.
+	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{kms_
+	// key_name}`. KMS keys specified can be in any order. The keys referenced by
+	// `kms_key_names` must fully cover all regions of the backup's instance
+	// configuration. Some examples: * For regional (single-region) instance
+	// configurations, specify a regional location KMS key. * For multi-region
+	// instance configurations of type `GOOGLE_MANAGED`, either specify a
+	// multi-region location KMS key or multiple regional location KMS keys that
+	// cover all regions in the instance configuration. * For an instance
+	// configuration of type `USER_MANAGED`, specify only regional location KMS
+	// keys to cover each region in the instance configuration. Multi-region
+	// location KMS keys aren't supported for `USER_MANAGED` type instance
+	// configurations.
 	KmsKeyNames []string `json:"kmsKeyNames,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EncryptionType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1755,12 +1761,13 @@ type CopyBackupMetadata struct {
 	// 1, corresponding to `Code.CANCELLED`.
 	CancelTime string `json:"cancelTime,omitempty"`
 	// Name: The name of the backup being created through the copy operation.
-	// Values are of the form `projects//instances//backups/`.
+	// Values are of the form
+	// `projects/{project}/instances/{instance}/backups/{backup}`.
 	Name string `json:"name,omitempty"`
 	// Progress: The progress of the CopyBackup operation.
 	Progress *OperationProgress `json:"progress,omitempty"`
 	// SourceBackup: The name of the source backup that is being copied. Values are
-	// of the form `projects//instances//backups/`.
+	// of the form `projects/{project}/instances/{instance}/backups/{backup}`.
 	SourceBackup string `json:"sourceBackup,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CancelTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1784,7 +1791,7 @@ func (s CopyBackupMetadata) MarshalJSON() ([]byte, error) {
 type CopyBackupRequest struct {
 	// BackupId: Required. The id of the backup copy. The `backup_id` appended to
 	// `parent` forms the full backup_uri of the form
-	// `projects//instances//backups/`.
+	// `projects/{project}/instances/{instance}/backups/{backup}`.
 	BackupId string `json:"backupId,omitempty"`
 	// EncryptionConfig: Optional. The encryption configuration used to encrypt the
 	// backup. If this field is not specified, the backup will use the same
@@ -1801,7 +1808,7 @@ type CopyBackupRequest struct {
 	// needs to be in READY state for it to be copied. Once CopyBackup is in
 	// progress, the source backup cannot be deleted or cleaned up on expiration
 	// until CopyBackup is finished. Values are of the form:
-	// `projects//instances//backups/`.
+	// `projects/{project}/instances/{instance}/backups/{backup}`.
 	SourceBackup string `json:"sourceBackup,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackupId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1844,21 +1851,22 @@ type CreateBackupEncryptionConfig struct {
 	// be in `us-central1` or `nam3`. The Cloud KMS key that is used to encrypt and
 	// decrypt the restored database. Set this field only when encryption_type is
 	// `CUSTOMER_MANAGED_ENCRYPTION`. Values are of the form
-	// `projects//locations//keyRings//cryptoKeys/`.
+	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{kms_
+	// key_name}`.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// KmsKeyNames: Optional. Specifies the KMS configuration for the one or more
 	// keys used to protect the backup. Values are of the form
-	// `projects//locations//keyRings//cryptoKeys/`. The keys referenced by
-	// `kms_key_names` must fully cover all regions of the backup's instance
-	// configuration. Some examples: * For regional (single-region) instance
-	// configurations, specify a regional location KMS key. * For multi-region
-	// instance configurations of type `GOOGLE_MANAGED`, either specify a
-	// multi-region location KMS key or multiple regional location KMS keys that
-	// cover all regions in the instance configuration. * For an instance
-	// configuration of type `USER_MANAGED`, specify only regional location KMS
-	// keys to cover each region in the instance configuration. Multi-region
-	// location KMS keys aren't supported for `USER_MANAGED` type instance
-	// configurations.
+	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{kms_
+	// key_name}`. The keys referenced by `kms_key_names` must fully cover all
+	// regions of the backup's instance configuration. Some examples: * For
+	// regional (single-region) instance configurations, specify a regional
+	// location KMS key. * For multi-region instance configurations of type
+	// `GOOGLE_MANAGED`, either specify a multi-region location KMS key or multiple
+	// regional location KMS keys that cover all regions in the instance
+	// configuration. * For an instance configuration of type `USER_MANAGED`,
+	// specify only regional location KMS keys to cover each region in the instance
+	// configuration. Multi-region location KMS keys aren't supported for
+	// `USER_MANAGED` type instance configurations.
 	KmsKeyNames []string `json:"kmsKeyNames,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EncryptionType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10402,7 +10410,7 @@ type ProjectsInstancesBackupOperationsListCall struct {
 // from the most recently started operation.
 //
 //   - parent: The instance of the backup operations. Values are of the form
-//     `projects//instances/`.
+//     `projects/{project}/instances/{instance}`.
 func (r *ProjectsInstancesBackupOperationsService) List(parent string) *ProjectsInstancesBackupOperationsListCall {
 	c := &ProjectsInstancesBackupOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10609,7 +10617,7 @@ type ProjectsInstancesBackupsCopyCall struct {
 // can run on the same source backup.
 //
 //   - parent: The name of the destination instance that will contain the backup
-//     copy. Values are of the form: `projects//instances/`.
+//     copy. Values are of the form: `projects/{project}/instances/{instance}`.
 func (r *ProjectsInstancesBackupsService) Copy(parent string, copybackuprequest *CopyBackupRequest) *ProjectsInstancesBackupsCopyCall {
 	c := &ProjectsInstancesBackupsCopyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10723,7 +10731,7 @@ type ProjectsInstancesBackupsCreateCall struct {
 //     be the same instance that contains the database the backup is created
 //     from. The backup will be stored in the locations specified in the instance
 //     configuration of this instance. Values are of the form
-//     `projects//instances/`.
+//     `projects/{project}/instances/{instance}`.
 func (r *ProjectsInstancesBackupsService) Create(parent string, backup *Backup) *ProjectsInstancesBackupsCreateCall {
 	c := &ProjectsInstancesBackupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10733,7 +10741,8 @@ func (r *ProjectsInstancesBackupsService) Create(parent string, backup *Backup) 
 
 // BackupId sets the optional parameter "backupId": Required. The id of the
 // backup to be created. The `backup_id` appended to `parent` forms the full
-// backup name of the form `projects//instances//backups/`.
+// backup name of the form
+// `projects/{project}/instances/{instance}/backups/{backup_id}`.
 func (c *ProjectsInstancesBackupsCreateCall) BackupId(backupId string) *ProjectsInstancesBackupsCreateCall {
 	c.urlParams_.Set("backupId", backupId)
 	return c
@@ -10770,7 +10779,9 @@ func (c *ProjectsInstancesBackupsCreateCall) EncryptionConfigEncryptionType(encr
 // database instance must also be in `us-central1` or `nam3`. The Cloud KMS key
 // that is used to encrypt and decrypt the restored database. Set this field
 // only when encryption_type is `CUSTOMER_MANAGED_ENCRYPTION`. Values are of
-// the form `projects//locations//keyRings//cryptoKeys/`.
+// the form
+// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{kms_
+// key_name}`.
 func (c *ProjectsInstancesBackupsCreateCall) EncryptionConfigKmsKeyName(encryptionConfigKmsKeyName string) *ProjectsInstancesBackupsCreateCall {
 	c.urlParams_.Set("encryptionConfig.kmsKeyName", encryptionConfigKmsKeyName)
 	return c
@@ -10779,17 +10790,17 @@ func (c *ProjectsInstancesBackupsCreateCall) EncryptionConfigKmsKeyName(encrypti
 // EncryptionConfigKmsKeyNames sets the optional parameter
 // "encryptionConfig.kmsKeyNames": Specifies the KMS configuration for the one
 // or more keys used to protect the backup. Values are of the form
-// `projects//locations//keyRings//cryptoKeys/`. The keys referenced by
-// `kms_key_names` must fully cover all regions of the backup's instance
-// configuration. Some examples: * For regional (single-region) instance
-// configurations, specify a regional location KMS key. * For multi-region
-// instance configurations of type `GOOGLE_MANAGED`, either specify a
-// multi-region location KMS key or multiple regional location KMS keys that
-// cover all regions in the instance configuration. * For an instance
-// configuration of type `USER_MANAGED`, specify only regional location KMS
-// keys to cover each region in the instance configuration. Multi-region
-// location KMS keys aren't supported for `USER_MANAGED` type instance
-// configurations.
+// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{kms_
+// key_name}`. The keys referenced by `kms_key_names` must fully cover all
+// regions of the backup's instance configuration. Some examples: * For
+// regional (single-region) instance configurations, specify a regional
+// location KMS key. * For multi-region instance configurations of type
+// `GOOGLE_MANAGED`, either specify a multi-region location KMS key or multiple
+// regional location KMS keys that cover all regions in the instance
+// configuration. * For an instance configuration of type `USER_MANAGED`,
+// specify only regional location KMS keys to cover each region in the instance
+// configuration. Multi-region location KMS keys aren't supported for
+// `USER_MANAGED` type instance configurations.
 func (c *ProjectsInstancesBackupsCreateCall) EncryptionConfigKmsKeyNames(encryptionConfigKmsKeyNames ...string) *ProjectsInstancesBackupsCreateCall {
 	c.urlParams_.SetMulti("encryptionConfig.kmsKeyNames", append([]string{}, encryptionConfigKmsKeyNames...))
 	return c
@@ -10890,7 +10901,7 @@ type ProjectsInstancesBackupsDeleteCall struct {
 // Delete: Deletes a pending or completed Backup.
 //
 //   - name: Name of the backup to delete. Values are of the form
-//     `projects//instances//backups/`.
+//     `projects/{project}/instances/{instance}/backups/{backup}`.
 func (r *ProjectsInstancesBackupsService) Delete(name string) *ProjectsInstancesBackupsDeleteCall {
 	c := &ProjectsInstancesBackupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10989,7 +11000,7 @@ type ProjectsInstancesBackupsGetCall struct {
 // Get: Gets metadata on a pending or completed Backup.
 //
 //   - name: Name of the backup. Values are of the form
-//     `projects//instances//backups/`.
+//     `projects/{project}/instances/{instance}/backups/{backup}`.
 func (r *ProjectsInstancesBackupsService) Get(name string) *ProjectsInstancesBackupsGetCall {
 	c := &ProjectsInstancesBackupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11212,7 +11223,7 @@ type ProjectsInstancesBackupsListCall struct {
 // `create_time`.
 //
 //   - parent: The instance to list backups from. Values are of the form
-//     `projects//instances/`.
+//     `projects/{project}/instances/{instance}`.
 func (r *ProjectsInstancesBackupsService) List(parent string) *ProjectsInstancesBackupsListCall {
 	c := &ProjectsInstancesBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11390,11 +11401,12 @@ type ProjectsInstancesBackupsPatchCall struct {
 //   - name: Output only for the CreateBackup operation. Required for the
 //     UpdateBackup operation. A globally unique identifier for the backup which
 //     cannot be changed. Values are of the form
-//     `projects//instances//backups/a-z*[a-z0-9]` The final segment of the name
-//     must be between 2 and 60 characters in length. The backup is stored in the
-//     location(s) specified in the instance configuration of the instance
-//     containing the backup, identified by the prefix of the backup name of the
-//     form `projects//instances/`.
+//     `projects/{project}/instances/{instance}/backups/a-z*[a-z0-9]` The final
+//     segment of the name must be between 2 and 60 characters in length. The
+//     backup is stored in the location(s) specified in the instance
+//     configuration of the instance containing the backup, identified by the
+//     prefix of the backup name of the form
+//     `projects/{project}/instances/{instance}`.
 func (r *ProjectsInstancesBackupsService) Patch(nameid string, backup *Backup) *ProjectsInstancesBackupsPatchCall {
 	c := &ProjectsInstancesBackupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid

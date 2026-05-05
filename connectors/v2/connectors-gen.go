@@ -1250,23 +1250,59 @@ func (s Instance) MarshalJSON() ([]byte, error) {
 
 // JsonSchema: JsonSchema representation of schema metadata
 type JsonSchema struct {
+	// Comment: A comment on the schema.
+	Comment string `json:"$comment,omitempty"`
+	// Defs: Definitions for the schema.
+	Defs map[string]JsonSchema `json:"$defs,omitempty"`
+	// Id: The URI defining the core schema meta-schema.
+	Id string `json:"$id,omitempty"`
+	// Ref: A reference to another schema.
+	Ref string `json:"$ref,omitempty"`
+	// Schema: The URI defining the schema.
+	Schema string `json:"$schema,omitempty"`
 	// AdditionalDetails: Additional details apart from standard json schema
 	// fields, this gives flexibility to store metadata about the schema
 	AdditionalDetails googleapi.RawMessage `json:"additionalDetails,omitempty"`
+	// AdditionalItems: Schema for additional items.
+	AdditionalItems *JsonSchema `json:"additionalItems,omitempty"`
+	// AdditionalProperties: Schema for additional properties.
+	AdditionalProperties *JsonSchema `json:"additionalProperties,omitempty"`
+	// AllOf: Schema that must be valid against all of the sub-schemas.
+	AllOf []*JsonSchema `json:"allOf,omitempty"`
+	// AnyOf: Schema that must be valid against at least one of the sub-schemas.
+	AnyOf []*JsonSchema `json:"anyOf,omitempty"`
+	// Const: Const value that the data must match.
+	Const interface{} `json:"const,omitempty"`
+	// Contains: Schema that applies to at least one item in an array.
+	Contains *JsonSchema `json:"contains,omitempty"`
+	// ContentEncoding: Encoding of the content.
+	ContentEncoding string `json:"contentEncoding,omitempty"`
+	// ContentMediaType: Media type of the content.
+	ContentMediaType string `json:"contentMediaType,omitempty"`
 	// Default: The default value of the field or object described by this schema.
 	Default interface{} `json:"default,omitempty"`
+	// Definitions: Definitions for the schema.
+	Definitions map[string]JsonSchema `json:"definitions,omitempty"`
+	// Dependencies: Dependencies for the schema.
+	Dependencies googleapi.RawMessage `json:"dependencies,omitempty"`
 	// Description: A description of this schema.
 	Description string `json:"description,omitempty"`
+	// Else: Schema that must be valid if the "if" schema is invalid.
+	Else *JsonSchema `json:"else,omitempty"`
 	// Enum: Possible values for an enumeration. This works in conjunction with
 	// `type` to represent types with a fixed set of legal values
 	Enum []interface{} `json:"enum,omitempty"`
+	// Examples: Examples of the value.
+	Examples []interface{} `json:"examples,omitempty"`
 	// ExclusiveMaximum: Whether the maximum number value is exclusive.
-	ExclusiveMaximum bool `json:"exclusiveMaximum,omitempty"`
+	ExclusiveMaximum interface{} `json:"exclusiveMaximum,omitempty"`
 	// ExclusiveMinimum: Whether the minimum number value is exclusive.
-	ExclusiveMinimum bool `json:"exclusiveMinimum,omitempty"`
+	ExclusiveMinimum interface{} `json:"exclusiveMinimum,omitempty"`
 	// Format: Format of the value as per
 	// https://json-schema.org/understanding-json-schema/reference/string.html#format
 	Format string `json:"format,omitempty"`
+	// If: Schema that must be valid if the "if" schema is valid.
+	If *JsonSchema `json:"if,omitempty"`
 	// Items: Schema that applies to array values, applicable only if this is of
 	// type `array`.
 	Items *JsonSchema `json:"items,omitempty"`
@@ -1323,36 +1359,58 @@ type JsonSchema struct {
 	MaxItems int64 `json:"maxItems,omitempty"`
 	// MaxLength: Maximum length of the string field.
 	MaxLength int64 `json:"maxLength,omitempty"`
+	// MaxProperties: Maximum number of properties.
+	MaxProperties int64 `json:"maxProperties,omitempty"`
 	// Maximum: Maximum value of the number field.
 	Maximum interface{} `json:"maximum,omitempty"`
 	// MinItems: Minimum number of items in the array field.
 	MinItems int64 `json:"minItems,omitempty"`
 	// MinLength: Minimum length of the string field.
 	MinLength int64 `json:"minLength,omitempty"`
+	// MinProperties: Minimum number of properties.
+	MinProperties int64 `json:"minProperties,omitempty"`
 	// Minimum: Minimum value of the number field.
 	Minimum interface{} `json:"minimum,omitempty"`
+	// MultipleOf: Number must be a multiple of this value.
+	MultipleOf float64 `json:"multipleOf,omitempty"`
+	// Not: Schema that must not be valid.
+	Not *JsonSchema `json:"not,omitempty"`
+	// OneOf: Schema that must be valid against at least one of the sub-schemas.
+	OneOf []*JsonSchema `json:"oneOf,omitempty"`
 	// Pattern: Regex pattern of the string field. This is a string value that
 	// describes the regular expression that the string value should match.
 	Pattern string `json:"pattern,omitempty"`
+	// PatternProperties: Pattern properties for the schema.
+	PatternProperties map[string]JsonSchema `json:"patternProperties,omitempty"`
 	// Properties: The child schemas, applicable only if this is of type `object`.
 	// The key is the name of the property and the value is the json schema that
 	// describes that property
 	Properties map[string]JsonSchema `json:"properties,omitempty"`
+	// PropertyNames: Schema for property names.
+	PropertyNames *JsonSchema `json:"propertyNames,omitempty"`
+	// ReadOnly: Whether the value is read-only.
+	ReadOnly bool `json:"readOnly,omitempty"`
 	// Required: Whether this property is required.
 	Required []string `json:"required,omitempty"`
+	// Then: Schema that must be valid if the "if" schema is valid.
+	Then *JsonSchema `json:"then,omitempty"`
+	// Title: A title of the schema.
+	Title string `json:"title,omitempty"`
 	// Type: JSON Schema Validation: A Vocabulary for Structural Validation of JSON
 	Type []string `json:"type,omitempty"`
 	// UniqueItems: Whether the items in the array field are unique.
 	UniqueItems bool `json:"uniqueItems,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AdditionalDetails") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// WriteOnly: Whether the value is write-only.
+	WriteOnly bool `json:"writeOnly,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Comment") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AdditionalDetails") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Comment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1360,6 +1418,20 @@ type JsonSchema struct {
 func (s JsonSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod JsonSchema
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *JsonSchema) UnmarshalJSON(data []byte) error {
+	type NoMethod JsonSchema
+	var s1 struct {
+		MultipleOf gensupport.JSONFloat64 `json:"multipleOf"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.MultipleOf = float64(s1.MultipleOf)
+	return nil
 }
 
 // ListActionsResponse: Response message for ActionService.ListActions
@@ -1516,6 +1588,8 @@ type ListToolsPostRequest struct {
 	PageSize int64 `json:"pageSize,omitempty"`
 	// PageToken: Page token.
 	PageToken string `json:"pageToken,omitempty"`
+	// ToolNames: List of tool names to for selective tool fetching.
+	ToolNames []string `json:"toolNames,omitempty"`
 	// ToolSpec: List of tool specifications.
 	ToolSpec *ToolSpec `json:"toolSpec,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExecutionConfig") to

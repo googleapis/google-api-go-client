@@ -2945,10 +2945,12 @@ type LogEntry struct {
 	// ErrorGroups: Output only. The Error Reporting
 	// (https://cloud.google.com/error-reporting) error groups associated with this
 	// LogEntry. Error Reporting sets the values for this field during error group
-	// creation.For more information, see View error details(
-	// https://cloud.google.com/error-reporting/docs/viewing-errors#view_error_details)This
-	// field isn't available during log routing
-	// (https://cloud.google.com/logging/docs/routing/overview)
+	// creation.This field is populated only when log entries are stored in Cloud
+	// Logging storage (Logs Explorer and Observability Analytics). It is not
+	// available for use in log sink filters, log-based metrics, or log-based
+	// alerts, and it is excluded from log exports (Cloud Storage, BigQuery, and
+	// Pub/Sub).For more information, see View error details(
+	// https://cloud.google.com/error-reporting/docs/viewing-errors#view_error_details)
 	ErrorGroups []*LogErrorGroup `json:"errorGroups,omitempty"`
 	// HttpRequest: Optional. Information about the HTTP request associated with
 	// this log entry, if applicable.
@@ -3176,10 +3178,13 @@ func (s LogEntrySourceLocation) MarshalJSON() ([]byte, error) {
 type LogErrorGroup struct {
 	// Id: The id is a unique identifier for a particular error group; it is the
 	// last part of the error group resource name:
-	// /project/[PROJECT_ID]/errors/[ERROR_GROUP_ID]. Example: COShysOX0r_51QE. The
-	// id is derived from key parts of the error-log content and is treated as
-	// Service Data. For information about how Service Data is handled, see Google
-	// Cloud Privacy Notice (https://cloud.google.com/terms/cloud-privacy-notice).
+	// /project/[PROJECT_ID]/errors/[ERROR_GROUP_ID]. Example: COShysOX0r_51QE.This
+	// field can be used to search for log entries belonging to a specific error
+	// group in Logs Explorer (e.g., error_groups.id = "ID") or Observability
+	// Analytics.The id is derived from key parts of the error-log content and is
+	// treated as Service Data. For information about how Service Data is handled,
+	// see Google Cloud Privacy Notice
+	// (https://cloud.google.com/terms/cloud-privacy-notice).
 	Id string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

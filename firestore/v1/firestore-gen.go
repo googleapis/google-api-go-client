@@ -1979,10 +1979,15 @@ type GoogleFirestoreAdminV1Database struct {
 	AppEngineIntegrationMode string `json:"appEngineIntegrationMode,omitempty"`
 	// CmekConfig: Optional. Presence indicates CMEK is enabled for this database.
 	CmekConfig *GoogleFirestoreAdminV1CmekConfig `json:"cmekConfig,omitempty"`
-	// ConcurrencyMode: The concurrency control mode to use for this database. If
-	// unspecified in a CreateDatabase request, this will default based on the
-	// database edition: Optimistic for Enterprise and Pessimistic for all other
-	// databases.
+	// ConcurrencyMode: The default concurrency control mode to use for this
+	// database. If unspecified in a CreateDatabase request, this will default
+	// based on the database edition: Optimistic for Enterprise and Pessimistic for
+	// all other databases. While transactions can explicitly specify their own
+	// concurrency mode, this setting defines the default behavior when left
+	// unspecified. Important: This database-level setting is not respected for
+	// Firestore with MongoDB compatibility. All transactions through the MongoDB
+	// compatibility layer will use optimistic concurrency control, regardless of
+	// this setting.
 	//
 	// Possible values:
 	//   "CONCURRENCY_MODE_UNSPECIFIED" - Not used.
@@ -2751,9 +2756,7 @@ type GoogleFirestoreAdminV1IndexField struct {
 	//   "ASCENDING" - The field is ordered by ascending field value.
 	//   "DESCENDING" - The field is ordered by descending field value.
 	Order string `json:"order,omitempty"`
-	// SearchConfig: Indicates that this field supports search operations. This
-	// field is only currently supported for indexes with MONGODB_COMPATIBLE_API
-	// ApiScope.
+	// SearchConfig: Indicates that this field supports search operations.
 	SearchConfig *GoogleFirestoreAdminV1SearchConfig `json:"searchConfig,omitempty"`
 	// VectorConfig: Indicates that this field supports nearest neighbor and
 	// distance operations on vector.
@@ -4217,18 +4220,30 @@ func (s ReadOnly) MarshalJSON() ([]byte, error) {
 }
 
 // ReadWrite: Options for a transaction that can be used to read and write
-// documents. Firestore does not allow 3rd party auth requests to create
-// read-write. transactions.
+// documents.
 type ReadWrite struct {
+	// ConcurrencyMode: Optional. The concurrency control mode to use for this
+	// transaction. A database is able to use different concurrency modes for
+	// different transactions simultaneously. 3rd party auth requests are only
+	// allowed to create optimistic read-write transactions and must specify that
+	// here even if the database-level setting is already configured to optimistic.
+	//
+	// Possible values:
+	//   "CONCURRENCY_MODE_UNSPECIFIED" - Start the transaction with the
+	// database-level default concurrency mode.
+	//   "OPTIMISTIC" - Use optimistic concurrency control for the new transaction.
+	//   "PESSIMISTIC" - Use pessimistic concurrency control for the new
+	// transaction.
+	ConcurrencyMode string `json:"concurrencyMode,omitempty"`
 	// RetryTransaction: An optional transaction to retry.
 	RetryTransaction string `json:"retryTransaction,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RetryTransaction") to
+	// ForceSendFields is a list of field names (e.g. "ConcurrencyMode") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RetryTransaction") to include in
+	// NullFields is a list of field names (e.g. "ConcurrencyMode") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -8734,7 +8749,9 @@ type ProjectsDatabasesDocumentsListCollectionIdsCall struct {
 //   - parent: The parent document. In the format:
 //     `projects/{project_id}/databases/{database_id}/documents/{document_path}`.
 //     For example:
-//     `projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`.
+//     `projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`
+//     Use `projects/{project_id}/databases/{database_id}/documents` to list
+//     top-level collections.
 func (r *ProjectsDatabasesDocumentsService) ListCollectionIds(parent string, listcollectionidsrequest *ListCollectionIdsRequest) *ProjectsDatabasesDocumentsListCollectionIdsCall {
 	c := &ProjectsDatabasesDocumentsListCollectionIdsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11215,8 +11232,8 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this service. This
 // method lists locations based on the resource scope provided in the
-// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
-// empty, the method lists the public locations available to all projects. *
+// ListLocationsRequest.name field: * **Global locations**: If `name` is empty,
+// the method lists the public locations available to all projects. *
 // **Project-specific locations**: If `name` follows the format
 // `projects/{project}`, the method lists locations visible to that specific
 // project. This includes public, private, or other project-specific locations
@@ -11233,8 +11250,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

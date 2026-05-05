@@ -1286,6 +1286,8 @@ type ResumeSubscriptionRequest struct {
 	//   "RESUME_MODE_RESTORE_EXISTING_BILLING_SCHEDULE" - Resume the subscription
 	// with the existing billing schedule. The subscription's next renewal time
 	// must still be in the future for this mode to be applicable.
+	//   "RESUME_MODE_IMMEDIATE_NEW_CYCLE" - Resume the subscription and start a
+	// new billing cycle immediately, resulting in a new charge.
 	ResumeMode string `json:"resumeMode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CycleOptions") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1802,6 +1804,37 @@ func (s SubscriptionUpgradeDowngradeDetails) MarshalJSON() ([]byte, error) {
 
 // SuspendSubscriptionRequest: Request to suspend a subscription.
 type SuspendSubscriptionRequest struct {
+	// SuspendMode: Optional. The mode to suspend the subscription. It's required
+	// for partners to specify the suspend mode, whether suspend immediately and
+	// indefinitely, or cancel the subscription after grace_period_millis or
+	// auto_cancel_duration_millis if it's not resumed.
+	//
+	// Possible values:
+	//   "SUSPEND_MODE_UNSPECIFIED" - The default value. Suspend the subscription,
+	// and the subscription will stay suspended indefinitely.
+	//   "SUSPEND_MODE_CANCEL_AFTER_GRACE_PERIOD" - Suspend the subscription, and
+	// the subscription will be auto cancelled after the grace period. Contract
+	// terms dictate how long the grace period is.
+	//   "SUSPEND_MODE_CANCEL_AFTER_RETENTION_PERIOD" - Suspend the subscription,
+	// and the subscription will be auto cancelled after the retention period.
+	// Contract terms dictate how long the retention period is.
+	SuspendMode string `json:"suspendMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SuspendMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SuspendMode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SuspendSubscriptionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SuspendSubscriptionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SuspendSubscriptionResponse: Response that contains the suspended

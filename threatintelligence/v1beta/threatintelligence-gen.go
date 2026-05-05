@@ -345,7 +345,8 @@ type AlertDocument struct {
 	CollectionTime string `json:"collectionTime,omitempty"`
 	// Content: Output only. The content of the document.
 	Content string `json:"content,omitempty"`
-	// CreateTime: Output only. The time the document was created.
+	// CreateTime: Output only. The timestamp of the original external publication
+	// of the document.
 	CreateTime string `json:"createTime,omitempty"`
 	// IngestTime: Output only. Time when GTI received the intel.
 	IngestTime string `json:"ingestTime,omitempty"`

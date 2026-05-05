@@ -2110,6 +2110,226 @@ func (c *AdviceCalendarModeCall) Do(opts ...googleapi.CallOption) (*CalendarMode
 	return ret, nil
 }
 
+type AdviceCapacityCall struct {
+	s                     *Service
+	project               string
+	region                string
+	capacityadvicerequest *CapacityAdviceRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Capacity: Advice on making real-time decisions (such as choosing zone
+// or
+// machine types) during deployment to maximize your chances of
+// obtaining
+// capacity.
+//
+// - project: Project ID for this request.
+// - region: Name of the region for this request.
+func (r *AdviceService) Capacity(project string, region string, capacityadvicerequest *CapacityAdviceRequest) *AdviceCapacityCall {
+	c := &AdviceCapacityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.capacityadvicerequest = capacityadvicerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdviceCapacityCall) Fields(s ...googleapi.Field) *AdviceCapacityCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdviceCapacityCall) Context(ctx context.Context) *AdviceCapacityCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdviceCapacityCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdviceCapacityCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.capacityadvicerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/regions/{region}/advice/capacity")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"region":  c.region,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.advice.capacity", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.advice.capacity" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CapacityAdviceResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AdviceCapacityCall) Do(opts ...googleapi.CallOption) (*CapacityAdviceResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CapacityAdviceResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.advice.capacity", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AdviceCapacityHistoryCall struct {
+	s                      *Service
+	project                string
+	region                 string
+	capacityhistoryrequest *CapacityHistoryRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// CapacityHistory: Gets the capacity history.
+//
+// - project: Project ID for this request.
+// - region: Name of the region for this request.
+func (r *AdviceService) CapacityHistory(project string, region string, capacityhistoryrequest *CapacityHistoryRequest) *AdviceCapacityHistoryCall {
+	c := &AdviceCapacityHistoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.capacityhistoryrequest = capacityhistoryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdviceCapacityHistoryCall) Fields(s ...googleapi.Field) *AdviceCapacityHistoryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdviceCapacityHistoryCall) Context(ctx context.Context) *AdviceCapacityHistoryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdviceCapacityHistoryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdviceCapacityHistoryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.capacityhistoryrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/regions/{region}/advice/capacityHistory")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"region":  c.region,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.advice.capacityHistory", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.advice.capacityHistory" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CapacityHistoryResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdviceCapacityHistoryCall) Do(opts ...googleapi.CallOption) (*CapacityHistoryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CapacityHistoryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.advice.capacityHistory", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type AutoscalersAggregatedListCall struct {
 	s            *Service
 	project      string
@@ -17891,6 +18111,22 @@ func (r *ForwardingRulesService) Get(project string, region string, forwardingRu
 	return c
 }
 
+// View sets the optional parameter "view":
+//
+// Possible values:
+//
+//	"BASIC" - The default view of a ForwardingRule, which includes the basic
+//
+// fields.
+//
+//	"FULL" - The full view, including the ForwardingRule.`attached_extensions`
+//
+// field.
+func (c *ForwardingRulesGetCall) View(view string) *ForwardingRulesGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -21214,6 +21450,22 @@ func (r *GlobalForwardingRulesService) Get(project string, forwardingRule string
 	c := &GlobalForwardingRulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.forwardingRule = forwardingRule
+	return c
+}
+
+// View sets the optional parameter "view":
+//
+// Possible values:
+//
+//	"BASIC" - The default view of a ForwardingRule, which includes the basic
+//
+// fields.
+//
+//	"FULL" - The full view, including the ForwardingRule.`attached_extensions`
+//
+// field.
+func (c *GlobalForwardingRulesGetCall) View(view string) *GlobalForwardingRulesGetCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 
@@ -33055,6 +33307,15 @@ func (r *InstanceGroupManagersService) Delete(project string, zone string, insta
 	return c
 }
 
+// NoGracefulShutdown sets the optional parameter "noGracefulShutdown": When
+// set, graceful shutdown is skipped for instance deletion even if
+// it's
+// configured for the instances.
+func (c *InstanceGroupManagersDeleteCall) NoGracefulShutdown(noGracefulShutdown bool) *InstanceGroupManagersDeleteCall {
+	c.urlParams_.Set("noGracefulShutdown", fmt.Sprint(noGracefulShutdown))
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so
 // that if you must retry your request, the server will know to ignore
@@ -33201,6 +33462,15 @@ func (r *InstanceGroupManagersService) DeleteInstances(project string, zone stri
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
 	c.instancegroupmanagersdeleteinstancesrequest = instancegroupmanagersdeleteinstancesrequest
+	return c
+}
+
+// NoGracefulShutdown sets the optional parameter "noGracefulShutdown": When
+// set, graceful shutdown is skipped for instance deletion even if
+// it's
+// configured for the instances.
+func (c *InstanceGroupManagersDeleteInstancesCall) NoGracefulShutdown(noGracefulShutdown bool) *InstanceGroupManagersDeleteInstancesCall {
+	c.urlParams_.Set("noGracefulShutdown", fmt.Sprint(noGracefulShutdown))
 	return c
 }
 
@@ -35223,6 +35493,15 @@ func (r *InstanceGroupManagersService) RecreateInstances(project string, zone st
 	return c
 }
 
+// NoGracefulShutdown sets the optional parameter "noGracefulShutdown": When
+// set, graceful shutdown is skipped for instance recreation even if
+// it's
+// configured for the instances.
+func (c *InstanceGroupManagersRecreateInstancesCall) NoGracefulShutdown(noGracefulShutdown bool) *InstanceGroupManagersRecreateInstancesCall {
+	c.urlParams_.Set("noGracefulShutdown", fmt.Sprint(noGracefulShutdown))
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so
 // that if you must retry your request, the server will know to ignore
@@ -36435,6 +36714,15 @@ func (r *InstanceGroupManagersService) StopInstances(project string, zone string
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
 	c.instancegroupmanagersstopinstancesrequest = instancegroupmanagersstopinstancesrequest
+	return c
+}
+
+// NoGracefulShutdown sets the optional parameter "noGracefulShutdown": When
+// set, graceful shutdown is skipped for instance stopping even if
+// it's
+// configured for the instances.
+func (c *InstanceGroupManagersStopInstancesCall) NoGracefulShutdown(noGracefulShutdown bool) *InstanceGroupManagersStopInstancesCall {
+	c.urlParams_.Set("noGracefulShutdown", fmt.Sprint(noGracefulShutdown))
 	return c
 }
 
@@ -56765,6 +57053,249 @@ func (c *LicenseCodesGetCall) Do(opts ...googleapi.CallOption) (*LicenseCode, er
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.licenseCodes.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type LicenseCodesGetIamPolicyCall struct {
+	s            *Service
+	project      string
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource. May be empty if
+// no such
+// policy or resource exists.
+//
+//	*Caution* This resource is intended
+//
+// for use only by third-party partners who are creatingCloud
+// Marketplace
+// images.
+//
+// - project: Project ID for this request.
+// - resource: Name or id of the resource for this request.
+func (r *LicenseCodesService) GetIamPolicy(project string, resource string) *LicenseCodesGetIamPolicyCall {
+	c := &LicenseCodesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "optionsRequestedPolicyVersion": Requested IAM Policy version.
+func (c *LicenseCodesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *LicenseCodesGetIamPolicyCall {
+	c.urlParams_.Set("optionsRequestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *LicenseCodesGetIamPolicyCall) Fields(s ...googleapi.Field) *LicenseCodesGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *LicenseCodesGetIamPolicyCall) IfNoneMatch(entityTag string) *LicenseCodesGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *LicenseCodesGetIamPolicyCall) Context(ctx context.Context) *LicenseCodesGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *LicenseCodesGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LicenseCodesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/global/licenseCodes/{resource}/getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.licenseCodes.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.licenseCodes.getIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *LicenseCodesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.licenseCodes.getIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type LicenseCodesSetIamPolicyCall struct {
+	s                      *Service
+	project                string
+	resource               string
+	globalsetpolicyrequest *GlobalSetPolicyRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified
+// resource.
+// Replaces any existing policy.
+//
+//	*Caution* This resource is intended
+//
+// for use only by third-party partners who are creatingCloud
+// Marketplace
+// images.
+//
+// - project: Project ID for this request.
+// - resource: Name or id of the resource for this request.
+func (r *LicenseCodesService) SetIamPolicy(project string, resource string, globalsetpolicyrequest *GlobalSetPolicyRequest) *LicenseCodesSetIamPolicyCall {
+	c := &LicenseCodesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.resource = resource
+	c.globalsetpolicyrequest = globalsetpolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *LicenseCodesSetIamPolicyCall) Fields(s ...googleapi.Field) *LicenseCodesSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *LicenseCodesSetIamPolicyCall) Context(ctx context.Context) *LicenseCodesSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *LicenseCodesSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LicenseCodesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.globalsetpolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/global/licenseCodes/{resource}/setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.licenseCodes.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.licenseCodes.setIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *LicenseCodesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.licenseCodes.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

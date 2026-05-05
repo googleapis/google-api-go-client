@@ -526,6 +526,35 @@ func (s Authority) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AutoUpgradeConfig: Configuration for automatic upgrades.
+type AutoUpgradeConfig struct {
+	// RolloutCreationScope: Optional. Specifies the scope of automation for the
+	// creation of rollouts. Represents the types of rollouts (version upgrades)
+	// the sequence should initiate automatically. If this field is `unset`, it
+	// defaults to all types. If this field is `set` but the internal
+	// `upgrade_types` list is `empty`, most automatic rollouts are disabled for
+	// this sequence. Exceptions are rollouts enforcing our security policies (e.g.
+	// such as end-of-support and outdated control plane patch enforcements). These
+	// policy enforcements cannot be disabled.
+	RolloutCreationScope *RolloutCreationScope `json:"rolloutCreationScope,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RolloutCreationScope") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RolloutCreationScope") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutoUpgradeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoUpgradeConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BinaryAuthorizationConfig: BinaryAuthorizationConfig defines the fleet level
 // configuration of binary authorization feature.
 type BinaryAuthorizationConfig struct {
@@ -3131,6 +3160,29 @@ type FleetObservabilityRoutingConfig struct {
 
 func (s FleetObservabilityRoutingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod FleetObservabilityRoutingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ForceCompleteRolloutStageRequest: Request message for force-completing a
+// rollout stage.
+type ForceCompleteRolloutStageRequest struct {
+	// StageNumber: Required. The stage number to force-complete.
+	StageNumber int64 `json:"stageNumber,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StageNumber") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StageNumber") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ForceCompleteRolloutStageRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ForceCompleteRolloutStageRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6048,6 +6100,38 @@ func (s Rollout) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RolloutCreationScope: The scope for automatic rollout creation.
+type RolloutCreationScope struct {
+	// UpgradeTypes: Optional. The list of enabled upgrade types.
+	//
+	// Possible values:
+	//   "UPGRADE_TYPE_UNSPECIFIED" - Default value. Should not be used.
+	//   "CONTROL_PLANE_MINOR" - Control plane minor version upgrades (e.g. 1.33 to
+	// 1.34).
+	//   "CONTROL_PLANE_PATCH" - Control plane patch version upgrades (e.g. 1.33.1
+	// to 1.33.2).
+	//   "NODE_MINOR" - Node minor version upgrades (e.g. 1.33 to 1.34 or 1.33 to
+	// 1.35).
+	//   "NODE_PATCH" - Node patch version upgrades (e.g. 1.33.1 to 1.33.2).
+	UpgradeTypes []string `json:"upgradeTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UpgradeTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UpgradeTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RolloutCreationScope) MarshalJSON() ([]byte, error) {
+	type NoMethod RolloutCreationScope
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RolloutMembershipState: Metadata about single cluster (GKE Hub membership)
 // that's part of this Rollout.
 type RolloutMembershipState struct {
@@ -6081,6 +6165,9 @@ func (s RolloutMembershipState) MarshalJSON() ([]byte, error) {
 
 // RolloutSequence: RolloutSequence defines the desired order of upgrades.
 type RolloutSequence struct {
+	// AutoUpgradeConfig: Optional. Configuration for automatic upgrades. If this
+	// message is `unset`, the system applies default behavior.
+	AutoUpgradeConfig *AutoUpgradeConfig `json:"autoUpgradeConfig,omitempty"`
 	// CreateTime: Output only. The timestamp at which the Rollout Sequence was
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -6088,6 +6175,9 @@ type RolloutSequence struct {
 	DeleteTime string `json:"deleteTime,omitempty"`
 	// DisplayName: Optional. Human readable display name of the Rollout Sequence.
 	DisplayName string `json:"displayName,omitempty"`
+	// EffectiveAutoUpgradeConfig: Output only. The resolved auto-upgrade options
+	// which are in effect.
+	EffectiveAutoUpgradeConfig *AutoUpgradeConfig `json:"effectiveAutoUpgradeConfig,omitempty"`
 	// Etag: Output only. etag of the Rollout Sequence Ex. abc1234
 	Etag string `json:"etag,omitempty"`
 	// IgnoredClustersSelector: Optional. Selector for clusters to exclude from the
@@ -6113,15 +6203,15 @@ type RolloutSequence struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "AutoUpgradeConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AutoUpgradeConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -6144,6 +6234,8 @@ type RolloutSequenceState struct {
 	//   "LIFECYCLE_STATE_ACTIVE" - The Rollout Sequence is active.
 	//   "LIFECYCLE_STATE_WARNING" - The Rollout Sequence has warnings.
 	//   "LIFECYCLE_STATE_ERROR" - The Rollout Sequence has errors.
+	//   "LIFECYCLE_STATE_INITIALIZING" - The Rollout Sequence is being
+	// initialized.
 	LifecycleState string `json:"lifecycleState,omitempty"`
 	// StateReasons: Output only. StateReason represents the reason for the Rollout
 	// Sequence state.
@@ -7787,8 +7879,8 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this service. This
 // method lists locations based on the resource scope provided in the
-// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
-// empty, the method lists the public locations available to all projects. *
+// ListLocationsRequest.name field: * **Global locations**: If `name` is empty,
+// the method lists the public locations available to all projects. *
 // **Project-specific locations**: If `name` follows the format
 // `projects/{project}`, the method lists locations visible to that specific
 // project. This includes public, private, or other project-specific locations
@@ -7805,8 +7897,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -13043,7 +13135,7 @@ type ProjectsLocationsRolloutSequencesCreateCall struct {
 	header_         http.Header
 }
 
-// Create: Create a new rollout sequence resource.
+// Create: Creates a new rollout sequence resource.
 //
 //   - parent: The parent resource where this rollout sequence will be created.
 //     projects/{project}/locations/{location}.
@@ -13155,7 +13247,7 @@ type ProjectsLocationsRolloutSequencesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Remove a RolloutSequence.
+// Delete: Removes a RolloutSequence.
 //
 //   - name: The name of the rollout sequence to delete.
 //     projects/{project}/locations/{location}/rolloutSequences/{rollout_sequence}.
@@ -13365,7 +13457,7 @@ type ProjectsLocationsRolloutSequencesListCall struct {
 	header_      http.Header
 }
 
-// List: Retrieve the list of all rollout sequences.
+// List: Retrieves the list of all rollout sequences.
 //
 //   - parent: The parent, which owns this collection of rollout sequences.
 //     Format: projects/{project}/locations/{location}.
@@ -13523,7 +13615,7 @@ type ProjectsLocationsRolloutSequencesPatchCall struct {
 	header_         http.Header
 }
 
-// Patch: Update a rollout sequence.
+// Patch: Updates a rollout sequence.
 //
 //   - name: Identifier. Name of the rollout sequence in the format of:
 //     projects/{PROJECT_ID}/locations/global/rolloutSequences/{NAME}.
@@ -13625,6 +13717,111 @@ func (c *ProjectsLocationsRolloutSequencesPatchCall) Do(opts ...googleapi.CallOp
 	return ret, nil
 }
 
+type ProjectsLocationsRolloutsForceCompleteStageCall struct {
+	s                                *Service
+	name                             string
+	forcecompleterolloutstagerequest *ForceCompleteRolloutStageRequest
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// ForceCompleteStage: Force-completes a rollout stage. Only the active stage
+// of an active rollout can be force-completed.
+//
+//   - name: The name of the rollout. Format:
+//     projects/{project}/locations/{location}/rollouts/{rollout}.
+func (r *ProjectsLocationsRolloutsService) ForceCompleteStage(name string, forcecompleterolloutstagerequest *ForceCompleteRolloutStageRequest) *ProjectsLocationsRolloutsForceCompleteStageCall {
+	c := &ProjectsLocationsRolloutsForceCompleteStageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.forcecompleterolloutstagerequest = forcecompleterolloutstagerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRolloutsForceCompleteStageCall) Fields(s ...googleapi.Field) *ProjectsLocationsRolloutsForceCompleteStageCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRolloutsForceCompleteStageCall) Context(ctx context.Context) *ProjectsLocationsRolloutsForceCompleteStageCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRolloutsForceCompleteStageCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRolloutsForceCompleteStageCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.forcecompleterolloutstagerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:forceCompleteStage")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gkehub.projects.locations.rollouts.forceCompleteStage", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.rollouts.forceCompleteStage" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRolloutsForceCompleteStageCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gkehub.projects.locations.rollouts.forceCompleteStage", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsRolloutsGetCall struct {
 	s            *Service
 	name         string
@@ -13634,7 +13831,7 @@ type ProjectsLocationsRolloutsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieve a single rollout.
+// Get: Retrieves a single rollout.
 //
 //   - name: The name of the rollout to retrieve.
 //     projects/{project}/locations/{location}/rollouts/{rollout}.
@@ -13744,7 +13941,7 @@ type ProjectsLocationsRolloutsListCall struct {
 	header_      http.Header
 }
 
-// List: Retrieve the list of all rollouts.
+// List: Retrieves the list of all rollouts.
 //
 //   - parent: The parent, which owns this collection of rollout. Format:
 //     projects/{project}/locations/{location}.

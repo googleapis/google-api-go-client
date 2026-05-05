@@ -4896,8 +4896,8 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this service. This
 // method lists locations based on the resource scope provided in the
-// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
-// empty, the method lists the public locations available to all projects. *
+// ListLocationsRequest.name field: * **Global locations**: If `name` is empty,
+// the method lists the public locations available to all projects. *
 // **Project-specific locations**: If `name` follows the format
 // `projects/{project}`, the method lists locations visible to that specific
 // project. This includes public, private, or other project-specific locations
@@ -4914,8 +4914,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -8795,6 +8795,12 @@ func (c *ProjectsLocationsHttpRoutesCreateCall) HttpRouteId(httpRouteId string) 
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": Idempotent request UUID.
+func (c *ProjectsLocationsHttpRoutesCreateCall) RequestId(requestId string) *ProjectsLocationsHttpRoutesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -9103,6 +9109,13 @@ type ProjectsLocationsHttpRoutesListCall struct {
 func (r *ProjectsLocationsHttpRoutesService) List(parent string) *ProjectsLocationsHttpRoutesListCall {
 	c := &ProjectsLocationsHttpRoutesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression to restrict
+// the list.
+func (c *ProjectsLocationsHttpRoutesListCall) Filter(filter string) *ProjectsLocationsHttpRoutesListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 

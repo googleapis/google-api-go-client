@@ -2969,6 +2969,7 @@ type Publishing struct {
 	//   "SHOPPING" - Shopping Org.
 	//   "GEO" - Geo Org.
 	//   "GENERATIVE_AI" - Generative AI - https://developers.generativeai.google
+	//   "HEALTH" - Health Org.
 	Organization string `json:"organization,omitempty"`
 	// ProtoReferenceDocumentationUri: Optional link to proto reference
 	// documentation. Example:

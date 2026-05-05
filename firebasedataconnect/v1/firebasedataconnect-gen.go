@@ -339,7 +339,7 @@ func (s Connector) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DataConnectProperties: Data Connect specific properties for a path under
+// DataConnectProperties: SQL Connect specific properties for a path under
 // response.data.
 type DataConnectProperties struct {
 	// EntityId: A single Entity ID. Set if the path points to a single entity.
@@ -373,7 +373,7 @@ func (s DataConnectProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Datasource: A data source that backs Firebase Data Connect services.
+// Datasource: A data source that backs Firebase SQL Connect services.
 type Datasource struct {
 	// HttpGraphql: HTTP GraphQL server webhook configurations.
 	HttpGraphql *HttpGraphql `json:"httpGraphql,omitempty"`
@@ -406,8 +406,7 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// ExecuteMutationRequest: The ExecuteMutation request to Firebase Data
-// Connect.
+// ExecuteMutationRequest: The ExecuteMutation request to Firebase SQL Connect.
 type ExecuteMutationRequest struct {
 	// OperationName: Required. The name of the GraphQL operation name. Required
 	// because all Connector operations must be named. See
@@ -433,7 +432,7 @@ func (s ExecuteMutationRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ExecuteMutationResponse: The ExecuteMutation response from Firebase Data
+// ExecuteMutationResponse: The ExecuteMutation response from Firebase SQL
 // Connect.
 type ExecuteMutationResponse struct {
 	// Data: The result of executing the requested operation.
@@ -463,7 +462,7 @@ func (s ExecuteMutationResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ExecuteQueryRequest: The ExecuteQuery request to Firebase Data Connect.
+// ExecuteQueryRequest: The ExecuteQuery request to Firebase SQL Connect.
 type ExecuteQueryRequest struct {
 	// OperationName: Required. The name of the GraphQL operation name. Required
 	// because all Connector operations must be named. See
@@ -489,7 +488,7 @@ func (s ExecuteQueryRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ExecuteQueryResponse: The ExecuteQuery response from Firebase Data Connect.
+// ExecuteQueryResponse: The ExecuteQuery response from Firebase SQL Connect.
 type ExecuteQueryResponse struct {
 	// Data: The result of executing the requested operation.
 	Data googleapi.RawMessage `json:"data,omitempty"`
@@ -546,16 +545,15 @@ func (s File) MarshalJSON() ([]byte, error) {
 }
 
 // GraphqlError: GraphqlError conforms to the GraphQL error spec.
-// https://spec.graphql.org/draft/#sec-Errors Firebase Data Connect API
-// surfaces `GraphqlError` in various APIs: - Upon compile error,
-// `UpdateSchema` and `UpdateConnector` return Code.Invalid_Argument with a
-// list of `GraphqlError` in error details. - Upon query compile error,
-// `ExecuteGraphql`, `ExecuteGraphqlRead` and `IntrospectGraphql` return
-// Code.OK with a list of `GraphqlError` in response body. - Upon query
-// execution error, `ExecuteGraphql`, `ExecuteGraphqlRead`, `ExecuteMutation`,
-// `ExecuteQuery`, `IntrospectGraphql`, `ImpersonateQuery` and
-// `ImpersonateMutation` all return Code.OK with a list of `GraphqlError` in
-// response body.
+// https://spec.graphql.org/draft/#sec-Errors Firebase SQL Connect API surfaces
+// `GraphqlError` in various APIs: - Upon compile error, `UpdateSchema` and
+// `UpdateConnector` return Code.Invalid_Argument with a list of `GraphqlError`
+// in error details. - Upon query compile error, `ExecuteGraphql`,
+// `ExecuteGraphqlRead` and `IntrospectGraphql` return Code.OK with a list of
+// `GraphqlError` in response body. - Upon query execution error,
+// `ExecuteGraphql`, `ExecuteGraphqlRead`, `ExecuteMutation`, `ExecuteQuery`,
+// `IntrospectGraphql`, `ImpersonateQuery` and `ImpersonateMutation` all return
+// Code.OK with a list of `GraphqlError` in response body.
 type GraphqlError struct {
 	// Extensions: Additional error information.
 	Extensions *GraphqlErrorExtensions `json:"extensions,omitempty"`
@@ -681,11 +679,11 @@ type GraphqlErrorExtensions struct {
 	Code string `json:"code,omitempty"`
 	// DebugDetails: More detailed error message to assist debugging. It contains
 	// application business logic that are inappropriate to leak publicly. In the
-	// emulator, Data Connect API always includes it to assist local development
-	// and debugging. In the backend, ConnectorService always hides it.
-	// GraphqlService without impersonation always include it. GraphqlService with
-	// impersonation includes it only if explicitly opted-in with
-	// `include_debug_details` in `GraphqlRequestExtensions`.
+	// emulator, SQL Connect API always includes it to assist local development and
+	// debugging. In the backend, ConnectorService always hides it. GraphqlService
+	// without impersonation always include it. GraphqlService with impersonation
+	// includes it only if explicitly opted-in with `include_debug_details` in
+	// `GraphqlRequestExtensions`.
 	DebugDetails string `json:"debugDetails,omitempty"`
 	// File: The source file name where the error occurred. Included only for
 	// `UpdateSchema` and `UpdateConnector`, it corresponds to `File.path` of the
@@ -722,7 +720,7 @@ func (s GraphqlErrorExtensions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GraphqlRequest: The GraphQL request to Firebase Data Connect. It strives to
+// GraphqlRequest: The GraphQL request to Firebase SQL Connect. It strives to
 // match the GraphQL over HTTP spec.
 // https://github.com/graphql/graphql-over-http/blob/main/spec/GraphQLOverHTTP.md#post
 type GraphqlRequest struct {
@@ -779,8 +777,8 @@ func (s GraphqlRequestExtensions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GraphqlResponse: The GraphQL response from Firebase Data Connect. It strives
-// to match the GraphQL over HTTP spec. Note: Firebase Data Connect always
+// GraphqlResponse: The GraphQL response from Firebase SQL Connect. It strives
+// to match the GraphQL over HTTP spec. Note: Firebase SQL Connect always
 // responds with `Content-Type: application/json`.
 // https://github.com/graphql/graphql-over-http/blob/main/spec/GraphQLOverHTTP.md#body
 type GraphqlResponse struct {
@@ -823,7 +821,7 @@ func (s GraphqlResponse) MarshalJSON() ([]byte, error) {
 // GraphqlResponseExtensions: GraphqlResponseExtensions contains additional
 // information of `GraphqlResponse` or `ExecuteQueryResponse`.
 type GraphqlResponseExtensions struct {
-	// DataConnect: Data Connect specific GraphQL extension, a list of paths and
+	// DataConnect: SQL Connect specific GraphQL extension, a list of paths and
 	// properties.
 	DataConnect []*DataConnectProperties `json:"dataConnect,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataConnect") to
@@ -868,7 +866,7 @@ func (s HttpGraphql) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ImpersonateRequest: The Impersonate request to Firebase Data Connect.
+// ImpersonateRequest: The Impersonate request to Firebase SQL Connect.
 type ImpersonateRequest struct {
 	// Extensions: Optional. Additional GraphQL request information.
 	Extensions *GraphqlRequestExtensions `json:"extensions,omitempty"`
@@ -1222,12 +1220,12 @@ type PostgreSql struct {
 	CloudSql *CloudSqlInstance `json:"cloudSql,omitempty"`
 	// Database: Required. Name of the PostgreSQL database.
 	Database string `json:"database,omitempty"`
-	// Ephemeral: Output only. Ephemeral is true if this data connect service is
+	// Ephemeral: Output only. Ephemeral is true if this SQL Connect service is
 	// served from temporary in-memory emulation of Postgres. While Cloud SQL is
-	// being provisioned, the data connect service provides the ephemeral service
-	// to help developers get started. Once the Cloud SQL is provisioned, Data
-	// Connect service will transfer its data on a best-effort basis to the Cloud
-	// SQL instance. WARNING: Ephemeral data sources will expire after 24 hour. The
+	// being provisioned, the SQL Connect service provides the ephemeral service to
+	// help developers get started. Once the Cloud SQL is provisioned, SQL Connect
+	// service will transfer its data on a best-effort basis to the Cloud SQL
+	// instance. WARNING: Ephemeral data sources will expire after 24 hour. The
 	// data will be lost if they aren't transferred to the Cloud SQL instance.
 	// WARNING: When `ephemeral=true`, mutations to the database are not guaranteed
 	// to be durably persisted, even if an OK status code is returned. All or parts
@@ -1242,7 +1240,7 @@ type PostgreSql struct {
 	// Possible values:
 	//   "SQL_SCHEMA_MIGRATION_UNSPECIFIED" - Unspecified SQL schema migration.
 	//   "MIGRATE_COMPATIBLE" - Connect to the SQL database and identify any
-	// missing SQL resources used in the given Firebase Data Connect Schema.
+	// missing SQL resources used in the given Firebase SQL Connect Schema.
 	// Automatically create necessary SQL resources (SQL table, column, etc) before
 	// deploying the schema. During migration steps, the SQL Schema must comply
 	// with the previous before_deploy setting in case the migration is
@@ -1263,7 +1261,7 @@ type PostgreSql struct {
 	// matches the schema exactly. Surface any discrepancies as
 	// `FAILED_PRECONDITION` with an `IncompatibleSqlSchemaError` error detail.
 	//   "COMPATIBLE" - Connect to the SQL database and validate that the SQL DDL
-	// has all the SQL resources used in the given Firebase Data Connect Schema.
+	// has all the SQL resources used in the given Firebase SQL Connect Schema.
 	// Surface any missing resources as `FAILED_PRECONDITION` with an
 	// `IncompatibleSqlSchemaError` error detail. Succeed even if there are unknown
 	// tables and columns.
@@ -1289,7 +1287,7 @@ func (s PostgreSql) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Schema: The application schema of a Firebase Data Connect service.
+// Schema: The application schema of a Firebase SQL Connect service.
 type Schema struct {
 	// Annotations: Optional. Stores small amounts of arbitrary data.
 	Annotations map[string]string `json:"annotations,omitempty"`
@@ -1341,7 +1339,7 @@ func (s Schema) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Service: A Firebase Data Connect service.
+// Service: A Firebase SQL Connect service.
 type Service struct {
 	// Annotations: Optional. Stores small amounts of arbitrary data.
 	Annotations map[string]string `json:"annotations,omitempty"`
@@ -1356,10 +1354,10 @@ type Service struct {
 	Etag string `json:"etag,omitempty"`
 	// Labels: Optional. Labels as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Identifier. The relative resource name of the Firebase Data Connect
+	// Name: Identifier. The relative resource name of the Firebase SQL Connect
 	// service, in the format: ```
 	// projects/{project}/locations/{location}/services/{service} ``` Note that the
-	// service ID is specific to Firebase Data Connect and does not correspond to
+	// service ID is specific to Firebase SQL Connect and does not correspond to
 	// any of the instance IDs of the underlying data source connections.
 	Name string `json:"name,omitempty"`
 	// Reconciling: Output only. A field that if true, indicates that the system is
@@ -1616,8 +1614,8 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this service. This
 // method lists locations based on the resource scope provided in the
-// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
-// empty, the method lists the public locations available to all projects. *
+// ListLocationsRequest.name field: * **Global locations**: If `name` is empty,
+// the method lists the public locations available to all projects. *
 // **Project-specific locations**: If `name` follows the format
 // `projects/{project}`, the method lists locations visible to that specific
 // project. This includes public, private, or other project-specific locations
@@ -1634,8 +1632,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -2553,12 +2551,12 @@ type ProjectsLocationsServicesExecuteGraphqlCall struct {
 	header_        http.Header
 }
 
-// ExecuteGraphql: Execute any GraphQL query and mutation against the Firebase
-// Data Connect's generated GraphQL schema. Grants full read and write access
-// to the connected data sources. Note: Use introspection query to explore the
+// ExecuteGraphql: Execute any GraphQL query or mutation against the Firebase
+// SQL Connect's generated GraphQL schema. Grants full read and write access to
+// the connected data sources. Note: Use introspection query to explore the
 // generated GraphQL schema.
 //
-//   - name: The relative resource name of Firebase Data Connect service, in the
+//   - name: The relative resource name of Firebase SQL Connect service, in the
 //     format: ``` projects/{project}/locations/{location}/services/{service} ```.
 func (r *ProjectsLocationsServicesService) ExecuteGraphql(name string, graphqlrequest *GraphqlRequest) *ProjectsLocationsServicesExecuteGraphqlCall {
 	c := &ProjectsLocationsServicesExecuteGraphqlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2661,12 +2659,12 @@ type ProjectsLocationsServicesExecuteGraphqlReadCall struct {
 	header_        http.Header
 }
 
-// ExecuteGraphqlRead: Execute any GraphQL query against the Firebase Data
+// ExecuteGraphqlRead: Execute any GraphQL query against the Firebase SQL
 // Connect's generated GraphQL schema. Grants full read to the connected data
 // sources. `ExecuteGraphqlRead` is identical to `ExecuteGraphql` except it
 // only accepts read-only query.
 //
-//   - name: The relative resource name of Firebase Data Connect service, in the
+//   - name: The relative resource name of Firebase SQL Connect service, in the
 //     format: ``` projects/{project}/locations/{location}/services/{service} ```.
 func (r *ProjectsLocationsServicesService) ExecuteGraphqlRead(name string, graphqlrequest *GraphqlRequest) *ProjectsLocationsServicesExecuteGraphqlReadCall {
 	c := &ProjectsLocationsServicesExecuteGraphqlReadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2879,7 +2877,7 @@ type ProjectsLocationsServicesIntrospectGraphqlCall struct {
 	header_        http.Header
 }
 
-// IntrospectGraphql: Execute introspection query against the Firebase Data
+// IntrospectGraphql: Execute introspection query against the Firebase SQL
 // Connect's generated GraphQL schema. GraphQL introspection query provides
 // metadata such as what tables the schema have, what queries and mutations can
 // be performed on the schema, and so on. Read more at
@@ -2887,7 +2885,7 @@ type ProjectsLocationsServicesIntrospectGraphqlCall struct {
 // metadata but cannot read rows from Cloud SQL instance, which can be done via
 // ExecuteGraphqlRead.
 //
-//   - name: The relative resource name of Firebase Data Connect service, in the
+//   - name: The relative resource name of Firebase SQL Connect service, in the
 //     format: ``` projects/{project}/locations/{location}/services/{service} ```.
 func (r *ProjectsLocationsServicesService) IntrospectGraphql(name string, graphqlrequest *GraphqlRequest) *ProjectsLocationsServicesIntrospectGraphqlCall {
 	c := &ProjectsLocationsServicesIntrospectGraphqlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3153,12 +3151,11 @@ type ProjectsLocationsServicesPatchCall struct {
 
 // Patch: Updates the parameters of a single Service.
 //
-//   - name: Identifier. The relative resource name of the Firebase Data Connect
+//   - name: Identifier. The relative resource name of the Firebase SQL Connect
 //     service, in the format: ```
 //     projects/{project}/locations/{location}/services/{service} ``` Note that
-//     the service ID is specific to Firebase Data Connect and does not
-//     correspond to any of the instance IDs of the underlying data source
-//     connections.
+//     the service ID is specific to Firebase SQL Connect and does not correspond
+//     to any of the instance IDs of the underlying data source connections.
 func (r *ProjectsLocationsServicesService) Patch(name string, service *Service) *ProjectsLocationsServicesPatchCall {
 	c := &ProjectsLocationsServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3907,7 +3904,7 @@ type ProjectsLocationsServicesConnectorsImpersonateMutationCall struct {
 	header_            http.Header
 }
 
-// ImpersonateMutation: Impersonate a mutation defined on a Firebase Data
+// ImpersonateMutation: Impersonate a mutation defined on a Firebase SQL
 // Connect connector. It grants the admin SDK access to mutations defined in
 // the given connector. The caller can choose to impersonate a particular
 // Firebase Auth user, or skip @auth completely.
@@ -4017,7 +4014,7 @@ type ProjectsLocationsServicesConnectorsImpersonateQueryCall struct {
 	header_            http.Header
 }
 
-// ImpersonateQuery: Impersonate a query defined on a Firebase Data Connect
+// ImpersonateQuery: Impersonate a query defined on a Firebase SQL Connect
 // connector. It grants the admin SDK access to queries defined in the given
 // connector. The caller can choose to impersonate a particular Firebase Auth
 // user, or skip @auth completely.

@@ -797,7 +797,9 @@ func (s Filter) MarshalJSON() ([]byte, error) {
 type FilterAction struct {
 	// AddLabelIds: List of labels to add to the message.
 	AddLabelIds []string `json:"addLabelIds,omitempty"`
-	// Forward: Email address that the message should be forwarded to.
+	// Forward: Email address that the message should be forwarded to. This
+	// effectively redirects the message to the address specified in this field,
+	// maintaining the original sender in the "From" field.
 	Forward string `json:"forward,omitempty"`
 	// RemoveLabelIds: List of labels to remove from the message.
 	RemoveLabelIds []string `json:"removeLabelIds,omitempty"`
@@ -1902,7 +1904,7 @@ func (s Profile) MarshalJSON() ([]byte, error) {
 // SendAs: Settings associated with a send-as alias, which can be either the
 // primary login address associated with the account or a custom "from"
 // address. Send-as aliases correspond to the "Send Mail As" feature in the web
-// interface.
+// interface. The send-as alias must be a valid email address.
 type SendAs struct {
 	// DisplayName: A name that appears in the "From:" header for mail sent using
 	// this alias. For custom "from" addresses, when this is empty, Gmail will
@@ -2372,7 +2374,9 @@ type UsersStopCall struct {
 	header_    http.Header
 }
 
-// Stop: Stop receiving push notifications for the given user mailbox.
+// Stop: Turn off push notification delivery for the given user mailbox. For
+// more information, see Configure push notifications in Gmail API
+// (https://developers.google.com/workspace/gmail/api/guides/push).
 //
 //   - userId: The user's email address. The special value `me` can be used to
 //     indicate the authenticated user.
@@ -2448,6 +2452,8 @@ type UsersWatchCall struct {
 }
 
 // Watch: Set up or update a push notification watch on the given user mailbox.
+// For more information, see Configure push notifications in Gmail API
+// (https://developers.google.com/workspace/gmail/api/guides/push).
 //
 //   - userId: The user's email address. The special value `me` can be used to
 //     indicate the authenticated user.
@@ -2552,7 +2558,9 @@ type UsersDraftsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a new draft with the `DRAFT` label.
+// Create: Creates a draft with the `DRAFT` label. For more information, see
+// Create and send draft emails
+// (https://developers.google.com/workspace/gmail/api/guides/drafts).
 //
 //   - userId: The user's email address. The special value `me` can be used to
 //     indicate the authenticated user.
@@ -2719,7 +2727,8 @@ type UsersDraftsDeleteCall struct {
 }
 
 // Delete: Immediately and permanently deletes the specified draft. Does not
-// simply trash it.
+// simply trash it. For more information, see Create and send draft emails
+// (https://developers.google.com/workspace/gmail/api/guides/drafts).
 //
 //   - id: The ID of the draft to delete.
 //   - userId: The user's email address. The special value `me` can be used to
@@ -2798,7 +2807,9 @@ type UsersDraftsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the specified draft.
+// Get: Gets the specified draft. For more information, see Create and send
+// draft emails
+// (https://developers.google.com/workspace/gmail/api/guides/drafts).
 //
 //   - id: The ID of the draft to retrieve.
 //   - userId: The user's email address. The special value `me` can be used to
@@ -2936,7 +2947,9 @@ type UsersDraftsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the drafts in the user's mailbox.
+// List: Lists the drafts in the user's mailbox. For more information, see
+// Create and send draft emails
+// (https://developers.google.com/workspace/gmail/api/guides/drafts).
 //
 //   - userId: The user's email address. The special value `me` can be used to
 //     indicate the authenticated user.
@@ -3100,7 +3113,8 @@ type UsersDraftsSendCall struct {
 }
 
 // Send: Sends the specified, existing draft to the recipients in the `To`,
-// `Cc`, and `Bcc` headers.
+// `Cc`, and `Bcc` headers. For more information, see Create and send draft
+// emails (https://developers.google.com/workspace/gmail/api/guides/drafts).
 //
 //   - userId: The user's email address. The special value `me` can be used to
 //     indicate the authenticated user.
@@ -3268,7 +3282,9 @@ type UsersDraftsUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Replaces a draft's content.
+// Update: Replaces a draft's content. For more information, see Create and
+// send draft emails
+// (https://developers.google.com/workspace/gmail/api/guides/drafts).
 //
 //   - id: The ID of the draft to update.
 //   - userId: The user's email address. The special value `me` can be used to
@@ -3438,7 +3454,9 @@ type UsersHistoryListCall struct {
 }
 
 // List: Lists the history of all changes to the given mailbox. History results
-// are returned in chronological order (increasing `historyId`).
+// are returned in chronological order (increasing `historyId`). For more
+// information, see Synchronize clients with Gmail
+// (https://developers.google.com/workspace/gmail/api/guides/sync).
 //
 //   - userId: The user's email address. The special value `me` can be used to
 //     indicate the authenticated user.
@@ -3622,7 +3640,8 @@ type UsersLabelsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a new label.
+// Create: Creates a label. For more information, see Manage labels
+// (https://developers.google.com/workspace/gmail/api/guides/labels).
 //
 //   - userId: The user's email address. The special value `me` can be used to
 //     indicate the authenticated user.
@@ -3727,7 +3746,9 @@ type UsersLabelsDeleteCall struct {
 }
 
 // Delete: Immediately and permanently deletes the specified label and removes
-// it from any messages and threads that it is applied to.
+// it from any messages and threads that it's applied to. For more information,
+// see Manage labels
+// (https://developers.google.com/workspace/gmail/api/guides/labels).
 //
 //   - id: The ID of the label to delete.
 //   - userId: The user's email address. The special value `me` can be used to
@@ -3806,7 +3827,8 @@ type UsersLabelsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the specified label.
+// Get: Gets the specified label. For more information, see Manage labels
+// (https://developers.google.com/workspace/gmail/api/guides/labels).
 //
 //   - id: The ID of the label to retrieve.
 //   - userId: The user's email address. The special value `me` can be used to
@@ -3919,7 +3941,9 @@ type UsersLabelsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all labels in the user's mailbox.
+// List: Lists all labels in the user's mailbox. For more information, see
+// Manage labels
+// (https://developers.google.com/workspace/gmail/api/guides/labels).
 //
 //   - userId: The user's email address. The special value `me` can be used to
 //     indicate the authenticated user.
@@ -4031,7 +4055,8 @@ type UsersLabelsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Patch the specified label.
+// Patch: Patch the specified label. For more information, see Manage labels
+// (https://developers.google.com/workspace/gmail/api/guides/labels).
 //
 //   - id: The ID of the label to update.
 //   - userId: The user's email address. The special value `me` can be used to
@@ -4139,7 +4164,8 @@ type UsersLabelsUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates the specified label.
+// Update: Updates the specified label. For more information, see Manage labels
+// (https://developers.google.com/workspace/gmail/api/guides/labels).
 //
 //   - id: The ID of the label to update.
 //   - userId: The user's email address. The special value `me` can be used to
@@ -4639,7 +4665,8 @@ type UsersMessagesImportCall struct {
 // delivery scanning and classification similar to receiving via SMTP. This
 // method doesn't perform SPF checks, so it might not work for some spam
 // messages, such as those attempting to perform domain spoofing. This method
-// does not send a message. Note that the maximum size of the message is 150MB.
+// does not send a message. Note that the maximum size of the message is 150
+// MB.
 //
 //   - userId: The user's email address. The special value `me` can be used to
 //     indicate the authenticated user.
@@ -4848,7 +4875,8 @@ type UsersMessagesInsertCall struct {
 
 // Insert: Directly inserts a message into only this user's mailbox similar to
 // `IMAP APPEND`, bypassing most scanning and classification. Does not send a
-// message.
+// message. For more information, see Create and send email messages
+// (https://developers.google.com/workspace/gmail/api/guides/sending).
 //
 //   - userId: The user's email address. The special value `me` can be used to
 //     indicate the authenticated user.
@@ -5039,8 +5067,8 @@ type UsersMessagesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the messages in the user's mailbox. For example usage, see List
-// Gmail messages
+// List: Lists the messages in the user's mailbox. For more information, see
+// List Gmail messages
 // (https://developers.google.com/workspace/gmail/api/guides/list-messages).
 //
 //   - userId: The user's email address. The special value `me` can be used to
@@ -5324,7 +5352,7 @@ type UsersMessagesSendCall struct {
 }
 
 // Send: Sends the specified message to the recipients in the `To`, `Cc`, and
-// `Bcc` headers. For example usage, see Sending email
+// `Bcc` headers. For more information, see Create and send email messages
 // (https://developers.google.com/workspace/gmail/api/guides/sending).
 //
 //   - userId: The user's email address. The special value `me` can be used to
@@ -5815,7 +5843,8 @@ type UsersSettingsGetAutoForwardingCall struct {
 }
 
 // GetAutoForwarding: Gets the auto-forwarding setting for the specified
-// account.
+// account. For more information, see Manage email forwarding
+// (https://developers.google.com/workspace/gmail/api/guides/forwarding_settings).
 //
 //   - userId: User's email address. The special value "me" can be used to
 //     indicate the authenticated user.
@@ -5925,7 +5954,9 @@ type UsersSettingsGetImapCall struct {
 	header_      http.Header
 }
 
-// GetImap: Gets IMAP settings.
+// GetImap: Gets IMAP settings. For more information, see Configure POP and
+// IMAP settings with the Gmail API
+// (https://developers.google.com/workspace/gmail/api/guides/pop_imap_settings).
 //
 //   - userId: User's email address. The special value "me" can be used to
 //     indicate the authenticated user.
@@ -6035,7 +6066,9 @@ type UsersSettingsGetLanguageCall struct {
 	header_      http.Header
 }
 
-// GetLanguage: Gets language settings.
+// GetLanguage: Gets language settings. For more information, see Manage
+// language settings
+// (https://developers.google.com/workspace/gmail/api/guides/language-settings).
 //
 //   - userId: User's email address. The special value "me" can be used to
 //     indicate the authenticated user.
@@ -6146,7 +6179,9 @@ type UsersSettingsGetPopCall struct {
 	header_      http.Header
 }
 
-// GetPop: Gets POP settings.
+// GetPop: Gets POP settings. For more information, see Configure POP and IMAP
+// settings with the Gmail API
+// (https://developers.google.com/workspace/gmail/api/guides/pop_imap_settings).
 //
 //   - userId: User's email address. The special value "me" can be used to
 //     indicate the authenticated user.
@@ -6256,7 +6291,9 @@ type UsersSettingsGetVacationCall struct {
 	header_      http.Header
 }
 
-// GetVacation: Gets vacation responder settings.
+// GetVacation: Gets vacation responder settings. For more information, see
+// Manage vacation settings with the Gmail API
+// (https://developers.google.com/workspace/gmail/api/guides/vacation_settings).
 //
 //   - userId: User's email address. The special value "me" can be used to
 //     indicate the authenticated user.
@@ -6369,8 +6406,11 @@ type UsersSettingsUpdateAutoForwardingCall struct {
 
 // UpdateAutoForwarding: Updates the auto-forwarding setting for the specified
 // account. A verified forwarding address must be specified when
-// auto-forwarding is enabled. This method is only available to service account
-// clients that have been delegated domain-wide authority.
+// auto-forwarding is enabled. For more information, see Manage email
+// forwarding
+// (https://developers.google.com/workspace/gmail/api/guides/forwarding_settings).
+// This method is only available to service account clients that have been
+// delegated domain-wide authority.
 //
 //   - userId: User's email address. The special value "me" can be used to
 //     indicate the authenticated user.
@@ -6474,7 +6514,9 @@ type UsersSettingsUpdateImapCall struct {
 	header_      http.Header
 }
 
-// UpdateImap: Updates IMAP settings.
+// UpdateImap: Updates IMAP settings. For more information, see Configure POP
+// and IMAP settings with the Gmail API
+// (https://developers.google.com/workspace/gmail/api/guides/pop_imap_settings).
 //
 //   - userId: User's email address. The special value "me" can be used to
 //     indicate the authenticated user.
@@ -6578,11 +6620,14 @@ type UsersSettingsUpdateLanguageCall struct {
 	header_          http.Header
 }
 
-// UpdateLanguage: Updates language settings. If successful, the return object
-// contains the `displayLanguage` that was saved for the user, which may differ
-// from the value passed into the request. This is because the requested
-// `displayLanguage` may not be directly supported by Gmail but have a close
-// variant that is, and so the variant may be chosen and saved instead.
+// UpdateLanguage: Updates language settings. For more information, see Manage
+// language settings
+// (https://developers.google.com/workspace/gmail/api/guides/language-settings).
+// If successful, the return object contains the `displayLanguage` that was
+// saved for the user, which may differ from the value passed into the request.
+// This is because the requested `displayLanguage` may not be directly
+// supported by Gmail but have a close variant that is, and so the variant may
+// be chosen and saved instead.
 //
 //   - userId: User's email address. The special value "me" can be used to
 //     indicate the authenticated user.
@@ -6687,7 +6732,9 @@ type UsersSettingsUpdatePopCall struct {
 	header_     http.Header
 }
 
-// UpdatePop: Updates POP settings.
+// UpdatePop: Updates POP settings. For more information, see Configure POP and
+// IMAP settings with the Gmail API
+// (https://developers.google.com/workspace/gmail/api/guides/pop_imap_settings).
 //
 //   - userId: User's email address. The special value "me" can be used to
 //     indicate the authenticated user.
@@ -6791,7 +6838,9 @@ type UsersSettingsUpdateVacationCall struct {
 	header_          http.Header
 }
 
-// UpdateVacation: Updates vacation responder settings.
+// UpdateVacation: Updates vacation responder settings. For more information,
+// see Manage vacation settings with the Gmail API
+// (https://developers.google.com/workspace/gmail/api/guides/vacation_settings).
 //
 //   - userId: User's email address. The special value "me" can be used to
 //     indicate the authenticated user.
@@ -8247,14 +8296,16 @@ type UsersSettingsDelegatesCreateCall struct {
 // Create: Adds a delegate with its verification status set directly to
 // `accepted`, without sending any verification email. The delegate user must
 // be a member of the same Google Workspace organization as the delegator user.
+// For more information, see Manage delegates
+// (https://developers.google.com/workspace/gmail/api/guides/delegate_settings).
 // Gmail imposes limitations on the number of delegates and delegators each
 // user in a Google Workspace organization can have. These limits depend on
 // your organization, but in general each user can have up to 25 delegates and
-// up to 10 delegators. Note that a delegate user must be referred to by their
-// primary email address, and not an email alias. Also note that when a new
-// delegate is created, there may be up to a one minute delay before the new
-// delegate is available for use. This method is only available to service
-// account clients that have been delegated domain-wide authority.
+// up to 10 delegators. A delegate user must be referred to by their primary
+// email address, and not an email alias. When a new delegate is created, there
+// may be up to a one minute delay before the new delegate is available for
+// use. This method is only available to service account clients that have been
+// delegated domain-wide authority.
 //
 //   - userId: User's email address. The special value "me" can be used to
 //     indicate the authenticated user.
@@ -8360,9 +8411,11 @@ type UsersSettingsDelegatesDeleteCall struct {
 
 // Delete: Removes the specified delegate (which can be of any verification
 // status), and revokes any verification that may have been required for using
-// it. Note that a delegate user must be referred to by their primary email
-// address, and not an email alias. This method is only available to service
-// account clients that have been delegated domain-wide authority.
+// it. For more information, see Manage delegates
+// (https://developers.google.com/workspace/gmail/api/guides/delegate_settings).
+// A delegate user must be referred to by their primary email address, and not
+// an email alias. This method is only available to service account clients
+// that have been delegated domain-wide authority.
 //
 //   - delegateEmail: The email address of the user to be removed as a delegate.
 //   - userId: User's email address. The special value "me" can be used to
@@ -8441,10 +8494,11 @@ type UsersSettingsDelegatesGetCall struct {
 	header_       http.Header
 }
 
-// Get: Gets the specified delegate. Note that a delegate user must be referred
-// to by their primary email address, and not an email alias. This method is
-// only available to service account clients that have been delegated
-// domain-wide authority.
+// Get: Gets the specified delegate. For more information, see Manage delegates
+// (https://developers.google.com/workspace/gmail/api/guides/delegate_settings).
+// A delegate user must be referred to by their primary email address, and not
+// an email alias. This method is only available to service account clients
+// that have been delegated domain-wide authority.
 //
 //   - delegateEmail: The email address of the user whose delegate relationship
 //     is to be retrieved.
@@ -8558,9 +8612,11 @@ type UsersSettingsDelegatesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the delegates for the specified account. This method is only
-// available to service account clients that have been delegated domain-wide
-// authority.
+// List: Lists the delegates for the specified account. For more information,
+// see Manage delegates
+// (https://developers.google.com/workspace/gmail/api/guides/delegate_settings).
+// This method is only available to service account clients that have been
+// delegated domain-wide authority.
 //
 //   - userId: User's email address. The special value "me" can be used to
 //     indicate the authenticated user.
@@ -8672,7 +8728,8 @@ type UsersSettingsFiltersCreateCall struct {
 }
 
 // Create: Creates a filter. Note: you can only create a maximum of 1,000
-// filters.
+// filters. For more information, see Manage Gmail filters
+// (https://developers.google.com/workspace/gmail/api/guides/filter_settings).
 //
 //   - userId: User's email address. The special value "me" can be used to
 //     indicate the authenticated user.
@@ -8776,7 +8833,9 @@ type UsersSettingsFiltersDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Immediately and permanently deletes the specified filter.
+// Delete: Immediately and permanently deletes the specified filter. For more
+// information, see Manage Gmail filters
+// (https://developers.google.com/workspace/gmail/api/guides/filter_settings).
 //
 //   - id: The ID of the filter to be deleted.
 //   - userId: User's email address. The special value "me" can be used to
@@ -8855,7 +8914,8 @@ type UsersSettingsFiltersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a filter.
+// Get: Gets a filter. For more information, see Manage Gmail filters
+// (https://developers.google.com/workspace/gmail/api/guides/filter_settings).
 //
 //   - id: The ID of the filter to be fetched.
 //   - userId: User's email address. The special value "me" can be used to
@@ -8968,7 +9028,9 @@ type UsersSettingsFiltersListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the message filters of a Gmail user.
+// List: Lists the message filters of a Gmail user. For more information, see
+// Manage Gmail filters
+// (https://developers.google.com/workspace/gmail/api/guides/filter_settings).
 //
 //   - userId: User's email address. The special value "me" can be used to
 //     indicate the authenticated user.
@@ -9082,8 +9144,11 @@ type UsersSettingsForwardingAddressesCreateCall struct {
 // Create: Creates a forwarding address. If ownership verification is required,
 // a message will be sent to the recipient and the resource's verification
 // status will be set to `pending`; otherwise, the resource will be created
-// with verification status set to `accepted`. This method is only available to
-// service account clients that have been delegated domain-wide authority.
+// with verification status set to `accepted`. For more information, see Manage
+// email forwarding
+// (https://developers.google.com/workspace/gmail/api/guides/forwarding_settings).
+// This method is only available to service account clients that have been
+// delegated domain-wide authority.
 //
 //   - userId: User's email address. The special value "me" can be used to
 //     indicate the authenticated user.
@@ -9189,8 +9254,11 @@ type UsersSettingsForwardingAddressesDeleteCall struct {
 }
 
 // Delete: Deletes the specified forwarding address and revokes any
-// verification that may have been required. This method is only available to
-// service account clients that have been delegated domain-wide authority.
+// verification that may have been required. For more information, see Manage
+// email forwarding
+// (https://developers.google.com/workspace/gmail/api/guides/forwarding_settings).
+// This method is only available to service account clients that have been
+// delegated domain-wide authority.
 //
 //   - forwardingEmail: The forwarding address to be deleted.
 //   - userId: User's email address. The special value "me" can be used to
@@ -9269,7 +9337,9 @@ type UsersSettingsForwardingAddressesGetCall struct {
 	header_         http.Header
 }
 
-// Get: Gets the specified forwarding address.
+// Get: Gets the specified forwarding address. For more information, see Manage
+// email forwarding
+// (https://developers.google.com/workspace/gmail/api/guides/forwarding_settings).
 //
 //   - forwardingEmail: The forwarding address to be retrieved.
 //   - userId: User's email address. The special value "me" can be used to
@@ -9383,7 +9453,9 @@ type UsersSettingsForwardingAddressesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the forwarding addresses for the specified account.
+// List: Lists the forwarding addresses for the specified account. For more
+// information, see Manage email forwarding
+// (https://developers.google.com/workspace/gmail/api/guides/forwarding_settings).
 //
 //   - userId: User's email address. The special value "me" can be used to
 //     indicate the authenticated user.
@@ -9501,8 +9573,11 @@ type UsersSettingsSendAsCreateCall struct {
 // resource's verification status will be set to `pending`; otherwise, the
 // resource will be created with verification status set to `accepted`. If a
 // signature is provided, Gmail will sanitize the HTML before saving it with
-// the alias. This method is only available to service account clients that
-// have been delegated domain-wide authority.
+// the alias. For more information, see Manage aliases and signatures with the
+// Gmail API
+// (https://developers.google.com/workspace/gmail/api/guides/alias_and_signature_settings).
+// This method is only available to service account clients that have been
+// delegated domain-wide authority.
 //
 //   - userId: User's email address. The special value "me" can be used to
 //     indicate the authenticated user.
@@ -9607,8 +9682,11 @@ type UsersSettingsSendAsDeleteCall struct {
 }
 
 // Delete: Deletes the specified send-as alias. Revokes any verification that
-// may have been required for using it. This method is only available to
-// service account clients that have been delegated domain-wide authority.
+// may have been required for using it. For more information, see Manage
+// aliases and signatures with the Gmail API
+// (https://developers.google.com/workspace/gmail/api/guides/alias_and_signature_settings).
+// This method is only available to service account clients that have been
+// delegated domain-wide authority.
 //
 //   - sendAsEmail: The send-as alias to be deleted.
 //   - userId: User's email address. The special value "me" can be used to
@@ -9688,7 +9766,9 @@ type UsersSettingsSendAsGetCall struct {
 }
 
 // Get: Gets the specified send-as alias. Fails with an HTTP 404 error if the
-// specified address is not a member of the collection.
+// specified address is not a member of the collection. For more information,
+// see Manage aliases and signatures with the Gmail API
+// (https://developers.google.com/workspace/gmail/api/guides/alias_and_signature_settings).
 //
 //   - sendAsEmail: The send-as alias to be retrieved.
 //   - userId: User's email address. The special value "me" can be used to
@@ -9803,7 +9883,9 @@ type UsersSettingsSendAsListCall struct {
 
 // List: Lists the send-as aliases for the specified account. The result
 // includes the primary send-as address associated with the account as well as
-// any custom "from" aliases.
+// any custom "from" aliases. For more information, see Manage aliases and
+// signatures with the Gmail API
+// (https://developers.google.com/workspace/gmail/api/guides/alias_and_signature_settings).
 //
 //   - userId: User's email address. The special value "me" can be used to
 //     indicate the authenticated user.
@@ -9915,7 +9997,9 @@ type UsersSettingsSendAsPatchCall struct {
 	header_     http.Header
 }
 
-// Patch: Patch the specified send-as alias.
+// Patch: Patch the specified send-as alias. For more information, see Manage
+// aliases and signatures with the Gmail API
+// (https://developers.google.com/workspace/gmail/api/guides/alias_and_signature_settings).
 //
 //   - sendAsEmail: The send-as alias to be updated.
 //   - userId: User's email address. The special value "me" can be used to
@@ -10024,9 +10108,11 @@ type UsersSettingsSendAsUpdateCall struct {
 }
 
 // Update: Updates a send-as alias. If a signature is provided, Gmail will
-// sanitize the HTML before saving it with the alias. Addresses other than the
-// primary address for the account can only be updated by service account
-// clients that have been delegated domain-wide authority.
+// sanitize the HTML before saving it with the alias. For more information, see
+// Manage aliases and signatures with the Gmail API
+// (https://developers.google.com/workspace/gmail/api/guides/alias_and_signature_settings).
+// Addresses other than the primary address for the account can only be updated
+// by service account clients that have been delegated domain-wide authority.
 //
 //   - sendAsEmail: The send-as alias to be updated.
 //   - userId: User's email address. The special value "me" can be used to
@@ -10134,8 +10220,11 @@ type UsersSettingsSendAsVerifyCall struct {
 }
 
 // Verify: Sends a verification email to the specified send-as alias address.
-// The verification status must be `pending`. This method is only available to
-// service account clients that have been delegated domain-wide authority.
+// The verification status must be `pending`. For more information, see Manage
+// aliases and signatures with the Gmail API
+// (https://developers.google.com/workspace/gmail/api/guides/alias_and_signature_settings).
+// This method is only available to service account clients that have been
+// delegated domain-wide authority.
 //
 //   - sendAsEmail: The send-as alias to be verified.
 //   - userId: User's email address. The special value "me" can be used to
@@ -10215,6 +10304,8 @@ type UsersSettingsSendAsSmimeInfoDeleteCall struct {
 }
 
 // Delete: Deletes the specified S/MIME config for the specified send-as alias.
+// For more information, see Manage S/MIME certificates with the Gmail API
+// (https://developers.google.com/workspace/gmail/api/guides/smime_certs).
 //
 //   - id: The immutable ID for the SmimeInfo.
 //   - sendAsEmail: The email address that appears in the "From:" header for mail
@@ -10298,7 +10389,9 @@ type UsersSettingsSendAsSmimeInfoGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the specified S/MIME config for the specified send-as alias.
+// Get: Gets the specified S/MIME config for the specified send-as alias. For
+// more information, see Manage S/MIME certificates with the Gmail API
+// (https://developers.google.com/workspace/gmail/api/guides/smime_certs).
 //
 //   - id: The immutable ID for the SmimeInfo.
 //   - sendAsEmail: The email address that appears in the "From:" header for mail
@@ -10417,7 +10510,9 @@ type UsersSettingsSendAsSmimeInfoInsertCall struct {
 }
 
 // Insert: Insert (upload) the given S/MIME config for the specified send-as
-// alias. Note that pkcs12 format is required for the key.
+// alias. Note that `pkcs12` format is required for the key. For more
+// information, see Manage S/MIME certificates with the Gmail API
+// (https://developers.google.com/workspace/gmail/api/guides/smime_certs).
 //
 //   - sendAsEmail: The email address that appears in the "From:" header for mail
 //     sent using this alias.
@@ -10526,7 +10621,9 @@ type UsersSettingsSendAsSmimeInfoListCall struct {
 	header_      http.Header
 }
 
-// List: Lists S/MIME configs for the specified send-as alias.
+// List: Lists S/MIME configs for the specified send-as alias. For more
+// information, see Manage S/MIME certificates with the Gmail API
+// (https://developers.google.com/workspace/gmail/api/guides/smime_certs).
 //
 //   - sendAsEmail: The email address that appears in the "From:" header for mail
 //     sent using this alias.
@@ -10643,6 +10740,8 @@ type UsersSettingsSendAsSmimeInfoSetDefaultCall struct {
 }
 
 // SetDefault: Sets the default S/MIME config for the specified send-as alias.
+// For more information, see Manage S/MIME certificates with the Gmail API
+// (https://developers.google.com/workspace/gmail/api/guides/smime_certs).
 //
 //   - id: The immutable ID for the SmimeInfo.
 //   - sendAsEmail: The email address that appears in the "From:" header for mail
@@ -10726,7 +10825,8 @@ type UsersThreadsDeleteCall struct {
 
 // Delete: Immediately and permanently deletes the specified thread. Any
 // messages that belong to the thread are also deleted. This operation cannot
-// be undone. Prefer `threads.trash` instead.
+// be undone. Prefer `threads.trash` instead. For more information, see Manage
+// threads (https://developers.google.com/workspace/gmail/api/guides/threads).
 //
 //   - id: ID of the Thread to delete.
 //   - userId: The user's email address. The special value `me` can be used to
@@ -10805,7 +10905,8 @@ type UsersThreadsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the specified thread.
+// Get: Gets the specified thread. For more information, see Manage threads
+// (https://developers.google.com/workspace/gmail/api/guides/threads).
 //
 //   - id: The ID of the thread to retrieve.
 //   - userId: The user's email address. The special value `me` can be used to
@@ -10944,7 +11045,9 @@ type UsersThreadsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the threads in the user's mailbox.
+// List: Lists the threads in the user's mailbox. For more information, see
+// Manage threads
+// (https://developers.google.com/workspace/gmail/api/guides/threads).
 //
 //   - userId: The user's email address. The special value `me` can be used to
 //     indicate the authenticated user.
@@ -11116,7 +11219,8 @@ type UsersThreadsModifyCall struct {
 }
 
 // Modify: Modifies the labels applied to the thread. This applies to all
-// messages in the thread.
+// messages in the thread. For more information, see Manage threads
+// (https://developers.google.com/workspace/gmail/api/guides/threads).
 //
 //   - id: The ID of the thread to modify.
 //   - userId: The user's email address. The special value `me` can be used to
@@ -11224,7 +11328,8 @@ type UsersThreadsTrashCall struct {
 }
 
 // Trash: Moves the specified thread to the trash. Any messages that belong to
-// the thread are also moved to the trash.
+// the thread are also moved to the trash. For more information, see Manage
+// threads (https://developers.google.com/workspace/gmail/api/guides/threads).
 //
 //   - id: The ID of the thread to Trash.
 //   - userId: The user's email address. The special value `me` can be used to
@@ -11327,7 +11432,9 @@ type UsersThreadsUntrashCall struct {
 }
 
 // Untrash: Removes the specified thread from the trash. Any messages that
-// belong to the thread are also removed from the trash.
+// belong to the thread are also removed from the trash. For more information,
+// see Manage threads
+// (https://developers.google.com/workspace/gmail/api/guides/threads).
 //
 //   - id: The ID of the thread to remove from Trash.
 //   - userId: The user's email address. The special value `me` can be used to

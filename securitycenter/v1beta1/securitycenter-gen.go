@@ -2550,11 +2550,18 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 // ExternalExposure: Details about the externally exposed resource associated
 // with the finding.
 type ExternalExposure struct {
+	// BackendBucket: The full resource name of the load balancer backend bucket,
+	// for example,
+	// "//compute.googleapis.com/projects/{project-id}/global/backendBuckets/{name}"
+	BackendBucket string `json:"backendBucket,omitempty"`
 	// BackendService: The full resource name of load balancer backend service, for
 	// example,
 	// "//compute.googleapis.com/projects/{project-id}/global/backendServices/{name}
 	// ".
 	BackendService string `json:"backendService,omitempty"`
+	// ExposedApplication: The name and version of the exposed web application, for
+	// example, "Jenkins 2.184".
+	ExposedApplication string `json:"exposedApplication,omitempty"`
 	// ExposedEndpoint: The resource which is running the exposed service, for
 	// example,
 	// "//compute.googleapis.com/projects/{project-id}/zones/{zone}/instances/{insta
@@ -2567,10 +2574,21 @@ type ExternalExposure struct {
 	// "//compute.googleapis.com/projects/{project-id}/global/forwardingRules/{forwa
 	// rding-rule-name}".
 	ForwardingRule string `json:"forwardingRule,omitempty"`
+	// HostnameUri: Hostname of the exposed application, for example,
+	// "https://test-app.a.run.app/"
+	HostnameUri string `json:"hostnameUri,omitempty"`
+	// HttpResponse: The http response returned by the web application.
+	HttpResponse []*HttpResponse `json:"httpResponse,omitempty"`
 	// InstanceGroup: The full resource name of the instance group, for example,
 	// "//compute.googleapis.com/projects/{project-id}/global/instanceGroups/{name}"
 	// .
 	InstanceGroup string `json:"instanceGroup,omitempty"`
+	// InternalBackendService: The full resource name of load balancer backend
+	// service in the internal project having resource exposed via PSC, for
+	// example,
+	// "//compute.googleapis.com/projects/{project-id}/global/backendServices/{name}
+	// ".
+	InternalBackendService string `json:"internalBackendService,omitempty"`
 	// LoadBalancerFirewallPolicy: The full resource name of the load balancer
 	// firewall policy, for example,
 	// "//compute.googleapis.com/projects/{project-id}/global/firewallPolicies/{poli
@@ -2581,10 +2599,27 @@ type ExternalExposure struct {
 	// "//compute.googleapis.com/projects/{project-id}/global/networkEndpointGroups/
 	// {name}".
 	NetworkEndpointGroup string `json:"networkEndpointGroup,omitempty"`
+	// NetworkIngressFirewallPolicy: The full resource name of the network ingress
+	// firewall policy, for example,
+	// "//compute.googleapis.com/projects/{project-id}/global/firewallPolicies/{name
+	// }".
+	NetworkIngressFirewallPolicy string `json:"networkIngressFirewallPolicy,omitempty"`
 	// PrivateIpAddress: Private IP address of the exposed endpoint.
 	PrivateIpAddress string `json:"privateIpAddress,omitempty"`
 	// PrivatePort: Port number associated with private IP address.
 	PrivatePort string `json:"privatePort,omitempty"`
+	// PscNetworkAttachment: The full resource name of the PSC (Private Service
+	// Connect) network attachment that network interface controller is attached
+	// to, for example,
+	// "//compute.googleapis.com/projects/{project-id}/regions/{region}/networkAttac
+	// hments/{name}"
+	PscNetworkAttachment string `json:"pscNetworkAttachment,omitempty"`
+	// PscServiceAttachment: The full resource name of the PSC (Private Service
+	// Connect) service attachment that the load balancer network endpoint group
+	// targets, for example,
+	// "//compute.googleapis.com/projects/{project-id}/regions/{region}/serviceAttac
+	// hments/{name}"
+	PscServiceAttachment string `json:"pscServiceAttachment,omitempty"`
 	// PublicIpAddress: Public IP address of the exposed endpoint.
 	PublicIpAddress string `json:"publicIpAddress,omitempty"`
 	// PublicPort: Public port number of the exposed endpoint.
@@ -2594,15 +2629,15 @@ type ExternalExposure struct {
 	// "//compute.googleapis.com/projects/{project-id}/global/firewallPolicies/{poli
 	// cy-name}".
 	ServiceFirewallPolicy string `json:"serviceFirewallPolicy,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BackendService") to
+	// ForceSendFields is a list of field names (e.g. "BackendBucket") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BackendService") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BackendBucket") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2820,6 +2855,8 @@ type Finding struct {
 	// attack paths converge, based on attack path simulations (APS).
 	//   "EXTERNAL_EXPOSURE" - Describes a potential security risk due to the
 	// resource being exposed to the internet.
+	//   "SECRET" - Describes a potential security risk due to plaintext
+	// credentials, keys, or tokens being exposed in an asset or workload.
 	FindingClass string `json:"findingClass,omitempty"`
 	// GroupMemberships: Contains details about groups of which this finding is a
 	// member. A group is a collection of findings that are related in some way.
@@ -6596,11 +6633,18 @@ func (s GoogleCloudSecuritycenterV2Exfiltration) MarshalJSON() ([]byte, error) {
 // GoogleCloudSecuritycenterV2ExternalExposure: Details about the externally
 // exposed resource associated with the finding.
 type GoogleCloudSecuritycenterV2ExternalExposure struct {
+	// BackendBucket: The full resource name of the load balancer backend bucket,
+	// for example,
+	// "//compute.googleapis.com/projects/{project-id}/global/backendBuckets/{name}"
+	BackendBucket string `json:"backendBucket,omitempty"`
 	// BackendService: The full resource name of load balancer backend service, for
 	// example,
 	// "//compute.googleapis.com/projects/{project-id}/global/backendServices/{name}
 	// ".
 	BackendService string `json:"backendService,omitempty"`
+	// ExposedApplication: The name and version of the exposed web application, for
+	// example, "Jenkins 2.184".
+	ExposedApplication string `json:"exposedApplication,omitempty"`
 	// ExposedEndpoint: The resource which is running the exposed service, for
 	// example,
 	// "//compute.googleapis.com/projects/{project-id}/zones/{zone}/instances/{insta
@@ -6613,10 +6657,21 @@ type GoogleCloudSecuritycenterV2ExternalExposure struct {
 	// "//compute.googleapis.com/projects/{project-id}/global/forwardingRules/{forwa
 	// rding-rule-name}".
 	ForwardingRule string `json:"forwardingRule,omitempty"`
+	// HostnameUri: Hostname of the exposed application, for example,
+	// "https://test-app.a.run.app/"
+	HostnameUri string `json:"hostnameUri,omitempty"`
+	// HttpResponse: The http response returned by the web application.
+	HttpResponse []*GoogleCloudSecuritycenterV2HttpResponse `json:"httpResponse,omitempty"`
 	// InstanceGroup: The full resource name of the instance group, for example,
 	// "//compute.googleapis.com/projects/{project-id}/global/instanceGroups/{name}"
 	// .
 	InstanceGroup string `json:"instanceGroup,omitempty"`
+	// InternalBackendService: The full resource name of load balancer backend
+	// service in the internal project having resource exposed via PSC, for
+	// example,
+	// "//compute.googleapis.com/projects/{project-id}/global/backendServices/{name}
+	// ".
+	InternalBackendService string `json:"internalBackendService,omitempty"`
 	// LoadBalancerFirewallPolicy: The full resource name of the load balancer
 	// firewall policy, for example,
 	// "//compute.googleapis.com/projects/{project-id}/global/firewallPolicies/{poli
@@ -6627,10 +6682,27 @@ type GoogleCloudSecuritycenterV2ExternalExposure struct {
 	// "//compute.googleapis.com/projects/{project-id}/global/networkEndpointGroups/
 	// {name}".
 	NetworkEndpointGroup string `json:"networkEndpointGroup,omitempty"`
+	// NetworkIngressFirewallPolicy: The full resource name of the network ingress
+	// firewall policy, for example,
+	// "//compute.googleapis.com/projects/{project-id}/global/firewallPolicies/{name
+	// }".
+	NetworkIngressFirewallPolicy string `json:"networkIngressFirewallPolicy,omitempty"`
 	// PrivateIpAddress: Private IP address of the exposed endpoint.
 	PrivateIpAddress string `json:"privateIpAddress,omitempty"`
 	// PrivatePort: Port number associated with private IP address.
 	PrivatePort string `json:"privatePort,omitempty"`
+	// PscNetworkAttachment: The full resource name of the PSC (Private Service
+	// Connect) network attachment that network interface controller is attached
+	// to, for example,
+	// "//compute.googleapis.com/projects/{project-id}/regions/{region}/networkAttac
+	// hments/{name}"
+	PscNetworkAttachment string `json:"pscNetworkAttachment,omitempty"`
+	// PscServiceAttachment: The full resource name of the PSC (Private Service
+	// Connect) service attachment that the load balancer network endpoint group
+	// targets, for example,
+	// "//compute.googleapis.com/projects/{project-id}/regions/{region}/serviceAttac
+	// hments/{name}"
+	PscServiceAttachment string `json:"pscServiceAttachment,omitempty"`
 	// PublicIpAddress: Public IP address of the exposed endpoint.
 	PublicIpAddress string `json:"publicIpAddress,omitempty"`
 	// PublicPort: Public port number of the exposed endpoint.
@@ -6640,15 +6712,15 @@ type GoogleCloudSecuritycenterV2ExternalExposure struct {
 	// "//compute.googleapis.com/projects/{project-id}/global/firewallPolicies/{poli
 	// cy-name}".
 	ServiceFirewallPolicy string `json:"serviceFirewallPolicy,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BackendService") to
+	// ForceSendFields is a list of field names (e.g. "BackendBucket") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BackendService") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BackendBucket") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -6933,6 +7005,8 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	// attack paths converge, based on attack path simulations (APS).
 	//   "EXTERNAL_EXPOSURE" - Describes a potential security risk due to the
 	// resource being exposed to the internet.
+	//   "SECRET" - Describes a potential security risk due to plaintext
+	// credentials, keys, or tokens being exposed in an asset or workload.
 	FindingClass string `json:"findingClass,omitempty"`
 	// GroupMemberships: Contains details about groups of which this finding is a
 	// member. A group is a collection of findings that are related in some way.
@@ -7254,6 +7328,33 @@ type GoogleCloudSecuritycenterV2GroupMembership struct {
 
 func (s GoogleCloudSecuritycenterV2GroupMembership) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2GroupMembership
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2HttpResponse: The http response returned by the
+// web application.
+type GoogleCloudSecuritycenterV2HttpResponse struct {
+	// Path: The http path for which response code was returned by web application,
+	// for example, "https://test-app.a.run.app/test".
+	Path string `json:"path,omitempty"`
+	// StatusCode: The http response code returned by the web application, for
+	// example, 200.
+	StatusCode string `json:"statusCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Path") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Path") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2HttpResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2HttpResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10577,6 +10678,32 @@ type GroupResult struct {
 
 func (s GroupResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// HttpResponse: The http response returned by the web application.
+type HttpResponse struct {
+	// Path: The http path for which response code was returned by web application,
+	// for example, "https://test-app.a.run.app/test".
+	Path string `json:"path,omitempty"`
+	// StatusCode: The http response code returned by the web application, for
+	// example, 200.
+	StatusCode string `json:"statusCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Path") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Path") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HttpResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod HttpResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -982,6 +982,18 @@ type GoogleFirebaseAppdistroV1alphaDeviceInteraction struct {
 	Swipe *GoogleFirebaseAppdistroV1alphaDeviceInteractionSwipe `json:"swipe,omitempty"`
 	// Tap: Output only. A tap action.
 	Tap *AndroidxCrawlerOutputPoint `json:"tap,omitempty"`
+	// TargetFoldedState: Output only. The target folded state of the device in a
+	// set folded state action. The valid string values are device-dependent, and
+	// can be found using `adb shell cmd device_state print-states`.
+	TargetFoldedState string `json:"targetFoldedState,omitempty"`
+	// TargetOrientation: Output only. The target orientation of the device in a
+	// set orientation action.
+	//
+	// Possible values:
+	//   "ORIENTATION_UNSPECIFIED" - Orientation unspecified.
+	//   "PORTRAIT" - Portrait orientation.
+	//   "LANDSCAPE" - Landscape orientation.
+	TargetOrientation string `json:"targetOrientation,omitempty"`
 	// TextInput: Output only. A text input action, that types some text into
 	// whatever field is currently focused, if any. Unlike `enter_text` this action
 	// requires that the field be brought into focus first, for example by emitting
@@ -1232,6 +1244,7 @@ type GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse struct {
 	//   "AAB_UPLOAD_ERROR"
 	//   "APP_NOT_FOUND" - Happens if the Firebase app no longer exists by the time
 	// of extraction
+	//   "AAB_ADHOC_SHARING_KEY_NOT_REGISTERED"
 	ErrorCode string `json:"errorCode,omitempty"`
 	// Message: Any additional context for the given upload status (e.g. error
 	// message) Meant to be displayed to the client
@@ -1590,6 +1603,11 @@ type GoogleFirebaseAppdistroV1alphaReleaseTest struct {
 	// Name: The name of the release test resource. Format:
 	// `projects/{project_number}/apps/{app}/releases/{release}/tests/{test}`
 	Name string `json:"name,omitempty"`
+	// ResultsBucket: Optional. Input only. The custom Cloud Storage bucket where
+	// test results are stored. Format:
+	// `projects/{project_number}/buckets/{bucket}` If not provided, the default
+	// test lab bucket is used.
+	ResultsBucket string `json:"resultsBucket,omitempty"`
 	// TestCase: Optional. The test case that was used to generate this release
 	// test. Note: The test case may have changed or been deleted since the release
 	// test was created. Format:
@@ -1785,6 +1803,10 @@ type GoogleFirebaseAppdistroV1alphaTestConfig struct {
 	// Name: Identifier. The name of the test configuration resource. Format:
 	// `projects/{project_number}/apps/{app}/testConfig`
 	Name string `json:"name,omitempty"`
+	// ResultsBucket: Optional. The custom Cloud Storage bucket where test results
+	// are stored. Format: `projects/{project_number}/buckets/{bucket}` If not
+	// provided, the default test lab bucket is used.
+	ResultsBucket string `json:"resultsBucket,omitempty"`
 	// RoboCrawler: Optional. Configuration for Robo crawler
 	RoboCrawler *GoogleFirebaseAppdistroV1alphaRoboCrawler `json:"roboCrawler,omitempty"`
 	// TestDevices: Optional. Tests will be run on this list of devices

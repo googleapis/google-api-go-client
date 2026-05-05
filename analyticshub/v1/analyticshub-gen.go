@@ -1229,9 +1229,9 @@ func (s GoogleCloudBigqueryAnalyticshubV1SubscriptionCommercialInfoGoogleCloudMa
 
 // GooglePubsubV1Subscription: Defines the destination Pub/Sub subscription. If
 // none of `push_config`, `bigquery_config`, `cloud_storage_config`,
-// `pubsub_export_config`, or `pubsublite_export_config` is set, then the
-// subscriber will pull and ack messages using API methods. At most one of
-// these fields may be set.
+// `bigtable_config`, `pubsub_export_config`, or `pubsublite_export_config` is
+// set, then the subscriber will pull and ack messages using API methods. At
+// most one of these fields may be set.
 type GooglePubsubV1Subscription struct {
 	// AckDeadlineSeconds: Optional. The approximate amount of time (on a
 	// best-effort basis) Pub/Sub waits for the subscriber to acknowledge receipt

@@ -1120,8 +1120,8 @@ type SearchAgentsRequest struct {
 	// | skills.name | No | Yes | No | Included | | skills.description | No | Yes |
 	// No | Included | | skills.tags | No | Yes | No | Included | | skills.examples
 	// | No | Yes | No | Included | Examples: *
-	// `agentId=urn:agent:projects-123:projects:123:locations:us-central1:reasoningE
-	// ngines:1234` to find the agent with the specified agent ID. *
+	// `agentId="urn:agent:projects-123:projects:123:locations:us-central1:reasoning
+	// Engines:1234" to find the agent with the specified agent ID. *
 	// `name:important` to find agents whose name contains `important` as a word. *
 	// `displayName:works*` to find agents whose display name contains words that
 	// start with `works`. * `skills.tags:test` to find agents whose skills tags
@@ -1200,8 +1200,8 @@ type SearchMcpServersRequest struct {
 	// |--------------------|-----|-----|-----|----------------| | mcpServerId |
 	// Yes | Yes | Yes | Included | | name | No | Yes | Yes | Included | |
 	// displayName | No | Yes | Yes | Included | Examples: *
-	// `mcpServerId=urn:mcp:projects-123:projects:123:locations:us-central1:agentreg
-	// istry:services:service-id` to find the MCP Server with the specified MCP
+	// `mcpServerId="urn:mcp:projects-123:projects:123:locations:us-central1:agentre
+	// gistry:services:service-id" to find the MCP Server with the specified MCP
 	// Server ID. * `name:important` to find MCP Servers whose name contains
 	// `important` as a word. * `displayName:works*` to find MCP Servers whose
 	// display name contains words that start with `works`. * `planner OR booking`
@@ -1569,8 +1569,8 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this service. This
 // method lists locations based on the resource scope provided in the
-// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
-// empty, the method lists the public locations available to all projects. *
+// ListLocationsRequest.name field: * **Global locations**: If `name` is empty,
+// the method lists the public locations available to all projects. *
 // **Project-specific locations**: If `name` follows the format
 // `projects/{project}`, the method lists locations visible to that specific
 // project. This includes public, private, or other project-specific locations
@@ -1587,8 +1587,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

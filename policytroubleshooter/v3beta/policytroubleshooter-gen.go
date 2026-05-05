@@ -2099,7 +2099,7 @@ type GoogleIamV3PolicyBinding struct {
 	// `principal.subject.endsWith()` Allowed operations for `principal.type`: -
 	// `principal.type == ` - `principal.type != ` - `principal.type in []`
 	// Supported principal types are workspace, workforce pool, workload pool,
-	// service account, and Agent Identity. Allowed string must be one of: -
+	// service account, and agent identity. Allowed string must be one of: -
 	// `iam.googleapis.com/WorkspaceIdentity` -
 	// `iam.googleapis.com/WorkforcePoolIdentity` -
 	// `iam.googleapis.com/WorkloadPoolIdentity` -

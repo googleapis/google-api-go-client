@@ -6163,8 +6163,6 @@ func (s QuerySource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// QuerySuggestion: This field does not contain anything as of now and is just
-// used as an indicator that the suggest result was a phrase completion.
 type QuerySuggestion struct {
 	// LastQueryTime: Last query time of the suggestion for query history
 	// suggestions.
@@ -6273,6 +6271,9 @@ func (s RepositoryError) MarshalJSON() ([]byte, error) {
 
 // RequestOptions: Shared request options for all RPC methods.
 type RequestOptions struct {
+	// ClientDisplayLanguageCode: The BCP-47 language code, such as "pt" or "en".
+	// It represents the user's preferred Display Language.
+	ClientDisplayLanguageCode string `json:"clientDisplayLanguageCode,omitempty"`
 	// DebugOptions: Debug options of the request
 	DebugOptions *DebugOptions `json:"debugOptions,omitempty"`
 	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn". For
@@ -6295,15 +6296,15 @@ type RequestOptions struct {
 	// is used to correctly interpret date and time queries. If this field is not
 	// specified, the default time zone (UTC) is used.
 	TimeZone string `json:"timeZone,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DebugOptions") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "ClientDisplayLanguageCode")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DebugOptions") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ClientDisplayLanguageCode") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -10889,6 +10890,14 @@ func (r *QuerySourcesService) List() *QuerySourcesListCall {
 // return in the response.
 func (c *QuerySourcesListCall) PageToken(pageToken string) *QuerySourcesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// RequestOptionsClientDisplayLanguageCode sets the optional parameter
+// "requestOptions.clientDisplayLanguageCode": The BCP-47 language code, such
+// as "pt" or "en". It represents the user's preferred Display Language.
+func (c *QuerySourcesListCall) RequestOptionsClientDisplayLanguageCode(requestOptionsClientDisplayLanguageCode string) *QuerySourcesListCall {
+	c.urlParams_.Set("requestOptions.clientDisplayLanguageCode", requestOptionsClientDisplayLanguageCode)
 	return c
 }
 

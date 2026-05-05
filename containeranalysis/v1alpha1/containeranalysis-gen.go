@@ -259,6 +259,36 @@ type ProvidersNotesOccurrencesService struct {
 	s *Service
 }
 
+// AISkillAnalysisNote: AISkillAnalysisNote provides the metadata of an
+// AI-based skill analysis.
+type AISkillAnalysisNote struct {
+}
+
+// AISkillAnalysisOccurrence: AISkillAnalysisOccurrence provides the results of
+// an AI-based skill analysis.
+type AISkillAnalysisOccurrence struct {
+	// Findings: Optional. Findings produced by the analysis.
+	Findings []*Finding `json:"findings,omitempty"`
+	// SkillName: Optional. Name of the skill that produced this analysis.
+	SkillName string `json:"skillName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Findings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Findings") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AISkillAnalysisOccurrence) MarshalJSON() ([]byte, error) {
+	type NoMethod AISkillAnalysisOccurrence
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AnalysisCompleted: Indicates which analysis completed successfully. Multiple
 // types of analysis can be performed on a single resource.
 type AnalysisCompleted struct {
@@ -1391,6 +1421,10 @@ func (s ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalResult) MarshalJSON()
 // a build that should be uploaded upon successful completion of all build
 // steps.
 type ContaineranalysisGoogleDevtoolsCloudbuildV1Artifacts struct {
+	// GenericArtifacts: Optional. A list of generic artifacts to be uploaded to
+	// Artifact Registry upon successful completion of all build steps. If any
+	// artifacts fail to be pushed, the build is marked FAILURE.
+	GenericArtifacts []*ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsGenericArtifact `json:"genericArtifacts,omitempty"`
 	// GoModules: Optional. A list of Go modules to be uploaded to Artifact
 	// Registry upon successful completion of all build steps. If any objects fail
 	// to be pushed, the build is marked FAILURE.
@@ -1432,15 +1466,15 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Artifacts struct {
 	// account credentials will be used to perform the upload. If any objects fail
 	// to be pushed, the build is marked FAILURE.
 	PythonPackages []*ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsPythonPackage `json:"pythonPackages,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GoModules") to
+	// ForceSendFields is a list of field names (e.g. "GenericArtifacts") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GoModules") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "GenericArtifacts") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1480,6 +1514,36 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsArtifactObjects struct 
 
 func (s ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsArtifactObjects) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsArtifactObjects
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsGenericArtifact: Generic
+// artifact to upload to Artifact Registry upon successful completion of all
+// build steps.
+type ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsGenericArtifact struct {
+	// Folder: Required. Path to the generic artifact in the build's workspace to
+	// be uploaded to Artifact Registry.
+	Folder string `json:"folder,omitempty"`
+	// RegistryPath: Required. Registry path to upload the generic artifact to, in
+	// the form
+	// projects/$PROJECT/locations/$LOCATION/repositories/$REPO/packages/$PACKAGE/ve
+	// rsions/$VERSION
+	RegistryPath string `json:"registryPath,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Folder") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Folder") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsGenericArtifact) MarshalJSON() ([]byte, error) {
+	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsGenericArtifact
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2101,6 +2165,8 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStep struct {
 	// PullTiming: Output only. Stores timing information for pulling this build
 	// step's builder image only.
 	PullTiming *ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan `json:"pullTiming,omitempty"`
+	// Results: Declaration of results for this build step.
+	Results []*ContaineranalysisGoogleDevtoolsCloudbuildV1StepResult `json:"results,omitempty"`
 	// Script: A shell script to be executed in the step. When script is provided,
 	// the user cannot specify the entrypoint or args.
 	Script string `json:"script,omitempty"`
@@ -2159,6 +2225,29 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStep struct {
 
 func (s ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStep) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStepResults: Results for a
+// build step.
+type ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStepResults struct {
+	// Results: Results for a build step.
+	Results map[string]string `json:"results,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Results") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Results") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStepResults) MarshalJSON() ([]byte, error) {
+	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStepResults
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2271,6 +2360,8 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Dependency struct {
 	// Empty: If set to true disable all dependency fetching (ignoring the default
 	// source as well).
 	Empty bool `json:"empty,omitempty"`
+	// GenericArtifact: Represents a generic artifact as a build dependency.
+	GenericArtifact *ContaineranalysisGoogleDevtoolsCloudbuildV1DependencyGenericArtifactDependency `json:"genericArtifact,omitempty"`
 	// GitSource: Represents a git repository as a build dependency.
 	GitSource *ContaineranalysisGoogleDevtoolsCloudbuildV1DependencyGitSourceDependency `json:"gitSource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Empty") to unconditionally
@@ -2288,6 +2379,32 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Dependency struct {
 
 func (s ContaineranalysisGoogleDevtoolsCloudbuildV1Dependency) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1Dependency
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ContaineranalysisGoogleDevtoolsCloudbuildV1DependencyGenericArtifactDependenc
+// y: Represents a generic artifact as a build dependency.
+type ContaineranalysisGoogleDevtoolsCloudbuildV1DependencyGenericArtifactDependency struct {
+	// DestPath: Required. Where the artifact files should be placed on the worker.
+	DestPath string `json:"destPath,omitempty"`
+	// Resource: Required. The location to download the artifact files from. Ex:
+	// projects/p1/locations/us/repositories/r1/packages/p1/versions/v1
+	Resource string `json:"resource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DestPath") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DestPath") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1DependencyGenericArtifactDependency) MarshalJSON() ([]byte, error) {
+	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1DependencyGenericArtifactDependency
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2620,6 +2737,11 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Results struct {
 	// is stored. Note that the `$BUILDER_OUTPUT` variable is read-only and can't
 	// be substituted.
 	BuildStepOutputs []string `json:"buildStepOutputs,omitempty"`
+	// BuildStepResults: Results for build steps. step_id ->
+	BuildStepResults map[string]ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStepResults `json:"buildStepResults,omitempty"`
+	// GenericArtifacts: Output only. Generic artifacts uploaded to Artifact
+	// Registry at the end of the build.
+	GenericArtifacts []*ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedGenericArtifact `json:"genericArtifacts,omitempty"`
 	// GoModules: Optional. Go module artifacts uploaded to Artifact Registry at
 	// the end of the build.
 	GoModules []*ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedGoModule `json:"goModules,omitempty"`
@@ -2827,6 +2949,34 @@ func (s ContaineranalysisGoogleDevtoolsCloudbuildV1SourceProvenance) MarshalJSON
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ContaineranalysisGoogleDevtoolsCloudbuildV1StepResult: StepResult is the
+// declaration of a result for a build step.
+type ContaineranalysisGoogleDevtoolsCloudbuildV1StepResult struct {
+	// AttestationContent: Optional. The content of the attestation to be
+	// generated.
+	AttestationContent string `json:"attestationContent,omitempty"`
+	// AttestationType: Optional. The type of attestation to be generated.
+	AttestationType string `json:"attestationType,omitempty"`
+	// Name: Required. The name of the result.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttestationContent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttestationContent") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1StepResult) MarshalJSON() ([]byte, error) {
+	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1StepResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSource: Location of the
 // source in an archive file in Cloud Storage.
 type ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSource struct {
@@ -2923,6 +3073,41 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan struct {
 
 func (s ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedGenericArtifact: A
+// generic artifact uploaded to Artifact Registry using the GenericArtifact
+// directive.
+type ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedGenericArtifact struct {
+	// ArtifactFingerprint: Output only. The hash of the whole artifact.
+	ArtifactFingerprint *ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes `json:"artifactFingerprint,omitempty"`
+	// ArtifactRegistryPackage: Output only. Path to the artifact in Artifact
+	// Registry.
+	ArtifactRegistryPackage string `json:"artifactRegistryPackage,omitempty"`
+	// FileHashes: Output only. The file hashes that make up the generic artifact.
+	FileHashes map[string]ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes `json:"fileHashes,omitempty"`
+	// PushTiming: Output only. Stores timing information for pushing the specified
+	// artifact.
+	PushTiming *ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan `json:"pushTiming,omitempty"`
+	// Uri: Output only. URI of the uploaded artifact. Ex:
+	// projects/p1/locations/us/repositories/r1/packages/p1/versions/v1
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ArtifactFingerprint") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ArtifactFingerprint") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedGenericArtifact) MarshalJSON() ([]byte, error) {
+	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedGenericArtifact
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3456,6 +3641,7 @@ type Discovery struct {
 	//   "VULNERABILITY_ASSESSMENT" - This represents a Vulnerability Assessment.
 	//   "SBOM_REFERENCE" - This represents a reference to an SBOM.
 	//   "SECRET" - This represents a secret.
+	//   "AI_SKILL_ANALYSIS" - This represents an AI skill analysis.
 	AnalysisKind string `json:"analysisKind,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnalysisKind") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3960,6 +4146,41 @@ type FileOccurrence struct {
 
 func (s FileOccurrence) MarshalJSON() ([]byte, error) {
 	type NoMethod FileOccurrence
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Finding: Finding provides details for a single finding within an
+// AISkillAnalysisOccurrence.
+type Finding struct {
+	// Category: Optional. Category of the finding.
+	Category string `json:"category,omitempty"`
+	// Description: Optional. Detailed description of the finding.
+	Description string `json:"description,omitempty"`
+	// FilePath: Optional. Path to the file where the finding was detected.
+	FilePath string `json:"filePath,omitempty"`
+	// RuleId: Optional. Unique identifier of the rule that produced this finding.
+	RuleId string `json:"ruleId,omitempty"`
+	// Severity: Optional. Severity of the finding.
+	Severity string `json:"severity,omitempty"`
+	// Snippet: Optional. Code snippet relevant to the finding.
+	Snippet string `json:"snippet,omitempty"`
+	// Title: Optional. Title of the finding.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Finding) MarshalJSON() ([]byte, error) {
+	type NoMethod Finding
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5058,6 +5279,8 @@ func (s NonCompliantFile) MarshalJSON() ([]byte, error) {
 
 // Note: Provides a detailed description of a `Note`.
 type Note struct {
+	// AiSkillAnalysis: A note describing an AI skill analysis.
+	AiSkillAnalysis *AISkillAnalysisNote `json:"aiSkillAnalysis,omitempty"`
 	// AttestationAuthority: A note describing an attestation role.
 	AttestationAuthority *AttestationAuthority `json:"attestationAuthority,omitempty"`
 	// BaseImage: A note describing a base image.
@@ -5105,6 +5328,7 @@ type Note struct {
 	//   "VULNERABILITY_ASSESSMENT" - This represents a Vulnerability Assessment.
 	//   "SBOM_REFERENCE" - This represents a reference to an SBOM.
 	//   "SECRET" - This represents a secret.
+	//   "AI_SKILL_ANALYSIS" - This represents an AI skill analysis.
 	Kind string `json:"kind,omitempty"`
 	// LongDescription: A detailed description of this `Note`.
 	LongDescription string `json:"longDescription,omitempty"`
@@ -5141,15 +5365,15 @@ type Note struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AttestationAuthority") to
+	// ForceSendFields is a list of field names (e.g. "AiSkillAnalysis") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AttestationAuthority") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AiSkillAnalysis") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5162,6 +5386,8 @@ func (s Note) MarshalJSON() ([]byte, error) {
 // Occurrence: `Occurrence` includes information about analysis occurrences for
 // an image.
 type Occurrence struct {
+	// AiSkillAnalysis: This represents an AI skill analysis occurrence
+	AiSkillAnalysis *AISkillAnalysisOccurrence `json:"aiSkillAnalysis,omitempty"`
 	// Attestation: Describes an attestation of an artifact.
 	Attestation *Attestation `json:"attestation,omitempty"`
 	// BuildDetails: Build details for a verifiable build.
@@ -5211,6 +5437,7 @@ type Occurrence struct {
 	//   "VULNERABILITY_ASSESSMENT" - This represents a Vulnerability Assessment.
 	//   "SBOM_REFERENCE" - This represents a reference to an SBOM.
 	//   "SECRET" - This represents a secret.
+	//   "AI_SKILL_ANALYSIS" - This represents an AI skill analysis.
 	Kind string `json:"kind,omitempty"`
 	// Name: Output only. The name of the `Occurrence` in the form
 	// "projects/{project_id}/occurrences/{OCCURRENCE_ID}"
@@ -5248,15 +5475,15 @@ type Occurrence struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Attestation") to
+	// ForceSendFields is a list of field names (e.g. "AiSkillAnalysis") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Attestation") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AiSkillAnalysis") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -9397,6 +9624,7 @@ func (c *ProjectsOccurrencesListCall) Filter(filter string) *ProjectsOccurrences
 //	"VULNERABILITY_ASSESSMENT" - This represents a Vulnerability Assessment.
 //	"SBOM_REFERENCE" - This represents a reference to an SBOM.
 //	"SECRET" - This represents a secret.
+//	"AI_SKILL_ANALYSIS" - This represents an AI skill analysis.
 func (c *ProjectsOccurrencesListCall) Kind(kind string) *ProjectsOccurrencesListCall {
 	c.urlParams_.Set("kind", kind)
 	return c

@@ -1097,13 +1097,48 @@
                   ]
                 }
               }
+            },
+            "supportedRuntimes": {
+              "methods": {
+                "list": {
+                  "description": "Lists the runtimes supported by the backend. The list of runtimes may vary across projects and locations, for example, during staged rollouts of new runtime support.",
+                  "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/supportedRuntimes",
+                  "httpMethod": "GET",
+                  "id": "firebaseapphosting.projects.locations.supportedRuntimes.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "Optional. The suggested number of runtimes to return. This field is ignored. We return all runtimes in a single page regardless of the page size.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "parent": {
+                      "description": "Required. The parent, which owns this collection of SupportedRuntime. Format: projects/{project}/locations/{location}",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta/{+parent}/supportedRuntimes",
+                  "response": {
+                    "$ref": "ListSupportedRuntimesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
             }
           }
         }
       }
     }
   },
-  "revision": "20260423",
+  "revision": "20260427",
   "rootUrl": "https://firebaseapphosting.googleapis.com/",
   "schemas": {
     "ArchiveSource": {
@@ -2230,6 +2265,20 @@
       },
       "type": "object"
     },
+    "ListSupportedRuntimesResponse": {
+      "description": "Response message for a list of supported runtimes.",
+      "id": "ListSupportedRuntimesResponse",
+      "properties": {
+        "supportedRuntimes": {
+          "description": "The list of supported runtimes.",
+          "items": {
+            "$ref": "SupportedRuntime"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "LiveMigrationStep": {
       "description": "A set of updates including ACME challenges and DNS records that allow App Hosting to create an SSL certificate and establish project ownership for your domain name before you direct traffic to App Hosting servers. Use these updates to facilitate zero downtime migrations to App Hosting from other services. After you've made the recommended updates, check your custom domain's `ownershipState` and `certState`. To avoid downtime, they should be `OWNERSHIP_ACTIVE` and `CERT_ACTIVE`, respectively, before you update your `A` and `AAAA` records.",
       "id": "LiveMigrationStep",
@@ -2696,6 +2745,39 @@
         },
         "message": {
           "description": "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SupportedRuntime": {
+      "description": "Represents a single FAH supported runtime. Although instances of this resource are parented by a project and location, the set of available runtimes may vary across projects and locations, for example, during staged rollouts of new runtime support.",
+      "id": "SupportedRuntime",
+      "properties": {
+        "automaticBaseImageUpdatesSupported": {
+          "description": "Output only. True if Automatic Base Image Updates (ABIU) is supported for this runtime.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "decommissionTime": {
+          "description": "Output only. The time at which this runtime will be decommissioned. After this date, the runtime can no longer be used for new builds.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "deprecateTime": {
+          "description": "Output only. The time at which this runtime will effectively be deprecated. After this date, the runtime is still usable but may not receive new features or updates.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "description": "Identifier. The resource name of the supported runtime. Format: projects/{project}/locations/{location}/supportedRuntimes/{runtime_id}",
+          "type": "string"
+        },
+        "runtimeId": {
+          "description": "Output only. The identifier of the runtime, e.g., \"nodejs22\".",
+          "readOnly": true,
           "type": "string"
         }
       },

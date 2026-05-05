@@ -2329,11 +2329,9 @@ type GoogleCloudRecaptchaenterpriseV1TokenProperties struct {
 	// IosBundleId: Output only. The ID of the iOS bundle with which the token was
 	// generated (iOS keys only).
 	IosBundleId string `json:"iosBundleId,omitempty"`
-	// Valid: Output only. Whether the provided user response token is valid. When
-	// valid = false, the reason could be specified in invalid_reason or it could
-	// also be due to a user failing to solve a challenge or a sitekey mismatch
-	// (i.e the sitekey used to generate the token was different than the one
-	// specified in the assessment).
+	// Valid: Output only. Indicates whether the provided user response token is
+	// valid. If `false`, the token is invalid, either because the user failed the
+	// challenge or for a reason provided in the `invalid_reason` field.
 	Valid bool `json:"valid,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

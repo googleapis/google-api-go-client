@@ -391,6 +391,43 @@ type ProjectsLocationsProvidersConnectorsVersionsEventtypesService struct {
 	s *Service
 }
 
+// AdminFilters: * AdminFilters defines a set of filters that can be applied to
+// a connection. These are currently used by Gemini Enterprise connections.
+type AdminFilters struct {
+	// FilterKey: Required. Unique name for the filter, e.g., "SharePointSiteURL",
+	// "DocumentType", "ChatSpaceName".
+	FilterKey string `json:"filterKey,omitempty"`
+	// FilterType: Required. Type of the filter.
+	//
+	// Possible values:
+	//   "FILTER_TYPE_UNSPECIFIED" - Filter type is not specified.
+	//   "INCLUSION" - Only allow items matching the configured values.
+	//   "EXCLUSION" - Disallow items matching the configured values.
+	FilterType string `json:"filterType,omitempty"`
+	// IntValue: Optional. A single integer value.
+	IntValue int64 `json:"intValue,omitempty,string"`
+	// StringListValues: Optional. List of string values.
+	StringListValues *StringListValues `json:"stringListValues,omitempty"`
+	// StringValue: Optional. A single string value.
+	StringValue string `json:"stringValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FilterKey") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FilterKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdminFilters) MarshalJSON() ([]byte, error) {
+	type NoMethod AdminFilters
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must have one
@@ -985,6 +1022,9 @@ func (s ConfigVariableTemplate) MarshalJSON() ([]byte, error) {
 
 // Connection: Connection represents an instance of connector.
 type Connection struct {
+	// AdminFilters: Optional. Admin filters for the connection. These are used by
+	// Gemini Enterprise.
+	AdminFilters []*AdminFilters `json:"adminFilters,omitempty"`
 	// AsyncOperationsEnabled: Optional. Async operations enabled for the
 	// connection. If Async Operations is enabled, Connection allows the customers
 	// to initiate async long running operations using the actions API.
@@ -1114,15 +1154,15 @@ type Connection struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AsyncOperationsEnabled") to
+	// ForceSendFields is a list of field names (e.g. "AdminFilters") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AsyncOperationsEnabled") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdminFilters") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2874,7 +2914,7 @@ func (s EventType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// EventingConfig: Eventing Configuration of a connection next: 20
+// EventingConfig: Eventing Configuration of a connection next: 21
 type EventingConfig struct {
 	// AdditionalVariables: Optional. Additional eventing related field values
 	AdditionalVariables []*ConfigVariable `json:"additionalVariables,omitempty"`
@@ -2892,6 +2932,9 @@ type EventingConfig struct {
 	// EventsListenerIngressEndpoint: Output only. Ingress endpoint of the event
 	// listener. This is used only when private connectivity is enabled.
 	EventsListenerIngressEndpoint string `json:"eventsListenerIngressEndpoint,omitempty"`
+	// GlobalEventFilter: Optional. Filter to be applied on the events to be
+	// received by the connection.
+	GlobalEventFilter string `json:"globalEventFilter,omitempty"`
 	// ListenerAuthConfig: Optional. Auth details for the event listener.
 	ListenerAuthConfig *AuthConfig `json:"listenerAuthConfig,omitempty"`
 	// PrivateConnectivityAllowlistedProjects: Optional. List of projects to be
@@ -3006,6 +3049,15 @@ type EventingDetails struct {
 	Name string `json:"name,omitempty"`
 	// SearchTags: Output only. Array of search keywords.
 	SearchTags []string `json:"searchTags,omitempty"`
+	// SubscriptionType: The webhook model supported by this connector.
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_TYPE_UNSPECIFIED" - Default value.
+	//   "SHARED" - Managed via admin credentials. Handles global or system-wide
+	// events.
+	//   "USER_SPECIFIC" - Managed via individual user credentials. Isolates data
+	// per user.
+	SubscriptionType string `json:"subscriptionType,omitempty"`
 	// Type: Output only. The type of the event listener for a specific connector.
 	//
 	// Possible values:
@@ -3765,23 +3817,59 @@ func (s JsonAuthSchema) MarshalJSON() ([]byte, error) {
 
 // JsonSchema: JsonSchema representation of schema metadata
 type JsonSchema struct {
+	// Comment: A comment on the schema.
+	Comment string `json:"$comment,omitempty"`
+	// Defs: Definitions for the schema.
+	Defs map[string]JsonSchema `json:"$defs,omitempty"`
+	// Id: The URI defining the core schema meta-schema.
+	Id string `json:"$id,omitempty"`
+	// Ref: A reference to another schema.
+	Ref string `json:"$ref,omitempty"`
+	// Schema: The URI defining the schema.
+	Schema string `json:"$schema,omitempty"`
 	// AdditionalDetails: Additional details apart from standard json schema
 	// fields, this gives flexibility to store metadata about the schema
 	AdditionalDetails googleapi.RawMessage `json:"additionalDetails,omitempty"`
+	// AdditionalItems: Schema for additional items.
+	AdditionalItems *JsonSchema `json:"additionalItems,omitempty"`
+	// AdditionalProperties: Schema for additional properties.
+	AdditionalProperties *JsonSchema `json:"additionalProperties,omitempty"`
+	// AllOf: Schema that must be valid against all of the sub-schemas.
+	AllOf []*JsonSchema `json:"allOf,omitempty"`
+	// AnyOf: Schema that must be valid against at least one of the sub-schemas.
+	AnyOf []*JsonSchema `json:"anyOf,omitempty"`
+	// Const: Const value that the data must match.
+	Const interface{} `json:"const,omitempty"`
+	// Contains: Schema that applies to at least one item in an array.
+	Contains *JsonSchema `json:"contains,omitempty"`
+	// ContentEncoding: Encoding of the content.
+	ContentEncoding string `json:"contentEncoding,omitempty"`
+	// ContentMediaType: Media type of the content.
+	ContentMediaType string `json:"contentMediaType,omitempty"`
 	// Default: The default value of the field or object described by this schema.
 	Default interface{} `json:"default,omitempty"`
+	// Definitions: Definitions for the schema.
+	Definitions map[string]JsonSchema `json:"definitions,omitempty"`
+	// Dependencies: Dependencies for the schema.
+	Dependencies googleapi.RawMessage `json:"dependencies,omitempty"`
 	// Description: A description of this schema.
 	Description string `json:"description,omitempty"`
+	// Else: Schema that must be valid if the "if" schema is invalid.
+	Else *JsonSchema `json:"else,omitempty"`
 	// Enum: Possible values for an enumeration. This works in conjunction with
 	// `type` to represent types with a fixed set of legal values
 	Enum []interface{} `json:"enum,omitempty"`
+	// Examples: Examples of the value.
+	Examples []interface{} `json:"examples,omitempty"`
 	// ExclusiveMaximum: Whether the maximum number value is exclusive.
-	ExclusiveMaximum bool `json:"exclusiveMaximum,omitempty"`
+	ExclusiveMaximum interface{} `json:"exclusiveMaximum,omitempty"`
 	// ExclusiveMinimum: Whether the minimum number value is exclusive.
-	ExclusiveMinimum bool `json:"exclusiveMinimum,omitempty"`
+	ExclusiveMinimum interface{} `json:"exclusiveMinimum,omitempty"`
 	// Format: Format of the value as per
 	// https://json-schema.org/understanding-json-schema/reference/string.html#format
 	Format string `json:"format,omitempty"`
+	// If: Schema that must be valid if the "if" schema is valid.
+	If *JsonSchema `json:"if,omitempty"`
 	// Items: Schema that applies to array values, applicable only if this is of
 	// type `array`.
 	Items *JsonSchema `json:"items,omitempty"`
@@ -3840,36 +3928,58 @@ type JsonSchema struct {
 	MaxItems int64 `json:"maxItems,omitempty"`
 	// MaxLength: Maximum length of the string field.
 	MaxLength int64 `json:"maxLength,omitempty"`
+	// MaxProperties: Maximum number of properties.
+	MaxProperties int64 `json:"maxProperties,omitempty"`
 	// Maximum: Maximum value of the number field.
 	Maximum interface{} `json:"maximum,omitempty"`
 	// MinItems: Minimum number of items in the array field.
 	MinItems int64 `json:"minItems,omitempty"`
 	// MinLength: Minimum length of the string field.
 	MinLength int64 `json:"minLength,omitempty"`
+	// MinProperties: Minimum number of properties.
+	MinProperties int64 `json:"minProperties,omitempty"`
 	// Minimum: Minimum value of the number field.
 	Minimum interface{} `json:"minimum,omitempty"`
+	// MultipleOf: Number must be a multiple of this value.
+	MultipleOf float64 `json:"multipleOf,omitempty"`
+	// Not: Schema that must not be valid.
+	Not *JsonSchema `json:"not,omitempty"`
+	// OneOf: Schema that must be valid against at least one of the sub-schemas.
+	OneOf []*JsonSchema `json:"oneOf,omitempty"`
 	// Pattern: Regex pattern of the string field. This is a string value that
 	// describes the regular expression that the string value should match.
 	Pattern string `json:"pattern,omitempty"`
+	// PatternProperties: Pattern properties for the schema.
+	PatternProperties map[string]JsonSchema `json:"patternProperties,omitempty"`
 	// Properties: The child schemas, applicable only if this is of type `object`.
 	// The key is the name of the property and the value is the json schema that
 	// describes that property
 	Properties map[string]JsonSchema `json:"properties,omitempty"`
+	// PropertyNames: Schema for property names.
+	PropertyNames *JsonSchema `json:"propertyNames,omitempty"`
+	// ReadOnly: Whether the value is read-only.
+	ReadOnly bool `json:"readOnly,omitempty"`
 	// Required: Whether this property is required.
 	Required []string `json:"required,omitempty"`
+	// Then: Schema that must be valid if the "if" schema is valid.
+	Then *JsonSchema `json:"then,omitempty"`
+	// Title: A title of the schema.
+	Title string `json:"title,omitempty"`
 	// Type: JSON Schema Validation: A Vocabulary for Structural Validation of JSON
 	Type []string `json:"type,omitempty"`
 	// UniqueItems: Whether the items in the array field are unique.
 	UniqueItems bool `json:"uniqueItems,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AdditionalDetails") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// WriteOnly: Whether the value is write-only.
+	WriteOnly bool `json:"writeOnly,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Comment") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AdditionalDetails") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Comment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3877,6 +3987,20 @@ type JsonSchema struct {
 func (s JsonSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod JsonSchema
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *JsonSchema) UnmarshalJSON(data []byte) error {
+	type NoMethod JsonSchema
+	var s1 struct {
+		MultipleOf gensupport.JSONFloat64 `json:"multipleOf"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.MultipleOf = float64(s1.MultipleOf)
+	return nil
 }
 
 // JwtClaims: JWT claims used for the jwt-bearer authorization grant.
@@ -5611,6 +5735,8 @@ type RefreshConnectionSchemaMetadataRequest struct {
 
 // RegionalSettings: Regional Settings details.
 type RegionalSettings struct {
+	// Client: Optional. Client type for the regional settings.
+	Client string `json:"client,omitempty"`
 	// EncryptionConfig: Optional. Regional encryption config to hold CMEK details.
 	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
 	// Name: Output only. Resource name of the Connection. Format:
@@ -5623,15 +5749,15 @@ type RegionalSettings struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "EncryptionConfig") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Client") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EncryptionConfig") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Client") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -6507,6 +6633,29 @@ func (s Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// StringListValues: StringListValues is a message to store a list of string
+// values.
+type StringListValues struct {
+	// ListValues: Required. The list of string values.
+	ListValues []string `json:"listValues,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ListValues") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ListValues") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StringListValues) MarshalJSON() ([]byte, error) {
+	type NoMethod StringListValues
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SupportedRuntimeFeatures: Supported runtime features of a connector version.
 type SupportedRuntimeFeatures struct {
 	// ActionApis: Specifies if the connector supports action apis like
@@ -6663,6 +6812,9 @@ func (s ToolName) MarshalJSON() ([]byte, error) {
 // ToolspecOverride: Toolspec overrides for a connection only holds the
 // information that is to be displayed in the UI for admins.
 type ToolspecOverride struct {
+	// BaseVersion: Required. Represents the base version of the toolspec for which
+	// admin has added overrides.
+	BaseVersion string `json:"baseVersion,omitempty"`
 	// CreateTime: Output only. Created time.
 	CreateTime string `json:"createTime,omitempty"`
 	// Tools: Required. List of tools defined in the tool spec. Marking this field
@@ -6671,13 +6823,13 @@ type ToolspecOverride struct {
 	Tools []googleapi.RawMessage `json:"tools,omitempty"`
 	// UpdateTime: Output only. Updated time.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "BaseVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// NullFields is a list of field names (e.g. "BaseVersion") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -6896,6 +7048,12 @@ type WebhookData struct {
 	AdditionalVariables []*ConfigVariable `json:"additionalVariables,omitempty"`
 	// CreateTime: Output only. Timestamp when the webhook was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// EventSubscriptions: Output only. List of event subscriptions which are using
+	// the webhook.
+	EventSubscriptions []string `json:"eventSubscriptions,omitempty"`
+	// EventTypes: Output only. List of event types for the webhook. This is the
+	// event types subscribed by the current webhook.
+	EventTypes []string `json:"eventTypes,omitempty"`
 	// Id: Output only. ID to uniquely identify webhook.
 	Id string `json:"id,omitempty"`
 	// Name: Output only. Name of the Webhook
@@ -7313,10 +7471,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// ListLocationsRequest.name field: * **Global locations**: If `name` is empty,
+// the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
@@ -7326,8 +7490,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

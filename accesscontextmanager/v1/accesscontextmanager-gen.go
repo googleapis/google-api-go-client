@@ -1667,10 +1667,10 @@ func (s ListServicePerimetersResponse) MarshalJSON() ([]byte, error) {
 // ListSupportedPermissionsResponse: A response to
 // `ListSupportedPermissionsRequest`.
 type ListSupportedPermissionsResponse struct {
-	// NextPageToken: The pagination token to retrieve the next page of results. If
-	// the value is empty, no further results remain.
+	// NextPageToken: Use this pagination token to retrieve the next page of
+	// results. An empty value indicates that no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// SupportedPermissions: List of VPC-SC supported permissions.
+	// SupportedPermissions: List of VPC Service Controls supported permissions.
 	SupportedPermissions []string `json:"supportedPermissions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1695,8 +1695,8 @@ func (s ListSupportedPermissionsResponse) MarshalJSON() ([]byte, error) {
 
 // ListSupportedServicesResponse: A response to `ListSupportedServicesRequest`.
 type ListSupportedServicesResponse struct {
-	// NextPageToken: The pagination token to retrieve the next page of results. If
-	// the value is empty, no further results remain.
+	// NextPageToken: Use this pagination token to retrieve the next page of
+	// results. An empty value indicates that no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// SupportedServices: List of services supported by VPC Service Controls
 	// instances.
@@ -5576,7 +5576,7 @@ type AccessPoliciesServicePerimetersReplaceAllCall struct {
 // operation from this RPC has a successful status after all replacements
 // propagate to long-lasting storage. Replacements containing errors result in
 // an error response for the first error encountered. Upon an error,
-// replacement are cancelled and existing service perimeters are not affected.
+// replacements are cancelled and existing service perimeters are not affected.
 // The Operation.response field contains ReplaceServicePerimetersResponse.
 //
 //   - parent: Resource name for the access policy which owns these Service
@@ -6874,21 +6874,22 @@ type PermissionsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all supported permissions in VPCSC Granular Controls.
+// List: Lists all supported permissions in VPC Service Controls ingress and
+// egress rules for Granular Controls.
 func (r *PermissionsService) List() *PermissionsListCall {
 	c := &PermissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": This flag specifies the
-// maximum number of services to return per page. Default is 100.
+// maximum number of services to return per page. Default value is 100.
 func (c *PermissionsListCall) PageSize(pageSize int64) *PermissionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Token to start on a later
-// page. Default is the first page.
+// PageToken sets the optional parameter "pageToken": Use this token to
+// retrieve a specific page of results. Default is the first page.
 func (c *PermissionsListCall) PageToken(pageToken string) *PermissionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -7131,14 +7132,14 @@ func (r *ServicesService) List() *ServicesListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": This flag specifies the
-// maximum number of services to return per page. Default is 100.
+// maximum number of services to return per page. Default value is 100.
 func (c *ServicesListCall) PageSize(pageSize int64) *ServicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Token to start on a later
-// page. Default is the first page.
+// PageToken sets the optional parameter "pageToken": Use this token to
+// retrieve a specific page of results. Default is the first page.
 func (c *ServicesListCall) PageToken(pageToken string) *ServicesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c

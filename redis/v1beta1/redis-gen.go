@@ -2003,6 +2003,7 @@ type DatabaseResourceMetadata struct {
 	//   "MODE_UNSPECIFIED" - Default mode.
 	//   "MODE_NATIVE" - Native mode.
 	//   "MODE_MONGODB_COMPATIBLE" - MongoDB compatible mode.
+	//   "MODE_DATASTORE" - Datastore mode.
 	Modes []string `json:"modes,omitempty"`
 	// PrimaryResourceId: Identifier for this resource's immediate parent/primary
 	// resource if the current resource is a replica or derived form of another
@@ -2378,7 +2379,7 @@ type DatabaseResourceSignalData struct {
 	FullResourceName string `json:"fullResourceName,omitempty"`
 	// LastRefreshTime: Required. Last time signal was refreshed
 	LastRefreshTime string `json:"lastRefreshTime,omitempty"`
-	// Location: Resource location.
+	// Location: Required. Resource location.
 	Location string `json:"location,omitempty"`
 	// ResourceId: Database resource id.
 	ResourceId *DatabaseResourceId `json:"resourceId,omitempty"`
@@ -5375,8 +5376,8 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this service. This
 // method lists locations based on the resource scope provided in the
-// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
-// empty, the method lists the public locations available to all projects. *
+// ListLocationsRequest.name field: * **Global locations**: If `name` is empty,
+// the method lists the public locations available to all projects. *
 // **Project-specific locations**: If `name` follows the format
 // `projects/{project}`, the method lists locations visible to that specific
 // project. This includes public, private, or other project-specific locations
@@ -5393,8 +5394,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

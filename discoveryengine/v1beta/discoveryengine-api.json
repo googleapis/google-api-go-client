@@ -9466,7 +9466,7 @@
       }
     }
   },
-  "revision": "20260427",
+  "revision": "20260503",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiDistribution": {
@@ -13141,7 +13141,7 @@
       "type": "object"
     },
     "GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus": {
-      "description": "Represents the currently effective configurable billing parameters. These values are derived from the customer's subscription history stored internally and reflect the thresholds actively being used for billing purposes at the time of the GetProject call. This includes the start_time of the subscription and may differ from the values in `customer_provided_config` due to billing rules (e.g., scale-downs taking effect only at the start of a new month).",
+      "description": "Represents the currently effective configurable billing parameters. These values are derived from the customer's subscription history stored internally and reflect the thresholds actively being used for billing purposes at the time of the GetProject call. This includes the start_time of the subscription and may differ from the values in `customer_provided_config` due to billing rules (e.g., scale-downs taking effect only at the start of a new month). We also include the update type to indicate the type of update performed on the configurable billing configuration in the UpdateProject operation.",
       "id": "GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus",
       "properties": {
         "effectiveIndexingCoreThreshold": {
@@ -13174,6 +13174,25 @@
         "terminateTime": {
           "description": "Output only. The latest terminate effective time of search qpm and indexing core subscriptions.",
           "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "updateType": {
+          "description": "Output only. The type of update performed in this operation. This field is populated in the response of UpdateProject.",
+          "enum": [
+            "UPDATE_TYPE_UNSPECIFIED",
+            "CREATE",
+            "DELETE",
+            "SCALE_UP",
+            "SCALE_DOWN"
+          ],
+          "enumDescriptions": [
+            "Unspecified update type.",
+            "Configurable billing was created/enabled.",
+            "Configurable billing was deleted/disabled.",
+            "Subscription was scaled up (thresholds increased).",
+            "Subscription was scaled down (thresholds decreased)."
+          ],
           "readOnly": true,
           "type": "string"
         }
@@ -19465,7 +19484,7 @@
       "type": "object"
     },
     "GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus": {
-      "description": "Represents the currently effective configurable billing parameters. These values are derived from the customer's subscription history stored internally and reflect the thresholds actively being used for billing purposes at the time of the GetProject call. This includes the start_time of the subscription and may differ from the values in `customer_provided_config` due to billing rules (e.g., scale-downs taking effect only at the start of a new month).",
+      "description": "Represents the currently effective configurable billing parameters. These values are derived from the customer's subscription history stored internally and reflect the thresholds actively being used for billing purposes at the time of the GetProject call. This includes the start_time of the subscription and may differ from the values in `customer_provided_config` due to billing rules (e.g., scale-downs taking effect only at the start of a new month). We also include the update type to indicate the type of update performed on the configurable billing configuration in the UpdateProject operation.",
       "id": "GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus",
       "properties": {
         "effectiveIndexingCoreThreshold": {
@@ -19498,6 +19517,25 @@
         "terminateTime": {
           "description": "Output only. The latest terminate effective time of search qpm and indexing core subscriptions.",
           "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "updateType": {
+          "description": "Output only. The type of update performed in this operation. This field is populated in the response of UpdateProject.",
+          "enum": [
+            "UPDATE_TYPE_UNSPECIFIED",
+            "CREATE",
+            "DELETE",
+            "SCALE_UP",
+            "SCALE_DOWN"
+          ],
+          "enumDescriptions": [
+            "Unspecified update type.",
+            "Configurable billing was created/enabled.",
+            "Configurable billing was deleted/disabled.",
+            "Subscription was scaled up (thresholds increased).",
+            "Subscription was scaled down (thresholds decreased)."
+          ],
           "readOnly": true,
           "type": "string"
         }
@@ -29007,7 +29045,7 @@
       "type": "object"
     },
     "GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus": {
-      "description": "Represents the currently effective configurable billing parameters. These values are derived from the customer's subscription history stored internally and reflect the thresholds actively being used for billing purposes at the time of the GetProject call. This includes the start_time of the subscription and may differ from the values in `customer_provided_config` due to billing rules (e.g., scale-downs taking effect only at the start of a new month).",
+      "description": "Represents the currently effective configurable billing parameters. These values are derived from the customer's subscription history stored internally and reflect the thresholds actively being used for billing purposes at the time of the GetProject call. This includes the start_time of the subscription and may differ from the values in `customer_provided_config` due to billing rules (e.g., scale-downs taking effect only at the start of a new month). We also include the update type to indicate the type of update performed on the configurable billing configuration in the UpdateProject operation.",
       "id": "GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus",
       "properties": {
         "effectiveIndexingCoreThreshold": {
@@ -29040,6 +29078,25 @@
         "terminateTime": {
           "description": "Output only. The latest terminate effective time of search qpm and indexing core subscriptions.",
           "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "updateType": {
+          "description": "Output only. The type of update performed in this operation. This field is populated in the response of UpdateProject.",
+          "enum": [
+            "UPDATE_TYPE_UNSPECIFIED",
+            "CREATE",
+            "DELETE",
+            "SCALE_UP",
+            "SCALE_DOWN"
+          ],
+          "enumDescriptions": [
+            "Unspecified update type.",
+            "Configurable billing was created/enabled.",
+            "Configurable billing was deleted/disabled.",
+            "Subscription was scaled up (thresholds increased).",
+            "Subscription was scaled down (thresholds decreased)."
+          ],
           "readOnly": true,
           "type": "string"
         }

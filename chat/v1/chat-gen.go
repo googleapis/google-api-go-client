@@ -1955,8 +1955,7 @@ type Empty struct {
 }
 
 // FindGroupChatsResponse: A response containing group chat spaces with exactly
-// the calling user and the requested users. Developer Preview
-// (https://developers.google.com/workspace/preview):
+// the calling user and the requested users.
 type FindGroupChatsResponse struct {
 	// NextPageToken: A token that you can send as `pageToken` to retrieve the next
 	// page of results. If empty, there are no subsequent pages.
@@ -8594,12 +8593,10 @@ type SpacesFindGroupChatsCall struct {
 	header_      http.Header
 }
 
-// FindGroupChats: Developer Preview
-// (https://developers.google.com/workspace/preview): Returns all spaces with
-// `spaceType == GROUP_CHAT`, whose human memberships contain exactly the
-// calling user, and the users specified in `FindGroupChatsRequest.users`. Only
-// members that have joined the conversation are supported. For an example, see
-// Find group chats
+// FindGroupChats: Returns all spaces with `spaceType == GROUP_CHAT`, whose
+// human memberships contain exactly the calling user, and the users specified
+// in `FindGroupChatsRequest.users`. Only members that have joined the
+// conversation are supported. For an example, see Find group chats
 // (https://developers.google.com/workspace/chat/find-group-chats). If the
 // calling user blocks, or is blocked by, some users, and no spaces with the
 // entire specified set of users are found, this method returns spaces that

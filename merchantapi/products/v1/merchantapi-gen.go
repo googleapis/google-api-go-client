@@ -513,6 +513,34 @@ func (s *CloudExportAdditionalProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Co2Emissions: The co2 emission of the vehicle.
+type Co2Emissions struct {
+	// Unit: The unit of the co2 emission.
+	//
+	// Possible values:
+	//   "UNIT_UNSPECIFIED" - Unspecified unit.
+	//   "GPERKM" - Grams per km.
+	Unit string `json:"unit,omitempty"`
+	// Value: The co2 emission value.
+	Value int64 `json:"value,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Unit") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Unit") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Co2Emissions) MarshalJSON() ([]byte, error) {
+	type NoMethod Co2Emissions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CustomAttribute: A message that represents custom attributes. Exactly one of
 // `value` or `group_values` must not be empty.
 type CustomAttribute struct {
@@ -623,6 +651,48 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// EnergyConsumption: The energy consumption of the vehicle.
+type EnergyConsumption struct {
+	// Unit: The unit of the energy consumption.
+	//
+	// Possible values:
+	//   "UNIT_UNSPECIFIED" - Unspecified unit.
+	//   "KWHPER100KM" - Kilowatt hours per 100 km.
+	Unit string `json:"unit,omitempty"`
+	// Value: The energy consumption value.
+	Value float64 `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Unit") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Unit") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EnergyConsumption) MarshalJSON() ([]byte, error) {
+	type NoMethod EnergyConsumption
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *EnergyConsumption) UnmarshalJSON(data []byte) error {
+	type NoMethod EnergyConsumption
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
+}
+
 // FreeShippingThreshold: Conditions to be met for a product to have free
 // shipping.
 type FreeShippingThreshold struct {
@@ -649,6 +719,49 @@ type FreeShippingThreshold struct {
 func (s FreeShippingThreshold) MarshalJSON() ([]byte, error) {
 	type NoMethod FreeShippingThreshold
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FuelConsumption: The fuel consumption of the vehicle.
+type FuelConsumption struct {
+	// Unit: The unit of the fuel consumption.
+	//
+	// Possible values:
+	//   "UNIT_UNSPECIFIED" - Unspecified unit.
+	//   "LPER100KM" - Liter per 100 km.
+	//   "KGPER100KM" - Kilograms per 100 km.
+	Unit string `json:"unit,omitempty"`
+	// Value: The fuel consumption value.
+	Value float64 `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Unit") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Unit") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FuelConsumption) MarshalJSON() ([]byte, error) {
+	type NoMethod FuelConsumption
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *FuelConsumption) UnmarshalJSON(data []byte) error {
+	type NoMethod FuelConsumption
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
 }
 
 // HandlingCutoffTime: Configuration for offer or offer-country level shipping
@@ -927,6 +1040,35 @@ func (s LoyaltyProgram) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Mileage: The mileage of the vehicle.
+type Mileage struct {
+	// Unit: The unit of the mileage.
+	//
+	// Possible values:
+	//   "UNIT_UNSPECIFIED" - Unspecified unit.
+	//   "MILES" - Miles.
+	//   "KM" - Kilometers.
+	Unit string `json:"unit,omitempty"`
+	// Value: The distance value.
+	Value int64 `json:"value,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Unit") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Unit") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Mileage) MarshalJSON() ([]byte, error) {
+	type NoMethod Mileage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Price: The price represented as a number and currency.
 type Price struct {
 	// AmountMicros: The price represented as a number in micros (1 million micros
@@ -1096,6 +1238,43 @@ type ProductAttributes struct {
 	// AvailabilityDate: The day a pre-ordered product becomes available for
 	// delivery, in ISO 8601 (http://en.wikipedia.org/wiki/ISO_8601) format.
 	AvailabilityDate string `json:"availabilityDate,omitempty"`
+	// BodyStyle: The body style
+	// (https://support.google.com/google-ads/answer/14157085) of the vehicle.
+	//
+	// Possible values:
+	//   "VEHICLE_BODY_STYLE_UNSPECIFIED" - Unspecified vehicle body style.
+	//   "ATV_SPORT" - ATV Sport.
+	//   "ATV_TOURING" - ATV Touring.
+	//   "ATV_UTILITY" - ATV Utility.
+	//   "ATV_YOUTH" - ATV Youth.
+	//   "CITY_CAR" - City car.
+	//   "CLASS_A_MOTORHOME" - Class A motorhome.
+	//   "CLASS_B_MOTORHOME" - Class B motorhome.
+	//   "CLASS_C_MOTORHOME" - Class C motorhome.
+	//   "COMPACT_SUV" - Compact SUV.
+	//   "CONVERTIBLE" - Convertible.
+	//   "COUPE" - Coupe.
+	//   "CROSSOVER" - Crossover.
+	//   "FIFTH_WHEEL" - Fifth wheel.
+	//   "FULL_SIZE_VAN" - Full size van.
+	//   "HATCHBACK" - Hatchback.
+	//   "LIMOUSINE" - Limousine.
+	//   "MINIVAN" - Minivan.
+	//   "NOTCHBACK" - Notchback.
+	//   "POP_UP_CAMPER" - Pop up camper.
+	//   "SEDAN" - Sedan.
+	//   "SIDE_BY_SIDE" - Side by side.
+	//   "STATION_WAGON" - Station wagon.
+	//   "SUV" - SUV.
+	//   "TRAVEL_TRAILER" - Travel trailer.
+	//   "TRUCK" - Truck.
+	//   "TRUCK_CAMPER" - Truck camper.
+	//   "UTE" - Ute.
+	//   "UTV_RECREATIONAL_UTILITY" - UTV Recreational utility.
+	//   "UTV_SPORT" - UTV Sport.
+	//   "UTV_UTILITY" - UTV Utility.
+	//   "UTV_YOUTH" - UTV Youth.
+	BodyStyle string `json:"bodyStyle,omitempty"`
 	// Brand: Brand (https://support.google.com/merchants/answer/6324351) of the
 	// item. For example, "Google".
 	Brand string `json:"brand,omitempty"`
@@ -1109,9 +1288,15 @@ type ProductAttributes struct {
 	// (https://support.google.com/merchants/answer/13528839) article for more
 	// information.
 	Certifications []*ProductCertification `json:"certifications,omitempty"`
+	// CertifiedPreOwned: Whether the vehicle is OEM certified pre-owned
+	// (https://support.google.com/google-ads/answer/14156475).
+	CertifiedPreOwned bool `json:"certifiedPreOwned,omitempty"`
 	// CloudExportAdditionalProperties: Extra fields to export to the Cloud Retail
 	// program.
 	CloudExportAdditionalProperties []*CloudExportAdditionalProperties `json:"cloudExportAdditionalProperties,omitempty"`
+	// Co2Emissions: The co2 emission
+	// (https://support.google.com/google-ads/answer/14546146) of the vehicle.
+	Co2Emissions *Co2Emissions `json:"co2Emissions,omitempty"`
 	// Color: Color (https://support.google.com/merchants/answer/6324487) of the
 	// item. For example, "red".
 	Color string `json:"color,omitempty"`
@@ -1147,6 +1332,11 @@ type ProductAttributes struct {
 	// (https://support.google.com/merchants/answer/6324473) for custom grouping of
 	// items in a Shopping campaign.
 	CustomLabel4 string `json:"customLabel4,omitempty"`
+	// DateFirstRegistered: The date the vehicle was first registered. Format:
+	// `YYYY-MM`. See the Date first registered
+	// (https://support.google.com/google-ads/answer/14546138) for more
+	// information.
+	DateFirstRegistered string `json:"dateFirstRegistered,omitempty"`
 	// Description: Description of the item.
 	Description string `json:"description,omitempty"`
 	// DisclosureDate: The date time when an offer becomes visible in search
@@ -1169,6 +1359,31 @@ type ProductAttributes struct {
 	// information, see Display ads attribute
 	// (https://support.google.com/merchants/answer/6069387).
 	DisplayAdsValue float64 `json:"displayAdsValue,omitempty"`
+	// ElectricRange: The electric range
+	// (https://support.google.com/google-ads/answer/15162232) of the vehicle in
+	// miles/kms.
+	ElectricRange *Mileage `json:"electricRange,omitempty"`
+	// EmissionsStandard: The emission standard
+	// (https://support.google.com/google-ads/answer/14869021) of the vehicle.
+	//
+	// Possible values:
+	//   "EMISSIONS_STANDARD_UNSPECIFIED" - Unspecified emission standard.
+	//   "ZERO_EMISSIONS" - Zero emissions.
+	//   "EURO1" - Euro 1.
+	//   "EURO2" - Euro 2.
+	//   "EURO3" - Euro 3.
+	//   "EURO4" - Euro 4.
+	//   "EURO5" - Euro 5.
+	//   "EURO5B" - Euro 5b.
+	//   "EURO6" - Euro 6.
+	//   "EURO6C" - Euro 6c.
+	//   "EURO6D" - Euro 6d.
+	//   "EURO6D_TEMP" - Euro 6d-TEMP.
+	//   "EURO6E" - Euro 6e.
+	EmissionsStandard string `json:"emissionsStandard,omitempty"`
+	// EnergyConsumption: The energy consumption
+	// (https://support.google.com/google-ads/answer/14546149) of the vehicle.
+	EnergyConsumption *EnergyConsumption `json:"energyConsumption,omitempty"`
 	// EnergyEfficiencyClass: The energy efficiency class
 	// (https://support.google.com/merchants/answer/7562785) as defined in EU
 	// directive 2010/30/EU.
@@ -1187,6 +1402,21 @@ type ProductAttributes struct {
 	//   "F" - F.
 	//   "G" - G.
 	EnergyEfficiencyClass string `json:"energyEfficiencyClass,omitempty"`
+	// Engine: The engine (https://support.google.com/google-ads/answer/14156068)
+	// type of the vehicle.
+	//
+	// Possible values:
+	//   "ENGINE_TYPE_UNSPECIFIED" - Unspecified engine type.
+	//   "GASOLINE" - Gasoline.
+	//   "DIESEL" - Diesel.
+	//   "ELECTRIC" - Electric.
+	//   "HYBRID" - Hybrid.
+	//   "PLUG_IN_HYBRID" - Plug-in hybrid.
+	//   "NATURAL_GAS" - Natural gas.
+	//   "LPG" - LPG.
+	//   "METHANE" - Methane.
+	//   "OTHER" - Other.
+	Engine string `json:"engine,omitempty"`
 	// ExcludedDestinations: The list of destinations to exclude for this target
 	// (corresponds to unchecked check boxes in Merchant Center). For more
 	// information, see Excluded destination
@@ -1233,6 +1463,14 @@ type ProductAttributes struct {
 	// FreeShippingThreshold: Conditions to be met for a product to have free
 	// shipping.
 	FreeShippingThreshold []*FreeShippingThreshold `json:"freeShippingThreshold,omitempty"`
+	// FuelConsumption: The fuel consumption
+	// (https://support.google.com/google-ads/answer/14543580) of the vehicle.
+	FuelConsumption *FuelConsumption `json:"fuelConsumption,omitempty"`
+	// FuelConsumptionDischargedBattery: The fuel consumption of the vehicle when
+	// the hybrid battery is discharged. See the Help Center article
+	// (https://support.google.com/google-ads/answer/15162033) for more
+	// information.
+	FuelConsumptionDischargedBattery *FuelConsumption `json:"fuelConsumptionDischargedBattery,omitempty"`
 	// Gender: Target gender (https://support.google.com/merchants/answer/6324479)
 	// of the item.
 	//
@@ -1346,6 +1584,10 @@ type ProductAttributes struct {
 	// MaximumRetailPrice: Maximum retail price (MRP) of the item. Applicable to
 	// India only.
 	MaximumRetailPrice *Price `json:"maximumRetailPrice,omitempty"`
+	// Mileage: The number of miles/kms on the vehicle. See the Mileage
+	// (https://support.google.com/google-ads/answer/14156166) for more
+	// information.
+	Mileage *Mileage `json:"mileage,omitempty"`
 	// MinEnergyEfficiencyClass: The energy efficiency class
 	// (https://support.google.com/merchants/answer/7562785) as defined in EU
 	// directive 2010/30/EU.
@@ -1379,6 +1621,9 @@ type ProductAttributes struct {
 	// (https://support.google.com/merchants/answer/13870216) for business hosted
 	// local storefront optimized for mobile devices.
 	MobileLinkTemplate string `json:"mobileLinkTemplate,omitempty"`
+	// Model: The Model (https://support.google.com/google-ads/answer/14154511) of
+	// the vehicle, such as `LX`, `EX`, and others.
+	Model string `json:"model,omitempty"`
 	// Mpn: Manufacturer Part Number (MPN
 	// (https://support.google.com/merchants/answer/6324482)) of the item.
 	Mpn string `json:"mpn,omitempty"`
@@ -1549,19 +1794,68 @@ type ProductAttributes struct {
 	// TransitTimeLabel: The transit time label of the product, used to group
 	// product in account-level transit time tables.
 	TransitTimeLabel string `json:"transitTimeLabel,omitempty"`
+	// Trim: The Trim (https://support.google.com/google-ads/answer/14154176) of
+	// the vehicle model, such as `S`, `SV`, `SL` and others.
+	Trim string `json:"trim,omitempty"`
 	// UnitPricingBaseMeasure: The preference of the denominator of the unit price.
 	UnitPricingBaseMeasure *UnitPricingBaseMeasure `json:"unitPricingBaseMeasure,omitempty"`
 	// UnitPricingMeasure: The measure and dimension of an item.
 	UnitPricingMeasure *UnitPricingMeasure `json:"unitPricingMeasure,omitempty"`
+	// VehicleAllInPrice: The all-in advertised price for a vehicle, which includes
+	// costs for the following – any accessories attached to the vehicle,
+	// environmental levies, extra warranty, fuel, freight, pre-delivery inspection
+	// (PDI), dealer fees for handling licensing, provincial regulatory fees,
+	// miscellaneous dealer charges for security etching and nitrogen tire fill,
+	// and factory-to-customer or dealer-to-customer discounts or incentives. See
+	// the Vehicle all-in price
+	// (https://support.google.com/google-ads/answer/14156981) for more
+	// information.
+	VehicleAllInPrice *Price `json:"vehicleAllInPrice,omitempty"`
+	// VehicleExpenses: The miscellaneous expenses like insurance and registration
+	// fees of the vehicle. See the Vehicle expenses
+	// (https://support.google.com/google-ads/answer/15957154) for more
+	// information.
+	VehicleExpenses *Price `json:"vehicleExpenses,omitempty"`
+	// VehicleMandatoryInspectionIncluded: Whether the vehicle is sold with
+	// mandatory inspection and maintenance performed before delivery. See the
+	// Vehicle mandatory inspection included
+	// (https://support.google.com/google-ads/answer/15956630) for more
+	// information.`
+	VehicleMandatoryInspectionIncluded bool `json:"vehicleMandatoryInspectionIncluded,omitempty"`
+	// VehicleMsrp: The MSRP (Manufacturer Suggested Retail Price) for the vehicle
+	// in its current configuration. See the Vehicle MSRP
+	// (https://support.google.com/google-ads/answer/14154171) for more
+	// information.
+	VehicleMsrp *Price `json:"vehicleMsrp,omitempty"`
+	// VehiclePriceType: The price type
+	// (https://support.google.com/google-ads/answer/14592783) of the vehicle.
+	//
+	// Possible values:
+	//   "VEHICLE_PRICE_TYPE_UNSPECIFIED" - Unspecified vehicle price type.
+	//   "ALL_IN_PRICE" - All in price.
+	//   "DRIVE_AWAY_PRICE" - Drive away price.
+	//   "ESTIMATED_DRIVE_AWAY_PRICE" - Estimated drive away price.
+	//   "EXCLUDING_GOVERNMENT_CHARGES_PRICE" - Excluding government charges price.
+	//   "VEHICLE_BASE_PRICE" - Vehicle base price.
+	VehiclePriceType string `json:"vehiclePriceType,omitempty"`
 	// VideoLinks: Optional. A list of video URLs for the item. Use this attribute
 	// to provide more visuals for your product beyond your image attributes. See
 	// the Help Center article
 	// (https://support.google.com/merchants/answer/15216925) for more information.
 	VideoLinks []string `json:"videoLinks,omitempty"`
+	// Vin: The Vehicle Identification Number (VIN)
+	// (https://support.google.com/google-ads/answer/14154510) of the vehicle.
+	Vin string `json:"vin,omitempty"`
 	// VirtualModelLink: URL of the 3D image of the item. See the Help Center
 	// article (https://support.google.com/merchants/answer/13674896) for more
 	// information.
 	VirtualModelLink string `json:"virtualModelLink,omitempty"`
+	// Warranty: The warranty
+	// (https://support.google.com/google-ads/answer/15957626) of the vehicle.
+	Warranty *Warranty `json:"warranty,omitempty"`
+	// Year: The Year (https://support.google.com/google-ads/answer/14152816) of
+	// the vehicle model.
+	Year int64 `json:"year,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalImageLinks") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1941,6 +2235,9 @@ type ProductInstallment struct {
 	Downpayment *Price `json:"downpayment,omitempty"`
 	// Months: The number of installments the buyer has to pay.
 	Months int64 `json:"months,omitempty,string"`
+	// TotalAmount: Optional. Total amount the buyer has to pay, including
+	// interest.
+	TotalAmount *Price `json:"totalAmount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Amount") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -2559,6 +2856,30 @@ func (s *UnitPricingMeasure) UnmarshalJSON(data []byte) error {
 	}
 	s.Value = float64(s1.Value)
 	return nil
+}
+
+// Warranty: The warranty of the vehicle.
+type Warranty struct {
+	// Duration: The warranty duration in months.
+	Duration int64 `json:"duration,omitempty,string"`
+	// Mileage: The warranty mileage.
+	Mileage *Mileage `json:"mileage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Duration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Duration") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Warranty) MarshalJSON() ([]byte, error) {
+	type NoMethod Warranty
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccountsProductInputsDeleteCall struct {

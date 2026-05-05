@@ -9218,6 +9218,15 @@ func (r *RegionInstanceGroupManagersService) Delete(project string, region strin
 	return c
 }
 
+// NoGracefulShutdown sets the optional parameter "noGracefulShutdown": When
+// set, graceful shutdown is skipped for instance deletion even if
+// it's
+// configured for the instances.
+func (c *RegionInstanceGroupManagersDeleteCall) NoGracefulShutdown(noGracefulShutdown bool) *RegionInstanceGroupManagersDeleteCall {
+	c.urlParams_.Set("noGracefulShutdown", fmt.Sprint(noGracefulShutdown))
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so
 // that if you must retry your request, the server will know to ignore
@@ -9363,6 +9372,15 @@ func (r *RegionInstanceGroupManagersService) DeleteInstances(project string, reg
 	c.region = region
 	c.instanceGroupManager = instanceGroupManager
 	c.regioninstancegroupmanagersdeleteinstancesrequest = regioninstancegroupmanagersdeleteinstancesrequest
+	return c
+}
+
+// NoGracefulShutdown sets the optional parameter "noGracefulShutdown": When
+// set, graceful shutdown is skipped for instance deletion even if
+// it's
+// configured for the instances.
+func (c *RegionInstanceGroupManagersDeleteInstancesCall) NoGracefulShutdown(noGracefulShutdown bool) *RegionInstanceGroupManagersDeleteInstancesCall {
+	c.urlParams_.Set("noGracefulShutdown", fmt.Sprint(noGracefulShutdown))
 	return c
 }
 
@@ -11241,6 +11259,15 @@ func (r *RegionInstanceGroupManagersService) RecreateInstances(project string, r
 	return c
 }
 
+// NoGracefulShutdown sets the optional parameter "noGracefulShutdown": When
+// set, graceful shutdown is skipped for instance recreation even if
+// it's
+// configured for the instances.
+func (c *RegionInstanceGroupManagersRecreateInstancesCall) NoGracefulShutdown(noGracefulShutdown bool) *RegionInstanceGroupManagersRecreateInstancesCall {
+	c.urlParams_.Set("noGracefulShutdown", fmt.Sprint(noGracefulShutdown))
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so
 // that if you must retry your request, the server will know to ignore
@@ -12424,6 +12451,15 @@ func (r *RegionInstanceGroupManagersService) StopInstances(project string, regio
 	c.region = region
 	c.instanceGroupManager = instanceGroupManager
 	c.regioninstancegroupmanagersstopinstancesrequest = regioninstancegroupmanagersstopinstancesrequest
+	return c
+}
+
+// NoGracefulShutdown sets the optional parameter "noGracefulShutdown": When
+// set, graceful shutdown is skipped for instance stopping even if
+// it's
+// configured for the instances.
+func (c *RegionInstanceGroupManagersStopInstancesCall) NoGracefulShutdown(noGracefulShutdown bool) *RegionInstanceGroupManagersStopInstancesCall {
+	c.urlParams_.Set("noGracefulShutdown", fmt.Sprint(noGracefulShutdown))
 	return c
 }
 
@@ -75888,7 +75924,7 @@ type ZoneVmExtensionPoliciesDeleteCall struct {
 	header_           http.Header
 }
 
-// Delete: Deletes a specified zone VM extension policy.
+// Delete: Deletes a specified zone VM extension policy within a project.
 //
 // - project: Project ID for this request.
 // - vmExtensionPolicy: Name of the zone VM extension policy to delete.
@@ -76016,7 +76052,8 @@ type ZoneVmExtensionPoliciesGetCall struct {
 	header_           http.Header
 }
 
-// Get: Retrieves details of a specific zone VM extension policy.
+// Get: Retrieves details of a specific zone VM extension policy within a
+// project.
 //
 // - project: Project ID for this request.
 // - vmExtensionPolicy: Name of the VM extension policy resource to return.
@@ -76526,7 +76563,7 @@ type ZoneVmExtensionPoliciesUpdateCall struct {
 	header_           http.Header
 }
 
-// Update: Modifies an existing zone VM extension policy.
+// Update: Modifies an existing zone VM extension policy within a project.
 //
 // - project: Project ID for this request.
 // - vmExtensionPolicy: Name of the zone VM extension policy to update.

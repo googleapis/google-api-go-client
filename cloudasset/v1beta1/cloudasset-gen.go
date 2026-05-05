@@ -609,8 +609,8 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 // GcsDestination: A Cloud Storage location.
 type GcsDestination struct {
 	// Uri: The URI of the Cloud Storage object. It's the same URI that is used by
-	// gsutil. For example: "gs://bucket_name/object_name". See Viewing and Editing
-	// Object Metadata
+	// gcloud storage. For example: "gs://bucket_name/object_name". See Viewing and
+	// Editing Object Metadata
 	// (https://cloud.google.com/storage/docs/viewing-editing-metadata) for more
 	// information.
 	Uri string `json:"uri,omitempty"`

@@ -391,6 +391,11 @@ type Counters struct {
 	// TotalBytesFound: Output only. Number of bytes found from source. This field
 	// is only populated for jobs with a prefix list object configuration.
 	TotalBytesFound int64 `json:"totalBytesFound,omitempty,string"`
+	// TotalBytesTransformed: Output only. The total number of bytes affected by
+	// the transformation. For example, this counts bytes deleted for
+	// `DeleteObject` operations and bytes rewritten for `RewriteObject`
+	// operations.
+	TotalBytesTransformed int64 `json:"totalBytesTransformed,omitempty,string"`
 	// TotalObjectCount: Output only. Number of objects listed.
 	TotalObjectCount int64 `json:"totalObjectCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "FailedObjectCount") to

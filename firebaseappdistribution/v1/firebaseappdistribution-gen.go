@@ -762,16 +762,20 @@ type GoogleFirebaseAppdistroV1AabInfo struct {
 	// IntegrationState: App bundle integration state. Only valid for android apps.
 	//
 	// Possible values:
-	//   "AAB_INTEGRATION_STATE_UNSPECIFIED" - Aab integration state unspecified
-	//   "INTEGRATED" - App can receive app bundle uploads
+	//   "AAB_INTEGRATION_STATE_UNSPECIFIED" - AAB integration state unspecified.
+	//   "INTEGRATED" - App can receive app bundle uploads.
 	//   "PLAY_ACCOUNT_NOT_LINKED" - Firebase project is not linked to a Play
-	// developer account
-	//   "NO_APP_WITH_GIVEN_BUNDLE_ID_IN_PLAY_ACCOUNT" - There is no app in linked
-	// Play developer account with the same bundle id
-	//   "APP_NOT_PUBLISHED" - The app in Play developer account is not in a
-	// published state
-	//   "AAB_STATE_UNAVAILABLE" - Play App status is unavailable
-	//   "PLAY_IAS_TERMS_NOT_ACCEPTED" - Play IAS terms not accepted
+	// developer account.
+	//   "NO_APP_WITH_GIVEN_BUNDLE_ID_IN_PLAY_ACCOUNT" - There is no app in the
+	// linked Play developer account with the same bundle ID.
+	//   "APP_NOT_PUBLISHED" - The app in the Play developer account is not in a
+	// published state.
+	//   "AAB_STATE_UNAVAILABLE" - Play App status is unavailable.
+	//   "PLAY_IAS_TERMS_NOT_ACCEPTED" - Play in-app sharing terms not accepted.
+	//   "ADHOC_SHARING_KEY_NOT_GENERATED" - The ad-hoc sharing key has not been
+	// generated for this app.
+	//   "ADHOC_SHARING_KEY_NOT_REGISTERED" - The ad-hoc sharing key is not yet
+	// registered in ADI for this app.
 	IntegrationState string `json:"integrationState,omitempty"`
 	// Name: The name of the `AabInfo` resource. Format:
 	// `projects/{project_number}/apps/{app}/aabInfo`

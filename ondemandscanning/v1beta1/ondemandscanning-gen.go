@@ -1285,6 +1285,11 @@ type FileLocation struct {
 	// indicate the path to war file combined with the path to jar file.
 	FilePath     string        `json:"filePath,omitempty"`
 	LayerDetails *LayerDetails `json:"layerDetails,omitempty"`
+	// LineNumber: Line number in the file where the package is found. Applies only
+	// to source repository scanning. Note: this field is marked as `optional` in
+	// other corresponding protos, but in edition 2023, the "optional" keyword is
+	// redundant.
+	LineNumber int64 `json:"lineNumber,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FilePath") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

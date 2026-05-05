@@ -4358,7 +4358,7 @@ type SingleTenantHsmInstance struct {
 	State string `json:"state,omitempty"`
 	// UnrefreshedDurationUntilDisable: Output only. The system-defined duration
 	// that an instance can remain unrefreshed until it is automatically disabled.
-	// This will have a value of 120 days.
+	// This will have a value of 730 days.
 	UnrefreshedDurationUntilDisable string `json:"unrefreshedDurationUntilDisable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -6435,8 +6435,8 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this service. This
 // method lists locations based on the resource scope provided in the
-// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
-// empty, the method lists the public locations available to all projects. *
+// ListLocationsRequest.name field: * **Global locations**: If `name` is empty,
+// the method lists the public locations available to all projects. *
 // **Project-specific locations**: If `name` follows the format
 // `projects/{project}`, the method lists locations visible to that specific
 // project. This includes public, private, or other project-specific locations
@@ -6453,8 +6453,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

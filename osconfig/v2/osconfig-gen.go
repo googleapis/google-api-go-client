@@ -370,123 +370,6 @@ func (s FixedOrPercent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudOsconfigCommonV1__OperationMetadata: Represents the metadata of a
-// generic long-running operation.
-type GoogleCloudOsconfigCommonV1__OperationMetadata struct {
-	// ApiVersion: Output only. API version used to start the operation.
-	ApiVersion string `json:"apiVersion,omitempty"`
-	// CreateTime: Output only. The time the operation was created.
-	CreateTime string `json:"createTime,omitempty"`
-	// EndTime: Output only. The time the operation finished running.
-	EndTime string `json:"endTime,omitempty"`
-	// RequestedCancellation: Output only. Identifies whether the user has
-	// requested cancellation of the operation. Operations that have successfully
-	// been cancelled have Operation.error value with a google.rpc.Status.code of
-	// 1, corresponding to `Code.CANCELLED`.
-	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
-	// StatusMessage: Output only. Human-readable status of the operation, if any.
-	StatusMessage string `json:"statusMessage,omitempty"`
-	// Target: Output only. Server-defined resource path for the target of the
-	// operation.
-	Target string `json:"target,omitempty"`
-	// Verb: Output only. Name of the verb executed by the operation.
-	Verb string `json:"verb,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ApiVersion") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudOsconfigCommonV1__OperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudOsconfigCommonV1__OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudOsconfigCommonV1alpha__OperationMetadata: Represents the metadata
-// of a generic long-running operation.
-type GoogleCloudOsconfigCommonV1alpha__OperationMetadata struct {
-	// ApiVersion: Output only. API version used to start the operation.
-	ApiVersion string `json:"apiVersion,omitempty"`
-	// CreateTime: Output only. The time the operation was created.
-	CreateTime string `json:"createTime,omitempty"`
-	// EndTime: Output only. The time the operation finished running.
-	EndTime string `json:"endTime,omitempty"`
-	// RequestedCancellation: Output only. Identifies whether the user has
-	// requested cancellation of the operation. Operations that have successfully
-	// been cancelled have Operation.error value with a google.rpc.Status.code of
-	// 1, corresponding to `Code.CANCELLED`.
-	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
-	// StatusMessage: Output only. Human-readable status of the operation, if any.
-	StatusMessage string `json:"statusMessage,omitempty"`
-	// Target: Output only. Server-defined resource path for the target of the
-	// operation.
-	Target string `json:"target,omitempty"`
-	// Verb: Output only. Name of the verb executed by the operation.
-	Verb string `json:"verb,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ApiVersion") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudOsconfigCommonV1alpha__OperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudOsconfigCommonV1alpha__OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudOsconfigCommonV1main__OperationMetadata: Represents the metadata
-// of a generic long-running operation.
-type GoogleCloudOsconfigCommonV1main__OperationMetadata struct {
-	// ApiVersion: Output only. API version used to start the operation.
-	ApiVersion string `json:"apiVersion,omitempty"`
-	// CreateTime: Output only. The time the operation was created.
-	CreateTime string `json:"createTime,omitempty"`
-	// EndTime: Output only. The time the operation finished running.
-	EndTime string `json:"endTime,omitempty"`
-	// RequestedCancellation: Output only. Identifies whether the user has
-	// requested cancellation of the operation. Operations that have successfully
-	// been cancelled have Operation.error value with a google.rpc.Status.code of
-	// 1, corresponding to `Code.CANCELLED`.
-	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
-	// StatusMessage: Output only. Human-readable status of the operation, if any.
-	StatusMessage string `json:"statusMessage,omitempty"`
-	// Target: Output only. Server-defined resource path for the target of the
-	// operation.
-	Target string `json:"target,omitempty"`
-	// Verb: Output only. Name of the verb executed by the operation.
-	Verb string `json:"verb,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ApiVersion") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudOsconfigCommonV1main__OperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudOsconfigCommonV1main__OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata: OS policy
 // assignment operation metadata provided by OS policy assignment API methods
 // that return long running operations.
@@ -833,21 +716,22 @@ func (s GoogleCloudOsconfigV2__OrchestrationScope) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudOsconfigV2__PolicyOrchestrator: PolicyOrchestrator helps managing
-// project+zone level policy resources (e.g. OS Policy Assignments), by
-// providing tools to create, update and delete them across projects and
-// locations, at scale. Policy orchestrator functions as an endless loop. Each
-// iteration orchestrator computes a set of resources that should be affected,
-// then progressively applies changes to them. If for some reason this set of
-// resources changes over time (e.g. new projects are added), the future loop
-// iterations will address that. Orchestrator can either upsert or delete
-// policy resources. For more details, see the description of the `action`, and
-// `orchestrated_resource` fields. Note that policy orchestrator do not
-// "manage" the resources it creates. Every iteration is independent and only
-// minimal history of past actions is retained (apart from Cloud Logging). If
-// orchestrator gets deleted, it does not affect the resources it created in
-// the past. Those will remain where they were. Same applies if projects are
-// removed from the orchestrator's scope.
+// GoogleCloudOsconfigV2__PolicyOrchestrator: A policy orchestrator manages
+// project-level and zone-level policy resources, such as OS policy
+// assignments. It provides methods to create, update, and delete these
+// resources across projects and locations at scale. The policy orchestrator
+// operates as a continuous loop. In each iteration, the orchestrator
+// identifies the set of resources to be modified and progressively applies
+// changes. If the set of resources changes over time (for example, if you add
+// new projects), subsequent iterations address those changes. The orchestrator
+// can either upsert or delete policy resources. For more details, see the
+// `action` and `orchestrated_resource` fields. The policy orchestrator does
+// not manage the lifecycle of the resources it creates. Each iteration is
+// independent and, besides Cloud Logging, the orchestrator retains only a
+// minimal history of past actions. Deleting the orchestrator does not affect
+// previously created resources; these resources remain in their current state.
+// Similarly, removing projects from the orchestrator's scope does not affect
+// existing resources.
 type GoogleCloudOsconfigV2__PolicyOrchestrator struct {
 	// Action: Required. Action to be done by the orchestrator in
 	// `projects/{project_id}/zones/{zone_id}` locations defined by the
@@ -866,7 +750,7 @@ type GoogleCloudOsconfigV2__PolicyOrchestrator struct {
 	Etag string `json:"etag,omitempty"`
 	// Labels: Optional. Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Immutable. Identifier. In form of *
+	// Name: Immutable. Identifier. In the following format: *
 	// `organizations/{organization_id}/locations/global/policyOrchestrators/{orches
 	// trator_id}` *
 	// `folders/{folder_id}/locations/global/policyOrchestrators/{orchestrator_id}`
@@ -2660,7 +2544,7 @@ type FoldersLocationsGlobalPolicyOrchestratorsPatchCall struct {
 
 // Patch: Updates an existing policy orchestrator, parented by a folder.
 //
-//   - name: Immutable. Identifier. In form of *
+//   - name: Immutable. Identifier. In the following format: *
 //     `organizations/{organization_id}/locations/global/policyOrchestrators/{orch
 //     estrator_id}` *
 //     `folders/{folder_id}/locations/global/policyOrchestrators/{orchestrator_id}
@@ -3806,7 +3690,7 @@ type OrganizationsLocationsGlobalPolicyOrchestratorsPatchCall struct {
 
 // Patch: Updates an existing policy orchestrator, parented by an organization.
 //
-//   - name: Immutable. Identifier. In form of *
+//   - name: Immutable. Identifier. In the following format: *
 //     `organizations/{organization_id}/locations/global/policyOrchestrators/{orch
 //     estrator_id}` *
 //     `folders/{folder_id}/locations/global/policyOrchestrators/{orchestrator_id}
@@ -4952,7 +4836,7 @@ type ProjectsLocationsGlobalPolicyOrchestratorsPatchCall struct {
 
 // Patch: Updates an existing policy orchestrator, parented by a project.
 //
-//   - name: Immutable. Identifier. In form of *
+//   - name: Immutable. Identifier. In the following format: *
 //     `organizations/{organization_id}/locations/global/policyOrchestrators/{orch
 //     estrator_id}` *
 //     `folders/{folder_id}/locations/global/policyOrchestrators/{orchestrator_id}

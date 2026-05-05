@@ -410,11 +410,9 @@ type AwsKinesis struct {
 	//   "STREAM_NOT_FOUND" - The Kinesis stream does not exist.
 	//   "CONSUMER_NOT_FOUND" - The Kinesis consumer does not exist.
 	//   "CONFLICTING_REGION_CONSTRAINTS" - Indicates an error state where the
-	// ingestion source cannot be processed. This occurs because there is no
-	// overlap between the regions allowed by the topic's `MessageStoragePolicy`
-	// and the regions permitted by the Regional Access Boundary (RAB) restrictions
-	// on the project's Pub/Sub service account. A common, allowed region is
-	// required to determine a valid ingestion region.
+	// ingestion source cannot be processed because the selected ingestion region
+	// is not permitted by the Regional Access Boundary (RAB) restrictions on the
+	// project's service account.
 	State string `json:"state,omitempty"`
 	// StreamArn: Required. The Kinesis stream ARN to ingest data from.
 	StreamArn string `json:"streamArn,omitempty"`
@@ -464,11 +462,9 @@ type AwsMsk struct {
 	//   "CLUSTER_NOT_FOUND" - The provided MSK cluster wasn't found.
 	//   "TOPIC_NOT_FOUND" - The provided topic wasn't found.
 	//   "CONFLICTING_REGION_CONSTRAINTS" - Indicates an error state where the
-	// ingestion source cannot be processed. This occurs because there is no
-	// overlap between the regions allowed by the topic's `MessageStoragePolicy`
-	// and the regions permitted by the Regional Access Boundary (RAB) restrictions
-	// on the project's Pub/Sub service account. A common, allowed region is
-	// required to determine a valid ingestion region.
+	// ingestion source cannot be processed because the selected ingestion region
+	// is not permitted by the Regional Access Boundary (RAB) restrictions on the
+	// project's service account.
 	State string `json:"state,omitempty"`
 	// Topic: Required. The name of the topic in the Amazon MSK cluster that
 	// Pub/Sub will import from.
@@ -525,11 +521,9 @@ type AzureEventHubs struct {
 	//   "RESOURCE_GROUP_NOT_FOUND" - The provided Event Hubs resource group
 	// couldn't be found.
 	//   "CONFLICTING_REGION_CONSTRAINTS" - Indicates an error state where the
-	// ingestion source cannot be processed. This occurs because there is no
-	// overlap between the regions allowed by the topic's `MessageStoragePolicy`
-	// and the regions permitted by the Regional Access Boundary (RAB) restrictions
-	// on the project's Pub/Sub service account. A common, allowed region is
-	// required to determine a valid ingestion region.
+	// ingestion source cannot be processed because the selected ingestion region
+	// is not permitted by the Regional Access Boundary (RAB) restrictions on the
+	// project's service account.
 	State string `json:"state,omitempty"`
 	// SubscriptionId: Optional. The Azure subscription id.
 	SubscriptionId string `json:"subscriptionId,omitempty"`
@@ -651,21 +645,23 @@ type BigtableConfig struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
 	//   "ACTIVE" - The subscription can actively send messages to Bigtable.
-	//   "NOT_FOUND" - Cannot write to Bigtable because the instance, table, or app
-	// profile does not exist.
-	//   "APP_PROFILE_MISCONFIGURED" - Cannot write to Bigtable because the app
-	// profile is not configured for single-cluster routing.
+	//   "NOT_FOUND" - Unused in the current implementation. Placeholder for future
+	// use.
+	//   "APP_PROFILE_MISCONFIGURED" - Unused in the current implementation.
+	// Placeholder for future use.
 	//   "PERMISSION_DENIED" - Cannot write to Bigtable because of permission
-	// denied errors. This can happen if: - The Pub/Sub service agent has not been
-	// granted the [appropriate Bigtable IAM permission
+	// denied errors. This can happen if: - The Bigtable instance, table, or app
+	// profile does not exist. - The Pub/Sub service agent has not been granted the
+	// [appropriate Bigtable IAM permission
 	// bigtable.tables.mutateRows]({$universe.dns_names.final_documentation_domain}/
 	// bigtable/docs/access-control#permissions) - The bigtable.googleapis.com API
 	// is not enabled for the project
 	// ([instructions]({$universe.dns_names.final_documentation_domain}/service-usag
 	// e/docs/enable-disable))
 	//   "SCHEMA_MISMATCH" - Cannot write to Bigtable because of a missing column
-	// family ("data") or if there is no structured row key for the subscription
-	// name + message ID.
+	// family ("data"), or if there is no structured row key for the subscription
+	// name + message ID, if because the app profile is not configured for
+	// single-cluster routing.
 	//   "IN_TRANSIT_LOCATION_RESTRICTION" - Cannot write to the destination
 	// because enforce_in_transit is set to true and the destination locations are
 	// not in the allowed regions.
@@ -842,11 +838,9 @@ type CloudStorage struct {
 	//   "TOO_MANY_OBJECTS" - The Cloud Storage bucket has too many objects,
 	// ingestion will be paused.
 	//   "CONFLICTING_REGION_CONSTRAINTS" - Indicates an error state where the
-	// ingestion source cannot be processed. This occurs because there is no
-	// overlap between the regions allowed by the topic's `MessageStoragePolicy`
-	// and the regions permitted by the Regional Access Boundary (RAB) restrictions
-	// on the project's Pub/Sub service account. A common, allowed region is
-	// required to determine a valid ingestion region.
+	// ingestion source cannot be processed because the selected ingestion region
+	// is not permitted by the Regional Access Boundary (RAB) restrictions on the
+	// project's service account.
 	State string `json:"state,omitempty"`
 	// TextFormat: Optional. Data from Cloud Storage will be interpreted as text.
 	TextFormat *TextFormat `json:"textFormat,omitempty"`
@@ -1000,11 +994,9 @@ type ConfluentCloud struct {
 	//   "CLUSTER_NOT_FOUND" - The provided cluster wasn't found.
 	//   "TOPIC_NOT_FOUND" - The provided topic wasn't found.
 	//   "CONFLICTING_REGION_CONSTRAINTS" - Indicates an error state where the
-	// ingestion source cannot be processed. This occurs because there is no
-	// overlap between the regions allowed by the topic's `MessageStoragePolicy`
-	// and the regions permitted by the Regional Access Boundary (RAB) restrictions
-	// on the project's Pub/Sub service account. A common, allowed region is
-	// required to determine a valid ingestion region.
+	// ingestion source cannot be processed because the selected ingestion region
+	// is not permitted by the Regional Access Boundary (RAB) restrictions on the
+	// project's service account.
 	State string `json:"state,omitempty"`
 	// Topic: Required. The name of the topic in the Confluent Cloud cluster that
 	// Pub/Sub will import from.
@@ -1043,7 +1035,9 @@ type CreateSnapshotRequest struct {
 	Subscription string `json:"subscription,omitempty"`
 	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
 	// this resource. For example: "123/environment": "production",
-	// "123/costCenter": "marketing"
+	// "123/costCenter": "marketing" See
+	// https://{$universe.dns_names.final_documentation_domain}/pubsub/docs/tags
+	// for more information on using tags with Pub/Sub resources.
 	Tags map[string]string `json:"tags,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Labels") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2291,9 +2285,9 @@ func (s Snapshot) MarshalJSON() ([]byte, error) {
 }
 
 // Subscription: A subscription resource. If none of `push_config`,
-// `bigquery_config`, or `cloud_storage_config` is set, then the subscriber
-// will pull and ack messages using API methods. At most one of these fields
-// may be set.
+// `bigquery_config`, `cloud_storage_config`, or `bigtable_config` is set, then
+// the subscriber will pull and ack messages using API methods. At most one of
+// these fields may be set.
 type Subscription struct {
 	// AckDeadlineSeconds: Optional. The approximate amount of time (on a
 	// best-effort basis) Pub/Sub waits for the subscriber to acknowledge receipt
@@ -2416,7 +2410,9 @@ type Subscription struct {
 	State string `json:"state,omitempty"`
 	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
 	// this resource. For example: "123/environment": "production",
-	// "123/costCenter": "marketing"
+	// "123/costCenter": "marketing" See
+	// https://{$universe.dns_names.final_documentation_domain}/pubsub/docs/tags
+	// for more information on using tags with Pub/Sub resources.
 	Tags map[string]string `json:"tags,omitempty"`
 	// Topic: Required. The name of the topic from which this subscription is
 	// receiving messages. Format is `projects/{project}/topics/{topic}`. The value
@@ -2585,7 +2581,9 @@ type Topic struct {
 	State string `json:"state,omitempty"`
 	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
 	// this resource. For example: "123/environment": "production",
-	// "123/costCenter": "marketing"
+	// "123/costCenter": "marketing" See
+	// https://{$universe.dns_names.final_documentation_domain}/pubsub/docs/tags
+	// for more information on using tags with Pub/Sub resources.
 	Tags map[string]string `json:"tags,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

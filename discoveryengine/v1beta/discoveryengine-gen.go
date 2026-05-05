@@ -5962,7 +5962,9 @@ func (s GoogleCloudDiscoveryengineV1Project) MarshalJSON() ([]byte, error) {
 // reflect the thresholds actively being used for billing purposes at the time
 // of the GetProject call. This includes the start_time of the subscription and
 // may differ from the values in `customer_provided_config` due to billing
-// rules (e.g., scale-downs taking effect only at the start of a new month).
+// rules (e.g., scale-downs taking effect only at the start of a new month). We
+// also include the update type to indicate the type of update performed on the
+// configurable billing configuration in the UpdateProject operation.
 type GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus struct {
 	// EffectiveIndexingCoreThreshold: Optional. The currently effective Indexing
 	// Core threshold. This is the threshold against which Indexing Core usage is
@@ -5990,6 +5992,16 @@ type GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus struct {
 	// TerminateTime: Output only. The latest terminate effective time of search
 	// qpm and indexing core subscriptions.
 	TerminateTime string `json:"terminateTime,omitempty"`
+	// UpdateType: Output only. The type of update performed in this operation.
+	// This field is populated in the response of UpdateProject.
+	//
+	// Possible values:
+	//   "UPDATE_TYPE_UNSPECIFIED" - Unspecified update type.
+	//   "CREATE" - Configurable billing was created/enabled.
+	//   "DELETE" - Configurable billing was deleted/disabled.
+	//   "SCALE_UP" - Subscription was scaled up (thresholds increased).
+	//   "SCALE_DOWN" - Subscription was scaled down (thresholds decreased).
+	UpdateType string `json:"updateType,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "EffectiveIndexingCoreThreshold") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from
@@ -13959,7 +13971,9 @@ func (s GoogleCloudDiscoveryengineV1alphaProject) MarshalJSON() ([]byte, error) 
 // purposes at the time of the GetProject call. This includes the start_time of
 // the subscription and may differ from the values in
 // `customer_provided_config` due to billing rules (e.g., scale-downs taking
-// effect only at the start of a new month).
+// effect only at the start of a new month). We also include the update type to
+// indicate the type of update performed on the configurable billing
+// configuration in the UpdateProject operation.
 type GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus struct {
 	// EffectiveIndexingCoreThreshold: Optional. The currently effective Indexing
 	// Core threshold. This is the threshold against which Indexing Core usage is
@@ -13987,6 +14001,16 @@ type GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus struct {
 	// TerminateTime: Output only. The latest terminate effective time of search
 	// qpm and indexing core subscriptions.
 	TerminateTime string `json:"terminateTime,omitempty"`
+	// UpdateType: Output only. The type of update performed in this operation.
+	// This field is populated in the response of UpdateProject.
+	//
+	// Possible values:
+	//   "UPDATE_TYPE_UNSPECIFIED" - Unspecified update type.
+	//   "CREATE" - Configurable billing was created/enabled.
+	//   "DELETE" - Configurable billing was deleted/disabled.
+	//   "SCALE_UP" - Subscription was scaled up (thresholds increased).
+	//   "SCALE_DOWN" - Subscription was scaled down (thresholds decreased).
+	UpdateType string `json:"updateType,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "EffectiveIndexingCoreThreshold") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from
@@ -27202,7 +27226,9 @@ func (s GoogleCloudDiscoveryengineV1betaProject) MarshalJSON() ([]byte, error) {
 // reflect the thresholds actively being used for billing purposes at the time
 // of the GetProject call. This includes the start_time of the subscription and
 // may differ from the values in `customer_provided_config` due to billing
-// rules (e.g., scale-downs taking effect only at the start of a new month).
+// rules (e.g., scale-downs taking effect only at the start of a new month). We
+// also include the update type to indicate the type of update performed on the
+// configurable billing configuration in the UpdateProject operation.
 type GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus struct {
 	// EffectiveIndexingCoreThreshold: Optional. The currently effective Indexing
 	// Core threshold. This is the threshold against which Indexing Core usage is
@@ -27230,6 +27256,16 @@ type GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus struct {
 	// TerminateTime: Output only. The latest terminate effective time of search
 	// qpm and indexing core subscriptions.
 	TerminateTime string `json:"terminateTime,omitempty"`
+	// UpdateType: Output only. The type of update performed in this operation.
+	// This field is populated in the response of UpdateProject.
+	//
+	// Possible values:
+	//   "UPDATE_TYPE_UNSPECIFIED" - Unspecified update type.
+	//   "CREATE" - Configurable billing was created/enabled.
+	//   "DELETE" - Configurable billing was deleted/disabled.
+	//   "SCALE_UP" - Subscription was scaled up (thresholds increased).
+	//   "SCALE_DOWN" - Subscription was scaled down (thresholds decreased).
+	UpdateType string `json:"updateType,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "EffectiveIndexingCoreThreshold") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from

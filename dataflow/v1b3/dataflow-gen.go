@@ -3940,6 +3940,11 @@ type Package struct {
 	Location string `json:"location,omitempty"`
 	// Name: The name of the package.
 	Name string `json:"name,omitempty"`
+	// Sha256: Optional. The hex-encoded SHA256 checksum of the package. If the
+	// checksum is provided, the worker will verify the checksum of the package
+	// before using it. If the checksum does not match, the worker will fail to
+	// start.
+	Sha256 string `json:"sha256,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Location") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

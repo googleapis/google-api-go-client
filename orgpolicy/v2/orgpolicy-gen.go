@@ -276,7 +276,7 @@ type ProjectsPoliciesService struct {
 // for dry-run.
 type GoogleCloudOrgpolicyV2AlternatePolicySpec struct {
 	// Launch: Reference to the launch that will be used while audit logging and to
-	// control the launch. Should be set only in the alternate policy.
+	// control the launch. Set only in the alternate policy.
 	Launch string `json:"launch,omitempty"`
 	// Spec: Specify constraint for configurations of Google Cloud resources.
 	Spec *GoogleCloudOrgpolicyV2PolicySpec `json:"spec,omitempty"`
@@ -319,7 +319,7 @@ type GoogleCloudOrgpolicyV2Constraint struct {
 	//
 	// Possible values:
 	//   "CONSTRAINT_DEFAULT_UNSPECIFIED" - This is only used for distinguishing
-	// unset values and should never be used. Results in an error.
+	// unset values, and results in an error if set.
 	//   "ALLOW" - Indicate that all values are allowed for list constraints.
 	// Indicate that enforcement is off for boolean constraints.
 	//   "DENY" - Indicate that all values are denied for list constraints.
@@ -400,7 +400,7 @@ type GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinition struct {
 	//
 	// Possible values:
 	//   "ACTION_TYPE_UNSPECIFIED" - This is only used for distinguishing unset
-	// values and should never be used. Results in an error.
+	// values, and results in an error if used.
 	//   "ALLOW" - Allowed action type.
 	//   "DENY" - Deny action type.
 	ActionType string `json:"actionType,omitempty"`
@@ -413,11 +413,10 @@ type GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinition struct {
 	//
 	// Possible values:
 	//   "METHOD_TYPE_UNSPECIFIED" - This is only used for distinguishing unset
-	// values and should never be used. Results in an error.
+	// values, and results in an error if used.
 	//   "CREATE" - Constraint applied when creating the resource.
 	//   "UPDATE" - Constraint applied when updating the resource.
-	//   "DELETE" - Constraint applied when deleting the resource. Not currently
-	// supported.
+	//   "DELETE" - Constraint applied when deleting the resource. Not supported.
 	//   "REMOVE_GRANT" - Constraint applied when removing an IAM grant.
 	//   "GOVERN_TAGS" - Constraint applied when enforcing forced tagging.
 	MethodTypes []string `json:"methodTypes,omitempty"`
@@ -455,8 +454,8 @@ type GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameter struct 
 	// specified by defining `type: LIST`, and `item: STRING`.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - This is only used for distinguishing unset values and
-	// should never be used. Results in an error.
+	//   "TYPE_UNSPECIFIED" - This is only used for distinguishing unset values,
+	// and results in an error if used.
 	//   "LIST" - List parameter type.
 	//   "STRING" - String parameter type.
 	//   "BOOLEAN" - Boolean parameter type.
@@ -467,8 +466,8 @@ type GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameter struct 
 	// Type: Type of the parameter.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - This is only used for distinguishing unset values and
-	// should never be used. Results in an error.
+	//   "TYPE_UNSPECIFIED" - This is only used for distinguishing unset values,
+	// and results in an error if used.
 	//   "LIST" - List parameter type.
 	//   "STRING" - String parameter type.
 	//   "BOOLEAN" - Boolean parameter type.
@@ -560,7 +559,7 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	//
 	// Possible values:
 	//   "ACTION_TYPE_UNSPECIFIED" - This is only used for distinguishing unset
-	// values and should never be used. Results in an error.
+	// values, and results in an error if used.
 	//   "ALLOW" - Allowed action type.
 	//   "DENY" - Deny action type.
 	ActionType string `json:"actionType,omitempty"`
@@ -580,16 +579,15 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	//
 	// Possible values:
 	//   "METHOD_TYPE_UNSPECIFIED" - This is only used for distinguishing unset
-	// values and should never be used. Results in an error.
+	// values, and results in an error if used.
 	//   "CREATE" - Constraint applied when creating the resource.
 	//   "UPDATE" - Constraint applied when updating the resource.
-	//   "DELETE" - Constraint applied when deleting the resource. Not currently
-	// supported.
+	//   "DELETE" - Constraint applied when deleting the resource. Not supported.
 	//   "REMOVE_GRANT" - Constraint applied when removing an IAM grant.
 	//   "GOVERN_TAGS" - Constraint applied when enforcing forced tagging.
 	MethodTypes []string `json:"methodTypes,omitempty"`
 	// Name: Immutable. Name of the constraint. This is unique within the
-	// organization. Format of the name should be *
+	// organization. The name must be of the form: *
 	// `organizations/{organization_id}/customConstraints/{custom_constraint_id}`
 	// Example: `organizations/123/customConstraints/custom.createOnlyE2TypeVms`
 	// The max length is 71 characters and the minimum length is 1. Note that the
@@ -631,8 +629,7 @@ type GoogleCloudOrgpolicyV2ListConstraintsResponse struct {
 	// Constraints: The collection of constraints that are available on the
 	// targeted resource.
 	Constraints []*GoogleCloudOrgpolicyV2Constraint `json:"constraints,omitempty"`
-	// NextPageToken: Page token used to retrieve the next page. This is currently
-	// not used.
+	// NextPageToken: Page token used to retrieve the next page. This is not used.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -662,8 +659,8 @@ type GoogleCloudOrgpolicyV2ListCustomConstraintsResponse struct {
 	// CustomConstraints: All custom and managed constraints that exist on the
 	// organization resource. It will be empty if no custom constraints are set.
 	CustomConstraints []*GoogleCloudOrgpolicyV2CustomConstraint `json:"customConstraints,omitempty"`
-	// NextPageToken: Page token used to retrieve the next page. This is currently
-	// not used, but the server may at any point start supplying a valid token.
+	// NextPageToken: Page token used to retrieve the next page. This is not used,
+	// but the server may at any point start supplying a valid token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -690,8 +687,8 @@ func (s GoogleCloudOrgpolicyV2ListCustomConstraintsResponse) MarshalJSON() ([]by
 // ListPolicies method. It will be empty if no policies are set on the
 // resource.
 type GoogleCloudOrgpolicyV2ListPoliciesResponse struct {
-	// NextPageToken: Page token used to retrieve the next page. This is currently
-	// not used, but the server may at any point start supplying a valid token.
+	// NextPageToken: Page token used to retrieve the next page. This is not used,
+	// but the server may at any point start supplying a valid token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Policies: All policies that exist on the resource. It will be empty if no
 	// policies are set.
@@ -998,16 +995,16 @@ func (r *FoldersConstraintsService) List(parent string) *FoldersConstraintsListC
 }
 
 // PageSize sets the optional parameter "pageSize": Size of the pages to be
-// returned. This is currently unsupported and will be ignored. The server may
-// at any point start using this field to limit page size.
+// returned. This is not used, but the server may at any point start using this
+// field to limit page size.
 func (c *FoldersConstraintsListCall) PageSize(pageSize int64) *FoldersConstraintsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token used to
-// retrieve the next page. This is currently unsupported and will be ignored.
-// The server may at any point start using this field.
+// retrieve the next page. This is not used, but the server may at any point
+// start using this field.
 func (c *FoldersConstraintsListCall) PageToken(pageToken string) *FoldersConstraintsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1595,16 +1592,16 @@ func (r *FoldersPoliciesService) List(parent string) *FoldersPoliciesListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": Size of the pages to be
-// returned. This is currently unsupported and will be ignored. The server may
-// at any point start using this field to limit page size.
+// returned. This is not used, but the server may at any point start using this
+// field to limit page size.
 func (c *FoldersPoliciesListCall) PageSize(pageSize int64) *FoldersPoliciesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token used to
-// retrieve the next page. This is currently unsupported and will be ignored.
-// The server may at any point start using this field.
+// retrieve the next page. This is not used, but the server may at any point
+// start using this field.
 func (c *FoldersPoliciesListCall) PageToken(pageToken string) *FoldersPoliciesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1870,16 +1867,16 @@ func (r *OrganizationsConstraintsService) List(parent string) *OrganizationsCons
 }
 
 // PageSize sets the optional parameter "pageSize": Size of the pages to be
-// returned. This is currently unsupported and will be ignored. The server may
-// at any point start using this field to limit page size.
+// returned. This is not used, but the server may at any point start using this
+// field to limit page size.
 func (c *OrganizationsConstraintsListCall) PageSize(pageSize int64) *OrganizationsConstraintsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token used to
-// retrieve the next page. This is currently unsupported and will be ignored.
-// The server may at any point start using this field.
+// retrieve the next page. This is not used, but the server may at any point
+// start using this field.
 func (c *OrganizationsConstraintsListCall) PageToken(pageToken string) *OrganizationsConstraintsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2340,16 +2337,16 @@ func (r *OrganizationsCustomConstraintsService) List(parent string) *Organizatio
 }
 
 // PageSize sets the optional parameter "pageSize": Size of the pages to be
-// returned. This is currently unsupported and will be ignored. The server may
-// at any point start using this field to limit page size.
+// returned. This is not used, but the server may at any point start using this
+// field to limit page size.
 func (c *OrganizationsCustomConstraintsListCall) PageSize(pageSize int64) *OrganizationsCustomConstraintsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token used to
-// retrieve the next page. This is currently unsupported and will be ignored.
-// The server may at any point start using this field.
+// retrieve the next page. This is not used, but the server may at any point
+// start using this field.
 func (c *OrganizationsCustomConstraintsListCall) PageToken(pageToken string) *OrganizationsCustomConstraintsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2482,7 +2479,7 @@ type OrganizationsCustomConstraintsPatchCall struct {
 // supplied policy will perform a full overwrite of all fields.
 //
 //   - name: Immutable. Name of the constraint. This is unique within the
-//     organization. Format of the name should be *
+//     organization. The name must be of the form: *
 //     `organizations/{organization_id}/customConstraints/{custom_constraint_id}`
 //     Example: `organizations/123/customConstraints/custom.createOnlyE2TypeVms`
 //     The max length is 71 characters and the minimum length is 1. Note that the
@@ -3049,16 +3046,16 @@ func (r *OrganizationsPoliciesService) List(parent string) *OrganizationsPolicie
 }
 
 // PageSize sets the optional parameter "pageSize": Size of the pages to be
-// returned. This is currently unsupported and will be ignored. The server may
-// at any point start using this field to limit page size.
+// returned. This is not used, but the server may at any point start using this
+// field to limit page size.
 func (c *OrganizationsPoliciesListCall) PageSize(pageSize int64) *OrganizationsPoliciesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token used to
-// retrieve the next page. This is currently unsupported and will be ignored.
-// The server may at any point start using this field.
+// retrieve the next page. This is not used, but the server may at any point
+// start using this field.
 func (c *OrganizationsPoliciesListCall) PageToken(pageToken string) *OrganizationsPoliciesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3324,16 +3321,16 @@ func (r *ProjectsConstraintsService) List(parent string) *ProjectsConstraintsLis
 }
 
 // PageSize sets the optional parameter "pageSize": Size of the pages to be
-// returned. This is currently unsupported and will be ignored. The server may
-// at any point start using this field to limit page size.
+// returned. This is not used, but the server may at any point start using this
+// field to limit page size.
 func (c *ProjectsConstraintsListCall) PageSize(pageSize int64) *ProjectsConstraintsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token used to
-// retrieve the next page. This is currently unsupported and will be ignored.
-// The server may at any point start using this field.
+// retrieve the next page. This is not used, but the server may at any point
+// start using this field.
 func (c *ProjectsConstraintsListCall) PageToken(pageToken string) *ProjectsConstraintsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3921,16 +3918,16 @@ func (r *ProjectsPoliciesService) List(parent string) *ProjectsPoliciesListCall 
 }
 
 // PageSize sets the optional parameter "pageSize": Size of the pages to be
-// returned. This is currently unsupported and will be ignored. The server may
-// at any point start using this field to limit page size.
+// returned. This is not used, but the server may at any point start using this
+// field to limit page size.
 func (c *ProjectsPoliciesListCall) PageSize(pageSize int64) *ProjectsPoliciesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token used to
-// retrieve the next page. This is currently unsupported and will be ignored.
-// The server may at any point start using this field.
+// retrieve the next page. This is not used, but the server may at any point
+// start using this field.
 func (c *ProjectsPoliciesListCall) PageToken(pageToken string) *ProjectsPoliciesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c

@@ -2215,13 +2215,13 @@ type FieldViolation struct {
 	// email = 1; repeated EmailType type = 2; } string full_name = 1; repeated
 	// EmailAddress email_addresses = 2; } In this example, in proto `field` could
 	// take one of the following values: * `full_name` for a violation in the
-	// `full_name` value * `email_addresses[1].email` for a violation in the
+	// `full_name` value * `email_addresses[0].email` for a violation in the
 	// `email` field of the first `email_addresses` message *
-	// `email_addresses[3].type[2]` for a violation in the second `type` value in
+	// `email_addresses[2].type[1]` for a violation in the second `type` value in
 	// the third `email_addresses` message. In JSON, the same values are
 	// represented as: * `fullName` for a violation in the `fullName` value *
-	// `emailAddresses[1].email` for a violation in the `email` field of the first
-	// `emailAddresses` message * `emailAddresses[3].type[2]` for a violation in
+	// `emailAddresses[0].email` for a violation in the `email` field of the first
+	// `emailAddresses` message * `emailAddresses[2].type[1]` for a violation in
 	// the second `type` value in the third `emailAddresses` message.
 	Field string `json:"field,omitempty"`
 	// LocalizedMessage: Provides a localized error message for field-level errors
@@ -3327,6 +3327,9 @@ type MigrationJob struct {
 	// for dump to begin
 	//   "READY_FOR_PROMOTE" - The migration job is ready to be promoted.
 	Phase string `json:"phase,omitempty"`
+	// PostgresHomogeneousConfig: Optional. Configuration for PostgreSQL
+	// homogeneous migration.
+	PostgresHomogeneousConfig *PostgresHomogeneousConfig `json:"postgresHomogeneousConfig,omitempty"`
 	// PostgresToSqlserverConfig: Configuration for heterogeneous failback
 	// migrations from **PostgreSQL to SQL Server**.
 	PostgresToSqlserverConfig *PostgresToSqlServerConfig `json:"postgresToSqlserverConfig,omitempty"`
@@ -4195,6 +4198,32 @@ type PostgresDestinationConfig struct {
 
 func (s PostgresDestinationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PostgresDestinationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PostgresHomogeneousConfig: Configuration for PostgreSQL to PostgreSQL
+// migrations.
+type PostgresHomogeneousConfig struct {
+	// IsNativeLogical: Required. Whether the migration is native logical.
+	IsNativeLogical bool `json:"isNativeLogical,omitempty"`
+	// MaxAdditionalSubscriptions: Optional. Maximum number of additional
+	// subscriptions to use for the migration job.
+	MaxAdditionalSubscriptions int64 `json:"maxAdditionalSubscriptions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsNativeLogical") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsNativeLogical") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PostgresHomogeneousConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PostgresHomogeneousConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

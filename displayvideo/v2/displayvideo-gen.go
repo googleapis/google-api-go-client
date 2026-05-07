@@ -3286,6 +3286,7 @@ type BusinessChainTargetingOptionDetails struct {
 	//   "GEO_REGION_TYPE_COLLOQUIAL_AREA" - The geographic region is a colloquial
 	// area.
 	//   "GEO_REGION_TYPE_POST_TOWN" - The geographic region is a post town.
+	//   "GEO_REGION_TYPE_WARD" - The geographic region is a ward.
 	GeoRegionType string `json:"geoRegionType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BusinessChain") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7323,6 +7324,7 @@ type GeoRegionAssignedTargetingOptionDetails struct {
 	//   "GEO_REGION_TYPE_COLLOQUIAL_AREA" - The geographic region is a colloquial
 	// area.
 	//   "GEO_REGION_TYPE_POST_TOWN" - The geographic region is a post town.
+	//   "GEO_REGION_TYPE_WARD" - The geographic region is a ward.
 	GeoRegionType string `json:"geoRegionType,omitempty"`
 	// Negative: Indicates if this option is being negatively targeted.
 	Negative bool `json:"negative,omitempty"`
@@ -7429,6 +7431,7 @@ type GeoRegionTargetingOptionDetails struct {
 	//   "GEO_REGION_TYPE_COLLOQUIAL_AREA" - The geographic region is a colloquial
 	// area.
 	//   "GEO_REGION_TYPE_POST_TOWN" - The geographic region is a post town.
+	//   "GEO_REGION_TYPE_WARD" - The geographic region is a ward.
 	GeoRegionType string `json:"geoRegionType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or

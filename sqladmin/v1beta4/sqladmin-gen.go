@@ -542,6 +542,7 @@ type Backup struct {
 	//   "POSTGRES_16" - The database version is PostgreSQL 16.
 	//   "POSTGRES_17" - The database version is PostgreSQL 17.
 	//   "POSTGRES_18" - The database version is PostgreSQL 18.
+	//   "POSTGRES_19" - The database version is PostgreSQL 19.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
@@ -891,6 +892,7 @@ type BackupRun struct {
 	//   "POSTGRES_16" - The database version is PostgreSQL 16.
 	//   "POSTGRES_17" - The database version is PostgreSQL 17.
 	//   "POSTGRES_18" - The database version is PostgreSQL 18.
+	//   "POSTGRES_19" - The database version is PostgreSQL 19.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
@@ -1277,6 +1279,7 @@ type ConnectSettings struct {
 	//   "POSTGRES_16" - The database version is PostgreSQL 16.
 	//   "POSTGRES_17" - The database version is PostgreSQL 17.
 	//   "POSTGRES_18" - The database version is PostgreSQL 18.
+	//   "POSTGRES_19" - The database version is PostgreSQL 19.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
@@ -1615,6 +1618,7 @@ type DatabaseInstance struct {
 	//   "POSTGRES_16" - The database version is PostgreSQL 16.
 	//   "POSTGRES_17" - The database version is PostgreSQL 17.
 	//   "POSTGRES_18" - The database version is PostgreSQL 18.
+	//   "POSTGRES_19" - The database version is PostgreSQL 19.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
@@ -1789,6 +1793,7 @@ type DatabaseInstance struct {
 	// example:, causing the database to crash).
 	//   "KMS_KEY_ISSUE" - The KMS key used by the instance is either revoked or
 	// denied access to
+	//   "PROJECT_ABUSE" - The project is suspended due to abuse detected by Ares.
 	SuspensionReason []string `json:"suspensionReason,omitempty"`
 	// SwitchTransactionLogsToCloudStorageEnabled: Input only. Whether Cloud SQL is
 	// enabled to switch storing point-in-time recovery log files from a data disk
@@ -2640,6 +2645,7 @@ type Flag struct {
 	//   "POSTGRES_16" - The database version is PostgreSQL 16.
 	//   "POSTGRES_17" - The database version is PostgreSQL 17.
 	//   "POSTGRES_18" - The database version is PostgreSQL 18.
+	//   "POSTGRES_19" - The database version is PostgreSQL 19.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
@@ -4253,6 +4259,10 @@ type Operation struct {
 	// in the read pool.
 	//   "CREATE_READ_POOL" - Creates a Cloud SQL read pool instance.
 	//   "PRE_CHECK_MAJOR_VERSION_UPGRADE" - Pre-checks for major version upgrade.
+	//   "CREATE_BLUE_GREEN_DEPLOYMENT" - Creates a new Blue-Green deployment.
+	//   "SWITCHOVER_BLUE_GREEN_DEPLOYMENT" - Switches over a Blue-Green
+	// deployment.
+	//   "DELETE_BLUE_GREEN_DEPLOYMENT" - Deletes a Blue-Green deployment.
 	OperationType string `json:"operationType,omitempty"`
 	// PreCheckMajorVersionUpgradeContext: The context for pre-check major version
 	// upgrade operation, if applicable. This field is only populated when the
@@ -4519,24 +4529,28 @@ func (s PerformDiskShrinkContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PerformanceCaptureConfig: Performance Capture configuration.
+// PerformanceCaptureConfig: Performance capture configuration.
 type PerformanceCaptureConfig struct {
-	// Enabled: Optional. Enable or disable the Performance Capture.
+	// Enabled: Optional. Enables or disables the performance capture feature.
 	Enabled bool `json:"enabled,omitempty"`
-	// ProbeThreshold: Optional. The minimum number of consecutive readings above
-	// threshold that triggers instance state capture.
+	// ProbeThreshold: Optional. Specifies the minimum number of consecutive probe
+	// threshold that triggers performance capture.
 	ProbeThreshold int64 `json:"probeThreshold,omitempty"`
-	// ProbingIntervalSeconds: Optional. The time interval in seconds between any
-	// two probes.
+	// ProbingIntervalSeconds: Optional. Specifies the interval in seconds between
+	// consecutive probes that check if any trigger condition thresholds have been
+	// reached.
 	ProbingIntervalSeconds int64 `json:"probingIntervalSeconds,omitempty"`
-	// RunningThreadsThreshold: Optional. The minimum number of server threads
-	// running to trigger the capture on primary.
+	// RunningThreadsThreshold: Optional. Specifies the minimum number of MySQL
+	// `Threads_running` to trigger the performance capture on the primary
+	// instance.
 	RunningThreadsThreshold int64 `json:"runningThreadsThreshold,omitempty"`
-	// SecondsBehindSourceThreshold: Optional. The minimum number of seconds
-	// replica must be lagging behind primary to trigger capture on replica.
+	// SecondsBehindSourceThreshold: Optional. Specifies the minimum number of
+	// seconds replica must be lagging behind primary instance to trigger the
+	// performance capture on replica.
 	SecondsBehindSourceThreshold int64 `json:"secondsBehindSourceThreshold,omitempty"`
-	// TransactionDurationThreshold: Optional. The amount of time in seconds that a
-	// transaction needs to have been open before the watcher starts recording it.
+	// TransactionDurationThreshold: Optional. Specifies the amount of time in
+	// seconds that a transaction needs to have been open before the watcher starts
+	// recording it.
 	TransactionDurationThreshold int64 `json:"transactionDurationThreshold,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4750,6 +4764,7 @@ type PreCheckMajorVersionUpgradeContext struct {
 	//   "POSTGRES_16" - The database version is PostgreSQL 16.
 	//   "POSTGRES_17" - The database version is PostgreSQL 17.
 	//   "POSTGRES_18" - The database version is PostgreSQL 18.
+	//   "POSTGRES_19" - The database version is PostgreSQL 19.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019

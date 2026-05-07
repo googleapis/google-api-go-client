@@ -5434,6 +5434,9 @@ type Message struct {
 	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/User)
 	// `name` and `type`.
 	Sender *User `json:"sender,omitempty"`
+	// Silent: Output only. Whether this is a silent message. Silent messages are
+	// messages where Chat suppresses push notifications for recipients.
+	Silent bool `json:"silent,omitempty"`
 	// SlashCommand: Output only. Slash command information, if applicable.
 	SlashCommand *SlashCommand `json:"slashCommand,omitempty"`
 	// Space: Output only. If your Chat app authenticates as a user
@@ -10525,6 +10528,35 @@ func (r *SpacesMessagesService) Create(parent string, message *Message) *SpacesM
 	c := &SpacesMessagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.message = message
+	return c
+}
+
+// CreateMessageNotificationOptionsNotificationType sets the optional parameter
+// "createMessageNotificationOptions.notificationType": The notification type
+// for the message.
+//
+// Possible values:
+//
+//	"NOTIFICATION_TYPE_NONE" - Default behavior. Notification behavior is
+//
+// similar to when the human user sends the message using the Chat UI: no
+// notification is sent to the human sender.
+//
+//	"NOTIFICATION_TYPE_FORCE_NOTIFY" - Force notify recipients. This bypasses
+//
+// users' space notification settings and [Chat Do Not Disturb
+// settings](https://support.google.com/chat/answer/9093489). This option does
+// not bypass device-level Do Not Disturb settings. Requires [app
+// authentication]
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app).
+//
+//	"NOTIFICATION_TYPE_SILENT" - Silence the notification as if the recipients
+//
+// have [Chat Do Not Disturb](https://support.google.com/chat/answer/9093489)
+// enabled or have muted the space. Requires [app authentication]
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app).
+func (c *SpacesMessagesCreateCall) CreateMessageNotificationOptionsNotificationType(createMessageNotificationOptionsNotificationType string) *SpacesMessagesCreateCall {
+	c.urlParams_.Set("createMessageNotificationOptions.notificationType", createMessageNotificationOptionsNotificationType)
 	return c
 }
 

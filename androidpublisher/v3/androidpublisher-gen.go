@@ -4054,7 +4054,8 @@ func (s GeneratedApksListResponse) MarshalJSON() ([]byte, error) {
 }
 
 // GeneratedApksPerSigningKey: Download metadata for split, standalone and
-// universal APKs, as well as asset pack slices, signed with a given key.
+// universal APKs, as well as asset pack slices, signed with a given key. Next
+// ID: 10
 type GeneratedApksPerSigningKey struct {
 	// CertificateSha256Hash: SHA256 hash of the APK signing public key
 	// certificate.
@@ -4079,6 +4080,20 @@ type GeneratedApksPerSigningKey struct {
 	GeneratedUniversalApk *GeneratedUniversalApk `json:"generatedUniversalApk,omitempty"`
 	// TargetingInfo: Contains targeting information about the generated apks.
 	TargetingInfo *TargetingInfo `json:"targetingInfo,omitempty"`
+	// UnprotectedGeneratedSplitApks: List of generated split APKs without
+	// automatic protection, signed with a key corresponding to
+	// certificate_sha256_hash. This field is only present if the app uses
+	// automatic protection. In this case, `generated_split_apks` contains APKs
+	// with automatic protection enabled, whereas this field contains APKs without
+	// automatic protection.
+	UnprotectedGeneratedSplitApks []*GeneratedSplitApk `json:"unprotectedGeneratedSplitApks,omitempty"`
+	// UnprotectedGeneratedStandaloneApks: List of generated standalone APKs
+	// without automatic protection, signed with a key corresponding to
+	// certificate_sha256_hash. This field is only present if the app uses
+	// automatic protection. In this case, `generated_standalone_apks` contains
+	// APKs with automatic protection enabled, whereas this field contains APKs
+	// without automatic protection.
+	UnprotectedGeneratedStandaloneApks []*GeneratedStandaloneApk `json:"unprotectedGeneratedStandaloneApks,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CertificateSha256Hash") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

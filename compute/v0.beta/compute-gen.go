@@ -61277,6 +61277,9 @@ type ReservationAffinity struct {
 	//
 	// Possible values:
 	//   "ANY_RESERVATION" - Consume any allocation available.
+	//   "ANY_RESERVATION_THEN_FAIL" - Consume any reservation available, but fail
+	// if no reservation is
+	// available. Will not consume from the on-demand pool.
 	//   "NO_RESERVATION" - Do not consume from any allocated capacity.
 	//   "SPECIFIC_RESERVATION" - Must consume from a specific reservation. Must
 	// specify key value fields

@@ -425,6 +425,34 @@ func (s CreateDataPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DataGovernanceTag: Data Governance tag This is a namespaced name specifying
+// the key and the value. For example: `project-id/pii/sensitive`.
+type DataGovernanceTag struct {
+	// Key: Optional. Tag keys are globally unique. Tag key is expected to be in
+	// the namespaced format, for example `parent-id/pii` where `parent-id` is the
+	// ID of the parent organization or project resource for this tag key.
+	Key string `json:"key,omitempty"`
+	// Value: Optional. Specifies the tag value as the short name, for example
+	// `sensitive`.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataGovernanceTag) MarshalJSON() ([]byte, error) {
+	type NoMethod DataGovernanceTag
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DataMaskingPolicy: The policy used to specify data masking rule.
 type DataMaskingPolicy struct {
 	// PredefinedExpression: Optional. A predefined masking expression.
@@ -492,6 +520,8 @@ func (s DataMaskingPolicy) MarshalJSON() ([]byte, error) {
 
 // DataPolicy: Represents the label-policy binding.
 type DataPolicy struct {
+	// DataGovernanceTag: Optional. Data Governance tag bound to the Data Policy.
+	DataGovernanceTag *DataGovernanceTag `json:"dataGovernanceTag,omitempty"`
 	// DataMaskingPolicy: Optional. The data masking policy that specifies the data
 	// masking rule to use. It must be set if the data policy type is
 	// DATA_MASKING_POLICY.
@@ -547,13 +577,13 @@ type DataPolicy struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "DataMaskingPolicy") to
+	// ForceSendFields is a list of field names (e.g. "DataGovernanceTag") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DataMaskingPolicy") to include in
+	// NullFields is a list of field names (e.g. "DataGovernanceTag") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

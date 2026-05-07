@@ -1464,6 +1464,9 @@ type GoogleCloudRunV2Instance struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Creator: Output only. Email address of the authenticated creator.
 	Creator string `json:"creator,omitempty"`
+	// DefaultUriDisabled: Optional. Disables public resolution of the default URI
+	// of this Instance.
+	DefaultUriDisabled bool `json:"defaultUriDisabled,omitempty"`
 	// DeleteTime: Output only. The deletion time.
 	DeleteTime string `json:"deleteTime,omitempty"`
 	// Description: User-provided description of the Instance. This field currently
@@ -4696,7 +4699,7 @@ type GoogleDevtoolsCloudbuildV1BuildStep struct {
 	// PullTiming: Output only. Stores timing information for pulling this build
 	// step's builder image only.
 	PullTiming *GoogleDevtoolsCloudbuildV1TimeSpan `json:"pullTiming,omitempty"`
-	// Results: Declaration of results for this build step.
+	// Results: Output only. Declaration of results for this build step.
 	Results []*GoogleDevtoolsCloudbuildV1StepResult `json:"results,omitempty"`
 	// Script: A shell script to be executed in the step. When script is provided,
 	// the user cannot specify the entrypoint or args.

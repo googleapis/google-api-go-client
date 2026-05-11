@@ -5911,18 +5911,21 @@ func (s DeliverySchedule) MarshalJSON() ([]byte, error) {
 
 // DependentFieldValue: Contains dependent field value information.
 type DependentFieldValue struct {
+	// DynamicFeedId: Optional. The ID of the dynamic feed that value's field will
+	// match against.
+	DynamicFeedId int64 `json:"dynamicFeedId,omitempty,string"`
 	// ElementId: Optional. The ID of the element that value's field will match
 	// against.
 	ElementId int64 `json:"elementId,omitempty,string"`
 	// FieldId: Optional. The field id of the dependent field.
 	FieldId int64 `json:"fieldId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ElementId") to
+	// ForceSendFields is a list of field names (e.g. "DynamicFeedId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ElementId") to include in API
+	// NullFields is a list of field names (e.g. "DynamicFeedId") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

@@ -9515,6 +9515,8 @@ type GoogleCloudDialogflowV2beta1CesAppSpec struct {
 	//   "REQUIRED"
 	//   "NOT_REQUIRED"
 	ConfirmationRequirement string `json:"confirmationRequirement,omitempty"`
+	ProactiveEnabled        bool   `json:"proactiveEnabled,omitempty"`
+	ReactiveEnabled         bool   `json:"reactiveEnabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CesApp") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

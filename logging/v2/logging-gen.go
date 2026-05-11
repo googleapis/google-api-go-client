@@ -1751,8 +1751,10 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// FieldSource: A source that can be used to represent a field within various
-// parts of a structured query, such as in SELECT, WHERE, or ORDER BY clauses.
+// FieldSource: A source that can be used to represent a "field of data" within
+// various parts of a structured query, such as in SELECT, WHERE, or ORDER BY
+// clauses. The term "field of data" is used here because it is not limited to
+// literal fields in the underlying data schema.
 type FieldSource struct {
 	// AliasRef: The alias name for a field that has already been aliased within a
 	// different ProjectedField type elsewhere in the query model. The alias must
@@ -4249,7 +4251,10 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 // assigns an alias. Use ProjectedField when you need more than just the raw
 // source field name (for which you might use FieldSource directly in
 // QueryBuilderConfig's field_sources list if no transformations or specific
-// operation type are needed).
+// operation type are needed).A ProjectedField can represent either a field
+// present in the data schema (specified via the field property) or a virtual
+// field that is computed from other fields (specified via the virtual_field
+// property).
 type ProjectedField struct {
 	// Alias: The alias name for the field. Valid alias examples are: - single word
 	// alias: TestAlias - numbers in an alias: Alias123 - multi word alias should
@@ -4260,8 +4265,8 @@ type ProjectedField struct {
 	// Cast: The cast for the field. This can any SQL cast type. Examples: - STRING
 	// - CHAR - DATE - TIMESTAMP - DATETIME - INT - FLOAT
 	Cast string `json:"cast,omitempty"`
-	// Field: The field name. This will be the field that is selected using the dot
-	// notation to display the drill down value.
+	// Field: Optional. The field name. This will be the field that is selected
+	// using the dot notation to display the drill down value.
 	Field string `json:"field,omitempty"`
 	// Operation: Specifies the role of this field (direct selection, grouping, or
 	// aggregation).
@@ -6080,8 +6085,8 @@ func (r *BillingAccountsLocationsService) List(name string) *BillingAccountsLoca
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *BillingAccountsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *BillingAccountsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -12853,8 +12858,8 @@ func (r *FoldersLocationsService) List(name string) *FoldersLocationsListCall {
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *FoldersLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *FoldersLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -18570,8 +18575,8 @@ func (r *LocationsService) List(name string) *LocationsListCall {
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *LocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *LocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -23126,8 +23131,8 @@ func (r *OrganizationsLocationsService) List(name string) *OrganizationsLocation
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *OrganizationsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *OrganizationsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -29680,8 +29685,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

@@ -3339,7 +3339,9 @@ type AccessPoliciesTestIamPermissionsCall struct {
 // TestIamPermissions: Returns the IAM permissions that the caller has on the
 // specified Access Context Manager resource. The resource can be an
 // AccessPolicy, AccessLevel, or ServicePerimeter. This method does not support
-// other resources.
+// other resources. **IAM Permissions**: No specific IAM permission is required
+// to call this method. It returns the subset of the requested permissions that
+// the caller possesses.
 //
 //   - resource: REQUIRED: The resource for which the policy detail is being
 //     requested. See Resource names
@@ -4182,7 +4184,9 @@ type AccessPoliciesAccessLevelsTestIamPermissionsCall struct {
 // TestIamPermissions: Returns the IAM permissions that the caller has on the
 // specified Access Context Manager resource. The resource can be an
 // AccessPolicy, AccessLevel, or ServicePerimeter. This method does not support
-// other resources.
+// other resources. **IAM Permissions**: No specific IAM permission is required
+// to call this method. It returns the subset of the requested permissions that
+// the caller possesses.
 //
 //   - resource: REQUIRED: The resource for which the policy detail is being
 //     requested. See Resource names
@@ -5684,7 +5688,9 @@ type AccessPoliciesServicePerimetersTestIamPermissionsCall struct {
 // TestIamPermissions: Returns the IAM permissions that the caller has on the
 // specified Access Context Manager resource. The resource can be an
 // AccessPolicy, AccessLevel, or ServicePerimeter. This method does not support
-// other resources.
+// other resources. **IAM Permissions**: No specific IAM permission is required
+// to call this method. It returns the subset of the requested permissions that
+// the caller possesses.
 //
 //   - resource: REQUIRED: The resource for which the policy detail is being
 //     requested. See Resource names
@@ -7014,7 +7020,9 @@ type ServicesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns a VPC-SC supported service based on the service name.
+// Get: Returns a VPC-SC supported service based on the service name. **IAM
+// Permissions**: Requires the following IAM permissions to use this method: -
+// `serviceusage.services.use` on the project.
 //
 //   - name: The name of the service to get information about. The names must be
 //     in the same format as used in defining a service perimeter, for example,
@@ -7125,7 +7133,9 @@ type ServicesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all VPC-SC supported services.
+// List: Lists all VPC-SC supported services. **IAM Permissions**: Requires the
+// following IAM permissions to use this method: - `serviceusage.services.use`
+// on the project.
 func (r *ServicesService) List() *ServicesListCall {
 	c := &ServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c

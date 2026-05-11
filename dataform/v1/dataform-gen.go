@@ -825,6 +825,8 @@ type CommitWorkspaceChangesResponse struct {
 type CompilationError struct {
 	// ActionTarget: Output only. The identifier of the action where this error
 	// occurred, if available.
+	// LINT.ThenChange(//depot/google3/google/cloud/dataform/v2main/data_pipelines.p
+	// roto:CompilationError)
 	ActionTarget *Target `json:"actionTarget,omitempty"`
 	// Message: Output only. The error's top level message.
 	Message string `json:"message,omitempty"`
@@ -1849,6 +1851,8 @@ type ListCompilationResultsResponse struct {
 	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Unreachable: Locations which could not be reached.
+	// LINT.ThenChange(//depot/google3/google/cloud/dataform/v2main/data_pipelines.p
+	// roto:ListCompilationResultsResponse)
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1940,6 +1944,8 @@ type ListReleaseConfigsResponse struct {
 	// ReleaseConfigs: List of release configs.
 	ReleaseConfigs []*ReleaseConfig `json:"releaseConfigs,omitempty"`
 	// Unreachable: Locations which could not be reached.
+	// LINT.ThenChange(//depot/google3/google/cloud/dataform/v2main/data_pipelines.p
+	// roto:ListReleaseConfigsResponse)
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2326,9 +2332,10 @@ func (s Notebook) MarshalJSON() ([]byte, error) {
 type NotebookAction struct {
 	// Contents: Output only. The code contents of a Notebook to be run.
 	Contents string `json:"contents,omitempty"`
-	// JobId: Output only. The ID of the Vertex job that executed the notebook in
-	// contents and also the ID used for the outputs created in Google Cloud
-	// Storage buckets. Only set once the job has started to run.
+	// JobId: Output only. The ID of the Gemini Enterprise Agent Platform job that
+	// executed the notebook in contents and also the ID used for the outputs
+	// created in Google Cloud Storage buckets. Only set once the job has started
+	// to run.
 	JobId string `json:"jobId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Contents") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3090,6 +3097,8 @@ type ReleaseConfig struct {
 	// InternalMetadata: Output only. All the metadata information that is used
 	// internally to serve the resource. For example: timestamps, flags, status
 	// fields, etc. The format of this field is a JSON string.
+	// LINT.ThenChange(//depot/google3/google/cloud/dataform/v2main/data_pipelines.p
+	// roto:ReleaseConfig)
 	InternalMetadata string `json:"internalMetadata,omitempty"`
 	// Name: Identifier. The release config's name.
 	Name string `json:"name,omitempty"`
@@ -4314,8 +4323,8 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this service. This
 // method lists locations based on the resource scope provided in the
-// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
-// empty, the method lists the public locations available to all projects. *
+// ListLocationsRequest.name field: * **Global locations**: If `name` is empty,
+// the method lists the public locations available to all projects. *
 // **Project-specific locations**: If `name` follows the format
 // `projects/{project}`, the method lists locations visible to that specific
 // project. This includes public, private, or other project-specific locations
@@ -4332,8 +4341,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -8331,7 +8340,9 @@ type ProjectsLocationsRepositoriesCompilationResultsGetCall struct {
 
 // Get: Fetches a single CompilationResult.
 //
-// - name: The compilation result's name.
+//   - name: The compilation result's name.
+//     LINT.ThenChange(//depot/google3/google/cloud/dataform/v2main/data_pipelines
+//     .proto:GetCompilationResultRequest).
 func (r *ProjectsLocationsRepositoriesCompilationResultsService) Get(name string) *ProjectsLocationsRepositoriesCompilationResultsGetCall {
 	c := &ProjectsLocationsRepositoriesCompilationResultsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8450,6 +8461,8 @@ func (r *ProjectsLocationsRepositoriesCompilationResultsService) List(parent str
 }
 
 // Filter sets the optional parameter "filter": Filter for the returned list.
+// LINT.ThenChange(//depot/google3/google/cloud/dataform/v2main/data_pipelines.p
+// roto:ListCompilationResultsRequest)
 func (c *ProjectsLocationsRepositoriesCompilationResultsListCall) Filter(filter string) *ProjectsLocationsRepositoriesCompilationResultsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -8775,6 +8788,8 @@ func (r *ProjectsLocationsRepositoriesReleaseConfigsService) Create(parent strin
 // ReleaseConfigId sets the optional parameter "releaseConfigId": Required. The
 // ID to use for the release config, which will become the final component of
 // the release config's resource name.
+// LINT.ThenChange(//depot/google3/google/cloud/dataform/v2main/data_pipelines.p
+// roto:CreateReleaseConfigRequest)
 func (c *ProjectsLocationsRepositoriesReleaseConfigsCreateCall) ReleaseConfigId(releaseConfigId string) *ProjectsLocationsRepositoriesReleaseConfigsCreateCall {
 	c.urlParams_.Set("releaseConfigId", releaseConfigId)
 	return c
@@ -8874,7 +8889,9 @@ type ProjectsLocationsRepositoriesReleaseConfigsDeleteCall struct {
 
 // Delete: Deletes a single ReleaseConfig.
 //
-// - name: The release config's name.
+//   - name: The release config's name.
+//     LINT.ThenChange(//depot/google3/google/cloud/dataform/v2main/data_pipelines
+//     .proto:DeleteReleaseConfigRequest).
 func (r *ProjectsLocationsRepositoriesReleaseConfigsService) Delete(name string) *ProjectsLocationsRepositoriesReleaseConfigsDeleteCall {
 	c := &ProjectsLocationsRepositoriesReleaseConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8972,7 +8989,9 @@ type ProjectsLocationsRepositoriesReleaseConfigsGetCall struct {
 
 // Get: Fetches a single ReleaseConfig.
 //
-// - name: The release config's name.
+//   - name: The release config's name.
+//     LINT.ThenChange(//depot/google3/google/cloud/dataform/v2main/data_pipelines
+//     .proto:GetReleaseConfigRequest).
 func (r *ProjectsLocationsRepositoriesReleaseConfigsService) Get(name string) *ProjectsLocationsRepositoriesReleaseConfigsGetCall {
 	c := &ProjectsLocationsRepositoriesReleaseConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9102,6 +9121,8 @@ func (c *ProjectsLocationsRepositoriesReleaseConfigsListCall) PageSize(pageSize 
 // subsequent page. When paginating, all other parameters provided to
 // `ListReleaseConfigs`, with the exception of `page_size`, must match the call
 // that provided the page token.
+// LINT.ThenChange(//depot/google3/google/cloud/dataform/v2main/data_pipelines.p
+// roto:ListReleaseConfigsRequest)
 func (c *ProjectsLocationsRepositoriesReleaseConfigsListCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesReleaseConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c

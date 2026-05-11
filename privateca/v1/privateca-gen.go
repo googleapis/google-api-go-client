@@ -698,6 +698,14 @@ type Certificate struct {
 	PemCertificateChain []string `json:"pemCertificateChain,omitempty"`
 	// PemCsr: Immutable. A pem-encoded X.509 certificate signing request (CSR).
 	PemCsr string `json:"pemCsr,omitempty"`
+	// RequestedNotBeforeTime: Optional. The requested not_before_time of this
+	// Certificate. This field may only be set if the
+	// CaPool.IssuancePolicy.allow_requester_specified_not_before_time field is set
+	// to true for the issuing CaPool. If this field is specified, the certificate
+	// will be issued with this 'not_before_time'. If this is not specified, the
+	// 'not_before_time' will be set to the issuance time or issuance time minus
+	// backdate_duration depending on the CaPool configuration.
+	RequestedNotBeforeTime string `json:"requestedNotBeforeTime,omitempty"`
 	// RevocationDetails: Output only. Details regarding the revocation of this
 	// Certificate. This Certificate is considered revoked if and only if this
 	// field is present.
@@ -1564,6 +1572,14 @@ func (s IssuanceModes) MarshalJSON() ([]byte, error) {
 // IssuancePolicy: Defines controls over all certificate issuance within a
 // CaPool.
 type IssuancePolicy struct {
+	// AllowRequesterSpecifiedNotBeforeTime: Optional. If set to true, allows
+	// requesters to specify the requested_not_before_time field when creating a
+	// Certificate. Certificates requested with this option enabled will have a
+	// 'not_before_time' equal to the value specified in the request. The
+	// 'not_after_time' will be adjusted to preserve the requested lifetime. The
+	// maximum time that a certificate can be backdated with these options is 48
+	// hours in the past. This option cannot be set if backdate_duration is set.
+	AllowRequesterSpecifiedNotBeforeTime bool `json:"allowRequesterSpecifiedNotBeforeTime,omitempty"`
 	// AllowedIssuanceModes: Optional. If specified, then only methods allowed in
 	// the IssuanceModes may be used to issue Certificates.
 	AllowedIssuanceModes *IssuanceModes `json:"allowedIssuanceModes,omitempty"`
@@ -1605,16 +1621,18 @@ type IssuancePolicy struct {
 	// constraints do not apply to X.509 extensions set in this CaPool's
 	// baseline_values.
 	PassthroughExtensions *CertificateExtensionConstraints `json:"passthroughExtensions,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AllowedIssuanceModes") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowRequesterSpecifiedNotBeforeTime") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AllowedIssuanceModes") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "AllowRequesterSpecifiedNotBeforeTime") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
 	NullFields []string `json:"-"`
 }
 
@@ -3130,8 +3148,8 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this service. This
 // method lists locations based on the resource scope provided in the
-// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
-// empty, the method lists the public locations available to all projects. *
+// ListLocationsRequest.name field: * **Global locations**: If `name` is empty,
+// the method lists the public locations available to all projects. *
 // **Project-specific locations**: If `name` follows the format
 // `projects/{project}`, the method lists locations visible to that specific
 // project. This includes public, private, or other project-specific locations
@@ -3148,8 +3166,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

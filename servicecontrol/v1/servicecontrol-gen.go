@@ -323,6 +323,12 @@ func (s Attributes) MarshalJSON() ([]byte, error) {
 
 // AuditLog: Common audit log format for Google Cloud Platform API operations.
 type AuditLog struct {
+	// ApiVersionIdentifier: The API version identifier of the operation that uses
+	// interface based versioning (IBV). For example, "2026-01-01-preview". The
+	// version identifier generally follows the format of
+	// [variant_]date[_decorator]. It should not be parsed because the exact format
+	// varies across services.
+	ApiVersionIdentifier string `json:"apiVersionIdentifier,omitempty"`
 	// AuthenticationInfo: Authentication information.
 	AuthenticationInfo *AuthenticationInfo `json:"authenticationInfo,omitempty"`
 	// AuthorizationInfo: Authorization information. If there are multiple
@@ -381,13 +387,13 @@ type AuditLog struct {
 	ServiceName string `json:"serviceName,omitempty"`
 	// Status: The status of the overall operation.
 	Status *Status `json:"status,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AuthenticationInfo") to
+	// ForceSendFields is a list of field names (e.g. "ApiVersionIdentifier") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AuthenticationInfo") to include
+	// NullFields is a list of field names (e.g. "ApiVersionIdentifier") to include
 	// in API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

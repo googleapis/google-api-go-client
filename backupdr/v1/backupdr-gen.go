@@ -4715,6 +4715,47 @@ func (s Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// OperationMetadata: Represents the metadata of the long-running operation.
+type OperationMetadata struct {
+	// AdditionalInfo: Output only. AdditionalInfo contains additional Info related
+	// to backup plan association resource.
+	AdditionalInfo map[string]string `json:"additionalInfo,omitempty"`
+	// ApiVersion: Output only. API version used to start the operation.
+	ApiVersion string `json:"apiVersion,omitempty"`
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+	// RequestedCancellation: Output only. Identifies whether the user has
+	// requested cancellation of the operation. Operations that have successfully
+	// been cancelled have google.longrunning.Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to 'Code.CANCELLED'.
+	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
+	// StatusMessage: Output only. Human-readable status of the operation, if any.
+	StatusMessage string `json:"statusMessage,omitempty"`
+	// Target: Output only. Server-defined resource path for the target of the
+	// operation.
+	Target string `json:"target,omitempty"`
+	// Verb: Output only. Name of the verb executed by the operation.
+	Verb string `json:"verb,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod OperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PitrSettings: Point in time recovery settings of the backup configuration
 // resource.
 type PitrSettings struct {
@@ -5313,15 +5354,16 @@ type StandardSchedule struct {
 	//   "SUNDAY" - Sunday
 	DaysOfWeek []string `json:"daysOfWeek,omitempty"`
 	// HourlyFrequency: Optional. Specifies frequency for hourly backups. A hourly
-	// frequency of 2 means jobs will run every 2 hours from start time till end
+	// frequency of 1 means jobs will run every 1 hour from start time till end
 	// time defined. This is required for `recurrence_type`, `HOURLY` and is not
 	// applicable otherwise. A validation error will occur if a value is supplied
-	// and `recurrence_type` is not `HOURLY`. Value of hourly frequency should be
-	// between 4 and 23. Reason for limit : We found that there is bandwidth
-	// limitation of 3GB/S for GMI while taking a backup and 5GB/S while doing a
-	// restore. Given the amount of parallel backups and restore we are targeting,
-	// this will potentially take the backup time to mins and hours (in worst case
-	// scenario).
+	// and `recurrence_type` is not `HOURLY`. The supported values for each
+	// resource type are as follows: * `compute.googleapis.com/Instance`: 4-23 *
+	// `compute.googleapis.com/Disk`: 1-23 * `sqladmin.googleapis.com/Instance`:
+	// 6-23 * `alloydb.googleapis.com/Cluster`: 1-23 *
+	// `file.googleapis.com/Instance`: 1-23 Refer to link
+	// https://cloud.google.com/backup-disaster-recovery/docs/concepts/cloud_best_practices
+	// for more details.
 	HourlyFrequency int64 `json:"hourlyFrequency,omitempty"`
 	// Months: Optional. Specifies the months of year, like `FEBRUARY` and/or
 	// `MAY`, on which jobs will run. This field is only applicable when

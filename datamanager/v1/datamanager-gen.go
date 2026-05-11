@@ -306,6 +306,10 @@ type AdIdentifiers struct {
 	// used (if any) at the time of landing onto the advertiser’s site after
 	// interacting with the ad.
 	LandingPageDeviceInfo *DeviceInfo `json:"landingPageDeviceInfo,omitempty"`
+	// MobileDeviceId: Optional. The mobile identifier for advertisers. This would
+	// be IDFA on iOS, AdID on Android, or other platforms’ identifiers for
+	// advertisers.
+	MobileDeviceId string `json:"mobileDeviceId,omitempty"`
 	// SessionAttributes: Optional. Session attributes for event attribution and
 	// modeling.
 	SessionAttributes string `json:"sessionAttributes,omitempty"`
@@ -464,6 +468,11 @@ func (s Baseline) MarshalJSON() ([]byte, error) {
 
 // CartData: The cart data associated with the event.
 type CartData struct {
+	// CouponCodes: Optional. The list of coupon codes that were applied to the
+	// cart. Cart-level and item-level coupon codes are independent. If the event
+	// is for a Google Analytics destination, only provide a single coupon code.
+	// Google Analytics ignores additional coupon codes.
+	CouponCodes []string `json:"couponCodes,omitempty"`
 	// Items: Optional. The list of items associated with the event.
 	Items []*Item `json:"items,omitempty"`
 	// MerchantFeedLabel: Optional. The Merchant Center feed label associated with
@@ -478,13 +487,13 @@ type CartData struct {
 	// TransactionDiscount: Optional. The sum of all discounts associated with the
 	// transaction.
 	TransactionDiscount float64 `json:"transactionDiscount,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "CouponCodes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Items") to include in API
+	// NullFields is a list of field names (e.g. "CouponCodes") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -657,6 +666,15 @@ func (s Destination) MarshalJSON() ([]byte, error) {
 // DeviceInfo: Information about the device being used (if any) when the event
 // happened.
 type DeviceInfo struct {
+	// Brand: Optional. The brand of the device.
+	Brand string `json:"brand,omitempty"`
+	// Browser: Optional. The brand or type of the browser.
+	Browser string `json:"browser,omitempty"`
+	// BrowserVersion: Optional. The version of the browser.
+	BrowserVersion string `json:"browserVersion,omitempty"`
+	// Category: Optional. The category of device. For example, “desktop”,
+	// “tablet”, “mobile”, “smart TV”.
+	Category string `json:"category,omitempty"`
 	// IpAddress: Optional. The IP address of the device for the given context.
 	// **Note:** Google Ads does not support IP address matching for end users in
 	// the European Economic Area (EEA), United Kingdom (UK), or Switzerland (CH).
@@ -668,16 +686,29 @@ type DeviceInfo struct {
 	// (https://support.google.com/google-ads/answer/2998031) page for more
 	// details.
 	IpAddress string `json:"ipAddress,omitempty"`
+	// LanguageCode: Optional. The language the device uses in ISO 639-1 format.
+	LanguageCode string `json:"languageCode,omitempty"`
+	// Model: Optional. The model of the device.
+	Model string `json:"model,omitempty"`
+	// OperatingSystem: Optional. The operating system or platform of the device.
+	OperatingSystem string `json:"operatingSystem,omitempty"`
+	// OperatingSystemVersion: Optional. The version of the operating system or
+	// platform.
+	OperatingSystemVersion string `json:"operatingSystemVersion,omitempty"`
+	// ScreenHeight: Optional. The height of the screen in pixels.
+	ScreenHeight int64 `json:"screenHeight,omitempty"`
+	// ScreenWidth: Optional. The width of the screen in pixels.
+	ScreenWidth int64 `json:"screenWidth,omitempty"`
 	// UserAgent: Optional. The user-agent string of the device for the given
 	// context.
 	UserAgent string `json:"userAgent,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "IpAddress") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Brand") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "IpAddress") to include in API
+	// NullFields is a list of field names (e.g. "Brand") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -842,6 +873,9 @@ type Event struct {
 	// to be included within the event that were not already specified using other
 	// structured fields.
 	AdditionalEventParameters []*EventParameter `json:"additionalEventParameters,omitempty"`
+	// AppInstanceId: Optional. A unique identifier for the user instance of an app
+	// client for this GA4 app stream.
+	AppInstanceId string `json:"appInstanceId,omitempty"`
 	// CartData: Optional. Information about the transaction and items associated
 	// with the event.
 	CartData *CartData `json:"cartData,omitempty"`
@@ -867,6 +901,9 @@ type Event struct {
 	// EventDeviceInfo: Optional. Information gathered about the device being used
 	// (if any) when the event happened.
 	EventDeviceInfo *DeviceInfo `json:"eventDeviceInfo,omitempty"`
+	// EventLocation: Optional. Information gathered about the location of the user
+	// when this event occurred.
+	EventLocation *EventLocation `json:"eventLocation,omitempty"`
 	// EventName: Optional. The name of the event. Required for GA4 events.
 	EventName string `json:"eventName,omitempty"`
 	// EventSource: Optional. Signal for where the event happened (web, app,
@@ -879,6 +916,7 @@ type Event struct {
 	//   "APP" - The event was generated from an app.
 	//   "IN_STORE" - The event was generated from an in-store transaction.
 	//   "PHONE" - The event was generated from a phone call.
+	//   "MESSAGE" - The event was generated from a message.
 	//   "OTHER" - The event was generated from other sources.
 	EventSource string `json:"eventSource,omitempty"`
 	// EventTimestamp: Required. The time the event occurred.
@@ -888,8 +926,12 @@ type Event struct {
 	ExperimentalFields []*ExperimentalField `json:"experimentalFields,omitempty"`
 	// LastUpdatedTimestamp: Optional. The last time the event was updated.
 	LastUpdatedTimestamp string `json:"lastUpdatedTimestamp,omitempty"`
+	// ThirdPartyUserData: Optional. The same type of data provided in user_data,
+	// but explicitly flagged as being provided as owned by a third-party and not
+	// first-party advertiser data.
+	ThirdPartyUserData *UserData `json:"thirdPartyUserData,omitempty"`
 	// TransactionId: Optional. The unique identifier for this event. Required for
-	// conversions using multiple data sources.
+	// events sent as an additional data source for tag conversions.
 	TransactionId string `json:"transactionId,omitempty"`
 	// UserData: Optional. Pieces of user provided data, representing the user the
 	// event is associated with.
@@ -930,6 +972,42 @@ func (s *Event) UnmarshalJSON(data []byte) error {
 	}
 	s.ConversionValue = float64(s1.ConversionValue)
 	return nil
+}
+
+// EventLocation: The location where the event occurred.
+type EventLocation struct {
+	// City: Optional. The name of the city where the event occurred.
+	City string `json:"city,omitempty"`
+	// ContinentCode: Optional. The continent code in UN M49 format where the event
+	// occurred.
+	ContinentCode string `json:"continentCode,omitempty"`
+	// RegionCode: Optional. The 2-letter CLDR region code of the user's address.
+	RegionCode string `json:"regionCode,omitempty"`
+	// StoreId: Optional. Required for Store Sales. The identifier to represent a
+	// physical store where the event happened.
+	StoreId string `json:"storeId,omitempty"`
+	// SubcontinentCode: Optional. The subcontinent code in UN M49 format where the
+	// event occurred.
+	SubcontinentCode string `json:"subcontinentCode,omitempty"`
+	// SubdivisionCode: Optional. The ISO 3166-2 subdivision code where the event
+	// occurred.
+	SubdivisionCode string `json:"subdivisionCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "City") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "City") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EventLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod EventLocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EventParameter: Event parameter for GA4 events.
@@ -1466,8 +1544,28 @@ type Item struct {
 	// to be included within the event that were not already specified using other
 	// structured fields.
 	AdditionalItemParameters []*ItemParameter `json:"additionalItemParameters,omitempty"`
+	// ConversionValue: Optional. The conversion value associated with this item
+	// within the event, for cases where the conversion value is different for each
+	// item.
+	ConversionValue float64 `json:"conversionValue,omitempty"`
+	// CustomVariables: Optional. Additional key/value pair information to send to
+	// the conversion containers (conversion action or Floodlight activity), when
+	// tracking per-item conversions.
+	CustomVariables []*ItemCustomVariable `json:"customVariables,omitempty"`
 	// ItemId: Optional. A unique identifier to reference the item.
 	ItemId string `json:"itemId,omitempty"`
+	// MerchantFeedLabel: Optional. The feed label of the Merchant Center feed. If
+	// countries are still being used, the 2-letter country code in ISO-3166-1
+	// alpha-2 can be used instead. For Store Sales events this will override the
+	// value set at the cart level. This field is ignored for other events.
+	MerchantFeedLabel string `json:"merchantFeedLabel,omitempty"`
+	// MerchantFeedLanguageCode: Optional. The language code in ISO 639-1
+	// associated with the Merchant Center feed where your items are uploaded.
+	MerchantFeedLanguageCode string `json:"merchantFeedLanguageCode,omitempty"`
+	// MerchantId: Optional. The Merchant Center ID associated with the item. For
+	// Store Sales events this will override the value set at the cart level. This
+	// field is ignored for other events.
+	MerchantId string `json:"merchantId,omitempty"`
 	// MerchantProductId: Optional. The product ID within the Merchant Center
 	// account.
 	MerchantProductId string `json:"merchantProductId,omitempty"`
@@ -1497,15 +1595,46 @@ func (s Item) MarshalJSON() ([]byte, error) {
 func (s *Item) UnmarshalJSON(data []byte) error {
 	type NoMethod Item
 	var s1 struct {
-		UnitPrice gensupport.JSONFloat64 `json:"unitPrice"`
+		ConversionValue gensupport.JSONFloat64 `json:"conversionValue"`
+		UnitPrice       gensupport.JSONFloat64 `json:"unitPrice"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
+	s.ConversionValue = float64(s1.ConversionValue)
 	s.UnitPrice = float64(s1.UnitPrice)
 	return nil
+}
+
+// ItemCustomVariable: Item-level custom variable for ads conversions.
+type ItemCustomVariable struct {
+	// DestinationReferences: Optional. Reference string used to determine which of
+	// the Event.destination_references the custom variable should be sent to. If
+	// empty, the Event.destination_references will be used.
+	DestinationReferences []string `json:"destinationReferences,omitempty"`
+	// Value: Optional. The value to store for the custom variable.
+	Value string `json:"value,omitempty"`
+	// Variable: Optional. The name of the custom variable to set. If the variable
+	// is not found for the given destination, it will be ignored.
+	Variable string `json:"variable,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DestinationReferences") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DestinationReferences") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ItemCustomVariable) MarshalJSON() ([]byte, error) {
+	type NoMethod ItemCustomVariable
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ItemParameter: A bucket of any event parameters related to an item
@@ -2334,7 +2463,9 @@ type RequestStatusPerDestination struct {
 	// Destination: A destination within a DM API request.
 	Destination *Destination `json:"destination,omitempty"`
 	// ErrorInfo: An error info error containing the error reason and error counts
-	// related to the upload.
+	// related to the upload. Only populated if the `request_status` is `FAILED` or
+	// `PARTIAL_SUCCESS`. This field isn't populated while the request has
+	// `request_status` of `PROCESSING`.
 	ErrorInfo *ErrorInfo `json:"errorInfo,omitempty"`
 	// EventsIngestionStatus: The status of the ingest events request.
 	EventsIngestionStatus *IngestEventsStatus `json:"eventsIngestionStatus,omitempty"`
@@ -2342,13 +2473,19 @@ type RequestStatusPerDestination struct {
 	//
 	// Possible values:
 	//   "REQUEST_STATUS_UNKNOWN" - The request status is unknown.
-	//   "SUCCESS" - The request succeeded.
+	//   "SUCCESS" - Processing succeeded for all records without any errors.
+	// However, there may be warnings in the `warning_info` field.
 	//   "PROCESSING" - The request is processing.
-	//   "FAILED" - The request failed.
-	//   "PARTIAL_SUCCESS" - The request partially succeeded.
+	//   "FAILED" - Processing failed for all records. Check the `error_info` field
+	// for error details, and check the `warning_info` field for warning details.
+	//   "PARTIAL_SUCCESS" - Processing completed successfully without errors for
+	// some records, but failed with errors for other records. Check the
+	// `error_info` field for error details, and check the `warning_info` field for
+	// warning details.
 	RequestStatus string `json:"requestStatus,omitempty"`
 	// WarningInfo: A warning info containing the warning reason and warning counts
-	// related to the upload.
+	// related to the upload. This field isn't populated while the request has
+	// `request_status` of `PROCESSING`.
 	WarningInfo *WarningInfo `json:"warningInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "AudienceMembersIngestionStatus") to unconditionally include in API
@@ -2482,10 +2619,16 @@ type SizeInfo struct {
 	// DisplayNetworkMembersCount: Output only. Estimated number of members in this
 	// user list, on the Google Display Network.
 	DisplayNetworkMembersCount int64 `json:"displayNetworkMembersCount,omitempty,string"`
+	// GmailMembersCount: Output only. Estimated number of members in this user
+	// list on Gmail.
+	GmailMembersCount int64 `json:"gmailMembersCount,omitempty,string"`
 	// SearchNetworkMembersCount: Output only. Estimated number of members in this
 	// user list in the google.com domain. These are the members available for
 	// targeting in Search campaigns.
 	SearchNetworkMembersCount int64 `json:"searchNetworkMembersCount,omitempty,string"`
+	// YoutubeMembersCount: Output only. Estimated number of members in this user
+	// list on YouTube.
+	YoutubeMembersCount int64 `json:"youtubeMembersCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "DisplayNetworkMembersCount")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3200,7 +3343,7 @@ type WarningCount struct {
 	//   "PROCESSING_WARNING_REASON_INVALID_KEK" - The KEK cannot decrypt data
 	// because it is the wrong KEK, or it does not exist.
 	//   "PROCESSING_WARNING_REASON_USER_IDENTIFIER_DECRYPTION_ERROR" - Failed to
-	// decrypt th UserIdentifier data using the DEK.
+	// decrypt the UserIdentifier data using the DEK.
 	//   "PROCESSING_WARNING_REASON_INTERNAL_ERROR" - Internal error.
 	//   "PROCESSING_WARNING_REASON_AWS_AUTH_FAILED" - The system failed to
 	// authenticate with AWS.

@@ -1583,6 +1583,9 @@ type ContainerTask struct {
 	Env map[string]string `json:"env,omitempty"`
 	// Image: Required. Image is the container image to use.
 	Image string `json:"image,omitempty"`
+	// Script: Optional. Shell script to execute. If provided then command and args
+	// cannot be specified.
+	Script string `json:"script,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

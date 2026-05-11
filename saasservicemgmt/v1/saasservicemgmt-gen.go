@@ -1695,6 +1695,9 @@ type UnitCondition struct {
 	//   "TYPE_PROVISIONED" - Condition type is provisioned.
 	//   "TYPE_OPERATION_ERROR" - Condition type is operationError. True when the
 	// last unit operation fails with a non-ignorable error.
+	//   "TYPE_FLAGS_CONFIG_INITIALIZED" - Condition type is
+	// flagsConfigInitialized. True when the flags configuration is synchronized
+	// and ready to be served.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LastTransitionTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1966,6 +1969,10 @@ type UnitOperationCondition struct {
 	//   "TYPE_APP_CREATED" - Indicates if AppHub app has been created.
 	//   "TYPE_APP_COMPONENTS_REGISTERED" - Indicates if services and workloads
 	// have been registered with AppHub.
+	//   "TYPE_WORKLOAD_SUCCEEDED" - Indicates if the UnitOperation's core workload
+	// execution completed successfully. The workload is the core execution
+	// operation performed for a UnitOperation (e.g., provisioning, updating, or
+	// deprovisioning resources) excluding post-operation checks.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LastTransitionTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2215,8 +2222,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

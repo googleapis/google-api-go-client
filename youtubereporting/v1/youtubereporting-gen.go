@@ -557,6 +557,8 @@ type GdataMedia struct {
 	Sha1Hash string `json:"sha1Hash,omitempty"`
 	// Sha256Hash: gdata
 	Sha256Hash string `json:"sha256Hash,omitempty"`
+	// Sha512Hash: gdata
+	Sha512Hash string `json:"sha512Hash,omitempty"`
 	// Timestamp: gdata
 	Timestamp uint64 `json:"timestamp,omitempty,string"`
 	// Token: gdata

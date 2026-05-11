@@ -6290,6 +6290,14 @@ type Policy struct {
 	// from manually setting the date and time. If autoDateAndTimeZone is set, this
 	// field is ignored.
 	AutoTimeRequired bool `json:"autoTimeRequired,omitempty"`
+	// AutofillPolicy: Optional. The policy for the autofill service.
+	//
+	// Possible values:
+	//   "AUTOFILL_POLICY_UNSPECIFIED" - Defaults to AUTOFILL_USER_CHOICE.
+	//   "AUTOFILL_USER_CHOICE" - The user can choose and use an autofill service.
+	//   "AUTOFILL_DISABLED" - Autofill is disabled and the user is not allowed to
+	// change this setting. This is supported only on Android 8 and above.
+	AutofillPolicy string `json:"autofillPolicy,omitempty"`
 	// BlockApplicationsEnabled: This field has no effect.
 	BlockApplicationsEnabled bool `json:"blockApplicationsEnabled,omitempty"`
 	// BluetoothConfigDisabled: Whether configuring bluetooth is disabled.

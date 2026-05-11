@@ -596,22 +596,27 @@ func (s ErrorBudget) MarshalJSON() ([]byte, error) {
 // feature flag. A rule consists of a condition that, if met, assigns a
 // specific variant or allocation to the user.
 type EvaluationRule struct {
+	// AllocationId: Optional. The ID of an allocation to target.
+	AllocationId string `json:"allocationId,omitempty"`
 	// Condition: Required. A Common Expression Language (CEL) expression that
 	// evaluates to a boolean. The expression is evaluated against the provided
 	// context. If it returns true, the rule's target is applied.
 	Condition string `json:"condition,omitempty"`
 	// Id: Required. Evaluation rule ID. Max length: 128 bytes.
 	Id string `json:"id,omitempty"`
-	// Target: Required. The target variant or allocation to apply if the condition
-	// is met. This should match the name of a defined variant or allocation's ID.
+	// Target: Optional. Deprecated: Use `rule_target` instead. The target variant
+	// or allocation to apply if the condition is met. This should match the name
+	// of a defined variant or allocation's ID.
 	Target string `json:"target,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Condition") to
+	// VariantId: Optional. The name of a variant to target.
+	VariantId string `json:"variantId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllocationId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Condition") to include in API
+	// NullFields is a list of field names (e.g. "AllocationId") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -631,8 +636,13 @@ type EvaluationSpec struct {
 	// Attributes: Optional. Names of the context attributes that are used in the
 	// evaluation rules and allocations.
 	Attributes []string `json:"attributes,omitempty"`
-	// DefaultTarget: Required. Default variant or allocation of the flag.
+	// DefaultAllocation: Optional. The ID of an allocation to use as the default.
+	DefaultAllocation string `json:"defaultAllocation,omitempty"`
+	// DefaultTarget: Optional. Deprecated: Use `base_target` instead. Default
+	// variant or allocation of the flag.
 	DefaultTarget string `json:"defaultTarget,omitempty"`
+	// DefaultVariant: Optional. The name of a variant to use as the default.
+	DefaultVariant string `json:"defaultVariant,omitempty"`
 	// Rules: Optional. Evaluation rules define the logic for evaluating the flag
 	// against a given context. The rules are evaluated sequentially in their
 	// specified order.
@@ -2548,6 +2558,9 @@ type UnitCondition struct {
 	//   "TYPE_PROVISIONED" - Condition type is provisioned.
 	//   "TYPE_OPERATION_ERROR" - Condition type is operationError. True when the
 	// last unit operation fails with a non-ignorable error.
+	//   "TYPE_FLAGS_CONFIG_INITIALIZED" - Condition type is
+	// flagsConfigInitialized. True when the flags configuration is synchronized
+	// and ready to be served.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LastTransitionTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2825,6 +2838,10 @@ type UnitOperationCondition struct {
 	//   "TYPE_APP_CREATED" - Indicates if AppHub app has been created.
 	//   "TYPE_APP_COMPONENTS_REGISTERED" - Indicates if services and workloads
 	// have been registered with AppHub.
+	//   "TYPE_WORKLOAD_SUCCEEDED" - Indicates if the UnitOperation's core workload
+	// execution completed successfully. The workload is the core execution
+	// operation performed for a UnitOperation (e.g., provisioning, updating, or
+	// deprovisioning resources) excluding post-operation checks.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LastTransitionTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3119,8 +3136,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

@@ -286,6 +286,31 @@ func (s CloudSqlInstance) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CodeChunk: A chunk of code.
+type CodeChunk struct {
+	// Code: Required. The code content string.
+	Code string `json:"code,omitempty"`
+	// LanguageCode: Optional. Specifies the language if we expand support beyond
+	// GraphQL (e.g., SQL or JSON) The standard is BCP-47 language code.
+	LanguageCode string `json:"languageCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CodeChunk) MarshalJSON() ([]byte, error) {
+	type NoMethod CodeChunk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Connector: Connector consists of a set of operations, i.e. queries and
 // mutations.
 type Connector struct {
@@ -541,6 +566,143 @@ type File struct {
 
 func (s File) MarshalJSON() ([]byte, error) {
 	type NoMethod File
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenerateQueryRequest: Request message for GenerateQuery.
+type GenerateQueryRequest struct {
+	// Prompt: Required. The natural language description of the desired query.
+	// Example: "Find all users who signed up in the last 7 days."
+	Prompt string `json:"prompt,omitempty"`
+	// Schemas: Optional. The user's locally defined FDC Schema(s). If not defined,
+	// the backend will fetch the user's deployed schema.
+	Schemas []*Schema `json:"schemas,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Prompt") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Prompt") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateQueryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateQueryRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenerateQueryResponse: Output for streaming generate query requests
+type GenerateQueryResponse struct {
+	// Part: Required. The content from the current conversational turn.
+	Part *Part `json:"part,omitempty"`
+	// Status: Essential for providing responsive UI feedback (e.g., a spinner or
+	// "Analyzing schema..." step).
+	Status *GenerationStatus `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Part") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Part") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateQueryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateQueryResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenerateSchemaRequest: Request message for GenerateSchema.
+type GenerateSchemaRequest struct {
+	// Prompt: Required. The natural language description of the data model to
+	// generate. Example: "A blog system with Users, Posts, and Comments. Users can
+	// have multiple posts."
+	Prompt string `json:"prompt,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Prompt") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Prompt") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateSchemaRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateSchemaRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenerateSchemaResponse: Output for streaming generate schema requests
+type GenerateSchemaResponse struct {
+	// Part: The content from the current conversational turn.
+	Part *Part `json:"part,omitempty"`
+	// Status: Essential for providing responsive UI feedback (e.g., a spinner or
+	// "Analyzing schema..." step).
+	Status *GenerationStatus `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Part") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Part") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateSchemaResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateSchemaResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenerationStatus: Represents the progress of the server side generation
+// request.
+type GenerationStatus struct {
+	// Message: Output only. A message providing more details about the state.
+	Message string `json:"message,omitempty"`
+	// State: Output only. The state of generation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "ANALYZING_CODE" - The agent is analyzing schema or operations.
+	//   "GENERATING_CODE" - The agent is generating code
+	//   "COMPLETED" - Generation is complete.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Message") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerationStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerationStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1214,6 +1376,30 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Part: Represents a chunk of content.
+type Part struct {
+	// CodeChunk: Optional. A chunk of code.
+	CodeChunk *CodeChunk `json:"codeChunk,omitempty"`
+	// TextChunk: Optional. A chunk of text.
+	TextChunk *TextChunk `json:"textChunk,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CodeChunk") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CodeChunk") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Part) MarshalJSON() ([]byte, error) {
+	type NoMethod Part
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PostgreSql: Settings for PostgreSQL data source.
 type PostgreSql struct {
 	// CloudSql: Cloud SQL configurations.
@@ -1234,37 +1420,39 @@ type PostgreSql struct {
 	// Schema: Optional. User-configured PostgreSQL schema. Defaults to "public" if
 	// not specified.
 	Schema string `json:"schema,omitempty"`
-	// SchemaMigration: Optional. Configure how to perform Postgresql schema
-	// migration.
+	// SchemaMigration: Optional. Configure how to perform automatic PostgreSQL
+	// schema migration before deploying the FDC schema. This is an additive-only
+	// operation.
 	//
 	// Possible values:
 	//   "SQL_SCHEMA_MIGRATION_UNSPECIFIED" - Unspecified SQL schema migration.
-	//   "MIGRATE_COMPATIBLE" - Connect to the SQL database and identify any
-	// missing SQL resources used in the given Firebase SQL Connect Schema.
-	// Automatically create necessary SQL resources (SQL table, column, etc) before
-	// deploying the schema. During migration steps, the SQL Schema must comply
-	// with the previous before_deploy setting in case the migration is
-	// interrupted. Therefore, the previous before_deploy setting must not be
-	// `schema_validation=STRICT`.
+	//   "MIGRATE_COMPATIBLE" - Waits for the Cloud SQL instance to be provisioned
+	// and automatically creates necessary SQL resources (tables, columns, etc.) to
+	// match the desired FDC schema. This operation is strictly additive and
+	// executes as a Long-Running Operation during provisioning. Rejects migrations
+	// on a non-empty existing SQL schema.
 	SchemaMigration string `json:"schemaMigration,omitempty"`
-	// SchemaValidation: Optional. Configure how much Postgresql schema validation
-	// to perform.
+	// SchemaValidation: Optional. Configure how much PostgreSQL schema validation
+	// to perform against the live database before deploying the FDC schema.
 	//
 	// Possible values:
 	//   "SQL_SCHEMA_VALIDATION_UNSPECIFIED" - Unspecified SQL schema validation.
-	// Default to STRICT.
-	//   "NONE" - Skip no SQL schema validation. Use it with extreme caution.
-	// CreateSchema or UpdateSchema will succeed even if SQL database is
-	// unavailable or SQL schema is incompatible. Generated SQL may fail at
-	// execution time.
-	//   "STRICT" - Connect to the SQL database and validate that the SQL DDL
-	// matches the schema exactly. Surface any discrepancies as
-	// `FAILED_PRECONDITION` with an `IncompatibleSqlSchemaError` error detail.
-	//   "COMPATIBLE" - Connect to the SQL database and validate that the SQL DDL
-	// has all the SQL resources used in the given Firebase SQL Connect Schema.
-	// Surface any missing resources as `FAILED_PRECONDITION` with an
-	// `IncompatibleSqlSchemaError` error detail. Succeed even if there are unknown
-	// tables and columns.
+	// Defaults to STRICT.
+	//   "NONE" - Skips SQL schema validation. Deployment succeeds even if the
+	// database is pending provisioning, unavailable, or incompatible. Under NONE,
+	// newly created services route requests to a temporary ephemeral database
+	// (in-memory emulation) so the API can be tested immediately. Ephemeral data
+	// expires after 24 hours unless successfully validated or migrated to a linked
+	// database.
+	//   "STRICT" - Connects to the SQL database and validates that the SQL DDL
+	// matches the FDC schema exactly. Any discrepancies (extra or missing
+	// tables/columns) result in a FAILED_PRECONDITION error with required SQL
+	// diffs. Recommended for greenfield projects to ensure full schema
+	// consistency.
+	//   "COMPATIBLE" - Connects to the SQL database and validates that it contains
+	// all the SQL resources required by the FDC schema. Succeeds even if the
+	// database contains additional tables or columns not used by FDC. Suitable
+	// when sharing a database with other tools or legacy applications.
 	SchemaValidation string `json:"schemaValidation,omitempty"`
 	// Unlinked: No Postgres data source is linked. If set, don't allow `database`
 	// and `schema_validation` to be configured.
@@ -1465,6 +1653,28 @@ type Status struct {
 
 func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TextChunk: A chunk of conversational text.
+type TextChunk struct {
+	// Text: Required. The text content string.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TextChunk) MarshalJSON() ([]byte, error) {
+	type NoMethod TextChunk
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2755,6 +2965,221 @@ func (c *ProjectsLocationsServicesExecuteGraphqlReadCall) Do(opts ...googleapi.C
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.executeGraphqlRead", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsServicesGenerateQueryCall struct {
+	s                    *APIService
+	name                 string
+	generatequeryrequest *GenerateQueryRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// GenerateQuery: Generates a GraphQL query based on a natural language prompt
+// and the provided schema context. This is a stateless method; the schema is
+// provided per request to support local development states. Streams results
+// with real-time status and output chunks.
+//
+//   - name: The resource name of the service in which to generate the query.
+//     Format: projects/{project}/locations/{location}/services/{service}.
+func (r *ProjectsLocationsServicesService) GenerateQuery(name string, generatequeryrequest *GenerateQueryRequest) *ProjectsLocationsServicesGenerateQueryCall {
+	c := &ProjectsLocationsServicesGenerateQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.generatequeryrequest = generatequeryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsServicesGenerateQueryCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesGenerateQueryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsServicesGenerateQueryCall) Context(ctx context.Context) *ProjectsLocationsServicesGenerateQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsServicesGenerateQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesGenerateQueryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.generatequeryrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:generateQuery")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.generateQuery", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasedataconnect.projects.locations.services.generateQuery" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenerateQueryResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsServicesGenerateQueryCall) Do(opts ...googleapi.CallOption) (*GenerateQueryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenerateQueryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.generateQuery", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsServicesGenerateSchemaCall struct {
+	s                     *APIService
+	name                  string
+	generateschemarequest *GenerateSchemaRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// GenerateSchema: Generates GraphQL schema based on a natural language prompt
+// or data description. This allows users to scaffold new types and tables
+// quickly. Streams results with real-time status and output chunks.
+//
+//   - name: The resource name of the service in which to generate the schema.
+//     Format: projects/{project}/locations/{location}/services/{service}.
+func (r *ProjectsLocationsServicesService) GenerateSchema(name string, generateschemarequest *GenerateSchemaRequest) *ProjectsLocationsServicesGenerateSchemaCall {
+	c := &ProjectsLocationsServicesGenerateSchemaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.generateschemarequest = generateschemarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsServicesGenerateSchemaCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesGenerateSchemaCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsServicesGenerateSchemaCall) Context(ctx context.Context) *ProjectsLocationsServicesGenerateSchemaCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsServicesGenerateSchemaCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesGenerateSchemaCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.generateschemarequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:generateSchema")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.generateSchema", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasedataconnect.projects.locations.services.generateSchema" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenerateSchemaResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsServicesGenerateSchemaCall) Do(opts ...googleapi.CallOption) (*GenerateSchemaResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenerateSchemaResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.generateSchema", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

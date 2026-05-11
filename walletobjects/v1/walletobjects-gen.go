@@ -5314,8 +5314,6 @@ type Media struct {
 	Sha1Hash string `json:"sha1Hash,omitempty"`
 	// Sha256Hash: Scotty-provided SHA256 hash for an upload.
 	Sha256Hash string `json:"sha256Hash,omitempty"`
-	// Sha512Hash: Scotty-provided SHA512 hash for an upload.
-	Sha512Hash string `json:"sha512Hash,omitempty"`
 	// Timestamp: Time at which the media data was last updated, in milliseconds
 	// since UNIX epoch
 	Timestamp uint64 `json:"timestamp,omitempty,string"`

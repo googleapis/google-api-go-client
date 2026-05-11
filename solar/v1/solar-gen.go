@@ -199,6 +199,10 @@ type BuildingInsights struct {
 	BoundingBox *LatLngBox `json:"boundingBox,omitempty"`
 	// Center: A point near the center of the building.
 	Center *LatLng `json:"center,omitempty"`
+	// DetectedArrays: Solar arrays detected on the building. This field is only
+	// populated if DETECTED_ARRAYS is included in the request's
+	// FindClosestBuildingInsightsRequest.additional_insights.
+	DetectedArrays *BuildingInsightsDetectedArrays `json:"detectedArrays,omitempty"`
 	// ImageryDate: Date that the underlying imagery was acquired. This is
 	// approximate.
 	ImageryDate *Date `json:"imageryDate,omitempty"`
@@ -248,6 +252,42 @@ type BuildingInsights struct {
 
 func (s BuildingInsights) MarshalJSON() ([]byte, error) {
 	type NoMethod BuildingInsights
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BuildingInsightsDetectedArrays: Information about solar arrays detected on
+// the building.
+type BuildingInsightsDetectedArrays struct {
+	// DetectionStatus: Indicates the detection status of solar arrays for this
+	// building.
+	//
+	// Possible values:
+	//   "DETECTION_STATUS_UNSPECIFIED" - Unspecified status.
+	//   "DETECTION_STATUS_DATA_UNAVAILABLE" - Detected solar array data is
+	// unavailable for this building.
+	//   "DETECTION_STATUS_ARRAYS_DETECTED" - At least one solar array has been
+	// detected for this building.
+	//   "DETECTION_STATUS_NO_ARRAYS_DETECTED" - No solar arrays detected for this
+	// building.
+	DetectionStatus string `json:"detectionStatus,omitempty"`
+	// LatestCaptureDate: The date indicating when the latest solar array data was
+	// captured.
+	LatestCaptureDate *Date `json:"latestCaptureDate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DetectionStatus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DetectionStatus") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BuildingInsightsDetectedArrays) MarshalJSON() ([]byte, error) {
+	type NoMethod BuildingInsightsDetectedArrays
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1213,6 +1253,24 @@ type BuildingInsightsFindClosestCall struct {
 // within approximately 50m of the query point.
 func (r *BuildingInsightsService) FindClosest() *BuildingInsightsFindClosestCall {
 	c := &BuildingInsightsFindClosestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// AdditionalInsights sets the optional parameter "additionalInsights": A list
+// of additional_insights to be included in the response.
+//
+// Possible values:
+//
+//	"ADDITIONAL_INSIGHTS_UNSPECIFIED" - The default value. The default
+//
+// BuildingInsights will be returned.
+//
+//	"DETECTED_ARRAYS" - Determines whether the response will include the
+//
+// detected arrays. If specified, the `detected_arrays` field will be populated
+// in the response.
+func (c *BuildingInsightsFindClosestCall) AdditionalInsights(additionalInsights ...string) *BuildingInsightsFindClosestCall {
+	c.urlParams_.SetMulti("additionalInsights", append([]string{}, additionalInsights...))
 	return c
 }
 

@@ -474,6 +474,39 @@ func (s AndroidAttributes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AntivirusInfo: Resource representing the anti-virus information of a Device.
+type AntivirusInfo struct {
+	// DisplayName: Output only. The display name of the anti-virus software.
+	DisplayName string `json:"displayName,omitempty"`
+	// ProductGuid: Output only. The GUID of the anti-virus product.
+	ProductGuid string `json:"productGuid,omitempty"`
+	// ProductState: Output only. The state of the anti-virus.
+	//
+	// Possible values:
+	//   "PRODUCT_STATE_UNSPECIFIED" - Default value
+	//   "PRODUCT_STATE_ON" - The anti-virus is on.
+	//   "PRODUCT_STATE_OFF" - The anti-virus is off.
+	//   "PRODUCT_STATE_SNOOZED" - The anti-virus is snoozed.
+	//   "PRODUCT_STATE_EXPIRED" - The anti-virus is expired.
+	ProductState string `json:"productState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AntivirusInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AntivirusInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ApproveDeviceUserRequest: Request message for approving the device to access
 // user data.
 type ApproveDeviceUserRequest struct {
@@ -1236,6 +1269,8 @@ type Device struct {
 	// AndroidSpecificAttributes: Output only. Attributes specific to Android
 	// devices.
 	AndroidSpecificAttributes *AndroidAttributes `json:"androidSpecificAttributes,omitempty"`
+	// AntivirusInfo: Output only. Anti-virus information for the device.
+	AntivirusInfo []*AntivirusInfo `json:"antivirusInfo,omitempty"`
 	// AssetTag: Asset tag of the device.
 	AssetTag string `json:"assetTag,omitempty"`
 	// BasebandVersion: Output only. Baseband version of the device.
@@ -1341,6 +1376,14 @@ type Device struct {
 	// NetworkOperator: Output only. Mobile or network operator of device, if
 	// available.
 	NetworkOperator string `json:"networkOperator,omitempty"`
+	// OsFirewallStatus: Output only. OS firewall status of the device.
+	//
+	// Possible values:
+	//   "OS_FIREWALL_STATUS_UNSPECIFIED" - Default value
+	//   "OS_FIREWALL_STATUS_UNKNOWN" - OS firewall status is unknown.
+	//   "OS_FIREWALL_STATUS_ENABLED" - OS firewall is enabled.
+	//   "OS_FIREWALL_STATUS_DISABLED" - OS firewall is disabled.
+	OsFirewallStatus string `json:"osFirewallStatus,omitempty"`
 	// OsVersion: Output only. OS version of the device. Example: Android 8.1.0.
 	OsVersion string `json:"osVersion,omitempty"`
 	// OtherAccounts: Output only. Domain name for Google accounts on device. Type
@@ -1367,6 +1410,9 @@ type Device struct {
 	UnifiedDeviceId string `json:"unifiedDeviceId,omitempty"`
 	// WifiMacAddresses: WiFi MAC addresses of device.
 	WifiMacAddresses []string `json:"wifiMacAddresses,omitempty"`
+	// WindowsSpecificDeviceAttributes: Output only. Attributes specific to Windows
+	// devices.
+	WindowsSpecificDeviceAttributes *WindowsSpecificDeviceAttributes `json:"windowsSpecificDeviceAttributes,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -4587,6 +4633,44 @@ type UserInvitation struct {
 
 func (s UserInvitation) MarshalJSON() ([]byte, error) {
 	type NoMethod UserInvitation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WindowsSpecificDeviceAttributes: Represents the Windows specific attributes
+// of a Device.
+type WindowsSpecificDeviceAttributes struct {
+	// Hotfixes: Output only. The hotfixes installed on the device.
+	Hotfixes []string `json:"hotfixes,omitempty"`
+	// SecureBootMode: Output only. Secure boot mode of the device.
+	//
+	// Possible values:
+	//   "SECURE_BOOT_MODE_UNSPECIFIED" - Default value
+	//   "SECURE_BOOT_MODE_UNKNOWN" - Secure boot mode is unknown.
+	//   "SECURE_BOOT_MODE_ENABLED" - Secure boot mode is enabled.
+	//   "SECURE_BOOT_MODE_DISABLED" - Secure boot mode is disabled.
+	SecureBootMode string `json:"secureBootMode,omitempty"`
+	// WindowsMachineDomain: Output only. The domain of the machine that the user
+	// is logged into. This is different from the windows_user_domain as the user
+	// could be logged into a domain different from the machine domain.
+	WindowsMachineDomain string `json:"windowsMachineDomain,omitempty"`
+	// WindowsUserDomain: Output only. The domain of the user account that is
+	// logged into the machine.
+	WindowsUserDomain string `json:"windowsUserDomain,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Hotfixes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Hotfixes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WindowsSpecificDeviceAttributes) MarshalJSON() ([]byte, error) {
+	type NoMethod WindowsSpecificDeviceAttributes
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -203,7 +203,7 @@ type ProjectsLocationsOperationsService struct {
 // used as the boot disk for a Compute Engine VM instance.
 type BootDisk struct {
 	// SizeGb: Required. Immutable. Size of the disk in gigabytes. Must be at least
-	// 10GB.
+	// 40GB.
 	SizeGb int64 `json:"sizeGb,omitempty,string"`
 	// Type: Required. Immutable. Persistent disk type
 	// (https://cloud.google.com/compute/docs/disks#disk-types), in the format
@@ -922,6 +922,8 @@ type GcsAutoclassConfig struct {
 	//
 	// Possible values:
 	//   "TERMINAL_STORAGE_CLASS_UNSPECIFIED" - Unspecified terminal storage class
+	//   "NEARLINE" - Nearline terminal storage class
+	//   "ARCHIVE" - Archive terminal storage class
 	TerminalStorageClass string `json:"terminalStorageClass,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

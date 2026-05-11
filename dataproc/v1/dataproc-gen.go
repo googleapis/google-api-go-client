@@ -1654,10 +1654,9 @@ type ClusterConfig struct {
 	// ClusterTier: Optional. The cluster tier.
 	//
 	// Possible values:
-	//   "CLUSTER_TIER_UNSPECIFIED" - Not set. Works the same as
-	// CLUSTER_TIER_STANDARD.
-	//   "CLUSTER_TIER_STANDARD" - Standard Dataproc cluster.
-	//   "CLUSTER_TIER_PREMIUM" - Premium Dataproc cluster.
+	//   "CLUSTER_TIER_UNSPECIFIED" - Uses standard tier if unspecified.
+	//   "CLUSTER_TIER_STANDARD" - Standard cluster tier.
+	//   "CLUSTER_TIER_PREMIUM" - Premium cluster tier.
 	ClusterTier string `json:"clusterTier,omitempty"`
 	// ClusterType: Optional. The type of the cluster.
 	//
@@ -1672,11 +1671,10 @@ type ClusterConfig struct {
 	ClusterType string `json:"clusterType,omitempty"`
 	// ConfigBucket: Optional. A Cloud Storage bucket used to stage job
 	// dependencies, config files, and job driver console output. If you do not
-	// specify a staging bucket, Cloud Dataproc will determine a Cloud Storage
-	// location (US, ASIA, or EU) for your cluster's staging bucket according to
-	// the Compute Engine zone where your cluster is deployed, and then create and
-	// manage this project-level, per-location bucket (see Dataproc staging and
-	// temp buckets
+	// specify a staging bucket, Dataproc determines a Cloud Storage location (US,
+	// ASIA, or EU) for the cluster staging bucket according to the Compute Engine
+	// zone where the cluster is deployed, and then creates and manages this
+	// project-level, per-location bucket (see Dataproc staging and temp buckets
 	// (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/staging-bucket)).
 	// This field requires a Cloud Storage bucket name, not a gs://... URI to a
 	// Cloud Storage bucket.
@@ -1737,9 +1735,9 @@ type ClusterConfig struct {
 	SoftwareConfig *SoftwareConfig `json:"softwareConfig,omitempty"`
 	// TempBucket: Optional. A Cloud Storage bucket used to store ephemeral cluster
 	// and jobs data, such as Spark and MapReduce history files. If you do not
-	// specify a temp bucket, Dataproc will determine a Cloud Storage location (US,
-	// ASIA, or EU) for your cluster's temp bucket according to the Compute Engine
-	// zone where your cluster is deployed, and then create and manage this
+	// specify a temp bucket, Dataproc determines a Cloud Storage location (US,
+	// ASIA, or EU) for the cluster temp bucket according to the Compute Engine
+	// zone where the cluster is deployed, and then creates and manages this
 	// project-level, per-location bucket. The default bucket has a TTL of 90 days,
 	// but you can use any TTL (or none) if you specify a bucket (see Dataproc
 	// staging and temp buckets
@@ -2042,7 +2040,8 @@ func (s CohortInfo) MarshalJSON() ([]byte, error) {
 // ConfidentialInstanceConfig: Confidential Instance Config for clusters using
 // Confidential VMs (https://cloud.google.com/compute/confidential-vm/docs)
 type ConfidentialInstanceConfig struct {
-	// EnableConfidentialCompute: Optional. Defines whether the instance should
+	// EnableConfidentialCompute: Optional. Deprecated: Use
+	// 'confidential_instance_type' instead. Defines whether the instance should
 	// have confidential compute enabled.
 	EnableConfidentialCompute bool `json:"enableConfidentialCompute,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableConfidentialCompute")
@@ -2214,15 +2213,15 @@ type DiskConfig struct {
 	BootDiskProvisionedThroughput int64 `json:"bootDiskProvisionedThroughput,omitempty,string"`
 	// BootDiskSizeGb: Optional. Size in GB of the boot disk (default is 500GB).
 	BootDiskSizeGb int64 `json:"bootDiskSizeGb,omitempty"`
-	// BootDiskType: Optional. Type of the boot disk (default is "pd-standard").
-	// Valid values: "pd-balanced" (Persistent Disk Balanced Solid State Drive),
-	// "pd-ssd" (Persistent Disk Solid State Drive), or "pd-standard" (Persistent
-	// Disk Hard Disk Drive). See Disk types
+	// BootDiskType: Optional. Type of the boot disk (default is pd-standard).
+	// Valid values: pd-balanced (Persistent Disk Balanced Solid State Drive),
+	// pd-ssd (Persistent Disk Solid State Drive), or pd-standard (Persistent Disk
+	// Hard Disk Drive). See Disk types
 	// (https://cloud.google.com/compute/docs/disks#disk-types).
 	BootDiskType string `json:"bootDiskType,omitempty"`
-	// LocalSsdInterface: Optional. Interface type of local SSDs (default is
-	// "scsi"). Valid values: "scsi" (Small Computer System Interface), "nvme"
-	// (Non-Volatile Memory Express). See local SSD performance
+	// LocalSsdInterface: Optional. Interface type of local SSDs (default is scsi).
+	// Valid values: scsi (Small Computer System Interface), nvme (Non-Volatile
+	// Memory Express). See local SSD performance
 	// (https://cloud.google.com/compute/docs/disks/local-ssd#performance).
 	LocalSsdInterface string `json:"localSsdInterface,omitempty"`
 	// NumLocalSsds: Optional. Number of attached SSDs, from 0 to 8 (default is 0).
@@ -2901,10 +2900,9 @@ type GceClusterConfig struct {
 	// NetworkUri: Optional. The Compute Engine network to be used for machine
 	// communications. Cannot be specified with subnetwork_uri. If neither
 	// network_uri nor subnetwork_uri is specified, the "default" network of the
-	// project is used, if it exists. Cannot be a "Custom Subnet Network" (see
-	// Using Subnetworks (https://cloud.google.com/compute/docs/subnetworks) for
-	// more information).A full URL, partial URI, or short name are valid.
-	// Examples:
+	// project is used, if it exists. Cannot be a Custom Subnet Network (see Using
+	// Subnetworks (https://cloud.google.com/compute/docs/subnetworks) for more
+	// information).A full URL, partial URI, or short name are valid. Examples:
 	// https://www.googleapis.com/compute/v1/projects/[project_id]/global/networks/default
 	// projects/[project_id]/global/networks/default default
 	NetworkUri string `json:"networkUri,omitempty"`
@@ -9452,11 +9450,10 @@ type VirtualClusterConfig struct {
 	KubernetesClusterConfig *KubernetesClusterConfig `json:"kubernetesClusterConfig,omitempty"`
 	// StagingBucket: Optional. A Cloud Storage bucket used to stage job
 	// dependencies, config files, and job driver console output. If you do not
-	// specify a staging bucket, Cloud Dataproc will determine a Cloud Storage
-	// location (US, ASIA, or EU) for your cluster's staging bucket according to
-	// the Compute Engine zone where your cluster is deployed, and then create and
-	// manage this project-level, per-location bucket (see Dataproc staging and
-	// temp buckets
+	// specify a staging bucket, Dataproc determines a Cloud Storage location (US,
+	// ASIA, or EU) for your cluster's staging bucket according to the Compute
+	// Engine zone where your cluster is deployed, and then create and manage this
+	// project-level, per-location bucket (see Dataproc staging and temp buckets
 	// (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/staging-bucket)).
 	// This field requires a Cloud Storage bucket name, not a gs://... URI to a
 	// Cloud Storage bucket.
@@ -21811,7 +21808,7 @@ func (r *ProjectsRegionsClustersService) List(projectId string, region string) *
 // clusters to list. Filters are case-sensitive and have the following
 // syntax:field = value AND field = value ...where field is one of
 // status.state, clusterName, or labels.[KEY], and [KEY] is a label key. value
-// can be * to match all values. status.state can be one of the following:
+// can be "*" to match all values. status.state can be one of the following:
 // ACTIVE, INACTIVE, CREATING, RUNNING, ERROR, DELETING, UPDATING, STOPPING, or
 // STOPPED. ACTIVE contains the CREATING, UPDATING, and RUNNING states.
 // INACTIVE contains the DELETING, ERROR, STOPPING, and STOPPED states.

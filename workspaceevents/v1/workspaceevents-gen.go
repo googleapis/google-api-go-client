@@ -420,6 +420,35 @@ func (s DataPart) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DriveOptions: Additional supported options for serving Drive events.
+type DriveOptions struct {
+	// IncludeDescendants: Optional. Immutable. For subscriptions to Google Drive
+	// events, whether to receive events about Drive files that are children of the
+	// target folder or shared drive. * If `false`, the subscription only receives
+	// events about changes to the folder or shared drive that's specified as the
+	// `targetResource`. * If `true`, the `mimeType` field of the `file` resource
+	// must be set to `application/vnd.google-apps.folder`. For details, see Google
+	// Drive event types
+	// (https://developers.google.com/workspace/events/guides/events-drive#event-types).
+	IncludeDescendants bool `json:"includeDescendants,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IncludeDescendants") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IncludeDescendants") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DriveOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod DriveOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -886,6 +915,9 @@ type Subscription struct {
 	Authority string `json:"authority,omitempty"`
 	// CreateTime: Output only. The time when the subscription is created.
 	CreateTime string `json:"createTime,omitempty"`
+	// DriveOptions: Optional. Features that are supported only for subscriptions
+	// on Drive resources.
+	DriveOptions *DriveOptions `json:"driveOptions,omitempty"`
 	// Etag: Optional. This checksum is computed by the server based on the value
 	// of other fields, and might be sent on update requests to ensure the client
 	// has an up-to-date value before proceeding.

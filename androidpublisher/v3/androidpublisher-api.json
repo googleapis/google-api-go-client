@@ -5637,7 +5637,7 @@
       }
     }
   },
-  "revision": "20260506",
+  "revision": "20260511",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Abi": {
@@ -6308,7 +6308,7 @@
         },
         "recurringPrice": {
           "$ref": "Money",
-          "description": "The current recurring price of the auto renewing plan. Note that the price does not take into account discounts and does not include taxes for tax-exclusive pricing, please call orders.get API instead if transaction details are needed."
+          "description": "The current recurring price of the auto renewing plan. Note that the price does not take into account discounts and does not include taxes. For tax-exclusive pricing, please call orders.get API instead if transaction details are needed."
         }
       },
       "type": "object"

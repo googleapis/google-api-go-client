@@ -1069,6 +1069,31 @@ func (s Mileage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PickupCost: The pickup cost of the item.
+type PickupCost struct {
+	// FlatRate: Required. The flat rate pickup cost of the item.
+	FlatRate *Price `json:"flatRate,omitempty"`
+	// FreeThreshold: Optional. The price threshold above which pickup is free of
+	// charge.
+	FreeThreshold *Price `json:"freeThreshold,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FlatRate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FlatRate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PickupCost) MarshalJSON() ([]byte, error) {
+	type NoMethod PickupCost
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Price: The price represented as a number and currency.
 type Price struct {
 	// AmountMicros: The price represented as a number in micros (1 million micros
@@ -1644,6 +1669,10 @@ type ProductAttributes struct {
 	// (including Shopping Ads, Display Ads, local inventory ads, Buy on Google,
 	// and free listings).
 	Pause string `json:"pause,omitempty"`
+	// PickupCost: Optional. The pickup cost
+	// (https://support.google.com/merchants/answer/16988704) for an item when a
+	// customer buys it online and picks it up at a store.
+	PickupCost *PickupCost `json:"pickupCost,omitempty"`
 	// PickupMethod: The pickup
 	// (https://support.google.com/merchants/answer/14634021) option for the item.
 	//

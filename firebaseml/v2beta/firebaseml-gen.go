@@ -1151,6 +1151,19 @@ func (s GoogleCloudAiplatformV1beta1FunctionCallingConfig) MarshalJSON() ([]byte
 // FunctionDeclaration is a representation of a block of code that can be used
 // as a `Tool` by the model and executed by the client.
 type GoogleCloudAiplatformV1beta1FunctionDeclaration struct {
+	// Behavior: Optional. Specifies the function Behavior. If not specified, the
+	// system keeps the current function call behavior. This field is currently
+	// only supported by the BidiGenerateContent method.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - This value is unspecified.
+	//   "BLOCKING" - If set, the system will wait to receive the function response
+	// before continuing the conversation.
+	//   "NON_BLOCKING" - If set, the system will not wait to receive the function
+	// response. Instead, it will attempt to handle function responses as they
+	// become available while maintaining the conversation between the user and the
+	// model.
+	Behavior string `json:"behavior,omitempty"`
 	// Description: Optional. Description and purpose of the function. Model uses
 	// it to decide how and whether to call the function.
 	Description string `json:"description,omitempty"`
@@ -1184,13 +1197,13 @@ type GoogleCloudAiplatformV1beta1FunctionDeclaration struct {
 	// JSON Schema format. The value specified by the schema is the response value
 	// of the function. This field is mutually exclusive with `response`.
 	ResponseJsonSchema interface{} `json:"responseJsonSchema,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Description") to
+	// ForceSendFields is a list of field names (e.g. "Behavior") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Description") to include in API
+	// NullFields is a list of field names (e.g. "Behavior") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

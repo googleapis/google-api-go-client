@@ -7470,6 +7470,9 @@ func (s GoogleCloudDataplexV1ListZonesResponse) MarshalJSON() ([]byte, error) {
 // GoogleCloudDataplexV1LookupContextRequest: Lookup Context using permissions
 // in the source system.
 type GoogleCloudDataplexV1LookupContextRequest struct {
+	// Context: Optional. The text representing contextual information for which
+	// metadata context is being requested.
+	Context string `json:"context,omitempty"`
 	// Options: Optional. Allows to configure the context.Supported options: format
 	// - The format of the context (one of yaml, xml, json, default is yaml).
 	// context_budget - If provided, the output will be intelligently truncated on
@@ -7481,13 +7484,13 @@ type GoogleCloudDataplexV1LookupContextRequest struct {
 	// 10.Examples:projects/{project}/locations/{location}/entryGroups/{entry_group}
 	// /entries/{entry}
 	Resources []string `json:"resources,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Options") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Context") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Options") to include in API
+	// NullFields is a list of field names (e.g. "Context") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -16927,10 +16930,11 @@ func (r *ProjectsLocationsDataScansService) Create(parent string, googleclouddat
 	return c
 }
 
-// DataScanId sets the optional parameter "dataScanId": Required. DataScan
-// identifier. Must contain only lowercase letters, numbers and hyphens. Must
-// start with a letter. Must end with a number or a letter. Must be between
-// 1-63 characters. Must be unique within the customer project / location.
+// DataScanId sets the optional parameter "dataScanId": DataScan identifier. If
+// not provided, a unique ID will be generated with the prefix "data-scan-".
+// Must contain only lowercase letters, numbers and hyphens. Must start with a
+// letter. Must end with a number or a letter. Must be between 1-63 characters.
+// Must be unique within the customer project / location.
 func (c *ProjectsLocationsDataScansCreateCall) DataScanId(dataScanId string) *ProjectsLocationsDataScansCreateCall {
 	c.urlParams_.Set("dataScanId", dataScanId)
 	return c

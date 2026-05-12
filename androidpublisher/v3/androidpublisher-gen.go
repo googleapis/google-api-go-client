@@ -1507,7 +1507,7 @@ type AutoRenewingPlan struct {
 	PriceStepUpConsentDetails *PriceStepUpConsentDetails `json:"priceStepUpConsentDetails,omitempty"`
 	// RecurringPrice: The current recurring price of the auto renewing plan. Note
 	// that the price does not take into account discounts and does not include
-	// taxes for tax-exclusive pricing, please call orders.get API instead if
+	// taxes. For tax-exclusive pricing, please call orders.get API instead if
 	// transaction details are needed.
 	RecurringPrice *Money `json:"recurringPrice,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoRenewEnabled") to

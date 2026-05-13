@@ -7478,9 +7478,9 @@ type GoogleCloudRetailV2betaRemoveLocalInventoriesResponse struct {
 type GoogleCloudRetailV2betaReplaceCatalogAttributeRequest struct {
 	// CatalogAttribute: Required. The updated CatalogAttribute.
 	CatalogAttribute *GoogleCloudRetailV2betaCatalogAttribute `json:"catalogAttribute,omitempty"`
-	// UpdateMask: Indicates which fields in the provided CatalogAttribute to
-	// update. The following are NOT supported: * CatalogAttribute.key If not set,
-	// all supported fields are updated.
+	// UpdateMask: Optional. Indicates which fields in the provided
+	// CatalogAttribute to update. The following are NOT supported: *
+	// CatalogAttribute.key If not set, all supported fields are updated.
 	UpdateMask string `json:"updateMask,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CatalogAttribute") to
 	// unconditionally include in API requests. By default, fields with empty or

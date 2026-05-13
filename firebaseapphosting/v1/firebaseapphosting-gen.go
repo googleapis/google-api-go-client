@@ -1760,8 +1760,9 @@ type RolloutPolicy struct {
 	// RequiredPaths: Optional. A list of file paths patterns that trigger a build
 	// and rollout if at least one of the changed files in the commit are present
 	// in this list. This field is optional; the rollout policy will default to
-	// triggering on all paths if not populated. Limited to 100 paths. Example:
-	// “required_paths: { pattern: "foo/bar/*” type: GLOB }
+	// triggering on all paths if both ignored_paths and required_paths are not
+	// populated. Limited to 100 paths. Example: “required_paths: { pattern:
+	// "foo/bar/*” type: GLOB }
 	RequiredPaths []*Path `json:"requiredPaths,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CodebaseBranch") to
 	// unconditionally include in API requests. By default, fields with empty or

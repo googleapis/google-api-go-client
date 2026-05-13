@@ -1057,6 +1057,9 @@ type DropInfo struct {
 	// [Health check firewall
 	// rules](https://cloud.google.com/load-balancing/docs/health-checks#firewall_ru
 	// les).
+	//   "FIREWALL_BLOCKING_LOAD_BALANCER_ENVOY_PROXY_HEALTH_CHECK" - Firewalls
+	// block health check probes to the Envoy proxies that power this load
+	// balancer.
 	//   "INGRESS_FIREWALL_TAGS_UNSUPPORTED_BY_DIRECT_VPC_EGRESS" - Matching
 	// ingress firewall rules by network tags for packets sent via serverless VPC
 	// direct egress is unsupported. Behavior is undefined.

@@ -333,6 +333,29 @@ func (s DeviceInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DeviceMetadata: Metadata for traits of a single device.
+type DeviceMetadata struct {
+	// TraitCommitTimestamps: Map from the Trait ID (e.g.,
+	// "action.devices.traits.OnOff") to its last Spanner commit timestamp.
+	TraitCommitTimestamps map[string]string `json:"traitCommitTimestamps,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TraitCommitTimestamps") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TraitCommitTimestamps") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeviceMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DeviceNames: Identifiers used to describe the device.
 type DeviceNames struct {
 	// DefaultNames: List of names provided by the manufacturer rather than the
@@ -476,6 +499,9 @@ func (s HomeTraitUpdates) MarshalJSON() ([]byte, error) {
 type QueryRequest struct {
 	// AgentUserId: Required. Third-party user ID.
 	AgentUserId string `json:"agentUserId,omitempty"`
+	// IncludeDeviceMetadata: Optional. If true, the response will include device
+	// metadata in the device_metadata field.
+	IncludeDeviceMetadata bool `json:"includeDeviceMetadata,omitempty"`
 	// Inputs: Required. Inputs containing third-party device IDs for which to get
 	// the device states.
 	Inputs []*QueryRequestInput `json:"inputs,omitempty"`
@@ -579,18 +605,22 @@ func (s QueryResponse) MarshalJSON() ([]byte, error) {
 
 // QueryResponsePayload: Payload containing device states information.
 type QueryResponsePayload struct {
+	// DeviceMetadata: Map from the Trait ID (e.g., "action.devices.traits.OnOff")
+	// to its last Spanner commit timestamp. If a trait has no recorded timestamp,
+	// it will be omitted from this map.
+	DeviceMetadata map[string]DeviceMetadata `json:"deviceMetadata,omitempty"`
 	// Devices: States of the devices. Map of third-party device ID to struct of
 	// device states.
 	Devices map[string]googleapi.RawMessage `json:"devices,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Devices") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "DeviceMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Devices") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DeviceMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

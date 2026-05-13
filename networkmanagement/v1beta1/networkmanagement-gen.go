@@ -1055,6 +1055,9 @@ type DropInfo struct {
 	// [Health check firewall
 	// rules](https://cloud.google.com/load-balancing/docs/health-checks#firewall_ru
 	// les).
+	//   "FIREWALL_BLOCKING_LOAD_BALANCER_ENVOY_PROXY_HEALTH_CHECK" - Firewalls
+	// block health check probes to the Envoy proxies that power this load
+	// balancer.
 	//   "INGRESS_FIREWALL_TAGS_UNSUPPORTED_BY_DIRECT_VPC_EGRESS" - Matching
 	// ingress firewall rules by network tags for packets sent via serverless VPC
 	// direct egress is unsupported. Behavior is undefined.
@@ -1460,6 +1463,11 @@ type Endpoint struct {
 	// CloudFunction: A Cloud Function (https://cloud.google.com/functions).
 	// Applicable only to source endpoint.
 	CloudFunction *CloudFunctionEndpoint `json:"cloudFunction,omitempty"`
+	// CloudRunJob: A Cloud Run (https://cloud.google.com/run)
+	// [job](https://docs.cloud.google.com/run/docs/reference/rest/v2/projects.locat
+	// ions.jobs#Job) URI. Applicable only to source endpoint. The format is:
+	// projects/{project}/locations/{location}/jobs/{job}
+	CloudRunJob string `json:"cloudRunJob,omitempty"`
 	// CloudRunRevision: A Cloud Run (https://cloud.google.com/run)
 	// [revision](https://cloud.google.com/run/docs/reference/rest/v1/namespaces.rev
 	// isions/get) Applicable only to source endpoint.

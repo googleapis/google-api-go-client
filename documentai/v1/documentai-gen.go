@@ -3293,6 +3293,11 @@ type GoogleCloudDocumentaiV1DisableProcessorResponse struct {
 // into documents and allows for collaboration between users and Document AI to
 // iterate and optimize for quality.
 type GoogleCloudDocumentaiV1Document struct {
+	// BlobAssets: Optional. The blob assets in this document. This is used to
+	// store the content of the inline blobs in this document, for example, image
+	// bytes, such that it can be referenced by other fields in the document via
+	// asset id.
+	BlobAssets []*GoogleCloudDocumentaiV1DocumentBlobAsset `json:"blobAssets,omitempty"`
 	// ChunkedDocument: Document chunked based on chunking config.
 	ChunkedDocument *GoogleCloudDocumentaiV1DocumentChunkedDocument `json:"chunkedDocument,omitempty"`
 	// Content: Optional. Inline document content, represented as a stream of
@@ -3349,21 +3354,75 @@ type GoogleCloudDocumentaiV1Document struct {
 	// information, refer to Google Cloud Storage Request URIs
 	// (https://cloud.google.com/storage/docs/reference-uris).
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ChunkedDocument") to
+	// ForceSendFields is a list of field names (e.g. "BlobAssets") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ChunkedDocument") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BlobAssets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudDocumentaiV1Document) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1Document
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1DocumentAnnotations: Represents the annotation of a
+// block or a chunk.
+type GoogleCloudDocumentaiV1DocumentAnnotations struct {
+	// Description: The description of the content with this annotation.
+	Description string `json:"description,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1DocumentAnnotations) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1DocumentAnnotations
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1DocumentBlobAsset: Represents a blob asset. It's used
+// to store the content of the inline blob in this document, for example, image
+// bytes, such that it can be referenced by other fields in the document via
+// asset ID.
+type GoogleCloudDocumentaiV1DocumentBlobAsset struct {
+	// AssetId: Optional. The id of the blob asset.
+	AssetId string `json:"assetId,omitempty"`
+	// Content: Optional. The content of the blob asset, for example, image bytes.
+	Content string `json:"content,omitempty"`
+	// MimeType: The mime type of the blob asset. An IANA published media type
+	// (MIME type)
+	// (https://www.iana.org/assignments/media-types/media-types.xhtml).
+	MimeType string `json:"mimeType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AssetId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssetId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1DocumentBlobAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1DocumentBlobAsset
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3392,6 +3451,8 @@ func (s GoogleCloudDocumentaiV1DocumentChunkedDocument) MarshalJSON() ([]byte, e
 
 // GoogleCloudDocumentaiV1DocumentChunkedDocumentChunk: Represents a chunk.
 type GoogleCloudDocumentaiV1DocumentChunkedDocumentChunk struct {
+	// ChunkFields: Chunk fields inside this chunk.
+	ChunkFields []*GoogleCloudDocumentaiV1DocumentChunkedDocumentChunkChunkField `json:"chunkFields,omitempty"`
 	// ChunkId: ID of the chunk.
 	ChunkId string `json:"chunkId,omitempty"`
 	// Content: Text content of the chunk.
@@ -3404,13 +3465,13 @@ type GoogleCloudDocumentaiV1DocumentChunkedDocumentChunk struct {
 	PageSpan *GoogleCloudDocumentaiV1DocumentChunkedDocumentChunkChunkPageSpan `json:"pageSpan,omitempty"`
 	// SourceBlockIds: Unused.
 	SourceBlockIds []string `json:"sourceBlockIds,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ChunkId") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "ChunkFields") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ChunkId") to include in API
+	// NullFields is a list of field names (e.g. "ChunkFields") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3419,6 +3480,32 @@ type GoogleCloudDocumentaiV1DocumentChunkedDocumentChunk struct {
 
 func (s GoogleCloudDocumentaiV1DocumentChunkedDocumentChunk) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentChunkedDocumentChunk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1DocumentChunkedDocumentChunkChunkField: The chunk
+// field in the chunk. A chunk field could be one of the various types (for
+// example, image, table) supported.
+type GoogleCloudDocumentaiV1DocumentChunkedDocumentChunkChunkField struct {
+	// ImageChunkField: The image chunk field in the chunk.
+	ImageChunkField *GoogleCloudDocumentaiV1DocumentChunkedDocumentChunkImageChunkField `json:"imageChunkField,omitempty"`
+	// TableChunkField: The table chunk field in the chunk.
+	TableChunkField *GoogleCloudDocumentaiV1DocumentChunkedDocumentChunkTableChunkField `json:"tableChunkField,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ImageChunkField") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ImageChunkField") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1DocumentChunkedDocumentChunkChunkField) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1DocumentChunkedDocumentChunkChunkField
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3497,6 +3584,61 @@ func (s GoogleCloudDocumentaiV1DocumentChunkedDocumentChunkChunkPageSpan) Marsha
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1DocumentChunkedDocumentChunkImageChunkField: The
+// image chunk field in the chunk.
+type GoogleCloudDocumentaiV1DocumentChunkedDocumentChunkImageChunkField struct {
+	// Annotations: Annotation of the image chunk field.
+	Annotations *GoogleCloudDocumentaiV1DocumentAnnotations `json:"annotations,omitempty"`
+	// BlobAssetId: Optional. Asset id of the inline image. If set, find the image
+	// content in the blob_assets field.
+	BlobAssetId string `json:"blobAssetId,omitempty"`
+	// DataUri: Optional. Data uri of the image. It is composed of four parts: a
+	// prefix (data:), a MIME type indicating the type of data, an optional base64
+	// token if non-textual, and the data itself: data:,
+	DataUri string `json:"dataUri,omitempty"`
+	// GcsUri: Optional. Google Cloud Storage uri of the image.
+	GcsUri string `json:"gcsUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1DocumentChunkedDocumentChunkImageChunkField) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1DocumentChunkedDocumentChunkImageChunkField
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1DocumentChunkedDocumentChunkTableChunkField: The
+// table chunk field in the chunk.
+type GoogleCloudDocumentaiV1DocumentChunkedDocumentChunkTableChunkField struct {
+	// Annotations: Annotation of the table chunk field.
+	Annotations *GoogleCloudDocumentaiV1DocumentAnnotations `json:"annotations,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1DocumentChunkedDocumentChunkTableChunkField) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1DocumentChunkedDocumentChunkTableChunkField
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1DocumentDocumentLayout: Represents the parsed layout
 // of a document as a collection of blocks that the document is divided into.
 type GoogleCloudDocumentaiV1DocumentDocumentLayout struct {
@@ -3528,6 +3670,8 @@ type GoogleCloudDocumentaiV1DocumentDocumentLayoutDocumentLayoutBlock struct {
 	BlockId string `json:"blockId,omitempty"`
 	// BoundingBox: Identifies the bounding box for the block.
 	BoundingBox *GoogleCloudDocumentaiV1BoundingPoly `json:"boundingBox,omitempty"`
+	// ImageBlock: Block consisting of image content.
+	ImageBlock *GoogleCloudDocumentaiV1DocumentDocumentLayoutDocumentLayoutBlockLayoutImageBlock `json:"imageBlock,omitempty"`
 	// ListBlock: Block consisting of list content/structure.
 	ListBlock *GoogleCloudDocumentaiV1DocumentDocumentLayoutDocumentLayoutBlockLayoutListBlock `json:"listBlock,omitempty"`
 	// PageSpan: Page span of the block.
@@ -3551,6 +3695,44 @@ type GoogleCloudDocumentaiV1DocumentDocumentLayoutDocumentLayoutBlock struct {
 
 func (s GoogleCloudDocumentaiV1DocumentDocumentLayoutDocumentLayoutBlock) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentDocumentLayoutDocumentLayoutBlock
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1DocumentDocumentLayoutDocumentLayoutBlockLayoutImageBl
+// ock: Represents an image type block.
+type GoogleCloudDocumentaiV1DocumentDocumentLayoutDocumentLayoutBlockLayoutImageBlock struct {
+	// Annotations: Annotation of the image block.
+	Annotations *GoogleCloudDocumentaiV1DocumentAnnotations `json:"annotations,omitempty"`
+	// BlobAssetId: Optional. Asset id of the inline image. If set, find the image
+	// content in the blob_assets field.
+	BlobAssetId string `json:"blobAssetId,omitempty"`
+	// DataUri: Optional. Data uri of the image. It is composed of four parts: a
+	// prefix (data:), a MIME type indicating the type of data, an optional base64
+	// token if non-textual, and the data itself: data:,
+	DataUri string `json:"dataUri,omitempty"`
+	// GcsUri: Optional. Google Cloud Storage uri of the image.
+	GcsUri string `json:"gcsUri,omitempty"`
+	// ImageText: Text extracted from the image using OCR or alt text describing
+	// the image.
+	ImageText string `json:"imageText,omitempty"`
+	// MimeType: Mime type of the image. An IANA published [media type (MIME type)]
+	// (https://www.iana.org/assignments/media-types/media-types.xhtml).
+	MimeType string `json:"mimeType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1DocumentDocumentLayoutDocumentLayoutBlockLayoutImageBlock) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1DocumentDocumentLayoutDocumentLayoutBlockLayoutImageBlock
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3632,19 +3814,21 @@ func (s GoogleCloudDocumentaiV1DocumentDocumentLayoutDocumentLayoutBlockLayoutPa
 // GoogleCloudDocumentaiV1DocumentDocumentLayoutDocumentLayoutBlockLayoutTableBl
 // ock: Represents a table type block.
 type GoogleCloudDocumentaiV1DocumentDocumentLayoutDocumentLayoutBlockLayoutTableBlock struct {
+	// Annotations: Annotation of the table block.
+	Annotations *GoogleCloudDocumentaiV1DocumentAnnotations `json:"annotations,omitempty"`
 	// BodyRows: Body rows containing main table content.
 	BodyRows []*GoogleCloudDocumentaiV1DocumentDocumentLayoutDocumentLayoutBlockLayoutTableRow `json:"bodyRows,omitempty"`
 	// Caption: Table caption/title.
 	Caption string `json:"caption,omitempty"`
 	// HeaderRows: Header rows at the top of the table.
 	HeaderRows []*GoogleCloudDocumentaiV1DocumentDocumentLayoutDocumentLayoutBlockLayoutTableRow `json:"headerRows,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BodyRows") to
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BodyRows") to include in API
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3710,6 +3894,8 @@ func (s GoogleCloudDocumentaiV1DocumentDocumentLayoutDocumentLayoutBlockLayoutTa
 // GoogleCloudDocumentaiV1DocumentDocumentLayoutDocumentLayoutBlockLayoutTextBlo
 // ck: Represents a text type block.
 type GoogleCloudDocumentaiV1DocumentDocumentLayoutDocumentLayoutBlockLayoutTextBlock struct {
+	// Annotations: Annotation of the text block.
+	Annotations *GoogleCloudDocumentaiV1DocumentAnnotations `json:"annotations,omitempty"`
 	// Blocks: A text block could further have child blocks. Repeated blocks
 	// support further hierarchies and nested blocks.
 	Blocks []*GoogleCloudDocumentaiV1DocumentDocumentLayoutDocumentLayoutBlock `json:"blocks,omitempty"`
@@ -3719,13 +3905,13 @@ type GoogleCloudDocumentaiV1DocumentDocumentLayoutDocumentLayoutBlockLayoutTextB
 	// `subtitle`, `heading-1`, `heading-2`, `heading-3`, `heading-4`, `heading-5`,
 	// `header`, `footer`.
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Blocks") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Blocks") to include in API
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -10268,8 +10454,8 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this service. This
 // method lists locations based on the resource scope provided in the
-// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
-// empty, the method lists the public locations available to all projects. *
+// ListLocationsRequest.name field: * **Global locations**: If `name` is empty,
+// the method lists the public locations available to all projects. *
 // **Project-specific locations**: If `name` follows the format
 // `projects/{project}`, the method lists locations visible to that specific
 // project. This includes public, private, or other project-specific locations
@@ -10286,8 +10472,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

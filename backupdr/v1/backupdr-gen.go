@@ -1454,8 +1454,8 @@ type BackupPlan struct {
 	// the Backup Vault Service Account.
 	BackupVaultServiceAccount string `json:"backupVaultServiceAccount,omitempty"`
 	// ComputeInstanceBackupPlanProperties: Optional. Defines optional properties
-	// specific to backups of disk-based resources, such as Compute Engine. This
-	// includes settings like whether to perform a guest flush.
+	// specific to backups of compute instance-based resources, such as Compute
+	// Engine. This includes settings like whether to perform a guest flush.
 	ComputeInstanceBackupPlanProperties *ComputeInstanceBackupPlanProperties `json:"computeInstanceBackupPlanProperties,omitempty"`
 	// CreateTime: Output only. When the `BackupPlan` was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2105,8 +2105,8 @@ func (s CloudSqlInstanceInitializationConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ComputeInstanceBackupPlanProperties: --- ComputeInstanceBackupPlanProperties
-// Message ---
+// ComputeInstanceBackupPlanProperties: Properties for a compute instance
+// backup plan.
 type ComputeInstanceBackupPlanProperties struct {
 	// GuestFlush: Optional. Indicates whether to perform a guest flush operation
 	// before taking a compute backup. When set to false, the system will create
@@ -2752,7 +2752,7 @@ func (s DataSourceReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DiskBackupPlanProperties: --- DiskBackupPlanProperties Message ---
+// DiskBackupPlanProperties: Properties for a disk backup plan.
 type DiskBackupPlanProperties struct {
 	// GuestFlush: Optional. Indicates whether to perform a guest flush operation
 	// before taking a disk backup. When set to false, the system will create

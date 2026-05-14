@@ -661,6 +661,9 @@ type TargetLocation struct {
 	Address string `json:"address,omitempty"`
 	// LocationName: The name of the location to which the user is invited.
 	LocationName string `json:"locationName,omitempty"`
+	// PlaceId: Output only. The Place ID of the location to which the user is
+	// invited. Not always populated.
+	PlaceId string `json:"placeId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Address") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

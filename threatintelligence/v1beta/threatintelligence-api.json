@@ -817,7 +817,7 @@
       }
     }
   },
-  "revision": "20260428",
+  "revision": "20260510",
   "rootUrl": "https://threatintelligence.googleapis.com/",
   "schemas": {
     "Alert": {
@@ -825,7 +825,7 @@
       "id": "Alert",
       "properties": {
         "aiSummary": {
-          "description": "Optional. AI summary of the finding.",
+          "description": "Optional. AI summary of the alert.",
           "type": "string"
         },
         "audit": {
@@ -969,7 +969,7 @@
       "id": "AlertDocument",
       "properties": {
         "aiSummary": {
-          "description": "Output only. AI summary of the finding.",
+          "description": "Output only. AI summary of the document.",
           "readOnly": true,
           "type": "string"
         },

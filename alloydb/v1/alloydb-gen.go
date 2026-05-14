@@ -988,21 +988,24 @@ func (s ConnectionInfo) MarshalJSON() ([]byte, error) {
 
 // ConnectionPoolConfig: Configuration for Managed Connection Pool (MCP).
 type ConnectionPoolConfig struct {
+	// AuthproxyPoolerCount: Output only. The number of running AuthProxy poolers
+	// per instance.
+	AuthproxyPoolerCount int64 `json:"authproxyPoolerCount,omitempty"`
 	// Enabled: Optional. Whether to enable Managed Connection Pool (MCP).
 	Enabled bool `json:"enabled,omitempty"`
 	// Flags: Optional. Connection Pool flags, as a list of "key": "value" pairs.
 	Flags map[string]string `json:"flags,omitempty"`
 	// PoolerCount: Output only. The number of running poolers per instance.
 	PoolerCount int64 `json:"poolerCount,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AuthproxyPoolerCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Enabled") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AuthproxyPoolerCount") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

@@ -1131,6 +1131,12 @@ func (s Price) MarshalJSON() ([]byte, error) {
 // the name of their corresponding attribute in the Product data specification
 // (https://support.google.com/merchants/answer/7052112) with some exceptions.
 type Product struct {
+	// Archived: Output only. Determines whether the product is archived
+	// (https://support.google.com/merchants/answer/11909930). To archive or
+	// restore your product, visit Merchant Center products page. Learn also more
+	// about offer visibility
+	// (https://support.google.com/merchants/answer/12488713).
+	Archived bool `json:"archived,omitempty"`
 	// AutomatedDiscounts: Output only. The automated discounts information for the
 	// product.
 	AutomatedDiscounts *AutomatedDiscounts `json:"automatedDiscounts,omitempty"`
@@ -1199,15 +1205,15 @@ type Product struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AutomatedDiscounts") to
+	// ForceSendFields is a list of field names (e.g. "Archived") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AutomatedDiscounts") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Archived") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

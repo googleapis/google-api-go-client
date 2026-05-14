@@ -3710,6 +3710,30 @@ func (s SourceObjectIdentifier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SpannerChangeStreamPosition: Represents a position in a Spanner change
+// stream from which to start replicating.
+type SpannerChangeStreamPosition struct {
+	// StartTime: Required. The timestamp to start change stream queries from. The
+	// timestamp must be a positive value.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StartTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StartTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SpannerChangeStreamPosition) MarshalJSON() ([]byte, error) {
+	type NoMethod SpannerChangeStreamPosition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SpannerColumn: Spanner column.
 type SpannerColumn struct {
 	// Column: Required. The column name.
@@ -3920,6 +3944,9 @@ type SpecificStartPosition struct {
 	MysqlLogPosition *MysqlLogPosition `json:"mysqlLogPosition,omitempty"`
 	// OracleScnPosition: Oracle SCN to start replicating from.
 	OracleScnPosition *OracleScnPosition `json:"oracleScnPosition,omitempty"`
+	// SpannerChangeStreamPosition: Optional. Spanner change stream position to
+	// start replicating from.
+	SpannerChangeStreamPosition *SpannerChangeStreamPosition `json:"spannerChangeStreamPosition,omitempty"`
 	// SqlServerLsnPosition: SqlServer LSN to start replicating from.
 	SqlServerLsnPosition *SqlServerLsnPosition `json:"sqlServerLsnPosition,omitempty"`
 	// ForceSendFields is a list of field names (e.g.

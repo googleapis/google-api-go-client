@@ -2022,6 +2022,9 @@ type Workstation struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. Full name of this workstation.
 	Name string `json:"name,omitempty"`
+	// PersistentDirectories: Optional. Directories to persist across workstation
+	// sessions.
+	PersistentDirectories []*WorkstationPersistentDirectory `json:"persistentDirectories,omitempty"`
 	// Reconciling: Output only. Indicates whether this workstation is currently
 	// being updated to match its intended state.
 	Reconciling bool `json:"reconciling,omitempty"`
@@ -2381,6 +2384,60 @@ type WorkstationConfig struct {
 
 func (s WorkstationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkstationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkstationGceRegionalPersistentDisk: A Persistent Directory backed by a
+// Compute Engine regional persistent disk within the workstation.
+type WorkstationGceRegionalPersistentDisk struct {
+	// Name: The name of the persistent directory.
+	Name string `json:"name,omitempty"`
+	// SizeGb: Required. The desired size of the persistent directory in GB.
+	SizeGb int64 `json:"sizeGb,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkstationGceRegionalPersistentDisk) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkstationGceRegionalPersistentDisk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkstationPersistentDirectory: A directory to persist across workstation
+// sessions. Updates to this field will only take effect on this workstation
+// after it is restarted.
+type WorkstationPersistentDirectory struct {
+	// GcePd: A PersistentDirectory backed by a Compute Engine persistent disk.
+	GcePd *WorkstationGceRegionalPersistentDisk `json:"gcePd,omitempty"`
+	// MountPath: Optional. The mount path of the persistent directory.
+	MountPath string `json:"mountPath,omitempty"`
+	// SizeGb: Optional. Size of the persistent directory in GB. If specified in an
+	// update request, this is the desired size of the directory.
+	SizeGb int64 `json:"sizeGb,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GcePd") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GcePd") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkstationPersistentDirectory) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkstationPersistentDirectory
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

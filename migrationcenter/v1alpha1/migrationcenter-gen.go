@@ -717,6 +717,9 @@ type Asset struct {
 	// AwsApplicationLoadBalancerDetails: Output only. Asset information specific
 	// for AWS Application Load Balancers.
 	AwsApplicationLoadBalancerDetails *AwsApplicationLoadBalancerDetails `json:"awsApplicationLoadBalancerDetails,omitempty"`
+	// AwsAthenaWorkGroupDetails: Output only. Asset information specific for
+	// AwsAthenaWorkGroupDetails
+	AwsAthenaWorkGroupDetails *AwsAthenaWorkGroupDetails `json:"awsAthenaWorkGroupDetails,omitempty"`
 	// AwsAutoscalingGroupDetails: Output only. Asset information specific for
 	// AwsAutoscalingGroupDetails
 	AwsAutoscalingGroupDetails *AwsAutoscalingGroupDetails `json:"awsAutoscalingGroupDetails,omitempty"`
@@ -753,9 +756,21 @@ type Asset struct {
 	// AwsElbLoadBalancerDetails: Output only. Asset information specific for AWS
 	// Load Balancers.
 	AwsElbLoadBalancerDetails *AwsElbLoadBalancerDetails `json:"awsElbLoadBalancerDetails,omitempty"`
+	// AwsEmrClusterDetails: Output only. Asset information specific for
+	// AwsEmrClusterDetails
+	AwsEmrClusterDetails *AwsEmrClusterDetails `json:"awsEmrClusterDetails,omitempty"`
+	// AwsFirehoseDetails: Output only. Asset information specific for
+	// AwsFirehoseDetails
+	AwsFirehoseDetails *AwsFirehoseDetails `json:"awsFirehoseDetails,omitempty"`
+	// AwsGlueJobDetails: Output only. Asset information specific for
+	// AwsGlueJobDetails
+	AwsGlueJobDetails *AwsGlueJobDetails `json:"awsGlueJobDetails,omitempty"`
 	// AwsInternetGatewayDetails: Output only. Asset information specific for AWS
 	// Internet Gateways.
 	AwsInternetGatewayDetails *AwsInternetGatewayDetails `json:"awsInternetGatewayDetails,omitempty"`
+	// AwsKinesisStreamDetails: Output only. Asset information specific for
+	// AwsKinesisStreamDetails
+	AwsKinesisStreamDetails *AwsKinesisStreamDetails `json:"awsKinesisStreamDetails,omitempty"`
 	// AwsLambdaFunctionDetails: Output only. Asset information specific for AWS
 	// Lambda functions.
 	AwsLambdaFunctionDetails *AwsLambdaFunctionDetails `json:"awsLambdaFunctionDetails,omitempty"`
@@ -848,6 +863,9 @@ type AssetFrame struct {
 	// AwsApplicationLoadBalancerDetails: Optional. Asset information specific for
 	// AWS Application Load Balancers.
 	AwsApplicationLoadBalancerDetails *AwsApplicationLoadBalancerDetails `json:"awsApplicationLoadBalancerDetails,omitempty"`
+	// AwsAthenaWorkGroupDetails: Optional. Asset information specific for
+	// AwsAthenaWorkGroupDetails
+	AwsAthenaWorkGroupDetails *AwsAthenaWorkGroupDetails `json:"awsAthenaWorkGroupDetails,omitempty"`
 	// AwsAutoscalingGroupDetails: Optional. Asset information specific for
 	// AwsAutoscalingGroupDetails
 	AwsAutoscalingGroupDetails *AwsAutoscalingGroupDetails `json:"awsAutoscalingGroupDetails,omitempty"`
@@ -881,9 +899,21 @@ type AssetFrame struct {
 	// AwsElbLoadBalancerDetails: Asset information specific for AWS Load
 	// Balancers.
 	AwsElbLoadBalancerDetails *AwsElbLoadBalancerDetails `json:"awsElbLoadBalancerDetails,omitempty"`
+	// AwsEmrClusterDetails: Optional. Asset information specific for
+	// AwsEmrClusterDetails
+	AwsEmrClusterDetails *AwsEmrClusterDetails `json:"awsEmrClusterDetails,omitempty"`
+	// AwsFirehoseDetails: Optional. Asset information specific for
+	// AwsFirehoseDetails
+	AwsFirehoseDetails *AwsFirehoseDetails `json:"awsFirehoseDetails,omitempty"`
+	// AwsGlueJobDetails: Optional. Asset information specific for
+	// AwsGlueJobDetails
+	AwsGlueJobDetails *AwsGlueJobDetails `json:"awsGlueJobDetails,omitempty"`
 	// AwsInternetGatewayDetails: Optional. Asset information specific for AWS
 	// Internet Gateways.
 	AwsInternetGatewayDetails *AwsInternetGatewayDetails `json:"awsInternetGatewayDetails,omitempty"`
+	// AwsKinesisStreamDetails: Optional. Asset information specific for
+	// AwsKinesisStreamDetails
+	AwsKinesisStreamDetails *AwsKinesisStreamDetails `json:"awsKinesisStreamDetails,omitempty"`
 	// AwsLambdaFunctionDetails: Asset information specific for AWS Lambda
 	// functions.
 	AwsLambdaFunctionDetails *AwsLambdaFunctionDetails `json:"awsLambdaFunctionDetails,omitempty"`
@@ -1186,6 +1216,11 @@ type AwsAppSyncGraphqlApiDetails struct {
 type AwsApplicationLoadBalancerDetails struct {
 }
 
+// AwsAthenaWorkGroupDetails: Contains details for an AWS Athena Work Group
+// asset.
+type AwsAthenaWorkGroupDetails struct {
+}
+
 // AwsAutoscalingGroupDetails: Asset information specific for AWS Autoscaling
 // Group.
 type AwsAutoscalingGroupDetails struct {
@@ -1272,9 +1307,25 @@ type AwsElasticNetworkInterfaceDetails struct {
 type AwsElbLoadBalancerDetails struct {
 }
 
+// AwsEmrClusterDetails: Contains details for an AWS EMR Cluster asset.
+type AwsEmrClusterDetails struct {
+}
+
+// AwsFirehoseDetails: Contains details for an AWS Firehose asset.
+type AwsFirehoseDetails struct {
+}
+
+// AwsGlueJobDetails: Contains details for an AWS Glue Job asset.
+type AwsGlueJobDetails struct {
+}
+
 // AwsInternetGatewayDetails: Asset information specific for AWS Internet
 // Gateways.
 type AwsInternetGatewayDetails struct {
+}
+
+// AwsKinesisStreamDetails: Contains details for an AWS Kinesis Stream asset.
+type AwsKinesisStreamDetails struct {
 }
 
 // AwsLambdaFunctionDetails: Asset information specific for AWS Lambda

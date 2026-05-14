@@ -1934,6 +1934,7 @@ type EntityIssue struct {
 	//   "ISSUE_TYPE_DDL" - Issue originated from the DDL
 	//   "ISSUE_TYPE_APPLY" - Issue originated during the apply process
 	//   "ISSUE_TYPE_CONVERT" - Issue originated during the convert process
+	//   "ISSUE_TYPE_PULL_SCHEMA" - Issue originated during the pull schema process
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4565,7 +4566,7 @@ func (s QuotaFailure) MarshalJSON() ([]byte, error) {
 // violation. For example, a daily quota or a custom quota that was exceeded.
 type QuotaFailureViolation struct {
 	// ApiService: The API Service from which the `QuotaFailure.Violation`
-	// orginates. In some cases, Quota issues originate from an API Service other
+	// originates. In some cases, Quota issues originate from an API Service other
 	// than the one that was called. In other words, a dependency of the called API
 	// Service could be the cause of the `QuotaFailure`, and this field would have
 	// the dependency API service name. For example, if the called API is
@@ -6653,8 +6654,8 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this service. This
 // method lists locations based on the resource scope provided in the
-// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
-// empty, the method lists the public locations available to all projects. *
+// ListLocationsRequest.name field: * **Global locations**: If `name` is empty,
+// the method lists the public locations available to all projects. *
 // **Project-specific locations**: If `name` follows the format
 // `projects/{project}`, the method lists locations visible to that specific
 // project. This includes public, private, or other project-specific locations
@@ -6671,8 +6672,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

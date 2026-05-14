@@ -210,10 +210,21 @@ type BaseMetric struct {
 	// Possible values:
 	//   "STANDARD_METRIC_UNSPECIFIED" - Unspecified standard metric. This value
 	// should not be used directly.
-	//   "FEEDBACK_LOOP_ID" - Predefined metric for Feedback Loop (FBL) id.
+	//   "FEEDBACK_LOOP_ID" - Predefined metric for Feedback Loop (FBL) id. The
+	// `filter` field supports selecting the aggregation key type. Supported
+	// format: `aggregation_key_type` = "". Supported values: * `FROM_HEADER`:
+	// (Default) The metric includes messages with From: header domain matching the
+	// requested domain. * `ALL_DKIM`: The metric includes messages with one of the
+	// signed DKIM domains matching the requested domain.
 	//   "FEEDBACK_LOOP_SPAM_RATE" - Predefined metric for Feedback Loop (FBL) spam
-	// rate. Filter must be of type feedback_loop_id = "" where is one valid
-	// feedback loop ids.
+	// rate. The `filter` field requires a `feedback_loop_id` and optionally
+	// accepts an `aggregation_key_type`. Supported formats are: *
+	// `feedback_loop_id` = "" * `feedback_loop_id` = "" AND `aggregation_key_type`
+	// = "" If `aggregation_key_type` is omitted, it defaults to `FROM_HEADER`.
+	// Supported values: * `FROM_HEADER`: (Default) The metric includes messages
+	// with From: header domain matching the requested domain. * `ALL_DKIM`: The
+	// metric includes messages with one of the signed DKIM domains matching the
+	// requested domain.
 	//   "SPAM_RATE" - Predefined metric for spam rate.
 	//   "AUTH_SUCCESS_RATE" - The success rate of authentication mechanisms (DKIM,
 	// SPF, DMARC). Filter must be of type auth_type = "" where is one of: [spf,

@@ -628,6 +628,13 @@ func (s *AddOnAttachment) UnmarshalJSON(data []byte) error {
 
 // AddOnAttachmentStudentSubmission: Payload for grade update requests.
 type AddOnAttachmentStudentSubmission struct {
+	// CourseWorkSubmissionId: Output only. Identifier of the course work
+	// submission under which this attachment submission was made.
+	CourseWorkSubmissionId string `json:"courseWorkSubmissionId,omitempty"`
+	// Id: Output only. Classroom-assigned identifier for this student submission.
+	// This is unique among submissions for the relevant course work and add-on
+	// attachment combination.
+	Id string `json:"id,omitempty"`
 	// PointsEarned: Student grade on this attachment. If unset, no grade was set.
 	PointsEarned float64 `json:"pointsEarned,omitempty"`
 	// PostSubmissionState: Submission state of add-on attachment's parent post
@@ -650,15 +657,15 @@ type AddOnAttachmentStudentSubmission struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "PointsEarned") to
+	// ForceSendFields is a list of field names (e.g. "CourseWorkSubmissionId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PointsEarned") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CourseWorkSubmissionId") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

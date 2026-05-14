@@ -9355,7 +9355,7 @@ func (c *SpacesSearchCall) PageToken(pageToken string) *SpacesSearchCall {
 }
 
 // Query sets the optional parameter "query": Required. A search query. You can
-// search by using the following parameters: - `create_time` - `customer` -
+// search by using the following parameters : - `create_time` - `customer` -
 // `display_name` - `external_user_allowed` - `last_active_time` -
 // `space_history_state` - `space_type` `create_time` and `last_active_time`
 // accept a timestamp in RFC-3339 (https://www.rfc-editor.org/rfc/rfc3339)

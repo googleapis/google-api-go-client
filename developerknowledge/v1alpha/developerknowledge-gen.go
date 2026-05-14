@@ -177,7 +177,7 @@ type V1alphaService struct {
 
 // Answer: An answer to a query.
 type Answer struct {
-	// AnswerText: The text of the answer.
+	// AnswerText: Contains the text of the answer.
 	AnswerText string `json:"answerText,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnswerText") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -420,7 +420,10 @@ func (r *DocumentsService) BatchGet() *DocumentsBatchGetCall {
 // the documents to retrieve. A maximum of 20 documents can be retrieved in a
 // batch. The documents are returned in the same order as the `names` in the
 // request. Format: `documents/{uri_without_scheme}` Example:
-// `documents/docs.cloud.google.com/storage/docs/creating-buckets`
+// `documents/docs.cloud.google.com/storage/docs/creating-buckets` If you are
+// changing the batch size, consider the value of `maxConcurrentGCSFetches`
+// constant in the service implementation:
+// http://cs///depot/google3/devrel/boq/developerknowledge/service/developerknowledge.go
 func (c *DocumentsBatchGetCall) Names(names ...string) *DocumentsBatchGetCall {
 	c.urlParams_.SetMulti("names", append([]string{}, names...))
 	return c

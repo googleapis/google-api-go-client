@@ -462,9 +462,9 @@ type Backup struct {
 	// `projects/{project_id}/locations/{location}/volumes/{volume_id}/snapshots/{sn
 	// apshot_id}`
 	SourceSnapshot string `json:"sourceSnapshot,omitempty"`
-	// SourceVolume: Volume full name of this backup belongs to. Either
-	// source_volume or ontap_source should be provided. Format:
-	// `projects/{projects_id}/locations/{location}/volumes/{volume_id}`
+	// SourceVolume: The resource name of the volume that this backup belongs to.
+	// You must provide either `source_volume` or `ontap_source`. Format:
+	// `projects/{project_id}/locations/{location}/volumes/{volume_id}`
 	SourceVolume string `json:"sourceVolume,omitempty"`
 	// State: Output only. The backup state.
 	//
@@ -1068,7 +1068,7 @@ type EstablishVolumePeeringRequest struct {
 	// PeerClusterName: Required. Name of the user's local source cluster to be
 	// peered with the destination cluster.
 	PeerClusterName string `json:"peerClusterName,omitempty"`
-	// PeerIpAddresses: Optional. List of IPv4 ip addresses to be used for peering.
+	// PeerIpAddresses: Optional. List of IPv4 IP addresses to be used for peering.
 	PeerIpAddresses []string `json:"peerIpAddresses,omitempty"`
 	// PeerSvmName: Required. Name of the user's local source vserver svm to be
 	// peered with the destination vserver svm.
@@ -1506,7 +1506,7 @@ type KmsConfig struct {
 	Instructions string `json:"instructions,omitempty"`
 	// Labels: Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Identifier. Name of the KmsConfig. Format:
+	// Name: Identifier. Name of the `KmsConfig`. Format:
 	// `projects/{project}/locations/{location}/kmsConfigs/{kms_config}`
 	Name string `json:"name,omitempty"`
 	// ServiceAccount: Output only. The Service account which will have access to
@@ -1555,7 +1555,7 @@ func (s KmsConfig) MarshalJSON() ([]byte, error) {
 }
 
 // LargeCapacityConfig: Configuration for a Large Capacity Volume. A Large
-// Capacity Volume supports sizes ranging from 4.8 TiB to 20 PiB, it is
+// Capacity Volume supports sizes ranging from 4.8 TiB to 20 PiB; it is
 // composed of multiple internal constituents, and must be created in a large
 // capacity pool.
 type LargeCapacityConfig struct {
@@ -2131,6 +2131,7 @@ type MountOption struct {
 	//   "NFSV4" - NFS V4 protocol
 	//   "SMB" - SMB protocol
 	//   "ISCSI" - ISCSI protocol
+	//   "NVME" - NVMe protocol
 	Protocol string `json:"protocol,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Export") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2453,7 +2454,7 @@ func (s RestoreBackupFilesRequest) MarshalJSON() ([]byte, error) {
 type RestoreParameters struct {
 	// SourceBackup: Full name of the backup resource. Format for standard backup:
 	// projects/{project}/locations/{location}/backupVaults/{backup_vault_id}/backup
-	// s/{backup_id} Format for BackupDR backup:
+	// s/{backup_id}. Format for BackupDR backup:
 	// projects/{project}/locations/{location}/backupVaults/{backup_vault}/dataSourc
 	// es/{data_source}/backups/{backup}
 	SourceBackup string `json:"sourceBackup,omitempty"`
@@ -2810,8 +2811,8 @@ type StoragePool struct {
 	// not.
 	LdapEnabled bool `json:"ldapEnabled,omitempty"`
 	// Mode: Optional. Mode of the storage pool. This field is used to control
-	// whether the user can perform the ONTAP operations on the storage pool using
-	// the GCNV ONTAP Mode APIs. If not specified during creation, it defaults to
+	// whether the user can perform ONTAP operations on the storage pool using the
+	// GCNV ONTAP Mode APIs. If not specified during creation, it defaults to
 	// `DEFAULT`.
 	//
 	// Possible values:
@@ -3194,6 +3195,7 @@ type Volume struct {
 	//   "NFSV4" - NFS V4 protocol
 	//   "SMB" - SMB protocol
 	//   "ISCSI" - ISCSI protocol
+	//   "NVME" - NVMe protocol
 	Protocols []string `json:"protocols,omitempty"`
 	// PsaRange: Output only. This field is not implemented. The values provided in
 	// this field are ignored.
@@ -7243,7 +7245,7 @@ type ProjectsLocationsKmsConfigsPatchCall struct {
 
 // Patch: Updates the Kms config properties with the full spec
 //
-//   - name: Identifier. Name of the KmsConfig. Format:
+//   - name: Identifier. Name of the `KmsConfig`. Format:
 //     `projects/{project}/locations/{location}/kmsConfigs/{kms_config}`.
 func (r *ProjectsLocationsKmsConfigsService) Patch(name string, kmsconfig *KmsConfig) *ProjectsLocationsKmsConfigsPatchCall {
 	c := &ProjectsLocationsKmsConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8746,8 +8748,8 @@ type ProjectsLocationsStoragePoolsOntapExecuteOntapDeleteCall struct {
 	header_    http.Header
 }
 
-// ExecuteOntapDelete: `ExecuteOntapDelete` dispatches the ONTAP `DELETE`
-// request to the `StoragePool` cluster.
+// ExecuteOntapDelete: `ExecuteOntapDelete` sends the ONTAP `DELETE` request to
+// the `StoragePool` cluster.
 //
 //   - ontapPath: The resource path of the ONTAP resource. Format:
 //     `projects/{project_number}/locations/{location_id}/storagePools/{storage_po
@@ -8850,7 +8852,7 @@ type ProjectsLocationsStoragePoolsOntapExecuteOntapGetCall struct {
 	header_      http.Header
 }
 
-// ExecuteOntapGet: `ExecuteOntapGet` dispatches the ONTAP `GET` request to the
+// ExecuteOntapGet: `ExecuteOntapGet` sends the ONTAP `GET` request to the
 // `StoragePool` cluster.
 //
 //   - ontapPath: The resource path of the ONTAP resource. Format:
@@ -8965,8 +8967,8 @@ type ProjectsLocationsStoragePoolsOntapExecuteOntapPatchCall struct {
 	header_                  http.Header
 }
 
-// ExecuteOntapPatch: `ExecuteOntapPatch` dispatches the ONTAP `PATCH` request
-// to the `StoragePool` cluster.
+// ExecuteOntapPatch: `ExecuteOntapPatch` sends the ONTAP `PATCH` request to
+// the `StoragePool` cluster.
 //
 //   - ontapPath: The resource path of the ONTAP resource. Format:
 //     `projects/{project_number}/locations/{location_id}/storagePools/{storage_po
@@ -9074,10 +9076,10 @@ type ProjectsLocationsStoragePoolsOntapExecuteOntapPostCall struct {
 	header_                 http.Header
 }
 
-// ExecuteOntapPost: `ExecuteOntapPost` dispatches the ONTAP `POST` request to
-// the `StoragePool` cluster.
+// ExecuteOntapPost: `ExecuteOntapPost` sends the ONTAP `POST` request to the
+// `StoragePool` cluster.
 //
-//   - ontapPath: The resource path of the ONTAP resource. Format:
+//   - ontapPath: The path of the ONTAP resource. Format:
 //     `projects/{project_number}/locations/{location_id}/storagePools/{storage_po
 //     ol_id}/ontap/{ontap_resource_path}`. For example:
 //     `projects/123456789/locations/us-central1/storagePools/my-storage-pool/onta

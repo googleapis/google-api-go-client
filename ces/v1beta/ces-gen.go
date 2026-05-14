@@ -3231,6 +3231,12 @@ type Evaluation struct {
 	// `projects/{project}/locations/{location}/apps/{app}/evaluationDatasets/{evalu
 	// ationDataset}`
 	EvaluationDatasets []string `json:"evaluationDatasets,omitempty"`
+	// EvaluationMetricsConfigOverride: Optional. Overrides metrics config for this
+	// specific evaluation.
+	EvaluationMetricsConfigOverride *EvaluationMetricsConfig `json:"evaluationMetricsConfigOverride,omitempty"`
+	// EvaluationMetricsThresholdOverride: Optional. Overrides metrics thresholds
+	// for this specific evaluation.
+	EvaluationMetricsThresholdOverride *EvaluationMetricsThresholds `json:"evaluationMetricsThresholdOverride,omitempty"`
 	// EvaluationRuns: Output only. The EvaluationRuns that this Evaluation is
 	// associated with.
 	EvaluationRuns []string `json:"evaluationRuns,omitempty"`
@@ -3510,9 +3516,18 @@ type EvaluationGoldenExpectation struct {
 	// AgentResponse: Optional. Check that the agent responded with the correct
 	// response. The role "agent" is implied.
 	AgentResponse *Message `json:"agentResponse,omitempty"`
+	// AgentResponseHallucinationMetricsConfigOverride: Optional. Overrides for
+	// agent_response hallucination metrics.
+	AgentResponseHallucinationMetricsConfigOverride *EvaluationMetricsConfigHallucinationMetricsConfig `json:"agentResponseHallucinationMetricsConfigOverride,omitempty"`
+	// AgentResponseSemanticSimilarityMetricsConfigOverride: Optional. Overrides
+	// for agent_response semantic similarity metrics.
+	AgentResponseSemanticSimilarityMetricsConfigOverride *EvaluationMetricsConfigSemanticSimilarityMetricsConfig `json:"agentResponseSemanticSimilarityMetricsConfigOverride,omitempty"`
 	// AgentTransfer: Optional. Check that the agent transferred the conversation
 	// to a different agent.
 	AgentTransfer *AgentTransfer `json:"agentTransfer,omitempty"`
+	// ExpectationLevelMetricsThresholdsOverride: Optional. Overrides metrics at
+	// the step level.
+	ExpectationLevelMetricsThresholdsOverride *EvaluationMetricsThresholdsGoldenEvaluationMetricsThresholdsExpectationLevelMetricsThresholds `json:"expectationLevelMetricsThresholdsOverride,omitempty"`
 	// MockToolResponse: Optional. The tool response to mock, with the parameters
 	// of interest specified. Any parameters not specified will be hallucinated by
 	// the LLM.
@@ -3520,6 +3535,9 @@ type EvaluationGoldenExpectation struct {
 	// Note: Optional. A note for this requirement, useful in reporting when
 	// specific checks fail. E.g., "Check_Payment_Tool_Called".
 	Note string `json:"note,omitempty"`
+	// SkipEvaluation: Optional. If set to true, this specific expectation will not
+	// be evaluated.
+	SkipEvaluation bool `json:"skipEvaluation,omitempty"`
 	// ToolCall: Optional. Check that a specific tool was called with the
 	// parameters.
 	ToolCall *ToolCall `json:"toolCall,omitempty"`
@@ -3551,26 +3569,260 @@ func (s EvaluationGoldenExpectation) MarshalJSON() ([]byte, error) {
 // EvaluationGoldenTurn: A golden turn defines a single turn in a golden
 // conversation.
 type EvaluationGoldenTurn struct {
+	// HallucinationMetricBehaviorOverride: Optional. Override for turn-level
+	// hallucination metric behavior.
+	//
+	// Possible values:
+	//   "HALLUCINATION_METRIC_BEHAVIOR_UNSPECIFIED" - Unspecified hallucination
+	// metric behavior.
+	//   "DISABLED" - Disable hallucination metric.
+	//   "ENABLED" - Enable hallucination metric.
+	HallucinationMetricBehaviorOverride string `json:"hallucinationMetricBehaviorOverride,omitempty"`
 	// RootSpan: Optional. The root span of the golden turn for processing and
-	// maintaining audio information.
+	// maintaining audio information. The uri for the audio must contain audio
+	// saved in 16Khz sample rate.
 	RootSpan *Span `json:"rootSpan,omitempty"`
 	// Steps: Required. The steps required to replay a golden conversation.
 	Steps []*EvaluationStep `json:"steps,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RootSpan") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// TurnLevelMetricsThresholdsOverride: Optional. Overrides for turn-level
+	// metric thresholds.
+	TurnLevelMetricsThresholdsOverride *EvaluationMetricsThresholdsGoldenEvaluationMetricsThresholdsTurnLevelMetricsThresholds `json:"turnLevelMetricsThresholdsOverride,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "HallucinationMetricBehaviorOverride") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RootSpan") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "HallucinationMetricBehaviorOverride") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
 	NullFields []string `json:"-"`
 }
 
 func (s EvaluationGoldenTurn) MarshalJSON() ([]byte, error) {
 	type NoMethod EvaluationGoldenTurn
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EvaluationMetricsConfig: Configures the metrics for an evaluation.
+type EvaluationMetricsConfig struct {
+	// GoldenMetricsConfig: Optional. Configuration for the golden metrics for the
+	// evaluation.
+	GoldenMetricsConfig *EvaluationMetricsConfigGoldenMetricsConfig `json:"goldenMetricsConfig,omitempty"`
+	// ScenarioMetricsConfig: Optional. Configuration for the scenario metrics for
+	// the evaluation.
+	ScenarioMetricsConfig *EvaluationMetricsConfigScenarioMetricsConfig `json:"scenarioMetricsConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GoldenMetricsConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GoldenMetricsConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EvaluationMetricsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EvaluationMetricsConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EvaluationMetricsConfigExpectationsMetMetricsConfig: Configuration for the
+// expectation level metrics for the evaluation. To disable the metric, set the
+// message but do not set the `enable_expectations_met_metrics` field to true
+// (or explicitly set it to false). To unset the configuration and fallback to
+// the default behavior, omit the message entirely.
+type EvaluationMetricsConfigExpectationsMetMetricsConfig struct {
+	// EnableExpectationsMetMetrics: Optional. Whether to calculate the expectation
+	// level metrics for the evaluation.
+	EnableExpectationsMetMetrics bool `json:"enableExpectationsMetMetrics,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableExpectationsMetMetrics") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableExpectationsMetMetrics") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EvaluationMetricsConfigExpectationsMetMetricsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EvaluationMetricsConfigExpectationsMetMetricsConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EvaluationMetricsConfigGoldenMetricsConfig: Configuration for the golden
+// metrics for the evaluation.
+type EvaluationMetricsConfigGoldenMetricsConfig struct {
+	// SemanticSimilarityMetricsConfig: Optional. Global configuration for semantic
+	// similarity metrics.
+	SemanticSimilarityMetricsConfig *EvaluationMetricsConfigSemanticSimilarityMetricsConfig `json:"semanticSimilarityMetricsConfig,omitempty"`
+	// StepToolCorrectnessMetricsConfig: Optional. Configuration for step level
+	// tool correctness metrics.
+	StepToolCorrectnessMetricsConfig *EvaluationMetricsConfigToolCorrectnessMetricsConfig `json:"stepToolCorrectnessMetricsConfig,omitempty"`
+	// ToolCorrectnessMetricsConfig: Optional. Configuration for turn level tool
+	// correctness metrics.
+	ToolCorrectnessMetricsConfig *EvaluationMetricsConfigToolCorrectnessMetricsConfig `json:"toolCorrectnessMetricsConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "SemanticSimilarityMetricsConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SemanticSimilarityMetricsConfig")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EvaluationMetricsConfigGoldenMetricsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EvaluationMetricsConfigGoldenMetricsConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EvaluationMetricsConfigHallucinationMetricsConfig: Configuration for the
+// hallucination metrics for the evaluation. To disable the metric, set the
+// message but do not set the `enable_hallucination_metrics` field to true (or
+// explicitly set it to false). To unset the configuration and fallback to the
+// default behavior, omit the message entirely.
+type EvaluationMetricsConfigHallucinationMetricsConfig struct {
+	// EnableHallucinationMetrics: Optional. Whether to calculate hallucination
+	// metrics for the evaluation.
+	EnableHallucinationMetrics bool `json:"enableHallucinationMetrics,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableHallucinationMetrics")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableHallucinationMetrics") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EvaluationMetricsConfigHallucinationMetricsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EvaluationMetricsConfigHallucinationMetricsConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EvaluationMetricsConfigScenarioMetricsConfig: Configuration for the scenario
+// metrics for the evaluation.
+type EvaluationMetricsConfigScenarioMetricsConfig struct {
+	// ExpectationsMetMetricsConfig: Optional. Configuration for expectation level
+	// metrics.
+	ExpectationsMetMetricsConfig *EvaluationMetricsConfigExpectationsMetMetricsConfig `json:"expectationsMetMetricsConfig,omitempty"`
+	// UserGoalMetMetricsConfig: Optional. Configuration for user goal met metrics.
+	UserGoalMetMetricsConfig *EvaluationMetricsConfigUserGoalMetMetricsConfig `json:"userGoalMetMetricsConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ExpectationsMetMetricsConfig") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExpectationsMetMetricsConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EvaluationMetricsConfigScenarioMetricsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EvaluationMetricsConfigScenarioMetricsConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EvaluationMetricsConfigSemanticSimilarityMetricsConfig: Configuration for
+// similarity metrics for the evaluation. To disable the metric, set the
+// message but do not set the `enable_semantic_similarity_metrics` field to
+// true (or explicitly set it to false). To unset the configuration and
+// fallback to the default behavior, omit the message entirely.
+type EvaluationMetricsConfigSemanticSimilarityMetricsConfig struct {
+	// EnableSemanticSimilarityMetrics: Optional. Whether to calculate semantic
+	// similarity metrics for the evaluation.
+	EnableSemanticSimilarityMetrics bool `json:"enableSemanticSimilarityMetrics,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableSemanticSimilarityMetrics") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableSemanticSimilarityMetrics")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EvaluationMetricsConfigSemanticSimilarityMetricsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EvaluationMetricsConfigSemanticSimilarityMetricsConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EvaluationMetricsConfigToolCorrectnessMetricsConfig: Configuration for
+// correctness metrics for the evaluation. To disable the metric, set the
+// message but do not set the `enable_tool_correctness_metrics` field to true
+// (or explicitly set it to false). To unset the configuration and fallback to
+// the default behavior, omit the message entirely.
+type EvaluationMetricsConfigToolCorrectnessMetricsConfig struct {
+	// EnableToolCorrectnessMetrics: Optional. Whether to calculate tool
+	// correctness metrics for the evaluation.
+	EnableToolCorrectnessMetrics bool `json:"enableToolCorrectnessMetrics,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableToolCorrectnessMetrics") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableToolCorrectnessMetrics") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EvaluationMetricsConfigToolCorrectnessMetricsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EvaluationMetricsConfigToolCorrectnessMetricsConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EvaluationMetricsConfigUserGoalMetMetricsConfig: Configuration for the user
+// goal met metrics for the evaluation. To disable the metric, set the message
+// but do not set the `enable_user_goal_met_metrics` field to true (or
+// explicitly set it to false). To unset the configuration and fallback to the
+// default behavior, omit the message entirely.
+type EvaluationMetricsConfigUserGoalMetMetricsConfig struct {
+	// EnableUserGoalMetMetrics: Optional. Whether to calculate the user goal met
+	// metrics for the evaluation.
+	EnableUserGoalMetMetrics bool `json:"enableUserGoalMetMetrics,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableUserGoalMetMetrics")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableUserGoalMetMetrics") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EvaluationMetricsConfigUserGoalMetMetricsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EvaluationMetricsConfigUserGoalMetMetricsConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4975,6 +5227,8 @@ type EvaluationSettings struct {
 	//   "NAIVE" - Run the evaluation as naive replay, where the run is a single
 	// session with no context injected.
 	GoldenRunMethod string `json:"goldenRunMethod,omitempty"`
+	// MetricsConfig: Optional. Configures the default metrics for evaluations.
+	MetricsConfig *EvaluationMetricsConfig `json:"metricsConfig,omitempty"`
 	// ScenarioConversationInitiator: Optional. Who starts the conversation in a
 	// scenario evaluation.
 	//
@@ -8040,234 +8294,6 @@ type OAuthConfig struct {
 
 func (s OAuthConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod OAuthConfig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// Omnichannel: Represents an Omnichannel resource.
-type Omnichannel struct {
-	// CreateTime: Output only. Timestamp when the omnichannel resource was
-	// created.
-	CreateTime string `json:"createTime,omitempty"`
-	// Description: Optional. Human-readable description of the omnichannel
-	// resource.
-	Description string `json:"description,omitempty"`
-	// DisplayName: Required. Display name of the omnichannel resource.
-	DisplayName string `json:"displayName,omitempty"`
-	// Etag: Output only. Etag used to ensure the object hasn't changed during a
-	// read-modify-write operation.
-	Etag string `json:"etag,omitempty"`
-	// IntegrationConfig: Optional. The integration config for the omnichannel
-	// resource.
-	IntegrationConfig *OmnichannelIntegrationConfig `json:"integrationConfig,omitempty"`
-	// Name: Identifier. The unique identifier of the omnichannel resource. Format:
-	// `projects/{project}/locations/{location}/omnichannels/{omnichannel}`
-	Name string `json:"name,omitempty"`
-	// UpdateTime: Output only. Timestamp when the omnichannel resource was last
-	// updated.
-	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s Omnichannel) MarshalJSON() ([]byte, error) {
-	type NoMethod Omnichannel
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// OmnichannelIntegrationConfig: OmnichannelIntegrationConfig contains all App
-// integration configs.
-type OmnichannelIntegrationConfig struct {
-	// ChannelConfigs: Optional. Various of configuration for handling App events.
-	ChannelConfigs map[string]OmnichannelIntegrationConfigChannelConfig `json:"channelConfigs,omitempty"`
-	// RoutingConfigs: Optional. The key of routing_configs is a key of
-	// `app_configs`, value is a `RoutingConfig`, which contains subscriber's key.
-	RoutingConfigs map[string]OmnichannelIntegrationConfigRoutingConfig `json:"routingConfigs,omitempty"`
-	// SubscriberConfigs: Optional. Various of subscribers configs.
-	SubscriberConfigs map[string]OmnichannelIntegrationConfigSubscriberConfig `json:"subscriberConfigs,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ChannelConfigs") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ChannelConfigs") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s OmnichannelIntegrationConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod OmnichannelIntegrationConfig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// OmnichannelIntegrationConfigCesAppConfig: Configs for CES app.
-type OmnichannelIntegrationConfigCesAppConfig struct {
-	// App: The unique identifier of the CES app. Format:
-	// `projects/{project}/locations/{location}/apps/{app}`
-	App string `json:"app,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "App") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "App") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s OmnichannelIntegrationConfigCesAppConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod OmnichannelIntegrationConfigCesAppConfig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// OmnichannelIntegrationConfigChannelConfig: ChannelConfig contains config for
-// various of app integration.
-type OmnichannelIntegrationConfigChannelConfig struct {
-	// WhatsappConfig: WhatsApp config.
-	WhatsappConfig *OmnichannelIntegrationConfigWhatsappConfig `json:"whatsappConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "WhatsappConfig") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "WhatsappConfig") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s OmnichannelIntegrationConfigChannelConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod OmnichannelIntegrationConfigChannelConfig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// OmnichannelIntegrationConfigRoutingConfig: Routing config specify how/who to
-// route app events to a subscriber.
-type OmnichannelIntegrationConfigRoutingConfig struct {
-	// SubscriberKey: The key of the subscriber.
-	SubscriberKey string `json:"subscriberKey,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SubscriberKey") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SubscriberKey") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s OmnichannelIntegrationConfigRoutingConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod OmnichannelIntegrationConfigRoutingConfig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// OmnichannelIntegrationConfigSubscriberConfig: Configs of subscribers.
-type OmnichannelIntegrationConfigSubscriberConfig struct {
-	// CesAppConfig: Ces app config.
-	CesAppConfig *OmnichannelIntegrationConfigCesAppConfig `json:"cesAppConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CesAppConfig") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CesAppConfig") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s OmnichannelIntegrationConfigSubscriberConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod OmnichannelIntegrationConfigSubscriberConfig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// OmnichannelIntegrationConfigWhatsappConfig: How Omnichannel should
-// receive/reply events from WhatsApp.
-type OmnichannelIntegrationConfigWhatsappConfig struct {
-	// MetaBusinessPortfolioId: The Meta Business Portfolio (MBP) ID.
-	// https://www.facebook.com/business/help/1710077379203657
-	MetaBusinessPortfolioId string `json:"metaBusinessPortfolioId,omitempty"`
-	// PhoneNumber: The phone number used for sending/receiving messages.
-	PhoneNumber string `json:"phoneNumber,omitempty"`
-	// PhoneNumberId: The Phone Number ID associated with the WhatsApp Business
-	// Account.
-	PhoneNumberId string `json:"phoneNumberId,omitempty"`
-	// WebhookVerifyToken: The verify token configured in the Meta App Dashboard
-	// for webhook verification.
-	WebhookVerifyToken string `json:"webhookVerifyToken,omitempty"`
-	// WhatsappBusinessAccountId: The customer's WhatsApp Business Account (WABA)
-	// ID.
-	WhatsappBusinessAccountId string `json:"whatsappBusinessAccountId,omitempty"`
-	// WhatsappBusinessToken: The access token for authenticating API calls to the
-	// WhatsApp Cloud API.
-	// https://developers.facebook.com/docs/whatsapp/business-management-api/get-started/#business-integration-system-user-access-tokens
-	WhatsappBusinessToken string `json:"whatsappBusinessToken,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MetaBusinessPortfolioId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MetaBusinessPortfolioId") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s OmnichannelIntegrationConfigWhatsappConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod OmnichannelIntegrationConfigWhatsappConfig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// OmnichannelOperationMetadata: Represents the metadata of the long-running
-// operation.
-type OmnichannelOperationMetadata struct {
-	// CreateTime: Output only. The time the operation was created.
-	CreateTime string `json:"createTime,omitempty"`
-	// EndTime: Output only. The time the operation finished running.
-	EndTime string `json:"endTime,omitempty"`
-	// RequestedCancellation: Output only. Identifies whether the user has
-	// requested cancellation of the operation.
-	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
-	// StatusMessage: Output only. Human-readable status of the operation, if any.
-	StatusMessage string `json:"statusMessage,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s OmnichannelOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod OmnichannelOperationMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

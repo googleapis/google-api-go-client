@@ -1964,7 +1964,7 @@ func (s StorageConfig) MarshalJSON() ([]byte, error) {
 }
 
 // StorageResource: A resource representing a form of persistent storage that
-// is accessible to compute resources in the cluster.
+// can be mounted onto compute resources in the cluster.
 type StorageResource struct {
 	// Bucket: Output only. Reference to a Google Cloud Storage bucket. Populated
 	// if and only if the storage resource was configured to use Google Cloud

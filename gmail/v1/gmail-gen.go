@@ -461,22 +461,33 @@ func (s BatchDeleteMessagesRequest) MarshalJSON() ([]byte, error) {
 }
 
 type BatchModifyMessagesRequest struct {
+	// AddClassificationLabels: A list of Classification Label values to add. If a
+	// Classification Label with the same label ID is already applied to the
+	// message, fields with existing field IDs will be updated and fields with new
+	// field IDs will be added. There's a limit of 20 Classification Label values
+	// per request. If the message is already classified and the final total number
+	// of Classification Label values exceeds the maximum allowed number of
+	// Classification Label values per message, the modification fails.
+	AddClassificationLabels []*ClassificationLabelValue `json:"addClassificationLabels,omitempty"`
 	// AddLabelIds: A list of label IDs to add to messages.
 	AddLabelIds []string `json:"addLabelIds,omitempty"`
 	// Ids: The IDs of the messages to modify. There is a limit of 1000 ids per
 	// request.
 	Ids []string `json:"ids,omitempty"`
+	// RemoveClassificationLabelIds: A list of Classification Label values to
+	// remove from messages.
+	RemoveClassificationLabelIds []string `json:"removeClassificationLabelIds,omitempty"`
 	// RemoveLabelIds: A list of label IDs to remove from messages.
 	RemoveLabelIds []string `json:"removeLabelIds,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AddLabelIds") to
+	// ForceSendFields is a list of field names (e.g. "AddClassificationLabels") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AddLabelIds") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AddClassificationLabels") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1624,7 +1635,9 @@ type Message struct {
 	// Available Classification Label schemas can be queried using the Google Drive
 	// Labels API. Each classification label ID must be unique. If duplicate IDs
 	// are provided, only one will be retained, and the selection is arbitrary.
-	// Only used for Google Workspace accounts.
+	// Only used for Google Workspace accounts. There's a limit of 20
+	// Classification Label values per request. If the Classification Label values
+	// exceeds the maximum allowed number, the request fails.
 	ClassificationLabelValues []*ClassificationLabelValue `json:"classificationLabelValues,omitempty"`
 	// HistoryId: The ID of the last history record that modified this message.
 	HistoryId uint64 `json:"historyId,omitempty,string"`
@@ -1775,21 +1788,32 @@ func (s MessagePartHeader) MarshalJSON() ([]byte, error) {
 }
 
 type ModifyMessageRequest struct {
+	// AddClassificationLabels: A list of classification label values to add. If a
+	// Classification Label with the same label ID is already applied to the
+	// message, fields with existing field IDs will be updated and fields with new
+	// field IDs will be added. There's a limit of 20 Classification Label values
+	// per request. If the message is already classified and the final total number
+	// of Classification Label values exceeds the maximum allowed number of
+	// Classification Label values per message, the modification fails.
+	AddClassificationLabels []*ClassificationLabelValue `json:"addClassificationLabels,omitempty"`
 	// AddLabelIds: A list of IDs of labels to add to this message. You can add up
 	// to 100 labels with each update.
 	AddLabelIds []string `json:"addLabelIds,omitempty"`
+	// RemoveClassificationLabelIds: A list of Classification Label values to
+	// remove from this message.
+	RemoveClassificationLabelIds []string `json:"removeClassificationLabelIds,omitempty"`
 	// RemoveLabelIds: A list IDs of labels to remove from this message. You can
 	// remove up to 100 labels with each update.
 	RemoveLabelIds []string `json:"removeLabelIds,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AddLabelIds") to
+	// ForceSendFields is a list of field names (e.g. "AddClassificationLabels") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AddLabelIds") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AddClassificationLabels") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4353,7 +4377,14 @@ type UsersMessagesBatchModifyCall struct {
 	header_                    http.Header
 }
 
-// BatchModify: Modifies the labels on the specified messages.
+// BatchModify: Modifies the labels and the Classification Label values on the
+// specified messages. For administrators modifying messages for users in their
+// organization, requests require authorization with a service account
+// (https://developers.google.com/identity/protocols/OAuth2ServiceAccount) that
+// has domain-wide delegation authority
+// (https://developers.google.com/identity/protocols/OAuth2ServiceAccount#delegatingauthority)
+// to impersonate users with the
+// `https://www.googleapis.com/auth/gmail.modify.restricted` scope.
 //
 //   - userId: The user's email address. The special value `me` can be used to
 //     indicate the authenticated user.
@@ -5243,7 +5274,14 @@ type UsersMessagesModifyCall struct {
 	header_              http.Header
 }
 
-// Modify: Modifies the labels on the specified message.
+// Modify: Modifies the labels and the Classification Label values on the
+// specified message. For administrators modifying message for users in their
+// organization, requests require authorization with a service account
+// (https://developers.google.com/identity/protocols/OAuth2ServiceAccount) that
+// has domain-wide delegation authority
+// (https://developers.google.com/identity/protocols/OAuth2ServiceAccount#delegatingauthority)
+// to impersonate users with the
+// `https://www.googleapis.com/auth/gmail.modify.restricted` scope.
 //
 //   - id: The ID of the message to modify.
 //   - userId: The user's email address. The special value `me` can be used to

@@ -3772,6 +3772,8 @@ type Creative struct {
 	// Trackto.
 	//   "CREATIVE_AUTHORING_SOURCE_BORNLOGIC" - Creative authoring source is
 	// Bornlogic.
+	//   "CREATIVE_AUTHORING_SOURCE_BEGEN_AI" - Creative authoring source is
+	// BEGEN_AI.
 	AuthoringSource string `json:"authoringSource,omitempty"`
 	// AuthoringTool: Authoring tool for HTML5 banner creatives. This is a
 	// read-only field. Applicable to the following creative types: HTML5_BANNER.

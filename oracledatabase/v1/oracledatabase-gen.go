@@ -184,6 +184,13 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.ExadbVmClusters = NewProjectsLocationsExadbVmClustersService(s)
 	rs.ExascaleDbStorageVaults = NewProjectsLocationsExascaleDbStorageVaultsService(s)
 	rs.GiVersions = NewProjectsLocationsGiVersionsService(s)
+	rs.GoldengateConnectionAssignments = NewProjectsLocationsGoldengateConnectionAssignmentsService(s)
+	rs.GoldengateConnectionTypes = NewProjectsLocationsGoldengateConnectionTypesService(s)
+	rs.GoldengateConnections = NewProjectsLocationsGoldengateConnectionsService(s)
+	rs.GoldengateDeploymentEnvironments = NewProjectsLocationsGoldengateDeploymentEnvironmentsService(s)
+	rs.GoldengateDeploymentTypes = NewProjectsLocationsGoldengateDeploymentTypesService(s)
+	rs.GoldengateDeploymentVersions = NewProjectsLocationsGoldengateDeploymentVersionsService(s)
+	rs.GoldengateDeployments = NewProjectsLocationsGoldengateDeploymentsService(s)
 	rs.OdbNetworks = NewProjectsLocationsOdbNetworksService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.PluggableDatabases = NewProjectsLocationsPluggableDatabasesService(s)
@@ -224,6 +231,20 @@ type ProjectsLocationsService struct {
 	ExascaleDbStorageVaults *ProjectsLocationsExascaleDbStorageVaultsService
 
 	GiVersions *ProjectsLocationsGiVersionsService
+
+	GoldengateConnectionAssignments *ProjectsLocationsGoldengateConnectionAssignmentsService
+
+	GoldengateConnectionTypes *ProjectsLocationsGoldengateConnectionTypesService
+
+	GoldengateConnections *ProjectsLocationsGoldengateConnectionsService
+
+	GoldengateDeploymentEnvironments *ProjectsLocationsGoldengateDeploymentEnvironmentsService
+
+	GoldengateDeploymentTypes *ProjectsLocationsGoldengateDeploymentTypesService
+
+	GoldengateDeploymentVersions *ProjectsLocationsGoldengateDeploymentVersionsService
+
+	GoldengateDeployments *ProjectsLocationsGoldengateDeploymentsService
 
 	OdbNetworks *ProjectsLocationsOdbNetworksService
 
@@ -424,6 +445,69 @@ type ProjectsLocationsGiVersionsMinorVersionsService struct {
 	s *Service
 }
 
+func NewProjectsLocationsGoldengateConnectionAssignmentsService(s *Service) *ProjectsLocationsGoldengateConnectionAssignmentsService {
+	rs := &ProjectsLocationsGoldengateConnectionAssignmentsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsGoldengateConnectionAssignmentsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsGoldengateConnectionTypesService(s *Service) *ProjectsLocationsGoldengateConnectionTypesService {
+	rs := &ProjectsLocationsGoldengateConnectionTypesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsGoldengateConnectionTypesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsGoldengateConnectionsService(s *Service) *ProjectsLocationsGoldengateConnectionsService {
+	rs := &ProjectsLocationsGoldengateConnectionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsGoldengateConnectionsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsGoldengateDeploymentEnvironmentsService(s *Service) *ProjectsLocationsGoldengateDeploymentEnvironmentsService {
+	rs := &ProjectsLocationsGoldengateDeploymentEnvironmentsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsGoldengateDeploymentEnvironmentsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsGoldengateDeploymentTypesService(s *Service) *ProjectsLocationsGoldengateDeploymentTypesService {
+	rs := &ProjectsLocationsGoldengateDeploymentTypesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsGoldengateDeploymentTypesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsGoldengateDeploymentVersionsService(s *Service) *ProjectsLocationsGoldengateDeploymentVersionsService {
+	rs := &ProjectsLocationsGoldengateDeploymentVersionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsGoldengateDeploymentVersionsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsGoldengateDeploymentsService(s *Service) *ProjectsLocationsGoldengateDeploymentsService {
+	rs := &ProjectsLocationsGoldengateDeploymentsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsGoldengateDeploymentsService struct {
+	s *Service
+}
+
 func NewProjectsLocationsOdbNetworksService(s *Service) *ProjectsLocationsOdbNetworksService {
 	rs := &ProjectsLocationsOdbNetworksService{s: s}
 	rs.OdbSubnets = NewProjectsLocationsOdbNetworksOdbSubnetsService(s)
@@ -490,6 +574,43 @@ type AllConnectionStrings struct {
 
 func (s AllConnectionStrings) MarshalJSON() ([]byte, error) {
 	type NoMethod AllConnectionStrings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AmazonS3IcebergStorage: The Amazon S3 Iceberg storage.
+type AmazonS3IcebergStorage struct {
+	// AccessKeyId: Required. The access key ID of Amazon S3.
+	AccessKeyId string `json:"accessKeyId,omitempty"`
+	// Bucket: Required. The bucket of Amazon S3.
+	Bucket string `json:"bucket,omitempty"`
+	// Endpoint: Optional. The endpoint of Amazon S3.
+	Endpoint string `json:"endpoint,omitempty"`
+	// Region: Required. The region of Amazon S3.
+	Region string `json:"region,omitempty"`
+	// SchemeType: Required. The scheme type of Amazon S3.
+	//
+	// Possible values:
+	//   "SCHEME_TYPE_UNSPECIFIED" - Scheme type not specified.
+	//   "S3" - S3 scheme.
+	//   "S3A" - S3A scheme.
+	SchemeType string `json:"schemeType,omitempty"`
+	// SecretAccessKeySecret: Optional. The secret access key of Amazon S3.
+	SecretAccessKeySecret string `json:"secretAccessKeySecret,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccessKeyId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessKeyId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AmazonS3IcebergStorage) MarshalJSON() ([]byte, error) {
+	type NoMethod AmazonS3IcebergStorage
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1359,6 +1480,35 @@ type AutonomousDbVersion struct {
 
 func (s AutonomousDbVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod AutonomousDbVersion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AzureDataLakeStorageIcebergStorage: The Azure Data Lake Storage Iceberg
+// storage.
+type AzureDataLakeStorageIcebergStorage struct {
+	// AccountKeySecret: Optional. The account key of Azure Data Lake Storage.
+	AccountKeySecret string `json:"accountKeySecret,omitempty"`
+	// AzureAccount: Required. The account of Azure Data Lake Storage.
+	AzureAccount string `json:"azureAccount,omitempty"`
+	// Container: Required. The container of Azure Data Lake Storage.
+	Container string `json:"container,omitempty"`
+	// Endpoint: Optional. The endpoint of Azure Data Lake Storage.
+	Endpoint string `json:"endpoint,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccountKeySecret") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccountKeySecret") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AzureDataLakeStorageIcebergStorage) MarshalJSON() ([]byte, error) {
+	type NoMethod AzureDataLakeStorageIcebergStorage
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2867,6 +3017,44 @@ func (s DefinedTagValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DeploymentDiagnosticData: The deployment diagnostic data.
+type DeploymentDiagnosticData struct {
+	// Bucket: Output only. The bucket name.
+	Bucket string `json:"bucket,omitempty"`
+	// DiagnosticEndTime: Output only. The time diagnostic end.
+	DiagnosticEndTime string `json:"diagnosticEndTime,omitempty"`
+	// DiagnosticStartTime: Output only. The time diagnostic start.
+	DiagnosticStartTime string `json:"diagnosticStartTime,omitempty"`
+	// DiagnosticState: Output only. The diagnostic state.
+	//
+	// Possible values:
+	//   "DIAGNOSTIC_STATE_UNSPECIFIED" - The diagnostic state is unspecified.
+	//   "IN_PROGRESS" - The diagnostic is in progress.
+	//   "SUCCEEDED" - The diagnostic completed successfully.
+	//   "FAILED" - The diagnostic failed.
+	DiagnosticState string `json:"diagnosticState,omitempty"`
+	// Namespace: Output only. The namespace name.
+	Namespace string `json:"namespace,omitempty"`
+	// Object: Output only. The object name.
+	Object string `json:"object,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeploymentDiagnosticData) MarshalJSON() ([]byte, error) {
+	type NoMethod DeploymentDiagnosticData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -3419,6 +3607,2713 @@ func (s GiVersion) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GlueIcebergCatalog: The Glue Iceberg catalog.
+type GlueIcebergCatalog struct {
+	// GlueId: Required. The catalog ID of Glue.
+	GlueId string `json:"glueId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GlueId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GlueId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GlueIcebergCatalog) MarshalJSON() ([]byte, error) {
+	type NoMethod GlueIcebergCatalog
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateAmazonKinesisConnectionProperties: The properties of
+// GoldengateAmazonKinesisConnection.
+type GoldengateAmazonKinesisConnectionProperties struct {
+	// AccessKeyId: Optional. Access key ID to access the Amazon Kinesis.
+	AccessKeyId string `json:"accessKeyId,omitempty"`
+	// AwsRegion: Optional. The name of the AWS region. If not provided, Goldengate
+	// will default to 'us-west-1'.
+	AwsRegion string `json:"awsRegion,omitempty"`
+	// Endpoint: Optional. The endpoint URL of the Amazon Kinesis service. e.g.:
+	// 'https://kinesis.us-east-1.amazonaws.com' If not provided, Goldengate will
+	// default to 'https://kinesis..amazonaws.com'.
+	Endpoint string `json:"endpoint,omitempty"`
+	// SecretAccessKeySecret: Optional. Secret access key to access the Amazon
+	// Kinesis.
+	SecretAccessKeySecret string `json:"secretAccessKeySecret,omitempty"`
+	// TechnologyType: Optional. The technology type of AmazonKinesisConnection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccessKeyId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessKeyId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateAmazonKinesisConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateAmazonKinesisConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateAmazonRedshiftConnectionProperties: The properties of
+// GoldengateAmazonRedshiftConnection.
+type GoldengateAmazonRedshiftConnectionProperties struct {
+	// ConnectionUrl: Optional. Connection URL. e.g.:
+	// 'jdbc:redshift://aws-redshift-instance.aaaaaaaaaaaa.us-east-2.redshift.amazon
+	// aws.com:5439/mydb'
+	ConnectionUrl string `json:"connectionUrl,omitempty"`
+	// Password: Optional. Input only. The password Oracle Goldengate uses for
+	// Amazon Redshift connection in plain text.
+	Password string `json:"password,omitempty"`
+	// PasswordSecretVersion: Optional. Input only. The resource name of a secret
+	// version in Secret Manager which contains the password Oracle Goldengate uses
+	// for Amazon Redshift connection. Format:
+	// projects/{project}/secrets/{secret}/versions/{version}.
+	PasswordSecretVersion string `json:"passwordSecretVersion,omitempty"`
+	// TechnologyType: Optional. The technology type of AmazonRedshiftConnection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// Username: Optional. The username Oracle Goldengate uses to connect the
+	// associated system of the given technology.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConnectionUrl") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConnectionUrl") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateAmazonRedshiftConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateAmazonRedshiftConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateAmazonS3ConnectionProperties: The properties of
+// GoldengateAmazonS3Connection.
+type GoldengateAmazonS3ConnectionProperties struct {
+	// AccessKeyId: Optional. Access key ID to access the Amazon S3 bucket.
+	AccessKeyId string `json:"accessKeyId,omitempty"`
+	// Endpoint: Optional. The Amazon Endpoint for S3.
+	Endpoint string `json:"endpoint,omitempty"`
+	// Region: Optional. The name of the AWS region where the bucket is created.
+	Region string `json:"region,omitempty"`
+	// SecretAccessKeySecret: Optional. Secret access key to access the Amazon S3
+	// bucket.
+	SecretAccessKeySecret string `json:"secretAccessKeySecret,omitempty"`
+	// TechnologyType: Optional. The technology type of AmazonS3Connection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccessKeyId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessKeyId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateAmazonS3ConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateAmazonS3ConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateAzureDataLakeStorageConnectionProperties: The properties of
+// GoldengateAzureDataLakeStorageConnection.
+type GoldengateAzureDataLakeStorageConnectionProperties struct {
+	// Account: Optional. Sets the Azure storage account name.
+	Account string `json:"account,omitempty"`
+	// AccountKeySecret: Optional. Azure storage account key. This property is
+	// required when 'authentication_type' is set to 'SHARED_KEY'.
+	AccountKeySecret string `json:"accountKeySecret,omitempty"`
+	// AuthenticationType: Optional. Authentication mechanism to access Azure Data
+	// Lake Storage.
+	//
+	// Possible values:
+	//   "AUTHENTICATION_TYPE_UNSPECIFIED" - Authentication type not specified.
+	//   "SHARED_KEY" - Shared key authentication.
+	//   "SHARED_ACCESS_SIGNATURE" - Shared access signature authentication.
+	//   "AZURE_ACTIVE_DIRECTORY" - Azure active directory authentication.
+	AuthenticationType string `json:"authenticationType,omitempty"`
+	// AzureAuthorityHost: Optional. The endpoint used for authentication with
+	// Microsoft Entra ID (formerly Azure Active Directory). Default value:
+	// https://login.microsoftonline.com
+	AzureAuthorityHost string `json:"azureAuthorityHost,omitempty"`
+	// AzureTenantId: Optional. Azure tenant ID of the application. This property
+	// is required when 'authentication_type' is set to 'AZURE_ACTIVE_DIRECTORY'.
+	AzureTenantId string `json:"azureTenantId,omitempty"`
+	// ClientId: Optional. Azure client ID of the application. This property is
+	// required when 'authentication_type' is set to 'AZURE_ACTIVE_DIRECTORY'.
+	ClientId string `json:"clientId,omitempty"`
+	// ClientSecret: Optional. Azure client secret (aka application password) for
+	// authentication.
+	ClientSecret string `json:"clientSecret,omitempty"`
+	// Endpoint: Optional. Azure Storage service endpoint. e.g:
+	// https://test.blob.core.windows.net
+	Endpoint string `json:"endpoint,omitempty"`
+	// SasTokenSecret: Optional. Credential that uses a shared access signature
+	// (SAS) to authenticate to an Azure Service.
+	SasTokenSecret string `json:"sasTokenSecret,omitempty"`
+	// TechnologyType: Optional. The technology type of
+	// AzureDataLakeStorageConnection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Account") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Account") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateAzureDataLakeStorageConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateAzureDataLakeStorageConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateAzureSynapseAnalyticsConnectionProperties: The properties of
+// GoldengateAzureSynapseAnalyticsConnection.
+type GoldengateAzureSynapseAnalyticsConnectionProperties struct {
+	// ConnectionString: Optional. JDBC connection string. e.g.:
+	// 'jdbc:sqlserver://.sql.azuresynapse.net:1433;database=;encrypt=true;trustServ
+	// erCertificate=false;hostNameInCertificate=*.sql.azuresynapse.net;loginTimeout
+	// =300;'
+	ConnectionString string `json:"connectionString,omitempty"`
+	// Password: Optional. Input only. The password Oracle Goldengate uses for
+	// Azure Synapse Analytics connection in plain text.
+	Password string `json:"password,omitempty"`
+	// PasswordSecretVersion: Optional. Input only. The resource name of a secret
+	// version in Secret Manager which contains the password Oracle Goldengate uses
+	// for Azure Synapse Analytics connection. Format:
+	// projects/{project}/secrets/{secret}/versions/{version}.
+	PasswordSecretVersion string `json:"passwordSecretVersion,omitempty"`
+	// TechnologyType: Optional. The technology type of
+	// AzureSynapseAnalyticsConnection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// Username: Optional. The username Oracle Goldengate uses to connect the
+	// associated system of the given technology.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConnectionString") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConnectionString") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateAzureSynapseAnalyticsConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateAzureSynapseAnalyticsConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateBackupSchedule: The backup schedule of the GoldengateDeployment.
+type GoldengateBackupSchedule struct {
+	// BackupScheduledTime: Output only. The timestamp of when the backup was
+	// scheduled.
+	BackupScheduledTime string `json:"backupScheduledTime,omitempty"`
+	// Bucket: Output only. The bucket name.
+	Bucket string `json:"bucket,omitempty"`
+	// CompartmentId: Output only. The compartment id.
+	CompartmentId string `json:"compartmentId,omitempty"`
+	// FrequencyBackupScheduled: Output only. The frequency backup scheduled.
+	//
+	// Possible values:
+	//   "FREQUENCY_BACKUP_SCHEDULED_UNSPECIFIED" - The frequency backup scheduled
+	// is unspecified.
+	//   "DAILY" - The frequency backup scheduled is daily.
+	//   "WEEKLY" - The frequency backup scheduled is weekly.
+	//   "MONTHLY" - The frequency backup scheduled is monthly.
+	FrequencyBackupScheduled string `json:"frequencyBackupScheduled,omitempty"`
+	// MetadataOnly: Output only. If metadata only.
+	MetadataOnly bool `json:"metadataOnly,omitempty"`
+	// Namespace: Output only. The namespace name.
+	Namespace string `json:"namespace,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupScheduledTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupScheduledTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateBackupSchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateBackupSchedule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateConnection: Details of the GoldengateConnection resource.
+type GoldengateConnection struct {
+	// CreateTime: Output only. The date and time that the GoldengateConnection was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+	// EntitlementId: Output only. The ID of the subscription entitlement
+	// associated with the GoldengateConnection.
+	EntitlementId string `json:"entitlementId,omitempty"`
+	// GcpOracleZone: Optional. The GCP Oracle zone where Oracle
+	// GoldengateConnection is hosted. Example: us-east4-b-r2. If not specified,
+	// the system will pick a zone based on availability.
+	GcpOracleZone string `json:"gcpOracleZone,omitempty"`
+	// Labels: Optional. The labels or tags associated with the
+	// GoldengateConnection.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. The name of the GoldengateConnection resource in the
+	// following format:
+	// projects/{project}/locations/{region}/goldengateConnections/{goldengate_conne
+	// ction}
+	Name string `json:"name,omitempty"`
+	// OciUrl: Output only. HTTPS link to OCI resources exposed to Customer via UI
+	// Interface.
+	OciUrl string `json:"ociUrl,omitempty"`
+	// OdbNetwork: Optional. The name of the OdbNetwork associated with the
+	// GoldengateConnection. The format is
+	// projects/{project}/locations/{location}/odbNetworks/{odb_network}. It is
+	// optional but if specified, this should match the parent ODBNetwork of the
+	// OdbSubnet.
+	OdbNetwork string `json:"odbNetwork,omitempty"`
+	// OdbSubnet: Optional. The name of the OdbSubnet associated with the
+	// GoldengateConnection for IP allocation. Format:
+	// projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/
+	// {odb_subnet}
+	OdbSubnet string `json:"odbSubnet,omitempty"`
+	// Properties: Required. The properties of the GoldengateConnection.
+	Properties *GoldengateConnectionProperties `json:"properties,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateConnection) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateConnection
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateConnectionAssignment: Represents the metadata of a Goldengate
+// Connection Assignment.
+type GoldengateConnectionAssignment struct {
+	// CreateTime: Output only. The time when the connection assignment was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DisplayName: Optional. The display name for the
+	// GoldengateConnectionAssignment.
+	DisplayName string `json:"displayName,omitempty"`
+	// EntitlementId: Output only. The OCID of the entitlement linked to this
+	// resource.
+	EntitlementId string `json:"entitlementId,omitempty"`
+	// Labels: Optional. The labels or tags associated with the
+	// GoldengateConnectionAssignment.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. The name of the GoldengateConnectionAssignment resource in
+	// the following format:
+	// projects/{project}/locations/{region}/goldengateConnectionAssignments/{golden
+	// gate_connection_assignment}
+	Name string `json:"name,omitempty"`
+	// Properties: Required. The properties of the GoldengateConnectionAssignment.
+	Properties *GoldengateConnectionAssignmentProperties `json:"properties,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateConnectionAssignment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateConnectionAssignment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateConnectionAssignmentProperties: The properties of a
+// GoldengateConnectionAssignment.
+type GoldengateConnectionAssignmentProperties struct {
+	// Alias: Output only. Credential store alias.
+	Alias string `json:"alias,omitempty"`
+	// GoldengateConnection: Required. The GoldengateConnection resource to be
+	// assigned. Format:
+	// projects/{project}/locations/{location}/goldengateConnections/{goldengate_con
+	// nection}
+	GoldengateConnection string `json:"goldengateConnection,omitempty"`
+	// GoldengateDeployment: Required. The GoldenGateDeployment to assign the
+	// connection to. Format:
+	// projects/{project}/locations/{location}/goldengateDeployments/{goldengate_dep
+	// loyment}
+	GoldengateDeployment string `json:"goldengateDeployment,omitempty"`
+	// Ocid: Output only. The OCID
+	// (https://docs.cloud.oracle.com/Content/General/Concepts/identifiers.htm) of
+	// the connection assignment being referenced.
+	Ocid string `json:"ocid,omitempty"`
+	// State: Output only. The lifecycle state of the connection assignment.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Lifecycle state is unspecified.
+	//   "CREATING" - Connection assignment is being created.
+	//   "ACTIVE" - Connection assignment is active.
+	//   "FAILED" - Connection assignment failed.
+	//   "UPDATING" - Connection assignment is being updated.
+	//   "DELETING" - Connection assignment is being deleted.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Alias") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Alias") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateConnectionAssignmentProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateConnectionAssignmentProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateConnectionProperties: The properties of a GoldengateConnection.
+type GoldengateConnectionProperties struct {
+	// AmazonKinesisConnectionProperties: Properties for an Amazon Kinesis
+	// connection.
+	AmazonKinesisConnectionProperties *GoldengateAmazonKinesisConnectionProperties `json:"amazonKinesisConnectionProperties,omitempty"`
+	// AmazonRedshiftConnectionProperties: Properties for an Amazon Redshift
+	// connection.
+	AmazonRedshiftConnectionProperties *GoldengateAmazonRedshiftConnectionProperties `json:"amazonRedshiftConnectionProperties,omitempty"`
+	// AmazonS3ConnectionProperties: Properties for an Amazon S3 connection.
+	AmazonS3ConnectionProperties *GoldengateAmazonS3ConnectionProperties `json:"amazonS3ConnectionProperties,omitempty"`
+	// AzureDataLakeStorageConnectionProperties: Properties for an Azure Data Lake
+	// Storage Connection.
+	AzureDataLakeStorageConnectionProperties *GoldengateAzureDataLakeStorageConnectionProperties `json:"azureDataLakeStorageConnectionProperties,omitempty"`
+	// AzureSynapseAnalyticsConnectionProperties: Properties for an Azure Synapse
+	// Analytics connection.
+	AzureSynapseAnalyticsConnectionProperties *GoldengateAzureSynapseAnalyticsConnectionProperties `json:"azureSynapseAnalyticsConnectionProperties,omitempty"`
+	// ConnectionType: Required. The connection type.
+	//
+	// Possible values:
+	//   "GOLDENGATE_CONNECTION_TYPE_UNSPECIFIED" - Connection type unspecified.
+	//   "GOLDENGATE" - Goldengate connection type.
+	//   "KAFKA" - Kafka connection type.
+	//   "KAFKA_SCHEMA_REGISTRY" - Kafka schema registry connection type.
+	//   "MYSQL" - MySQL connection type.
+	//   "JAVA_MESSAGE_SERVICE" - Java message service connection type.
+	//   "MICROSOFT_SQLSERVER" - Microsoft SQL Server connection type.
+	//   "OCI_OBJECT_STORAGE" - OCI object storage connection type.
+	//   "ORACLE" - Oracle connection type.
+	//   "AZURE_DATA_LAKE_STORAGE" - Azure data lake storage connection type.
+	//   "POSTGRESQL" - PostgreSQL connection type.
+	//   "AZURE_SYNAPSE_ANALYTICS" - Azure synapse analytics connection type.
+	//   "SNOWFLAKE" - Snowflake connection type.
+	//   "AMAZON_S3" - Amazon S3 connection type.
+	//   "HDFS" - HDFS connection type.
+	//   "ORACLE_AI_DATA_PLATFORM" - Oracle AI data platform connection type.
+	//   "ORACLE_NOSQL" - Oracle NoSQL connection type.
+	//   "MONGODB" - MongoDB connection type.
+	//   "AMAZON_KINESIS" - Amazon Kinesis connection type.
+	//   "AMAZON_REDSHIFT" - Amazon Redshift connection type.
+	//   "DB2" - DB2 connection type.
+	//   "REDIS" - Redis connection type.
+	//   "ELASTICSEARCH" - Elasticsearch connection type.
+	//   "GENERIC" - Generic connection type.
+	//   "GOOGLE_CLOUD_STORAGE" - Google Cloud Storage connection type.
+	//   "GOOGLE_BIGQUERY" - Google BigQuery connection type.
+	//   "DATABRICKS" - Databricks connection type.
+	//   "GOOGLE_PUBSUB" - Google Pub/Sub connection type.
+	//   "MICROSOFT_FABRIC" - Microsoft Fabric connection type.
+	//   "ICEBERG" - Iceberg connection type.
+	ConnectionType string `json:"connectionType,omitempty"`
+	// DatabricksConnectionProperties: Properties for a Databricks connection.
+	DatabricksConnectionProperties *GoldengateDatabricksConnectionProperties `json:"databricksConnectionProperties,omitempty"`
+	// Db2ConnectionProperties: Properties for a DB2 connection.
+	Db2ConnectionProperties *GoldengateDb2ConnectionProperties `json:"db2ConnectionProperties,omitempty"`
+	// Description: Optional. Metadata about this specific object.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Required. An object's Display Name.
+	DisplayName string `json:"displayName,omitempty"`
+	// ElasticsearchConnectionProperties: Properties for an Elasticsearch
+	// connection.
+	ElasticsearchConnectionProperties *GoldengateElasticsearchConnectionProperties `json:"elasticsearchConnectionProperties,omitempty"`
+	// GenericConnectionProperties: Properties for a Generic Connection.
+	GenericConnectionProperties *GoldengateGenericConnectionProperties `json:"genericConnectionProperties,omitempty"`
+	// GoldengateConnectionProperties: Properties for a Goldengate Connection.
+	GoldengateConnectionProperties *GoldengateGoldengateConnectionProperties `json:"goldengateConnectionProperties,omitempty"`
+	// GoogleBigQueryConnectionProperties: Properties for a Google BigQuery
+	// Connection.
+	GoogleBigQueryConnectionProperties *GoldengateGoogleBigQueryConnectionProperties `json:"googleBigQueryConnectionProperties,omitempty"`
+	// GoogleCloudStorageConnectionProperties: Properties for a Google Cloud
+	// Storage Connection.
+	GoogleCloudStorageConnectionProperties *GoldengateGoogleCloudStorageConnectionProperties `json:"googleCloudStorageConnectionProperties,omitempty"`
+	// GooglePubsubConnectionProperties: Properties for a Google Pub/Sub
+	// connection.
+	GooglePubsubConnectionProperties *GoldengateGooglePubsubConnectionProperties `json:"googlePubsubConnectionProperties,omitempty"`
+	// HdfsConnectionProperties: Properties for an HDFS connection.
+	HdfsConnectionProperties *GoldengateHdfsConnectionProperties `json:"hdfsConnectionProperties,omitempty"`
+	// IcebergConnectionProperties: Properties for an Iceberg connection.
+	IcebergConnectionProperties *GoldengateIcebergConnectionProperties `json:"icebergConnectionProperties,omitempty"`
+	// IngressIpAddresses: Output only. The Ingress IPs of the
+	// GoldengateConnection.
+	IngressIpAddresses []string `json:"ingressIpAddresses,omitempty"`
+	// JavaMessageServiceConnectionProperties: Properties for a Java Message
+	// Service connection.
+	JavaMessageServiceConnectionProperties *GoldengateJavaMessageServiceConnectionProperties `json:"javaMessageServiceConnectionProperties,omitempty"`
+	// KafkaConnectionProperties: Properties for a Kafka Connection.
+	KafkaConnectionProperties *GoldengateKafkaConnectionProperties `json:"kafkaConnectionProperties,omitempty"`
+	// KafkaSchemaRegistryConnectionProperties: Properties for a Kafka Schema
+	// Registry Connection.
+	KafkaSchemaRegistryConnectionProperties *GoldengateKafkaSchemaRegistryConnectionProperties `json:"kafkaSchemaRegistryConnectionProperties,omitempty"`
+	// LifecycleDetails: Output only. Describes the object's current state in
+	// detail. For example, it can be used to provide actionable information for a
+	// resource in a Failed state.
+	LifecycleDetails string `json:"lifecycleDetails,omitempty"`
+	// LifecycleState: Output only. The lifecycle state of the connection.
+	//
+	// Possible values:
+	//   "GOLDENGATE_CONNECTION_LIFECYCLE_STATE_UNSPECIFIED" - Default unspecified
+	// value.
+	//   "CREATING" - Indicates that the resource is in provisioning state.
+	//   "ACTIVE" - Indicates that the resource is in active state.
+	//   "UPDATING" - Indicates that the resource is in updating state.
+	//   "DELETING" - Indicates that the resource is in deleting state.
+	//   "DELETED" - Indicates that the resource is in deleted state.
+	//   "FAILED" - Indicates that the resource is in failed state.
+	LifecycleState string `json:"lifecycleState,omitempty"`
+	// MicrosoftFabricConnectionProperties: Properties for a Microsoft Fabric
+	// connection.
+	MicrosoftFabricConnectionProperties *GoldengateMicrosoftFabricConnectionProperties `json:"microsoftFabricConnectionProperties,omitempty"`
+	// MicrosoftSqlserverConnectionProperties: Properties for a Microsoft SQL
+	// Server connection.
+	MicrosoftSqlserverConnectionProperties *GoldengateMicrosoftSqlserverConnectionProperties `json:"microsoftSqlserverConnectionProperties,omitempty"`
+	// MongodbConnectionProperties: Properties for a MongoDB connection.
+	MongodbConnectionProperties *GoldengateMongodbConnectionProperties `json:"mongodbConnectionProperties,omitempty"`
+	// MysqlConnectionProperties: Properties for a Mysql Connection.
+	MysqlConnectionProperties *GoldengateMysqlConnectionProperties `json:"mysqlConnectionProperties,omitempty"`
+	// OciObjectStorageConnectionProperties: Properties for an OCI Object Storage
+	// Connection.
+	OciObjectStorageConnectionProperties *GoldengateOciObjectStorageConnectionProperties `json:"ociObjectStorageConnectionProperties,omitempty"`
+	// Ocid: Output only. The [OCID] of the connection being referenced.
+	Ocid string `json:"ocid,omitempty"`
+	// OracleAiDataPlatformConnectionProperties: Properties for an Oracle AI Data
+	// Platform connection.
+	OracleAiDataPlatformConnectionProperties *GoldengateOracleAIDataPlatformConnectionProperties `json:"oracleAiDataPlatformConnectionProperties,omitempty"`
+	// OracleConnectionProperties: Properties for an Oracle Database Connection.
+	OracleConnectionProperties *GoldengateOracleConnectionProperties `json:"oracleConnectionProperties,omitempty"`
+	// OracleNosqlConnectionProperties: Properties for an Oracle NoSQL connection.
+	OracleNosqlConnectionProperties *GoldengateOracleNosqlConnectionProperties `json:"oracleNosqlConnectionProperties,omitempty"`
+	// PostgresqlConnectionProperties: Properties for a PostgreSQL connection.
+	PostgresqlConnectionProperties *GoldengatePostgresqlConnectionProperties `json:"postgresqlConnectionProperties,omitempty"`
+	// RedisConnectionProperties: Properties for a Redis connection.
+	RedisConnectionProperties *GoldengateRedisConnectionProperties `json:"redisConnectionProperties,omitempty"`
+	// RoutingMethod: Optional. The routing method for the GoldengateConnection.
+	//
+	// Possible values:
+	//   "GOLDENGATE_CONNECTION_ROUTING_METHOD_UNSPECIFIED" - Default unspecified
+	// value.
+	//   "SHARED_DEPLOYMENT_ENDPOINT" - Network traffic flows from the assigned
+	// deployment's private endpoint through the deployment's subnet.
+	//   "DEDICATED_ENDPOINT" - A dedicated private endpoint is created in the
+	// target VCN subnet for the connection.
+	RoutingMethod string `json:"routingMethod,omitempty"`
+	// SnowflakeConnectionProperties: Properties for a Snowflake connection.
+	SnowflakeConnectionProperties *GoldengateSnowflakeConnectionProperties `json:"snowflakeConnectionProperties,omitempty"`
+	// UpdateTime: Output only. The time the resource was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AmazonKinesisConnectionProperties") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "AmazonKinesisConnectionProperties") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateConnectionType: Details of the Goldengate Connection Type
+// resource.
+type GoldengateConnectionType struct {
+	// ConnectionType: Output only. The connection type of the Goldengate
+	// Connection Type resource.
+	//
+	// Possible values:
+	//   "CONNECTION_TYPE_UNSPECIFIED" - Default unspecified value.
+	//   "GOLDENGATE" - Goldengate Connection Type category is GOLDENGATE.
+	//   "KAFKA" - Goldengate Connection Type category is KAFKA.
+	//   "KAFKA_SCHEMA_REGISTRY" - Goldengate Connection Type category is
+	// KAFKA_SCHEMA_REGISTRY.
+	//   "MYSQL" - Goldengate Connection Type category is MYSQL.
+	//   "JAVA_MESSAGE_SERVICE" - Goldengate Connection Type category is
+	// JAVA_MESSAGE_SERVICE.
+	//   "MICROSOFT_SQLSERVER" - Goldengate Connection Type category is
+	// MICROSOFT_SQLSERVER.
+	//   "OCI_OBJECT_STORAGE" - Goldengate Connection Type category is
+	// OCI_OBJECT_STORAGE.
+	//   "ORACLE" - Goldengate Connection Type category is ORACLE.
+	//   "AZURE_DATA_LAKE_STORAGE" - Goldengate Connection Type category is
+	// AZURE_DATA_LAKE_STORAGE.
+	//   "POSTGRESQL" - Goldengate Connection Type category is POSTGRESQL.
+	//   "AZURE_SYNAPSE_ANALYTICS" - Goldengate Connection Type category is
+	// AZURE_SYNAPSE_ANALYTICS.
+	//   "SNOWFLAKE" - Goldengate Connection Type category is SNOWFLAKE.
+	//   "AMAZON_S3" - Goldengate Connection Type category is AMAZON_S3.
+	//   "HDFS" - Goldengate Connection Type category is HDFS.
+	//   "ORACLE_AI_DATA_PLATFORM" - Goldengate Connection Type category is
+	// ORACLE_AI_DATA_PLATFORM.
+	//   "ORACLE_NOSQL" - Goldengate Connection Type category is ORACLE_NOSQL.
+	//   "MONGODB" - Goldengate Connection Type category is MONGODB.
+	//   "AMAZON_KINESIS" - Goldengate Connection Type category is AMAZON_KINESIS.
+	//   "AMAZON_REDSHIFT" - Goldengate Connection Type category is
+	// AMAZON_REDSHIFT.
+	//   "DB2" - Goldengate Connection Type category is DB2.
+	//   "REDIS" - Goldengate Connection Type category is REDIS.
+	//   "ELASTICSEARCH" - Goldengate Connection Type category is ELASTICSEARCH.
+	//   "GENERIC" - Goldengate Connection Type category is GENERIC.
+	//   "GOOGLE_CLOUD_STORAGE" - Goldengate Connection Type category is
+	// GOOGLE_CLOUD_STORAGE.
+	//   "GOOGLE_BIGQUERY" - Goldengate Connection Type category is
+	// GOOGLE_BIGQUERY.
+	//   "DATABRICKS" - Goldengate Connection Type category is DATABRICKS.
+	//   "GOOGLE_PUBSUB" - Goldengate Connection Type category is GOOGLE_PUBSUB.
+	//   "MICROSOFT_FABRIC" - Goldengate Connection Type category is
+	// MICROSOFT_FABRIC.
+	//   "ICEBERG" - Goldengate Connection Type category is ICEBERG.
+	ConnectionType string `json:"connectionType,omitempty"`
+	// Name: Identifier. The name of the Goldengate Connection Type resource with
+	// the format:
+	// projects/{project}/locations/{region}/goldengateConnectionTypes/{goldengate_c
+	// onnection_type}
+	Name string `json:"name,omitempty"`
+	// TechnologyTypes: Output only. The technology type of the Goldengate
+	// Connection Type resource.
+	TechnologyTypes []string `json:"technologyTypes,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ConnectionType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConnectionType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateConnectionType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateConnectionType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateDatabricksConnectionProperties: The properties of
+// GoldengateDatabricksConnection.
+type GoldengateDatabricksConnectionProperties struct {
+	// AuthenticationType: Optional. Authentication type for Databricks.
+	//
+	// Possible values:
+	//   "DATABRICKS_AUTHENTICATION_TYPE_UNSPECIFIED" - Authentication type not
+	// specified.
+	//   "PERSONAL_ACCESS_TOKEN" - Personal access token authentication.
+	//   "OAUTH_M2M" - OAuth M2M authentication.
+	AuthenticationType string `json:"authenticationType,omitempty"`
+	// ClientId: Optional. OAuth client id, only applicable for authentication_type
+	// == OAUTH_M2M
+	ClientId string `json:"clientId,omitempty"`
+	// ClientSecret: Optional. OAuth client secret, only applicable for
+	// authentication_type == OAUTH_M2M
+	ClientSecret string `json:"clientSecret,omitempty"`
+	// ConnectionUrl: Optional. Connection URL. e.g.:
+	// 'jdbc:databricks://adb-33934.4.azuredatabricks.net:443/default;transportMode=
+	// http;ssl=1;httpPath=sql/protocolv1/o/3393########44/0##3-7-hlrb'
+	ConnectionUrl string `json:"connectionUrl,omitempty"`
+	// Password: Optional. Input only. The password used to connect to Databricks
+	// in plain text.
+	Password string `json:"password,omitempty"`
+	// PasswordSecretVersion: Optional. Input only. The resource name of a secret
+	// version in Secret Manager which contains the password used to connect to
+	// Databricks. Format: projects/{project}/secrets/{secret}/versions/{version}.
+	PasswordSecretVersion string `json:"passwordSecretVersion,omitempty"`
+	// StorageCredential: Optional. External storage credential name to access
+	// files on object storage such as ADLS Gen2, S3 or Cloud Storage.
+	StorageCredential string `json:"storageCredential,omitempty"`
+	// TechnologyType: Optional. The technology type of DatabricksConnection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthenticationType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthenticationType") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateDatabricksConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateDatabricksConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateDb2ConnectionProperties: The properties of
+// GoldengateDb2Connection.
+type GoldengateDb2ConnectionProperties struct {
+	// AdditionalAttributes: Optional. An array of name-value pair attribute
+	// entries. Used as additional parameters in connection string.
+	AdditionalAttributes []*NameValuePair `json:"additionalAttributes,omitempty"`
+	// Database: Optional. The name of the database.
+	Database string `json:"database,omitempty"`
+	// Host: Optional. The name or address of a host.
+	Host string `json:"host,omitempty"`
+	// Password: Optional. Input only. The password Oracle Goldengate uses for Db2
+	// connection in plain text.
+	Password string `json:"password,omitempty"`
+	// PasswordSecretVersion: Optional. Input only. The resource name of a secret
+	// version in Secret Manager which contains the password Oracle Goldengate uses
+	// for Db2 connection. Format:
+	// projects/{project}/secrets/{secret}/versions/{version}.
+	PasswordSecretVersion string `json:"passwordSecretVersion,omitempty"`
+	// Port: Optional. The port of an endpoint usually specified for a connection.
+	Port int64 `json:"port,omitempty"`
+	// SecurityProtocol: Optional. Security protocol for the DB2 database.
+	//
+	// Possible values:
+	//   "DB2_SECURITY_PROTOCOL_UNSPECIFIED" - Security protocol not specified.
+	//   "PLAIN" - Plain text communication.
+	//   "TLS" - Transport Layer Security.
+	SecurityProtocol string `json:"securityProtocol,omitempty"`
+	// SslClientKeystashFile: Optional. The keystash file which contains the
+	// encrypted password to the key database file. Not supported for IBM Db2 for
+	// i.
+	SslClientKeystashFile string `json:"sslClientKeystashFile,omitempty"`
+	// SslClientKeystoredbFile: Optional. The keystore file created at the client
+	// containing the server certificate / CA root certificate. Not supported for
+	// IBM Db2 for i.
+	SslClientKeystoredbFile string `json:"sslClientKeystoredbFile,omitempty"`
+	// SslServerCertificateFile: Optional. The file which contains the self-signed
+	// server certificate / Certificate Authority (CA) certificate.
+	SslServerCertificateFile string `json:"sslServerCertificateFile,omitempty"`
+	// TechnologyType: Optional. The technology type of Db2Connection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// Username: Optional. The username Oracle Goldengate uses to connect to the
+	// DB2 database.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalAttributes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalAttributes") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateDb2ConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateDb2ConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateDeployment: GoldengateDeployment Goldengate Deployment resource
+// model.
+type GoldengateDeployment struct {
+	// CreateTime: Output only. The date and time that the GoldengateDeployment was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DisplayName: Required. The display name for the GoldengateDeployment.
+	DisplayName string `json:"displayName,omitempty"`
+	// EntitlementId: Output only. The ID of the subscription entitlement
+	// associated with the GoldengateDeployment
+	EntitlementId string `json:"entitlementId,omitempty"`
+	// GcpOracleZone: Optional. The GCP Oracle zone where Oracle
+	// GoldengateDeployment is hosted. Example: us-east4-b-r2. If not specified,
+	// the system will pick a zone based on availability.
+	GcpOracleZone string `json:"gcpOracleZone,omitempty"`
+	// Labels: Optional. The labels or tags associated with the
+	// GoldengateDeployment.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. The name of the GoldengateDeployment resource in the
+	// following format:
+	// projects/{project}/locations/{region}/goldengateDeployments/{goldengate_deplo
+	// yment}
+	Name string `json:"name,omitempty"`
+	// OciUrl: Output only. HTTPS link to OCI resources exposed to Customer via UI
+	// Interface.
+	OciUrl string `json:"ociUrl,omitempty"`
+	// OdbNetwork: Optional. The name of the OdbNetwork associated with the
+	// GoldengateDeployment.
+	OdbNetwork string `json:"odbNetwork,omitempty"`
+	// OdbSubnet: Required. The name of the OdbSubnet associated with the
+	// GoldengateDeployment for IP allocation.
+	OdbSubnet string `json:"odbSubnet,omitempty"`
+	// Properties: Required. The properties of the GoldengateDeployment.
+	Properties *GoldengateDeploymentProperties `json:"properties,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateDeployment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateDeployment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateDeploymentEnvironment: Details of the Goldengate Deployment
+// Environment resource.
+type GoldengateDeploymentEnvironment struct {
+	// AutoScalingEnabled: Output only. Whether auto scaling is enabled by default
+	// for the Goldengate Deployment Environment resource.
+	AutoScalingEnabled bool `json:"autoScalingEnabled,omitempty"`
+	// Category: Output only. The category of the Goldengate Deployment Environment
+	// resource.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_CATEGORY_UNSPECIFIED" - Default unspecified value.
+	//   "DATA_REPLICATION_CATEGORY" - Goldengate Deployment Environment category
+	// is DATA_REPLICATION_CATEGORY.
+	//   "DATA_TRANSFORMS_CATEGORY" - Goldengate Deployment Environment category is
+	// DATA_TRANSFORMS_CATEGORY.
+	Category string `json:"category,omitempty"`
+	// DefaultCpuCoreCount: Output only. The default CPU core count of the
+	// Goldengate Deployment Environment resource.
+	DefaultCpuCoreCount int64 `json:"defaultCpuCoreCount,omitempty"`
+	// DisplayName: The display name of the Goldengate Deployment Environment
+	// resource.
+	DisplayName string `json:"displayName,omitempty"`
+	// EnvironmentType: Output only. The environment type of the Goldengate
+	// Deployment Environment resource.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_ENVIRONMENT_TYPE_UNSPECIFIED" - Default unspecified value.
+	//   "PRODUCTION" - Goldengate Deployment Environment type is PRODUCTION.
+	//   "DEVELOPMENT_OR_TESTING" - Goldengate Deployment Environment type is
+	// DEVELOPMENT_OR_TESTING.
+	EnvironmentType string `json:"environmentType,omitempty"`
+	// MaxCpuCoreCount: Output only. The max CPU core count of the Goldengate
+	// Deployment Environment resource.
+	MaxCpuCoreCount int64 `json:"maxCpuCoreCount,omitempty"`
+	// MemoryGbPerCpuCore: Output only. The memory per CPU core in GBs of the
+	// Goldengate Deployment Environment resource.
+	MemoryGbPerCpuCore int64 `json:"memoryGbPerCpuCore,omitempty"`
+	// MinCpuCoreCount: Output only. The min CPU core count of the Goldengate
+	// Deployment Environment resource.
+	MinCpuCoreCount int64 `json:"minCpuCoreCount,omitempty"`
+	// Name: Identifier. The name of the Goldengate Deployment Environment resource
+	// with the format:
+	// projects/{project}/locations/{location}/goldengateDeploymentEnvironments/{gol
+	// dengate_deployment_environment}
+	Name string `json:"name,omitempty"`
+	// NetworkBandwidthGbpsPerCpuCore: Output only. The network bandwidth per CPU
+	// core in Gbps of the Goldengate Deployment Environment resource.
+	NetworkBandwidthGbpsPerCpuCore int64 `json:"networkBandwidthGbpsPerCpuCore,omitempty"`
+	// StorageUsageLimitGbPerCpuCore: Output only. The storage usage limit per CPU
+	// core in GBs of the Goldengate Deployment Environment resource.
+	StorageUsageLimitGbPerCpuCore int64 `json:"storageUsageLimitGbPerCpuCore,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AutoScalingEnabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AutoScalingEnabled") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateDeploymentEnvironment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateDeploymentEnvironment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateDeploymentLock: The lock of the GoldengateDeployment.
+type GoldengateDeploymentLock struct {
+	// CompartmentId: Output only. The compartment id.
+	CompartmentId string `json:"compartmentId,omitempty"`
+	// CreateTime: Output only. The time created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Message: Output only. The message.
+	Message string `json:"message,omitempty"`
+	// RelatedResourceId: Output only. The related resource id.
+	RelatedResourceId string `json:"relatedResourceId,omitempty"`
+	// Type: Output only. The type of lock.
+	//
+	// Possible values:
+	//   "LOCK_TYPE_UNSPECIFIED" - The lock type is unspecified.
+	//   "FULL" - The lock type is full.
+	//   "DELETE" - The lock type is delete.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CompartmentId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CompartmentId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateDeploymentLock) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateDeploymentLock
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateDeploymentProperties: Properties of GoldengateDeployment.
+type GoldengateDeploymentProperties struct {
+	// BackupSchedule: Output only. The backup schedule of the
+	// GoldengateDeployment.
+	BackupSchedule *GoldengateBackupSchedule `json:"backupSchedule,omitempty"`
+	// Category: Output only. The category of the GoldengateDeployment.
+	//
+	// Possible values:
+	//   "GOLDENGATE_DEPLOYMENT_CATEGORY_UNSPECIFIED" - The category is
+	// unspecified.
+	//   "DATA_REPLICATION" - The deployment is data replication.
+	//   "DATA_TRANSFORMS" - The deployment is data transforms.
+	Category string `json:"category,omitempty"`
+	// CpuCoreCount: Optional. The Minimum number of OCPUs to be made available for
+	// this Deployment.
+	CpuCoreCount int64 `json:"cpuCoreCount,omitempty"`
+	// DeploymentBackupId: Output only. The deployment backup id of the
+	// GoldengateDeployment.
+	DeploymentBackupId string `json:"deploymentBackupId,omitempty"`
+	// DeploymentDiagnosticData: Output only. The deployment diagnostic data of the
+	// GoldengateDeployment.
+	DeploymentDiagnosticData *DeploymentDiagnosticData `json:"deploymentDiagnosticData,omitempty"`
+	// DeploymentRole: Output only. The deployment role of the
+	// GoldengateDeployment.
+	//
+	// Possible values:
+	//   "GOLDENGATE_DEPLOYMENT_ROLE_TYPE_UNSPECIFIED" - The deployment role type
+	// is unspecified.
+	//   "PRIMARY" - The deployment role type is primary.
+	//   "STANDBY" - The deployment role type is standby.
+	DeploymentRole string `json:"deploymentRole,omitempty"`
+	// DeploymentType: Required. A valid Goldengate Deployment type. For a list of
+	// supported types, use the `ListGoldengateDeploymentTypes` operation.
+	DeploymentType string `json:"deploymentType,omitempty"`
+	// DeploymentUrl: Output only. The deployment url of the GoldengateDeployment.
+	DeploymentUrl string `json:"deploymentUrl,omitempty"`
+	// Description: Optional. The description of the GoldengateDeployment.
+	Description string `json:"description,omitempty"`
+	// EnvironmentType: Optional. The environment type of the GoldengateDeployment.
+	EnvironmentType string `json:"environmentType,omitempty"`
+	// Fqdn: Output only. The Fully Qualified Domain Name of the
+	// GoldengateDeployment.
+	Fqdn string `json:"fqdn,omitempty"`
+	// Healthy: Output only. Whether the GoldengateDeployment is healthy.
+	Healthy bool `json:"healthy,omitempty"`
+	// IngressIps: Output only. The ingress ips of the GoldengateDeployment.
+	IngressIps []*IngressIp `json:"ingressIps,omitempty"`
+	// IsAutoScalingEnabled: Optional. Indicates if auto scaling is enabled for the
+	// Deployment's CPU core count.
+	IsAutoScalingEnabled bool `json:"isAutoScalingEnabled,omitempty"`
+	// IsLatestVersion: Output only. Whether the GoldengateDeployment is of the
+	// latest version.
+	IsLatestVersion bool `json:"isLatestVersion,omitempty"`
+	// IsPublic: Output only. Whether the GoldengateDeployment is public.
+	IsPublic bool `json:"isPublic,omitempty"`
+	// IsStorageUtilizationLimitExceeded: Output only. Whether storage utilization
+	// limit is exceeded of the GoldengateDeployment.
+	IsStorageUtilizationLimitExceeded bool `json:"isStorageUtilizationLimitExceeded,omitempty"`
+	// LastBackupScheduleTime: Output only. The time last backup scheduled of the
+	// GoldengateDeployment.
+	LastBackupScheduleTime string `json:"lastBackupScheduleTime,omitempty"`
+	// LicenseModel: Optional. The Oracle license model that applies to a
+	// Deployment.
+	//
+	// Possible values:
+	//   "LICENSE_MODEL_UNSPECIFIED" - The license model is unspecified.
+	//   "LICENSE_INCLUDED" - The license model is included.
+	//   "BRING_YOUR_OWN_LICENSE" - The license model is bring your own license.
+	LicenseModel string `json:"licenseModel,omitempty"`
+	// LifecycleDetails: Output only. The lifecycle details of the
+	// GoldengateDeployment.
+	LifecycleDetails string `json:"lifecycleDetails,omitempty"`
+	// LifecycleState: Output only. State of the GoldengateDeployment.
+	//
+	// Possible values:
+	//   "GOLDENGATE_DEPLOYMENT_LIFECYCLE_STATE_UNSPECIFIED" - Default unspecified
+	// value.
+	//   "CREATING" - The deployment is being created.
+	//   "UPDATING" - The deployment is being updated.
+	//   "ACTIVE" - The deployment is active.
+	//   "INACTIVE" - The deployment is inactive.
+	//   "DELETING" - The deployment is being deleted.
+	//   "DELETED" - The deployment is deleted.
+	//   "FAILED" - The deployment failed.
+	//   "NEEDS_ATTENTION" - The deployment needs attention.
+	//   "IN_PROGRESS" - The deployment is in progress.
+	//   "CANCELLING" - The deployment is canceling.
+	//   "CANCELLED" - The deployment is canceled.
+	//   "SUCCEEDED" - The deployment succeeded.
+	//   "WAITING" - The deployment is waiting.
+	LifecycleState string `json:"lifecycleState,omitempty"`
+	// LifecycleSubState: Output only. The lifecycle sub-state of the
+	// GoldengateDeployment.
+	//
+	// Possible values:
+	//   "GOLDENGATE_DEPLOYMENT_LIFECYCLE_SUB_STATE_UNSPECIFIED" - The lifecycle
+	// sub-state is unspecified.
+	//   "RECOVERING" - The deployment is recovering.
+	//   "STARTING" - The deployment is starting.
+	//   "STOPPING" - The deployment is stopping.
+	//   "MOVING" - The deployment is moving.
+	//   "UPGRADING" - The deployment is upgrading.
+	//   "RESTORING" - The deployment is restoring.
+	//   "BACKING_UP" - The deployment is backing up.
+	//   "ROLLING_BACK" - The deployment is rolling back.
+	LifecycleSubState string `json:"lifecycleSubState,omitempty"`
+	// LoadBalancerId: Output only. The load balancer id of the
+	// GoldengateDeployment.
+	LoadBalancerId string `json:"loadBalancerId,omitempty"`
+	// LoadBalancerSubnetId: Output only. The load balancer subnet id of the
+	// GoldengateDeployment.
+	LoadBalancerSubnetId string `json:"loadBalancerSubnetId,omitempty"`
+	// Locks: Output only. The locks of the GoldengateDeployment.
+	Locks []*GoldengateDeploymentLock `json:"locks,omitempty"`
+	// MaintenanceConfig: Optional. The maintenance configuration of the
+	// GoldengateDeployment.
+	MaintenanceConfig *GoldengateMaintenanceConfig `json:"maintenanceConfig,omitempty"`
+	// MaintenanceWindow: Optional. The maintenance window of the
+	// GoldengateDeployment.
+	MaintenanceWindow *GoldengateMaintenanceWindow `json:"maintenanceWindow,omitempty"`
+	// NextBackupScheduleTime: Output only. The time next backup scheduled of the
+	// GoldengateDeployment.
+	NextBackupScheduleTime string `json:"nextBackupScheduleTime,omitempty"`
+	// NextMaintenanceActionType: Output only. The next maintenance action type of
+	// the GoldengateDeployment.
+	//
+	// Possible values:
+	//   "NEXT_MAINTENANCE_ACTION_TYPE_UNSPECIFIED" - The next maintenance action
+	// type is unspecified.
+	//   "UPGRADE" - The next maintenance action type is upgrade.
+	NextMaintenanceActionType string `json:"nextMaintenanceActionType,omitempty"`
+	// NextMaintenanceDescription: Output only. The next maintenance description of
+	// the GoldengateDeployment.
+	NextMaintenanceDescription string `json:"nextMaintenanceDescription,omitempty"`
+	// NextMaintenanceTime: Output only. The time of next maintenance of the
+	// GoldengateDeployment.
+	NextMaintenanceTime string `json:"nextMaintenanceTime,omitempty"`
+	// NsgIds: Output only. The nsg ids of the GoldengateDeployment.
+	NsgIds []string `json:"nsgIds,omitempty"`
+	// Ocid: Output only. OCID of the GoldengateDeployment.
+	Ocid string `json:"ocid,omitempty"`
+	// OggData: Required. The ogg data of the GoldengateDeployment.
+	OggData *GoldengateOggDeployment `json:"oggData,omitempty"`
+	// OggVersionSupportEndTime: Output only. The time ogg version supported until
+	// of the GoldengateDeployment.
+	OggVersionSupportEndTime string `json:"oggVersionSupportEndTime,omitempty"`
+	// Placements: Output only. The placements of the GoldengateDeployment.
+	Placements []*GoldengatePlacement `json:"placements,omitempty"`
+	// PrivateIpAddress: Output only. The private ip address of the
+	// GoldengateDeployment.
+	PrivateIpAddress string `json:"privateIpAddress,omitempty"`
+	// PublicIpAddress: Output only. The public ip address of the
+	// GoldengateDeployment.
+	PublicIpAddress string `json:"publicIpAddress,omitempty"`
+	// RoleChangeTime: Output only. The time when the role of the
+	// GoldengateDeployment was changed.
+	RoleChangeTime string `json:"roleChangeTime,omitempty"`
+	// StorageUtilizationBytes: Output only. The storage utilization in bytes of
+	// the GoldengateDeployment.
+	StorageUtilizationBytes int64 `json:"storageUtilizationBytes,omitempty,string"`
+	// UpdateTime: Output only. The time the GoldengateDeployment was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// UpgradeRequiredTime: Output only. The time upgrade required of the
+	// GoldengateDeployment.
+	UpgradeRequiredTime string `json:"upgradeRequiredTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupSchedule") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupSchedule") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateDeploymentProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateDeploymentProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateDeploymentType: Details of the Goldengate Deployment Type
+// resource.
+type GoldengateDeploymentType struct {
+	// Category: Output only. The category of the Goldengate Deployment Type
+	// resource.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_CATEGORY_UNSPECIFIED" - Default unspecified value.
+	//   "DATA_REPLICATION_CATEGORY" - Goldengate Deployment Type category is
+	// DATA_REPLICATION_CATEGORY.
+	//   "DATA_TRANSFORMS_CATEGORY" - Goldengate Deployment Type category is
+	// DATA_TRANSFORMS_CATEGORY.
+	Category string `json:"category,omitempty"`
+	// ConnectionTypes: Output only. The connection types of the Goldengate
+	// Deployment Type resource.
+	ConnectionTypes []string `json:"connectionTypes,omitempty"`
+	// DefaultUsername: Output only. The default username of the Goldengate
+	// Deployment Type resource.
+	DefaultUsername string `json:"defaultUsername,omitempty"`
+	// DeploymentType: Output only. The deployment type of the Goldengate
+	// Deployment Type resource.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_TYPE_UNSPECIFIED" - Default unspecified value.
+	//   "OGG" - Goldengate Deployment Type category is OGG.
+	//   "DATABASE_ORACLE" - Goldengate Deployment Type category is
+	// DATABASE_ORACLE.
+	//   "BIGDATA" - Goldengate Deployment Type category is BIGDATA.
+	//   "DATABASE_MICROSOFT_SQLSERVER" - Goldengate Deployment Type category is
+	// DATABASE_MICROSOFT_SQLSERVER.
+	//   "DATABASE_MYSQL" - Goldengate Deployment Type category is DATABASE_MYSQL.
+	//   "DATABASE_POSTGRESQL" - Goldengate Deployment Type category is
+	// DATABASE_POSTGRESQL.
+	//   "DATABASE_DB2ZOS" - Goldengate Deployment Type category is
+	// DATABASE_DB2ZOS.
+	//   "DATABASE_DB2I" - Goldengate Deployment Type category is DATABASE_DB2I.
+	//   "GGSA" - Goldengate Deployment Type category is GGSA.
+	//   "DATA_TRANSFORMS" - Goldengate Deployment Type category is
+	// DATA_TRANSFORMS.
+	DeploymentType string `json:"deploymentType,omitempty"`
+	// DisplayName: Output only. The display name of the Goldengate Deployment Type
+	// resource.
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: Identifier. The name of the Goldengate Deployment Type resource with
+	// the format:
+	// projects/{project}/locations/{region}/goldengateDeploymentTypes/{goldengate_d
+	// eployment_type}
+	Name string `json:"name,omitempty"`
+	// OggVersion: Output only. The Ogg version of the Goldengate Deployment Type
+	// resource.
+	OggVersion string `json:"oggVersion,omitempty"`
+	// SourceTechnologies: Output only. The source technologies of the Goldengate
+	// Deployment Type resource.
+	SourceTechnologies []string `json:"sourceTechnologies,omitempty"`
+	// SupportedCapabilities: Output only. The supported capabilities of the
+	// Goldengate Deployment Type resource.
+	SupportedCapabilities []string `json:"supportedCapabilities,omitempty"`
+	// SupportedTechnologiesUrl: Output only. The supported technologies URL of the
+	// Goldengate Deployment Type resource.
+	SupportedTechnologiesUrl string `json:"supportedTechnologiesUrl,omitempty"`
+	// TargetTechnologies: Output only. The target technologies of the Goldengate
+	// Deployment Type resource.
+	TargetTechnologies []string `json:"targetTechnologies,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateDeploymentType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateDeploymentType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateDeploymentVersion: Details of the Goldengate Deployment Version
+// resource.
+type GoldengateDeploymentVersion struct {
+	// Name: Identifier. The name of the Goldengate Deployment Version resource
+	// with the format:
+	// projects/{project}/locations/{location}/goldengateDeploymentVersions/{goldeng
+	// ate_deployment_version}
+	Name string `json:"name,omitempty"`
+	// Ocid: Output only. The deployment version ocid of the Goldengate Deployment
+	// Version resource.
+	Ocid string `json:"ocid,omitempty"`
+	// Properties: Output only. The technology type of the Goldengate Deployment
+	// Version resource.
+	Properties *GoldengateDeploymentVersionProperties `json:"properties,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateDeploymentVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateDeploymentVersion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateDeploymentVersionProperties: Properties of
+// GoldengateDeploymentVersion.
+type GoldengateDeploymentVersionProperties struct {
+	// DeploymentType: Output only. The deployment type of the Goldengate
+	// Deployment Version resource.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_TYPE_UNSPECIFIED" - Default unspecified value.
+	//   "OGG" - Goldengate Deployment Type category is OGG.
+	//   "DATABASE_ORACLE" - Goldengate Deployment Type category is
+	// DATABASE_ORACLE.
+	//   "BIGDATA" - Goldengate Deployment Type category is BIGDATA.
+	//   "DATABASE_MICROSOFT_SQLSERVER" - Goldengate Deployment Type category is
+	// DATABASE_MICROSOFT_SQLSERVER.
+	//   "DATABASE_MYSQL" - Goldengate Deployment Type category is DATABASE_MYSQL.
+	//   "DATABASE_POSTGRESQL" - Goldengate Deployment Type category is
+	// DATABASE_POSTGRESQL.
+	//   "DATABASE_DB2ZOS" - Goldengate Deployment Type category is
+	// DATABASE_DB2ZOS.
+	//   "DATABASE_DB2I" - Goldengate Deployment Type category is DATABASE_DB2I.
+	//   "GGSA" - Goldengate Deployment Type category is GGSA.
+	//   "DATA_TRANSFORMS" - Goldengate Deployment Type category is
+	// DATA_TRANSFORMS.
+	DeploymentType string `json:"deploymentType,omitempty"`
+	// OggVersion: Output only. The OGG version of the Goldengate Deployment
+	// Version resource.
+	OggVersion string `json:"oggVersion,omitempty"`
+	// ReleaseTime: Output only. The release time of the Goldengate Deployment
+	// Version resource.
+	ReleaseTime string `json:"releaseTime,omitempty"`
+	// ReleaseType: Output only. The release type of the Goldengate Deployment
+	// Version resource.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_RELEASE_TYPE_UNSPECIFIED" - Default unspecified value.
+	//   "MAJOR" - Goldengate Deployment Version release type is MAJOR.
+	//   "BUNDLE" - Goldengate Deployment Version release type is BUNDLE.
+	//   "MINOR" - Goldengate Deployment Version release type is MINOR.
+	ReleaseType string `json:"releaseType,omitempty"`
+	// SecurityFix: Optional. Whether the Goldengate Deployment Version resource is
+	// a security fix.
+	SecurityFix bool `json:"securityFix,omitempty"`
+	// SupportEndTime: Output only. The support end time of the Goldengate
+	// Deployment Version resource.
+	SupportEndTime string `json:"supportEndTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeploymentType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeploymentType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateDeploymentVersionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateDeploymentVersionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateElasticsearchConnectionProperties: The properties of
+// GoldengateElasticsearchConnection.
+type GoldengateElasticsearchConnectionProperties struct {
+	// AuthenticationType: Optional. Authentication type for Elasticsearch.
+	//
+	// Possible values:
+	//   "ELASTICSEARCH_AUTHENTICATION_TYPE_UNSPECIFIED" - Authentication type not
+	// specified.
+	//   "NONE" - No authentication.
+	//   "BASIC" - Basic authentication.
+	AuthenticationType string `json:"authenticationType,omitempty"`
+	// Fingerprint: Optional. Fingerprint required by TLS security protocol. Eg.:
+	// '6152b2dfbff200f973c5074a5b91d06ab3b472c07c09a1ea57bb7fd406cdce9c'
+	Fingerprint string `json:"fingerprint,omitempty"`
+	// Password: Optional. Input only. The password Oracle Goldengate uses for
+	// Elastic Search connection in plain text.
+	Password string `json:"password,omitempty"`
+	// PasswordSecretVersion: Optional. Input only. The resource name of a secret
+	// version in Secret Manager which contains the password Oracle Goldengate uses
+	// for Elastic Search connection. Format:
+	// projects/{project}/secrets/{secret}/versions/{version}.
+	PasswordSecretVersion string `json:"passwordSecretVersion,omitempty"`
+	// SecurityProtocol: Optional. Security protocol for Elasticsearch.
+	//
+	// Possible values:
+	//   "ELASTICSEARCH_SECURITY_PROTOCOL_UNSPECIFIED" - Security protocol not
+	// specified.
+	//   "PLAIN" - Plain text communication.
+	//   "TLS" - Transport Layer Security.
+	SecurityProtocol string `json:"securityProtocol,omitempty"`
+	// Servers: Optional. Comma separated list of Elasticsearch server addresses,
+	// specified as host:port entries, where :port is optional. If port is not
+	// specified, it defaults to 9200. Example:
+	// "server1.example.com:4000,server2.example.com:4000"
+	Servers string `json:"servers,omitempty"`
+	// TechnologyType: Optional. The technology type of ElasticsearchConnection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// Username: Optional. The username Oracle Goldengate uses to connect the
+	// associated system of the given technology.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthenticationType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthenticationType") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateElasticsearchConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateElasticsearchConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateGenericConnectionProperties: The properties of
+// GoldengateGenericConnectionProperties.
+type GoldengateGenericConnectionProperties struct {
+	// Host: Optional. The host of the GenericConnection.
+	Host string `json:"host,omitempty"`
+	// TechnologyType: Optional. The technology type.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Host") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Host") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateGenericConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateGenericConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateGoldengateConnectionProperties: The properties of
+// GoldengateGoldengateConnectionProperties.
+type GoldengateGoldengateConnectionProperties struct {
+	// GoldengateDeploymentId: Optional. The name of the GoldengateDeployment
+	// associated with the GoldengateConnection. Format:
+	// projects/{project}/locations/{location}/goldengateDeployments/{goldengate_dep
+	// loyment}
+	GoldengateDeploymentId string `json:"goldengateDeploymentId,omitempty"`
+	// Host: Optional. The host of the GoldengateConnection.
+	Host string `json:"host,omitempty"`
+	// Password: Optional. Input only. The password used to connect to the Oracle
+	// Goldengate in plain text.
+	Password string `json:"password,omitempty"`
+	// PasswordSecretVersion: Optional. Input only. The resource name of a secret
+	// version in Secret Manager which contains the password used to connect to the
+	// Oracle Goldengate. Format:
+	// projects/{project}/secrets/{secret}/versions/{version}.
+	PasswordSecretVersion string `json:"passwordSecretVersion,omitempty"`
+	// Port: Optional. The port of the GoldengateConnection.
+	Port int64 `json:"port,omitempty"`
+	// TechnologyType: Optional. The technology type.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// Username: Optional. The username credential.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GoldengateDeploymentId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GoldengateDeploymentId") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateGoldengateConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateGoldengateConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateGoogleBigQueryConnectionProperties: The properties of
+// GoldengateGoogleBigQueryConnectionProperties.
+type GoldengateGoogleBigQueryConnectionProperties struct {
+	// ServiceAccountKeyFile: Optional. The service account key file Cloud Storage
+	// containing the credentials required to use Google BigQuery.
+	ServiceAccountKeyFile string `json:"serviceAccountKeyFile,omitempty"`
+	// TechnologyType: Optional. The technology type.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ServiceAccountKeyFile") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ServiceAccountKeyFile") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateGoogleBigQueryConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateGoogleBigQueryConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateGoogleCloudStorageConnectionProperties: The properties of
+// GoldengateGoogleCloudStorageConnectionProperties.
+type GoldengateGoogleCloudStorageConnectionProperties struct {
+	// ServiceAccountKeyFile: Optional. The service account key Cloud Storage file
+	// containing the credentials required to use Google Cloud Storage.
+	ServiceAccountKeyFile string `json:"serviceAccountKeyFile,omitempty"`
+	// TechnologyType: Optional. The technology type.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ServiceAccountKeyFile") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ServiceAccountKeyFile") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateGoogleCloudStorageConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateGoogleCloudStorageConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateGooglePubsubConnectionProperties: The properties of
+// GoldengateGooglePubsubConnection.
+type GoldengateGooglePubsubConnectionProperties struct {
+	// ServiceAccountKeyFile: Optional. The content of the service account key file
+	// containing the credentials required to use Google Pub/Sub.
+	ServiceAccountKeyFile string `json:"serviceAccountKeyFile,omitempty"`
+	// TechnologyType: Optional. The technology type of GooglePubsubConnection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ServiceAccountKeyFile") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ServiceAccountKeyFile") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateGooglePubsubConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateGooglePubsubConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateGroupToRolesMapping: The group to roles mapping of the
+// GoldengateDeployment.
+type GoldengateGroupToRolesMapping struct {
+	// AdministratorGroupId: Output only. The administrator group id.
+	AdministratorGroupId string `json:"administratorGroupId,omitempty"`
+	// OperatorGroupId: Output only. The operator group id.
+	OperatorGroupId string `json:"operatorGroupId,omitempty"`
+	// SecurityGroupId: Output only. The security group id.
+	SecurityGroupId string `json:"securityGroupId,omitempty"`
+	// UserGroupId: Output only. The user group id.
+	UserGroupId string `json:"userGroupId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdministratorGroupId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdministratorGroupId") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateGroupToRolesMapping) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateGroupToRolesMapping
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateHdfsConnectionProperties: The properties of
+// GoldengateHdfsConnection.
+type GoldengateHdfsConnectionProperties struct {
+	// CoreSiteXml: Optional. The content of the Hadoop Distributed File System
+	// configuration file (core-site.xml).
+	CoreSiteXml string `json:"coreSiteXml,omitempty"`
+	// TechnologyType: Optional. The technology type of HdfsConnection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CoreSiteXml") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CoreSiteXml") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateHdfsConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateHdfsConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateIcebergConnectionProperties: The properties of
+// GoldengateIcebergConnection.
+type GoldengateIcebergConnectionProperties struct {
+	// Catalog: Required. The Iceberg catalog.
+	Catalog *IcebergCatalog `json:"catalog,omitempty"`
+	// Storage: Required. The Iceberg storage.
+	Storage *IcebergStorage `json:"storage,omitempty"`
+	// TechnologyType: Required. The technology type of Iceberg connection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Catalog") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Catalog") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateIcebergConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateIcebergConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateJavaMessageServiceConnectionProperties: The properties of
+// GoldengateJavaMessageServiceConnection.
+type GoldengateJavaMessageServiceConnectionProperties struct {
+	// AuthenticationType: Optional. Authentication type for Java Message Service.
+	//
+	// Possible values:
+	//   "JMS_AUTHENTICATION_TYPE_UNSPECIFIED" - Authentication type not specified.
+	//   "NONE" - No authentication.
+	//   "BASIC" - Basic authentication.
+	AuthenticationType string `json:"authenticationType,omitempty"`
+	// ConnectionFactory: Optional. The Java class implementing
+	// javax.jms.ConnectionFactory interface supplied by the JMS provider.
+	ConnectionFactory string `json:"connectionFactory,omitempty"`
+	// ConnectionUrl: Optional. Connection URL of the Java Message Service,
+	// specifying the protocol, host, and port. e.g.: 'mq://myjms.host.domain:7676'
+	ConnectionUrl string `json:"connectionUrl,omitempty"`
+	// JndiConnectionFactory: Optional. The Connection Factory can be looked up
+	// using this name. e.g.: 'ConnectionFactory'
+	JndiConnectionFactory string `json:"jndiConnectionFactory,omitempty"`
+	// JndiInitialContextFactory: Optional. The implementation of
+	// javax.naming.spi.InitialContextFactory interface used to obtain initial
+	// naming context.
+	JndiInitialContextFactory string `json:"jndiInitialContextFactory,omitempty"`
+	// JndiProviderUrl: Optional. The URL that Java Message Service will use to
+	// contact the JNDI provider. e.g.:
+	// 'tcp://myjms.host.domain:61616?jms.prefetchPolicy.all=1000'
+	JndiProviderUrl string `json:"jndiProviderUrl,omitempty"`
+	// JndiSecurityCredentialsSecret: Optional. The password associated to the
+	// principal.
+	JndiSecurityCredentialsSecret string `json:"jndiSecurityCredentialsSecret,omitempty"`
+	// JndiSecurityPrincipal: Optional. Specifies the identity of the principal
+	// (user) to be authenticated.
+	JndiSecurityPrincipal string `json:"jndiSecurityPrincipal,omitempty"`
+	// KeyStoreFile: Optional. The content of the KeyStore file.
+	KeyStoreFile string `json:"keyStoreFile,omitempty"`
+	// KeyStorePassword: Optional. Input only. The KeyStore password in plain text.
+	KeyStorePassword string `json:"keyStorePassword,omitempty"`
+	// KeyStorePasswordSecretVersion: Optional. Input only. The resource name of a
+	// secret version in Secret Manager which contains the KeyStore password.
+	// Format: projects/{project}/secrets/{secret}/versions/{version}.
+	KeyStorePasswordSecretVersion string `json:"keyStorePasswordSecretVersion,omitempty"`
+	// Password: Optional. Input only. The password Oracle Goldengate uses to
+	// connect the Java Message Service in plain text.
+	Password string `json:"password,omitempty"`
+	// PasswordSecretVersion: Optional. Input only. The resource name of a secret
+	// version in Secret Manager which contains the password Oracle Goldengate uses
+	// to connect the associated Java Message Service. Format:
+	// projects/{project}/secrets/{secret}/versions/{version}.
+	PasswordSecretVersion string `json:"passwordSecretVersion,omitempty"`
+	// SecurityProtocol: Optional. Security protocol for Java Message Service.
+	//
+	// Possible values:
+	//   "JMS_SECURITY_PROTOCOL_UNSPECIFIED" - Security protocol not specified.
+	//   "PLAIN" - Plain text communication.
+	//   "TLS" - Transport Layer Security.
+	//   "MTLS" - Mutual Transport Layer Security.
+	SecurityProtocol string `json:"securityProtocol,omitempty"`
+	// SslKeyPassword: Optional. Input only. The password for the cert inside of
+	// the KeyStore in plain text.
+	SslKeyPassword string `json:"sslKeyPassword,omitempty"`
+	// SslKeyPasswordSecretVersion: Optional. Input only. The resource name of a
+	// secret version in Secret Manager which contains the password for the cert
+	// inside of the KeyStore. Format:
+	// projects/{project}/secrets/{secret}/versions/{version}.
+	SslKeyPasswordSecretVersion string `json:"sslKeyPasswordSecretVersion,omitempty"`
+	// TechnologyType: Optional. The technology type of
+	// JavaMessageServiceConnection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// TrustStoreFile: Optional. The content of the TrustStore file.
+	TrustStoreFile string `json:"trustStoreFile,omitempty"`
+	// TrustStorePassword: Optional. Input only. The TrustStore password in plain
+	// text.
+	TrustStorePassword string `json:"trustStorePassword,omitempty"`
+	// TrustStorePasswordSecretVersion: Optional. Input only. The resource name of
+	// a secret version in Secret Manager which contains the TrustStore password.
+	// Format: projects/{project}/secrets/{secret}/versions/{version}.
+	TrustStorePasswordSecretVersion string `json:"trustStorePasswordSecretVersion,omitempty"`
+	// UseJndi: Optional. If set to true, Java Naming and Directory Interface
+	// (JNDI) properties should be provided.
+	UseJndi bool `json:"useJndi,omitempty"`
+	// Username: Optional. The username Oracle Goldengate uses to connect to the
+	// Java Message Service.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthenticationType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthenticationType") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateJavaMessageServiceConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateJavaMessageServiceConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateKafkaConnectionProperties: The properties of
+// GoldengateKafkaConnection.
+type GoldengateKafkaConnectionProperties struct {
+	// BootstrapServers: Optional. Kafka bootstrap. Equivalent of bootstrap.servers
+	// configuration property in Kafka: list of KafkaBootstrapServer objects
+	// specified by host/port. Used for establishing the initial connection to the
+	// Kafka cluster. Example: "server1.example.com:9092,server2.example.com:9092"
+	BootstrapServers []*KafkaBootstrapServer `json:"bootstrapServers,omitempty"`
+	// ClusterId: Optional. The OCID of the Kafka cluster being referenced from OCI
+	// Streaming with Apache Kafka.
+	ClusterId string `json:"clusterId,omitempty"`
+	// ConsumerPropertiesFile: Optional. The content of the consumer.properties
+	// file.
+	ConsumerPropertiesFile string `json:"consumerPropertiesFile,omitempty"`
+	// KeyStoreFile: Optional. The content of the KeyStore file.
+	KeyStoreFile string `json:"keyStoreFile,omitempty"`
+	// KeyStorePassword: Optional. Input only. The KeyStore password in plain text.
+	KeyStorePassword string `json:"keyStorePassword,omitempty"`
+	// KeyStorePasswordSecretVersion: Optional. Input only. The resource name of a
+	// secret version in Secret Manager which contains the KeyStore password.
+	// Format: projects/{project}/secrets/{secret}/versions/{version}.
+	KeyStorePasswordSecretVersion string `json:"keyStorePasswordSecretVersion,omitempty"`
+	// Password: Optional. Input only. The password for Kafka basic/SASL auth in
+	// plain text.
+	Password string `json:"password,omitempty"`
+	// PasswordSecretVersion: Optional. Input only. The resource name of a secret
+	// version in Secret Manager which contains the password for Kafka basic/SASL
+	// auth. Format: projects/{project}/secrets/{secret}/versions/{version}.
+	PasswordSecretVersion string `json:"passwordSecretVersion,omitempty"`
+	// ProducerPropertiesFile: Optional. The content of the producer.properties
+	// file.
+	ProducerPropertiesFile string `json:"producerPropertiesFile,omitempty"`
+	// SecurityProtocol: Optional. Security Type for Kafka.
+	//
+	// Possible values:
+	//   "KAFKA_SECURITY_PROTOCOL_UNSPECIFIED" - Security type not specified.
+	//   "SSL" - SSL security protocol.
+	//   "SASL_SSL" - SASL SSL security protocol.
+	//   "PLAINTEXT" - Plaintext security protocol.
+	//   "SASL_PLAINTEXT" - SASL Plaintext security protocol.
+	SecurityProtocol string `json:"securityProtocol,omitempty"`
+	// SslKeyPassword: Optional. Input only. The password for the cert inside of
+	// the KeyStore in plain text.
+	SslKeyPassword string `json:"sslKeyPassword,omitempty"`
+	// SslKeyPasswordSecretVersion: Optional. Input only. The resource name of a
+	// secret version in Secret Manager which contains the password for the cert
+	// inside of the KeyStore. Format:
+	// projects/{project}/secrets/{secret}/versions/{version}.
+	SslKeyPasswordSecretVersion string `json:"sslKeyPasswordSecretVersion,omitempty"`
+	// StreamPoolId: Optional. The OCID of the stream pool being referenced.
+	StreamPoolId string `json:"streamPoolId,omitempty"`
+	// TechnologyType: Optional. The technology type of KafkaConnection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// TrustStoreFile: Optional. The content of the TrustStore file.
+	TrustStoreFile string `json:"trustStoreFile,omitempty"`
+	// TrustStorePassword: Optional. Input only. The TrustStore password in plain
+	// text.
+	TrustStorePassword string `json:"trustStorePassword,omitempty"`
+	// TrustStorePasswordSecretVersion: Optional. Input only. The resource name of
+	// a secret version in Secret Manager which contains the TrustStore password.
+	// Format: projects/{project}/secrets/{secret}/versions/{version}.
+	TrustStorePasswordSecretVersion string `json:"trustStorePasswordSecretVersion,omitempty"`
+	// UseResourcePrincipal: Optional. Specifies that the user intends to
+	// authenticate to the instance using a resource principal. Applicable only for
+	// OCI Streaming connections.
+	UseResourcePrincipal bool `json:"useResourcePrincipal,omitempty"`
+	// Username: Optional. The username Oracle Goldengate uses to connect the
+	// associated system of the given technology.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BootstrapServers") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BootstrapServers") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateKafkaConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateKafkaConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateKafkaSchemaRegistryConnectionProperties: The properties of
+// GoldengateKafkaSchemaRegistryConnection.
+type GoldengateKafkaSchemaRegistryConnectionProperties struct {
+	// AuthenticationType: Optional. Used authentication mechanism to access Schema
+	// Registry.
+	//
+	// Possible values:
+	//   "AUTHENTICATION_TYPE_UNSPECIFIED" - Authentication type not specified.
+	//   "NONE" - No authentication.
+	//   "BASIC" - Basic authentication.
+	//   "MUTUAL" - Mutual authentication.
+	AuthenticationType string `json:"authenticationType,omitempty"`
+	// KeyStoreFile: Optional. The content of the KeyStore file.
+	KeyStoreFile string `json:"keyStoreFile,omitempty"`
+	// KeyStorePassword: Optional. Input only. The KeyStore password in plain text.
+	KeyStorePassword string `json:"keyStorePassword,omitempty"`
+	// KeyStorePasswordSecretVersion: Optional. Input only. The resource name of a
+	// secret version in Secret Manager which contains the KeyStore password.
+	// Format: projects/{project}/secrets/{secret}/versions/{version}.
+	KeyStorePasswordSecretVersion string `json:"keyStorePasswordSecretVersion,omitempty"`
+	// Password: Optional. Input only. The password to access Schema Registry in
+	// plain text.
+	Password string `json:"password,omitempty"`
+	// PasswordSecretVersion: Optional. Input only. The resource name of a secret
+	// version in Secret Manager which contains the password to access Schema
+	// Registry using basic authentication. Format:
+	// projects/{project}/secrets/{secret}/versions/{version}.
+	PasswordSecretVersion string `json:"passwordSecretVersion,omitempty"`
+	// SslKeyPassword: Optional. Input only. The password for the cert inside the
+	// KeyStore in plain text.
+	SslKeyPassword string `json:"sslKeyPassword,omitempty"`
+	// SslKeyPasswordSecretVersion: Optional. Input only. The resource name of a
+	// secret version in Secret Manager which contains the password for the cert
+	// inside the KeyStore. Format:
+	// projects/{project}/secrets/{secret}/versions/{version}.
+	SslKeyPasswordSecretVersion string `json:"sslKeyPasswordSecretVersion,omitempty"`
+	// TechnologyType: Optional. The technology type of
+	// KafkaSchemaRegistryConnection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// TrustStoreFile: Optional. The content of the TrustStore file.
+	TrustStoreFile string `json:"trustStoreFile,omitempty"`
+	// TrustStorePassword: Optional. Input only. The TrustStore password in plain
+	// text.
+	TrustStorePassword string `json:"trustStorePassword,omitempty"`
+	// TrustStorePasswordSecretVersion: Optional. Input only. The resource name of
+	// a secret version in Secret Manager which contains the TrustStore password.
+	// Format: projects/{project}/secrets/{secret}/versions/{version}.
+	TrustStorePasswordSecretVersion string `json:"trustStorePasswordSecretVersion,omitempty"`
+	// Url: Optional. Kafka Schema Registry URL. e.g.:
+	// 'https://server1.us.oracle.com:8081'
+	Url string `json:"url,omitempty"`
+	// Username: Optional. The username to access Schema Registry using basic
+	// authentication. This value is injected into
+	// 'schema.registry.basic.auth.user.info=user:password' configuration property.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthenticationType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthenticationType") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateKafkaSchemaRegistryConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateKafkaSchemaRegistryConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateMaintenanceConfig: The maintenance configuration of the
+// GoldengateDeployment.
+type GoldengateMaintenanceConfig struct {
+	// BundleReleaseUpgradePeriodDays: Optional. Defines auto upgrade period for
+	// bundle releases. Manually configured period cannot be longer than service
+	// defined period for bundle releases. This period must be shorter or equal to
+	// major release upgrade period. Not passing this field during create will
+	// equate to using the service default.
+	BundleReleaseUpgradePeriodDays int64 `json:"bundleReleaseUpgradePeriodDays,omitempty"`
+	// InterimReleaseUpgradePeriodDays: Optional. Defines auto upgrade period for
+	// interim releases. This period must be shorter or equal to bundle release
+	// upgrade period.
+	InterimReleaseUpgradePeriodDays int64 `json:"interimReleaseUpgradePeriodDays,omitempty"`
+	// IsInterimReleaseAutoUpgradeEnabled: Optional. By default auto upgrade for
+	// interim releases are not enabled. If auto-upgrade is enabled for interim
+	// release, you have to specify interim_release_upgrade_period_days too.
+	IsInterimReleaseAutoUpgradeEnabled bool `json:"isInterimReleaseAutoUpgradeEnabled,omitempty"`
+	// MajorReleaseUpgradePeriodDays: Optional. Defines auto upgrade period for
+	// major releases. Manually configured period cannot be longer than service
+	// defined period for major releases. Not passing this field during create will
+	// equate to using the service default.
+	MajorReleaseUpgradePeriodDays int64 `json:"majorReleaseUpgradePeriodDays,omitempty"`
+	// SecurityPatchUpgradePeriodDays: Optional. Defines auto upgrade period for
+	// releases with security fix. Manually configured period cannot be longer than
+	// service defined period for security releases. Not passing this field during
+	// create will equate to using the service default.
+	SecurityPatchUpgradePeriodDays int64 `json:"securityPatchUpgradePeriodDays,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "BundleReleaseUpgradePeriodDays") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BundleReleaseUpgradePeriodDays")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateMaintenanceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateMaintenanceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateMaintenanceWindow: The maintenance window of the
+// GoldengateDeployment.
+type GoldengateMaintenanceWindow struct {
+	// Day: Required. Days of the week.
+	//
+	// Possible values:
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
+	Day string `json:"day,omitempty"`
+	// StartHour: Required. Start hour for maintenance period. Hour is in UTC.
+	StartHour int64 `json:"startHour,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Day") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateMaintenanceWindow) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateMaintenanceWindow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateMicrosoftFabricConnectionProperties: The properties of
+// GoldengateMicrosoftFabricConnection.
+type GoldengateMicrosoftFabricConnectionProperties struct {
+	// ClientId: Optional. Azure client ID of the application.
+	ClientId string `json:"clientId,omitempty"`
+	// ClientSecret: Optional. Client secret associated with the client id.
+	ClientSecret string `json:"clientSecret,omitempty"`
+	// Endpoint: Optional. Optional Microsoft Fabric service endpoint. Default
+	// value: https://onelake.dfs.fabric.microsoft.com
+	Endpoint string `json:"endpoint,omitempty"`
+	// TechnologyType: Optional. The technology type of MicrosoftFabricConnection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// TenantId: Optional. Azure tenant ID of the application.
+	TenantId string `json:"tenantId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateMicrosoftFabricConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateMicrosoftFabricConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateMicrosoftSqlserverConnectionProperties: The properties of
+// GoldengateMicrosoftSqlserverConnection.
+type GoldengateMicrosoftSqlserverConnectionProperties struct {
+	// AdditionalAttributes: Optional. An array of name-value pair attribute
+	// entries. Used as additional parameters in connection string.
+	AdditionalAttributes []*NameValuePair `json:"additionalAttributes,omitempty"`
+	// Database: Optional. The name of the database.
+	Database string `json:"database,omitempty"`
+	// Host: Optional. The name or address of a host.
+	Host string `json:"host,omitempty"`
+	// Password: Optional. Input only. The password Oracle Goldengate uses for
+	// Microsoft SQL Server connection in plain text.
+	Password string `json:"password,omitempty"`
+	// PasswordSecretVersion: Optional. Input only. The resource name of a secret
+	// version in Secret Manager which contains the password Oracle Goldengate uses
+	// for Microsoft SQL Server connection. Format:
+	// projects/{project}/secrets/{secret}/versions/{version}.
+	PasswordSecretVersion string `json:"passwordSecretVersion,omitempty"`
+	// Port: Optional. The port of an endpoint usually specified for a connection.
+	Port int64 `json:"port,omitempty"`
+	// SecurityProtocol: Optional. Security Type for Microsoft SQL Server.
+	//
+	// Possible values:
+	//   "MICROSOFT_SQLSERVER_SECURITY_PROTOCOL_UNSPECIFIED" - Security type not
+	// specified.
+	//   "PLAIN" - Plain text communication.
+	//   "TLS" - Transport Layer Security.
+	SecurityProtocol string `json:"securityProtocol,omitempty"`
+	// ServerCertificateValidationRequired: Optional. If set to true, the driver
+	// validates the certificate that is sent by the database server.
+	ServerCertificateValidationRequired bool `json:"serverCertificateValidationRequired,omitempty"`
+	// SslCaFile: Optional. Database Certificate - The content of a .pem or .crt
+	// file containing the server public key (for 1-way SSL).
+	SslCaFile string `json:"sslCaFile,omitempty"`
+	// TechnologyType: Optional. The technology type of
+	// MicrosoftSqlserverConnection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// Username: Optional. The username Oracle Goldengate uses to connect to the
+	// Microsoft SQL Server.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalAttributes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalAttributes") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateMicrosoftSqlserverConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateMicrosoftSqlserverConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateMongodbConnectionProperties: The properties of
+// GoldengateMongodbConnection.
+type GoldengateMongodbConnectionProperties struct {
+	// ConnectionString: Optional. MongoDB connection string. e.g.:
+	// 'mongodb://mongodb0.example.com:27017/recordsrecords'
+	ConnectionString string `json:"connectionString,omitempty"`
+	// DatabaseId: Optional. The OCID of the Oracle Autonomous Json Database.
+	DatabaseId string `json:"databaseId,omitempty"`
+	// Password: Optional. Input only. The password Oracle Goldengate uses to
+	// connect the Mongodb connection in plain text.
+	Password string `json:"password,omitempty"`
+	// PasswordSecretVersion: Optional. Input only. The resource name of a secret
+	// version in Secret Manager which contains the password Oracle Goldengate uses
+	// to connect the Mongodb connection. Format:
+	// projects/{project}/secrets/{secret}/versions/{version}.
+	PasswordSecretVersion string `json:"passwordSecretVersion,omitempty"`
+	// SecurityProtocol: Optional. Security Type for MongoDB.
+	//
+	// Possible values:
+	//   "MONGODB_SECURITY_PROTOCOL_UNSPECIFIED" - Security type not specified.
+	//   "PLAIN" - Plain text communication.
+	//   "TLS" - Transport Layer Security.
+	//   "MTLS" - Mutual Transport Layer Security.
+	SecurityProtocol string `json:"securityProtocol,omitempty"`
+	// TechnologyType: Optional. The technology type of MongodbConnection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// TlsCaFile: Optional. Database Certificate - The content of a .pem file,
+	// containing the server public key (for 1 and 2-way SSL).
+	TlsCaFile string `json:"tlsCaFile,omitempty"`
+	// TlsCertificateKeyFile: Optional. Client Certificate - The content of a .pem
+	// file, containing the client public key (for 2-way SSL).
+	TlsCertificateKeyFile string `json:"tlsCertificateKeyFile,omitempty"`
+	// TlsCertificateKeyFilePassword: Optional. Input only. The Client Certificate
+	// key file password in plain text.
+	TlsCertificateKeyFilePassword string `json:"tlsCertificateKeyFilePassword,omitempty"`
+	// TlsCertificateKeyFilePasswordSecretVersion: Optional. Input only. The
+	// resource name of a secret version in Secret Manager which contains the
+	// Client Certificate key file password in Secret Manager. Format:
+	// projects/{project}/secrets/{secret}/versions/{version}.
+	TlsCertificateKeyFilePasswordSecretVersion string `json:"tlsCertificateKeyFilePasswordSecretVersion,omitempty"`
+	// Username: Optional. The username Oracle Goldengate uses to connect to the
+	// database.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConnectionString") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConnectionString") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateMongodbConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateMongodbConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateMysqlConnectionProperties: Properties of
+// GoldengateMysqlConnection.
+type GoldengateMysqlConnectionProperties struct {
+	// AdditionalAttributes: Optional. An array of name-value pair attribute
+	// entries. Used as additional parameters in connection string.
+	AdditionalAttributes []*NameValuePair `json:"additionalAttributes,omitempty"`
+	// Database: Optional. The name of the database.
+	Database string `json:"database,omitempty"`
+	// DbSystemId: Optional. The OCID of the database system being referenced.
+	DbSystemId string `json:"dbSystemId,omitempty"`
+	// Host: Optional. The name or address of a host.
+	Host string `json:"host,omitempty"`
+	// Password: Optional. Input only. The password Oracle Goldengate uses to
+	// connect to MySQL in plain text.
+	Password string `json:"password,omitempty"`
+	// PasswordSecretVersion: Optional. Input only. The resource name of a secret
+	// version in Secret Manager which contains the password Oracle Goldengate uses
+	// to connect to MySQL. Format:
+	// projects/{project}/secrets/{secret}/versions/{version}.
+	PasswordSecretVersion string `json:"passwordSecretVersion,omitempty"`
+	// Port: Optional. The port of an endpoint usually specified for a connection.
+	Port int64 `json:"port,omitempty"`
+	// SecurityProtocol: Optional. Security Type for MySQL.
+	//
+	// Possible values:
+	//   "MYSQL_SECURITY_PROTOCOL_UNSPECIFIED" - Security type not specified.
+	//   "PLAIN" - Plain text communication.
+	//   "TLS" - Transport Layer Security.
+	//   "MTLS" - Mutual Transport Layer Security.
+	SecurityProtocol string `json:"securityProtocol,omitempty"`
+	// SslCaFile: Optional. Database Certificate - The content of a .pem or .crt
+	// file containing the server public key (for 1 and 2-way SSL).
+	SslCaFile string `json:"sslCaFile,omitempty"`
+	// SslCertFile: Optional. Client Certificate - The content of a .pem or .crt
+	// file containing the client public key (for 2-way SSL).
+	SslCertFile string `json:"sslCertFile,omitempty"`
+	// SslCrlFile: Optional. The list of certificates revoked by the trusted
+	// certificate authorities (Trusted CA).
+	SslCrlFile string `json:"sslCrlFile,omitempty"`
+	// SslKeyFile: Optional. Client Key - The content of a .pem or .crt file
+	// containing the client private key (for 2-way SSL).
+	SslKeyFile string `json:"sslKeyFile,omitempty"`
+	// SslMode: Optional. SSL modes for MySQL.
+	//
+	// Possible values:
+	//   "SSL_MODE_UNSPECIFIED" - SSL mode not specified.
+	//   "DISABLED" - SSL is disabled.
+	//   "PREFERRED" - SSL is preferred.
+	//   "REQUIRED" - SSL is required.
+	//   "VERIFY_CA" - SSL is required and certificate is verified.
+	//   "VERIFY_IDENTITY" - SSL is required and certificate and hostname are
+	// verified.
+	SslMode string `json:"sslMode,omitempty"`
+	// TechnologyType: Optional. The technology type of MysqlConnection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// Username: Optional. The username Oracle Goldengate uses to connect the
+	// associated system of the given technology.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalAttributes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalAttributes") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateMysqlConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateMysqlConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateOciObjectStorageConnectionProperties: The properties of
+// GoldengateOciObjectStorageConnection.
+type GoldengateOciObjectStorageConnectionProperties struct {
+	// PrivateKeyFile: Optional. The content of the private key file (PEM file)
+	// corresponding to the API key of the fingerprint.
+	PrivateKeyFile string `json:"privateKeyFile,omitempty"`
+	// PrivateKeyPassphraseSecret: Optional. The passphrase of the private key.
+	PrivateKeyPassphraseSecret string `json:"privateKeyPassphraseSecret,omitempty"`
+	// PublicKeyFingerprint: Optional. The fingerprint of the API Key of the user
+	// specified by the userId.
+	PublicKeyFingerprint string `json:"publicKeyFingerprint,omitempty"`
+	// Region: Optional. The name of the region of OCI Object Storage. e.g.:
+	// us-ashburn-1 If the region is not provided, backend will default to the
+	// default region.
+	Region string `json:"region,omitempty"`
+	// TechnologyType: Optional. The technology type of OciObjectStorageConnection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// TenancyId: Optional. The OCID of the related OCI tenancy.
+	TenancyId string `json:"tenancyId,omitempty"`
+	// UseResourcePrincipal: Optional. Specifies that the user intends to
+	// authenticate to the instance using a resource principal.
+	UseResourcePrincipal bool `json:"useResourcePrincipal,omitempty"`
+	// UserId: Optional. The OCID of the OCI user who will access the Object
+	// Storage. The user must have write access to the bucket they want to connect
+	// to.
+	UserId string `json:"userId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PrivateKeyFile") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PrivateKeyFile") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateOciObjectStorageConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateOciObjectStorageConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateOggDeployment: The Ogg data of the GoldengateDeployment.
+type GoldengateOggDeployment struct {
+	// AdminPassword: Optional. The Goldengate deployment console password in plain
+	// text.
+	AdminPassword string `json:"adminPassword,omitempty"`
+	// AdminPasswordSecretVersion: Optional. Input only. The Goldengate deployment
+	// console password secret version.
+	AdminPasswordSecretVersion string `json:"adminPasswordSecretVersion,omitempty"`
+	// AdminUsername: Required. The Goldengate deployment console username.
+	AdminUsername string `json:"adminUsername,omitempty"`
+	// Certificate: Output only. The certificate of the GoldengateDeployment.
+	Certificate string `json:"certificate,omitempty"`
+	// CredentialStore: Output only. The credential store of the
+	// GoldengateDeployment.
+	//
+	// Possible values:
+	//   "CREDENTIAL_STORE_UNSPECIFIED" - The credential store is unspecified.
+	//   "GOLDENGATE" - The credential store is Goldengate.
+	//   "IAM" - The credential store is IAM.
+	CredentialStore string `json:"credentialStore,omitempty"`
+	// Deployment: Required. The name given to the Goldengate service deployment.
+	// The name must be 1 to 32 characters long, must contain only alphanumeric
+	// characters and must start with a letter.
+	Deployment string `json:"deployment,omitempty"`
+	// GroupRolesMapping: Output only. The group to roles mapping of the
+	// GoldengateDeployment.
+	GroupRolesMapping *GoldengateGroupToRolesMapping `json:"groupRolesMapping,omitempty"`
+	// IdentityDomainId: Output only. The identity domain id of the
+	// GoldengateDeployment.
+	IdentityDomainId string `json:"identityDomainId,omitempty"`
+	// OggVersion: Optional. Version of OGG
+	OggVersion string `json:"oggVersion,omitempty"`
+	// PasswordSecretId: Output only. The password secret id of the
+	// GoldengateDeployment.
+	PasswordSecretId string `json:"passwordSecretId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdminPassword") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdminPassword") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateOggDeployment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateOggDeployment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateOracleAIDataPlatformConnectionProperties: The properties of
+// GoldengateOracleAIDataPlatformConnection.
+type GoldengateOracleAIDataPlatformConnectionProperties struct {
+	// ConnectionUrl: Optional. Connection URL. It must start with 'jdbc:spark://'
+	ConnectionUrl string `json:"connectionUrl,omitempty"`
+	// PrivateKeyFile: Optional. The content of the private key file (PEM file)
+	// corresponding to the API key of the fingerprint.
+	PrivateKeyFile string `json:"privateKeyFile,omitempty"`
+	// PrivateKeyPassphraseSecret: Optional. The passphrase of the private key.
+	PrivateKeyPassphraseSecret string `json:"privateKeyPassphraseSecret,omitempty"`
+	// PublicKeyFingerprint: Optional. The fingerprint of the API Key of the user
+	// specified by the user_id.
+	PublicKeyFingerprint string `json:"publicKeyFingerprint,omitempty"`
+	// Region: Optional. The name of the region. e.g.: us-ashburn-1
+	Region string `json:"region,omitempty"`
+	// TechnologyType: Optional. The technology type of
+	// OracleAiDataPlatformConnection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// TenancyId: Optional. The OCID of the related OCI tenancy.
+	TenancyId string `json:"tenancyId,omitempty"`
+	// UseResourcePrincipal: Optional. Specifies that the user intends to
+	// authenticate to the instance using a resource principal.
+	UseResourcePrincipal bool `json:"useResourcePrincipal,omitempty"`
+	// UserId: Optional. The OCID of the OCI user who will access.
+	UserId string `json:"userId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConnectionUrl") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConnectionUrl") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateOracleAIDataPlatformConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateOracleAIDataPlatformConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateOracleConnectionProperties: The properties of Goldengate Oracle
+// Database Connection.
+type GoldengateOracleConnectionProperties struct {
+	// AuthenticationMode: Optional. Authentication mode.
+	//
+	// Possible values:
+	//   "ORACLE_AUTHENTICATION_MODE_UNSPECIFIED" - Authentication mode not
+	// specified.
+	//   "TLS" - TLS authentication mode.
+	//   "MTLS" - MTLS authentication mode.
+	AuthenticationMode string `json:"authenticationMode,omitempty"`
+	// ConnectionString: Optional. Connect descriptor or Easy Connect Naming method
+	// used to connect to a database.
+	ConnectionString string `json:"connectionString,omitempty"`
+	// GcpOracleDatabaseId: Optional. Database instance id of database in Oracle
+	// Database @ Google Cloud. If gcp_oracle_database_id is provided,
+	// connection_string must be empty.
+	GcpOracleDatabaseId string `json:"gcpOracleDatabaseId,omitempty"`
+	// Password: Optional. Input only. The password Oracle Goldengate uses in plain
+	// text.
+	Password string `json:"password,omitempty"`
+	// PasswordSecretVersion: Optional. Input only. The resource name of a secret
+	// version in Secret Manager which contains the password Oracle Goldengate
+	// uses. Format: projects/{project}/secrets/{secret}/versions/{version}.
+	PasswordSecretVersion string `json:"passwordSecretVersion,omitempty"`
+	// SessionMode: Optional. The mode of the database connection session to be
+	// established by the data client.
+	//
+	// Possible values:
+	//   "SESSION_MODE_UNSPECIFIED" - Default unspecified value.
+	//   "DIRECT" - Indicates that the resource is using direct session mode.
+	//   "REDIRECT" - Indicates that the resource is using redirect session mode.
+	SessionMode string `json:"sessionMode,omitempty"`
+	// TechnologyType: Optional. The technology type.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// Username: Optional. The username Oracle Goldengate uses to connect.
+	Username string `json:"username,omitempty"`
+	// WalletFile: Optional. The wallet contents Oracle Goldengate uses to make
+	// connections to a database.
+	WalletFile string `json:"walletFile,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthenticationMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthenticationMode") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateOracleConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateOracleConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateOracleNosqlConnectionProperties: The properties of
+// GoldengateOracleNosqlConnection.
+type GoldengateOracleNosqlConnectionProperties struct {
+	// PrivateKeyFile: Optional. The content of the private key file (PEM file)
+	// corresponding to the API key of the fingerprint.
+	PrivateKeyFile string `json:"privateKeyFile,omitempty"`
+	// PrivateKeyPassphraseSecret: Optional. The passphrase of the private key.
+	PrivateKeyPassphraseSecret string `json:"privateKeyPassphraseSecret,omitempty"`
+	// PublicKeyFingerprint: Optional. The fingerprint of the API Key of the user
+	// specified by the userId.
+	PublicKeyFingerprint string `json:"publicKeyFingerprint,omitempty"`
+	// Region: Optional. The name of the region. e.g.: us-ashburn-1
+	Region string `json:"region,omitempty"`
+	// TechnologyType: Optional. The technology type of OracleNosqlConnection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// TenancyId: Optional. The OCID of the OCI tenancy.
+	TenancyId string `json:"tenancyId,omitempty"`
+	// UseResourcePrincipal: Optional. Specifies that the user intends to
+	// authenticate to the instance using a resource principal.
+	UseResourcePrincipal bool `json:"useResourcePrincipal,omitempty"`
+	// UserId: Optional. The OCID of the OCI user who will access the Oracle NoSQL
+	// database.
+	UserId string `json:"userId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PrivateKeyFile") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PrivateKeyFile") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateOracleNosqlConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateOracleNosqlConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengatePlacement: The placement of the GoldengateDeployment.
+type GoldengatePlacement struct {
+	// AvailabilityDomain: Output only. The availability domain.
+	AvailabilityDomain string `json:"availabilityDomain,omitempty"`
+	// FaultDomain: Output only. The fault domain.
+	FaultDomain string `json:"faultDomain,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AvailabilityDomain") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AvailabilityDomain") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengatePlacement) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengatePlacement
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengatePostgresqlConnectionProperties: The properties of
+// GoldengatePostgresqlConnection.
+type GoldengatePostgresqlConnectionProperties struct {
+	// AdditionalAttributes: Optional. An array of name-value pair attribute
+	// entries. Used as additional parameters in connection string.
+	AdditionalAttributes []*NameValuePair `json:"additionalAttributes,omitempty"`
+	// Database: Optional. The name of the database.
+	Database string `json:"database,omitempty"`
+	// DbSystemId: Optional. The OCID of the database system being referenced.
+	DbSystemId string `json:"dbSystemId,omitempty"`
+	// Host: Optional. The name or address of a host.
+	Host string `json:"host,omitempty"`
+	// Password: Optional. Input only. The password Oracle Goldengate uses for
+	// PostgreSQL connection in plain text.
+	Password string `json:"password,omitempty"`
+	// PasswordSecretVersion: Optional. Input only. The resource name of a secret
+	// version in Secret Manager which contains the password Oracle Goldengate uses
+	// for PostgreSQL connection. Format:
+	// projects/{project}/secrets/{secret}/versions/{version}.
+	PasswordSecretVersion string `json:"passwordSecretVersion,omitempty"`
+	// Port: Optional. The port of an endpoint usually specified for a connection.
+	Port int64 `json:"port,omitempty"`
+	// SecurityProtocol: Optional. Security protocol for PostgreSQL.
+	//
+	// Possible values:
+	//   "POSTGRESQL_SECURITY_PROTOCOL_UNSPECIFIED" - Security protocol not
+	// specified.
+	//   "PLAIN" - Plain text communication.
+	//   "TLS" - Transport Layer Security.
+	//   "MTLS" - Mutual Transport Layer Security.
+	SecurityProtocol string `json:"securityProtocol,omitempty"`
+	// SslCaFile: Optional. The certificate of the trusted certificate authorities
+	// (Trusted CA) for PostgreSQL.
+	SslCaFile string `json:"sslCaFile,omitempty"`
+	// SslCertFile: Optional. The certificate of the PostgreSQL server.
+	SslCertFile string `json:"sslCertFile,omitempty"`
+	// SslCrlFile: Optional. The list of certificates revoked by the trusted
+	// certificate authorities (Trusted CA).
+	SslCrlFile string `json:"sslCrlFile,omitempty"`
+	// SslKeyFile: Optional. The private key of the PostgreSQL server.
+	SslKeyFile string `json:"sslKeyFile,omitempty"`
+	// SslMode: Optional. SSL modes for PostgreSQL.
+	//
+	// Possible values:
+	//   "POSTGRESQL_SSL_MODE_UNSPECIFIED" - SSL mode not specified.
+	//   "PREFER" - Prefer SSL.
+	//   "REQUIRE" - Require SSL.
+	//   "VERIFY_CA" - Verify Certificate Authority.
+	//   "VERIFY_FULL" - Verify Full.
+	SslMode string `json:"sslMode,omitempty"`
+	// TechnologyType: Optional. The technology type of PostgresqlConnection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// Username: Optional. The username Oracle Goldengate uses to connect the
+	// associated system of the given technology.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalAttributes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalAttributes") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengatePostgresqlConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengatePostgresqlConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateRedisConnectionProperties: The properties of
+// GoldengateRedisConnection.
+type GoldengateRedisConnectionProperties struct {
+	// AuthenticationType: Optional. Authentication type for Redis.
+	//
+	// Possible values:
+	//   "REDIS_AUTHENTICATION_TYPE_UNSPECIFIED" - Authentication type not
+	// specified.
+	//   "NONE" - No authentication.
+	//   "BASIC" - Basic authentication.
+	AuthenticationType string `json:"authenticationType,omitempty"`
+	// KeyStoreFile: Optional. The content of the KeyStore file.
+	KeyStoreFile string `json:"keyStoreFile,omitempty"`
+	// KeyStorePassword: Optional. Input only. The KeyStore password in plain text.
+	KeyStorePassword string `json:"keyStorePassword,omitempty"`
+	// KeyStorePasswordSecretVersion: Optional. Input only. The resource name of a
+	// secret version in Secret Manager which contains the KeyStore password.
+	// Format: projects/{project}/secrets/{secret}/versions/{version}.
+	KeyStorePasswordSecretVersion string `json:"keyStorePasswordSecretVersion,omitempty"`
+	// Password: Optional. Input only. The password Oracle Goldengate uses for
+	// Redis connection in plain text.
+	Password string `json:"password,omitempty"`
+	// PasswordSecretVersion: Optional. Input only. The resource name of a secret
+	// version in Secret Manager which contains the password Oracle Goldengate uses
+	// for Redis connection. Format:
+	// projects/{project}/secrets/{secret}/versions/{version}.
+	PasswordSecretVersion string `json:"passwordSecretVersion,omitempty"`
+	// RedisClusterId: Optional. The OCID of the Redis cluster.
+	RedisClusterId string `json:"redisClusterId,omitempty"`
+	// SecurityProtocol: Optional. Security protocol for Redis.
+	//
+	// Possible values:
+	//   "REDIS_SECURITY_PROTOCOL_UNSPECIFIED" - Security protocol not specified.
+	//   "PLAIN" - Plain text communication.
+	//   "TLS" - Transport Layer Security.
+	//   "MTLS" - Mutual Transport Layer Security.
+	SecurityProtocol string `json:"securityProtocol,omitempty"`
+	// Servers: Optional. Comma separated list of Redis server addresses, specified
+	// as host:port entries, where :port is optional. If port is not specified, it
+	// defaults to 6379. Example:
+	// "server1.example.com:6379,server2.example.com:6379"
+	Servers string `json:"servers,omitempty"`
+	// TechnologyType: Optional. The technology type of RedisConnection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// TrustStoreFile: Optional. The content of the TrustStore file.
+	TrustStoreFile string `json:"trustStoreFile,omitempty"`
+	// TrustStorePassword: Optional. Input only. The TrustStore password in plain
+	// text.
+	TrustStorePassword string `json:"trustStorePassword,omitempty"`
+	// TrustStorePasswordSecretVersion: Optional. Input only. The resource name of
+	// a secret version in Secret Manager which contains the TrustStore password.
+	// Format: projects/{project}/secrets/{secret}/versions/{version}.
+	TrustStorePasswordSecretVersion string `json:"trustStorePasswordSecretVersion,omitempty"`
+	// Username: Optional. The username Oracle Goldengate uses to connect the
+	// associated system of the given technology.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthenticationType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthenticationType") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateRedisConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateRedisConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoldengateSnowflakeConnectionProperties: The properties of
+// GoldengateSnowflakeConnection.
+type GoldengateSnowflakeConnectionProperties struct {
+	// AuthenticationType: Optional. Used authentication mechanism to access
+	// Snowflake.
+	//
+	// Possible values:
+	//   "AUTHENTICATION_TYPE_UNSPECIFIED" - Authentication type not specified.
+	//   "BASIC" - Basic authentication.
+	//   "KEY_PAIR" - Key pair authentication.
+	AuthenticationType string `json:"authenticationType,omitempty"`
+	// ConnectionUrl: Optional. JDBC connection URL. e.g.:
+	// 'jdbc:snowflake://.snowflakecomputing.com/?warehouse=&db='
+	ConnectionUrl string `json:"connectionUrl,omitempty"`
+	// Password: Optional. Input only. The password Oracle Goldengate uses to
+	// connect to Snowflake platform in plain text.
+	Password string `json:"password,omitempty"`
+	// PasswordSecretVersion: Optional. Input only. The resource name of a secret
+	// version in Secret Manager which contains the password Oracle Goldengate uses
+	// to connect to Snowflake platform. Format:
+	// projects/{project}/secrets/{secret}/versions/{version}.
+	PasswordSecretVersion string `json:"passwordSecretVersion,omitempty"`
+	// PrivateKeyFile: Optional. The content of private key file in PEM format.
+	PrivateKeyFile string `json:"privateKeyFile,omitempty"`
+	// PrivateKeyPassphraseSecret: Optional. Password if the private key file is
+	// encrypted.
+	PrivateKeyPassphraseSecret string `json:"privateKeyPassphraseSecret,omitempty"`
+	// TechnologyType: Optional. The technology type of SnowflakeConnection.
+	TechnologyType string `json:"technologyType,omitempty"`
+	// Username: Optional. The username Oracle Goldengate uses to connect to
+	// Snowflake.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthenticationType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthenticationType") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoldengateSnowflakeConnectionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoldengateSnowflakeConnectionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudStorageIcebergStorage: The Google Cloud Storage Iceberg storage.
+type GoogleCloudStorageIcebergStorage struct {
+	// Bucket: Required. The bucket of Google Cloud Storage.
+	Bucket string `json:"bucket,omitempty"`
+	// ProjectId: Required. The project ID of Google Cloud Storage.
+	ProjectId string `json:"projectId,omitempty"`
+	// ServiceAccountKeyFile: Optional. The service account key file of Google
+	// Cloud Storage.
+	ServiceAccountKeyFile string `json:"serviceAccountKeyFile,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudStorageIcebergStorage) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudStorageIcebergStorage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IcebergCatalog: The Iceberg catalog details.
+type IcebergCatalog struct {
+	// CatalogType: Required. The type of Iceberg catalog.
+	//
+	// Possible values:
+	//   "CATALOG_TYPE_UNSPECIFIED" - Catalog type not specified.
+	//   "GLUE" - Glue catalog.
+	//   "HADOOP" - Hadoop catalog.
+	//   "NESSIE" - Nessie catalog.
+	//   "POLARIS" - Polaris catalog.
+	//   "REST" - REST catalog.
+	CatalogType string `json:"catalogType,omitempty"`
+	// GlueIcebergCatalog: The Glue Iceberg catalog.
+	GlueIcebergCatalog *GlueIcebergCatalog `json:"glueIcebergCatalog,omitempty"`
+	// NessieIcebergCatalog: The Nessie Iceberg catalog.
+	NessieIcebergCatalog *NessieIcebergCatalog `json:"nessieIcebergCatalog,omitempty"`
+	// PolarisIcebergCatalog: The Polaris Iceberg catalog.
+	PolarisIcebergCatalog *PolarisIcebergCatalog `json:"polarisIcebergCatalog,omitempty"`
+	// RestIcebergCatalog: The REST Iceberg catalog.
+	RestIcebergCatalog *RestIcebergCatalog `json:"restIcebergCatalog,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CatalogType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CatalogType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IcebergCatalog) MarshalJSON() ([]byte, error) {
+	type NoMethod IcebergCatalog
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IcebergStorage: The Iceberg storage details.
+type IcebergStorage struct {
+	// AmazonS3IcebergStorage: The Amazon S3 Iceberg storage.
+	AmazonS3IcebergStorage *AmazonS3IcebergStorage `json:"amazonS3IcebergStorage,omitempty"`
+	// AzureDataLakeStorageIcebergStorage: The Azure Data Lake Storage Iceberg
+	// storage.
+	AzureDataLakeStorageIcebergStorage *AzureDataLakeStorageIcebergStorage `json:"azureDataLakeStorageIcebergStorage,omitempty"`
+	// GoogleCloudStorageIcebergStorage: The Google Cloud Storage Iceberg storage.
+	GoogleCloudStorageIcebergStorage *GoogleCloudStorageIcebergStorage `json:"googleCloudStorageIcebergStorage,omitempty"`
+	// StorageType: Required. The type of Iceberg storage.
+	//
+	// Possible values:
+	//   "STORAGE_TYPE_UNSPECIFIED" - Storage type not specified.
+	//   "AMAZON_S3" - Amazon S3 storage.
+	//   "GOOGLE_CLOUD_STORAGE" - Google Cloud Storage storage.
+	//   "AZURE_DATA_LAKE_STORAGE" - Azure Data Lake Storage storage.
+	StorageType string `json:"storageType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AmazonS3IcebergStorage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AmazonS3IcebergStorage") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IcebergStorage) MarshalJSON() ([]byte, error) {
+	type NoMethod IcebergStorage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // IdentityConnector: The identity connector details which will allow OCI to
 // securely access the resources in the customer project.
 type IdentityConnector struct {
@@ -3452,6 +6347,61 @@ type IdentityConnector struct {
 
 func (s IdentityConnector) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentityConnector
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IngressIp: The ingress IPs of the GoldengateDeployment.
+type IngressIp struct {
+	// IngressIpAddress: Output only. The ingress IP.
+	IngressIpAddress string `json:"ingressIpAddress,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IngressIpAddress") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IngressIpAddress") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IngressIp) MarshalJSON() ([]byte, error) {
+	type NoMethod IngressIp
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// KafkaBootstrapServer: Represents a Kafka bootstrap server with host name,
+// optional port defaults to 9092, and an optional private ip.
+type KafkaBootstrapServer struct {
+	// Host: Required. The name or address of a host.
+	Host string `json:"host,omitempty"`
+	// Port: Optional. The port of an endpoint usually specified for a connection.
+	Port int64 `json:"port,omitempty"`
+	// PrivateIpAddress: Optional. The private IP address of the connection's
+	// endpoint in the customer's VCN, typically a database endpoint or a big data
+	// endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided,
+	// the subnetId must also be provided. In case the privateIp (and the subnetId)
+	// is not provided it is assumed the datasource is publicly accessible. In case
+	// the connection is accessible only privately, the lack of privateIp will
+	// result in not being able to access the connection.
+	PrivateIpAddress string `json:"privateIpAddress,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Host") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Host") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s KafkaBootstrapServer) MarshalJSON() ([]byte, error) {
+	type NoMethod KafkaBootstrapServer
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3985,6 +6935,230 @@ func (s ListGiVersionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListGoldengateConnectionAssignmentsResponse: Response message for listing
+// GoldengateConnectionAssignments.
+type ListGoldengateConnectionAssignmentsResponse struct {
+	// GoldengateConnectionAssignments: The list of
+	// GoldengateConnectionAssignments.
+	GoldengateConnectionAssignments []*GoldengateConnectionAssignment `json:"goldengateConnectionAssignments,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unreachable locations when listing resources across all
+	// locations using wildcard location '-'.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "GoldengateConnectionAssignments") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GoldengateConnectionAssignments")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListGoldengateConnectionAssignmentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListGoldengateConnectionAssignmentsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListGoldengateConnectionTypesResponse: Message for response to listing
+// GoldengateConnectionTypes
+type ListGoldengateConnectionTypesResponse struct {
+	// GoldengateConnectionTypes: The list of GoldengateConnectionType
+	GoldengateConnectionTypes []*GoldengateConnectionType `json:"goldengateConnectionTypes,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unordered list. Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "GoldengateConnectionTypes")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GoldengateConnectionTypes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListGoldengateConnectionTypesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListGoldengateConnectionTypesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListGoldengateConnectionsResponse: The response for
+// `GoldengateConnection.List`.
+type ListGoldengateConnectionsResponse struct {
+	// GoldengateConnections: The list of GoldengateConnections.
+	GoldengateConnections []*GoldengateConnection `json:"goldengateConnections,omitempty"`
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Optional. Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "GoldengateConnections") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GoldengateConnections") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListGoldengateConnectionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListGoldengateConnectionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListGoldengateDeploymentEnvironmentsResponse: Message for response to
+// listing GoldengateDeploymentEnvironments
+type ListGoldengateDeploymentEnvironmentsResponse struct {
+	// GoldengateDeploymentEnvironments: The list of
+	// GoldengateDeploymentEnvironment
+	GoldengateDeploymentEnvironments []*GoldengateDeploymentEnvironment `json:"goldengateDeploymentEnvironments,omitempty"`
+	// NextPageToken: A token identifying a page of results the server should
+	// return. If this field is empty, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unordered list. Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "GoldengateDeploymentEnvironments") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "GoldengateDeploymentEnvironments") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListGoldengateDeploymentEnvironmentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListGoldengateDeploymentEnvironmentsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListGoldengateDeploymentTypesResponse: Message for response to listing
+// GoldengateDeploymentTypes
+type ListGoldengateDeploymentTypesResponse struct {
+	// GoldengateDeploymentTypes: The list of GoldengateDeploymentType
+	GoldengateDeploymentTypes []*GoldengateDeploymentType `json:"goldengateDeploymentTypes,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unordered list. The resource names of locations that could not
+	// be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "GoldengateDeploymentTypes")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GoldengateDeploymentTypes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListGoldengateDeploymentTypesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListGoldengateDeploymentTypesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListGoldengateDeploymentVersionsResponse: Message for response to listing
+// GoldengateDeploymentVersions
+type ListGoldengateDeploymentVersionsResponse struct {
+	// GoldengateDeploymentVersions: The list of GoldengateDeploymentVersion
+	GoldengateDeploymentVersions []*GoldengateDeploymentVersion `json:"goldengateDeploymentVersions,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unordered list. Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "GoldengateDeploymentVersions") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GoldengateDeploymentVersions") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListGoldengateDeploymentVersionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListGoldengateDeploymentVersionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListGoldengateDeploymentsResponse: The response for
+// `GoldengateDeployment.List`.
+type ListGoldengateDeploymentsResponse struct {
+	// GoldengateDeployments: The list of GoldengateDeployments.
+	GoldengateDeployments []*GoldengateDeployment `json:"goldengateDeployments,omitempty"`
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Optional. Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "GoldengateDeployments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GoldengateDeployments") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListGoldengateDeploymentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListGoldengateDeploymentsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListLocationsResponse: The response message for Locations.ListLocations.
 type ListLocationsResponse struct {
 	// Locations: A list of locations that matches the specified filter in the
@@ -4346,6 +7520,55 @@ type MinorVersion struct {
 
 func (s MinorVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod MinorVersion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NameValuePair: A name-value pair representing an attribute entry usable in a
+// list of attributes.
+type NameValuePair struct {
+	// Key: Required. The name of the property entry.
+	Key string `json:"key,omitempty"`
+	// Value: Required. The value of the property entry.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NameValuePair) MarshalJSON() ([]byte, error) {
+	type NoMethod NameValuePair
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NessieIcebergCatalog: The Nessie Iceberg catalog.
+type NessieIcebergCatalog struct {
+	// Branch: Required. The Nessie branch.
+	Branch string `json:"branch,omitempty"`
+	// Uri: Required. The Nessie uri.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Branch") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Branch") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NessieIcebergCatalog) MarshalJSON() ([]byte, error) {
+	type NoMethod NessieIcebergCatalog
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4730,6 +7953,36 @@ func (s PluggableDatabaseProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PolarisIcebergCatalog: The Polaris Iceberg catalog.
+type PolarisIcebergCatalog struct {
+	// ClientId: Required. The Polaris client ID.
+	ClientId string `json:"clientId,omitempty"`
+	// ClientSecret: Optional. The Polaris client secret.
+	ClientSecret string `json:"clientSecret,omitempty"`
+	// PolarisCatalog: Required. The catalog name within Polaris.
+	PolarisCatalog string `json:"polarisCatalog,omitempty"`
+	// PrincipalRole: Required. The Polaris principal role.
+	PrincipalRole string `json:"principalRole,omitempty"`
+	// Uri: Required. The Polaris uri.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolarisIcebergCatalog) MarshalJSON() ([]byte, error) {
+	type NoMethod PolarisIcebergCatalog
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RemoveVirtualMachineExadbVmClusterRequest: The request for
 // `ExadbVmCluster.RemoveVirtualMachine`.
 type RemoveVirtualMachineExadbVmClusterRequest struct {
@@ -4759,6 +8012,31 @@ type RemoveVirtualMachineExadbVmClusterRequest struct {
 
 func (s RemoveVirtualMachineExadbVmClusterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoveVirtualMachineExadbVmClusterRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RestIcebergCatalog: The REST Iceberg catalog.
+type RestIcebergCatalog struct {
+	// Properties: Optional. The content of the configuration file containing
+	// additional properties for the REST catalog.
+	Properties string `json:"properties,omitempty"`
+	// Uri: Required. The REST uri.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Properties") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Properties") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RestIcebergCatalog) MarshalJSON() ([]byte, error) {
+	type NoMethod RestIcebergCatalog
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4859,6 +8137,11 @@ func (s SourceConfig) MarshalJSON() ([]byte, error) {
 type StartAutonomousDatabaseRequest struct {
 }
 
+// StartGoldengateDeploymentRequest: The request for
+// `GoldengateDeployment.Start`.
+type StartGoldengateDeploymentRequest struct {
+}
+
 // Status: The `Status` type defines a logical error model that is suitable for
 // different programming environments, including REST APIs and RPC APIs. It is
 // used by gRPC (https://github.com/grpc). Each `Status` message contains three
@@ -4895,6 +8178,11 @@ func (s Status) MarshalJSON() ([]byte, error) {
 
 // StopAutonomousDatabaseRequest: The request for `AutonomousDatabase.Stop`.
 type StopAutonomousDatabaseRequest struct {
+}
+
+// StopGoldengateDeploymentRequest: The request for
+// `GoldengateDeployment.Stop`.
+type StopGoldengateDeploymentRequest struct {
 }
 
 // StorageSizeDetails: The initial storage size, in gigabytes, that is
@@ -4946,6 +8234,101 @@ type SwitchoverAutonomousDatabaseRequest struct {
 
 func (s SwitchoverAutonomousDatabaseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SwitchoverAutonomousDatabaseRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TestConnectionAssignmentError: Error details for
+// TestGoldengateConnectionAssignment.
+type TestConnectionAssignmentError struct {
+	// Action: The text describing the action required to fix the issue.
+	Action string `json:"action,omitempty"`
+	// Code: A short error code that defines the error, meant for programmatic
+	// parsing.
+	Code string `json:"code,omitempty"`
+	// Issue: The text describing the root cause of the reported issue.
+	Issue string `json:"issue,omitempty"`
+	// Message: A human-readable error message.
+	Message string `json:"message,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TestConnectionAssignmentError) MarshalJSON() ([]byte, error) {
+	type NoMethod TestConnectionAssignmentError
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TestGoldengateConnectionAssignmentRequest: Request message for
+// TestGoldengateConnectionAssignment.
+type TestGoldengateConnectionAssignmentRequest struct {
+	// Type: Optional. The type of the test of the assigned connection. The only
+	// type actually supported is DEFAULT.
+	//
+	// Possible values:
+	//   "TEST_TYPE_UNSPECIFIED" - The default value. This value is unused.
+	//   "DEFAULT" - The default connection test.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Type") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TestGoldengateConnectionAssignmentRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod TestGoldengateConnectionAssignmentRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TestGoldengateConnectionAssignmentResponse: The result of the connectivity
+// test performed between the Goldengate deployment and the associated database
+// / service.
+type TestGoldengateConnectionAssignmentResponse struct {
+	// Error: Error details if test connection failed.
+	Error *TestConnectionAssignmentError `json:"error,omitempty"`
+	// Errors: List of test connection assignment error objects.
+	Errors []*TestConnectionAssignmentError `json:"errors,omitempty"`
+	// ResultType: Type of the result i.e. Success, Failure or Timeout.
+	//
+	// Possible values:
+	//   "RESULT_TYPE_UNSPECIFIED" - Result type is unspecified.
+	//   "SUCCEEDED" - Test connection succeeded.
+	//   "FAILED" - Test connection failed.
+	//   "TIMED_OUT" - Test connection timed out.
+	ResultType string `json:"resultType,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TestGoldengateConnectionAssignmentResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod TestGoldengateConnectionAssignmentResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11736,6 +15119,2955 @@ func (c *ProjectsLocationsGiVersionsMinorVersionsListCall) Pages(ctx context.Con
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsGoldengateConnectionAssignmentsCreateCall struct {
+	s                              *Service
+	parent                         string
+	goldengateconnectionassignment *GoldengateConnectionAssignment
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Create: Creates a new GoldengateConnectionAssignment in a given project and
+// location.
+//
+//   - parent: The parent resource where this GoldengateConnectionAssignment will
+//     be created. Format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsGoldengateConnectionAssignmentsService) Create(parent string, goldengateconnectionassignment *GoldengateConnectionAssignment) *ProjectsLocationsGoldengateConnectionAssignmentsCreateCall {
+	c := &ProjectsLocationsGoldengateConnectionAssignmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.goldengateconnectionassignment = goldengateconnectionassignment
+	return c
+}
+
+// GoldengateConnectionAssignmentId sets the optional parameter
+// "goldengateConnectionAssignmentId": Required. The ID of the
+// GoldengateConnectionAssignment to create.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsCreateCall) GoldengateConnectionAssignmentId(goldengateConnectionAssignmentId string) *ProjectsLocationsGoldengateConnectionAssignmentsCreateCall {
+	c.urlParams_.Set("goldengateConnectionAssignmentId", goldengateConnectionAssignmentId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsCreateCall) RequestId(requestId string) *ProjectsLocationsGoldengateConnectionAssignmentsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateConnectionAssignmentsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsCreateCall) Context(ctx context.Context) *ProjectsLocationsGoldengateConnectionAssignmentsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.goldengateconnectionassignment)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/goldengateConnectionAssignments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnectionAssignments.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateConnectionAssignments.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnectionAssignments.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGoldengateConnectionAssignmentsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single GoldengateConnectionAssignment.
+//
+//   - name: The name of the GoldengateConnectionAssignment to delete. Format:
+//     projects/{project}/locations/{location}/goldengateConnectionAssignments/{go
+//     ldengate_connection_assignment}.
+func (r *ProjectsLocationsGoldengateConnectionAssignmentsService) Delete(name string) *ProjectsLocationsGoldengateConnectionAssignmentsDeleteCall {
+	c := &ProjectsLocationsGoldengateConnectionAssignmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes after
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsDeleteCall) RequestId(requestId string) *ProjectsLocationsGoldengateConnectionAssignmentsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateConnectionAssignmentsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsDeleteCall) Context(ctx context.Context) *ProjectsLocationsGoldengateConnectionAssignmentsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnectionAssignments.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateConnectionAssignments.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnectionAssignments.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGoldengateConnectionAssignmentsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single GoldengateConnectionAssignment.
+//
+//   - name: The name of the GoldengateConnectionAssignment to retrieve. Format:
+//     projects/{project}/locations/{location}/goldengateConnectionAssignments/{go
+//     ldengate_connection_assignment}.
+func (r *ProjectsLocationsGoldengateConnectionAssignmentsService) Get(name string) *ProjectsLocationsGoldengateConnectionAssignmentsGetCall {
+	c := &ProjectsLocationsGoldengateConnectionAssignmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateConnectionAssignmentsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGoldengateConnectionAssignmentsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsGetCall) Context(ctx context.Context) *ProjectsLocationsGoldengateConnectionAssignmentsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnectionAssignments.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateConnectionAssignments.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoldengateConnectionAssignment.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsGetCall) Do(opts ...googleapi.CallOption) (*GoldengateConnectionAssignment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoldengateConnectionAssignment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnectionAssignments.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGoldengateConnectionAssignmentsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists GoldengateConnectionAssignments in a given project and location.
+//
+//   - parent: The parent value for the GoldengateConnectionAssignments. Format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsGoldengateConnectionAssignmentsService) List(parent string) *ProjectsLocationsGoldengateConnectionAssignmentsListCall {
+	c := &ProjectsLocationsGoldengateConnectionAssignmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters GoldengateConnectionAssignments listed in the response.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsListCall) Filter(filter string) *ProjectsLocationsGoldengateConnectionAssignmentsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": A comma-separated list of
+// fields to order by, sorted in ascending order. Use "DESC" after a field name
+// for descending.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsListCall) OrderBy(orderBy string) *ProjectsLocationsGoldengateConnectionAssignmentsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// GoldengateConnectionAssignments to return. The service may return fewer than
+// this value. If unspecified, at most 50 GoldengateConnectionAssignments will
+// be returned. The maximum value is 1000; values above 1000 will be coerced to
+// 1000.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsListCall) PageSize(pageSize int64) *ProjectsLocationsGoldengateConnectionAssignmentsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListGoldengateConnectionAssignments` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters provided
+// to `ListGoldengateConnectionAssignments` must match the call that provided
+// the page token.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsListCall) PageToken(pageToken string) *ProjectsLocationsGoldengateConnectionAssignmentsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateConnectionAssignmentsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGoldengateConnectionAssignmentsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsListCall) Context(ctx context.Context) *ProjectsLocationsGoldengateConnectionAssignmentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/goldengateConnectionAssignments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnectionAssignments.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateConnectionAssignments.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListGoldengateConnectionAssignmentsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsListCall) Do(opts ...googleapi.CallOption) (*ListGoldengateConnectionAssignmentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListGoldengateConnectionAssignmentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnectionAssignments.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsListCall) Pages(ctx context.Context, f func(*ListGoldengateConnectionAssignmentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsGoldengateConnectionAssignmentsTestCall struct {
+	s                                         *Service
+	name                                      string
+	testgoldengateconnectionassignmentrequest *TestGoldengateConnectionAssignmentRequest
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// Test: Tests a single GoldengateConnectionAssignment.
+//
+//   - name: Name of the connection assignment for which to test connection.
+//     projects/{project}/locations/{region}/goldengateConnectionAssignments/{gold
+//     engate_connection_assignment}.
+func (r *ProjectsLocationsGoldengateConnectionAssignmentsService) Test(name string, testgoldengateconnectionassignmentrequest *TestGoldengateConnectionAssignmentRequest) *ProjectsLocationsGoldengateConnectionAssignmentsTestCall {
+	c := &ProjectsLocationsGoldengateConnectionAssignmentsTestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.testgoldengateconnectionassignmentrequest = testgoldengateconnectionassignmentrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsTestCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateConnectionAssignmentsTestCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsTestCall) Context(ctx context.Context) *ProjectsLocationsGoldengateConnectionAssignmentsTestCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsTestCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsTestCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.testgoldengateconnectionassignmentrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:test")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnectionAssignments.test", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateConnectionAssignments.test" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestGoldengateConnectionAssignmentResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsTestCall) Do(opts ...googleapi.CallOption) (*TestGoldengateConnectionAssignmentResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TestGoldengateConnectionAssignmentResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnectionAssignments.test", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGoldengateConnectionTypesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single GoldengateConnectionType.
+//
+//   - name: Name of the resource in the format:
+//     projects/{project}/locations/{location}/goldengateConnectionTypes/{goldenga
+//     te_connection_type}.
+func (r *ProjectsLocationsGoldengateConnectionTypesService) Get(name string) *ProjectsLocationsGoldengateConnectionTypesGetCall {
+	c := &ProjectsLocationsGoldengateConnectionTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateConnectionTypesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateConnectionTypesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGoldengateConnectionTypesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGoldengateConnectionTypesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateConnectionTypesGetCall) Context(ctx context.Context) *ProjectsLocationsGoldengateConnectionTypesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateConnectionTypesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateConnectionTypesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnectionTypes.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateConnectionTypes.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoldengateConnectionType.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateConnectionTypesGetCall) Do(opts ...googleapi.CallOption) (*GoldengateConnectionType, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoldengateConnectionType{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnectionTypes.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGoldengateConnectionTypesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists GoldengateConnectionTypes in a given project and location.
+//
+//   - parent: Parent value for ListGoldengateConnectionTypesRequest Format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsGoldengateConnectionTypesService) List(parent string) *ProjectsLocationsGoldengateConnectionTypesListCall {
+	c := &ProjectsLocationsGoldengateConnectionTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request. The connection_type field must be specified in the
+// format: `connection_type="ORACLE".
+func (c *ProjectsLocationsGoldengateConnectionTypesListCall) Filter(filter string) *ProjectsLocationsGoldengateConnectionTypesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *ProjectsLocationsGoldengateConnectionTypesListCall) PageSize(pageSize int64) *ProjectsLocationsGoldengateConnectionTypesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsGoldengateConnectionTypesListCall) PageToken(pageToken string) *ProjectsLocationsGoldengateConnectionTypesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateConnectionTypesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateConnectionTypesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGoldengateConnectionTypesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGoldengateConnectionTypesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateConnectionTypesListCall) Context(ctx context.Context) *ProjectsLocationsGoldengateConnectionTypesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateConnectionTypesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateConnectionTypesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/goldengateConnectionTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnectionTypes.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateConnectionTypes.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListGoldengateConnectionTypesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateConnectionTypesListCall) Do(opts ...googleapi.CallOption) (*ListGoldengateConnectionTypesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListGoldengateConnectionTypesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnectionTypes.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGoldengateConnectionTypesListCall) Pages(ctx context.Context, f func(*ListGoldengateConnectionTypesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsGoldengateConnectionsCreateCall struct {
+	s                    *Service
+	parent               string
+	goldengateconnection *GoldengateConnection
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Create: Creates a new GoldengateConnection in a given project and location.
+//
+//   - parent: The value for parent of the GoldengateConnection in the following
+//     format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsGoldengateConnectionsService) Create(parent string, goldengateconnection *GoldengateConnection) *ProjectsLocationsGoldengateConnectionsCreateCall {
+	c := &ProjectsLocationsGoldengateConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.goldengateconnection = goldengateconnection
+	return c
+}
+
+// GoldengateConnectionId sets the optional parameter "goldengateConnectionId":
+// Required. The ID of the GoldengateConnection to create. This value is
+// restricted to (^a-z ([a-z0-9-]{0,61}[a-z0-9])?$) and must be a maximum of 63
+// characters in length. The value must start with a letter and end with a
+// letter or a number.
+func (c *ProjectsLocationsGoldengateConnectionsCreateCall) GoldengateConnectionId(goldengateConnectionId string) *ProjectsLocationsGoldengateConnectionsCreateCall {
+	c.urlParams_.Set("goldengateConnectionId", goldengateConnectionId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsGoldengateConnectionsCreateCall) RequestId(requestId string) *ProjectsLocationsGoldengateConnectionsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateConnectionsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateConnectionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateConnectionsCreateCall) Context(ctx context.Context) *ProjectsLocationsGoldengateConnectionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateConnectionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.goldengateconnection)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/goldengateConnections")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnections.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateConnections.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateConnectionsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnections.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGoldengateConnectionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single GoldengateConnection.
+//
+//   - name: The name of the GoldengateConnection in the following format:
+//     projects/{project}/locations/{location}/goldengateConnections/{goldengate_c
+//     onnection}.
+func (r *ProjectsLocationsGoldengateConnectionsService) Delete(name string) *ProjectsLocationsGoldengateConnectionsDeleteCall {
+	c := &ProjectsLocationsGoldengateConnectionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsGoldengateConnectionsDeleteCall) RequestId(requestId string) *ProjectsLocationsGoldengateConnectionsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateConnectionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateConnectionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateConnectionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsGoldengateConnectionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateConnectionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateConnectionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnections.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateConnections.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateConnectionsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnections.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGoldengateConnectionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single GoldengateConnection.
+//
+//   - name: The name of the GoldengateConnection in the following format:
+//     projects/{project}/locations/{location}/goldengateConnections/{goldengate_c
+//     onnection}.
+func (r *ProjectsLocationsGoldengateConnectionsService) Get(name string) *ProjectsLocationsGoldengateConnectionsGetCall {
+	c := &ProjectsLocationsGoldengateConnectionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateConnectionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateConnectionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGoldengateConnectionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGoldengateConnectionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateConnectionsGetCall) Context(ctx context.Context) *ProjectsLocationsGoldengateConnectionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateConnectionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateConnectionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnections.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateConnections.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoldengateConnection.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsGoldengateConnectionsGetCall) Do(opts ...googleapi.CallOption) (*GoldengateConnection, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoldengateConnection{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnections.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGoldengateConnectionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the GoldengateConnections for the given project and
+// location.
+//
+//   - parent: The parent value for GoldengateConnections in the following
+//     format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsGoldengateConnectionsService) List(parent string) *ProjectsLocationsGoldengateConnectionsListCall {
+	c := &ProjectsLocationsGoldengateConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request.
+func (c *ProjectsLocationsGoldengateConnectionsListCall) Filter(filter string) *ProjectsLocationsGoldengateConnectionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": An expression for ordering
+// the results of the request.
+func (c *ProjectsLocationsGoldengateConnectionsListCall) OrderBy(orderBy string) *ProjectsLocationsGoldengateConnectionsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return. If unspecified, at most 50 GoldengateConnections will be
+// returned. The maximum value is 1000; values above 1000 will be coerced to
+// 1000.
+func (c *ProjectsLocationsGoldengateConnectionsListCall) PageSize(pageSize int64) *ProjectsLocationsGoldengateConnectionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous ListGoldengateConnections call. Provide this to retrieve the
+// subsequent page.
+func (c *ProjectsLocationsGoldengateConnectionsListCall) PageToken(pageToken string) *ProjectsLocationsGoldengateConnectionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateConnectionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateConnectionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGoldengateConnectionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGoldengateConnectionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateConnectionsListCall) Context(ctx context.Context) *ProjectsLocationsGoldengateConnectionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateConnectionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateConnectionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/goldengateConnections")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnections.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateConnections.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListGoldengateConnectionsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListGoldengateConnectionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListGoldengateConnectionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnections.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGoldengateConnectionsListCall) Pages(ctx context.Context, f func(*ListGoldengateConnectionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single GoldengateDeploymentEnvironment.
+//
+//   - name: Name of the resource with the format:
+//     projects/{project}/locations/{location}/goldengateDeploymentEnvironments/{g
+//     oldengate_deployment_environment}.
+func (r *ProjectsLocationsGoldengateDeploymentEnvironmentsService) Get(name string) *ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall {
+	c := &ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall) Context(ctx context.Context) *ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeploymentEnvironments.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateDeploymentEnvironments.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoldengateDeploymentEnvironment.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall) Do(opts ...googleapi.CallOption) (*GoldengateDeploymentEnvironment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoldengateDeploymentEnvironment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeploymentEnvironments.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGoldengateDeploymentEnvironmentsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists GoldengateDeploymentEnvironments in a given project and
+// location.
+//
+//   - parent: The parent, which owns this collection of
+//     GoldengateDeploymentEnvironments. Format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsGoldengateDeploymentEnvironmentsService) List(parent string) *ProjectsLocationsGoldengateDeploymentEnvironmentsListCall {
+	c := &ProjectsLocationsGoldengateDeploymentEnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return. If unspecified, at most 50 deployment environments will be
+// returned. The maximum value is 1000; values above 1000 will be coerced to
+// 1000.
+func (c *ProjectsLocationsGoldengateDeploymentEnvironmentsListCall) PageSize(pageSize int64) *ProjectsLocationsGoldengateDeploymentEnvironmentsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsGoldengateDeploymentEnvironmentsListCall) PageToken(pageToken string) *ProjectsLocationsGoldengateDeploymentEnvironmentsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateDeploymentEnvironmentsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateDeploymentEnvironmentsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGoldengateDeploymentEnvironmentsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGoldengateDeploymentEnvironmentsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateDeploymentEnvironmentsListCall) Context(ctx context.Context) *ProjectsLocationsGoldengateDeploymentEnvironmentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateDeploymentEnvironmentsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateDeploymentEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/goldengateDeploymentEnvironments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeploymentEnvironments.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateDeploymentEnvironments.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListGoldengateDeploymentEnvironmentsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateDeploymentEnvironmentsListCall) Do(opts ...googleapi.CallOption) (*ListGoldengateDeploymentEnvironmentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListGoldengateDeploymentEnvironmentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeploymentEnvironments.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGoldengateDeploymentEnvironmentsListCall) Pages(ctx context.Context, f func(*ListGoldengateDeploymentEnvironmentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsGoldengateDeploymentTypesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single GoldenGateDeploymentType.
+//
+//   - name: The name of the GoldengateDeploymentType to retrieve. Format:
+//     projects/{project}/locations/{location}/goldengateDeploymentTypes/{goldenga
+//     te_deployment_type}.
+func (r *ProjectsLocationsGoldengateDeploymentTypesService) Get(name string) *ProjectsLocationsGoldengateDeploymentTypesGetCall {
+	c := &ProjectsLocationsGoldengateDeploymentTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateDeploymentTypesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateDeploymentTypesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGoldengateDeploymentTypesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGoldengateDeploymentTypesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateDeploymentTypesGetCall) Context(ctx context.Context) *ProjectsLocationsGoldengateDeploymentTypesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateDeploymentTypesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateDeploymentTypesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeploymentTypes.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateDeploymentTypes.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoldengateDeploymentType.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateDeploymentTypesGetCall) Do(opts ...googleapi.CallOption) (*GoldengateDeploymentType, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoldengateDeploymentType{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeploymentTypes.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGoldengateDeploymentTypesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists GoldenGateDeploymentTypes in a given project and location.
+//
+//   - parent: The parent resource. Format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsGoldengateDeploymentTypesService) List(parent string) *ProjectsLocationsGoldengateDeploymentTypesListCall {
+	c := &ProjectsLocationsGoldengateDeploymentTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request. Either the deployment_type and ogg_version fields
+// must be specified in the format: `deployment_type="DATABASE_ORACLE" or
+// `ogg_version="version". Allowed values for deployment_type are:
+// `DATABASE_ORACLE`, `BIGDATA`, `DATABASE_MICROSOFT_SQLSERVER`,
+// `DATABASE_MYSQL`, `DATABASE_POSTGRESQL`, `DATABASE_DB2ZOS`, `DATABASE_DB2I`,
+// `GGSA`, `DATA_TRANSFORMS`.
+func (c *ProjectsLocationsGoldengateDeploymentTypesListCall) Filter(filter string) *ProjectsLocationsGoldengateDeploymentTypesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Hint for how to order the
+// results
+func (c *ProjectsLocationsGoldengateDeploymentTypesListCall) OrderBy(orderBy string) *ProjectsLocationsGoldengateDeploymentTypesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *ProjectsLocationsGoldengateDeploymentTypesListCall) PageSize(pageSize int64) *ProjectsLocationsGoldengateDeploymentTypesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsGoldengateDeploymentTypesListCall) PageToken(pageToken string) *ProjectsLocationsGoldengateDeploymentTypesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateDeploymentTypesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateDeploymentTypesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGoldengateDeploymentTypesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGoldengateDeploymentTypesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateDeploymentTypesListCall) Context(ctx context.Context) *ProjectsLocationsGoldengateDeploymentTypesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateDeploymentTypesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateDeploymentTypesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/goldengateDeploymentTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeploymentTypes.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateDeploymentTypes.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListGoldengateDeploymentTypesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateDeploymentTypesListCall) Do(opts ...googleapi.CallOption) (*ListGoldengateDeploymentTypesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListGoldengateDeploymentTypesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeploymentTypes.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGoldengateDeploymentTypesListCall) Pages(ctx context.Context, f func(*ListGoldengateDeploymentTypesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsGoldengateDeploymentVersionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single GoldengateDeploymentVersion.
+//
+//   - name: The name of the GoldengateDeploymentVersion to retrieve. Format:
+//     projects/{project}/locations/{location}/goldengateDeploymentVersions/{golde
+//     ngate_deployment_version}.
+func (r *ProjectsLocationsGoldengateDeploymentVersionsService) Get(name string) *ProjectsLocationsGoldengateDeploymentVersionsGetCall {
+	c := &ProjectsLocationsGoldengateDeploymentVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateDeploymentVersionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateDeploymentVersionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGoldengateDeploymentVersionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGoldengateDeploymentVersionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateDeploymentVersionsGetCall) Context(ctx context.Context) *ProjectsLocationsGoldengateDeploymentVersionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateDeploymentVersionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateDeploymentVersionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeploymentVersions.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateDeploymentVersions.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoldengateDeploymentVersion.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateDeploymentVersionsGetCall) Do(opts ...googleapi.CallOption) (*GoldengateDeploymentVersion, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoldengateDeploymentVersion{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeploymentVersions.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGoldengateDeploymentVersionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists GoldengateDeploymentVersions in a given project and location.
+//
+//   - parent: Parent value for ListGoldengateDeploymentVersionsRequest Format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsGoldengateDeploymentVersionsService) List(parent string) *ProjectsLocationsGoldengateDeploymentVersionsListCall {
+	c := &ProjectsLocationsGoldengateDeploymentVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request. Either the deployment_id and deployment_type fields
+// must be specified in the format: `deployment_id="id" or
+// `deployment_type="DATABASE_ORACLE".
+func (c *ProjectsLocationsGoldengateDeploymentVersionsListCall) Filter(filter string) *ProjectsLocationsGoldengateDeploymentVersionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default. The maximum value is 1000; values above 1000 will be
+// coerced to 1000.
+func (c *ProjectsLocationsGoldengateDeploymentVersionsListCall) PageSize(pageSize int64) *ProjectsLocationsGoldengateDeploymentVersionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsGoldengateDeploymentVersionsListCall) PageToken(pageToken string) *ProjectsLocationsGoldengateDeploymentVersionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateDeploymentVersionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateDeploymentVersionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGoldengateDeploymentVersionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGoldengateDeploymentVersionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateDeploymentVersionsListCall) Context(ctx context.Context) *ProjectsLocationsGoldengateDeploymentVersionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateDeploymentVersionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateDeploymentVersionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/goldengateDeploymentVersions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeploymentVersions.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateDeploymentVersions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListGoldengateDeploymentVersionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateDeploymentVersionsListCall) Do(opts ...googleapi.CallOption) (*ListGoldengateDeploymentVersionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListGoldengateDeploymentVersionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeploymentVersions.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGoldengateDeploymentVersionsListCall) Pages(ctx context.Context, f func(*ListGoldengateDeploymentVersionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsGoldengateDeploymentsCreateCall struct {
+	s                    *Service
+	parent               string
+	goldengatedeployment *GoldengateDeployment
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Create: Creates a new GoldengateDeployment in a given project and location.
+//
+//   - parent: The value for parent of the GoldengateDeployment in the following
+//     format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsGoldengateDeploymentsService) Create(parent string, goldengatedeployment *GoldengateDeployment) *ProjectsLocationsGoldengateDeploymentsCreateCall {
+	c := &ProjectsLocationsGoldengateDeploymentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.goldengatedeployment = goldengatedeployment
+	return c
+}
+
+// GoldengateDeploymentId sets the optional parameter "goldengateDeploymentId":
+// Required. The ID of the GoldengateDeployment to create. This value is
+// restricted to (^a-z ([a-z0-9-]{0,61}[a-z0-9])?$) and must be a maximum of 63
+// characters in length. The value must start with a letter and end with a
+// letter or a number.
+func (c *ProjectsLocationsGoldengateDeploymentsCreateCall) GoldengateDeploymentId(goldengateDeploymentId string) *ProjectsLocationsGoldengateDeploymentsCreateCall {
+	c.urlParams_.Set("goldengateDeploymentId", goldengateDeploymentId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsGoldengateDeploymentsCreateCall) RequestId(requestId string) *ProjectsLocationsGoldengateDeploymentsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateDeploymentsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateDeploymentsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateDeploymentsCreateCall) Context(ctx context.Context) *ProjectsLocationsGoldengateDeploymentsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateDeploymentsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.goldengatedeployment)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/goldengateDeployments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeployments.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateDeployments.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateDeploymentsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeployments.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGoldengateDeploymentsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single GoldengateDeployment.
+//
+//   - name: The name of the GoldengateDeployment in the following format:
+//     projects/{project}/locations/{location}/goldengateDeployments/{goldengate_d
+//     eployment}.
+func (r *ProjectsLocationsGoldengateDeploymentsService) Delete(name string) *ProjectsLocationsGoldengateDeploymentsDeleteCall {
+	c := &ProjectsLocationsGoldengateDeploymentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsGoldengateDeploymentsDeleteCall) RequestId(requestId string) *ProjectsLocationsGoldengateDeploymentsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateDeploymentsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateDeploymentsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateDeploymentsDeleteCall) Context(ctx context.Context) *ProjectsLocationsGoldengateDeploymentsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateDeploymentsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeployments.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateDeployments.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateDeploymentsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeployments.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGoldengateDeploymentsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single GoldengateDeployment.
+//
+//   - name: The name of the GoldengateDeployment in the following format:
+//     projects/{project}/locations/{location}/goldengateDeployments/{goldengate_d
+//     eployment}.
+func (r *ProjectsLocationsGoldengateDeploymentsService) Get(name string) *ProjectsLocationsGoldengateDeploymentsGetCall {
+	c := &ProjectsLocationsGoldengateDeploymentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateDeploymentsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateDeploymentsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGoldengateDeploymentsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGoldengateDeploymentsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateDeploymentsGetCall) Context(ctx context.Context) *ProjectsLocationsGoldengateDeploymentsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateDeploymentsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeployments.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateDeployments.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoldengateDeployment.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsGoldengateDeploymentsGetCall) Do(opts ...googleapi.CallOption) (*GoldengateDeployment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoldengateDeployment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeployments.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGoldengateDeploymentsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the GoldengateDeployments for the given project and
+// location.
+//
+//   - parent: The parent value for GoldengateDeployments in the following
+//     format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsGoldengateDeploymentsService) List(parent string) *ProjectsLocationsGoldengateDeploymentsListCall {
+	c := &ProjectsLocationsGoldengateDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request.
+func (c *ProjectsLocationsGoldengateDeploymentsListCall) Filter(filter string) *ProjectsLocationsGoldengateDeploymentsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": An expression for ordering
+// the results of the request.
+func (c *ProjectsLocationsGoldengateDeploymentsListCall) OrderBy(orderBy string) *ProjectsLocationsGoldengateDeploymentsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return. If unspecified, at most 50 GoldengateDeployments will be
+// returned. The maximum value is 1000; values above 1000 will be coerced to
+// 1000.
+func (c *ProjectsLocationsGoldengateDeploymentsListCall) PageSize(pageSize int64) *ProjectsLocationsGoldengateDeploymentsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous ListGoldengateDeployments call. Provide this to retrieve the
+// subsequent page.
+func (c *ProjectsLocationsGoldengateDeploymentsListCall) PageToken(pageToken string) *ProjectsLocationsGoldengateDeploymentsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateDeploymentsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateDeploymentsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGoldengateDeploymentsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGoldengateDeploymentsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateDeploymentsListCall) Context(ctx context.Context) *ProjectsLocationsGoldengateDeploymentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateDeploymentsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/goldengateDeployments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeployments.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateDeployments.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListGoldengateDeploymentsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateDeploymentsListCall) Do(opts ...googleapi.CallOption) (*ListGoldengateDeploymentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListGoldengateDeploymentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeployments.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGoldengateDeploymentsListCall) Pages(ctx context.Context, f func(*ListGoldengateDeploymentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsGoldengateDeploymentsStartCall struct {
+	s                                *Service
+	name                             string
+	startgoldengatedeploymentrequest *StartGoldengateDeploymentRequest
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Start: Starts a single GoldengateDeployment.
+//
+//   - name: The name of the Goldengate Deployment in the following format:
+//     projects/{project}/locations/{location}/goldengateDeployments/{goldengate_d
+//     eployment}.
+func (r *ProjectsLocationsGoldengateDeploymentsService) Start(name string, startgoldengatedeploymentrequest *StartGoldengateDeploymentRequest) *ProjectsLocationsGoldengateDeploymentsStartCall {
+	c := &ProjectsLocationsGoldengateDeploymentsStartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.startgoldengatedeploymentrequest = startgoldengatedeploymentrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateDeploymentsStartCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateDeploymentsStartCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateDeploymentsStartCall) Context(ctx context.Context) *ProjectsLocationsGoldengateDeploymentsStartCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateDeploymentsStartCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateDeploymentsStartCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.startgoldengatedeploymentrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:start")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeployments.start", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateDeployments.start" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateDeploymentsStartCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeployments.start", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGoldengateDeploymentsStopCall struct {
+	s                               *Service
+	name                            string
+	stopgoldengatedeploymentrequest *StopGoldengateDeploymentRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// Stop: Stops a single GoldengateDeployment.
+//
+//   - name: The name of the Goldengate Deployment in the following format:
+//     projects/{project}/locations/{location}/goldengateDeployments/{goldengate_d
+//     eployment}.
+func (r *ProjectsLocationsGoldengateDeploymentsService) Stop(name string, stopgoldengatedeploymentrequest *StopGoldengateDeploymentRequest) *ProjectsLocationsGoldengateDeploymentsStopCall {
+	c := &ProjectsLocationsGoldengateDeploymentsStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.stopgoldengatedeploymentrequest = stopgoldengatedeploymentrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateDeploymentsStopCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateDeploymentsStopCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateDeploymentsStopCall) Context(ctx context.Context) *ProjectsLocationsGoldengateDeploymentsStopCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateDeploymentsStopCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateDeploymentsStopCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.stopgoldengatedeploymentrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:stop")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeployments.stop", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateDeployments.stop" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateDeploymentsStopCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeployments.stop", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsOdbNetworksCreateCall struct {

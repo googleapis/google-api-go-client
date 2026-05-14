@@ -3378,6 +3378,9 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	//   "FEDERATED_AND_EUA" - Hybrid connector utilized for federated search and
 	// End User Authentication.
 	ConnectorModes []string `json:"connectorModes,omitempty"`
+	// ConnectorSourceId: Optional. If set, this value instead of `data_source` is
+	// used to fetch the corresponding connector source.
+	ConnectorSourceId string `json:"connectorSourceId,omitempty"`
 	// ConnectorType: Output only. The type of connector. Each source can only map
 	// to one type. For example, salesforce, confluence and jira have THIRD_PARTY
 	// connector type. It is not mutable once set by system.
@@ -4786,7 +4789,8 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// `disable-image-generation` * `disable-video-generation` *
 	// `disable-onedrive-upload` * `disable-talk-to-content` *
 	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
-	// * `disable-canvas-workspace` * `disable-skills`
+	// * `disable-canvas-workspace` * `disable-skills` *
+	// `enable-end-user-sharing-with-groups`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -8620,6 +8624,8 @@ type GoogleCloudDiscoveryengineV1alphaAssistAnswer struct {
 	//   "FAILED" - Assist operation has failed.
 	//   "SUCCEEDED" - Assist operation has succeeded.
 	//   "SKIPPED" - Assist operation has been skipped.
+	//   "CANCELLED" - Assist operation has been cancelled (e.g. client closed the
+	// stream). May contain a partial response.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AssistSkippedReasons") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10346,6 +10352,9 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	//   "FEDERATED_AND_EUA" - Hybrid connector utilized for federated search and
 	// End User Authentication.
 	ConnectorModes []string `json:"connectorModes,omitempty"`
+	// ConnectorSourceId: Optional. If set, this value instead of `data_source` is
+	// used to fetch the corresponding connector source.
+	ConnectorSourceId string `json:"connectorSourceId,omitempty"`
 	// ConnectorType: Output only. The type of connector. Each source can only map
 	// to one type. For example, salesforce, confluence and jira have THIRD_PARTY
 	// connector type. It is not mutable once set by system.
@@ -11968,7 +11977,8 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// `disable-image-generation` * `disable-video-generation` *
 	// `disable-onedrive-upload` * `disable-talk-to-content` *
 	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
-	// * `disable-canvas-workspace` * `disable-skills`
+	// * `disable-canvas-workspace` * `disable-skills` *
+	// `enable-end-user-sharing-with-groups`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -14549,19 +14559,21 @@ func (s *GoogleCloudDiscoveryengineV1alphaQualityMetricsTopkMetrics) UnmarshalJS
 
 // GoogleCloudDiscoveryengineV1alphaQuery: Defines a user inputed query.
 type GoogleCloudDiscoveryengineV1alphaQuery struct {
+	// CreateTime: Output only. The time at which the server accepted this query.
+	CreateTime string `json:"createTime,omitempty"`
 	// Parts: Query content parts.
 	Parts []*GoogleCloudDiscoveryengineV1alphaQueryPart `json:"parts,omitempty"`
 	// QueryId: Output only. Unique Id for the query.
 	QueryId string `json:"queryId,omitempty"`
 	// Text: Plain text.
 	Text string `json:"text,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Parts") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Parts") to include in API
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -16763,6 +16775,11 @@ type GoogleCloudDiscoveryengineV1alphaSession struct {
 	// `projects/{project}/locations/global/collections/{collection}/engines/{engine
 	// }/sessions/*`
 	Name string `json:"name,omitempty"`
+	// PendingAsyncAssistOperationId: Output only. Full resource name of an
+	// in-progress AsyncAssist operation for this session, e.g.
+	// `projects/*/locations/*/collections/*/engines/*/sessions/*/operations/*`.
+	// Set when the operation starts and cleared when it finishes.
+	PendingAsyncAssistOperationId string `json:"pendingAsyncAssistOperationId,omitempty"`
 	// StartTime: Output only. The time the session started.
 	StartTime string `json:"startTime,omitempty"`
 	// State: The state of the session.
@@ -19920,6 +19937,8 @@ type GoogleCloudDiscoveryengineV1betaAssistAnswer struct {
 	//   "FAILED" - Assist operation has failed.
 	//   "SUCCEEDED" - Assist operation has succeeded.
 	//   "SKIPPED" - Assist operation has been skipped.
+	//   "CANCELLED" - Assist operation has been cancelled (e.g. client closed the
+	// stream). May contain a partial response.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AssistSkippedReasons") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -24215,7 +24234,8 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// `disable-image-generation` * `disable-video-generation` *
 	// `disable-onedrive-upload` * `disable-talk-to-content` *
 	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
-	// * `disable-canvas-workspace` * `disable-skills`
+	// * `disable-canvas-workspace` * `disable-skills` *
+	// `enable-end-user-sharing-with-groups`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -26621,6 +26641,34 @@ type GoogleCloudDiscoveryengineV1betaListIdentityMappingsResponse struct {
 
 func (s GoogleCloudDiscoveryengineV1betaListIdentityMappingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaListIdentityMappingsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaListLicenseConfigsResponse: Response message
+// for LicenseConfigService.ListLicenseConfigs method.
+type GoogleCloudDiscoveryengineV1betaListLicenseConfigsResponse struct {
+	// LicenseConfigs: All the customer's LicenseConfigs.
+	LicenseConfigs []*GoogleCloudDiscoveryengineV1betaLicenseConfig `json:"licenseConfigs,omitempty"`
+	// NextPageToken: Not supported.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "LicenseConfigs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LicenseConfigs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaListLicenseConfigsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaListLicenseConfigsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -31764,6 +31812,11 @@ type GoogleCloudDiscoveryengineV1betaSession struct {
 	// `projects/{project}/locations/global/collections/{collection}/engines/{engine
 	// }/sessions/*`
 	Name string `json:"name,omitempty"`
+	// PendingAsyncAssistOperationId: Output only. Full resource name of an
+	// in-progress AsyncAssist operation for this session, e.g.
+	// `projects/*/locations/*/collections/*/engines/*/sessions/*/operations/*`.
+	// Set when the operation starts and cleared when it finishes.
+	PendingAsyncAssistOperationId string `json:"pendingAsyncAssistOperationId,omitempty"`
 	// StartTime: Output only. The time the session started.
 	StartTime string `json:"startTime,omitempty"`
 	// State: The state of the session.
@@ -47074,8 +47127,10 @@ type ProjectsLocationsCollectionsEnginesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the IAM access control policy for an Engine. A
 // `NOT_FOUND` error is returned if the resource does not exist. **Important:**
 // When setting a policy directly on an Engine resource, the only recommended
-// roles in the bindings are: `roles/discoveryengine.user` and
-// `roles/discoveryengine.agentspaceUser`. Attempting to grant any other role
+// roles in the bindings are: `roles/discoveryengine.admin`,
+// `roles/discoveryengine.agentspaceAdmin`, `roles/discoveryengine.user`,
+// `roles/discoveryengine.agentspaceUser`, `roles/discoveryengine.viewer`,
+// `roles/discoveryengine.agentspaceViewer`. Attempting to grant any other role
 // will result in a warning in logging.
 //
 //   - resource: REQUIRED: The resource for which the policy is being specified.
@@ -63277,6 +63332,161 @@ func (c *ProjectsLocationsLicenseConfigsGetCall) Do(opts ...googleapi.CallOption
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.licenseConfigs.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsLicenseConfigsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the LicenseConfigs associated with the project.
+//
+//   - parent: The parent branch resource name, such as
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsLicenseConfigsService) List(parent string) *ProjectsLocationsLicenseConfigsListCall {
+	c := &ProjectsLocationsLicenseConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter to apply to the list
+// results. The supported fields are: * `subscription_tier` * `state` Examples:
+// * `subscription_tier=SUBSCRIPTION_TIER_SEARCH,state=ACTIVE` - Lists all
+// active search license configs. * `state=ACTIVE` - Lists all active license
+// configs. The filter string should be a comma-separated list of field=value
+// pairs.
+func (c *ProjectsLocationsLicenseConfigsListCall) Filter(filter string) *ProjectsLocationsLicenseConfigsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Not supported.
+func (c *ProjectsLocationsLicenseConfigsListCall) PageSize(pageSize int64) *ProjectsLocationsLicenseConfigsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Not supported.
+func (c *ProjectsLocationsLicenseConfigsListCall) PageToken(pageToken string) *ProjectsLocationsLicenseConfigsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsLicenseConfigsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsLicenseConfigsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsLicenseConfigsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsLicenseConfigsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsLicenseConfigsListCall) Context(ctx context.Context) *ProjectsLocationsLicenseConfigsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsLicenseConfigsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsLicenseConfigsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/licenseConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.licenseConfigs.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.licenseConfigs.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaListLicenseConfigsResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsLicenseConfigsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaListLicenseConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaListLicenseConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.licenseConfigs.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsLicenseConfigsListCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1betaListLicenseConfigsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsLicenseConfigsPatchCall struct {

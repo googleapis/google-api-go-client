@@ -6184,15 +6184,15 @@ func (r *ProjectsLocationsGoogleApiSourcesService) Delete(name string) *Projects
 }
 
 // AllowMissing sets the optional parameter "allowMissing": If set to true, and
-// the MessageBus is not found, the request will succeed but no action will be
-// taken on the server.
+// the GoogleApiSource is not found, the request will succeed but no action
+// will be taken on the server.
 func (c *ProjectsLocationsGoogleApiSourcesDeleteCall) AllowMissing(allowMissing bool) *ProjectsLocationsGoogleApiSourcesDeleteCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
 }
 
-// Etag sets the optional parameter "etag": If provided, the MessageBus will
-// only be deleted if the etag matches the current etag on the resource.
+// Etag sets the optional parameter "etag": If provided, the GoogleApiSource
+// will only be deleted if the etag matches the current etag on the resource.
 func (c *ProjectsLocationsGoogleApiSourcesDeleteCall) Etag(etag string) *ProjectsLocationsGoogleApiSourcesDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c

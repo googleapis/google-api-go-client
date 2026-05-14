@@ -6888,12 +6888,24 @@ type AccountsDeveloperRegistrationRegisterGcpCall struct {
 // RegisterGcp: Registers the GCP used for the API call to the shopping account
 // passed in the request. Will create a user with an "API developer" and add
 // the "developer_email" as a contact with "API notifications" email preference
-// on.
+// on. Restrictions: * The caller account must be authenticated and must not
+// impersonate another account at registration time. Registering for
+// subaccounts is not supported if the caller account is authenticated with the
+// parent or the managing advanced account. * The caller account must have a
+// verified website (https://support.google.com/merchants/answer/11586344) in
+// Merchant Center. * Test accounts
+// (https://developers.google.com/merchant/api/guides/accounts/test-accounts)
+// are not eligible for registration.
 //
 //   - name: The name of the developer registration to be created for the
 //     merchant account that the GCP will be registered with. Format:
 //     `accounts/{account}/developerRegistration` The {account} used must be the
 //     same account where user calling this API method is directly added to.
+//     Note: The account used must be a production account (can't be a test
+//     account
+//     (https://developers.google.com/merchant/api/guides/accounts/test-accounts)
+//     ) and must have a verified website
+//     (https://support.google.com/merchants/answer/11586344) in Merchant Center.
 func (r *AccountsDeveloperRegistrationService) RegisterGcp(name string, registergcprequest *RegisterGcpRequest) *AccountsDeveloperRegistrationRegisterGcpCall {
 	c := &AccountsDeveloperRegistrationRegisterGcpCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

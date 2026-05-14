@@ -746,7 +746,12 @@ type GoogleCloudRecaptchaenterpriseV1Bot struct {
 	// purpose of efficient retrieval, likely as part of a search engine.
 	BotType string `json:"botType,omitempty"`
 	// Name: Optional. Enumerated string value that indicates the identity of the
-	// bot, formatted in kebab-case.
+	// bot, formatted in kebab-case. Current example values include the following:
+	// * google-agent * browser-base * chat-gpt * aws-bedrock * cybaa-bot *
+	// cloudflare * payhawk Ensure that your applications can handle identifier
+	// values not explicitly listed here. Deprecated values might take some time to
+	// stop showing up in responses. New values can be pushed so this list should
+	// be taken as non exhaustive.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BotType") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

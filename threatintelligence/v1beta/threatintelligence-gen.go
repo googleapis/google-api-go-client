@@ -227,7 +227,7 @@ type ProjectsFindingsService struct {
 // Alert is that it expresses the user's intent towards the findings of that
 // group, even those that haven't occurred yet.
 type Alert struct {
-	// AiSummary: Optional. AI summary of the finding.
+	// AiSummary: Optional. AI summary of the alert.
 	AiSummary string `json:"aiSummary,omitempty"`
 	// Audit: Output only. Audit information for the alert.
 	Audit *Audit `json:"audit,omitempty"`
@@ -336,7 +336,7 @@ func (s AlertDetail) MarshalJSON() ([]byte, error) {
 
 // AlertDocument: A document that is associated with an alert.
 type AlertDocument struct {
-	// AiSummary: Output only. AI summary of the finding.
+	// AiSummary: Output only. AI summary of the document.
 	AiSummary string `json:"aiSummary,omitempty"`
 	// Author: Output only. The author of the document.
 	Author string `json:"author,omitempty"`

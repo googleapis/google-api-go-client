@@ -34,6 +34,11 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	healthService, err := health.NewService(ctx, option.WithScopes(health.GooglehealthSleepReadonlyScope))
+//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -101,12 +106,36 @@ const (
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// See your Google Health activity and fitness data
+	GooglehealthActivityAndFitnessReadonlyScope = "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly"
+
+	// See your Google Health health metrics and measurement data
+	GooglehealthHealthMetricsAndMeasurementsReadonlyScope = "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly"
+
+	// See exercise GPS location data in Google Health
+	GooglehealthLocationReadonlyScope = "https://www.googleapis.com/auth/googlehealth.location.readonly"
+
+	// See your Google Health profile data
+	GooglehealthProfileReadonlyScope = "https://www.googleapis.com/auth/googlehealth.profile.readonly"
+
+	// See your Google Health settings
+	GooglehealthSettingsReadonlyScope = "https://www.googleapis.com/auth/googlehealth.settings.readonly"
+
+	// See your Google Health sleep data
+	GooglehealthSleepReadonlyScope = "https://www.googleapis.com/auth/googlehealth.sleep.readonly"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
+		"https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly",
+		"https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly",
+		"https://www.googleapis.com/auth/googlehealth.location.readonly",
+		"https://www.googleapis.com/auth/googlehealth.profile.readonly",
+		"https://www.googleapis.com/auth/googlehealth.settings.readonly",
+		"https://www.googleapis.com/auth/googlehealth.sleep.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -1916,7 +1945,10 @@ func (s ExerciseMetadata) MarshalJSON() ([]byte, error) {
 // ExportExerciseTcxResponse: Represents a Response for exporting exercise data
 // in TCX format.
 type ExportExerciseTcxResponse struct {
-	// TcxData: Contains the exported TCX data.
+	// TcxData: Contains the exported TCX data. This field is intended for gRPC
+	// clients, as media download integration is not supported for gRPC. HTTP
+	// clients should instead use the `alt=media` query parameter to download the
+	// raw binary TCX file.
 	TcxData string `json:"tcxData,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4032,8 +4064,9 @@ func (s Subscriber) MarshalJSON() ([]byte, error) {
 // SubscriberConfig: Configuration for a subscriber. A notification is sent to
 // a subscription ONLY if the subscriber has a config for the data type.
 type SubscriberConfig struct {
-	// DataTypes: Required. Supported data types are: "altitude", "distance",
-	// "floors", "sleep", "steps", "weight". Values should be in kebab-case.
+	// DataTypes: Required. See Google Health API data types
+	// (https://developers.google.com/health/data-types) for the list of supported
+	// data types. Values should be in kebab-case.
 	DataTypes []string `json:"dataTypes,omitempty"`
 	// SubscriptionCreatePolicy: Required. Policy for subscription creation.
 	//
@@ -5987,11 +6020,17 @@ type UsersDataTypesDataPointsExportExerciseTcxCall struct {
 	header_      http.Header
 }
 
-// ExportExerciseTcx: Exports exercise data in TCX format. Note: While the
-// Authorization section below states that any one of the listed scopes is
-// accepted, this specific method requires the user to provide both one of the
-// `activity_and_fitness` scopes (`normal` or `readonly`) AND one of the
-// `location` scopes (`normal` or `readonly`) in their access token to succeed.
+// ExportExerciseTcx: Exports exercise data in TCX format. **IMPORTANT:** HTTP
+// clients must append `?alt=media` to the request URL to download the raw TCX
+// file. Example:
+// `https://health.googleapis.com/v4/users/me/dataTypes/exercise/dataPoints/EXER
+// CISE_ID:exportExerciseTcx?alt=media` Without `alt=media`, the server returns
+// a JSON response (`ExportExerciseTcxResponse`) which is intended primarily
+// for gRPC clients. **Note:** While the Authorization section below states
+// that any one of the listed scopes is accepted, this specific method requires
+// the user to provide both one of the `activity_and_fitness` scopes (`normal`
+// or `readonly`) AND one of the `location` scopes (`normal` or `readonly`) in
+// their access token to succeed.
 //
 //   - name: The resource name of the exercise data point to export. Format:
 //     `users/{user}/dataTypes/exercise/dataPoints/{data_point}` Example:
@@ -6284,12 +6323,17 @@ func (r *UsersDataTypesDataPointsService) List(parent string) *UsersDataTypesDat
 // date: - Pattern: `{daily_summary_data_type}.date` - Supported comparison
 // operators: `>=`, `<` - Date literal expected in ISO 8601 `YYYY-MM-DD` format
 // - Supported logical operators: `AND` - Example: -
-// `daily_heart_rate_variability.date < "2024-08-15" - Session civil start
-// time (**Excluding Sleep**): - Pattern:
-// `{session_data_type}.interval.civil_start_time` - Supported comparison
-// operators: `>=`, `<` - Date with optional time literal expected in ISO 8601
-// `YYYY-MM-DD[THH:mm:ss]` format - Supported logical operators: `AND` -
-// Example: - `exercise.interval.civil_start_time >= "2023-11-24" AND
+// `daily_heart_rate_variability.date < "2024-08-15" - Session start time
+// (**ECG specific**): - Pattern: `electrocardiogram.interval.start_time` -
+// Supported comparison operators: `>=` - Timestamp literal expected in
+// RFC-3339 format - Example: - `electrocardiogram.interval.start_time >=
+// "2024-08-14T12:34:56Z" - Note: Only filtering by start time is supported
+// for ECG. Filtering by end time (e.g., `electrocardiogram.interval.end_time`)
+// is not supported. - Session civil start time (**Excluding Sleep**): -
+// Pattern: `{session_data_type}.interval.civil_start_time` - Supported
+// comparison operators: `>=`, `<` - Date with optional time literal expected
+// in ISO 8601 `YYYY-MM-DD[THH:mm:ss]` format - Supported logical operators:
+// `AND` - Example: - `exercise.interval.civil_start_time >= "2023-11-24" AND
 // exercise.interval.civil_start_time < "2023-11-25" -
 // `exercise.interval.civil_start_time >= "2024-08-14T12:34:56" - Session end
 // time (**Sleep specific**): - Pattern: `sleep.interval.end_time` - Supported

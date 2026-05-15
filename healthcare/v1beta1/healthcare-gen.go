@@ -1293,6 +1293,11 @@ type BulkDeleteResourcesRequest struct {
 	// example, `2015-02-07T13:28:17.239+02:00` or `2017-01-01T00:00:00Z`. The time
 	// must be specified to the second and include a time zone.
 	Until string `json:"until,omitempty"`
+	// ValidateOnly: Optional. If set to true, the request will only perform a dry
+	// run. By default (once the behavior change is fully rolled out), this will
+	// default to true. During the transition period, the default depends on the
+	// Mendel flag status for the project.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
 	// VersionConfig: Optional. Specifies which version of the resources to delete.
 	//
 	// Possible values:
@@ -7526,8 +7531,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

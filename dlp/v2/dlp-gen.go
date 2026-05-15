@@ -7241,6 +7241,13 @@ func (s GooglePrivacyDlpV2InspectResult) MarshalJSON() ([]byte, error) {
 // https://cloud.google.com/sensitive-data-protection/docs/concepts-templates
 // to learn more.
 type GooglePrivacyDlpV2InspectTemplate struct {
+	// AllowLimitedAvailabilityInfoTypes: Optional. Enables the use of
+	// limited-availability built-in infoTypes in inspect_config. These infoTypes
+	// are supported only in specific regions and can cause scanning errors if used
+	// elsewhere. For more information, see
+	// https://cloud.google.com/sensitive-data-protection/docs/locations#location-specific_limitations
+	// to learn more about location-specific limitations.
+	AllowLimitedAvailabilityInfoTypes bool `json:"allowLimitedAvailabilityInfoTypes,omitempty"`
 	// CreateTime: Output only. The creation timestamp of an inspectTemplate.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Short description (max 256 chars).
@@ -7259,16 +7266,18 @@ type GooglePrivacyDlpV2InspectTemplate struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowLimitedAvailabilityInfoTypes") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "AllowLimitedAvailabilityInfoTypes") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
 	NullFields []string `json:"-"`
 }
 
@@ -11484,15 +11493,15 @@ type GooglePrivacyDlpV2TransformationResultStatus struct {
 	//
 	// Possible values:
 	//   "STATE_TYPE_UNSPECIFIED" - Unused.
-	//   "INVALID_TRANSFORM" - This will be set when a finding could not be
-	// transformed (i.e. outside user set bucket range).
-	//   "BIGQUERY_MAX_ROW_SIZE_EXCEEDED" - This will be set when a BigQuery
-	// transformation was successful but could not be stored back in BigQuery
-	// because the transformed row exceeds BigQuery's max row size.
-	//   "METADATA_UNRETRIEVABLE" - This will be set when there is a finding in the
+	//   "INVALID_TRANSFORM" - This is set when a finding cannot be transformed
+	// (i.e. outside user set bucket range).
+	//   "BIGQUERY_MAX_ROW_SIZE_EXCEEDED" - This is set when a transformation is
+	// successful but cannot be stored in BigQuery because the transformed row
+	// exceeds BigQuery's max row size.
+	//   "METADATA_UNRETRIEVABLE" - This is set when there is a finding in the
 	// custom metadata of a file, but at the write time of the transformed file,
 	// this key / value pair is unretrievable.
-	//   "SUCCESS" - This will be set when the transformation and storing of it is
+	//   "SUCCESS" - This is set when the transformation and its storage are
 	// successful.
 	ResultStatusType string `json:"resultStatusType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Details") to unconditionally

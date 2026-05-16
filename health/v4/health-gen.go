@@ -1194,7 +1194,9 @@ func (s DailyRollUpDataPointsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // DailyRollupDataPoint: Value of a daily rollup for a single civil time
-// interval (aggregation window)
+// interval (aggregation window) of reconciled data points from all data
+// sources, excluding those data points that are identified as recorded by
+// wearables in intervals when they were not actually worn.
 type DailyRollupDataPoint struct {
 	// ActiveMinutes: Returned by default when rolling up data points from the
 	// `active-minutes` data type, or when requested explicitly using the
@@ -2189,7 +2191,7 @@ func (s *HeartRateRollupValue) UnmarshalJSON(data []byte) error {
 type HeartRateVariability struct {
 	// RootMeanSquareOfSuccessiveDifferencesMilliseconds: Optional. The root mean
 	// square of successive differences between normal heartbeats. This is a
-	// measure of heart rate variability used by Fitbit.
+	// measure of heart rate variability used by Google Health.
 	RootMeanSquareOfSuccessiveDifferencesMilliseconds float64 `json:"rootMeanSquareOfSuccessiveDifferencesMilliseconds,omitempty"`
 	// SampleTime: Required. The time of the heart rate variability measurement.
 	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
@@ -3273,7 +3275,9 @@ func (s RollUpDataPointsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // RollupDataPoint: Value of a rollup for a single physical time interval
-// (aggregation window)
+// (aggregation window) of reconciled data points from all data sources,
+// excluding those data points that are identified as recorded by wearables in
+// intervals when they were not actually worn.
 type RollupDataPoint struct {
 	// ActiveMinutes: Returned by default when rolling up data points from the
 	// `active-minutes` data type, or when requested explicitly using the
@@ -4440,7 +4444,9 @@ func (s *VO2Max) UnmarshalJSON(data []byte) error {
 type VolumeQuantity struct {
 	// Milliliters: Required. Value representing the volume in milliliters.
 	Milliliters float64 `json:"milliliters,omitempty"`
-	// UserProvidedUnit: Optional. Value representing the user provided unit.
+	// UserProvidedUnit: Optional. Value representing the user provided unit, used
+	// only for user-facing input and display purposes. In the API format, all
+	// volume quantities are converted to milliliters.
 	//
 	// Possible values:
 	//   "VOLUME_UNIT_UNSPECIFIED" - Unspecified volume unit.

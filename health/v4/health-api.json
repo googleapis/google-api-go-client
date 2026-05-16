@@ -711,7 +711,7 @@
       }
     }
   },
-  "revision": "20260514",
+  "revision": "20260515",
   "rootUrl": "https://health.googleapis.com/",
   "schemas": {
     "ActiveMinutes": {
@@ -1314,7 +1314,7 @@
       "type": "object"
     },
     "DailyRollupDataPoint": {
-      "description": "Value of a daily rollup for a single civil time interval (aggregation window)",
+      "description": "Value of a daily rollup for a single civil time interval (aggregation window) of reconciled data points from all data sources, excluding those data points that are identified as recorded by wearables in intervals when they were not actually worn.",
       "id": "DailyRollupDataPoint",
       "properties": {
         "activeMinutes": {
@@ -2140,7 +2140,7 @@
       "id": "HeartRateVariability",
       "properties": {
         "rootMeanSquareOfSuccessiveDifferencesMilliseconds": {
-          "description": "Optional. The root mean square of successive differences between normal heartbeats. This is a measure of heart rate variability used by Fitbit.",
+          "description": "Optional. The root mean square of successive differences between normal heartbeats. This is a measure of heart rate variability used by Google Health.",
           "format": "double",
           "type": "number"
         },
@@ -2912,7 +2912,7 @@
       "type": "object"
     },
     "RollupDataPoint": {
-      "description": "Value of a rollup for a single physical time interval (aggregation window)",
+      "description": "Value of a rollup for a single physical time interval (aggregation window) of reconciled data points from all data sources, excluding those data points that are identified as recorded by wearables in intervals when they were not actually worn.",
       "id": "RollupDataPoint",
       "properties": {
         "activeMinutes": {
@@ -3970,7 +3970,7 @@
           "type": "number"
         },
         "userProvidedUnit": {
-          "description": "Optional. Value representing the user provided unit.",
+          "description": "Optional. Value representing the user provided unit, used only for user-facing input and display purposes. In the API format, all volume quantities are converted to milliliters.",
           "enum": [
             "VOLUME_UNIT_UNSPECIFIED",
             "CUP_IMPERIAL",

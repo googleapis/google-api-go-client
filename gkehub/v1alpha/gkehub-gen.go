@@ -5183,6 +5183,51 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// OperationalState: Operational state of the Rollout Sequence.
+type OperationalState struct {
+	// Reasons: Output only. Reasons for the Rollout Sequence state.
+	//
+	// Possible values:
+	//   "REASON_UNSPECIFIED" - Default unspecified value.
+	//   "FLEET_FEATURE_DELETED_ERROR" - A fleet feature is deleted.
+	//   "FLEET_DELETED_ERROR" - A fleet is deleted.
+	//   "EMPTY_STAGE_WARNING" - A stage is empty.
+	//   "MIXED_RELEASE_CHANNELS_WARNING" - Mixed release channels in the sequence.
+	//   "INTERNAL_ERROR" - Internal error, for example when host project is
+	// soft-deleted.
+	Reasons []string `json:"reasons,omitempty"`
+	// State: Output only. State of the Rollout Sequence.
+	//
+	// Possible values:
+	//   "STATE_CODE_UNSPECIFIED" - The default value. This value is used if the
+	// state is omitted.
+	//   "ACTIVE" - The Rollout Sequence is active.
+	//   "WARNING" - The Rollout Sequence has warnings. It is still functioning but
+	// performance may be degraded.
+	//   "ERROR" - The Rollout Sequence has errors and is not functioning.
+	//   "INITIALIZING" - The Rollout Sequence is being initialized.
+	State string `json:"state,omitempty"`
+	// StateChangeTime: Output only. The timestamp at which the operational state
+	// was last changed. Used to track how long it has been in the current state.
+	StateChangeTime string `json:"stateChangeTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Reasons") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Reasons") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OperationalState) MarshalJSON() ([]byte, error) {
+	type NoMethod OperationalState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Origin: Origin defines where this MembershipFeatureSpec originated from.
 type Origin struct {
 	// Type: Type specifies which type of origin is set.
@@ -6189,10 +6234,10 @@ type RolloutSequence struct {
 	// Name: Identifier. Name of the rollout sequence in the format of:
 	// projects/{PROJECT_ID}/locations/global/rolloutSequences/{NAME}
 	Name string `json:"name,omitempty"`
+	// OperationalState: Output only. Operational state of the Rollout Sequence.
+	OperationalState *OperationalState `json:"operationalState,omitempty"`
 	// Stages: Required. Ordered list of stages that constitutes this Rollout.
 	Stages []*Stage `json:"stages,omitempty"`
-	// State: Output only. State of the Rollout Sequence as a whole.
-	State *RolloutSequenceState `json:"state,omitempty"`
 	// Uid: Output only. Google-generated UUID for this resource. This is unique
 	// across all Rollout Sequence resources. If a Rollout Sequence resource is
 	// deleted and another resource with the same name is created, it gets a
@@ -6219,52 +6264,6 @@ type RolloutSequence struct {
 
 func (s RolloutSequence) MarshalJSON() ([]byte, error) {
 	type NoMethod RolloutSequence
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// RolloutSequenceState: State and reasons of the Rollout Sequence.
-type RolloutSequenceState struct {
-	// LastStateChangeTime: Output only. The timestamp at which the LifecycleState
-	// was last changed. Used to track how long it has been in the current state.
-	LastStateChangeTime string `json:"lastStateChangeTime,omitempty"`
-	// LifecycleState: Output only. Lifecycle state of the Rollout Sequence.
-	//
-	// Possible values:
-	//   "LIFECYCLE_STATE_UNSPECIFIED" - The default value. This value is used if
-	// the state is omitted.
-	//   "LIFECYCLE_STATE_ACTIVE" - The Rollout Sequence is active.
-	//   "LIFECYCLE_STATE_WARNING" - The Rollout Sequence has warnings.
-	//   "LIFECYCLE_STATE_ERROR" - The Rollout Sequence has errors.
-	//   "LIFECYCLE_STATE_INITIALIZING" - The Rollout Sequence is being
-	// initialized.
-	LifecycleState string `json:"lifecycleState,omitempty"`
-	// StateReasons: Output only. StateReason represents the reason for the Rollout
-	// Sequence state.
-	//
-	// Possible values:
-	//   "STATE_REASON_UNSPECIFIED" - Default unspecified value.
-	//   "FLEET_FEATURE_DELETED_ERROR" - A fleet feature is deleted.
-	//   "FLEET_DELETED_ERROR" - A fleet is deleted.
-	//   "EMPTY_STAGE_WARNING" - A stage is empty.
-	//   "MIXED_RELEASE_CHANNELS_WARNING" - Mixed release channels in the sequence.
-	//   "INTERNAL_ERROR" - Internal error, for example when host project is
-	// soft-deleted.
-	StateReasons []string `json:"stateReasons,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "LastStateChangeTime") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "LastStateChangeTime") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s RolloutSequenceState) MarshalJSON() ([]byte, error) {
-	type NoMethod RolloutSequenceState
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

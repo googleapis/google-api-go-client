@@ -399,10 +399,22 @@ type ProjectsLocationsServiceConnectionTokensService struct {
 
 func NewProjectsLocationsSpokesService(s *Service) *ProjectsLocationsSpokesService {
 	rs := &ProjectsLocationsSpokesService{s: s}
+	rs.GatewayAdvertisedRoutes = NewProjectsLocationsSpokesGatewayAdvertisedRoutesService(s)
 	return rs
 }
 
 type ProjectsLocationsSpokesService struct {
+	s *Service
+
+	GatewayAdvertisedRoutes *ProjectsLocationsSpokesGatewayAdvertisedRoutesService
+}
+
+func NewProjectsLocationsSpokesGatewayAdvertisedRoutesService(s *Service) *ProjectsLocationsSpokesGatewayAdvertisedRoutesService {
+	rs := &ProjectsLocationsSpokesGatewayAdvertisedRoutesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSpokesGatewayAdvertisedRoutesService struct {
 	s *Service
 }
 
@@ -1457,6 +1469,126 @@ func (s Filter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Gateway: A gateway that can apply specialized traffic processing.
+type Gateway struct {
+	// Capacity: Optional. The aggregate processing capacity of this gateway.
+	//
+	// Possible values:
+	//   "GATEWAY_CAPACITY_UNSPECIFIED" - The gateway capacity is unspecified.
+	//   "CAPACITY_1_GBPS" - The gateway has 1 Gbps of aggregate processing
+	// capacity
+	//   "CAPACITY_10_GBPS" - The gateway has 10 Gbps of aggregate processing
+	// capacity
+	Capacity string `json:"capacity,omitempty"`
+	// CloudRouters: Output only. The list of Cloud Routers that are connected to
+	// this gateway. Should be in the form:
+	// https://www.googleapis.com/compute/v1/projects/{project}/regions/{region}/routers/{router}
+	CloudRouters []string `json:"cloudRouters,omitempty"`
+	// IpRangeReservations: Optional. A list of IP ranges that are reserved for
+	// this gateway's internal intfrastructure.
+	IpRangeReservations []*IpRangeReservation `json:"ipRangeReservations,omitempty"`
+	// SacAttachment: Output only. The URI of the connected SACAttachment. Should
+	// be in the form:
+	// projects/{project}/locations/{location}/sacAttachments/{sac_attachment}
+	SacAttachment string `json:"sacAttachment,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Capacity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Capacity") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Gateway) MarshalJSON() ([]byte, error) {
+	type NoMethod Gateway
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GatewayAdvertisedRoute: A gateway advertised route is a route that a gateway
+// spoke advertises somewhere.
+type GatewayAdvertisedRoute struct {
+	// CreateTime: Output only. The time the gateway advertised route was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: An optional description of the gateway advertised route.
+	Description string `json:"description,omitempty"`
+	// IpRange: Immutable. This route's advertised IP address range. Must be a
+	// valid CIDR-formatted prefix. If an IP address is provided without a subnet
+	// mask, it is interpreted as, for IPv4, a `/32` singular IP address range,
+	// and, for IPv6, `/128`.
+	IpRange string `json:"ipRange,omitempty"`
+	// Labels: Optional labels in key-value pair format. For more information about
+	// labels, see Requirements for labels
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. The name of the gateway advertised route. Route names must
+	// be unique and use the following form:
+	// `projects/{project_number}/locations/{region}/spokes/{spoke}/gatewayAdvertise
+	// dRoutes/{gateway_advertised_route_id}`
+	Name string `json:"name,omitempty"`
+	// Priority: Optional. The priority of this advertised route. You can choose a
+	// value from `0` to `65335`. If you don't provide a value, Google Cloud
+	// assigns a priority of `100` to the ranges.
+	Priority int64 `json:"priority,omitempty"`
+	// Recipient: Optional. The recipient of this advertised route.
+	//
+	// Possible values:
+	//   "RECIPIENT_UNSPECIFIED" - No recipient specified. By default routes are
+	// advertised to the hub.
+	//   "ADVERTISE_TO_HUB" - Advertises a route toward the hub. Other spokes
+	// reachable from this spoke will receive the route.
+	Recipient string `json:"recipient,omitempty"`
+	// State: Output only. The current lifecycle state of this gateway advertised
+	// route.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - No state information available
+	//   "CREATING" - The resource's create operation is in progress.
+	//   "ACTIVE" - The resource is active
+	//   "DELETING" - The resource's delete operation is in progress.
+	//   "ACCEPTING" - The resource's accept operation is in progress.
+	//   "REJECTING" - The resource's reject operation is in progress.
+	//   "UPDATING" - The resource's update operation is in progress.
+	//   "INACTIVE" - The resource is inactive.
+	//   "OBSOLETE" - The hub associated with this spoke resource has been deleted.
+	// This state applies to spoke resources only.
+	//   "FAILED" - The resource is in an undefined state due to resource creation
+	// or deletion failure. You can try to delete the resource later or contact
+	// support for help.
+	State string `json:"state,omitempty"`
+	// UniqueId: Output only. The Google-generated UUID for the gateway advertised
+	// route. This value is unique across all gateway advertised route resources.
+	// If a gateway advertised route is deleted and another with the same name is
+	// created, the new route is assigned a different `unique_id`.
+	UniqueId string `json:"uniqueId,omitempty"`
+	// UpdateTime: Output only. The time the gateway advertised route was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GatewayAdvertisedRoute) MarshalJSON() ([]byte, error) {
+	type NoMethod GatewayAdvertisedRoute
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleLongrunningCancelOperationRequest: The request message for
 // Operations.CancelOperation.
 type GoogleLongrunningCancelOperationRequest struct {
@@ -1737,6 +1869,9 @@ type Hub struct {
 	//   "STAR" - Star topology is implemented. Two groups, `center` and `edge`,
 	// are automatically created along with hub creation. Spokes have to join one
 	// of the groups during creation.
+	//   "HYBRID_INSPECTION" - Hybrid inspection has 4 groups ('non-prod', 'prod',
+	// 'services', and 'untrusted') that are automatically created along with hub
+	// creation.
 	PresetTopology string `json:"presetTopology,omitempty"`
 	// RouteTables: Output only. The route tables that belong to this hub. They use
 	// the following form:
@@ -1984,6 +2119,32 @@ type InternalRange struct {
 
 func (s InternalRange) MarshalJSON() ([]byte, error) {
 	type NoMethod InternalRange
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IpRangeReservation: A list of IP ranges that are reserved for this gateway's
+// internal intfrastructure.
+type IpRangeReservation struct {
+	// IpRange: Required. A block of IP addresses used to allocate supporting
+	// infrastructure for this gateway. This block must not overlap with subnets in
+	// any spokes or peer VPC networks that the gateway can communicate with.
+	// Example: "10.1.2.0/24"
+	IpRange string `json:"ipRange,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IpRange") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IpRange") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IpRangeReservation) MarshalJSON() ([]byte, error) {
+	type NoMethod IpRangeReservation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2263,6 +2424,38 @@ type ListDestinationsResponse struct {
 
 func (s ListDestinationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDestinationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListGatewayAdvertisedRoutesResponse: Response for
+// HubService.ListGatewayAdvertisedRoutes method.
+type ListGatewayAdvertisedRoutesResponse struct {
+	// GatewayAdvertisedRoutes: The requested gateway advertised routes.
+	GatewayAdvertisedRoutes []*GatewayAdvertisedRoute `json:"gatewayAdvertisedRoutes,omitempty"`
+	// NextPageToken: The token for the next page of the response. To see more
+	// results, use this value as the page_token for your next request. If this
+	// value is empty, there are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Hubs that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "GatewayAdvertisedRoutes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GatewayAdvertisedRoutes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListGatewayAdvertisedRoutesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListGatewayAdvertisedRoutesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4399,6 +4592,9 @@ type Spoke struct {
 	// FieldPathsPendingUpdate: Optional. The list of fields waiting for hub
 	// administrator's approval.
 	FieldPathsPendingUpdate []string `json:"fieldPathsPendingUpdate,omitempty"`
+	// Gateway: Optional. This is a gateway that can apply specialized processing
+	// to traffic going through it.
+	Gateway *Gateway `json:"gateway,omitempty"`
 	// Group: Optional. The name of the group that this spoke is associated with.
 	Group string `json:"group,omitempty"`
 	// Hub: Immutable. The name of the hub that this spoke is attached to.
@@ -4434,6 +4630,7 @@ type Spoke struct {
 	//   "INTERCONNECT_ATTACHMENT" - Spokes associated with VLAN attachments.
 	//   "ROUTER_APPLIANCE" - Spokes associated with router appliance instances.
 	//   "VPC_NETWORK" - Spokes associated with VPC networks.
+	//   "GATEWAY" - Spokes that are NCC gateways.
 	//   "PRODUCER_VPC_NETWORK" - Spokes that are backed by a producer VPC network.
 	SpokeType string `json:"spokeType,omitempty"`
 	// State: Output only. The current lifecycle state of this spoke.
@@ -4608,6 +4805,7 @@ type SpokeTypeCount struct {
 	//   "INTERCONNECT_ATTACHMENT" - Spokes associated with VLAN attachments.
 	//   "ROUTER_APPLIANCE" - Spokes associated with router appliance instances.
 	//   "VPC_NETWORK" - Spokes associated with VPC networks.
+	//   "GATEWAY" - Spokes that are NCC gateways.
 	//   "PRODUCER_VPC_NETWORK" - Spokes that are backed by a producer VPC network.
 	SpokeType string `json:"spokeType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
@@ -17073,6 +17271,655 @@ func (c *ProjectsLocationsSpokesTestIamPermissionsCall) Do(opts ...googleapi.Cal
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.spokes.testIamPermissions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSpokesGatewayAdvertisedRoutesCreateCall struct {
+	s                      *Service
+	parent                 string
+	gatewayadvertisedroute *GatewayAdvertisedRoute
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Create: Create a GatewayAdvertisedRoute
+//
+// - parent: The parent resource.
+func (r *ProjectsLocationsSpokesGatewayAdvertisedRoutesService) Create(parent string, gatewayadvertisedroute *GatewayAdvertisedRoute) *ProjectsLocationsSpokesGatewayAdvertisedRoutesCreateCall {
+	c := &ProjectsLocationsSpokesGatewayAdvertisedRoutesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.gatewayadvertisedroute = gatewayadvertisedroute
+	return c
+}
+
+// GatewayAdvertisedRouteId sets the optional parameter
+// "gatewayAdvertisedRouteId": Required. Unique id for the route to create.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesCreateCall) GatewayAdvertisedRouteId(gatewayAdvertisedRouteId string) *ProjectsLocationsSpokesGatewayAdvertisedRoutesCreateCall {
+	c.urlParams_.Set("gatewayAdvertisedRouteId", gatewayAdvertisedRouteId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to identify
+// requests. Specify a unique request ID so that if you must retry your
+// request, the server knows to ignore the request if it has already been
+// completed. The server guarantees that a request doesn't result in creation
+// of duplicate commitments for at least 60 minutes. For example, consider a
+// situation where you make an initial request and the request times out. If
+// you make the request again with the same request ID, the server can check to
+// see whether the original operation was received. If it was, the server
+// ignores the second request. This behavior prevents clients from mistakenly
+// creating duplicate commitments. The request ID must be a valid UUID, with
+// the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesCreateCall) RequestId(requestId string) *ProjectsLocationsSpokesGatewayAdvertisedRoutesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSpokesGatewayAdvertisedRoutesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesCreateCall) Context(ctx context.Context) *ProjectsLocationsSpokesGatewayAdvertisedRoutesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.gatewayadvertisedroute)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/gatewayAdvertisedRoutes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.spokes.gatewayAdvertisedRoutes.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.spokes.gatewayAdvertisedRoutes.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.spokes.gatewayAdvertisedRoutes.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSpokesGatewayAdvertisedRoutesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a GatewayAdvertisedRoute
+//
+// - name: The name of the gateway advertised route to delete.
+func (r *ProjectsLocationsSpokesGatewayAdvertisedRoutesService) Delete(name string) *ProjectsLocationsSpokesGatewayAdvertisedRoutesDeleteCall {
+	c := &ProjectsLocationsSpokesGatewayAdvertisedRoutesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to identify
+// requests. Specify a unique request ID so that if you must retry your
+// request, the server knows to ignore the request if it has already been
+// completed. The server guarantees that a request doesn't result in creation
+// of duplicate commitments for at least 60 minutes. For example, consider a
+// situation where you make an initial request and the request times out. If
+// you make the request again with the same request ID, the server can check to
+// see whether the original operation was received. If it was, the server
+// ignores the second request. This behavior prevents clients from mistakenly
+// creating duplicate commitments. The request ID must be a valid UUID, with
+// the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesDeleteCall) RequestId(requestId string) *ProjectsLocationsSpokesGatewayAdvertisedRoutesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSpokesGatewayAdvertisedRoutesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesDeleteCall) Context(ctx context.Context) *ProjectsLocationsSpokesGatewayAdvertisedRoutesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.spokes.gatewayAdvertisedRoutes.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.spokes.gatewayAdvertisedRoutes.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.spokes.gatewayAdvertisedRoutes.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSpokesGatewayAdvertisedRoutesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a GatewayAdvertisedRoute
+//
+// - name: The name of the gateway advertised route to get.
+func (r *ProjectsLocationsSpokesGatewayAdvertisedRoutesService) Get(name string) *ProjectsLocationsSpokesGatewayAdvertisedRoutesGetCall {
+	c := &ProjectsLocationsSpokesGatewayAdvertisedRoutesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSpokesGatewayAdvertisedRoutesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSpokesGatewayAdvertisedRoutesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesGetCall) Context(ctx context.Context) *ProjectsLocationsSpokesGatewayAdvertisedRoutesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.spokes.gatewayAdvertisedRoutes.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.spokes.gatewayAdvertisedRoutes.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GatewayAdvertisedRoute.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesGetCall) Do(opts ...googleapi.CallOption) (*GatewayAdvertisedRoute, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GatewayAdvertisedRoute{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.spokes.gatewayAdvertisedRoutes.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSpokesGatewayAdvertisedRoutesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List GatewayAdvertisedRoutes
+//
+// - parent: The parent resource's name.
+func (r *ProjectsLocationsSpokesGatewayAdvertisedRoutesService) List(parent string) *ProjectsLocationsSpokesGatewayAdvertisedRoutesListCall {
+	c := &ProjectsLocationsSpokesGatewayAdvertisedRoutesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression that filters the
+// list of results.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesListCall) Filter(filter string) *ProjectsLocationsSpokesGatewayAdvertisedRoutesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sort the results by a certain
+// order.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesListCall) OrderBy(orderBy string) *ProjectsLocationsSpokesGatewayAdvertisedRoutesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// results per page that should be returned.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesListCall) PageSize(pageSize int64) *ProjectsLocationsSpokesGatewayAdvertisedRoutesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListGatewayAdvertisedRoutes` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListGatewayAdvertisedRoutes` must match the call that provided the page
+// token.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesListCall) PageToken(pageToken string) *ProjectsLocationsSpokesGatewayAdvertisedRoutesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSpokesGatewayAdvertisedRoutesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSpokesGatewayAdvertisedRoutesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesListCall) Context(ctx context.Context) *ProjectsLocationsSpokesGatewayAdvertisedRoutesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/gatewayAdvertisedRoutes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.spokes.gatewayAdvertisedRoutes.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.spokes.gatewayAdvertisedRoutes.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListGatewayAdvertisedRoutesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesListCall) Do(opts ...googleapi.CallOption) (*ListGatewayAdvertisedRoutesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListGatewayAdvertisedRoutesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.spokes.gatewayAdvertisedRoutes.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesListCall) Pages(ctx context.Context, f func(*ListGatewayAdvertisedRoutesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsSpokesGatewayAdvertisedRoutesPatchCall struct {
+	s                      *Service
+	name                   string
+	gatewayadvertisedroute *GatewayAdvertisedRoute
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Patch: Update a GatewayAdvertisedRoute
+//
+//   - name: Identifier. The name of the gateway advertised route. Route names
+//     must be unique and use the following form:
+//     `projects/{project_number}/locations/{region}/spokes/{spoke}/gatewayAdverti
+//     sedRoutes/{gateway_advertised_route_id}`.
+func (r *ProjectsLocationsSpokesGatewayAdvertisedRoutesService) Patch(name string, gatewayadvertisedroute *GatewayAdvertisedRoute) *ProjectsLocationsSpokesGatewayAdvertisedRoutesPatchCall {
+	c := &ProjectsLocationsSpokesGatewayAdvertisedRoutesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.gatewayadvertisedroute = gatewayadvertisedroute
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to identify
+// requests. Specify a unique request ID so that if you must retry your
+// request, the server knows to ignore the request if it has already been
+// completed. The server guarantees that a request doesn't result in creation
+// of duplicate commitments for at least 60 minutes. For example, consider a
+// situation where you make an initial request and the request times out. If
+// you make the request again with the same request ID, the server can check to
+// see whether the original operation was received. If it was, the server
+// ignores the second request. This behavior prevents clients from mistakenly
+// creating duplicate commitments. The request ID must be a valid UUID, with
+// the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesPatchCall) RequestId(requestId string) *ProjectsLocationsSpokesGatewayAdvertisedRoutesPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": In the case of an
+// update to an existing group, field mask is used to specify the fields to be
+// overwritten. The fields specified in the update_mask are relative to the
+// resource, not the full request. A field is overwritten if it is in the mask.
+// If the user does not provide a mask, then all fields are overwritten.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsSpokesGatewayAdvertisedRoutesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsSpokesGatewayAdvertisedRoutesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesPatchCall) Context(ctx context.Context) *ProjectsLocationsSpokesGatewayAdvertisedRoutesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.gatewayadvertisedroute)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.spokes.gatewayAdvertisedRoutes.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.spokes.gatewayAdvertisedRoutes.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSpokesGatewayAdvertisedRoutesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.spokes.gatewayAdvertisedRoutes.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

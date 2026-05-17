@@ -2399,6 +2399,10 @@ type GoogleCloudApigeeV1ApiProxyRevision struct {
 	// LastModifiedAt: Time that the API proxy revision was last modified in
 	// milliseconds since epoch.
 	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
+	// Mcp: Output only. Whether this proxy revision is detected as an MCP (Model
+	// Context Protocol) proxy. A proxy revision is identified as MCP if it has a
+	// proxy endpoint with the `/mcp` base path that routes to the MCP target URL.
+	Mcp bool `json:"mcp,omitempty"`
 	// Name: Name of the API proxy.
 	Name string `json:"name,omitempty"`
 	// Policies: List of policy names included in the API proxy revision..

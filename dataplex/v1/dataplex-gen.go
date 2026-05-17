@@ -1630,6 +1630,282 @@ type GoogleCloudDataplexV1CancelJobRequest struct {
 type GoogleCloudDataplexV1CancelMetadataJobRequest struct {
 }
 
+// GoogleCloudDataplexV1ChangeRequest: Represents a proposed change to a
+// metadata resource.
+type GoogleCloudDataplexV1ChangeRequest struct {
+	// Approver: Output only. The email address of the user who approved/rejected
+	// the ChangeRequest.
+	Approver string `json:"approver,omitempty"`
+	// Author: Output only. The email address of the user who created the
+	// ChangeRequest.
+	Author string `json:"author,omitempty"`
+	// ChangeType: Output only. The type of change represented by the
+	// change_payload. This field is derived from the populated field in the
+	// change_payload oneof.
+	//
+	// Possible values:
+	//   "CHANGE_TYPE_UNSPECIFIED" - State unspecified.
+	//   "CREATE_ENTRY" - Request to create an Entry.
+	//   "UPDATE_ENTRY" - Request to update an Entry.
+	//   "DELETE_ENTRY" - Request to delete an Entry.
+	//   "CREATE_ENTRY_LINK" - Request to create an EntryLink.
+	//   "DELETE_ENTRY_LINK" - Request to delete an EntryLink.
+	//   "CREATE_GLOSSARY" - Request to create a Glossary.
+	//   "UPDATE_GLOSSARY" - Request to update a Glossary.
+	//   "DELETE_GLOSSARY" - Request to delete a Glossary.
+	//   "CREATE_GLOSSARY_CATEGORY" - Request to create a GlossaryCategory.
+	//   "UPDATE_GLOSSARY_CATEGORY" - Request to update a GlossaryCategory.
+	//   "DELETE_GLOSSARY_CATEGORY" - Request to delete a GlossaryCategory.
+	//   "CREATE_GLOSSARY_TERM" - Request to create a GlossaryTerm.
+	//   "UPDATE_GLOSSARY_TERM" - Request to update a GlossaryTerm.
+	//   "DELETE_GLOSSARY_TERM" - Request to delete a GlossaryTerm.
+	ChangeType string `json:"changeType,omitempty"`
+	// CreateEntry: Payload for creating an Entry.
+	CreateEntry *GoogleCloudDataplexV1CreateEntryRequest `json:"createEntry,omitempty"`
+	// CreateEntryLink: Payload for creating an EntryLink.
+	CreateEntryLink *GoogleCloudDataplexV1CreateEntryLinkRequest `json:"createEntryLink,omitempty"`
+	// CreateGlossary: Payload for creating a Glossary.
+	CreateGlossary *GoogleCloudDataplexV1CreateGlossaryRequest `json:"createGlossary,omitempty"`
+	// CreateGlossaryCategory: Payload for creating a GlossaryCategory.
+	CreateGlossaryCategory *GoogleCloudDataplexV1CreateGlossaryCategoryRequest `json:"createGlossaryCategory,omitempty"`
+	// CreateGlossaryTerm: Payload for creating a GlossaryTerm.
+	CreateGlossaryTerm *GoogleCloudDataplexV1CreateGlossaryTermRequest `json:"createGlossaryTerm,omitempty"`
+	// CreateTime: Output only. The time when the ChangeRequest was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DeleteEntry: Payload for deleting an Entry.
+	DeleteEntry *GoogleCloudDataplexV1DeleteEntryRequest `json:"deleteEntry,omitempty"`
+	// DeleteEntryLink: Payload for deleting an EntryLink.
+	DeleteEntryLink *GoogleCloudDataplexV1DeleteEntryLinkRequest `json:"deleteEntryLink,omitempty"`
+	// DeleteGlossary: Payload for deleting a Glossary.
+	DeleteGlossary *GoogleCloudDataplexV1DeleteGlossaryRequest `json:"deleteGlossary,omitempty"`
+	// DeleteGlossaryCategory: Payload for deleting a GlossaryCategory.
+	DeleteGlossaryCategory *GoogleCloudDataplexV1DeleteGlossaryCategoryRequest `json:"deleteGlossaryCategory,omitempty"`
+	// DeleteGlossaryTerm: Payload for deleting a GlossaryTerm.
+	DeleteGlossaryTerm *GoogleCloudDataplexV1DeleteGlossaryTermRequest `json:"deleteGlossaryTerm,omitempty"`
+	// Etag: Optional. This checksum is computed by the service. It can be sent on
+	// update and delete requests to ensure the client has an up-to-date value
+	// before proceeding.
+	Etag string `json:"etag,omitempty"`
+	// Justification: Optional. Justification of the ChangeRequest. This should
+	// explain why the change is needed or why it should be approved.
+	Justification string `json:"justification,omitempty"`
+	// Labels: Optional. User-defined labels for the ChangeRequest.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. The relative resource name of the ChangeRequest, of the
+	// form:
+	// projects/{project_number}/locations/{location_id}/changeRequests/{change_requ
+	// est_id}
+	Name string `json:"name,omitempty"`
+	// RejectionComment: Output only. The reason provided for rejecting the
+	// ChangeRequest.
+	RejectionComment string `json:"rejectionComment,omitempty"`
+	// Resource: Output only. The full resource name of the target resource to be
+	// modified. Example:
+	// //dataplex.googleapis.com/projects/my-project/locations/us-central1/entryGrou
+	// ps/my-group/entries/my-entry
+	Resource string `json:"resource,omitempty"`
+	// State: Output only. The current state of the ChangeRequest.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State unspecified.
+	//   "NEW" - The change is proposed and new.
+	//   "APPROVED" - The change has been approved.
+	//   "REJECTED" - The change has been rejected.
+	//   "EXPIRED" - The change request has expired.
+	//   "REVOKED" - The approved change has been revoked.
+	State string `json:"state,omitempty"`
+	// Uid: Output only. System generated globally unique ID for the ChangeRequest.
+	Uid string `json:"uid,omitempty"`
+	// UpdateEntry: Payload for updating an Entry.
+	UpdateEntry *GoogleCloudDataplexV1UpdateEntryRequest `json:"updateEntry,omitempty"`
+	// UpdateGlossary: Payload for updating a Glossary.
+	UpdateGlossary *GoogleCloudDataplexV1UpdateGlossaryRequest `json:"updateGlossary,omitempty"`
+	// UpdateGlossaryCategory: Payload for updating a GlossaryCategory.
+	UpdateGlossaryCategory *GoogleCloudDataplexV1UpdateGlossaryCategoryRequest `json:"updateGlossaryCategory,omitempty"`
+	// UpdateGlossaryTerm: Payload for updating a GlossaryTerm.
+	UpdateGlossaryTerm *GoogleCloudDataplexV1UpdateGlossaryTermRequest `json:"updateGlossaryTerm,omitempty"`
+	// UpdateTime: Output only. The time when the ChangeRequest was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Approver") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Approver") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1ChangeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1ChangeRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1CreateEntryLinkRequest: Request message for
+// CreateEntryLink.
+type GoogleCloudDataplexV1CreateEntryLinkRequest struct {
+	// EntryLink: Required. Entry Link resource.
+	EntryLink *GoogleCloudDataplexV1EntryLink `json:"entryLink,omitempty"`
+	// EntryLinkId: Required. Entry Link identifier * Must contain only lowercase
+	// letters, numbers and hyphens. * Must start with a letter. * Must be between
+	// 1-63 characters. * Must end with a number or a letter. * Must be unique
+	// within the EntryGroup.
+	EntryLinkId string `json:"entryLinkId,omitempty"`
+	// Parent: Required. The resource name of the parent Entry Group:
+	// projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_gr
+	// oup_id}.
+	Parent string `json:"parent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EntryLink") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EntryLink") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1CreateEntryLinkRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1CreateEntryLinkRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1CreateEntryRequest: Create Entry request.
+type GoogleCloudDataplexV1CreateEntryRequest struct {
+	// Entry: Required. Entry resource.
+	Entry *GoogleCloudDataplexV1Entry `json:"entry,omitempty"`
+	// EntryId: Required. Entry identifier. It has to be unique within an Entry
+	// Group.Entries corresponding to Google Cloud resources use an Entry ID format
+	// based on full resource names
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name).
+	// The format is a full resource name of the resource without the prefix double
+	// slashes in the API service name part of the full resource name. This allows
+	// retrieval of entries using their associated resource name.For example, if
+	// the full resource name of a resource is
+	// //library.googleapis.com/shelves/shelf1/books/book2, then the suggested
+	// entry_id is library.googleapis.com/shelves/shelf1/books/book2.It is also
+	// suggested to follow the same convention for entries corresponding to
+	// resources from providers or systems other than Google Cloud.The maximum size
+	// of the field is 4000 characters.
+	EntryId string `json:"entryId,omitempty"`
+	// Parent: Required. The resource name of the parent Entry Group:
+	// projects/{project}/locations/{location}/entryGroups/{entry_group}.
+	Parent string `json:"parent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Entry") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Entry") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1CreateEntryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1CreateEntryRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1CreateGlossaryCategoryRequest: Creates a new
+// GlossaryCategory under the specified Glossary.
+type GoogleCloudDataplexV1CreateGlossaryCategoryRequest struct {
+	// Category: Required. The GlossaryCategory to create.
+	Category *GoogleCloudDataplexV1GlossaryCategory `json:"category,omitempty"`
+	// CategoryId: Required. GlossaryCategory identifier.
+	CategoryId string `json:"categoryId,omitempty"`
+	// Parent: Required. The parent resource where this GlossaryCategory will be
+	// created. Format:
+	// projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_
+	// id} where locationId refers to a Google Cloud region.
+	Parent string `json:"parent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1CreateGlossaryCategoryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1CreateGlossaryCategoryRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1CreateGlossaryRequest: Create Glossary Request
+type GoogleCloudDataplexV1CreateGlossaryRequest struct {
+	// Glossary: Required. The Glossary to create.
+	Glossary *GoogleCloudDataplexV1Glossary `json:"glossary,omitempty"`
+	// GlossaryId: Required. Glossary ID: Glossary identifier.
+	GlossaryId string `json:"glossaryId,omitempty"`
+	// Parent: Required. The parent resource where this Glossary will be created.
+	// Format: projects/{project_id_or_number}/locations/{location_id} where
+	// location_id refers to a Google Cloud region.
+	Parent string `json:"parent,omitempty"`
+	// ValidateOnly: Optional. Validates the request without actually creating the
+	// Glossary. Default: false.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Glossary") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Glossary") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1CreateGlossaryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1CreateGlossaryRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1CreateGlossaryTermRequest: Creates a new GlossaryTerm
+// under the specified Glossary.
+type GoogleCloudDataplexV1CreateGlossaryTermRequest struct {
+	// Parent: Required. The parent resource where the GlossaryTerm will be
+	// created. Format:
+	// projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_
+	// id} where location_id refers to a Google Cloud region.
+	Parent string `json:"parent,omitempty"`
+	// Term: Required. The GlossaryTerm to create.
+	Term *GoogleCloudDataplexV1GlossaryTerm `json:"term,omitempty"`
+	// TermId: Required. GlossaryTerm identifier.
+	TermId string `json:"termId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Parent") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1CreateGlossaryTermRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1CreateGlossaryTermRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1DataAccessSpec: DataAccessSpec holds the access control
 // configuration to be enforced on data stored within resources (eg: rows,
 // columns in BigQuery Tables). When associated with data, the data is only
@@ -2494,6 +2770,9 @@ func (s GoogleCloudDataplexV1DataDocumentationSpec) MarshalJSON() ([]byte, error
 // data assets, packaged to address specific use cases. It's a way to manage
 // and share data in a more organized, product-like manner.
 type GoogleCloudDataplexV1DataProduct struct {
+	// AccessApprovalConfig: Optional. Configuration for access approval for the
+	// data product.
+	AccessApprovalConfig *GoogleCloudDataplexV1DataProductAccessApprovalConfig `json:"accessApprovalConfig,omitempty"`
 	// AccessGroups: Optional. Data product access groups by access group id as
 	// key. If data product is used only for packaging data assets, then access
 	// groups may be empty. However, if a data product is used for sharing data
@@ -2540,21 +2819,46 @@ type GoogleCloudDataplexV1DataProduct struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AccessGroups") to
+	// ForceSendFields is a list of field names (e.g. "AccessApprovalConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AccessGroups") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AccessApprovalConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudDataplexV1DataProduct) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataProduct
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataProductAccessApprovalConfig: Configuration for
+// access approval for the data product.
+type GoogleCloudDataplexV1DataProductAccessApprovalConfig struct {
+	// ApproverEmails: Optional. Specifies the email addresses of users who are
+	// potential approvers and are notified when an access request is made for the
+	// data product. The maximum number of emails allowed is 10.
+	ApproverEmails []string `json:"approverEmails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApproverEmails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApproverEmails") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataProductAccessApprovalConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataProductAccessApprovalConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2597,6 +2901,10 @@ type GoogleCloudDataplexV1DataProductPrincipal struct {
 	// GoogleGroup: Optional. Email of the Google Group, as per
 	// https://cloud.google.com/iam/docs/principals-overview#google-group.
 	GoogleGroup string `json:"googleGroup,omitempty"`
+	// ServiceAccount: Optional. Specifies the email of the producer service
+	// account, as per
+	// https://cloud.google.com/iam/docs/principals-overview#service-account.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GoogleGroup") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5189,6 +5497,132 @@ type GoogleCloudDataplexV1DataTaxonomy struct {
 
 func (s GoogleCloudDataplexV1DataTaxonomy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataTaxonomy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DeleteEntryLinkRequest: Request message for
+// DeleteEntryLink.
+type GoogleCloudDataplexV1DeleteEntryLinkRequest struct {
+	// Name: Required. The resource name of the Entry Link:
+	// projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_gr
+	// oup_id}/entryLinks/{entry_link_id}.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DeleteEntryLinkRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DeleteEntryLinkRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DeleteEntryRequest: Delete Entry request.
+type GoogleCloudDataplexV1DeleteEntryRequest struct {
+	// Name: Required. The resource name of the Entry:
+	// projects/{project}/locations/{location}/entryGroups/{entry_group}/entries/{en
+	// try}.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DeleteEntryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DeleteEntryRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DeleteGlossaryCategoryRequest: Delete GlossaryCategory
+// Request
+type GoogleCloudDataplexV1DeleteGlossaryCategoryRequest struct {
+	// Name: Required. The name of the GlossaryCategory to delete. Format:
+	// projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_
+	// id}/categories/{category_id}
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DeleteGlossaryCategoryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DeleteGlossaryCategoryRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DeleteGlossaryRequest: Delete Glossary Request
+type GoogleCloudDataplexV1DeleteGlossaryRequest struct {
+	// Etag: Optional. The etag of the Glossary. If this is provided, it must match
+	// the server's etag. If the etag is provided and does not match the
+	// server-computed etag, the request must fail with a ABORTED error code.
+	Etag string `json:"etag,omitempty"`
+	// Name: Required. The name of the Glossary to delete. Format:
+	// projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_
+	// id}
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DeleteGlossaryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DeleteGlossaryRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DeleteGlossaryTermRequest: Delete GlossaryTerm Request
+type GoogleCloudDataplexV1DeleteGlossaryTermRequest struct {
+	// Name: Required. The name of the GlossaryTerm to delete. Format:
+	// projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_
+	// id}/terms/{term_id}
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DeleteGlossaryTermRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DeleteGlossaryTermRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8231,6 +8665,61 @@ func (s GoogleCloudDataplexV1Partition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1RequestDataProductAccessRequest: Message for requesting
+// access to a Data Product.
+type GoogleCloudDataplexV1RequestDataProductAccessRequest struct {
+	// ChangeRequest: Required. The change request for the data product access
+	// request.
+	ChangeRequest *GoogleCloudDataplexV1ChangeRequest `json:"changeRequest,omitempty"`
+	// ValidateOnly: Optional. Validates the request without actually creating the
+	// access change request. Defaults to false.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChangeRequest") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChangeRequest") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1RequestDataProductAccessRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1RequestDataProductAccessRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1RequestDataProductAccessResponse: Response message for
+// requesting access to a Data Product.
+type GoogleCloudDataplexV1RequestDataProductAccessResponse struct {
+	// ChangeRequestName: The resource name of the created ChangeRequest. Format:
+	// projects/{project_number}/locations/{location_id}/changeRequests/{change_requ
+	// est_id}
+	ChangeRequestName string `json:"changeRequestName,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ChangeRequestName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChangeRequestName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1RequestDataProductAccessResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1RequestDataProductAccessResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1ResourceAccessSpec: ResourceAccessSpec holds the access
 // control configuration to be enforced on the resources, for example, Cloud
 // Storage bucket, BigQuery dataset, BigQuery table.
@@ -9365,6 +9854,135 @@ type GoogleCloudDataplexV1TriggerSchedule struct {
 
 func (s GoogleCloudDataplexV1TriggerSchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1TriggerSchedule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1UpdateEntryRequest: Update Entry request.
+type GoogleCloudDataplexV1UpdateEntryRequest struct {
+	// AllowMissing: Optional. If set to true and the entry doesn't exist, the
+	// service will create it.
+	AllowMissing bool `json:"allowMissing,omitempty"`
+	// AspectKeys: Optional. The map keys of the Aspects which the service should
+	// modify. It supports the following syntaxes: - matches an aspect of the given
+	// type and empty path. @path - matches an aspect of the given type and
+	// specified path. For example, to attach an aspect to a field that is
+	// specified by the schema aspect, the path should have the format Schema.. @*
+	// - matches aspects of the given type for all paths. *@path - matches aspects
+	// of all types on the given path.The service will not remove existing aspects
+	// matching the syntax unless delete_missing_aspects is set to true.If this
+	// field is left empty, the service treats it as specifying exactly those
+	// Aspects present in the request.
+	AspectKeys []string `json:"aspectKeys,omitempty"`
+	// DeleteMissingAspects: Optional. If set to true and the aspect_keys specify
+	// aspect ranges, the service deletes any existing aspects from that range that
+	// weren't provided in the request.
+	DeleteMissingAspects bool `json:"deleteMissingAspects,omitempty"`
+	// Entry: Required. Entry resource.
+	Entry *GoogleCloudDataplexV1Entry `json:"entry,omitempty"`
+	// UpdateMask: Optional. Mask of fields to update. To update Aspects, the
+	// update_mask must contain the value "aspects".If the update_mask is empty,
+	// the service will update all modifiable fields present in the request.
+	UpdateMask string `json:"updateMask,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowMissing") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowMissing") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1UpdateEntryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1UpdateEntryRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1UpdateGlossaryCategoryRequest: Update GlossaryCategory
+// Request
+type GoogleCloudDataplexV1UpdateGlossaryCategoryRequest struct {
+	// Category: Required. The GlossaryCategory to update. The GlossaryCategory's
+	// name field is used to identify the GlossaryCategory to update. Format:
+	// projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_
+	// id}/categories/{category_id}
+	Category *GoogleCloudDataplexV1GlossaryCategory `json:"category,omitempty"`
+	// UpdateMask: Required. The list of fields to update.
+	UpdateMask string `json:"updateMask,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1UpdateGlossaryCategoryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1UpdateGlossaryCategoryRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1UpdateGlossaryRequest: Update Glossary Request
+type GoogleCloudDataplexV1UpdateGlossaryRequest struct {
+	// Glossary: Required. The Glossary to update. The Glossary's name field is
+	// used to identify the Glossary to update. Format:
+	// projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_
+	// id}
+	Glossary *GoogleCloudDataplexV1Glossary `json:"glossary,omitempty"`
+	// UpdateMask: Required. The list of fields to update.
+	UpdateMask string `json:"updateMask,omitempty"`
+	// ValidateOnly: Optional. Validates the request without actually updating the
+	// Glossary. Default: false.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Glossary") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Glossary") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1UpdateGlossaryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1UpdateGlossaryRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1UpdateGlossaryTermRequest: Update GlossaryTerm Request
+type GoogleCloudDataplexV1UpdateGlossaryTermRequest struct {
+	// Term: Required. The GlossaryTerm to update. The GlossaryTerm's name field is
+	// used to identify the GlossaryTerm to update. Format:
+	// projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_
+	// id}/terms/{term_id}
+	Term *GoogleCloudDataplexV1GlossaryTerm `json:"term,omitempty"`
+	// UpdateMask: Required. The list of fields to update.
+	UpdateMask string `json:"updateMask,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Term") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Term") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1UpdateGlossaryTermRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1UpdateGlossaryTermRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -16047,6 +16665,115 @@ func (c *ProjectsLocationsDataProductsPatchCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.dataProducts.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDataProductsRequestAccessCall struct {
+	s                                                    *Service
+	parent                                               string
+	googleclouddataplexv1requestdataproductaccessrequest *GoogleCloudDataplexV1RequestDataProductAccessRequest
+	urlParams_                                           gensupport.URLParams
+	ctx_                                                 context.Context
+	header_                                              http.Header
+}
+
+// RequestAccess: Requests access to a data product. This will trigger an
+// access approval workflow, and the requester will need to wait for the
+// approval to be granted before they will be able to access the data product
+// assets.
+//
+//   - parent: The resource name of the data product. Format:
+//     projects/{project_number}/locations/{location_id}/dataProducts/{data_produc
+//     t_id}.
+func (r *ProjectsLocationsDataProductsService) RequestAccess(parent string, googleclouddataplexv1requestdataproductaccessrequest *GoogleCloudDataplexV1RequestDataProductAccessRequest) *ProjectsLocationsDataProductsRequestAccessCall {
+	c := &ProjectsLocationsDataProductsRequestAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddataplexv1requestdataproductaccessrequest = googleclouddataplexv1requestdataproductaccessrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataProductsRequestAccessCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataProductsRequestAccessCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataProductsRequestAccessCall) Context(ctx context.Context) *ProjectsLocationsDataProductsRequestAccessCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataProductsRequestAccessCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataProductsRequestAccessCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddataplexv1requestdataproductaccessrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:requestAccess")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.dataProducts.requestAccess", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.dataProducts.requestAccess" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1RequestDataProductAccessResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataProductsRequestAccessCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1RequestDataProductAccessResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1RequestDataProductAccessResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.dataProducts.requestAccess", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

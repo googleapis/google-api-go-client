@@ -5384,12 +5384,13 @@ type Settings struct {
 	DeletionProtectionEnabled bool `json:"deletionProtectionEnabled,omitempty"`
 	// DenyMaintenancePeriods: Deny maintenance periods
 	DenyMaintenancePeriods []*DenyMaintenancePeriod `json:"denyMaintenancePeriods,omitempty"`
-	// Edition: Optional. The edition of the instance.
+	// Edition: Optional. The edition type of the Cloud SQL instance.
 	//
 	// Possible values:
 	//   "EDITION_UNSPECIFIED" - The instance did not specify the edition.
 	//   "ENTERPRISE" - The instance is an enterprise edition.
 	//   "ENTERPRISE_PLUS" - The instance is an Enterprise Plus edition.
+	//   "DEVELOPER" - This instance is a Cloud SQL developer edition instance.
 	Edition string `json:"edition,omitempty"`
 	// EnableDataplexIntegration: Optional. By default, Cloud SQL instances have
 	// schema extraction disabled for Dataplex. When this parameter is set to true,

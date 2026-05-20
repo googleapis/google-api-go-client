@@ -4574,6 +4574,29 @@ func (s InAppProductListing) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InGracePeriodStateContext: Additional context around subscriptions in
+// IN_GRACE_PERIOD state.
+type InGracePeriodStateContext struct {
+	// RenewalDeclined: Optional. The payment for the renewal was declined.
+	RenewalDeclined *RenewalDeclinedContext `json:"renewalDeclined,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RenewalDeclined") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RenewalDeclined") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InGracePeriodStateContext) MarshalJSON() ([]byte, error) {
+	type NoMethod InGracePeriodStateContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // InappproductsBatchDeleteRequest: Request to delete multiple in-app products.
 type InappproductsBatchDeleteRequest struct {
 	// Requests: Individual delete requests. At least one request is required. Can
@@ -5785,6 +5808,29 @@ type OfferTag struct {
 
 func (s OfferTag) MarshalJSON() ([]byte, error) {
 	type NoMethod OfferTag
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OnHoldStateContext: Additional context around subscriptions in ON_HOLD
+// state.
+type OnHoldStateContext struct {
+	// RenewalDeclined: Optional. The payment for the renewal was declined.
+	RenewalDeclined *RenewalDeclinedContext `json:"renewalDeclined,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RenewalDeclined") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RenewalDeclined") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OnHoldStateContext) MarshalJSON() ([]byte, error) {
+	type NoMethod OnHoldStateContext
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8035,6 +8081,29 @@ func (s RemoteInAppUpdateDataPerBundle) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RenewalDeclinedContext: Context related to renewal declined scenario.
+type RenewalDeclinedContext struct {
+	// PendingOrderId: Required. The ID of the pending or failed order causing the
+	// state.
+	PendingOrderId string `json:"pendingOrderId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PendingOrderId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PendingOrderId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RenewalDeclinedContext) MarshalJSON() ([]byte, error) {
+	type NoMethod RenewalDeclinedContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RentOfferDetails: Offer details information related to a rental line item.
 type RentOfferDetails struct {
 }
@@ -8681,8 +8750,8 @@ type SubscriptionDetails struct {
 	BasePlanId string `json:"basePlanId,omitempty"`
 	// OfferId: The offer ID for the current subscription offer.
 	OfferId string `json:"offerId,omitempty"`
-	// OfferPhase: The pricing phase for the billing period funded by this order.
-	// Deprecated. Use offer_phase_details instead.
+	// OfferPhase: Deprecated: Use offer_phase_details instead. The pricing phase
+	// for the billing period funded by this order.
 	//
 	// Possible values:
 	//   "OFFER_PHASE_UNSPECIFIED" - Offer phase unspecified. This value is not
@@ -8965,8 +9034,9 @@ func (s SubscriptionPriceChange) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SubscriptionPurchase: A SubscriptionPurchase resource indicates the status
-// of a user's subscription purchase.
+// SubscriptionPurchase: Deprecated: Use SubscriptionPurchaseV2 instead. A
+// SubscriptionPurchase resource indicates the status of a user's subscription
+// purchase.
 type SubscriptionPurchase struct {
 	// AcknowledgementState: The acknowledgement state of the subscription product.
 	// Possible values are: 0. Yet to be acknowledged 1. Acknowledged
@@ -9182,6 +9252,10 @@ type SubscriptionPurchaseV2 struct {
 	// ExternalAccountIdentifiers: User account identifier in the third-party
 	// service.
 	ExternalAccountIdentifiers *ExternalAccountIdentifiers `json:"externalAccountIdentifiers,omitempty"`
+	// InGracePeriodStateContext: Optional. Additional context around subscriptions
+	// in IN_GRACE_PERIOD state. Only present if the subscription currently has
+	// subscription_state SUBSCRIPTION_STATE_IN_GRACE_PERIOD.
+	InGracePeriodStateContext *InGracePeriodStateContext `json:"inGracePeriodStateContext,omitempty"`
 	// Kind: This kind represents a SubscriptionPurchaseV2 object in the
 	// androidpublisher service.
 	Kind string `json:"kind,omitempty"`
@@ -9202,6 +9276,10 @@ type SubscriptionPurchaseV2 struct {
 	// Convert from prepaid to auto renewing subscription. * Convert from an auto
 	// renewing subscription to prepaid. * Topup a prepaid subscription.
 	LinkedPurchaseToken string `json:"linkedPurchaseToken,omitempty"`
+	// OnHoldStateContext: Optional. Additional context around subscriptions in
+	// ON_HOLD state. Only present if the subscription currently has
+	// subscription_state SUBSCRIPTION_STATE_ON_HOLD.
+	OnHoldStateContext *OnHoldStateContext `json:"onHoldStateContext,omitempty"`
 	// OutOfAppPurchaseContext: Additional context for out of app purchases. This
 	// information is only present for re-subscription purchases (subscription
 	// purchases made after the previous subscription of the same product has
@@ -10422,6 +10500,10 @@ type User struct {
 	// for the developer.
 	//   "CAN_MANAGE_DEEPLINKS_GLOBAL" - Manage the deep links setup for all apps
 	// for the developer.
+	//   "CAN_VIEW_CONNECTED_APPS_GLOBAL" - Allows viewing connected apps in the
+	// Google Play Console.
+	//   "CAN_EDIT_CONNECTED_APPS_GLOBAL" - Allows editing connected apps in the
+	// Google Play Console.
 	DeveloperAccountPermissions []string `json:"developerAccountPermissions,omitempty"`
 	// Email: Immutable. The user's email address.
 	Email string `json:"email,omitempty"`
@@ -24449,8 +24531,9 @@ type PurchasesSubscriptionsCancelCall struct {
 	header_        http.Header
 }
 
-// Cancel: Cancels a user's subscription purchase. The subscription remains
-// valid until its expiration time. Newer version is available at
+// Cancel: Deprecated: Use purchases.subscriptionsv2.cancel instead. Cancels a
+// user's subscription purchase. The subscription remains valid until its
+// expiration time. Newer version is available at
 // purchases.subscriptionsv2.cancel for better client library support.
 //
 //   - packageName: The package name of the application for which this
@@ -24537,8 +24620,8 @@ type PurchasesSubscriptionsDeferCall struct {
 	header_                           http.Header
 }
 
-// Defer: Defers a user's subscription purchase until a specified future
-// expiration time.
+// Defer: Deprecated: Use purchases.subscriptionsv2.defer instead. Defers a
+// user's subscription purchase until a specified future expiration time.
 //
 //   - packageName: The package name of the application for which this
 //     subscription was purchased (for example, 'com.some.thing').

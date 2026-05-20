@@ -229,6 +229,7 @@ type ProjectsService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Global = NewProjectsLocationsGlobalService(s)
+	rs.NetworkMonitoringProviders = NewProjectsLocationsNetworkMonitoringProvidersService(s)
 	rs.VpcFlowLogsConfigs = NewProjectsLocationsVpcFlowLogsConfigsService(s)
 	return rs
 }
@@ -237,6 +238,8 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	Global *ProjectsLocationsGlobalService
+
+	NetworkMonitoringProviders *ProjectsLocationsNetworkMonitoringProvidersService
 
 	VpcFlowLogsConfigs *ProjectsLocationsVpcFlowLogsConfigsService
 }
@@ -271,6 +274,51 @@ func NewProjectsLocationsGlobalOperationsService(s *Service) *ProjectsLocationsG
 }
 
 type ProjectsLocationsGlobalOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsNetworkMonitoringProvidersService(s *Service) *ProjectsLocationsNetworkMonitoringProvidersService {
+	rs := &ProjectsLocationsNetworkMonitoringProvidersService{s: s}
+	rs.MonitoringPoints = NewProjectsLocationsNetworkMonitoringProvidersMonitoringPointsService(s)
+	rs.NetworkPaths = NewProjectsLocationsNetworkMonitoringProvidersNetworkPathsService(s)
+	rs.WebPaths = NewProjectsLocationsNetworkMonitoringProvidersWebPathsService(s)
+	return rs
+}
+
+type ProjectsLocationsNetworkMonitoringProvidersService struct {
+	s *Service
+
+	MonitoringPoints *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsService
+
+	NetworkPaths *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsService
+
+	WebPaths *ProjectsLocationsNetworkMonitoringProvidersWebPathsService
+}
+
+func NewProjectsLocationsNetworkMonitoringProvidersMonitoringPointsService(s *Service) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsService {
+	rs := &ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsNetworkMonitoringProvidersNetworkPathsService(s *Service) *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsService {
+	rs := &ProjectsLocationsNetworkMonitoringProvidersNetworkPathsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsNetworkMonitoringProvidersNetworkPathsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsNetworkMonitoringProvidersWebPathsService(s *Service) *ProjectsLocationsNetworkMonitoringProvidersWebPathsService {
+	rs := &ProjectsLocationsNetworkMonitoringProvidersWebPathsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsNetworkMonitoringProvidersWebPathsService struct {
 	s *Service
 }
 
@@ -935,6 +983,10 @@ type DeliverInfo struct {
 	//   "REDIS_INSTANCE" - Target is a Redis Instance.
 	//   "REDIS_CLUSTER" - Target is a Redis Cluster.
 	//   "GKE_POD" - Target is a GKE Pod.
+	//   "DMS_PRIVATE_CONNECTION" - Target is a DMS Private Connection. Used only
+	// for return traces.
+	//   "DATASTREAM_PRIVATE_CONNECTION" - Target is a Datastream Private
+	// Connection. Used only for return traces.
 	Target string `json:"target,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GoogleServiceType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1092,6 +1144,10 @@ type DropInfo struct {
 	// Engine Service.
 	//   "DROPPED_INSIDE_CLOUD_SQL_SERVICE" - Packet was dropped inside Cloud SQL
 	// Service.
+	//   "DROPPED_INSIDE_DMS_PRIVATE_CONNECTION" - Packet was dropped inside DMS
+	// Private Connection.
+	//   "DROPPED_INSIDE_DATASTREAM_PRIVATE_CONNECTION" - Packet was dropped inside
+	// Datastream Private Connection.
 	//   "GOOGLE_MANAGED_SERVICE_NO_PEERING" - Packet was dropped because there is
 	// no peering between the originating network and the Google Managed Services
 	// Network.
@@ -1904,6 +1960,83 @@ func (s GKEMasterInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GenerateMonitoringPointConfigResponse: Message for response for getting
+// Monitoring Point configuration of a NetworkMonitoringProvider resource.
+type GenerateMonitoringPointConfigResponse struct {
+	// Config: The Monitoring Point configuration of the provider in JSON format.
+	Config googleapi.RawMessage `json:"config,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Config") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Config") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateMonitoringPointConfigResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateMonitoringPointConfigResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenerateProviderAccessTokenResponse: Message for response for generating an
+// access token for a NetworkMonitoringProvider resource.
+type GenerateProviderAccessTokenResponse struct {
+	// ProviderAccessToken: Provider access token for the NetworkMonitoringProvider
+	// resource.
+	ProviderAccessToken string `json:"providerAccessToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ProviderAccessToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProviderAccessToken") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateProviderAccessTokenResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateProviderAccessTokenResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GeoLocation: The geographical location of the MonitoringPoint.
+type GeoLocation struct {
+	// FormattedAddress: Formatted address.
+	FormattedAddress string `json:"formattedAddress,omitempty"`
+	// RegionCode: Unicode CLDR region code.
+	RegionCode string `json:"regionCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FormattedAddress") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FormattedAddress") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GeoLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod GeoLocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GkeNetworkPolicyInfo: For display only. Metadata associated with a GKE
 // Network Policy.
 type GkeNetworkPolicyInfo struct {
@@ -2051,6 +2184,88 @@ type GoogleServiceInfo struct {
 
 func (s GoogleServiceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleServiceInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Host: Message describing information about the host.
+type Host struct {
+	// CloudInstanceId: Output only. The cloud instance id of the host.
+	CloudInstanceId string `json:"cloudInstanceId,omitempty"`
+	// CloudProjectId: Output only. The cloud project id of the host.
+	CloudProjectId string `json:"cloudProjectId,omitempty"`
+	// CloudProvider: Output only. The cloud provider of the host.
+	CloudProvider string `json:"cloudProvider,omitempty"`
+	// CloudRegion: Output only. The cloud region of the host.
+	CloudRegion string `json:"cloudRegion,omitempty"`
+	// CloudVirtualNetworkIds: Output only. The ids of cloud virtual networks of
+	// the host.
+	CloudVirtualNetworkIds []string `json:"cloudVirtualNetworkIds,omitempty"`
+	// CloudZone: Output only. The cloud zone of the host.
+	CloudZone string `json:"cloudZone,omitempty"`
+	// Os: Output only. The operating system of the host.
+	Os string `json:"os,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudInstanceId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudInstanceId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Host) MarshalJSON() ([]byte, error) {
+	type NoMethod Host
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// HttpBody: Message that represents an arbitrary HTTP body. It should only be
+// used for payload formats that can't be represented as JSON, such as raw
+// binary or an HTML page. This message can be used both in streaming and
+// non-streaming API methods in the request as well as the response. It can be
+// used as a top-level request field, which is convenient if one wants to
+// extract parameters from either the URL or HTTP template into the request
+// fields and also want access to the raw HTTP body. Example: message
+// GetResourceRequest { // A unique request id. string request_id = 1; // The
+// raw HTTP body is bound to this field. google.api.HttpBody http_body = 2; }
+// service ResourceService { rpc GetResource(GetResourceRequest) returns
+// (google.api.HttpBody); rpc UpdateResource(google.api.HttpBody) returns
+// (google.protobuf.Empty); } Example with streaming methods: service
+// CaldavService { rpc GetCalendar(stream google.api.HttpBody) returns (stream
+// google.api.HttpBody); rpc UpdateCalendar(stream google.api.HttpBody) returns
+// (stream google.api.HttpBody); } Use of this type only changes how the
+// request and response bodies are handled, all other features will continue to
+// work unchanged.
+type HttpBody struct {
+	// ContentType: The HTTP Content-Type header value specifying the content type
+	// of the body.
+	ContentType string `json:"contentType,omitempty"`
+	// Data: The HTTP request/response body as raw binary.
+	Data string `json:"data,omitempty"`
+	// Extensions: Application specific response metadata. Must be set in the first
+	// response for streaming APIs.
+	Extensions []googleapi.RawMessage `json:"extensions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ContentType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HttpBody) MarshalJSON() ([]byte, error) {
+	type NoMethod HttpBody
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2330,6 +2545,92 @@ func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListMonitoringPointsResponse: Message for response to listing
+// MonitoringPoints
+type ListMonitoringPointsResponse struct {
+	// MonitoringPoints: The list of MonitoringPoints.
+	MonitoringPoints []*MonitoringPoint `json:"monitoringPoints,omitempty"`
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "MonitoringPoints") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MonitoringPoints") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListMonitoringPointsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListMonitoringPointsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListNetworkMonitoringProvidersResponse: Message for response to listing
+// NetworkMonitoringProviders
+type ListNetworkMonitoringProvidersResponse struct {
+	// NetworkMonitoringProviders: The list of NetworkMonitoringProvider
+	NetworkMonitoringProviders []*NetworkMonitoringProvider `json:"networkMonitoringProviders,omitempty"`
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NetworkMonitoringProviders")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NetworkMonitoringProviders") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListNetworkMonitoringProvidersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListNetworkMonitoringProvidersResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListNetworkPathsResponse: Message for response to listing NetworkPaths
+type ListNetworkPathsResponse struct {
+	// NetworkPaths: The list of NetworkPath
+	NetworkPaths []*NetworkPath `json:"networkPaths,omitempty"`
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NetworkPaths") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NetworkPaths") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListNetworkPathsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListNetworkPathsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListOperationsResponse: The response message for Operations.ListOperations.
 type ListOperationsResponse struct {
 	// NextPageToken: The standard List next-page token.
@@ -2391,6 +2692,34 @@ type ListVpcFlowLogsConfigsResponse struct {
 
 func (s ListVpcFlowLogsConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListVpcFlowLogsConfigsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListWebPathsResponse: Message for response to listing WebPaths
+type ListWebPathsResponse struct {
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// WebPaths: The list of WebPath.
+	WebPaths []*WebPath `json:"webPaths,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListWebPathsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListWebPathsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2596,6 +2925,104 @@ func (s Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MonitoringPoint: Message describing MonitoringPoint resource.
+type MonitoringPoint struct {
+	// AutoGeoLocationEnabled: Output only. Indicates if automaitic geographic
+	// location is enabled for the MonitoringPoint.
+	AutoGeoLocationEnabled bool `json:"autoGeoLocationEnabled,omitempty"`
+	// ConnectionStatus: Output only. Connection status of the MonitoringPoint.
+	//
+	// Possible values:
+	//   "CONNECTION_STATUS_UNSPECIFIED" - The default value. This value is used if
+	// the status is omitted.
+	//   "ONLINE" - MonitoringPoint is online.
+	//   "OFFLINE" - MonitoringPoint is offline.
+	ConnectionStatus string `json:"connectionStatus,omitempty"`
+	// CreateTime: Output only. The time the MonitoringPoint was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DeploymentType: Output only. The deployment type of the MonitoringPoint.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_TYPE_UNSPECIFIED" - The default value. This value is used if
+	// the type is omitted.
+	//   "DOCKER" - The MonitoringPoint is deployed as a Docker container.
+	//   "PODMAN" - The MonitoringPoint is deployed as a Podman container.
+	//   "HELM" - The MonitoringPoint is deployed as a Helm chart.
+	DeploymentType string `json:"deploymentType,omitempty"`
+	// DisplayName: Output only. Display name of the MonitoringPoint.
+	DisplayName string `json:"displayName,omitempty"`
+	// Errors: Output only. The codes of errors detected in the MonitoringPoint.
+	//
+	// Possible values:
+	//   "ERROR_CODE_UNSPECIFIED" - The default value. This value is used if the
+	// error code is omitted.
+	//   "NTP_ERROR" - Error detected in NTP service.
+	//   "UPGRADE_ERROR" - Error detected during the upgrade process.
+	//   "DOWNLOAD_FAILED" - Error detected while downloading.
+	Errors []string `json:"errors,omitempty"`
+	// GeoLocation: Output only. The geographical location of the MonitoringPoint.
+	GeoLocation *GeoLocation `json:"geoLocation,omitempty"`
+	// Guid: Output only. The GUID of the MonitoringPoint.
+	Guid string `json:"guid,omitempty"`
+	// Host: Output only. The host information of the MonitoringPoint.
+	Host *Host `json:"host,omitempty"`
+	// Hostname: Output only. The hostname of the MonitoringPoint.
+	Hostname string `json:"hostname,omitempty"`
+	// Name: Identifier. Name of the resource. Format:
+	// `projects/{project}/locations/{location}/networkMonitoringProviders/{network_
+	// monitoring_provider}/monitoringPoints/{monitoring_point}`
+	Name string `json:"name,omitempty"`
+	// NetworkInterfaces: Output only. The network interfaces of the
+	// MonitoringPoint.
+	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty"`
+	// OriginatingIp: Output only. IP address visible when MonitoringPoint connects
+	// to the provider.
+	OriginatingIp string `json:"originatingIp,omitempty"`
+	// ProviderTags: Output only. The provider tags of the MonitoringPoint.
+	ProviderTags []*ProviderTag `json:"providerTags,omitempty"`
+	// Type: Output only. Deployment type of the MonitoringPoint.
+	Type string `json:"type,omitempty"`
+	// UpdateTime: Output only. The time the MonitoringPoint was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// UpgradeAvailable: Output only. Indicates if an upgrade is available for the
+	// MonitoringPoint.
+	UpgradeAvailable bool `json:"upgradeAvailable,omitempty"`
+	// UpgradeType: Output only. The type of upgrade available for the
+	// MonitoringPoint.
+	//
+	// Possible values:
+	//   "UPGRADE_TYPE_UNSPECIFIED" - The default value. This value is used if the
+	// upgrade type is omitted.
+	//   "MANUAL" - Upgrades are performed manually.
+	//   "MANAGED" - Upgrades are managed.
+	//   "SCHEDULED" - Upgrade is scheduled.
+	//   "AUTO" - Upgrades are performed automatically.
+	//   "EXTERNAL" - Upgrades are performed externally.
+	UpgradeType string `json:"upgradeType,omitempty"`
+	// Version: Output only. Version of the software running on the
+	// MonitoringPoint.
+	Version string `json:"version,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AutoGeoLocationEnabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AutoGeoLocationEnabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MonitoringPoint) MarshalJSON() ([]byte, error) {
+	type NoMethod MonitoringPoint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // NatInfo: For display only. Metadata associated with NAT.
 type NatInfo struct {
 	// CloudNatGatewayType: Type of Cloud NAT gateway. Only valid when `type` is
@@ -2698,6 +3125,181 @@ type NetworkInfo struct {
 
 func (s NetworkInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NetworkInterface: Message describing network interfaces.
+type NetworkInterface struct {
+	// AdapterDescription: Output only. The description of the interface.
+	AdapterDescription string `json:"adapterDescription,omitempty"`
+	// Cidr: Output only. The IP address of the interface and subnet mask in CIDR
+	// format. Examples: 192.168.1.0/24, 2001:db8::/32
+	Cidr string `json:"cidr,omitempty"`
+	// InterfaceName: Output only. The name of the network interface. Examples:
+	// eth0, eno1
+	InterfaceName string `json:"interfaceName,omitempty"`
+	// IpAddress: Output only. The IP address of the interface.
+	IpAddress string `json:"ipAddress,omitempty"`
+	// MacAddress: Output only. The MAC address of the interface.
+	MacAddress string `json:"macAddress,omitempty"`
+	// Speed: Output only. Speed of the interface in millions of bits per second.
+	Speed int64 `json:"speed,omitempty,string"`
+	// VlanId: Output only. The id of the VLAN.
+	VlanId int64 `json:"vlanId,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "AdapterDescription") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdapterDescription") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NetworkInterface) MarshalJSON() ([]byte, error) {
+	type NoMethod NetworkInterface
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NetworkMonitoringProvider: Message describing NetworkMonitoringProvider
+// resource.
+type NetworkMonitoringProvider struct {
+	// CreateTime: Output only. The time the NetworkMonitoringProvider was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Errors: Output only. The list of error messages detected for the
+	// NetworkMonitoringProvider.
+	Errors []string `json:"errors,omitempty"`
+	// Name: Output only. Identifier. Name of the resource. Format:
+	// `projects/{project}/locations/{location}/networkMonitoringProviders/{network_
+	// monitoring_provider}`
+	Name string `json:"name,omitempty"`
+	// ProviderType: Required. Type of the NetworkMonitoringProvider.
+	//
+	// Possible values:
+	//   "PROVIDER_TYPE_UNSPECIFIED" - The default value. This value is used if the
+	// type is omitted.
+	//   "EXTERNAL" - External provider.
+	ProviderType string `json:"providerType,omitempty"`
+	// ProviderUri: Output only. Link to the provider's UI.
+	ProviderUri string `json:"providerUri,omitempty"`
+	// State: Output only. State of the NetworkMonitoringProvider.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The default value. This value is used if the status
+	// is omitted.
+	//   "ACTIVATING" - NetworkMonitoringProvider is being activated.
+	//   "ACTIVE" - NetworkMonitoringProvider is active.
+	//   "SUSPENDING" - NetworkMonitoringProvider is being suspended.
+	//   "SUSPENDED" - NetworkMonitoringProvider is suspended.
+	//   "DELETING" - NetworkMonitoringProvider is being deleted.
+	//   "DELETED" - NetworkMonitoringProvider is deleted.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. The time the NetworkMonitoringProvider was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NetworkMonitoringProvider) MarshalJSON() ([]byte, error) {
+	type NoMethod NetworkMonitoringProvider
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NetworkPath: Message describing NetworkPath resource.
+type NetworkPath struct {
+	// CreateTime: Output only. The time the NetworkPath was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Destination: Output only. IP address or hostname of the network path
+	// destination.
+	Destination string `json:"destination,omitempty"`
+	// DestinationGeoLocation: Output only. Geographical location of the
+	// destination MonitoringPoint.
+	DestinationGeoLocation *GeoLocation `json:"destinationGeoLocation,omitempty"`
+	// DestinationMonitoringPointId: Output only. Provider's UUID of the
+	// destination MonitoringPoint. This id may not point to a resource in the
+	// Google Cloud.
+	DestinationMonitoringPointId string `json:"destinationMonitoringPointId,omitempty"`
+	// DisplayName: Output only. The display name of the network path.
+	DisplayName string `json:"displayName,omitempty"`
+	// DualEnded: Output only. Indicates if the network path is dual ended. When
+	// true, the network path is measured both: from both source to destination,
+	// and from destination to source. When false, the network path is measured
+	// from the source through the destination back to the source (round trip
+	// measurement).
+	DualEnded bool `json:"dualEnded,omitempty"`
+	// MonitoringEnabled: Output only. Is monitoring enabled for the network path.
+	MonitoringEnabled bool `json:"monitoringEnabled,omitempty"`
+	// MonitoringPolicyDisplayName: Output only. Display name of the monitoring
+	// policy.
+	MonitoringPolicyDisplayName string `json:"monitoringPolicyDisplayName,omitempty"`
+	// MonitoringPolicyId: Output only. ID of monitoring policy.
+	MonitoringPolicyId string `json:"monitoringPolicyId,omitempty"`
+	// MonitoringStatus: Output only. The monitoring status of the network path.
+	//
+	// Possible values:
+	//   "MONITORING_STATUS_UNSPECIFIED" - The default value. This value is used if
+	// the status is omitted.
+	//   "MONITORING" - Monitoring is enabled.
+	//   "POLICY_MISMATCH" - Policy is mismatched.
+	//   "MONITORING_POINT_OFFLINE" - Monitoring point is offline.
+	//   "DISABLED" - Monitoring is disabled.
+	MonitoringStatus string `json:"monitoringStatus,omitempty"`
+	// Name: Identifier. Name of the resource. Format:
+	// `projects/{project}/locations/{location}/networkMonitoringProviders/{network_
+	// monitoring_provider}/networkPaths/{network_path}`
+	Name string `json:"name,omitempty"`
+	// NetworkProtocol: Output only. The network protocol of the network path.
+	//
+	// Possible values:
+	//   "NETWORK_PROTOCOL_UNSPECIFIED" - The default value. This value is used if
+	// the network protocol is omitted.
+	//   "ICMP" - ICMP.
+	//   "UDP" - UDP.
+	//   "TCP" - TCP.
+	NetworkProtocol string `json:"networkProtocol,omitempty"`
+	// ProviderTags: Output only. The provider tags of the network path.
+	ProviderTags []*ProviderTag `json:"providerTags,omitempty"`
+	// ProviderUiUri: Output only. Link to provider's UI; link shows the
+	// NetworkPath.
+	ProviderUiUri string `json:"providerUiUri,omitempty"`
+	// SourceMonitoringPointId: Output only. Provider's UUID of the source
+	// MonitoringPoint. This id may not point to a resource in the Google Cloud.
+	SourceMonitoringPointId string `json:"sourceMonitoringPointId,omitempty"`
+	// UpdateTime: Output only. The time the NetworkPath was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NetworkPath) MarshalJSON() ([]byte, error) {
+	type NoMethod NetworkPath
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2988,6 +3590,48 @@ type ProbingDetails struct {
 
 func (s ProbingDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ProbingDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ProviderTag: Message describing the provider tag.
+type ProviderTag struct {
+	// Category: Output only. The category of the provider tag.
+	Category string `json:"category,omitempty"`
+	// ResourceType: Output only. The resource type of the provider tag.
+	//
+	// Possible values:
+	//   "RESOURCE_TYPE_UNSPECIFIED" - The default value. This value is used if the
+	// status is omitted.
+	//   "NETWORK_PATH" - Network path.
+	//   "WEB_PATH" - Web path.
+	//   "MONITORING_POLICY" - Monitoring policy.
+	//   "MONITORING_POINT" - Monitoring point.
+	//   "MONITORING_POINT_RULE" - This represents Provider Tag that a user
+	// manually assigns to a specific Rule within a Monitoring Policy. It is
+	// created when a user saves a Monitoring Policy with custom tags applied to
+	// its rules.
+	//   "MONITORING_POINT_RULE_AUTO" - This represents auto-generated Provider
+	// Tags derived from the criteria defined in a Monitoring Point Rule (e.g.,
+	// Subnet, VLAN, Interface). If "Auto Network Rule Tagging" is enabled, the
+	// system automatically generates these tags based on the rule's filter values.
+	ResourceType string `json:"resourceType,omitempty"`
+	// Value: Output only. The value of the provider tag.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProviderTag) MarshalJSON() ([]byte, error) {
+	type NoMethod ProviderTag
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4112,6 +4756,80 @@ type VpnTunnelInfo struct {
 
 func (s VpnTunnelInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod VpnTunnelInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WebPath: Message describing WebPath resource.
+type WebPath struct {
+	// CreateTime: Output only. The time the WebPath was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Destination: Output only. Web monitoring target.
+	Destination string `json:"destination,omitempty"`
+	// DestinationGeoLocation: Output only. Geographical location of the
+	// destination.
+	DestinationGeoLocation *GeoLocation `json:"destinationGeoLocation,omitempty"`
+	// DisplayName: Output only. Display name of the WebPath.
+	DisplayName string `json:"displayName,omitempty"`
+	// Interval: Output only. Monitoring interval.
+	Interval string `json:"interval,omitempty"`
+	// MonitoringEnabled: Output only. Is monitoring enabled for the WebPath.
+	MonitoringEnabled bool `json:"monitoringEnabled,omitempty"`
+	// MonitoringPolicyDisplayName: Output only. Display name of the monitoring
+	// policy.
+	MonitoringPolicyDisplayName string `json:"monitoringPolicyDisplayName,omitempty"`
+	// MonitoringPolicyId: Output only. ID of the monitoring policy.
+	MonitoringPolicyId string `json:"monitoringPolicyId,omitempty"`
+	// MonitoringStatus: Output only. The monitoring status of the WebPath.
+	//
+	// Possible values:
+	//   "MONITORING_STATUS_UNSPECIFIED" - The default value. This value is used if
+	// the status is omitted.
+	//   "MONITORING" - Monitoring is enabled.
+	//   "POLICY_MISMATCH" - Policy is mismatched.
+	//   "MONITORING_POINT_OFFLINE" - Monitoring point is offline.
+	//   "DISABLED" - Monitoring is disabled.
+	MonitoringStatus string `json:"monitoringStatus,omitempty"`
+	// Name: Identifier. Name of the resource. Format:
+	// `projects/{project}/locations/{location}/networkMonitoringProviders/{network_
+	// monitoring_provider}/webPaths/{web_path}`
+	Name string `json:"name,omitempty"`
+	// ProviderTags: Output only. The provider tags of the web path.
+	ProviderTags []*ProviderTag `json:"providerTags,omitempty"`
+	// ProviderUiUri: Output only. Link to provider's UI; link shows the WebPath.
+	ProviderUiUri string `json:"providerUiUri,omitempty"`
+	// RelatedNetworkPathId: Output only. Provider's UUID of the related
+	// NetworkPath.
+	RelatedNetworkPathId string `json:"relatedNetworkPathId,omitempty"`
+	// SourceMonitoringPointId: Output only. ID of the source MonitoringPoint.
+	SourceMonitoringPointId string `json:"sourceMonitoringPointId,omitempty"`
+	// UpdateTime: Output only. The time the WebPath was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// WorkflowType: Output only. The workflow type of the WebPath.
+	//
+	// Possible values:
+	//   "WORKFLOW_TYPE_UNSPECIFIED" - The default value. This value is used if the
+	// status is omitted.
+	//   "BROWSER" - Browser.
+	//   "HTTP" - HTTP.
+	WorkflowType string `json:"workflowType,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WebPath) MarshalJSON() ([]byte, error) {
+	type NoMethod WebPath
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7342,6 +8060,1973 @@ func (c *ProjectsLocationsGlobalOperationsListCall) Do(opts ...googleapi.CallOpt
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsGlobalOperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsNetworkMonitoringProvidersCreateCall struct {
+	s                         *Service
+	parent                    string
+	networkmonitoringprovider *NetworkMonitoringProvider
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Create: Creates a NetworkMonitoringProvider resource.
+//
+//   - parent: Parent value for CreateNetworkMonitoringProviderRequest. Format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsNetworkMonitoringProvidersService) Create(parent string, networkmonitoringprovider *NetworkMonitoringProvider) *ProjectsLocationsNetworkMonitoringProvidersCreateCall {
+	c := &ProjectsLocationsNetworkMonitoringProvidersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.networkmonitoringprovider = networkmonitoringprovider
+	return c
+}
+
+// NetworkMonitoringProviderId sets the optional parameter
+// "networkMonitoringProviderId": Required. The ID to use for the
+// NetworkMonitoringProvider resource, which will become the final component of
+// the NetworkMonitoringProvider resource's name.
+func (c *ProjectsLocationsNetworkMonitoringProvidersCreateCall) NetworkMonitoringProviderId(networkMonitoringProviderId string) *ProjectsLocationsNetworkMonitoringProvidersCreateCall {
+	c.urlParams_.Set("networkMonitoringProviderId", networkMonitoringProviderId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNetworkMonitoringProvidersCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkMonitoringProvidersCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNetworkMonitoringProvidersCreateCall) Context(ctx context.Context) *ProjectsLocationsNetworkMonitoringProvidersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNetworkMonitoringProvidersCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.networkmonitoringprovider)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/networkMonitoringProviders")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkmanagement.projects.locations.networkMonitoringProviders.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsNetworkMonitoringProvidersCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsNetworkMonitoringProvidersDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a NetworkMonitoringProvider resource and all of its child
+// resources.
+//
+//   - name: Name of the resource. Format:
+//     projects/{project}/locations/{location}/networkMonitoringProviders/{network
+//     _monitoring_provider}.
+func (r *ProjectsLocationsNetworkMonitoringProvidersService) Delete(name string) *ProjectsLocationsNetworkMonitoringProvidersDeleteCall {
+	c := &ProjectsLocationsNetworkMonitoringProvidersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Force sets the optional parameter "force": If set to true, any nested
+// MonitoringPoints, NetworkPaths and WebPaths resources from this
+// NetworkMonitoringProvider will also be deleted. Otherwise, the request will
+// only work if there are no nested resources.
+func (c *ProjectsLocationsNetworkMonitoringProvidersDeleteCall) Force(force bool) *ProjectsLocationsNetworkMonitoringProvidersDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNetworkMonitoringProvidersDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkMonitoringProvidersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNetworkMonitoringProvidersDeleteCall) Context(ctx context.Context) *ProjectsLocationsNetworkMonitoringProvidersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNetworkMonitoringProvidersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkmanagement.projects.locations.networkMonitoringProviders.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsNetworkMonitoringProvidersDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsNetworkMonitoringProvidersGenerateMonitoringPointConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GenerateMonitoringPointConfig: Generates Monitoring Point configuration of a
+// NetworkMonitoringProvider resource.
+//
+//   - name: Name of the resource. Format:
+//     projects/{project}/locations/{location}/networkMonitoringProviders/{network
+//     _monitoring_provider}.
+func (r *ProjectsLocationsNetworkMonitoringProvidersService) GenerateMonitoringPointConfig(name string) *ProjectsLocationsNetworkMonitoringProvidersGenerateMonitoringPointConfigCall {
+	c := &ProjectsLocationsNetworkMonitoringProvidersGenerateMonitoringPointConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNetworkMonitoringProvidersGenerateMonitoringPointConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkMonitoringProvidersGenerateMonitoringPointConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersGenerateMonitoringPointConfigCall) IfNoneMatch(entityTag string) *ProjectsLocationsNetworkMonitoringProvidersGenerateMonitoringPointConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNetworkMonitoringProvidersGenerateMonitoringPointConfigCall) Context(ctx context.Context) *ProjectsLocationsNetworkMonitoringProvidersGenerateMonitoringPointConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersGenerateMonitoringPointConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNetworkMonitoringProvidersGenerateMonitoringPointConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:generateMonitoringPointConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.generateMonitoringPointConfig", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkmanagement.projects.locations.networkMonitoringProviders.generateMonitoringPointConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenerateMonitoringPointConfigResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNetworkMonitoringProvidersGenerateMonitoringPointConfigCall) Do(opts ...googleapi.CallOption) (*GenerateMonitoringPointConfigResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenerateMonitoringPointConfigResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.generateMonitoringPointConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsNetworkMonitoringProvidersGenerateProviderAccessTokenCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GenerateProviderAccessToken: Generates a provider access token for a given
+// Google access token. Provider access token is a short-lived token that is
+// used to access resources in the provider's platform.
+//
+//   - name: Name of the resource. Format:
+//     projects/{project}/locations/{location}/networkMonitoringProviders/{network
+//     _monitoring_provider}.
+func (r *ProjectsLocationsNetworkMonitoringProvidersService) GenerateProviderAccessToken(name string) *ProjectsLocationsNetworkMonitoringProvidersGenerateProviderAccessTokenCall {
+	c := &ProjectsLocationsNetworkMonitoringProvidersGenerateProviderAccessTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// GcpAccessToken sets the optional parameter "gcpAccessToken": Required.
+// Google access token.
+func (c *ProjectsLocationsNetworkMonitoringProvidersGenerateProviderAccessTokenCall) GcpAccessToken(gcpAccessToken string) *ProjectsLocationsNetworkMonitoringProvidersGenerateProviderAccessTokenCall {
+	c.urlParams_.Set("gcpAccessToken", gcpAccessToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNetworkMonitoringProvidersGenerateProviderAccessTokenCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkMonitoringProvidersGenerateProviderAccessTokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersGenerateProviderAccessTokenCall) IfNoneMatch(entityTag string) *ProjectsLocationsNetworkMonitoringProvidersGenerateProviderAccessTokenCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNetworkMonitoringProvidersGenerateProviderAccessTokenCall) Context(ctx context.Context) *ProjectsLocationsNetworkMonitoringProvidersGenerateProviderAccessTokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersGenerateProviderAccessTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNetworkMonitoringProvidersGenerateProviderAccessTokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:generateProviderAccessToken")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.generateProviderAccessToken", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkmanagement.projects.locations.networkMonitoringProviders.generateProviderAccessToken" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenerateProviderAccessTokenResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNetworkMonitoringProvidersGenerateProviderAccessTokenCall) Do(opts ...googleapi.CallOption) (*GenerateProviderAccessTokenResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenerateProviderAccessTokenResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.generateProviderAccessToken", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsNetworkMonitoringProvidersGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the NetworkMonitoringProvider resource.
+//
+//   - name: Name of the resource. Format:
+//     `projects/{project}/locations/{location}/networkMonitoringProviders/{networ
+//     k_monitoring_provider}`.
+func (r *ProjectsLocationsNetworkMonitoringProvidersService) Get(name string) *ProjectsLocationsNetworkMonitoringProvidersGetCall {
+	c := &ProjectsLocationsNetworkMonitoringProvidersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNetworkMonitoringProvidersGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkMonitoringProvidersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsNetworkMonitoringProvidersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNetworkMonitoringProvidersGetCall) Context(ctx context.Context) *ProjectsLocationsNetworkMonitoringProvidersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNetworkMonitoringProvidersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkmanagement.projects.locations.networkMonitoringProviders.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *NetworkMonitoringProvider.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNetworkMonitoringProvidersGetCall) Do(opts ...googleapi.CallOption) (*NetworkMonitoringProvider, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &NetworkMonitoringProvider{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsNetworkMonitoringProvidersListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists NetworkMonitoringProviders for a given project and location.
+//
+//   - parent: Parent value for ListNetworkMonitoringProvidersRequest. Format:
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsNetworkMonitoringProvidersService) List(parent string) *ProjectsLocationsNetworkMonitoringProvidersListCall {
+	c := &ProjectsLocationsNetworkMonitoringProvidersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// monitoring points to return. The service may return fewer than this value.
+// If unspecified, at most 20 monitoring points will be returned. The maximum
+// value is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsNetworkMonitoringProvidersListCall) PageSize(pageSize int64) *ProjectsLocationsNetworkMonitoringProvidersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListMonitoringPoints` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListMonitoringPoints` must match the call that provided the page token.
+func (c *ProjectsLocationsNetworkMonitoringProvidersListCall) PageToken(pageToken string) *ProjectsLocationsNetworkMonitoringProvidersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNetworkMonitoringProvidersListCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkMonitoringProvidersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersListCall) IfNoneMatch(entityTag string) *ProjectsLocationsNetworkMonitoringProvidersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNetworkMonitoringProvidersListCall) Context(ctx context.Context) *ProjectsLocationsNetworkMonitoringProvidersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNetworkMonitoringProvidersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/networkMonitoringProviders")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkmanagement.projects.locations.networkMonitoringProviders.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListNetworkMonitoringProvidersResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNetworkMonitoringProvidersListCall) Do(opts ...googleapi.CallOption) (*ListNetworkMonitoringProvidersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListNetworkMonitoringProvidersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsNetworkMonitoringProvidersListCall) Pages(ctx context.Context, f func(*ListNetworkMonitoringProvidersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// DownloadInstallScript: Downloads an install script for MonitoringPoints for
+// a given network monitoring provider.
+//
+//   - parent: Parent value for DownloadInstallScriptRequest. Format:
+//     projects/{project}/locations/{location}/networkMonitoringProviders/{network
+//     _monitoring_provider}.
+func (r *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsService) DownloadInstallScript(parent string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall {
+	c := &ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Password sets the optional parameter "_password": Password for logging into
+// the MonitoringPoint.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) Password(Password string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall {
+	c.urlParams_.Set("_password", Password)
+	return c
+}
+
+// Hostname sets the optional parameter "hostname": Required. The hostname of
+// the MonitoringPoint, e.g. "test-vm"
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) Hostname(hostname string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall {
+	c.urlParams_.Set("hostname", hostname)
+	return c
+}
+
+// MonitoringPointType sets the optional parameter "monitoringPointType":
+// Required. The type of the monitoring point.
+//
+// Possible values:
+//
+//	"MONITORING_POINT_TYPE_UNSPECIFIED" - This value should not be used.
+//	"CONTAINER" - Monitoring Point that runs in a Docker container.
+//	"KVM" - Monitoring Point that runs in a Kernel-based Virtual Machine (KVM)
+//
+// hypervisor.
+//
+//	"VMWARE" - Monitoring Point that runs in a VMware hypervisor.
+//	"HELM" - Monitoring Point that runs on a K8S Helm.
+//	"GCE_VM" - Monitoring Point that runs as a startup script in a Compute
+//
+// Engine VM.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) MonitoringPointType(monitoringPointType string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall {
+	c.urlParams_.Set("monitoringPointType", monitoringPointType)
+	return c
+}
+
+// NtpServerAddress sets the optional parameter "ntpServerAddress": Network
+// Time Protocol a user can configure. If the user omits the field, the default
+// is either NTP servers provided in the DHCP lease or a set of well-known NTP
+// servers pre-configured on the monitoring point. This field can be an IP
+// address or FQDN.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) NtpServerAddress(ntpServerAddress string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall {
+	c.urlParams_.Set("ntpServerAddress", ntpServerAddress)
+	return c
+}
+
+// NtpServerSecondaryAddress sets the optional parameter
+// "ntpServerSecondaryAddress": Second NTP server.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) NtpServerSecondaryAddress(ntpServerSecondaryAddress string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall {
+	c.urlParams_.Set("ntpServerSecondaryAddress", ntpServerSecondaryAddress)
+	return c
+}
+
+// StaticIpAddressDnsServerAddress sets the optional parameter
+// "staticIpAddress.dnsServerAddress": Required. DNS server.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) StaticIpAddressDnsServerAddress(staticIpAddressDnsServerAddress string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall {
+	c.urlParams_.Set("staticIpAddress.dnsServerAddress", staticIpAddressDnsServerAddress)
+	return c
+}
+
+// StaticIpAddressDnsServerSecondaryAddress sets the optional parameter
+// "staticIpAddress.dnsServerSecondaryAddress": Second DNS server.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) StaticIpAddressDnsServerSecondaryAddress(staticIpAddressDnsServerSecondaryAddress string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall {
+	c.urlParams_.Set("staticIpAddress.dnsServerSecondaryAddress", staticIpAddressDnsServerSecondaryAddress)
+	return c
+}
+
+// StaticIpAddressDomain sets the optional parameter "staticIpAddress.domain":
+// Domain name of the MonitoringPoint.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) StaticIpAddressDomain(staticIpAddressDomain string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall {
+	c.urlParams_.Set("staticIpAddress.domain", staticIpAddressDomain)
+	return c
+}
+
+// StaticIpAddressGatewayAddress sets the optional parameter
+// "staticIpAddress.gatewayAddress": Required. Gateway IP address. Example:
+// "100.80.40.1".
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) StaticIpAddressGatewayAddress(staticIpAddressGatewayAddress string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall {
+	c.urlParams_.Set("staticIpAddress.gatewayAddress", staticIpAddressGatewayAddress)
+	return c
+}
+
+// StaticIpAddressIpAddress sets the optional parameter
+// "staticIpAddress.ipAddress": Required. IP address of the MonitoringPoint.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) StaticIpAddressIpAddress(staticIpAddressIpAddress string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall {
+	c.urlParams_.Set("staticIpAddress.ipAddress", staticIpAddressIpAddress)
+	return c
+}
+
+// StaticIpAddressNetmask sets the optional parameter
+// "staticIpAddress.netmask": Networkmask and CIDR range. Example:
+// "255.255.255.0/24"
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) StaticIpAddressNetmask(staticIpAddressNetmask string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall {
+	c.urlParams_.Set("staticIpAddress.netmask", staticIpAddressNetmask)
+	return c
+}
+
+// TimeZoneId sets the optional parameter "timeZone.id": IANA Time Zone
+// Database time zone. For example "America/New_York".
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) TimeZoneId(timeZoneId string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall {
+	c.urlParams_.Set("timeZone.id", timeZoneId)
+	return c
+}
+
+// TimeZoneVersion sets the optional parameter "timeZone.version": IANA Time
+// Zone Database version number. For example "2019a".
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) TimeZoneVersion(timeZoneVersion string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall {
+	c.urlParams_.Set("timeZone.version", timeZoneVersion)
+	return c
+}
+
+// UseDhcp sets the optional parameter "useDhcp": Dynamic Host Configuration
+// Protocol, is a network management protocol that automatically assigns IP
+// addresses and other network configuration parameters to devices connecting
+// to a network.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) UseDhcp(useDhcp bool) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall {
+	c.urlParams_.Set("useDhcp", fmt.Sprint(useDhcp))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) IfNoneMatch(entityTag string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) Context(ctx context.Context) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/monitoringPoints:downloadInstallScript")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.monitoringPoints.downloadInstallScript", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkmanagement.projects.locations.networkMonitoringProviders.monitoringPoints.downloadInstallScript" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.monitoringPoints.downloadInstallScript", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadRecreateInstallScriptCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// DownloadRecreateInstallScript: Downloads an install script for a specific
+// Container MonitoringPoint.
+//
+//   - name: Resource name of the MonitoringPoint. Format:
+//     projects/{project}/locations/{location}/networkMonitoringProviders/{network
+//     _monitoring_provider}/monitoringPoints/{monitoring_point}.
+func (r *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsService) DownloadRecreateInstallScript(name string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadRecreateInstallScriptCall {
+	c := &ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadRecreateInstallScriptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Hostname sets the optional parameter "hostname": The hostname of the
+// MonitoringPoint, e.g. "test-vm"
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadRecreateInstallScriptCall) Hostname(hostname string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadRecreateInstallScriptCall {
+	c.urlParams_.Set("hostname", hostname)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadRecreateInstallScriptCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadRecreateInstallScriptCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadRecreateInstallScriptCall) IfNoneMatch(entityTag string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadRecreateInstallScriptCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadRecreateInstallScriptCall) Context(ctx context.Context) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadRecreateInstallScriptCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadRecreateInstallScriptCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadRecreateInstallScriptCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:downloadRecreateInstallScript")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.monitoringPoints.downloadRecreateInstallScript", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkmanagement.projects.locations.networkMonitoringProviders.monitoringPoints.downloadRecreateInstallScript" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadRecreateInstallScriptCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.monitoringPoints.downloadRecreateInstallScript", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadServerConnectConfigCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// DownloadServerConnectConfig: Downloads the server connect configuration for
+// a given network monitoring provider.
+//
+//   - parent: Parent value for DownloadServerConnectConfigRequest. Format:
+//     projects/{project}/locations/{location}/networkMonitoringProviders/{network
+//     _monitoring_provider}.
+func (r *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsService) DownloadServerConnectConfig(parent string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadServerConnectConfigCall {
+	c := &ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadServerConnectConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadServerConnectConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadServerConnectConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadServerConnectConfigCall) IfNoneMatch(entityTag string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadServerConnectConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadServerConnectConfigCall) Context(ctx context.Context) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadServerConnectConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadServerConnectConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadServerConnectConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/monitoringPoints:downloadServerConnectConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.monitoringPoints.downloadServerConnectConfig", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkmanagement.projects.locations.networkMonitoringProviders.monitoringPoints.downloadServerConnectConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadServerConnectConfigCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.monitoringPoints.downloadServerConnectConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the MonitoringPoint resource.
+//
+//   - name: Name of the resource. Format:
+//     projects/{project}/locations/{location}/networkMonitoringProviders/{network
+//     _monitoring_provider}/monitoringPoints/{monitoring_point}.
+func (r *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsService) Get(name string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsGetCall {
+	c := &ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsGetCall) Context(ctx context.Context) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.monitoringPoints.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkmanagement.projects.locations.networkMonitoringProviders.monitoringPoints.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *MonitoringPoint.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsGetCall) Do(opts ...googleapi.CallOption) (*MonitoringPoint, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &MonitoringPoint{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.monitoringPoints.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists MonitoringPoints for a given network monitoring provider.
+//
+//   - parent: Parent value for ListMonitoringPointsRequest. Format:
+//     projects/{project}/locations/{location}/networkMonitoringProviders/{network
+//     _monitoring_provider}.
+func (r *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsService) List(parent string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsListCall {
+	c := &ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// monitoring points to return. The service may return fewer than this value.
+// If unspecified, at most 20 monitoring points will be returned. The maximum
+// value is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsListCall) PageSize(pageSize int64) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListMonitoringPoints` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListMonitoringPoints` must match the call that provided the page token.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsListCall) PageToken(pageToken string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsListCall) Context(ctx context.Context) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/monitoringPoints")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.monitoringPoints.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkmanagement.projects.locations.networkMonitoringProviders.monitoringPoints.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListMonitoringPointsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsListCall) Do(opts ...googleapi.CallOption) (*ListMonitoringPointsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListMonitoringPointsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.monitoringPoints.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsListCall) Pages(ctx context.Context, f func(*ListMonitoringPointsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsNetworkMonitoringProvidersNetworkPathsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the NetworkPath resource.
+//
+//   - name: Name of the resource. Format:
+//     projects/{project}/locations/{location}/networkMonitoringProviders/{network
+//     _monitoring_provider}/networkPaths/{network_path}.
+func (r *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsService) Get(name string) *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsGetCall {
+	c := &ProjectsLocationsNetworkMonitoringProvidersNetworkPathsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsGetCall) Context(ctx context.Context) *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.networkPaths.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkmanagement.projects.locations.networkMonitoringProviders.networkPaths.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *NetworkPath.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsGetCall) Do(opts ...googleapi.CallOption) (*NetworkPath, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &NetworkPath{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.networkPaths.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsNetworkMonitoringProvidersNetworkPathsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists NetworkPaths for a given network monitoring provider.
+//
+//   - parent: Parent value for ListNetworkPathsRequest. Format:
+//     projects/{project}/locations/{location}/networkMonitoringProviders/{network
+//     _monitoring_provider}.
+func (r *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsService) List(parent string) *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsListCall {
+	c := &ProjectsLocationsNetworkMonitoringProvidersNetworkPathsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// network paths to return. The service may return fewer than this value. If
+// unspecified, at most 20 network pathswill be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsListCall) PageSize(pageSize int64) *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListNetworkPaths` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListNetworkPaths` must match the call that provided the page token.
+func (c *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsListCall) PageToken(pageToken string) *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsListCall) Context(ctx context.Context) *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/networkPaths")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.networkPaths.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkmanagement.projects.locations.networkMonitoringProviders.networkPaths.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListNetworkPathsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsListCall) Do(opts ...googleapi.CallOption) (*ListNetworkPathsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListNetworkPathsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.networkPaths.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsNetworkMonitoringProvidersNetworkPathsListCall) Pages(ctx context.Context, f func(*ListNetworkPathsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsNetworkMonitoringProvidersWebPathsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the WebPath resource.
+//
+//   - name: Name of the resource.. Format:
+//     projects/{project}/locations/{location}/networkMonitoringProviders/{network
+//     _monitoring_provider}/webPaths/{web_path}.
+func (r *ProjectsLocationsNetworkMonitoringProvidersWebPathsService) Get(name string) *ProjectsLocationsNetworkMonitoringProvidersWebPathsGetCall {
+	c := &ProjectsLocationsNetworkMonitoringProvidersWebPathsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNetworkMonitoringProvidersWebPathsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkMonitoringProvidersWebPathsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersWebPathsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsNetworkMonitoringProvidersWebPathsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNetworkMonitoringProvidersWebPathsGetCall) Context(ctx context.Context) *ProjectsLocationsNetworkMonitoringProvidersWebPathsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersWebPathsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNetworkMonitoringProvidersWebPathsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.webPaths.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkmanagement.projects.locations.networkMonitoringProviders.webPaths.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *WebPath.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsNetworkMonitoringProvidersWebPathsGetCall) Do(opts ...googleapi.CallOption) (*WebPath, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &WebPath{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.webPaths.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsNetworkMonitoringProvidersWebPathsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists WebPaths for a given network monitoring provider.
+//
+//   - parent: Parent value for ListWebPathsRequest. Format:
+//     projects/{project}/locations/{location}/networkMonitoringProviders/{network
+//     _monitoring_provider}.
+func (r *ProjectsLocationsNetworkMonitoringProvidersWebPathsService) List(parent string) *ProjectsLocationsNetworkMonitoringProvidersWebPathsListCall {
+	c := &ProjectsLocationsNetworkMonitoringProvidersWebPathsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of web
+// paths to return. The service may return fewer than this value. If
+// unspecified, at most 20 web paths will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsNetworkMonitoringProvidersWebPathsListCall) PageSize(pageSize int64) *ProjectsLocationsNetworkMonitoringProvidersWebPathsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListWebPaths` call. Provide this to retrieve the subsequent
+// page. When paginating, all other parameters provided to `ListWebPaths` must
+// match the call that provided the page token.
+func (c *ProjectsLocationsNetworkMonitoringProvidersWebPathsListCall) PageToken(pageToken string) *ProjectsLocationsNetworkMonitoringProvidersWebPathsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNetworkMonitoringProvidersWebPathsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkMonitoringProvidersWebPathsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersWebPathsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsNetworkMonitoringProvidersWebPathsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNetworkMonitoringProvidersWebPathsListCall) Context(ctx context.Context) *ProjectsLocationsNetworkMonitoringProvidersWebPathsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNetworkMonitoringProvidersWebPathsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNetworkMonitoringProvidersWebPathsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/webPaths")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.webPaths.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkmanagement.projects.locations.networkMonitoringProviders.webPaths.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListWebPathsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsNetworkMonitoringProvidersWebPathsListCall) Do(opts ...googleapi.CallOption) (*ListWebPathsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListWebPathsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.networkMonitoringProviders.webPaths.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsNetworkMonitoringProvidersWebPathsListCall) Pages(ctx context.Context, f func(*ListWebPathsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

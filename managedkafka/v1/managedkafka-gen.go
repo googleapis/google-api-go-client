@@ -2099,6 +2099,38 @@ func (s SchemaRegistry) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SchemaSubject: Subject defines the evolution scope of schemas as a holder of
+// schema versions.
+type SchemaSubject struct {
+	// Name: Identifier. The name of the subject. Structured like:
+	// `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/s
+	// ubjects/{subject}` or
+	// `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/c
+	// ontexts/{context}/subjects/{subject}` Subject name {subject} can contain the
+	// following: * Up to 255 UTF-8 bytes. * Allowed characters: letters (uppercase
+	// or lowercase), numbers, and the following special characters: `.`, `-`, `_`,
+	// `+`, `%`, and `~`.
+	Name string `json:"name,omitempty"`
+	// Versions: Optional. The versions of the subject.
+	Versions []string `json:"versions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SchemaSubject) MarshalJSON() ([]byte, error) {
+	type NoMethod SchemaSubject
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SchemaVersion: Version of a schema.
 type SchemaVersion struct {
 	// Id: Required. The schema ID.

@@ -346,6 +346,12 @@ func (s ItemRevisionStatus) MarshalJSON() ([]byte, error) {
 
 // PublishItemRequest: Request message for PublishItem.
 type PublishItemRequest struct {
+	// BlockOnWarnings: Optional. When set to true the request will fail if there
+	// are any warnings during validation and the details will be included in the
+	// error_details. Otherwise warnings are treated as non-blocking and will be
+	// ignored for validation but will be included in the response for inspection.
+	// Defaults to `false` if unset.
+	BlockOnWarnings bool `json:"blockOnWarnings,omitempty"`
 	// DeployInfos: Optional. Additional deploy information including the desired
 	// initial percentage rollout. Defaults to the current value saved in the
 	// developer dashboard if unset.
@@ -366,15 +372,15 @@ type PublishItemRequest struct {
 	// validate if the item qualifies and return a validation error if the item
 	// requires review. Defaults to `false` if unset.
 	SkipReview bool `json:"skipReview,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DeployInfos") to
+	// ForceSendFields is a list of field names (e.g. "BlockOnWarnings") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DeployInfos") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BlockOnWarnings") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -401,6 +407,9 @@ type PublishItemResponse struct {
 	//   "REJECTED" - The item has been rejected for publishing.
 	//   "CANCELLED" - The item submission has been cancelled.
 	State string `json:"state,omitempty"`
+	// WarningInfo: Output only. Non-blocking warnings encountered during the
+	// request.
+	WarningInfo *WarningsInfo `json:"warningInfo,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -497,6 +506,58 @@ type UploadItemPackageResponse struct {
 
 func (s UploadItemPackageResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UploadItemPackageResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Warning: Represents a single warning encountered during the request.
+type Warning struct {
+	// Description: A description of the warning. Developers should use this
+	// message to understand the warning and take appropriate action to resolve the
+	// issue.
+	Description string `json:"description,omitempty"`
+	// Reason: The reason for the warning. This is a constant value that identifies
+	// the proximate cause of the warning. This should be at most 63 characters and
+	// match a regular expression of `A-Z+[A-Z0-9]`, which represents
+	// UPPER_SNAKE_CASE.
+	Reason string `json:"reason,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Warning) MarshalJSON() ([]byte, error) {
+	type NoMethod Warning
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WarningsInfo: Message containing details on warnings encountered during
+// PublishItem.
+type WarningsInfo struct {
+	// Warnings: All warnings encountered during the request.
+	Warnings []*Warning `json:"warnings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Warnings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Warnings") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WarningsInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod WarningsInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

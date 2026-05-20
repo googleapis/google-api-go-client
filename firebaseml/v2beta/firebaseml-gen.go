@@ -3663,16 +3663,11 @@ type GoogleCloudAiplatformV1beta1ToolCodeExecution struct {
 
 // GoogleCloudAiplatformV1beta1ToolComputerUse: Tool to support computer use.
 type GoogleCloudAiplatformV1beta1ToolComputerUse struct {
-	// EnablePromptInjectionDetection: Optional. Enables the prompt injection
-	// detection check on computer-use request.
-	EnablePromptInjectionDetection bool `json:"enablePromptInjectionDetection,omitempty"`
 	// Environment: Required. The environment being operated.
 	//
 	// Possible values:
 	//   "ENVIRONMENT_UNSPECIFIED" - Defaults to browser.
 	//   "ENVIRONMENT_BROWSER" - Operates in a web browser.
-	//   "ENVIRONMENT_MOBILE" - Operates in a mobile environment.
-	//   "ENVIRONMENT_DESKTOP" - Operates in a desktop environment.
 	Environment string `json:"environment,omitempty"`
 	// ExcludedPredefinedFunctions: Optional. By default, predefined functions
 	// (https://cloud.google.com/vertex-ai/generative-ai/docs/computer-use#supported-actions)
@@ -3681,16 +3676,15 @@ type GoogleCloudAiplatformV1beta1ToolComputerUse struct {
 	// Using a more restricted / different action space. 2. Improving the
 	// definitions / instructions of predefined functions.
 	ExcludedPredefinedFunctions []string `json:"excludedPredefinedFunctions,omitempty"`
-	// ForceSendFields is a list of field names (e.g.
-	// "EnablePromptInjectionDetection") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted from
-	// API requests. See
+	// ForceSendFields is a list of field names (e.g. "Environment") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EnablePromptInjectionDetection")
-	// to include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Environment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

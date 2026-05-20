@@ -1539,6 +1539,8 @@ type GoogleMapsPlacesV1Place struct {
 	Takeout bool `json:"takeout,omitempty"`
 	// TimeZone: IANA Time Zone Database time zone. For example "America/New_York".
 	TimeZone *GoogleTypeTimeZone `json:"timeZone,omitempty"`
+	// TransitStation: The transit station information for the place.
+	TransitStation *GoogleMapsPlacesV1TransitStation `json:"transitStation,omitempty"`
 	// Types: A set of type tags for this result. For example, "political" and
 	// "locality". For the complete list of possible values, see Table A and Table
 	// B at
@@ -3037,6 +3039,207 @@ type GoogleMapsPlacesV1SearchTextResponse struct {
 
 func (s GoogleMapsPlacesV1SearchTextResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1SearchTextResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1TransitAgency: Represents a transit agency.
+type GoogleMapsPlacesV1TransitAgency struct {
+	// DisplayName: Agency name (e.g. "VTA") in the requested language.
+	DisplayName *GoogleTypeLocalizedText `json:"displayName,omitempty"`
+	// FareUrl: The URL of the agency's fare details page.
+	FareUrl string `json:"fareUrl,omitempty"`
+	// Icon: Icon identifier for localized branded icon of a transit system (e.g.
+	// London Underground) which should be used instead of TransitLine.vehicle_icon
+	// in the UI.
+	Icon *GoogleMapsPlacesV1TransitIcon `json:"icon,omitempty"`
+	// Lines: The transit lines that are served by this agency.
+	Lines []*GoogleMapsPlacesV1TransitLine `json:"lines,omitempty"`
+	// Url: The URL of the agency's homepage.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMapsPlacesV1TransitAgency) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1TransitAgency
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1TransitIcon: Icon for a transit line, vehicle, or agency.
+type GoogleMapsPlacesV1TransitIcon struct {
+	// NameIncluded: Whether the name is contained in the icon and there is no need
+	// to display it next to the icon.
+	NameIncluded bool `json:"nameIncluded,omitempty"`
+	// Url: The URL of the icon.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NameIncluded") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NameIncluded") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMapsPlacesV1TransitIcon) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1TransitIcon
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1TransitLine: Represents a single transit line.
+type GoogleMapsPlacesV1TransitLine struct {
+	// BackgroundColor: The background color of the labels for this transit line in
+	// #RRGGBB hex format, e.g. #909CE1. This color can also be used for drawing
+	// shapes for this transit line.
+	BackgroundColor string `json:"backgroundColor,omitempty"`
+	// DisplayName: The long name for this transit line (e.g. "Sunnydale local").
+	DisplayName *GoogleTypeLocalizedText `json:"displayName,omitempty"`
+	// Icon: Icon identifier for this particular line (e.g. subway lines in New
+	// York).
+	Icon *GoogleMapsPlacesV1TransitIcon `json:"icon,omitempty"`
+	// Id: The id of the transit line that can be used to uniquely identify the
+	// line among other transit lines in the same transit station. This identifier
+	// is not guaranteed to be stable across different responses.
+	Id string `json:"id,omitempty"`
+	// ShortDisplayName: The short name for this transit line (e.g. "S2").
+	ShortDisplayName *GoogleTypeLocalizedText `json:"shortDisplayName,omitempty"`
+	// TextColor: The text color of labels for this transit line in #RRGGBB hex
+	// format, e.g. #909CE1.
+	TextColor string `json:"textColor,omitempty"`
+	// Url: The URL of a webpage with details about this line.
+	Url string `json:"url,omitempty"`
+	// VehicleIcon: Icon identifier for this particular vehicle type.
+	VehicleIcon *GoogleMapsPlacesV1TransitIcon `json:"vehicleIcon,omitempty"`
+	// VehicleType: The type of vehicle using this line.
+	//
+	// Possible values:
+	//   "VEHICLE_TYPE_UNSPECIFIED" - Default value when vehicle type is not
+	// specified.
+	//   "RAIL" - Rail.
+	//   "METRO_RAIL" - Metro rail.
+	//   "SUBWAY" - Subway.
+	//   "TRAM" - Tram.
+	//   "MONORAIL" - Monorail.
+	//   "HEAVY_RAIL" - Heavy rail.
+	//   "COMMUTER_TRAIN" - Commuter train.
+	//   "HIGH_SPEED_TRAIN" - High speed train.
+	//   "LONG_DISTANCE_TRAIN" - Long distance train.
+	//   "BUS" - Bus.
+	//   "INTERCITY_BUS" - Intercity bus.
+	//   "TROLLEYBUS" - Trolleybus.
+	//   "SHARE_TAXI" - Share taxi.
+	//   "COACH" - Coach.
+	//   "FERRY" - Ferry.
+	//   "CABLE_CAR" - Cable car.
+	//   "GONDOLA_LIFT" - Gondola lift.
+	//   "FUNICULAR" - Funicular.
+	//   "SPECIAL" - Special.
+	//   "HORSE_CARRIAGE" - Horse carriage.
+	//   "AIRPLANE" - Airplane.
+	VehicleType string `json:"vehicleType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackgroundColor") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackgroundColor") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMapsPlacesV1TransitLine) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1TransitLine
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1TransitStation: Represents transit-specific information
+// for a place.
+type GoogleMapsPlacesV1TransitStation struct {
+	// Agencies: The transit agencies that serve this station.
+	Agencies []*GoogleMapsPlacesV1TransitAgency `json:"agencies,omitempty"`
+	// DisplayName: The name of the station in the local language.
+	DisplayName *GoogleTypeLocalizedText `json:"displayName,omitempty"`
+	// Stops: Transit stops at this station.
+	Stops []*GoogleMapsPlacesV1TransitStop `json:"stops,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Agencies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Agencies") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMapsPlacesV1TransitStation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1TransitStation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1TransitStop: Represents a transit stop within a station.
+// This is a specific location where passengers board and alight transit
+// vehicles, such as a platform or bus bay. This is distinct from a
+// `Departure`, which is an event of a vehicle leaving a stop at a specific
+// time.
+type GoogleMapsPlacesV1TransitStop struct {
+	// DisplayName: The name of the stop.
+	DisplayName *GoogleTypeLocalizedText `json:"displayName,omitempty"`
+	// Id: The id of the transit stop that can be used to uniquely identify the
+	// stop among other transit stops in the same transit station. This identifier
+	// is not guaranteed to be stable across different responses.
+	Id string `json:"id,omitempty"`
+	// Location: The stop's location.
+	Location *GoogleTypeLatLng `json:"location,omitempty"`
+	// PlatformCode: The platform code represented by this stop. It can be
+	// formatted in any way. (eg: "2", "Platform 2", "2-4", or "1x").
+	PlatformCode *GoogleTypeLocalizedText `json:"platformCode,omitempty"`
+	// SignageText: The verbatim text written on the signboard for this platform,
+	// e.g. "Towards Central" or "East side & Brooklyn". When `platform_code` is
+	// absent, this field is potentially the only identifier for the platform;
+	// however, both `platform_code` and `signage_text` may be set simultaneously.
+	SignageText *GoogleTypeLocalizedText `json:"signageText,omitempty"`
+	// StopCode: Human readable identifier of the stop, used by transit agencies to
+	// distinguish stops with the same name.
+	StopCode *GoogleTypeLocalizedText `json:"stopCode,omitempty"`
+	// WheelchairAccessibleEntrance: Wheelchair accessibility of this stop. This
+	// field indicates whether there is an accessible path from outside the station
+	// to the stop. It does not indicate whether it is possible to board a vehicle
+	// from the stop.
+	WheelchairAccessibleEntrance bool `json:"wheelchairAccessibleEntrance,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMapsPlacesV1TransitStop) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1TransitStop
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

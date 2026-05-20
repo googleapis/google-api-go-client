@@ -777,7 +777,10 @@ type GoogleFirebaseAppdistroV1AabInfo struct {
 	//   "ADHOC_SHARING_KEY_NOT_GENERATED" - The ad-hoc sharing key has not been
 	// generated for this app.
 	//   "ADHOC_SHARING_KEY_NOT_REGISTERED" - The ad-hoc sharing key is not yet
-	// registered in ADI for this app.
+	// registered in Android Developer Verification for this app.
+	//   "PLAY_ANDROID_DEVELOPER_CONSOLE_ACCOUNT_NOT_FOUND" - The linked Play
+	// developer account was not found or is not fully set up in Android Developer
+	// Console.
 	IntegrationState string `json:"integrationState,omitempty"`
 	// Name: The name of the `AabInfo` resource. Format:
 	// `projects/{project_number}/apps/{app}/aabInfo`

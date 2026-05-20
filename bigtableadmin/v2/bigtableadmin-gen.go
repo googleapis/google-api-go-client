@@ -563,8 +563,8 @@ type AutomatedBackupPolicy struct {
 	// Locations: Optional. A list of Cloud Bigtable zones where automated backups
 	// are allowed to be created. If empty, automated backups will be created in
 	// all zones of the instance. Locations are in the format
-	// `projects/{project}/locations/{zone}`. This field can only set for tables in
-	// Enterprise Plus instances.
+	// `projects/{project}/locations/{zone}`. You can set this field only for
+	// tables in Enterprise Plus instances.
 	Locations []string `json:"locations,omitempty"`
 	// RetentionPeriod: Required. How long the automated backups should be
 	// retained. Values must be at least 3 days and at most 90 days.
@@ -3963,7 +3963,7 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ProtoSchema: Represents a protobuf schema.
+// ProtoSchema: Represents a collection of protobuf schemas.
 type ProtoSchema struct {
 	// ProtoDescriptors: Required. Contains a protobuf-serialized
 	// google.protobuf.FileDescriptorSet

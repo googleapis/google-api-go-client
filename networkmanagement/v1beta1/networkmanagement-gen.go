@@ -933,6 +933,10 @@ type DeliverInfo struct {
 	//   "REDIS_INSTANCE" - Target is a Redis Instance.
 	//   "REDIS_CLUSTER" - Target is a Redis Cluster.
 	//   "GKE_POD" - Target is a GKE Pod.
+	//   "DMS_PRIVATE_CONNECTION" - Target is a DMS Private Connection. Used only
+	// for return traces.
+	//   "DATASTREAM_PRIVATE_CONNECTION" - Target is a Datastream Private
+	// Connection. Used only for return traces.
 	Target string `json:"target,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GoogleServiceType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1090,6 +1094,10 @@ type DropInfo struct {
 	// Engine Service.
 	//   "DROPPED_INSIDE_CLOUD_SQL_SERVICE" - Packet was dropped inside Cloud SQL
 	// Service.
+	//   "DROPPED_INSIDE_DMS_PRIVATE_CONNECTION" - Packet was dropped inside DMS
+	// Private Connection.
+	//   "DROPPED_INSIDE_DATASTREAM_PRIVATE_CONNECTION" - Packet was dropped inside
+	// Datastream Private Connection.
 	//   "GOOGLE_MANAGED_SERVICE_NO_PEERING" - Packet was dropped because there is
 	// no peering between the originating network and the Google Managed Services
 	// Network.

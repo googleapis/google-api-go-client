@@ -519,7 +519,7 @@ type Co2Emissions struct {
 	//
 	// Possible values:
 	//   "UNIT_UNSPECIFIED" - Unspecified unit.
-	//   "GPERKM" - Grams per km.
+	//   "GPERKM" - Grams per kilometer.
 	Unit string `json:"unit,omitempty"`
 	// Value: The co2 emission value.
 	Value int64 `json:"value,omitempty,string"`
@@ -657,7 +657,7 @@ type EnergyConsumption struct {
 	//
 	// Possible values:
 	//   "UNIT_UNSPECIFIED" - Unspecified unit.
-	//   "KWHPER100KM" - Kilowatt hours per 100 km.
+	//   "KWHPER100KM" - Kilowatt hours per 100 kilometers.
 	Unit string `json:"unit,omitempty"`
 	// Value: The energy consumption value.
 	Value float64 `json:"value,omitempty"`
@@ -727,8 +727,8 @@ type FuelConsumption struct {
 	//
 	// Possible values:
 	//   "UNIT_UNSPECIFIED" - Unspecified unit.
-	//   "LPER100KM" - Liter per 100 km.
-	//   "KGPER100KM" - Kilograms per 100 km.
+	//   "LPER100KM" - Liter per 100 kilometers.
+	//   "KGPER100KM" - Kilograms per 100 kilometers.
 	Unit string `json:"unit,omitempty"`
 	// Value: The fuel consumption value.
 	Value float64 `json:"value,omitempty"`
@@ -1390,6 +1390,12 @@ type ProductAttributes struct {
 	// information, see Display ads attribute
 	// (https://support.google.com/merchants/answer/6069387).
 	DisplayAdsValue float64 `json:"displayAdsValue,omitempty"`
+	// DocumentLinks: Optional. Contains a list of PDF document URLs
+	// (https://support.google.com/merchants/answer/17084656) for the product.
+	// Examples are training manuals, user guides, assembly instructions, package
+	// inserts, etc. Must start with "http://" or "https://"), ASCII characters
+	// only, and RFC 3986 compliant.
+	DocumentLinks []string `json:"documentLinks,omitempty"`
 	// ElectricRange: The electric range
 	// (https://support.google.com/google-ads/answer/15162232) of the vehicle in
 	// miles/kms.
@@ -1571,6 +1577,13 @@ type ProductAttributes struct {
 	IsBundle bool `json:"isBundle,omitempty"`
 	// ItemGroupId: Shared identifier for all variants of the same product.
 	ItemGroupId string `json:"itemGroupId,omitempty"`
+	// ItemGroupTitle: Optional. Represents the product group title
+	// (https://support.google.com/merchants/answer/17085146) to which this variant
+	// product belongs. This can be used along with the item group id
+	// (https://support.google.com/merchants/answer/6324507) attribute. It lets you
+	// perform better grouping of variant products, and helps identifying common
+	// product characteristics more efficiently.
+	ItemGroupTitle string `json:"itemGroupTitle,omitempty"`
 	// LifestyleImageLinks: Additional URLs of lifestyle images of the item, used
 	// to explicitly identify images that showcase your item in a real-world
 	// context. See the Help Center article
@@ -1713,6 +1726,10 @@ type ProductAttributes struct {
 	//   "MULTI_WEEK" - Indicates that the product will be shipped to a store for a
 	// customer to pick up in one week or more.
 	PickupSla string `json:"pickupSla,omitempty"`
+	// PopularityRank: Optional. Indicates the popularity
+	// (https://support.google.com/merchants/answer/17085297) of the product in a
+	// merchant's inventory. Using a scale of 0.0 (lowest) to 100.0 (highest).
+	PopularityRank float64 `json:"popularityRank,omitempty"`
 	// Price: Price of the item.
 	Price *Price `json:"price,omitempty"`
 	// ProductDetails: Technical specification or additional product details.
@@ -1738,6 +1755,15 @@ type ProductAttributes struct {
 	ProductWidth *ProductDimension `json:"productWidth,omitempty"`
 	// PromotionIds: The unique ID of a promotion.
 	PromotionIds []string `json:"promotionIds,omitempty"`
+	// QuestionsAndAnswers: Optional. Contains merchant authored questions and
+	// answers (https://support.google.com/merchants/answer/17085211) about the
+	// product. Max 30 question and answer pairs. Max 5000 characters total. Each
+	// question can have max 1000 characters. Each answer can have max 1000
+	// characters.
+	QuestionsAndAnswers []*QuestionAndAnswer `json:"questionsAndAnswers,omitempty"`
+	// RelatedProducts: Optional. Specifies how other products are related
+	// (https://support.google.com/merchants/answer/17085213) to this product.
+	RelatedProducts []*RelatedProduct `json:"relatedProducts,omitempty"`
 	// ReturnPolicyLabel: The return label of the product, used to group products
 	// in account-level return policies. Max. 100 characters. For more information,
 	// see Return policy label
@@ -1836,6 +1862,9 @@ type ProductAttributes struct {
 	UnitPricingBaseMeasure *UnitPricingBaseMeasure `json:"unitPricingBaseMeasure,omitempty"`
 	// UnitPricingMeasure: The measure and dimension of an item.
 	UnitPricingMeasure *UnitPricingMeasure `json:"unitPricingMeasure,omitempty"`
+	// VariantOptions: Optional. Contains a list of additional variants
+	// (https://support.google.com/merchants/answer/17085214) for the product.
+	VariantOptions []*VariantOption `json:"variantOptions,omitempty"`
 	// VehicleAllInPrice: The all-in advertised price for a vehicle, which includes
 	// costs for the following – any accessories attached to the vehicle,
 	// environmental levies, extra warranty, fuel, freight, pre-delivery inspection
@@ -1913,6 +1942,7 @@ func (s *ProductAttributes) UnmarshalJSON(data []byte) error {
 	type NoMethod ProductAttributes
 	var s1 struct {
 		DisplayAdsValue gensupport.JSONFloat64 `json:"displayAdsValue"`
+		PopularityRank  gensupport.JSONFloat64 `json:"popularityRank"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -1920,6 +1950,7 @@ func (s *ProductAttributes) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.DisplayAdsValue = float64(s1.DisplayAdsValue)
+	s.PopularityRank = float64(s1.PopularityRank)
 	return nil
 }
 
@@ -2527,6 +2558,79 @@ func (s *ProductWeight) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// QuestionAndAnswer: The question and answer for the product.
+type QuestionAndAnswer struct {
+	// Answer: Required. The answer text.
+	Answer string `json:"answer,omitempty"`
+	// Question: Required. The question text.
+	Question string `json:"question,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Answer") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Answer") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s QuestionAndAnswer) MarshalJSON() ([]byte, error) {
+	type NoMethod QuestionAndAnswer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RelatedProduct: Specifies how other products are related to this product.
+type RelatedProduct struct {
+	// Id: Required. The identifier of the related product.
+	Id string `json:"id,omitempty"`
+	// IdType: Required. The type of the identifier of the related product. For
+	// example, GTIN (https://support.google.com/merchants/answer/6219078) or
+	// product ID (https://support.google.com/merchants/answer/6324405).
+	//
+	// Possible values:
+	//   "ID_TYPE_UNSPECIFIED" - The identifier type is unspecified.
+	//   "GTIN" - The identifier is a GTIN.
+	//   "ID" - The identifier is a product ID in the feed.
+	IdType string `json:"idType,omitempty"`
+	// RelationshipType: Required. The type of the relationship between this
+	// product and the related product.
+	//
+	// Possible values:
+	//   "RELATIONSHIP_TYPE_UNSPECIFIED" - The relationship type is unspecified.
+	//   "PART_OF_SET" - Part of a set of products that are often purchased
+	// together.
+	//   "REQUIRED_PART" - Part that is necessary for the product to function, for
+	// example a battery for a battery-operated lamp.
+	//   "OFTEN_BOUGHT_WITH" - A product that this product is often purchased
+	// together with, for example a phone case with a phone.
+	//   "SUBSTITUTE" - Product that this product can be substituted for. For
+	// example a printer comparable in function to another printer.
+	//   "DIFFERENT_BRAND" - An identical product sold under a different brand, for
+	// example a cheaper house brand.
+	//   "ACCESSORY" - An accessory to this product, for example a side table that
+	// matches the style of a couch.
+	RelationshipType string `json:"relationshipType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RelatedProduct) MarshalJSON() ([]byte, error) {
+	type NoMethod RelatedProduct
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Shipping: The Shipping of the product.
 type Shipping struct {
 	// Country: The CLDR territory code
@@ -2891,6 +2995,32 @@ func (s *UnitPricingMeasure) UnmarshalJSON(data []byte) error {
 	}
 	s.Value = float64(s1.Value)
 	return nil
+}
+
+// VariantOption: Additional product variants for the product.
+type VariantOption struct {
+	// Name: Required. The name of the variant. For example, "Color", "Memory",
+	// "Size", "Length"
+	Name string `json:"name,omitempty"`
+	// Value: Required. The value of the variant. For example, "Red", "128GB",
+	// "XL", "100cm"
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VariantOption) MarshalJSON() ([]byte, error) {
+	type NoMethod VariantOption
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Warranty: The warranty of the vehicle.

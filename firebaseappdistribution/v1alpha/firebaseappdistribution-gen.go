@@ -1245,6 +1245,9 @@ type GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse struct {
 	//   "APP_NOT_FOUND" - Happens if the Firebase app no longer exists by the time
 	// of extraction
 	//   "AAB_ADHOC_SHARING_KEY_NOT_REGISTERED"
+	//   "AAB_ANDROID_DEVELOPER_CONSOLE_ACCOUNT_NOT_FOUND" - A corresponding
+	// Android Developer Console account for this app's Play Console account was
+	// not found.
 	ErrorCode string `json:"errorCode,omitempty"`
 	// Message: Any additional context for the given upload status (e.g. error
 	// message) Meant to be displayed to the client

@@ -1237,7 +1237,7 @@
       }
     }
   },
-  "revision": "20260506",
+  "revision": "20260513",
   "rootUrl": "https://networkmanagement.googleapis.com/",
   "schemas": {
     "AbortInfo": {
@@ -1764,7 +1764,9 @@
             "GOOGLE_MANAGED_SERVICE",
             "REDIS_INSTANCE",
             "REDIS_CLUSTER",
-            "GKE_POD"
+            "GKE_POD",
+            "DMS_PRIVATE_CONNECTION",
+            "DATASTREAM_PRIVATE_CONNECTION"
           ],
           "enumDescriptions": [
             "Target not specified.",
@@ -1785,7 +1787,9 @@
             "Target is a Google-managed service. Used only for return traces.",
             "Target is a Redis Instance.",
             "Target is a Redis Cluster.",
-            "Target is a GKE Pod."
+            "Target is a GKE Pod.",
+            "Target is a DMS Private Connection. Used only for return traces.",
+            "Target is a Datastream Private Connection. Used only for return traces."
           ],
           "type": "string"
         }
@@ -1866,6 +1870,8 @@
             "CLOUD_SQL_INSTANCE_UNAUTHORIZED_ACCESS",
             "DROPPED_INSIDE_GKE_SERVICE",
             "DROPPED_INSIDE_CLOUD_SQL_SERVICE",
+            "DROPPED_INSIDE_DMS_PRIVATE_CONNECTION",
+            "DROPPED_INSIDE_DATASTREAM_PRIVATE_CONNECTION",
             "GOOGLE_MANAGED_SERVICE_NO_PEERING",
             "GOOGLE_MANAGED_SERVICE_NO_PSC_ENDPOINT",
             "GKE_PSC_ENDPOINT_MISSING",
@@ -1975,6 +1981,8 @@
             "Access to the Cloud SQL instance endpoint is not authorized. See [Authorizing with authorized networks](https://cloud.google.com/sql/docs/mysql/authorize-networks) for more details.",
             "Packet was dropped inside Google Kubernetes Engine Service.",
             "Packet was dropped inside Cloud SQL Service.",
+            "Packet was dropped inside DMS Private Connection.",
+            "Packet was dropped inside Datastream Private Connection.",
             "Packet was dropped because there is no peering between the originating network and the Google Managed Services Network.",
             "Packet was dropped because the Google-managed service uses Private Service Connect (PSC), but the PSC endpoint is not found in the project.",
             "Packet was dropped because the GKE cluster uses Private Service Connect (PSC), but the PSC endpoint is not found in the project.",

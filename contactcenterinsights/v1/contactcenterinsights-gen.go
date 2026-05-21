@@ -3541,6 +3541,8 @@ type GoogleCloudContactcenterinsightsV1ConversationQualityMetadataAgentInfo stru
 	DispositionCode string `json:"dispositionCode,omitempty"`
 	// EntrySubagentDisplayName: The entry subagent's display name.
 	EntrySubagentDisplayName string `json:"entrySubagentDisplayName,omitempty"`
+	// EntrySubagentId: The entry subagent's ID.
+	EntrySubagentId string `json:"entrySubagentId,omitempty"`
 	// Location: The agent's location.
 	Location string `json:"location,omitempty"`
 	// Team: A user-specified string representing the agent's team. Deprecated in
@@ -12256,6 +12258,8 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationQualityMetadataAgentInf
 	DispositionCode string `json:"dispositionCode,omitempty"`
 	// EntrySubagentDisplayName: The entry subagent's display name.
 	EntrySubagentDisplayName string `json:"entrySubagentDisplayName,omitempty"`
+	// EntrySubagentId: The entry subagent's ID.
+	EntrySubagentId string `json:"entrySubagentId,omitempty"`
 	// Location: The agent's location.
 	Location string `json:"location,omitempty"`
 	// Team: A user-specified string representing the agent's team. Deprecated in
@@ -18641,6 +18645,8 @@ type GoogleCloudContactcenterinsightsV1mainConversationQualityMetadataAgentInfo 
 	DispositionCode string `json:"dispositionCode,omitempty"`
 	// EntrySubagentDisplayName: The entry subagent's display name.
 	EntrySubagentDisplayName string `json:"entrySubagentDisplayName,omitempty"`
+	// EntrySubagentId: The entry subagent's ID.
+	EntrySubagentId string `json:"entrySubagentId,omitempty"`
 	// Location: The agent's location.
 	Location string `json:"location,omitempty"`
 	// Team: A user-specified string representing the agent's team. Deprecated in

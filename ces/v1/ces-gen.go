@@ -198,6 +198,7 @@ func NewProjectsLocationsAppsService(s *Service) *ProjectsLocationsAppsService {
 	rs.Deployments = NewProjectsLocationsAppsDeploymentsService(s)
 	rs.Examples = NewProjectsLocationsAppsExamplesService(s)
 	rs.Guardrails = NewProjectsLocationsAppsGuardrailsService(s)
+	rs.Message = NewProjectsLocationsAppsMessageService(s)
 	rs.Sessions = NewProjectsLocationsAppsSessionsService(s)
 	rs.Tools = NewProjectsLocationsAppsToolsService(s)
 	rs.Toolsets = NewProjectsLocationsAppsToolsetsService(s)
@@ -219,6 +220,8 @@ type ProjectsLocationsAppsService struct {
 	Examples *ProjectsLocationsAppsExamplesService
 
 	Guardrails *ProjectsLocationsAppsGuardrailsService
+
+	Message *ProjectsLocationsAppsMessageService
 
 	Sessions *ProjectsLocationsAppsSessionsService
 
@@ -280,6 +283,15 @@ func NewProjectsLocationsAppsGuardrailsService(s *Service) *ProjectsLocationsApp
 }
 
 type ProjectsLocationsAppsGuardrailsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsAppsMessageService(s *Service) *ProjectsLocationsAppsMessageService {
+	rs := &ProjectsLocationsAppsMessageService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAppsMessageService struct {
 	s *Service
 }
 
@@ -628,6 +640,10 @@ type AgentRemoteDialogflowAgent struct {
 	// the Dialogflow session parameters names to be sent to the Dialogflow agent
 	// as input.
 	InputVariableMapping map[string]string `json:"inputVariableMapping,omitempty"`
+	// LanguageCodeVariable: Optional. The name of the variable that contains the
+	// language code to be used for the Dialogflow session. If unspecified, the
+	// default language code of the Dialogflow agent will be used.
+	LanguageCodeVariable string `json:"languageCodeVariable,omitempty"`
 	// OutputVariableMapping: Optional. The mapping of the Dialogflow session
 	// parameters names to the app variables names to be sent back to the CES agent
 	// after the Dialogflow agent execution ends.
@@ -4101,6 +4117,381 @@ func (s LanguageSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// LfA2aV1Artifact: Artifacts represent task outputs.
+type LfA2aV1Artifact struct {
+	// ArtifactId: Required. Unique identifier (e.g. UUID) for the artifact. It
+	// must be unique within a task.
+	ArtifactId string `json:"artifactId,omitempty"`
+	// Description: Optional. A human readable description of the artifact.
+	Description string `json:"description,omitempty"`
+	// Extensions: The URIs of extensions that are present or contributed to this
+	// Artifact.
+	Extensions []string `json:"extensions,omitempty"`
+	// Metadata: Optional. Metadata included with the artifact.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+	// Name: A human readable name for the artifact.
+	Name string `json:"name,omitempty"`
+	// Parts: Required. The content of the artifact. Must contain at least one
+	// part.
+	Parts []*LfA2aV1Part `json:"parts,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ArtifactId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ArtifactId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1Artifact) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1Artifact
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1AuthenticationInfo: Defines authentication details, used for push
+// notifications.
+type LfA2aV1AuthenticationInfo struct {
+	// Credentials: Push Notification credentials. Format depends on the scheme
+	// (e.g., token for Bearer).
+	Credentials string `json:"credentials,omitempty"`
+	// Scheme: Required. HTTP Authentication Scheme from the IANA registry
+	// (https://www.iana.org/assignments/http-authschemes/). Examples: `Bearer`,
+	// `Basic`, `Digest`. Scheme names are case-insensitive per RFC 9110 Section
+	// 11.1 (https://www.rfc-editor.org/rfc/rfc9110#section-11.1).
+	Scheme string `json:"scheme,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Credentials") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Credentials") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1AuthenticationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1AuthenticationInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1Message: `Message` is one unit of communication between client and
+// server. It can be associated with a context and/or a task. For server
+// messages, `context_id` must be provided, and `task_id` only if a task was
+// created. For client messages, both fields are optional, with the caveat that
+// if both are provided, they have to match (the `context_id` has to be the one
+// that is set on the task). If only `task_id` is provided, the server will
+// infer `context_id` from it.
+type LfA2aV1Message struct {
+	// ContextId: Optional. The context id of the message. If set, the message will
+	// be associated with the given context.
+	ContextId string `json:"contextId,omitempty"`
+	// Extensions: The URIs of extensions that are present or contributed to this
+	// Message.
+	Extensions []string `json:"extensions,omitempty"`
+	// MessageId: Required. The unique identifier (e.g. UUID) of the message. This
+	// is created by the message creator.
+	MessageId string `json:"messageId,omitempty"`
+	// Metadata: Optional. Any metadata to provide along with the message.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+	// Parts: Required. Parts is the container of the message content.
+	Parts []*LfA2aV1Part `json:"parts,omitempty"`
+	// ReferenceTaskIds: A list of task IDs that this message references for
+	// additional context.
+	ReferenceTaskIds []string `json:"referenceTaskIds,omitempty"`
+	// Role: Required. Identifies the sender of the message.
+	//
+	// Possible values:
+	//   "ROLE_UNSPECIFIED" - The role is unspecified.
+	//   "ROLE_USER" - The message is from the client to the server.
+	//   "ROLE_AGENT" - The message is from the server to the client.
+	Role string `json:"role,omitempty"`
+	// TaskId: Optional. The task id of the message. If set, the message will be
+	// associated with the given task.
+	TaskId string `json:"taskId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContextId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContextId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1Message) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1Message
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1Part: `Part` represents a container for a section of communication
+// content. Parts can be purely textual, some sort of file (image, video, etc)
+// or a structured data blob (i.e. JSON).
+type LfA2aV1Part struct {
+	// Data: Arbitrary structured `data` as a JSON value (object, array, string,
+	// number, boolean, or null).
+	Data interface{} `json:"data,omitempty"`
+	// Filename: An optional `filename` for the file (e.g., "document.pdf").
+	Filename string `json:"filename,omitempty"`
+	// MediaType: The `media_type` (MIME type) of the part content (e.g.,
+	// "text/plain", "application/json", "image/png"). This field is available for
+	// all part types.
+	MediaType string `json:"mediaType,omitempty"`
+	// Metadata: Optional. metadata associated with this part.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+	// Raw: The `raw` byte content of a file. In JSON serialization, this is
+	// encoded as a base64 string.
+	Raw string `json:"raw,omitempty"`
+	// Text: The string content of the `text` part.
+	Text string `json:"text,omitempty"`
+	// Url: A `url` pointing to the file's content.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Data") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1Part) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1Part
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1SendMessageConfiguration: Configuration of a send message request.
+type LfA2aV1SendMessageConfiguration struct {
+	// AcceptedOutputModes: A list of media types the client is prepared to accept
+	// for response parts. Agents SHOULD use this to tailor their output.
+	AcceptedOutputModes []string `json:"acceptedOutputModes,omitempty"`
+	// HistoryLength: The maximum number of most recent messages from the task's
+	// history to retrieve in the response. An unset value means the client does
+	// not impose any limit. A value of zero is a request to not include any
+	// messages. The server MUST NOT return more messages than the provided value,
+	// but MAY apply a lower limit.
+	HistoryLength int64 `json:"historyLength,omitempty"`
+	// ReturnImmediately: If `true`, the operation returns immediately after
+	// creating the task, even if processing is still in progress. If `false`
+	// (default), the operation MUST wait until the task reaches a terminal
+	// (`COMPLETED`, `FAILED`, `CANCELED`, `REJECTED`) or interrupted
+	// (`INPUT_REQUIRED`, `AUTH_REQUIRED`) state before returning.
+	ReturnImmediately bool `json:"returnImmediately,omitempty"`
+	// TaskPushNotificationConfig: Configuration for the agent to send push
+	// notifications for task updates. Task id should be empty when sending this
+	// configuration in a `SendMessage` request.
+	TaskPushNotificationConfig *LfA2aV1TaskPushNotificationConfig `json:"taskPushNotificationConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AcceptedOutputModes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AcceptedOutputModes") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1SendMessageConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1SendMessageConfiguration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1SendMessageRequest: Represents a request for the `SendMessage`
+// method.
+type LfA2aV1SendMessageRequest struct {
+	// Configuration: Configuration for the send request.
+	Configuration *LfA2aV1SendMessageConfiguration `json:"configuration,omitempty"`
+	// Message: Required. The message to send to the agent.
+	Message *LfA2aV1Message `json:"message,omitempty"`
+	// Metadata: A flexible key-value map for passing additional context or
+	// parameters.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Configuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Configuration") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1SendMessageRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1SendMessageRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1SendMessageResponse: Represents the response for the `SendMessage`
+// method.
+type LfA2aV1SendMessageResponse struct {
+	// Message: A message from the agent.
+	Message *LfA2aV1Message `json:"message,omitempty"`
+	// Task: The task created or updated by the message.
+	Task *LfA2aV1Task `json:"task,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Message") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1SendMessageResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1SendMessageResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1Task: `Task` is the core unit of action for A2A. It has a current
+// status and when results are created for the task they are stored in the
+// artifact. If there are multiple turns for a task, these are stored in
+// history.
+type LfA2aV1Task struct {
+	// Artifacts: A set of output artifacts for a `Task`.
+	Artifacts []*LfA2aV1Artifact `json:"artifacts,omitempty"`
+	// ContextId: Unique identifier (e.g. UUID) for the contextual collection of
+	// interactions (tasks and messages).
+	ContextId string `json:"contextId,omitempty"`
+	// History: protolint:disable REPEATED_FIELD_NAMES_PLURALIZED The history of
+	// interactions from a `Task`.
+	History []*LfA2aV1Message `json:"history,omitempty"`
+	// Id: Required. Unique identifier (e.g. UUID) for the task, generated by the
+	// server for a new task.
+	Id string `json:"id,omitempty"`
+	// Metadata: protolint:enable REPEATED_FIELD_NAMES_PLURALIZED A key/value
+	// object to store custom metadata about a task.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+	// Status: Required. The current status of a `Task`, including `state` and a
+	// `message`.
+	Status *LfA2aV1TaskStatus `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Artifacts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Artifacts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1Task) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1Task
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1TaskPushNotificationConfig: A container associating a push
+// notification configuration with a specific task.
+type LfA2aV1TaskPushNotificationConfig struct {
+	// Authentication: Authentication information required to send the
+	// notification.
+	Authentication *LfA2aV1AuthenticationInfo `json:"authentication,omitempty"`
+	// Id: The push notification configuration details. A unique identifier (e.g.
+	// UUID) for this push notification configuration.
+	Id string `json:"id,omitempty"`
+	// TaskId: The ID of the task this configuration is associated with.
+	TaskId string `json:"taskId,omitempty"`
+	// Tenant: Optional. Tenant ID.
+	Tenant string `json:"tenant,omitempty"`
+	// Token: A token unique for this task or session.
+	Token string `json:"token,omitempty"`
+	// Url: Required. The URL where the notification should be sent.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Authentication") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Authentication") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1TaskPushNotificationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1TaskPushNotificationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1TaskStatus: A container for the status of a task
+type LfA2aV1TaskStatus struct {
+	// Message: A message associated with the status.
+	Message *LfA2aV1Message `json:"message,omitempty"`
+	// State: Required. The current state of this task.
+	//
+	// Possible values:
+	//   "TASK_STATE_UNSPECIFIED" - The task is in an unknown or indeterminate
+	// state.
+	//   "TASK_STATE_SUBMITTED" - Indicates that a task has been successfully
+	// submitted and acknowledged.
+	//   "TASK_STATE_WORKING" - Indicates that a task is actively being processed
+	// by the agent.
+	//   "TASK_STATE_COMPLETED" - Indicates that a task has finished successfully.
+	// This is a terminal state.
+	//   "TASK_STATE_FAILED" - Indicates that a task has finished with an error.
+	// This is a terminal state.
+	//   "TASK_STATE_CANCELED" - Indicates that a task was canceled before
+	// completion. This is a terminal state.
+	//   "TASK_STATE_INPUT_REQUIRED" - Indicates that the agent requires additional
+	// user input to proceed. This is an interrupted state.
+	//   "TASK_STATE_REJECTED" - Indicates that the agent has decided to not
+	// perform the task. This may be done during initial task creation or later
+	// once an agent has determined it can't or won't proceed. This is a terminal
+	// state.
+	//   "TASK_STATE_AUTH_REQUIRED" - Indicates that authentication is required to
+	// proceed. This is an interrupted state.
+	State string `json:"state,omitempty"`
+	// Timestamp: ISO 8601 Timestamp when the status was recorded. Example:
+	// "2023-10-27T10:00:00Z"
+	Timestamp string `json:"timestamp,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Message") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1TaskStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1TaskStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListAgentsResponse: Response message for AgentService.ListAgents.
 type ListAgentsResponse struct {
 	// Agents: The list of agents.
@@ -4495,11 +4886,12 @@ func (s Location) MarshalJSON() ([]byte, error) {
 // LoggingSettings: Settings to describe the logging behaviors for the app.
 type LoggingSettings struct {
 	// AudioRecordingConfig: Optional. Configuration for how audio interactions
-	// should be recorded.
+	// should be recorded. The audio is subject to redaction as configured in
+	// RedactionConfig.
 	AudioRecordingConfig *AudioRecordingConfig `json:"audioRecordingConfig,omitempty"`
-	// BigqueryExportSettings: Optional. Settings to describe the BigQuery export
-	// behaviors for the app. The conversation data will be exported to BigQuery
-	// tables if it is enabled.
+	// BigqueryExportSettings: Optional. Configures the BigQuery export behaviors
+	// for the app. The conversation data is subject to redaction as configured in
+	// RedactionConfig.
 	BigqueryExportSettings *BigQueryExportSettings `json:"bigqueryExportSettings,omitempty"`
 	// CloudLoggingSettings: Optional. Settings to describe the Cloud Logging
 	// behaviors for the app.
@@ -4517,9 +4909,9 @@ type LoggingSettings struct {
 	// RedactionConfig: Optional. Configuration for how sensitive data should be
 	// redacted.
 	RedactionConfig *RedactionConfig `json:"redactionConfig,omitempty"`
-	// UnredactedAudioRecordingConfig: Optional. Configures recording of unredacted
-	// audio. Use this to maintain a raw backup with restricted access when audio
-	// redaction is enabled, typically for auditing or monitoring purposes.
+	// UnredactedAudioRecordingConfig: Optional. Configures an additional recording
+	// of unredacted audio. This can be used to maintain a raw audio copy when
+	// audio redaction is enabled, typically for auditing or monitoring purposes.
 	UnredactedAudioRecordingConfig *AudioRecordingConfig `json:"unredactedAudioRecordingConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudioRecordingConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4560,6 +4952,9 @@ type McpTool struct {
 	InputSchema *Schema `json:"inputSchema,omitempty"`
 	// Name: Required. The name of the MCP tool.
 	Name string `json:"name,omitempty"`
+	// NameOverride: Optional. The name override of the MCP tool. This is populated
+	// if the name was overridden by a Toolset override.
+	NameOverride string `json:"nameOverride,omitempty"`
 	// OutputSchema: Optional. The schema of the output arguments of the MCP tool.
 	OutputSchema *Schema `json:"outputSchema,omitempty"`
 	// ServerAddress: Required. The server address of the MCP server, e.g.,
@@ -4573,6 +4968,17 @@ type McpTool struct {
 	// ServiceDirectoryConfig: Optional. Service Directory configuration for
 	// VPC-SC, used to resolve service names within a perimeter.
 	ServiceDirectoryConfig *ServiceDirectoryConfig `json:"serviceDirectoryConfig,omitempty"`
+	// State: Output only. The dynamic availability state of the tool on the
+	// external server.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default state.
+	//   "ACTIVE" - The tool is available and actively offered by the server.
+	//   "INACTIVE" - The tool is configured or pinned, but currently not offered
+	// by the server.
+	//   "STALE" - The tool exists on the server, but does not match the version on
+	// the server.
+	State string `json:"state,omitempty"`
 	// TlsConfig: Optional. The TLS configuration. Includes the custom server
 	// certificates that the client should trust.
 	TlsConfig *TlsConfig `json:"tlsConfig,omitempty"`
@@ -4591,6 +4997,71 @@ type McpTool struct {
 
 func (s McpTool) MarshalJSON() ([]byte, error) {
 	type NoMethod McpTool
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// McpToolDefinition: Container for a tool's core definition elements that are
+// snapshot. Schemas in the snapshot are used as-is and cannot be overridden.
+type McpToolDefinition struct {
+	// Description: Output only. The description of the MCP tool. This can be
+	// overridden by `description_override` in `McpToolOverride`.
+	Description string `json:"description,omitempty"`
+	// InputSchema: Output only. The schema of the input arguments of the MCP tool.
+	InputSchema *Schema `json:"inputSchema,omitempty"`
+	// OutputSchema: Output only. The schema of the output arguments of the MCP
+	// tool.
+	OutputSchema *Schema `json:"outputSchema,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s McpToolDefinition) MarshalJSON() ([]byte, error) {
+	type NoMethod McpToolDefinition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// McpToolOverride: Overrides associated with a given tool in a Toolset. This
+// enables "pinning" or "overriding" of tool definitions from the external
+// dynamic server.
+type McpToolOverride struct {
+	// DescriptionOverride: Optional. If present, this tool uses this description
+	// instead of the original description from the server.
+	DescriptionOverride string `json:"descriptionOverride,omitempty"`
+	// NameOverride: Optional. If present, this tool uses this name in the Agent
+	// instead of the original name. This is primarily used as an alias if the MCP
+	// server offers poorly named tools.
+	NameOverride string `json:"nameOverride,omitempty"`
+	// Snapshot: Output only. If present, this tool is "Pinned" and uses the
+	// snapshot values as fallbacks if the server becomes temporarily unavailable
+	// or if no Override is present.
+	Snapshot *McpToolDefinition `json:"snapshot,omitempty"`
+	// Tool: Required. The original name of the tool as it is emitted by the MCP
+	// server.
+	Tool string `json:"tool,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DescriptionOverride") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DescriptionOverride") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s McpToolOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod McpToolOverride
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4621,6 +5092,10 @@ type McpToolset struct {
 	// TlsConfig: Optional. The TLS configuration. Includes the custom server
 	// certificates that the client should trust.
 	TlsConfig *TlsConfig `json:"tlsConfig,omitempty"`
+	// ToolOverrides: Optional. Overrides for individual tools within this toolset.
+	// This allows overriding specific details like descriptions, names, or pinning
+	// the tools' states so they aren't fully dynamic.
+	ToolOverrides []*McpToolOverride `json:"toolOverrides,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApiAuthentication") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5074,6 +5549,9 @@ type PythonFunction struct {
 	Name string `json:"name,omitempty"`
 	// PythonCode: Optional. The Python code to execute for the tool.
 	PythonCode string `json:"pythonCode,omitempty"`
+	// ServiceDirectoryConfig: Optional. Service Directory configuration for the
+	// tool.
+	ServiceDirectoryConfig *ServiceDirectoryConfig `json:"serviceDirectoryConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5221,18 +5699,22 @@ func (s RetrieveToolSchemaResponse) MarshalJSON() ([]byte, error) {
 
 // RetrieveToolsRequest: Request message for ToolService.RetrieveTools.
 type RetrieveToolsRequest struct {
+	// BypassPersistenceConfig: Optional. If true, the returned tools will contain
+	// raw descriptions and schemas directly from the server, bypassing any stored
+	// persistence configurations (overrides/snapshots).
+	BypassPersistenceConfig bool `json:"bypassPersistenceConfig,omitempty"`
 	// ToolIds: Optional. The identifiers of the tools to retrieve from the
 	// toolset. If empty, all tools in the toolset will be returned.
 	ToolIds []string `json:"toolIds,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ToolIds") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "BypassPersistenceConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ToolIds") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BypassPersistenceConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -11175,6 +11657,110 @@ func (c *ProjectsLocationsAppsGuardrailsPatchCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.guardrails.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAppsMessageSendCall struct {
+	s                         *Service
+	tenant                    string
+	lfa2av1sendmessagerequest *LfA2aV1SendMessageRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Send: Sends a message to an agent.
+//
+// - tenant: Optional. Tenant ID, provided as a path parameter.
+func (r *ProjectsLocationsAppsMessageService) Send(tenant string, lfa2av1sendmessagerequest *LfA2aV1SendMessageRequest) *ProjectsLocationsAppsMessageSendCall {
+	c := &ProjectsLocationsAppsMessageSendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.tenant = tenant
+	c.lfa2av1sendmessagerequest = lfa2av1sendmessagerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsMessageSendCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsMessageSendCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsMessageSendCall) Context(ctx context.Context) *ProjectsLocationsAppsMessageSendCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsMessageSendCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsMessageSendCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.lfa2av1sendmessagerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/message:send")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"tenant": c.tenant,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.message.send", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.message.send" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *LfA2aV1SendMessageResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAppsMessageSendCall) Do(opts ...googleapi.CallOption) (*LfA2aV1SendMessageResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &LfA2aV1SendMessageResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.message.send", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

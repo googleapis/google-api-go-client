@@ -1202,9 +1202,11 @@ func (s DeleteTeamFolderTreeRequest) MarshalJSON() ([]byte, error) {
 
 // DirectoryEntry: Represents a single entry in a directory.
 type DirectoryEntry struct {
-	// Directory: A child directory in the directory.
+	// Directory: A child directory in the directory. The path is returned
+	// including the full folder structure from the root.
 	Directory string `json:"directory,omitempty"`
-	// File: A file in the directory.
+	// File: A file in the directory. The path is returned including the full
+	// folder structure from the root.
 	File string `json:"file,omitempty"`
 	// Metadata: Entry with metadata.
 	Metadata *FilesystemEntryMetadata `json:"metadata,omitempty"`
@@ -1618,9 +1620,13 @@ type GitRemoteSettings struct {
 	// secret version to use as an authentication token for Git operations. Must be
 	// in the format `projects/*/secrets/*/versions/*`.
 	AuthenticationTokenSecretVersion string `json:"authenticationTokenSecretVersion,omitempty"`
-	// DefaultBranch: Required. The Git remote's default branch name. If not set,
-	// `main` will be used and stored for the repository.
+	// DefaultBranch: Optional. The Git remote's default branch name. If not set
+	// `main` will be used.
 	DefaultBranch string `json:"defaultBranch,omitempty"`
+	// EffectiveDefaultBranch: Output only. The Git remote's effective default
+	// branch name. This is the default branch name of the Git remote if it is set,
+	// otherwise it is `main`.
+	EffectiveDefaultBranch string `json:"effectiveDefaultBranch,omitempty"`
 	// SshAuthenticationConfig: Optional. Authentication fields for remote uris
 	// using SSH protocol.
 	SshAuthenticationConfig *SshAuthenticationConfig `json:"sshAuthenticationConfig,omitempty"`
@@ -14309,7 +14315,7 @@ func (c *ProjectsLocationsTeamFoldersSearchCall) OrderBy(orderBy string) *Projec
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // TeamFolders to return. The server may return fewer items than requested. If
-// unspecified, the server will pick an appropriate default.
+// unspecified, the server will pick a default of page_size = 50.
 func (c *ProjectsLocationsTeamFoldersSearchCall) PageSize(pageSize int64) *ProjectsLocationsTeamFoldersSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

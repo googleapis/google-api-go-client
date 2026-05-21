@@ -1606,6 +1606,8 @@ type Cluster struct {
 	// node pool, see `node_pool.config`) If unspecified, the defaults are used.
 	// This field is deprecated, use node_pool.config instead.
 	NodeConfig *NodeConfig `json:"nodeConfig,omitempty"`
+	// NodeCreationConfig: Optional. Configuration for Node Creation Mode.
+	NodeCreationConfig *NodeCreationConfig `json:"nodeCreationConfig,omitempty"`
 	// NodeIpv4CidrSize: Output only. The size of the address space on each node
 	// for hosting containers. This is provisioned from within the
 	// `container_ipv4_cidr` range. This field will only be set when cluster is in
@@ -2023,6 +2025,9 @@ type ClusterUpdate struct {
 	// DesiredNetworkTierConfig: The desired network tier configuration for the
 	// cluster.
 	DesiredNetworkTierConfig *NetworkTierConfig `json:"desiredNetworkTierConfig,omitempty"`
+	// DesiredNodeCreationConfig: Optional. The desired NodeCreationConfig for the
+	// cluster.
+	DesiredNodeCreationConfig *NodeCreationConfig `json:"desiredNodeCreationConfig,omitempty"`
 	// DesiredNodeKubeletConfig: The desired node kubelet config for the cluster.
 	DesiredNodeKubeletConfig *NodeKubeletConfig `json:"desiredNodeKubeletConfig,omitempty"`
 	// DesiredNodePoolAutoConfigKubeletConfig: The desired node kubelet config for
@@ -3373,6 +3378,37 @@ type EvictionSignals struct {
 
 func (s EvictionSignals) MarshalJSON() ([]byte, error) {
 	type NoMethod EvictionSignals
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExclusionUntilEndOfSupport: Defines the maintenance exclusion for the node
+// pool.
+type ExclusionUntilEndOfSupport struct {
+	// Enabled: Optional. Indicates whether the exclusion is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// EndTime: Output only. The end time of the maintenance exclusion. It is
+	// output only. It is the cluster control plane version's end of support time,
+	// or end of extended support time when the cluster is on extended support
+	// channel.
+	EndTime string `json:"endTime,omitempty"`
+	// StartTime: Output only. The start time of the maintenance exclusion. It is
+	// output only. It is the exclusion creation time.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExclusionUntilEndOfSupport) MarshalJSON() ([]byte, error) {
+	type NoMethod ExclusionUntilEndOfSupport
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5827,24 +5863,56 @@ func (s NodeConfigDefaults) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// NodeDrainConfig: NodeDrainConfig contains the node drain related
-// configurations for this node pool.
-type NodeDrainConfig struct {
-	// RespectPdbDuringNodePoolDeletion: Whether to respect PDB during node pool
-	// deletion.
-	RespectPdbDuringNodePoolDeletion bool `json:"respectPdbDuringNodePoolDeletion,omitempty"`
-	// ForceSendFields is a list of field names (e.g.
-	// "RespectPdbDuringNodePoolDeletion") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted from
-	// API requests. See
+// NodeCreationConfig: NodeCreationConfig defines the settings of node creation
+// mode.
+type NodeCreationConfig struct {
+	// NodeCreationMode: The mode of node creation.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - When no user input is provided.
+	//   "VIA_KUBELET" - Kubelet registers itself.
+	//   "VIA_CONTROL_PLANE" - gcp-controller-manager automatically creates the
+	// node object after CSR approval.
+	NodeCreationMode string `json:"nodeCreationMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NodeCreationMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g.
-	// "RespectPdbDuringNodePoolDeletion") to include in API requests with the JSON
-	// null value. By default, fields with empty values are omitted from API
-	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
-	// more details.
+	// NullFields is a list of field names (e.g. "NodeCreationMode") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NodeCreationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod NodeCreationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NodeDrainConfig: NodeDrainConfig contains the node drain related
+// configurations for this node pool.
+type NodeDrainConfig struct {
+	// GraceTerminationDuration: The duration of the grace termination period for
+	// node drain.
+	GraceTerminationDuration string `json:"graceTerminationDuration,omitempty"`
+	// PdbTimeoutDuration: The duration of the PDB timeout period for node drain.
+	PdbTimeoutDuration string `json:"pdbTimeoutDuration,omitempty"`
+	// RespectPdbDuringNodePoolDeletion: Whether to respect PDB during node pool
+	// deletion.
+	RespectPdbDuringNodePoolDeletion bool `json:"respectPdbDuringNodePoolDeletion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GraceTerminationDuration")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GraceTerminationDuration") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
@@ -6251,6 +6319,9 @@ type NodePool struct {
 	// value will be used, instead. Warning: changing node pool locations will
 	// result in nodes being added and/or removed.
 	Locations []string `json:"locations,omitempty"`
+	// MaintenancePolicy: Optional. Specifies the maintenance policy for the node
+	// pool.
+	MaintenancePolicy *NodePoolMaintenancePolicy `json:"maintenancePolicy,omitempty"`
 	// Management: NodeManagement configuration for this NodePool.
 	Management *NodeManagement `json:"management,omitempty"`
 	// MaxPodsConstraint: The constraint on the maximum number of pods that can be
@@ -6456,6 +6527,29 @@ type NodePoolLoggingConfig struct {
 
 func (s NodePoolLoggingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NodePoolLoggingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NodePoolMaintenancePolicy: Defines the maintenance policy for the node pool.
+type NodePoolMaintenancePolicy struct {
+	// ExclusionUntilEndOfSupport: Optional. The exclusion until end of support for
+	// the node pool.
+	ExclusionUntilEndOfSupport *ExclusionUntilEndOfSupport `json:"exclusionUntilEndOfSupport,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExclusionUntilEndOfSupport")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExclusionUntilEndOfSupport") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NodePoolMaintenancePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod NodePoolMaintenancePolicy
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

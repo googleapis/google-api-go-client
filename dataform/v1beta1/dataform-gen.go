@@ -1173,6 +1173,34 @@ func (s DeleteFolderTreeRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DeleteRepositoryLongRunningRequest: `DeleteRepositoryLongRunning` request
+// message.
+type DeleteRepositoryLongRunningRequest struct {
+	// Force: Optional. If set to true, child resources of this repository
+	// (compilation results and workflow invocations) will also be deleted.
+	// Otherwise, the request will only succeed if the repository has no child
+	// resources. **Note:** *This flag doesn't support deletion of workspaces,
+	// release configs or workflow configs. If any of such resources exists in the
+	// repository, the request will fail.*
+	Force bool `json:"force,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Force") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Force") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeleteRepositoryLongRunningRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteRepositoryLongRunningRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DeleteTeamFolderTreeRequest: `DeleteTeamFolderTree` request message.
 type DeleteTeamFolderTreeRequest struct {
 	// Force: Optional. If `false` (default): The operation will fail if any
@@ -1202,9 +1230,11 @@ func (s DeleteTeamFolderTreeRequest) MarshalJSON() ([]byte, error) {
 
 // DirectoryEntry: Represents a single entry in a directory.
 type DirectoryEntry struct {
-	// Directory: A child directory in the directory.
+	// Directory: A child directory in the directory. The path is returned
+	// including the full folder structure from the root.
 	Directory string `json:"directory,omitempty"`
-	// File: A file in the directory.
+	// File: A file in the directory. The path is returned including the full
+	// folder structure from the root.
 	File string `json:"file,omitempty"`
 	// Metadata: Entry with metadata.
 	Metadata *FilesystemEntryMetadata `json:"metadata,omitempty"`
@@ -1618,9 +1648,13 @@ type GitRemoteSettings struct {
 	// secret version to use as an authentication token for Git operations. Must be
 	// in the format `projects/*/secrets/*/versions/*`.
 	AuthenticationTokenSecretVersion string `json:"authenticationTokenSecretVersion,omitempty"`
-	// DefaultBranch: Required. The Git remote's default branch name. If not set,
-	// `main` will be used and stored for the repository.
+	// DefaultBranch: Optional. The Git remote's default branch name. If not set
+	// `main` will be used.
 	DefaultBranch string `json:"defaultBranch,omitempty"`
+	// EffectiveDefaultBranch: Output only. The Git remote's effective default
+	// branch name. This is the default branch name of the Git remote if it is set,
+	// otherwise it is `main`.
+	EffectiveDefaultBranch string `json:"effectiveDefaultBranch,omitempty"`
 	// SshAuthenticationConfig: Optional. Authentication fields for remote uris
 	// using SSH protocol.
 	SshAuthenticationConfig *SshAuthenticationConfig `json:"sshAuthenticationConfig,omitempty"`
@@ -6852,6 +6886,109 @@ func (c *ProjectsLocationsRepositoriesDeleteCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.repositories.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsRepositoriesDeleteLongRunningCall struct {
+	s                                  *Service
+	name                               string
+	deleterepositorylongrunningrequest *DeleteRepositoryLongRunningRequest
+	urlParams_                         gensupport.URLParams
+	ctx_                               context.Context
+	header_                            http.Header
+}
+
+// DeleteLongRunning: Deletes a single Repository asynchronously.
+//
+// - name: The repository's name.
+func (r *ProjectsLocationsRepositoriesService) DeleteLongRunning(name string, deleterepositorylongrunningrequest *DeleteRepositoryLongRunningRequest) *ProjectsLocationsRepositoriesDeleteLongRunningCall {
+	c := &ProjectsLocationsRepositoriesDeleteLongRunningCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.deleterepositorylongrunningrequest = deleterepositorylongrunningrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesDeleteLongRunningCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesDeleteLongRunningCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesDeleteLongRunningCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesDeleteLongRunningCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesDeleteLongRunningCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesDeleteLongRunningCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.deleterepositorylongrunningrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:deleteLongRunning")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.repositories.deleteLongRunning", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.repositories.deleteLongRunning" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesDeleteLongRunningCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.repositories.deleteLongRunning", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14337,7 +14474,7 @@ func (c *ProjectsLocationsTeamFoldersSearchCall) OrderBy(orderBy string) *Projec
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // TeamFolders to return. The server may return fewer items than requested. If
-// unspecified, the server will pick an appropriate default.
+// unspecified, the server will pick a default of page_size = 50.
 func (c *ProjectsLocationsTeamFoldersSearchCall) PageSize(pageSize int64) *ProjectsLocationsTeamFoldersSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

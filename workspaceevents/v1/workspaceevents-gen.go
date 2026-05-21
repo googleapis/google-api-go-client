@@ -155,6 +155,12 @@ const (
 	// View chat and spaces in Google Chat
 	ChatSpacesReadonlyScope = "https://www.googleapis.com/auth/chat.spaces.readonly"
 
+	// See and change your availability status in Google Chat.
+	ChatUsersAvailabilityScope = "https://www.googleapis.com/auth/chat.users.availability"
+
+	// See your availability status in Google Chat.
+	ChatUsersAvailabilityReadonlyScope = "https://www.googleapis.com/auth/chat.users.availability.readonly"
+
 	// View and modify last read time for Google Chat conversations
 	ChatUsersReadstateScope = "https://www.googleapis.com/auth/chat.users.readstate"
 
@@ -202,6 +208,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/chat.messages.readonly",
 		"https://www.googleapis.com/auth/chat.spaces",
 		"https://www.googleapis.com/auth/chat.spaces.readonly",
+		"https://www.googleapis.com/auth/chat.users.availability",
+		"https://www.googleapis.com/auth/chat.users.availability.readonly",
 		"https://www.googleapis.com/auth/chat.users.readstate",
 		"https://www.googleapis.com/auth/chat.users.readstate.readonly",
 		"https://www.googleapis.com/auth/drive",

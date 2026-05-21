@@ -2,6 +2,9 @@
   "auth": {
     "oauth2": {
       "scopes": {
+        "https://www.googleapis.com/auth/cloud-netapp": {
+          "description": "See, edit, configure, and delete your Google Cloud NetApp data and see the email address for your Google Account"
+        },
         "https://www.googleapis.com/auth/cloud-platform": {
           "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         }
@@ -649,6 +652,7 @@
                     "$ref": "BackupPolicy"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/cloud-netapp",
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
@@ -695,6 +699,7 @@
                     "$ref": "ListBackupPoliciesResponse"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/cloud-netapp",
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
@@ -816,6 +821,7 @@
                     "$ref": "BackupVault"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/cloud-netapp",
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
@@ -862,6 +868,7 @@
                     "$ref": "ListBackupVaultsResponse"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/cloud-netapp",
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
@@ -933,6 +940,7 @@
                         "$ref": "Operation"
                       },
                       "scopes": [
+                        "https://www.googleapis.com/auth/cloud-netapp",
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
@@ -983,6 +991,7 @@
                         "$ref": "Backup"
                       },
                       "scopes": [
+                        "https://www.googleapis.com/auth/cloud-netapp",
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
@@ -1029,6 +1038,7 @@
                         "$ref": "ListBackupsResponse"
                       },
                       "scopes": [
+                        "https://www.googleapis.com/auth/cloud-netapp",
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
@@ -1670,6 +1680,7 @@
                     "$ref": "StoragePool"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/cloud-netapp",
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
@@ -1716,6 +1727,7 @@
                     "$ref": "ListStoragePoolsResponse"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/cloud-netapp",
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
@@ -2144,6 +2156,7 @@
                     "$ref": "Volume"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/cloud-netapp",
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
@@ -2190,6 +2203,7 @@
                     "$ref": "ListVolumesResponse"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/cloud-netapp",
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
@@ -2791,6 +2805,7 @@
                         "$ref": "Operation"
                       },
                       "scopes": [
+                        "https://www.googleapis.com/auth/cloud-netapp",
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
@@ -2841,6 +2856,7 @@
                         "$ref": "Snapshot"
                       },
                       "scopes": [
+                        "https://www.googleapis.com/auth/cloud-netapp",
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
@@ -2887,6 +2903,7 @@
                         "$ref": "ListSnapshotsResponse"
                       },
                       "scopes": [
+                        "https://www.googleapis.com/auth/cloud-netapp",
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
@@ -2933,7 +2950,7 @@
       }
     }
   },
-  "revision": "20260513",
+  "revision": "20260518",
   "rootUrl": "https://netapp.googleapis.com/",
   "schemas": {
     "ActiveDirectory": {

@@ -6224,7 +6224,7 @@
       }
     }
   },
-  "revision": "20260510",
+  "revision": "20260519",
   "rootUrl": "https://contactcenterinsights.googleapis.com/",
   "schemas": {
     "GoogleCloudAiplatformV1Blob": {
@@ -8722,6 +8722,10 @@
         },
         "entrySubagentDisplayName": {
           "description": "The entry subagent's display name.",
+          "type": "string"
+        },
+        "entrySubagentId": {
+          "description": "The entry subagent's ID.",
           "type": "string"
         },
         "location": {
@@ -15554,6 +15558,10 @@
           "description": "The entry subagent's display name.",
           "type": "string"
         },
+        "entrySubagentId": {
+          "description": "The entry subagent's ID.",
+          "type": "string"
+        },
         "location": {
           "description": "The agent's location.",
           "type": "string"
@@ -20755,6 +20763,10 @@
         },
         "entrySubagentDisplayName": {
           "description": "The entry subagent's display name.",
+          "type": "string"
+        },
+        "entrySubagentId": {
+          "description": "The entry subagent's ID.",
           "type": "string"
         },
         "location": {

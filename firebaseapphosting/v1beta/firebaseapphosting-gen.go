@@ -307,6 +307,10 @@ type Backend struct {
 	// (https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects.webApps#WebApp.FIELDS.app_id)
 	// associated with the backend.
 	AppId string `json:"appId,omitempty"`
+	// AutomaticBaseImageUpdatesDisabled: Optional.
+	// automatic_base_image_updates_disabled acts as a way for users to opt out of
+	// ABIU.
+	AutomaticBaseImageUpdatesDisabled bool `json:"automaticBaseImageUpdatesDisabled,omitempty"`
 	// Codebase: Optional. If specified, the connection to an external source
 	// repository to watch for event-driven updates to the backend.
 	Codebase *Codebase `json:"codebase,omitempty"`
@@ -342,6 +346,9 @@ type Backend struct {
 	// incoming request logs are disabled for this backend. Incoming request logs
 	// are enabled by default.
 	RequestLogsDisabled bool `json:"requestLogsDisabled,omitempty"`
+	// Runtime: Optional. The runtime that the backend will be built on. A default
+	// base_image will be chosen for a given runtime.
+	Runtime *BackendRuntime `json:"runtime,omitempty"`
 	// ServiceAccount: Required. The name of the service account used for Cloud
 	// Build and Cloud Run. Should have the role
 	// roles/firebaseapphosting.computeRunner or equivalent permissions.
@@ -391,6 +398,33 @@ type Backend struct {
 
 func (s Backend) MarshalJSON() ([]byte, error) {
 	type NoMethod Backend
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BackendRuntime: Runtime is a string that represents the runtime that is used
+// to build the backend. Users can specify one of the following runtimes:
+// nodejs20, nodejs22, nodejs24, nodejs. Runtime "nodejs" means that nodejs
+// version will be determined at build time. If not specified or specified with
+// a value that is not in the list above, the default runtime `nodejs` will be
+// used and Automatic Base Image Updates will be disabled.
+type BackendRuntime struct {
+	// Value: Optional. The value of the runtime.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackendRuntime) MarshalJSON() ([]byte, error) {
+	type NoMethod BackendRuntime
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1808,15 +1842,15 @@ type RolloutPolicy struct {
 	// IgnoredPaths: Optional. A list of file paths patterns to exclude from
 	// triggering a rollout. Patterns in this list take precedence over
 	// required_paths. **Note**: All paths must be in the ignored_paths in order
-	// for the rollout to be skipped. Limited to 100 paths. Example: ignored_paths:
-	// { pattern: "foo/bar/excluded/*” type: GLOB }
+	// for the rollout to be skipped. Limited to 100 paths. Example: ```
+	// ignored_paths: { pattern: "foo/bar/excluded/*", type: "GLOB" } ```
 	IgnoredPaths []*Path `json:"ignoredPaths,omitempty"`
 	// RequiredPaths: Optional. A list of file paths patterns that trigger a build
 	// and rollout if at least one of the changed files in the commit are present
 	// in this list. This field is optional; the rollout policy will default to
 	// triggering on all paths if both ignored_paths and required_paths are not
-	// populated. Limited to 100 paths. Example: “required_paths: { pattern:
-	// "foo/bar/*” type: GLOB }
+	// populated. Limited to 100 paths. Example: ``` required_paths: { pattern:
+	// "foo/bar/*", type: "GLOB" } ```
 	RequiredPaths []*Path `json:"requiredPaths,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CodebaseBranch") to
 	// unconditionally include in API requests. By default, fields with empty or

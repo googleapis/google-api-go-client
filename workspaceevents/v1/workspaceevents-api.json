@@ -44,6 +44,12 @@
         "https://www.googleapis.com/auth/chat.spaces.readonly": {
           "description": "View chat and spaces in Google Chat"
         },
+        "https://www.googleapis.com/auth/chat.users.availability": {
+          "description": "See and change your availability status in Google Chat."
+        },
+        "https://www.googleapis.com/auth/chat.users.availability.readonly": {
+          "description": "See your availability status in Google Chat."
+        },
         "https://www.googleapis.com/auth/chat.users.readstate": {
           "description": "View and modify last read time for Google Chat conversations"
         },
@@ -223,6 +229,8 @@
             "https://www.googleapis.com/auth/chat.messages.readonly",
             "https://www.googleapis.com/auth/chat.spaces",
             "https://www.googleapis.com/auth/chat.spaces.readonly",
+            "https://www.googleapis.com/auth/chat.users.availability",
+            "https://www.googleapis.com/auth/chat.users.availability.readonly",
             "https://www.googleapis.com/auth/chat.users.readstate",
             "https://www.googleapis.com/auth/chat.users.readstate.readonly",
             "https://www.googleapis.com/auth/drive",
@@ -272,6 +280,8 @@
             "https://www.googleapis.com/auth/chat.messages.readonly",
             "https://www.googleapis.com/auth/chat.spaces",
             "https://www.googleapis.com/auth/chat.spaces.readonly",
+            "https://www.googleapis.com/auth/chat.users.availability",
+            "https://www.googleapis.com/auth/chat.users.availability.readonly",
             "https://www.googleapis.com/auth/chat.users.readstate",
             "https://www.googleapis.com/auth/chat.users.readstate.readonly",
             "https://www.googleapis.com/auth/drive",
@@ -329,6 +339,8 @@
             "https://www.googleapis.com/auth/chat.messages.readonly",
             "https://www.googleapis.com/auth/chat.spaces",
             "https://www.googleapis.com/auth/chat.spaces.readonly",
+            "https://www.googleapis.com/auth/chat.users.availability",
+            "https://www.googleapis.com/auth/chat.users.availability.readonly",
             "https://www.googleapis.com/auth/chat.users.readstate",
             "https://www.googleapis.com/auth/chat.users.readstate.readonly",
             "https://www.googleapis.com/auth/drive",
@@ -371,6 +383,8 @@
             "https://www.googleapis.com/auth/chat.messages.readonly",
             "https://www.googleapis.com/auth/chat.spaces",
             "https://www.googleapis.com/auth/chat.spaces.readonly",
+            "https://www.googleapis.com/auth/chat.users.availability",
+            "https://www.googleapis.com/auth/chat.users.availability.readonly",
             "https://www.googleapis.com/auth/chat.users.readstate",
             "https://www.googleapis.com/auth/chat.users.readstate.readonly",
             "https://www.googleapis.com/auth/drive",
@@ -420,6 +434,8 @@
             "https://www.googleapis.com/auth/chat.messages.readonly",
             "https://www.googleapis.com/auth/chat.spaces",
             "https://www.googleapis.com/auth/chat.spaces.readonly",
+            "https://www.googleapis.com/auth/chat.users.availability",
+            "https://www.googleapis.com/auth/chat.users.availability.readonly",
             "https://www.googleapis.com/auth/chat.users.readstate",
             "https://www.googleapis.com/auth/chat.users.readstate.readonly",
             "https://www.googleapis.com/auth/drive",
@@ -480,6 +496,8 @@
             "https://www.googleapis.com/auth/chat.messages.readonly",
             "https://www.googleapis.com/auth/chat.spaces",
             "https://www.googleapis.com/auth/chat.spaces.readonly",
+            "https://www.googleapis.com/auth/chat.users.availability",
+            "https://www.googleapis.com/auth/chat.users.availability.readonly",
             "https://www.googleapis.com/auth/chat.users.readstate",
             "https://www.googleapis.com/auth/chat.users.readstate.readonly",
             "https://www.googleapis.com/auth/drive",
@@ -529,6 +547,8 @@
             "https://www.googleapis.com/auth/chat.messages.readonly",
             "https://www.googleapis.com/auth/chat.spaces",
             "https://www.googleapis.com/auth/chat.spaces.readonly",
+            "https://www.googleapis.com/auth/chat.users.availability",
+            "https://www.googleapis.com/auth/chat.users.availability.readonly",
             "https://www.googleapis.com/auth/chat.users.readstate",
             "https://www.googleapis.com/auth/chat.users.readstate.readonly",
             "https://www.googleapis.com/auth/drive",
@@ -765,7 +785,7 @@
       }
     }
   },
-  "revision": "20260510",
+  "revision": "20260517",
   "rootUrl": "https://workspaceevents.googleapis.com/",
   "schemas": {
     "Artifact": {

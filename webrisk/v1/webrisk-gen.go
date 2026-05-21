@@ -1363,12 +1363,11 @@ type ProjectsSubmissionsCreateCall struct {
 }
 
 // Create: Creates a Submission of a URI suspected of containing phishing
-// content to be reviewed. If the result verifies the existence of malicious
-// phishing content, the site will be added to the Google's Social Engineering
-// lists (https://support.google.com/webmasters/answer/6350487/) in order to
-// protect users that could get exposed to this threat in the future. Only
-// allowlisted projects can use this method during Early Access. Please reach
-// out to Sales or your customer engineer to obtain access.
+// content for review. If the review confirms malicious phishing content,
+// Google adds the site to Google's Social Engineering lists
+// (https://support.google.com/webmasters/answer/6350487/) to help protect
+// users. Only allowlisted projects can use this method during Early Access. To
+// obtain access, contact Sales or your customer engineer.
 //
 //   - parent: The name of the project that is making the submission. This string
 //     is in the format "projects/{project_number}".

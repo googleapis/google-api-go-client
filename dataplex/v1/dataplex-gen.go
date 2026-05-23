@@ -864,6 +864,29 @@ type GoogleCloudDataplexV1ActionMissingResource struct {
 type GoogleCloudDataplexV1ActionUnauthorizedResource struct {
 }
 
+// GoogleCloudDataplexV1ApproveChangeRequestRequest: Request message for
+// ApproveChangeRequest.
+type GoogleCloudDataplexV1ApproveChangeRequestRequest struct {
+	// Etag: Optional. The etag of the ChangeRequest.
+	Etag string `json:"etag,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1ApproveChangeRequestRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1ApproveChangeRequestRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1Aspect: Represents a single piece of metadata
 // describing an entry or entry link.
 type GoogleCloudDataplexV1Aspect struct {
@@ -1659,6 +1682,7 @@ type GoogleCloudDataplexV1ChangeRequest struct {
 	//   "CREATE_GLOSSARY_TERM" - Request to create a GlossaryTerm.
 	//   "UPDATE_GLOSSARY_TERM" - Request to update a GlossaryTerm.
 	//   "DELETE_GLOSSARY_TERM" - Request to delete a GlossaryTerm.
+	//   "REQUEST_DATA_PRODUCT_ACCESS" - Request to request Data Product access.
 	ChangeType string `json:"changeType,omitempty"`
 	// CreateEntry: Payload for creating an Entry.
 	CreateEntry *GoogleCloudDataplexV1CreateEntryRequest `json:"createEntry,omitempty"`
@@ -1672,6 +1696,8 @@ type GoogleCloudDataplexV1ChangeRequest struct {
 	CreateGlossaryTerm *GoogleCloudDataplexV1CreateGlossaryTermRequest `json:"createGlossaryTerm,omitempty"`
 	// CreateTime: Output only. The time when the ChangeRequest was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// DataProductAccessRequest: Payload for Data Product access request.
+	DataProductAccessRequest *GoogleCloudDataplexV1DataProductAccessRequest `json:"dataProductAccessRequest,omitempty"`
 	// DeleteEntry: Payload for deleting an Entry.
 	DeleteEntry *GoogleCloudDataplexV1DeleteEntryRequest `json:"deleteEntry,omitempty"`
 	// DeleteEntryLink: Payload for deleting an EntryLink.
@@ -1726,6 +1752,9 @@ type GoogleCloudDataplexV1ChangeRequest struct {
 	UpdateGlossaryTerm *GoogleCloudDataplexV1UpdateGlossaryTermRequest `json:"updateGlossaryTerm,omitempty"`
 	// UpdateTime: Output only. The time when the ChangeRequest was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 	// ForceSendFields is a list of field names (e.g. "Approver") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2463,20 +2492,16 @@ func (s GoogleCloudDataplexV1DataDiscoverySpecStorageConfigJsonOptions) MarshalJ
 // GoogleCloudDataplexV1DataDiscoverySpecStorageConfigUnstructuredDataOptions:
 // Describes options for unstructured data discovery.
 type GoogleCloudDataplexV1DataDiscoverySpecStorageConfigUnstructuredDataOptions struct {
-	// EntityInferenceEnabled: Optional. Deprecated: Use semantic_inference_enabled
-	// instead. Specifies whether deeper entity inference over the objects'
-	// contents using GenAI is enabled.
-	EntityInferenceEnabled bool `json:"entityInferenceEnabled,omitempty"`
 	// SemanticInferenceEnabled: Optional. Specifies whether deeper semantic
 	// inference over the objects' contents using GenAI is enabled.
 	SemanticInferenceEnabled bool `json:"semanticInferenceEnabled,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EntityInferenceEnabled") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "SemanticInferenceEnabled")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EntityInferenceEnabled") to
+	// NullFields is a list of field names (e.g. "SemanticInferenceEnabled") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2891,6 +2916,45 @@ type GoogleCloudDataplexV1DataProductAccessGroup struct {
 
 func (s GoogleCloudDataplexV1DataProductAccessGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataProductAccessGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataProductAccessRequest: Message for requesting access
+// to a Data Product. This will be used to create a ChangeRequest of type
+// REQUEST_DATA_PRODUCT_ACCESS.
+type GoogleCloudDataplexV1DataProductAccessRequest struct {
+	// AccessGroupDisplayName: Output only. The display name of the access group
+	// defined in the Data Product for which access is being requested.
+	AccessGroupDisplayName string `json:"accessGroupDisplayName,omitempty"`
+	// AccessGroupId: Required. The ID of the access group for which access is
+	// being requested. This corresponds to the unique identifier of the
+	// AccessGroup defined in the Data Product.
+	AccessGroupId string `json:"accessGroupId,omitempty"`
+	// Parent: Required. The resource name of the data product. Format:
+	// projects/{project_number}/locations/{location_id}/dataProducts/{data_product_
+	// id}
+	Parent string `json:"parent,omitempty"`
+	// RequestedPrincipal: Optional. The principal for which access is being
+	// requested in IAM format. If not specified, the requestor's principal will be
+	// used. Example: serviceAccount:my-sa@my-project.iam.gserviceaccount.com. Only
+	// service account principals are currently supported.
+	// https://cloud.google.com/iam/docs/principal-identifiers
+	RequestedPrincipal string `json:"requestedPrincipal,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccessGroupDisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessGroupDisplayName") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataProductAccessRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataProductAccessRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7244,6 +7308,37 @@ func (s GoogleCloudDataplexV1ListAssetsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1ListChangeRequestsResponse: Response message for
+// ListChangeRequests.
+type GoogleCloudDataplexV1ListChangeRequestsResponse struct {
+	// ChangeRequests: The ChangeRequests from the specified project and location.
+	ChangeRequests []*GoogleCloudDataplexV1ChangeRequest `json:"changeRequests,omitempty"`
+	// NextPageToken: A token, which can be sent as page_token to retrieve the next
+	// page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ChangeRequests") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChangeRequests") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1ListChangeRequestsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1ListChangeRequestsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1ListDataAssetsResponse: Response message for listing
 // data assets.
 type GoogleCloudDataplexV1ListDataAssetsResponse struct {
@@ -8662,6 +8757,31 @@ type GoogleCloudDataplexV1Partition struct {
 
 func (s GoogleCloudDataplexV1Partition) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1Partition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1RejectChangeRequestRequest: Request message for
+// RejectChangeRequest.
+type GoogleCloudDataplexV1RejectChangeRequestRequest struct {
+	// Comment: Optional. The reason for rejecting the ChangeRequest.
+	Comment string `json:"comment,omitempty"`
+	// Etag: Optional. The etag of the ChangeRequest.
+	Etag string `json:"etag,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Comment") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Comment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1RejectChangeRequestRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1RejectChangeRequestRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -14215,6 +14335,331 @@ func (c *ProjectsLocationsAspectTypesTestIamPermissionsCall) Do(opts ...googleap
 	return ret, nil
 }
 
+type ProjectsLocationsChangeRequestsApproveCall struct {
+	s                                                *Service
+	name                                             string
+	googleclouddataplexv1approvechangerequestrequest *GoogleCloudDataplexV1ApproveChangeRequestRequest
+	urlParams_                                       gensupport.URLParams
+	ctx_                                             context.Context
+	header_                                          http.Header
+}
+
+// Approve: Approves a ChangeRequest.
+//
+// - name: The name of the ChangeRequest to approve.
+func (r *ProjectsLocationsChangeRequestsService) Approve(name string, googleclouddataplexv1approvechangerequestrequest *GoogleCloudDataplexV1ApproveChangeRequestRequest) *ProjectsLocationsChangeRequestsApproveCall {
+	c := &ProjectsLocationsChangeRequestsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddataplexv1approvechangerequestrequest = googleclouddataplexv1approvechangerequestrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsChangeRequestsApproveCall) Fields(s ...googleapi.Field) *ProjectsLocationsChangeRequestsApproveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsChangeRequestsApproveCall) Context(ctx context.Context) *ProjectsLocationsChangeRequestsApproveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsChangeRequestsApproveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsChangeRequestsApproveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddataplexv1approvechangerequestrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:approve")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.changeRequests.approve", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.changeRequests.approve" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1ChangeRequest.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsChangeRequestsApproveCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1ChangeRequest, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1ChangeRequest{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.changeRequests.approve", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsChangeRequestsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a ChangeRequest.Behavior depends on the caller's permissions
+// and the resource's state: 1. Callers with dataplex.changeRequests.delete can
+// only delete ChangeRequests in the NEW state. 2. Callers with the
+// dataplex.changeRequests.adminDelete permission can delete ChangeRequests
+// regardless of their state.
+//
+//   - name: The name of the ChangeRequest to delete. Format:
+//     projects/{project_number}/locations/{location_id}/changeRequests/{change_re
+//     quest_id}.
+func (r *ProjectsLocationsChangeRequestsService) Delete(name string) *ProjectsLocationsChangeRequestsDeleteCall {
+	c := &ProjectsLocationsChangeRequestsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": The etag of the ChangeRequest.
+func (c *ProjectsLocationsChangeRequestsDeleteCall) Etag(etag string) *ProjectsLocationsChangeRequestsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsChangeRequestsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsChangeRequestsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsChangeRequestsDeleteCall) Context(ctx context.Context) *ProjectsLocationsChangeRequestsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsChangeRequestsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsChangeRequestsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.changeRequests.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.changeRequests.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsChangeRequestsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.changeRequests.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsChangeRequestsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a ChangeRequest.
+//
+//   - name: The name of the ChangeRequest to retrieve. Format:
+//     projects/{project_number}/locations/{location_id}/changeRequests/{change_re
+//     quest_id}.
+func (r *ProjectsLocationsChangeRequestsService) Get(name string) *ProjectsLocationsChangeRequestsGetCall {
+	c := &ProjectsLocationsChangeRequestsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsChangeRequestsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsChangeRequestsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsChangeRequestsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsChangeRequestsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsChangeRequestsGetCall) Context(ctx context.Context) *ProjectsLocationsChangeRequestsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsChangeRequestsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsChangeRequestsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.changeRequests.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.changeRequests.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1ChangeRequest.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsChangeRequestsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1ChangeRequest, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1ChangeRequest{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.changeRequests.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsChangeRequestsGetIamPolicyCall struct {
 	s            *Service
 	resource     string
@@ -14342,6 +14787,384 @@ func (c *ProjectsLocationsChangeRequestsGetIamPolicyCall) Do(opts ...googleapi.C
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.changeRequests.getIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsChangeRequestsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists ChangeRequests.
+//
+//   - parent: The parent, which owns this collection of ChangeRequests. Format:
+//     projects/{project_number}/locations/{location_id}.
+func (r *ProjectsLocationsChangeRequestsService) List(parent string) *ProjectsLocationsChangeRequestsListCall {
+	c := &ProjectsLocationsChangeRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter request. Supports
+// filtering by: state, author, resource, create_time, update_time.
+func (c *ProjectsLocationsChangeRequestsListCall) Filter(filter string) *ProjectsLocationsChangeRequestsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Order by fields for the
+// result.
+func (c *ProjectsLocationsChangeRequestsListCall) OrderBy(orderBy string) *ProjectsLocationsChangeRequestsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// ChangeRequests to return. The service may return fewer.
+func (c *ProjectsLocationsChangeRequestsListCall) PageSize(pageSize int64) *ProjectsLocationsChangeRequestsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token received from
+// a previous ListChangeRequests call.
+func (c *ProjectsLocationsChangeRequestsListCall) PageToken(pageToken string) *ProjectsLocationsChangeRequestsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsChangeRequestsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsChangeRequestsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsChangeRequestsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsChangeRequestsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsChangeRequestsListCall) Context(ctx context.Context) *ProjectsLocationsChangeRequestsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsChangeRequestsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsChangeRequestsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/changeRequests")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.changeRequests.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.changeRequests.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1ListChangeRequestsResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsChangeRequestsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1ListChangeRequestsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1ListChangeRequestsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.changeRequests.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsChangeRequestsListCall) Pages(ctx context.Context, f func(*GoogleCloudDataplexV1ListChangeRequestsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsChangeRequestsPatchCall struct {
+	s                                  *Service
+	name                               string
+	googleclouddataplexv1changerequest *GoogleCloudDataplexV1ChangeRequest
+	urlParams_                         gensupport.URLParams
+	ctx_                               context.Context
+	header_                            http.Header
+}
+
+// Patch: Updates a ChangeRequest. Only allowed when the state is NEW.
+//
+//   - name: Identifier. The relative resource name of the ChangeRequest, of the
+//     form:
+//     projects/{project_number}/locations/{location_id}/changeRequests/{change_re
+//     quest_id}.
+func (r *ProjectsLocationsChangeRequestsService) Patch(name string, googleclouddataplexv1changerequest *GoogleCloudDataplexV1ChangeRequest) *ProjectsLocationsChangeRequestsPatchCall {
+	c := &ProjectsLocationsChangeRequestsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddataplexv1changerequest = googleclouddataplexv1changerequest
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update.
+func (c *ProjectsLocationsChangeRequestsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsChangeRequestsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsChangeRequestsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsChangeRequestsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsChangeRequestsPatchCall) Context(ctx context.Context) *ProjectsLocationsChangeRequestsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsChangeRequestsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsChangeRequestsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddataplexv1changerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.changeRequests.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.changeRequests.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1ChangeRequest.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsChangeRequestsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1ChangeRequest, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1ChangeRequest{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.changeRequests.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsChangeRequestsRejectCall struct {
+	s                                               *Service
+	name                                            string
+	googleclouddataplexv1rejectchangerequestrequest *GoogleCloudDataplexV1RejectChangeRequestRequest
+	urlParams_                                      gensupport.URLParams
+	ctx_                                            context.Context
+	header_                                         http.Header
+}
+
+// Reject: Rejects a ChangeRequest.
+//
+// - name: The name of the ChangeRequest to reject.
+func (r *ProjectsLocationsChangeRequestsService) Reject(name string, googleclouddataplexv1rejectchangerequestrequest *GoogleCloudDataplexV1RejectChangeRequestRequest) *ProjectsLocationsChangeRequestsRejectCall {
+	c := &ProjectsLocationsChangeRequestsRejectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddataplexv1rejectchangerequestrequest = googleclouddataplexv1rejectchangerequestrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsChangeRequestsRejectCall) Fields(s ...googleapi.Field) *ProjectsLocationsChangeRequestsRejectCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsChangeRequestsRejectCall) Context(ctx context.Context) *ProjectsLocationsChangeRequestsRejectCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsChangeRequestsRejectCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsChangeRequestsRejectCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddataplexv1rejectchangerequestrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:reject")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.changeRequests.reject", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.changeRequests.reject" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1ChangeRequest.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsChangeRequestsRejectCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1ChangeRequest, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1ChangeRequest{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.changeRequests.reject", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -186,6 +186,7 @@ func NewCustomersService(s *Service) *CustomersService {
 	rs.Apps = NewCustomersAppsService(s)
 	rs.CertificateProvisioningProcesses = NewCustomersCertificateProvisioningProcessesService(s)
 	rs.ConnectorConfigs = NewCustomersConnectorConfigsService(s)
+	rs.Enterprise = NewCustomersEnterpriseService(s)
 	rs.Profiles = NewCustomersProfilesService(s)
 	rs.Reports = NewCustomersReportsService(s)
 	rs.Telemetry = NewCustomersTelemetryService(s)
@@ -201,6 +202,8 @@ type CustomersService struct {
 	CertificateProvisioningProcesses *CustomersCertificateProvisioningProcessesService
 
 	ConnectorConfigs *CustomersConnectorConfigsService
+
+	Enterprise *CustomersEnterpriseService
 
 	Profiles *CustomersProfilesService
 
@@ -283,6 +286,27 @@ func NewCustomersConnectorConfigsService(s *Service) *CustomersConnectorConfigsS
 }
 
 type CustomersConnectorConfigsService struct {
+	s *Service
+}
+
+func NewCustomersEnterpriseService(s *Service) *CustomersEnterpriseService {
+	rs := &CustomersEnterpriseService{s: s}
+	rs.SecurityInsights = NewCustomersEnterpriseSecurityInsightsService(s)
+	return rs
+}
+
+type CustomersEnterpriseService struct {
+	s *Service
+
+	SecurityInsights *CustomersEnterpriseSecurityInsightsService
+}
+
+func NewCustomersEnterpriseSecurityInsightsService(s *Service) *CustomersEnterpriseSecurityInsightsService {
+	rs := &CustomersEnterpriseSecurityInsightsService{s: s}
+	return rs
+}
+
+type CustomersEnterpriseSecurityInsightsService struct {
 	s *Service
 }
 
@@ -4529,6 +4553,38 @@ func (s GoogleChromeManagementVersionsV1CertificateProvisioningProcess) MarshalJ
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementVersionsV1CheckEnablementStatusResponse: Response from
+// checking the enablement status of insights for the customer.
+type GoogleChromeManagementVersionsV1CheckEnablementStatusResponse struct {
+	// InsightsState: The state of the insights feature.
+	//
+	// Possible values:
+	//   "INSIGHTS_ENABLEMENT_STATE_UNSPECIFIED" - Default value. Should not be
+	// used.
+	//   "INSIGHTS_ENABLED" - The insights feature is enabled for the customer.
+	//   "INSIGHTS_DISABLED" - The insights feature is disabled for the customer.
+	InsightsState string `json:"insightsState,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "InsightsState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InsightsState") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1CheckEnablementStatusResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1CheckEnablementStatusResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementVersionsV1ChromeBrowserProfile: A representation of a
 // Chrome browser profile.
 type GoogleChromeManagementVersionsV1ChromeBrowserProfile struct {
@@ -5127,6 +5183,101 @@ type GoogleChromeManagementVersionsV1DeviceTrustConfig struct {
 
 func (s GoogleChromeManagementVersionsV1DeviceTrustConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementVersionsV1DeviceTrustConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1DisableInsightsRequest: Request to disable
+// insights for the customer.
+type GoogleChromeManagementVersionsV1DisableInsightsRequest struct {
+}
+
+// GoogleChromeManagementVersionsV1DisableInsightsResponse: Response from
+// disabling insights for the customer.
+type GoogleChromeManagementVersionsV1DisableInsightsResponse struct {
+	// InsightsState: The state of the insights feature.
+	//
+	// Possible values:
+	//   "INSIGHTS_ENABLEMENT_STATE_UNSPECIFIED" - Default value. Should not be
+	// used.
+	//   "INSIGHTS_ENABLED" - The insights feature is enabled for the customer.
+	//   "INSIGHTS_DISABLED" - The insights feature is disabled for the customer.
+	InsightsState string `json:"insightsState,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "InsightsState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InsightsState") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1DisableInsightsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1DisableInsightsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1EnableInsightsRequest: Request to enable
+// insights for the customer.
+type GoogleChromeManagementVersionsV1EnableInsightsRequest struct {
+	// TargetOus: Optional. The Organizational Units to set up required connectors
+	// for. Organizational Units are provided as paths relative to root. If this
+	// field is not set, connectors will be set up at root OU (as if it were set to
+	// ["/"]). Example: ["/corp/sales", "/eng"]
+	TargetOus []string `json:"targetOus,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TargetOus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TargetOus") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1EnableInsightsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1EnableInsightsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1EnableInsightsResponse: Response from
+// enabling insights for the customer.
+type GoogleChromeManagementVersionsV1EnableInsightsResponse struct {
+	// InsightsState: The state of the insights feature.
+	//
+	// Possible values:
+	//   "INSIGHTS_ENABLEMENT_STATE_UNSPECIFIED" - Default value. Should not be
+	// used.
+	//   "INSIGHTS_ENABLED" - The insights feature is enabled for the customer.
+	//   "INSIGHTS_DISABLED" - The insights feature is disabled for the customer.
+	InsightsState string `json:"insightsState,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "InsightsState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InsightsState") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1EnableInsightsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1EnableInsightsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8315,6 +8466,331 @@ func (c *CustomersConnectorConfigsPatchCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.connectorConfigs.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomersEnterpriseSecurityInsightsCheckEnablementStatusCall struct {
+	s            *Service
+	customer     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// CheckEnablementStatus: Gets the setting state of the insights feature for
+// the customer.
+//
+//   - customer: The customer to check the enablement status for. Format:
+//     customers/{customer_id}.
+func (r *CustomersEnterpriseSecurityInsightsService) CheckEnablementStatus(customer string) *CustomersEnterpriseSecurityInsightsCheckEnablementStatusCall {
+	c := &CustomersEnterpriseSecurityInsightsCheckEnablementStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersEnterpriseSecurityInsightsCheckEnablementStatusCall) Fields(s ...googleapi.Field) *CustomersEnterpriseSecurityInsightsCheckEnablementStatusCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CustomersEnterpriseSecurityInsightsCheckEnablementStatusCall) IfNoneMatch(entityTag string) *CustomersEnterpriseSecurityInsightsCheckEnablementStatusCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersEnterpriseSecurityInsightsCheckEnablementStatusCall) Context(ctx context.Context) *CustomersEnterpriseSecurityInsightsCheckEnablementStatusCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersEnterpriseSecurityInsightsCheckEnablementStatusCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersEnterpriseSecurityInsightsCheckEnablementStatusCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/enterprise/securityInsights:checkEnablementStatus")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.enterprise.securityInsights.checkEnablementStatus", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.enterprise.securityInsights.checkEnablementStatus" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementVersionsV1CheckEnablementStatusResponse.ServerResponse
+// .Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CustomersEnterpriseSecurityInsightsCheckEnablementStatusCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementVersionsV1CheckEnablementStatusResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementVersionsV1CheckEnablementStatusResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.enterprise.securityInsights.checkEnablementStatus", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomersEnterpriseSecurityInsightsDisableCall struct {
+	s                                                      *Service
+	customer                                               string
+	googlechromemanagementversionsv1disableinsightsrequest *GoogleChromeManagementVersionsV1DisableInsightsRequest
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// Disable: Disables insights for the customer.
+//
+//   - customer: The customer to disable insights for. Format:
+//     customers/{customer}.
+func (r *CustomersEnterpriseSecurityInsightsService) Disable(customer string, googlechromemanagementversionsv1disableinsightsrequest *GoogleChromeManagementVersionsV1DisableInsightsRequest) *CustomersEnterpriseSecurityInsightsDisableCall {
+	c := &CustomersEnterpriseSecurityInsightsDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	c.googlechromemanagementversionsv1disableinsightsrequest = googlechromemanagementversionsv1disableinsightsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersEnterpriseSecurityInsightsDisableCall) Fields(s ...googleapi.Field) *CustomersEnterpriseSecurityInsightsDisableCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersEnterpriseSecurityInsightsDisableCall) Context(ctx context.Context) *CustomersEnterpriseSecurityInsightsDisableCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersEnterpriseSecurityInsightsDisableCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersEnterpriseSecurityInsightsDisableCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlechromemanagementversionsv1disableinsightsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/enterprise/securityInsights:disable")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.enterprise.securityInsights.disable", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.enterprise.securityInsights.disable" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementVersionsV1DisableInsightsResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomersEnterpriseSecurityInsightsDisableCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementVersionsV1DisableInsightsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementVersionsV1DisableInsightsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.enterprise.securityInsights.disable", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomersEnterpriseSecurityInsightsEnableCall struct {
+	s                                                     *Service
+	customer                                              string
+	googlechromemanagementversionsv1enableinsightsrequest *GoogleChromeManagementVersionsV1EnableInsightsRequest
+	urlParams_                                            gensupport.URLParams
+	ctx_                                                  context.Context
+	header_                                               http.Header
+}
+
+// Enable: Enables insights for the customer and sets up required chrome
+// connectors.
+//
+//   - customer: The customer to enable insights for. Format:
+//     customers/{customer}.
+func (r *CustomersEnterpriseSecurityInsightsService) Enable(customer string, googlechromemanagementversionsv1enableinsightsrequest *GoogleChromeManagementVersionsV1EnableInsightsRequest) *CustomersEnterpriseSecurityInsightsEnableCall {
+	c := &CustomersEnterpriseSecurityInsightsEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	c.googlechromemanagementversionsv1enableinsightsrequest = googlechromemanagementversionsv1enableinsightsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersEnterpriseSecurityInsightsEnableCall) Fields(s ...googleapi.Field) *CustomersEnterpriseSecurityInsightsEnableCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersEnterpriseSecurityInsightsEnableCall) Context(ctx context.Context) *CustomersEnterpriseSecurityInsightsEnableCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersEnterpriseSecurityInsightsEnableCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersEnterpriseSecurityInsightsEnableCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlechromemanagementversionsv1enableinsightsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/enterprise/securityInsights:enable")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.enterprise.securityInsights.enable", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.enterprise.securityInsights.enable" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementVersionsV1EnableInsightsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomersEnterpriseSecurityInsightsEnableCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementVersionsV1EnableInsightsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementVersionsV1EnableInsightsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.enterprise.securityInsights.enable", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

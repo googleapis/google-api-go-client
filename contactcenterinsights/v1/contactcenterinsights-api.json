@@ -4568,6 +4568,16 @@
                     "parent"
                   ],
                   "parameters": {
+                    "appId": {
+                      "description": "Optional. The CES App ID to filter diagnostics by.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "appVersion": {
+                      "description": "Optional. The CES App version to filter diagnostics by.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "filter": {
                       "description": "Optional. A filter to apply to the list (e.g. `create_time \u003e \"2023-01-01T00:00:00Z\"`).",
                       "location": "query",
@@ -6224,7 +6234,7 @@
       }
     }
   },
-  "revision": "20260519",
+  "revision": "20260521",
   "rootUrl": "https://contactcenterinsights.googleapis.com/",
   "schemas": {
     "GoogleCloudAiplatformV1Blob": {
@@ -9405,6 +9415,22 @@
       "description": "The request to analyze conversation data using agentic workflows. This RPC triggers a complex analysis process that may involve several steps of reasoning and tool execution.",
       "id": "GoogleCloudContactcenterinsightsV1DiagnoseConversationsRequest",
       "properties": {
+        "agentDisplayName": {
+          "description": "ces agent display name (e.g., \"Steering\", \"Billing\").",
+          "type": "string"
+        },
+        "agentId": {
+          "description": "ces agent id to diagnose.",
+          "type": "string"
+        },
+        "appId": {
+          "description": "Required. The CES App ID.",
+          "type": "string"
+        },
+        "appVersion": {
+          "description": "Optional. Optional but highly recommended. ces app version. If provided, specific version of agent instruction will be retrieved. If empty or set to '-', will use the latest draft version of instruction.",
+          "type": "string"
+        },
         "dryRun": {
           "deprecated": true,
           "description": "Optional. Deprecated: If true, the request will be validated and a simulation of the analysis will be performed without actually executing the task. This field is unused. Use validate_only instead.",
@@ -9419,8 +9445,13 @@
           "description": "Optional. Deprecated: If true, the agent will generate a full diagnostic report for all sub-agents. Subagent reporting configuration is unused. The final diagnostic details are already persisted inside the Diagnostic resource instead.",
           "type": "boolean"
         },
+        "groupId": {
+          "description": "Optional. A unique identifier used to group multiple diagnostic requests triggered under the same run batch or cron job.",
+          "type": "string"
+        },
         "instructions": {
-          "description": "Optional. Specific instructions for the agent.",
+          "deprecated": true,
+          "description": "Optional. Deprecated: Specific instructions for the agent. Use app_id and subagent fields instead.",
           "type": "string"
         },
         "maxSteps": {
@@ -9507,8 +9538,28 @@
       "description": "The diagnostic resource.",
       "id": "GoogleCloudContactcenterinsightsV1Diagnostic",
       "properties": {
+        "agentDisplayName": {
+          "description": "Output only. The display name of the agent associated with the diagnostic.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "agentId": {
+          "description": "Output only. The ID of the agent associated with the diagnostic.",
+          "readOnly": true,
+          "type": "string"
+        },
         "analysisSummary": {
           "description": "Output only. The complete sequence of thoughts and actions taken by the agent.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "appId": {
+          "description": "Output only. The application ID associated with the diagnostic.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "appVersion": {
+          "description": "Output only. The application version associated with the diagnostic.",
           "readOnly": true,
           "type": "string"
         },
@@ -9519,6 +9570,12 @@
         },
         "createTime": {
           "description": "Output only. The time at which the diagnostic was created.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "groupCreateTime": {
+          "description": "Output only. The timestamp when the group was created.",
           "format": "google-datetime",
           "readOnly": true,
           "type": "string"
@@ -9536,7 +9593,7 @@
       "type": "object"
     },
     "GoogleCloudContactcenterinsightsV1DiagnosticReport": {
-      "description": "A diagnostic report containing aggregate metrics and intent breakdowns.",
+      "description": "A diagnostic report containing loss patterns and problematic slice stats.",
       "id": "GoogleCloudContactcenterinsightsV1DiagnosticReport",
       "properties": {
         "conversationSlices": {
@@ -16074,6 +16131,22 @@
       "description": "The request to analyze conversation data using agentic workflows. This RPC triggers a complex analysis process that may involve several steps of reasoning and tool execution.",
       "id": "GoogleCloudContactcenterinsightsV1alpha1DiagnoseConversationsRequest",
       "properties": {
+        "agentDisplayName": {
+          "description": "ces agent display name (e.g., \"Steering\", \"Billing\").",
+          "type": "string"
+        },
+        "agentId": {
+          "description": "ces agent id to diagnose.",
+          "type": "string"
+        },
+        "appId": {
+          "description": "Required. The CES App ID.",
+          "type": "string"
+        },
+        "appVersion": {
+          "description": "Optional. Optional but highly recommended. ces app version. If provided, specific version of agent instruction will be retrieved. If empty or set to '-', will use the latest draft version of instruction.",
+          "type": "string"
+        },
         "dryRun": {
           "deprecated": true,
           "description": "Optional. Deprecated: If true, the request will be validated and a simulation of the analysis will be performed without actually executing the task. This field is unused. Use validate_only instead.",
@@ -16088,8 +16161,13 @@
           "description": "Optional. Deprecated: If true, the agent will generate a full diagnostic report for all sub-agents. Subagent reporting configuration is unused. The final diagnostic details are already persisted inside the Diagnostic resource instead.",
           "type": "boolean"
         },
+        "groupId": {
+          "description": "Optional. A unique identifier used to group multiple diagnostic requests triggered under the same run batch or cron job.",
+          "type": "string"
+        },
         "instructions": {
-          "description": "Optional. Specific instructions for the agent.",
+          "deprecated": true,
+          "description": "Optional. Deprecated: Specific instructions for the agent. Use app_id and subagent fields instead.",
           "type": "string"
         },
         "maxSteps": {
@@ -16173,7 +16251,7 @@
       "type": "object"
     },
     "GoogleCloudContactcenterinsightsV1alpha1DiagnosticReport": {
-      "description": "A diagnostic report containing aggregate metrics and intent breakdowns.",
+      "description": "A diagnostic report containing loss patterns and problematic slice stats.",
       "id": "GoogleCloudContactcenterinsightsV1alpha1DiagnosticReport",
       "properties": {
         "conversationSlices": {
@@ -21281,6 +21359,22 @@
       "description": "The request to analyze conversation data using agentic workflows. This RPC triggers a complex analysis process that may involve several steps of reasoning and tool execution.",
       "id": "GoogleCloudContactcenterinsightsV1mainDiagnoseConversationsRequest",
       "properties": {
+        "agentDisplayName": {
+          "description": "ces agent display name (e.g., \"Steering\", \"Billing\").",
+          "type": "string"
+        },
+        "agentId": {
+          "description": "ces agent id to diagnose.",
+          "type": "string"
+        },
+        "appId": {
+          "description": "Required. The CES App ID.",
+          "type": "string"
+        },
+        "appVersion": {
+          "description": "Optional. Optional but highly recommended. ces app version. If provided, specific version of agent instruction will be retrieved. If empty or set to '-', will use the latest draft version of instruction.",
+          "type": "string"
+        },
         "dryRun": {
           "deprecated": true,
           "description": "Optional. Deprecated: If true, the request will be validated and a simulation of the analysis will be performed without actually executing the task. This field is unused. Use validate_only instead.",
@@ -21295,8 +21389,13 @@
           "description": "Optional. Deprecated: If true, the agent will generate a full diagnostic report for all sub-agents. Subagent reporting configuration is unused. The final diagnostic details are already persisted inside the Diagnostic resource instead.",
           "type": "boolean"
         },
+        "groupId": {
+          "description": "Optional. A unique identifier used to group multiple diagnostic requests triggered under the same run batch or cron job.",
+          "type": "string"
+        },
         "instructions": {
-          "description": "Optional. Specific instructions for the agent.",
+          "deprecated": true,
+          "description": "Optional. Deprecated: Specific instructions for the agent. Use app_id and subagent fields instead.",
           "type": "string"
         },
         "maxSteps": {
@@ -21380,7 +21479,7 @@
       "type": "object"
     },
     "GoogleCloudContactcenterinsightsV1mainDiagnosticReport": {
-      "description": "A diagnostic report containing aggregate metrics and intent breakdowns.",
+      "description": "A diagnostic report containing loss patterns and problematic slice stats.",
       "id": "GoogleCloudContactcenterinsightsV1mainDiagnosticReport",
       "properties": {
         "conversationSlices": {

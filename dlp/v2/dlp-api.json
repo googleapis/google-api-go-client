@@ -5128,7 +5128,7 @@
       }
     }
   },
-  "revision": "20260509",
+  "revision": "20260516",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -5300,6 +5300,12 @@
     "GooglePrivacyDlpV2AllInfoTypes": {
       "description": "Apply transformation to all findings.",
       "id": "GooglePrivacyDlpV2AllInfoTypes",
+      "properties": {},
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2AllMessages": {
+      "description": "If set, indicates that the finding applies to all messages in the conversation.",
+      "id": "GooglePrivacyDlpV2AllMessages",
       "properties": {},
       "type": "object"
     },
@@ -6525,6 +6531,10 @@
           "$ref": "GooglePrivacyDlpV2ContentMetadata",
           "description": "User provided metadata for the content."
         },
+        "conversation": {
+          "$ref": "GooglePrivacyDlpV2Conversation",
+          "description": "Represents a conversation (either complete or a slice). It is assumed that all included messages are contiguous and ordered in chronological order."
+        },
         "table": {
           "$ref": "GooglePrivacyDlpV2Table",
           "description": "Structured content for inspection. See https://cloud.google.com/sensitive-data-protection/docs/inspecting-text#inspecting_a_table to learn more."
@@ -6552,6 +6562,10 @@
         "containerVersion": {
           "description": "Finding container version, if available (\"generation\" for Cloud Storage).",
           "type": "string"
+        },
+        "conversationLocation": {
+          "$ref": "GooglePrivacyDlpV2ConversationLocation",
+          "description": "Location within a conversation."
         },
         "documentLocation": {
           "$ref": "GooglePrivacyDlpV2DocumentLocation",
@@ -6582,6 +6596,65 @@
             "$ref": "GooglePrivacyDlpV2KeyValueMetadataProperty"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2Conversation": {
+      "description": "Complete conversation or slice of a conversation. It is assumed that all included messages are contiguous and ordered in chronological order.",
+      "id": "GooglePrivacyDlpV2Conversation",
+      "properties": {
+        "messages": {
+          "description": "Messages exchanged within this conversation. The maximum number of messages allowed is 50k. The order of the messages is assumed to be chronological and will be used to index findings in the response.",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2ConversationMessage"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2ConversationLocation": {
+      "description": "Location within a conversation.",
+      "id": "GooglePrivacyDlpV2ConversationLocation",
+      "properties": {
+        "allMessages": {
+          "$ref": "GooglePrivacyDlpV2AllMessages",
+          "description": "If set, indicates that the finding applies to all messages in the conversation."
+        },
+        "messageIndex": {
+          "description": "Matches an index of a message in the conversation provided in the request.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2ConversationMessage": {
+      "description": "Single message in a conversation.",
+      "id": "GooglePrivacyDlpV2ConversationMessage",
+      "properties": {
+        "content": {
+          "description": "The contents of this message.",
+          "type": "string"
+        },
+        "messageType": {
+          "description": "The type of message.",
+          "enum": [
+            "MESSAGE_TYPE_UNSPECIFIED",
+            "CONTENT",
+            "CONTEXT"
+          ],
+          "enumDescriptions": [
+            "Unused.",
+            "Message contains content to be inspected.",
+            "Message contains context only and will not have findings reported from it during inspection or redacted from it during de-identification."
+          ],
+          "type": "string"
+        },
+        "participantId": {
+          "description": "Optional. The identifier of the participant. For example 'test-user' or 'gemini'. The participant ID can contain lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$`. The maximum length is 63 characters.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -9989,7 +10062,7 @@
       "id": "GooglePrivacyDlpV2InspectTemplate",
       "properties": {
         "allowLimitedAvailabilityInfoTypes": {
-          "description": "Optional. Enables the use of limited-availability built-in infoTypes in inspect_config. These infoTypes are supported only in specific regions and can cause scanning errors if used elsewhere. For more information, see https://cloud.google.com/sensitive-data-protection/docs/locations#location-specific_limitations to learn more about location-specific limitations.",
+          "description": "Optional. Enables the use of [limited-availability built-in infoTypes](https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference#limited-availability-infotypes) in inspect_config. These infoTypes are supported only in specific regions and can cause scanning errors if used elsewhere.",
           "type": "boolean"
         },
         "createTime": {

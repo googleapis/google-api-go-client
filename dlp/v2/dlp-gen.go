@@ -900,6 +900,11 @@ func (s GooglePrivacyDlpV2AdjustmentRule) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2AllInfoTypes struct {
 }
 
+// GooglePrivacyDlpV2AllMessages: If set, indicates that the finding applies to
+// all messages in the conversation.
+type GooglePrivacyDlpV2AllMessages struct {
+}
+
 // GooglePrivacyDlpV2AllOtherBigQueryTables: Catch-all for all other tables not
 // specified by other filters. Should always be last, except for single-table
 // configurations, which will only have a TableReference target.
@@ -2484,6 +2489,10 @@ type GooglePrivacyDlpV2ContentItem struct {
 	ByteItem *GooglePrivacyDlpV2ByteContentItem `json:"byteItem,omitempty"`
 	// ContentMetadata: User provided metadata for the content.
 	ContentMetadata *GooglePrivacyDlpV2ContentMetadata `json:"contentMetadata,omitempty"`
+	// Conversation: Represents a conversation (either complete or a slice). It is
+	// assumed that all included messages are contiguous and ordered in
+	// chronological order.
+	Conversation *GooglePrivacyDlpV2Conversation `json:"conversation,omitempty"`
 	// Table: Structured content for inspection. See
 	// https://cloud.google.com/sensitive-data-protection/docs/inspecting-text#inspecting_a_table
 	// to learn more.
@@ -2527,6 +2536,8 @@ type GooglePrivacyDlpV2ContentLocation struct {
 	// ContainerVersion: Finding container version, if available ("generation" for
 	// Cloud Storage).
 	ContainerVersion string `json:"containerVersion,omitempty"`
+	// ConversationLocation: Location within a conversation.
+	ConversationLocation *GooglePrivacyDlpV2ConversationLocation `json:"conversationLocation,omitempty"`
 	// DocumentLocation: Location data for document files.
 	DocumentLocation *GooglePrivacyDlpV2DocumentLocation `json:"documentLocation,omitempty"`
 	// ImageLocation: Location within an image's pixels.
@@ -2572,6 +2583,94 @@ type GooglePrivacyDlpV2ContentMetadata struct {
 
 func (s GooglePrivacyDlpV2ContentMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ContentMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2Conversation: Complete conversation or slice of a
+// conversation. It is assumed that all included messages are contiguous and
+// ordered in chronological order.
+type GooglePrivacyDlpV2Conversation struct {
+	// Messages: Messages exchanged within this conversation. The maximum number of
+	// messages allowed is 50k. The order of the messages is assumed to be
+	// chronological and will be used to index findings in the response.
+	Messages []*GooglePrivacyDlpV2ConversationMessage `json:"messages,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Messages") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Messages") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2Conversation) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2Conversation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2ConversationLocation: Location within a conversation.
+type GooglePrivacyDlpV2ConversationLocation struct {
+	// AllMessages: If set, indicates that the finding applies to all messages in
+	// the conversation.
+	AllMessages *GooglePrivacyDlpV2AllMessages `json:"allMessages,omitempty"`
+	// MessageIndex: Matches an index of a message in the conversation provided in
+	// the request.
+	MessageIndex int64 `json:"messageIndex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllMessages") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllMessages") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2ConversationLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2ConversationLocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2ConversationMessage: Single message in a conversation.
+type GooglePrivacyDlpV2ConversationMessage struct {
+	// Content: The contents of this message.
+	Content string `json:"content,omitempty"`
+	// MessageType: The type of message.
+	//
+	// Possible values:
+	//   "MESSAGE_TYPE_UNSPECIFIED" - Unused.
+	//   "CONTENT" - Message contains content to be inspected.
+	//   "CONTEXT" - Message contains context only and will not have findings
+	// reported from it during inspection or redacted from it during
+	// de-identification.
+	MessageType string `json:"messageType,omitempty"`
+	// ParticipantId: Optional. The identifier of the participant. For example
+	// 'test-user' or 'gemini'. The participant ID can contain lowercase letters,
+	// numbers, and hyphens; that is, it must match the regular expression: `^a-z
+	// ([a-z0-9-]{0,61}[a-z0-9])?$`. The maximum length is 63 characters.
+	ParticipantId string `json:"participantId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2ConversationMessage) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2ConversationMessage
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7242,11 +7341,10 @@ func (s GooglePrivacyDlpV2InspectResult) MarshalJSON() ([]byte, error) {
 // to learn more.
 type GooglePrivacyDlpV2InspectTemplate struct {
 	// AllowLimitedAvailabilityInfoTypes: Optional. Enables the use of
-	// limited-availability built-in infoTypes in inspect_config. These infoTypes
-	// are supported only in specific regions and can cause scanning errors if used
-	// elsewhere. For more information, see
-	// https://cloud.google.com/sensitive-data-protection/docs/locations#location-specific_limitations
-	// to learn more about location-specific limitations.
+	// limited-availability built-in infoTypes
+	// (https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference#limited-availability-infotypes)
+	// in inspect_config. These infoTypes are supported only in specific regions
+	// and can cause scanning errors if used elsewhere.
 	AllowLimitedAvailabilityInfoTypes bool `json:"allowLimitedAvailabilityInfoTypes,omitempty"`
 	// CreateTime: Output only. The creation timestamp of an inspectTemplate.
 	CreateTime string `json:"createTime,omitempty"`

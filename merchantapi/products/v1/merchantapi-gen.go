@@ -1577,7 +1577,7 @@ type ProductAttributes struct {
 	IsBundle bool `json:"isBundle,omitempty"`
 	// ItemGroupId: Shared identifier for all variants of the same product.
 	ItemGroupId string `json:"itemGroupId,omitempty"`
-	// ItemGroupTitle: Optional. Represents the product group title
+	// ItemGroupTitle: Optional. Represents the title of the product group
 	// (https://support.google.com/merchants/answer/17085146) to which this variant
 	// product belongs. This can be used along with the item group id
 	// (https://support.google.com/merchants/answer/6324507) attribute. It lets you
@@ -1755,11 +1755,11 @@ type ProductAttributes struct {
 	ProductWidth *ProductDimension `json:"productWidth,omitempty"`
 	// PromotionIds: The unique ID of a promotion.
 	PromotionIds []string `json:"promotionIds,omitempty"`
-	// QuestionsAndAnswers: Optional. Contains merchant authored questions and
-	// answers (https://support.google.com/merchants/answer/17085211) about the
-	// product. Max 30 question and answer pairs. Max 5000 characters total. Each
-	// question can have max 1000 characters. Each answer can have max 1000
-	// characters.
+	// QuestionsAndAnswers: Optional. Contains user-, merchant-, and
+	// manufacturer-authored questions and answers
+	// (https://support.google.com/merchants/answer/17085211) about the product.
+	// Max 30 question and answer pairs. Max 5000 characters total. Each question
+	// can have max 1000 characters. Each answer can have max 1000 characters.
 	QuestionsAndAnswers []*QuestionAndAnswer `json:"questionsAndAnswers,omitempty"`
 	// RelatedProducts: Optional. Specifies how other products are related
 	// (https://support.google.com/merchants/answer/17085213) to this product.
@@ -1862,8 +1862,9 @@ type ProductAttributes struct {
 	UnitPricingBaseMeasure *UnitPricingBaseMeasure `json:"unitPricingBaseMeasure,omitempty"`
 	// UnitPricingMeasure: The measure and dimension of an item.
 	UnitPricingMeasure *UnitPricingMeasure `json:"unitPricingMeasure,omitempty"`
-	// VariantOptions: Optional. Contains a list of additional variants
-	// (https://support.google.com/merchants/answer/17085214) for the product.
+	// VariantOptions: Optional. Contains the list of all variant-identifying
+	// options (https://support.google.com/merchants/answer/17085214) of this
+	// product.
 	VariantOptions []*VariantOption `json:"variantOptions,omitempty"`
 	// VehicleAllInPrice: The all-in advertised price for a vehicle, which includes
 	// costs for the following – any accessories attached to the vehicle,

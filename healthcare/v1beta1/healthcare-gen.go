@@ -1970,6 +1970,32 @@ func (s CryptoHashConfig) MarshalJSON() ([]byte, error) {
 type CryptoHashField struct {
 }
 
+// CustomRegex: Defines a custom regular expression pattern to detect and
+// redact in the image.
+type CustomRegex struct {
+	// GroupIndexes: Optional. The capturing group indexes to redact.
+	// skip_request_analyics: true
+	GroupIndexes []int64 `json:"groupIndexes,omitempty"`
+	// Pattern: Optional. The regular expression pattern to match.
+	Pattern string `json:"pattern,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GroupIndexes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GroupIndexes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomRegex) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomRegex
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Dataset: A message representing a health dataset. A health dataset
 // represents a collection of healthcare data pertaining to one or more
 // patients. This may include multiple modalities of healthcare data, such as
@@ -4689,6 +4715,8 @@ type ImageConfig struct {
 	// `REDACT_SENSITIVE_TEXT_CLEAN_DESCRIPTORS` or
 	// `TEXT_REDACTION_MODE_UNSPECIFIED`.
 	AdditionalInfoTypes []string `json:"additionalInfoTypes,omitempty"`
+	// CustomRegexes: Optional. Custom regex patterns to redact from the image.
+	CustomRegexes []*CustomRegex `json:"customRegexes,omitempty"`
 	// ExcludeInfoTypes: InfoTypes to skip redacting, overriding those used by
 	// `text_redaction_mode`. Can only be used when `text_redaction_mode` is set to
 	// `REDACT_SENSITIVE_TEXT` or `REDACT_SENSITIVE_TEXT_CLEAN_DESCRIPTORS`.

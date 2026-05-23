@@ -1599,6 +1599,13 @@ func (s EventAttachment) MarshalJSON() ([]byte, error) {
 type EventAttendee struct {
 	// AdditionalGuests: Number of additional guests. Optional. The default is 0.
 	AdditionalGuests int64 `json:"additionalGuests,omitempty"`
+	// AsyncOperation: If present, indicates the status of an asynchronous
+	// operation ongoing for this attendee (e.g. listing of members of large
+	// attendee groups). Read-only. The default is to not be present.
+	// Possible values are:
+	// - "inProgress" - The asynchronous operation is in progress.
+	// - (not present) - Otherwise.
+	AsyncOperation string `json:"asyncOperation,omitempty"`
 	// Comment: The attendee's response comment. Optional.
 	Comment string `json:"comment,omitempty"`
 	// DisplayName: The attendee's name, if available. Optional.

@@ -7459,7 +7459,9 @@ func (s GoogleCloudDiscoveryengineV1UserStore) MarshalJSON() ([]byte, error) {
 // GoogleCloudDiscoveryengineV1WorkspaceConfig: Config to store data store type
 // configuration for workspace data
 type GoogleCloudDiscoveryengineV1WorkspaceConfig struct {
-	// DasherCustomerId: Obfuscated Dasher customer ID.
+	// DasherCustomerId: Output only. Obfuscated Dasher customer ID. Derived by the
+	// server from the project's GCP organization at data store creation time; any
+	// value supplied in the request payload is ignored.
 	DasherCustomerId string `json:"dasherCustomerId,omitempty"`
 	// SuperAdminEmailAddress: Optional. The super admin email address for the
 	// workspace that will be used for access token generation. For now we only use
@@ -12919,7 +12921,9 @@ type GoogleCloudDiscoveryengineV1alphaFieldConfig struct {
 	// when `searchable_option` is `SEARCHABLE_ENABLED`. If `searchable_option` is
 	// `SEARCHABLE_DISABLED`, this field is ignored. If `searchable_option` is
 	// `SEARCHABLE_ENABLED` and this is `SEARCHABLE_FIELD_IMPORTANCE_UNSPECIFIED`,
-	// it behaves as `DEFAULT_IMPORTANCE`.
+	// it behaves as `DEFAULT_IMPORTANCE`. For more information, see Weight
+	// searchable fields
+	// (https://cloud.google.com/generative-ai-app-builder/docs/configure-field-settings#weight-search).
 	//
 	// Possible values:
 	//   "SEARCHABLE_FIELD_IMPORTANCE_UNSPECIFIED" - Value used when unset. Behaves
@@ -15373,7 +15377,14 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// updated, a floating-point number (e.g., 0.25 means 15 minutes). *
 	// `topicality_rank`: topicality adjustment as a rank. Uses proprietary Google
 	// model to determine the keyword-based overlap between the query and the
-	// document. * `base_rank`: the default rank of the result
+	// document. * `base_rank`: the default rank of the result *
+	// `media_actor_match`: whether the media actor matches the query *
+	// `media_director_match`: whether the media director matches the query *
+	// `media_genre_match`: whether the media genre matches the query *
+	// `media_language_match`: whether the media language matches the query *
+	// `media_title_match`: whether the media title matches the query *
+	// `media_prefix_similarity_rank`: prefix similarity rank for media results *
+	// `media_semantic_similarity_rank`: semantic similarity rank for media results
 	RankingExpression string `json:"rankingExpression,omitempty"`
 	// RankingExpressionBackend: Optional. The backend to use for the ranking
 	// expression evaluation.
@@ -17549,7 +17560,9 @@ func (s GoogleCloudDiscoveryengineV1alphaUserLicense) MarshalJSON() ([]byte, err
 // GoogleCloudDiscoveryengineV1alphaWorkspaceConfig: Config to store data store
 // type configuration for workspace data
 type GoogleCloudDiscoveryengineV1alphaWorkspaceConfig struct {
-	// DasherCustomerId: Obfuscated Dasher customer ID.
+	// DasherCustomerId: Output only. Obfuscated Dasher customer ID. Derived by the
+	// server from the project's GCP organization at data store creation time; any
+	// value supplied in the request payload is ignored.
 	DasherCustomerId string `json:"dasherCustomerId,omitempty"`
 	// SuperAdminEmailAddress: Optional. The super admin email address for the
 	// workspace that will be used for access token generation. For now we only use
@@ -29121,7 +29134,14 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// updated, a floating-point number (e.g., 0.25 means 15 minutes). *
 	// `topicality_rank`: topicality adjustment as a rank. Uses proprietary Google
 	// model to determine the keyword-based overlap between the query and the
-	// document. * `base_rank`: the default rank of the result
+	// document. * `base_rank`: the default rank of the result *
+	// `media_actor_match`: whether the media actor matches the query *
+	// `media_director_match`: whether the media director matches the query *
+	// `media_genre_match`: whether the media genre matches the query *
+	// `media_language_match`: whether the media language matches the query *
+	// `media_title_match`: whether the media title matches the query *
+	// `media_prefix_similarity_rank`: prefix similarity rank for media results *
+	// `media_semantic_similarity_rank`: semantic similarity rank for media results
 	RankingExpression string `json:"rankingExpression,omitempty"`
 	// RankingExpressionBackend: Optional. The backend to use for the ranking
 	// expression evaluation.
@@ -32328,6 +32348,8 @@ type GoogleCloudDiscoveryengineV1betaStreamAssistResponse struct {
 	AssistToken string `json:"assistToken,omitempty"`
 	// InvocationTools: The tool names of the tools that were invoked.
 	InvocationTools []string `json:"invocationTools,omitempty"`
+	// InvokedSkills: The skills executed during the turn.
+	InvokedSkills []*GoogleCloudDiscoveryengineV1betaStreamAssistResponseInvokedSkill `json:"invokedSkills,omitempty"`
 	// SessionInfo: Session information. Only included in the final
 	// StreamAssistResponse of the response stream.
 	SessionInfo *GoogleCloudDiscoveryengineV1betaStreamAssistResponseSessionInfo `json:"sessionInfo,omitempty"`
@@ -32349,6 +32371,31 @@ type GoogleCloudDiscoveryengineV1betaStreamAssistResponse struct {
 
 func (s GoogleCloudDiscoveryengineV1betaStreamAssistResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaStreamAssistResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaStreamAssistResponseInvokedSkill: Represents
+// a skill used during the assist call.
+type GoogleCloudDiscoveryengineV1betaStreamAssistResponseInvokedSkill struct {
+	// DisplayName: The display name of the skill.
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: The resource name of the skill.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaStreamAssistResponseInvokedSkill) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaStreamAssistResponseInvokedSkill
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -33201,7 +33248,9 @@ func (s GoogleCloudDiscoveryengineV1betaUserStore) MarshalJSON() ([]byte, error)
 // GoogleCloudDiscoveryengineV1betaWorkspaceConfig: Config to store data store
 // type configuration for workspace data
 type GoogleCloudDiscoveryengineV1betaWorkspaceConfig struct {
-	// DasherCustomerId: Obfuscated Dasher customer ID.
+	// DasherCustomerId: Output only. Obfuscated Dasher customer ID. Derived by the
+	// server from the project's GCP organization at data store creation time; any
+	// value supplied in the request payload is ignored.
 	DasherCustomerId string `json:"dasherCustomerId,omitempty"`
 	// SuperAdminEmailAddress: Optional. The super admin email address for the
 	// workspace that will be used for access token generation. For now we only use

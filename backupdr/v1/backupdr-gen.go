@@ -2376,6 +2376,9 @@ func (s ComputeInstanceRestoreProperties) MarshalJSON() ([]byte, error) {
 type ComputeInstanceTargetEnvironment struct {
 	// Project: Required. Target project for the Compute Engine instance.
 	Project string `json:"project,omitempty"`
+	// UseProjectServiceAccount: Optional. Whether to use the project service
+	// account for the Compute Engine instance.
+	UseProjectServiceAccount bool `json:"useProjectServiceAccount,omitempty"`
 	// Zone: Required. The zone of the Compute Engine instance.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Project") to unconditionally
@@ -2967,6 +2970,9 @@ func (s DiskRestoreProperties) MarshalJSON() ([]byte, error) {
 type DiskTargetEnvironment struct {
 	// Project: Required. Target project for the disk.
 	Project string `json:"project,omitempty"`
+	// UseProjectServiceAccount: Optional. Whether to use the project service
+	// account for the disk.
+	UseProjectServiceAccount bool `json:"useProjectServiceAccount,omitempty"`
 	// Zone: Required. Target zone for the disk.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Project") to unconditionally
@@ -4880,6 +4886,9 @@ type RegionDiskTargetEnvironment struct {
 	Region string `json:"region,omitempty"`
 	// ReplicaZones: Required. Target URLs of the replica zones for the disk.
 	ReplicaZones []string `json:"replicaZones,omitempty"`
+	// UseProjectServiceAccount: Optional. Whether to use the project service
+	// account for the disk.
+	UseProjectServiceAccount bool `json:"useProjectServiceAccount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Project") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

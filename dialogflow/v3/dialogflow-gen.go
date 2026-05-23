@@ -12180,6 +12180,7 @@ func (s GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuery) MarshalJSON(
 }
 
 type GoogleCloudDialogflowV2KnowledgeAssistDebugInfo struct {
+	CesDebugInfo googleapi.RawMessage `json:"cesDebugInfo,omitempty"`
 	// Possible values:
 	//   "DATASTORE_RESPONSE_REASON_UNSPECIFIED"
 	//   "NONE"
@@ -12199,7 +12200,8 @@ type GoogleCloudDialogflowV2KnowledgeAssistDebugInfo struct {
 	//   "QUERY_CATEGORIZATION_INVALID_CONFIG"
 	//   "QUERY_CATEGORIZATION_RESULT_NOT_FOUND"
 	//   "QUERY_CATEGORIZATION_FAILED"
-	QueryCategorizationFailureReason string `json:"queryCategorizationFailureReason,omitempty"`
+	QueryCategorizationFailureReason string                                                                   `json:"queryCategorizationFailureReason,omitempty"`
+	QueryGenerationDebugInfo         *GoogleCloudDialogflowV2KnowledgeAssistDebugInfoQueryGenerationDebugInfo `json:"queryGenerationDebugInfo,omitempty"`
 	// Possible values:
 	//   "QUERY_GENERATION_FAILURE_REASON_UNSPECIFIED"
 	//   "QUERY_GENERATION_OUT_OF_QUOTA"
@@ -12214,15 +12216,15 @@ type GoogleCloudDialogflowV2KnowledgeAssistDebugInfo struct {
 	//   "QUERY_GENERATION_TRIGGERING_EVENT_CONDITION_NOT_MET"
 	QueryGenerationFailureReason string                                 `json:"queryGenerationFailureReason,omitempty"`
 	ServiceLatency               *GoogleCloudDialogflowV2ServiceLatency `json:"serviceLatency,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DatastoreResponseReason") to
+	// ForceSendFields is a list of field names (e.g. "CesDebugInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DatastoreResponseReason") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CesDebugInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -12265,6 +12267,28 @@ type GoogleCloudDialogflowV2KnowledgeAssistDebugInfoKnowledgeAssistBehavior stru
 
 func (s GoogleCloudDialogflowV2KnowledgeAssistDebugInfoKnowledgeAssistBehavior) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2KnowledgeAssistDebugInfoKnowledgeAssistBehavior
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudDialogflowV2KnowledgeAssistDebugInfoQueryGenerationDebugInfo struct {
+	CandidatesTokenCount int64 `json:"candidatesTokenCount,omitempty"`
+	PromptTokenCount     int64 `json:"promptTokenCount,omitempty"`
+	TotalTokenCount      int64 `json:"totalTokenCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CandidatesTokenCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CandidatesTokenCount") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2KnowledgeAssistDebugInfoQueryGenerationDebugInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2KnowledgeAssistDebugInfoQueryGenerationDebugInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -15254,6 +15278,7 @@ func (s GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuery) Marshal
 }
 
 type GoogleCloudDialogflowV2beta1KnowledgeAssistDebugInfo struct {
+	CesDebugInfo googleapi.RawMessage `json:"cesDebugInfo,omitempty"`
 	// Possible values:
 	//   "DATASTORE_RESPONSE_REASON_UNSPECIFIED"
 	//   "NONE"
@@ -15273,7 +15298,8 @@ type GoogleCloudDialogflowV2beta1KnowledgeAssistDebugInfo struct {
 	//   "QUERY_CATEGORIZATION_INVALID_CONFIG"
 	//   "QUERY_CATEGORIZATION_RESULT_NOT_FOUND"
 	//   "QUERY_CATEGORIZATION_FAILED"
-	QueryCategorizationFailureReason string `json:"queryCategorizationFailureReason,omitempty"`
+	QueryCategorizationFailureReason string                                                                        `json:"queryCategorizationFailureReason,omitempty"`
+	QueryGenerationDebugInfo         *GoogleCloudDialogflowV2beta1KnowledgeAssistDebugInfoQueryGenerationDebugInfo `json:"queryGenerationDebugInfo,omitempty"`
 	// Possible values:
 	//   "QUERY_GENERATION_FAILURE_REASON_UNSPECIFIED"
 	//   "QUERY_GENERATION_OUT_OF_QUOTA"
@@ -15288,15 +15314,15 @@ type GoogleCloudDialogflowV2beta1KnowledgeAssistDebugInfo struct {
 	//   "QUERY_GENERATION_TRIGGERING_EVENT_CONDITION_NOT_MET"
 	QueryGenerationFailureReason string                                      `json:"queryGenerationFailureReason,omitempty"`
 	ServiceLatency               *GoogleCloudDialogflowV2beta1ServiceLatency `json:"serviceLatency,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DatastoreResponseReason") to
+	// ForceSendFields is a list of field names (e.g. "CesDebugInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DatastoreResponseReason") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CesDebugInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -15339,6 +15365,28 @@ type GoogleCloudDialogflowV2beta1KnowledgeAssistDebugInfoKnowledgeAssistBehavior
 
 func (s GoogleCloudDialogflowV2beta1KnowledgeAssistDebugInfoKnowledgeAssistBehavior) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1KnowledgeAssistDebugInfoKnowledgeAssistBehavior
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudDialogflowV2beta1KnowledgeAssistDebugInfoQueryGenerationDebugInfo struct {
+	CandidatesTokenCount int64 `json:"candidatesTokenCount,omitempty"`
+	PromptTokenCount     int64 `json:"promptTokenCount,omitempty"`
+	TotalTokenCount      int64 `json:"totalTokenCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CandidatesTokenCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CandidatesTokenCount") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1KnowledgeAssistDebugInfoQueryGenerationDebugInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1KnowledgeAssistDebugInfoQueryGenerationDebugInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

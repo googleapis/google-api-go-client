@@ -2347,6 +2347,27 @@ type ImportJob struct {
 	// 4096 bit RSA key. The key material to be imported is wrapped directly with
 	// the RSA key. Due to technical limitations of RSA wrapping, this method
 	// cannot be used to wrap RSA keys for import.
+	//   "HPKE_KEM_ML_KEM_768_HKDF_SHA256_AES_256_GCM" - Represents the Hybrid
+	// Public Key Encryption (HPKE) Scheme originally defined in [RFC
+	// 9180](https://www.rfc-editor.org/rfc/rfc9180). It involves wrapping the raw
+	// key with an ephemeral AES key, derived with HKDF-SHA256 from an encryption
+	// context, that is, in turn obtained from the receiver’s public key with the
+	// help of the ML-KEM-768 KEM. For more details, see the [ML-KEM HPKE
+	// standard](http://datatracker.ietf.org/doc/draft-ietf-hpke-pq/01/).
+	//   "HPKE_KEM_ML_KEM_1024_HKDF_SHA256_AES_256_GCM" - Represents the Hybrid
+	// Public Key Encryption (HPKE) Scheme originally defined in [RFC
+	// 9180](https://www.rfc-editor.org/rfc/rfc9180). It involves wrapping the raw
+	// key with an ephemeral AES key, derived with HKDF-SHA256 from an encryption
+	// context, that is, in turn obtained from the receiver’s public key with the
+	// help of the ML-KEM-1024 KEM. For more details, see the [ML-KEM HPKE
+	// standard](http://datatracker.ietf.org/doc/draft-ietf-hpke-pq/01/).
+	//   "HPKE_KEM_XWING_HKDF_SHA256_AES_256_GCM" - Represents the Hybrid Public
+	// Key Encryption (HPKE) Scheme originally defined in [RFC
+	// 9180](https://www.rfc-editor.org/rfc/rfc9180). It involves wrapping the raw
+	// key with an ephemeral AES key, derived with HKDF-SHA256 from an encryption
+	// context, that is, in turn obtained from the receiver’s public key with the
+	// help of the X-Wing hybrid KEM. For more details, see the [X-Wing
+	// standard](http://datatracker.ietf.org/doc/draft-connolly-cfrg-xwing-kem/09/).
 	ImportMethod string `json:"importMethod,omitempty"`
 	// Name: Output only. The resource name for this ImportJob in the format
 	// `projects/*/locations/*/keyRings/*/importJobs/*`.
@@ -2368,6 +2389,29 @@ type ImportJob struct {
 	// PublicKey: Output only. The public key with which to wrap key material prior
 	// to import. Only returned if state is ACTIVE.
 	PublicKey *WrappingPublicKey `json:"publicKey,omitempty"`
+	// PublicKeyFormat: Output only. Specifies the WrappingPublicKey format
+	// provided by the customer in the KeyManagementService.GetImportJob request.
+	//
+	// Possible values:
+	//   "PUBLIC_KEY_FORMAT_UNSPECIFIED" - If the public_key_format field is not
+	// specified: - For PQC algorithms, an error will be returned. - For non-PQC
+	// algorithms, the default format is PEM, and the field pem will be populated.
+	// Otherwise, the public key will be exported through the public_key field in
+	// the requested format.
+	//   "PEM" - The returned public key will be encoded in PEM format. See the
+	// [RFC7468](https://tools.ietf.org/html/rfc7468) sections for [General
+	// Considerations](https://tools.ietf.org/html/rfc7468#section-2) and [Textual
+	// Encoding of Subject Public Key Info]
+	// (https://tools.ietf.org/html/rfc7468#section-13) for more information.
+	//   "DER" - The returned public key will be encoded in DER format (the
+	// PrivateKeyInfo structure from RFC 5208).
+	//   "NIST_PQC" - This is supported only for PQC algorithms. The key material
+	// is returned in the format defined by NIST PQC standards (FIPS 203, FIPS 204,
+	// and FIPS 205).
+	//   "XWING_RAW_BYTES" - The returned public key is in raw bytes format defined
+	// in its standard
+	// https://datatracker.ietf.org/doc/draft-connolly-cfrg-xwing-kem.
+	PublicKeyFormat string `json:"publicKeyFormat,omitempty"`
 	// State: Output only. The current state of the ImportJob, indicating if it can
 	// be used.
 	//
@@ -4602,19 +4646,27 @@ type VerifyConnectivityResponse struct {
 // WrappingPublicKey: The public key component of the wrapping key. For details
 // of the type of key this public key corresponds to, see the ImportMethod.
 type WrappingPublicKey struct {
+	// Data: Output only. Contains the public key, formatted according to the
+	// PublicKey.PublicKeyFormat specified in the KeyManagementService.GetImportJob
+	// request.
+	Data string `json:"data,omitempty"`
 	// Pem: The public key, encoded in PEM format. For more information, see the
 	// RFC 7468 (https://tools.ietf.org/html/rfc7468) sections for General
 	// Considerations (https://tools.ietf.org/html/rfc7468#section-2) and [Textual
 	// Encoding of Subject Public Key Info]
-	// (https://tools.ietf.org/html/rfc7468#section-13).
+	// (https://tools.ietf.org/html/rfc7468#section-13). This field gets populated
+	// by default for RSA-based import methods, if no public_key_format is
+	// specified in the request. If you want to retrieve the wrapping key of an
+	// ImportJob in some other format, use KeyManagementService.GetImportJob and
+	// set the public_key_format to the desired public key format.
 	Pem string `json:"pem,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Pem") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Pem") to include in API requests
+	// NullFields is a list of field names (e.g. "Data") to include in API requests
 	// with the JSON null value. By default, fields with empty values are omitted
 	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -12384,6 +12436,48 @@ type ProjectsLocationsKeyRingsImportJobsGetCall struct {
 func (r *ProjectsLocationsKeyRingsImportJobsService) Get(name string) *ProjectsLocationsKeyRingsImportJobsGetCall {
 	c := &ProjectsLocationsKeyRingsImportJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// PublicKeyFormat sets the optional parameter "publicKeyFormat": Specifies the
+// WrappingPublicKey format. If not specified: * For RSA-based import methods,
+// the wrapping key will be returned in PEM format * For pure ML-KEM-based
+// import methods, the wrapping key will be returned in the raw bytes format
+// specified in FIPS-203 * For X-Wing-based import methods, the wrapping key
+// will be returned in the raw bytes format specified in
+// https://datatracker.ietf.org/doc/draft-connolly-cfrg-xwing-kem.
+//
+// Possible values:
+//
+//	"PUBLIC_KEY_FORMAT_UNSPECIFIED" - If the public_key_format field is not
+//
+// specified: - For PQC algorithms, an error will be returned. - For non-PQC
+// algorithms, the default format is PEM, and the field pem will be populated.
+// Otherwise, the public key will be exported through the public_key field in
+// the requested format.
+//
+//	"PEM" - The returned public key will be encoded in PEM format. See the
+//
+// [RFC7468](https://tools.ietf.org/html/rfc7468) sections for [General
+// Considerations](https://tools.ietf.org/html/rfc7468#section-2) and [Textual
+// Encoding of Subject Public Key Info]
+// (https://tools.ietf.org/html/rfc7468#section-13) for more information.
+//
+//	"DER" - The returned public key will be encoded in DER format (the
+//
+// PrivateKeyInfo structure from RFC 5208).
+//
+//	"NIST_PQC" - This is supported only for PQC algorithms. The key material
+//
+// is returned in the format defined by NIST PQC standards (FIPS 203, FIPS 204,
+// and FIPS 205).
+//
+//	"XWING_RAW_BYTES" - The returned public key is in raw bytes format defined
+//
+// in its standard
+// https://datatracker.ietf.org/doc/draft-connolly-cfrg-xwing-kem.
+func (c *ProjectsLocationsKeyRingsImportJobsGetCall) PublicKeyFormat(publicKeyFormat string) *ProjectsLocationsKeyRingsImportJobsGetCall {
+	c.urlParams_.Set("publicKeyFormat", publicKeyFormat)
 	return c
 }
 

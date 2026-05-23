@@ -1515,12 +1515,14 @@ type ApplicationReport struct {
 	// to verify the app hasn't been modified. Each byte of the hash value is
 	// represented as a two-digit hexadecimal number.
 	PackageSha256Hash string `json:"packageSha256Hash,omitempty"`
-	// SigningKeyCertFingerprints: The SHA-1 hash of each
-	// android.content.pm.Signature
+	// SigningKeyCertFingerprints: Deprecated. Use signingKeyCerts instead. The
+	// SHA-1 hash of each android.content.pm.Signature
 	// (https://developer.android.com/reference/android/content/pm/Signature.html)
 	// associated with the app package. Each byte of each hash value is represented
 	// as a two-digit hexadecimal number.
 	SigningKeyCertFingerprints []string `json:"signingKeyCertFingerprints,omitempty"`
+	// SigningKeyCerts: Output only. Signing key certificates of the app.
+	SigningKeyCerts []*ApplicationSigningKeyCert `json:"signingKeyCerts,omitempty"`
 	// State: Application state.
 	//
 	// Possible values:

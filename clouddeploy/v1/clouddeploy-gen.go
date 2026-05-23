@@ -1583,9 +1583,6 @@ type ContainerTask struct {
 	Env map[string]string `json:"env,omitempty"`
 	// Image: Required. Image is the container image to use.
 	Image string `json:"image,omitempty"`
-	// Script: Optional. Shell script to execute. If provided then command and args
-	// cannot be specified.
-	Script string `json:"script,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -2068,13 +2065,13 @@ type DeliveryPipeline struct {
 	// fields, and may be sent on update and delete requests to ensure the client
 	// has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
-	// Labels: Labels are attributes that can be set and used by both the user and
-	// by Cloud Deploy. Labels must meet the following constraints: * Keys and
-	// values can contain only lowercase letters, numeric characters, underscores,
-	// and dashes. * All characters must use UTF-8 encoding, and international
-	// characters are allowed. * Keys must start with a lowercase letter or
-	// international character. * Each resource is limited to a maximum of 64
-	// labels. Both keys and values are additionally constrained to be <= 128
+	// Labels: Optional. Labels are attributes that can be set and used by both the
+	// user and by Cloud Deploy. Labels must meet the following constraints: * Keys
+	// and values can contain only lowercase letters, numeric characters,
+	// underscores, and dashes. * All characters must use UTF-8 encoding, and
+	// international characters are allowed. * Keys must start with a lowercase
+	// letter or international character. * Each resource is limited to a maximum
+	// of 64 labels. Both keys and values are additionally constrained to be <= 128
 	// bytes.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. Name of the `DeliveryPipeline`. Format is
@@ -4375,13 +4372,13 @@ type Release struct {
 	// fields, and may be sent on update and delete requests to ensure the client
 	// has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
-	// Labels: Labels are attributes that can be set and used by both the user and
-	// by Cloud Deploy. Labels must meet the following constraints: * Keys and
-	// values can contain only lowercase letters, numeric characters, underscores,
-	// and dashes. * All characters must use UTF-8 encoding, and international
-	// characters are allowed. * Keys must start with a lowercase letter or
-	// international character. * Each resource is limited to a maximum of 64
-	// labels. Both keys and values are additionally constrained to be <= 128
+	// Labels: Optional. Labels are attributes that can be set and used by both the
+	// user and by Cloud Deploy. Labels must meet the following constraints: * Keys
+	// and values can contain only lowercase letters, numeric characters,
+	// underscores, and dashes. * All characters must use UTF-8 encoding, and
+	// international characters are allowed. * Keys must start with a lowercase
+	// letter or international character. * Each resource is limited to a maximum
+	// of 64 labels. Both keys and values are additionally constrained to be <= 128
 	// bytes.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. Name of the `Release`. Format is

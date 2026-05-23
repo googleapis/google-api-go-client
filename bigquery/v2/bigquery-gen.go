@@ -2001,6 +2001,31 @@ func (s DataMaskingStatistics) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DataPolicyList: A list of data policy options. For more information, see
+// Mask data by applying data policies to a column
+// (https://docs.cloud.google.com/bigquery/docs/column-data-masking#data-policies-on-column).
+type DataPolicyList struct {
+	// DataPolicies: Contains a list of data policy options. At most 9 data
+	// policies are allowed per field.
+	DataPolicies []*DataPolicyOption `json:"dataPolicies,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataPolicies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataPolicies") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataPolicyList) MarshalJSON() ([]byte, error) {
+	type NoMethod DataPolicyList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DataPolicyOption: Data policy option. For more information, see Mask data by
 // applying data policies to a column
 // (https://docs.cloud.google.com/bigquery/docs/column-data-masking#data-policies-on-column).
@@ -3509,6 +3534,10 @@ type ExternalRuntimeOptions struct {
 	// 512Mi. For more information, see Configure container limits for Python UDFs
 	// (https://cloud.google.com/bigquery/docs/user-defined-functions-python#configure-container-limits)
 	ContainerMemory string `json:"containerMemory,omitempty"`
+	// ContainerRequestConcurrency: Optional. Maximum number of requests that a
+	// Cloud Run instance can handle concurrently. If absent or if `0`, a default
+	// concurrency is used.
+	ContainerRequestConcurrency int64 `json:"containerRequestConcurrency,omitempty,string"`
 	// MaxBatchingRows: Optional. Maximum number of rows in each batch sent to the
 	// external runtime. If absent or if 0, BigQuery dynamically decides the number
 	// of rows in a batch.
@@ -3716,6 +3745,29 @@ func (s GenAiErrorStats) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GenAiFunctionCacheStats: Provides cache statistics for a GenAi function
+// call.
+type GenAiFunctionCacheStats struct {
+	// NumCacheHitRows: Number of rows served from cache.
+	NumCacheHitRows int64 `json:"numCacheHitRows,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "NumCacheHitRows") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NumCacheHitRows") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenAiFunctionCacheStats) MarshalJSON() ([]byte, error) {
+	type NoMethod GenAiFunctionCacheStats
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GenAiFunctionCostOptimizationStats: Provides cost optimization statistics
 // for a GenAi function call.
 type GenAiFunctionCostOptimizationStats struct {
@@ -3771,6 +3823,8 @@ func (s GenAiFunctionErrorStats) MarshalJSON() ([]byte, error) {
 // GenAiFunctionStats: Provides statistics for each Ai function call within a
 // query.
 type GenAiFunctionStats struct {
+	// CacheStats: Cache stats for the function.
+	CacheStats *GenAiFunctionCacheStats `json:"cacheStats,omitempty"`
 	// CostOptimizationStats: Cost optimization stats if applied on the rows
 	// processed by the function.
 	CostOptimizationStats *GenAiFunctionCostOptimizationStats `json:"costOptimizationStats,omitempty"`
@@ -3783,15 +3837,15 @@ type GenAiFunctionStats struct {
 	NumProcessedRows int64 `json:"numProcessedRows,omitempty,string"`
 	// Prompt: User input prompt of the function (truncated to 20 chars).
 	Prompt string `json:"prompt,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CostOptimizationStats") to
+	// ForceSendFields is a list of field names (e.g. "CacheStats") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CostOptimizationStats") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CacheStats") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -6597,6 +6651,48 @@ func (s MaterializedViewStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MetadataCacheStalenessInsight: Column Metadata Index staleness detailed
+// infnormation.
+type MetadataCacheStalenessInsight struct {
+	// AvgPreviousStalenessMs: Output only. Average column metadata index staleness
+	// of previous runs with the same query hash.
+	AvgPreviousStalenessMs string `json:"avgPreviousStalenessMs,omitempty"`
+	// StalenessPercentageIncrease: Output only. The percent increase in staleness
+	// between the current job and the average staleness of previous jobs with the
+	// same query hash.
+	StalenessPercentageIncrease float64 `json:"stalenessPercentageIncrease,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AvgPreviousStalenessMs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AvgPreviousStalenessMs") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MetadataCacheStalenessInsight) MarshalJSON() ([]byte, error) {
+	type NoMethod MetadataCacheStalenessInsight
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *MetadataCacheStalenessInsight) UnmarshalJSON(data []byte) error {
+	type NoMethod MetadataCacheStalenessInsight
+	var s1 struct {
+		StalenessPercentageIncrease gensupport.JSONFloat64 `json:"stalenessPercentageIncrease"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.StalenessPercentageIncrease = float64(s1.StalenessPercentageIncrease)
+	return nil
+}
+
 // MetadataCacheStatistics: Statistics for metadata caching in queried tables.
 type MetadataCacheStatistics struct {
 	// TableMetadataCacheUsage: Set for the Metadata caching eligible tables
@@ -7070,6 +7166,9 @@ type PerformanceInsights struct {
 	// StagePerformanceStandaloneInsights: Output only. Standalone query stage
 	// performance insights, for exploring potential improvements.
 	StagePerformanceStandaloneInsights []*StagePerformanceStandaloneInsight `json:"stagePerformanceStandaloneInsights,omitempty"`
+	// TableChangeInsights: Output only. Performance insights for table-level
+	// attributes that changed compared to previous runs.
+	TableChangeInsights []*TableChangeInsight `json:"tableChangeInsights,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AvgPreviousExecutionMs") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9615,6 +9714,40 @@ func (s TableCell) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TableChangeInsight: Table-level performance insights compared to previous
+// runs. These insights don't apply to specific query stages, rather they apply
+// to the whole table.
+type TableChangeInsight struct {
+	// MetadataCacheNotUsedButUsedPreviously: Output only. True if the table's
+	// column metadata index was not used in the current job, but was used in a
+	// previous job with the same query hash.
+	MetadataCacheNotUsedButUsedPreviously bool `json:"metadataCacheNotUsedButUsedPreviously,omitempty"`
+	// MetadataCacheStalenessInsight: Output only. If present, indicates that the
+	// table's metadata column index staleness has increased significantly compared
+	// to previous jobs with the same query hash.
+	MetadataCacheStalenessInsight *MetadataCacheStalenessInsight `json:"metadataCacheStalenessInsight,omitempty"`
+	// TableReference: Output only. The table that was queried.
+	TableReference *TableReference `json:"tableReference,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "MetadataCacheNotUsedButUsedPreviously") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "MetadataCacheNotUsedButUsedPreviously") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TableChangeInsight) MarshalJSON() ([]byte, error) {
+	type NoMethod TableChangeInsight
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TableConstraints: The TableConstraints defines the primary key and foreign
 // key.
 type TableConstraints struct {
@@ -9907,9 +10040,26 @@ type TableFieldSchema struct {
 	// locale, case insensitive. * '': empty string. Default to case-sensitive
 	// behavior.
 	Collation string `json:"collation,omitempty"`
+	// DataGovernanceTagsInfo: Optional. Specifies the data governance tags on this
+	// field. This field works with other column-level security fields as follows:
+	// - Precedence: If a data governance tag is attached to a column, it takes
+	// precedence over the policy tag attached to the column. However, if a data
+	// policy is attached to a column, it takes precedence over the data governance
+	// tag. - Patching behavior (how this field behaves during a `Table.patch`
+	// schema update): - Unset: If the `data_governance_tags_info` field is omitted
+	// from the update request, the existing tags on the column are preserved. -
+	// Empty Field: To clear data governance tags from a column, send the
+	// `data_governance_tags_info` field as an empty object. This will remove all
+	// tags from the column. - Updating tags: To replace existing tag, send the
+	// field with the new tag.
+	DataGovernanceTagsInfo *TableFieldSchemaDataGovernanceTagsInfo `json:"dataGovernanceTagsInfo,omitempty"`
 	// DataPolicies: Optional. Data policies attached to this field, used for
 	// field-level access control.
 	DataPolicies []*DataPolicyOption `json:"dataPolicies,omitempty"`
+	// DataPolicyList: Optional. Specifies data policies attached to this field,
+	// used for field-level access control. When set, this will be the source of
+	// truth for data policy information.
+	DataPolicyList *DataPolicyList `json:"dataPolicyList,omitempty"`
 	// DefaultValueExpression: Optional. A SQL expression to specify the [default
 	// value] (https://cloud.google.com/bigquery/docs/default-values) for this
 	// field.
@@ -10031,6 +10181,48 @@ type TableFieldSchemaCategories struct {
 
 func (s TableFieldSchemaCategories) MarshalJSON() ([]byte, error) {
 	type NoMethod TableFieldSchemaCategories
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TableFieldSchemaDataGovernanceTagsInfo: Optional. Specifies the data
+// governance tags on this field. This field works with other column-level
+// security fields as follows: - Precedence: If a data governance tag is
+// attached to a column, it takes precedence over the policy tag attached to
+// the column. However, if a data policy is attached to a column, it takes
+// precedence over the data governance tag. - Patching behavior (how this field
+// behaves during a `Table.patch` schema update): - Unset: If the
+// `data_governance_tags_info` field is omitted from the update request, the
+// existing tags on the column are preserved. - Empty Field: To clear data
+// governance tags from a column, send the `data_governance_tags_info` field as
+// an empty object. This will remove all tags from the column. - Updating tags:
+// To replace existing tag, send the field with the new tag.
+type TableFieldSchemaDataGovernanceTagsInfo struct {
+	// DataGovernanceTags: Optional. The data governance tags added to this field
+	// are used for field-level access control. Only one data governance tag is
+	// currently supported on a field. Tag keys are globally unique. Tag key is
+	// expected to be in the namespaced format, for example "123456789012/pii"
+	// where 123456789012 is the ID of the parent organization or project resource
+	// for this tag key. Tag value is expected to be the short name, for example
+	// "sensitive". See Tag definitions
+	// (https://cloud.google.com/iam/docs/tags-access-control#definitions) for more
+	// details. For example: "123456789012/pii": "sensitive",
+	// "myProject/cost_center": "sales"
+	DataGovernanceTags map[string]string `json:"dataGovernanceTags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataGovernanceTags") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataGovernanceTags") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TableFieldSchemaDataGovernanceTagsInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod TableFieldSchemaDataGovernanceTagsInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

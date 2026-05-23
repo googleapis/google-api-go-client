@@ -4384,6 +4384,16 @@ func (s GoogleCloudContactcenterinsightsV1DiagnoseConversationsMetadata) Marshal
 // complex analysis process that may involve several steps of reasoning and
 // tool execution.
 type GoogleCloudContactcenterinsightsV1DiagnoseConversationsRequest struct {
+	// AgentDisplayName: ces agent display name (e.g., "Steering", "Billing").
+	AgentDisplayName string `json:"agentDisplayName,omitempty"`
+	// AgentId: ces agent id to diagnose.
+	AgentId string `json:"agentId,omitempty"`
+	// AppId: Required. The CES App ID.
+	AppId string `json:"appId,omitempty"`
+	// AppVersion: Optional. Optional but highly recommended. ces app version. If
+	// provided, specific version of agent instruction will be retrieved. If empty
+	// or set to '-', will use the latest draft version of instruction.
+	AppVersion string `json:"appVersion,omitempty"`
 	// DryRun: Optional. Deprecated: If true, the request will be validated and a
 	// simulation of the analysis will be performed without actually executing the
 	// task. This field is unused. Use validate_only instead.
@@ -4396,7 +4406,11 @@ type GoogleCloudContactcenterinsightsV1DiagnoseConversationsRequest struct {
 	// unused. The final diagnostic details are already persisted inside the
 	// Diagnostic resource instead.
 	FullReport bool `json:"fullReport,omitempty"`
-	// Instructions: Optional. Specific instructions for the agent.
+	// GroupId: Optional. A unique identifier used to group multiple diagnostic
+	// requests triggered under the same run batch or cron job.
+	GroupId string `json:"groupId,omitempty"`
+	// Instructions: Optional. Deprecated: Specific instructions for the agent. Use
+	// app_id and subagent fields instead.
 	Instructions string `json:"instructions,omitempty"`
 	// MaxSteps: Optional. The maximum number of steps the agent can take during
 	// the execution of the task. Defaults to 10.
@@ -4427,15 +4441,15 @@ type GoogleCloudContactcenterinsightsV1DiagnoseConversationsRequest struct {
 	// ValidateOnly: Optional. If true, the request will only be validated
 	// (permissions, filter syntax, etc.) without actually triggering the analysis.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DryRun") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AgentDisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DryRun") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgentDisplayName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4486,14 +4500,26 @@ func (s GoogleCloudContactcenterinsightsV1DiagnoseConversationsResponse) Marshal
 
 // GoogleCloudContactcenterinsightsV1Diagnostic: The diagnostic resource.
 type GoogleCloudContactcenterinsightsV1Diagnostic struct {
+	// AgentDisplayName: Output only. The display name of the agent associated with
+	// the diagnostic.
+	AgentDisplayName string `json:"agentDisplayName,omitempty"`
+	// AgentId: Output only. The ID of the agent associated with the diagnostic.
+	AgentId string `json:"agentId,omitempty"`
 	// AnalysisSummary: Output only. The complete sequence of thoughts and actions
 	// taken by the agent.
 	AnalysisSummary string `json:"analysisSummary,omitempty"`
+	// AppId: Output only. The application ID associated with the diagnostic.
+	AppId string `json:"appId,omitempty"`
+	// AppVersion: Output only. The application version associated with the
+	// diagnostic.
+	AppVersion string `json:"appVersion,omitempty"`
 	// ConversationFilter: Output only. The filter used to select the conversations
 	// that were included in the diagnostic.
 	ConversationFilter string `json:"conversationFilter,omitempty"`
 	// CreateTime: Output only. The time at which the diagnostic was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// GroupCreateTime: Output only. The timestamp when the group was created.
+	GroupCreateTime string `json:"groupCreateTime,omitempty"`
 	// Name: Immutable. Identifier. The resource name of the diagnostic.
 	Name string `json:"name,omitempty"`
 	// Report: Output only. The report containing the findings of the diagnostic.
@@ -4501,13 +4527,13 @@ type GoogleCloudContactcenterinsightsV1Diagnostic struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AnalysisSummary") to
+	// ForceSendFields is a list of field names (e.g. "AgentDisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AnalysisSummary") to include in
+	// NullFields is a list of field names (e.g. "AgentDisplayName") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -4520,7 +4546,7 @@ func (s GoogleCloudContactcenterinsightsV1Diagnostic) MarshalJSON() ([]byte, err
 }
 
 // GoogleCloudContactcenterinsightsV1DiagnosticReport: A diagnostic report
-// containing aggregate metrics and intent breakdowns.
+// containing loss patterns and problematic slice stats.
 type GoogleCloudContactcenterinsightsV1DiagnosticReport struct {
 	// ConversationSlices: Output only. A map of conversation slices used in the
 	// report.
@@ -12892,6 +12918,16 @@ func (s GoogleCloudContactcenterinsightsV1alpha1DiagnoseConversationsMetadata) M
 // triggers a complex analysis process that may involve several steps of
 // reasoning and tool execution.
 type GoogleCloudContactcenterinsightsV1alpha1DiagnoseConversationsRequest struct {
+	// AgentDisplayName: ces agent display name (e.g., "Steering", "Billing").
+	AgentDisplayName string `json:"agentDisplayName,omitempty"`
+	// AgentId: ces agent id to diagnose.
+	AgentId string `json:"agentId,omitempty"`
+	// AppId: Required. The CES App ID.
+	AppId string `json:"appId,omitempty"`
+	// AppVersion: Optional. Optional but highly recommended. ces app version. If
+	// provided, specific version of agent instruction will be retrieved. If empty
+	// or set to '-', will use the latest draft version of instruction.
+	AppVersion string `json:"appVersion,omitempty"`
 	// DryRun: Optional. Deprecated: If true, the request will be validated and a
 	// simulation of the analysis will be performed without actually executing the
 	// task. This field is unused. Use validate_only instead.
@@ -12904,7 +12940,11 @@ type GoogleCloudContactcenterinsightsV1alpha1DiagnoseConversationsRequest struct
 	// unused. The final diagnostic details are already persisted inside the
 	// Diagnostic resource instead.
 	FullReport bool `json:"fullReport,omitempty"`
-	// Instructions: Optional. Specific instructions for the agent.
+	// GroupId: Optional. A unique identifier used to group multiple diagnostic
+	// requests triggered under the same run batch or cron job.
+	GroupId string `json:"groupId,omitempty"`
+	// Instructions: Optional. Deprecated: Specific instructions for the agent. Use
+	// app_id and subagent fields instead.
 	Instructions string `json:"instructions,omitempty"`
 	// MaxSteps: Optional. The maximum number of steps the agent can take during
 	// the execution of the task. Defaults to 10.
@@ -12935,15 +12975,15 @@ type GoogleCloudContactcenterinsightsV1alpha1DiagnoseConversationsRequest struct
 	// ValidateOnly: Optional. If true, the request will only be validated
 	// (permissions, filter syntax, etc.) without actually triggering the analysis.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DryRun") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AgentDisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DryRun") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgentDisplayName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -12993,7 +13033,7 @@ func (s GoogleCloudContactcenterinsightsV1alpha1DiagnoseConversationsResponse) M
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1DiagnosticReport: A diagnostic
-// report containing aggregate metrics and intent breakdowns.
+// report containing loss patterns and problematic slice stats.
 type GoogleCloudContactcenterinsightsV1alpha1DiagnosticReport struct {
 	// ConversationSlices: Output only. A map of conversation slices used in the
 	// report.
@@ -19279,6 +19319,16 @@ func (s GoogleCloudContactcenterinsightsV1mainDiagnoseConversationsMetadata) Mar
 // triggers a complex analysis process that may involve several steps of
 // reasoning and tool execution.
 type GoogleCloudContactcenterinsightsV1mainDiagnoseConversationsRequest struct {
+	// AgentDisplayName: ces agent display name (e.g., "Steering", "Billing").
+	AgentDisplayName string `json:"agentDisplayName,omitempty"`
+	// AgentId: ces agent id to diagnose.
+	AgentId string `json:"agentId,omitempty"`
+	// AppId: Required. The CES App ID.
+	AppId string `json:"appId,omitempty"`
+	// AppVersion: Optional. Optional but highly recommended. ces app version. If
+	// provided, specific version of agent instruction will be retrieved. If empty
+	// or set to '-', will use the latest draft version of instruction.
+	AppVersion string `json:"appVersion,omitempty"`
 	// DryRun: Optional. Deprecated: If true, the request will be validated and a
 	// simulation of the analysis will be performed without actually executing the
 	// task. This field is unused. Use validate_only instead.
@@ -19291,7 +19341,11 @@ type GoogleCloudContactcenterinsightsV1mainDiagnoseConversationsRequest struct {
 	// unused. The final diagnostic details are already persisted inside the
 	// Diagnostic resource instead.
 	FullReport bool `json:"fullReport,omitempty"`
-	// Instructions: Optional. Specific instructions for the agent.
+	// GroupId: Optional. A unique identifier used to group multiple diagnostic
+	// requests triggered under the same run batch or cron job.
+	GroupId string `json:"groupId,omitempty"`
+	// Instructions: Optional. Deprecated: Specific instructions for the agent. Use
+	// app_id and subagent fields instead.
 	Instructions string `json:"instructions,omitempty"`
 	// MaxSteps: Optional. The maximum number of steps the agent can take during
 	// the execution of the task. Defaults to 10.
@@ -19322,15 +19376,15 @@ type GoogleCloudContactcenterinsightsV1mainDiagnoseConversationsRequest struct {
 	// ValidateOnly: Optional. If true, the request will only be validated
 	// (permissions, filter syntax, etc.) without actually triggering the analysis.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DryRun") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AgentDisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DryRun") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgentDisplayName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -19380,7 +19434,7 @@ func (s GoogleCloudContactcenterinsightsV1mainDiagnoseConversationsResponse) Mar
 }
 
 // GoogleCloudContactcenterinsightsV1mainDiagnosticReport: A diagnostic report
-// containing aggregate metrics and intent breakdowns.
+// containing loss patterns and problematic slice stats.
 type GoogleCloudContactcenterinsightsV1mainDiagnosticReport struct {
 	// ConversationSlices: Output only. A map of conversation slices used in the
 	// report.
@@ -40463,6 +40517,20 @@ type ProjectsLocationsDiagnosticsListCall struct {
 func (r *ProjectsLocationsDiagnosticsService) List(parent string) *ProjectsLocationsDiagnosticsListCall {
 	c := &ProjectsLocationsDiagnosticsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// AppId sets the optional parameter "appId": The CES App ID to filter
+// diagnostics by.
+func (c *ProjectsLocationsDiagnosticsListCall) AppId(appId string) *ProjectsLocationsDiagnosticsListCall {
+	c.urlParams_.Set("appId", appId)
+	return c
+}
+
+// AppVersion sets the optional parameter "appVersion": The CES App version to
+// filter diagnostics by.
+func (c *ProjectsLocationsDiagnosticsListCall) AppVersion(appVersion string) *ProjectsLocationsDiagnosticsListCall {
+	c.urlParams_.Set("appVersion", appVersion)
 	return c
 }
 

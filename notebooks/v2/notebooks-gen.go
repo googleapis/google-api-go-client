@@ -229,6 +229,7 @@ type AcceleratorConfig struct {
 	//   "NVIDIA_TESLA_P4_VWS" - Accelerator type is NVIDIA Tesla P4 Virtual
 	// Workstations.
 	//   "NVIDIA_B200" - Accelerator type is NVIDIA B200.
+	//   "NVIDIA_RTX6000" - NVIDIA RTX 6000.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CoreCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1943,6 +1944,29 @@ func (s UpgradeHistoryEntry) MarshalJSON() ([]byte, error) {
 
 // UpgradeInstanceRequest: Request for upgrading a notebook instance
 type UpgradeInstanceRequest struct {
+	// ImageFamily: Optional. The Compute Engine image family resource name to
+	// upgrade to. Format:
+	// `projects/{project_id}/global/images/family/{image_family}` If specified,
+	// the instance will be upgraded to the latest image in the specified image
+	// family, allowing upgrades across image families. If not specified, the
+	// instance will be upgraded to the latest image in its current image family.
+	ImageFamily string `json:"imageFamily,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ImageFamily") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ImageFamily") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpgradeInstanceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpgradeInstanceRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpgradeInstanceSystemRequest: Request for upgrading a notebook instance from
@@ -2119,8 +2143,8 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this service. This
 // method lists locations based on the resource scope provided in the
-// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
-// empty, the method lists the public locations available to all projects. *
+// ListLocationsRequest.name field: * **Global locations**: If `name` is empty,
+// the method lists the public locations available to all projects. *
 // **Project-specific locations**: If `name` follows the format
 // `projects/{project}`, the method lists locations visible to that specific
 // project. This includes public, private, or other project-specific locations
@@ -2137,8 +2161,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

@@ -372,8 +372,9 @@ func (s FetchVerificationOptionsResponse) MarshalJSON() ([]byte, error) {
 // GenerateInstantVerificationTokenRequest: Request message for
 // Verifications.GenerateInstantVerificationToken.
 type GenerateInstantVerificationTokenRequest struct {
-	// LocationData: Immutable. The address and other details of the location to
-	// generate an instant verification token for.
+	// LocationData: Immutable. Deprecated: Please use location_id instead. The
+	// address and other details of the location to generate an instant
+	// verification token for.
 	LocationData *LocationData `json:"locationData,omitempty"`
 	// LocationId: The location identifier associated with an unverified listing.
 	// This is the location id generated at the time that the listing was

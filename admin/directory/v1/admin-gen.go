@@ -2666,10 +2666,11 @@ func (s DirectoryChromeosdevicesIssueCommandResponse) MarshalJSON() ([]byte, err
 // DirectoryUsersCreateGuestRequest: Directory users guest creation request
 // message.
 type DirectoryUsersCreateGuestRequest struct {
-	// Customer: Optional. Immutable ID of the Google Workspace account.
+	// Customer: Optional. Immutable ID of the Google Workspace account. Only
+	// required when request is created by a service account. Defaults to the
+	// authenticated user's customer ID otherwise.
 	Customer string `json:"customer,omitempty"`
-	// PrimaryGuestEmail: Immutable. External email of the guest user being
-	// created.
+	// PrimaryGuestEmail: Required. External email of the guest user being created.
 	PrimaryGuestEmail string `json:"primaryGuestEmail,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Customer") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -17555,8 +17556,7 @@ type UsersCreateGuestCall struct {
 
 // CreateGuest: Create a guest user with access to a subset of Workspace
 // capabilities (https://support.google.com/a/answer/16558545). This feature is
-// currently in Alpha. Please reach out to support if you are interested in
-// trying this feature.
+// currently in Open Beta.
 func (r *UsersService) CreateGuest(directoryuserscreateguestrequest *DirectoryUsersCreateGuestRequest) *UsersCreateGuestCall {
 	c := &UsersCreateGuestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.directoryuserscreateguestrequest = directoryuserscreateguestrequest

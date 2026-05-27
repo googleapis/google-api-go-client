@@ -1913,6 +1913,12 @@ func (s RuleInfo) MarshalJSON() ([]byte, error) {
 // RuleViolationInfo: Common alert information about violated rules that are
 // configured by Google Workspace administrators.
 type RuleViolationInfo struct {
+	// AgentType: Optional. Agent type that triggered the rule.
+	//
+	// Possible values:
+	//   "AGENT_TYPE_UNSPECIFIED" - Unspecified agent type.
+	//   "STUDIO" - Studio agent type.
+	AgentType string `json:"agentType,omitempty"`
 	// DataSource: Source of the data.
 	//
 	// Possible values:
@@ -2000,6 +2006,7 @@ type RuleViolationInfo struct {
 	//   "CHROMEOS_FILE_TRANSFER" - A file being transferred (copy or moved)
 	// between different file systems on ChromeOS.
 	//   "GEMINI_ACCESS" - Gemini access.
+	//   "AGENT_EXECUTION" - Agent execution.
 	Trigger string `json:"trigger,omitempty"`
 	// TriggeredActionInfo: Metadata related to the triggered actions.
 	TriggeredActionInfo []*ActionInfo `json:"triggeredActionInfo,omitempty"`
@@ -2048,13 +2055,13 @@ type RuleViolationInfo struct {
 	// be empty if not applicable, for example, a violation found by drive
 	// continuous scan.
 	TriggeringUserEmail string `json:"triggeringUserEmail,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DataSource") to
+	// ForceSendFields is a list of field names (e.g. "AgentType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DataSource") to include in API
+	// NullFields is a list of field names (e.g. "AgentType") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

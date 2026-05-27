@@ -280,7 +280,7 @@
       }
     }
   },
-  "revision": "20260517",
+  "revision": "20260524",
   "rootUrl": "https://places.googleapis.com/",
   "schemas": {
     "GoogleGeoTypeViewport": {
@@ -691,11 +691,11 @@
       "type": "object"
     },
     "GoogleMapsPlacesV1ContextualContent": {
-      "description": "Experimental: See https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative for more details. Content that is contextual to the place query.",
+      "description": "Content that is contextual to the place query.",
       "id": "GoogleMapsPlacesV1ContextualContent",
       "properties": {
         "justifications": {
-          "description": "Experimental: See https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative for more details. Justifications for the place.",
+          "description": "Justifications for the place.",
           "items": {
             "$ref": "GoogleMapsPlacesV1ContextualContentJustification"
           },
@@ -719,22 +719,20 @@
       "type": "object"
     },
     "GoogleMapsPlacesV1ContextualContentJustification": {
-      "description": "Experimental: See https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative for more details. Justifications for the place. Justifications answers the question of why a place could interest an end user.",
+      "description": "Justifications for the place. Justifications answers the question of why a place could interest an end user.",
       "id": "GoogleMapsPlacesV1ContextualContentJustification",
       "properties": {
         "businessAvailabilityAttributesJustification": {
-          "$ref": "GoogleMapsPlacesV1ContextualContentJustificationBusinessAvailabilityAttributesJustification",
-          "description": "Experimental: See https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative for more details."
+          "$ref": "GoogleMapsPlacesV1ContextualContentJustificationBusinessAvailabilityAttributesJustification"
         },
         "reviewJustification": {
-          "$ref": "GoogleMapsPlacesV1ContextualContentJustificationReviewJustification",
-          "description": "Experimental: See https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative for more details."
+          "$ref": "GoogleMapsPlacesV1ContextualContentJustificationReviewJustification"
         }
       },
       "type": "object"
     },
     "GoogleMapsPlacesV1ContextualContentJustificationBusinessAvailabilityAttributesJustification": {
-      "description": "Experimental: See https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative for more details. BusinessAvailabilityAttributes justifications. This shows some attributes a business has that could interest an end user.",
+      "description": "BusinessAvailabilityAttributes justifications. This shows some attributes a business has that could interest an end user.",
       "id": "GoogleMapsPlacesV1ContextualContentJustificationBusinessAvailabilityAttributesJustification",
       "properties": {
         "delivery": {
@@ -753,7 +751,7 @@
       "type": "object"
     },
     "GoogleMapsPlacesV1ContextualContentJustificationReviewJustification": {
-      "description": "Experimental: See https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative for more details. User review justifications. This highlights a section of the user review that would interest an end user. For instance, if the search query is \"firewood pizza\", the review justification highlights the text relevant to the search query.",
+      "description": "User review justifications. This highlights a section of the user review that would interest an end user. For instance, if the search query is \"firewood pizza\", the review justification highlights the text relevant to the search query.",
       "id": "GoogleMapsPlacesV1ContextualContentJustificationReviewJustification",
       "properties": {
         "highlightedText": {

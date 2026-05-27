@@ -1362,6 +1362,8 @@ type ComputeEngineTargetDefaults struct {
 	//   "COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED_HIGH_AVAILABILITY" -
 	// Hyperdisk balanced high availability disk type.
 	DiskType string `json:"diskType,omitempty"`
+	// Disks: Optional. The details of each disk to create.
+	Disks []*PersistentDiskDefaults `json:"disks,omitempty"`
 	// EnableIntegrityMonitoring: Optional. Defines whether the instance has
 	// integrity monitoring enabled. This can be set to true only if the VM boot
 	// option is EFI, and vTPM is enabled.
@@ -3617,9 +3619,9 @@ type PauseMigrationRequest struct {
 
 // PersistentDisk: Details of a created Persistent Disk.
 type PersistentDisk struct {
-	// DiskUri: The URI of the Persistent Disk.
+	// DiskUri: Output only. The URI of the Persistent Disk.
 	DiskUri string `json:"diskUri,omitempty"`
-	// SourceDiskNumber: The ordinal number of the source VM disk.
+	// SourceDiskNumber: Output only. The ordinal number of the source VM disk.
 	SourceDiskNumber int64 `json:"sourceDiskNumber,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DiskUri") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

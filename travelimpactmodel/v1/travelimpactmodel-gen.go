@@ -730,7 +730,7 @@ type FlightsComputeFlightEmissionsCall struct {
 
 // ComputeFlightEmissions: Stateless method to retrieve emission estimates.
 // Details on how emission estimates are computed are in GitHub
-// (https://github.com/google/travel-impact-model) The response will contain
+// (https://github.com/google/travel-impact-model). The response will contain
 // all entries that match the input flight legs, in the same order. If there
 // are no estimates available for a certain flight leg, the response will
 // return the flight leg object with empty emission fields. The request will

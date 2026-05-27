@@ -1699,7 +1699,8 @@ type ClusterConfig struct {
 	//   "ENGINE_UNSPECIFIED" - The engine is not specified. Works the same as
 	// ENGINE_DEFAULT.
 	//   "DEFAULT" - The cluster is a default engine cluster.
-	//   "LIGHTNING" - The cluster is a lightning engine cluster.
+	//   "LIGHTNING" - The cluster is a Lightning Engine
+	// (https://cloud.google.com/dataproc/docs/guides/lightning-engine) cluster.
 	Engine string `json:"engine,omitempty"`
 	// GceClusterConfig: Optional. The shared Compute Engine config settings for
 	// all instances in a cluster.
@@ -9310,12 +9311,26 @@ func (s TrinoJob) MarshalJSON() ([]byte, error) {
 // UsageMetrics: Usage metrics represent approximate total resources consumed
 // by a workload.
 type UsageMetrics struct {
-	// AcceleratorType: Optional. DEPRECATED Accelerator type being used, if any
+	// AcceleratorType: Optional. Accelerator type being used, if any Deprecated:
+	// This field is only used in runtime versions below 3.0.
 	AcceleratorType string `json:"acceleratorType,omitempty"`
-	// MilliAcceleratorSeconds: Optional. DEPRECATED Accelerator usage in
+	// MilliAcceleratorSeconds: Optional. Accelerator usage in (milliAccelerator x
+	// seconds) (see Dataproc Serverless pricing
+	// (https://cloud.google.com/dataproc-serverless/pricing)). Deprecated: This
+	// field is only used in runtime versions below 3.0.
+	MilliAcceleratorSeconds int64 `json:"milliAcceleratorSeconds,omitempty,string"`
+	// MilliAcceleratorSecondsA10040: Optional. A100-40 accelerator usage in
 	// (milliAccelerator x seconds) (see Dataproc Serverless pricing
 	// (https://cloud.google.com/dataproc-serverless/pricing)).
-	MilliAcceleratorSeconds int64 `json:"milliAcceleratorSeconds,omitempty,string"`
+	MilliAcceleratorSecondsA10040 int64 `json:"milliAcceleratorSecondsA10040,omitempty,string"`
+	// MilliAcceleratorSecondsA10080: Optional. A100-80 accelerator usage in
+	// (milliAccelerator x seconds) (see Dataproc Serverless pricing
+	// (https://cloud.google.com/dataproc-serverless/pricing)).
+	MilliAcceleratorSecondsA10080 int64 `json:"milliAcceleratorSecondsA10080,omitempty,string"`
+	// MilliAcceleratorSecondsL4: Optional. L4 accelerator usage in
+	// (milliAccelerator x seconds) (see Dataproc Serverless pricing
+	// (https://cloud.google.com/dataproc-serverless/pricing)).
+	MilliAcceleratorSecondsL4 int64 `json:"milliAcceleratorSecondsL4,omitempty,string"`
 	// MilliDcuSeconds: Optional. DCU (Dataproc Compute Units) usage in (milliDCU x
 	// seconds) (see Dataproc Serverless pricing
 	// (https://cloud.google.com/dataproc-serverless/pricing)).
@@ -9347,12 +9362,26 @@ func (s UsageMetrics) MarshalJSON() ([]byte, error) {
 // UsageSnapshot: The usage snapshot represents the resources consumed by a
 // workload at a specified time.
 type UsageSnapshot struct {
-	// AcceleratorType: Optional. Accelerator type being used, if any
+	// AcceleratorType: Optional. Accelerator type being used, if any Deprecated:
+	// This field is only used in runtime versions below 3.0.
 	AcceleratorType string `json:"acceleratorType,omitempty"`
 	// MilliAccelerator: Optional. Milli (one-thousandth) accelerator. (see
 	// Dataproc Serverless pricing
-	// (https://cloud.google.com/dataproc-serverless/pricing))
+	// (https://cloud.google.com/dataproc-serverless/pricing)) Deprecated: This
+	// field is only used in runtime versions below 3.0.
 	MilliAccelerator int64 `json:"milliAccelerator,omitempty,string"`
+	// MilliAcceleratorA10040: Optional. Milli (one-thousandth) accelerator for
+	// A100-40 accelerators. (see Dataproc Serverless pricing
+	// (https://cloud.google.com/dataproc-serverless/pricing))
+	MilliAcceleratorA10040 int64 `json:"milliAcceleratorA10040,omitempty,string"`
+	// MilliAcceleratorA10080: Optional. Milli (one-thousandth) accelerator for
+	// A100-80 accelerators. (see Dataproc Serverless pricing
+	// (https://cloud.google.com/dataproc-serverless/pricing))
+	MilliAcceleratorA10080 int64 `json:"milliAcceleratorA10080,omitempty,string"`
+	// MilliAcceleratorL4: Optional. Milli (one-thousandth) accelerator for L4
+	// accelerators. (see Dataproc Serverless pricing
+	// (https://cloud.google.com/dataproc-serverless/pricing))
+	MilliAcceleratorL4 int64 `json:"milliAcceleratorL4,omitempty,string"`
 	// MilliDcu: Optional. Milli (one-thousandth) Dataproc Compute Units (DCUs)
 	// (see Dataproc Serverless pricing
 	// (https://cloud.google.com/dataproc-serverless/pricing)).

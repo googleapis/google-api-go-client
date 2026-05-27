@@ -700,6 +700,32 @@ func (s CloudFunctionInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CloudRunJobInfo: For display only. Metadata associated with a Cloud Run job.
+type CloudRunJobInfo struct {
+	// DisplayName: Name of a Cloud Run job.
+	DisplayName string `json:"displayName,omitempty"`
+	// Location: Location in which this job is deployed.
+	Location string `json:"location,omitempty"`
+	// Uri: URI of a Cloud Run job.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudRunJobInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudRunJobInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CloudRunRevisionEndpoint: Wrapper for Cloud Run revision attributes.
 type CloudRunRevisionEndpoint struct {
 	// ServiceUri: Output only. The URI of the Cloud Run service that the revision
@@ -933,6 +959,7 @@ type DeliverInfo struct {
 	//   "REDIS_INSTANCE" - Target is a Redis Instance.
 	//   "REDIS_CLUSTER" - Target is a Redis Cluster.
 	//   "GKE_POD" - Target is a GKE Pod.
+	//   "CLOUD_RUN_JOB" - Target is a Cloud Run Job. Used only for return traces.
 	//   "DMS_PRIVATE_CONNECTION" - Target is a DMS Private Connection. Used only
 	// for return traces.
 	//   "DATASTREAM_PRIVATE_CONNECTION" - Target is a Datastream Private
@@ -1167,6 +1194,8 @@ type DropInfo struct {
 	// region, but such a configuration is not supported.
 	//   "CLOUD_RUN_REVISION_NOT_READY" - Packet sent from a Cloud Run revision
 	// that is not ready.
+	//   "CLOUD_RUN_JOB_NOT_READY" - Packet sent from a Cloud Run job that is not
+	// ready.
 	//   "DROPPED_INSIDE_PSC_SERVICE_PRODUCER" - Packet was dropped inside Private
 	// Service Connect service producer.
 	//   "LOAD_BALANCER_HAS_NO_PROXY_SUBNET" - Packet sent to a load balancer,
@@ -3561,6 +3590,8 @@ type Step struct {
 	CausesDrop bool `json:"causesDrop,omitempty"`
 	// CloudFunction: Display information of a Cloud Function.
 	CloudFunction *CloudFunctionInfo `json:"cloudFunction,omitempty"`
+	// CloudRunJob: Display information of a Cloud Run job.
+	CloudRunJob *CloudRunJobInfo `json:"cloudRunJob,omitempty"`
 	// CloudRunRevision: Display information of a Cloud Run revision.
 	CloudRunRevision *CloudRunRevisionInfo `json:"cloudRunRevision,omitempty"`
 	// CloudSqlInstance: Display information of a Cloud SQL instance.
@@ -3680,6 +3711,8 @@ type Step struct {
 	//   "START_FROM_CLOUD_RUN_REVISION" - Initial state: packet originating from a
 	// Cloud Run revision. A CloudRunRevisionInfo is populated with starting
 	// revision information.
+	//   "START_FROM_CLOUD_RUN_JOB" - Initial state: packet originating from a
+	// Cloud Run Job. A CloudRunJobInfo is populated with starting Job information.
 	//   "START_FROM_STORAGE_BUCKET" - Initial state: packet originating from a
 	// Storage Bucket. Used only for return traces. The storage_bucket information
 	// is populated.

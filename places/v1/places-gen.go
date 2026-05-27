@@ -871,13 +871,10 @@ func (s GoogleMapsPlacesV1ContentBlock) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleMapsPlacesV1ContextualContent: Experimental: See
-// https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
-// for more details. Content that is contextual to the place query.
+// GoogleMapsPlacesV1ContextualContent: Content that is contextual to the place
+// query.
 type GoogleMapsPlacesV1ContextualContent struct {
-	// Justifications: Experimental: See
-	// https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
-	// for more details. Justifications for the place.
+	// Justifications: Justifications for the place.
 	Justifications []*GoogleMapsPlacesV1ContextualContentJustification `json:"justifications,omitempty"`
 	// Photos: Information (including references) about photos of this place,
 	// contextual to the place query.
@@ -902,19 +899,12 @@ func (s GoogleMapsPlacesV1ContextualContent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleMapsPlacesV1ContextualContentJustification: Experimental: See
-// https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
-// for more details. Justifications for the place. Justifications answers the
-// question of why a place could interest an end user.
+// GoogleMapsPlacesV1ContextualContentJustification: Justifications for the
+// place. Justifications answers the question of why a place could interest an
+// end user.
 type GoogleMapsPlacesV1ContextualContentJustification struct {
-	// BusinessAvailabilityAttributesJustification: Experimental: See
-	// https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
-	// for more details.
 	BusinessAvailabilityAttributesJustification *GoogleMapsPlacesV1ContextualContentJustificationBusinessAvailabilityAttributesJustification `json:"businessAvailabilityAttributesJustification,omitempty"`
-	// ReviewJustification: Experimental: See
-	// https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
-	// for more details.
-	ReviewJustification *GoogleMapsPlacesV1ContextualContentJustificationReviewJustification `json:"reviewJustification,omitempty"`
+	ReviewJustification                         *GoogleMapsPlacesV1ContextualContentJustificationReviewJustification                         `json:"reviewJustification,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "BusinessAvailabilityAttributesJustification") to unconditionally include in
 	// API requests. By default, fields with empty or default values are omitted
@@ -936,9 +926,7 @@ func (s GoogleMapsPlacesV1ContextualContentJustification) MarshalJSON() ([]byte,
 }
 
 // GoogleMapsPlacesV1ContextualContentJustificationBusinessAvailabilityAttribute
-// sJustification: Experimental: See
-// https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
-// for more details. BusinessAvailabilityAttributes justifications. This shows
+// sJustification: BusinessAvailabilityAttributes justifications. This shows
 // some attributes a business has that could interest an end user.
 type GoogleMapsPlacesV1ContextualContentJustificationBusinessAvailabilityAttributesJustification struct {
 	// Delivery: If a place provides delivery.
@@ -965,13 +953,11 @@ func (s GoogleMapsPlacesV1ContextualContentJustificationBusinessAvailabilityAttr
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleMapsPlacesV1ContextualContentJustificationReviewJustification:
-// Experimental: See
-// https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
-// for more details. User review justifications. This highlights a section of
-// the user review that would interest an end user. For instance, if the search
-// query is "firewood pizza", the review justification highlights the text
-// relevant to the search query.
+// GoogleMapsPlacesV1ContextualContentJustificationReviewJustification: User
+// review justifications. This highlights a section of the user review that
+// would interest an end user. For instance, if the search query is "firewood
+// pizza", the review justification highlights the text relevant to the search
+// query.
 type GoogleMapsPlacesV1ContextualContentJustificationReviewJustification struct {
 	HighlightedText *GoogleMapsPlacesV1ContextualContentJustificationReviewJustificationHighlightedText `json:"highlightedText,omitempty"`
 	// Review: The review that the highlighted text is generated from.

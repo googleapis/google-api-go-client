@@ -2469,6 +2469,50 @@ func (s ManagementDnsZoneBinding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MigrateManagementVmsRequest: Request message for
+// VmwareEngine.MigrateManagementVms
+type MigrateManagementVmsRequest struct {
+	// ClusterId: Required. The user-provided identifier of the workload cluster to
+	// which the management VMs are to be migrated. The cluster must be in the same
+	// private cloud as the one specified in `name`, and must be a workload
+	// cluster. The eventual cluster name will be constructed from the private
+	// cloud name and this cluster ID.
+	ClusterId string `json:"clusterId,omitempty"`
+	// Etag: Optional. Checksum used to ensure that the user-provided value is up
+	// to date before the server processes the request. The server compares
+	// provided checksum with the current checksum of the resource. If the
+	// user-provided value is out of date, this request returns an `ABORTED` error.
+	Etag string `json:"etag,omitempty"`
+	// RequestId: Optional. A request ID to identify requests. Specify a unique
+	// request ID so that if you must retry your request, the server will know to
+	// ignore the request if it has already been completed. The server guarantees
+	// that a request doesn't result in creation of duplicate commitments for at
+	// least 60 minutes. For example, consider a situation where you make an
+	// initial request and the request times out. If you make the request again
+	// with the same request ID, the server can check if the original operation
+	// with the same request ID was received, and if so, will ignore the second
+	// request. This prevents clients from accidentally creating duplicate
+	// commitments. The request ID must be a valid UUID with the exception that
+	// zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClusterId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClusterId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MigrateManagementVmsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod MigrateManagementVmsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // MountDatastoreRequest: Mount Datastore Request message
 type MountDatastoreRequest struct {
 	// DatastoreMountConfig: Required. The datastore mount configuration.
@@ -4591,8 +4635,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -9841,6 +9885,115 @@ func (c *ProjectsLocationsPrivateCloudsListCall) Pages(ctx context.Context, f fu
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsPrivateCloudsMigrateManagementVmsCall struct {
+	s                           *Service
+	name                        string
+	migratemanagementvmsrequest *MigrateManagementVmsRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// MigrateManagementVms: Migrates the management VMs of the PC from the current
+// management cluster to a workload cluster. Post this migration, the provided
+// workload cluster becomes the management cluster
+//
+//   - name: The resource name of the private cloud whose management vms are
+//     getting migrated. Resource names are schemeless URIs that follow the
+//     conventions in https://cloud.google.com/apis/design/resource_names. For
+//     example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`.
+func (r *ProjectsLocationsPrivateCloudsService) MigrateManagementVms(name string, migratemanagementvmsrequest *MigrateManagementVmsRequest) *ProjectsLocationsPrivateCloudsMigrateManagementVmsCall {
+	c := &ProjectsLocationsPrivateCloudsMigrateManagementVmsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.migratemanagementvmsrequest = migratemanagementvmsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPrivateCloudsMigrateManagementVmsCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsMigrateManagementVmsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPrivateCloudsMigrateManagementVmsCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsMigrateManagementVmsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPrivateCloudsMigrateManagementVmsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsMigrateManagementVmsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.migratemanagementvmsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:migrateManagementVms")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.privateClouds.migrateManagementVms", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.migrateManagementVms" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsMigrateManagementVmsCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.privateClouds.migrateManagementVms", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsPrivateCloudsPatchCall struct {

@@ -3609,6 +3609,10 @@ type GoogleCloudAiplatformV1beta1Tool struct {
 	// EnterpriseWebSearch: Optional. Tool to support searching public web data,
 	// powered by Vertex AI Search and Sec4 compliance.
 	EnterpriseWebSearch *GoogleCloudAiplatformV1beta1EnterpriseWebSearch `json:"enterpriseWebSearch,omitempty"`
+	// ExaAiSearch: Optional. Uses Exa.ai to search for information to answer user
+	// queries. The search results will be grounded on Exa.ai and presented to the
+	// model for response generation
+	ExaAiSearch *GoogleCloudAiplatformV1beta1ToolExaAiSearch `json:"exaAiSearch,omitempty"`
 	// FunctionDeclarations: Optional. Function tool type. One or more function
 	// declarations to be passed to the model along with the current user query.
 	// Model may decide to call a subset of these functions by populating
@@ -3716,6 +3720,32 @@ type GoogleCloudAiplatformV1beta1ToolConfig struct {
 
 func (s GoogleCloudAiplatformV1beta1ToolConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1ToolConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1ToolExaAiSearch: ExaAiSearch tool type. A tool
+// that uses the Exa.ai search engine for grounding.
+type GoogleCloudAiplatformV1beta1ToolExaAiSearch struct {
+	// ApiKey: Required. The API key for ExaAiSearch.
+	ApiKey string `json:"apiKey,omitempty"`
+	// CustomConfigs: Optional. This field can be used to pass any parameter from
+	// the Exa.ai Search API.
+	CustomConfigs googleapi.RawMessage `json:"customConfigs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1ToolExaAiSearch) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1ToolExaAiSearch
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

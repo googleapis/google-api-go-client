@@ -1058,6 +1058,11 @@
                       "pattern": "^projects/[^/]+/locations/[^/]+/networkMonitoringProviders/[^/]+$",
                       "required": true,
                       "type": "string"
+                    },
+                    "privateConnectivityEnabled": {
+                      "description": "Optional. For Google Cloud MPs, this field indicates whether the Monitoring Point is deployed in a Private Service Connect deployment. Not used for non-Google Cloud MPs.",
+                      "location": "query",
+                      "type": "boolean"
                     }
                   },
                   "path": "v1/{+name}:generateMonitoringPointConfig",
@@ -1190,7 +1195,8 @@
                             "KVM",
                             "VMWARE",
                             "HELM",
-                            "GCE_VM"
+                            "GCE_VM",
+                            "AZURE_VM"
                           ],
                           "enumDescriptions": [
                             "This value should not be used.",
@@ -1198,7 +1204,8 @@
                             "Monitoring Point that runs in a Kernel-based Virtual Machine (KVM) hypervisor.",
                             "Monitoring Point that runs in a VMware hypervisor.",
                             "Monitoring Point that runs on a K8S Helm.",
-                            "Monitoring Point that runs as a startup script in a Compute Engine VM."
+                            "Monitoring Point that runs as a startup script in a Compute Engine VM.",
+                            "Monitoring Point that runs as a startup script in an Azure VM."
                           ],
                           "location": "query",
                           "type": "string"
@@ -1219,6 +1226,11 @@
                           "pattern": "^projects/[^/]+/locations/[^/]+/networkMonitoringProviders/[^/]+$",
                           "required": true,
                           "type": "string"
+                        },
+                        "privateConnectivityEnabled": {
+                          "description": "Optional. For Google Cloud MPs, this field indicates whether the Monitoring Point is deployed in a Private Service Connect deployment. Not used for non-Google Cloud MPs.",
+                          "location": "query",
+                          "type": "boolean"
                         },
                         "staticIpAddress.dnsServerAddress": {
                           "description": "Required. DNS server.",
@@ -1783,7 +1795,7 @@
       }
     }
   },
-  "revision": "20260513",
+  "revision": "20260520",
   "rootUrl": "https://networkmanagement.googleapis.com/",
   "schemas": {
     "AbortInfo": {
@@ -2098,6 +2110,25 @@
       },
       "type": "object"
     },
+    "CloudRunJobInfo": {
+      "description": "For display only. Metadata associated with a Cloud Run job.",
+      "id": "CloudRunJobInfo",
+      "properties": {
+        "displayName": {
+          "description": "Name of a Cloud Run job.",
+          "type": "string"
+        },
+        "location": {
+          "description": "Location in which this job is deployed.",
+          "type": "string"
+        },
+        "uri": {
+          "description": "URI of a Cloud Run job.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "CloudRunRevisionEndpoint": {
       "description": "Wrapper for Cloud Run revision attributes.",
       "id": "CloudRunRevisionEndpoint",
@@ -2311,6 +2342,7 @@
             "REDIS_INSTANCE",
             "REDIS_CLUSTER",
             "GKE_POD",
+            "CLOUD_RUN_JOB",
             "DMS_PRIVATE_CONNECTION",
             "DATASTREAM_PRIVATE_CONNECTION"
           ],
@@ -2334,6 +2366,7 @@
             "Target is a Redis Instance.",
             "Target is a Redis Cluster.",
             "Target is a GKE Pod.",
+            "Target is a Cloud Run Job. Used only for return traces.",
             "Target is a DMS Private Connection. Used only for return traces.",
             "Target is a Datastream Private Connection. Used only for return traces."
           ],
@@ -2445,6 +2478,7 @@
             "HYBRID_NEG_NON_DYNAMIC_ROUTE_MATCHED",
             "HYBRID_NEG_NON_LOCAL_DYNAMIC_ROUTE_MATCHED",
             "CLOUD_RUN_REVISION_NOT_READY",
+            "CLOUD_RUN_JOB_NOT_READY",
             "DROPPED_INSIDE_PSC_SERVICE_PRODUCER",
             "LOAD_BALANCER_HAS_NO_PROXY_SUBNET",
             "CLOUD_NAT_NO_ADDRESSES",
@@ -2556,6 +2590,7 @@
             "The packet sent from the hybrid NEG proxy matches a non-dynamic route, but such a configuration is not supported.",
             "The packet sent from the hybrid NEG proxy matches a dynamic route with a next hop in a different region, but such a configuration is not supported.",
             "Packet sent from a Cloud Run revision that is not ready.",
+            "Packet sent from a Cloud Run job that is not ready.",
             "Packet was dropped inside Private Service Connect service producer.",
             "Packet sent to a load balancer, which requires a proxy-only subnet and the subnet is not found.",
             "Packet sent to Cloud Nat without active NAT IPs.",
@@ -5294,6 +5329,10 @@
           "$ref": "CloudFunctionInfo",
           "description": "Display information of a Cloud Function."
         },
+        "cloudRunJob": {
+          "$ref": "CloudRunJobInfo",
+          "description": "Display information of a Cloud Run job."
+        },
         "cloudRunRevision": {
           "$ref": "CloudRunRevisionInfo",
           "description": "Display information of a Cloud Run revision."
@@ -5443,6 +5482,7 @@
             "START_FROM_CLOUD_FUNCTION",
             "START_FROM_APP_ENGINE_VERSION",
             "START_FROM_CLOUD_RUN_REVISION",
+            "START_FROM_CLOUD_RUN_JOB",
             "START_FROM_STORAGE_BUCKET",
             "START_FROM_PSC_PUBLISHED_SERVICE",
             "START_FROM_SERVERLESS_NEG",
@@ -5480,6 +5520,7 @@
             "VIEWER_PERMISSION_MISSING"
           ],
           "enumDeprecated": [
+            false,
             false,
             false,
             false,
@@ -5543,6 +5584,7 @@
             "Initial state: packet originating from a Cloud Function. A CloudFunctionInfo is populated with starting function information.",
             "Initial state: packet originating from an App Engine service version. An AppEngineVersionInfo is populated with starting version information.",
             "Initial state: packet originating from a Cloud Run revision. A CloudRunRevisionInfo is populated with starting revision information.",
+            "Initial state: packet originating from a Cloud Run Job. A CloudRunJobInfo is populated with starting Job information.",
             "Initial state: packet originating from a Storage Bucket. Used only for return traces. The storage_bucket information is populated.",
             "Initial state: packet originating from a published service that uses Private Service Connect. Used only for return traces.",
             "Initial state: packet originating from a serverless network endpoint group backend. Used only for return traces. The serverless_neg information is populated.",

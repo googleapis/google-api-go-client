@@ -877,7 +877,7 @@ func (s SyncResponsePayload) MarshalJSON() ([]byte, error) {
 
 // TraitData: Contains the trait payload for a single trait.
 type TraitData struct {
-	// Trait: Optional. The Home API trait payload.
+	// Trait: The Provider Home API trait payload.
 	Trait googleapi.RawMessage `json:"trait,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Trait") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

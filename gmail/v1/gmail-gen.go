@@ -1222,7 +1222,8 @@ type LabelColor struct {
 	// #8a1c0a, #f2b2a8, #7a2e0b, #ffc8af, #7a4706, #ffdeb5, \#594c05, #fbe983,
 	// #684e07, #fdedc1, #0b4f30, #b3efd3, #04502e, #a2dcc1, \#c2c2c2, #4986e7,
 	// #2da2bb, #b99aff, #994a64, #f691b2, #ff7537, #ffad46, \#662e37, #ebdbde,
-	// #cca6ac, #094228, #42d692, #16a765
+	// #cca6ac, #094228, #42d692, #16a765, #757575, #1e53b8, \#007286, #7858c3,
+	// #c2185b, #d93025, #54240e, #633e04, #521d28, #202124, \#083018
 	BackgroundColor string `json:"backgroundColor,omitempty"`
 	// TextColor: The text color of the label, represented as hex string. This
 	// field is required in order to set the color of a label. Only the following
@@ -1239,7 +1240,8 @@ type LabelColor struct {
 	// #f2b2a8, #7a2e0b, #ffc8af, #7a4706, #ffdeb5, \#594c05, #fbe983, #684e07,
 	// #fdedc1, #0b4f30, #b3efd3, #04502e, #a2dcc1, \#c2c2c2, #4986e7, #2da2bb,
 	// #b99aff, #994a64, #f691b2, #ff7537, #ffad46, \#662e37, #ebdbde, #cca6ac,
-	// #094228, #42d692, #16a765
+	// #094228, #42d692, #16a765, #757575, #1e53b8, \#007286, #7858c3, #c2185b,
+	// #d93025, #54240e, #633e04, #521d28, #202124, \#083018
 	TextColor string `json:"textColor,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackgroundColor") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1655,7 +1657,8 @@ type Message struct {
 	Payload *MessagePart `json:"payload,omitempty"`
 	// Raw: The entire email message in an RFC 2822 formatted and base64url encoded
 	// string. Returned in `messages.get` and `drafts.get` responses when the
-	// `format=RAW` parameter is supplied.
+	// `format=RAW` parameter is supplied. @required gmail.users.drafts.create
+	// gmail.users.drafts.update
 	Raw string `json:"raw,omitempty"`
 	// SizeEstimate: Estimated size in bytes of the message.
 	SizeEstimate int64 `json:"sizeEstimate,omitempty"`

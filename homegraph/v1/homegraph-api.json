@@ -216,7 +216,7 @@
       }
     }
   },
-  "revision": "20260508",
+  "revision": "20260523",
   "rootUrl": "https://homegraph.googleapis.com/",
   "schemas": {
     "AgentDeviceId": {
@@ -735,7 +735,7 @@
             "description": "Properties of the object. Contains field @type with type URL.",
             "type": "any"
           },
-          "description": "Optional. The Home API trait payload.",
+          "description": "The Provider Home API trait payload.",
           "type": "object"
         }
       },

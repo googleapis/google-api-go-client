@@ -113,6 +113,9 @@ const (
 	// See your Google Health health metrics and measurement data
 	GooglehealthHealthMetricsAndMeasurementsReadonlyScope = "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly"
 
+	// See your Google Health Irregular Rhythm Notifications data
+	GooglehealthIrnReadonlyScope = "https://www.googleapis.com/auth/googlehealth.irn.readonly"
+
 	// See exercise GPS location data in Google Health
 	GooglehealthLocationReadonlyScope = "https://www.googleapis.com/auth/googlehealth.location.readonly"
 
@@ -132,6 +135,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly",
 		"https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly",
+		"https://www.googleapis.com/auth/googlehealth.irn.readonly",
 		"https://www.googleapis.com/auth/googlehealth.location.readonly",
 		"https://www.googleapis.com/auth/googlehealth.profile.readonly",
 		"https://www.googleapis.com/auth/googlehealth.settings.readonly",
@@ -200,16 +204,29 @@ type ProjectsService struct {
 
 func NewProjectsSubscribersService(s *Service) *ProjectsSubscribersService {
 	rs := &ProjectsSubscribersService{s: s}
+	rs.Subscriptions = NewProjectsSubscribersSubscriptionsService(s)
 	return rs
 }
 
 type ProjectsSubscribersService struct {
+	s *Service
+
+	Subscriptions *ProjectsSubscribersSubscriptionsService
+}
+
+func NewProjectsSubscribersSubscriptionsService(s *Service) *ProjectsSubscribersSubscriptionsService {
+	rs := &ProjectsSubscribersSubscriptionsService{s: s}
+	return rs
+}
+
+type ProjectsSubscribersSubscriptionsService struct {
 	s *Service
 }
 
 func NewUsersService(s *Service) *UsersService {
 	rs := &UsersService{s: s}
 	rs.DataTypes = NewUsersDataTypesService(s)
+	rs.PairedDevices = NewUsersPairedDevicesService(s)
 	return rs
 }
 
@@ -217,6 +234,8 @@ type UsersService struct {
 	s *Service
 
 	DataTypes *UsersDataTypesService
+
+	PairedDevices *UsersPairedDevicesService
 }
 
 func NewUsersDataTypesService(s *Service) *UsersDataTypesService {
@@ -238,6 +257,91 @@ func NewUsersDataTypesDataPointsService(s *Service) *UsersDataTypesDataPointsSer
 
 type UsersDataTypesDataPointsService struct {
 	s *Service
+}
+
+func NewUsersPairedDevicesService(s *Service) *UsersPairedDevicesService {
+	rs := &UsersPairedDevicesService{s: s}
+	return rs
+}
+
+type UsersPairedDevicesService struct {
+	s *Service
+}
+
+// ActiveEnergyBurned: Energy burned as part of an activity, excluding the
+// basal energy burn.
+type ActiveEnergyBurned struct {
+	// Interval: Required. Observed interval
+	Interval *ObservationTimeInterval `json:"interval,omitempty"`
+	// Kcal: Required. Energy burned during an activity, measured in kilocalories.
+	Kcal float64 `json:"kcal,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Interval") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Interval") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ActiveEnergyBurned) MarshalJSON() ([]byte, error) {
+	type NoMethod ActiveEnergyBurned
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *ActiveEnergyBurned) UnmarshalJSON(data []byte) error {
+	type NoMethod ActiveEnergyBurned
+	var s1 struct {
+		Kcal gensupport.JSONFloat64 `json:"kcal"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Kcal = float64(s1.Kcal)
+	return nil
+}
+
+// ActiveEnergyBurnedRollupValue: Represents the result of the rollup of active
+// energy burned.
+type ActiveEnergyBurnedRollupValue struct {
+	// KcalSum: Output only. Sum of the active energy burned in kilocalories.
+	KcalSum float64 `json:"kcalSum,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KcalSum") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KcalSum") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ActiveEnergyBurnedRollupValue) MarshalJSON() ([]byte, error) {
+	type NoMethod ActiveEnergyBurnedRollupValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *ActiveEnergyBurnedRollupValue) UnmarshalJSON(data []byte) error {
+	type NoMethod ActiveEnergyBurnedRollupValue
+	var s1 struct {
+		KcalSum gensupport.JSONFloat64 `json:"kcalSum"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.KcalSum = float64(s1.KcalSum)
+	return nil
 }
 
 // ActiveMinutes: Record of active minutes in a given time interval.
@@ -503,6 +607,55 @@ func (s ActivityLevelRollupValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AlertWindow: An analysis window evaluated for AFib. Note: The current
+// version of the algorithm will only produce alerts if all windows are
+// positive. So anything returned from the API will always have the positive
+// bit set to true. Internally, windows can be negative, however. We never save
+// "inconclusive" windows (they aren't produced by the algorithm).
+type AlertWindow struct {
+	// CivilEndTime: Output only. Observed interval end time in civil time in the
+	// timezone the subject is in at the end of the observed interval
+	CivilEndTime *CivilDateTime `json:"civilEndTime,omitempty"`
+	// CivilStartTime: Output only. Observed interval start time in civil time in
+	// the timezone the subject is in at the start of the observed interval
+	CivilStartTime *CivilDateTime `json:"civilStartTime,omitempty"`
+	// EndTime: Required. The end time of the analysis window.
+	EndTime string `json:"endTime,omitempty"`
+	// EndUtcOffset: Required. The UTC offset of the user's timezone when the
+	// analysis window ended.
+	EndUtcOffset string `json:"endUtcOffset,omitempty"`
+	// HeartBeats: Optional. All heart beats in the interval contained in this
+	// analysis window.
+	HeartBeats []*HeartBeat `json:"heartBeats,omitempty"`
+	// Positive: Optional. Flag indicating whether the window was positive for AFib
+	// or not. A `true` value indicates that AFib was detected in this window. A
+	// `false` value means AFib was not detected, but does not guarantee the
+	// absence of AFib.
+	Positive bool `json:"positive,omitempty"`
+	// StartTime: Required. Observed interval. The start time of the analysis
+	// window.
+	StartTime string `json:"startTime,omitempty"`
+	// StartUtcOffset: Required. The UTC offset of the user's timezone when the
+	// analysis window started.
+	StartUtcOffset string `json:"startUtcOffset,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CivilEndTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CivilEndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AlertWindow) MarshalJSON() ([]byte, error) {
+	type NoMethod AlertWindow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Altitude: Captures the altitude gain (i.e. deltas), and not level above sea,
 // for a user in millimeters.
 type Altitude struct {
@@ -653,6 +806,130 @@ type BatchDeleteDataPointsRequest struct {
 func (s BatchDeleteDataPointsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchDeleteDataPointsRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BloodGlucose: Represents a blood glucose level measurement. LINT:
+// LEGACY_NAMES
+type BloodGlucose struct {
+	// BloodGlucoseMilligramsPerDeciliter: Required. Blood glucose level
+	// concentration in mg/dL.
+	BloodGlucoseMilligramsPerDeciliter float64 `json:"bloodGlucoseMilligramsPerDeciliter,omitempty"`
+	// MealType: Optional. Meal type of the measurement.
+	//
+	// Possible values:
+	//   "MEAL_TYPE_UNSPECIFIED" - Unspecified meal type.
+	//   "BREAKFAST" - Breakfast.
+	//   "LUNCH" - Lunch.
+	//   "DINNER" - Dinner.
+	//   "SNACK" - Snack.
+	MealType string `json:"mealType,omitempty"`
+	// MeasurementSource: Optional. Source of the measurement.
+	//
+	// Possible values:
+	//   "MEASUREMENT_SOURCE_UNSPECIFIED" - Unspecified measurement source.
+	//   "SELF_MONITORING_BLOOD_GLUCOSE" - Self-monitoring of blood glucose (Blood
+	// glucose meter)
+	//   "CONTINUOUS_GLUCOSE_MONITORING" - Continuous glucose monitoring device
+	//   "LAB_TEST" - Laboratory test
+	MeasurementSource string `json:"measurementSource,omitempty"`
+	// MeasurementTiming: Optional. Timing of the measurement.
+	//
+	// Possible values:
+	//   "MEASUREMENT_TIMING_UNSPECIFIED" - Unspecified measurement timing.
+	//   "AFTER_MEAL" - Measurement taken after meal.
+	//   "BEFORE_MEAL" - Measurement taken before meal.
+	//   "FASTING" - Measurement taken while fasting.
+	//   "GENERAL" - General measurement (not associated with a meal or time of
+	// day).
+	//   "BEFORE_BED" - Measurement taken before bed.
+	//   "OVER_NIGHT" - Measurement taken over night.
+	MeasurementTiming string `json:"measurementTiming,omitempty"`
+	// Notes: Optional. Standard free-form notes captured at manual logging.
+	Notes string `json:"notes,omitempty"`
+	// SampleTime: Required. The time at which blood glucose was measured.
+	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
+	// Specimen: Optional. Type of body fluid used to measure the blood glucose.
+	//
+	// Possible values:
+	//   "SPECIMEN_UNSPECIFIED" - Unspecified specimen.
+	//   "CAPILLARY_BLOOD" - Capillary blood.
+	//   "INTERSTITIAL_FLUID" - Interstitial fluid.
+	//   "PLASMA" - Plasma.
+	//   "SERUM" - Serum.
+	//   "TEARS" - Tears.
+	//   "WHOLE_BLOOD" - Whole blood.
+	Specimen string `json:"specimen,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "BloodGlucoseMilligramsPerDeciliter") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "BloodGlucoseMilligramsPerDeciliter") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BloodGlucose) MarshalJSON() ([]byte, error) {
+	type NoMethod BloodGlucose
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *BloodGlucose) UnmarshalJSON(data []byte) error {
+	type NoMethod BloodGlucose
+	var s1 struct {
+		BloodGlucoseMilligramsPerDeciliter gensupport.JSONFloat64 `json:"bloodGlucoseMilligramsPerDeciliter"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.BloodGlucoseMilligramsPerDeciliter = float64(s1.BloodGlucoseMilligramsPerDeciliter)
+	return nil
+}
+
+// BloodGlucoseRollupValue: Represents the result of the rollup of the blood
+// glucose data type. LINT: LEGACY_NAMES
+type BloodGlucoseRollupValue struct {
+	// BloodGlucoseMilligramsPerDeciliterAvg: Average blood glucose level in mg/dL.
+	BloodGlucoseMilligramsPerDeciliterAvg float64 `json:"bloodGlucoseMilligramsPerDeciliterAvg,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "BloodGlucoseMilligramsPerDeciliterAvg") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "BloodGlucoseMilligramsPerDeciliterAvg") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BloodGlucoseRollupValue) MarshalJSON() ([]byte, error) {
+	type NoMethod BloodGlucoseRollupValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *BloodGlucoseRollupValue) UnmarshalJSON(data []byte) error {
+	type NoMethod BloodGlucoseRollupValue
+	var s1 struct {
+		BloodGlucoseMilligramsPerDeciliterAvg gensupport.JSONFloat64 `json:"bloodGlucoseMilligramsPerDeciliterAvg"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.BloodGlucoseMilligramsPerDeciliterAvg = float64(s1.BloodGlucoseMilligramsPerDeciliterAvg)
+	return nil
 }
 
 // BodyFat: Body fat measurement.
@@ -851,6 +1128,117 @@ func (s CivilTimeInterval) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CoreBodyTemperature: Core body temperature measurement, distinct from
+// peripheral body temperature, reflects the temperature of the body's internal
+// organs.
+type CoreBodyTemperature struct {
+	// Id: Optional. The unique identifier of the core body temperature
+	// measurement.
+	Id string `json:"id,omitempty"`
+	// MeasurementLocation: Optional. The location of the core body temperature
+	// measurement.
+	//
+	// Possible values:
+	//   "MEASUREMENT_LOCATION_UNSPECIFIED" - Measurement location is unspecified.
+	//   "OTHER" - Other measurement location.
+	//   "ARMPIT" - Armpit measurement location.
+	//   "BODY" - Body measurement location.
+	//   "EAR" - Ear measurement location.
+	//   "FINGER" - Finger measurement location.
+	//   "GASTRO_INTESTINAL" - Gastro-intestinal measurement location.
+	//   "MOUTH" - Mouth measurement location.
+	//   "RECTUM" - Rectum measurement location.
+	//   "TOE" - Toe measurement location.
+	//   "EAR_DRUM" - Ear drum measurement location.
+	//   "TEMPORAL_ARTERY" - Temporal artery measurement location.
+	//   "FOREHEAD" - Forehead measurement location.
+	//   "URINARY_BLADDER" - Urinary bladder measurement location.
+	//   "NASAL" - Nasal measurement location.
+	//   "NASOPHARYNGEAL" - Nasopharyngeal measurement location.
+	//   "WRIST" - Wrist measurement location.
+	//   "VAGINA" - Vagina measurement location.
+	MeasurementLocation string `json:"measurementLocation,omitempty"`
+	// SampleTime: Required. The time at which core body temperature was measured.
+	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
+	// TemperatureCelsius: Required. The core body temperature in Celsius.
+	TemperatureCelsius float64 `json:"temperatureCelsius,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CoreBodyTemperature) MarshalJSON() ([]byte, error) {
+	type NoMethod CoreBodyTemperature
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *CoreBodyTemperature) UnmarshalJSON(data []byte) error {
+	type NoMethod CoreBodyTemperature
+	var s1 struct {
+		TemperatureCelsius gensupport.JSONFloat64 `json:"temperatureCelsius"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.TemperatureCelsius = float64(s1.TemperatureCelsius)
+	return nil
+}
+
+// CoreBodyTemperatureRollupValue: Represents the result of the rollup of the
+// core body temperature data type.
+type CoreBodyTemperatureRollupValue struct {
+	// TemperatureCelsiusAvg: Average core body temperature in Celsius.
+	TemperatureCelsiusAvg float64 `json:"temperatureCelsiusAvg,omitempty"`
+	// TemperatureCelsiusMax: Maximum core body temperature in Celsius.
+	TemperatureCelsiusMax float64 `json:"temperatureCelsiusMax,omitempty"`
+	// TemperatureCelsiusMin: Minimum core body temperature in Celsius.
+	TemperatureCelsiusMin float64 `json:"temperatureCelsiusMin,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TemperatureCelsiusAvg") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TemperatureCelsiusAvg") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CoreBodyTemperatureRollupValue) MarshalJSON() ([]byte, error) {
+	type NoMethod CoreBodyTemperatureRollupValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *CoreBodyTemperatureRollupValue) UnmarshalJSON(data []byte) error {
+	type NoMethod CoreBodyTemperatureRollupValue
+	var s1 struct {
+		TemperatureCelsiusAvg gensupport.JSONFloat64 `json:"temperatureCelsiusAvg"`
+		TemperatureCelsiusMax gensupport.JSONFloat64 `json:"temperatureCelsiusMax"`
+		TemperatureCelsiusMin gensupport.JSONFloat64 `json:"temperatureCelsiusMin"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.TemperatureCelsiusAvg = float64(s1.TemperatureCelsiusAvg)
+	s.TemperatureCelsiusMax = float64(s1.TemperatureCelsiusMax)
+	s.TemperatureCelsiusMin = float64(s1.TemperatureCelsiusMin)
+	return nil
+}
+
 // CreateSubscriberPayload: Payload for creating a subscriber.
 type CreateSubscriberPayload struct {
 	// EndpointAuthorization: Required. Authorization mechanism for the subscriber
@@ -879,6 +1267,34 @@ type CreateSubscriberPayload struct {
 
 func (s CreateSubscriberPayload) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateSubscriberPayload
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CreateSubscriptionPayload: Payload for creating a subscription.
+type CreateSubscriptionPayload struct {
+	// DataTypes: Optional. Data types subscribed to.
+	DataTypes []string `json:"dataTypes,omitempty"`
+	// User: Required. Immutable. The resource name of the user for whom this
+	// subscription is active. Format: `users/{user}` where `{user}` is the public
+	// `healthUserId` as returned by the `GetIdentity` action in the profile PAPI
+	// (see
+	// `google.devicesandservices.health.v4main.HealthProfileService.GetIdentity`).
+	User string `json:"user,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateSubscriptionPayload) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateSubscriptionPayload
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1198,6 +1614,9 @@ func (s DailyRollUpDataPointsResponse) MarshalJSON() ([]byte, error) {
 // sources, excluding those data points that are identified as recorded by
 // wearables in intervals when they were not actually worn.
 type DailyRollupDataPoint struct {
+	// ActiveEnergyBurned: Returned by default when rolling up data points from the
+	// `active-energy-burned` data type.
+	ActiveEnergyBurned *ActiveEnergyBurnedRollupValue `json:"activeEnergyBurned,omitempty"`
 	// ActiveMinutes: Returned by default when rolling up data points from the
 	// `active-minutes` data type, or when requested explicitly using the
 	// `active-minutes` rollup type identifier.
@@ -1214,6 +1633,9 @@ type DailyRollupDataPoint struct {
 	// `altitude` data type, or when requested explicitly using the `altitude`
 	// rollup type identifier.
 	Altitude *AltitudeRollupValue `json:"altitude,omitempty"`
+	// BloodGlucose: Returned by default when rolling up data points from the
+	// `blood-glucose` data type.
+	BloodGlucose *BloodGlucoseRollupValue `json:"bloodGlucose,omitempty"`
 	// BodyFat: Returned by default when rolling up data points from the `body-fat`
 	// data type, or when requested explicitly using the `body-fat` rollup type
 	// identifier.
@@ -1226,6 +1648,10 @@ type DailyRollupDataPoint struct {
 	CivilEndTime *CivilDateTime `json:"civilEndTime,omitempty"`
 	// CivilStartTime: Start time of the window this value aggregates over
 	CivilStartTime *CivilDateTime `json:"civilStartTime,omitempty"`
+	// CoreBodyTemperature: Returned by default when rolling up data points from
+	// the `core-body-temperature` data type, or when requested explicitly using
+	// the `core-body-temperature` rollup type identifier.
+	CoreBodyTemperature *CoreBodyTemperatureRollupValue `json:"coreBodyTemperature,omitempty"`
 	// Distance: Returned by default when rolling up data points from the
 	// `distance` data type, or when requested explicitly using the `distance`
 	// rollup type identifier.
@@ -1247,6 +1673,10 @@ type DailyRollupDataPoint struct {
 	// `hydration-log` data type, or when requested explicitly using the
 	// `hydration-log` rollup type identifier.
 	HydrationLog *HydrationLogRollupValue `json:"hydrationLog,omitempty"`
+	// NutritionLog: Returned by default when rolling up data points from the
+	// `nutrition-log` data type, or when requested explicitly using the
+	// `nutrition-log` rollup type identifier.
+	NutritionLog *NutritionLogRollupValue `json:"nutritionLog,omitempty"`
 	// RestingHeartRatePersonalRange: Returned by default when rolling up data
 	// points from the `daily-resting-heart-rate` data type, or when requested
 	// explicitly using the `resting-heart-rate-personal-range` rollup type
@@ -1279,15 +1709,15 @@ type DailyRollupDataPoint struct {
 	// data type, or when requested explicitly using the `weight` rollup type
 	// identifier.
 	Weight *WeightRollupValue `json:"weight,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ActiveMinutes") to
+	// ForceSendFields is a list of field names (e.g. "ActiveEnergyBurned") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ActiveMinutes") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ActiveEnergyBurned") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1412,6 +1842,9 @@ func (s *DailyVO2Max) UnmarshalJSON(data []byte) error {
 
 // DataPoint: A computed or recorded metric.
 type DataPoint struct {
+	// ActiveEnergyBurned: Optional. Data for points in the `active-energy-burned`
+	// interval data type collection.
+	ActiveEnergyBurned *ActiveEnergyBurned `json:"activeEnergyBurned,omitempty"`
 	// ActiveMinutes: Optional. Data for points in the `active-minutes` interval
 	// data type collection.
 	ActiveMinutes *ActiveMinutes `json:"activeMinutes,omitempty"`
@@ -1427,9 +1860,15 @@ type DataPoint struct {
 	// BasalEnergyBurned: Optional. Data for points in the `basal-energy-burned`
 	// interval data type collection.
 	BasalEnergyBurned *BasalEnergyBurned `json:"basalEnergyBurned,omitempty"`
+	// BloodGlucose: Optional. Data for points in the `blood-glucose` sample data
+	// type collection.
+	BloodGlucose *BloodGlucose `json:"bloodGlucose,omitempty"`
 	// BodyFat: Optional. Data for points in the `body-fat` sample data type
 	// collection.
 	BodyFat *BodyFat `json:"bodyFat,omitempty"`
+	// CoreBodyTemperature: Optional. Data for points in the
+	// `core-body-temperature` sample data type collection.
+	CoreBodyTemperature *CoreBodyTemperature `json:"coreBodyTemperature,omitempty"`
 	// DailyHeartRateVariability: Optional. Data for points in the
 	// `daily-heart-rate-variability` daily data type collection.
 	DailyHeartRateVariability *DailyHeartRateVariability `json:"dailyHeartRateVariability,omitempty"`
@@ -1456,12 +1895,19 @@ type DataPoint struct {
 	// Distance: Optional. Data for points in the `distance` interval data type
 	// collection.
 	Distance *Distance `json:"distance,omitempty"`
+	// Electrocardiogram: Optional. Data for points in the `electrocardiogram`
+	// session data type collection.
+	Electrocardiogram *Electrocardiogram `json:"electrocardiogram,omitempty"`
 	// Exercise: Optional. Data for points in the `exercise` session data type
 	// collection.
 	Exercise *Exercise `json:"exercise,omitempty"`
 	// Floors: Optional. Data for points in the `floors` interval data type
 	// collection.
 	Floors *Floors `json:"floors,omitempty"`
+	// Food: Optional. The food details.
+	Food *Food `json:"food,omitempty"`
+	// FoodMeasurementUnit: Optional. The food measurement unit details.
+	FoodMeasurementUnit *FoodMeasurementUnit `json:"foodMeasurementUnit,omitempty"`
 	// HeartRate: Optional. Data for points in the `heart-rate` sample data type
 	// collection.
 	HeartRate *HeartRate `json:"heartRate,omitempty"`
@@ -1474,6 +1920,9 @@ type DataPoint struct {
 	// HydrationLog: Optional. Data for points in the `hydration-log` session data
 	// type collection.
 	HydrationLog *HydrationLog `json:"hydrationLog,omitempty"`
+	// IrregularRhythmNotification: Optional. Data for points in the
+	// `irregular-rhythm-notification` session data type collection.
+	IrregularRhythmNotification *IrregularRhythmNotification `json:"irregularRhythmNotification,omitempty"`
 	// Name: Identifier. Data point name, only supported for the subset of
 	// identifiable data types. For the majority of the data types, individual data
 	// points do not need to be identified and this field would be empty. Format:
@@ -1487,6 +1936,9 @@ type DataPoint struct {
 	// string of 4-63 characters, containing only lowercase letters, numbers, and
 	// hyphens.
 	Name string `json:"name,omitempty"`
+	// NutritionLog: Optional. Data for points in the `nutrition-log` session data
+	// type collection.
+	NutritionLog *NutritionLog `json:"nutritionLog,omitempty"`
 	// OxygenSaturation: Optional. Data for points in the `oxygen-saturation`
 	// sample data type collection.
 	OxygenSaturation *OxygenSaturation `json:"oxygenSaturation,omitempty"`
@@ -1520,15 +1972,15 @@ type DataPoint struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ActiveMinutes") to
+	// ForceSendFields is a list of field names (e.g. "ActiveEnergyBurned") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ActiveMinutes") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ActiveEnergyBurned") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1779,6 +2231,84 @@ func (s DistanceRollupValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Electrocardiogram: Represents an Electrocardiogram (ECG) measurement
+// session. This data type is based on SaMD feature and any changes to it may
+// require additional review.
+type Electrocardiogram struct {
+	// BeatsPerMinuteAvg: Optional. Average heart rate recorded during ECG reading
+	// in beats per minute.
+	BeatsPerMinuteAvg int64 `json:"beatsPerMinuteAvg,omitempty,string"`
+	// Interval: Required. Observed interval. NOTE: Historical ECG data lacks
+	// timezone offsets, so `start_utc_offset` and `end_utc_offset` will be missing
+	// or default to zero. As a result, the civil time fields within this interval
+	// will default to UTC. It is recommended to use physical time fields instead
+	// for accurate time referencing. NOTE: The `start_time` and `end_time` of the
+	// interval are equal, representing the reading time.
+	Interval *SessionTimeInterval `json:"interval,omitempty"`
+	// LeadNumber: Optional. The number of leads used for ECG reading.
+	LeadNumber int64 `json:"leadNumber,omitempty"`
+	// MedicalDeviceInfo: Output only. The meta information for the compatible
+	// device used to conduct the measurement. ECG measurements typically populate
+	// `firmware_version`, `feature_version`, and `device_model`.
+	MedicalDeviceInfo *MedicalDeviceInfo `json:"medicalDeviceInfo,omitempty"`
+	// MillivoltsScalingFactor: Optional. The factor by which to divide waveform
+	// samples to get voltage in millivolts: millivolts = waveform_sample /
+	// millivolts_scaling_factor.
+	MillivoltsScalingFactor int64 `json:"millivoltsScalingFactor,omitempty"`
+	// ResultClassification: Optional. The result classification of the ECG
+	// reading.
+	//
+	// Possible values:
+	//   "RESULT_CLASSIFICATION_UNSPECIFIED" - Unspecified result classification.
+	//   "NORMAL_SINUS_RHYTHM" - Heart rhythm appears normal. Corresponds to result
+	// "Normal Sinus Rhythm".
+	//   "ATRIAL_FIBRILLATION" - Signs of Atrial Fibrillation detected. Corresponds
+	// to result "Atrial Fibrillation".
+	//   "INCONCLUSIVE" - The reading is inconclusive as it could not be
+	// classified. Corresponds to result "Inconclusive".
+	//   "INCONCLUSIVE_HIGH_HEART_RATE" - The reading is inconclusive as it could
+	// not be classified because heart rate is high (>120bpm). Corresponds to
+	// result "Inconclusive: High heart rate".
+	//   "INCONCLUSIVE_LOW_HEART_RATE" - The reading is inconclusive as it could
+	// not be classified because heart rate is low (<50bpm). Corresponds to result
+	// "Inconclusive: Low heart rate".
+	//   "UNREADABLE" - The reading is unreadable.
+	//   "NOT_ANALYZED" - The reading was not analyzed.
+	ResultClassification string `json:"resultClassification,omitempty"`
+	// SamplingFrequencyHertz: Optional. The sampling frequency of waveform samples
+	// in hertz.
+	SamplingFrequencyHertz int64 `json:"samplingFrequencyHertz,omitempty"`
+	// WaveformSamples: Optional. An array of voltage values representing lead I
+	// ECG values. Each sample represents voltage difference in ECG graph. The
+	// first value in array corresponds to the start of the reading.
+	WaveformSamples []int64 `json:"waveformSamples,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BeatsPerMinuteAvg") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BeatsPerMinuteAvg") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Electrocardiogram) MarshalJSON() ([]byte, error) {
+	type NoMethod Electrocardiogram
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // EndpointAuthorization: Authorization mechanism for a subscriber endpoint.
 // For all requests sent by the Webhooks service, the JSON payload is
 // cryptographically signed. The signature is delivered in the
@@ -1813,6 +2343,98 @@ type EndpointAuthorization struct {
 func (s EndpointAuthorization) MarshalJSON() ([]byte, error) {
 	type NoMethod EndpointAuthorization
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EnergyQuantity: Represents the energy quantity.
+type EnergyQuantity struct {
+	// Kcal: Required. Value representing the energy in kilocalories.
+	Kcal float64 `json:"kcal,omitempty"`
+	// UserProvidedUnit: Optional. Value representing the user provided unit.
+	//
+	// Possible values:
+	//   "ENERGY_UNIT_UNSPECIFIED" - Unspecified energy unit.
+	//   "JOULE" - Value representing joule.
+	//   "KILOJOULE" - Value representing kilojoule.
+	//   "KILOCALORIE" - Value representing kilocalorie.
+	//   "SMALL_CALORIE" - Value representing small calorie.
+	//   "CALORIE" - Value representing calorie.
+	UserProvidedUnit string `json:"userProvidedUnit,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Kcal") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Kcal") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EnergyQuantity) MarshalJSON() ([]byte, error) {
+	type NoMethod EnergyQuantity
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *EnergyQuantity) UnmarshalJSON(data []byte) error {
+	type NoMethod EnergyQuantity
+	var s1 struct {
+		Kcal gensupport.JSONFloat64 `json:"kcal"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Kcal = float64(s1.Kcal)
+	return nil
+}
+
+// EnergyQuantityRollup: Rollup for the energy quantity.
+type EnergyQuantityRollup struct {
+	// KcalSum: Required. The sum of the energy in kilocalories.
+	KcalSum float64 `json:"kcalSum,omitempty"`
+	// UserProvidedUnitLast: Optional. The user provided unit on the last element.
+	//
+	// Possible values:
+	//   "ENERGY_UNIT_UNSPECIFIED" - Unspecified energy unit.
+	//   "JOULE" - Value representing joule.
+	//   "KILOJOULE" - Value representing kilojoule.
+	//   "KILOCALORIE" - Value representing kilocalorie.
+	//   "SMALL_CALORIE" - Value representing small calorie.
+	//   "CALORIE" - Value representing calorie.
+	UserProvidedUnitLast string `json:"userProvidedUnitLast,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KcalSum") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KcalSum") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EnergyQuantityRollup) MarshalJSON() ([]byte, error) {
+	type NoMethod EnergyQuantityRollup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *EnergyQuantityRollup) UnmarshalJSON(data []byte) error {
+	type NoMethod EnergyQuantityRollup
+	var s1 struct {
+		KcalSum gensupport.JSONFloat64 `json:"kcalSum"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.KcalSum = float64(s1.KcalSum)
+	return nil
 }
 
 // Exercise: An exercise that stores information about a physical activity.
@@ -2019,6 +2641,159 @@ func (s FloorsRollupValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Food: Represents a food item.
+type Food struct {
+	// AccessLevel: Required. The access level of the food.
+	//
+	// Possible values:
+	//   "FOOD_ACCESS_LEVEL_UNSPECIFIED" - Unspecified food access level.
+	//   "FOOD_ACCESS_LEVEL_PUBLIC" - Public food access level.
+	//   "FOOD_ACCESS_LEVEL_PRIVATE" - Private food access level.
+	AccessLevel string `json:"accessLevel,omitempty"`
+	// Brand: Optional. The brand of the food.
+	Brand string `json:"brand,omitempty"`
+	// DefaultServing: Required. Value representing the default serving of the
+	// food.
+	DefaultServing *FoodServing `json:"defaultServing,omitempty"`
+	// Description: Optional. The description of the food.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Required. The display name of the food.
+	DisplayName string `json:"displayName,omitempty"`
+	// EnergyAvg: Optional. Value representing the average energy of the food for
+	// the default serving.
+	EnergyAvg *EnergyQuantity `json:"energyAvg,omitempty"`
+	// EnergyFromFat: Optional. Value representing the energy from fat of the food
+	// for the default serving.
+	EnergyFromFat *EnergyQuantity `json:"energyFromFat,omitempty"`
+	// EnergyMax: Optional. Value representing the maximum energy of the food for
+	// the default serving.
+	EnergyMax *EnergyQuantity `json:"energyMax,omitempty"`
+	// EnergyMin: Optional. Value representing the minimum energy of the food for
+	// the default serving.
+	EnergyMin *EnergyQuantity `json:"energyMin,omitempty"`
+	// LanguageCode: Optional. The language code where the food is available in
+	// format xx-XX. Supported values are defined in Settings.food_language_code.
+	LanguageCode string `json:"languageCode,omitempty"`
+	// MealType: Optional. The meal type associated with this food.
+	//
+	// Possible values:
+	//   "MEAL_TYPE_UNSPECIFIED" - Unspecified meal type.
+	//   "BEFORE_BREAKFAST" - Value representing a meal before breakfast.
+	//   "BREAKFAST" - Value representing a breakfast.
+	//   "BEFORE_LUNCH" - Value representing a morning snack.
+	//   "LUNCH" - Value representing a lunch.
+	//   "BEFORE_DINNER" - Value representing an afternoon snack.
+	//   "DINNER" - Value representing dinner.
+	//   "AFTER_DINNER" - Value representing an evening snack.
+	//   "SNACK" - Value representing any meal outside of the usual three meals per
+	// day.
+	//   "ANYTIME" - Value representing any time (legacy NA).
+	MealType string `json:"mealType,omitempty"`
+	// Nutrients: Optional. Value representing the nutrients of the food for the
+	// default serving.
+	Nutrients []*NutrientQuantity `json:"nutrients,omitempty"`
+	// Servings: Optional. The serving of the food.
+	Servings []*FoodServing `json:"servings,omitempty"`
+	// TotalCarbohydrate: Optional. Value representing the total carbohydrate of
+	// the food for the default serving.
+	TotalCarbohydrate *WeightQuantity `json:"totalCarbohydrate,omitempty"`
+	// TotalFat: Optional. Value representing the total fat of the food for the
+	// default serving.
+	TotalFat *WeightQuantity `json:"totalFat,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccessLevel") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessLevel") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Food) MarshalJSON() ([]byte, error) {
+	type NoMethod Food
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FoodMeasurementUnit: Represents a food measurement unit.
+type FoodMeasurementUnit struct {
+	// DisplayName: Required. The display name of the food measurement unit (e.g.,
+	// "gram", "piece").
+	DisplayName string `json:"displayName,omitempty"`
+	// PluralDisplayName: Optional. The plural display name of the food measurement
+	// unit (e.g., "grams", "pieces").
+	PluralDisplayName string `json:"pluralDisplayName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FoodMeasurementUnit) MarshalJSON() ([]byte, error) {
+	type NoMethod FoodMeasurementUnit
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FoodServing: Represents different properties and information about the
+// serving of a specific food.
+type FoodServing struct {
+	// Amount: Optional. Amount of food consumed, fractional values are supported.
+	Amount float64 `json:"amount,omitempty"`
+	// FoodMeasurementUnit: Required. Food measurement unit
+	FoodMeasurementUnit string `json:"foodMeasurementUnit,omitempty"`
+	// FoodMeasurementUnitDisplayName: Output only. Legacy measurement unit for
+	// serving size in singular form (e.g. "piece", "gram").
+	FoodMeasurementUnitDisplayName string `json:"foodMeasurementUnitDisplayName,omitempty"`
+	// FoodMeasurementUnitDisplayNamePlural: Output only. Legacy measurement unit
+	// for serving size in plural form (e.g. "pieces", "grams").
+	FoodMeasurementUnitDisplayNamePlural string `json:"foodMeasurementUnitDisplayNamePlural,omitempty"`
+	// Multiplier: Optional. Value representing the multiplier used to compute the
+	// energy when using this serving instead of the default serving.
+	Multiplier float64 `json:"multiplier,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Amount") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Amount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FoodServing) MarshalJSON() ([]byte, error) {
+	type NoMethod FoodServing
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *FoodServing) UnmarshalJSON(data []byte) error {
+	type NoMethod FoodServing
+	var s1 struct {
+		Amount     gensupport.JSONFloat64 `json:"amount"`
+		Multiplier gensupport.JSONFloat64 `json:"multiplier"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Amount = float64(s1.Amount)
+	s.Multiplier = float64(s1.Multiplier)
+	return nil
+}
+
 // GoogleDevicesandservicesHealthV4DataType: Represents a type of health data a
 // user can have data points recorded for. It matches the parent resource of
 // collection containing data points of the given type. Clients currently do
@@ -2068,6 +2843,39 @@ type GoogleDevicesandservicesHealthV4WebhookNotificationCloudLog struct {
 
 func (s GoogleDevicesandservicesHealthV4WebhookNotificationCloudLog) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDevicesandservicesHealthV4WebhookNotificationCloudLog
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// HeartBeat: A single heart beat measurement.
+type HeartBeat struct {
+	// BeatsPerMinute: Required. The beats-per-minute value extrapolated from the
+	// time before the following heart beat. This is calculated as 60000 / rr,
+	// where rr is the gap between heart beats in milliseconds (IBI - Interbeat
+	// Interval).
+	BeatsPerMinute int64 `json:"beatsPerMinute,omitempty"`
+	// CivilTime: Output only. The civil time in the timezone the subject is in at
+	// the time of the observation.
+	CivilTime *CivilDateTime `json:"civilTime,omitempty"`
+	// PhysicalTime: Required. The time of the heart beat measurement.
+	PhysicalTime string `json:"physicalTime,omitempty"`
+	// UtcOffset: Required. The UTC offset of the user's timezone when the heart
+	// beat measurement occurred.
+	UtcOffset string `json:"utcOffset,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BeatsPerMinute") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BeatsPerMinute") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HeartBeat) MarshalJSON() ([]byte, error) {
+	type NoMethod HeartBeat
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2511,6 +3319,83 @@ func (s Interval) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// IrnProfile: Irregular Rhythm Notifications (IRN) Profile details. The
+// Irregular Rhythm Notifications (IRN) feature checks for signs of atrial
+// fibrillation (AFib). The IrnProfile details include information about the
+// user's onboarding status, enrollment status, and the last update time of
+// analyzable data for this feature.
+type IrnProfile struct {
+	// EnrollmentStatus: Required. Whether or not the user is currently enrolled in
+	// having their data processed for IRN alerts.
+	EnrollmentStatus bool `json:"enrollmentStatus,omitempty"`
+	// Name: Identifier. The resource name of this IrnProfile resource. Format:
+	// `users/{user}/irnProfile` Example: `users/1234567890/irnProfile` or
+	// `users/me/irnProfile` The {user} ID is a system-generated Google Health API
+	// user ID, a string of 1-63 characters consisting of lowercase and uppercase
+	// letters, numbers, and hyphens. The literal `me` can also be used to refer to
+	// the authenticated user.
+	Name string `json:"name,omitempty"`
+	// OnboardingStatus: Required. Whether or not the user has onboarded onto the
+	// IRN feature.
+	OnboardingStatus bool `json:"onboardingStatus,omitempty"`
+	// UpdateTime: Output only. The timestamp of the last piece of analyzable data
+	// synced by the user.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "EnrollmentStatus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnrollmentStatus") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IrnProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod IrnProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IrregularRhythmNotification: Represents an Irregular Rhythm Notification
+// alert, indicating a potential sign of atrial fibrillation (AFib). This data
+// type is based on SaMD feature and any changes to it may require additional
+// review.
+type IrregularRhythmNotification struct {
+	// AlertWindows: Optional. The overlapping analysis windows that were used to
+	// evaluate rhythm for potential AFib, containing specific information about
+	// the user's heart rhythm.
+	AlertWindows []*AlertWindow `json:"alertWindows,omitempty"`
+	// Interval: Required. Observed interval.
+	Interval *SessionTimeInterval `json:"interval,omitempty"`
+	// MedicalDeviceInfo: Output only. The meta information for the compatible
+	// device used to conduct the measurement. Irregular Rhythm Notification
+	// measurements typically populate `algorithm_version`, `service_version`, and
+	// `device_model`.
+	MedicalDeviceInfo *MedicalDeviceInfo `json:"medicalDeviceInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlertWindows") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertWindows") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IrregularRhythmNotification) MarshalJSON() ([]byte, error) {
+	type NoMethod IrregularRhythmNotification
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListDataPointsResponse: Response containing raw data points matching the
 // query
 type ListDataPointsResponse struct {
@@ -2536,6 +3421,34 @@ type ListDataPointsResponse struct {
 
 func (s ListDataPointsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDataPointsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListPairedDevicesResponse: Response message for ListPairedDevices.
+type ListPairedDevicesResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// PairedDevices: The paired devices of the user.
+	PairedDevices []*PairedDevice `json:"pairedDevices,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListPairedDevicesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPairedDevicesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2566,6 +3479,68 @@ type ListSubscribersResponse struct {
 
 func (s ListSubscribersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSubscribersResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListSubscriptionsResponse: Response message for ListSubscriptions.
+type ListSubscriptionsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Subscriptions: The subscriptions from the specified subscriber.
+	Subscriptions []*Subscription `json:"subscriptions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSubscriptionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MedicalDeviceInfo: Software as Medical Device (SaMD) metadata. Used to
+// construct the Unique Device Identifier (UDI).
+type MedicalDeviceInfo struct {
+	// AlgorithmVersion: Output only. The algorithm version used by the feature.
+	AlgorithmVersion string `json:"algorithmVersion,omitempty"`
+	// DeviceModel: Output only. The model name or device type of the compatible
+	// device used to collect the data.
+	DeviceModel string `json:"deviceModel,omitempty"`
+	// FeatureVersion: Output only. The version of the feature/app running on the
+	// device.
+	FeatureVersion string `json:"featureVersion,omitempty"`
+	// FirmwareVersion: Output only. The firmware version running on the compatible
+	// device used to collect the data.
+	FirmwareVersion string `json:"firmwareVersion,omitempty"`
+	// ServiceVersion: Output only. The service version used by the feature.
+	ServiceVersion string `json:"serviceVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlgorithmVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlgorithmVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MedicalDeviceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod MedicalDeviceInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2698,6 +3673,245 @@ func (s *MobilityMetrics) UnmarshalJSON(data []byte) error {
 	s.AvgCadenceStepsPerMinute = float64(s1.AvgCadenceStepsPerMinute)
 	s.AvgVerticalRatio = float64(s1.AvgVerticalRatio)
 	return nil
+}
+
+// NutrientQuantity: Represents the quantity of a nutrient.
+type NutrientQuantity struct {
+	// Nutrient: Required. Value representing the nutrient.
+	//
+	// Possible values:
+	//   "NUTRIENT_UNSPECIFIED" - Unspecified nutrient.
+	//   "BIOTIN" - Value representing biotin nutrient.
+	//   "CAFFEINE" - Value representing caffeine nutrient.
+	//   "CALCIUM" - Value representing calcium nutrient.
+	//   "CHLORIDE" - Value representing chloride nutrient.
+	//   "CARBOHYDRATES" - Value representing carbohydrates nutrient.
+	//   "CHOLESTEROL" - Value representing cholesterol nutrient.
+	//   "CHROMIUM" - Value representing chromium nutrient.
+	//   "COPPER" - Value representing copper nutrient.
+	//   "DIETARY_FIBER" - Value representing dietary fiber nutrient.
+	//   "FOLIC_ACID" - Value representing folic acid nutrient.
+	//   "IODINE" - Value representing iodine nutrient.
+	//   "IRON" - Value representing iron nutrient.
+	//   "MAGNESIUM" - Value representing magnesium nutrient.
+	//   "MANGANESE" - Value representing manganese nutrient.
+	//   "MOLYBDENUM" - Value representing molybdenum nutrient.
+	//   "MONOUNSATURATED_FAT" - Value representing monounsaturated fat nutrient.
+	//   "NIACIN" - Value representing niacin nutrient.
+	//   "PANTOTHENIC_ACID" - Value representing pantothenic acid nutrient.
+	//   "PHOSPHORUS" - Value representing phosphorus nutrient.
+	//   "POLYUNSATURATED_FAT" - Value representing polyunsaturated fat nutrient.
+	//   "POTASSIUM" - Value representing potassium nutrient.
+	//   "PROTEIN" - Value representing protein nutrient.
+	//   "RIBOFLAVIN" - Value representing riboflavin nutrient.
+	//   "SATURATED_FAT" - Value representing saturated fat nutrient.
+	//   "SELENIUM" - Value representing selenium nutrient.
+	//   "SODIUM" - Value representing sodium nutrient.
+	//   "SUGAR" - Value representing sugar nutrient.
+	//   "THIAMIN" - Value representing thiamin nutrient.
+	//   "TRANS_FAT" - Value representing trans fat nutrient.
+	//   "UNSATURATED_FAT" - Value representing unsaturated fat nutrient.
+	//   "VITAMIN_A" - Value representing vitamin A nutrient.
+	//   "VITAMIN_B12" - Value representing vitamin B12 nutrient.
+	//   "VITAMIN_B6" - Value representing vitamin B6 nutrient.
+	//   "VITAMIN_C" - Value representing vitamin C nutrient.
+	//   "VITAMIN_D" - Value representing vitamin D nutrient.
+	//   "VITAMIN_E" - Value representing vitamin E nutrient.
+	//   "VITAMIN_K" - Value representing vitamin K nutrient.
+	//   "ZINC" - Value representing zinc nutrient.
+	//   "FOLATE" - Value representing folate nutrient.
+	Nutrient string `json:"nutrient,omitempty"`
+	// Quantity: Required. Value representing the quantity of the nutrient.
+	Quantity *WeightQuantity `json:"quantity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Nutrient") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Nutrient") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NutrientQuantity) MarshalJSON() ([]byte, error) {
+	type NoMethod NutrientQuantity
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NutrientQuantityRollup: Nutrient quantity rollup.
+type NutrientQuantityRollup struct {
+	// Nutrient: Required. Aggregated nutrient.
+	//
+	// Possible values:
+	//   "NUTRIENT_UNSPECIFIED" - Unspecified nutrient.
+	//   "BIOTIN" - Value representing biotin nutrient.
+	//   "CAFFEINE" - Value representing caffeine nutrient.
+	//   "CALCIUM" - Value representing calcium nutrient.
+	//   "CHLORIDE" - Value representing chloride nutrient.
+	//   "CARBOHYDRATES" - Value representing carbohydrates nutrient.
+	//   "CHOLESTEROL" - Value representing cholesterol nutrient.
+	//   "CHROMIUM" - Value representing chromium nutrient.
+	//   "COPPER" - Value representing copper nutrient.
+	//   "DIETARY_FIBER" - Value representing dietary fiber nutrient.
+	//   "FOLIC_ACID" - Value representing folic acid nutrient.
+	//   "IODINE" - Value representing iodine nutrient.
+	//   "IRON" - Value representing iron nutrient.
+	//   "MAGNESIUM" - Value representing magnesium nutrient.
+	//   "MANGANESE" - Value representing manganese nutrient.
+	//   "MOLYBDENUM" - Value representing molybdenum nutrient.
+	//   "MONOUNSATURATED_FAT" - Value representing monounsaturated fat nutrient.
+	//   "NIACIN" - Value representing niacin nutrient.
+	//   "PANTOTHENIC_ACID" - Value representing pantothenic acid nutrient.
+	//   "PHOSPHORUS" - Value representing phosphorus nutrient.
+	//   "POLYUNSATURATED_FAT" - Value representing polyunsaturated fat nutrient.
+	//   "POTASSIUM" - Value representing potassium nutrient.
+	//   "PROTEIN" - Value representing protein nutrient.
+	//   "RIBOFLAVIN" - Value representing riboflavin nutrient.
+	//   "SATURATED_FAT" - Value representing saturated fat nutrient.
+	//   "SELENIUM" - Value representing selenium nutrient.
+	//   "SODIUM" - Value representing sodium nutrient.
+	//   "SUGAR" - Value representing sugar nutrient.
+	//   "THIAMIN" - Value representing thiamin nutrient.
+	//   "TRANS_FAT" - Value representing trans fat nutrient.
+	//   "UNSATURATED_FAT" - Value representing unsaturated fat nutrient.
+	//   "VITAMIN_A" - Value representing vitamin A nutrient.
+	//   "VITAMIN_B12" - Value representing vitamin B12 nutrient.
+	//   "VITAMIN_B6" - Value representing vitamin B6 nutrient.
+	//   "VITAMIN_C" - Value representing vitamin C nutrient.
+	//   "VITAMIN_D" - Value representing vitamin D nutrient.
+	//   "VITAMIN_E" - Value representing vitamin E nutrient.
+	//   "VITAMIN_K" - Value representing vitamin K nutrient.
+	//   "ZINC" - Value representing zinc nutrient.
+	//   "FOLATE" - Value representing folate nutrient.
+	Nutrient string `json:"nutrient,omitempty"`
+	// Quantity: Required. Aggregated nutrient weight.
+	Quantity *WeightQuantityRollup `json:"quantity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Nutrient") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Nutrient") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NutrientQuantityRollup) MarshalJSON() ([]byte, error) {
+	type NoMethod NutrientQuantityRollup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NutritionLog: Holds information about a user logged food. There are two ways
+// of creating a nutrition log based on the food type: 1. Identified food:
+// Using the food field, which is a reference to a Food resource. In this case
+// fields `nutrients`, `energy`, `energy_from_fat`, `total_carbohydrate`,
+// `total_fat`, `food_display_name` will be populated based on the referenced
+// food. 2. Anonymous food: Using the `food_display_name` field and setting the
+// `nutrients`, `energy`, `energy_from_fat`, `total_carbohydrate`, `total_fat`
+// fields manually. The identified food is preferred over the anonymous food.
+// Nutrition logs created from anonymous food are not be editable.
+type NutritionLog struct {
+	// Energy: Optional. Value representing the energy of the nutrition log. For
+	// nutrition logs created from an identified food, this field will be populated
+	// based on the referenced food. For anonymous food, this field will be
+	// populated manually.
+	Energy *EnergyQuantity `json:"energy,omitempty"`
+	// EnergyFromFat: Optional. Value representing the energy from fat of the
+	// nutrition log. For nutrition logs created from an identified food, this
+	// field will be populated based on the referenced food. For anonymous food,
+	// this field will be populated manually.
+	EnergyFromFat *EnergyQuantity `json:"energyFromFat,omitempty"`
+	// Food: Required. Represents the food ID.
+	Food string `json:"food,omitempty"`
+	// FoodDisplayName: Value representing the display name of the food. For
+	// nutrition logs created from an identified food, this field will be populated
+	// based on the referenced food. For anonymous food, this field will be
+	// populated manually.
+	FoodDisplayName string `json:"foodDisplayName,omitempty"`
+	// Interval: Required. Observed interval.
+	Interval *SessionTimeInterval `json:"interval,omitempty"`
+	// MealType: Optional. Value representing the meal type of the nutrition log.
+	//
+	// Possible values:
+	//   "MEAL_TYPE_UNSPECIFIED" - Unspecified meal type.
+	//   "BEFORE_BREAKFAST" - Value representing a meal before breakfast.
+	//   "BREAKFAST" - Value representing a breakfast.
+	//   "BEFORE_LUNCH" - Value representing a morning snack.
+	//   "LUNCH" - Value representing a lunch.
+	//   "BEFORE_DINNER" - Value representing an afternoon snack.
+	//   "DINNER" - Value representing dinner.
+	//   "AFTER_DINNER" - Value representing an evening snack.
+	//   "SNACK" - Value representing any meal outside of the usual three meals per
+	// day.
+	//   "ANYTIME" - Value representing any time (legacy NA).
+	MealType string `json:"mealType,omitempty"`
+	// Nutrients: Optional. Value representing the nutrients of the nutrition log.
+	Nutrients []*NutrientQuantity `json:"nutrients,omitempty"`
+	// Serving: Optional. Value representing the nutrition log serving.
+	Serving *Serving `json:"serving,omitempty"`
+	// TotalCarbohydrate: Optional. Value representing the total carbohydrate of
+	// the nutrition log. For nutrition logs created from an identified food, this
+	// field will be populated based on the referenced food. For anonymous food,
+	// this field will be populated manually.
+	TotalCarbohydrate *WeightQuantity `json:"totalCarbohydrate,omitempty"`
+	// TotalFat: Optional. Value representing the total fat of the nutrition log.
+	// For nutrition logs created from an identified food, this field will be
+	// populated based on the referenced food. For anonymous food, this field will
+	// be populated manually.
+	TotalFat *WeightQuantity `json:"totalFat,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Energy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Energy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NutritionLog) MarshalJSON() ([]byte, error) {
+	type NoMethod NutritionLog
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NutritionLogRollupValue: Represents the result of the rollup of the
+// nutrition log data type.
+type NutritionLogRollupValue struct {
+	// Energy: Energy rollup.
+	Energy *EnergyQuantityRollup `json:"energy,omitempty"`
+	// EnergyFromFat: Value Energy from fat rollup.
+	EnergyFromFat *EnergyQuantityRollup `json:"energyFromFat,omitempty"`
+	// Nutrients: List of the nutrient roll-ups by the nutrient type.
+	Nutrients []*NutrientQuantityRollup `json:"nutrients,omitempty"`
+	// TotalCarbohydrate: Total carbohydrate rollup.
+	TotalCarbohydrate *WeightQuantityRollup `json:"totalCarbohydrate,omitempty"`
+	// TotalFat: Total fat rollup.
+	TotalFat *WeightQuantityRollup `json:"totalFat,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Energy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Energy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NutritionLogRollupValue) MarshalJSON() ([]byte, error) {
+	type NoMethod NutritionLogRollupValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ObservationSampleTime: Represents a sample time of an observed data point.
@@ -2882,6 +4096,106 @@ func (s *OxygenSaturation) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// PairedDevice: User's Paired 1P Device The PairedDevice details include
+// information about the device type, battery status, battery level, last sync
+// time, device version, mac address, and features.
+type PairedDevice struct {
+	// BatteryLevel: Output only. The battery level of the device.
+	BatteryLevel int64 `json:"batteryLevel,omitempty"`
+	// BatteryStatus: Output only. The battery status of the device. Supported:
+	// High | Medium | Low | Empty
+	BatteryStatus string `json:"batteryStatus,omitempty"`
+	// DeviceType: Output only. The device type. Supported: TRACKER | SCALE
+	//
+	// Possible values:
+	//   "DEVICE_TYPE_UNSPECIFIED" - Device type is not specified.
+	//   "TRACKER" - Device type is tracker.
+	//   "SCALE" - Device type is scale.
+	DeviceType string `json:"deviceType,omitempty"`
+	// DeviceVersion: Output only. The product name of the device
+	DeviceVersion string `json:"deviceVersion,omitempty"`
+	// Features: Output only. Lists of unique features supported by the device.
+	// Comprehensive list of supported features: **Fitness Tracking** -
+	// `ACTIVE_MINUTES`: Legacy active minutes. - `AUTOSTRIDE`: Automatic stride
+	// length calculation. - `BIKE_ONBOARDING`: Cycling UI support. - `CALORIES`:
+	// Daily burned calories. - `DISTANCE`: Daily distance tracking. - `ELEVATION`:
+	// Floors climbed. - `INACTIVITY_ALERTS`: Reminders to move. -
+	// `SEDENTARY_TIME`: Tracks inactive time. - `STEPS`: Daily steps. - `SWIM`:
+	// Swim tracking (laps/strokes). - `AUTORUN`: Automatic run detection. -
+	// `ACTIVE_ZONE_MINUTES`: Active Zone Minutes (AZM). **Heart Rate & Health** -
+	// `HEART_RATE`: Continuous heart rate (PPG). - `BAT_SIGNAL`: High/Low Heart
+	// Rate Alerts. **Advanced Sensors** - `SPO2`: Blood oxygen saturation. -
+	// `NIGHTTIME_OXYGEN_SATURATION`: Sleep SpO2. - `ESTIMATED_OXYGEN_VARIATION`:
+	// Estimated Oxygen Variation. - `EDA`: Electrodermal Activity (stress). -
+	// `SKIN_TEMPERATURE`: Skin temperature variation. -
+	// `INTERNAL_DEVICE_TEMPERATURE`: Internal device temperature. **Sleep &
+	// Wellness** - `SLEEP`: Basic sleep tracking. - `SMART_SLEEP`: Advanced sleep
+	// tracking (stages/score). - `BEDTIME_REMINDER`: Bedtime reminders. -
+	// `SOUNDSCAPE`: Snore and noise detection. **Advanced Workouts** - `WB`:
+	// Custom Workout Builder. - `AUTOCUES`: Auto Cues / Auto Lap. - `DWR_RUN`:
+	// Daily Run Recommendations. - `ADVANCED_RUNNING`: Advanced Running Dynamics
+	// (e.g., GCT, VO). **GPS & Location** - `GPS`: Built-in GPS. -
+	// `CONNECTED_GPS`: Connected GPS (uses phone). - `LOCATION_HINT`: Location
+	// helper. **Payments & NFC** - `PAYMENTS`: NFC payments (Fitbit Pay/Google
+	// Wallet). - `FELICA`: FeliCa support (Japan payments/transit). **Activity
+	// Detection** - `GROK`: SmartTrack automatic activity detection. - `RETRO_AR`:
+	// Retroactive Activity Recognition prompts. **Smart Features & UI** -
+	// `ALARMS`: Silent alarms. - `BLE_MUSIC_CONTROL`: BLE music control. -
+	// `MUSIC`: Direct music storage/control. - `YOUTUBE_MUSIC_SUPPORTED`: YouTube
+	// Music support. - `GALLERY`: App Gallery. - `TUTORIAL_SUPPORTED`: On-screen
+	// tutorials. - `SMILEY_EMOTE`: Legacy Zip face. - `MOBILE_TO_DEVICE_DEEPLINK`:
+	// Mobile to device settings deep link. - `HIDE_GALLERY`: Option to hide
+	// Gallery. - `HIDE_GOAL_SELECTION`: Option to hide goal selection. -
+	// `DIGITAL_WARRANTY_SUPPORTED`: Digital warranty display. -
+	// `DIRECT_DEVICE_SETTINGS_SUPPORTED`: Direct device settings management. **Gym
+	// HR Broadcasting** - `ASPEN_SUPPORTED`: Broadcast HR to gym equipment. -
+	// `ASPEN_REMOTE_UI_SUPPORTED`: Remote UI for HR sharing. **Privacy &
+	// Security** - `FINITE_IMPROBABILITY`: BLE Resolvable Private Address (RPA)
+	// privacy. - `DOMAIN_KEY_SYNC`: Domain key synchronization. **BLE Protocol** -
+	// `BONDING`: Secure BLE bonding. - `ADVERTISES_SERIAL`: Advertises serial
+	// number. - `STATUS_CHARACTERISTIC`: BLE Status Characteristic. -
+	// `TRACKER_CHANNEL_CHARACTERISTIC`: BLE Tracker Channel Characteristic. -
+	// `PING_CHARACTERISTIC`: BLE Ping Characteristic. **Cellular & Wi-Fi** -
+	// `MOBILE_DATA`: LTE cellular support. - `SINGLE_AP_WIFI`: Single AP Wi-Fi. -
+	// `MULTI_AP_WIFI`: Multi AP Wi-Fi. - `WIFI_FWUP`: Firmware updates over Wi-Fi.
+	// **Data Sync & Transfer** - `APP_SYNC`: Background app sync. - `LIVE_DATA`:
+	// Real-time data streaming. - `EVENT_BASED_SYNC_SUPPORTED`: Event-based sync.
+	// - `TIME_SERVICE`: Time synchronization service. - `REMOTE_FILE_PROVIDER`:
+	// Remote file transfer. - `DIRECT_COMMS_ALARMS`: Direct communication for
+	// alarms. - `DIRECT_COMMS_EXERCISE`: Direct communication for exercise. -
+	// `DIRECT_COMMS_BATTERY_ALERTS`: Direct communication for battery alerts.
+	// **Google Integrations** - `PARROT_TREE_SUPPORTED`: Find My Device support.
+	Features []string `json:"features,omitempty"`
+	// LastSyncTime: Output only. The time of last sync with the Fitbit mobile
+	// application.
+	LastSyncTime string `json:"lastSyncTime,omitempty"`
+	// MacAddress: Output only. Mac ID number of the device.
+	MacAddress string `json:"macAddress,omitempty"`
+	// Name: Identifier. The resource name of this Device resource. Format:
+	// `users/{user}/pairedDevices/{paired_device}` Example:
+	// `users/1234567890/pairedDevices/123` or `users/me/pairedDevices/123`
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BatteryLevel") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BatteryLevel") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PairedDevice) MarshalJSON() ([]byte, error) {
+	type NoMethod PairedDevice
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Profile: Profile details.
 type Profile struct {
 	// Age: Optional. The age in years based on the user's birth date. Updates to
@@ -2972,6 +4286,9 @@ func (s ReconcileDataPointsResponse) MarshalJSON() ([]byte, error) {
 
 // ReconciledDataPoint: A reconciled computed or recorded metric.
 type ReconciledDataPoint struct {
+	// ActiveEnergyBurned: Data for points in the `active-energy-burned` interval
+	// data type collection.
+	ActiveEnergyBurned *ActiveEnergyBurned `json:"activeEnergyBurned,omitempty"`
 	// ActiveMinutes: Data for points in the `active-minutes` interval data type
 	// collection.
 	ActiveMinutes *ActiveMinutes `json:"activeMinutes,omitempty"`
@@ -2986,8 +4303,14 @@ type ReconciledDataPoint struct {
 	// BasalEnergyBurned: Data for points in the `basal-energy-burned` interval
 	// data type collection.
 	BasalEnergyBurned *BasalEnergyBurned `json:"basalEnergyBurned,omitempty"`
+	// BloodGlucose: Data for points in the `blood-glucose` sample data type
+	// collection.
+	BloodGlucose *BloodGlucose `json:"bloodGlucose,omitempty"`
 	// BodyFat: Data for points in the `body-fat` sample data type collection.
 	BodyFat *BodyFat `json:"bodyFat,omitempty"`
+	// CoreBodyTemperature: Data for points in the `core-body-temperature` sample
+	// data type collection.
+	CoreBodyTemperature *CoreBodyTemperature `json:"coreBodyTemperature,omitempty"`
 	// DailyHeartRateVariability: Data for points in the
 	// `daily-heart-rate-variability` daily data type collection.
 	DailyHeartRateVariability *DailyHeartRateVariability `json:"dailyHeartRateVariability,omitempty"`
@@ -3038,6 +4361,9 @@ type ReconciledDataPoint struct {
 	// HydrationLog: Data for points in the `hydration-log` session data type
 	// collection.
 	HydrationLog *HydrationLog `json:"hydrationLog,omitempty"`
+	// NutritionLog: Data for points in the `nutrition-log` session data type
+	// collection.
+	NutritionLog *NutritionLog `json:"nutritionLog,omitempty"`
 	// OxygenSaturation: Data for points in the `oxygen-saturation` sample data
 	// type collection.
 	OxygenSaturation *OxygenSaturation `json:"oxygenSaturation,omitempty"`
@@ -3063,15 +4389,15 @@ type ReconciledDataPoint struct {
 	Vo2Max *VO2Max `json:"vo2Max,omitempty"`
 	// Weight: Data for points in the `weight` sample data type collection.
 	Weight *Weight `json:"weight,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ActiveMinutes") to
+	// ForceSendFields is a list of field names (e.g. "ActiveEnergyBurned") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ActiveMinutes") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ActiveEnergyBurned") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3279,6 +4605,9 @@ func (s RollUpDataPointsResponse) MarshalJSON() ([]byte, error) {
 // excluding those data points that are identified as recorded by wearables in
 // intervals when they were not actually worn.
 type RollupDataPoint struct {
+	// ActiveEnergyBurned: Returned by default when rolling up data points from the
+	// `active-energy-burned` data type.
+	ActiveEnergyBurned *ActiveEnergyBurnedRollupValue `json:"activeEnergyBurned,omitempty"`
 	// ActiveMinutes: Returned by default when rolling up data points from the
 	// `active-minutes` data type, or when requested explicitly using the
 	// `active-minutes` rollup type identifier.
@@ -3295,6 +4624,9 @@ type RollupDataPoint struct {
 	// `altitude` data type, or when requested explicitly using the `altitude`
 	// rollup type identifier.
 	Altitude *AltitudeRollupValue `json:"altitude,omitempty"`
+	// BloodGlucose: Returned by default when rolling up data points from the
+	// `blood-glucose` data type.
+	BloodGlucose *BloodGlucoseRollupValue `json:"bloodGlucose,omitempty"`
 	// BodyFat: Returned by default when rolling up data points from the `body-fat`
 	// data type, or when requested explicitly using the `body-fat` rollup type
 	// identifier.
@@ -3303,6 +4635,10 @@ type RollupDataPoint struct {
 	// from the `calories-in-heart-rate-zone` data type, or when requested
 	// explicitly using the `calories-in-heart-rate-zone` rollup type identifier.
 	CaloriesInHeartRateZone *CaloriesInHeartRateZoneRollupValue `json:"caloriesInHeartRateZone,omitempty"`
+	// CoreBodyTemperature: Returned by default when rolling up data points from
+	// the `core-body-temperature` data type, or when requested explicitly using
+	// the `core-body-temperature` rollup type identifier.
+	CoreBodyTemperature *CoreBodyTemperatureRollupValue `json:"coreBodyTemperature,omitempty"`
 	// Distance: Returned by default when rolling up data points from the
 	// `distance` data type, or when requested explicitly using the `distance`
 	// rollup type identifier.
@@ -3321,6 +4657,10 @@ type RollupDataPoint struct {
 	// `hydration-log` data type, or when requested explicitly using the
 	// `hydration-log` rollup type identifier.
 	HydrationLog *HydrationLogRollupValue `json:"hydrationLog,omitempty"`
+	// NutritionLog: Returned by default when rolling up data points from the
+	// `nutrition-log` data type, or when requested explicitly using the
+	// `nutrition-log` rollup type identifier.
+	NutritionLog *NutritionLogRollupValue `json:"nutritionLog,omitempty"`
 	// RunVo2Max: Returned by default when rolling up data points from the
 	// `run-vo2-max` data type, or when requested explicitly using the
 	// `run-vo2-max` rollup type identifier.
@@ -3350,15 +4690,15 @@ type RollupDataPoint struct {
 	// data type, or when requested explicitly using the `weight` rollup type
 	// identifier.
 	Weight *WeightRollupValue `json:"weight,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ActiveMinutes") to
+	// ForceSendFields is a list of field names (e.g. "ActiveEnergyBurned") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ActiveMinutes") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ActiveEnergyBurned") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3499,6 +4839,48 @@ func (s SedentaryPeriodRollupValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Serving: Represents different properties and information about the serving
+// of a specific food.
+type Serving struct {
+	// Amount: Optional. Amount of food consumed, fractional values are supported.
+	Amount float64 `json:"amount,omitempty"`
+	// FoodMeasurementUnit: Required. Food measurement unit
+	FoodMeasurementUnit string `json:"foodMeasurementUnit,omitempty"`
+	// FoodMeasurementUnitDisplayName: Output only. Legacy measurement unit for
+	// serving size in singular form (e.g. "piece", "gram").
+	FoodMeasurementUnitDisplayName string `json:"foodMeasurementUnitDisplayName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Amount") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Amount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Serving) MarshalJSON() ([]byte, error) {
+	type NoMethod Serving
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *Serving) UnmarshalJSON(data []byte) error {
+	type NoMethod Serving
+	var s1 struct {
+		Amount gensupport.JSONFloat64 `json:"amount"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Amount = float64(s1.Amount)
+	return nil
+}
+
 // SessionTimeInterval: Represents a time interval of session data point, which
 // bundles multiple observed metrics together.
 type SessionTimeInterval struct {
@@ -3549,6 +4931,12 @@ type Settings struct {
 	//   "DISTANCE_UNIT_MILES" - Distance unit is miles.
 	//   "DISTANCE_UNIT_KILOMETERS" - Distance unit is kilometers.
 	DistanceUnit string `json:"distanceUnit,omitempty"`
+	// FoodLanguageCode: Output only. The food language code derived from the
+	// user's food database. Possible values: `'en-US'`, `'en-GB'`, `'de-DE'`,
+	// `'es-ES'`, `'fr-FR'`, `'zh-CN'`, `'zh-TW'`, `'ja-JP'`, `'en-AU'`, `'en-CA'`,
+	// `'it-IT'`, `'ko-KR'`, `'es-MX'`, `'en-IN'`, `'en-SG'`, `'en-PH'`, `'en-IE'`,
+	// `'fr-CA'`. Updates to this field are currently not supported.
+	FoodLanguageCode string `json:"foodLanguageCode,omitempty"`
 	// GlucoseUnit: Optional. The measurement unit defined in the user's account
 	// settings.
 	//
@@ -4107,6 +5495,51 @@ func (s SubscriberConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Subscription: A subscription to a data collection for a specific user, to be
+// delivered to a subscriber.
+type Subscription struct {
+	// DataTypes: Optional. Data types subscribed to. A subscriber will only
+	// receive notifications for data types that are declared here. A subscription
+	// can only subscribe to the data types of the subscriber. Supported data types
+	// are: "altitude", "distance", "floors", "sleep", "steps", "weight".
+	DataTypes []string `json:"dataTypes,omitempty"`
+	// Name: Identifier. The resource name of the Subscription. Format:
+	// `projects/{project}/subscribers/{subscriber}/subscriptions/{subscription}`
+	// Example:
+	// `projects/my-project/subscribers/my-subscriber-123/subscriptions/my-subscript
+	// ion-456` The {project} ID is mandatory (6-30 characters, matching
+	// /a-z{6,30}/) The {subscriber} ID is user-settable (4-36 characters, matching
+	// /a-z ([a-z0-9-]{2,34}[a-z0-9])/) if provided during creation, or
+	// system-generated otherwise. The {subscription} ID is user-settable (4-36
+	// chars, matching /a-z ([a-z0-9-]{2,34}[a-z0-9])/) or system-generated
+	// otherwise.
+	Name string `json:"name,omitempty"`
+	// User: Immutable. The resource name of the user for whom this subscription is
+	// active. Format: `users/{user}` where `{user}` is the public `healthUserId`
+	// as returned by the `GetIdentity` action in the profile PAPI (see
+	// `google.devicesandservices.health.v4main.HealthProfileService.GetIdentity`).
+	User string `json:"user,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DataTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Subscription) MarshalJSON() ([]byte, error) {
+	type NoMethod Subscription
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SwimLengthsData: Swim lengths data over the time interval.
 type SwimLengthsData struct {
 	// Interval: Required. Observed interval.
@@ -4577,6 +6010,104 @@ func (s *Weight) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.WeightGrams = float64(s1.WeightGrams)
+	return nil
+}
+
+// WeightQuantity: Represents the weight quantity.
+type WeightQuantity struct {
+	// Grams: Required. Value representing the weight in grams.
+	Grams float64 `json:"grams,omitempty"`
+	// UserProvidedUnit: Optional. Value representing the user provided unit.
+	//
+	// Possible values:
+	//   "WEIGHT_UNIT_UNSPECIFIED" - Unspecified weight unit.
+	//   "GRAM" - Value representing gram.
+	//   "KILOGRAM" - Value representing kilogram.
+	//   "OUNCE" - Value representing ounce.
+	//   "POUND" - Value representing pound.
+	//   "STONE" - Value representing stone.
+	//   "MILLIGRAM" - Value representing milligram.
+	//   "MICROGRAM" - Value representing microgram.
+	//   "NANOGRAM" - Value representing nanogram.
+	UserProvidedUnit string `json:"userProvidedUnit,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Grams") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Grams") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WeightQuantity) MarshalJSON() ([]byte, error) {
+	type NoMethod WeightQuantity
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *WeightQuantity) UnmarshalJSON(data []byte) error {
+	type NoMethod WeightQuantity
+	var s1 struct {
+		Grams gensupport.JSONFloat64 `json:"grams"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Grams = float64(s1.Grams)
+	return nil
+}
+
+// WeightQuantityRollup: Rollup for the weight.
+type WeightQuantityRollup struct {
+	// GramsSum: Required. The sum of the weight in grams.
+	GramsSum float64 `json:"gramsSum,omitempty"`
+	// UserProvidedUnitLast: Optional. The user provided unit on the last element.
+	//
+	// Possible values:
+	//   "WEIGHT_UNIT_UNSPECIFIED" - Unspecified weight unit.
+	//   "GRAM" - Value representing gram.
+	//   "KILOGRAM" - Value representing kilogram.
+	//   "OUNCE" - Value representing ounce.
+	//   "POUND" - Value representing pound.
+	//   "STONE" - Value representing stone.
+	//   "MILLIGRAM" - Value representing milligram.
+	//   "MICROGRAM" - Value representing microgram.
+	//   "NANOGRAM" - Value representing nanogram.
+	UserProvidedUnitLast string `json:"userProvidedUnitLast,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GramsSum") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GramsSum") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WeightQuantityRollup) MarshalJSON() ([]byte, error) {
+	type NoMethod WeightQuantityRollup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *WeightQuantityRollup) UnmarshalJSON(data []byte) error {
+	type NoMethod WeightQuantityRollup
+	var s1 struct {
+		GramsSum gensupport.JSONFloat64 `json:"gramsSum"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.GramsSum = float64(s1.GramsSum)
 	return nil
 }
 
@@ -5137,6 +6668,513 @@ func (c *ProjectsSubscribersPatchCall) Do(opts ...googleapi.CallOption) (*Operat
 	return ret, nil
 }
 
+type ProjectsSubscribersSubscriptionsCreateCall struct {
+	s                         *Service
+	parent                    string
+	createsubscriptionpayload *CreateSubscriptionPayload
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Create: Creates a subscription for a specific user to a specific subscriber.
+// This method requires the subscriber to have a `SubscriptionCreatePolicy` set
+// to `MANUAL` for the given data types.
+//
+//   - parent: The parent subscriber. Format:
+//     projects/{project}/subscribers/{subscriber} The {subscriber} ID is
+//     user-settable (4-36 characters, matching /a-z ([a-z0-9-]{2,34}[a-z0-9])/)
+//     if provided during creation, or system-generated otherwise.
+func (r *ProjectsSubscribersSubscriptionsService) Create(parent string, createsubscriptionpayload *CreateSubscriptionPayload) *ProjectsSubscribersSubscriptionsCreateCall {
+	c := &ProjectsSubscribersSubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.createsubscriptionpayload = createsubscriptionpayload
+	return c
+}
+
+// SubscriptionId sets the optional parameter "subscriptionId": The
+// {subscription_id} is user-settable (4-36 chars, matching /a-z
+// ([a-z0-9-]{2,34}[a-z0-9])/) or system-generated otherwise. If provided, the
+// ID must be unique within the parent subscriber.
+func (c *ProjectsSubscribersSubscriptionsCreateCall) SubscriptionId(subscriptionId string) *ProjectsSubscribersSubscriptionsCreateCall {
+	c.urlParams_.Set("subscriptionId", subscriptionId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsSubscribersSubscriptionsCreateCall) Fields(s ...googleapi.Field) *ProjectsSubscribersSubscriptionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsSubscribersSubscriptionsCreateCall) Context(ctx context.Context) *ProjectsSubscribersSubscriptionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsSubscribersSubscriptionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSubscribersSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.createsubscriptionpayload)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/{+parent}/subscriptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "health.projects.subscribers.subscriptions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "health.projects.subscribers.subscriptions.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Subscription.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsSubscribersSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Subscription, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Subscription{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "health.projects.subscribers.subscriptions.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsSubscribersSubscriptionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a specific user subscription, stopping notifications for
+// this user to this subscriber.
+//
+//   - name: The resource name of the subscription to delete. Format:
+//     `projects/{project}/subscribers/{subscriber}/subscriptions/{subscription}`
+//     Example:
+//     `projects/my-project/subscribers/my-subscriber-123/subscriptions/my-subscri
+//     ption-456` The {subscriber} ID is user-settable (4-36 characters, matching
+//     /a-z ([a-z0-9-]{2,34}[a-z0-9])/) if provided during creation, or
+//     system-generated otherwise. The {subscription} ID is user-settable (4-36
+//     characters, matching /a-z ([a-z0-9-]{2,34}[a-z0-9])/) or system-generated
+//     if not provided during creation.
+func (r *ProjectsSubscribersSubscriptionsService) Delete(name string) *ProjectsSubscribersSubscriptionsDeleteCall {
+	c := &ProjectsSubscribersSubscriptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsSubscribersSubscriptionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsSubscribersSubscriptionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsSubscribersSubscriptionsDeleteCall) Context(ctx context.Context) *ProjectsSubscribersSubscriptionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsSubscribersSubscriptionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSubscribersSubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "health.projects.subscribers.subscriptions.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "health.projects.subscribers.subscriptions.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsSubscribersSubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "health.projects.subscribers.subscriptions.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsSubscribersSubscriptionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all active subscriptions for a given subscriber. This can be
+// filtered, for example, by user or data type.
+//
+//   - parent: The parent subscriber. Format:
+//     projects/{project}/subscribers/{subscriber} The {subscriber} ID is
+//     user-settable (4-36 characters, matching /a-z ([a-z0-9-]{2,34}[a-z0-9])/)
+//     if provided during creation, or system-generated otherwise.
+func (r *ProjectsSubscribersSubscriptionsService) List(parent string) *ProjectsSubscribersSubscriptionsListCall {
+	c := &ProjectsSubscribersSubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter to apply to the list
+// of subscriptions. The filter syntax is described in
+// https://google.aip.dev/160. The filter can be applied to the following
+// fields: - `user` - `data_type` The `user` identifier (e.g., `user1` in
+// `users/user1`) refers to the public `healthUserId` Example: user =
+// "users/user1" Example: user = "users/user1" OR user = "users/user2" Example:
+// user = "users/user1" AND (data_type = "sleep" OR data_type = "weight")
+func (c *ProjectsSubscribersSubscriptionsListCall) Filter(filter string) *ProjectsSubscribersSubscriptionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// subscriptions to return. The service may return fewer than this value. If
+// unspecified, at most 50 subscriptions will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsSubscribersSubscriptionsListCall) PageSize(pageSize int64) *ProjectsSubscribersSubscriptionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListSubscriptions` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListSubscriptions` must match the call that provided the page token.
+func (c *ProjectsSubscribersSubscriptionsListCall) PageToken(pageToken string) *ProjectsSubscribersSubscriptionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsSubscribersSubscriptionsListCall) Fields(s ...googleapi.Field) *ProjectsSubscribersSubscriptionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsSubscribersSubscriptionsListCall) IfNoneMatch(entityTag string) *ProjectsSubscribersSubscriptionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsSubscribersSubscriptionsListCall) Context(ctx context.Context) *ProjectsSubscribersSubscriptionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsSubscribersSubscriptionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSubscribersSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/{+parent}/subscriptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "health.projects.subscribers.subscriptions.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "health.projects.subscribers.subscriptions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListSubscriptionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsSubscribersSubscriptionsListCall) Do(opts ...googleapi.CallOption) (*ListSubscriptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSubscriptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "health.projects.subscribers.subscriptions.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsSubscribersSubscriptionsListCall) Pages(ctx context.Context, f func(*ListSubscriptionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsSubscribersSubscriptionsPatchCall struct {
+	s            *Service
+	name         string
+	subscription *Subscription
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Patch: Updates the data types for an existing user subscription.
+//
+//   - name: Identifier. The resource name of the Subscription. Format:
+//     `projects/{project}/subscribers/{subscriber}/subscriptions/{subscription}`
+//     Example:
+//     `projects/my-project/subscribers/my-subscriber-123/subscriptions/my-subscri
+//     ption-456` The {project} ID is mandatory (6-30 characters, matching
+//     /a-z{6,30}/) The {subscriber} ID is user-settable (4-36 characters,
+//     matching /a-z ([a-z0-9-]{2,34}[a-z0-9])/) if provided during creation, or
+//     system-generated otherwise. The {subscription} ID is user-settable (4-36
+//     chars, matching /a-z ([a-z0-9-]{2,34}[a-z0-9])/) or system-generated
+//     otherwise.
+func (r *ProjectsSubscribersSubscriptionsService) Patch(name string, subscription *Subscription) *ProjectsSubscribersSubscriptionsPatchCall {
+	c := &ProjectsSubscribersSubscriptionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.subscription = subscription
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update.
+func (c *ProjectsSubscribersSubscriptionsPatchCall) UpdateMask(updateMask string) *ProjectsSubscribersSubscriptionsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsSubscribersSubscriptionsPatchCall) Fields(s ...googleapi.Field) *ProjectsSubscribersSubscriptionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsSubscribersSubscriptionsPatchCall) Context(ctx context.Context) *ProjectsSubscribersSubscriptionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsSubscribersSubscriptionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSubscribersSubscriptionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.subscription)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "health.projects.subscribers.subscriptions.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "health.projects.subscribers.subscriptions.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Subscription.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsSubscribersSubscriptionsPatchCall) Do(opts ...googleapi.CallOption) (*Subscription, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Subscription{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "health.projects.subscribers.subscriptions.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type UsersGetIdentityCall struct {
 	s            *Service
 	name         string
@@ -5245,6 +7283,120 @@ func (c *UsersGetIdentityCall) Do(opts ...googleapi.CallOption) (*Identity, erro
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "health.users.getIdentity", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type UsersGetIrnProfileCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIrnProfile: Returns user's IRN Profile details.
+//
+//   - name: The resource name of the IRN Profile. Format:
+//     `users/{user}/irnProfile` Example: `users/1234567890/irnProfile` or
+//     `users/me/irnProfile` The {user} ID is a system-generated Google Health
+//     API user ID, a string of 1-63 characters consisting of lowercase and
+//     uppercase letters, numbers, and hyphens. The literal `me` can also be used
+//     to refer to the authenticated user.
+func (r *UsersService) GetIrnProfile(name string) *UsersGetIrnProfileCall {
+	c := &UsersGetIrnProfileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *UsersGetIrnProfileCall) Fields(s ...googleapi.Field) *UsersGetIrnProfileCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *UsersGetIrnProfileCall) IfNoneMatch(entityTag string) *UsersGetIrnProfileCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *UsersGetIrnProfileCall) Context(ctx context.Context) *UsersGetIrnProfileCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *UsersGetIrnProfileCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersGetIrnProfileCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "health.users.getIrnProfile", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "health.users.getIrnProfile" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *IrnProfile.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *UsersGetIrnProfileCall) Do(opts ...googleapi.CallOption) (*IrnProfile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &IrnProfile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "health.users.getIrnProfile", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6329,22 +8481,23 @@ func (r *UsersDataTypesDataPointsService) List(parent string) *UsersDataTypesDat
 // date: - Pattern: `{daily_summary_data_type}.date` - Supported comparison
 // operators: `>=`, `<` - Date literal expected in ISO 8601 `YYYY-MM-DD` format
 // - Supported logical operators: `AND` - Example: -
-// `daily_heart_rate_variability.date < "2024-08-15" - Session start time
-// (**ECG specific**): - Pattern: `electrocardiogram.interval.start_time` -
-// Supported comparison operators: `>=` - Timestamp literal expected in
-// RFC-3339 format - Example: - `electrocardiogram.interval.start_time >=
-// "2024-08-14T12:34:56Z" - Note: Only filtering by start time is supported
-// for ECG. Filtering by end time (e.g., `electrocardiogram.interval.end_time`)
-// is not supported. - Session civil start time (**Excluding Sleep**): -
-// Pattern: `{session_data_type}.interval.civil_start_time` - Supported
-// comparison operators: `>=`, `<` - Date with optional time literal expected
-// in ISO 8601 `YYYY-MM-DD[THH:mm:ss]` format - Supported logical operators:
-// `AND` - Example: - `exercise.interval.civil_start_time >= "2023-11-24" AND
+// `daily_heart_rate_variability.date < "2024-08-15" - Session civil start
+// time (**Excluding Sleep and ECG**): - Pattern:
+// `{session_data_type}.interval.civil_start_time` - Supported comparison
+// operators: `>=`, `<` - Date with optional time literal expected in ISO 8601
+// `YYYY-MM-DD[THH:mm:ss]` format - Supported logical operators: `AND` -
+// Example: - `exercise.interval.civil_start_time >= "2023-11-24" AND
 // exercise.interval.civil_start_time < "2023-11-25" -
-// `exercise.interval.civil_start_time >= "2024-08-14T12:34:56" - Session end
-// time (**Sleep specific**): - Pattern: `sleep.interval.end_time` - Supported
-// comparison operators: `>=`, `<` - Timestamp literal expected in RFC-3339
-// format - Supported logical operators: `AND`, `OR` - Example: -
+// `exercise.interval.civil_start_time >= "2024-08-14T12:34:56" - Session
+// start time (**ECG specific**): - Pattern:
+// `electrocardiogram.interval.start_time` - Supported comparison operators:
+// `>=` - Timestamp literal expected in RFC-3339 format - Example: -
+// `electrocardiogram.interval.start_time >= "2024-08-14T12:34:56Z" - Note:
+// Only filtering by start time is supported for ECG. Filtering by end time
+// (e.g., `electrocardiogram.interval.end_time`) is not supported. - Session
+// end time (**Sleep specific**): - Pattern: `sleep.interval.end_time` -
+// Supported comparison operators: `>=`, `<` - Timestamp literal expected in
+// RFC-3339 format - Supported logical operators: `AND`, `OR` - Example: -
 // `sleep.interval.end_time >= "2023-11-24T00:00:00Z" AND
 // sleep.interval.end_time < "2023-11-25T00:00:00Z" - Session civil end time
 // (**Sleep specific**): - Pattern: `sleep.interval.civil_end_time` - Supported
@@ -6903,5 +9056,265 @@ func (c *UsersDataTypesDataPointsRollUpCall) Pages(ctx context.Context, f func(*
 			return nil
 		}
 		c.rollupdatapointsrequest.PageToken = x.NextPageToken
+	}
+}
+
+type UsersPairedDevicesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns user's Device.
+//
+//   - name: The name of the device to retrieve. Format:
+//     users/{user}/devices/{device}.
+func (r *UsersPairedDevicesService) Get(name string) *UsersPairedDevicesGetCall {
+	c := &UsersPairedDevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *UsersPairedDevicesGetCall) Fields(s ...googleapi.Field) *UsersPairedDevicesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *UsersPairedDevicesGetCall) IfNoneMatch(entityTag string) *UsersPairedDevicesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *UsersPairedDevicesGetCall) Context(ctx context.Context) *UsersPairedDevicesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *UsersPairedDevicesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersPairedDevicesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "health.users.pairedDevices.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "health.users.pairedDevices.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *PairedDevice.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *UsersPairedDevicesGetCall) Do(opts ...googleapi.CallOption) (*PairedDevice, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &PairedDevice{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "health.users.pairedDevices.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type UsersPairedDevicesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns the user's list of paired 1P trackers and smartwatches.
+//
+//   - parent: The parent, which owns this collection of devices. Format:
+//     users/{user}.
+func (r *UsersPairedDevicesService) List(parent string) *UsersPairedDevicesListCall {
+	c := &UsersPairedDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// devices to return. The service may return fewer than this value. If
+// unspecified, at most 5 devices will be returned. The maximum value is 100.
+// values above 100 will be coerced to 100.
+func (c *UsersPairedDevicesListCall) PageSize(pageSize int64) *UsersPairedDevicesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListPairedDevices` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListPairedDevices` must match the call that provided the page token.
+func (c *UsersPairedDevicesListCall) PageToken(pageToken string) *UsersPairedDevicesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *UsersPairedDevicesListCall) Fields(s ...googleapi.Field) *UsersPairedDevicesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *UsersPairedDevicesListCall) IfNoneMatch(entityTag string) *UsersPairedDevicesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *UsersPairedDevicesListCall) Context(ctx context.Context) *UsersPairedDevicesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *UsersPairedDevicesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersPairedDevicesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/{+parent}/pairedDevices")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "health.users.pairedDevices.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "health.users.pairedDevices.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListPairedDevicesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *UsersPairedDevicesListCall) Do(opts ...googleapi.CallOption) (*ListPairedDevicesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListPairedDevicesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "health.users.pairedDevices.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *UsersPairedDevicesListCall) Pages(ctx context.Context, f func(*ListPairedDevicesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
 	}
 }

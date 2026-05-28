@@ -6634,7 +6634,7 @@ type SearchListResponse struct {
 	PrevPageToken   string           `json:"prevPageToken,omitempty"`
 	RegionCode      string           `json:"regionCode,omitempty"`
 	TokenPagination *TokenPagination `json:"tokenPagination,omitempty"`
-	// VisitorId: The visitorId identifies the visitor.
+	// VisitorId: The visitor ID identifies the visitor.
 	VisitorId string `json:"visitorId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -16633,7 +16633,7 @@ func (r *SearchService) List(part []string) *SearchListCall {
 }
 
 // ChannelId sets the optional parameter "channelId": Filter on resources
-// belonging to this channelId.
+// belonging to this channelId. (Force TAP rebuild)
 func (c *SearchListCall) ChannelId(channelId string) *SearchListCall {
 	c.urlParams_.Set("channelId", channelId)
 	return c

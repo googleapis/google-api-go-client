@@ -1897,9 +1897,9 @@ type CloudVmClusterProperties struct {
 	ScanDnsRecordId string `json:"scanDnsRecordId,omitempty"`
 	// ScanIpIds: Output only. OCIDs of scan IPs.
 	ScanIpIds []string `json:"scanIpIds,omitempty"`
-	// ScanListenerPortTcp: Output only. SCAN listener port - TCP
+	// ScanListenerPortTcp: Optional. SCAN listener port - TCP
 	ScanListenerPortTcp int64 `json:"scanListenerPortTcp,omitempty"`
-	// ScanListenerPortTcpSsl: Output only. SCAN listener port - TLS
+	// ScanListenerPortTcpSsl: Optional. SCAN listener port - TLS
 	ScanListenerPortTcpSsl int64 `json:"scanListenerPortTcpSsl,omitempty"`
 	// Shape: Output only. Shape of VM Cluster.
 	Shape string `json:"shape,omitempty"`
@@ -2771,7 +2771,8 @@ type DbSystemOptions struct {
 	//
 	// Possible values:
 	//   "STORAGE_MANAGEMENT_UNSPECIFIED" - The storage management is unspecified.
-	//   "ASM" - Automatic storage management.
+	//   "ASM" - Automatic storage management. This option is not supported. Only
+	// LVM is supported.
 	//   "LVM" - Logical Volume management.
 	StorageManagement string `json:"storageManagement,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "StorageManagement") to
@@ -5028,8 +5029,8 @@ func (s GoldengateGoldengateConnectionProperties) MarshalJSON() ([]byte, error) 
 // GoldengateGoogleBigQueryConnectionProperties: The properties of
 // GoldengateGoogleBigQueryConnectionProperties.
 type GoldengateGoogleBigQueryConnectionProperties struct {
-	// ServiceAccountKeyFile: Optional. The service account key file Cloud Storage
-	// containing the credentials required to use Google BigQuery.
+	// ServiceAccountKeyFile: Optional. The base64 encoded content of the service
+	// account key file containing the credentials required to use Google BigQuery.
 	ServiceAccountKeyFile string `json:"serviceAccountKeyFile,omitempty"`
 	// TechnologyType: Optional. The technology type.
 	TechnologyType string `json:"technologyType,omitempty"`
@@ -5054,8 +5055,9 @@ func (s GoldengateGoogleBigQueryConnectionProperties) MarshalJSON() ([]byte, err
 // GoldengateGoogleCloudStorageConnectionProperties: The properties of
 // GoldengateGoogleCloudStorageConnectionProperties.
 type GoldengateGoogleCloudStorageConnectionProperties struct {
-	// ServiceAccountKeyFile: Optional. The service account key Cloud Storage file
-	// containing the credentials required to use Google Cloud Storage.
+	// ServiceAccountKeyFile: Optional. The base64 encoded content of the service
+	// account key file containing the credentials required to use Google Cloud
+	// Storage.
 	ServiceAccountKeyFile string `json:"serviceAccountKeyFile,omitempty"`
 	// TechnologyType: Optional. The technology type.
 	TechnologyType string `json:"technologyType,omitempty"`
@@ -5080,8 +5082,8 @@ func (s GoldengateGoogleCloudStorageConnectionProperties) MarshalJSON() ([]byte,
 // GoldengateGooglePubsubConnectionProperties: The properties of
 // GoldengateGooglePubsubConnection.
 type GoldengateGooglePubsubConnectionProperties struct {
-	// ServiceAccountKeyFile: Optional. The content of the service account key file
-	// containing the credentials required to use Google Pub/Sub.
+	// ServiceAccountKeyFile: Optional. The base64 encoded content of the service
+	// account key file containing the credentials required to use Google Pub/Sub.
 	ServiceAccountKeyFile string `json:"serviceAccountKeyFile,omitempty"`
 	// TechnologyType: Optional. The technology type of GooglePubsubConnection.
 	TechnologyType string `json:"technologyType,omitempty"`
@@ -5218,7 +5220,7 @@ type GoldengateJavaMessageServiceConnectionProperties struct {
 	// JndiSecurityPrincipal: Optional. Specifies the identity of the principal
 	// (user) to be authenticated.
 	JndiSecurityPrincipal string `json:"jndiSecurityPrincipal,omitempty"`
-	// KeyStoreFile: Optional. The content of the KeyStore file.
+	// KeyStoreFile: Optional. The base64 encoded content of the KeyStore file.
 	KeyStoreFile string `json:"keyStoreFile,omitempty"`
 	// KeyStorePassword: Optional. Input only. The KeyStore password in plain text.
 	KeyStorePassword string `json:"keyStorePassword,omitempty"`
@@ -5253,7 +5255,7 @@ type GoldengateJavaMessageServiceConnectionProperties struct {
 	// TechnologyType: Optional. The technology type of
 	// JavaMessageServiceConnection.
 	TechnologyType string `json:"technologyType,omitempty"`
-	// TrustStoreFile: Optional. The content of the TrustStore file.
+	// TrustStoreFile: Optional. The base64 encoded content of the TrustStore file.
 	TrustStoreFile string `json:"trustStoreFile,omitempty"`
 	// TrustStorePassword: Optional. Input only. The TrustStore password in plain
 	// text.
@@ -5297,10 +5299,10 @@ type GoldengateKafkaConnectionProperties struct {
 	// ClusterId: Optional. The OCID of the Kafka cluster being referenced from OCI
 	// Streaming with Apache Kafka.
 	ClusterId string `json:"clusterId,omitempty"`
-	// ConsumerPropertiesFile: Optional. The content of the consumer.properties
-	// file.
+	// ConsumerPropertiesFile: Optional. The base64 encoded content of the
+	// consumer.properties file.
 	ConsumerPropertiesFile string `json:"consumerPropertiesFile,omitempty"`
-	// KeyStoreFile: Optional. The content of the KeyStore file.
+	// KeyStoreFile: Optional. The base64 encoded content of the KeyStore file.
 	KeyStoreFile string `json:"keyStoreFile,omitempty"`
 	// KeyStorePassword: Optional. Input only. The KeyStore password in plain text.
 	KeyStorePassword string `json:"keyStorePassword,omitempty"`
@@ -5315,8 +5317,8 @@ type GoldengateKafkaConnectionProperties struct {
 	// version in Secret Manager which contains the password for Kafka basic/SASL
 	// auth. Format: projects/{project}/secrets/{secret}/versions/{version}.
 	PasswordSecretVersion string `json:"passwordSecretVersion,omitempty"`
-	// ProducerPropertiesFile: Optional. The content of the producer.properties
-	// file.
+	// ProducerPropertiesFile: Optional. The base64 encoded content of the
+	// producer.properties file.
 	ProducerPropertiesFile string `json:"producerPropertiesFile,omitempty"`
 	// SecurityProtocol: Optional. Security Type for Kafka.
 	//
@@ -5339,7 +5341,7 @@ type GoldengateKafkaConnectionProperties struct {
 	StreamPoolId string `json:"streamPoolId,omitempty"`
 	// TechnologyType: Optional. The technology type of KafkaConnection.
 	TechnologyType string `json:"technologyType,omitempty"`
-	// TrustStoreFile: Optional. The content of the TrustStore file.
+	// TrustStoreFile: Optional. The base64 encoded content of the TrustStore file.
 	TrustStoreFile string `json:"trustStoreFile,omitempty"`
 	// TrustStorePassword: Optional. Input only. The TrustStore password in plain
 	// text.
@@ -5385,7 +5387,7 @@ type GoldengateKafkaSchemaRegistryConnectionProperties struct {
 	//   "BASIC" - Basic authentication.
 	//   "MUTUAL" - Mutual authentication.
 	AuthenticationType string `json:"authenticationType,omitempty"`
-	// KeyStoreFile: Optional. The content of the KeyStore file.
+	// KeyStoreFile: Optional. The base64 encoded content of the KeyStore file.
 	KeyStoreFile string `json:"keyStoreFile,omitempty"`
 	// KeyStorePassword: Optional. Input only. The KeyStore password in plain text.
 	KeyStorePassword string `json:"keyStorePassword,omitempty"`
@@ -5412,7 +5414,7 @@ type GoldengateKafkaSchemaRegistryConnectionProperties struct {
 	// TechnologyType: Optional. The technology type of
 	// KafkaSchemaRegistryConnection.
 	TechnologyType string `json:"technologyType,omitempty"`
-	// TrustStoreFile: Optional. The content of the TrustStore file.
+	// TrustStoreFile: Optional. The base64 encoded content of the TrustStore file.
 	TrustStoreFile string `json:"trustStoreFile,omitempty"`
 	// TrustStorePassword: Optional. Input only. The TrustStore password in plain
 	// text.
@@ -5590,8 +5592,8 @@ type GoldengateMicrosoftSqlserverConnectionProperties struct {
 	// ServerCertificateValidationRequired: Optional. If set to true, the driver
 	// validates the certificate that is sent by the database server.
 	ServerCertificateValidationRequired bool `json:"serverCertificateValidationRequired,omitempty"`
-	// SslCaFile: Optional. Database Certificate - The content of a .pem or .crt
-	// file containing the server public key (for 1-way SSL).
+	// SslCaFile: Optional. Database Certificate - The base64 encoded content of a
+	// .pem or .crt file containing the server public key (for 1-way SSL).
 	SslCaFile string `json:"sslCaFile,omitempty"`
 	// TechnologyType: Optional. The technology type of
 	// MicrosoftSqlserverConnection.
@@ -5643,11 +5645,11 @@ type GoldengateMongodbConnectionProperties struct {
 	SecurityProtocol string `json:"securityProtocol,omitempty"`
 	// TechnologyType: Optional. The technology type of MongodbConnection.
 	TechnologyType string `json:"technologyType,omitempty"`
-	// TlsCaFile: Optional. Database Certificate - The content of a .pem file,
-	// containing the server public key (for 1 and 2-way SSL).
+	// TlsCaFile: Optional. Database Certificate - The base64 encoded content of a
+	// .pem file, containing the server public key (for 1 and 2-way SSL).
 	TlsCaFile string `json:"tlsCaFile,omitempty"`
-	// TlsCertificateKeyFile: Optional. Client Certificate - The content of a .pem
-	// file, containing the client public key (for 2-way SSL).
+	// TlsCertificateKeyFile: Optional. Client Certificate - The base64 encoded
+	// content of a .pem file, containing the client public key (for 2-way SSL).
 	TlsCertificateKeyFile string `json:"tlsCertificateKeyFile,omitempty"`
 	// TlsCertificateKeyFilePassword: Optional. Input only. The Client Certificate
 	// key file password in plain text.
@@ -5708,17 +5710,17 @@ type GoldengateMysqlConnectionProperties struct {
 	//   "TLS" - Transport Layer Security.
 	//   "MTLS" - Mutual Transport Layer Security.
 	SecurityProtocol string `json:"securityProtocol,omitempty"`
-	// SslCaFile: Optional. Database Certificate - The content of a .pem or .crt
-	// file containing the server public key (for 1 and 2-way SSL).
+	// SslCaFile: Optional. Database Certificate - The base64 encoded content of a
+	// .pem or .crt file containing the server public key (for 1 and 2-way SSL).
 	SslCaFile string `json:"sslCaFile,omitempty"`
-	// SslCertFile: Optional. Client Certificate - The content of a .pem or .crt
-	// file containing the client public key (for 2-way SSL).
+	// SslCertFile: Optional. Client Certificate - The base64 encoded content of a
+	// .pem or .crt file containing the client public key (for 2-way SSL).
 	SslCertFile string `json:"sslCertFile,omitempty"`
-	// SslCrlFile: Optional. The list of certificates revoked by the trusted
-	// certificate authorities (Trusted CA).
+	// SslCrlFile: Optional. The base64 encoded list of certificates revoked by the
+	// trusted certificate authorities (Trusted CA).
 	SslCrlFile string `json:"sslCrlFile,omitempty"`
-	// SslKeyFile: Optional. Client Key - The content of a .pem or .crt file
-	// containing the client private key (for 2-way SSL).
+	// SslKeyFile: Optional. Client Key - The base64 encoded content of a .pem or
+	// .crt file containing the client private key (for 2-way SSL).
 	SslKeyFile string `json:"sslKeyFile,omitempty"`
 	// SslMode: Optional. SSL modes for MySQL.
 	//
@@ -5932,7 +5934,7 @@ type GoldengateOracleConnectionProperties struct {
 	// Username: Optional. The username Oracle Goldengate uses to connect.
 	Username string `json:"username,omitempty"`
 	// WalletFile: Optional. The wallet contents Oracle Goldengate uses to make
-	// connections to a database.
+	// connections to a database. This attribute is expected to be base64 encoded.
 	WalletFile string `json:"walletFile,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthenticationMode") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6048,15 +6050,17 @@ type GoldengatePostgresqlConnectionProperties struct {
 	//   "TLS" - Transport Layer Security.
 	//   "MTLS" - Mutual Transport Layer Security.
 	SecurityProtocol string `json:"securityProtocol,omitempty"`
-	// SslCaFile: Optional. The certificate of the trusted certificate authorities
-	// (Trusted CA) for PostgreSQL.
+	// SslCaFile: Optional. The base64 encoded certificate of the trusted
+	// certificate authorities (Trusted CA) for PostgreSQL.
 	SslCaFile string `json:"sslCaFile,omitempty"`
-	// SslCertFile: Optional. The certificate of the PostgreSQL server.
+	// SslCertFile: Optional. The base64 encoded certificate of the PostgreSQL
+	// server.
 	SslCertFile string `json:"sslCertFile,omitempty"`
-	// SslCrlFile: Optional. The list of certificates revoked by the trusted
-	// certificate authorities (Trusted CA).
+	// SslCrlFile: Optional. The base64 encoded list of certificates revoked by the
+	// trusted certificate authorities (Trusted CA).
 	SslCrlFile string `json:"sslCrlFile,omitempty"`
-	// SslKeyFile: Optional. The private key of the PostgreSQL server.
+	// SslKeyFile: Optional. The base64 encoded private key of the PostgreSQL
+	// server.
 	SslKeyFile string `json:"sslKeyFile,omitempty"`
 	// SslMode: Optional. SSL modes for PostgreSQL.
 	//
@@ -6101,7 +6105,7 @@ type GoldengateRedisConnectionProperties struct {
 	//   "NONE" - No authentication.
 	//   "BASIC" - Basic authentication.
 	AuthenticationType string `json:"authenticationType,omitempty"`
-	// KeyStoreFile: Optional. The content of the KeyStore file.
+	// KeyStoreFile: Optional. The base64 encoded content of the KeyStore file.
 	KeyStoreFile string `json:"keyStoreFile,omitempty"`
 	// KeyStorePassword: Optional. Input only. The KeyStore password in plain text.
 	KeyStorePassword string `json:"keyStorePassword,omitempty"`
@@ -6134,7 +6138,7 @@ type GoldengateRedisConnectionProperties struct {
 	Servers string `json:"servers,omitempty"`
 	// TechnologyType: Optional. The technology type of RedisConnection.
 	TechnologyType string `json:"technologyType,omitempty"`
-	// TrustStoreFile: Optional. The content of the TrustStore file.
+	// TrustStoreFile: Optional. The base64 encoded content of the TrustStore file.
 	TrustStoreFile string `json:"trustStoreFile,omitempty"`
 	// TrustStorePassword: Optional. Input only. The TrustStore password in plain
 	// text.
@@ -6220,8 +6224,8 @@ type GoogleCloudStorageIcebergStorage struct {
 	Bucket string `json:"bucket,omitempty"`
 	// ProjectId: Required. The project ID of Google Cloud Storage.
 	ProjectId string `json:"projectId,omitempty"`
-	// ServiceAccountKeyFile: Optional. The service account key file of Google
-	// Cloud Storage.
+	// ServiceAccountKeyFile: Optional. The base64 encoded content of the service
+	// account key file of Google Cloud Storage.
 	ServiceAccountKeyFile string `json:"serviceAccountKeyFile,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -8017,8 +8021,8 @@ func (s RemoveVirtualMachineExadbVmClusterRequest) MarshalJSON() ([]byte, error)
 
 // RestIcebergCatalog: The REST Iceberg catalog.
 type RestIcebergCatalog struct {
-	// Properties: Optional. The content of the configuration file containing
-	// additional properties for the REST catalog.
+	// Properties: Optional. The base64 encoded content of the configuration file
+	// containing additional properties for the REST catalog.
 	Properties string `json:"properties,omitempty"`
 	// Uri: Required. The REST uri.
 	Uri string `json:"uri,omitempty"`

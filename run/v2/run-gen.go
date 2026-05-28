@@ -1600,9 +1600,6 @@ type GoogleCloudRunV2Instance struct {
 	// reach a serving state. See comments in `reconciling` for additional
 	// information on reconciliation process in Cloud Run.
 	TerminalCondition *GoogleCloudRunV2Condition `json:"terminalCondition,omitempty"`
-	// Timeout: Optional. Duration the instance may be active before the system
-	// will shut it down.
-	Timeout string `json:"timeout,omitempty"`
 	// Uid: Output only. Server assigned unique identifier for the trigger. The
 	// value is a UUID4 string and guaranteed to remain unchanged until the
 	// resource is deleted.

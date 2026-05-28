@@ -3297,7 +3297,7 @@
       }
     }
   },
-  "revision": "20260512",
+  "revision": "20260526",
   "rootUrl": "https://oracledatabase.googleapis.com/",
   "schemas": {
     "AllConnectionStrings": {
@@ -4982,15 +4982,13 @@
           "type": "array"
         },
         "scanListenerPortTcp": {
-          "description": "Output only. SCAN listener port - TCP",
+          "description": "Optional. SCAN listener port - TCP",
           "format": "int32",
-          "readOnly": true,
           "type": "integer"
         },
         "scanListenerPortTcpSsl": {
-          "description": "Output only. SCAN listener port - TLS",
+          "description": "Optional. SCAN listener port - TLS",
           "format": "int32",
-          "readOnly": true,
           "type": "integer"
         },
         "shape": {
@@ -5940,7 +5938,7 @@
           ],
           "enumDescriptions": [
             "The storage management is unspecified.",
-            "Automatic storage management.",
+            "Automatic storage management. This option is not supported. Only LVM is supported.",
             "Logical Volume management."
           ],
           "type": "string"
@@ -8467,7 +8465,7 @@
       "id": "GoldengateGoogleBigQueryConnectionProperties",
       "properties": {
         "serviceAccountKeyFile": {
-          "description": "Optional. The service account key file Cloud Storage containing the credentials required to use Google BigQuery.",
+          "description": "Optional. The base64 encoded content of the service account key file containing the credentials required to use Google BigQuery.",
           "type": "string"
         },
         "technologyType": {
@@ -8482,7 +8480,7 @@
       "id": "GoldengateGoogleCloudStorageConnectionProperties",
       "properties": {
         "serviceAccountKeyFile": {
-          "description": "Optional. The service account key Cloud Storage file containing the credentials required to use Google Cloud Storage.",
+          "description": "Optional. The base64 encoded content of the service account key file containing the credentials required to use Google Cloud Storage.",
           "type": "string"
         },
         "technologyType": {
@@ -8497,7 +8495,7 @@
       "id": "GoldengateGooglePubsubConnectionProperties",
       "properties": {
         "serviceAccountKeyFile": {
-          "description": "Optional. The content of the service account key file containing the credentials required to use Google Pub/Sub.",
+          "description": "Optional. The base64 encoded content of the service account key file containing the credentials required to use Google Pub/Sub.",
           "type": "string"
         },
         "technologyType": {
@@ -8615,7 +8613,7 @@
           "type": "string"
         },
         "keyStoreFile": {
-          "description": "Optional. The content of the KeyStore file.",
+          "description": "Optional. The base64 encoded content of the KeyStore file.",
           "type": "string"
         },
         "keyStorePassword": {
@@ -8663,7 +8661,7 @@
           "type": "string"
         },
         "trustStoreFile": {
-          "description": "Optional. The content of the TrustStore file.",
+          "description": "Optional. The base64 encoded content of the TrustStore file.",
           "type": "string"
         },
         "trustStorePassword": {
@@ -8701,11 +8699,11 @@
           "type": "string"
         },
         "consumerPropertiesFile": {
-          "description": "Optional. The content of the consumer.properties file.",
+          "description": "Optional. The base64 encoded content of the consumer.properties file.",
           "type": "string"
         },
         "keyStoreFile": {
-          "description": "Optional. The content of the KeyStore file.",
+          "description": "Optional. The base64 encoded content of the KeyStore file.",
           "type": "string"
         },
         "keyStorePassword": {
@@ -8725,7 +8723,7 @@
           "type": "string"
         },
         "producerPropertiesFile": {
-          "description": "Optional. The content of the producer.properties file.",
+          "description": "Optional. The base64 encoded content of the producer.properties file.",
           "type": "string"
         },
         "securityProtocol": {
@@ -8763,7 +8761,7 @@
           "type": "string"
         },
         "trustStoreFile": {
-          "description": "Optional. The content of the TrustStore file.",
+          "description": "Optional. The base64 encoded content of the TrustStore file.",
           "type": "string"
         },
         "trustStorePassword": {
@@ -8806,7 +8804,7 @@
           "type": "string"
         },
         "keyStoreFile": {
-          "description": "Optional. The content of the KeyStore file.",
+          "description": "Optional. The base64 encoded content of the KeyStore file.",
           "type": "string"
         },
         "keyStorePassword": {
@@ -8838,7 +8836,7 @@
           "type": "string"
         },
         "trustStoreFile": {
-          "description": "Optional. The content of the TrustStore file.",
+          "description": "Optional. The base64 encoded content of the TrustStore file.",
           "type": "string"
         },
         "trustStorePassword": {
@@ -9005,7 +9003,7 @@
           "type": "boolean"
         },
         "sslCaFile": {
-          "description": "Optional. Database Certificate - The content of a .pem or .crt file containing the server public key (for 1-way SSL).",
+          "description": "Optional. Database Certificate - The base64 encoded content of a .pem or .crt file containing the server public key (for 1-way SSL).",
           "type": "string"
         },
         "technologyType": {
@@ -9060,11 +9058,11 @@
           "type": "string"
         },
         "tlsCaFile": {
-          "description": "Optional. Database Certificate - The content of a .pem file, containing the server public key (for 1 and 2-way SSL).",
+          "description": "Optional. Database Certificate - The base64 encoded content of a .pem file, containing the server public key (for 1 and 2-way SSL).",
           "type": "string"
         },
         "tlsCertificateKeyFile": {
-          "description": "Optional. Client Certificate - The content of a .pem file, containing the client public key (for 2-way SSL).",
+          "description": "Optional. Client Certificate - The base64 encoded content of a .pem file, containing the client public key (for 2-way SSL).",
           "type": "string"
         },
         "tlsCertificateKeyFilePassword": {
@@ -9135,19 +9133,19 @@
           "type": "string"
         },
         "sslCaFile": {
-          "description": "Optional. Database Certificate - The content of a .pem or .crt file containing the server public key (for 1 and 2-way SSL).",
+          "description": "Optional. Database Certificate - The base64 encoded content of a .pem or .crt file containing the server public key (for 1 and 2-way SSL).",
           "type": "string"
         },
         "sslCertFile": {
-          "description": "Optional. Client Certificate - The content of a .pem or .crt file containing the client public key (for 2-way SSL).",
+          "description": "Optional. Client Certificate - The base64 encoded content of a .pem or .crt file containing the client public key (for 2-way SSL).",
           "type": "string"
         },
         "sslCrlFile": {
-          "description": "Optional. The list of certificates revoked by the trusted certificate authorities (Trusted CA).",
+          "description": "Optional. The base64 encoded list of certificates revoked by the trusted certificate authorities (Trusted CA).",
           "type": "string"
         },
         "sslKeyFile": {
-          "description": "Optional. Client Key - The content of a .pem or .crt file containing the client private key (for 2-way SSL).",
+          "description": "Optional. Client Key - The base64 encoded content of a .pem or .crt file containing the client private key (for 2-way SSL).",
           "type": "string"
         },
         "sslMode": {
@@ -9382,7 +9380,7 @@
           "type": "string"
         },
         "walletFile": {
-          "description": "Optional. The wallet contents Oracle Goldengate uses to make connections to a database.",
+          "description": "Optional. The wallet contents Oracle Goldengate uses to make connections to a database. This attribute is expected to be base64 encoded.",
           "type": "string"
         }
       },
@@ -9497,19 +9495,19 @@
           "type": "string"
         },
         "sslCaFile": {
-          "description": "Optional. The certificate of the trusted certificate authorities (Trusted CA) for PostgreSQL.",
+          "description": "Optional. The base64 encoded certificate of the trusted certificate authorities (Trusted CA) for PostgreSQL.",
           "type": "string"
         },
         "sslCertFile": {
-          "description": "Optional. The certificate of the PostgreSQL server.",
+          "description": "Optional. The base64 encoded certificate of the PostgreSQL server.",
           "type": "string"
         },
         "sslCrlFile": {
-          "description": "Optional. The list of certificates revoked by the trusted certificate authorities (Trusted CA).",
+          "description": "Optional. The base64 encoded list of certificates revoked by the trusted certificate authorities (Trusted CA).",
           "type": "string"
         },
         "sslKeyFile": {
-          "description": "Optional. The private key of the PostgreSQL server.",
+          "description": "Optional. The base64 encoded private key of the PostgreSQL server.",
           "type": "string"
         },
         "sslMode": {
@@ -9560,7 +9558,7 @@
           "type": "string"
         },
         "keyStoreFile": {
-          "description": "Optional. The content of the KeyStore file.",
+          "description": "Optional. The base64 encoded content of the KeyStore file.",
           "type": "string"
         },
         "keyStorePassword": {
@@ -9608,7 +9606,7 @@
           "type": "string"
         },
         "trustStoreFile": {
-          "description": "Optional. The content of the TrustStore file.",
+          "description": "Optional. The base64 encoded content of the TrustStore file.",
           "type": "string"
         },
         "trustStorePassword": {
@@ -9688,7 +9686,7 @@
           "type": "string"
         },
         "serviceAccountKeyFile": {
-          "description": "Optional. The service account key file of Google Cloud Storage.",
+          "description": "Optional. The base64 encoded content of the service account key file of Google Cloud Storage.",
           "type": "string"
         }
       },
@@ -11188,7 +11186,7 @@
       "id": "RestIcebergCatalog",
       "properties": {
         "properties": {
-          "description": "Optional. The content of the configuration file containing additional properties for the REST catalog.",
+          "description": "Optional. The base64 encoded content of the configuration file containing additional properties for the REST catalog.",
           "type": "string"
         },
         "uri": {

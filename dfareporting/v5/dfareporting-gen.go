@@ -7374,20 +7374,12 @@ type FloodlightActivity struct {
 	//   "CONVERSION_CATEGORY_DOWNLOAD" - Software download action (as for an app).
 	// A conversion type that is created as a download type may not have its
 	// category changed.
-	//   "CONVERSION_CATEGORY_BOOM_EVENT" - Boom event (for user list creation).
-	// This is an internal-only category.
 	//   "CONVERSION_CATEGORY_ADD_TO_CART" - . The addition of items to a shopping
 	// cart or bag on an advertiser site.
 	//   "CONVERSION_CATEGORY_BEGIN_CHECKOUT" - When someone enters the checkout
 	// flow on an advertiser site.
 	//   "CONVERSION_CATEGORY_SUBSCRIBE_PAID" - The start of a paid subscription
 	// for a product or service.
-	//   "CONVERSION_CATEGORY_SUBSCRIBE_FREE" - The start of a free subscription
-	// for a product or service.
-	//   "CONVERSION_CATEGORY_PHONE_CALL_LEAD" - A call to indicate interesting in
-	// an advertiser's offering. Note: this is different from support calls.
-	//   "CONVERSION_CATEGORY_IMPORTED_LEAD" - A lead conversion imported from an
-	// external source into Google Ads.
 	//   "CONVERSION_CATEGORY_SUBMIT_LEAD_FORM" - A submission of a form on an
 	// advertiser site indicating business interest.
 	//   "CONVERSION_CATEGORY_BOOK_APPOINTMENT" - A booking of an appointment with
@@ -7399,11 +7391,6 @@ type FloodlightActivity struct {
 	// site, e.g. a referral.
 	//   "CONVERSION_CATEGORY_CONTACT" - A call, SMS, email, chat or other type of
 	// contact to an advertiser.
-	//   "CONVERSION_CATEGORY_VIEW_KEY_PAGE" - Key page views (ex: product page,
-	// article).
-	//   "CONVERSION_CATEGORY_ENGAGEMENT" - A website engagement event
-	//   "CONVERSION_CATEGORY_STORE_VISIT" - A visit to a physical store location.
-	//   "CONVERSION_CATEGORY_STORE_SALE" - A sale occurring in a physical store.
 	//   "CONVERSION_CATEGORY_QUALIFIED_LEAD" - A lead conversion imported from an
 	// external source into Google Ads, that has been further qualified by the
 	// advertiser.
@@ -7412,8 +7399,6 @@ type FloodlightActivity struct {
 	// as defined by the lead gen advertiser.
 	//   "CONVERSION_CATEGORY_IN_APP_AD_REVENUE" - Conversion event that provides
 	// the revenue value of impressions that were shown in-app to users.
-	//   "CONVERSION_CATEGORY_MESSAGE_LEAD" - Message exchanges which indicate an
-	// interest in an advertiser's offering.
 	ConversionCategory string `json:"conversionCategory,omitempty"`
 	// CountingMethod: Counting method for conversions for this floodlight
 	// activity. This is a required field.

@@ -34,6 +34,11 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	containerService, err := container.NewService(ctx, option.WithScopes(container.ContainerReadOnlyScope))
+//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -101,12 +106,22 @@ const (
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// See, edit, configure, and delete your Google Kubernetes Engine data and see
+	// the email address for your Google Account
+	ContainerScope = "https://www.googleapis.com/auth/container"
+
+	// See your Google Kubernetes Engine data and the email address of your Google
+	// Account
+	ContainerReadOnlyScope = "https://www.googleapis.com/auth/container.read-only"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
+		"https://www.googleapis.com/auth/container",
+		"https://www.googleapis.com/auth/container.read-only",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -2133,6 +2148,12 @@ type ClusterUpdate struct {
 	// DesiredIdentityServiceConfig: The desired Identity Service component
 	// configuration.
 	DesiredIdentityServiceConfig *IdentityServiceConfig `json:"desiredIdentityServiceConfig,omitempty"`
+	// DesiredImage: The desired name of the image to use for this node. This is
+	// used to create clusters using a custom image.
+	DesiredImage string `json:"desiredImage,omitempty"`
+	// DesiredImageProject: The project containing the desired image to use for
+	// this node. This is used to create clusters using a custom image.
+	DesiredImageProject string `json:"desiredImageProject,omitempty"`
 	// DesiredImageType: The desired image type for the node pool. NOTE: Set the
 	// "desired_node_pool" field as well.
 	DesiredImageType string `json:"desiredImageType,omitempty"`
@@ -2895,6 +2916,32 @@ func (s CreateNodePoolRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CustomImageConfig: CustomImageConfig contains the information r
+type CustomImageConfig struct {
+	// Image: The name of the image to use for this node.
+	Image string `json:"image,omitempty"`
+	// ImageFamily: The name of the image family to use for this node.
+	ImageFamily string `json:"imageFamily,omitempty"`
+	// ImageProject: The project containing the image to use for this node.
+	ImageProject string `json:"imageProject,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Image") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Image") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomImageConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomImageConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CustomNodeInit: Support for running custom init code while bootstrapping
 // nodes.
 type CustomNodeInit struct {
@@ -3088,6 +3135,33 @@ type DatabaseEncryption struct {
 
 func (s DatabaseEncryption) MarshalJSON() ([]byte, error) {
 	type NoMethod DatabaseEncryption
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DataplaneV2Config: DataplaneV2Config is the configuration for DPv2.
+type DataplaneV2Config struct {
+	// ScalabilityMode: Optional. Scalability mode for the cluster.
+	//
+	// Possible values:
+	//   "SCALABILITY_MODE_UNSPECIFIED" - Default value.
+	//   "DISABLED" - Disables the scale optimized mode for DPv2.
+	//   "SCALE_OPTIMIZED" - Enables the scale optimized mode for DPv2.
+	ScalabilityMode string `json:"scalabilityMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ScalabilityMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ScalabilityMode") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataplaneV2Config) MarshalJSON() ([]byte, error) {
+	type NoMethod DataplaneV2Config
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4913,20 +4987,22 @@ type LinuxNodeConfig struct {
 	// running on the nodes. The following parameters are supported.
 	// net.core.busy_poll net.core.busy_read net.core.netdev_max_backlog
 	// net.core.rmem_max net.core.rmem_default net.core.wmem_default
-	// net.core.wmem_max net.core.optmem_max net.core.somaxconn net.ipv4.tcp_rmem
-	// net.ipv4.tcp_wmem net.ipv4.tcp_tw_reuse net.ipv4.tcp_mtu_probing
-	// net.ipv4.tcp_max_orphans net.ipv4.tcp_max_tw_buckets
-	// net.ipv4.tcp_syn_retries net.ipv4.tcp_ecn net.ipv4.tcp_congestion_control
-	// net.netfilter.nf_conntrack_max net.netfilter.nf_conntrack_buckets
+	// net.core.wmem_max net.core.optmem_max net.core.somaxconn
+	// net.ipv4.neigh.default.gc_thresh1 net.ipv4.neigh.default.gc_thresh2
+	// net.ipv4.neigh.default.gc_thresh3 net.ipv4.tcp_rmem net.ipv4.tcp_wmem
+	// net.ipv4.tcp_tw_reuse net.ipv4.tcp_mtu_probing net.ipv4.tcp_max_orphans
+	// net.ipv4.tcp_max_tw_buckets net.ipv4.tcp_syn_retries net.ipv4.tcp_ecn
+	// net.ipv4.tcp_congestion_control net.netfilter.nf_conntrack_max
+	// net.netfilter.nf_conntrack_buckets
 	// net.netfilter.nf_conntrack_tcp_timeout_close_wait
 	// net.netfilter.nf_conntrack_tcp_timeout_time_wait
 	// net.netfilter.nf_conntrack_tcp_timeout_established
-	// net.netfilter.nf_conntrack_acct kernel.shmmni kernel.shmmax kernel.shmall
-	// kernel.perf_event_paranoid kernel.sched_rt_runtime_us
-	// kernel.softlockup_panic kernel.yama.ptrace_scope kernel.kptr_restrict
-	// kernel.dmesg_restrict kernel.sysrq fs.aio-max-nr fs.file-max
-	// fs.inotify.max_user_instances fs.inotify.max_user_watches fs.nr_open
-	// vm.dirty_background_ratio vm.dirty_background_bytes
+	// net.netfilter.nf_conntrack_acct kernel.keys.maxkeys kernel.keys.maxbytes
+	// kernel.shmmni kernel.shmmax kernel.shmall kernel.perf_event_paranoid
+	// kernel.sched_rt_runtime_us kernel.softlockup_panic kernel.yama.ptrace_scope
+	// kernel.kptr_restrict kernel.dmesg_restrict kernel.sysrq fs.aio-max-nr
+	// fs.file-max fs.inotify.max_user_instances fs.inotify.max_user_watches
+	// fs.nr_open vm.dirty_background_ratio vm.dirty_background_bytes
 	// vm.dirty_expire_centisecs vm.dirty_ratio vm.dirty_bytes
 	// vm.dirty_writeback_centisecs vm.max_map_count vm.overcommit_memory
 	// vm.overcommit_ratio vm.vfs_cache_pressure vm.swappiness
@@ -5837,6 +5913,9 @@ type NetworkConfig struct {
 	// documentation](https://cloud.google.com/kubernetes-engine/docs/how-to/datapla
 	// ne-v2) for more.
 	DatapathProvider string `json:"datapathProvider,omitempty"`
+	// DataplaneV2Config: Optional. DataplaneV2Config specifies the DPv2
+	// configuration.
+	DataplaneV2Config *DataplaneV2Config `json:"dataplaneV2Config,omitempty"`
 	// DefaultEnablePrivateNodes: Controls whether by default nodes have private IP
 	// addresses only. It is invalid to specify both
 	// PrivateClusterConfig.enablePrivateNodes and this field at the same time. To
@@ -6255,6 +6334,9 @@ type NodeConfig struct {
 	// tenant nodes
 	// (https://cloud.google.com/compute/docs/nodes/sole-tenant-nodes).
 	NodeGroup string `json:"nodeGroup,omitempty"`
+	// NodeImageConfig: The node image configuration to use for this node pool.
+	// Note that this is only applicable for node pools using image_type=CUSTOM.
+	NodeImageConfig *CustomImageConfig `json:"nodeImageConfig,omitempty"`
 	// OauthScopes: The set of Google API scopes to be made available on all of the
 	// node VMs under the "default" service account. The following scopes are
 	// recommended, but not required, and by default are not included: *
@@ -6700,6 +6782,8 @@ type NodeNetworkConfig struct {
 	// enable_private_nodes is not specified, then the value is derived from
 	// Cluster.NetworkConfig.default_enable_private_nodes
 	EnablePrivateNodes bool `json:"enablePrivateNodes,omitempty"`
+	// Network: Optional. Immutable. The VPC network for the node pool.
+	Network string `json:"network,omitempty"`
 	// NetworkPerformanceConfig: Network bandwidth tier configuration.
 	NetworkPerformanceConfig *NetworkPerformanceConfig `json:"networkPerformanceConfig,omitempty"`
 	// NetworkTierConfig: Output only. The network tier configuration for the node
@@ -10178,6 +10262,12 @@ type UpdateNodePoolRequest struct {
 	GcfsConfig *GcfsConfig `json:"gcfsConfig,omitempty"`
 	// Gvnic: Enable or disable gvnic on the node pool.
 	Gvnic *VirtualNIC `json:"gvnic,omitempty"`
+	// Image: The desired name of the image name to use for this node. This is used
+	// to create clusters using a custom image.
+	Image string `json:"image,omitempty"`
+	// ImageProject: The project containing the desired image to use for this node
+	// pool. This is used to create clusters using a custom image.
+	ImageProject string `json:"imageProject,omitempty"`
 	// ImageType: Required. The desired image type for the node pool. Please see
 	// https://cloud.google.com/kubernetes-engine/docs/concepts/node-images for
 	// available image types.

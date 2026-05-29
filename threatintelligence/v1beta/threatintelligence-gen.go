@@ -452,6 +452,10 @@ type Configuration struct {
 	Detail *ConfigurationDetail `json:"detail,omitempty"`
 	// DisplayName: Output only. Human readable name for the configuration.
 	DisplayName string `json:"displayName,omitempty"`
+	// Etag: If included when updating a configuration, this should be set to the
+	// current etag of the configuration. If the etags do not match, the update
+	// will be rejected and an ABORTED error will be returned.
+	Etag string `json:"etag,omitempty"`
 	// Name: Identifier. Server generated name for the configuration. format is
 	// projects/{project}/configurations/{configuration}
 	Name string `json:"name,omitempty"`

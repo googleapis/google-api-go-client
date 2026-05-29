@@ -1419,6 +1419,7 @@ type ProductStatusChangeMessage struct {
 	// Possible values:
 	//   "RESOURCE_UNSPECIFIED" - Unspecified resource
 	//   "PRODUCT" - Resource type : product
+	//   "ACCOUNT_SERVICE" - Account service
 	ResourceType string `json:"resourceType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Account") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

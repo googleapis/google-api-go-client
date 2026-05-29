@@ -1087,94 +1087,189 @@ func (s ByProducts) MarshalJSON() ([]byte, error) {
 }
 
 // CVSS: Common Vulnerability Scoring System. This message is compatible with
-// CVSS v2 and v3. For CVSS v2 details, see https://www.first.org/cvss/v2/guide
-// CVSS v2 calculator: https://nvd.nist.gov/vuln-metrics/cvss/v2-calculator For
-// CVSS v3 details, see https://www.first.org/cvss/specification-document CVSS
-// v3 calculator: https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator
+// CVSS v2, v3, and v4. For CVSS v2 details, see
+// https://www.first.org/cvss/v2/guide CVSS v2 calculator:
+// https://nvd.nist.gov/vuln-metrics/cvss/v2-calculator For CVSS v3 details,
+// see https://www.first.org/cvss/specification-document CVSS v3 calculator:
+// https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator For CVSS v4 details,
+// see https://www.first.org/cvss/v4.0/user-guide CVSS v4 calculator:
+// https://nvd.nist.gov/vuln-metrics/cvss/v4-calculator
 type CVSS struct {
-	// AttackComplexity: Defined in CVSS v3, CVSS v2
+	// AttackComplexity: Attack Complexity (AC). Defined in CVSS v2, v3, v4.
 	//
 	// Possible values:
-	//   "ATTACK_COMPLEXITY_UNSPECIFIED" - Defined in CVSS v3, CVSS v2
-	//   "ATTACK_COMPLEXITY_LOW" - Defined in CVSS v3, CVSS v2
-	//   "ATTACK_COMPLEXITY_HIGH" - Defined in CVSS v3, CVSS v2
-	//   "ATTACK_COMPLEXITY_MEDIUM" - Defined in CVSS v2
+	//   "ATTACK_COMPLEXITY_UNSPECIFIED" - Unspecified.
+	//   "ATTACK_COMPLEXITY_LOW" - Low attack complexity (AC:L). Defined in CVSS
+	// v2, v3, v4.
+	//   "ATTACK_COMPLEXITY_HIGH" - High attack complexity (AC:H). Defined in CVSS
+	// v2, v3, v4.
+	//   "ATTACK_COMPLEXITY_MEDIUM" - Medium attack complexity (AC:M). Defined in
+	// CVSS v2.
 	AttackComplexity string `json:"attackComplexity,omitempty"`
-	// AttackVector: Base Metrics Represents the intrinsic characteristics of a
-	// vulnerability that are constant over time and across user environments.
-	// Defined in CVSS v3, CVSS v2
+	// AttackRequirements: Attack Requirements (AT). Defined in CVSS v4.
 	//
 	// Possible values:
-	//   "ATTACK_VECTOR_UNSPECIFIED" - Defined in CVSS v3, CVSS v2
-	//   "ATTACK_VECTOR_NETWORK" - Defined in CVSS v3, CVSS v2
-	//   "ATTACK_VECTOR_ADJACENT" - Defined in CVSS v3, CVSS v2
-	//   "ATTACK_VECTOR_LOCAL" - Defined in CVSS v3, CVSS v2
-	//   "ATTACK_VECTOR_PHYSICAL" - Defined in CVSS v3
+	//   "ATTACK_REQUIREMENTS_UNSPECIFIED" - Unspecified.
+	//   "ATTACK_REQUIREMENTS_NONE" - No attack requirements (AT:N). Defined in
+	// CVSS v4.
+	//   "ATTACK_REQUIREMENTS_PRESENT" - Attack requirements: Present (AT:P).
+	// Defined in CVSS v4.
+	AttackRequirements string `json:"attackRequirements,omitempty"`
+	// AttackVector: Attack Vector (AV). Defined in CVSS v2, v3, v4.
+	//
+	// Possible values:
+	//   "ATTACK_VECTOR_UNSPECIFIED" - Unspecified.
+	//   "ATTACK_VECTOR_NETWORK" - Attack Vector: Network (AV:N). Defined in CVSS
+	// v2, v3, v4.
+	//   "ATTACK_VECTOR_ADJACENT" - Attack Vector: Adjacent (AV:A). Defined in CVSS
+	// v2, v3, v4.
+	//   "ATTACK_VECTOR_LOCAL" - Attack Vector: Local (AV:L). Defined in CVSS v2,
+	// v3, v4.
+	//   "ATTACK_VECTOR_PHYSICAL" - Attack Vector: Physical (AV:P). Defined in CVSS
+	// v3, v4.
 	AttackVector string `json:"attackVector,omitempty"`
-	// Authentication: Defined in CVSS v2
+	// Authentication: Authentication (Au). Defined in CVSS v2.
 	//
 	// Possible values:
-	//   "AUTHENTICATION_UNSPECIFIED" - Defined in CVSS v2
-	//   "AUTHENTICATION_MULTIPLE" - Defined in CVSS v2
-	//   "AUTHENTICATION_SINGLE" - Defined in CVSS v2
-	//   "AUTHENTICATION_NONE" - Defined in CVSS v2
+	//   "AUTHENTICATION_UNSPECIFIED" - Unspecified.
+	//   "AUTHENTICATION_MULTIPLE" - Multiple authentication required (Au:M).
+	// Defined in CVSS v2.
+	//   "AUTHENTICATION_SINGLE" - Single authentication required (Au:S). Defined
+	// in CVSS v2.
+	//   "AUTHENTICATION_NONE" - No authentication required (Au:N). Defined in CVSS
+	// v2.
 	Authentication string `json:"authentication,omitempty"`
-	// AvailabilityImpact: Defined in CVSS v3, CVSS v2
+	// AvailabilityImpact: Availability Impact (A). Defined in CVSS v2, v3.
 	//
 	// Possible values:
-	//   "IMPACT_UNSPECIFIED" - Defined in CVSS v3, CVSS v2
-	//   "IMPACT_HIGH" - Defined in CVSS v3
-	//   "IMPACT_LOW" - Defined in CVSS v3
-	//   "IMPACT_NONE" - Defined in CVSS v3, CVSS v2
-	//   "IMPACT_PARTIAL" - Defined in CVSS v2
-	//   "IMPACT_COMPLETE" - Defined in CVSS v2
+	//   "IMPACT_UNSPECIFIED" - Unspecified.
+	//   "IMPACT_HIGH" - High impact (H). Defined in CVSS v3, v4.
+	//   "IMPACT_LOW" - Low impact (L). Defined in CVSS v3, v4.
+	//   "IMPACT_NONE" - No impact (N). Defined in CVSS v2, v3, v4.
+	//   "IMPACT_PARTIAL" - Partial impact (P). Defined in CVSS v2.
+	//   "IMPACT_COMPLETE" - Complete impact (C). Defined in CVSS v2.
 	AvailabilityImpact string `json:"availabilityImpact,omitempty"`
 	// BaseScore: The base score is a function of the base metric scores.
 	BaseScore float64 `json:"baseScore,omitempty"`
-	// ConfidentialityImpact: Defined in CVSS v3, CVSS v2
+	// ConfidentialityImpact: Confidentiality Impact (C). Defined in CVSS v2, v3.
 	//
 	// Possible values:
-	//   "IMPACT_UNSPECIFIED" - Defined in CVSS v3, CVSS v2
-	//   "IMPACT_HIGH" - Defined in CVSS v3
-	//   "IMPACT_LOW" - Defined in CVSS v3
-	//   "IMPACT_NONE" - Defined in CVSS v3, CVSS v2
-	//   "IMPACT_PARTIAL" - Defined in CVSS v2
-	//   "IMPACT_COMPLETE" - Defined in CVSS v2
+	//   "IMPACT_UNSPECIFIED" - Unspecified.
+	//   "IMPACT_HIGH" - High impact (H). Defined in CVSS v3, v4.
+	//   "IMPACT_LOW" - Low impact (L). Defined in CVSS v3, v4.
+	//   "IMPACT_NONE" - No impact (N). Defined in CVSS v2, v3, v4.
+	//   "IMPACT_PARTIAL" - Partial impact (P). Defined in CVSS v2.
+	//   "IMPACT_COMPLETE" - Complete impact (C). Defined in CVSS v2.
 	ConfidentialityImpact string  `json:"confidentialityImpact,omitempty"`
 	ExploitabilityScore   float64 `json:"exploitabilityScore,omitempty"`
 	ImpactScore           float64 `json:"impactScore,omitempty"`
-	// IntegrityImpact: Defined in CVSS v3, CVSS v2
+	// IntegrityImpact: Integrity Impact (I). Defined in CVSS v2, v3.
 	//
 	// Possible values:
-	//   "IMPACT_UNSPECIFIED" - Defined in CVSS v3, CVSS v2
-	//   "IMPACT_HIGH" - Defined in CVSS v3
-	//   "IMPACT_LOW" - Defined in CVSS v3
-	//   "IMPACT_NONE" - Defined in CVSS v3, CVSS v2
-	//   "IMPACT_PARTIAL" - Defined in CVSS v2
-	//   "IMPACT_COMPLETE" - Defined in CVSS v2
+	//   "IMPACT_UNSPECIFIED" - Unspecified.
+	//   "IMPACT_HIGH" - High impact (H). Defined in CVSS v3, v4.
+	//   "IMPACT_LOW" - Low impact (L). Defined in CVSS v3, v4.
+	//   "IMPACT_NONE" - No impact (N). Defined in CVSS v2, v3, v4.
+	//   "IMPACT_PARTIAL" - Partial impact (P). Defined in CVSS v2.
+	//   "IMPACT_COMPLETE" - Complete impact (C). Defined in CVSS v2.
 	IntegrityImpact string `json:"integrityImpact,omitempty"`
-	// PrivilegesRequired: Defined in CVSS v3
+	// PrivilegesRequired: Privileges Required (PR). Defined in CVSS v3, v4.
 	//
 	// Possible values:
-	//   "PRIVILEGES_REQUIRED_UNSPECIFIED" - Defined in CVSS v3
-	//   "PRIVILEGES_REQUIRED_NONE" - Defined in CVSS v3
-	//   "PRIVILEGES_REQUIRED_LOW" - Defined in CVSS v3
-	//   "PRIVILEGES_REQUIRED_HIGH" - Defined in CVSS v3
+	//   "PRIVILEGES_REQUIRED_UNSPECIFIED" - Unspecified.
+	//   "PRIVILEGES_REQUIRED_NONE" - No privileges required (PR:N). Defined in
+	// CVSS v3, v4.
+	//   "PRIVILEGES_REQUIRED_LOW" - Low privileges required (PR:L). Defined in
+	// CVSS v3, v4.
+	//   "PRIVILEGES_REQUIRED_HIGH" - High privileges required (PR:H). Defined in
+	// CVSS v3, v4.
 	PrivilegesRequired string `json:"privilegesRequired,omitempty"`
-	// Scope: Defined in CVSS v3
+	// Scope: Scope (S). Defined in CVSS v3.
 	//
 	// Possible values:
-	//   "SCOPE_UNSPECIFIED" - Defined in CVSS v3
-	//   "SCOPE_UNCHANGED" - Defined in CVSS v3
-	//   "SCOPE_CHANGED" - Defined in CVSS v3
+	//   "SCOPE_UNSPECIFIED" - Unspecified.
+	//   "SCOPE_UNCHANGED" - Scope: Unchanged (S:U). Defined in CVSS v3.
+	//   "SCOPE_CHANGED" - Scope: Changed (S:C). Defined in CVSS v3.
 	Scope string `json:"scope,omitempty"`
-	// UserInteraction: Defined in CVSS v3
+	// SubsequentSystemAvailabilityImpact: Subsequent System Availability Impact
+	// (SA). Defined in CVSS v4.
 	//
 	// Possible values:
-	//   "USER_INTERACTION_UNSPECIFIED" - Defined in CVSS v3
-	//   "USER_INTERACTION_NONE" - Defined in CVSS v3
-	//   "USER_INTERACTION_REQUIRED" - Defined in CVSS v3
+	//   "IMPACT_UNSPECIFIED" - Unspecified.
+	//   "IMPACT_HIGH" - High impact (H). Defined in CVSS v3, v4.
+	//   "IMPACT_LOW" - Low impact (L). Defined in CVSS v3, v4.
+	//   "IMPACT_NONE" - No impact (N). Defined in CVSS v2, v3, v4.
+	//   "IMPACT_PARTIAL" - Partial impact (P). Defined in CVSS v2.
+	//   "IMPACT_COMPLETE" - Complete impact (C). Defined in CVSS v2.
+	SubsequentSystemAvailabilityImpact string `json:"subsequentSystemAvailabilityImpact,omitempty"`
+	// SubsequentSystemConfidentialityImpact: Subsequent System Confidentiality
+	// Impact (SC). Defined in CVSS v4.
+	//
+	// Possible values:
+	//   "IMPACT_UNSPECIFIED" - Unspecified.
+	//   "IMPACT_HIGH" - High impact (H). Defined in CVSS v3, v4.
+	//   "IMPACT_LOW" - Low impact (L). Defined in CVSS v3, v4.
+	//   "IMPACT_NONE" - No impact (N). Defined in CVSS v2, v3, v4.
+	//   "IMPACT_PARTIAL" - Partial impact (P). Defined in CVSS v2.
+	//   "IMPACT_COMPLETE" - Complete impact (C). Defined in CVSS v2.
+	SubsequentSystemConfidentialityImpact string `json:"subsequentSystemConfidentialityImpact,omitempty"`
+	// SubsequentSystemIntegrityImpact: Subsequent System Integrity Impact (SI).
+	// Defined in CVSS v4.
+	//
+	// Possible values:
+	//   "IMPACT_UNSPECIFIED" - Unspecified.
+	//   "IMPACT_HIGH" - High impact (H). Defined in CVSS v3, v4.
+	//   "IMPACT_LOW" - Low impact (L). Defined in CVSS v3, v4.
+	//   "IMPACT_NONE" - No impact (N). Defined in CVSS v2, v3, v4.
+	//   "IMPACT_PARTIAL" - Partial impact (P). Defined in CVSS v2.
+	//   "IMPACT_COMPLETE" - Complete impact (C). Defined in CVSS v2.
+	SubsequentSystemIntegrityImpact string `json:"subsequentSystemIntegrityImpact,omitempty"`
+	// UserInteraction: User Interaction (UI). Defined in CVSS v3, v4.
+	//
+	// Possible values:
+	//   "USER_INTERACTION_UNSPECIFIED" - Unspecified.
+	//   "USER_INTERACTION_NONE" - No user interaction required (UI:N). Defined in
+	// CVSS v3, v4.
+	//   "USER_INTERACTION_REQUIRED" - User interaction required (UI:R). Defined in
+	// CVSS v3.
+	//   "USER_INTERACTION_PASSIVE" - Passive user interaction required (UI:P).
+	// Defined in CVSS v4.
+	//   "USER_INTERACTION_ACTIVE" - Active user interaction required (UI:A).
+	// Defined in CVSS v4.
 	UserInteraction string `json:"userInteraction,omitempty"`
+	// VulnerableSystemAvailabilityImpact: Vulnerable System Availability Impact
+	// (VA). Defined in CVSS v4.
+	//
+	// Possible values:
+	//   "IMPACT_UNSPECIFIED" - Unspecified.
+	//   "IMPACT_HIGH" - High impact (H). Defined in CVSS v3, v4.
+	//   "IMPACT_LOW" - Low impact (L). Defined in CVSS v3, v4.
+	//   "IMPACT_NONE" - No impact (N). Defined in CVSS v2, v3, v4.
+	//   "IMPACT_PARTIAL" - Partial impact (P). Defined in CVSS v2.
+	//   "IMPACT_COMPLETE" - Complete impact (C). Defined in CVSS v2.
+	VulnerableSystemAvailabilityImpact string `json:"vulnerableSystemAvailabilityImpact,omitempty"`
+	// VulnerableSystemConfidentialityImpact: Vulnerable System Confidentiality
+	// Impact (VC). Defined in CVSS v4.
+	//
+	// Possible values:
+	//   "IMPACT_UNSPECIFIED" - Unspecified.
+	//   "IMPACT_HIGH" - High impact (H). Defined in CVSS v3, v4.
+	//   "IMPACT_LOW" - Low impact (L). Defined in CVSS v3, v4.
+	//   "IMPACT_NONE" - No impact (N). Defined in CVSS v2, v3, v4.
+	//   "IMPACT_PARTIAL" - Partial impact (P). Defined in CVSS v2.
+	//   "IMPACT_COMPLETE" - Complete impact (C). Defined in CVSS v2.
+	VulnerableSystemConfidentialityImpact string `json:"vulnerableSystemConfidentialityImpact,omitempty"`
+	// VulnerableSystemIntegrityImpact: Vulnerable System Integrity Impact (VI).
+	// Defined in CVSS v4.
+	//
+	// Possible values:
+	//   "IMPACT_UNSPECIFIED" - Unspecified.
+	//   "IMPACT_HIGH" - High impact (H). Defined in CVSS v3, v4.
+	//   "IMPACT_LOW" - Low impact (L). Defined in CVSS v3, v4.
+	//   "IMPACT_NONE" - No impact (N). Defined in CVSS v2, v3, v4.
+	//   "IMPACT_PARTIAL" - Partial impact (P). Defined in CVSS v2.
+	//   "IMPACT_COMPLETE" - Complete impact (C). Defined in CVSS v2.
+	VulnerableSystemIntegrityImpact string `json:"vulnerableSystemIntegrityImpact,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AttackComplexity") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4585,9 +4680,10 @@ type GrafeasV1beta1VulnerabilityDetails struct {
 	// severity.
 	//
 	// Possible values:
-	//   "CVSS_VERSION_UNSPECIFIED"
-	//   "CVSS_VERSION_2"
-	//   "CVSS_VERSION_3"
+	//   "CVSS_VERSION_UNSPECIFIED" - Unspecified.
+	//   "CVSS_VERSION_2" - CVSS v2.
+	//   "CVSS_VERSION_3" - CVSS v3.
+	//   "CVSS_VERSION_4" - CVSS v4.
 	CvssVersion string `json:"cvssVersion,omitempty"`
 	// EffectiveSeverity: The distro assigned severity for this vulnerability when
 	// it is available, and note provider assigned severity when distro has not yet
@@ -7034,9 +7130,10 @@ type Vulnerability struct {
 	// CvssVersion: CVSS version used to populate cvss_score and severity.
 	//
 	// Possible values:
-	//   "CVSS_VERSION_UNSPECIFIED"
-	//   "CVSS_VERSION_2"
-	//   "CVSS_VERSION_3"
+	//   "CVSS_VERSION_UNSPECIFIED" - Unspecified.
+	//   "CVSS_VERSION_2" - CVSS v2.
+	//   "CVSS_VERSION_3" - CVSS v3.
+	//   "CVSS_VERSION_4" - CVSS v4.
 	CvssVersion string `json:"cvssVersion,omitempty"`
 	// Cwe: A list of CWE for this vulnerability. For details, see:
 	// https://cwe.mitre.org/index.html

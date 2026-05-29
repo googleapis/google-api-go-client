@@ -4332,6 +4332,9 @@ type GoogleCloudContactcenterinsightsV1DeployQaScorecardRevisionRequest struct {
 // GoogleCloudContactcenterinsightsV1DiagnoseConversationsMetadata: Metadata
 // for a DiagnoseConversations operation.
 type GoogleCloudContactcenterinsightsV1DiagnoseConversationsMetadata struct {
+	// ConversationIds: Output only. The list of conversation IDs that were
+	// selected for this diagnosis.
+	ConversationIds []string `json:"conversationIds,omitempty"`
 	// CreateTime: Output only. The time the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DiagnosticReport: Output only. The diagnostic report containing metrics and
@@ -4361,15 +4364,15 @@ type GoogleCloudContactcenterinsightsV1DiagnoseConversationsMetadata struct {
 	PartialTrajectorySteps []*GoogleCloudContactcenterinsightsV1SherlockStep `json:"partialTrajectorySteps,omitempty"`
 	// Request: Output only. The request that created the operation.
 	Request *GoogleCloudContactcenterinsightsV1DiagnoseConversationsRequest `json:"request,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "ConversationIds") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ConversationIds") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4390,9 +4393,10 @@ type GoogleCloudContactcenterinsightsV1DiagnoseConversationsRequest struct {
 	AgentId string `json:"agentId,omitempty"`
 	// AppId: Required. The CES App ID.
 	AppId string `json:"appId,omitempty"`
-	// AppVersion: Optional. Optional but highly recommended. ces app version. If
-	// provided, specific version of agent instruction will be retrieved. If empty
-	// or set to '-', will use the latest draft version of instruction.
+	// AppVersion: Required. The CES App version of the agent. Setting to "-" uses
+	// the latest draft version. Note that the agent active during the conversation
+	// history may have different instructions or tool definitions compared with
+	// the latest draft version.
 	AppVersion string `json:"appVersion,omitempty"`
 	// DryRun: Optional. Deprecated: If true, the request will be validated and a
 	// simulation of the analysis will be performed without actually executing the
@@ -12866,6 +12870,9 @@ type GoogleCloudContactcenterinsightsV1alpha1DeployIssueModelResponse struct {
 // GoogleCloudContactcenterinsightsV1alpha1DiagnoseConversationsMetadata:
 // Metadata for a DiagnoseConversations operation.
 type GoogleCloudContactcenterinsightsV1alpha1DiagnoseConversationsMetadata struct {
+	// ConversationIds: Output only. The list of conversation IDs that were
+	// selected for this diagnosis.
+	ConversationIds []string `json:"conversationIds,omitempty"`
 	// CreateTime: Output only. The time the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DiagnosticReport: Output only. The diagnostic report containing metrics and
@@ -12895,15 +12902,15 @@ type GoogleCloudContactcenterinsightsV1alpha1DiagnoseConversationsMetadata struc
 	PartialTrajectorySteps []*GoogleCloudContactcenterinsightsV1alpha1SherlockStep `json:"partialTrajectorySteps,omitempty"`
 	// Request: Output only. The request that created the operation.
 	Request *GoogleCloudContactcenterinsightsV1alpha1DiagnoseConversationsRequest `json:"request,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "ConversationIds") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ConversationIds") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -12924,9 +12931,10 @@ type GoogleCloudContactcenterinsightsV1alpha1DiagnoseConversationsRequest struct
 	AgentId string `json:"agentId,omitempty"`
 	// AppId: Required. The CES App ID.
 	AppId string `json:"appId,omitempty"`
-	// AppVersion: Optional. Optional but highly recommended. ces app version. If
-	// provided, specific version of agent instruction will be retrieved. If empty
-	// or set to '-', will use the latest draft version of instruction.
+	// AppVersion: Required. The CES App version of the agent. Setting to "-" uses
+	// the latest draft version. Note that the agent active during the conversation
+	// history may have different instructions or tool definitions compared with
+	// the latest draft version.
 	AppVersion string `json:"appVersion,omitempty"`
 	// DryRun: Optional. Deprecated: If true, the request will be validated and a
 	// simulation of the analysis will be performed without actually executing the
@@ -19267,6 +19275,9 @@ type GoogleCloudContactcenterinsightsV1mainDeployIssueModelResponse struct {
 // GoogleCloudContactcenterinsightsV1mainDiagnoseConversationsMetadata:
 // Metadata for a DiagnoseConversations operation.
 type GoogleCloudContactcenterinsightsV1mainDiagnoseConversationsMetadata struct {
+	// ConversationIds: Output only. The list of conversation IDs that were
+	// selected for this diagnosis.
+	ConversationIds []string `json:"conversationIds,omitempty"`
 	// CreateTime: Output only. The time the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DiagnosticReport: Output only. The diagnostic report containing metrics and
@@ -19296,15 +19307,15 @@ type GoogleCloudContactcenterinsightsV1mainDiagnoseConversationsMetadata struct 
 	PartialTrajectorySteps []*GoogleCloudContactcenterinsightsV1mainSherlockStep `json:"partialTrajectorySteps,omitempty"`
 	// Request: Output only. The request that created the operation.
 	Request *GoogleCloudContactcenterinsightsV1mainDiagnoseConversationsRequest `json:"request,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "ConversationIds") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ConversationIds") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -19325,9 +19336,10 @@ type GoogleCloudContactcenterinsightsV1mainDiagnoseConversationsRequest struct {
 	AgentId string `json:"agentId,omitempty"`
 	// AppId: Required. The CES App ID.
 	AppId string `json:"appId,omitempty"`
-	// AppVersion: Optional. Optional but highly recommended. ces app version. If
-	// provided, specific version of agent instruction will be retrieved. If empty
-	// or set to '-', will use the latest draft version of instruction.
+	// AppVersion: Required. The CES App version of the agent. Setting to "-" uses
+	// the latest draft version. Note that the agent active during the conversation
+	// history may have different instructions or tool definitions compared with
+	// the latest draft version.
 	AppVersion string `json:"appVersion,omitempty"`
 	// DryRun: Optional. Deprecated: If true, the request will be validated and a
 	// simulation of the analysis will be performed without actually executing the
@@ -40528,7 +40540,10 @@ func (c *ProjectsLocationsDiagnosticsListCall) AppId(appId string) *ProjectsLoca
 }
 
 // AppVersion sets the optional parameter "appVersion": The CES App version to
-// filter diagnostics by.
+// filter diagnostics by. Setting to "-" filters to diagnostics created using
+// "-" (the latest draft version). Note that reports created at different times
+// may correspond to different draft instructions. Setting to "" (empty)
+// retrieves all diagnostics for the app_id regardless of version.
 func (c *ProjectsLocationsDiagnosticsListCall) AppVersion(appVersion string) *ProjectsLocationsDiagnosticsListCall {
 	c.urlParams_.Set("appVersion", appVersion)
 	return c

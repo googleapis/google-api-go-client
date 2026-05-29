@@ -292,6 +292,8 @@ type GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountRiskReason 
 	// request characteristics.
 	//   "CLIENT_ACCESSED_MANY_ACCOUNTS" - The client has been observed accessing
 	// many accounts on this site.
+	//   "DISPOSABLE_EMAIL_DOMAIN" - This email domain is a suspected provider of
+	// disposable email addresses.
 	Reason string `json:"reason,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Reason") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

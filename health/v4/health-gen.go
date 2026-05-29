@@ -110,6 +110,9 @@ const (
 	// See your Google Health activity and fitness data
 	GooglehealthActivityAndFitnessReadonlyScope = "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly"
 
+	// See your Google Health ECG data
+	GooglehealthEcgReadonlyScope = "https://www.googleapis.com/auth/googlehealth.ecg.readonly"
+
 	// See your Google Health health metrics and measurement data
 	GooglehealthHealthMetricsAndMeasurementsReadonlyScope = "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly"
 
@@ -134,6 +137,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly",
+		"https://www.googleapis.com/auth/googlehealth.ecg.readonly",
 		"https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly",
 		"https://www.googleapis.com/auth/googlehealth.irn.readonly",
 		"https://www.googleapis.com/auth/googlehealth.location.readonly",
@@ -2821,6 +2825,32 @@ func (s GoogleDevicesandservicesHealthV4DataType) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleDevicesandservicesHealthV4User: Represents a user in the Google Health
+// API. It matches the parent resource of collections owned by the user.
+// Clients currently do not need to interact with this resource directly.
+type GoogleDevicesandservicesHealthV4User struct {
+	// Name: Identifier. The resource name of the user. The `{user}` ID is a
+	// system-generated identifier, as described in Identity.health_user_id.
+	// Format: `users/{user}`
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleDevicesandservicesHealthV4User) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevicesandservicesHealthV4User
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleDevicesandservicesHealthV4WebhookNotificationCloudLog: Log message for
 // a webhook notification sent by the Google Health API to a subscriber's
 // endpoint. Includes the HTTP response received from the endpoint.
@@ -5500,8 +5530,10 @@ func (s SubscriberConfig) MarshalJSON() ([]byte, error) {
 type Subscription struct {
 	// DataTypes: Optional. Data types subscribed to. A subscriber will only
 	// receive notifications for data types that are declared here. A subscription
-	// can only subscribe to the data types of the subscriber. Supported data types
-	// are: "altitude", "distance", "floors", "sleep", "steps", "weight".
+	// can only subscribe to the data types of the subscriber. The values should be
+	// in the format "users/{health_user_id}/dataTypes/{data_type}" where
+	// `{data_type}` is one of "altitude", "distance", "floors", "sleep", "steps",
+	// "weight".
 	DataTypes []string `json:"dataTypes,omitempty"`
 	// Name: Identifier. The resource name of the Subscription. Format:
 	// `projects/{project}/subscribers/{subscriber}/subscriptions/{subscription}`
@@ -6917,7 +6949,7 @@ func (r *ProjectsSubscribersSubscriptionsService) List(parent string) *ProjectsS
 // of subscriptions. The filter syntax is described in
 // https://google.aip.dev/160. The filter can be applied to the following
 // fields: - `user` - `data_type` The `user` identifier (e.g., `user1` in
-// `users/user1`) refers to the public `healthUserId` Example: user =
+// `users/user1`) refers to the public `health_user_id` Example: user =
 // "users/user1" Example: user = "users/user1" OR user = "users/user2" Example:
 // user = "users/user1" AND (data_type = "sleep" OR data_type = "weight")
 func (c *ProjectsSubscribersSubscriptionsListCall) Filter(filter string) *ProjectsSubscribersSubscriptionsListCall {

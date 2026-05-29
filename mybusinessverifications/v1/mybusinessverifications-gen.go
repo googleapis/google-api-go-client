@@ -372,10 +372,6 @@ func (s FetchVerificationOptionsResponse) MarshalJSON() ([]byte, error) {
 // GenerateInstantVerificationTokenRequest: Request message for
 // Verifications.GenerateInstantVerificationToken.
 type GenerateInstantVerificationTokenRequest struct {
-	// LocationData: Immutable. Deprecated: Please use location_id instead. The
-	// address and other details of the location to generate an instant
-	// verification token for.
-	LocationData *LocationData `json:"locationData,omitempty"`
 	// LocationId: The location identifier associated with an unverified listing.
 	// This is the location id generated at the time that the listing was
 	// originally created. It is the final portion of a location resource name as
@@ -384,13 +380,13 @@ type GenerateInstantVerificationTokenRequest struct {
 	// the location resource (/my-business/reference/rest/v4/accounts.locations)
 	// documentation for more information.
 	LocationId string `json:"locationId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "LocationData") to
+	// ForceSendFields is a list of field names (e.g. "LocationId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "LocationData") to include in API
+	// NullFields is a list of field names (e.g. "LocationId") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -464,43 +460,6 @@ type ListVerificationsResponse struct {
 
 func (s ListVerificationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListVerificationsResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// LocationData: The address and other details of the location to generate an
-// instant verification token for.
-type LocationData struct {
-	// Address: Immutable. A precise, accurate address to describe your business
-	// location. PO boxes or mailboxes located at remote locations are not
-	// acceptable. At this time, you can specify a maximum of five `address_lines`
-	// values in the address.
-	Address *PostalAddress `json:"address,omitempty"`
-	// Name: Immutable. Name should reflect your business's real-world name, as
-	// used consistently on your storefront, website, and stationery, and as known
-	// to customers. Any additional information, when relevant, can be included in
-	// other fields of the resource (for example, `Address`, `Categories`). Don't
-	// add unnecessary information to your name (for example, prefer "Google" over
-	// "Google Inc. - Mountain View Corporate Headquarters"). Don't include
-	// marketing taglines, store codes, special characters, hours or closed/open
-	// status, phone numbers, website URLs, service/product information,
-	// location/address or directions, or containment information (for example,
-	// "Chase ATM in Duane Reade").
-	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Address") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Address") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s LocationData) MarshalJSON() ([]byte, error) {
-	type NoMethod LocationData
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

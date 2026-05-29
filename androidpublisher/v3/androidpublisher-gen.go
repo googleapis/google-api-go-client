@@ -4054,8 +4054,7 @@ func (s GeneratedApksListResponse) MarshalJSON() ([]byte, error) {
 }
 
 // GeneratedApksPerSigningKey: Download metadata for split, standalone and
-// universal APKs, as well as asset pack slices, signed with a given key. Next
-// ID: 10
+// universal APKs, as well as asset pack slices, signed with a given key.
 type GeneratedApksPerSigningKey struct {
 	// CertificateSha256Hash: SHA256 hash of the APK signing public key
 	// certificate.

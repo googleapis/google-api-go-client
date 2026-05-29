@@ -179,6 +179,10 @@ type V1alphaService struct {
 type Answer struct {
 	// AnswerText: Contains the text of the answer.
 	AnswerText string `json:"answerText,omitempty"`
+	// Citations: Output only. Contains citations for the answer.
+	Citations []*AnswerCitation `json:"citations,omitempty"`
+	// References: Output only. Contains references for the answer.
+	References []*AnswerReference `json:"references,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnswerText") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -194,6 +198,38 @@ type Answer struct {
 
 func (s Answer) MarshalJSON() ([]byte, error) {
 	type NoMethod Answer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AnswerCitation: Citation info for a segment.
+type AnswerCitation struct {
+	// EndIndex: Output only. Indicates the end of the segment, measured in bytes
+	// (UTF-8 unicode), exclusive. If there are multi-byte characters, such as
+	// non-ASCII characters, the index measurement is longer than the string
+	// length.
+	EndIndex int64 `json:"endIndex,omitempty"`
+	// Sources: Output only. Contains citation sources for the attributed segment.
+	Sources []*CitationSource `json:"sources,omitempty"`
+	// StartIndex: Output only. Indicates the start of the segment, measured in
+	// bytes (UTF-8 unicode), inclusive. If there are multi-byte characters, such
+	// as non-ASCII characters, the index measurement is longer than the string
+	// length.
+	StartIndex int64 `json:"startIndex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndIndex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndIndex") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AnswerCitation) MarshalJSON() ([]byte, error) {
+	type NoMethod AnswerCitation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -244,6 +280,28 @@ func (s AnswerQueryResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AnswerReference: Represents a reference to a source.
+type AnswerReference struct {
+	// DocumentReference: Output only. The reference document.
+	DocumentReference *DocumentReference `json:"documentReference,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DocumentReference") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DocumentReference") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AnswerReference) MarshalJSON() ([]byte, error) {
+	type NoMethod AnswerReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BatchGetDocumentsResponse: Response message for
 // DeveloperKnowledge.BatchGetDocuments.
 type BatchGetDocumentsResponse struct {
@@ -267,6 +325,29 @@ type BatchGetDocumentsResponse struct {
 
 func (s BatchGetDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchGetDocumentsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CitationSource: Citation source.
+type CitationSource struct {
+	// ReferenceIndex: Output only. Contains the index of the
+	// Answer.AnswerReference in the `references` repeated field.
+	ReferenceIndex int64 `json:"referenceIndex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ReferenceIndex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ReferenceIndex") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CitationSource) MarshalJSON() ([]byte, error) {
+	type NoMethod CitationSource
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -368,6 +449,29 @@ func (s DocumentChunk) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DocumentReference: Represents a reference to a document.
+type DocumentReference struct {
+	// DocumentChunk: Output only. Contains the document chunk. The
+	// `document_chunk.id` field is not set and will be empty.
+	DocumentChunk *DocumentChunk `json:"documentChunk,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DocumentChunk") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DocumentChunk") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DocumentReference) MarshalJSON() ([]byte, error) {
+	type NoMethod DocumentReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SearchDocumentChunksResponse: Response message for
 // DeveloperKnowledge.SearchDocumentChunks.
 type SearchDocumentChunksResponse struct {
@@ -420,10 +524,7 @@ func (r *DocumentsService) BatchGet() *DocumentsBatchGetCall {
 // the documents to retrieve. A maximum of 20 documents can be retrieved in a
 // batch. The documents are returned in the same order as the `names` in the
 // request. Format: `documents/{uri_without_scheme}` Example:
-// `documents/docs.cloud.google.com/storage/docs/creating-buckets` If you are
-// changing the batch size, consider the value of `maxConcurrentGCSFetches`
-// constant in the service implementation:
-// http://cs///depot/google3/devrel/boq/developerknowledge/service/developerknowledge.go
+// `documents/docs.cloud.google.com/storage/docs/creating-buckets`
 func (c *DocumentsBatchGetCall) Names(names ...string) *DocumentsBatchGetCall {
 	c.urlParams_.SetMulti("names", append([]string{}, names...))
 	return c

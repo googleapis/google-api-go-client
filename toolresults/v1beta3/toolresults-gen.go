@@ -1453,6 +1453,11 @@ func (s IosXcTest) MarshalJSON() ([]byte, error) {
 type LauncherActivityNotFound struct {
 }
 
+// LicensingProtectionTermination: Licensing protection termination (Pairip)
+// was detected.
+type LicensingProtectionTermination struct {
+}
+
 // ListEnvironmentsResponse: Response message for
 // EnvironmentService.ListEnvironments.
 type ListEnvironmentsResponse struct {
@@ -3241,6 +3246,8 @@ type TestIssue struct {
 	//   "detectedAppSplashScreen" - Robo detected a splash screen provided by app
 	// (vs. Android OS splash screen).
 	//   "assetIssue" - There was an issue with the assets in this test.
+	//   "licensingProtectionTermination" - Licensing protection termination
+	// (Pairip) was detected.
 	Type string `json:"type,omitempty"`
 	// WarningMigration: Warning message with additional details of the issue.
 	// Should always be a message from com.google.devtools.toolresults.v1.warnings

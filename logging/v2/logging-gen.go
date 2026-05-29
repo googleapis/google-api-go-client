@@ -4303,6 +4303,12 @@ type ProjectedField struct {
 	// https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#timestamp_trunc_granularity_time
 	// respectively.
 	TruncationGranularity string `json:"truncationGranularity,omitempty"`
+	// VirtualField: Optional. A virtual field definition, used in place of field
+	// to define a field that is computed from other fields rather than being
+	// directly present in the data schema.For example, a virtual field can be
+	// defined using COALESCE to select the first non-null value from a list of
+	// fields.If virtual_field is set, field must not be set.
+	VirtualField *VirtualField `json:"virtualField,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Alias") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -5027,6 +5033,47 @@ type UpdateBucketRequest struct {
 
 func (s UpdateBucketRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateBucketRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VirtualField: A virtual field is a field that is not physically present in
+// the underlying data schema, but is created through specific operations
+// within the query builder model based on other fields in the schema.
+type VirtualField struct {
+	// UnderlyingFieldSources: The field sources that will be used to create the
+	// virtual field, based on the semantics of the virtual field type.The field
+	// sources must follow these rules, based on the virtual field type: - For
+	// VIRTUAL_FIELD_TYPE_UNSPECIFIED, this field must be empty. - For COALESCE,
+	// this field must be non-empty and include a minimum of two field sources. The
+	// underlying field sources must be actual projected fields that represent
+	// actual schema fields and that must not be transformed and aggregated in any
+	// way, except for casting. The type of all the underlying field sources must
+	// be equivalent so that picking one of them would result in the same value
+	// type.
+	UnderlyingFieldSources []*FieldSource `json:"underlyingFieldSources,omitempty"`
+	// VirtualFieldType: Required. The type of the virtual field.
+	//
+	// Possible values:
+	//   "VIRTUAL_FIELD_TYPE_UNSPECIFIED" - Invalid value, do not use.
+	//   "COALESCE" - Creates a virtual field by selecting the first non-null value
+	// from the list of fields specified in underlying_field_sources, similar to a
+	// COALESCE function in SQL.
+	VirtualFieldType string `json:"virtualFieldType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UnderlyingFieldSources") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UnderlyingFieldSources") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VirtualField) MarshalJSON() ([]byte, error) {
+	type NoMethod VirtualField
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

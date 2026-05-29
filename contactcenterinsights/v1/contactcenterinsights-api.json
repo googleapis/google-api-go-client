@@ -4574,7 +4574,7 @@
                       "type": "string"
                     },
                     "appVersion": {
-                      "description": "Optional. The CES App version to filter diagnostics by.",
+                      "description": "Optional. The CES App version to filter diagnostics by. Setting to \"-\" filters to diagnostics created using \"-\" (the latest draft version). Note that reports created at different times may correspond to different draft instructions. Setting to \"\" (empty) retrieves all diagnostics for the app_id regardless of version.",
                       "location": "query",
                       "type": "string"
                     },
@@ -6234,7 +6234,7 @@
       }
     }
   },
-  "revision": "20260521",
+  "revision": "20260527",
   "rootUrl": "https://contactcenterinsights.googleapis.com/",
   "schemas": {
     "GoogleCloudAiplatformV1Blob": {
@@ -9344,6 +9344,14 @@
       "description": "Metadata for a DiagnoseConversations operation.",
       "id": "GoogleCloudContactcenterinsightsV1DiagnoseConversationsMetadata",
       "properties": {
+        "conversationIds": {
+          "description": "Output only. The list of conversation IDs that were selected for this diagnosis.",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "createTime": {
           "description": "Output only. The time the operation was created.",
           "format": "google-datetime",
@@ -9428,7 +9436,7 @@
           "type": "string"
         },
         "appVersion": {
-          "description": "Optional. Optional but highly recommended. ces app version. If provided, specific version of agent instruction will be retrieved. If empty or set to '-', will use the latest draft version of instruction.",
+          "description": "Required. The CES App version of the agent. Setting to \"-\" uses the latest draft version. Note that the agent active during the conversation history may have different instructions or tool definitions compared with the latest draft version.",
           "type": "string"
         },
         "dryRun": {
@@ -16060,6 +16068,14 @@
       "description": "Metadata for a DiagnoseConversations operation.",
       "id": "GoogleCloudContactcenterinsightsV1alpha1DiagnoseConversationsMetadata",
       "properties": {
+        "conversationIds": {
+          "description": "Output only. The list of conversation IDs that were selected for this diagnosis.",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "createTime": {
           "description": "Output only. The time the operation was created.",
           "format": "google-datetime",
@@ -16144,7 +16160,7 @@
           "type": "string"
         },
         "appVersion": {
-          "description": "Optional. Optional but highly recommended. ces app version. If provided, specific version of agent instruction will be retrieved. If empty or set to '-', will use the latest draft version of instruction.",
+          "description": "Required. The CES App version of the agent. Setting to \"-\" uses the latest draft version. Note that the agent active during the conversation history may have different instructions or tool definitions compared with the latest draft version.",
           "type": "string"
         },
         "dryRun": {
@@ -21288,6 +21304,14 @@
       "description": "Metadata for a DiagnoseConversations operation.",
       "id": "GoogleCloudContactcenterinsightsV1mainDiagnoseConversationsMetadata",
       "properties": {
+        "conversationIds": {
+          "description": "Output only. The list of conversation IDs that were selected for this diagnosis.",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "createTime": {
           "description": "Output only. The time the operation was created.",
           "format": "google-datetime",
@@ -21372,7 +21396,7 @@
           "type": "string"
         },
         "appVersion": {
-          "description": "Optional. Optional but highly recommended. ces app version. If provided, specific version of agent instruction will be retrieved. If empty or set to '-', will use the latest draft version of instruction.",
+          "description": "Required. The CES App version of the agent. Setting to \"-\" uses the latest draft version. Note that the agent active during the conversation history may have different instructions or tool definitions compared with the latest draft version.",
           "type": "string"
         },
         "dryRun": {

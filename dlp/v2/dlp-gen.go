@@ -1162,6 +1162,53 @@ func (s GooglePrivacyDlpV2AwsDiscoveryStartingLocation) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2BatchContentItem: Represents a batch of content to inspect
+// or redact.
+type GooglePrivacyDlpV2BatchContentItem struct {
+	// StringValueBatch: Optional. Represents a batch of string values to inspect
+	// or redact.
+	StringValueBatch *GooglePrivacyDlpV2StringValueBatch `json:"stringValueBatch,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StringValueBatch") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StringValueBatch") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2BatchContentItem) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2BatchContentItem
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2BatchContentLocation: Location within a batch of content.
+type GooglePrivacyDlpV2BatchContentLocation struct {
+	// ItemIndex: Matches an index of a batch item in the batch provided in the
+	// request.
+	ItemIndex int64 `json:"itemIndex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ItemIndex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ItemIndex") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2BatchContentLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2BatchContentLocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2BigQueryDiscoveryTarget: Target used to match against for
 // discovery with BigQuery tables
 type GooglePrivacyDlpV2BigQueryDiscoveryTarget struct {
@@ -2485,6 +2532,8 @@ func (s GooglePrivacyDlpV2Container) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2ContentItem: Type of content to inspect.
 type GooglePrivacyDlpV2ContentItem struct {
+	// BatchContentItem: Represents a batch of items to inspect.
+	BatchContentItem *GooglePrivacyDlpV2BatchContentItem `json:"batchContentItem,omitempty"`
 	// ByteItem: Content data to inspect or redact. Replaces `type` and `data`.
 	ByteItem *GooglePrivacyDlpV2ByteContentItem `json:"byteItem,omitempty"`
 	// ContentMetadata: User provided metadata for the content.
@@ -2499,15 +2548,15 @@ type GooglePrivacyDlpV2ContentItem struct {
 	Table *GooglePrivacyDlpV2Table `json:"table,omitempty"`
 	// Value: String data to inspect or redact.
 	Value string `json:"value,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ByteItem") to
+	// ForceSendFields is a list of field names (e.g. "BatchContentItem") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ByteItem") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BatchContentItem") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2520,6 +2569,8 @@ func (s GooglePrivacyDlpV2ContentItem) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2ContentLocation: Precise location of the finding within a
 // document, record, image, or metadata container.
 type GooglePrivacyDlpV2ContentLocation struct {
+	// BatchContentLocation: Location within a batch of content.
+	BatchContentLocation *GooglePrivacyDlpV2BatchContentLocation `json:"batchContentLocation,omitempty"`
 	// ContainerName: Name of the container where the finding is located. The top
 	// level name is the source file name or table name. Names of some common
 	// storage containers are formatted as follows: * BigQuery tables:
@@ -2546,15 +2597,15 @@ type GooglePrivacyDlpV2ContentLocation struct {
 	MetadataLocation *GooglePrivacyDlpV2MetadataLocation `json:"metadataLocation,omitempty"`
 	// RecordLocation: Location within a row or record of a database table.
 	RecordLocation *GooglePrivacyDlpV2RecordLocation `json:"recordLocation,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ContainerName") to
+	// ForceSendFields is a list of field names (e.g. "BatchContentLocation") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ContainerName") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BatchContentLocation") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -10693,6 +10744,29 @@ type GooglePrivacyDlpV2StoredType struct {
 
 func (s GooglePrivacyDlpV2StoredType) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2StoredType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2StringValueBatch: Represents a batch of string values to
+// inspect or redact.
+type GooglePrivacyDlpV2StringValueBatch struct {
+	// Values: Optional. Represents string data to inspect or redact.
+	Values []string `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2StringValueBatch) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2StringValueBatch
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

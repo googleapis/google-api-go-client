@@ -1316,6 +1316,37 @@ func (s GoogleChromeManagementV1CountChromeHardwareFleetDevicesResponse) Marshal
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementV1CountChromeProfileVersionsResponse: Response
+// containing requested managed profile versions details and counts.
+type GoogleChromeManagementV1CountChromeProfileVersionsResponse struct {
+	// NextPageToken: Token to specify the next page of the request.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// ProfileBrowserVersions: List of all browser versions reported for profiles
+	// and their install counts.
+	ProfileBrowserVersions []*GoogleChromeManagementV1BrowserVersion `json:"profileBrowserVersions,omitempty"`
+	// TotalSize: Total number browser versions matching request.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementV1CountChromeProfileVersionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1CountChromeProfileVersionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementV1CountChromeVersionsResponse: Response containing
 // requested browser versions details and counts.
 type GoogleChromeManagementV1CountChromeVersionsResponse struct {
@@ -10327,6 +10358,168 @@ func (c *CustomersReportsCountChromeHardwareFleetDevicesCall) Do(opts ...googlea
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.reports.countChromeHardwareFleetDevices", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type CustomersReportsCountChromeProfileVersionsCall struct {
+	s            *Service
+	customer     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// CountChromeProfileVersions: Generate report of installed Chrome versions on
+// managed profiles.
+//
+//   - customer: Customer id or "my_customer" to use the customer associated to
+//     the account making the request.
+func (r *CustomersReportsService) CountChromeProfileVersions(customer string) *CustomersReportsCountChromeProfileVersionsCall {
+	c := &CustomersReportsCountChromeProfileVersionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	return c
+}
+
+// Filter sets the optional parameter "filter": Query string to filter results,
+// AND-separated fields in EBNF syntax. Note: OR operations are not supported
+// in this filter. Supported filter fields: * last_active_date
+func (c *CustomersReportsCountChromeProfileVersionsCall) Filter(filter string) *CustomersReportsCountChromeProfileVersionsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrgUnitId sets the optional parameter "orgUnitId": The ID of the
+// organizational unit. If omitted, all data will be returned.
+func (c *CustomersReportsCountChromeProfileVersionsCall) OrgUnitId(orgUnitId string) *CustomersReportsCountChromeProfileVersionsCall {
+	c.urlParams_.Set("orgUnitId", orgUnitId)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of results
+// to return. Maximum and default are 100.
+func (c *CustomersReportsCountChromeProfileVersionsCall) PageSize(pageSize int64) *CustomersReportsCountChromeProfileVersionsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token to specify the page
+// of the request to be returned.
+func (c *CustomersReportsCountChromeProfileVersionsCall) PageToken(pageToken string) *CustomersReportsCountChromeProfileVersionsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersReportsCountChromeProfileVersionsCall) Fields(s ...googleapi.Field) *CustomersReportsCountChromeProfileVersionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CustomersReportsCountChromeProfileVersionsCall) IfNoneMatch(entityTag string) *CustomersReportsCountChromeProfileVersionsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersReportsCountChromeProfileVersionsCall) Context(ctx context.Context) *CustomersReportsCountChromeProfileVersionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersReportsCountChromeProfileVersionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersReportsCountChromeProfileVersionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/reports:countChromeProfileVersions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.reports.countChromeProfileVersions", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.reports.countChromeProfileVersions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementV1CountChromeProfileVersionsResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CustomersReportsCountChromeProfileVersionsCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementV1CountChromeProfileVersionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementV1CountChromeProfileVersionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.reports.countChromeProfileVersions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CustomersReportsCountChromeProfileVersionsCall) Pages(ctx context.Context, f func(*GoogleChromeManagementV1CountChromeProfileVersionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type CustomersReportsCountChromeVersionsCall struct {

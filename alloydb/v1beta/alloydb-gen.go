@@ -4357,8 +4357,11 @@ func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceId) MarshalJSON() (
 }
 
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata: Common model
-// for database resource instance metadata. Next ID: 32
+// for database resource instance metadata. Next ID: 35
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
+	// AdditionalMetadata: Field to ingest additional metadata whichd does not
+	// support proto format.
+	AdditionalMetadata googleapi.RawMessage `json:"additionalMetadata,omitempty"`
 	// AvailabilityConfiguration: Availability configuration for this instance
 	AvailabilityConfiguration *StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
 	// BackupConfiguration: Backup configuration for this instance
@@ -4435,6 +4438,11 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	//   "SUB_RESOURCE_TYPE_DATASET" - Represents a dataset resource.
 	//   "SUB_RESOURCE_TYPE_OTHER" - For rest of the other categories.
 	InstanceType string `json:"instanceType,omitempty"`
+	// InternalAdditionalMetadata: Field to ingest additional metadata which
+	// support proto format.
+	InternalAdditionalMetadata googleapi.RawMessage `json:"internalAdditionalMetadata,omitempty"`
+	// IpAddress: Optional. Private and public IP address of the resource.
+	IpAddress *StorageDatabasecenterPartnerapiV1mainIpAddress `json:"ipAddress,omitempty"`
 	// IsDeletionProtectionEnabled: Optional. Whether deletion protection is
 	// enabled for this resource.
 	IsDeletionProtectionEnabled bool `json:"isDeletionProtectionEnabled,omitempty"`
@@ -4498,15 +4506,15 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// Zone: The resource zone. This is only applicable for zonal resources and
 	// will be empty for regional and multi-regional resources.
 	Zone string `json:"zone,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AvailabilityConfiguration")
-	// to unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AvailabilityConfiguration") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdditionalMetadata") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4987,6 +4995,35 @@ func (s StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata) MarshalJS
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// StorageDatabasecenterPartnerapiV1mainIpAddress: Used to send IP address
+// information for a database resource.
+type StorageDatabasecenterPartnerapiV1mainIpAddress struct {
+	// PrivateIp: The private IP address assigned to the resource within a Virtual
+	// Private Cloud (VPC). This IP is only reachable from within the same VPC
+	// network. Stored in standard string format (e.g., "10.0.0.2").
+	PrivateIp string `json:"privateIp,omitempty"`
+	// PublicIp: The public IP address assigned to the resource. This IP is
+	// reachable from the internet. Stored in standard string format (e.g.,
+	// "34.72.1.1").
+	PublicIp string `json:"publicIp,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PrivateIp") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PrivateIp") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StorageDatabasecenterPartnerapiV1mainIpAddress) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainIpAddress
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // StorageDatabasecenterPartnerapiV1mainMachineConfiguration:
 // MachineConfiguration describes the configuration of a machine specific to
 // Database Resource.
@@ -5459,6 +5496,7 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	//   "ENGINE_MEMORYSTORE_FOR_REDIS" - Memorystore with Redis dialect.
 	//   "ENGINE_MEMORYSTORE_FOR_REDIS_CLUSTER" - Memorystore with Redis cluster
 	// dialect.
+	//   "ENGINE_MEMORSTORE_FOR_VALKEY" - Memorystore with Valkey dialect.
 	//   "ENGINE_OTHER" - Other refers to rest of other database engine. This is to
 	// be when engine is known, but it is not present in this enum.
 	//   "ENGINE_FIRESTORE_WITH_NATIVE_MODE" - Firestore with native mode.

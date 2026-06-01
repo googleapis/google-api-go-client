@@ -739,8 +739,9 @@ type AutokeyConfig struct {
 	// RESOURCE_PROJECT).
 	KeyProjectResolutionMode string `json:"keyProjectResolutionMode,omitempty"`
 	// Name: Identifier. Name of the AutokeyConfig resource, e.g.
-	// `folders/{FOLDER_NUMBER}/autokeyConfig` or
-	// `projects/{PROJECT_NUMBER}/autokeyConfig`.
+	// `folders/{FOLDER_NUMBER}/autokeyConfig`,
+	// `projects/{PROJECT_NUMBER}/autokeyConfig`, or
+	// `projects/{PROJECT_ID}/autokeyConfig`.
 	Name string `json:"name,omitempty"`
 	// State: Output only. The state for the AutokeyConfig.
 	//
@@ -751,6 +752,8 @@ type AutokeyConfig struct {
 	// deleted and the current AutokeyConfig is unusable.
 	//   "UNINITIALIZED" - The AutokeyConfig is not yet initialized or has been
 	// reset to its default uninitialized state.
+	//   "KEY_PROJECT_PERMISSION_DENIED" - Deprecated: This state is not returned
+	// by the backend.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4690,8 +4693,9 @@ type FoldersGetAutokeyConfigCall struct {
 // GetAutokeyConfig: Returns the AutokeyConfig for a folder or project.
 //
 //   - name: Name of the AutokeyConfig resource, e.g.
-//     `folders/{FOLDER_NUMBER}/autokeyConfig` or
-//     `projects/{PROJECT_NUMBER}/autokeyConfig`.
+//     `folders/{FOLDER_NUMBER}/autokeyConfig`,
+//     `projects/{PROJECT_NUMBER}/autokeyConfig`, or
+//     `projects/{PROJECT_ID}/autokeyConfig`.
 func (r *FoldersService) GetAutokeyConfig(name string) *FoldersGetAutokeyConfigCall {
 	c := &FoldersGetAutokeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4918,8 +4922,9 @@ type FoldersUpdateAutokeyConfigCall struct {
 // resulting CryptoKey.
 //
 //   - name: Identifier. Name of the AutokeyConfig resource, e.g.
-//     `folders/{FOLDER_NUMBER}/autokeyConfig` or
-//     `projects/{PROJECT_NUMBER}/autokeyConfig`.
+//     `folders/{FOLDER_NUMBER}/autokeyConfig`,
+//     `projects/{PROJECT_NUMBER}/autokeyConfig`, or
+//     `projects/{PROJECT_ID}/autokeyConfig`.
 func (r *FoldersService) UpdateAutokeyConfig(name string, autokeyconfig *AutokeyConfig) *FoldersUpdateAutokeyConfigCall {
 	c := &FoldersUpdateAutokeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5370,8 +5375,9 @@ type ProjectsGetAutokeyConfigCall struct {
 // GetAutokeyConfig: Returns the AutokeyConfig for a folder or project.
 //
 //   - name: Name of the AutokeyConfig resource, e.g.
-//     `folders/{FOLDER_NUMBER}/autokeyConfig` or
-//     `projects/{PROJECT_NUMBER}/autokeyConfig`.
+//     `folders/{FOLDER_NUMBER}/autokeyConfig`,
+//     `projects/{PROJECT_NUMBER}/autokeyConfig`, or
+//     `projects/{PROJECT_ID}/autokeyConfig`.
 func (r *ProjectsService) GetAutokeyConfig(name string) *ProjectsGetAutokeyConfigCall {
 	c := &ProjectsGetAutokeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5937,8 +5943,9 @@ type ProjectsUpdateAutokeyConfigCall struct {
 // resulting CryptoKey.
 //
 //   - name: Identifier. Name of the AutokeyConfig resource, e.g.
-//     `folders/{FOLDER_NUMBER}/autokeyConfig` or
-//     `projects/{PROJECT_NUMBER}/autokeyConfig`.
+//     `folders/{FOLDER_NUMBER}/autokeyConfig`,
+//     `projects/{PROJECT_NUMBER}/autokeyConfig`, or
+//     `projects/{PROJECT_ID}/autokeyConfig`.
 func (r *ProjectsService) UpdateAutokeyConfig(name string, autokeyconfig *AutokeyConfig) *ProjectsUpdateAutokeyConfigCall {
 	c := &ProjectsUpdateAutokeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

@@ -419,6 +419,10 @@ type ArtifactDeployment struct {
 	DeployTime string `json:"deployTime,omitempty"`
 	// Id: Output only. Unique identifier of `ArtifactDeployment`.
 	Id string `json:"id,omitempty"`
+	// SourceCodeUris: Output only. The URIs of the source code, if available. For
+	// Cloud Run source deploy for example:
+	// `gs://my-bucket/my-folder/1234567890.abcde-fdbe.zip#1234567890`
+	SourceCodeUris []string `json:"sourceCodeUris,omitempty"`
 	// SourceCommitUris: Output only. The source commits at which this artifact was
 	// built. Extracted from provenance.
 	SourceCommitUris []string `json:"sourceCommitUris,omitempty"`

@@ -2696,12 +2696,11 @@ func (c *ProjectsLocationsUpdateBoundaryCall) RequestId(requestId string) *Proje
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the Boundary resource by the
-// update. The fields specified in the update_mask are relative to the
-// resource, not the full request. A field will be overwritten if it is in the
-// mask. If the user does not provide a mask then all fields will be
-// overwritten.
+// UpdateMask sets the optional parameter "updateMask": Field mask is used to
+// specify the fields to be overwritten in the Boundary resource by the update.
+// The fields specified in the update_mask are relative to the resource, not
+// the full request. A field will be overwritten if it is in the mask. If the
+// user does not provide a mask then all fields will be overwritten.
 func (c *ProjectsLocationsUpdateBoundaryCall) UpdateMask(updateMask string) *ProjectsLocationsUpdateBoundaryCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3470,9 +3469,9 @@ func (c *ProjectsLocationsApplicationsPatchCall) RequestId(requestId string) *Pr
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the Application resource by
-// the update. The fields specified in the update_mask are relative to the
+// UpdateMask sets the optional parameter "updateMask": Field mask is used to
+// specify the fields to be overwritten in the Application resource by the
+// update. The fields specified in the update_mask are relative to the
 // resource, not the full request. The API changes the values of the fields as
 // specified in the update_mask. The API ignores the values of all fields not
 // covered by the update_mask. You can also unset a field by not specifying it
@@ -4340,14 +4339,14 @@ func (c *ProjectsLocationsApplicationsServicesPatchCall) RequestId(requestId str
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the Service resource by the
-// update. The fields specified in the update_mask are relative to the
-// resource, not the full request. The API changes the values of the fields as
-// specified in the update_mask. The API ignores the values of all fields not
-// covered by the update_mask. You can also unset a field by not specifying it
-// in the updated message, but adding the field to the mask. This clears
-// whatever value the field previously had.
+// UpdateMask sets the optional parameter "updateMask": Field mask is used to
+// specify the fields to be overwritten in the Service resource by the update.
+// The fields specified in the update_mask are relative to the resource, not
+// the full request. The API changes the values of the fields as specified in
+// the update_mask. The API ignores the values of all fields not covered by the
+// update_mask. You can also unset a field by not specifying it in the updated
+// message, but adding the field to the mask. This clears whatever value the
+// field previously had.
 func (c *ProjectsLocationsApplicationsServicesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsApplicationsServicesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4992,14 +4991,14 @@ func (c *ProjectsLocationsApplicationsWorkloadsPatchCall) RequestId(requestId st
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the Workload resource by the
-// update. The fields specified in the update_mask are relative to the
-// resource, not the full request. The API changes the values of the fields as
-// specified in the update_mask. The API ignores the values of all fields not
-// covered by the update_mask. You can also unset a field by not specifying it
-// in the updated message, but adding the field to the mask. This clears
-// whatever value the field previously had.
+// UpdateMask sets the optional parameter "updateMask": Field mask is used to
+// specify the fields to be overwritten in the Workload resource by the update.
+// The fields specified in the update_mask are relative to the resource, not
+// the full request. The API changes the values of the fields as specified in
+// the update_mask. The API ignores the values of all fields not covered by the
+// update_mask. You can also unset a field by not specifying it in the updated
+// message, but adding the field to the mask. This clears whatever value the
+// field previously had.
 func (c *ProjectsLocationsApplicationsWorkloadsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsApplicationsWorkloadsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

@@ -211,59 +211,18 @@ type OrganizationsSourcesFindingsService struct {
 	s *Service
 }
 
-// Access: Represents an access event.
 type Access struct {
-	// CallerIp: Caller's IP address, such as "1.1.1.1".
-	CallerIp string `json:"callerIp,omitempty"`
-	// CallerIpGeo: The caller IP's geolocation, which identifies where the call
-	// came from.
-	CallerIpGeo *Geolocation `json:"callerIpGeo,omitempty"`
-	// MethodName: The method that the service account called, e.g. "SetIamPolicy".
-	MethodName string `json:"methodName,omitempty"`
-	// PrincipalEmail: Associated email, such as "foo@google.com". The email
-	// address of the authenticated user or a service account acting on behalf of a
-	// third party principal making the request. For third party identity callers,
-	// the `principal_subject` field is populated instead of this field. For
-	// privacy reasons, the principal email address is sometimes redacted. For more
-	// information, see Caller identities in audit logs
-	// (https://cloud.google.com/logging/docs/audit#user-id).
-	PrincipalEmail string `json:"principalEmail,omitempty"`
-	// PrincipalSubject: A string that represents the principal_subject that is
-	// associated with the identity. Unlike `principal_email`, `principal_subject`
-	// supports principals that aren't associated with email addresses, such as
-	// third party principals. For most identities, the format is
-	// `principal://iam.googleapis.com/{identity pool name}/subject/{subject}`.
-	// Some GKE identities, such as GKE_WORKLOAD, FREEFORM, and GKE_HUB_WORKLOAD,
-	// still use the legacy format `serviceAccount:{identity pool
-	// name}[{subject}]`.
-	PrincipalSubject string `json:"principalSubject,omitempty"`
-	// ServiceAccountDelegationInfo: The identity delegation history of an
-	// authenticated service account that made the request. The
-	// `serviceAccountDelegationInfo[]` object contains information about the real
-	// authorities that try to access Google Cloud resources by delegating on a
-	// service account. When multiple authorities are present, they are guaranteed
-	// to be sorted based on the original ordering of the identity delegation
-	// events.
+	CallerIp                     string                          `json:"callerIp,omitempty"`
+	CallerIpGeo                  *Geolocation                    `json:"callerIpGeo,omitempty"`
+	MethodName                   string                          `json:"methodName,omitempty"`
+	PrincipalEmail               string                          `json:"principalEmail,omitempty"`
+	PrincipalSubject             string                          `json:"principalSubject,omitempty"`
 	ServiceAccountDelegationInfo []*ServiceAccountDelegationInfo `json:"serviceAccountDelegationInfo,omitempty"`
-	// ServiceAccountKeyName: The name of the service account key that was used to
-	// create or exchange credentials when authenticating the service account that
-	// made the request. This is a scheme-less URI full resource name. For example:
-	// "//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{k
-	// ey}".
-	ServiceAccountKeyName string `json:"serviceAccountKeyName,omitempty"`
-	// ServiceName: This is the API service that the service account made a call
-	// to, e.g. "iam.googleapis.com"
-	ServiceName string `json:"serviceName,omitempty"`
-	// UserAgent: The caller's user agent string associated with the finding.
-	UserAgent string `json:"userAgent,omitempty"`
-	// UserAgentFamily: Type of user agent associated with the finding. For
-	// example, an operating system shell or an embedded or standalone application.
-	UserAgentFamily string `json:"userAgentFamily,omitempty"`
-	// UserName: A string that represents a username. The username provided depends
-	// on the type of the finding and is likely not an IAM principal. For example,
-	// this can be a system username if the finding is related to a virtual
-	// machine, or it can be an application login username.
-	UserName string `json:"userName,omitempty"`
+	ServiceAccountKeyName        string                          `json:"serviceAccountKeyName,omitempty"`
+	ServiceName                  string                          `json:"serviceName,omitempty"`
+	UserAgent                    string                          `json:"userAgent,omitempty"`
+	UserAgentFamily              string                          `json:"userAgentFamily,omitempty"`
+	UserName                     string                          `json:"userName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CallerIp") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -282,28 +241,14 @@ func (s Access) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AccessReview: Conveys information about a Kubernetes access review (such as
-// one returned by a `kubectl auth can-i`
-// (https://kubernetes.io/docs/reference/access-authn-authz/authorization/#checking-api-access)
-// command) that was involved in a finding.
 type AccessReview struct {
-	// Group: The API group of the resource. "*" means all.
-	Group string `json:"group,omitempty"`
-	// Name: The name of the resource being requested. Empty means all.
-	Name string `json:"name,omitempty"`
-	// Ns: Namespace of the action being requested. Currently, there is no
-	// distinction between no namespace and all namespaces. Both are represented by
-	// "" (empty).
-	Ns string `json:"ns,omitempty"`
-	// Resource: The optional resource type requested. "*" means all.
-	Resource string `json:"resource,omitempty"`
-	// Subresource: The optional subresource type.
+	Group       string `json:"group,omitempty"`
+	Name        string `json:"name,omitempty"`
+	Ns          string `json:"ns,omitempty"`
+	Resource    string `json:"resource,omitempty"`
 	Subresource string `json:"subresource,omitempty"`
-	// Verb: A Kubernetes resource API verb, like get, list, watch, create, update,
-	// delete, proxy. "*" means all.
-	Verb string `json:"verb,omitempty"`
-	// Version: The API version of the resource. "*" means all.
-	Version string `json:"version,omitempty"`
+	Verb        string `json:"verb,omitempty"`
+	Version     string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Group") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -322,15 +267,7 @@ func (s AccessReview) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdaptiveProtection: Information about Google Cloud Armor Adaptive Protection
-// (https://cloud.google.com/armor/docs/cloud-armor-overview#google-cloud-armor-adaptive-protection).
 type AdaptiveProtection struct {
-	// Confidence: A score of 0 means that there is low confidence that the
-	// detected event is an actual attack. A score of 1 means that there is high
-	// confidence that the detected event is an attack. See the Adaptive Protection
-	// documentation
-	// (https://cloud.google.com/armor/docs/adaptive-protection-overview#configure-alert-tuning)
-	// for further explanation.
 	Confidence float64 `json:"confidence,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -364,14 +301,9 @@ func (s *AdaptiveProtection) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// AdcApplication: Represents an ADC application associated with the finding.
 type AdcApplication struct {
-	// Attributes: Consumer provided attributes for the AppHub application.
 	Attributes *GoogleCloudSecuritycenterV1ResourceApplicationAttributes `json:"attributes,omitempty"`
-	// Name: The resource name of an ADC Application. Format:
-	// projects/{project}/locations/{location}/spaces/{space}/applications/{applicat
-	// ion}
-	Name string `json:"name,omitempty"`
+	Name       string                                                    `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -390,12 +322,7 @@ func (s AdcApplication) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdcApplicationTemplateRevision: Represents an ADC template associated with
-// the finding.
 type AdcApplicationTemplateRevision struct {
-	// Name: The resource name of an ADC Application Template Revision. Format:
-	// projects/{project}/locations/{location}/spaces/{space}/applicationTemplates/{
-	// application_template}/revisions/{revision}
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -415,12 +342,7 @@ func (s AdcApplicationTemplateRevision) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdcSharedTemplateRevision: Represents an ADC shared template associated with
-// the finding.
 type AdcSharedTemplateRevision struct {
-	// Name: The resource name of an ADC Shared Template Revision. Format:
-	// projects/{project}/locations/{location}/spaces/{space}/applicationTemplates/{
-	// application_template}/revisions/{revision}
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -440,9 +362,7 @@ func (s AdcSharedTemplateRevision) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AffectedResources: Details about resources affected by this finding.
 type AffectedResources struct {
-	// Count: The count of resources affected by the finding.
 	Count int64 `json:"count,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -462,22 +382,15 @@ func (s AffectedResources) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AgentDataAccessEvent: Details about a data access attempt made by an agent
-// principal not authorized under applicable data security policy.
 type AgentDataAccessEvent struct {
-	// EventId: Unique identifier for data access event.
-	EventId string `json:"eventId,omitempty"`
-	// EventTime: Timestamp of data access event.
+	EventId   string `json:"eventId,omitempty"`
 	EventTime string `json:"eventTime,omitempty"`
-	// Operation: The operation performed by the principal to access the data.
-	//
 	// Possible values:
-	//   "OPERATION_UNSPECIFIED" - The operation is unspecified.
-	//   "READ" - Represents a read operation.
-	//   "MOVE" - Represents a move operation.
-	//   "COPY" - Represents a copy operation.
-	Operation string `json:"operation,omitempty"`
-	// PrincipalSubject: The agent principal that accessed the data.
+	//   "OPERATION_UNSPECIFIED"
+	//   "READ"
+	//   "MOVE"
+	//   "COPY"
+	Operation        string `json:"operation,omitempty"`
 	PrincipalSubject string `json:"principalSubject,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EventId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -497,36 +410,21 @@ func (s AgentDataAccessEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AiModel: Contains information about the AI model associated with the
-// finding.
 type AiModel struct {
-	// DeploymentPlatform: The platform on which the model is deployed.
-	//
 	// Possible values:
-	//   "DEPLOYMENT_PLATFORM_UNSPECIFIED" - Unspecified deployment platform.
-	//   "VERTEX_AI" - Vertex AI.
-	//   "GKE" - Google Kubernetes Engine.
-	//   "GCE" - Google Compute Engine.
-	//   "FINE_TUNED_MODEL" - Fine tuned model.
+	//   "DEPLOYMENT_PLATFORM_UNSPECIFIED"
+	//   "VERTEX_AI"
+	//   "GKE"
+	//   "GCE"
+	//   "FINE_TUNED_MODEL"
 	DeploymentPlatform string `json:"deploymentPlatform,omitempty"`
-	// DisplayName: The user defined display name of model. Ex.
-	// baseline-classification-model
-	DisplayName string `json:"displayName,omitempty"`
-	// Domain: The domain of the model, for example, “image-classification”.
-	Domain string `json:"domain,omitempty"`
-	// Library: The name of the model library, for example, “transformers”.
-	Library string `json:"library,omitempty"`
-	// Location: The region in which the model is used, for example,
-	// “us-central1”.
-	Location string `json:"location,omitempty"`
-	// Name: The name of the AI model, for example, "gemini:1.0.0".
-	Name string `json:"name,omitempty"`
-	// Publisher: The publisher of the model, for example, “google” or
-	// “nvidia”.
-	Publisher string `json:"publisher,omitempty"`
-	// UsageCategory: The purpose of the model, for example, "Inteference" or
-	// "Training".
-	UsageCategory string `json:"usageCategory,omitempty"`
+	DisplayName        string `json:"displayName,omitempty"`
+	Domain             string `json:"domain,omitempty"`
+	Library            string `json:"library,omitempty"`
+	Location           string `json:"location,omitempty"`
+	Name               string `json:"name,omitempty"`
+	Publisher          string `json:"publisher,omitempty"`
+	UsageCategory      string `json:"usageCategory,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DeploymentPlatform") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -545,9 +443,7 @@ func (s AiModel) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Allowed: Allowed IP rule.
 type Allowed struct {
-	// IpRules: Optional. Optional list of allowed IP rules.
 	IpRules []*IpRule `json:"ipRules,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IpRules") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -567,14 +463,8 @@ func (s Allowed) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Application: Represents an application associated with a finding.
 type Application struct {
-	// BaseUri: The base URI that identifies the network location of the
-	// application in which the vulnerability was detected. For example,
-	// `http://example.com`.
 	BaseUri string `json:"baseUri,omitempty"`
-	// FullUri: The full URI with payload that can be used to reproduce the
-	// vulnerability. For example, `http://example.com?p=aMmYgI6H`.
 	FullUri string `json:"fullUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BaseUri") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -594,13 +484,9 @@ func (s Application) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ArtifactGuardPolicies: Represents the result of evaluating artifact guard
-// policies.
 type ArtifactGuardPolicies struct {
-	// FailingPolicies: A list of failing policies.
 	FailingPolicies []*ArtifactGuardPolicy `json:"failingPolicies,omitempty"`
-	// ResourceId: The ID of the resource that has policies configured for it.
-	ResourceId string `json:"resourceId,omitempty"`
+	ResourceId      string                 `json:"resourceId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FailingPolicies") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -619,20 +505,12 @@ func (s ArtifactGuardPolicies) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ArtifactGuardPolicy: Represents an artifact guard policy.
 type ArtifactGuardPolicy struct {
-	// FailureReason: The reason for the policy failure, for example,
-	// "severity=HIGH AND max_vuln_count=2".
 	FailureReason string `json:"failureReason,omitempty"`
-	// PolicyId: The ID of the failing policy, for example,
-	// "organizations/3392779/locations/global/policies/prod-policy".
-	PolicyId string `json:"policyId,omitempty"`
-	// Type: The type of the policy evaluation.
-	//
+	PolicyId      string `json:"policyId,omitempty"`
 	// Possible values:
-	//   "ARTIFACT_GUARD_POLICY_TYPE_UNSPECIFIED" - Default value. This value is
-	// unused.
-	//   "VULNERABILITY" - Vulnerability type.
+	//   "ARTIFACT_GUARD_POLICY_TYPE_UNSPECIFIED"
+	//   "VULNERABILITY"
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FailureReason") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -652,34 +530,13 @@ func (s ArtifactGuardPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Asset: Security Command Center representation of a Google Cloud resource.
-// The Asset is a Security Command Center resource that captures information
-// about a single Google Cloud resource. All modifications to an Asset are only
-// within the context of Security Command Center and don't affect the
-// referenced Google Cloud resource.
 type Asset struct {
-	// CreateTime: The time at which the asset was created in Security Command
-	// Center.
-	CreateTime string `json:"createTime,omitempty"`
-	// Name: The relative resource name of this asset. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-	// Example: "organizations/{organization_id}/assets/{asset_id}".
-	Name string `json:"name,omitempty"`
-	// ResourceProperties: Resource managed properties. These properties are
-	// managed and defined by the Google Cloud resource and cannot be modified by
-	// the user.
-	ResourceProperties googleapi.RawMessage `json:"resourceProperties,omitempty"`
-	// SecurityCenterProperties: Security Command Center managed properties. These
-	// properties are managed by Security Command Center and cannot be modified by
-	// the user.
-	SecurityCenterProperties *SecurityCenterProperties `json:"securityCenterProperties,omitempty"`
-	// SecurityMarks: User specified security marks. These marks are entirely
-	// managed by the user and come from the SecurityMarks resource that belongs to
-	// the asset.
-	SecurityMarks *GoogleCloudSecuritycenterV1beta1SecurityMarks `json:"securityMarks,omitempty"`
-	// UpdateTime: The time at which the asset was last updated, added, or deleted
-	// in Security Command Center.
-	UpdateTime string `json:"updateTime,omitempty"`
+	CreateTime               string                                         `json:"createTime,omitempty"`
+	Name                     string                                         `json:"name,omitempty"`
+	ResourceProperties       googleapi.RawMessage                           `json:"resourceProperties,omitempty"`
+	SecurityCenterProperties *SecurityCenterProperties                      `json:"securityCenterProperties,omitempty"`
+	SecurityMarks            *GoogleCloudSecuritycenterV1beta1SecurityMarks `json:"securityMarks,omitempty"`
+	UpdateTime               string                                         `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -698,20 +555,13 @@ func (s Asset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AssetDiscoveryConfig: The configuration used for Asset Discovery runs.
 type AssetDiscoveryConfig struct {
-	// InclusionMode: The mode to use for filtering asset discovery.
-	//
 	// Possible values:
-	//   "INCLUSION_MODE_UNSPECIFIED" - Unspecified. Setting the mode with this
-	// value will disable inclusion/exclusion filtering for Asset Discovery.
-	//   "INCLUDE_ONLY" - Asset Discovery will capture only the resources within
-	// the projects specified. All other resources will be ignored.
-	//   "EXCLUDE" - Asset Discovery will ignore all resources under the projects
-	// specified. All other resources will be retrieved.
-	InclusionMode string `json:"inclusionMode,omitempty"`
-	// ProjectIds: The project ids to use for filtering asset discovery.
-	ProjectIds []string `json:"projectIds,omitempty"`
+	//   "INCLUSION_MODE_UNSPECIFIED"
+	//   "INCLUDE_ONLY"
+	//   "EXCLUDE"
+	InclusionMode string   `json:"inclusionMode,omitempty"`
+	ProjectIds    []string `json:"projectIds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "InclusionMode") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -730,21 +580,12 @@ func (s AssetDiscoveryConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Attack: Information about DDoS attack volume and classification.
 type Attack struct {
-	// Classification: Type of attack, for example, 'SYN-flood', 'NTP-udp', or
-	// 'CHARGEN-udp'.
 	Classification string `json:"classification,omitempty"`
-	// VolumeBps: Total BPS (bytes per second) volume of attack. Deprecated - refer
-	// to volume_bps_long instead.
-	VolumeBps int64 `json:"volumeBps,omitempty"`
-	// VolumeBpsLong: Total BPS (bytes per second) volume of attack.
-	VolumeBpsLong int64 `json:"volumeBpsLong,omitempty,string"`
-	// VolumePps: Total PPS (packets per second) volume of attack. Deprecated -
-	// refer to volume_pps_long instead.
-	VolumePps int64 `json:"volumePps,omitempty"`
-	// VolumePpsLong: Total PPS (packets per second) volume of attack.
-	VolumePpsLong int64 `json:"volumePpsLong,omitempty,string"`
+	VolumeBps      int64  `json:"volumeBps,omitempty"`
+	VolumeBpsLong  int64  `json:"volumeBpsLong,omitempty,string"`
+	VolumePps      int64  `json:"volumePps,omitempty"`
+	VolumePpsLong  int64  `json:"volumePpsLong,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Classification") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -763,36 +604,17 @@ func (s Attack) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AttackExposure: An attack exposure contains the results of an attack path
-// simulation run.
 type AttackExposure struct {
-	// AttackExposureResult: The resource name of the attack path simulation result
-	// that contains the details regarding this attack exposure score. Example:
-	// `organizations/123/simulations/456/attackExposureResults/789`
-	AttackExposureResult string `json:"attackExposureResult,omitempty"`
-	// ExposedHighValueResourcesCount: The number of high value resources that are
-	// exposed as a result of this finding.
-	ExposedHighValueResourcesCount int64 `json:"exposedHighValueResourcesCount,omitempty"`
-	// ExposedLowValueResourcesCount: The number of high value resources that are
-	// exposed as a result of this finding.
-	ExposedLowValueResourcesCount int64 `json:"exposedLowValueResourcesCount,omitempty"`
-	// ExposedMediumValueResourcesCount: The number of medium value resources that
-	// are exposed as a result of this finding.
-	ExposedMediumValueResourcesCount int64 `json:"exposedMediumValueResourcesCount,omitempty"`
-	// LatestCalculationTime: The most recent time the attack exposure was updated
-	// on this finding.
-	LatestCalculationTime string `json:"latestCalculationTime,omitempty"`
-	// Score: A number between 0 (inclusive) and infinity that represents how
-	// important this finding is to remediate. The higher the score, the more
-	// important it is to remediate.
-	Score float64 `json:"score,omitempty"`
-	// State: What state this AttackExposure is in. This captures whether or not an
-	// attack exposure has been calculated or not.
-	//
+	AttackExposureResult             string  `json:"attackExposureResult,omitempty"`
+	ExposedHighValueResourcesCount   int64   `json:"exposedHighValueResourcesCount,omitempty"`
+	ExposedLowValueResourcesCount    int64   `json:"exposedLowValueResourcesCount,omitempty"`
+	ExposedMediumValueResourcesCount int64   `json:"exposedMediumValueResourcesCount,omitempty"`
+	LatestCalculationTime            string  `json:"latestCalculationTime,omitempty"`
+	Score                            float64 `json:"score,omitempty"`
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - The state is not specified.
-	//   "CALCULATED" - The attack exposure has been calculated.
-	//   "NOT_CALCULATED" - The attack exposure has not been calculated.
+	//   "STATE_UNSPECIFIED"
+	//   "CALCULATED"
+	//   "NOT_CALCULATED"
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AttackExposureResult") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -826,29 +648,9 @@ func (s *AttackExposure) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// AuditConfig: Specifies the audit configuration for a service. The
-// configuration determines which permission types are logged, and what
-// identities, if any, are exempted from logging. An AuditConfig must have one
-// or more AuditLogConfigs. If there are AuditConfigs for both `allServices`
-// and a specific service, the union of the two AuditConfigs is used for that
-// service: the log_types specified in each AuditConfig are enabled, and the
-// exempted_members in each AuditLogConfig are exempted. Example Policy with
-// multiple AuditConfigs: { "audit_configs": [ { "service": "allServices",
-// "audit_log_configs": [ { "log_type": "DATA_READ", "exempted_members": [
-// "user:jose@example.com" ] }, { "log_type": "DATA_WRITE" }, { "log_type":
-// "ADMIN_READ" } ] }, { "service": "sampleservice.googleapis.com",
-// "audit_log_configs": [ { "log_type": "DATA_READ" }, { "log_type":
-// "DATA_WRITE", "exempted_members": [ "user:aliya@example.com" ] } ] } ] } For
-// sampleservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ
-// logging. It also exempts `jose@example.com` from DATA_READ logging, and
-// `aliya@example.com` from DATA_WRITE logging.
 type AuditConfig struct {
-	// AuditLogConfigs: The configuration for logging of each type of permission.
 	AuditLogConfigs []*AuditLogConfig `json:"auditLogConfigs,omitempty"`
-	// Service: Specifies a service that will be enabled for audit logging. For
-	// example, `storage.googleapis.com`, `cloudsql.googleapis.com`. `allServices`
-	// is a special value that covers all services.
-	Service string `json:"service,omitempty"`
+	Service         string            `json:"service,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuditLogConfigs") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -867,22 +669,13 @@ func (s AuditConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AuditLogConfig: Provides the configuration for logging a type of
-// permissions. Example: { "audit_log_configs": [ { "log_type": "DATA_READ",
-// "exempted_members": [ "user:jose@example.com" ] }, { "log_type":
-// "DATA_WRITE" } ] } This enables 'DATA_READ' and 'DATA_WRITE' logging, while
-// exempting jose@example.com from DATA_READ logging.
 type AuditLogConfig struct {
-	// ExemptedMembers: Specifies the identities that do not cause logging for this
-	// type of permission. Follows the same format of Binding.members.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
-	// LogType: The log type that this config enables.
-	//
 	// Possible values:
-	//   "LOG_TYPE_UNSPECIFIED" - Default case. Should never be this.
-	//   "ADMIN_READ" - Admin reads. Example: CloudIAM getIamPolicy
-	//   "DATA_WRITE" - Data writes. Example: CloudSQL Users create
-	//   "DATA_READ" - Data reads. Example: CloudSQL Users list
+	//   "LOG_TYPE_UNSPECIFIED"
+	//   "ADMIN_READ"
+	//   "DATA_WRITE"
+	//   "DATA_READ"
 	LogType string `json:"logType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExemptedMembers") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -902,11 +695,8 @@ func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AwsAccount: An AWS account that is a member of an organization.
 type AwsAccount struct {
-	// Id: The unique identifier (ID) of the account, containing exactly 12 digits.
-	Id string `json:"id,omitempty"`
-	// Name: The friendly name of this account.
+	Id   string `json:"id,omitempty"`
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -926,16 +716,9 @@ func (s AwsAccount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AwsMetadata: AWS metadata associated with the resource, only applicable if
-// the finding's cloud provider is Amazon Web Services.
 type AwsMetadata struct {
-	// Account: The AWS account associated with the resource.
-	Account *AwsAccount `json:"account,omitempty"`
-	// Organization: The AWS organization associated with the resource.
-	Organization *AwsOrganization `json:"organization,omitempty"`
-	// OrganizationalUnits: A list of AWS organizational units associated with the
-	// resource, ordered from lowest level (closest to the account) to highest
-	// level.
+	Account             *AwsAccount              `json:"account,omitempty"`
+	Organization        *AwsOrganization         `json:"organization,omitempty"`
 	OrganizationalUnits []*AwsOrganizationalUnit `json:"organizationalUnits,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Account") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -955,14 +738,7 @@ func (s AwsMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AwsOrganization: An organization is a collection of accounts that are
-// centrally managed together using consolidated billing, organized
-// hierarchically with organizational units (OUs), and controlled with
-// policies.
 type AwsOrganization struct {
-	// Id: The unique identifier (ID) for the organization. The regex pattern for
-	// an organization ID string requires "o-" followed by from 10 to 32 lowercase
-	// letters or digits.
 	Id string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -982,17 +758,8 @@ func (s AwsOrganization) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AwsOrganizationalUnit: An Organizational Unit (OU) is a container of AWS
-// accounts within a root of an organization. Policies that are attached to an
-// OU apply to all accounts contained in that OU and in any child OUs.
 type AwsOrganizationalUnit struct {
-	// Id: The unique identifier (ID) associated with this OU. The regex pattern
-	// for an organizational unit ID string requires "ou-" followed by from 4 to 32
-	// lowercase letters or digits (the ID of the root that contains the OU). This
-	// string is followed by a second "-" dash and from 8 to 32 additional
-	// lowercase letters or digits. For example, "ou-ab12-cd34ef56".
-	Id string `json:"id,omitempty"`
-	// Name: The friendly name of the OU.
+	Id   string `json:"id,omitempty"`
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1012,13 +779,9 @@ func (s AwsOrganizationalUnit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AzureManagementGroup: Represents an Azure management group.
 type AzureManagementGroup struct {
-	// DisplayName: The display name of the Azure management group.
 	DisplayName string `json:"displayName,omitempty"`
-	// Id: The UUID of the Azure management group, for example,
-	// `20000000-0001-0000-0000-000000000000`.
-	Id string `json:"id,omitempty"`
+	Id          string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1037,19 +800,11 @@ func (s AzureManagementGroup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AzureMetadata: Azure metadata associated with the resource, only applicable
-// if the finding's cloud provider is Microsoft Azure.
 type AzureMetadata struct {
-	// ManagementGroups: A list of Azure management groups associated with the
-	// resource, ordered from lowest level (closest to the subscription) to highest
-	// level.
 	ManagementGroups []*AzureManagementGroup `json:"managementGroups,omitempty"`
-	// ResourceGroup: The Azure resource group associated with the resource.
-	ResourceGroup *AzureResourceGroup `json:"resourceGroup,omitempty"`
-	// Subscription: The Azure subscription associated with the resource.
-	Subscription *AzureSubscription `json:"subscription,omitempty"`
-	// Tenant: The Azure Entra tenant associated with the resource.
-	Tenant *AzureTenant `json:"tenant,omitempty"`
+	ResourceGroup    *AzureResourceGroup     `json:"resourceGroup,omitempty"`
+	Subscription     *AzureSubscription      `json:"subscription,omitempty"`
+	Tenant           *AzureTenant            `json:"tenant,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ManagementGroups") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1068,11 +823,8 @@ func (s AzureMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AzureResourceGroup: Represents an Azure resource group.
 type AzureResourceGroup struct {
-	// Id: The ID of the Azure resource group.
-	Id string `json:"id,omitempty"`
-	// Name: The name of the Azure resource group. This is not a UUID.
+	Id   string `json:"id,omitempty"`
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1092,13 +844,9 @@ func (s AzureResourceGroup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AzureSubscription: Represents an Azure subscription.
 type AzureSubscription struct {
-	// DisplayName: The display name of the Azure subscription.
 	DisplayName string `json:"displayName,omitempty"`
-	// Id: The UUID of the Azure subscription, for example,
-	// `291bba3f-e0a5-47bc-a099-3bdcb2a50a05`.
-	Id string `json:"id,omitempty"`
+	Id          string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1117,13 +865,9 @@ func (s AzureSubscription) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AzureTenant: Represents a Microsoft Entra tenant.
 type AzureTenant struct {
-	// DisplayName: The display name of the Azure tenant.
 	DisplayName string `json:"displayName,omitempty"`
-	// Id: The ID of the Microsoft Entra tenant, for example,
-	// "a11aaa11-aa11-1aa1-11aa-1aaa11a".
-	Id string `json:"id,omitempty"`
+	Id          string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1142,59 +886,17 @@ func (s AzureTenant) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BackupDisasterRecovery: Information related to Google Cloud Backup and DR
-// Service findings.
 type BackupDisasterRecovery struct {
-	// Appliance: The name of the Backup and DR appliance that captures, moves, and
-	// manages the lifecycle of backup data. For example, `backup-server-57137`.
-	Appliance string `json:"appliance,omitempty"`
-	// Applications: The names of Backup and DR applications. An application is a
-	// VM, database, or file system on a managed host monitored by a backup and
-	// recovery appliance. For example, `centos7-01-vol00`, `centos7-01-vol01`,
-	// `centos7-01-vol02`.
-	Applications []string `json:"applications,omitempty"`
-	// BackupCreateTime: The timestamp at which the Backup and DR backup was
-	// created.
-	BackupCreateTime string `json:"backupCreateTime,omitempty"`
-	// BackupTemplate: The name of a Backup and DR template which comprises one or
-	// more backup policies. See the Backup and DR documentation
-	// (https://cloud.google.com/backup-disaster-recovery/docs/concepts/backup-plan#temp)
-	// for more information. For example, `snap-ov`.
-	BackupTemplate string `json:"backupTemplate,omitempty"`
-	// BackupType: The backup type of the Backup and DR image. For example,
-	// `Snapshot`, `Remote Snapshot`, `OnVault`.
-	BackupType string `json:"backupType,omitempty"`
-	// Host: The name of a Backup and DR host, which is managed by the backup and
-	// recovery appliance and known to the management console. The host can be of
-	// type Generic (for example, Compute Engine, SQL Server, Oracle DB, SMB file
-	// system, etc.), vCenter, or an ESX server. See the Backup and DR
-	// documentation on hosts
-	// (https://cloud.google.com/backup-disaster-recovery/docs/configuration/manage-hosts-and-their-applications)
-	// for more information. For example, `centos7-01`.
-	Host string `json:"host,omitempty"`
-	// Policies: The names of Backup and DR policies that are associated with a
-	// template and that define when to run a backup, how frequently to run a
-	// backup, and how long to retain the backup image. For example, `onvaults`.
-	Policies []string `json:"policies,omitempty"`
-	// PolicyOptions: The names of Backup and DR advanced policy options of a
-	// policy applying to an application. See the Backup and DR documentation on
-	// policy options
-	// (https://cloud.google.com/backup-disaster-recovery/docs/create-plan/policy-settings).
-	// For example, `skipofflineappsincongrp, nounmap`.
-	PolicyOptions []string `json:"policyOptions,omitempty"`
-	// Profile: The name of the Backup and DR resource profile that specifies the
-	// storage media for backups of application and VM data. See the Backup and DR
-	// documentation on profiles
-	// (https://cloud.google.com/backup-disaster-recovery/docs/concepts/backup-plan#profile).
-	// For example, `GCP`.
-	Profile string `json:"profile,omitempty"`
-	// StoragePool: The name of the Backup and DR storage pool that the backup and
-	// recovery appliance is storing data in. The storage pool could be of type
-	// Cloud, Primary, Snapshot, or OnVault. See the Backup and DR documentation on
-	// storage pools
-	// (https://cloud.google.com/backup-disaster-recovery/docs/concepts/storage-pools).
-	// For example, `DiskPoolOne`.
-	StoragePool string `json:"storagePool,omitempty"`
+	Appliance        string   `json:"appliance,omitempty"`
+	Applications     []string `json:"applications,omitempty"`
+	BackupCreateTime string   `json:"backupCreateTime,omitempty"`
+	BackupTemplate   string   `json:"backupTemplate,omitempty"`
+	BackupType       string   `json:"backupType,omitempty"`
+	Host             string   `json:"host,omitempty"`
+	Policies         []string `json:"policies,omitempty"`
+	PolicyOptions    []string `json:"policyOptions,omitempty"`
+	Profile          string   `json:"profile,omitempty"`
+	StoragePool      string   `json:"storagePool,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Appliance") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1213,10 +915,7 @@ func (s BackupDisasterRecovery) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BigQueryDestination: The destination BigQuery dataset to export findings to.
 type BigQueryDestination struct {
-	// Dataset: Required. The relative resource name of the destination dataset, in
-	// the form projects/{projectId}/datasets/{datasetId}.
 	Dataset string `json:"dataset,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Dataset") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1236,87 +935,10 @@ func (s BigQueryDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
-	// Condition: The condition that is associated with this binding. If the
-	// condition evaluates to `true`, then this binding applies to the current
-	// request. If the condition evaluates to `false`, then this binding does not
-	// apply to the current request. However, a different role binding might grant
-	// the same role to one or more of the principals in this binding. To learn
-	// which resources support conditions in their IAM policies, see the IAM
-	// documentation
-	// (https://cloud.google.com/iam/help/conditions/resource-policies).
-	Condition *Expr `json:"condition,omitempty"`
-	// Members: Specifies the principals requesting access for a Google Cloud
-	// resource. `members` can have the following values: * `allUsers`: A special
-	// identifier that represents anyone who is on the internet; with or without a
-	// Google account. * `allAuthenticatedUsers`: A special identifier that
-	// represents anyone who is authenticated with a Google account or a service
-	// account. Does not include identities that come from external identity
-	// providers (IdPs) through identity federation. * `user:{emailid}`: An email
-	// address that represents a specific Google account. For example,
-	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address that
-	// represents a Google service account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`. *
-	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`: An
-	// identifier for a Kubernetes service account
-	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
-	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`. *
-	// `group:{emailid}`: An email address that represents a Google group. For
-	// example, `admins@example.com`. * `domain:{domain}`: The G Suite domain
-	// (primary) that represents all the users of that domain. For example,
-	// `google.com` or `example.com`. *
-	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/sub
-	// ject/{subject_attribute_value}`: A single identity in a workforce identity
-	// pool. *
-	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/
-	// group/{group_id}`: All workforce identities in a group. *
-	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/
-	// attribute.{attribute_name}/{attribute_value}`: All workforce identities with
-	// a specific attribute value. *
-	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/
-	// *`: All identities in a workforce identity pool. *
-	// `principal://iam.googleapis.com/projects/{project_number}/locations/global/wo
-	// rkloadIdentityPools/{pool_id}/subject/{subject_attribute_value}`: A single
-	// identity in a workload identity pool. *
-	// `principalSet://iam.googleapis.com/projects/{project_number}/locations/global
-	// /workloadIdentityPools/{pool_id}/group/{group_id}`: A workload identity pool
-	// group. *
-	// `principalSet://iam.googleapis.com/projects/{project_number}/locations/global
-	// /workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{attribute_value}
-	// `: All identities in a workload identity pool with a certain attribute. *
-	// `principalSet://iam.googleapis.com/projects/{project_number}/locations/global
-	// /workloadIdentityPools/{pool_id}/*`: All identities in a workload identity
-	// pool. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently deleted. For
-	// example, `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered user
-	// retains the role in the binding. *
-	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a service account that has been recently
-	// deleted. For example,
-	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the
-	// service account is undeleted, this value reverts to
-	// `serviceAccount:{emailid}` and the undeleted service account retains the
-	// role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email
-	// address (plus unique identifier) representing a Google group that has been
-	// recently deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If the group is recovered,
-	// this value reverts to `group:{emailid}` and the recovered group retains the
-	// role in the binding. *
-	// `deleted:principal://iam.googleapis.com/locations/global/workforcePools/{pool
-	// _id}/subject/{subject_attribute_value}`: Deleted single identity in a
-	// workforce identity pool. For example,
-	// `deleted:principal://iam.googleapis.com/locations/global/workforcePools/my-po
-	// ol-id/subject/my-subject-attribute-value`.
-	Members []string `json:"members,omitempty"`
-	// Role: Role that is assigned to the list of `members`, or principals. For
-	// example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an overview
-	// of the IAM roles and permissions, see the IAM documentation
-	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
-	// available pre-defined roles, see here
-	// (https://cloud.google.com/iam/docs/understanding-roles).
-	Role string `json:"role,omitempty"`
+	Condition *Expr    `json:"condition,omitempty"`
+	Members   []string `json:"members,omitempty"`
+	Role      string   `json:"role,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1335,18 +957,10 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
 }
 
-// Chokepoint: Contains details about a chokepoint, which is a resource or
-// resource group where high-risk attack paths converge, based on [attack path
-// simulations]
-// (https://cloud.google.com/security-command-center/docs/attack-exposure-learn#attack_path_simulations).
 type Chokepoint struct {
-	// RelatedFindings: List of resource names of findings associated with this
-	// chokepoint. For example, organizations/123/sources/456/findings/789. This
-	// list will have at most 100 findings.
 	RelatedFindings []string `json:"relatedFindings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RelatedFindings") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1366,29 +980,13 @@ func (s Chokepoint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CloudArmor: Fields related to Google Cloud Armor findings.
 type CloudArmor struct {
-	// AdaptiveProtection: Information about potential Layer 7 DDoS attacks
-	// identified by Google Cloud Armor Adaptive Protection
-	// (https://cloud.google.com/armor/docs/adaptive-protection-overview).
 	AdaptiveProtection *AdaptiveProtection `json:"adaptiveProtection,omitempty"`
-	// Attack: Information about DDoS attack volume and classification.
-	Attack *Attack `json:"attack,omitempty"`
-	// Duration: Duration of attack from the start until the current moment
-	// (updated every 5 minutes).
-	Duration string `json:"duration,omitempty"`
-	// Requests: Information about incoming requests evaluated by Google Cloud
-	// Armor security policies
-	// (https://cloud.google.com/armor/docs/security-policy-overview).
-	Requests *Requests `json:"requests,omitempty"`
-	// SecurityPolicy: Information about the Google Cloud Armor security policy
-	// (https://cloud.google.com/armor/docs/security-policy-overview) relevant to
-	// the finding.
-	SecurityPolicy *SecurityPolicy `json:"securityPolicy,omitempty"`
-	// ThreatVector: Distinguish between volumetric & protocol DDoS attack and
-	// application layer attacks. For example, "L3_4" for Layer 3 and Layer 4 DDoS
-	// attacks, or "L_7" for Layer 7 DDoS attacks.
-	ThreatVector string `json:"threatVector,omitempty"`
+	Attack             *Attack             `json:"attack,omitempty"`
+	Duration           string              `json:"duration,omitempty"`
+	Requests           *Requests           `json:"requests,omitempty"`
+	SecurityPolicy     *SecurityPolicy     `json:"securityPolicy,omitempty"`
+	ThreatVector       string              `json:"threatVector,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdaptiveProtection") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1407,21 +1005,15 @@ func (s CloudArmor) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CloudControl: CloudControl associated with the finding.
 type CloudControl struct {
-	// CloudControlName: Name of the CloudControl associated with the finding.
 	CloudControlName string `json:"cloudControlName,omitempty"`
-	// PolicyType: Policy type of the CloudControl
-	PolicyType string `json:"policyType,omitempty"`
-	// Type: Type of cloud control.
-	//
+	PolicyType       string `json:"policyType,omitempty"`
 	// Possible values:
-	//   "CLOUD_CONTROL_TYPE_UNSPECIFIED" - Unspecified.
-	//   "BUILT_IN" - Built in Cloud Control.
-	//   "CUSTOM" - Custom Cloud Control.
-	Type string `json:"type,omitempty"`
-	// Version: Version of the Cloud Control
-	Version int64 `json:"version,omitempty"`
+	//   "CLOUD_CONTROL_TYPE_UNSPECIFIED"
+	//   "BUILT_IN"
+	//   "CUSTOM"
+	Type    string `json:"type,omitempty"`
+	Version int64  `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudControlName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1440,23 +1032,13 @@ func (s CloudControl) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CloudDlpDataProfile: The data profile
-// (https://cloud.google.com/dlp/docs/data-profiles) associated with the
-// finding.
 type CloudDlpDataProfile struct {
-	// DataProfile: Name of the data profile, for example,
-	// `projects/123/locations/europe/tableProfiles/8383929`.
-	DataProfile string `json:"dataProfile,omitempty"`
-	// InfoTypes: Type of information detected by SDP. Info type includes name,
-	// version and sensitivity of the detected information type.
-	InfoTypes []*InfoType `json:"infoTypes,omitempty"`
-	// ParentType: The resource hierarchy level at which the data profile was
-	// generated.
-	//
+	DataProfile string      `json:"dataProfile,omitempty"`
+	InfoTypes   []*InfoType `json:"infoTypes,omitempty"`
 	// Possible values:
-	//   "PARENT_TYPE_UNSPECIFIED" - Unspecified parent type.
-	//   "ORGANIZATION" - Organization-level configurations.
-	//   "PROJECT" - Project-level configurations.
+	//   "PARENT_TYPE_UNSPECIFIED"
+	//   "ORGANIZATION"
+	//   "PROJECT"
 	ParentType string `json:"parentType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataProfile") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1476,23 +1058,11 @@ func (s CloudDlpDataProfile) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CloudDlpInspection: Details about the Cloud Data Loss Prevention (Cloud DLP)
-// inspection job (https://cloud.google.com/dlp/docs/concepts-job-triggers)
-// that produced the finding.
 type CloudDlpInspection struct {
-	// FullScan: Whether Cloud DLP scanned the complete resource or a sampled
-	// subset.
-	FullScan bool `json:"fullScan,omitempty"`
-	// InfoType: The type of information (or *infoType
-	// (https://cloud.google.com/dlp/docs/infotypes-reference)*) found, for
-	// example, `EMAIL_ADDRESS` or `STREET_ADDRESS`.
-	InfoType string `json:"infoType,omitempty"`
-	// InfoTypeCount: The number of times Cloud DLP found this infoType within this
-	// job and resource.
-	InfoTypeCount int64 `json:"infoTypeCount,omitempty,string"`
-	// InspectJob: Name of the inspection job, for example,
-	// `projects/123/locations/europe/dlpJobs/i-8383929`.
-	InspectJob string `json:"inspectJob,omitempty"`
+	FullScan      bool   `json:"fullScan,omitempty"`
+	InfoType      string `json:"infoType,omitempty"`
+	InfoTypeCount int64  `json:"infoTypeCount,omitempty,string"`
+	InspectJob    string `json:"inspectJob,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FullScan") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1511,21 +1081,11 @@ func (s CloudDlpInspection) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CloudLoggingEntry: Metadata taken from a Cloud Logging LogEntry
-// (https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry)
 type CloudLoggingEntry struct {
-	// InsertId: A unique identifier for the log entry.
-	InsertId string `json:"insertId,omitempty"`
-	// LogId: The type of the log (part of `log_name`. `log_name` is the resource
-	// name of the log to which this log entry belongs). For example:
-	// `cloudresourcemanager.googleapis.com/activity`. Note that this field is not
-	// URL-encoded, unlike the `LOG_ID` field in `LogEntry`.
-	LogId string `json:"logId,omitempty"`
-	// ResourceContainer: The organization, folder, or project of the monitored
-	// resource that produced this log entry.
+	InsertId          string `json:"insertId,omitempty"`
+	LogId             string `json:"logId,omitempty"`
 	ResourceContainer string `json:"resourceContainer,omitempty"`
-	// Timestamp: The time the event described by the log entry occurred.
-	Timestamp string `json:"timestamp,omitempty"`
+	Timestamp         string `json:"timestamp,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "InsertId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1544,16 +1104,10 @@ func (s CloudLoggingEntry) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Compliance: Contains compliance information about a security standard
-// indicating unmet recommendations.
 type Compliance struct {
-	// Ids: Policies within the standard or benchmark, for example, A.12.4.1
-	Ids []string `json:"ids,omitempty"`
-	// Standard: Industry-wide compliance standards or benchmarks, such as CIS,
-	// PCI, and OWASP.
-	Standard string `json:"standard,omitempty"`
-	// Version: Version of the standard or benchmark, for example, 1.1
-	Version string `json:"version,omitempty"`
+	Ids      []string `json:"ids,omitempty"`
+	Standard string   `json:"standard,omitempty"`
+	Version  string   `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Ids") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1572,17 +1126,10 @@ func (s Compliance) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ComplianceDetails: Compliance Details associated with the finding.
 type ComplianceDetails struct {
-	// CloudControl: CloudControl associated with the finding
-	CloudControl *CloudControl `json:"cloudControl,omitempty"`
-	// CloudControlDeploymentNames: Cloud Control Deployments associated with the
-	// finding. For example,
-	// organizations/123/locations/global/cloudControlDeployments/deploymentIdentifi
-	// er
-	CloudControlDeploymentNames []string `json:"cloudControlDeploymentNames,omitempty"`
-	// Frameworks: Details of Frameworks associated with the finding
-	Frameworks []*Framework `json:"frameworks,omitempty"`
+	CloudControl                *CloudControl `json:"cloudControl,omitempty"`
+	CloudControlDeploymentNames []string      `json:"cloudControlDeploymentNames,omitempty"`
+	Frameworks                  []*Framework  `json:"frameworks,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudControl") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1601,29 +1148,19 @@ func (s ComplianceDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Connection: Contains information about the IP connection associated with the
-// finding.
 type Connection struct {
-	// DestinationIp: Destination IP address. Not present for sockets that are
-	// listening and not connected.
-	DestinationIp string `json:"destinationIp,omitempty"`
-	// DestinationPort: Destination port. Not present for sockets that are
-	// listening and not connected.
-	DestinationPort int64 `json:"destinationPort,omitempty"`
-	// Protocol: IANA Internet Protocol Number such as TCP(6) and UDP(17).
-	//
+	DestinationIp   string `json:"destinationIp,omitempty"`
+	DestinationPort int64  `json:"destinationPort,omitempty"`
 	// Possible values:
-	//   "PROTOCOL_UNSPECIFIED" - Unspecified protocol (not HOPOPT).
-	//   "ICMP" - Internet Control Message Protocol.
-	//   "TCP" - Transmission Control Protocol.
-	//   "UDP" - User Datagram Protocol.
-	//   "GRE" - Generic Routing Encapsulation.
-	//   "ESP" - Encap Security Payload.
-	Protocol string `json:"protocol,omitempty"`
-	// SourceIp: Source IP address.
-	SourceIp string `json:"sourceIp,omitempty"`
-	// SourcePort: Source port.
-	SourcePort int64 `json:"sourcePort,omitempty"`
+	//   "PROTOCOL_UNSPECIFIED"
+	//   "ICMP"
+	//   "TCP"
+	//   "UDP"
+	//   "GRE"
+	//   "ESP"
+	Protocol   string `json:"protocol,omitempty"`
+	SourceIp   string `json:"sourceIp,omitempty"`
+	SourcePort int64  `json:"sourcePort,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DestinationIp") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1642,9 +1179,7 @@ func (s Connection) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Contact: The email address of a contact.
 type Contact struct {
-	// Email: An email address. For example, "person123@company.com".
 	Email string `json:"email,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Email") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1664,9 +1199,7 @@ func (s Contact) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ContactDetails: Details about specific contacts
 type ContactDetails struct {
-	// Contacts: A list of contacts
 	Contacts []*Contact `json:"contacts,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Contacts") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1686,21 +1219,12 @@ func (s ContactDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Container: Container associated with the finding.
 type Container struct {
-	// CreateTime: The time that the container was created.
-	CreateTime string `json:"createTime,omitempty"`
-	// ImageId: Optional container image ID, if provided by the container runtime.
-	// Uniquely identifies the container image launched using a container image
-	// digest.
-	ImageId string `json:"imageId,omitempty"`
-	// Labels: Container labels, as provided by the container runtime.
-	Labels []*Label `json:"labels,omitempty"`
-	// Name: Name of the container.
-	Name string `json:"name,omitempty"`
-	// Uri: Container image URI provided when configuring a pod or container. This
-	// string can identify a container image version using mutable tags.
-	Uri string `json:"uri,omitempty"`
+	CreateTime string   `json:"createTime,omitempty"`
+	ImageId    string   `json:"imageId,omitempty"`
+	Labels     []*Label `json:"labels,omitempty"`
+	Name       string   `json:"name,omitempty"`
+	Uri        string   `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1719,11 +1243,8 @@ func (s Container) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Control: Compliance control associated with the finding.
 type Control struct {
-	// ControlName: Name of the Control
 	ControlName string `json:"controlName,omitempty"`
-	// DisplayName: Display name of the control. For example, AU-02.
 	DisplayName string `json:"displayName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ControlName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1743,57 +1264,30 @@ func (s Control) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Cve: CVE stands for Common Vulnerabilities and Exposures. Information from
-// the CVE record (https://www.cve.org/ResourcesSupport/Glossary) that
-// describes this vulnerability.
 type Cve struct {
-	// Cvssv3: Describe Common Vulnerability Scoring System specified at
-	// https://www.first.org/cvss/v3.1/specification-document
-	Cvssv3 *Cvssv3 `json:"cvssv3,omitempty"`
-	// ExploitReleaseDate: Date the first publicly available exploit or PoC was
-	// released.
-	ExploitReleaseDate string `json:"exploitReleaseDate,omitempty"`
-	// ExploitationActivity: The exploitation activity of the vulnerability in the
-	// wild.
-	//
+	Cvssv3             *Cvssv3 `json:"cvssv3,omitempty"`
+	ExploitReleaseDate string  `json:"exploitReleaseDate,omitempty"`
 	// Possible values:
-	//   "EXPLOITATION_ACTIVITY_UNSPECIFIED" - Invalid or empty value.
-	//   "WIDE" - Exploitation has been reported or confirmed to widely occur.
-	//   "CONFIRMED" - Limited reported or confirmed exploitation activities.
-	//   "AVAILABLE" - Exploit is publicly available.
-	//   "ANTICIPATED" - No known exploitation activity, but has a high potential
-	// for exploitation.
-	//   "NO_KNOWN" - No known exploitation activity.
-	ExploitationActivity string `json:"exploitationActivity,omitempty"`
-	// FirstExploitationDate: Date of the earliest known exploitation.
+	//   "EXPLOITATION_ACTIVITY_UNSPECIFIED"
+	//   "WIDE"
+	//   "CONFIRMED"
+	//   "AVAILABLE"
+	//   "ANTICIPATED"
+	//   "NO_KNOWN"
+	ExploitationActivity  string `json:"exploitationActivity,omitempty"`
 	FirstExploitationDate string `json:"firstExploitationDate,omitempty"`
-	// Id: The unique identifier for the vulnerability. e.g. CVE-2021-34527
-	Id string `json:"id,omitempty"`
-	// Impact: The potential impact of the vulnerability if it was to be exploited.
-	//
+	Id                    string `json:"id,omitempty"`
 	// Possible values:
-	//   "RISK_RATING_UNSPECIFIED" - Invalid or empty value.
-	//   "LOW" - Exploitation would have little to no security impact.
-	//   "MEDIUM" - Exploitation would enable attackers to perform activities, or
-	// could allow attackers to have a direct impact, but would require additional
-	// steps.
-	//   "HIGH" - Exploitation would enable attackers to have a notable direct
-	// impact without needing to overcome any major mitigating factors.
-	//   "CRITICAL" - Exploitation would fundamentally undermine the security of
-	// affected systems, enable actors to perform significant attacks with minimal
-	// effort, with little to no mitigating factors to overcome.
-	Impact string `json:"impact,omitempty"`
-	// ObservedInTheWild: Whether or not the vulnerability has been observed in the
-	// wild.
-	ObservedInTheWild bool `json:"observedInTheWild,omitempty"`
-	// References: Additional information about the CVE. e.g.
-	// https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-34527
-	References []*Reference `json:"references,omitempty"`
-	// UpstreamFixAvailable: Whether upstream fix is available for the CVE.
-	UpstreamFixAvailable bool `json:"upstreamFixAvailable,omitempty"`
-	// ZeroDay: Whether or not the vulnerability was zero day when the finding was
-	// published.
-	ZeroDay bool `json:"zeroDay,omitempty"`
+	//   "RISK_RATING_UNSPECIFIED"
+	//   "LOW"
+	//   "MEDIUM"
+	//   "HIGH"
+	//   "CRITICAL"
+	Impact               string       `json:"impact,omitempty"`
+	ObservedInTheWild    bool         `json:"observedInTheWild,omitempty"`
+	References           []*Reference `json:"references,omitempty"`
+	UpstreamFixAvailable bool         `json:"upstreamFixAvailable,omitempty"`
+	ZeroDay              bool         `json:"zeroDay,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Cvssv3") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1812,109 +1306,53 @@ func (s Cve) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Cvssv3: Common Vulnerability Scoring System version 3.
 type Cvssv3 struct {
-	// AttackComplexity: This metric describes the conditions beyond the attacker's
-	// control that must exist in order to exploit the vulnerability.
-	//
 	// Possible values:
-	//   "ATTACK_COMPLEXITY_UNSPECIFIED" - Invalid value.
-	//   "ATTACK_COMPLEXITY_LOW" - Specialized access conditions or extenuating
-	// circumstances do not exist. An attacker can expect repeatable success when
-	// attacking the vulnerable component.
-	//   "ATTACK_COMPLEXITY_HIGH" - A successful attack depends on conditions
-	// beyond the attacker's control. That is, a successful attack cannot be
-	// accomplished at will, but requires the attacker to invest in some measurable
-	// amount of effort in preparation or execution against the vulnerable
-	// component before a successful attack can be expected.
+	//   "ATTACK_COMPLEXITY_UNSPECIFIED"
+	//   "ATTACK_COMPLEXITY_LOW"
+	//   "ATTACK_COMPLEXITY_HIGH"
 	AttackComplexity string `json:"attackComplexity,omitempty"`
-	// AttackVector: Base Metrics Represents the intrinsic characteristics of a
-	// vulnerability that are constant over time and across user environments. This
-	// metric reflects the context by which vulnerability exploitation is possible.
-	//
 	// Possible values:
-	//   "ATTACK_VECTOR_UNSPECIFIED" - Invalid value.
-	//   "ATTACK_VECTOR_NETWORK" - The vulnerable component is bound to the network
-	// stack and the set of possible attackers extends beyond the other options
-	// listed below, up to and including the entire Internet.
-	//   "ATTACK_VECTOR_ADJACENT" - The vulnerable component is bound to the
-	// network stack, but the attack is limited at the protocol level to a
-	// logically adjacent topology.
-	//   "ATTACK_VECTOR_LOCAL" - The vulnerable component is not bound to the
-	// network stack and the attacker's path is via read/write/execute
-	// capabilities.
-	//   "ATTACK_VECTOR_PHYSICAL" - The attack requires the attacker to physically
-	// touch or manipulate the vulnerable component.
+	//   "ATTACK_VECTOR_UNSPECIFIED"
+	//   "ATTACK_VECTOR_NETWORK"
+	//   "ATTACK_VECTOR_ADJACENT"
+	//   "ATTACK_VECTOR_LOCAL"
+	//   "ATTACK_VECTOR_PHYSICAL"
 	AttackVector string `json:"attackVector,omitempty"`
-	// AvailabilityImpact: This metric measures the impact to the availability of
-	// the impacted component resulting from a successfully exploited
-	// vulnerability.
-	//
 	// Possible values:
-	//   "IMPACT_UNSPECIFIED" - Invalid value.
-	//   "IMPACT_HIGH" - High impact.
-	//   "IMPACT_LOW" - Low impact.
-	//   "IMPACT_NONE" - No impact.
-	AvailabilityImpact string `json:"availabilityImpact,omitempty"`
-	// BaseScore: The base score is a function of the base metric scores.
-	BaseScore float64 `json:"baseScore,omitempty"`
-	// ConfidentialityImpact: This metric measures the impact to the
-	// confidentiality of the information resources managed by a software component
-	// due to a successfully exploited vulnerability.
-	//
+	//   "IMPACT_UNSPECIFIED"
+	//   "IMPACT_HIGH"
+	//   "IMPACT_LOW"
+	//   "IMPACT_NONE"
+	AvailabilityImpact string  `json:"availabilityImpact,omitempty"`
+	BaseScore          float64 `json:"baseScore,omitempty"`
 	// Possible values:
-	//   "IMPACT_UNSPECIFIED" - Invalid value.
-	//   "IMPACT_HIGH" - High impact.
-	//   "IMPACT_LOW" - Low impact.
-	//   "IMPACT_NONE" - No impact.
+	//   "IMPACT_UNSPECIFIED"
+	//   "IMPACT_HIGH"
+	//   "IMPACT_LOW"
+	//   "IMPACT_NONE"
 	ConfidentialityImpact string `json:"confidentialityImpact,omitempty"`
-	// IntegrityImpact: This metric measures the impact to integrity of a
-	// successfully exploited vulnerability.
-	//
 	// Possible values:
-	//   "IMPACT_UNSPECIFIED" - Invalid value.
-	//   "IMPACT_HIGH" - High impact.
-	//   "IMPACT_LOW" - Low impact.
-	//   "IMPACT_NONE" - No impact.
+	//   "IMPACT_UNSPECIFIED"
+	//   "IMPACT_HIGH"
+	//   "IMPACT_LOW"
+	//   "IMPACT_NONE"
 	IntegrityImpact string `json:"integrityImpact,omitempty"`
-	// PrivilegesRequired: This metric describes the level of privileges an
-	// attacker must possess before successfully exploiting the vulnerability.
-	//
 	// Possible values:
-	//   "PRIVILEGES_REQUIRED_UNSPECIFIED" - Invalid value.
-	//   "PRIVILEGES_REQUIRED_NONE" - The attacker is unauthorized prior to attack,
-	// and therefore does not require any access to settings or files of the
-	// vulnerable system to carry out an attack.
-	//   "PRIVILEGES_REQUIRED_LOW" - The attacker requires privileges that provide
-	// basic user capabilities that could normally affect only settings and files
-	// owned by a user. Alternatively, an attacker with Low privileges has the
-	// ability to access only non-sensitive resources.
-	//   "PRIVILEGES_REQUIRED_HIGH" - The attacker requires privileges that provide
-	// significant (e.g., administrative) control over the vulnerable component
-	// allowing access to component-wide settings and files.
+	//   "PRIVILEGES_REQUIRED_UNSPECIFIED"
+	//   "PRIVILEGES_REQUIRED_NONE"
+	//   "PRIVILEGES_REQUIRED_LOW"
+	//   "PRIVILEGES_REQUIRED_HIGH"
 	PrivilegesRequired string `json:"privilegesRequired,omitempty"`
-	// Scope: The Scope metric captures whether a vulnerability in one vulnerable
-	// component impacts resources in components beyond its security scope.
-	//
 	// Possible values:
-	//   "SCOPE_UNSPECIFIED" - Invalid value.
-	//   "SCOPE_UNCHANGED" - An exploited vulnerability can only affect resources
-	// managed by the same security authority.
-	//   "SCOPE_CHANGED" - An exploited vulnerability can affect resources beyond
-	// the security scope managed by the security authority of the vulnerable
-	// component.
+	//   "SCOPE_UNSPECIFIED"
+	//   "SCOPE_UNCHANGED"
+	//   "SCOPE_CHANGED"
 	Scope string `json:"scope,omitempty"`
-	// UserInteraction: This metric captures the requirement for a human user,
-	// other than the attacker, to participate in the successful compromise of the
-	// vulnerable component.
-	//
 	// Possible values:
-	//   "USER_INTERACTION_UNSPECIFIED" - Invalid value.
-	//   "USER_INTERACTION_NONE" - The vulnerable system can be exploited without
-	// interaction from any user.
-	//   "USER_INTERACTION_REQUIRED" - Successful exploitation of this
-	// vulnerability requires a user to take some action before the vulnerability
-	// can be exploited.
+	//   "USER_INTERACTION_UNSPECIFIED"
+	//   "USER_INTERACTION_NONE"
+	//   "USER_INTERACTION_REQUIRED"
 	UserInteraction string `json:"userInteraction,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AttackComplexity") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1948,13 +1386,8 @@ func (s *Cvssv3) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Cwe: CWE stands for Common Weakness Enumeration. Information about this
-// weakness, as described by CWE (https://cwe.mitre.org/).
 type Cwe struct {
-	// Id: The CWE identifier, e.g. CWE-94
-	Id string `json:"id,omitempty"`
-	// References: Any reference to the details on the CWE, for example,
-	// https://cwe.mitre.org/data/definitions/94.html
+	Id         string       `json:"id,omitempty"`
 	References []*Reference `json:"references,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1974,24 +1407,15 @@ func (s Cwe) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DataAccessEvent: Details about a data access attempt made by a principal not
-// authorized under applicable data security policy.
 type DataAccessEvent struct {
-	// EventId: Unique identifier for data access event.
-	EventId string `json:"eventId,omitempty"`
-	// EventTime: Timestamp of data access event.
+	EventId   string `json:"eventId,omitempty"`
 	EventTime string `json:"eventTime,omitempty"`
-	// Operation: The operation performed by the principal to access the data.
-	//
 	// Possible values:
-	//   "OPERATION_UNSPECIFIED" - The operation is unspecified.
-	//   "READ" - Represents a read operation.
-	//   "MOVE" - Represents a move operation.
-	//   "COPY" - Represents a copy operation.
-	Operation string `json:"operation,omitempty"`
-	// PrincipalEmail: The email address of the principal that accessed the data.
-	// The principal could be a user account, service account, Google group, or
-	// other.
+	//   "OPERATION_UNSPECIFIED"
+	//   "READ"
+	//   "MOVE"
+	//   "COPY"
+	Operation      string `json:"operation,omitempty"`
 	PrincipalEmail string `json:"principalEmail,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EventId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2011,28 +1435,16 @@ func (s DataAccessEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DataFlowEvent: Details about a data flow event, in which either the data is
-// moved to or is accessed from a non-compliant geo-location, as defined in the
-// applicable data security policy.
 type DataFlowEvent struct {
-	// EventId: Unique identifier for data flow event.
-	EventId string `json:"eventId,omitempty"`
-	// EventTime: Timestamp of data flow event.
+	EventId   string `json:"eventId,omitempty"`
 	EventTime string `json:"eventTime,omitempty"`
-	// Operation: The operation performed by the principal for the data flow event.
-	//
 	// Possible values:
-	//   "OPERATION_UNSPECIFIED" - The operation is unspecified.
-	//   "READ" - Represents a read operation.
-	//   "MOVE" - Represents a move operation.
-	//   "COPY" - Represents a copy operation.
-	Operation string `json:"operation,omitempty"`
-	// PrincipalEmail: The email address of the principal that initiated the data
-	// flow event. The principal could be a user account, service account, Google
-	// group, or other.
-	PrincipalEmail string `json:"principalEmail,omitempty"`
-	// ViolatedLocation: Non-compliant location of the principal or the data
-	// destination.
+	//   "OPERATION_UNSPECIFIED"
+	//   "READ"
+	//   "MOVE"
+	//   "COPY"
+	Operation        string `json:"operation,omitempty"`
+	PrincipalEmail   string `json:"principalEmail,omitempty"`
 	ViolatedLocation string `json:"violatedLocation,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EventId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2052,47 +1464,17 @@ func (s DataFlowEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DataRetentionDeletionEvent: Details about data retention deletion
-// violations, in which the data is non-compliant based on their retention or
-// deletion time, as defined in the applicable data security policy. The Data
-// Retention Deletion (DRD) control is a control of the DSPM (Data Security
-// Posture Management) suite that enables organizations to manage data
-// retention and deletion policies in compliance with regulations, such as GDPR
-// and CRPA. DRD supports two primary policy types: maximum storage length (max
-// TTL) and minimum storage length (min TTL). Both are aimed at helping
-// organizations meet regulatory and data management commitments.
 type DataRetentionDeletionEvent struct {
-	// DataObjectCount: Number of objects that violated the policy for this
-	// resource. If the number is less than 1,000, then the value of this field is
-	// the exact number. If the number of objects that violated the policy is
-	// greater than or equal to 1,000, then the value of this field is 1000.
-	DataObjectCount int64 `json:"dataObjectCount,omitempty,string"`
-	// EventDetectionTime: Timestamp indicating when the event was detected.
+	DataObjectCount    int64  `json:"dataObjectCount,omitempty,string"`
 	EventDetectionTime string `json:"eventDetectionTime,omitempty"`
-	// EventType: Type of the DRD event.
-	//
 	// Possible values:
-	//   "EVENT_TYPE_UNSPECIFIED" - Unspecified event type.
-	//   "EVENT_TYPE_MAX_TTL_EXCEEDED" - Deprecated: This field is pending removal.
-	// Use EVENT_TYPE_MAX_TTL_FROM_CREATION or
-	// EVENT_TYPE_MAX_TTL_FROM_LAST_MODIFICATION instead.
-	//   "EVENT_TYPE_MAX_TTL_FROM_CREATION" - Max TTL from the asset's creation
-	// time.
-	//   "EVENT_TYPE_MAX_TTL_FROM_LAST_MODIFICATION" - Max TTL from the asset's
-	// last modification time.
-	//   "EVENT_TYPE_MIN_TTL_FROM_CREATION" - Min TTL from the asset's creation
-	// time.
-	EventType string `json:"eventType,omitempty"`
-	// MaxRetentionAllowed: Maximum duration of retention allowed from the DRD
-	// control. This comes from the DRD control where users set a max TTL for their
-	// data. For example, suppose that a user sets the max TTL for a Cloud Storage
-	// bucket to 90 days. However, an object in that bucket is 100 days old. In
-	// this case, a DataRetentionDeletionEvent will be generated for that Cloud
-	// Storage bucket, and the max_retention_allowed is 90 days.
+	//   "EVENT_TYPE_UNSPECIFIED"
+	//   "EVENT_TYPE_MAX_TTL_EXCEEDED"
+	//   "EVENT_TYPE_MAX_TTL_FROM_CREATION"
+	//   "EVENT_TYPE_MAX_TTL_FROM_LAST_MODIFICATION"
+	//   "EVENT_TYPE_MIN_TTL_FROM_CREATION"
+	EventType           string `json:"eventType,omitempty"`
 	MaxRetentionAllowed string `json:"maxRetentionAllowed,omitempty"`
-	// MinRetentionAllowed: Min duration of retention allowed from the DSPM
-	// retention control. This field is only populated when event type is set to
-	// EVENT_TYPE_MIN_TTL_FROM_CREATION.
 	MinRetentionAllowed string `json:"minRetentionAllowed,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataObjectCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2112,37 +1494,13 @@ func (s DataRetentionDeletionEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Database: Represents database access information, such as queries. A
-// database may be a sub-resource of an instance (as in the case of Cloud SQL
-// instances or Cloud Spanner instances), or the database instance itself. Some
-// database resources might not have the full resource name
-// (https://google.aip.dev/122#full-resource-names) populated because these
-// resource types, such as Cloud SQL databases, are not yet supported by Cloud
-// Asset Inventory. In these cases only the display name is provided.
 type Database struct {
-	// DisplayName: The human-readable name of the database that the user connected
-	// to.
-	DisplayName string `json:"displayName,omitempty"`
-	// Grantees: The target usernames, roles, or groups of an SQL privilege grant,
-	// which is not an IAM policy change.
-	Grantees []string `json:"grantees,omitempty"`
-	// Name: Some database resources may not have the full resource name
-	// (https://google.aip.dev/122#full-resource-names) populated because these
-	// resource types are not yet supported by Cloud Asset Inventory (e.g. Cloud
-	// SQL databases). In these cases only the display name will be provided. The
-	// full resource name (https://google.aip.dev/122#full-resource-names) of the
-	// database that the user connected to, if it is supported by Cloud Asset
-	// Inventory.
-	Name string `json:"name,omitempty"`
-	// Query: The SQL statement that is associated with the database access.
-	Query string `json:"query,omitempty"`
-	// UserName: The username used to connect to the database. The username might
-	// not be an IAM principal and does not have a set format.
-	UserName string `json:"userName,omitempty"`
-	// Version: The version of the database, for example, POSTGRES_14. See the
-	// complete list
-	// (https://cloud.google.com/sql/docs/mysql/admin-api/rest/v1/SqlDatabaseVersion).
-	Version string `json:"version,omitempty"`
+	DisplayName string   `json:"displayName,omitempty"`
+	Grantees    []string `json:"grantees,omitempty"`
+	Name        string   `json:"name,omitempty"`
+	Query       string   `json:"query,omitempty"`
+	UserName    string   `json:"userName,omitempty"`
+	Version     string   `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2161,16 +1519,10 @@ func (s Database) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Dataset: Vertex AI dataset associated with the finding.
 type Dataset struct {
-	// DisplayName: The user defined display name of dataset, e.g. plants-dataset
 	DisplayName string `json:"displayName,omitempty"`
-	// Name: Resource name of the dataset, e.g.
-	// projects/{project}/locations/{location}/datasets/2094040236064505856
-	Name string `json:"name,omitempty"`
-	// Source: Data source, such as BigQuery source URI, e.g.
-	// bq://scc-nexus-test.AIPPtest.gsod
-	Source string `json:"source,omitempty"`
+	Name        string `json:"name,omitempty"`
+	Source      string `json:"source,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2189,9 +1541,7 @@ func (s Dataset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Denied: Denied IP rule.
 type Denied struct {
-	// IpRules: Optional. Optional list of denied IP rules.
 	IpRules []*IpRule `json:"ipRules,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IpRules") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2211,13 +1561,8 @@ func (s Denied) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Detection: Memory hash detection contributing to the binary family match.
 type Detection struct {
-	// Binary: The name of the binary associated with the memory hash signature
-	// detection.
-	Binary string `json:"binary,omitempty"`
-	// PercentPagesMatched: The percentage of memory page hashes in the signature
-	// that were matched.
+	Binary              string  `json:"binary,omitempty"`
 	PercentPagesMatched float64 `json:"percentPagesMatched,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Binary") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2251,31 +1596,19 @@ func (s *Detection) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// DiscoveredWorkload: Represents discovered, customer managed workload that is
-// not registered with the respective GCP service.
 type DiscoveredWorkload struct {
-	// Confidence: The confidence in detection of this workload.
-	//
 	// Possible values:
-	//   "CONFIDENCE_UNSPECIFIED" - Unspecified confidence level.
-	//   "CONFIDENCE_HIGH" - High confidence in detection of a workload.
-	Confidence string `json:"confidence,omitempty"`
-	// DetectedRelevantHardware: A boolean flag set to true if associated hardware
-	// strongly predicts the workload type.
-	DetectedRelevantHardware bool `json:"detectedRelevantHardware,omitempty"`
-	// DetectedRelevantKeywords: A boolean flag set to true if associated keywords
-	// strongly predict the workload type.
-	DetectedRelevantKeywords bool `json:"detectedRelevantKeywords,omitempty"`
-	// DetectedRelevantPackages: A boolean flag set to true if installed packages
-	// strongly predict the workload type.
-	DetectedRelevantPackages bool `json:"detectedRelevantPackages,omitempty"`
-	// WorkloadType: The type of workload.
-	//
+	//   "CONFIDENCE_UNSPECIFIED"
+	//   "CONFIDENCE_HIGH"
+	Confidence               string `json:"confidence,omitempty"`
+	DetectedRelevantHardware bool   `json:"detectedRelevantHardware,omitempty"`
+	DetectedRelevantKeywords bool   `json:"detectedRelevantKeywords,omitempty"`
+	DetectedRelevantPackages bool   `json:"detectedRelevantPackages,omitempty"`
 	// Possible values:
-	//   "WORKLOAD_TYPE_UNSPECIFIED" - Unspecified workload type
-	//   "MCP_SERVER" - A workload of type MCP Server
-	//   "AI_INFERENCE" - A workload of type AI Inference
-	//   "AGENT" - A workload of type LLM Agent
+	//   "WORKLOAD_TYPE_UNSPECIFIED"
+	//   "MCP_SERVER"
+	//   "AI_INFERENCE"
+	//   "AGENT"
 	WorkloadType string `json:"workloadType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2295,11 +1628,7 @@ func (s DiscoveredWorkload) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Disk: Contains information about the disk associated with the finding.
 type Disk struct {
-	// Name: The name of the disk, for example,
-	// "https://www.googleapis.com/compute/v1/projects/{project-id}/zones/{zone-id}/
-	// disks/{disk-id}".
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2319,15 +1648,9 @@ func (s Disk) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DiskPath: Path of the file in terms of underlying disk/partition
-// identifiers.
 type DiskPath struct {
-	// PartitionUuid: UUID of the partition (format
-	// https://wiki.archlinux.org/title/persistent_block_device_naming#by-uuid)
 	PartitionUuid string `json:"partitionUuid,omitempty"`
-	// RelativePath: Relative path of the file in the partition as a JSON encoded
-	// string. Example: /home/user1/executable_file.sh
-	RelativePath string `json:"relativePath,omitempty"`
+	RelativePath  string `json:"relativePath,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PartitionUuid") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2346,15 +1669,8 @@ func (s DiskPath) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DynamicMuteRecord: The record of a dynamic mute rule that matches the
-// finding.
 type DynamicMuteRecord struct {
-	// MatchTime: When the dynamic mute rule first matched the finding.
-	MatchTime string `json:"matchTime,omitempty"`
-	// MuteConfig: The relative resource name of the mute rule, represented by a
-	// mute config, that created this record, for example
-	// `organizations/123/muteConfigs/mymuteconfig` or
-	// `organizations/123/locations/global/muteConfigs/mymuteconfig`.
+	MatchTime  string `json:"matchTime,omitempty"`
 	MuteConfig string `json:"muteConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MatchTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2374,22 +1690,14 @@ func (s DynamicMuteRecord) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use it as
-// the request or the response type of an API method. For instance: service Foo
-// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// EnvironmentVariable: A name-value pair representing an environment variable
-// used in an operating system process.
 type EnvironmentVariable struct {
-	// Name: Environment variable name as a JSON encoded string.
 	Name string `json:"name,omitempty"`
-	// Val: Environment variable value as a JSON encoded string.
-	Val string `json:"val,omitempty"`
+	Val  string `json:"val,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -2408,17 +1716,9 @@ func (s EnvironmentVariable) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ExfilResource: Resource where data was exfiltrated from or exfiltrated to.
 type ExfilResource struct {
-	// Components: Subcomponents of the asset that was exfiltrated, like URIs used
-	// during exfiltration, table names, databases, and filenames. For example,
-	// multiple tables might have been exfiltrated from the same Cloud SQL
-	// instance, or multiple files might have been exfiltrated from the same Cloud
-	// Storage bucket.
 	Components []string `json:"components,omitempty"`
-	// Name: The resource's full resource name
-	// (https://cloud.google.com/apis/design/resource_names#full_resource_name).
-	Name string `json:"name,omitempty"`
+	Name       string   `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Components") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2437,20 +1737,10 @@ func (s ExfilResource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Exfiltration: Exfiltration represents a data exfiltration attempt from one
-// or more sources to one or more targets. The `sources` attribute lists the
-// sources of the exfiltrated data. The `targets` attribute lists the
-// destinations the data was copied to.
 type Exfiltration struct {
-	// Sources: If there are multiple sources, then the data is considered "joined"
-	// between them. For instance, BigQuery can join multiple tables, and each
-	// table would be considered a source.
-	Sources []*ExfilResource `json:"sources,omitempty"`
-	// Targets: If there are multiple targets, each target would get a complete
-	// copy of the "joined" source data.
-	Targets []*ExfilResource `json:"targets,omitempty"`
-	// TotalExfiltratedBytes: Total exfiltrated bytes processed for the entire job.
-	TotalExfiltratedBytes int64 `json:"totalExfiltratedBytes,omitempty,string"`
+	Sources               []*ExfilResource `json:"sources,omitempty"`
+	Targets               []*ExfilResource `json:"targets,omitempty"`
+	TotalExfiltratedBytes int64            `json:"totalExfiltratedBytes,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Sources") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -2469,13 +1759,9 @@ func (s Exfiltration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ExportFindingsMetadata: The LRO metadata for a ExportFindings request.
 type ExportFindingsMetadata struct {
-	// BigQueryDestination: Required. The destination BigQuery dataset to export
-	// findings to.
 	BigQueryDestination *BigQueryDestination `json:"bigQueryDestination,omitempty"`
-	// ExportStartTime: Optional. Timestamp at which export was started
-	ExportStartTime string `json:"exportStartTime,omitempty"`
+	ExportStartTime     string               `json:"exportStartTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BigQueryDestination") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2494,41 +1780,14 @@ func (s ExportFindingsMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ExportFindingsResponse: The response to a ExportFindings request. Contains
-// the LRO information.
 type ExportFindingsResponse struct {
 }
 
-// Expr: Represents a textual expression in the Common Expression Language
-// (CEL) syntax. CEL is a C-like expression language. The syntax and semantics
-// of CEL are documented at https://github.com/google/cel-spec. Example
-// (Comparison): title: "Summary size limit" description: "Determines if a
-// summary is less than 100 chars" expression: "document.summary.size() < 100"
-// Example (Equality): title: "Requestor is owner" description: "Determines if
-// requestor is the document owner" expression: "document.owner ==
-// request.auth.claims.email" Example (Logic): title: "Public documents"
-// description: "Determine whether the document should be publicly visible"
-// expression: "document.type != 'private' && document.type != 'internal'"
-// Example (Data Manipulation): title: "Notification string" description:
-// "Create a notification string with a timestamp." expression: "'New message
-// received at ' + string(document.create_time)" The exact variables and
-// functions that may be referenced within an expression are determined by the
-// service that evaluates it. See the service documentation for additional
-// information.
 type Expr struct {
-	// Description: Optional. Description of the expression. This is a longer text
-	// which describes the expression, e.g. when hovered over it in a UI.
 	Description string `json:"description,omitempty"`
-	// Expression: Textual representation of an expression in Common Expression
-	// Language syntax.
-	Expression string `json:"expression,omitempty"`
-	// Location: Optional. String indicating the location of the expression for
-	// error reporting, e.g. a file name and a position in the file.
-	Location string `json:"location,omitempty"`
-	// Title: Optional. Title for the expression, i.e. a short string describing
-	// its purpose. This can be used e.g. in UIs which allow to enter the
-	// expression.
-	Title string `json:"title,omitempty"`
+	Expression  string `json:"expression,omitempty"`
+	Location    string `json:"location,omitempty"`
+	Title       string `json:"title,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2547,88 +1806,27 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ExternalExposure: Details about the externally exposed resource associated
-// with the finding.
 type ExternalExposure struct {
-	// BackendBucket: The full resource name of the load balancer backend bucket,
-	// for example,
-	// "//compute.googleapis.com/projects/{project-id}/global/backendBuckets/{name}"
-	BackendBucket string `json:"backendBucket,omitempty"`
-	// BackendService: The full resource name of load balancer backend service, for
-	// example,
-	// "//compute.googleapis.com/projects/{project-id}/global/backendServices/{name}
-	// ".
-	BackendService string `json:"backendService,omitempty"`
-	// ExposedApplication: The name and version of the exposed web application, for
-	// example, "Jenkins 2.184".
-	ExposedApplication string `json:"exposedApplication,omitempty"`
-	// ExposedEndpoint: The resource which is running the exposed service, for
-	// example,
-	// "//compute.googleapis.com/projects/{project-id}/zones/{zone}/instances/{insta
-	// nce}.”
-	ExposedEndpoint string `json:"exposedEndpoint,omitempty"`
-	// ExposedService: The name and version of the service, for example, "Jupyter
-	// Notebook 6.14.0".
-	ExposedService string `json:"exposedService,omitempty"`
-	// ForwardingRule: The full resource name of the forwarding rule, for example,
-	// "//compute.googleapis.com/projects/{project-id}/global/forwardingRules/{forwa
-	// rding-rule-name}".
-	ForwardingRule string `json:"forwardingRule,omitempty"`
-	// HostnameUri: Hostname of the exposed application, for example,
-	// "https://test-app.a.run.app/"
-	HostnameUri string `json:"hostnameUri,omitempty"`
-	// HttpResponse: The http response returned by the web application.
-	HttpResponse []*HttpResponse `json:"httpResponse,omitempty"`
-	// InstanceGroup: The full resource name of the instance group, for example,
-	// "//compute.googleapis.com/projects/{project-id}/global/instanceGroups/{name}"
-	// .
-	InstanceGroup string `json:"instanceGroup,omitempty"`
-	// InternalBackendService: The full resource name of load balancer backend
-	// service in the internal project having resource exposed via PSC, for
-	// example,
-	// "//compute.googleapis.com/projects/{project-id}/global/backendServices/{name}
-	// ".
-	InternalBackendService string `json:"internalBackendService,omitempty"`
-	// LoadBalancerFirewallPolicy: The full resource name of the load balancer
-	// firewall policy, for example,
-	// "//compute.googleapis.com/projects/{project-id}/global/firewallPolicies/{poli
-	// cy-name}".
-	LoadBalancerFirewallPolicy string `json:"loadBalancerFirewallPolicy,omitempty"`
-	// NetworkEndpointGroup: The full resource name of the network endpoint group,
-	// for example,
-	// "//compute.googleapis.com/projects/{project-id}/global/networkEndpointGroups/
-	// {name}".
-	NetworkEndpointGroup string `json:"networkEndpointGroup,omitempty"`
-	// NetworkIngressFirewallPolicy: The full resource name of the network ingress
-	// firewall policy, for example,
-	// "//compute.googleapis.com/projects/{project-id}/global/firewallPolicies/{name
-	// }".
-	NetworkIngressFirewallPolicy string `json:"networkIngressFirewallPolicy,omitempty"`
-	// PrivateIpAddress: Private IP address of the exposed endpoint.
-	PrivateIpAddress string `json:"privateIpAddress,omitempty"`
-	// PrivatePort: Port number associated with private IP address.
-	PrivatePort string `json:"privatePort,omitempty"`
-	// PscNetworkAttachment: The full resource name of the PSC (Private Service
-	// Connect) network attachment that network interface controller is attached
-	// to, for example,
-	// "//compute.googleapis.com/projects/{project-id}/regions/{region}/networkAttac
-	// hments/{name}"
-	PscNetworkAttachment string `json:"pscNetworkAttachment,omitempty"`
-	// PscServiceAttachment: The full resource name of the PSC (Private Service
-	// Connect) service attachment that the load balancer network endpoint group
-	// targets, for example,
-	// "//compute.googleapis.com/projects/{project-id}/regions/{region}/serviceAttac
-	// hments/{name}"
-	PscServiceAttachment string `json:"pscServiceAttachment,omitempty"`
-	// PublicIpAddress: Public IP address of the exposed endpoint.
-	PublicIpAddress string `json:"publicIpAddress,omitempty"`
-	// PublicPort: Public port number of the exposed endpoint.
-	PublicPort string `json:"publicPort,omitempty"`
-	// ServiceFirewallPolicy: The full resource name of the firewall policy of the
-	// exposed service, for example,
-	// "//compute.googleapis.com/projects/{project-id}/global/firewallPolicies/{poli
-	// cy-name}".
-	ServiceFirewallPolicy string `json:"serviceFirewallPolicy,omitempty"`
+	BackendBucket                string          `json:"backendBucket,omitempty"`
+	BackendService               string          `json:"backendService,omitempty"`
+	ExposedApplication           string          `json:"exposedApplication,omitempty"`
+	ExposedEndpoint              string          `json:"exposedEndpoint,omitempty"`
+	ExposedService               string          `json:"exposedService,omitempty"`
+	ForwardingRule               string          `json:"forwardingRule,omitempty"`
+	HostnameUri                  string          `json:"hostnameUri,omitempty"`
+	HttpResponse                 []*HttpResponse `json:"httpResponse,omitempty"`
+	InstanceGroup                string          `json:"instanceGroup,omitempty"`
+	InternalBackendService       string          `json:"internalBackendService,omitempty"`
+	LoadBalancerFirewallPolicy   string          `json:"loadBalancerFirewallPolicy,omitempty"`
+	NetworkEndpointGroup         string          `json:"networkEndpointGroup,omitempty"`
+	NetworkIngressFirewallPolicy string          `json:"networkIngressFirewallPolicy,omitempty"`
+	PrivateIpAddress             string          `json:"privateIpAddress,omitempty"`
+	PrivatePort                  string          `json:"privatePort,omitempty"`
+	PscNetworkAttachment         string          `json:"pscNetworkAttachment,omitempty"`
+	PscServiceAttachment         string          `json:"pscServiceAttachment,omitempty"`
+	PublicIpAddress              string          `json:"publicIpAddress,omitempty"`
+	PublicPort                   string          `json:"publicPort,omitempty"`
+	ServiceFirewallPolicy        string          `json:"serviceFirewallPolicy,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackendBucket") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2647,38 +1845,20 @@ func (s ExternalExposure) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// File: File information about the related binary/library used by an
-// executable, or the script used by a script interpreter
 type File struct {
-	// Contents: Prefix of the file contents as a JSON-encoded string.
-	Contents string `json:"contents,omitempty"`
-	// DiskPath: Path of the file in terms of underlying disk/partition
-	// identifiers.
+	Contents string    `json:"contents,omitempty"`
 	DiskPath *DiskPath `json:"diskPath,omitempty"`
-	// FileLoadState: The load state of the file.
-	//
 	// Possible values:
-	//   "FILE_LOAD_STATE_UNSPECIFIED" - The file state is unspecified.
-	//   "LOADED_BY_PROCESS" - The file is being used by an active process at the
-	// time of scanning.
-	//   "NOT_LOADED_BY_PROCESS" - The file is not being used by any active process
-	// at the time of scanning.
-	FileLoadState string `json:"fileLoadState,omitempty"`
-	// HashedSize: The length in bytes of the file prefix that was hashed. If
-	// hashed_size == size, any hashes reported represent the entire file.
-	HashedSize int64 `json:"hashedSize,omitempty,string"`
-	// Operations: Operation(s) performed on a file.
-	Operations []*FileOperation `json:"operations,omitempty"`
-	// PartiallyHashed: True when the hash covers only a prefix of the file.
-	PartiallyHashed bool `json:"partiallyHashed,omitempty"`
-	// Path: Absolute path of the file as a JSON encoded string.
-	Path string `json:"path,omitempty"`
-	// Sha256: SHA256 hash of the first hashed_size bytes of the file encoded as a
-	// hex string. If hashed_size == size, sha256 represents the SHA256 hash of the
-	// entire file.
-	Sha256 string `json:"sha256,omitempty"`
-	// Size: Size of the file in bytes.
-	Size int64 `json:"size,omitempty,string"`
+	//   "FILE_LOAD_STATE_UNSPECIFIED"
+	//   "LOADED_BY_PROCESS"
+	//   "NOT_LOADED_BY_PROCESS"
+	FileLoadState   string           `json:"fileLoadState,omitempty"`
+	HashedSize      int64            `json:"hashedSize,omitempty,string"`
+	Operations      []*FileOperation `json:"operations,omitempty"`
+	PartiallyHashed bool             `json:"partiallyHashed,omitempty"`
+	Path            string           `json:"path,omitempty"`
+	Sha256          string           `json:"sha256,omitempty"`
+	Size            int64            `json:"size,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Contents") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2697,17 +1877,14 @@ func (s File) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// FileOperation: Operation(s) performed on a file.
 type FileOperation struct {
-	// Type: The type of the operation
-	//
 	// Possible values:
-	//   "OPERATION_TYPE_UNSPECIFIED" - The operation is unspecified.
-	//   "OPEN" - Represents an open operation.
-	//   "READ" - Represents a read operation.
-	//   "RENAME" - Represents a rename operation.
-	//   "WRITE" - Represents a write operation.
-	//   "EXECUTE" - Represents an execute operation.
+	//   "OPERATION_TYPE_UNSPECIFIED"
+	//   "OPEN"
+	//   "READ"
+	//   "RENAME"
+	//   "WRITE"
+	//   "EXECUTE"
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2727,300 +1904,103 @@ func (s FileOperation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Finding: Security Command Center finding. A finding is a record of
-// assessment data like security, risk, health, or privacy, that is ingested
-// into Security Command Center for presentation, notification, analysis,
-// policy testing, and enforcement. For example, a cross-site scripting (XSS)
-// vulnerability in an App Engine application is a finding.
 type Finding struct {
-	// Access: Access details associated with the finding, such as more information
-	// on the caller, which method was accessed, and from where.
-	Access *Access `json:"access,omitempty"`
-	// AffectedResources: AffectedResources associated with the finding.
-	AffectedResources *AffectedResources `json:"affectedResources,omitempty"`
-	// AgentDataAccessEvents: Agent data access events associated with the finding.
-	AgentDataAccessEvents []*AgentDataAccessEvent `json:"agentDataAccessEvents,omitempty"`
-	// AiModel: The AI model associated with the finding.
-	AiModel *AiModel `json:"aiModel,omitempty"`
-	// Application: Represents an application associated with the finding.
-	Application *Application `json:"application,omitempty"`
-	// ArtifactGuardPolicies: ArtifactGuardPolicies associated with the finding.
-	ArtifactGuardPolicies *ArtifactGuardPolicies `json:"artifactGuardPolicies,omitempty"`
-	// AttackExposure: The results of an attack path simulation relevant to this
-	// finding.
-	AttackExposure *AttackExposure `json:"attackExposure,omitempty"`
-	// BackupDisasterRecovery: Fields related to Backup and DR findings.
-	BackupDisasterRecovery *BackupDisasterRecovery `json:"backupDisasterRecovery,omitempty"`
-	// CanonicalName: The canonical name of the finding. It's either
-	// "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}",
-	// "folders/{folder_id}/sources/{source_id}/findings/{finding_id}" or
-	// "projects/{project_number}/sources/{source_id}/findings/{finding_id}",
-	// depending on the closest CRM ancestor of the resource associated with the
-	// finding.
-	CanonicalName string `json:"canonicalName,omitempty"`
-	// Category: The additional taxonomy group within findings from a given source.
-	// This field is immutable after creation time. Example: "XSS_FLASH_INJECTION"
-	Category string `json:"category,omitempty"`
-	// Chokepoint: Contains details about a chokepoint, which is a resource or
-	// resource group where high-risk attack paths converge, based on [attack path
-	// simulations]
-	// (https://cloud.google.com/security-command-center/docs/attack-exposure-learn#attack_path_simulations).
-	// This field cannot be updated. Its value is ignored in all update requests.
-	Chokepoint *Chokepoint `json:"chokepoint,omitempty"`
-	// CloudArmor: Fields related to Cloud Armor findings.
-	CloudArmor *CloudArmor `json:"cloudArmor,omitempty"`
-	// CloudDlpDataProfile: Cloud DLP data profile that is associated with the
-	// finding.
-	CloudDlpDataProfile *CloudDlpDataProfile `json:"cloudDlpDataProfile,omitempty"`
-	// CloudDlpInspection: Cloud Data Loss Prevention (Cloud DLP) inspection
-	// results that are associated with the finding.
-	CloudDlpInspection *CloudDlpInspection `json:"cloudDlpInspection,omitempty"`
-	// ComplianceDetails: Details about the compliance implications of the finding.
-	ComplianceDetails *ComplianceDetails `json:"complianceDetails,omitempty"`
-	// Compliances: Contains compliance information for security standards
-	// associated to the finding.
-	Compliances []*Compliance `json:"compliances,omitempty"`
-	// Connections: Contains information about the IP connection associated with
-	// the finding.
-	Connections []*Connection `json:"connections,omitempty"`
-	// Contacts: Output only. Map containing the points of contact for the given
-	// finding. The key represents the type of contact, while the value contains a
-	// list of all the contacts that pertain. Please refer to:
-	// https://cloud.google.com/resource-manager/docs/managing-notification-contacts#notification-categories
-	// { "security": { "contacts": [ { "email": "person1@company.com" }, { "email":
-	// "person2@company.com" } ] } }
-	Contacts map[string]ContactDetails `json:"contacts,omitempty"`
-	// Containers: Containers associated with the finding. This field provides
-	// information for both Kubernetes and non-Kubernetes containers.
-	Containers []*Container `json:"containers,omitempty"`
-	// CreateTime: The time at which the finding was created in Security Command
-	// Center.
-	CreateTime string `json:"createTime,omitempty"`
-	// DataAccessEvents: Data access events associated with the finding.
-	DataAccessEvents []*DataAccessEvent `json:"dataAccessEvents,omitempty"`
-	// DataFlowEvents: Data flow events associated with the finding.
-	DataFlowEvents []*DataFlowEvent `json:"dataFlowEvents,omitempty"`
-	// DataRetentionDeletionEvents: Data retention deletion events associated with
-	// the finding.
-	DataRetentionDeletionEvents []*DataRetentionDeletionEvent `json:"dataRetentionDeletionEvents,omitempty"`
-	// Database: Database associated with the finding.
-	Database *Database `json:"database,omitempty"`
-	// Description: Contains more details about the finding.
-	Description string `json:"description,omitempty"`
-	// DiscoveredWorkload: DiscoveredWorkload associated with the finding.
-	DiscoveredWorkload *DiscoveredWorkload `json:"discoveredWorkload,omitempty"`
-	// Disk: Disk associated with the finding.
-	Disk *Disk `json:"disk,omitempty"`
-	// EventTime: The time the finding was first detected. If an existing finding
-	// is updated, then this is the time the update occurred. For example, if the
-	// finding represents an open firewall, this property captures the time the
-	// detector believes the firewall became open. The accuracy is determined by
-	// the detector. If the finding is later resolved, then this time reflects when
-	// the finding was resolved. This must not be set to a value greater than the
-	// current timestamp.
-	EventTime string `json:"eventTime,omitempty"`
-	// Exfiltration: Represents exfiltrations associated with the finding.
-	Exfiltration *Exfiltration `json:"exfiltration,omitempty"`
-	// ExternalExposure: External exposure associated with the finding.
-	ExternalExposure *ExternalExposure `json:"externalExposure,omitempty"`
-	// ExternalSystems: Output only. Third party SIEM/SOAR fields within SCC,
-	// contains external system information and external system finding fields.
-	ExternalSystems map[string]GoogleCloudSecuritycenterV1ExternalSystem `json:"externalSystems,omitempty"`
-	// ExternalUri: The URI that, if available, points to a web page outside of
-	// Security Command Center where additional information about the finding can
-	// be found. This field is guaranteed to be either empty or a well formed URL.
-	ExternalUri string `json:"externalUri,omitempty"`
-	// Files: File associated with the finding.
-	Files []*File `json:"files,omitempty"`
-	// FindingClass: The class of the finding.
-	//
+	Access                      *Access                                              `json:"access,omitempty"`
+	AffectedResources           *AffectedResources                                   `json:"affectedResources,omitempty"`
+	AgentDataAccessEvents       []*AgentDataAccessEvent                              `json:"agentDataAccessEvents,omitempty"`
+	AiModel                     *AiModel                                             `json:"aiModel,omitempty"`
+	Application                 *Application                                         `json:"application,omitempty"`
+	ArtifactGuardPolicies       *ArtifactGuardPolicies                               `json:"artifactGuardPolicies,omitempty"`
+	AttackExposure              *AttackExposure                                      `json:"attackExposure,omitempty"`
+	BackupDisasterRecovery      *BackupDisasterRecovery                              `json:"backupDisasterRecovery,omitempty"`
+	CanonicalName               string                                               `json:"canonicalName,omitempty"`
+	Category                    string                                               `json:"category,omitempty"`
+	Chokepoint                  *Chokepoint                                          `json:"chokepoint,omitempty"`
+	CloudArmor                  *CloudArmor                                          `json:"cloudArmor,omitempty"`
+	CloudDlpDataProfile         *CloudDlpDataProfile                                 `json:"cloudDlpDataProfile,omitempty"`
+	CloudDlpInspection          *CloudDlpInspection                                  `json:"cloudDlpInspection,omitempty"`
+	ComplianceDetails           *ComplianceDetails                                   `json:"complianceDetails,omitempty"`
+	Compliances                 []*Compliance                                        `json:"compliances,omitempty"`
+	Connections                 []*Connection                                        `json:"connections,omitempty"`
+	Contacts                    map[string]ContactDetails                            `json:"contacts,omitempty"`
+	Containers                  []*Container                                         `json:"containers,omitempty"`
+	CreateTime                  string                                               `json:"createTime,omitempty"`
+	DataAccessEvents            []*DataAccessEvent                                   `json:"dataAccessEvents,omitempty"`
+	DataFlowEvents              []*DataFlowEvent                                     `json:"dataFlowEvents,omitempty"`
+	DataRetentionDeletionEvents []*DataRetentionDeletionEvent                        `json:"dataRetentionDeletionEvents,omitempty"`
+	Database                    *Database                                            `json:"database,omitempty"`
+	Description                 string                                               `json:"description,omitempty"`
+	DiscoveredWorkload          *DiscoveredWorkload                                  `json:"discoveredWorkload,omitempty"`
+	Disk                        *Disk                                                `json:"disk,omitempty"`
+	EventTime                   string                                               `json:"eventTime,omitempty"`
+	Exfiltration                *Exfiltration                                        `json:"exfiltration,omitempty"`
+	ExternalExposure            *ExternalExposure                                    `json:"externalExposure,omitempty"`
+	ExternalSystems             map[string]GoogleCloudSecuritycenterV1ExternalSystem `json:"externalSystems,omitempty"`
+	ExternalUri                 string                                               `json:"externalUri,omitempty"`
+	Files                       []*File                                              `json:"files,omitempty"`
 	// Possible values:
-	//   "FINDING_CLASS_UNSPECIFIED" - Unspecified finding class.
-	//   "THREAT" - Describes unwanted or malicious activity.
-	//   "VULNERABILITY" - Describes a potential weakness in software that
-	// increases risk to Confidentiality & Integrity & Availability.
-	//   "MISCONFIGURATION" - Describes a potential weakness in cloud
-	// resource/asset configuration that increases risk.
-	//   "OBSERVATION" - Describes a security observation that is for informational
-	// purposes.
-	//   "SCC_ERROR" - Describes an error that prevents some SCC functionality.
-	//   "POSTURE_VIOLATION" - Describes a potential security risk due to a change
-	// in the security posture.
-	//   "TOXIC_COMBINATION" - Describes a group of security issues that, when the
-	// issues occur together, represent a greater risk than when the issues occur
-	// independently. A group of such issues is referred to as a toxic combination.
-	//   "SENSITIVE_DATA_RISK" - Describes a potential security risk to data assets
-	// that contain sensitive data.
-	//   "CHOKEPOINT" - Describes a resource or resource group where high risk
-	// attack paths converge, based on attack path simulations (APS).
-	//   "EXTERNAL_EXPOSURE" - Describes a potential security risk due to the
-	// resource being exposed to the internet.
-	//   "SECRET" - Describes a potential security risk due to plaintext
-	// credentials, keys, or tokens being exposed in an asset or workload.
-	FindingClass string `json:"findingClass,omitempty"`
-	// GroupMemberships: Contains details about groups of which this finding is a
-	// member. A group is a collection of findings that are related in some way.
-	// This field cannot be updated. Its value is ignored in all update requests.
+	//   "FINDING_CLASS_UNSPECIFIED"
+	//   "THREAT"
+	//   "VULNERABILITY"
+	//   "MISCONFIGURATION"
+	//   "OBSERVATION"
+	//   "SCC_ERROR"
+	//   "POSTURE_VIOLATION"
+	//   "TOXIC_COMBINATION"
+	//   "SENSITIVE_DATA_RISK"
+	//   "CHOKEPOINT"
+	//   "EXTERNAL_EXPOSURE"
+	//   "SECRET"
+	FindingClass     string             `json:"findingClass,omitempty"`
 	GroupMemberships []*GroupMembership `json:"groupMemberships,omitempty"`
-	// IamBindings: Represents IAM bindings associated with the finding.
-	IamBindings []*IamBinding `json:"iamBindings,omitempty"`
-	// Indicator: Represents what's commonly known as an *indicator of compromise*
-	// (IoC) in computer forensics. This is an artifact observed on a network or in
-	// an operating system that, with high confidence, indicates a computer
-	// intrusion. For more information, see Indicator of compromise
-	// (https://en.wikipedia.org/wiki/Indicator_of_compromise).
-	Indicator *Indicator `json:"indicator,omitempty"`
-	// IpRules: IP rules associated with the finding.
-	IpRules *IpRules `json:"ipRules,omitempty"`
-	// Job: Job associated with the finding.
-	Job *Job `json:"job,omitempty"`
-	// KernelRootkit: Signature of the kernel rootkit.
-	KernelRootkit *KernelRootkit `json:"kernelRootkit,omitempty"`
-	// Kubernetes: Kubernetes resources associated with the finding.
-	Kubernetes *Kubernetes `json:"kubernetes,omitempty"`
-	// LoadBalancers: The load balancers associated with the finding.
-	LoadBalancers []*LoadBalancer `json:"loadBalancers,omitempty"`
-	// LogEntries: Log entries that are relevant to the finding.
-	LogEntries []*LogEntry `json:"logEntries,omitempty"`
-	// MitreAttack: MITRE ATT&CK tactics and techniques related to this finding.
-	// See: https://attack.mitre.org
-	MitreAttack *MitreAttack `json:"mitreAttack,omitempty"`
-	// ModuleName: Unique identifier of the module which generated the finding.
-	// Example:
-	// folders/598186756061/securityHealthAnalyticsSettings/customModules/5679944116
-	// 1885
-	ModuleName string `json:"moduleName,omitempty"`
-	// Mute: Indicates the mute state of a finding (either muted, unmuted or
-	// undefined). Unlike other attributes of a finding, a finding provider
-	// shouldn't set the value of mute.
-	//
+	IamBindings      []*IamBinding      `json:"iamBindings,omitempty"`
+	Indicator        *Indicator         `json:"indicator,omitempty"`
+	IpRules          *IpRules           `json:"ipRules,omitempty"`
+	Job              *Job               `json:"job,omitempty"`
+	KernelRootkit    *KernelRootkit     `json:"kernelRootkit,omitempty"`
+	Kubernetes       *Kubernetes        `json:"kubernetes,omitempty"`
+	LoadBalancers    []*LoadBalancer    `json:"loadBalancers,omitempty"`
+	LogEntries       []*LogEntry        `json:"logEntries,omitempty"`
+	MitreAttack      *MitreAttack       `json:"mitreAttack,omitempty"`
+	ModuleName       string             `json:"moduleName,omitempty"`
 	// Possible values:
-	//   "MUTE_UNSPECIFIED" - Unspecified.
-	//   "MUTED" - Finding has been muted.
-	//   "UNMUTED" - Finding has been unmuted.
-	//   "UNDEFINED" - Finding has never been muted/unmuted.
-	Mute string `json:"mute,omitempty"`
-	// MuteInfo: Output only. The mute information regarding this finding.
-	MuteInfo *MuteInfo `json:"muteInfo,omitempty"`
-	// MuteInitiator: Records additional information about the mute operation, for
-	// example, the mute configuration
-	// (/security-command-center/docs/how-to-mute-findings) that muted the finding
-	// and the user who muted the finding.
-	MuteInitiator string `json:"muteInitiator,omitempty"`
-	// MuteUpdateTime: Output only. The most recent time this finding was muted or
-	// unmuted.
-	MuteUpdateTime string `json:"muteUpdateTime,omitempty"`
-	// Name: The relative resource name
-	// (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
-	// of the finding. Example:
-	// "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}",
-	// "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
-	// "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
-	Name string `json:"name,omitempty"`
-	// Networks: Represents the VPC networks that the resource is attached to.
-	Networks []*Network `json:"networks,omitempty"`
-	// NextSteps: Steps to address the finding.
-	NextSteps string `json:"nextSteps,omitempty"`
-	// Notebook: Notebook associated with the finding.
-	Notebook *Notebook `json:"notebook,omitempty"`
-	// OrgPolicies: Contains information about the org policies associated with the
-	// finding.
-	OrgPolicies []*OrgPolicy `json:"orgPolicies,omitempty"`
-	// Parent: The relative resource name of the source the finding belongs to.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-	// This field is immutable after creation time. For example:
-	// "organizations/{organization_id}/sources/{source_id}"
-	Parent string `json:"parent,omitempty"`
-	// ParentDisplayName: Output only. The human readable display name of the
-	// finding source such as "Event Threat Detection" or "Security Health
-	// Analytics".
-	ParentDisplayName string `json:"parentDisplayName,omitempty"`
-	// PolicyViolationSummary: PolicyViolationSummary associated with the finding.
+	//   "MUTE_UNSPECIFIED"
+	//   "MUTED"
+	//   "UNMUTED"
+	//   "UNDEFINED"
+	Mute                   string                  `json:"mute,omitempty"`
+	MuteInfo               *MuteInfo               `json:"muteInfo,omitempty"`
+	MuteInitiator          string                  `json:"muteInitiator,omitempty"`
+	MuteUpdateTime         string                  `json:"muteUpdateTime,omitempty"`
+	Name                   string                  `json:"name,omitempty"`
+	Networks               []*Network              `json:"networks,omitempty"`
+	NextSteps              string                  `json:"nextSteps,omitempty"`
+	Notebook               *Notebook               `json:"notebook,omitempty"`
+	OrgPolicies            []*OrgPolicy            `json:"orgPolicies,omitempty"`
+	Parent                 string                  `json:"parent,omitempty"`
+	ParentDisplayName      string                  `json:"parentDisplayName,omitempty"`
 	PolicyViolationSummary *PolicyViolationSummary `json:"policyViolationSummary,omitempty"`
-	// Processes: Represents operating system processes associated with the
-	// Finding.
-	Processes []*Process `json:"processes,omitempty"`
-	// ResourceName: For findings on Google Cloud resources, the full resource name
-	// of the Google Cloud resource this finding is for. See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource_name When
-	// the finding is for a non-Google Cloud resource, the resourceName can be a
-	// customer or partner defined string. This field is immutable after creation
-	// time.
-	ResourceName string `json:"resourceName,omitempty"`
-	// Secret: Secret associated with the finding.
-	Secret *Secret `json:"secret,omitempty"`
-	// SecurityMarks: Output only. User specified security marks. These marks are
-	// entirely managed by the user and come from the SecurityMarks resource that
-	// belongs to the finding.
-	SecurityMarks *SecurityMarks `json:"securityMarks,omitempty"`
-	// SecurityPosture: The security posture associated with the finding.
-	SecurityPosture *SecurityPosture `json:"securityPosture,omitempty"`
-	// Severity: The severity of the finding. This field is managed by the source
-	// that writes the finding.
-	//
+	Processes              []*Process              `json:"processes,omitempty"`
+	ResourceName           string                  `json:"resourceName,omitempty"`
+	Secret                 *Secret                 `json:"secret,omitempty"`
+	SecurityMarks          *SecurityMarks          `json:"securityMarks,omitempty"`
+	SecurityPosture        *SecurityPosture        `json:"securityPosture,omitempty"`
 	// Possible values:
-	//   "SEVERITY_UNSPECIFIED" - This value is used for findings when a source
-	// doesn't write a severity value.
-	//   "CRITICAL" - Vulnerability: A critical vulnerability is easily
-	// discoverable by an external actor, exploitable, and results in the direct
-	// ability to execute arbitrary code, exfiltrate data, and otherwise gain
-	// additional access and privileges to cloud resources and workloads. Examples
-	// include publicly accessible unprotected user data and public SSH access with
-	// weak or no passwords. Threat: Indicates a threat that is able to access,
-	// modify, or delete data or execute unauthorized code within existing
-	// resources.
-	//   "HIGH" - Vulnerability: A high risk vulnerability can be easily discovered
-	// and exploited in combination with other vulnerabilities in order to gain
-	// direct access and the ability to execute arbitrary code, exfiltrate data,
-	// and otherwise gain additional access and privileges to cloud resources and
-	// workloads. An example is a database with weak or no passwords that is only
-	// accessible internally. This database could easily be compromised by an actor
-	// that had access to the internal network. Threat: Indicates a threat that is
-	// able to create new computational resources in an environment but not able to
-	// access data or execute code in existing resources.
-	//   "MEDIUM" - Vulnerability: A medium risk vulnerability could be used by an
-	// actor to gain access to resources or privileges that enable them to
-	// eventually (through multiple steps or a complex exploit) gain access and the
-	// ability to execute arbitrary code or exfiltrate data. An example is a
-	// service account with access to more projects than it should have. If an
-	// actor gains access to the service account, they could potentially use that
-	// access to manipulate a project the service account was not intended to.
-	// Threat: Indicates a threat that is able to cause operational impact but may
-	// not access data or execute unauthorized code.
-	//   "LOW" - Vulnerability: A low risk vulnerability hampers a security
-	// organization's ability to detect vulnerabilities or active threats in their
-	// deployment, or prevents the root cause investigation of security issues. An
-	// example is monitoring and logs being disabled for resource configurations
-	// and access. Threat: Indicates a threat that has obtained minimal access to
-	// an environment but is not able to access data, execute code, or create
-	// resources.
-	Severity string `json:"severity,omitempty"`
-	// SourceProperties: Source specific properties. These properties are managed
-	// by the source that writes the finding. The key names in the
-	// source_properties map must be between 1 and 255 characters, and must start
-	// with a letter and contain alphanumeric characters or underscores only.
+	//   "SEVERITY_UNSPECIFIED"
+	//   "CRITICAL"
+	//   "HIGH"
+	//   "MEDIUM"
+	//   "LOW"
+	Severity         string               `json:"severity,omitempty"`
 	SourceProperties googleapi.RawMessage `json:"sourceProperties,omitempty"`
-	// State: The state of the finding.
-	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Unspecified state.
-	//   "ACTIVE" - The finding requires attention and has not been addressed yet.
-	//   "INACTIVE" - The finding has been fixed, triaged as a non-issue or
-	// otherwise addressed and is no longer active.
-	State string `json:"state,omitempty"`
-	// ToxicCombination: Contains details about a group of security issues that,
-	// when the issues occur together, represent a greater risk than when the
-	// issues occur independently. A group of such issues is referred to as a toxic
-	// combination. This field cannot be updated. Its value is ignored in all
-	// update requests.
+	//   "STATE_UNSPECIFIED"
+	//   "ACTIVE"
+	//   "INACTIVE"
+	State            string            `json:"state,omitempty"`
 	ToxicCombination *ToxicCombination `json:"toxicCombination,omitempty"`
-	// VertexAi: VertexAi associated with the finding.
-	VertexAi *VertexAi `json:"vertexAi,omitempty"`
-	// Vulnerability: Represents vulnerability-specific fields like CVE and CVSS
-	// scores. CVE stands for Common Vulnerabilities and Exposures
-	// (https://cve.mitre.org/about/)
-	Vulnerability *Vulnerability `json:"vulnerability,omitempty"`
+	VertexAi         *VertexAi         `json:"vertexAi,omitempty"`
+	Vulnerability    *Vulnerability    `json:"vulnerability,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Access") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3039,13 +2019,8 @@ func (s Finding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Folder: Message that contains the resource name and display name of a folder
-// resource.
 type Folder struct {
-	// ResourceFolder: Full resource name of this folder. See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource_name
-	ResourceFolder string `json:"resourceFolder,omitempty"`
-	// ResourceFolderDisplayName: The user defined display name for this folder.
+	ResourceFolder            string `json:"resourceFolder,omitempty"`
 	ResourceFolderDisplayName string `json:"resourceFolderDisplayName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ResourceFolder") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3065,37 +2040,22 @@ func (s Folder) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Framework: Compliance framework associated with the finding.
 type Framework struct {
-	// Category: Category of the framework associated with the finding. E.g.
-	// Security Benchmark, or Assured Workloads
-	//
 	// Possible values:
-	//   "FRAMEWORK_CATEGORY_UNSPECIFIED" - Default value. This value is unused.
-	//   "SECURITY_BENCHMARKS" - Security Benchmarks framework
-	//   "ASSURED_WORKLOADS" - Assured Workloads framework
-	//   "DATA_SECURITY" - Data Security framework
-	//   "GOOGLE_BEST_PRACTICES" - Google Best Practices framework
-	//   "CUSTOM_FRAMEWORK" - A user-created framework
-	Category []string `json:"category,omitempty"`
-	// Controls: The controls associated with the framework.
-	Controls []*Control `json:"controls,omitempty"`
-	// DisplayName: Display name of the framework. For a standard framework, this
-	// will look like e.g. PCI DSS 3.2.1, whereas for a custom framework it can be
-	// a user defined string like MyFramework
-	DisplayName string `json:"displayName,omitempty"`
-	// Name: Name of the framework associated with the finding
-	Name string `json:"name,omitempty"`
-	// Type: Type of the framework associated with the finding, to specify whether
-	// the framework is built-in (pre-defined and immutable) or a custom framework
-	// defined by the customer (equivalent to security posture)
-	//
+	//   "FRAMEWORK_CATEGORY_UNSPECIFIED"
+	//   "SECURITY_BENCHMARKS"
+	//   "ASSURED_WORKLOADS"
+	//   "DATA_SECURITY"
+	//   "GOOGLE_BEST_PRACTICES"
+	//   "CUSTOM_FRAMEWORK"
+	Category    []string   `json:"category,omitempty"`
+	Controls    []*Control `json:"controls,omitempty"`
+	DisplayName string     `json:"displayName,omitempty"`
+	Name        string     `json:"name,omitempty"`
 	// Possible values:
-	//   "FRAMEWORK_TYPE_UNSPECIFIED" - Default value. This value is unused.
-	//   "FRAMEWORK_TYPE_BUILT_IN" - The framework is a built-in framework if it is
-	// created and managed by GCP.
-	//   "FRAMEWORK_TYPE_CUSTOM" - The framework is a custom framework if it is
-	// created and managed by the user.
+	//   "FRAMEWORK_TYPE_UNSPECIFIED"
+	//   "FRAMEWORK_TYPE_BUILT_IN"
+	//   "FRAMEWORK_TYPE_CUSTOM"
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Category") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3115,23 +2075,13 @@ func (s Framework) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GcpMetadata: Google Cloud metadata associated with the resource. Only
-// applicable if the finding's cloud provider is Google Cloud.
 type GcpMetadata struct {
-	// Folders: Output only. Contains a Folder message for each folder in the
-	// assets ancestry. The first folder is the deepest nested folder, and the last
-	// folder is the folder directly under the Organization.
-	Folders []*GoogleCloudSecuritycenterV2Folder `json:"folders,omitempty"`
-	// Organization: The name of the organization that the resource belongs to.
-	Organization string `json:"organization,omitempty"`
-	// Parent: The full resource name of resource's parent.
-	Parent string `json:"parent,omitempty"`
-	// ParentDisplayName: The human readable name of resource's parent.
-	ParentDisplayName string `json:"parentDisplayName,omitempty"`
-	// Project: The full resource name of project that the resource belongs to.
-	Project string `json:"project,omitempty"`
-	// ProjectDisplayName: The project ID that the resource belongs to.
-	ProjectDisplayName string `json:"projectDisplayName,omitempty"`
+	Folders            []*GoogleCloudSecuritycenterV2Folder `json:"folders,omitempty"`
+	Organization       string                               `json:"organization,omitempty"`
+	Parent             string                               `json:"parent,omitempty"`
+	ParentDisplayName  string                               `json:"parentDisplayName,omitempty"`
+	Project            string                               `json:"project,omitempty"`
+	ProjectDisplayName string                               `json:"projectDisplayName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Folders") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3150,9 +2100,7 @@ func (s GcpMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Geolocation: Represents a geographical location for a given access.
 type Geolocation struct {
-	// RegionCode: A CLDR.
 	RegionCode string `json:"regionCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RegionCode") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3172,10 +2120,7 @@ func (s Geolocation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GetIamPolicyRequest: Request message for `GetIamPolicy` method.
 type GetIamPolicyRequest struct {
-	// Options: OPTIONAL: A `GetPolicyOptions` object for specifying options to
-	// `GetIamPolicy`.
 	Options *GetPolicyOptions `json:"options,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Options") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3195,19 +2140,7 @@ func (s GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
 type GetPolicyOptions struct {
-	// RequestedPolicyVersion: Optional. The maximum policy version that will be
-	// used to format the policy. Valid values are 0, 1, and 3. Requests specifying
-	// an invalid value will be rejected. Requests for policies with any
-	// conditional role bindings must specify version 3. Policies with no
-	// conditional role bindings may specify any valid value or leave the field
-	// unset. The policy in the response might use the policy version that you
-	// specified, or it might use a lower policy version. For example, if you
-	// specify version 3, but the policy has no conditional role bindings, the
-	// response uses version 1. To learn which resources support conditions in
-	// their IAM policies, see the IAM documentation
-	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	RequestedPolicyVersion int64 `json:"requestedPolicyVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RequestedPolicyVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3227,50 +2160,15 @@ func (s GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1BigQueryExport: Configures how to deliver
-// Findings to BigQuery Instance.
 type GoogleCloudSecuritycenterV1BigQueryExport struct {
-	// CreateTime: Output only. The time at which the BigQuery export was created.
-	// This field is set by the server and will be ignored if provided on export on
-	// creation.
-	CreateTime string `json:"createTime,omitempty"`
-	// Dataset: The dataset to write findings' updates to. Its format is
-	// "projects/[project_id]/datasets/[bigquery_dataset_id]". BigQuery Dataset
-	// unique ID must contain only letters (a-z, A-Z), numbers (0-9), or
-	// underscores (_).
-	Dataset string `json:"dataset,omitempty"`
-	// Description: The description of the export (max of 1024 characters).
-	Description string `json:"description,omitempty"`
-	// Filter: Expression that defines the filter to apply across create/update
-	// events of findings. The expression is a list of zero or more restrictions
-	// combined via logical operators `AND` and `OR`. Parentheses are supported,
-	// and `OR` has higher precedence than `AND`. Restrictions have the form ` `
-	// and may have a `-` character in front of them to indicate negation. The
-	// fields map to those defined in the corresponding resource. The supported
-	// operators are: * `=` for all value types. * `>`, `<`, `>=`, `<=` for integer
-	// values. * `:`, meaning substring matching, for strings. The supported value
-	// types are: * string literals in quotes. * integer literals without quotes. *
-	// boolean literals `true` and `false` without quotes.
-	Filter string `json:"filter,omitempty"`
-	// MostRecentEditor: Output only. Email address of the user who last edited the
-	// BigQuery export. This field is set by the server and will be ignored if
-	// provided on export creation or update.
+	CreateTime       string `json:"createTime,omitempty"`
+	Dataset          string `json:"dataset,omitempty"`
+	Description      string `json:"description,omitempty"`
+	Filter           string `json:"filter,omitempty"`
 	MostRecentEditor string `json:"mostRecentEditor,omitempty"`
-	// Name: The relative resource name of this export. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name.
-	// Example format:
-	// "organizations/{organization_id}/bigQueryExports/{export_id}" Example
-	// format: "folders/{folder_id}/bigQueryExports/{export_id}" Example format:
-	// "projects/{project_id}/bigQueryExports/{export_id}" This field is provided
-	// in responses, and is ignored when provided in create requests.
-	Name string `json:"name,omitempty"`
-	// Principal: Output only. The service account that needs permission to create
-	// table and upload data to the BigQuery dataset.
-	Principal string `json:"principal,omitempty"`
-	// UpdateTime: Output only. The most recent time at which the BigQuery export
-	// was updated. This field is set by the server and will be ignored if provided
-	// on export creation or update.
-	UpdateTime string `json:"updateTime,omitempty"`
+	Name             string `json:"name,omitempty"`
+	Principal        string `json:"principal,omitempty"`
+	UpdateTime       string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3289,17 +2187,10 @@ func (s GoogleCloudSecuritycenterV1BigQueryExport) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1Binding: Represents a Kubernetes RoleBinding or
-// ClusterRoleBinding.
 type GoogleCloudSecuritycenterV1Binding struct {
-	// Name: Name for the binding.
-	Name string `json:"name,omitempty"`
-	// Ns: Namespace for the binding.
-	Ns string `json:"ns,omitempty"`
-	// Role: The Role or ClusterRole referenced by the binding.
-	Role *Role `json:"role,omitempty"`
-	// Subjects: Represents one or more subjects that are bound to the role. Not
-	// always available for PATCH requests.
+	Name     string     `json:"name,omitempty"`
+	Ns       string     `json:"ns,omitempty"`
+	Role     *Role      `json:"role,omitempty"`
 	Subjects []*Subject `json:"subjects,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3319,42 +2210,21 @@ func (s GoogleCloudSecuritycenterV1Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1BulkMuteFindingsResponse: The response to a
-// BulkMute request. Contains the LRO information.
 type GoogleCloudSecuritycenterV1BulkMuteFindingsResponse struct {
 }
 
-// GoogleCloudSecuritycenterV1CustomConfig: Defines the properties in a custom
-// module configuration for Security Health Analytics. Use the custom module
-// configuration to create custom detectors that generate custom findings for
-// resources that you specify.
 type GoogleCloudSecuritycenterV1CustomConfig struct {
-	// CustomOutput: Custom output properties.
-	CustomOutput *GoogleCloudSecuritycenterV1CustomOutputSpec `json:"customOutput,omitempty"`
-	// Description: Text that describes the vulnerability or misconfiguration that
-	// the custom module detects. This explanation is returned with each finding
-	// instance to help investigators understand the detected issue. The text must
-	// be enclosed in quotation marks.
-	Description string `json:"description,omitempty"`
-	// Predicate: The CEL expression to evaluate to produce findings. When the
-	// expression evaluates to true against a resource, a finding is generated.
-	Predicate *Expr `json:"predicate,omitempty"`
-	// Recommendation: An explanation of the recommended steps that security teams
-	// can take to resolve the detected issue. This explanation is returned with
-	// each finding generated by this module in the `nextSteps` property of the
-	// finding JSON.
-	Recommendation string `json:"recommendation,omitempty"`
-	// ResourceSelector: The resource types that the custom module operates on.
-	// Each custom module can specify up to 5 resource types.
+	CustomOutput     *GoogleCloudSecuritycenterV1CustomOutputSpec `json:"customOutput,omitempty"`
+	Description      string                                       `json:"description,omitempty"`
+	Predicate        *Expr                                        `json:"predicate,omitempty"`
+	Recommendation   string                                       `json:"recommendation,omitempty"`
 	ResourceSelector *GoogleCloudSecuritycenterV1ResourceSelector `json:"resourceSelector,omitempty"`
-	// Severity: The severity to assign to findings generated by the module.
-	//
 	// Possible values:
-	//   "SEVERITY_UNSPECIFIED" - Unspecified severity.
-	//   "CRITICAL" - Critical severity.
-	//   "HIGH" - High severity.
-	//   "MEDIUM" - Medium severity.
-	//   "LOW" - Low severity.
+	//   "SEVERITY_UNSPECIFIED"
+	//   "CRITICAL"
+	//   "HIGH"
+	//   "MEDIUM"
+	//   "LOW"
 	Severity string `json:"severity,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CustomOutput") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3374,12 +2244,7 @@ func (s GoogleCloudSecuritycenterV1CustomConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1CustomOutputSpec: A set of optional name-value
-// pairs that define custom source properties to return with each finding that
-// is generated by the custom module. The custom source properties that are
-// defined here are included in the finding JSON under `sourceProperties`.
 type GoogleCloudSecuritycenterV1CustomOutputSpec struct {
-	// Properties: A list of custom output properties to add to the finding.
 	Properties []*GoogleCloudSecuritycenterV1Property `json:"properties,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Properties") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3399,47 +2264,21 @@ func (s GoogleCloudSecuritycenterV1CustomOutputSpec) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule: An
-// EffectiveSecurityHealthAnalyticsCustomModule is the representation of a
-// Security Health Analytics custom module at a specified level of the resource
-// hierarchy: organization, folder, or project. If a custom module is inherited
-// from a parent organization or folder, the value of the `enablementState`
-// property in EffectiveSecurityHealthAnalyticsCustomModule is set to the value
-// that is effective in the parent, instead of `INHERITED`. For example, if the
-// module is enabled in a parent organization or folder, the effective
-// enablement_state for the module in all child folders or projects is also
-// `enabled`. EffectiveSecurityHealthAnalyticsCustomModule is read-only.
 type GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule struct {
-	// CloudProvider: The cloud provider of the custom module.
-	//
 	// Possible values:
-	//   "CLOUD_PROVIDER_UNSPECIFIED" - Unspecified cloud provider.
-	//   "GOOGLE_CLOUD_PLATFORM" - Google Cloud.
-	//   "AMAZON_WEB_SERVICES" - Amazon Web Services.
-	//   "MICROSOFT_AZURE" - Microsoft Azure.
-	CloudProvider string `json:"cloudProvider,omitempty"`
-	// CustomConfig: Output only. The user-specified configuration for the module.
-	CustomConfig *GoogleCloudSecuritycenterV1CustomConfig `json:"customConfig,omitempty"`
-	// DisplayName: Output only. The display name for the custom module. The name
-	// must be between 1 and 128 characters, start with a lowercase letter, and
-	// contain alphanumeric characters or underscores only.
-	DisplayName string `json:"displayName,omitempty"`
-	// EnablementState: Output only. The effective state of enablement for the
-	// module at the given level of the hierarchy.
-	//
+	//   "CLOUD_PROVIDER_UNSPECIFIED"
+	//   "GOOGLE_CLOUD_PLATFORM"
+	//   "AMAZON_WEB_SERVICES"
+	//   "MICROSOFT_AZURE"
+	CloudProvider string                                   `json:"cloudProvider,omitempty"`
+	CustomConfig  *GoogleCloudSecuritycenterV1CustomConfig `json:"customConfig,omitempty"`
+	DisplayName   string                                   `json:"displayName,omitempty"`
 	// Possible values:
-	//   "ENABLEMENT_STATE_UNSPECIFIED" - Unspecified enablement state.
-	//   "ENABLED" - The module is enabled at the given level.
-	//   "DISABLED" - The module is disabled at the given level.
+	//   "ENABLEMENT_STATE_UNSPECIFIED"
+	//   "ENABLED"
+	//   "DISABLED"
 	EnablementState string `json:"enablementState,omitempty"`
-	// Name: Output only. The resource name of the custom module. Its format is
-	// "organizations/{organization}/securityHealthAnalyticsSettings/effectiveCustom
-	// Modules/{customModule}", or
-	// "folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomModules/{cus
-	// tomModule}", or
-	// "projects/{project}/securityHealthAnalyticsSettings/effectiveCustomModules/{c
-	// ustomModule}"
-	Name string `json:"name,omitempty"`
+	Name            string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudProvider") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3458,43 +2297,18 @@ func (s GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1ExternalSystem: Representation of third party
-// SIEM/SOAR fields within SCC.
 type GoogleCloudSecuritycenterV1ExternalSystem struct {
-	// Assignees: References primary/secondary etc assignees in the external
-	// system.
-	Assignees []string `json:"assignees,omitempty"`
-	// CaseCloseTime: The time when the case was closed, as reported by the
-	// external system.
-	CaseCloseTime string `json:"caseCloseTime,omitempty"`
-	// CaseCreateTime: The time when the case was created, as reported by the
-	// external system.
-	CaseCreateTime string `json:"caseCreateTime,omitempty"`
-	// CasePriority: The priority of the finding's corresponding case in the
-	// external system.
-	CasePriority string `json:"casePriority,omitempty"`
-	// CaseSla: The SLA of the finding's corresponding case in the external system.
-	CaseSla string `json:"caseSla,omitempty"`
-	// CaseUri: The link to the finding's corresponding case in the external
-	// system.
-	CaseUri string `json:"caseUri,omitempty"`
-	// ExternalSystemUpdateTime: The time when the case was last updated, as
-	// reported by the external system.
-	ExternalSystemUpdateTime string `json:"externalSystemUpdateTime,omitempty"`
-	// ExternalUid: The identifier that's used to track the finding's corresponding
-	// case in the external system.
-	ExternalUid string `json:"externalUid,omitempty"`
-	// Name: Full resource name of the external system, for example:
-	// "organizations/1234/sources/5678/findings/123456/externalSystems/jira",
-	// "folders/1234/sources/5678/findings/123456/externalSystems/jira",
-	// "projects/1234/sources/5678/findings/123456/externalSystems/jira"
-	Name string `json:"name,omitempty"`
-	// Status: The most recent status of the finding's corresponding case, as
-	// reported by the external system.
-	Status string `json:"status,omitempty"`
-	// TicketInfo: Information about the ticket, if any, that is being used to
-	// track the resolution of the issue that is identified by this finding.
-	TicketInfo *TicketInfo `json:"ticketInfo,omitempty"`
+	Assignees                []string    `json:"assignees,omitempty"`
+	CaseCloseTime            string      `json:"caseCloseTime,omitempty"`
+	CaseCreateTime           string      `json:"caseCreateTime,omitempty"`
+	CasePriority             string      `json:"casePriority,omitempty"`
+	CaseSla                  string      `json:"caseSla,omitempty"`
+	CaseUri                  string      `json:"caseUri,omitempty"`
+	ExternalSystemUpdateTime string      `json:"externalSystemUpdateTime,omitempty"`
+	ExternalUid              string      `json:"externalUid,omitempty"`
+	Name                     string      `json:"name,omitempty"`
+	Status                   string      `json:"status,omitempty"`
+	TicketInfo               *TicketInfo `json:"ticketInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Assignees") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3513,65 +2327,19 @@ func (s GoogleCloudSecuritycenterV1ExternalSystem) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1MuteConfig: A mute config is a Cloud SCC resource
-// that contains the configuration to mute create/update events of findings.
 type GoogleCloudSecuritycenterV1MuteConfig struct {
-	// CreateTime: Output only. The time at which the mute config was created. This
-	// field is set by the server and will be ignored if provided on config
-	// creation.
-	CreateTime string `json:"createTime,omitempty"`
-	// Description: A description of the mute config.
-	Description string `json:"description,omitempty"`
-	// DisplayName: The human readable name to be displayed for the mute config.
-	DisplayName string `json:"displayName,omitempty"`
-	// ExpiryTime: Optional. The expiry of the mute config. Only applicable for
-	// dynamic configs. If the expiry is set, when the config expires, it is
-	// removed from all findings.
-	ExpiryTime string `json:"expiryTime,omitempty"`
-	// Filter: Required. An expression that defines the filter to apply across
-	// create/update events of findings. While creating a filter string, be mindful
-	// of the scope in which the mute configuration is being created. E.g., If a
-	// filter contains project = X but is created under the project = Y scope, it
-	// might not match any findings. The following field and operator combinations
-	// are supported: * severity: `=`, `:` * category: `=`, `:` * resource.name:
-	// `=`, `:` * resource.project_name: `=`, `:` * resource.project_display_name:
-	// `=`, `:` * resource.folders.resource_folder: `=`, `:` *
-	// resource.parent_name: `=`, `:` * resource.parent_display_name: `=`, `:` *
-	// resource.type: `=`, `:` * finding_class: `=`, `:` * indicator.ip_addresses:
-	// `=`, `:` * indicator.domains: `=`, `:`
-	Filter string `json:"filter,omitempty"`
-	// MostRecentEditor: Output only. Email address of the user who last edited the
-	// mute config. This field is set by the server and will be ignored if provided
-	// on config creation or update.
+	CreateTime       string `json:"createTime,omitempty"`
+	Description      string `json:"description,omitempty"`
+	DisplayName      string `json:"displayName,omitempty"`
+	ExpiryTime       string `json:"expiryTime,omitempty"`
+	Filter           string `json:"filter,omitempty"`
 	MostRecentEditor string `json:"mostRecentEditor,omitempty"`
-	// Name: This field will be ignored if provided on config creation. Format
-	// `organizations/{organization}/muteConfigs/{mute_config}`
-	// `folders/{folder}/muteConfigs/{mute_config}`
-	// `projects/{project}/muteConfigs/{mute_config}`
-	// `organizations/{organization}/locations/global/muteConfigs/{mute_config}`
-	// `folders/{folder}/locations/global/muteConfigs/{mute_config}`
-	// `projects/{project}/locations/global/muteConfigs/{mute_config}`
-	Name string `json:"name,omitempty"`
-	// Type: Optional. The type of the mute config, which determines what type of
-	// mute state the config affects. The static mute state takes precedence over
-	// the dynamic mute state. Immutable after creation. STATIC by default if not
-	// set during creation.
-	//
+	Name             string `json:"name,omitempty"`
 	// Possible values:
-	//   "MUTE_CONFIG_TYPE_UNSPECIFIED" - Unused.
-	//   "STATIC" - A static mute config, which sets the static mute state of
-	// future matching findings to muted. Once the static mute state has been set,
-	// finding or config modifications will not affect the state.
-	//   "DYNAMIC" - A dynamic mute config, which is applied to existing and future
-	// matching findings, setting their dynamic mute state to "muted". If the
-	// config is updated or deleted, or a matching finding is updated, such that
-	// the finding doesn't match the config, the config will be removed from the
-	// finding, and the finding's dynamic mute state may become "unmuted" (unless
-	// other configs still match).
-	Type string `json:"type,omitempty"`
-	// UpdateTime: Output only. The most recent time at which the mute config was
-	// updated. This field is set by the server and will be ignored if provided on
-	// config creation or update.
+	//   "MUTE_CONFIG_TYPE_UNSPECIFIED"
+	//   "STATIC"
+	//   "DYNAMIC"
+	Type       string `json:"type,omitempty"`
 	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3591,16 +2359,10 @@ func (s GoogleCloudSecuritycenterV1MuteConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1NotificationMessage: Cloud SCC's Notification
 type GoogleCloudSecuritycenterV1NotificationMessage struct {
-	// Finding: If it's a Finding based notification config, this field will be
-	// populated.
-	Finding *Finding `json:"finding,omitempty"`
-	// NotificationConfigName: Name of the notification config that generated
-	// current notification.
-	NotificationConfigName string `json:"notificationConfigName,omitempty"`
-	// Resource: The Cloud resource tied to this notification's Finding.
-	Resource *GoogleCloudSecuritycenterV1Resource `json:"resource,omitempty"`
+	Finding                *Finding                             `json:"finding,omitempty"`
+	NotificationConfigName string                               `json:"notificationConfigName,omitempty"`
+	Resource               *GoogleCloudSecuritycenterV1Resource `json:"resource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Finding") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3619,15 +2381,9 @@ func (s GoogleCloudSecuritycenterV1NotificationMessage) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1Property: An individual name-value pair that
-// defines a custom source property.
 type GoogleCloudSecuritycenterV1Property struct {
-	// Name: Name of the property for the custom output.
-	Name string `json:"name,omitempty"`
-	// ValueExpression: The CEL expression for the custom output. A resource
-	// property can be specified to return the value of the property or a text
-	// string enclosed in quotation marks.
-	ValueExpression *Expr `json:"valueExpression,omitempty"`
+	Name            string `json:"name,omitempty"`
+	ValueExpression *Expr  `json:"valueExpression,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3646,71 +2402,32 @@ func (s GoogleCloudSecuritycenterV1Property) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1Resource: Information related to the Google Cloud
-// resource.
 type GoogleCloudSecuritycenterV1Resource struct {
-	// AdcApplication: The ADC application associated with the finding.
-	AdcApplication *AdcApplication `json:"adcApplication,omitempty"`
-	// AdcApplicationTemplate: The ADC template associated with the finding.
-	AdcApplicationTemplate *AdcApplicationTemplateRevision `json:"adcApplicationTemplate,omitempty"`
-	// AdcSharedTemplate: The ADC shared template associated with the finding.
-	AdcSharedTemplate *AdcSharedTemplateRevision `json:"adcSharedTemplate,omitempty"`
-	// Application: The App Hub application this resource belongs to.
-	Application *GoogleCloudSecuritycenterV1ResourceApplication `json:"application,omitempty"`
-	// AwsMetadata: The AWS metadata associated with the finding.
-	AwsMetadata *AwsMetadata `json:"awsMetadata,omitempty"`
-	// AzureMetadata: The Azure metadata associated with the finding.
-	AzureMetadata *AzureMetadata `json:"azureMetadata,omitempty"`
-	// CloudProvider: Indicates which cloud provider the resource resides in.
-	//
+	AdcApplication         *AdcApplication                                 `json:"adcApplication,omitempty"`
+	AdcApplicationTemplate *AdcApplicationTemplateRevision                 `json:"adcApplicationTemplate,omitempty"`
+	AdcSharedTemplate      *AdcSharedTemplateRevision                      `json:"adcSharedTemplate,omitempty"`
+	Application            *GoogleCloudSecuritycenterV1ResourceApplication `json:"application,omitempty"`
+	AwsMetadata            *AwsMetadata                                    `json:"awsMetadata,omitempty"`
+	AzureMetadata          *AzureMetadata                                  `json:"azureMetadata,omitempty"`
 	// Possible values:
-	//   "CLOUD_PROVIDER_UNSPECIFIED" - The cloud provider is unspecified.
-	//   "GOOGLE_CLOUD_PLATFORM" - The cloud provider is Google Cloud.
-	//   "AMAZON_WEB_SERVICES" - The cloud provider is Amazon Web Services.
-	//   "MICROSOFT_AZURE" - The cloud provider is Microsoft Azure.
-	CloudProvider string `json:"cloudProvider,omitempty"`
-	// DisplayName: The human readable name of the resource.
-	DisplayName string `json:"displayName,omitempty"`
-	// Folders: Output only. Contains a Folder message for each folder in the
-	// assets ancestry. The first folder is the deepest nested folder, and the last
-	// folder is the folder directly under the Organization.
-	Folders []*Folder `json:"folders,omitempty"`
-	// Location: The region or location of the service (if applicable).
-	Location string `json:"location,omitempty"`
-	// Name: The full resource name of the resource. See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource_name
-	Name string `json:"name,omitempty"`
-	// Organization: Indicates which organization or tenant in the cloud provider
-	// the finding applies to.
-	Organization string `json:"organization,omitempty"`
-	// Parent: The full resource name of resource's parent.
-	Parent string `json:"parent,omitempty"`
-	// ParentDisplayName: The human readable name of resource's parent.
-	ParentDisplayName string `json:"parentDisplayName,omitempty"`
-	// Project: The full resource name of project that the resource belongs to.
-	Project string `json:"project,omitempty"`
-	// ProjectDisplayName: The project ID that the resource belongs to.
-	ProjectDisplayName string `json:"projectDisplayName,omitempty"`
-	// ResourcePath: Provides the path to the resource within the resource
-	// hierarchy.
-	ResourcePath *ResourcePath `json:"resourcePath,omitempty"`
-	// ResourcePathString: A string representation of the resource path. For Google
-	// Cloud, it has the format of
-	// `organizations/{organization_id}/folders/{folder_id}/folders/{folder_id}/proj
-	// ects/{project_id}` where there can be any number of folders. For AWS, it has
-	// the format of
-	// `org/{organization_id}/ou/{organizational_unit_id}/ou/{organizational_unit_id
-	// }/account/{account_id}` where there can be any number of organizational
-	// units. For Azure, it has the format of
-	// `mg/{management_group_id}/mg/{management_group_id}/subscription/{subscription
-	// _id}/rg/{resource_group_name}` where there can be any number of management
-	// groups.
-	ResourcePathString string `json:"resourcePathString,omitempty"`
-	// Service: The parent service or product from which the resource is provided,
-	// for example, GKE or SNS.
-	Service string `json:"service,omitempty"`
-	// Type: The full resource type of the resource.
-	Type string `json:"type,omitempty"`
+	//   "CLOUD_PROVIDER_UNSPECIFIED"
+	//   "GOOGLE_CLOUD_PLATFORM"
+	//   "AMAZON_WEB_SERVICES"
+	//   "MICROSOFT_AZURE"
+	CloudProvider      string        `json:"cloudProvider,omitempty"`
+	DisplayName        string        `json:"displayName,omitempty"`
+	Folders            []*Folder     `json:"folders,omitempty"`
+	Location           string        `json:"location,omitempty"`
+	Name               string        `json:"name,omitempty"`
+	Organization       string        `json:"organization,omitempty"`
+	Parent             string        `json:"parent,omitempty"`
+	ParentDisplayName  string        `json:"parentDisplayName,omitempty"`
+	Project            string        `json:"project,omitempty"`
+	ProjectDisplayName string        `json:"projectDisplayName,omitempty"`
+	ResourcePath       *ResourcePath `json:"resourcePath,omitempty"`
+	ResourcePathString string        `json:"resourcePathString,omitempty"`
+	Service            string        `json:"service,omitempty"`
+	Type               string        `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdcApplication") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3729,15 +2446,9 @@ func (s GoogleCloudSecuritycenterV1Resource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1ResourceApplication: The App Hub Application
-// associated with the finding's resource.
 type GoogleCloudSecuritycenterV1ResourceApplication struct {
-	// Attributes: Consumer provided attributes for the application
 	Attributes *GoogleCloudSecuritycenterV1ResourceApplicationAttributes `json:"attributes,omitempty"`
-	// Name: The resource name of an Application. Format:
-	// `projects/{host-project-id}/locations/{location}/applications/{application-id
-	// }`
-	Name string `json:"name,omitempty"`
+	Name       string                                                    `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3756,20 +2467,12 @@ func (s GoogleCloudSecuritycenterV1ResourceApplication) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1ResourceApplicationAttributes: Consumer provided
-// attributes for the application
 type GoogleCloudSecuritycenterV1ResourceApplicationAttributes struct {
-	// BusinessOwners: Business team that ensures user needs are met and value is
-	// delivered
-	BusinessOwners []*GoogleCloudSecuritycenterV1ResourceApplicationAttributesContactInfo `json:"businessOwners,omitempty"`
-	// Criticality: User-defined criticality information.
-	Criticality *GoogleCloudSecuritycenterV1ResourceApplicationAttributesCriticality `json:"criticality,omitempty"`
-	// DeveloperOwners: Developer team that owns development and coding.
+	BusinessOwners  []*GoogleCloudSecuritycenterV1ResourceApplicationAttributesContactInfo `json:"businessOwners,omitempty"`
+	Criticality     *GoogleCloudSecuritycenterV1ResourceApplicationAttributesCriticality   `json:"criticality,omitempty"`
 	DeveloperOwners []*GoogleCloudSecuritycenterV1ResourceApplicationAttributesContactInfo `json:"developerOwners,omitempty"`
-	// Environment: User-defined environment information.
-	Environment *GoogleCloudSecuritycenterV1ResourceApplicationAttributesEnvironment `json:"environment,omitempty"`
-	// OperatorOwners: Operator team that ensures runtime and operations.
-	OperatorOwners []*GoogleCloudSecuritycenterV1ResourceApplicationAttributesContactInfo `json:"operatorOwners,omitempty"`
+	Environment     *GoogleCloudSecuritycenterV1ResourceApplicationAttributesEnvironment   `json:"environment,omitempty"`
+	OperatorOwners  []*GoogleCloudSecuritycenterV1ResourceApplicationAttributesContactInfo `json:"operatorOwners,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BusinessOwners") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3788,10 +2491,7 @@ func (s GoogleCloudSecuritycenterV1ResourceApplicationAttributes) MarshalJSON() 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1ResourceApplicationAttributesContactInfo: Contact
-// information of stakeholders.
 type GoogleCloudSecuritycenterV1ResourceApplicationAttributesContactInfo struct {
-	// Email: Email address of the contacts.
 	Email string `json:"email,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Email") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3811,17 +2511,13 @@ func (s GoogleCloudSecuritycenterV1ResourceApplicationAttributesContactInfo) Mar
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1ResourceApplicationAttributesCriticality:
-// Criticality of the Application, Service, or Workload
 type GoogleCloudSecuritycenterV1ResourceApplicationAttributesCriticality struct {
-	// Type: Criticality Type.
-	//
 	// Possible values:
-	//   "CRITICALITY_TYPE_UNSPECIFIED" - Unspecified type.
-	//   "MISSION_CRITICAL" - Mission critical service, application or workload.
-	//   "HIGH" - High impact.
-	//   "MEDIUM" - Medium impact.
-	//   "LOW" - Low impact.
+	//   "CRITICALITY_TYPE_UNSPECIFIED"
+	//   "MISSION_CRITICAL"
+	//   "HIGH"
+	//   "MEDIUM"
+	//   "LOW"
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3841,17 +2537,13 @@ func (s GoogleCloudSecuritycenterV1ResourceApplicationAttributesCriticality) Mar
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1ResourceApplicationAttributesEnvironment:
-// Environment of the Application, Service, or Workload
 type GoogleCloudSecuritycenterV1ResourceApplicationAttributesEnvironment struct {
-	// Type: Environment Type.
-	//
 	// Possible values:
-	//   "ENVIRONMENT_TYPE_UNSPECIFIED" - Unspecified type.
-	//   "PRODUCTION" - Production environment.
-	//   "STAGING" - Staging environment.
-	//   "TEST" - Test environment.
-	//   "DEVELOPMENT" - Development environment.
+	//   "ENVIRONMENT_TYPE_UNSPECIFIED"
+	//   "PRODUCTION"
+	//   "STAGING"
+	//   "TEST"
+	//   "DEVELOPMENT"
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3871,10 +2563,7 @@ func (s GoogleCloudSecuritycenterV1ResourceApplicationAttributesEnvironment) Mar
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1ResourceSelector: Resource for selecting resource
-// type.
 type GoogleCloudSecuritycenterV1ResourceSelector struct {
-	// ResourceTypes: The resource types to run the detector on.
 	ResourceTypes []string `json:"resourceTypes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ResourceTypes") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3894,63 +2583,29 @@ func (s GoogleCloudSecuritycenterV1ResourceSelector) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1ResourceValueConfig: A resource value
-// configuration (RVC) is a mapping configuration of user's resources to
-// resource values. Used in Attack path simulations.
 type GoogleCloudSecuritycenterV1ResourceValueConfig struct {
-	// CloudProvider: Cloud provider this configuration applies to
-	//
 	// Possible values:
-	//   "CLOUD_PROVIDER_UNSPECIFIED" - The cloud provider is unspecified.
-	//   "GOOGLE_CLOUD_PLATFORM" - The cloud provider is Google Cloud.
-	//   "AMAZON_WEB_SERVICES" - The cloud provider is Amazon Web Services.
-	//   "MICROSOFT_AZURE" - The cloud provider is Microsoft Azure.
-	CloudProvider string `json:"cloudProvider,omitempty"`
-	// CreateTime: Output only. Timestamp this resource value configuration was
-	// created.
-	CreateTime string `json:"createTime,omitempty"`
-	// Description: Description of the resource value configuration.
-	Description string `json:"description,omitempty"`
-	// Name: Name for the resource value configuration
-	Name string `json:"name,omitempty"`
-	// ResourceLabelsSelector: List of resource labels to search for, evaluated
-	// with `AND`. For example, "resource_labels_selector": {"key": "value",
-	// "env": "prod"}` will match resources with labels "key": "value" `AND` "env":
-	// "prod"
-	// https://cloud.google.com/resource-manager/docs/creating-managing-labels
+	//   "CLOUD_PROVIDER_UNSPECIFIED"
+	//   "GOOGLE_CLOUD_PLATFORM"
+	//   "AMAZON_WEB_SERVICES"
+	//   "MICROSOFT_AZURE"
+	CloudProvider          string            `json:"cloudProvider,omitempty"`
+	CreateTime             string            `json:"createTime,omitempty"`
+	Description            string            `json:"description,omitempty"`
+	Name                   string            `json:"name,omitempty"`
 	ResourceLabelsSelector map[string]string `json:"resourceLabelsSelector,omitempty"`
-	// ResourceType: Apply resource_value only to resources that match
-	// resource_type. resource_type will be checked with `AND` of other resources.
-	// For example, "storage.googleapis.com/Bucket" with resource_value "HIGH" will
-	// apply "HIGH" value only to "storage.googleapis.com/Bucket" resources.
-	ResourceType string `json:"resourceType,omitempty"`
-	// ResourceValue: Required. Resource value level this expression represents
-	//
+	ResourceType           string            `json:"resourceType,omitempty"`
 	// Possible values:
-	//   "RESOURCE_VALUE_UNSPECIFIED" - Unspecific value
-	//   "HIGH" - High resource value
-	//   "MEDIUM" - Medium resource value
-	//   "LOW" - Low resource value
-	//   "NONE" - No resource value, e.g. ignore these resources
-	ResourceValue string `json:"resourceValue,omitempty"`
-	// Scope: Project or folder to scope this configuration to. For example,
-	// "project/456" would apply this configuration only to resources in
-	// "project/456" scope will be checked with `AND` of other resources.
-	Scope string `json:"scope,omitempty"`
-	// SensitiveDataProtectionMapping: A mapping of the sensitivity on Sensitive
-	// Data Protection finding to resource values. This mapping can only be used in
-	// combination with a resource_type that is related to BigQuery, e.g.
-	// "bigquery.googleapis.com/Dataset".
+	//   "RESOURCE_VALUE_UNSPECIFIED"
+	//   "HIGH"
+	//   "MEDIUM"
+	//   "LOW"
+	//   "NONE"
+	ResourceValue                  string                                                     `json:"resourceValue,omitempty"`
+	Scope                          string                                                     `json:"scope,omitempty"`
 	SensitiveDataProtectionMapping *GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping `json:"sensitiveDataProtectionMapping,omitempty"`
-	// TagValues: Required. Tag values combined with `AND` to check against. For
-	// Google Cloud resources, they are tag value IDs in the form of
-	// "tagValues/123". Example: `[ "tagValues/123", "tagValues/456",
-	// "tagValues/789" ]`
-	// https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing
-	TagValues []string `json:"tagValues,omitempty"`
-	// UpdateTime: Output only. Timestamp this resource value configuration was
-	// last updated.
-	UpdateTime string `json:"updateTime,omitempty"`
+	TagValues                      []string                                                   `json:"tagValues,omitempty"`
+	UpdateTime                     string                                                     `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudProvider") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3969,19 +2624,13 @@ func (s GoogleCloudSecuritycenterV1ResourceValueConfig) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse: Response of asset
-// discovery run
 type GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse struct {
-	// Duration: The duration between asset discovery run start and end
 	Duration string `json:"duration,omitempty"`
-	// State: The state of an asset discovery run.
-	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Asset discovery run state was unspecified.
-	//   "COMPLETED" - Asset discovery run completed successfully.
-	//   "SUPERSEDED" - Asset discovery run was cancelled with tasks still pending,
-	// as another run for the same organization was started with a higher priority.
-	//   "TERMINATED" - Asset discovery run was killed and terminated.
+	//   "STATE_UNSPECIFIED"
+	//   "COMPLETED"
+	//   "SUPERSEDED"
+	//   "TERMINATED"
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Duration") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4001,58 +2650,25 @@ func (s GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule: Represents
-// an instance of a Security Health Analytics custom module, including its full
-// module name, display name, enablement state, and last updated time. You can
-// create a custom module at the organization, folder, or project level. Custom
-// modules that you create at the organization or folder level are inherited by
-// the child folders and projects.
 type GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule struct {
-	// AncestorModule: Output only. If empty, indicates that the custom module was
-	// created in the organization, folder, or project in which you are viewing the
-	// custom module. Otherwise, `ancestor_module` specifies the organization or
-	// folder from which the custom module is inherited.
 	AncestorModule string `json:"ancestorModule,omitempty"`
-	// CloudProvider: The cloud provider of the custom module.
-	//
 	// Possible values:
-	//   "CLOUD_PROVIDER_UNSPECIFIED" - Unspecified cloud provider.
-	//   "GOOGLE_CLOUD_PLATFORM" - Google Cloud.
-	//   "AMAZON_WEB_SERVICES" - Amazon Web Services (AWS).
-	//   "MICROSOFT_AZURE" - Microsoft Azure.
-	CloudProvider string `json:"cloudProvider,omitempty"`
-	// CustomConfig: The user specified custom configuration for the module.
-	CustomConfig *GoogleCloudSecuritycenterV1CustomConfig `json:"customConfig,omitempty"`
-	// DisplayName: The display name of the Security Health Analytics custom
-	// module. This display name becomes the finding category for all findings that
-	// are returned by this custom module. The display name must be between 1 and
-	// 128 characters, start with a lowercase letter, and contain alphanumeric
-	// characters or underscores only.
-	DisplayName string `json:"displayName,omitempty"`
-	// EnablementState: The enablement state of the custom module.
-	//
+	//   "CLOUD_PROVIDER_UNSPECIFIED"
+	//   "GOOGLE_CLOUD_PLATFORM"
+	//   "AMAZON_WEB_SERVICES"
+	//   "MICROSOFT_AZURE"
+	CloudProvider string                                   `json:"cloudProvider,omitempty"`
+	CustomConfig  *GoogleCloudSecuritycenterV1CustomConfig `json:"customConfig,omitempty"`
+	DisplayName   string                                   `json:"displayName,omitempty"`
 	// Possible values:
-	//   "ENABLEMENT_STATE_UNSPECIFIED" - Unspecified enablement state.
-	//   "ENABLED" - The module is enabled at the given CRM resource.
-	//   "DISABLED" - The module is disabled at the given CRM resource.
-	//   "INHERITED" - State is inherited from an ancestor module. The module will
-	// either be effectively ENABLED or DISABLED based on its closest non-inherited
-	// ancestor module in the CRM hierarchy.
+	//   "ENABLEMENT_STATE_UNSPECIFIED"
+	//   "ENABLED"
+	//   "DISABLED"
+	//   "INHERITED"
 	EnablementState string `json:"enablementState,omitempty"`
-	// LastEditor: Output only. The editor that last updated the custom module.
-	LastEditor string `json:"lastEditor,omitempty"`
-	// Name: Immutable. The resource name of the custom module. Its format is
-	// "organizations/{organization}/securityHealthAnalyticsSettings/customModules/{
-	// customModule}", or
-	// "folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModule
-	// }", or
-	// "projects/{project}/securityHealthAnalyticsSettings/customModules/{customModu
-	// le}" The id {customModule} is server-generated and is not user settable. It
-	// will be a numeric id containing 1-20 digits.
-	Name string `json:"name,omitempty"`
-	// UpdateTime: Output only. The time at which the custom module was last
-	// updated.
-	UpdateTime string `json:"updateTime,omitempty"`
+	LastEditor      string `json:"lastEditor,omitempty"`
+	Name            string `json:"name,omitempty"`
+	UpdateTime      string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AncestorModule") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4071,30 +2687,20 @@ func (s GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) MarshalJ
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping: Resource value
-// mapping for Sensitive Data Protection findings. If any of these mappings
-// have a resource value that is not unspecified, the resource_value field will
-// be ignored when reading this configuration.
 type GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping struct {
-	// HighSensitivityMapping: Resource value mapping for high-sensitivity
-	// Sensitive Data Protection findings
-	//
 	// Possible values:
-	//   "RESOURCE_VALUE_UNSPECIFIED" - Unspecific value
-	//   "HIGH" - High resource value
-	//   "MEDIUM" - Medium resource value
-	//   "LOW" - Low resource value
-	//   "NONE" - No resource value, e.g. ignore these resources
+	//   "RESOURCE_VALUE_UNSPECIFIED"
+	//   "HIGH"
+	//   "MEDIUM"
+	//   "LOW"
+	//   "NONE"
 	HighSensitivityMapping string `json:"highSensitivityMapping,omitempty"`
-	// MediumSensitivityMapping: Resource value mapping for medium-sensitivity
-	// Sensitive Data Protection findings
-	//
 	// Possible values:
-	//   "RESOURCE_VALUE_UNSPECIFIED" - Unspecific value
-	//   "HIGH" - High resource value
-	//   "MEDIUM" - Medium resource value
-	//   "LOW" - Low resource value
-	//   "NONE" - No resource value, e.g. ignore these resources
+	//   "RESOURCE_VALUE_UNSPECIFIED"
+	//   "HIGH"
+	//   "MEDIUM"
+	//   "LOW"
+	//   "NONE"
 	MediumSensitivityMapping string `json:"mediumSensitivityMapping,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "HighSensitivityMapping") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4114,62 +2720,20 @@ func (s GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping) MarshalJSON()
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1beta1Finding: Security Command Center finding. A
-// finding is a record of assessment data (security, risk, health or privacy)
-// ingested into Security Command Center for presentation, notification,
-// analysis, policy testing, and enforcement. For example, an XSS vulnerability
-// in an App Engine application is a finding.
 type GoogleCloudSecuritycenterV1beta1Finding struct {
-	// Category: The additional taxonomy group within findings from a given source.
-	// This field is immutable after creation time. Example: "XSS_FLASH_INJECTION"
-	Category string `json:"category,omitempty"`
-	// CreateTime: The time at which the finding was created in Security Command
-	// Center.
-	CreateTime string `json:"createTime,omitempty"`
-	// EventTime: The time at which the event took place, or when an update to the
-	// finding occurred. For example, if the finding represents an open firewall it
-	// would capture the time the detector believes the firewall became open. The
-	// accuracy is determined by the detector. If the finding were to be resolved
-	// afterward, this time would reflect when the finding was resolved.
-	EventTime string `json:"eventTime,omitempty"`
-	// ExternalUri: The URI that, if available, points to a web page outside of
-	// Security Command Center where additional information about the finding can
-	// be found. This field is guaranteed to be either empty or a well formed URL.
-	ExternalUri string `json:"externalUri,omitempty"`
-	// Name: The relative resource name of this finding. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-	// Example:
-	// "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}"
-	Name string `json:"name,omitempty"`
-	// Parent: Immutable. The relative resource name of the source the finding
-	// belongs to. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-	// This field is immutable after creation time. For example:
-	// "organizations/{organization_id}/sources/{source_id}"
-	Parent string `json:"parent,omitempty"`
-	// ResourceName: For findings on Google Cloud resources, the full resource name
-	// of the Google Cloud resource this finding is for. See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource_name When
-	// the finding is for a non-Google Cloud resource, the resourceName can be a
-	// customer or partner defined string. This field is immutable after creation
-	// time.
-	ResourceName string `json:"resourceName,omitempty"`
-	// SecurityMarks: Output only. User specified security marks. These marks are
-	// entirely managed by the user and come from the SecurityMarks resource that
-	// belongs to the finding.
-	SecurityMarks *GoogleCloudSecuritycenterV1beta1SecurityMarks `json:"securityMarks,omitempty"`
-	// SourceProperties: Source specific properties. These properties are managed
-	// by the source that writes the finding. The key names in the
-	// source_properties map must be between 1 and 255 characters, and must start
-	// with a letter and contain alphanumeric characters or underscores only.
-	SourceProperties googleapi.RawMessage `json:"sourceProperties,omitempty"`
-	// State: The state of the finding.
-	//
+	Category         string                                         `json:"category,omitempty"`
+	CreateTime       string                                         `json:"createTime,omitempty"`
+	EventTime        string                                         `json:"eventTime,omitempty"`
+	ExternalUri      string                                         `json:"externalUri,omitempty"`
+	Name             string                                         `json:"name,omitempty"`
+	Parent           string                                         `json:"parent,omitempty"`
+	ResourceName     string                                         `json:"resourceName,omitempty"`
+	SecurityMarks    *GoogleCloudSecuritycenterV1beta1SecurityMarks `json:"securityMarks,omitempty"`
+	SourceProperties googleapi.RawMessage                           `json:"sourceProperties,omitempty"`
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Unspecified state.
-	//   "ACTIVE" - The finding requires attention and has not been addressed yet.
-	//   "INACTIVE" - The finding has been fixed, triaged as a non-issue or
-	// otherwise addressed and is no longer active.
+	//   "STATE_UNSPECIFIED"
+	//   "ACTIVE"
+	//   "INACTIVE"
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4192,19 +2756,13 @@ func (s GoogleCloudSecuritycenterV1beta1Finding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1beta1RunAssetDiscoveryResponse: Response of asset
-// discovery run
 type GoogleCloudSecuritycenterV1beta1RunAssetDiscoveryResponse struct {
-	// Duration: The duration between asset discovery run start and end
 	Duration string `json:"duration,omitempty"`
-	// State: The state of an asset discovery run.
-	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Asset discovery run state was unspecified.
-	//   "COMPLETED" - Asset discovery run completed successfully.
-	//   "SUPERSEDED" - Asset discovery run was cancelled with tasks still pending,
-	// as another run for the same organization was started with a higher priority.
-	//   "TERMINATED" - Asset discovery run was killed and terminated.
+	//   "STATE_UNSPECIFIED"
+	//   "COMPLETED"
+	//   "SUPERSEDED"
+	//   "TERMINATED"
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Duration") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4224,25 +2782,9 @@ func (s GoogleCloudSecuritycenterV1beta1RunAssetDiscoveryResponse) MarshalJSON()
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1beta1SecurityMarks: User specified security marks
-// that are attached to the parent Security Command Center resource. Security
-// marks are scoped within a Security Command Center organization -- they can
-// be modified and viewed by all users who have proper permissions on the
-// organization.
 type GoogleCloudSecuritycenterV1beta1SecurityMarks struct {
-	// Marks: Mutable user specified security marks belonging to the parent
-	// resource. Constraints are as follows: * Keys and values are treated as case
-	// insensitive * Keys must be between 1 - 256 characters (inclusive) * Keys
-	// must be letters, numbers, underscores, or dashes * Values have leading and
-	// trailing whitespace trimmed, remaining characters must be between 1 - 4096
-	// characters (inclusive)
 	Marks map[string]string `json:"marks,omitempty"`
-	// Name: The relative resource name of the SecurityMarks. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-	// Examples: "organizations/{organization_id}/assets/{asset_id}/securityMarks"
-	// "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/se
-	// curityMarks".
-	Name string `json:"name,omitempty"`
+	Name  string            `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -4264,80 +2806,28 @@ func (s GoogleCloudSecuritycenterV1beta1SecurityMarks) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1p1beta1Finding: Security Command Center finding.
-// A finding is a record of assessment data (security, risk, health or privacy)
-// ingested into Security Command Center for presentation, notification,
-// analysis, policy testing, and enforcement. For example, an XSS vulnerability
-// in an App Engine application is a finding.
 type GoogleCloudSecuritycenterV1p1beta1Finding struct {
-	// CanonicalName: The canonical name of the finding. It's either
-	// "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}",
-	// "folders/{folder_id}/sources/{source_id}/findings/{finding_id}" or
-	// "projects/{project_number}/sources/{source_id}/findings/{finding_id}",
-	// depending on the closest CRM ancestor of the resource associated with the
-	// finding.
-	CanonicalName string `json:"canonicalName,omitempty"`
-	// Category: The additional taxonomy group within findings from a given source.
-	// This field is immutable after creation time. Example: "XSS_FLASH_INJECTION"
-	Category string `json:"category,omitempty"`
-	// CreateTime: The time at which the finding was created in Security Command
-	// Center.
-	CreateTime string `json:"createTime,omitempty"`
-	// EventTime: The time at which the event took place, or when an update to the
-	// finding occurred. For example, if the finding represents an open firewall it
-	// would capture the time the detector believes the firewall became open. The
-	// accuracy is determined by the detector. If the finding were to be resolved
-	// afterward, this time would reflect when the finding was resolved. Must not
-	// be set to a value greater than the current timestamp.
-	EventTime string `json:"eventTime,omitempty"`
-	// ExternalUri: The URI that, if available, points to a web page outside of
-	// Security Command Center where additional information about the finding can
-	// be found. This field is guaranteed to be either empty or a well formed URL.
-	ExternalUri string `json:"externalUri,omitempty"`
-	// Name: The relative resource name of this finding. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-	// Example:
-	// "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}"
-	Name string `json:"name,omitempty"`
-	// Parent: The relative resource name of the source the finding belongs to.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-	// This field is immutable after creation time. For example:
-	// "organizations/{organization_id}/sources/{source_id}"
-	Parent string `json:"parent,omitempty"`
-	// ResourceName: For findings on Google Cloud resources, the full resource name
-	// of the Google Cloud resource this finding is for. See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource_name When
-	// the finding is for a non-Google Cloud resource, the resourceName can be a
-	// customer or partner defined string. This field is immutable after creation
-	// time.
-	ResourceName string `json:"resourceName,omitempty"`
-	// SecurityMarks: Output only. User specified security marks. These marks are
-	// entirely managed by the user and come from the SecurityMarks resource that
-	// belongs to the finding.
+	CanonicalName string                                           `json:"canonicalName,omitempty"`
+	Category      string                                           `json:"category,omitempty"`
+	CreateTime    string                                           `json:"createTime,omitempty"`
+	EventTime     string                                           `json:"eventTime,omitempty"`
+	ExternalUri   string                                           `json:"externalUri,omitempty"`
+	Name          string                                           `json:"name,omitempty"`
+	Parent        string                                           `json:"parent,omitempty"`
+	ResourceName  string                                           `json:"resourceName,omitempty"`
 	SecurityMarks *GoogleCloudSecuritycenterV1p1beta1SecurityMarks `json:"securityMarks,omitempty"`
-	// Severity: The severity of the finding. This field is managed by the source
-	// that writes the finding.
-	//
 	// Possible values:
-	//   "SEVERITY_UNSPECIFIED" - No severity specified. The default value.
-	//   "CRITICAL" - Critical severity.
-	//   "HIGH" - High severity.
-	//   "MEDIUM" - Medium severity.
-	//   "LOW" - Low severity.
-	Severity string `json:"severity,omitempty"`
-	// SourceProperties: Source specific properties. These properties are managed
-	// by the source that writes the finding. The key names in the
-	// source_properties map must be between 1 and 255 characters, and must start
-	// with a letter and contain alphanumeric characters or underscores only.
+	//   "SEVERITY_UNSPECIFIED"
+	//   "CRITICAL"
+	//   "HIGH"
+	//   "MEDIUM"
+	//   "LOW"
+	Severity         string               `json:"severity,omitempty"`
 	SourceProperties googleapi.RawMessage `json:"sourceProperties,omitempty"`
-	// State: The state of the finding.
-	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Unspecified state.
-	//   "ACTIVE" - The finding requires attention and has not been addressed yet.
-	//   "INACTIVE" - The finding has been fixed, triaged as a non-issue or
-	// otherwise addressed and is no longer active.
+	//   "STATE_UNSPECIFIED"
+	//   "ACTIVE"
+	//   "INACTIVE"
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CanonicalName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4357,13 +2847,8 @@ func (s GoogleCloudSecuritycenterV1p1beta1Finding) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1p1beta1Folder: Message that contains the resource
-// name and display name of a folder resource.
 type GoogleCloudSecuritycenterV1p1beta1Folder struct {
-	// ResourceFolder: Full resource name of this folder. See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource_name
-	ResourceFolder string `json:"resourceFolder,omitempty"`
-	// ResourceFolderDisplayName: The user defined display name for this folder.
+	ResourceFolder            string `json:"resourceFolder,omitempty"`
 	ResourceFolderDisplayName string `json:"resourceFolderDisplayName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ResourceFolder") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4383,17 +2868,10 @@ func (s GoogleCloudSecuritycenterV1p1beta1Folder) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1p1beta1NotificationMessage: Security Command
-// Center's Notification
 type GoogleCloudSecuritycenterV1p1beta1NotificationMessage struct {
-	// Finding: If it's a Finding based notification config, this field will be
-	// populated.
-	Finding *GoogleCloudSecuritycenterV1p1beta1Finding `json:"finding,omitempty"`
-	// NotificationConfigName: Name of the notification config that generated
-	// current notification.
-	NotificationConfigName string `json:"notificationConfigName,omitempty"`
-	// Resource: The Cloud resource tied to the notification.
-	Resource *GoogleCloudSecuritycenterV1p1beta1Resource `json:"resource,omitempty"`
+	Finding                *GoogleCloudSecuritycenterV1p1beta1Finding  `json:"finding,omitempty"`
+	NotificationConfigName string                                      `json:"notificationConfigName,omitempty"`
+	Resource               *GoogleCloudSecuritycenterV1p1beta1Resource `json:"resource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Finding") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -4412,24 +2890,13 @@ func (s GoogleCloudSecuritycenterV1p1beta1NotificationMessage) MarshalJSON() ([]
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1p1beta1Resource: Information related to the
-// Google Cloud resource.
 type GoogleCloudSecuritycenterV1p1beta1Resource struct {
-	// Folders: Output only. Contains a Folder message for each folder in the
-	// assets ancestry. The first folder is the deepest nested folder, and the last
-	// folder is the folder directly under the Organization.
-	Folders []*GoogleCloudSecuritycenterV1p1beta1Folder `json:"folders,omitempty"`
-	// Name: The full resource name of the resource. See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource_name
-	Name string `json:"name,omitempty"`
-	// Parent: The full resource name of resource's parent.
-	Parent string `json:"parent,omitempty"`
-	// ParentDisplayName: The human readable name of resource's parent.
-	ParentDisplayName string `json:"parentDisplayName,omitempty"`
-	// Project: The full resource name of project that the resource belongs to.
-	Project string `json:"project,omitempty"`
-	// ProjectDisplayName: The project id that the resource belongs to.
-	ProjectDisplayName string `json:"projectDisplayName,omitempty"`
+	Folders            []*GoogleCloudSecuritycenterV1p1beta1Folder `json:"folders,omitempty"`
+	Name               string                                      `json:"name,omitempty"`
+	Parent             string                                      `json:"parent,omitempty"`
+	ParentDisplayName  string                                      `json:"parentDisplayName,omitempty"`
+	Project            string                                      `json:"project,omitempty"`
+	ProjectDisplayName string                                      `json:"projectDisplayName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Folders") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -4448,19 +2915,13 @@ func (s GoogleCloudSecuritycenterV1p1beta1Resource) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1p1beta1RunAssetDiscoveryResponse: Response of
-// asset discovery run
 type GoogleCloudSecuritycenterV1p1beta1RunAssetDiscoveryResponse struct {
-	// Duration: The duration between asset discovery run start and end
 	Duration string `json:"duration,omitempty"`
-	// State: The state of an asset discovery run.
-	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Asset discovery run state was unspecified.
-	//   "COMPLETED" - Asset discovery run completed successfully.
-	//   "SUPERSEDED" - Asset discovery run was cancelled with tasks still pending,
-	// as another run for the same organization was started with a higher priority.
-	//   "TERMINATED" - Asset discovery run was killed and terminated.
+	//   "STATE_UNSPECIFIED"
+	//   "COMPLETED"
+	//   "SUPERSEDED"
+	//   "TERMINATED"
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Duration") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4480,36 +2941,10 @@ func (s GoogleCloudSecuritycenterV1p1beta1RunAssetDiscoveryResponse) MarshalJSON
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1p1beta1SecurityMarks: User specified security
-// marks that are attached to the parent Security Command Center resource.
-// Security marks are scoped within a Security Command Center organization --
-// they can be modified and viewed by all users who have proper permissions on
-// the organization.
 type GoogleCloudSecuritycenterV1p1beta1SecurityMarks struct {
-	// CanonicalName: The canonical name of the marks. Examples:
-	// "organizations/{organization_id}/assets/{asset_id}/securityMarks"
-	// "folders/{folder_id}/assets/{asset_id}/securityMarks"
-	// "projects/{project_number}/assets/{asset_id}/securityMarks"
-	// "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/se
-	// curityMarks"
-	// "folders/{folder_id}/sources/{source_id}/findings/{finding_id}/securityMarks"
-	//
-	// "projects/{project_number}/sources/{source_id}/findings/{finding_id}/security
-	// Marks"
-	CanonicalName string `json:"canonicalName,omitempty"`
-	// Marks: Mutable user specified security marks belonging to the parent
-	// resource. Constraints are as follows: * Keys and values are treated as case
-	// insensitive * Keys must be between 1 - 256 characters (inclusive) * Keys
-	// must be letters, numbers, underscores, or dashes * Values have leading and
-	// trailing whitespace trimmed, remaining characters must be between 1 - 4096
-	// characters (inclusive)
-	Marks map[string]string `json:"marks,omitempty"`
-	// Name: The relative resource name of the SecurityMarks. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-	// Examples: "organizations/{organization_id}/assets/{asset_id}/securityMarks"
-	// "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/se
-	// curityMarks".
-	Name string `json:"name,omitempty"`
+	CanonicalName string            `json:"canonicalName,omitempty"`
+	Marks         map[string]string `json:"marks,omitempty"`
+	Name          string            `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CanonicalName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4528,59 +2963,18 @@ func (s GoogleCloudSecuritycenterV1p1beta1SecurityMarks) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Access: Represents an access event.
 type GoogleCloudSecuritycenterV2Access struct {
-	// CallerIp: Caller's IP address, such as "1.1.1.1".
-	CallerIp string `json:"callerIp,omitempty"`
-	// CallerIpGeo: The caller IP's geolocation, which identifies where the call
-	// came from.
-	CallerIpGeo *GoogleCloudSecuritycenterV2Geolocation `json:"callerIpGeo,omitempty"`
-	// MethodName: The method that the service account called, e.g. "SetIamPolicy".
-	MethodName string `json:"methodName,omitempty"`
-	// PrincipalEmail: Associated email, such as "foo@google.com". The email
-	// address of the authenticated user or a service account acting on behalf of a
-	// third party principal making the request. For third party identity callers,
-	// the `principal_subject` field is populated instead of this field. For
-	// privacy reasons, the principal email address is sometimes redacted. For more
-	// information, see Caller identities in audit logs
-	// (https://cloud.google.com/logging/docs/audit#user-id).
-	PrincipalEmail string `json:"principalEmail,omitempty"`
-	// PrincipalSubject: A string that represents the principal_subject that is
-	// associated with the identity. Unlike `principal_email`, `principal_subject`
-	// supports principals that aren't associated with email addresses, such as
-	// third party principals. For most identities, the format is
-	// `principal://iam.googleapis.com/{identity pool name}/subject/{subject}`.
-	// Some GKE identities, such as GKE_WORKLOAD, FREEFORM, and GKE_HUB_WORKLOAD,
-	// still use the legacy format `serviceAccount:{identity pool
-	// name}[{subject}]`.
-	PrincipalSubject string `json:"principalSubject,omitempty"`
-	// ServiceAccountDelegationInfo: The identity delegation history of an
-	// authenticated service account that made the request. The
-	// `serviceAccountDelegationInfo[]` object contains information about the real
-	// authorities that try to access Google Cloud resources by delegating on a
-	// service account. When multiple authorities are present, they are guaranteed
-	// to be sorted based on the original ordering of the identity delegation
-	// events.
+	CallerIp                     string                                                     `json:"callerIp,omitempty"`
+	CallerIpGeo                  *GoogleCloudSecuritycenterV2Geolocation                    `json:"callerIpGeo,omitempty"`
+	MethodName                   string                                                     `json:"methodName,omitempty"`
+	PrincipalEmail               string                                                     `json:"principalEmail,omitempty"`
+	PrincipalSubject             string                                                     `json:"principalSubject,omitempty"`
 	ServiceAccountDelegationInfo []*GoogleCloudSecuritycenterV2ServiceAccountDelegationInfo `json:"serviceAccountDelegationInfo,omitempty"`
-	// ServiceAccountKeyName: The name of the service account key that was used to
-	// create or exchange credentials when authenticating the service account that
-	// made the request. This is a scheme-less URI full resource name. For example:
-	// "//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{k
-	// ey}".
-	ServiceAccountKeyName string `json:"serviceAccountKeyName,omitempty"`
-	// ServiceName: This is the API service that the service account made a call
-	// to, e.g. "iam.googleapis.com"
-	ServiceName string `json:"serviceName,omitempty"`
-	// UserAgent: The caller's user agent string associated with the finding.
-	UserAgent string `json:"userAgent,omitempty"`
-	// UserAgentFamily: Type of user agent associated with the finding. For
-	// example, an operating system shell or an embedded or standalone application.
-	UserAgentFamily string `json:"userAgentFamily,omitempty"`
-	// UserName: A string that represents a username. The username provided depends
-	// on the type of the finding and is likely not an IAM principal. For example,
-	// this can be a system username if the finding is related to a virtual
-	// machine, or it can be an application login username.
-	UserName string `json:"userName,omitempty"`
+	ServiceAccountKeyName        string                                                     `json:"serviceAccountKeyName,omitempty"`
+	ServiceName                  string                                                     `json:"serviceName,omitempty"`
+	UserAgent                    string                                                     `json:"userAgent,omitempty"`
+	UserAgentFamily              string                                                     `json:"userAgentFamily,omitempty"`
+	UserName                     string                                                     `json:"userName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CallerIp") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4599,28 +2993,14 @@ func (s GoogleCloudSecuritycenterV2Access) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2AccessReview: Conveys information about a
-// Kubernetes access review (such as one returned by a `kubectl auth can-i`
-// (https://kubernetes.io/docs/reference/access-authn-authz/authorization/#checking-api-access)
-// command) that was involved in a finding.
 type GoogleCloudSecuritycenterV2AccessReview struct {
-	// Group: The API group of the resource. "*" means all.
-	Group string `json:"group,omitempty"`
-	// Name: The name of the resource being requested. Empty means all.
-	Name string `json:"name,omitempty"`
-	// Ns: Namespace of the action being requested. Currently, there is no
-	// distinction between no namespace and all namespaces. Both are represented by
-	// "" (empty).
-	Ns string `json:"ns,omitempty"`
-	// Resource: The optional resource type requested. "*" means all.
-	Resource string `json:"resource,omitempty"`
-	// Subresource: The optional subresource type.
+	Group       string `json:"group,omitempty"`
+	Name        string `json:"name,omitempty"`
+	Ns          string `json:"ns,omitempty"`
+	Resource    string `json:"resource,omitempty"`
 	Subresource string `json:"subresource,omitempty"`
-	// Verb: A Kubernetes resource API verb, like get, list, watch, create, update,
-	// delete, proxy. "*" means all.
-	Verb string `json:"verb,omitempty"`
-	// Version: The API version of the resource. "*" means all.
-	Version string `json:"version,omitempty"`
+	Verb        string `json:"verb,omitempty"`
+	Version     string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Group") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -4639,16 +3019,7 @@ func (s GoogleCloudSecuritycenterV2AccessReview) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2AdaptiveProtection: Information about Google
-// Cloud Armor Adaptive Protection
-// (https://cloud.google.com/armor/docs/cloud-armor-overview#google-cloud-armor-adaptive-protection).
 type GoogleCloudSecuritycenterV2AdaptiveProtection struct {
-	// Confidence: A score of 0 means that there is low confidence that the
-	// detected event is an actual attack. A score of 1 means that there is high
-	// confidence that the detected event is an attack. See the Adaptive Protection
-	// documentation
-	// (https://cloud.google.com/armor/docs/adaptive-protection-overview#configure-alert-tuning)
-	// for further explanation.
 	Confidence float64 `json:"confidence,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4682,15 +3053,9 @@ func (s *GoogleCloudSecuritycenterV2AdaptiveProtection) UnmarshalJSON(data []byt
 	return nil
 }
 
-// GoogleCloudSecuritycenterV2AdcApplication: Represents an ADC application
-// associated with the finding.
 type GoogleCloudSecuritycenterV2AdcApplication struct {
-	// Attributes: Consumer provided attributes for the AppHub application.
 	Attributes *GoogleCloudSecuritycenterV2ResourceApplicationAttributes `json:"attributes,omitempty"`
-	// Name: The resource name of an ADC Application. Format:
-	// projects/{project}/locations/{location}/spaces/{space}/applications/{applicat
-	// ion}
-	Name string `json:"name,omitempty"`
+	Name       string                                                    `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4709,12 +3074,7 @@ func (s GoogleCloudSecuritycenterV2AdcApplication) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2AdcApplicationTemplateRevision: Represents an ADC
-// template associated with the finding.
 type GoogleCloudSecuritycenterV2AdcApplicationTemplateRevision struct {
-	// Name: The resource name of an ADC Application Template Revision. Format:
-	// projects/{project}/locations/{location}/spaces/{space}/applicationTemplates/{
-	// application_template}/revisions/{revision}
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4734,12 +3094,7 @@ func (s GoogleCloudSecuritycenterV2AdcApplicationTemplateRevision) MarshalJSON()
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2AdcSharedTemplateRevision: Represents an ADC
-// shared template associated with the finding.
 type GoogleCloudSecuritycenterV2AdcSharedTemplateRevision struct {
-	// Name: The resource name of an ADC Shared Template Revision. Format:
-	// projects/{project}/locations/{location}/spaces/{space}/applicationTemplates/{
-	// application_template}/revisions/{revision}
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4759,10 +3114,7 @@ func (s GoogleCloudSecuritycenterV2AdcSharedTemplateRevision) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2AffectedResources: Details about resources
-// affected by this finding.
 type GoogleCloudSecuritycenterV2AffectedResources struct {
-	// Count: The count of resources affected by the finding.
 	Count int64 `json:"count,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4782,23 +3134,15 @@ func (s GoogleCloudSecuritycenterV2AffectedResources) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2AgentDataAccessEvent: Details about a data access
-// attempt made by an agent principal not authorized under applicable data
-// security policy.
 type GoogleCloudSecuritycenterV2AgentDataAccessEvent struct {
-	// EventId: Unique identifier for data access event.
-	EventId string `json:"eventId,omitempty"`
-	// EventTime: Timestamp of data access event.
+	EventId   string `json:"eventId,omitempty"`
 	EventTime string `json:"eventTime,omitempty"`
-	// Operation: The operation performed by the principal to access the data.
-	//
 	// Possible values:
-	//   "OPERATION_UNSPECIFIED" - The operation is unspecified.
-	//   "READ" - Represents a read operation.
-	//   "MOVE" - Represents a move operation.
-	//   "COPY" - Represents a copy operation.
-	Operation string `json:"operation,omitempty"`
-	// PrincipalSubject: The agent principal that accessed the data.
+	//   "OPERATION_UNSPECIFIED"
+	//   "READ"
+	//   "MOVE"
+	//   "COPY"
+	Operation        string `json:"operation,omitempty"`
 	PrincipalSubject string `json:"principalSubject,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EventId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4818,36 +3162,21 @@ func (s GoogleCloudSecuritycenterV2AgentDataAccessEvent) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2AiModel: Contains information about the AI model
-// associated with the finding.
 type GoogleCloudSecuritycenterV2AiModel struct {
-	// DeploymentPlatform: The platform on which the model is deployed.
-	//
 	// Possible values:
-	//   "DEPLOYMENT_PLATFORM_UNSPECIFIED" - Unspecified deployment platform.
-	//   "VERTEX_AI" - Vertex AI.
-	//   "GKE" - Google Kubernetes Engine.
-	//   "GCE" - Google Compute Engine.
-	//   "FINE_TUNED_MODEL" - Fine tuned model.
+	//   "DEPLOYMENT_PLATFORM_UNSPECIFIED"
+	//   "VERTEX_AI"
+	//   "GKE"
+	//   "GCE"
+	//   "FINE_TUNED_MODEL"
 	DeploymentPlatform string `json:"deploymentPlatform,omitempty"`
-	// DisplayName: The user defined display name of model. Ex.
-	// baseline-classification-model
-	DisplayName string `json:"displayName,omitempty"`
-	// Domain: The domain of the model, for example, “image-classification”.
-	Domain string `json:"domain,omitempty"`
-	// Library: The name of the model library, for example, “transformers”.
-	Library string `json:"library,omitempty"`
-	// Location: The region in which the model is used, for example,
-	// “us-central1”.
-	Location string `json:"location,omitempty"`
-	// Name: The name of the AI model, for example, "gemini:1.0.0".
-	Name string `json:"name,omitempty"`
-	// Publisher: The publisher of the model, for example, “google” or
-	// “nvidia”.
-	Publisher string `json:"publisher,omitempty"`
-	// UsageCategory: The purpose of the model, for example, "Inteference" or
-	// "Training".
-	UsageCategory string `json:"usageCategory,omitempty"`
+	DisplayName        string `json:"displayName,omitempty"`
+	Domain             string `json:"domain,omitempty"`
+	Library            string `json:"library,omitempty"`
+	Location           string `json:"location,omitempty"`
+	Name               string `json:"name,omitempty"`
+	Publisher          string `json:"publisher,omitempty"`
+	UsageCategory      string `json:"usageCategory,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DeploymentPlatform") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4866,9 +3195,7 @@ func (s GoogleCloudSecuritycenterV2AiModel) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Allowed: Allowed IP rule.
 type GoogleCloudSecuritycenterV2Allowed struct {
-	// IpRules: Optional. Optional list of allowed IP rules.
 	IpRules []*GoogleCloudSecuritycenterV2IpRule `json:"ipRules,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IpRules") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4888,15 +3215,8 @@ func (s GoogleCloudSecuritycenterV2Allowed) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Application: Represents an application associated
-// with a finding.
 type GoogleCloudSecuritycenterV2Application struct {
-	// BaseUri: The base URI that identifies the network location of the
-	// application in which the vulnerability was detected. For example,
-	// `http://example.com`.
 	BaseUri string `json:"baseUri,omitempty"`
-	// FullUri: The full URI with payload that could be used to reproduce the
-	// vulnerability. For example, `http://example.com?p=aMmYgI6H`.
 	FullUri string `json:"fullUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BaseUri") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4916,13 +3236,9 @@ func (s GoogleCloudSecuritycenterV2Application) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2ArtifactGuardPolicies: Represents the result of
-// evaluating artifact guard policies.
 type GoogleCloudSecuritycenterV2ArtifactGuardPolicies struct {
-	// FailingPolicies: A list of failing policies.
 	FailingPolicies []*GoogleCloudSecuritycenterV2ArtifactGuardPolicy `json:"failingPolicies,omitempty"`
-	// ResourceId: The ID of the resource that has policies configured for it.
-	ResourceId string `json:"resourceId,omitempty"`
+	ResourceId      string                                            `json:"resourceId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FailingPolicies") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4941,21 +3257,12 @@ func (s GoogleCloudSecuritycenterV2ArtifactGuardPolicies) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2ArtifactGuardPolicy: Represents an artifact guard
-// policy.
 type GoogleCloudSecuritycenterV2ArtifactGuardPolicy struct {
-	// FailureReason: The reason for the policy failure, for example,
-	// "severity=HIGH AND max_vuln_count=2".
 	FailureReason string `json:"failureReason,omitempty"`
-	// PolicyId: The ID of the failing policy, for example,
-	// "organizations/3392779/locations/global/policies/prod-policy".
-	PolicyId string `json:"policyId,omitempty"`
-	// Type: The type of the policy evaluation.
-	//
+	PolicyId      string `json:"policyId,omitempty"`
 	// Possible values:
-	//   "ARTIFACT_GUARD_POLICY_TYPE_UNSPECIFIED" - Default value. This value is
-	// unused.
-	//   "VULNERABILITY" - Vulnerability type.
+	//   "ARTIFACT_GUARD_POLICY_TYPE_UNSPECIFIED"
+	//   "VULNERABILITY"
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FailureReason") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4975,22 +3282,12 @@ func (s GoogleCloudSecuritycenterV2ArtifactGuardPolicy) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Attack: Information about DDoS attack volume and
-// classification.
 type GoogleCloudSecuritycenterV2Attack struct {
-	// Classification: Type of attack, for example, 'SYN-flood', 'NTP-udp', or
-	// 'CHARGEN-udp'.
 	Classification string `json:"classification,omitempty"`
-	// VolumeBps: Total BPS (bytes per second) volume of attack. Deprecated - refer
-	// to volume_bps_long instead.
-	VolumeBps int64 `json:"volumeBps,omitempty"`
-	// VolumeBpsLong: Total BPS (bytes per second) volume of attack.
-	VolumeBpsLong int64 `json:"volumeBpsLong,omitempty,string"`
-	// VolumePps: Total PPS (packets per second) volume of attack. Deprecated -
-	// refer to volume_pps_long instead.
-	VolumePps int64 `json:"volumePps,omitempty"`
-	// VolumePpsLong: Total PPS (packets per second) volume of attack.
-	VolumePpsLong int64 `json:"volumePpsLong,omitempty,string"`
+	VolumeBps      int64  `json:"volumeBps,omitempty"`
+	VolumeBpsLong  int64  `json:"volumeBpsLong,omitempty,string"`
+	VolumePps      int64  `json:"volumePps,omitempty"`
+	VolumePpsLong  int64  `json:"volumePpsLong,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Classification") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5009,36 +3306,17 @@ func (s GoogleCloudSecuritycenterV2Attack) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2AttackExposure: An attack exposure contains the
-// results of an attack path simulation run.
 type GoogleCloudSecuritycenterV2AttackExposure struct {
-	// AttackExposureResult: The resource name of the attack path simulation result
-	// that contains the details regarding this attack exposure score. Example:
-	// `organizations/123/simulations/456/attackExposureResults/789`
-	AttackExposureResult string `json:"attackExposureResult,omitempty"`
-	// ExposedHighValueResourcesCount: The number of high value resources that are
-	// exposed as a result of this finding.
-	ExposedHighValueResourcesCount int64 `json:"exposedHighValueResourcesCount,omitempty"`
-	// ExposedLowValueResourcesCount: The number of high value resources that are
-	// exposed as a result of this finding.
-	ExposedLowValueResourcesCount int64 `json:"exposedLowValueResourcesCount,omitempty"`
-	// ExposedMediumValueResourcesCount: The number of medium value resources that
-	// are exposed as a result of this finding.
-	ExposedMediumValueResourcesCount int64 `json:"exposedMediumValueResourcesCount,omitempty"`
-	// LatestCalculationTime: The most recent time the attack exposure was updated
-	// on this finding.
-	LatestCalculationTime string `json:"latestCalculationTime,omitempty"`
-	// Score: A number between 0 (inclusive) and infinity that represents how
-	// important this finding is to remediate. The higher the score, the more
-	// important it is to remediate.
-	Score float64 `json:"score,omitempty"`
-	// State: Output only. What state this AttackExposure is in. This captures
-	// whether or not an attack exposure has been calculated or not.
-	//
+	AttackExposureResult             string  `json:"attackExposureResult,omitempty"`
+	ExposedHighValueResourcesCount   int64   `json:"exposedHighValueResourcesCount,omitempty"`
+	ExposedLowValueResourcesCount    int64   `json:"exposedLowValueResourcesCount,omitempty"`
+	ExposedMediumValueResourcesCount int64   `json:"exposedMediumValueResourcesCount,omitempty"`
+	LatestCalculationTime            string  `json:"latestCalculationTime,omitempty"`
+	Score                            float64 `json:"score,omitempty"`
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - The state is not specified.
-	//   "CALCULATED" - The attack exposure has been calculated.
-	//   "NOT_CALCULATED" - The attack exposure has not been calculated.
+	//   "STATE_UNSPECIFIED"
+	//   "CALCULATED"
+	//   "NOT_CALCULATED"
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AttackExposureResult") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5072,12 +3350,8 @@ func (s *GoogleCloudSecuritycenterV2AttackExposure) UnmarshalJSON(data []byte) e
 	return nil
 }
 
-// GoogleCloudSecuritycenterV2AwsAccount: An AWS account that is a member of an
-// organization.
 type GoogleCloudSecuritycenterV2AwsAccount struct {
-	// Id: The unique identifier (ID) of the account, containing exactly 12 digits.
-	Id string `json:"id,omitempty"`
-	// Name: The friendly name of this account.
+	Id   string `json:"id,omitempty"`
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5097,17 +3371,9 @@ func (s GoogleCloudSecuritycenterV2AwsAccount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2AwsMetadata: AWS metadata associated with the
-// resource, only applicable if the finding's cloud provider is Amazon Web
-// Services.
 type GoogleCloudSecuritycenterV2AwsMetadata struct {
-	// Account: The AWS account associated with the resource.
-	Account *GoogleCloudSecuritycenterV2AwsAccount `json:"account,omitempty"`
-	// Organization: The AWS organization associated with the resource.
-	Organization *GoogleCloudSecuritycenterV2AwsOrganization `json:"organization,omitempty"`
-	// OrganizationalUnits: A list of AWS organizational units associated with the
-	// resource, ordered from lowest level (closest to the account) to highest
-	// level.
+	Account             *GoogleCloudSecuritycenterV2AwsAccount              `json:"account,omitempty"`
+	Organization        *GoogleCloudSecuritycenterV2AwsOrganization         `json:"organization,omitempty"`
 	OrganizationalUnits []*GoogleCloudSecuritycenterV2AwsOrganizationalUnit `json:"organizationalUnits,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Account") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5127,14 +3393,7 @@ func (s GoogleCloudSecuritycenterV2AwsMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2AwsOrganization: An organization is a collection
-// of accounts that are centrally managed together using consolidated billing,
-// organized hierarchically with organizational units (OUs), and controlled
-// with policies.
 type GoogleCloudSecuritycenterV2AwsOrganization struct {
-	// Id: The unique identifier (ID) for the organization. The regex pattern for
-	// an organization ID string requires "o-" followed by from 10 to 32 lowercase
-	// letters or digits.
 	Id string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5154,18 +3413,8 @@ func (s GoogleCloudSecuritycenterV2AwsOrganization) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2AwsOrganizationalUnit: An Organizational Unit
-// (OU) is a container of AWS accounts within a root of an organization.
-// Policies that are attached to an OU apply to all accounts contained in that
-// OU and in any child OUs.
 type GoogleCloudSecuritycenterV2AwsOrganizationalUnit struct {
-	// Id: The unique identifier (ID) associated with this OU. The regex pattern
-	// for an organizational unit ID string requires "ou-" followed by from 4 to 32
-	// lowercase letters or digits (the ID of the root that contains the OU). This
-	// string is followed by a second "-" dash and from 8 to 32 additional
-	// lowercase letters or digits. For example, "ou-ab12-cd34ef56".
-	Id string `json:"id,omitempty"`
-	// Name: The friendly name of the OU.
+	Id   string `json:"id,omitempty"`
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5185,14 +3434,9 @@ func (s GoogleCloudSecuritycenterV2AwsOrganizationalUnit) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2AzureManagementGroup: Represents an Azure
-// management group.
 type GoogleCloudSecuritycenterV2AzureManagementGroup struct {
-	// DisplayName: The display name of the Azure management group.
 	DisplayName string `json:"displayName,omitempty"`
-	// Id: The UUID of the Azure management group, for example,
-	// `20000000-0001-0000-0000-000000000000`.
-	Id string `json:"id,omitempty"`
+	Id          string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5211,20 +3455,11 @@ func (s GoogleCloudSecuritycenterV2AzureManagementGroup) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2AzureMetadata: Azure metadata associated with the
-// resource, only applicable if the finding's cloud provider is Microsoft
-// Azure.
 type GoogleCloudSecuritycenterV2AzureMetadata struct {
-	// ManagementGroups: A list of Azure management groups associated with the
-	// resource, ordered from lowest level (closest to the subscription) to highest
-	// level.
 	ManagementGroups []*GoogleCloudSecuritycenterV2AzureManagementGroup `json:"managementGroups,omitempty"`
-	// ResourceGroup: The Azure resource group associated with the resource.
-	ResourceGroup *GoogleCloudSecuritycenterV2AzureResourceGroup `json:"resourceGroup,omitempty"`
-	// Subscription: The Azure subscription associated with the resource.
-	Subscription *GoogleCloudSecuritycenterV2AzureSubscription `json:"subscription,omitempty"`
-	// Tenant: The Azure Entra tenant associated with the resource.
-	Tenant *GoogleCloudSecuritycenterV2AzureTenant `json:"tenant,omitempty"`
+	ResourceGroup    *GoogleCloudSecuritycenterV2AzureResourceGroup     `json:"resourceGroup,omitempty"`
+	Subscription     *GoogleCloudSecuritycenterV2AzureSubscription      `json:"subscription,omitempty"`
+	Tenant           *GoogleCloudSecuritycenterV2AzureTenant            `json:"tenant,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ManagementGroups") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5243,12 +3478,8 @@ func (s GoogleCloudSecuritycenterV2AzureMetadata) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2AzureResourceGroup: Represents an Azure resource
-// group.
 type GoogleCloudSecuritycenterV2AzureResourceGroup struct {
-	// Id: The ID of the Azure resource group.
-	Id string `json:"id,omitempty"`
-	// Name: The name of the Azure resource group. This is not a UUID.
+	Id   string `json:"id,omitempty"`
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5268,14 +3499,9 @@ func (s GoogleCloudSecuritycenterV2AzureResourceGroup) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2AzureSubscription: Represents an Azure
-// subscription.
 type GoogleCloudSecuritycenterV2AzureSubscription struct {
-	// DisplayName: The display name of the Azure subscription.
 	DisplayName string `json:"displayName,omitempty"`
-	// Id: The UUID of the Azure subscription, for example,
-	// `291bba3f-e0a5-47bc-a099-3bdcb2a50a05`.
-	Id string `json:"id,omitempty"`
+	Id          string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5294,13 +3520,9 @@ func (s GoogleCloudSecuritycenterV2AzureSubscription) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2AzureTenant: Represents a Microsoft Entra tenant.
 type GoogleCloudSecuritycenterV2AzureTenant struct {
-	// DisplayName: The display name of the Azure tenant.
 	DisplayName string `json:"displayName,omitempty"`
-	// Id: The ID of the Microsoft Entra tenant, for example,
-	// "a11aaa11-aa11-1aa1-11aa-1aaa11a".
-	Id string `json:"id,omitempty"`
+	Id          string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5319,59 +3541,17 @@ func (s GoogleCloudSecuritycenterV2AzureTenant) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2BackupDisasterRecovery: Information related to
-// Google Cloud Backup and DR Service findings.
 type GoogleCloudSecuritycenterV2BackupDisasterRecovery struct {
-	// Appliance: The name of the Backup and DR appliance that captures, moves, and
-	// manages the lifecycle of backup data. For example, `backup-server-57137`.
-	Appliance string `json:"appliance,omitempty"`
-	// Applications: The names of Backup and DR applications. An application is a
-	// VM, database, or file system on a managed host monitored by a backup and
-	// recovery appliance. For example, `centos7-01-vol00`, `centos7-01-vol01`,
-	// `centos7-01-vol02`.
-	Applications []string `json:"applications,omitempty"`
-	// BackupCreateTime: The timestamp at which the Backup and DR backup was
-	// created.
-	BackupCreateTime string `json:"backupCreateTime,omitempty"`
-	// BackupTemplate: The name of a Backup and DR template which comprises one or
-	// more backup policies. See the Backup and DR documentation
-	// (https://cloud.google.com/backup-disaster-recovery/docs/concepts/backup-plan#temp)
-	// for more information. For example, `snap-ov`.
-	BackupTemplate string `json:"backupTemplate,omitempty"`
-	// BackupType: The backup type of the Backup and DR image. For example,
-	// `Snapshot`, `Remote Snapshot`, `OnVault`.
-	BackupType string `json:"backupType,omitempty"`
-	// Host: The name of a Backup and DR host, which is managed by the backup and
-	// recovery appliance and known to the management console. The host can be of
-	// type Generic (for example, Compute Engine, SQL Server, Oracle DB, SMB file
-	// system, etc.), vCenter, or an ESX server. See the Backup and DR
-	// documentation on hosts
-	// (https://cloud.google.com/backup-disaster-recovery/docs/configuration/manage-hosts-and-their-applications)
-	// for more information. For example, `centos7-01`.
-	Host string `json:"host,omitempty"`
-	// Policies: The names of Backup and DR policies that are associated with a
-	// template and that define when to run a backup, how frequently to run a
-	// backup, and how long to retain the backup image. For example, `onvaults`.
-	Policies []string `json:"policies,omitempty"`
-	// PolicyOptions: The names of Backup and DR advanced policy options of a
-	// policy applying to an application. See the Backup and DR documentation on
-	// policy options
-	// (https://cloud.google.com/backup-disaster-recovery/docs/create-plan/policy-settings).
-	// For example, `skipofflineappsincongrp, nounmap`.
-	PolicyOptions []string `json:"policyOptions,omitempty"`
-	// Profile: The name of the Backup and DR resource profile that specifies the
-	// storage media for backups of application and VM data. See the Backup and DR
-	// documentation on profiles
-	// (https://cloud.google.com/backup-disaster-recovery/docs/concepts/backup-plan#profile).
-	// For example, `GCP`.
-	Profile string `json:"profile,omitempty"`
-	// StoragePool: The name of the Backup and DR storage pool that the backup and
-	// recovery appliance is storing data in. The storage pool could be of type
-	// Cloud, Primary, Snapshot, or OnVault. See the Backup and DR documentation on
-	// storage pools
-	// (https://cloud.google.com/backup-disaster-recovery/docs/concepts/storage-pools).
-	// For example, `DiskPoolOne`.
-	StoragePool string `json:"storagePool,omitempty"`
+	Appliance        string   `json:"appliance,omitempty"`
+	Applications     []string `json:"applications,omitempty"`
+	BackupCreateTime string   `json:"backupCreateTime,omitempty"`
+	BackupTemplate   string   `json:"backupTemplate,omitempty"`
+	BackupType       string   `json:"backupType,omitempty"`
+	Host             string   `json:"host,omitempty"`
+	Policies         []string `json:"policies,omitempty"`
+	PolicyOptions    []string `json:"policyOptions,omitempty"`
+	Profile          string   `json:"profile,omitempty"`
+	StoragePool      string   `json:"storagePool,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Appliance") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5390,56 +3570,16 @@ func (s GoogleCloudSecuritycenterV2BackupDisasterRecovery) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2BigQueryExport: Configures how to deliver
-// Findings to BigQuery Instance.
 type GoogleCloudSecuritycenterV2BigQueryExport struct {
-	// CreateTime: Output only. The time at which the BigQuery export was created.
-	// This field is set by the server and will be ignored if provided on export on
-	// creation.
-	CreateTime string `json:"createTime,omitempty"`
-	// CryptoKeyName: Output only. The resource name of the Cloud KMS `CryptoKey`
-	// used to protect this configuration's data, if configured during Security
-	// Command Center activation.
-	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
-	// Dataset: The dataset to write findings' updates to. Its format is
-	// "projects/[project_id]/datasets/[bigquery_dataset_id]". BigQuery dataset
-	// unique ID must contain only letters (a-z, A-Z), numbers (0-9), or
-	// underscores (_).
-	Dataset string `json:"dataset,omitempty"`
-	// Description: The description of the export (max of 1024 characters).
-	Description string `json:"description,omitempty"`
-	// Filter: Expression that defines the filter to apply across create/update
-	// events of findings. The expression is a list of zero or more restrictions
-	// combined via logical operators `AND` and `OR`. Parentheses are supported,
-	// and `OR` has higher precedence than `AND`. Restrictions have the form ` `
-	// and may have a `-` character in front of them to indicate negation. The
-	// fields map to those defined in the corresponding resource. The supported
-	// operators are: * `=` for all value types. * `>`, `<`, `>=`, `<=` for integer
-	// values. * `:`, meaning substring matching, for strings. The supported value
-	// types are: * string literals in quotes. * integer literals without quotes. *
-	// boolean literals `true` and `false` without quotes.
-	Filter string `json:"filter,omitempty"`
-	// MostRecentEditor: Output only. Email address of the user who last edited the
-	// BigQuery export. This field is set by the server and will be ignored if
-	// provided on export creation or update.
+	CreateTime       string `json:"createTime,omitempty"`
+	CryptoKeyName    string `json:"cryptoKeyName,omitempty"`
+	Dataset          string `json:"dataset,omitempty"`
+	Description      string `json:"description,omitempty"`
+	Filter           string `json:"filter,omitempty"`
 	MostRecentEditor string `json:"mostRecentEditor,omitempty"`
-	// Name: Identifier. The relative resource name of this export. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name.
-	// The following list shows some examples: +
-	// `organizations/{organization_id}/locations/{location_id}/bigQueryExports/{exp
-	// ort_id}` +
-	// `folders/{folder_id}/locations/{location_id}/bigQueryExports/{export_id}` +
-	// `projects/{project_id}/locations/{location_id}/bigQueryExports/{export_id}`
-	// This field is provided in responses, and is ignored when provided in create
-	// requests.
-	Name string `json:"name,omitempty"`
-	// Principal: Output only. The service account that needs permission to create
-	// table and upload data to the BigQuery dataset.
-	Principal string `json:"principal,omitempty"`
-	// UpdateTime: Output only. The most recent time at which the BigQuery export
-	// was updated. This field is set by the server and will be ignored if provided
-	// on export creation or update.
-	UpdateTime string `json:"updateTime,omitempty"`
+	Name             string `json:"name,omitempty"`
+	Principal        string `json:"principal,omitempty"`
+	UpdateTime       string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5458,17 +3598,10 @@ func (s GoogleCloudSecuritycenterV2BigQueryExport) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Binding: Represents a Kubernetes RoleBinding or
-// ClusterRoleBinding.
 type GoogleCloudSecuritycenterV2Binding struct {
-	// Name: Name for the binding.
-	Name string `json:"name,omitempty"`
-	// Ns: Namespace for the binding.
-	Ns string `json:"ns,omitempty"`
-	// Role: The Role or ClusterRole referenced by the binding.
-	Role *GoogleCloudSecuritycenterV2Role `json:"role,omitempty"`
-	// Subjects: Represents one or more subjects that are bound to the role. Not
-	// always available for PATCH requests.
+	Name     string                                `json:"name,omitempty"`
+	Ns       string                                `json:"ns,omitempty"`
+	Role     *GoogleCloudSecuritycenterV2Role      `json:"role,omitempty"`
 	Subjects []*GoogleCloudSecuritycenterV2Subject `json:"subjects,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5488,19 +3621,10 @@ func (s GoogleCloudSecuritycenterV2Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2BulkMuteFindingsResponse: The response to a
-// BulkMute request. Contains the LRO information.
 type GoogleCloudSecuritycenterV2BulkMuteFindingsResponse struct {
 }
 
-// GoogleCloudSecuritycenterV2Chokepoint: Contains details about a chokepoint,
-// which is a resource or resource group where high-risk attack paths converge,
-// based on [attack path simulations]
-// (https://cloud.google.com/security-command-center/docs/attack-exposure-learn#attack_path_simulations).
 type GoogleCloudSecuritycenterV2Chokepoint struct {
-	// RelatedFindings: List of resource names of findings associated with this
-	// chokepoint. For example, organizations/123/sources/456/findings/789. This
-	// list will have at most 100 findings.
 	RelatedFindings []string `json:"relatedFindings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RelatedFindings") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5520,30 +3644,13 @@ func (s GoogleCloudSecuritycenterV2Chokepoint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2CloudArmor: Fields related to Google Cloud Armor
-// findings.
 type GoogleCloudSecuritycenterV2CloudArmor struct {
-	// AdaptiveProtection: Information about potential Layer 7 DDoS attacks
-	// identified by Google Cloud Armor Adaptive Protection
-	// (https://cloud.google.com/armor/docs/adaptive-protection-overview).
 	AdaptiveProtection *GoogleCloudSecuritycenterV2AdaptiveProtection `json:"adaptiveProtection,omitempty"`
-	// Attack: Information about DDoS attack volume and classification.
-	Attack *GoogleCloudSecuritycenterV2Attack `json:"attack,omitempty"`
-	// Duration: Duration of attack from the start until the current moment
-	// (updated every 5 minutes).
-	Duration string `json:"duration,omitempty"`
-	// Requests: Information about incoming requests evaluated by Google Cloud
-	// Armor security policies
-	// (https://cloud.google.com/armor/docs/security-policy-overview).
-	Requests *GoogleCloudSecuritycenterV2Requests `json:"requests,omitempty"`
-	// SecurityPolicy: Information about the Google Cloud Armor security policy
-	// (https://cloud.google.com/armor/docs/security-policy-overview) relevant to
-	// the finding.
-	SecurityPolicy *GoogleCloudSecuritycenterV2SecurityPolicy `json:"securityPolicy,omitempty"`
-	// ThreatVector: Distinguish between volumetric & protocol DDoS attack and
-	// application layer attacks. For example, "L3_4" for Layer 3 and Layer 4 DDoS
-	// attacks, or "L_7" for Layer 7 DDoS attacks.
-	ThreatVector string `json:"threatVector,omitempty"`
+	Attack             *GoogleCloudSecuritycenterV2Attack             `json:"attack,omitempty"`
+	Duration           string                                         `json:"duration,omitempty"`
+	Requests           *GoogleCloudSecuritycenterV2Requests           `json:"requests,omitempty"`
+	SecurityPolicy     *GoogleCloudSecuritycenterV2SecurityPolicy     `json:"securityPolicy,omitempty"`
+	ThreatVector       string                                         `json:"threatVector,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdaptiveProtection") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5562,22 +3669,15 @@ func (s GoogleCloudSecuritycenterV2CloudArmor) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2CloudControl: CloudControl associated with the
-// finding.
 type GoogleCloudSecuritycenterV2CloudControl struct {
-	// CloudControlName: Name of the CloudControl associated with the finding.
 	CloudControlName string `json:"cloudControlName,omitempty"`
-	// PolicyType: Policy type of the CloudControl
-	PolicyType string `json:"policyType,omitempty"`
-	// Type: Type of cloud control.
-	//
+	PolicyType       string `json:"policyType,omitempty"`
 	// Possible values:
-	//   "CLOUD_CONTROL_TYPE_UNSPECIFIED" - Unspecified.
-	//   "BUILT_IN" - Built in Cloud Control.
-	//   "CUSTOM" - Custom Cloud Control.
-	Type string `json:"type,omitempty"`
-	// Version: Version of the Cloud Control
-	Version int64 `json:"version,omitempty"`
+	//   "CLOUD_CONTROL_TYPE_UNSPECIFIED"
+	//   "BUILT_IN"
+	//   "CUSTOM"
+	Type    string `json:"type,omitempty"`
+	Version int64  `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudControlName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5596,23 +3696,13 @@ func (s GoogleCloudSecuritycenterV2CloudControl) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2CloudDlpDataProfile: The data profile
-// (https://cloud.google.com/dlp/docs/data-profiles) associated with the
-// finding.
 type GoogleCloudSecuritycenterV2CloudDlpDataProfile struct {
-	// DataProfile: Name of the data profile, for example,
-	// `projects/123/locations/europe/tableProfiles/8383929`.
-	DataProfile string `json:"dataProfile,omitempty"`
-	// InfoTypes: Type of information detected by SDP. Info type includes name,
-	// version and sensitivity of the detected information type.
-	InfoTypes []*GoogleCloudSecuritycenterV2InfoType `json:"infoTypes,omitempty"`
-	// ParentType: The resource hierarchy level at which the data profile was
-	// generated.
-	//
+	DataProfile string                                 `json:"dataProfile,omitempty"`
+	InfoTypes   []*GoogleCloudSecuritycenterV2InfoType `json:"infoTypes,omitempty"`
 	// Possible values:
-	//   "PARENT_TYPE_UNSPECIFIED" - Unspecified parent type.
-	//   "ORGANIZATION" - Organization-level configurations.
-	//   "PROJECT" - Project-level configurations.
+	//   "PARENT_TYPE_UNSPECIFIED"
+	//   "ORGANIZATION"
+	//   "PROJECT"
 	ParentType string `json:"parentType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataProfile") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5632,24 +3722,11 @@ func (s GoogleCloudSecuritycenterV2CloudDlpDataProfile) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2CloudDlpInspection: Details about the Cloud Data
-// Loss Prevention (Cloud DLP) inspection job
-// (https://cloud.google.com/dlp/docs/concepts-job-triggers) that produced the
-// finding.
 type GoogleCloudSecuritycenterV2CloudDlpInspection struct {
-	// FullScan: Whether Cloud DLP scanned the complete resource or a sampled
-	// subset.
-	FullScan bool `json:"fullScan,omitempty"`
-	// InfoType: The type of information (or *infoType
-	// (https://cloud.google.com/dlp/docs/infotypes-reference)*) found, for
-	// example, `EMAIL_ADDRESS` or `STREET_ADDRESS`.
-	InfoType string `json:"infoType,omitempty"`
-	// InfoTypeCount: The number of times Cloud DLP found this infoType within this
-	// job and resource.
-	InfoTypeCount int64 `json:"infoTypeCount,omitempty,string"`
-	// InspectJob: Name of the inspection job, for example,
-	// `projects/123/locations/europe/dlpJobs/i-8383929`.
-	InspectJob string `json:"inspectJob,omitempty"`
+	FullScan      bool   `json:"fullScan,omitempty"`
+	InfoType      string `json:"infoType,omitempty"`
+	InfoTypeCount int64  `json:"infoTypeCount,omitempty,string"`
+	InspectJob    string `json:"inspectJob,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FullScan") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5668,22 +3745,11 @@ func (s GoogleCloudSecuritycenterV2CloudDlpInspection) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2CloudLoggingEntry: Metadata taken from a Cloud
-// Logging LogEntry
-// (https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry)
 type GoogleCloudSecuritycenterV2CloudLoggingEntry struct {
-	// InsertId: A unique identifier for the log entry.
-	InsertId string `json:"insertId,omitempty"`
-	// LogId: The type of the log (part of `log_name`. `log_name` is the resource
-	// name of the log to which this log entry belongs). For example:
-	// `cloudresourcemanager.googleapis.com/activity` Note that this field is not
-	// URL-encoded, unlike in `LogEntry`.
-	LogId string `json:"logId,omitempty"`
-	// ResourceContainer: The organization, folder, or project of the monitored
-	// resource that produced this log entry.
+	InsertId          string `json:"insertId,omitempty"`
+	LogId             string `json:"logId,omitempty"`
 	ResourceContainer string `json:"resourceContainer,omitempty"`
-	// Timestamp: The time the event described by the log entry occurred.
-	Timestamp string `json:"timestamp,omitempty"`
+	Timestamp         string `json:"timestamp,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "InsertId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5702,16 +3768,10 @@ func (s GoogleCloudSecuritycenterV2CloudLoggingEntry) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Compliance: Contains compliance information about
-// a security standard indicating unmet recommendations.
 type GoogleCloudSecuritycenterV2Compliance struct {
-	// Ids: Policies within the standard or benchmark, for example, A.12.4.1
-	Ids []string `json:"ids,omitempty"`
-	// Standard: Industry-wide compliance standards or benchmarks, such as CIS,
-	// PCI, and OWASP.
-	Standard string `json:"standard,omitempty"`
-	// Version: Version of the standard or benchmark, for example, 1.1
-	Version string `json:"version,omitempty"`
+	Ids      []string `json:"ids,omitempty"`
+	Standard string   `json:"standard,omitempty"`
+	Version  string   `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Ids") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -5730,18 +3790,10 @@ func (s GoogleCloudSecuritycenterV2Compliance) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2ComplianceDetails: Compliance Details associated
-// with the finding.
 type GoogleCloudSecuritycenterV2ComplianceDetails struct {
-	// CloudControl: CloudControl associated with the finding
-	CloudControl *GoogleCloudSecuritycenterV2CloudControl `json:"cloudControl,omitempty"`
-	// CloudControlDeploymentNames: Cloud Control Deployments associated with the
-	// finding. For example,
-	// organizations/123/locations/global/cloudControlDeployments/deploymentIdentifi
-	// er
-	CloudControlDeploymentNames []string `json:"cloudControlDeploymentNames,omitempty"`
-	// Frameworks: Details of Frameworks associated with the finding
-	Frameworks []*GoogleCloudSecuritycenterV2Framework `json:"frameworks,omitempty"`
+	CloudControl                *GoogleCloudSecuritycenterV2CloudControl `json:"cloudControl,omitempty"`
+	CloudControlDeploymentNames []string                                 `json:"cloudControlDeploymentNames,omitempty"`
+	Frameworks                  []*GoogleCloudSecuritycenterV2Framework  `json:"frameworks,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudControl") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5760,29 +3812,19 @@ func (s GoogleCloudSecuritycenterV2ComplianceDetails) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Connection: Contains information about the IP
-// connection associated with the finding.
 type GoogleCloudSecuritycenterV2Connection struct {
-	// DestinationIp: Destination IP address. Not present for sockets that are
-	// listening and not connected.
-	DestinationIp string `json:"destinationIp,omitempty"`
-	// DestinationPort: Destination port. Not present for sockets that are
-	// listening and not connected.
-	DestinationPort int64 `json:"destinationPort,omitempty"`
-	// Protocol: IANA Internet Protocol Number such as TCP(6) and UDP(17).
-	//
+	DestinationIp   string `json:"destinationIp,omitempty"`
+	DestinationPort int64  `json:"destinationPort,omitempty"`
 	// Possible values:
-	//   "PROTOCOL_UNSPECIFIED" - Unspecified protocol (not HOPOPT).
-	//   "ICMP" - Internet Control Message Protocol.
-	//   "TCP" - Transmission Control Protocol.
-	//   "UDP" - User Datagram Protocol.
-	//   "GRE" - Generic Routing Encapsulation.
-	//   "ESP" - Encap Security Payload.
-	Protocol string `json:"protocol,omitempty"`
-	// SourceIp: Source IP address.
-	SourceIp string `json:"sourceIp,omitempty"`
-	// SourcePort: Source port.
-	SourcePort int64 `json:"sourcePort,omitempty"`
+	//   "PROTOCOL_UNSPECIFIED"
+	//   "ICMP"
+	//   "TCP"
+	//   "UDP"
+	//   "GRE"
+	//   "ESP"
+	Protocol   string `json:"protocol,omitempty"`
+	SourceIp   string `json:"sourceIp,omitempty"`
+	SourcePort int64  `json:"sourcePort,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DestinationIp") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5801,9 +3843,7 @@ func (s GoogleCloudSecuritycenterV2Connection) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Contact: The email address of a contact.
 type GoogleCloudSecuritycenterV2Contact struct {
-	// Email: An email address. For example, "person123@company.com".
 	Email string `json:"email,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Email") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5823,9 +3863,7 @@ func (s GoogleCloudSecuritycenterV2Contact) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2ContactDetails: Details about specific contacts
 type GoogleCloudSecuritycenterV2ContactDetails struct {
-	// Contacts: A list of contacts
 	Contacts []*GoogleCloudSecuritycenterV2Contact `json:"contacts,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Contacts") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5845,21 +3883,12 @@ func (s GoogleCloudSecuritycenterV2ContactDetails) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Container: Container associated with the finding.
 type GoogleCloudSecuritycenterV2Container struct {
-	// CreateTime: The time that the container was created.
-	CreateTime string `json:"createTime,omitempty"`
-	// ImageId: Optional container image ID, if provided by the container runtime.
-	// Uniquely identifies the container image launched using a container image
-	// digest.
-	ImageId string `json:"imageId,omitempty"`
-	// Labels: Container labels, as provided by the container runtime.
-	Labels []*GoogleCloudSecuritycenterV2Label `json:"labels,omitempty"`
-	// Name: Name of the container.
-	Name string `json:"name,omitempty"`
-	// Uri: Container image URI provided when configuring a pod or container. This
-	// string can identify a container image version using mutable tags.
-	Uri string `json:"uri,omitempty"`
+	CreateTime string                              `json:"createTime,omitempty"`
+	ImageId    string                              `json:"imageId,omitempty"`
+	Labels     []*GoogleCloudSecuritycenterV2Label `json:"labels,omitempty"`
+	Name       string                              `json:"name,omitempty"`
+	Uri        string                              `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5878,12 +3907,8 @@ func (s GoogleCloudSecuritycenterV2Container) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Control: Compliance control associated with the
-// finding.
 type GoogleCloudSecuritycenterV2Control struct {
-	// ControlName: Name of the Control
 	ControlName string `json:"controlName,omitempty"`
-	// DisplayName: Display name of the control. For example, AU-02.
 	DisplayName string `json:"displayName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ControlName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5903,58 +3928,30 @@ func (s GoogleCloudSecuritycenterV2Control) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Cve: CVE stands for Common Vulnerabilities and
-// Exposures. Information from the CVE record
-// (https://www.cve.org/ResourcesSupport/Glossary) that describes this
-// vulnerability.
 type GoogleCloudSecuritycenterV2Cve struct {
-	// Cvssv3: Describe Common Vulnerability Scoring System specified at
-	// https://www.first.org/cvss/v3.1/specification-document
-	Cvssv3 *GoogleCloudSecuritycenterV2Cvssv3 `json:"cvssv3,omitempty"`
-	// ExploitReleaseDate: Date the first publicly available exploit or PoC was
-	// released.
-	ExploitReleaseDate string `json:"exploitReleaseDate,omitempty"`
-	// ExploitationActivity: The exploitation activity of the vulnerability in the
-	// wild.
-	//
+	Cvssv3             *GoogleCloudSecuritycenterV2Cvssv3 `json:"cvssv3,omitempty"`
+	ExploitReleaseDate string                             `json:"exploitReleaseDate,omitempty"`
 	// Possible values:
-	//   "EXPLOITATION_ACTIVITY_UNSPECIFIED" - Invalid or empty value.
-	//   "WIDE" - Exploitation has been reported or confirmed to widely occur.
-	//   "CONFIRMED" - Limited reported or confirmed exploitation activities.
-	//   "AVAILABLE" - Exploit is publicly available.
-	//   "ANTICIPATED" - No known exploitation activity, but has a high potential
-	// for exploitation.
-	//   "NO_KNOWN" - No known exploitation activity.
-	ExploitationActivity string `json:"exploitationActivity,omitempty"`
-	// FirstExploitationDate: Date of the earliest known exploitation.
+	//   "EXPLOITATION_ACTIVITY_UNSPECIFIED"
+	//   "WIDE"
+	//   "CONFIRMED"
+	//   "AVAILABLE"
+	//   "ANTICIPATED"
+	//   "NO_KNOWN"
+	ExploitationActivity  string `json:"exploitationActivity,omitempty"`
 	FirstExploitationDate string `json:"firstExploitationDate,omitempty"`
-	// Id: The unique identifier for the vulnerability. e.g. CVE-2021-34527
-	Id string `json:"id,omitempty"`
-	// Impact: The potential impact of the vulnerability if it was to be exploited.
-	//
+	Id                    string `json:"id,omitempty"`
 	// Possible values:
-	//   "RISK_RATING_UNSPECIFIED" - Invalid or empty value.
-	//   "LOW" - Exploitation would have little to no security impact.
-	//   "MEDIUM" - Exploitation would enable attackers to perform activities, or
-	// could allow attackers to have a direct impact, but would require additional
-	// steps.
-	//   "HIGH" - Exploitation would enable attackers to have a notable direct
-	// impact without needing to overcome any major mitigating factors.
-	//   "CRITICAL" - Exploitation would fundamentally undermine the security of
-	// affected systems, enable actors to perform significant attacks with minimal
-	// effort, with little to no mitigating factors to overcome.
-	Impact string `json:"impact,omitempty"`
-	// ObservedInTheWild: Whether or not the vulnerability has been observed in the
-	// wild.
-	ObservedInTheWild bool `json:"observedInTheWild,omitempty"`
-	// References: Additional information about the CVE. e.g.
-	// https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-34527
-	References []*GoogleCloudSecuritycenterV2Reference `json:"references,omitempty"`
-	// UpstreamFixAvailable: Whether upstream fix is available for the CVE.
-	UpstreamFixAvailable bool `json:"upstreamFixAvailable,omitempty"`
-	// ZeroDay: Whether or not the vulnerability was zero day when the finding was
-	// published.
-	ZeroDay bool `json:"zeroDay,omitempty"`
+	//   "RISK_RATING_UNSPECIFIED"
+	//   "LOW"
+	//   "MEDIUM"
+	//   "HIGH"
+	//   "CRITICAL"
+	Impact               string                                  `json:"impact,omitempty"`
+	ObservedInTheWild    bool                                    `json:"observedInTheWild,omitempty"`
+	References           []*GoogleCloudSecuritycenterV2Reference `json:"references,omitempty"`
+	UpstreamFixAvailable bool                                    `json:"upstreamFixAvailable,omitempty"`
+	ZeroDay              bool                                    `json:"zeroDay,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Cvssv3") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -5973,110 +3970,53 @@ func (s GoogleCloudSecuritycenterV2Cve) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Cvssv3: Common Vulnerability Scoring System
-// version 3.
 type GoogleCloudSecuritycenterV2Cvssv3 struct {
-	// AttackComplexity: This metric describes the conditions beyond the attacker's
-	// control that must exist in order to exploit the vulnerability.
-	//
 	// Possible values:
-	//   "ATTACK_COMPLEXITY_UNSPECIFIED" - Invalid value.
-	//   "ATTACK_COMPLEXITY_LOW" - Specialized access conditions or extenuating
-	// circumstances do not exist. An attacker can expect repeatable success when
-	// attacking the vulnerable component.
-	//   "ATTACK_COMPLEXITY_HIGH" - A successful attack depends on conditions
-	// beyond the attacker's control. That is, a successful attack cannot be
-	// accomplished at will, but requires the attacker to invest in some measurable
-	// amount of effort in preparation or execution against the vulnerable
-	// component before a successful attack can be expected.
+	//   "ATTACK_COMPLEXITY_UNSPECIFIED"
+	//   "ATTACK_COMPLEXITY_LOW"
+	//   "ATTACK_COMPLEXITY_HIGH"
 	AttackComplexity string `json:"attackComplexity,omitempty"`
-	// AttackVector: Base Metrics Represents the intrinsic characteristics of a
-	// vulnerability that are constant over time and across user environments. This
-	// metric reflects the context by which vulnerability exploitation is possible.
-	//
 	// Possible values:
-	//   "ATTACK_VECTOR_UNSPECIFIED" - Invalid value.
-	//   "ATTACK_VECTOR_NETWORK" - The vulnerable component is bound to the network
-	// stack and the set of possible attackers extends beyond the other options
-	// listed below, up to and including the entire Internet.
-	//   "ATTACK_VECTOR_ADJACENT" - The vulnerable component is bound to the
-	// network stack, but the attack is limited at the protocol level to a
-	// logically adjacent topology.
-	//   "ATTACK_VECTOR_LOCAL" - The vulnerable component is not bound to the
-	// network stack and the attacker's path is via read/write/execute
-	// capabilities.
-	//   "ATTACK_VECTOR_PHYSICAL" - The attack requires the attacker to physically
-	// touch or manipulate the vulnerable component.
+	//   "ATTACK_VECTOR_UNSPECIFIED"
+	//   "ATTACK_VECTOR_NETWORK"
+	//   "ATTACK_VECTOR_ADJACENT"
+	//   "ATTACK_VECTOR_LOCAL"
+	//   "ATTACK_VECTOR_PHYSICAL"
 	AttackVector string `json:"attackVector,omitempty"`
-	// AvailabilityImpact: This metric measures the impact to the availability of
-	// the impacted component resulting from a successfully exploited
-	// vulnerability.
-	//
 	// Possible values:
-	//   "IMPACT_UNSPECIFIED" - Invalid value.
-	//   "IMPACT_HIGH" - High impact.
-	//   "IMPACT_LOW" - Low impact.
-	//   "IMPACT_NONE" - No impact.
-	AvailabilityImpact string `json:"availabilityImpact,omitempty"`
-	// BaseScore: The base score is a function of the base metric scores.
-	BaseScore float64 `json:"baseScore,omitempty"`
-	// ConfidentialityImpact: This metric measures the impact to the
-	// confidentiality of the information resources managed by a software component
-	// due to a successfully exploited vulnerability.
-	//
+	//   "IMPACT_UNSPECIFIED"
+	//   "IMPACT_HIGH"
+	//   "IMPACT_LOW"
+	//   "IMPACT_NONE"
+	AvailabilityImpact string  `json:"availabilityImpact,omitempty"`
+	BaseScore          float64 `json:"baseScore,omitempty"`
 	// Possible values:
-	//   "IMPACT_UNSPECIFIED" - Invalid value.
-	//   "IMPACT_HIGH" - High impact.
-	//   "IMPACT_LOW" - Low impact.
-	//   "IMPACT_NONE" - No impact.
+	//   "IMPACT_UNSPECIFIED"
+	//   "IMPACT_HIGH"
+	//   "IMPACT_LOW"
+	//   "IMPACT_NONE"
 	ConfidentialityImpact string `json:"confidentialityImpact,omitempty"`
-	// IntegrityImpact: This metric measures the impact to integrity of a
-	// successfully exploited vulnerability.
-	//
 	// Possible values:
-	//   "IMPACT_UNSPECIFIED" - Invalid value.
-	//   "IMPACT_HIGH" - High impact.
-	//   "IMPACT_LOW" - Low impact.
-	//   "IMPACT_NONE" - No impact.
+	//   "IMPACT_UNSPECIFIED"
+	//   "IMPACT_HIGH"
+	//   "IMPACT_LOW"
+	//   "IMPACT_NONE"
 	IntegrityImpact string `json:"integrityImpact,omitempty"`
-	// PrivilegesRequired: This metric describes the level of privileges an
-	// attacker must possess before successfully exploiting the vulnerability.
-	//
 	// Possible values:
-	//   "PRIVILEGES_REQUIRED_UNSPECIFIED" - Invalid value.
-	//   "PRIVILEGES_REQUIRED_NONE" - The attacker is unauthorized prior to attack,
-	// and therefore does not require any access to settings or files of the
-	// vulnerable system to carry out an attack.
-	//   "PRIVILEGES_REQUIRED_LOW" - The attacker requires privileges that provide
-	// basic user capabilities that could normally affect only settings and files
-	// owned by a user. Alternatively, an attacker with Low privileges has the
-	// ability to access only non-sensitive resources.
-	//   "PRIVILEGES_REQUIRED_HIGH" - The attacker requires privileges that provide
-	// significant (e.g., administrative) control over the vulnerable component
-	// allowing access to component-wide settings and files.
+	//   "PRIVILEGES_REQUIRED_UNSPECIFIED"
+	//   "PRIVILEGES_REQUIRED_NONE"
+	//   "PRIVILEGES_REQUIRED_LOW"
+	//   "PRIVILEGES_REQUIRED_HIGH"
 	PrivilegesRequired string `json:"privilegesRequired,omitempty"`
-	// Scope: The Scope metric captures whether a vulnerability in one vulnerable
-	// component impacts resources in components beyond its security scope.
-	//
 	// Possible values:
-	//   "SCOPE_UNSPECIFIED" - Invalid value.
-	//   "SCOPE_UNCHANGED" - An exploited vulnerability can only affect resources
-	// managed by the same security authority.
-	//   "SCOPE_CHANGED" - An exploited vulnerability can affect resources beyond
-	// the security scope managed by the security authority of the vulnerable
-	// component.
+	//   "SCOPE_UNSPECIFIED"
+	//   "SCOPE_UNCHANGED"
+	//   "SCOPE_CHANGED"
 	Scope string `json:"scope,omitempty"`
-	// UserInteraction: This metric captures the requirement for a human user,
-	// other than the attacker, to participate in the successful compromise of the
-	// vulnerable component.
-	//
 	// Possible values:
-	//   "USER_INTERACTION_UNSPECIFIED" - Invalid value.
-	//   "USER_INTERACTION_NONE" - The vulnerable system can be exploited without
-	// interaction from any user.
-	//   "USER_INTERACTION_REQUIRED" - Successful exploitation of this
-	// vulnerability requires a user to take some action before the vulnerability
-	// can be exploited.
+	//   "USER_INTERACTION_UNSPECIFIED"
+	//   "USER_INTERACTION_NONE"
+	//   "USER_INTERACTION_REQUIRED"
 	UserInteraction string `json:"userInteraction,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AttackComplexity") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6110,14 +4050,8 @@ func (s *GoogleCloudSecuritycenterV2Cvssv3) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GoogleCloudSecuritycenterV2Cwe: CWE stands for Common Weakness Enumeration.
-// Information about this weakness, as described by CWE
-// (https://cwe.mitre.org/).
 type GoogleCloudSecuritycenterV2Cwe struct {
-	// Id: The CWE identifier, e.g. CWE-94
-	Id string `json:"id,omitempty"`
-	// References: Any reference to the details on the CWE, for example,
-	// https://cwe.mitre.org/data/definitions/94.html
+	Id         string                                  `json:"id,omitempty"`
 	References []*GoogleCloudSecuritycenterV2Reference `json:"references,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6137,25 +4071,15 @@ func (s GoogleCloudSecuritycenterV2Cwe) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2DataAccessEvent: Details about a data access
-// attempt made by a principal not authorized under applicable data security
-// policy.
 type GoogleCloudSecuritycenterV2DataAccessEvent struct {
-	// EventId: Unique identifier for data access event.
-	EventId string `json:"eventId,omitempty"`
-	// EventTime: Timestamp of data access event.
+	EventId   string `json:"eventId,omitempty"`
 	EventTime string `json:"eventTime,omitempty"`
-	// Operation: The operation performed by the principal to access the data.
-	//
 	// Possible values:
-	//   "OPERATION_UNSPECIFIED" - The operation is unspecified.
-	//   "READ" - Represents a read operation.
-	//   "MOVE" - Represents a move operation.
-	//   "COPY" - Represents a copy operation.
-	Operation string `json:"operation,omitempty"`
-	// PrincipalEmail: The email address of the principal that accessed the data.
-	// The principal could be a user account, service account, Google group, or
-	// other.
+	//   "OPERATION_UNSPECIFIED"
+	//   "READ"
+	//   "MOVE"
+	//   "COPY"
+	Operation      string `json:"operation,omitempty"`
 	PrincipalEmail string `json:"principalEmail,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EventId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6175,28 +4099,16 @@ func (s GoogleCloudSecuritycenterV2DataAccessEvent) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2DataFlowEvent: Details about a data flow event,
-// in which either the data is moved to or is accessed from a non-compliant
-// geo-location, as defined in the applicable data security policy.
 type GoogleCloudSecuritycenterV2DataFlowEvent struct {
-	// EventId: Unique identifier for data flow event.
-	EventId string `json:"eventId,omitempty"`
-	// EventTime: Timestamp of data flow event.
+	EventId   string `json:"eventId,omitempty"`
 	EventTime string `json:"eventTime,omitempty"`
-	// Operation: The operation performed by the principal for the data flow event.
-	//
 	// Possible values:
-	//   "OPERATION_UNSPECIFIED" - The operation is unspecified.
-	//   "READ" - Represents a read operation.
-	//   "MOVE" - Represents a move operation.
-	//   "COPY" - Represents a copy operation.
-	Operation string `json:"operation,omitempty"`
-	// PrincipalEmail: The email address of the principal that initiated the data
-	// flow event. The principal could be a user account, service account, Google
-	// group, or other.
-	PrincipalEmail string `json:"principalEmail,omitempty"`
-	// ViolatedLocation: Non-compliant location of the principal or the data
-	// destination.
+	//   "OPERATION_UNSPECIFIED"
+	//   "READ"
+	//   "MOVE"
+	//   "COPY"
+	Operation        string `json:"operation,omitempty"`
+	PrincipalEmail   string `json:"principalEmail,omitempty"`
 	ViolatedLocation string `json:"violatedLocation,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EventId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6216,48 +4128,17 @@ func (s GoogleCloudSecuritycenterV2DataFlowEvent) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2DataRetentionDeletionEvent: Details about data
-// retention deletion violations, in which the data is non-compliant based on
-// their retention or deletion time, as defined in the applicable data security
-// policy. The Data Retention Deletion (DRD) control is a control of the DSPM
-// (Data Security Posture Management) suite that enables organizations to
-// manage data retention and deletion policies in compliance with regulations,
-// such as GDPR and CRPA. DRD supports two primary policy types: maximum
-// storage length (max TTL) and minimum storage length (min TTL). Both are
-// aimed at helping organizations meet regulatory and data management
-// commitments.
 type GoogleCloudSecuritycenterV2DataRetentionDeletionEvent struct {
-	// DataObjectCount: Number of objects that violated the policy for this
-	// resource. If the number is less than 1,000, then the value of this field is
-	// the exact number. If the number of objects that violated the policy is
-	// greater than or equal to 1,000, then the value of this field is 1000.
-	DataObjectCount int64 `json:"dataObjectCount,omitempty,string"`
-	// EventDetectionTime: Timestamp indicating when the event was detected.
+	DataObjectCount    int64  `json:"dataObjectCount,omitempty,string"`
 	EventDetectionTime string `json:"eventDetectionTime,omitempty"`
-	// EventType: Type of the DRD event.
-	//
 	// Possible values:
-	//   "EVENT_TYPE_UNSPECIFIED" - Unspecified event type.
-	//   "EVENT_TYPE_MAX_TTL_EXCEEDED" - Deprecated: This field is pending removal.
-	// Use EVENT_TYPE_MAX_TTL_FROM_CREATION or
-	// EVENT_TYPE_MAX_TTL_FROM_LAST_MODIFICATION instead.
-	//   "EVENT_TYPE_MAX_TTL_FROM_CREATION" - Max TTL from the asset's creation
-	// time.
-	//   "EVENT_TYPE_MAX_TTL_FROM_LAST_MODIFICATION" - Max TTL from the asset's
-	// last modification time.
-	//   "EVENT_TYPE_MIN_TTL_FROM_CREATION" - Min TTL from the asset's creation
-	// time.
-	EventType string `json:"eventType,omitempty"`
-	// MaxRetentionAllowed: Maximum duration of retention allowed from the DRD
-	// control. This comes from the DRD control where users set a max TTL for their
-	// data. For example, suppose that a user sets the max TTL for a Cloud Storage
-	// bucket to 90 days. However, an object in that bucket is 100 days old. In
-	// this case, a DataRetentionDeletionEvent will be generated for that Cloud
-	// Storage bucket, and the max_retention_allowed is 90 days.
+	//   "EVENT_TYPE_UNSPECIFIED"
+	//   "EVENT_TYPE_MAX_TTL_EXCEEDED"
+	//   "EVENT_TYPE_MAX_TTL_FROM_CREATION"
+	//   "EVENT_TYPE_MAX_TTL_FROM_LAST_MODIFICATION"
+	//   "EVENT_TYPE_MIN_TTL_FROM_CREATION"
+	EventType           string `json:"eventType,omitempty"`
 	MaxRetentionAllowed string `json:"maxRetentionAllowed,omitempty"`
-	// MinRetentionAllowed: Min duration of retention allowed from the DSPM
-	// retention control. This field is only populated when event type is set to
-	// EVENT_TYPE_MIN_TTL_FROM_CREATION.
 	MinRetentionAllowed string `json:"minRetentionAllowed,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataObjectCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6277,37 +4158,13 @@ func (s GoogleCloudSecuritycenterV2DataRetentionDeletionEvent) MarshalJSON() ([]
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Database: Represents database access information,
-// such as queries. A database may be a sub-resource of an instance (as in the
-// case of Cloud SQL instances or Cloud Spanner instances), or the database
-// instance itself. Some database resources might not have the full resource
-// name (https://google.aip.dev/122#full-resource-names) populated because
-// these resource types, such as Cloud SQL databases, are not yet supported by
-// Cloud Asset Inventory. In these cases only the display name is provided.
 type GoogleCloudSecuritycenterV2Database struct {
-	// DisplayName: The human-readable name of the database that the user connected
-	// to.
-	DisplayName string `json:"displayName,omitempty"`
-	// Grantees: The target usernames, roles, or groups of an SQL privilege grant,
-	// which is not an IAM policy change.
-	Grantees []string `json:"grantees,omitempty"`
-	// Name: Some database resources may not have the full resource name
-	// (https://google.aip.dev/122#full-resource-names) populated because these
-	// resource types are not yet supported by Cloud Asset Inventory (e.g. Cloud
-	// SQL databases). In these cases only the display name will be provided. The
-	// full resource name (https://google.aip.dev/122#full-resource-names) of the
-	// database that the user connected to, if it is supported by Cloud Asset
-	// Inventory.
-	Name string `json:"name,omitempty"`
-	// Query: The SQL statement that is associated with the database access.
-	Query string `json:"query,omitempty"`
-	// UserName: The username used to connect to the database. The username might
-	// not be an IAM principal and does not have a set format.
-	UserName string `json:"userName,omitempty"`
-	// Version: The version of the database, for example, POSTGRES_14. See the
-	// complete list
-	// (https://cloud.google.com/sql/docs/mysql/admin-api/rest/v1/SqlDatabaseVersion).
-	Version string `json:"version,omitempty"`
+	DisplayName string   `json:"displayName,omitempty"`
+	Grantees    []string `json:"grantees,omitempty"`
+	Name        string   `json:"name,omitempty"`
+	Query       string   `json:"query,omitempty"`
+	UserName    string   `json:"userName,omitempty"`
+	Version     string   `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6326,17 +4183,10 @@ func (s GoogleCloudSecuritycenterV2Database) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Dataset: Vertex AI dataset associated with the
-// finding.
 type GoogleCloudSecuritycenterV2Dataset struct {
-	// DisplayName: The user defined display name of dataset, e.g. plants-dataset
 	DisplayName string `json:"displayName,omitempty"`
-	// Name: Resource name of the dataset, e.g.
-	// projects/{project}/locations/{location}/datasets/2094040236064505856
-	Name string `json:"name,omitempty"`
-	// Source: Data source, such as a BigQuery source URI, e.g.
-	// bq://scc-nexus-test.AIPPtest.gsod
-	Source string `json:"source,omitempty"`
+	Name        string `json:"name,omitempty"`
+	Source      string `json:"source,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6355,9 +4205,7 @@ func (s GoogleCloudSecuritycenterV2Dataset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Denied: Denied IP rule.
 type GoogleCloudSecuritycenterV2Denied struct {
-	// IpRules: Optional. Optional list of denied IP rules.
 	IpRules []*GoogleCloudSecuritycenterV2IpRule `json:"ipRules,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IpRules") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6377,14 +4225,8 @@ func (s GoogleCloudSecuritycenterV2Denied) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Detection: Memory hash detection contributing to
-// the binary family match.
 type GoogleCloudSecuritycenterV2Detection struct {
-	// Binary: The name of the binary associated with the memory hash signature
-	// detection.
-	Binary string `json:"binary,omitempty"`
-	// PercentPagesMatched: The percentage of memory page hashes in the signature
-	// that were matched.
+	Binary              string  `json:"binary,omitempty"`
 	PercentPagesMatched float64 `json:"percentPagesMatched,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Binary") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6418,32 +4260,19 @@ func (s *GoogleCloudSecuritycenterV2Detection) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-// GoogleCloudSecuritycenterV2DiscoveredWorkload: Represents discovered,
-// customer managed workload that is not registered with the respective GCP
-// service.
 type GoogleCloudSecuritycenterV2DiscoveredWorkload struct {
-	// Confidence: The confidence in detection of this workload.
-	//
 	// Possible values:
-	//   "CONFIDENCE_UNSPECIFIED" - Unspecified confidence level.
-	//   "CONFIDENCE_HIGH" - High confidence in detection of a workload.
-	Confidence string `json:"confidence,omitempty"`
-	// DetectedRelevantHardware: A boolean flag set to true if associated hardware
-	// strongly predicts the workload type.
-	DetectedRelevantHardware bool `json:"detectedRelevantHardware,omitempty"`
-	// DetectedRelevantKeywords: A boolean flag set to true if associated keywords
-	// strongly predict the workload type.
-	DetectedRelevantKeywords bool `json:"detectedRelevantKeywords,omitempty"`
-	// DetectedRelevantPackages: A boolean flag set to true if installed packages
-	// strongly predict the workload type.
-	DetectedRelevantPackages bool `json:"detectedRelevantPackages,omitempty"`
-	// WorkloadType: The type of workload.
-	//
+	//   "CONFIDENCE_UNSPECIFIED"
+	//   "CONFIDENCE_HIGH"
+	Confidence               string `json:"confidence,omitempty"`
+	DetectedRelevantHardware bool   `json:"detectedRelevantHardware,omitempty"`
+	DetectedRelevantKeywords bool   `json:"detectedRelevantKeywords,omitempty"`
+	DetectedRelevantPackages bool   `json:"detectedRelevantPackages,omitempty"`
 	// Possible values:
-	//   "WORKLOAD_TYPE_UNSPECIFIED" - Unspecified workload type
-	//   "MCP_SERVER" - A workload of type MCP Server
-	//   "AI_INFERENCE" - A workload of type AI Inference
-	//   "AGENT" - A workload of type LLM Agent
+	//   "WORKLOAD_TYPE_UNSPECIFIED"
+	//   "MCP_SERVER"
+	//   "AI_INFERENCE"
+	//   "AGENT"
 	WorkloadType string `json:"workloadType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6463,12 +4292,7 @@ func (s GoogleCloudSecuritycenterV2DiscoveredWorkload) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Disk: Contains information about the disk
-// associated with the finding.
 type GoogleCloudSecuritycenterV2Disk struct {
-	// Name: The name of the disk, for example,
-	// "https://www.googleapis.com/compute/v1/projects/{project-id}/zones/{zone-id}/
-	// disks/{disk-id}".
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6488,15 +4312,9 @@ func (s GoogleCloudSecuritycenterV2Disk) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2DiskPath: Path of the file in terms of underlying
-// disk/partition identifiers.
 type GoogleCloudSecuritycenterV2DiskPath struct {
-	// PartitionUuid: UUID of the partition (format
-	// https://wiki.archlinux.org/title/persistent_block_device_naming#by-uuid)
 	PartitionUuid string `json:"partitionUuid,omitempty"`
-	// RelativePath: Relative path of the file in the partition as a JSON encoded
-	// string. Example: /home/user1/executable_file.sh
-	RelativePath string `json:"relativePath,omitempty"`
+	RelativePath  string `json:"relativePath,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PartitionUuid") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6515,15 +4333,8 @@ func (s GoogleCloudSecuritycenterV2DiskPath) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2DynamicMuteRecord: The record of a dynamic mute
-// rule that matches the finding.
 type GoogleCloudSecuritycenterV2DynamicMuteRecord struct {
-	// MatchTime: When the dynamic mute rule first matched the finding.
-	MatchTime string `json:"matchTime,omitempty"`
-	// MuteConfig: The relative resource name of the mute rule, represented by a
-	// mute config, that created this record, for example
-	// `organizations/123/muteConfigs/mymuteconfig` or
-	// `organizations/123/locations/global/muteConfigs/mymuteconfig`.
+	MatchTime  string `json:"matchTime,omitempty"`
 	MuteConfig string `json:"muteConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MatchTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6543,13 +4354,9 @@ func (s GoogleCloudSecuritycenterV2DynamicMuteRecord) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2EnvironmentVariable: A name-value pair
-// representing an environment variable used in an operating system process.
 type GoogleCloudSecuritycenterV2EnvironmentVariable struct {
-	// Name: Environment variable name as a JSON encoded string.
 	Name string `json:"name,omitempty"`
-	// Val: Environment variable value as a JSON encoded string.
-	Val string `json:"val,omitempty"`
+	Val  string `json:"val,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -6568,18 +4375,9 @@ func (s GoogleCloudSecuritycenterV2EnvironmentVariable) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2ExfilResource: Resource where data was
-// exfiltrated from or exfiltrated to.
 type GoogleCloudSecuritycenterV2ExfilResource struct {
-	// Components: Subcomponents of the asset that was exfiltrated, like URIs used
-	// during exfiltration, table names, databases, and filenames. For example,
-	// multiple tables might have been exfiltrated from the same Cloud SQL
-	// instance, or multiple files might have been exfiltrated from the same Cloud
-	// Storage bucket.
 	Components []string `json:"components,omitempty"`
-	// Name: The resource's full resource name
-	// (https://cloud.google.com/apis/design/resource_names#full_resource_name).
-	Name string `json:"name,omitempty"`
+	Name       string   `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Components") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6598,20 +4396,10 @@ func (s GoogleCloudSecuritycenterV2ExfilResource) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Exfiltration: Exfiltration represents a data
-// exfiltration attempt from one or more sources to one or more targets. The
-// `sources` attribute lists the sources of the exfiltrated data. The `targets`
-// attribute lists the destinations the data was copied to.
 type GoogleCloudSecuritycenterV2Exfiltration struct {
-	// Sources: If there are multiple sources, then the data is considered "joined"
-	// between them. For instance, BigQuery can join multiple tables, and each
-	// table would be considered a source.
-	Sources []*GoogleCloudSecuritycenterV2ExfilResource `json:"sources,omitempty"`
-	// Targets: If there are multiple targets, each target would get a complete
-	// copy of the "joined" source data.
-	Targets []*GoogleCloudSecuritycenterV2ExfilResource `json:"targets,omitempty"`
-	// TotalExfiltratedBytes: Total exfiltrated bytes processed for the entire job.
-	TotalExfiltratedBytes int64 `json:"totalExfiltratedBytes,omitempty,string"`
+	Sources               []*GoogleCloudSecuritycenterV2ExfilResource `json:"sources,omitempty"`
+	Targets               []*GoogleCloudSecuritycenterV2ExfilResource `json:"targets,omitempty"`
+	TotalExfiltratedBytes int64                                       `json:"totalExfiltratedBytes,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Sources") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -6630,88 +4418,27 @@ func (s GoogleCloudSecuritycenterV2Exfiltration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2ExternalExposure: Details about the externally
-// exposed resource associated with the finding.
 type GoogleCloudSecuritycenterV2ExternalExposure struct {
-	// BackendBucket: The full resource name of the load balancer backend bucket,
-	// for example,
-	// "//compute.googleapis.com/projects/{project-id}/global/backendBuckets/{name}"
-	BackendBucket string `json:"backendBucket,omitempty"`
-	// BackendService: The full resource name of load balancer backend service, for
-	// example,
-	// "//compute.googleapis.com/projects/{project-id}/global/backendServices/{name}
-	// ".
-	BackendService string `json:"backendService,omitempty"`
-	// ExposedApplication: The name and version of the exposed web application, for
-	// example, "Jenkins 2.184".
-	ExposedApplication string `json:"exposedApplication,omitempty"`
-	// ExposedEndpoint: The resource which is running the exposed service, for
-	// example,
-	// "//compute.googleapis.com/projects/{project-id}/zones/{zone}/instances/{insta
-	// nce}.”
-	ExposedEndpoint string `json:"exposedEndpoint,omitempty"`
-	// ExposedService: The name and version of the service, for example, "Jupyter
-	// Notebook 6.14.0".
-	ExposedService string `json:"exposedService,omitempty"`
-	// ForwardingRule: The full resource name of the forwarding rule, for example,
-	// "//compute.googleapis.com/projects/{project-id}/global/forwardingRules/{forwa
-	// rding-rule-name}".
-	ForwardingRule string `json:"forwardingRule,omitempty"`
-	// HostnameUri: Hostname of the exposed application, for example,
-	// "https://test-app.a.run.app/"
-	HostnameUri string `json:"hostnameUri,omitempty"`
-	// HttpResponse: The http response returned by the web application.
-	HttpResponse []*GoogleCloudSecuritycenterV2HttpResponse `json:"httpResponse,omitempty"`
-	// InstanceGroup: The full resource name of the instance group, for example,
-	// "//compute.googleapis.com/projects/{project-id}/global/instanceGroups/{name}"
-	// .
-	InstanceGroup string `json:"instanceGroup,omitempty"`
-	// InternalBackendService: The full resource name of load balancer backend
-	// service in the internal project having resource exposed via PSC, for
-	// example,
-	// "//compute.googleapis.com/projects/{project-id}/global/backendServices/{name}
-	// ".
-	InternalBackendService string `json:"internalBackendService,omitempty"`
-	// LoadBalancerFirewallPolicy: The full resource name of the load balancer
-	// firewall policy, for example,
-	// "//compute.googleapis.com/projects/{project-id}/global/firewallPolicies/{poli
-	// cy-name}".
-	LoadBalancerFirewallPolicy string `json:"loadBalancerFirewallPolicy,omitempty"`
-	// NetworkEndpointGroup: The full resource name of the network endpoint group,
-	// for example,
-	// "//compute.googleapis.com/projects/{project-id}/global/networkEndpointGroups/
-	// {name}".
-	NetworkEndpointGroup string `json:"networkEndpointGroup,omitempty"`
-	// NetworkIngressFirewallPolicy: The full resource name of the network ingress
-	// firewall policy, for example,
-	// "//compute.googleapis.com/projects/{project-id}/global/firewallPolicies/{name
-	// }".
-	NetworkIngressFirewallPolicy string `json:"networkIngressFirewallPolicy,omitempty"`
-	// PrivateIpAddress: Private IP address of the exposed endpoint.
-	PrivateIpAddress string `json:"privateIpAddress,omitempty"`
-	// PrivatePort: Port number associated with private IP address.
-	PrivatePort string `json:"privatePort,omitempty"`
-	// PscNetworkAttachment: The full resource name of the PSC (Private Service
-	// Connect) network attachment that network interface controller is attached
-	// to, for example,
-	// "//compute.googleapis.com/projects/{project-id}/regions/{region}/networkAttac
-	// hments/{name}"
-	PscNetworkAttachment string `json:"pscNetworkAttachment,omitempty"`
-	// PscServiceAttachment: The full resource name of the PSC (Private Service
-	// Connect) service attachment that the load balancer network endpoint group
-	// targets, for example,
-	// "//compute.googleapis.com/projects/{project-id}/regions/{region}/serviceAttac
-	// hments/{name}"
-	PscServiceAttachment string `json:"pscServiceAttachment,omitempty"`
-	// PublicIpAddress: Public IP address of the exposed endpoint.
-	PublicIpAddress string `json:"publicIpAddress,omitempty"`
-	// PublicPort: Public port number of the exposed endpoint.
-	PublicPort string `json:"publicPort,omitempty"`
-	// ServiceFirewallPolicy: The full resource name of the firewall policy of the
-	// exposed service, for example,
-	// "//compute.googleapis.com/projects/{project-id}/global/firewallPolicies/{poli
-	// cy-name}".
-	ServiceFirewallPolicy string `json:"serviceFirewallPolicy,omitempty"`
+	BackendBucket                string                                     `json:"backendBucket,omitempty"`
+	BackendService               string                                     `json:"backendService,omitempty"`
+	ExposedApplication           string                                     `json:"exposedApplication,omitempty"`
+	ExposedEndpoint              string                                     `json:"exposedEndpoint,omitempty"`
+	ExposedService               string                                     `json:"exposedService,omitempty"`
+	ForwardingRule               string                                     `json:"forwardingRule,omitempty"`
+	HostnameUri                  string                                     `json:"hostnameUri,omitempty"`
+	HttpResponse                 []*GoogleCloudSecuritycenterV2HttpResponse `json:"httpResponse,omitempty"`
+	InstanceGroup                string                                     `json:"instanceGroup,omitempty"`
+	InternalBackendService       string                                     `json:"internalBackendService,omitempty"`
+	LoadBalancerFirewallPolicy   string                                     `json:"loadBalancerFirewallPolicy,omitempty"`
+	NetworkEndpointGroup         string                                     `json:"networkEndpointGroup,omitempty"`
+	NetworkIngressFirewallPolicy string                                     `json:"networkIngressFirewallPolicy,omitempty"`
+	PrivateIpAddress             string                                     `json:"privateIpAddress,omitempty"`
+	PrivatePort                  string                                     `json:"privatePort,omitempty"`
+	PscNetworkAttachment         string                                     `json:"pscNetworkAttachment,omitempty"`
+	PscServiceAttachment         string                                     `json:"pscServiceAttachment,omitempty"`
+	PublicIpAddress              string                                     `json:"publicIpAddress,omitempty"`
+	PublicPort                   string                                     `json:"publicPort,omitempty"`
+	ServiceFirewallPolicy        string                                     `json:"serviceFirewallPolicy,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackendBucket") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6730,48 +4457,18 @@ func (s GoogleCloudSecuritycenterV2ExternalExposure) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2ExternalSystem: Representation of third party
-// SIEM/SOAR fields within SCC.
 type GoogleCloudSecuritycenterV2ExternalSystem struct {
-	// Assignees: References primary/secondary etc assignees in the external
-	// system.
-	Assignees []string `json:"assignees,omitempty"`
-	// CaseCloseTime: The time when the case was closed, as reported by the
-	// external system.
-	CaseCloseTime string `json:"caseCloseTime,omitempty"`
-	// CaseCreateTime: The time when the case was created, as reported by the
-	// external system.
-	CaseCreateTime string `json:"caseCreateTime,omitempty"`
-	// CasePriority: The priority of the finding's corresponding case in the
-	// external system.
-	CasePriority string `json:"casePriority,omitempty"`
-	// CaseSla: The SLA of the finding's corresponding case in the external system.
-	CaseSla string `json:"caseSla,omitempty"`
-	// CaseUri: The link to the finding's corresponding case in the external
-	// system.
-	CaseUri string `json:"caseUri,omitempty"`
-	// ExternalSystemUpdateTime: The time when the case was last updated, as
-	// reported by the external system.
-	ExternalSystemUpdateTime string `json:"externalSystemUpdateTime,omitempty"`
-	// ExternalUid: The identifier that's used to track the finding's corresponding
-	// case in the external system.
-	ExternalUid string `json:"externalUid,omitempty"`
-	// Name: Full resource name of the external system. The following list shows
-	// some examples: +
-	// `organizations/1234/sources/5678/findings/123456/externalSystems/jira` +
-	// `organizations/1234/sources/5678/locations/us/findings/123456/externalSystems
-	// /jira` + `folders/1234/sources/5678/findings/123456/externalSystems/jira` +
-	// `folders/1234/sources/5678/locations/us/findings/123456/externalSystems/jira`
-	//  + `projects/1234/sources/5678/findings/123456/externalSystems/jira` +
-	// `projects/1234/sources/5678/locations/us/findings/123456/externalSystems/jira
-	// `
-	Name string `json:"name,omitempty"`
-	// Status: The most recent status of the finding's corresponding case, as
-	// reported by the external system.
-	Status string `json:"status,omitempty"`
-	// TicketInfo: Information about the ticket, if any, that is being used to
-	// track the resolution of the issue that is identified by this finding.
-	TicketInfo *GoogleCloudSecuritycenterV2TicketInfo `json:"ticketInfo,omitempty"`
+	Assignees                []string                               `json:"assignees,omitempty"`
+	CaseCloseTime            string                                 `json:"caseCloseTime,omitempty"`
+	CaseCreateTime           string                                 `json:"caseCreateTime,omitempty"`
+	CasePriority             string                                 `json:"casePriority,omitempty"`
+	CaseSla                  string                                 `json:"caseSla,omitempty"`
+	CaseUri                  string                                 `json:"caseUri,omitempty"`
+	ExternalSystemUpdateTime string                                 `json:"externalSystemUpdateTime,omitempty"`
+	ExternalUid              string                                 `json:"externalUid,omitempty"`
+	Name                     string                                 `json:"name,omitempty"`
+	Status                   string                                 `json:"status,omitempty"`
+	TicketInfo               *GoogleCloudSecuritycenterV2TicketInfo `json:"ticketInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Assignees") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6790,39 +4487,20 @@ func (s GoogleCloudSecuritycenterV2ExternalSystem) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2File: File information about the related
-// binary/library used by an executable, or the script used by a script
-// interpreter
 type GoogleCloudSecuritycenterV2File struct {
-	// Contents: Prefix of the file contents as a JSON-encoded string.
-	Contents string `json:"contents,omitempty"`
-	// DiskPath: Path of the file in terms of underlying disk/partition
-	// identifiers.
+	Contents string                               `json:"contents,omitempty"`
 	DiskPath *GoogleCloudSecuritycenterV2DiskPath `json:"diskPath,omitempty"`
-	// FileLoadState: The load state of the file.
-	//
 	// Possible values:
-	//   "FILE_LOAD_STATE_UNSPECIFIED" - The file state is unspecified.
-	//   "LOADED_BY_PROCESS" - The file is being used by an active process at the
-	// time of scanning.
-	//   "NOT_LOADED_BY_PROCESS" - The file is not being used by any active process
-	// at the time of scanning.
-	FileLoadState string `json:"fileLoadState,omitempty"`
-	// HashedSize: The length in bytes of the file prefix that was hashed. If
-	// hashed_size == size, any hashes reported represent the entire file.
-	HashedSize int64 `json:"hashedSize,omitempty,string"`
-	// Operations: Operation(s) performed on a file.
-	Operations []*GoogleCloudSecuritycenterV2FileOperation `json:"operations,omitempty"`
-	// PartiallyHashed: True when the hash covers only a prefix of the file.
-	PartiallyHashed bool `json:"partiallyHashed,omitempty"`
-	// Path: Absolute path of the file as a JSON encoded string.
-	Path string `json:"path,omitempty"`
-	// Sha256: SHA256 hash of the first hashed_size bytes of the file encoded as a
-	// hex string. If hashed_size == size, sha256 represents the SHA256 hash of the
-	// entire file.
-	Sha256 string `json:"sha256,omitempty"`
-	// Size: Size of the file in bytes.
-	Size int64 `json:"size,omitempty,string"`
+	//   "FILE_LOAD_STATE_UNSPECIFIED"
+	//   "LOADED_BY_PROCESS"
+	//   "NOT_LOADED_BY_PROCESS"
+	FileLoadState   string                                      `json:"fileLoadState,omitempty"`
+	HashedSize      int64                                       `json:"hashedSize,omitempty,string"`
+	Operations      []*GoogleCloudSecuritycenterV2FileOperation `json:"operations,omitempty"`
+	PartiallyHashed bool                                        `json:"partiallyHashed,omitempty"`
+	Path            string                                      `json:"path,omitempty"`
+	Sha256          string                                      `json:"sha256,omitempty"`
+	Size            int64                                       `json:"size,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Contents") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6841,17 +4519,14 @@ func (s GoogleCloudSecuritycenterV2File) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2FileOperation: Operation(s) performed on a file.
 type GoogleCloudSecuritycenterV2FileOperation struct {
-	// Type: The type of the operation
-	//
 	// Possible values:
-	//   "OPERATION_TYPE_UNSPECIFIED" - The operation is unspecified.
-	//   "OPEN" - Represents an open operation.
-	//   "READ" - Represents a read operation.
-	//   "RENAME" - Represents a rename operation.
-	//   "WRITE" - Represents a write operation.
-	//   "EXECUTE" - Represents an execute operation.
+	//   "OPERATION_TYPE_UNSPECIFIED"
+	//   "OPEN"
+	//   "READ"
+	//   "RENAME"
+	//   "WRITE"
+	//   "EXECUTE"
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6871,317 +4546,104 @@ func (s GoogleCloudSecuritycenterV2FileOperation) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Finding: Security Command Center finding. A
-// finding is a record of assessment data like security, risk, health, or
-// privacy, that is ingested into Security Command Center for presentation,
-// notification, analysis, policy testing, and enforcement. For example, a
-// cross-site scripting (XSS) vulnerability in an App Engine application is a
-// finding.
 type GoogleCloudSecuritycenterV2Finding struct {
-	// Access: Access details associated with the finding, such as more information
-	// on the caller, which method was accessed, and from where.
-	Access *GoogleCloudSecuritycenterV2Access `json:"access,omitempty"`
-	// AffectedResources: AffectedResources associated with the finding.
-	AffectedResources *GoogleCloudSecuritycenterV2AffectedResources `json:"affectedResources,omitempty"`
-	// AgentDataAccessEvents: Agent data access events associated with the finding.
-	AgentDataAccessEvents []*GoogleCloudSecuritycenterV2AgentDataAccessEvent `json:"agentDataAccessEvents,omitempty"`
-	// AiModel: The AI model associated with the finding.
-	AiModel *GoogleCloudSecuritycenterV2AiModel `json:"aiModel,omitempty"`
-	// Application: Represents an application associated with the finding.
-	Application *GoogleCloudSecuritycenterV2Application `json:"application,omitempty"`
-	// ArtifactGuardPolicies: ArtifactGuardPolicies associated with the finding.
-	ArtifactGuardPolicies *GoogleCloudSecuritycenterV2ArtifactGuardPolicies `json:"artifactGuardPolicies,omitempty"`
-	// AttackExposure: The results of an attack path simulation relevant to this
-	// finding.
-	AttackExposure *GoogleCloudSecuritycenterV2AttackExposure `json:"attackExposure,omitempty"`
-	// BackupDisasterRecovery: Fields related to Backup and DR findings.
-	BackupDisasterRecovery *GoogleCloudSecuritycenterV2BackupDisasterRecovery `json:"backupDisasterRecovery,omitempty"`
-	// CanonicalName: Output only. The canonical name of the finding. The following
-	// list shows some examples: +
-	// `organizations/{organization_id}/sources/{source_id}/locations/{location_id}/
-	// findings/{finding_id}` +
-	// `folders/{folder_id}/sources/{source_id}/locations/{location_id}/findings/{fi
-	// nding_id}` +
-	// `projects/{project_id}/sources/{source_id}/locations/{location_id}/findings/{
-	// finding_id}` The prefix is the closest CRM ancestor of the resource
-	// associated with the finding.
-	CanonicalName string `json:"canonicalName,omitempty"`
-	// Category: Immutable. The additional taxonomy group within findings from a
-	// given source. Example: "XSS_FLASH_INJECTION"
-	Category string `json:"category,omitempty"`
-	// Chokepoint: Contains details about a chokepoint, which is a resource or
-	// resource group where high-risk attack paths converge, based on [attack path
-	// simulations]
-	// (https://cloud.google.com/security-command-center/docs/attack-exposure-learn#attack_path_simulations).
-	// This field cannot be updated. Its value is ignored in all update requests.
-	Chokepoint *GoogleCloudSecuritycenterV2Chokepoint `json:"chokepoint,omitempty"`
-	// CloudArmor: Fields related to Cloud Armor findings.
-	CloudArmor *GoogleCloudSecuritycenterV2CloudArmor `json:"cloudArmor,omitempty"`
-	// CloudDlpDataProfile: Cloud DLP data profile that is associated with the
-	// finding.
-	CloudDlpDataProfile *GoogleCloudSecuritycenterV2CloudDlpDataProfile `json:"cloudDlpDataProfile,omitempty"`
-	// CloudDlpInspection: Cloud Data Loss Prevention (Cloud DLP) inspection
-	// results that are associated with the finding.
-	CloudDlpInspection *GoogleCloudSecuritycenterV2CloudDlpInspection `json:"cloudDlpInspection,omitempty"`
-	// ComplianceDetails: Details about the compliance implications of the finding.
-	ComplianceDetails *GoogleCloudSecuritycenterV2ComplianceDetails `json:"complianceDetails,omitempty"`
-	// Compliances: Contains compliance information for security standards
-	// associated to the finding.
-	Compliances []*GoogleCloudSecuritycenterV2Compliance `json:"compliances,omitempty"`
-	// Connections: Contains information about the IP connection associated with
-	// the finding.
-	Connections []*GoogleCloudSecuritycenterV2Connection `json:"connections,omitempty"`
-	// Contacts: Output only. Map containing the points of contact for the given
-	// finding. The key represents the type of contact, while the value contains a
-	// list of all the contacts that pertain. Please refer to:
-	// https://cloud.google.com/resource-manager/docs/managing-notification-contacts#notification-categories
-	// { "security": { "contacts": [ { "email": "person1@company.com" }, { "email":
-	// "person2@company.com" } ] } }
-	Contacts map[string]GoogleCloudSecuritycenterV2ContactDetails `json:"contacts,omitempty"`
-	// Containers: Containers associated with the finding. This field provides
-	// information for both Kubernetes and non-Kubernetes containers.
-	Containers []*GoogleCloudSecuritycenterV2Container `json:"containers,omitempty"`
-	// CreateTime: Output only. The time at which the finding was created in
-	// Security Command Center.
-	CreateTime string `json:"createTime,omitempty"`
-	// CryptoKeyName: Output only. The name of the Cloud KMS key used to encrypt
-	// this finding, if any.
-	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
-	// DataAccessEvents: Data access events associated with the finding.
-	DataAccessEvents []*GoogleCloudSecuritycenterV2DataAccessEvent `json:"dataAccessEvents,omitempty"`
-	// DataFlowEvents: Data flow events associated with the finding.
-	DataFlowEvents []*GoogleCloudSecuritycenterV2DataFlowEvent `json:"dataFlowEvents,omitempty"`
-	// DataRetentionDeletionEvents: Data retention deletion events associated with
-	// the finding.
+	Access                      *GoogleCloudSecuritycenterV2Access                       `json:"access,omitempty"`
+	AffectedResources           *GoogleCloudSecuritycenterV2AffectedResources            `json:"affectedResources,omitempty"`
+	AgentDataAccessEvents       []*GoogleCloudSecuritycenterV2AgentDataAccessEvent       `json:"agentDataAccessEvents,omitempty"`
+	AiModel                     *GoogleCloudSecuritycenterV2AiModel                      `json:"aiModel,omitempty"`
+	Application                 *GoogleCloudSecuritycenterV2Application                  `json:"application,omitempty"`
+	ArtifactGuardPolicies       *GoogleCloudSecuritycenterV2ArtifactGuardPolicies        `json:"artifactGuardPolicies,omitempty"`
+	AttackExposure              *GoogleCloudSecuritycenterV2AttackExposure               `json:"attackExposure,omitempty"`
+	BackupDisasterRecovery      *GoogleCloudSecuritycenterV2BackupDisasterRecovery       `json:"backupDisasterRecovery,omitempty"`
+	CanonicalName               string                                                   `json:"canonicalName,omitempty"`
+	Category                    string                                                   `json:"category,omitempty"`
+	Chokepoint                  *GoogleCloudSecuritycenterV2Chokepoint                   `json:"chokepoint,omitempty"`
+	CloudArmor                  *GoogleCloudSecuritycenterV2CloudArmor                   `json:"cloudArmor,omitempty"`
+	CloudDlpDataProfile         *GoogleCloudSecuritycenterV2CloudDlpDataProfile          `json:"cloudDlpDataProfile,omitempty"`
+	CloudDlpInspection          *GoogleCloudSecuritycenterV2CloudDlpInspection           `json:"cloudDlpInspection,omitempty"`
+	ComplianceDetails           *GoogleCloudSecuritycenterV2ComplianceDetails            `json:"complianceDetails,omitempty"`
+	Compliances                 []*GoogleCloudSecuritycenterV2Compliance                 `json:"compliances,omitempty"`
+	Connections                 []*GoogleCloudSecuritycenterV2Connection                 `json:"connections,omitempty"`
+	Contacts                    map[string]GoogleCloudSecuritycenterV2ContactDetails     `json:"contacts,omitempty"`
+	Containers                  []*GoogleCloudSecuritycenterV2Container                  `json:"containers,omitempty"`
+	CreateTime                  string                                                   `json:"createTime,omitempty"`
+	CryptoKeyName               string                                                   `json:"cryptoKeyName,omitempty"`
+	DataAccessEvents            []*GoogleCloudSecuritycenterV2DataAccessEvent            `json:"dataAccessEvents,omitempty"`
+	DataFlowEvents              []*GoogleCloudSecuritycenterV2DataFlowEvent              `json:"dataFlowEvents,omitempty"`
 	DataRetentionDeletionEvents []*GoogleCloudSecuritycenterV2DataRetentionDeletionEvent `json:"dataRetentionDeletionEvents,omitempty"`
-	// Database: Database associated with the finding.
-	Database *GoogleCloudSecuritycenterV2Database `json:"database,omitempty"`
-	// Description: Contains more details about the finding.
-	Description string `json:"description,omitempty"`
-	// DiscoveredWorkload: DiscoveredWorkload associated with the finding.
-	DiscoveredWorkload *GoogleCloudSecuritycenterV2DiscoveredWorkload `json:"discoveredWorkload,omitempty"`
-	// Disk: Disk associated with the finding.
-	Disk *GoogleCloudSecuritycenterV2Disk `json:"disk,omitempty"`
-	// EventTime: The time the finding was first detected. If an existing finding
-	// is updated, then this is the time the update occurred. For example, if the
-	// finding represents an open firewall, this property captures the time the
-	// detector believes the firewall became open. The accuracy is determined by
-	// the detector. If the finding is later resolved, then this time reflects when
-	// the finding was resolved. This must not be set to a value greater than the
-	// current timestamp.
-	EventTime string `json:"eventTime,omitempty"`
-	// Exfiltration: Represents exfiltrations associated with the finding.
-	Exfiltration *GoogleCloudSecuritycenterV2Exfiltration `json:"exfiltration,omitempty"`
-	// ExternalExposure: External exposure associated with the finding.
-	ExternalExposure *GoogleCloudSecuritycenterV2ExternalExposure `json:"externalExposure,omitempty"`
-	// ExternalSystems: Output only. Third party SIEM/SOAR fields within SCC,
-	// contains external system information and external system finding fields.
-	ExternalSystems map[string]GoogleCloudSecuritycenterV2ExternalSystem `json:"externalSystems,omitempty"`
-	// ExternalUri: The URI that, if available, points to a web page outside of
-	// Security Command Center where additional information about the finding can
-	// be found. This field is guaranteed to be either empty or a well formed URL.
-	ExternalUri string `json:"externalUri,omitempty"`
-	// Files: File associated with the finding.
-	Files []*GoogleCloudSecuritycenterV2File `json:"files,omitempty"`
-	// FindingClass: The class of the finding.
-	//
+	Database                    *GoogleCloudSecuritycenterV2Database                     `json:"database,omitempty"`
+	Description                 string                                                   `json:"description,omitempty"`
+	DiscoveredWorkload          *GoogleCloudSecuritycenterV2DiscoveredWorkload           `json:"discoveredWorkload,omitempty"`
+	Disk                        *GoogleCloudSecuritycenterV2Disk                         `json:"disk,omitempty"`
+	EventTime                   string                                                   `json:"eventTime,omitempty"`
+	Exfiltration                *GoogleCloudSecuritycenterV2Exfiltration                 `json:"exfiltration,omitempty"`
+	ExternalExposure            *GoogleCloudSecuritycenterV2ExternalExposure             `json:"externalExposure,omitempty"`
+	ExternalSystems             map[string]GoogleCloudSecuritycenterV2ExternalSystem     `json:"externalSystems,omitempty"`
+	ExternalUri                 string                                                   `json:"externalUri,omitempty"`
+	Files                       []*GoogleCloudSecuritycenterV2File                       `json:"files,omitempty"`
 	// Possible values:
-	//   "FINDING_CLASS_UNSPECIFIED" - Unspecified finding class.
-	//   "THREAT" - Describes unwanted or malicious activity.
-	//   "VULNERABILITY" - Describes a potential weakness in software that
-	// increases risk to Confidentiality & Integrity & Availability.
-	//   "MISCONFIGURATION" - Describes a potential weakness in cloud
-	// resource/asset configuration that increases risk.
-	//   "OBSERVATION" - Describes a security observation that is for informational
-	// purposes.
-	//   "SCC_ERROR" - Describes an error that prevents some SCC functionality.
-	//   "POSTURE_VIOLATION" - Describes a potential security risk due to a change
-	// in the security posture.
-	//   "TOXIC_COMBINATION" - Describes a combination of security issues that
-	// represent a more severe security problem when taken together.
-	//   "SENSITIVE_DATA_RISK" - Describes a potential security risk to data assets
-	// that contain sensitive data.
-	//   "CHOKEPOINT" - Describes a resource or resource group where high risk
-	// attack paths converge, based on attack path simulations (APS).
-	//   "EXTERNAL_EXPOSURE" - Describes a potential security risk due to the
-	// resource being exposed to the internet.
-	//   "SECRET" - Describes a potential security risk due to plaintext
-	// credentials, keys, or tokens being exposed in an asset or workload.
-	FindingClass string `json:"findingClass,omitempty"`
-	// GroupMemberships: Contains details about groups of which this finding is a
-	// member. A group is a collection of findings that are related in some way.
-	// This field cannot be updated. Its value is ignored in all update requests.
+	//   "FINDING_CLASS_UNSPECIFIED"
+	//   "THREAT"
+	//   "VULNERABILITY"
+	//   "MISCONFIGURATION"
+	//   "OBSERVATION"
+	//   "SCC_ERROR"
+	//   "POSTURE_VIOLATION"
+	//   "TOXIC_COMBINATION"
+	//   "SENSITIVE_DATA_RISK"
+	//   "CHOKEPOINT"
+	//   "EXTERNAL_EXPOSURE"
+	//   "SECRET"
+	FindingClass     string                                        `json:"findingClass,omitempty"`
 	GroupMemberships []*GoogleCloudSecuritycenterV2GroupMembership `json:"groupMemberships,omitempty"`
-	// IamBindings: Represents IAM bindings associated with the finding.
-	IamBindings []*GoogleCloudSecuritycenterV2IamBinding `json:"iamBindings,omitempty"`
-	// Indicator: Represents what's commonly known as an *indicator of compromise*
-	// (IoC) in computer forensics. This is an artifact observed on a network or in
-	// an operating system that, with high confidence, indicates a computer
-	// intrusion. For more information, see Indicator of compromise
-	// (https://en.wikipedia.org/wiki/Indicator_of_compromise).
-	Indicator *GoogleCloudSecuritycenterV2Indicator `json:"indicator,omitempty"`
-	// IpRules: IP rules associated with the finding.
-	IpRules *GoogleCloudSecuritycenterV2IpRules `json:"ipRules,omitempty"`
-	// Job: Job associated with the finding.
-	Job *GoogleCloudSecuritycenterV2Job `json:"job,omitempty"`
-	// KernelRootkit: Signature of the kernel rootkit.
-	KernelRootkit *GoogleCloudSecuritycenterV2KernelRootkit `json:"kernelRootkit,omitempty"`
-	// Kubernetes: Kubernetes resources associated with the finding.
-	Kubernetes *GoogleCloudSecuritycenterV2Kubernetes `json:"kubernetes,omitempty"`
-	// LoadBalancers: The load balancers associated with the finding.
-	LoadBalancers []*GoogleCloudSecuritycenterV2LoadBalancer `json:"loadBalancers,omitempty"`
-	// LogEntries: Log entries that are relevant to the finding.
-	LogEntries []*GoogleCloudSecuritycenterV2LogEntry `json:"logEntries,omitempty"`
-	// MitreAttack: MITRE ATT&CK tactics and techniques related to this finding.
-	// See: https://attack.mitre.org
-	MitreAttack *GoogleCloudSecuritycenterV2MitreAttack `json:"mitreAttack,omitempty"`
-	// ModuleName: Unique identifier of the module which generated the finding.
-	// Example:
-	// folders/598186756061/securityHealthAnalyticsSettings/customModules/5679944116
-	// 1885
-	ModuleName string `json:"moduleName,omitempty"`
-	// Mute: Indicates the mute state of a finding (either muted, unmuted or
-	// undefined). Unlike other attributes of a finding, a finding provider
-	// shouldn't set the value of mute.
-	//
+	IamBindings      []*GoogleCloudSecuritycenterV2IamBinding      `json:"iamBindings,omitempty"`
+	Indicator        *GoogleCloudSecuritycenterV2Indicator         `json:"indicator,omitempty"`
+	IpRules          *GoogleCloudSecuritycenterV2IpRules           `json:"ipRules,omitempty"`
+	Job              *GoogleCloudSecuritycenterV2Job               `json:"job,omitempty"`
+	KernelRootkit    *GoogleCloudSecuritycenterV2KernelRootkit     `json:"kernelRootkit,omitempty"`
+	Kubernetes       *GoogleCloudSecuritycenterV2Kubernetes        `json:"kubernetes,omitempty"`
+	LoadBalancers    []*GoogleCloudSecuritycenterV2LoadBalancer    `json:"loadBalancers,omitempty"`
+	LogEntries       []*GoogleCloudSecuritycenterV2LogEntry        `json:"logEntries,omitempty"`
+	MitreAttack      *GoogleCloudSecuritycenterV2MitreAttack       `json:"mitreAttack,omitempty"`
+	ModuleName       string                                        `json:"moduleName,omitempty"`
 	// Possible values:
-	//   "MUTE_UNSPECIFIED" - Unspecified.
-	//   "MUTED" - Finding has been muted.
-	//   "UNMUTED" - Finding has been unmuted.
-	//   "UNDEFINED" - Finding has never been muted/unmuted.
-	Mute string `json:"mute,omitempty"`
-	// MuteInfo: Output only. The mute information regarding this finding.
-	MuteInfo *GoogleCloudSecuritycenterV2MuteInfo `json:"muteInfo,omitempty"`
-	// MuteInitiator: Records additional information about the mute operation, for
-	// example, the mute configuration
-	// (https://cloud.google.com/security-command-center/docs/how-to-mute-findings)
-	// that muted the finding and the user who muted the finding.
-	MuteInitiator string `json:"muteInitiator,omitempty"`
-	// MuteUpdateTime: Output only. The most recent time this finding was muted or
-	// unmuted.
-	MuteUpdateTime string `json:"muteUpdateTime,omitempty"`
-	// Name: Identifier. The relative resource name
-	// (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
-	// of the finding. The following list shows some examples: +
-	// `organizations/{organization_id}/sources/{source_id}/findings/{finding_id}`
-	// +
-	// `organizations/{organization_id}/sources/{source_id}/locations/{location_id}/
-	// findings/{finding_id}` +
-	// `folders/{folder_id}/sources/{source_id}/findings/{finding_id}` +
-	// `folders/{folder_id}/sources/{source_id}/locations/{location_id}/findings/{fi
-	// nding_id}` +
-	// `projects/{project_id}/sources/{source_id}/findings/{finding_id}` +
-	// `projects/{project_id}/sources/{source_id}/locations/{location_id}/findings/{
-	// finding_id}`
-	Name string `json:"name,omitempty"`
-	// Networks: Represents the VPC networks that the resource is attached to.
-	Networks []*GoogleCloudSecuritycenterV2Network `json:"networks,omitempty"`
-	// NextSteps: Steps to address the finding.
-	NextSteps string `json:"nextSteps,omitempty"`
-	// Notebook: Notebook associated with the finding.
-	Notebook *GoogleCloudSecuritycenterV2Notebook `json:"notebook,omitempty"`
-	// OrgPolicies: Contains information about the org policies associated with the
-	// finding.
-	OrgPolicies []*GoogleCloudSecuritycenterV2OrgPolicy `json:"orgPolicies,omitempty"`
-	// Parent: The relative resource name of the source and location the finding
-	// belongs to. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-	// This field is immutable after creation time. The following list shows some
-	// examples: + `organizations/{organization_id}/sources/{source_id}` +
-	// `folders/{folders_id}/sources/{source_id}` +
-	// `projects/{projects_id}/sources/{source_id}` +
-	// `organizations/{organization_id}/sources/{source_id}/locations/{location_id}`
-	//  + `folders/{folders_id}/sources/{source_id}/locations/{location_id}` +
-	// `projects/{projects_id}/sources/{source_id}/locations/{location_id}`
-	Parent string `json:"parent,omitempty"`
-	// ParentDisplayName: Output only. The human readable display name of the
-	// finding source such as "Event Threat Detection" or "Security Health
-	// Analytics".
-	ParentDisplayName string `json:"parentDisplayName,omitempty"`
-	// PolicyViolationSummary: PolicyViolationSummary associated with the finding.
+	//   "MUTE_UNSPECIFIED"
+	//   "MUTED"
+	//   "UNMUTED"
+	//   "UNDEFINED"
+	Mute                   string                                             `json:"mute,omitempty"`
+	MuteInfo               *GoogleCloudSecuritycenterV2MuteInfo               `json:"muteInfo,omitempty"`
+	MuteInitiator          string                                             `json:"muteInitiator,omitempty"`
+	MuteUpdateTime         string                                             `json:"muteUpdateTime,omitempty"`
+	Name                   string                                             `json:"name,omitempty"`
+	Networks               []*GoogleCloudSecuritycenterV2Network              `json:"networks,omitempty"`
+	NextSteps              string                                             `json:"nextSteps,omitempty"`
+	Notebook               *GoogleCloudSecuritycenterV2Notebook               `json:"notebook,omitempty"`
+	OrgPolicies            []*GoogleCloudSecuritycenterV2OrgPolicy            `json:"orgPolicies,omitempty"`
+	Parent                 string                                             `json:"parent,omitempty"`
+	ParentDisplayName      string                                             `json:"parentDisplayName,omitempty"`
 	PolicyViolationSummary *GoogleCloudSecuritycenterV2PolicyViolationSummary `json:"policyViolationSummary,omitempty"`
-	// Processes: Represents operating system processes associated with the
-	// Finding.
-	Processes []*GoogleCloudSecuritycenterV2Process `json:"processes,omitempty"`
-	// ResourceName: Immutable. For findings on Google Cloud resources, the full
-	// resource name of the Google Cloud resource this finding is for. See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource_name When
-	// the finding is for a non-Google Cloud resource, the resourceName can be a
-	// customer or partner defined string.
-	ResourceName string `json:"resourceName,omitempty"`
-	// Secret: Secret associated with the finding.
-	Secret *GoogleCloudSecuritycenterV2Secret `json:"secret,omitempty"`
-	// SecurityMarks: Output only. User specified security marks. These marks are
-	// entirely managed by the user and come from the SecurityMarks resource that
-	// belongs to the finding.
-	SecurityMarks *GoogleCloudSecuritycenterV2SecurityMarks `json:"securityMarks,omitempty"`
-	// SecurityPosture: The security posture associated with the finding.
-	SecurityPosture *GoogleCloudSecuritycenterV2SecurityPosture `json:"securityPosture,omitempty"`
-	// Severity: The severity of the finding. This field is managed by the source
-	// that writes the finding.
-	//
+	Processes              []*GoogleCloudSecuritycenterV2Process              `json:"processes,omitempty"`
+	ResourceName           string                                             `json:"resourceName,omitempty"`
+	Secret                 *GoogleCloudSecuritycenterV2Secret                 `json:"secret,omitempty"`
+	SecurityMarks          *GoogleCloudSecuritycenterV2SecurityMarks          `json:"securityMarks,omitempty"`
+	SecurityPosture        *GoogleCloudSecuritycenterV2SecurityPosture        `json:"securityPosture,omitempty"`
 	// Possible values:
-	//   "SEVERITY_UNSPECIFIED" - This value is used for findings when a source
-	// doesn't write a severity value.
-	//   "CRITICAL" - Vulnerability: A critical vulnerability is easily
-	// discoverable by an external actor, exploitable, and results in the direct
-	// ability to execute arbitrary code, exfiltrate data, and otherwise gain
-	// additional access and privileges to cloud resources and workloads. Examples
-	// include publicly accessible unprotected user data and public SSH access with
-	// weak or no passwords. Threat: Indicates a threat that is able to access,
-	// modify, or delete data or execute unauthorized code within existing
-	// resources.
-	//   "HIGH" - Vulnerability: A high risk vulnerability can be easily discovered
-	// and exploited in combination with other vulnerabilities in order to gain
-	// direct access and the ability to execute arbitrary code, exfiltrate data,
-	// and otherwise gain additional access and privileges to cloud resources and
-	// workloads. An example is a database with weak or no passwords that is only
-	// accessible internally. This database could easily be compromised by an actor
-	// that had access to the internal network. Threat: Indicates a threat that is
-	// able to create new computational resources in an environment but not able to
-	// access data or execute code in existing resources.
-	//   "MEDIUM" - Vulnerability: A medium risk vulnerability could be used by an
-	// actor to gain access to resources or privileges that enable them to
-	// eventually (through multiple steps or a complex exploit) gain access and the
-	// ability to execute arbitrary code or exfiltrate data. An example is a
-	// service account with access to more projects than it should have. If an
-	// actor gains access to the service account, they could potentially use that
-	// access to manipulate a project the service account was not intended to.
-	// Threat: Indicates a threat that is able to cause operational impact but may
-	// not access data or execute unauthorized code.
-	//   "LOW" - Vulnerability: A low risk vulnerability hampers a security
-	// organization's ability to detect vulnerabilities or active threats in their
-	// deployment, or prevents the root cause investigation of security issues. An
-	// example is monitoring and logs being disabled for resource configurations
-	// and access. Threat: Indicates a threat that has obtained minimal access to
-	// an environment but is not able to access data, execute code, or create
-	// resources.
-	Severity string `json:"severity,omitempty"`
-	// SourceProperties: Source specific properties. These properties are managed
-	// by the source that writes the finding. The key names in the
-	// source_properties map must be between 1 and 255 characters, and must start
-	// with a letter and contain alphanumeric characters or underscores only.
+	//   "SEVERITY_UNSPECIFIED"
+	//   "CRITICAL"
+	//   "HIGH"
+	//   "MEDIUM"
+	//   "LOW"
+	Severity         string               `json:"severity,omitempty"`
 	SourceProperties googleapi.RawMessage `json:"sourceProperties,omitempty"`
-	// State: Output only. The state of the finding.
-	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Unspecified state.
-	//   "ACTIVE" - The finding requires attention and has not been addressed yet.
-	//   "INACTIVE" - The finding has been fixed, triaged as a non-issue or
-	// otherwise addressed and is no longer active.
-	State string `json:"state,omitempty"`
-	// ToxicCombination: Contains details about a group of security issues that,
-	// when the issues occur together, represent a greater risk than when the
-	// issues occur independently. A group of such issues is referred to as a toxic
-	// combination. This field cannot be updated. Its value is ignored in all
-	// update requests.
+	//   "STATE_UNSPECIFIED"
+	//   "ACTIVE"
+	//   "INACTIVE"
+	State            string                                       `json:"state,omitempty"`
 	ToxicCombination *GoogleCloudSecuritycenterV2ToxicCombination `json:"toxicCombination,omitempty"`
-	// VertexAi: VertexAi associated with the finding.
-	VertexAi *GoogleCloudSecuritycenterV2VertexAi `json:"vertexAi,omitempty"`
-	// Vulnerability: Represents vulnerability-specific fields like CVE and CVSS
-	// scores. CVE stands for Common Vulnerabilities and Exposures
-	// (https://cve.mitre.org/about/)
-	Vulnerability *GoogleCloudSecuritycenterV2Vulnerability `json:"vulnerability,omitempty"`
+	VertexAi         *GoogleCloudSecuritycenterV2VertexAi         `json:"vertexAi,omitempty"`
+	Vulnerability    *GoogleCloudSecuritycenterV2Vulnerability    `json:"vulnerability,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Access") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -7200,13 +4662,8 @@ func (s GoogleCloudSecuritycenterV2Finding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Folder: Message that contains the resource name
-// and display name of a folder resource.
 type GoogleCloudSecuritycenterV2Folder struct {
-	// ResourceFolder: Full resource name of this folder. See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource_name
-	ResourceFolder string `json:"resourceFolder,omitempty"`
-	// ResourceFolderDisplayName: The user defined display name for this folder.
+	ResourceFolder            string `json:"resourceFolder,omitempty"`
 	ResourceFolderDisplayName string `json:"resourceFolderDisplayName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ResourceFolder") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7226,38 +4683,22 @@ func (s GoogleCloudSecuritycenterV2Folder) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Framework: Compliance framework associated with
-// the finding.
 type GoogleCloudSecuritycenterV2Framework struct {
-	// Category: Category of the framework associated with the finding. E.g.
-	// Security Benchmark, or Assured Workloads
-	//
 	// Possible values:
-	//   "FRAMEWORK_CATEGORY_UNSPECIFIED" - Default value. This value is unused.
-	//   "SECURITY_BENCHMARKS" - Security Benchmarks framework
-	//   "ASSURED_WORKLOADS" - Assured Workloads framework
-	//   "DATA_SECURITY" - Data Security framework
-	//   "GOOGLE_BEST_PRACTICES" - Google Best Practices framework
-	//   "CUSTOM_FRAMEWORK" - A user-created framework
-	Category []string `json:"category,omitempty"`
-	// Controls: The controls associated with the framework.
-	Controls []*GoogleCloudSecuritycenterV2Control `json:"controls,omitempty"`
-	// DisplayName: Display name of the framework. For a standard framework, this
-	// will look like e.g. PCI DSS 3.2.1, whereas for a custom framework it can be
-	// a user defined string like MyFramework
-	DisplayName string `json:"displayName,omitempty"`
-	// Name: Name of the framework associated with the finding
-	Name string `json:"name,omitempty"`
-	// Type: Type of the framework associated with the finding, to specify whether
-	// the framework is built-in (pre-defined and immutable) or a custom framework
-	// defined by the customer (equivalent to security posture)
-	//
+	//   "FRAMEWORK_CATEGORY_UNSPECIFIED"
+	//   "SECURITY_BENCHMARKS"
+	//   "ASSURED_WORKLOADS"
+	//   "DATA_SECURITY"
+	//   "GOOGLE_BEST_PRACTICES"
+	//   "CUSTOM_FRAMEWORK"
+	Category    []string                              `json:"category,omitempty"`
+	Controls    []*GoogleCloudSecuritycenterV2Control `json:"controls,omitempty"`
+	DisplayName string                                `json:"displayName,omitempty"`
+	Name        string                                `json:"name,omitempty"`
 	// Possible values:
-	//   "FRAMEWORK_TYPE_UNSPECIFIED" - Default value. This value is unused.
-	//   "FRAMEWORK_TYPE_BUILT_IN" - The framework is a built-in framework if it is
-	// created and managed by GCP.
-	//   "FRAMEWORK_TYPE_CUSTOM" - The framework is a custom framework if it is
-	// created and managed by the user.
+	//   "FRAMEWORK_TYPE_UNSPECIFIED"
+	//   "FRAMEWORK_TYPE_BUILT_IN"
+	//   "FRAMEWORK_TYPE_CUSTOM"
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Category") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7277,10 +4718,7 @@ func (s GoogleCloudSecuritycenterV2Framework) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Geolocation: Represents a geographical location
-// for a given access.
 type GoogleCloudSecuritycenterV2Geolocation struct {
-	// RegionCode: A CLDR.
 	RegionCode string `json:"regionCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RegionCode") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7300,18 +4738,12 @@ func (s GoogleCloudSecuritycenterV2Geolocation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2GroupMembership: Contains details about groups of
-// which this finding is a member. A group is a collection of findings that are
-// related in some way.
 type GoogleCloudSecuritycenterV2GroupMembership struct {
-	// GroupId: ID of the group.
 	GroupId string `json:"groupId,omitempty"`
-	// GroupType: Type of group.
-	//
 	// Possible values:
-	//   "GROUP_TYPE_UNSPECIFIED" - Default value.
-	//   "GROUP_TYPE_TOXIC_COMBINATION" - Group represents a toxic combination.
-	//   "GROUP_TYPE_CHOKEPOINT" - Group represents a chokepoint.
+	//   "GROUP_TYPE_UNSPECIFIED"
+	//   "GROUP_TYPE_TOXIC_COMBINATION"
+	//   "GROUP_TYPE_CHOKEPOINT"
 	GroupType string `json:"groupType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GroupId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -7331,14 +4763,8 @@ func (s GoogleCloudSecuritycenterV2GroupMembership) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2HttpResponse: The http response returned by the
-// web application.
 type GoogleCloudSecuritycenterV2HttpResponse struct {
-	// Path: The http path for which response code was returned by web application,
-	// for example, "https://test-app.a.run.app/test".
-	Path string `json:"path,omitempty"`
-	// StatusCode: The http response code returned by the web application, for
-	// example, 200.
+	Path       string `json:"path,omitempty"`
 	StatusCode string `json:"statusCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Path") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -7358,22 +4784,14 @@ func (s GoogleCloudSecuritycenterV2HttpResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IamBinding: Represents a particular IAM binding,
-// which captures a member's role addition, removal, or state.
 type GoogleCloudSecuritycenterV2IamBinding struct {
-	// Action: The action that was performed on a Binding.
-	//
 	// Possible values:
-	//   "ACTION_UNSPECIFIED" - Unspecified.
-	//   "ADD" - Addition of a Binding.
-	//   "REMOVE" - Removal of a Binding.
+	//   "ACTION_UNSPECIFIED"
+	//   "ADD"
+	//   "REMOVE"
 	Action string `json:"action,omitempty"`
-	// Member: A single identity requesting access for a Cloud Platform resource,
-	// for example, "foo@google.com".
 	Member string `json:"member,omitempty"`
-	// Role: Role that is assigned to "members". For example, "roles/viewer",
-	// "roles/editor", or "roles/owner".
-	Role string `json:"role,omitempty"`
+	Role   string `json:"role,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -7392,21 +4810,11 @@ func (s GoogleCloudSecuritycenterV2IamBinding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Indicator: Represents what's commonly known as an
-// _indicator of compromise_ (IoC) in computer forensics. This is an artifact
-// observed on a network or in an operating system that, with high confidence,
-// indicates a computer intrusion. For more information, see Indicator of
-// compromise (https://en.wikipedia.org/wiki/Indicator_of_compromise).
 type GoogleCloudSecuritycenterV2Indicator struct {
-	// Domains: List of domains associated to the Finding.
-	Domains []string `json:"domains,omitempty"`
-	// IpAddresses: The list of IP addresses that are associated with the finding.
-	IpAddresses []string `json:"ipAddresses,omitempty"`
-	// Signatures: The list of matched signatures indicating that the given process
-	// is present in the environment.
-	Signatures []*GoogleCloudSecuritycenterV2ProcessSignature `json:"signatures,omitempty"`
-	// Uris: The list of URIs associated to the Findings.
-	Uris []string `json:"uris,omitempty"`
+	Domains     []string                                       `json:"domains,omitempty"`
+	IpAddresses []string                                       `json:"ipAddresses,omitempty"`
+	Signatures  []*GoogleCloudSecuritycenterV2ProcessSignature `json:"signatures,omitempty"`
+	Uris        []string                                       `json:"uris,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Domains") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -7425,21 +4833,10 @@ func (s GoogleCloudSecuritycenterV2Indicator) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2InfoType: Type of information detected by the
-// API.
 type GoogleCloudSecuritycenterV2InfoType struct {
-	// Name: Name of the information type. Either a name of your choosing when
-	// creating a CustomInfoType, or one of the names listed at
-	// https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference
-	// when specifying a built-in type. When sending Cloud DLP results to Data
-	// Catalog, infoType names should conform to the pattern
-	// `[A-Za-z0-9$_-]{1,64}`.
-	Name string `json:"name,omitempty"`
-	// SensitivityScore: Optional custom sensitivity for this InfoType. This only
-	// applies to data profiling.
+	Name             string                                       `json:"name,omitempty"`
 	SensitivityScore *GoogleCloudSecuritycenterV2SensitivityScore `json:"sensitivityScore,omitempty"`
-	// Version: Optional version name for this InfoType.
-	Version string `json:"version,omitempty"`
+	Version          string                                       `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -7458,16 +4855,9 @@ func (s GoogleCloudSecuritycenterV2InfoType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IpRule: IP rule information.
 type GoogleCloudSecuritycenterV2IpRule struct {
-	// PortRanges: Optional. An optional list of ports to which this rule applies.
-	// This field is only applicable for the UDP or (S)TCP protocols. Each entry
-	// must be either an integer or a range including a min and max port number.
 	PortRanges []*GoogleCloudSecuritycenterV2PortRange `json:"portRanges,omitempty"`
-	// Protocol: The IP protocol this rule applies to. This value can either be one
-	// of the following well known protocol strings (TCP, UDP, ICMP, ESP, AH, IPIP,
-	// SCTP) or a string representation of the integer value.
-	Protocol string `json:"protocol,omitempty"`
+	Protocol   string                                  `json:"protocol,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PortRanges") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7486,32 +4876,17 @@ func (s GoogleCloudSecuritycenterV2IpRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IpRules: IP rules associated with the finding.
 type GoogleCloudSecuritycenterV2IpRules struct {
-	// Allowed: Tuple with allowed rules.
-	Allowed *GoogleCloudSecuritycenterV2Allowed `json:"allowed,omitempty"`
-	// Denied: Tuple with denied rules.
-	Denied *GoogleCloudSecuritycenterV2Denied `json:"denied,omitempty"`
-	// DestinationIpRanges: If destination IP ranges are specified, the firewall
-	// rule applies only to traffic that has a destination IP address in these
-	// ranges. These ranges must be expressed in CIDR format. Only supports IPv4.
-	DestinationIpRanges []string `json:"destinationIpRanges,omitempty"`
-	// Direction: The direction that the rule is applicable to, one of ingress or
-	// egress.
-	//
+	Allowed             *GoogleCloudSecuritycenterV2Allowed `json:"allowed,omitempty"`
+	Denied              *GoogleCloudSecuritycenterV2Denied  `json:"denied,omitempty"`
+	DestinationIpRanges []string                            `json:"destinationIpRanges,omitempty"`
 	// Possible values:
-	//   "DIRECTION_UNSPECIFIED" - Unspecified direction value.
-	//   "INGRESS" - Ingress direction value.
-	//   "EGRESS" - Egress direction value.
-	Direction string `json:"direction,omitempty"`
-	// ExposedServices: Name of the network protocol service, such as FTP, that is
-	// exposed by the open port. Follows the naming convention available at:
-	// https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml.
+	//   "DIRECTION_UNSPECIFIED"
+	//   "INGRESS"
+	//   "EGRESS"
+	Direction       string   `json:"direction,omitempty"`
 	ExposedServices []string `json:"exposedServices,omitempty"`
-	// SourceIpRanges: If source IP ranges are specified, the firewall rule applies
-	// only to traffic that has a source IP address in these ranges. These ranges
-	// must be expressed in CIDR format. Only supports IPv4.
-	SourceIpRanges []string `json:"sourceIpRanges,omitempty"`
+	SourceIpRanges  []string `json:"sourceIpRanges,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Allowed") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -7530,60 +4905,38 @@ func (s GoogleCloudSecuritycenterV2IpRules) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Issue: Security Command Center Issue.
 type GoogleCloudSecuritycenterV2Issue struct {
-	// CreateTime: Output only. The time the issue was created.
-	CreateTime string `json:"createTime,omitempty"`
-	// Description: The description of the issue in Markdown format.
-	Description string `json:"description,omitempty"`
-	// Detection: The finding category or rule name that generated the issue.
-	Detection string `json:"detection,omitempty"`
-	// Domains: The domains of the issue.
-	Domains []*GoogleCloudSecuritycenterV2IssueDomain `json:"domains,omitempty"`
-	// ExposureScore: The exposure score of the issue.
-	ExposureScore float64 `json:"exposureScore,omitempty"`
-	// IssueType: The type of the issue.
-	//
+	CreateTime    string                                    `json:"createTime,omitempty"`
+	Description   string                                    `json:"description,omitempty"`
+	Detection     string                                    `json:"detection,omitempty"`
+	Domains       []*GoogleCloudSecuritycenterV2IssueDomain `json:"domains,omitempty"`
+	ExposureScore float64                                   `json:"exposureScore,omitempty"`
 	// Possible values:
-	//   "ISSUE_TYPE_UNSPECIFIED" - Unspecified issue type.
-	//   "CHOKEPOINT" - Chokepoint issue type.
-	//   "TOXIC_COMBINATION" - Toxic combination issue type.
-	//   "INSIGHT" - Insight issue type.
-	IssueType string `json:"issueType,omitempty"`
-	// LastObservationTime: The time the issue was last observed.
-	LastObservationTime string `json:"lastObservationTime,omitempty"`
-	// Mute: The mute information of the issue.
-	Mute *GoogleCloudSecuritycenterV2IssueMute `json:"mute,omitempty"`
-	// Name: Identifier. The name of the issue. Format:
-	// organizations/{organization}/locations/{location}/issues/{issue}
-	Name string `json:"name,omitempty"`
-	// PrimaryResource: The primary resource associated with the issue.
-	PrimaryResource *GoogleCloudSecuritycenterV2IssueResource `json:"primaryResource,omitempty"`
-	// RelatedFindings: The findings related to the issue.
-	RelatedFindings []*GoogleCloudSecuritycenterV2IssueFinding `json:"relatedFindings,omitempty"`
-	// Remediations: Approaches to remediate the issue in Markdown format.
-	Remediations []string `json:"remediations,omitempty"`
-	// SecondaryResources: Additional resources associated with the issue.
-	SecondaryResources []*GoogleCloudSecuritycenterV2IssueResource `json:"secondaryResources,omitempty"`
-	// SecurityContexts: The security context of the issue.
-	SecurityContexts []*GoogleCloudSecuritycenterV2IssueSecurityContext `json:"securityContexts,omitempty"`
-	// Severity: The severity of the issue.
-	//
+	//   "ISSUE_TYPE_UNSPECIFIED"
+	//   "CHOKEPOINT"
+	//   "TOXIC_COMBINATION"
+	//   "INSIGHT"
+	IssueType           string                                             `json:"issueType,omitempty"`
+	LastObservationTime string                                             `json:"lastObservationTime,omitempty"`
+	Mute                *GoogleCloudSecuritycenterV2IssueMute              `json:"mute,omitempty"`
+	Name                string                                             `json:"name,omitempty"`
+	PrimaryResource     *GoogleCloudSecuritycenterV2IssueResource          `json:"primaryResource,omitempty"`
+	RelatedFindings     []*GoogleCloudSecuritycenterV2IssueFinding         `json:"relatedFindings,omitempty"`
+	Remediations        []string                                           `json:"remediations,omitempty"`
+	SecondaryResources  []*GoogleCloudSecuritycenterV2IssueResource        `json:"secondaryResources,omitempty"`
+	SecurityContexts    []*GoogleCloudSecuritycenterV2IssueSecurityContext `json:"securityContexts,omitempty"`
 	// Possible values:
-	//   "SEVERITY_UNSPECIFIED" - Unspecified severity.
-	//   "CRITICAL" - Critical severity.
-	//   "HIGH" - High severity.
-	//   "MEDIUM" - Medium severity.
-	//   "LOW" - Low severity.
+	//   "SEVERITY_UNSPECIFIED"
+	//   "CRITICAL"
+	//   "HIGH"
+	//   "MEDIUM"
+	//   "LOW"
 	Severity string `json:"severity,omitempty"`
-	// State: Output only. The state of the issue.
-	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Unspecified state.
-	//   "ACTIVE" - Active state.
-	//   "INACTIVE" - Inactive state.
-	State string `json:"state,omitempty"`
-	// UpdateTime: Output only. The time the issue was last updated.
+	//   "STATE_UNSPECIFIED"
+	//   "ACTIVE"
+	//   "INACTIVE"
+	State      string `json:"state,omitempty"`
 	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7617,19 +4970,16 @@ func (s *GoogleCloudSecuritycenterV2Issue) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GoogleCloudSecuritycenterV2IssueDomain: The domains of an issue.
 type GoogleCloudSecuritycenterV2IssueDomain struct {
-	// DomainCategory: The domain category of the issue.
-	//
 	// Possible values:
-	//   "DOMAIN_CATEGORY_UNSPECIFIED" - Unspecified domain category.
-	//   "AI" - Issues in the AI domain.
-	//   "CODE" - Issues in the code domain.
-	//   "CONTAINER" - Issues in the container domain.
-	//   "DATA" - Issues in the data domain.
-	//   "IDENTITY_AND_ACCESS" - Issues in the identity and access domain.
-	//   "VULNERABILITY" - Issues in the vulnerability domain.
-	//   "THREAT" - Issues in the threat domain.
+	//   "DOMAIN_CATEGORY_UNSPECIFIED"
+	//   "AI"
+	//   "CODE"
+	//   "CONTAINER"
+	//   "DATA"
+	//   "IDENTITY_AND_ACCESS"
+	//   "VULNERABILITY"
+	//   "THREAT"
 	DomainCategory string `json:"domainCategory,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DomainCategory") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7649,13 +4999,9 @@ func (s GoogleCloudSecuritycenterV2IssueDomain) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IssueFinding: Finding related to an issue.
 type GoogleCloudSecuritycenterV2IssueFinding struct {
-	// Cve: The CVE of the finding.
-	Cve *GoogleCloudSecuritycenterV2IssueFindingCve `json:"cve,omitempty"`
-	// Name: The name of the finding.
-	Name string `json:"name,omitempty"`
-	// SecurityBulletin: The security bulletin of the finding.
+	Cve              *GoogleCloudSecuritycenterV2IssueFindingCve              `json:"cve,omitempty"`
+	Name             string                                                   `json:"name,omitempty"`
 	SecurityBulletin *GoogleCloudSecuritycenterV2IssueFindingSecurityBulletin `json:"securityBulletin,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Cve") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -7675,9 +5021,7 @@ func (s GoogleCloudSecuritycenterV2IssueFinding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IssueFindingCve: The CVE of the finding.
 type GoogleCloudSecuritycenterV2IssueFindingCve struct {
-	// Name: The CVE name.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -7697,10 +5041,7 @@ func (s GoogleCloudSecuritycenterV2IssueFindingCve) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IssueFindingSecurityBulletin: The security
-// bulletin of the finding.
 type GoogleCloudSecuritycenterV2IssueFindingSecurityBulletin struct {
-	// Name: The security bulletin name.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -7720,21 +5061,14 @@ func (s GoogleCloudSecuritycenterV2IssueFindingSecurityBulletin) MarshalJSON() (
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IssueMute: The mute information of the issue.
 type GoogleCloudSecuritycenterV2IssueMute struct {
-	// MuteInitiator: The email address of the user who last changed the mute state
-	// of the issue.
 	MuteInitiator string `json:"muteInitiator,omitempty"`
-	// MuteReason: The user-provided reason for muting the issue.
-	MuteReason string `json:"muteReason,omitempty"`
-	// MuteState: Output only. The mute state of the issue.
-	//
+	MuteReason    string `json:"muteReason,omitempty"`
 	// Possible values:
-	//   "MUTE_STATE_UNSPECIFIED" - Unspecified mute state.
-	//   "NOT_MUTED" - Not muted.
-	//   "MUTED" - Muted.
-	MuteState string `json:"muteState,omitempty"`
-	// MuteUpdateTime: The time the issue was muted.
+	//   "MUTE_STATE_UNSPECIFIED"
+	//   "NOT_MUTED"
+	//   "MUTED"
+	MuteState      string `json:"muteState,omitempty"`
 	MuteUpdateTime string `json:"muteUpdateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MuteInitiator") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7754,42 +5088,23 @@ func (s GoogleCloudSecuritycenterV2IssueMute) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IssueResource: A resource associated with the an
-// issue.
 type GoogleCloudSecuritycenterV2IssueResource struct {
-	// AdcApplication: The ADC application associated with the finding.
-	AdcApplication *GoogleCloudSecuritycenterV2IssueResourceAdcApplication `json:"adcApplication,omitempty"`
-	// AdcApplicationTemplate: The ADC template associated with the finding.
+	AdcApplication         *GoogleCloudSecuritycenterV2IssueResourceAdcApplication                 `json:"adcApplication,omitempty"`
 	AdcApplicationTemplate *GoogleCloudSecuritycenterV2IssueResourceAdcApplicationTemplateRevision `json:"adcApplicationTemplate,omitempty"`
-	// AdcSharedTemplate: The ADC shared template associated with the finding.
-	AdcSharedTemplate *GoogleCloudSecuritycenterV2IssueResourceAdcSharedTemplateRevision `json:"adcSharedTemplate,omitempty"`
-	// Application: The AppHub application associated with the resource, if any.
-	// Only populated for the primary resource.
-	Application *GoogleCloudSecuritycenterV2IssueResourceApplication `json:"application,omitempty"`
-	// AwsMetadata: The AWS metadata of the resource associated with the issue.
-	// Only populated for AWS resources.
-	AwsMetadata *GoogleCloudSecuritycenterV2IssueResourceAwsMetadata `json:"awsMetadata,omitempty"`
-	// AzureMetadata: The Azure metadata of the resource associated with the issue.
-	// Only populated for Azure resources.
-	AzureMetadata *GoogleCloudSecuritycenterV2IssueResourceAzureMetadata `json:"azureMetadata,omitempty"`
-	// CloudProvider: The cloud provider of the resource associated with the issue.
-	//
+	AdcSharedTemplate      *GoogleCloudSecuritycenterV2IssueResourceAdcSharedTemplateRevision      `json:"adcSharedTemplate,omitempty"`
+	Application            *GoogleCloudSecuritycenterV2IssueResourceApplication                    `json:"application,omitempty"`
+	AwsMetadata            *GoogleCloudSecuritycenterV2IssueResourceAwsMetadata                    `json:"awsMetadata,omitempty"`
+	AzureMetadata          *GoogleCloudSecuritycenterV2IssueResourceAzureMetadata                  `json:"azureMetadata,omitempty"`
 	// Possible values:
-	//   "CLOUD_PROVIDER_UNSPECIFIED" - Unspecified cloud provider.
-	//   "GOOGLE_CLOUD" - Google Cloud.
-	//   "AMAZON_WEB_SERVICES" - Amazon Web Services.
-	//   "MICROSOFT_AZURE" - Microsoft Azure.
-	CloudProvider string `json:"cloudProvider,omitempty"`
-	// DisplayName: The resource-type specific display name of the resource
-	// associated with the issue.
-	DisplayName string `json:"displayName,omitempty"`
-	// GoogleCloudMetadata: The Google Cloud metadata of the resource associated
-	// with the issue. Only populated for Google Cloud resources.
+	//   "CLOUD_PROVIDER_UNSPECIFIED"
+	//   "GOOGLE_CLOUD"
+	//   "AMAZON_WEB_SERVICES"
+	//   "MICROSOFT_AZURE"
+	CloudProvider       string                                                       `json:"cloudProvider,omitempty"`
+	DisplayName         string                                                       `json:"displayName,omitempty"`
 	GoogleCloudMetadata *GoogleCloudSecuritycenterV2IssueResourceGoogleCloudMetadata `json:"googleCloudMetadata,omitempty"`
-	// Name: The full resource name of the resource associated with the issue.
-	Name string `json:"name,omitempty"`
-	// Type: The type of the resource associated with the issue.
-	Type string `json:"type,omitempty"`
+	Name                string                                                       `json:"name,omitempty"`
+	Type                string                                                       `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdcApplication") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7808,15 +5123,9 @@ func (s GoogleCloudSecuritycenterV2IssueResource) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IssueResourceAdcApplication: Represents an ADC
-// application associated with the finding.
 type GoogleCloudSecuritycenterV2IssueResourceAdcApplication struct {
-	// Attributes: Consumer provided attributes for the AppHub application.
 	Attributes *GoogleCloudSecuritycenterV2IssueResourceApplicationAttributes `json:"attributes,omitempty"`
-	// Name: The resource name of an ADC Application. Format:
-	// projects/{project}/locations/{location}/spaces/{space}/applications/{applicat
-	// ion}
-	Name string `json:"name,omitempty"`
+	Name       string                                                         `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7835,12 +5144,7 @@ func (s GoogleCloudSecuritycenterV2IssueResourceAdcApplication) MarshalJSON() ([
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IssueResourceAdcApplicationTemplateRevision:
-// Represents an ADC template associated with the finding.
 type GoogleCloudSecuritycenterV2IssueResourceAdcApplicationTemplateRevision struct {
-	// Name: The resource name of an ADC Application Template Revision. Format:
-	// projects/{project}/locations/{location}/spaces/{space}/applicationTemplates/{
-	// application_template}/revisions/{revision}
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -7860,12 +5164,7 @@ func (s GoogleCloudSecuritycenterV2IssueResourceAdcApplicationTemplateRevision) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IssueResourceAdcSharedTemplateRevision:
-// Represents an ADC shared template associated with the finding.
 type GoogleCloudSecuritycenterV2IssueResourceAdcSharedTemplateRevision struct {
-	// Name: The resource name of an ADC Shared Template Revision. Format:
-	// projects/{project}/locations/{location}/spaces/{space}/applicationTemplates/{
-	// application_template}/revisions/{revision}
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -7885,15 +5184,9 @@ func (s GoogleCloudSecuritycenterV2IssueResourceAdcSharedTemplateRevision) Marsh
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IssueResourceApplication: The AppHub application
-// associated with the resource, if any.
 type GoogleCloudSecuritycenterV2IssueResourceApplication struct {
-	// Attributes: Consumer provided attributes for the application
 	Attributes *GoogleCloudSecuritycenterV2IssueResourceApplicationAttributes `json:"attributes,omitempty"`
-	// Name: The resource name of an Application. Format:
-	// `projects/{host-project-id}/locations/{location}/applications/{application-id
-	// }`
-	Name string `json:"name,omitempty"`
+	Name       string                                                         `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7912,20 +5205,12 @@ func (s GoogleCloudSecuritycenterV2IssueResourceApplication) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IssueResourceApplicationAttributes: Consumer
-// provided attributes for the application
 type GoogleCloudSecuritycenterV2IssueResourceApplicationAttributes struct {
-	// BusinessOwners: Business team that ensures user needs are met and value is
-	// delivered
-	BusinessOwners []*GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesContactInfo `json:"businessOwners,omitempty"`
-	// Criticality: User-defined criticality information.
-	Criticality *GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesCriticality `json:"criticality,omitempty"`
-	// DeveloperOwners: Developer team that owns development and coding.
+	BusinessOwners  []*GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesContactInfo `json:"businessOwners,omitempty"`
+	Criticality     *GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesCriticality   `json:"criticality,omitempty"`
 	DeveloperOwners []*GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesContactInfo `json:"developerOwners,omitempty"`
-	// Environment: User-defined environment information.
-	Environment *GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesEnvironment `json:"environment,omitempty"`
-	// OperatorOwners: Operator team that ensures runtime and operations.
-	OperatorOwners []*GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesContactInfo `json:"operatorOwners,omitempty"`
+	Environment     *GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesEnvironment   `json:"environment,omitempty"`
+	OperatorOwners  []*GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesContactInfo `json:"operatorOwners,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BusinessOwners") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7944,10 +5229,7 @@ func (s GoogleCloudSecuritycenterV2IssueResourceApplicationAttributes) MarshalJS
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesContactInfo:
-// Contact information of stakeholders.
 type GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesContactInfo struct {
-	// Email: Email address of the contacts.
 	Email string `json:"email,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Email") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -7967,17 +5249,13 @@ func (s GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesContactInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesCriticality:
-// Criticality of the Application, Service, or Workload
 type GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesCriticality struct {
-	// Type: Criticality Type.
-	//
 	// Possible values:
-	//   "CRITICALITY_TYPE_UNSPECIFIED" - Unspecified type.
-	//   "MISSION_CRITICAL" - Mission critical service, application or workload.
-	//   "HIGH" - High impact.
-	//   "MEDIUM" - Medium impact.
-	//   "LOW" - Low impact.
+	//   "CRITICALITY_TYPE_UNSPECIFIED"
+	//   "MISSION_CRITICAL"
+	//   "HIGH"
+	//   "MEDIUM"
+	//   "LOW"
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -7997,17 +5275,13 @@ func (s GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesCriticality
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesEnvironment:
-// Environment of the Application, Service, or Workload
 type GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesEnvironment struct {
-	// Type: Environment Type.
-	//
 	// Possible values:
-	//   "ENVIRONMENT_TYPE_UNSPECIFIED" - Unspecified type.
-	//   "PRODUCTION" - Production environment.
-	//   "STAGING" - Staging environment.
-	//   "TEST" - Test environment.
-	//   "DEVELOPMENT" - Development environment.
+	//   "ENVIRONMENT_TYPE_UNSPECIFIED"
+	//   "PRODUCTION"
+	//   "STAGING"
+	//   "TEST"
+	//   "DEVELOPMENT"
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -8027,10 +5301,7 @@ func (s GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesEnvironment
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IssueResourceAwsMetadata: The AWS metadata of a
-// resource associated with an issue.
 type GoogleCloudSecuritycenterV2IssueResourceAwsMetadata struct {
-	// Account: The AWS account of the resource associated with the issue.
 	Account *GoogleCloudSecuritycenterV2IssueResourceAwsMetadataAwsAccount `json:"account,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Account") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -8050,12 +5321,8 @@ func (s GoogleCloudSecuritycenterV2IssueResourceAwsMetadata) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IssueResourceAwsMetadataAwsAccount: The AWS
-// account of the resource associated with the issue.
 type GoogleCloudSecuritycenterV2IssueResourceAwsMetadataAwsAccount struct {
-	// Id: The AWS account ID of the resource associated with the issue.
-	Id string `json:"id,omitempty"`
-	// Name: The AWS account name of the resource associated with the issue.
+	Id   string `json:"id,omitempty"`
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -8075,11 +5342,7 @@ func (s GoogleCloudSecuritycenterV2IssueResourceAwsMetadataAwsAccount) MarshalJS
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IssueResourceAzureMetadata: The Azure metadata of
-// a resource associated with an issue.
 type GoogleCloudSecuritycenterV2IssueResourceAzureMetadata struct {
-	// Subscription: The Azure subscription of the resource associated with the
-	// issue.
 	Subscription *GoogleCloudSecuritycenterV2IssueResourceAzureMetadataAzureSubscription `json:"subscription,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Subscription") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8099,14 +5362,9 @@ func (s GoogleCloudSecuritycenterV2IssueResourceAzureMetadata) MarshalJSON() ([]
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IssueResourceAzureMetadataAzureSubscription: The
-// Azure subscription of the resource associated with the issue.
 type GoogleCloudSecuritycenterV2IssueResourceAzureMetadataAzureSubscription struct {
-	// DisplayName: The Azure subscription display name of the resource associated
-	// with the issue.
 	DisplayName string `json:"displayName,omitempty"`
-	// Id: The Azure subscription ID of the resource associated with the issue.
-	Id string `json:"id,omitempty"`
+	Id          string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -8125,11 +5383,7 @@ func (s GoogleCloudSecuritycenterV2IssueResourceAzureMetadataAzureSubscription) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IssueResourceGoogleCloudMetadata: Google Cloud
-// metadata of a resource associated with an issue.
 type GoogleCloudSecuritycenterV2IssueResourceGoogleCloudMetadata struct {
-	// ProjectId: The project ID that the resource associated with the issue
-	// belongs to.
 	ProjectId string `json:"projectId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ProjectId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8149,13 +5403,9 @@ func (s GoogleCloudSecuritycenterV2IssueResourceGoogleCloudMetadata) MarshalJSON
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IssueSecurityContext: Security context associated
-// with an issue.
 type GoogleCloudSecuritycenterV2IssueSecurityContext struct {
-	// AggregatedCount: The aggregated count of the security context.
 	AggregatedCount *GoogleCloudSecuritycenterV2IssueSecurityContextAggregatedCount `json:"aggregatedCount,omitempty"`
-	// Context: The context of the security context.
-	Context *GoogleCloudSecuritycenterV2IssueSecurityContextContext `json:"context,omitempty"`
+	Context         *GoogleCloudSecuritycenterV2IssueSecurityContextContext         `json:"context,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AggregatedCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -8174,13 +5424,9 @@ func (s GoogleCloudSecuritycenterV2IssueSecurityContext) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IssueSecurityContextAggregatedCount: Aggregated
-// count of a security context.
 type GoogleCloudSecuritycenterV2IssueSecurityContextAggregatedCount struct {
-	// Key: Aggregation key.
-	Key string `json:"key,omitempty"`
-	// Value: Aggregation value.
-	Value int64 `json:"value,omitempty"`
+	Key   string `json:"key,omitempty"`
+	Value int64  `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -8199,12 +5445,8 @@ func (s GoogleCloudSecuritycenterV2IssueSecurityContextAggregatedCount) MarshalJ
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2IssueSecurityContextContext: Context of a
-// security context.
 type GoogleCloudSecuritycenterV2IssueSecurityContextContext struct {
-	// Type: Context type.
-	Type string `json:"type,omitempty"`
-	// Values: Context values.
+	Type   string   `json:"type,omitempty"`
 	Values []string `json:"values,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -8224,25 +5466,16 @@ func (s GoogleCloudSecuritycenterV2IssueSecurityContextContext) MarshalJSON() ([
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Job: Describes a job
 type GoogleCloudSecuritycenterV2Job struct {
-	// ErrorCode: Optional. If the job did not complete successfully, this field
-	// describes why.
-	ErrorCode int64 `json:"errorCode,omitempty"`
-	// Location: Optional. Gives the location where the job ran, such as `US` or
-	// `europe-west1`
-	Location string `json:"location,omitempty"`
-	// Name: The fully-qualified name for a job. e.g. `projects//jobs/`
-	Name string `json:"name,omitempty"`
-	// State: Output only. State of the job, such as `RUNNING` or `PENDING`.
-	//
+	ErrorCode int64  `json:"errorCode,omitempty"`
+	Location  string `json:"location,omitempty"`
+	Name      string `json:"name,omitempty"`
 	// Possible values:
-	//   "JOB_STATE_UNSPECIFIED" - Unspecified represents an unknown state and
-	// should not be used.
-	//   "PENDING" - Job is scheduled and pending for run
-	//   "RUNNING" - Job in progress
-	//   "SUCCEEDED" - Job has completed with success
-	//   "FAILED" - Job has completed but with failure
+	//   "JOB_STATE_UNSPECIFIED"
+	//   "PENDING"
+	//   "RUNNING"
+	//   "SUCCEEDED"
+	//   "FAILED"
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8262,37 +5495,16 @@ func (s GoogleCloudSecuritycenterV2Job) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2KernelRootkit: Kernel mode rootkit signatures.
 type GoogleCloudSecuritycenterV2KernelRootkit struct {
-	// Name: Rootkit name, when available.
-	Name string `json:"name,omitempty"`
-	// UnexpectedCodeModification: True if unexpected modifications of kernel code
-	// memory are present.
-	UnexpectedCodeModification bool `json:"unexpectedCodeModification,omitempty"`
-	// UnexpectedFtraceHandler: True if `ftrace` points are present with callbacks
-	// pointing to regions that are not in the expected kernel or module code
-	// range.
-	UnexpectedFtraceHandler bool `json:"unexpectedFtraceHandler,omitempty"`
-	// UnexpectedInterruptHandler: True if interrupt handlers that are are not in
-	// the expected kernel or module code regions are present.
-	UnexpectedInterruptHandler bool `json:"unexpectedInterruptHandler,omitempty"`
-	// UnexpectedKernelCodePages: True if kernel code pages that are not in the
-	// expected kernel or module code regions are present.
-	UnexpectedKernelCodePages bool `json:"unexpectedKernelCodePages,omitempty"`
-	// UnexpectedKprobeHandler: True if `kprobe` points are present with callbacks
-	// pointing to regions that are not in the expected kernel or module code
-	// range.
-	UnexpectedKprobeHandler bool `json:"unexpectedKprobeHandler,omitempty"`
-	// UnexpectedProcessesInRunqueue: True if unexpected processes in the scheduler
-	// run queue are present. Such processes are in the run queue, but not in the
-	// process task list.
-	UnexpectedProcessesInRunqueue bool `json:"unexpectedProcessesInRunqueue,omitempty"`
-	// UnexpectedReadOnlyDataModification: True if unexpected modifications of
-	// kernel read-only data memory are present.
-	UnexpectedReadOnlyDataModification bool `json:"unexpectedReadOnlyDataModification,omitempty"`
-	// UnexpectedSystemCallHandler: True if system call handlers that are are not
-	// in the expected kernel or module code regions are present.
-	UnexpectedSystemCallHandler bool `json:"unexpectedSystemCallHandler,omitempty"`
+	Name                               string `json:"name,omitempty"`
+	UnexpectedCodeModification         bool   `json:"unexpectedCodeModification,omitempty"`
+	UnexpectedFtraceHandler            bool   `json:"unexpectedFtraceHandler,omitempty"`
+	UnexpectedInterruptHandler         bool   `json:"unexpectedInterruptHandler,omitempty"`
+	UnexpectedKernelCodePages          bool   `json:"unexpectedKernelCodePages,omitempty"`
+	UnexpectedKprobeHandler            bool   `json:"unexpectedKprobeHandler,omitempty"`
+	UnexpectedProcessesInRunqueue      bool   `json:"unexpectedProcessesInRunqueue,omitempty"`
+	UnexpectedReadOnlyDataModification bool   `json:"unexpectedReadOnlyDataModification,omitempty"`
+	UnexpectedSystemCallHandler        bool   `json:"unexpectedSystemCallHandler,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -8311,35 +5523,14 @@ func (s GoogleCloudSecuritycenterV2KernelRootkit) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Kubernetes: Kubernetes-related attributes.
 type GoogleCloudSecuritycenterV2Kubernetes struct {
-	// AccessReviews: Provides information on any Kubernetes access reviews
-	// (privilege checks) relevant to the finding.
 	AccessReviews []*GoogleCloudSecuritycenterV2AccessReview `json:"accessReviews,omitempty"`
-	// Bindings: Provides Kubernetes role binding information for findings that
-	// involve RoleBindings or ClusterRoleBindings
-	// (https://cloud.google.com/kubernetes-engine/docs/how-to/role-based-access-control).
-	Bindings []*GoogleCloudSecuritycenterV2Binding `json:"bindings,omitempty"`
-	// NodePools: GKE node pools
-	// (https://cloud.google.com/kubernetes-engine/docs/concepts/node-pools)
-	// associated with the finding. This field contains node pool information for
-	// each node, when it is available.
-	NodePools []*GoogleCloudSecuritycenterV2NodePool `json:"nodePools,omitempty"`
-	// Nodes: Provides Kubernetes node
-	// (https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-architecture#nodes)
-	// information.
-	Nodes []*GoogleCloudSecuritycenterV2Node `json:"nodes,omitempty"`
-	// Objects: Kubernetes objects related to the finding.
-	Objects []*GoogleCloudSecuritycenterV2Object `json:"objects,omitempty"`
-	// Pods: Kubernetes Pods
-	// (https://cloud.google.com/kubernetes-engine/docs/concepts/pod) associated
-	// with the finding. This field contains Pod records for each container that is
-	// owned by a Pod.
-	Pods []*GoogleCloudSecuritycenterV2Pod `json:"pods,omitempty"`
-	// Roles: Provides Kubernetes role information for findings that involve Roles
-	// or ClusterRoles
-	// (https://cloud.google.com/kubernetes-engine/docs/how-to/role-based-access-control).
-	Roles []*GoogleCloudSecuritycenterV2Role `json:"roles,omitempty"`
+	Bindings      []*GoogleCloudSecuritycenterV2Binding      `json:"bindings,omitempty"`
+	NodePools     []*GoogleCloudSecuritycenterV2NodePool     `json:"nodePools,omitempty"`
+	Nodes         []*GoogleCloudSecuritycenterV2Node         `json:"nodes,omitempty"`
+	Objects       []*GoogleCloudSecuritycenterV2Object       `json:"objects,omitempty"`
+	Pods          []*GoogleCloudSecuritycenterV2Pod          `json:"pods,omitempty"`
+	Roles         []*GoogleCloudSecuritycenterV2Role         `json:"roles,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccessReviews") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -8358,15 +5549,8 @@ func (s GoogleCloudSecuritycenterV2Kubernetes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Label: Represents a generic name-value label. A
-// label has separate name and value fields to support filtering with the
-// `contains()` function. For more information, see Filtering on array-type
-// fields
-// (https://cloud.google.com/security-command-center/docs/how-to-api-list-findings#array-contains-filtering).
 type GoogleCloudSecuritycenterV2Label struct {
-	// Name: Name of the label.
-	Name string `json:"name,omitempty"`
-	// Value: Value that corresponds to the label's name.
+	Name  string `json:"name,omitempty"`
 	Value string `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -8386,10 +5570,7 @@ func (s GoogleCloudSecuritycenterV2Label) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2LoadBalancer: Contains information related to the
-// load balancer associated with the finding.
 type GoogleCloudSecuritycenterV2LoadBalancer struct {
-	// Name: The name of the load balancer associated with the finding.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -8409,9 +5590,7 @@ func (s GoogleCloudSecuritycenterV2LoadBalancer) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2LogEntry: An individual entry in a log.
 type GoogleCloudSecuritycenterV2LogEntry struct {
-	// CloudLoggingEntry: An individual entry in a log stored in Cloud Logging.
 	CloudLoggingEntry *GoogleCloudSecuritycenterV2CloudLoggingEntry `json:"cloudLoggingEntry,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudLoggingEntry") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8431,14 +5610,9 @@ func (s GoogleCloudSecuritycenterV2LogEntry) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2MemoryHashSignature: A signature corresponding to
-// memory page hashes.
 type GoogleCloudSecuritycenterV2MemoryHashSignature struct {
-	// BinaryFamily: The binary family.
-	BinaryFamily string `json:"binaryFamily,omitempty"`
-	// Detections: The list of memory hash detections contributing to the binary
-	// family match.
-	Detections []*GoogleCloudSecuritycenterV2Detection `json:"detections,omitempty"`
+	BinaryFamily string                                  `json:"binaryFamily,omitempty"`
+	Detections   []*GoogleCloudSecuritycenterV2Detection `json:"detections,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BinaryFamily") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -8457,343 +5631,324 @@ func (s GoogleCloudSecuritycenterV2MemoryHashSignature) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2MitreAttack: MITRE ATT&CK tactics and techniques
-// related to this finding. See: https://attack.mitre.org
 type GoogleCloudSecuritycenterV2MitreAttack struct {
-	// AdditionalTactics: Additional MITRE ATT&CK tactics related to this finding,
-	// if any.
-	//
 	// Possible values:
-	//   "TACTIC_UNSPECIFIED" - Unspecified value.
-	//   "RECONNAISSANCE" - TA0043
-	//   "RESOURCE_DEVELOPMENT" - TA0042
-	//   "INITIAL_ACCESS" - TA0001
-	//   "EXECUTION" - TA0002
-	//   "PERSISTENCE" - TA0003
-	//   "PRIVILEGE_ESCALATION" - TA0004
-	//   "DEFENSE_EVASION" - TA0005
-	//   "CREDENTIAL_ACCESS" - TA0006
-	//   "DISCOVERY" - TA0007
-	//   "LATERAL_MOVEMENT" - TA0008
-	//   "COLLECTION" - TA0009
-	//   "COMMAND_AND_CONTROL" - TA0011
-	//   "EXFILTRATION" - TA0010
-	//   "IMPACT" - TA0040
+	//   "TACTIC_UNSPECIFIED"
+	//   "RECONNAISSANCE"
+	//   "RESOURCE_DEVELOPMENT"
+	//   "INITIAL_ACCESS"
+	//   "EXECUTION"
+	//   "PERSISTENCE"
+	//   "PRIVILEGE_ESCALATION"
+	//   "DEFENSE_EVASION"
+	//   "CREDENTIAL_ACCESS"
+	//   "DISCOVERY"
+	//   "LATERAL_MOVEMENT"
+	//   "COLLECTION"
+	//   "COMMAND_AND_CONTROL"
+	//   "EXFILTRATION"
+	//   "IMPACT"
 	AdditionalTactics []string `json:"additionalTactics,omitempty"`
-	// AdditionalTechniques: Additional MITRE ATT&CK techniques related to this
-	// finding, if any, along with any of their respective parent techniques.
-	//
 	// Possible values:
-	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
-	//   "DATA_OBFUSCATION" - T1001
-	//   "DATA_OBFUSCATION_STEGANOGRAPHY" - T1001.002
-	//   "OS_CREDENTIAL_DUMPING" - T1003
-	//   "OS_CREDENTIAL_DUMPING_PROC_FILESYSTEM" - T1003.007
-	//   "OS_CREDENTIAL_DUMPING_ETC_PASSWORD_AND_ETC_SHADOW" - T1003.008
-	//   "DATA_FROM_LOCAL_SYSTEM" - T1005
-	//   "AUTOMATED_EXFILTRATION" - T1020
-	//   "OBFUSCATED_FILES_OR_INFO" - T1027
-	//   "STEGANOGRAPHY" - T1027.003
-	//   "COMPILE_AFTER_DELIVERY" - T1027.004
-	//   "COMMAND_OBFUSCATION" - T1027.010
-	//   "SCHEDULED_TRANSFER" - T1029
-	//   "SYSTEM_OWNER_USER_DISCOVERY" - T1033
-	//   "MASQUERADING" - T1036
-	//   "MATCH_LEGITIMATE_NAME_OR_LOCATION" - T1036.005
-	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS" - T1037
-	//   "STARTUP_ITEMS" - T1037.005
-	//   "NETWORK_SERVICE_DISCOVERY" - T1046
-	//   "SCHEDULED_TASK_JOB" - T1053
-	//   "SCHEDULED_TASK_JOB_CRON" - T1053.003
-	//   "CONTAINER_ORCHESTRATION_JOB" - T1053.007
-	//   "PROCESS_INJECTION" - T1055
-	//   "INPUT_CAPTURE" - T1056
-	//   "INPUT_CAPTURE_KEYLOGGING" - T1056.001
-	//   "PROCESS_DISCOVERY" - T1057
-	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
-	//   "UNIX_SHELL" - T1059.004
-	//   "PYTHON" - T1059.006
-	//   "EXPLOITATION_FOR_PRIVILEGE_ESCALATION" - T1068
-	//   "PERMISSION_GROUPS_DISCOVERY" - T1069
-	//   "CLOUD_GROUPS" - T1069.003
-	//   "INDICATOR_REMOVAL" - T1070
-	//   "INDICATOR_REMOVAL_CLEAR_LINUX_OR_MAC_SYSTEM_LOGS" - T1070.002
-	//   "INDICATOR_REMOVAL_CLEAR_COMMAND_HISTORY" - T1070.003
-	//   "INDICATOR_REMOVAL_FILE_DELETION" - T1070.004
-	//   "INDICATOR_REMOVAL_TIMESTOMP" - T1070.006
-	//   "INDICATOR_REMOVAL_CLEAR_MAILBOX_DATA" - T1070.008
-	//   "APPLICATION_LAYER_PROTOCOL" - T1071
-	//   "DNS" - T1071.004
-	//   "SOFTWARE_DEPLOYMENT_TOOLS" - T1072
-	//   "VALID_ACCOUNTS" - T1078
-	//   "DEFAULT_ACCOUNTS" - T1078.001
-	//   "LOCAL_ACCOUNTS" - T1078.003
-	//   "CLOUD_ACCOUNTS" - T1078.004
-	//   "FILE_AND_DIRECTORY_DISCOVERY" - T1083
-	//   "ACCOUNT_DISCOVERY_LOCAL_ACCOUNT" - T1087.001
-	//   "PROXY" - T1090
-	//   "EXTERNAL_PROXY" - T1090.002
-	//   "MULTI_HOP_PROXY" - T1090.003
-	//   "ACCOUNT_MANIPULATION" - T1098
-	//   "ADDITIONAL_CLOUD_CREDENTIALS" - T1098.001
-	//   "ADDITIONAL_CLOUD_ROLES" - T1098.003
-	//   "SSH_AUTHORIZED_KEYS" - T1098.004
-	//   "ADDITIONAL_CONTAINER_CLUSTER_ROLES" - T1098.006
-	//   "MULTI_STAGE_CHANNELS" - T1104
-	//   "INGRESS_TOOL_TRANSFER" - T1105
-	//   "NATIVE_API" - T1106
-	//   "BRUTE_FORCE" - T1110
-	//   "AUTOMATED_COLLECTION" - T1119
-	//   "SHARED_MODULES" - T1129
-	//   "DATA_ENCODING" - T1132
-	//   "STANDARD_ENCODING" - T1132.001
-	//   "ACCESS_TOKEN_MANIPULATION" - T1134
-	//   "TOKEN_IMPERSONATION_OR_THEFT" - T1134.001
-	//   "CREATE_ACCOUNT" - T1136
-	//   "LOCAL_ACCOUNT" - T1136.001
-	//   "DEOBFUSCATE_DECODE_FILES_OR_INFO" - T1140
-	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
-	//   "SUPPLY_CHAIN_COMPROMISE" - T1195
-	//   "COMPROMISE_SOFTWARE_DEPENDENCIES_AND_DEVELOPMENT_TOOLS" - T1195.001
-	//   "EXPLOITATION_FOR_CLIENT_EXECUTION" - T1203
-	//   "USER_EXECUTION" - T1204
-	//   "EXPLOITATION_FOR_CREDENTIAL_ACCESS" - T1212
-	//   "LINUX_AND_MAC_FILE_AND_DIRECTORY_PERMISSIONS_MODIFICATION" - T1222.002
-	//   "DOMAIN_POLICY_MODIFICATION" - T1484
-	//   "DATA_DESTRUCTION" - T1485
-	//   "DATA_ENCRYPTED_FOR_IMPACT" - T1486
-	//   "SERVICE_STOP" - T1489
-	//   "INHIBIT_SYSTEM_RECOVERY" - T1490
-	//   "FIRMWARE_CORRUPTION" - T1495
-	//   "RESOURCE_HIJACKING" - T1496
-	//   "NETWORK_DENIAL_OF_SERVICE" - T1498
-	//   "CLOUD_SERVICE_DISCOVERY" - T1526
-	//   "STEAL_APPLICATION_ACCESS_TOKEN" - T1528
-	//   "ACCOUNT_ACCESS_REMOVAL" - T1531
-	//   "TRANSFER_DATA_TO_CLOUD_ACCOUNT" - T1537
-	//   "STEAL_WEB_SESSION_COOKIE" - T1539
-	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
-	//   "EVENT_TRIGGERED_EXECUTION" - T1546
-	//   "BOOT_OR_LOGON_AUTOSTART_EXECUTION" - T1547
-	//   "KERNEL_MODULES_AND_EXTENSIONS" - T1547.006
-	//   "SHORTCUT_MODIFICATION" - T1547.009
-	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
-	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SETUID_AND_SETGID" - T1548.001
-	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SUDO_AND_SUDO_CACHING" - T1548.003
-	//   "UNSECURED_CREDENTIALS" - T1552
-	//   "CREDENTIALS_IN_FILES" - T1552.001
-	//   "BASH_HISTORY" - T1552.003
-	//   "PRIVATE_KEYS" - T1552.004
-	//   "SUBVERT_TRUST_CONTROL" - T1553
-	//   "INSTALL_ROOT_CERTIFICATE" - T1553.004
-	//   "COMPROMISE_HOST_SOFTWARE_BINARY" - T1554
-	//   "CREDENTIALS_FROM_PASSWORD_STORES" - T1555
-	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
-	//   "PLUGGABLE_AUTHENTICATION_MODULES" - T1556.003
-	//   "MULTI_FACTOR_AUTHENTICATION" - T1556.006
-	//   "IMPAIR_DEFENSES" - T1562
-	//   "DISABLE_OR_MODIFY_TOOLS" - T1562.001
-	//   "INDICATOR_BLOCKING" - T1562.006
-	//   "DISABLE_OR_MODIFY_LINUX_AUDIT_SYSTEM" - T1562.012
-	//   "HIDE_ARTIFACTS" - T1564
-	//   "HIDDEN_FILES_AND_DIRECTORIES" - T1564.001
-	//   "HIDDEN_USERS" - T1564.002
-	//   "EXFILTRATION_OVER_WEB_SERVICE" - T1567
-	//   "EXFILTRATION_TO_CLOUD_STORAGE" - T1567.002
-	//   "DYNAMIC_RESOLUTION" - T1568
-	//   "LATERAL_TOOL_TRANSFER" - T1570
-	//   "HIJACK_EXECUTION_FLOW" - T1574
-	//   "HIJACK_EXECUTION_FLOW_DYNAMIC_LINKER_HIJACKING" - T1574.006
-	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE" - T1578
-	//   "CREATE_SNAPSHOT" - T1578.001
-	//   "CLOUD_INFRASTRUCTURE_DISCOVERY" - T1580
-	//   "DEVELOP_CAPABILITIES" - T1587
-	//   "DEVELOP_CAPABILITIES_MALWARE" - T1587.001
-	//   "OBTAIN_CAPABILITIES" - T1588
-	//   "OBTAIN_CAPABILITIES_MALWARE" - T1588.001
-	//   "OBTAIN_CAPABILITIES_VULNERABILITIES" - T1588.006
-	//   "ACTIVE_SCANNING" - T1595
-	//   "SCANNING_IP_BLOCKS" - T1595.001
-	//   "STAGE_CAPABILITIES" - T1608
-	//   "UPLOAD_MALWARE" - T1608.001
-	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
-	//   "DEPLOY_CONTAINER" - T1610
-	//   "ESCAPE_TO_HOST" - T1611
-	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
-	//   "REFLECTIVE_CODE_LOADING" - T1620
-	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649
-	//   "FINANCIAL_THEFT" - T1657
+	//   "TECHNIQUE_UNSPECIFIED"
+	//   "DATA_OBFUSCATION"
+	//   "DATA_OBFUSCATION_STEGANOGRAPHY"
+	//   "OS_CREDENTIAL_DUMPING"
+	//   "OS_CREDENTIAL_DUMPING_PROC_FILESYSTEM"
+	//   "OS_CREDENTIAL_DUMPING_ETC_PASSWORD_AND_ETC_SHADOW"
+	//   "DATA_FROM_LOCAL_SYSTEM"
+	//   "AUTOMATED_EXFILTRATION"
+	//   "OBFUSCATED_FILES_OR_INFO"
+	//   "STEGANOGRAPHY"
+	//   "COMPILE_AFTER_DELIVERY"
+	//   "COMMAND_OBFUSCATION"
+	//   "SCHEDULED_TRANSFER"
+	//   "SYSTEM_OWNER_USER_DISCOVERY"
+	//   "MASQUERADING"
+	//   "MATCH_LEGITIMATE_NAME_OR_LOCATION"
+	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS"
+	//   "STARTUP_ITEMS"
+	//   "NETWORK_SERVICE_DISCOVERY"
+	//   "SCHEDULED_TASK_JOB"
+	//   "SCHEDULED_TASK_JOB_CRON"
+	//   "CONTAINER_ORCHESTRATION_JOB"
+	//   "PROCESS_INJECTION"
+	//   "INPUT_CAPTURE"
+	//   "INPUT_CAPTURE_KEYLOGGING"
+	//   "PROCESS_DISCOVERY"
+	//   "COMMAND_AND_SCRIPTING_INTERPRETER"
+	//   "UNIX_SHELL"
+	//   "PYTHON"
+	//   "EXPLOITATION_FOR_PRIVILEGE_ESCALATION"
+	//   "PERMISSION_GROUPS_DISCOVERY"
+	//   "CLOUD_GROUPS"
+	//   "INDICATOR_REMOVAL"
+	//   "INDICATOR_REMOVAL_CLEAR_LINUX_OR_MAC_SYSTEM_LOGS"
+	//   "INDICATOR_REMOVAL_CLEAR_COMMAND_HISTORY"
+	//   "INDICATOR_REMOVAL_FILE_DELETION"
+	//   "INDICATOR_REMOVAL_TIMESTOMP"
+	//   "INDICATOR_REMOVAL_CLEAR_MAILBOX_DATA"
+	//   "APPLICATION_LAYER_PROTOCOL"
+	//   "DNS"
+	//   "SOFTWARE_DEPLOYMENT_TOOLS"
+	//   "VALID_ACCOUNTS"
+	//   "DEFAULT_ACCOUNTS"
+	//   "LOCAL_ACCOUNTS"
+	//   "CLOUD_ACCOUNTS"
+	//   "FILE_AND_DIRECTORY_DISCOVERY"
+	//   "ACCOUNT_DISCOVERY_LOCAL_ACCOUNT"
+	//   "PROXY"
+	//   "EXTERNAL_PROXY"
+	//   "MULTI_HOP_PROXY"
+	//   "ACCOUNT_MANIPULATION"
+	//   "ADDITIONAL_CLOUD_CREDENTIALS"
+	//   "ADDITIONAL_CLOUD_ROLES"
+	//   "SSH_AUTHORIZED_KEYS"
+	//   "ADDITIONAL_CONTAINER_CLUSTER_ROLES"
+	//   "MULTI_STAGE_CHANNELS"
+	//   "INGRESS_TOOL_TRANSFER"
+	//   "NATIVE_API"
+	//   "BRUTE_FORCE"
+	//   "AUTOMATED_COLLECTION"
+	//   "SHARED_MODULES"
+	//   "DATA_ENCODING"
+	//   "STANDARD_ENCODING"
+	//   "ACCESS_TOKEN_MANIPULATION"
+	//   "TOKEN_IMPERSONATION_OR_THEFT"
+	//   "CREATE_ACCOUNT"
+	//   "LOCAL_ACCOUNT"
+	//   "DEOBFUSCATE_DECODE_FILES_OR_INFO"
+	//   "EXPLOIT_PUBLIC_FACING_APPLICATION"
+	//   "SUPPLY_CHAIN_COMPROMISE"
+	//   "COMPROMISE_SOFTWARE_DEPENDENCIES_AND_DEVELOPMENT_TOOLS"
+	//   "EXPLOITATION_FOR_CLIENT_EXECUTION"
+	//   "USER_EXECUTION"
+	//   "EXPLOITATION_FOR_CREDENTIAL_ACCESS"
+	//   "LINUX_AND_MAC_FILE_AND_DIRECTORY_PERMISSIONS_MODIFICATION"
+	//   "DOMAIN_POLICY_MODIFICATION"
+	//   "DATA_DESTRUCTION"
+	//   "DATA_ENCRYPTED_FOR_IMPACT"
+	//   "SERVICE_STOP"
+	//   "INHIBIT_SYSTEM_RECOVERY"
+	//   "FIRMWARE_CORRUPTION"
+	//   "RESOURCE_HIJACKING"
+	//   "NETWORK_DENIAL_OF_SERVICE"
+	//   "CLOUD_SERVICE_DISCOVERY"
+	//   "STEAL_APPLICATION_ACCESS_TOKEN"
+	//   "ACCOUNT_ACCESS_REMOVAL"
+	//   "TRANSFER_DATA_TO_CLOUD_ACCOUNT"
+	//   "STEAL_WEB_SESSION_COOKIE"
+	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS"
+	//   "EVENT_TRIGGERED_EXECUTION"
+	//   "BOOT_OR_LOGON_AUTOSTART_EXECUTION"
+	//   "KERNEL_MODULES_AND_EXTENSIONS"
+	//   "SHORTCUT_MODIFICATION"
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM"
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SETUID_AND_SETGID"
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SUDO_AND_SUDO_CACHING"
+	//   "UNSECURED_CREDENTIALS"
+	//   "CREDENTIALS_IN_FILES"
+	//   "BASH_HISTORY"
+	//   "PRIVATE_KEYS"
+	//   "SUBVERT_TRUST_CONTROL"
+	//   "INSTALL_ROOT_CERTIFICATE"
+	//   "COMPROMISE_HOST_SOFTWARE_BINARY"
+	//   "CREDENTIALS_FROM_PASSWORD_STORES"
+	//   "MODIFY_AUTHENTICATION_PROCESS"
+	//   "PLUGGABLE_AUTHENTICATION_MODULES"
+	//   "MULTI_FACTOR_AUTHENTICATION"
+	//   "IMPAIR_DEFENSES"
+	//   "DISABLE_OR_MODIFY_TOOLS"
+	//   "INDICATOR_BLOCKING"
+	//   "DISABLE_OR_MODIFY_LINUX_AUDIT_SYSTEM"
+	//   "HIDE_ARTIFACTS"
+	//   "HIDDEN_FILES_AND_DIRECTORIES"
+	//   "HIDDEN_USERS"
+	//   "EXFILTRATION_OVER_WEB_SERVICE"
+	//   "EXFILTRATION_TO_CLOUD_STORAGE"
+	//   "DYNAMIC_RESOLUTION"
+	//   "LATERAL_TOOL_TRANSFER"
+	//   "HIJACK_EXECUTION_FLOW"
+	//   "HIJACK_EXECUTION_FLOW_DYNAMIC_LINKER_HIJACKING"
+	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE"
+	//   "CREATE_SNAPSHOT"
+	//   "CLOUD_INFRASTRUCTURE_DISCOVERY"
+	//   "DEVELOP_CAPABILITIES"
+	//   "DEVELOP_CAPABILITIES_MALWARE"
+	//   "OBTAIN_CAPABILITIES"
+	//   "OBTAIN_CAPABILITIES_MALWARE"
+	//   "OBTAIN_CAPABILITIES_VULNERABILITIES"
+	//   "ACTIVE_SCANNING"
+	//   "SCANNING_IP_BLOCKS"
+	//   "STAGE_CAPABILITIES"
+	//   "UPLOAD_MALWARE"
+	//   "CONTAINER_ADMINISTRATION_COMMAND"
+	//   "DEPLOY_CONTAINER"
+	//   "ESCAPE_TO_HOST"
+	//   "CONTAINER_AND_RESOURCE_DISCOVERY"
+	//   "REFLECTIVE_CODE_LOADING"
+	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES"
+	//   "FINANCIAL_THEFT"
 	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
-	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by this
-	// finding, if any.
-	//
 	// Possible values:
-	//   "TACTIC_UNSPECIFIED" - Unspecified value.
-	//   "RECONNAISSANCE" - TA0043
-	//   "RESOURCE_DEVELOPMENT" - TA0042
-	//   "INITIAL_ACCESS" - TA0001
-	//   "EXECUTION" - TA0002
-	//   "PERSISTENCE" - TA0003
-	//   "PRIVILEGE_ESCALATION" - TA0004
-	//   "DEFENSE_EVASION" - TA0005
-	//   "CREDENTIAL_ACCESS" - TA0006
-	//   "DISCOVERY" - TA0007
-	//   "LATERAL_MOVEMENT" - TA0008
-	//   "COLLECTION" - TA0009
-	//   "COMMAND_AND_CONTROL" - TA0011
-	//   "EXFILTRATION" - TA0010
-	//   "IMPACT" - TA0040
+	//   "TACTIC_UNSPECIFIED"
+	//   "RECONNAISSANCE"
+	//   "RESOURCE_DEVELOPMENT"
+	//   "INITIAL_ACCESS"
+	//   "EXECUTION"
+	//   "PERSISTENCE"
+	//   "PRIVILEGE_ESCALATION"
+	//   "DEFENSE_EVASION"
+	//   "CREDENTIAL_ACCESS"
+	//   "DISCOVERY"
+	//   "LATERAL_MOVEMENT"
+	//   "COLLECTION"
+	//   "COMMAND_AND_CONTROL"
+	//   "EXFILTRATION"
+	//   "IMPACT"
 	PrimaryTactic string `json:"primaryTactic,omitempty"`
-	// PrimaryTechniques: The MITRE ATT&CK technique most closely represented by
-	// this finding, if any. primary_techniques is a repeated field because there
-	// are multiple levels of MITRE ATT&CK techniques. If the technique most
-	// closely represented by this finding is a sub-technique (e.g.
-	// `SCANNING_IP_BLOCKS`), both the sub-technique and its parent technique(s)
-	// will be listed (e.g. `SCANNING_IP_BLOCKS`, `ACTIVE_SCANNING`).
-	//
 	// Possible values:
-	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
-	//   "DATA_OBFUSCATION" - T1001
-	//   "DATA_OBFUSCATION_STEGANOGRAPHY" - T1001.002
-	//   "OS_CREDENTIAL_DUMPING" - T1003
-	//   "OS_CREDENTIAL_DUMPING_PROC_FILESYSTEM" - T1003.007
-	//   "OS_CREDENTIAL_DUMPING_ETC_PASSWORD_AND_ETC_SHADOW" - T1003.008
-	//   "DATA_FROM_LOCAL_SYSTEM" - T1005
-	//   "AUTOMATED_EXFILTRATION" - T1020
-	//   "OBFUSCATED_FILES_OR_INFO" - T1027
-	//   "STEGANOGRAPHY" - T1027.003
-	//   "COMPILE_AFTER_DELIVERY" - T1027.004
-	//   "COMMAND_OBFUSCATION" - T1027.010
-	//   "SCHEDULED_TRANSFER" - T1029
-	//   "SYSTEM_OWNER_USER_DISCOVERY" - T1033
-	//   "MASQUERADING" - T1036
-	//   "MATCH_LEGITIMATE_NAME_OR_LOCATION" - T1036.005
-	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS" - T1037
-	//   "STARTUP_ITEMS" - T1037.005
-	//   "NETWORK_SERVICE_DISCOVERY" - T1046
-	//   "SCHEDULED_TASK_JOB" - T1053
-	//   "SCHEDULED_TASK_JOB_CRON" - T1053.003
-	//   "CONTAINER_ORCHESTRATION_JOB" - T1053.007
-	//   "PROCESS_INJECTION" - T1055
-	//   "INPUT_CAPTURE" - T1056
-	//   "INPUT_CAPTURE_KEYLOGGING" - T1056.001
-	//   "PROCESS_DISCOVERY" - T1057
-	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
-	//   "UNIX_SHELL" - T1059.004
-	//   "PYTHON" - T1059.006
-	//   "EXPLOITATION_FOR_PRIVILEGE_ESCALATION" - T1068
-	//   "PERMISSION_GROUPS_DISCOVERY" - T1069
-	//   "CLOUD_GROUPS" - T1069.003
-	//   "INDICATOR_REMOVAL" - T1070
-	//   "INDICATOR_REMOVAL_CLEAR_LINUX_OR_MAC_SYSTEM_LOGS" - T1070.002
-	//   "INDICATOR_REMOVAL_CLEAR_COMMAND_HISTORY" - T1070.003
-	//   "INDICATOR_REMOVAL_FILE_DELETION" - T1070.004
-	//   "INDICATOR_REMOVAL_TIMESTOMP" - T1070.006
-	//   "INDICATOR_REMOVAL_CLEAR_MAILBOX_DATA" - T1070.008
-	//   "APPLICATION_LAYER_PROTOCOL" - T1071
-	//   "DNS" - T1071.004
-	//   "SOFTWARE_DEPLOYMENT_TOOLS" - T1072
-	//   "VALID_ACCOUNTS" - T1078
-	//   "DEFAULT_ACCOUNTS" - T1078.001
-	//   "LOCAL_ACCOUNTS" - T1078.003
-	//   "CLOUD_ACCOUNTS" - T1078.004
-	//   "FILE_AND_DIRECTORY_DISCOVERY" - T1083
-	//   "ACCOUNT_DISCOVERY_LOCAL_ACCOUNT" - T1087.001
-	//   "PROXY" - T1090
-	//   "EXTERNAL_PROXY" - T1090.002
-	//   "MULTI_HOP_PROXY" - T1090.003
-	//   "ACCOUNT_MANIPULATION" - T1098
-	//   "ADDITIONAL_CLOUD_CREDENTIALS" - T1098.001
-	//   "ADDITIONAL_CLOUD_ROLES" - T1098.003
-	//   "SSH_AUTHORIZED_KEYS" - T1098.004
-	//   "ADDITIONAL_CONTAINER_CLUSTER_ROLES" - T1098.006
-	//   "MULTI_STAGE_CHANNELS" - T1104
-	//   "INGRESS_TOOL_TRANSFER" - T1105
-	//   "NATIVE_API" - T1106
-	//   "BRUTE_FORCE" - T1110
-	//   "AUTOMATED_COLLECTION" - T1119
-	//   "SHARED_MODULES" - T1129
-	//   "DATA_ENCODING" - T1132
-	//   "STANDARD_ENCODING" - T1132.001
-	//   "ACCESS_TOKEN_MANIPULATION" - T1134
-	//   "TOKEN_IMPERSONATION_OR_THEFT" - T1134.001
-	//   "CREATE_ACCOUNT" - T1136
-	//   "LOCAL_ACCOUNT" - T1136.001
-	//   "DEOBFUSCATE_DECODE_FILES_OR_INFO" - T1140
-	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
-	//   "SUPPLY_CHAIN_COMPROMISE" - T1195
-	//   "COMPROMISE_SOFTWARE_DEPENDENCIES_AND_DEVELOPMENT_TOOLS" - T1195.001
-	//   "EXPLOITATION_FOR_CLIENT_EXECUTION" - T1203
-	//   "USER_EXECUTION" - T1204
-	//   "EXPLOITATION_FOR_CREDENTIAL_ACCESS" - T1212
-	//   "LINUX_AND_MAC_FILE_AND_DIRECTORY_PERMISSIONS_MODIFICATION" - T1222.002
-	//   "DOMAIN_POLICY_MODIFICATION" - T1484
-	//   "DATA_DESTRUCTION" - T1485
-	//   "DATA_ENCRYPTED_FOR_IMPACT" - T1486
-	//   "SERVICE_STOP" - T1489
-	//   "INHIBIT_SYSTEM_RECOVERY" - T1490
-	//   "FIRMWARE_CORRUPTION" - T1495
-	//   "RESOURCE_HIJACKING" - T1496
-	//   "NETWORK_DENIAL_OF_SERVICE" - T1498
-	//   "CLOUD_SERVICE_DISCOVERY" - T1526
-	//   "STEAL_APPLICATION_ACCESS_TOKEN" - T1528
-	//   "ACCOUNT_ACCESS_REMOVAL" - T1531
-	//   "TRANSFER_DATA_TO_CLOUD_ACCOUNT" - T1537
-	//   "STEAL_WEB_SESSION_COOKIE" - T1539
-	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
-	//   "EVENT_TRIGGERED_EXECUTION" - T1546
-	//   "BOOT_OR_LOGON_AUTOSTART_EXECUTION" - T1547
-	//   "KERNEL_MODULES_AND_EXTENSIONS" - T1547.006
-	//   "SHORTCUT_MODIFICATION" - T1547.009
-	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
-	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SETUID_AND_SETGID" - T1548.001
-	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SUDO_AND_SUDO_CACHING" - T1548.003
-	//   "UNSECURED_CREDENTIALS" - T1552
-	//   "CREDENTIALS_IN_FILES" - T1552.001
-	//   "BASH_HISTORY" - T1552.003
-	//   "PRIVATE_KEYS" - T1552.004
-	//   "SUBVERT_TRUST_CONTROL" - T1553
-	//   "INSTALL_ROOT_CERTIFICATE" - T1553.004
-	//   "COMPROMISE_HOST_SOFTWARE_BINARY" - T1554
-	//   "CREDENTIALS_FROM_PASSWORD_STORES" - T1555
-	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
-	//   "PLUGGABLE_AUTHENTICATION_MODULES" - T1556.003
-	//   "MULTI_FACTOR_AUTHENTICATION" - T1556.006
-	//   "IMPAIR_DEFENSES" - T1562
-	//   "DISABLE_OR_MODIFY_TOOLS" - T1562.001
-	//   "INDICATOR_BLOCKING" - T1562.006
-	//   "DISABLE_OR_MODIFY_LINUX_AUDIT_SYSTEM" - T1562.012
-	//   "HIDE_ARTIFACTS" - T1564
-	//   "HIDDEN_FILES_AND_DIRECTORIES" - T1564.001
-	//   "HIDDEN_USERS" - T1564.002
-	//   "EXFILTRATION_OVER_WEB_SERVICE" - T1567
-	//   "EXFILTRATION_TO_CLOUD_STORAGE" - T1567.002
-	//   "DYNAMIC_RESOLUTION" - T1568
-	//   "LATERAL_TOOL_TRANSFER" - T1570
-	//   "HIJACK_EXECUTION_FLOW" - T1574
-	//   "HIJACK_EXECUTION_FLOW_DYNAMIC_LINKER_HIJACKING" - T1574.006
-	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE" - T1578
-	//   "CREATE_SNAPSHOT" - T1578.001
-	//   "CLOUD_INFRASTRUCTURE_DISCOVERY" - T1580
-	//   "DEVELOP_CAPABILITIES" - T1587
-	//   "DEVELOP_CAPABILITIES_MALWARE" - T1587.001
-	//   "OBTAIN_CAPABILITIES" - T1588
-	//   "OBTAIN_CAPABILITIES_MALWARE" - T1588.001
-	//   "OBTAIN_CAPABILITIES_VULNERABILITIES" - T1588.006
-	//   "ACTIVE_SCANNING" - T1595
-	//   "SCANNING_IP_BLOCKS" - T1595.001
-	//   "STAGE_CAPABILITIES" - T1608
-	//   "UPLOAD_MALWARE" - T1608.001
-	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
-	//   "DEPLOY_CONTAINER" - T1610
-	//   "ESCAPE_TO_HOST" - T1611
-	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
-	//   "REFLECTIVE_CODE_LOADING" - T1620
-	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649
-	//   "FINANCIAL_THEFT" - T1657
+	//   "TECHNIQUE_UNSPECIFIED"
+	//   "DATA_OBFUSCATION"
+	//   "DATA_OBFUSCATION_STEGANOGRAPHY"
+	//   "OS_CREDENTIAL_DUMPING"
+	//   "OS_CREDENTIAL_DUMPING_PROC_FILESYSTEM"
+	//   "OS_CREDENTIAL_DUMPING_ETC_PASSWORD_AND_ETC_SHADOW"
+	//   "DATA_FROM_LOCAL_SYSTEM"
+	//   "AUTOMATED_EXFILTRATION"
+	//   "OBFUSCATED_FILES_OR_INFO"
+	//   "STEGANOGRAPHY"
+	//   "COMPILE_AFTER_DELIVERY"
+	//   "COMMAND_OBFUSCATION"
+	//   "SCHEDULED_TRANSFER"
+	//   "SYSTEM_OWNER_USER_DISCOVERY"
+	//   "MASQUERADING"
+	//   "MATCH_LEGITIMATE_NAME_OR_LOCATION"
+	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS"
+	//   "STARTUP_ITEMS"
+	//   "NETWORK_SERVICE_DISCOVERY"
+	//   "SCHEDULED_TASK_JOB"
+	//   "SCHEDULED_TASK_JOB_CRON"
+	//   "CONTAINER_ORCHESTRATION_JOB"
+	//   "PROCESS_INJECTION"
+	//   "INPUT_CAPTURE"
+	//   "INPUT_CAPTURE_KEYLOGGING"
+	//   "PROCESS_DISCOVERY"
+	//   "COMMAND_AND_SCRIPTING_INTERPRETER"
+	//   "UNIX_SHELL"
+	//   "PYTHON"
+	//   "EXPLOITATION_FOR_PRIVILEGE_ESCALATION"
+	//   "PERMISSION_GROUPS_DISCOVERY"
+	//   "CLOUD_GROUPS"
+	//   "INDICATOR_REMOVAL"
+	//   "INDICATOR_REMOVAL_CLEAR_LINUX_OR_MAC_SYSTEM_LOGS"
+	//   "INDICATOR_REMOVAL_CLEAR_COMMAND_HISTORY"
+	//   "INDICATOR_REMOVAL_FILE_DELETION"
+	//   "INDICATOR_REMOVAL_TIMESTOMP"
+	//   "INDICATOR_REMOVAL_CLEAR_MAILBOX_DATA"
+	//   "APPLICATION_LAYER_PROTOCOL"
+	//   "DNS"
+	//   "SOFTWARE_DEPLOYMENT_TOOLS"
+	//   "VALID_ACCOUNTS"
+	//   "DEFAULT_ACCOUNTS"
+	//   "LOCAL_ACCOUNTS"
+	//   "CLOUD_ACCOUNTS"
+	//   "FILE_AND_DIRECTORY_DISCOVERY"
+	//   "ACCOUNT_DISCOVERY_LOCAL_ACCOUNT"
+	//   "PROXY"
+	//   "EXTERNAL_PROXY"
+	//   "MULTI_HOP_PROXY"
+	//   "ACCOUNT_MANIPULATION"
+	//   "ADDITIONAL_CLOUD_CREDENTIALS"
+	//   "ADDITIONAL_CLOUD_ROLES"
+	//   "SSH_AUTHORIZED_KEYS"
+	//   "ADDITIONAL_CONTAINER_CLUSTER_ROLES"
+	//   "MULTI_STAGE_CHANNELS"
+	//   "INGRESS_TOOL_TRANSFER"
+	//   "NATIVE_API"
+	//   "BRUTE_FORCE"
+	//   "AUTOMATED_COLLECTION"
+	//   "SHARED_MODULES"
+	//   "DATA_ENCODING"
+	//   "STANDARD_ENCODING"
+	//   "ACCESS_TOKEN_MANIPULATION"
+	//   "TOKEN_IMPERSONATION_OR_THEFT"
+	//   "CREATE_ACCOUNT"
+	//   "LOCAL_ACCOUNT"
+	//   "DEOBFUSCATE_DECODE_FILES_OR_INFO"
+	//   "EXPLOIT_PUBLIC_FACING_APPLICATION"
+	//   "SUPPLY_CHAIN_COMPROMISE"
+	//   "COMPROMISE_SOFTWARE_DEPENDENCIES_AND_DEVELOPMENT_TOOLS"
+	//   "EXPLOITATION_FOR_CLIENT_EXECUTION"
+	//   "USER_EXECUTION"
+	//   "EXPLOITATION_FOR_CREDENTIAL_ACCESS"
+	//   "LINUX_AND_MAC_FILE_AND_DIRECTORY_PERMISSIONS_MODIFICATION"
+	//   "DOMAIN_POLICY_MODIFICATION"
+	//   "DATA_DESTRUCTION"
+	//   "DATA_ENCRYPTED_FOR_IMPACT"
+	//   "SERVICE_STOP"
+	//   "INHIBIT_SYSTEM_RECOVERY"
+	//   "FIRMWARE_CORRUPTION"
+	//   "RESOURCE_HIJACKING"
+	//   "NETWORK_DENIAL_OF_SERVICE"
+	//   "CLOUD_SERVICE_DISCOVERY"
+	//   "STEAL_APPLICATION_ACCESS_TOKEN"
+	//   "ACCOUNT_ACCESS_REMOVAL"
+	//   "TRANSFER_DATA_TO_CLOUD_ACCOUNT"
+	//   "STEAL_WEB_SESSION_COOKIE"
+	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS"
+	//   "EVENT_TRIGGERED_EXECUTION"
+	//   "BOOT_OR_LOGON_AUTOSTART_EXECUTION"
+	//   "KERNEL_MODULES_AND_EXTENSIONS"
+	//   "SHORTCUT_MODIFICATION"
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM"
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SETUID_AND_SETGID"
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SUDO_AND_SUDO_CACHING"
+	//   "UNSECURED_CREDENTIALS"
+	//   "CREDENTIALS_IN_FILES"
+	//   "BASH_HISTORY"
+	//   "PRIVATE_KEYS"
+	//   "SUBVERT_TRUST_CONTROL"
+	//   "INSTALL_ROOT_CERTIFICATE"
+	//   "COMPROMISE_HOST_SOFTWARE_BINARY"
+	//   "CREDENTIALS_FROM_PASSWORD_STORES"
+	//   "MODIFY_AUTHENTICATION_PROCESS"
+	//   "PLUGGABLE_AUTHENTICATION_MODULES"
+	//   "MULTI_FACTOR_AUTHENTICATION"
+	//   "IMPAIR_DEFENSES"
+	//   "DISABLE_OR_MODIFY_TOOLS"
+	//   "INDICATOR_BLOCKING"
+	//   "DISABLE_OR_MODIFY_LINUX_AUDIT_SYSTEM"
+	//   "HIDE_ARTIFACTS"
+	//   "HIDDEN_FILES_AND_DIRECTORIES"
+	//   "HIDDEN_USERS"
+	//   "EXFILTRATION_OVER_WEB_SERVICE"
+	//   "EXFILTRATION_TO_CLOUD_STORAGE"
+	//   "DYNAMIC_RESOLUTION"
+	//   "LATERAL_TOOL_TRANSFER"
+	//   "HIJACK_EXECUTION_FLOW"
+	//   "HIJACK_EXECUTION_FLOW_DYNAMIC_LINKER_HIJACKING"
+	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE"
+	//   "CREATE_SNAPSHOT"
+	//   "CLOUD_INFRASTRUCTURE_DISCOVERY"
+	//   "DEVELOP_CAPABILITIES"
+	//   "DEVELOP_CAPABILITIES_MALWARE"
+	//   "OBTAIN_CAPABILITIES"
+	//   "OBTAIN_CAPABILITIES_MALWARE"
+	//   "OBTAIN_CAPABILITIES_VULNERABILITIES"
+	//   "ACTIVE_SCANNING"
+	//   "SCANNING_IP_BLOCKS"
+	//   "STAGE_CAPABILITIES"
+	//   "UPLOAD_MALWARE"
+	//   "CONTAINER_ADMINISTRATION_COMMAND"
+	//   "DEPLOY_CONTAINER"
+	//   "ESCAPE_TO_HOST"
+	//   "CONTAINER_AND_RESOURCE_DISCOVERY"
+	//   "REFLECTIVE_CODE_LOADING"
+	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES"
+	//   "FINANCIAL_THEFT"
 	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
-	// Version: The MITRE ATT&CK version referenced by the above fields. E.g. "8".
-	Version string `json:"version,omitempty"`
+	Version           string   `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalTactics") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -8812,66 +5967,19 @@ func (s GoogleCloudSecuritycenterV2MitreAttack) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2MuteConfig: A mute config is a Cloud SCC resource
-// that contains the configuration to mute create/update events of findings.
 type GoogleCloudSecuritycenterV2MuteConfig struct {
-	// CreateTime: Output only. The time at which the mute config was created. This
-	// field is set by the server and will be ignored if provided on config
-	// creation.
-	CreateTime string `json:"createTime,omitempty"`
-	// CryptoKeyName: Output only. The resource name of the Cloud KMS `CryptoKey`
-	// used to encrypt this configuration data, if CMEK was enabled during Security
-	// Command Center activation.
-	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
-	// Description: A description of the mute config.
-	Description string `json:"description,omitempty"`
-	// ExpiryTime: Optional. The expiry of the mute config. Only applicable for
-	// dynamic configs. If the expiry is set, when the config expires, it is
-	// removed from all findings.
-	ExpiryTime string `json:"expiryTime,omitempty"`
-	// Filter: Required. An expression that defines the filter to apply across
-	// create/update events of findings. While creating a filter string, be mindful
-	// of the scope in which the mute configuration is being created. E.g., If a
-	// filter contains project = X but is created under the project = Y scope, it
-	// might not match any findings. The following field and operator combinations
-	// are supported: * severity: `=`, `:` * category: `=`, `:` * resource.name:
-	// `=`, `:` * resource.project_name: `=`, `:` * resource.project_display_name:
-	// `=`, `:` * resource.folders.resource_folder: `=`, `:` *
-	// resource.parent_name: `=`, `:` * resource.parent_display_name: `=`, `:` *
-	// resource.type: `=`, `:` * finding_class: `=`, `:` * indicator.ip_addresses:
-	// `=`, `:` * indicator.domains: `=`, `:`
-	Filter string `json:"filter,omitempty"`
-	// MostRecentEditor: Output only. Email address of the user who last edited the
-	// mute config. This field is set by the server and will be ignored if provided
-	// on config creation or update.
+	CreateTime       string `json:"createTime,omitempty"`
+	CryptoKeyName    string `json:"cryptoKeyName,omitempty"`
+	Description      string `json:"description,omitempty"`
+	ExpiryTime       string `json:"expiryTime,omitempty"`
+	Filter           string `json:"filter,omitempty"`
 	MostRecentEditor string `json:"mostRecentEditor,omitempty"`
-	// Name: Identifier. This field will be ignored if provided on config creation.
-	// The following list shows some examples of the format: +
-	// `organizations/{organization}/muteConfigs/{mute_config}` +
-	// `organizations/{organization}locations/{location}//muteConfigs/{mute_config}`
-	//  + `folders/{folder}/muteConfigs/{mute_config}` +
-	// `folders/{folder}/locations/{location}/muteConfigs/{mute_config}` +
-	// `projects/{project}/muteConfigs/{mute_config}` +
-	// `projects/{project}/locations/{location}/muteConfigs/{mute_config}`
-	Name string `json:"name,omitempty"`
-	// Type: Required. The type of the mute config, which determines what type of
-	// mute state the config affects. Immutable after creation.
-	//
+	Name             string `json:"name,omitempty"`
 	// Possible values:
-	//   "MUTE_CONFIG_TYPE_UNSPECIFIED" - Unused.
-	//   "STATIC" - A static mute config, which sets the static mute state of
-	// future matching findings to muted. Once the static mute state has been set,
-	// finding or config modifications will not affect the state.
-	//   "DYNAMIC" - A dynamic mute config, which is applied to existing and future
-	// matching findings, setting their dynamic mute state to "muted". If the
-	// config is updated or deleted, or a matching finding is updated, such that
-	// the finding doesn't match the config, the config will be removed from the
-	// finding, and the finding's dynamic mute state may become "unmuted" (unless
-	// other configs still match).
-	Type string `json:"type,omitempty"`
-	// UpdateTime: Output only. The most recent time at which the mute config was
-	// updated. This field is set by the server and will be ignored if provided on
-	// config creation or update.
+	//   "MUTE_CONFIG_TYPE_UNSPECIFIED"
+	//   "STATIC"
+	//   "DYNAMIC"
+	Type       string `json:"type,omitempty"`
 	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8891,16 +5999,9 @@ func (s GoogleCloudSecuritycenterV2MuteConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2MuteInfo: Mute information about the finding,
-// including whether the finding has a static mute or any matching dynamic mute
-// rules.
 type GoogleCloudSecuritycenterV2MuteInfo struct {
-	// DynamicMuteRecords: The list of dynamic mute rules that currently match the
-	// finding.
 	DynamicMuteRecords []*GoogleCloudSecuritycenterV2DynamicMuteRecord `json:"dynamicMuteRecords,omitempty"`
-	// StaticMute: If set, the static mute applied to this finding. Static mutes
-	// override dynamic mutes. If unset, there is no static mute.
-	StaticMute *GoogleCloudSecuritycenterV2StaticMute `json:"staticMute,omitempty"`
+	StaticMute         *GoogleCloudSecuritycenterV2StaticMute          `json:"staticMute,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DynamicMuteRecords") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -8919,11 +6020,7 @@ func (s GoogleCloudSecuritycenterV2MuteInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Network: Contains information about a VPC network
-// associated with the finding.
 type GoogleCloudSecuritycenterV2Network struct {
-	// Name: The name of the VPC network resource, for example,
-	// `//compute.googleapis.com/projects/my-project/global/networks/my-network`.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -8943,11 +6040,7 @@ func (s GoogleCloudSecuritycenterV2Network) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Node: Kubernetes nodes associated with the
-// finding.
 type GoogleCloudSecuritycenterV2Node struct {
-	// Name: Full resource name (https://google.aip.dev/122#full-resource-names) of
-	// the Compute Engine VM running the cluster node.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -8967,11 +6060,8 @@ func (s GoogleCloudSecuritycenterV2Node) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2NodePool: Provides GKE node pool information.
 type GoogleCloudSecuritycenterV2NodePool struct {
-	// Name: Kubernetes node pool name.
-	Name string `json:"name,omitempty"`
-	// Nodes: Nodes associated with the finding.
+	Name  string                             `json:"name,omitempty"`
 	Nodes []*GoogleCloudSecuritycenterV2Node `json:"nodes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -8991,19 +6081,11 @@ func (s GoogleCloudSecuritycenterV2NodePool) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Notebook: Represents a Jupyter notebook IPYNB
-// file, such as a Colab Enterprise notebook
-// (https://cloud.google.com/colab/docs/introduction) file, that is associated
-// with a finding.
 type GoogleCloudSecuritycenterV2Notebook struct {
-	// LastAuthor: The user ID of the latest author to modify the notebook.
-	LastAuthor string `json:"lastAuthor,omitempty"`
-	// Name: The name of the notebook.
-	Name string `json:"name,omitempty"`
-	// NotebookUpdateTime: The most recent time the notebook was updated.
+	LastAuthor         string `json:"lastAuthor,omitempty"`
+	Name               string `json:"name,omitempty"`
 	NotebookUpdateTime string `json:"notebookUpdateTime,omitempty"`
-	// Service: The source notebook service, for example, "Colab Enterprise".
-	Service string `json:"service,omitempty"`
+	Service            string `json:"service,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LastAuthor") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9022,16 +6104,10 @@ func (s GoogleCloudSecuritycenterV2Notebook) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2NotificationMessage: Cloud SCC's Notification
 type GoogleCloudSecuritycenterV2NotificationMessage struct {
-	// Finding: If it's a Finding based notification config, this field will be
-	// populated.
-	Finding *GoogleCloudSecuritycenterV2Finding `json:"finding,omitempty"`
-	// NotificationConfigName: Name of the notification config that generated
-	// current notification.
-	NotificationConfigName string `json:"notificationConfigName,omitempty"`
-	// Resource: The Cloud resource tied to this notification's Finding.
-	Resource *GoogleCloudSecuritycenterV2Resource `json:"resource,omitempty"`
+	Finding                *GoogleCloudSecuritycenterV2Finding  `json:"finding,omitempty"`
+	NotificationConfigName string                               `json:"notificationConfigName,omitempty"`
+	Resource               *GoogleCloudSecuritycenterV2Resource `json:"resource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Finding") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -9050,23 +6126,12 @@ func (s GoogleCloudSecuritycenterV2NotificationMessage) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Object: Kubernetes object related to the finding,
-// uniquely identified by GKNN. Used if the object Kind is not one of Pod,
-// Node, NodePool, Binding, or AccessReview.
 type GoogleCloudSecuritycenterV2Object struct {
-	// Containers: Pod containers associated with this finding, if any.
 	Containers []*GoogleCloudSecuritycenterV2Container `json:"containers,omitempty"`
-	// Group: Kubernetes object group, such as "policy.k8s.io/v1".
-	Group string `json:"group,omitempty"`
-	// Kind: Kubernetes object kind, such as "Namespace".
-	Kind string `json:"kind,omitempty"`
-	// Name: Kubernetes object name. For details see
-	// https://kubernetes.io/docs/concepts/overview/working-with-objects/names/.
-	Name string `json:"name,omitempty"`
-	// Ns: Kubernetes object namespace. Must be a valid DNS label. Named "ns" to
-	// avoid collision with C++ namespace keyword. For details see
-	// https://kubernetes.io/docs/tasks/administer-cluster/namespaces/.
-	Ns string `json:"ns,omitempty"`
+	Group      string                                  `json:"group,omitempty"`
+	Kind       string                                  `json:"kind,omitempty"`
+	Name       string                                  `json:"name,omitempty"`
+	Ns         string                                  `json:"ns,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Containers") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9085,11 +6150,7 @@ func (s GoogleCloudSecuritycenterV2Object) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2OrgPolicy: Contains information about the org
-// policies associated with the finding.
 type GoogleCloudSecuritycenterV2OrgPolicy struct {
-	// Name: Identifier. The resource name of the org policy. Example:
-	// "organizations/{organization_id}/policies/{constraint_name}"
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -9109,16 +6170,10 @@ func (s GoogleCloudSecuritycenterV2OrgPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Package: Package is a generic definition of a
-// package.
 type GoogleCloudSecuritycenterV2Package struct {
-	// CpeUri: The CPE URI where the vulnerability was detected.
-	CpeUri string `json:"cpeUri,omitempty"`
-	// PackageName: The name of the package where the vulnerability was detected.
-	PackageName string `json:"packageName,omitempty"`
-	// PackageType: Type of package, for example, os, maven, or go.
-	PackageType string `json:"packageType,omitempty"`
-	// PackageVersion: The version of the package.
+	CpeUri         string `json:"cpeUri,omitempty"`
+	PackageName    string `json:"packageName,omitempty"`
+	PackageType    string `json:"packageType,omitempty"`
 	PackageVersion string `json:"packageVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CpeUri") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -9138,15 +6193,9 @@ func (s GoogleCloudSecuritycenterV2Package) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Pipeline: Vertex AI training pipeline associated
-// with the finding.
 type GoogleCloudSecuritycenterV2Pipeline struct {
-	// DisplayName: The user-defined display name of pipeline, e.g.
-	// plants-classification
 	DisplayName string `json:"displayName,omitempty"`
-	// Name: Resource name of the pipeline, e.g.
-	// projects/{project}/locations/{location}/trainingPipelines/5253428229225578496
-	Name string `json:"name,omitempty"`
+	Name        string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9165,17 +6214,11 @@ func (s GoogleCloudSecuritycenterV2Pipeline) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Pod: A Kubernetes Pod.
 type GoogleCloudSecuritycenterV2Pod struct {
-	// Containers: Pod containers associated with this finding, if any.
 	Containers []*GoogleCloudSecuritycenterV2Container `json:"containers,omitempty"`
-	// Labels: Pod labels. For Kubernetes containers, these are applied to the
-	// container.
-	Labels []*GoogleCloudSecuritycenterV2Label `json:"labels,omitempty"`
-	// Name: Kubernetes Pod name.
-	Name string `json:"name,omitempty"`
-	// Ns: Kubernetes Pod namespace.
-	Ns string `json:"ns,omitempty"`
+	Labels     []*GoogleCloudSecuritycenterV2Label     `json:"labels,omitempty"`
+	Name       string                                  `json:"name,omitempty"`
+	Ns         string                                  `json:"ns,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Containers") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9194,18 +6237,10 @@ func (s GoogleCloudSecuritycenterV2Pod) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2PolicyDriftDetails: The policy field that
-// violates the deployed posture and its expected and detected values.
 type GoogleCloudSecuritycenterV2PolicyDriftDetails struct {
-	// DetectedValue: The detected value that violates the deployed posture, for
-	// example, `false` or `allowed_values={"projects/22831892"}`.
 	DetectedValue string `json:"detectedValue,omitempty"`
-	// ExpectedValue: The value of this field that was configured in a posture, for
-	// example, `true` or `allowed_values={"projects/29831892"}`.
 	ExpectedValue string `json:"expectedValue,omitempty"`
-	// Field: The name of the updated field, for example
-	// constraint.implementation.policy_rules[0].enforce
-	Field string `json:"field,omitempty"`
+	Field         string `json:"field,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DetectedValue") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9224,27 +6259,11 @@ func (s GoogleCloudSecuritycenterV2PolicyDriftDetails) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2PolicyViolationSummary: Metadata summarizing
-// policy violations of child resources of the affected resource.
-// `finding_category` and `resource` determine the exact semantics of the
-// counts. For example, when
-// category=DATA_SECURITY_POSTURE_OBJECT_PUBLIC_ACCESS_VIOLATION and
-// resource='storage.googleapis.com/buckets/my-bucket-name' then this counts
-// the number of Cloud Storage objects in my-bucket-name which violate a Public
-// Access control.
 type GoogleCloudSecuritycenterV2PolicyViolationSummary struct {
-	// ConformantResourcesCount: Total number of child resources that conform to
-	// the policy.
 	ConformantResourcesCount int64 `json:"conformantResourcesCount,omitempty,string"`
-	// EvaluationErrorsCount: Number of child resources for which errors during
-	// evaluation occurred. The evaluation result for these child resources is
-	// effectively "unknown".
-	EvaluationErrorsCount int64 `json:"evaluationErrorsCount,omitempty,string"`
-	// OutOfScopeResourcesCount: Total count of child resources which were not in
-	// scope for evaluation.
+	EvaluationErrorsCount    int64 `json:"evaluationErrorsCount,omitempty,string"`
 	OutOfScopeResourcesCount int64 `json:"outOfScopeResourcesCount,omitempty,string"`
-	// PolicyViolationsCount: Count of child resources in violation of the policy.
-	PolicyViolationsCount int64 `json:"policyViolationsCount,omitempty,string"`
+	PolicyViolationsCount    int64 `json:"policyViolationsCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "ConformantResourcesCount")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9263,14 +6282,8 @@ func (s GoogleCloudSecuritycenterV2PolicyViolationSummary) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2PortRange: A port range which is inclusive of the
-// min and max values. Values are between 0 and 2^16-1. The max can be equal /
-// must be not smaller than the min value. If min and max are equal this
-// indicates that it is a single port.
 type GoogleCloudSecuritycenterV2PortRange struct {
-	// Max: Maximum port value.
 	Max int64 `json:"max,omitempty,string"`
-	// Min: Minimum port value.
 	Min int64 `json:"min,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Max") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -9290,35 +6303,18 @@ func (s GoogleCloudSecuritycenterV2PortRange) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Process: Represents an operating system process.
 type GoogleCloudSecuritycenterV2Process struct {
-	// Args: Process arguments as JSON encoded strings.
-	Args []string `json:"args,omitempty"`
-	// ArgumentsTruncated: True if `args` is incomplete.
-	ArgumentsTruncated bool `json:"argumentsTruncated,omitempty"`
-	// Binary: File information for the process executable.
-	Binary *GoogleCloudSecuritycenterV2File `json:"binary,omitempty"`
-	// EnvVariables: Process environment variables.
-	EnvVariables []*GoogleCloudSecuritycenterV2EnvironmentVariable `json:"envVariables,omitempty"`
-	// EnvVariablesTruncated: True if `env_variables` is incomplete.
-	EnvVariablesTruncated bool `json:"envVariablesTruncated,omitempty"`
-	// Libraries: File information for libraries loaded by the process.
-	Libraries []*GoogleCloudSecuritycenterV2File `json:"libraries,omitempty"`
-	// Name: The process name, as displayed in utilities like `top` and `ps`. This
-	// name can be accessed through `/proc/[pid]/comm` and changed with
-	// `prctl(PR_SET_NAME)`.
-	Name string `json:"name,omitempty"`
-	// ParentPid: The parent process ID.
-	ParentPid int64 `json:"parentPid,omitempty,string"`
-	// Pid: The process ID.
-	Pid int64 `json:"pid,omitempty,string"`
-	// Script: When the process represents the invocation of a script, `binary`
-	// provides information about the interpreter, while `script` provides
-	// information about the script file provided to the interpreter.
-	Script *GoogleCloudSecuritycenterV2File `json:"script,omitempty"`
-	// UserId: The ID of the user that executed the process. E.g. If this is the
-	// root user this will always be 0.
-	UserId int64 `json:"userId,omitempty,string"`
+	Args                  []string                                          `json:"args,omitempty"`
+	ArgumentsTruncated    bool                                              `json:"argumentsTruncated,omitempty"`
+	Binary                *GoogleCloudSecuritycenterV2File                  `json:"binary,omitempty"`
+	EnvVariables          []*GoogleCloudSecuritycenterV2EnvironmentVariable `json:"envVariables,omitempty"`
+	EnvVariablesTruncated bool                                              `json:"envVariablesTruncated,omitempty"`
+	Libraries             []*GoogleCloudSecuritycenterV2File                `json:"libraries,omitempty"`
+	Name                  string                                            `json:"name,omitempty"`
+	ParentPid             int64                                             `json:"parentPid,omitempty,string"`
+	Pid                   int64                                             `json:"pid,omitempty,string"`
+	Script                *GoogleCloudSecuritycenterV2File                  `json:"script,omitempty"`
+	UserId                int64                                             `json:"userId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -9337,19 +6333,13 @@ func (s GoogleCloudSecuritycenterV2Process) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2ProcessSignature: Indicates what signature
-// matched this process.
 type GoogleCloudSecuritycenterV2ProcessSignature struct {
-	// MemoryHashSignature: Signature indicating that a binary family was matched.
 	MemoryHashSignature *GoogleCloudSecuritycenterV2MemoryHashSignature `json:"memoryHashSignature,omitempty"`
-	// SignatureType: Describes the type of resource associated with the signature.
-	//
 	// Possible values:
-	//   "SIGNATURE_TYPE_UNSPECIFIED" - The default signature type.
-	//   "SIGNATURE_TYPE_PROCESS" - Used for signatures concerning processes.
-	//   "SIGNATURE_TYPE_FILE" - Used for signatures concerning disks.
-	SignatureType string `json:"signatureType,omitempty"`
-	// YaraRuleSignature: Signature indicating that a YARA rule was matched.
+	//   "SIGNATURE_TYPE_UNSPECIFIED"
+	//   "SIGNATURE_TYPE_PROCESS"
+	//   "SIGNATURE_TYPE_FILE"
+	SignatureType     string                                        `json:"signatureType,omitempty"`
 	YaraRuleSignature *GoogleCloudSecuritycenterV2YaraRuleSignature `json:"yaraRuleSignature,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MemoryHashSignature") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -9369,13 +6359,9 @@ func (s GoogleCloudSecuritycenterV2ProcessSignature) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Reference: Additional Links
 type GoogleCloudSecuritycenterV2Reference struct {
-	// Source: Source of the reference e.g. NVD
 	Source string `json:"source,omitempty"`
-	// Uri: Uri for the mentioned source e.g.
-	// https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-34527.
-	Uri string `json:"uri,omitempty"`
+	Uri    string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Source") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -9394,20 +6380,11 @@ func (s GoogleCloudSecuritycenterV2Reference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Requests: Information about the requests relevant
-// to the finding.
 type GoogleCloudSecuritycenterV2Requests struct {
-	// LongTermAllowed: Allowed RPS (requests per second) over the long term.
-	LongTermAllowed int64 `json:"longTermAllowed,omitempty"`
-	// LongTermDenied: Denied RPS (requests per second) over the long term.
-	LongTermDenied int64 `json:"longTermDenied,omitempty"`
-	// Ratio: For 'Increasing deny ratio', the ratio is the denied traffic divided
-	// by the allowed traffic. For 'Allowed traffic spike', the ratio is the
-	// allowed traffic in the short term divided by allowed traffic in the long
-	// term.
-	Ratio float64 `json:"ratio,omitempty"`
-	// ShortTermAllowed: Allowed RPS (requests per second) in the short term.
-	ShortTermAllowed int64 `json:"shortTermAllowed,omitempty"`
+	LongTermAllowed  int64   `json:"longTermAllowed,omitempty"`
+	LongTermDenied   int64   `json:"longTermDenied,omitempty"`
+	Ratio            float64 `json:"ratio,omitempty"`
+	ShortTermAllowed int64   `json:"shortTermAllowed,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LongTermAllowed") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9440,57 +6417,27 @@ func (s *GoogleCloudSecuritycenterV2Requests) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GoogleCloudSecuritycenterV2Resource: Information related to the Google Cloud
-// resource.
 type GoogleCloudSecuritycenterV2Resource struct {
-	// AdcApplication: The ADC application associated with the finding.
-	AdcApplication *GoogleCloudSecuritycenterV2AdcApplication `json:"adcApplication,omitempty"`
-	// AdcApplicationTemplate: The ADC template associated with the finding.
+	AdcApplication         *GoogleCloudSecuritycenterV2AdcApplication                 `json:"adcApplication,omitempty"`
 	AdcApplicationTemplate *GoogleCloudSecuritycenterV2AdcApplicationTemplateRevision `json:"adcApplicationTemplate,omitempty"`
-	// AdcSharedTemplate: The ADC shared template associated with the finding.
-	AdcSharedTemplate *GoogleCloudSecuritycenterV2AdcSharedTemplateRevision `json:"adcSharedTemplate,omitempty"`
-	// Application: The App Hub application this resource belongs to.
-	Application *GoogleCloudSecuritycenterV2ResourceApplication `json:"application,omitempty"`
-	// AwsMetadata: The AWS metadata associated with the finding.
-	AwsMetadata *GoogleCloudSecuritycenterV2AwsMetadata `json:"awsMetadata,omitempty"`
-	// AzureMetadata: The Azure metadata associated with the finding.
-	AzureMetadata *GoogleCloudSecuritycenterV2AzureMetadata `json:"azureMetadata,omitempty"`
-	// CloudProvider: Indicates which cloud provider the finding is from.
-	//
+	AdcSharedTemplate      *GoogleCloudSecuritycenterV2AdcSharedTemplateRevision      `json:"adcSharedTemplate,omitempty"`
+	Application            *GoogleCloudSecuritycenterV2ResourceApplication            `json:"application,omitempty"`
+	AwsMetadata            *GoogleCloudSecuritycenterV2AwsMetadata                    `json:"awsMetadata,omitempty"`
+	AzureMetadata          *GoogleCloudSecuritycenterV2AzureMetadata                  `json:"azureMetadata,omitempty"`
 	// Possible values:
-	//   "CLOUD_PROVIDER_UNSPECIFIED" - The cloud provider is unspecified.
-	//   "GOOGLE_CLOUD_PLATFORM" - The cloud provider is Google Cloud.
-	//   "AMAZON_WEB_SERVICES" - The cloud provider is Amazon Web Services.
-	//   "MICROSOFT_AZURE" - The cloud provider is Microsoft Azure.
-	CloudProvider string `json:"cloudProvider,omitempty"`
-	// DisplayName: The human readable name of the resource.
-	DisplayName string `json:"displayName,omitempty"`
-	// GcpMetadata: The Google Cloud metadata associated with the finding.
-	GcpMetadata *GcpMetadata `json:"gcpMetadata,omitempty"`
-	// Location: The region or location of the service (if applicable).
-	Location string `json:"location,omitempty"`
-	// Name: The full resource name of the resource. See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource_name
-	Name string `json:"name,omitempty"`
-	// ResourcePath: Provides the path to the resource within the resource
-	// hierarchy.
-	ResourcePath *GoogleCloudSecuritycenterV2ResourcePath `json:"resourcePath,omitempty"`
-	// ResourcePathString: A string representation of the resource path. For Google
-	// Cloud, it has the format of
-	// `organizations/{organization_id}/folders/{folder_id}/folders/{folder_id}/proj
-	// ects/{project_id}` where there can be any number of folders. For AWS, it has
-	// the format of
-	// `org/{organization_id}/ou/{organizational_unit_id}/ou/{organizational_unit_id
-	// }/account/{account_id}` where there can be any number of organizational
-	// units. For Azure, it has the format of
-	// `mg/{management_group_id}/mg/{management_group_id}/subscription/{subscription
-	// _id}/rg/{resource_group_name}` where there can be any number of management
-	// groups.
-	ResourcePathString string `json:"resourcePathString,omitempty"`
-	// Service: The service or resource provider associated with the resource.
-	Service string `json:"service,omitempty"`
-	// Type: The full resource type of the resource.
-	Type string `json:"type,omitempty"`
+	//   "CLOUD_PROVIDER_UNSPECIFIED"
+	//   "GOOGLE_CLOUD_PLATFORM"
+	//   "AMAZON_WEB_SERVICES"
+	//   "MICROSOFT_AZURE"
+	CloudProvider      string                                   `json:"cloudProvider,omitempty"`
+	DisplayName        string                                   `json:"displayName,omitempty"`
+	GcpMetadata        *GcpMetadata                             `json:"gcpMetadata,omitempty"`
+	Location           string                                   `json:"location,omitempty"`
+	Name               string                                   `json:"name,omitempty"`
+	ResourcePath       *GoogleCloudSecuritycenterV2ResourcePath `json:"resourcePath,omitempty"`
+	ResourcePathString string                                   `json:"resourcePathString,omitempty"`
+	Service            string                                   `json:"service,omitempty"`
+	Type               string                                   `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdcApplication") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9509,15 +6456,9 @@ func (s GoogleCloudSecuritycenterV2Resource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2ResourceApplication: The App Hub Application
-// associated with the finding's resource.
 type GoogleCloudSecuritycenterV2ResourceApplication struct {
-	// Attributes: Consumer provided attributes for the application
 	Attributes *GoogleCloudSecuritycenterV2ResourceApplicationAttributes `json:"attributes,omitempty"`
-	// Name: The resource name of an Application. Format:
-	// `projects/{host-project-id}/locations/{location}/applications/{application-id
-	// }`
-	Name string `json:"name,omitempty"`
+	Name       string                                                    `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9536,20 +6477,12 @@ func (s GoogleCloudSecuritycenterV2ResourceApplication) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2ResourceApplicationAttributes: Consumer provided
-// attributes for the application
 type GoogleCloudSecuritycenterV2ResourceApplicationAttributes struct {
-	// BusinessOwners: Business team that ensures user needs are met and value is
-	// delivered
-	BusinessOwners []*GoogleCloudSecuritycenterV2ResourceApplicationAttributesContactInfo `json:"businessOwners,omitempty"`
-	// Criticality: User-defined criticality information.
-	Criticality *GoogleCloudSecuritycenterV2ResourceApplicationAttributesCriticality `json:"criticality,omitempty"`
-	// DeveloperOwners: Developer team that owns development and coding.
+	BusinessOwners  []*GoogleCloudSecuritycenterV2ResourceApplicationAttributesContactInfo `json:"businessOwners,omitempty"`
+	Criticality     *GoogleCloudSecuritycenterV2ResourceApplicationAttributesCriticality   `json:"criticality,omitempty"`
 	DeveloperOwners []*GoogleCloudSecuritycenterV2ResourceApplicationAttributesContactInfo `json:"developerOwners,omitempty"`
-	// Environment: User-defined environment information.
-	Environment *GoogleCloudSecuritycenterV2ResourceApplicationAttributesEnvironment `json:"environment,omitempty"`
-	// OperatorOwners: Operator team that ensures runtime and operations.
-	OperatorOwners []*GoogleCloudSecuritycenterV2ResourceApplicationAttributesContactInfo `json:"operatorOwners,omitempty"`
+	Environment     *GoogleCloudSecuritycenterV2ResourceApplicationAttributesEnvironment   `json:"environment,omitempty"`
+	OperatorOwners  []*GoogleCloudSecuritycenterV2ResourceApplicationAttributesContactInfo `json:"operatorOwners,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BusinessOwners") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9568,10 +6501,7 @@ func (s GoogleCloudSecuritycenterV2ResourceApplicationAttributes) MarshalJSON() 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2ResourceApplicationAttributesContactInfo: Contact
-// information of stakeholders.
 type GoogleCloudSecuritycenterV2ResourceApplicationAttributesContactInfo struct {
-	// Email: Email address of the contacts.
 	Email string `json:"email,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Email") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -9591,17 +6521,13 @@ func (s GoogleCloudSecuritycenterV2ResourceApplicationAttributesContactInfo) Mar
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2ResourceApplicationAttributesCriticality:
-// Criticality of the Application, Service, or Workload
 type GoogleCloudSecuritycenterV2ResourceApplicationAttributesCriticality struct {
-	// Type: Criticality Type.
-	//
 	// Possible values:
-	//   "CRITICALITY_TYPE_UNSPECIFIED" - Unspecified type.
-	//   "MISSION_CRITICAL" - Mission critical service, application or workload.
-	//   "HIGH" - High impact.
-	//   "MEDIUM" - Medium impact.
-	//   "LOW" - Low impact.
+	//   "CRITICALITY_TYPE_UNSPECIFIED"
+	//   "MISSION_CRITICAL"
+	//   "HIGH"
+	//   "MEDIUM"
+	//   "LOW"
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -9621,17 +6547,13 @@ func (s GoogleCloudSecuritycenterV2ResourceApplicationAttributesCriticality) Mar
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2ResourceApplicationAttributesEnvironment:
-// Environment of the Application, Service, or Workload
 type GoogleCloudSecuritycenterV2ResourceApplicationAttributesEnvironment struct {
-	// Type: Environment Type.
-	//
 	// Possible values:
-	//   "ENVIRONMENT_TYPE_UNSPECIFIED" - Unspecified type.
-	//   "PRODUCTION" - Production environment.
-	//   "STAGING" - Staging environment.
-	//   "TEST" - Test environment.
-	//   "DEVELOPMENT" - Development environment.
+	//   "ENVIRONMENT_TYPE_UNSPECIFIED"
+	//   "PRODUCTION"
+	//   "STAGING"
+	//   "TEST"
+	//   "DEVELOPMENT"
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -9651,11 +6573,7 @@ func (s GoogleCloudSecuritycenterV2ResourceApplicationAttributesEnvironment) Mar
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2ResourcePath: Represents the path of resources
-// leading up to the resource this finding is about.
 type GoogleCloudSecuritycenterV2ResourcePath struct {
-	// Nodes: The list of nodes that make the up resource path, ordered from lowest
-	// level to highest level.
 	Nodes []*GoogleCloudSecuritycenterV2ResourcePathNode `json:"nodes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Nodes") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -9675,27 +6593,20 @@ func (s GoogleCloudSecuritycenterV2ResourcePath) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2ResourcePathNode: A node within the resource
-// path. Each node represents a resource within the resource hierarchy.
 type GoogleCloudSecuritycenterV2ResourcePathNode struct {
-	// DisplayName: The display name of the resource this node represents.
 	DisplayName string `json:"displayName,omitempty"`
-	// Id: The ID of the resource this node represents.
-	Id string `json:"id,omitempty"`
-	// NodeType: The type of resource this node represents.
-	//
+	Id          string `json:"id,omitempty"`
 	// Possible values:
-	//   "RESOURCE_PATH_NODE_TYPE_UNSPECIFIED" - Node type is unspecified.
-	//   "GCP_ORGANIZATION" - The node represents a Google Cloud organization.
-	//   "GCP_FOLDER" - The node represents a Google Cloud folder.
-	//   "GCP_PROJECT" - The node represents a Google Cloud project.
-	//   "AWS_ORGANIZATION" - The node represents an AWS organization.
-	//   "AWS_ORGANIZATIONAL_UNIT" - The node represents an AWS organizational
-	// unit.
-	//   "AWS_ACCOUNT" - The node represents an AWS account.
-	//   "AZURE_MANAGEMENT_GROUP" - The node represents an Azure management group.
-	//   "AZURE_SUBSCRIPTION" - The node represents an Azure subscription.
-	//   "AZURE_RESOURCE_GROUP" - The node represents an Azure resource group.
+	//   "RESOURCE_PATH_NODE_TYPE_UNSPECIFIED"
+	//   "GCP_ORGANIZATION"
+	//   "GCP_FOLDER"
+	//   "GCP_PROJECT"
+	//   "AWS_ORGANIZATION"
+	//   "AWS_ORGANIZATIONAL_UNIT"
+	//   "AWS_ACCOUNT"
+	//   "AZURE_MANAGEMENT_GROUP"
+	//   "AZURE_SUBSCRIPTION"
+	//   "AZURE_RESOURCE_GROUP"
 	NodeType string `json:"nodeType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -9715,62 +6626,29 @@ func (s GoogleCloudSecuritycenterV2ResourcePathNode) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2ResourceValueConfig: A resource value
-// configuration (RVC) is a mapping configuration of user's resources to
-// resource values. Used in Attack path simulations.
 type GoogleCloudSecuritycenterV2ResourceValueConfig struct {
-	// CloudProvider: Cloud provider this configuration applies to
-	//
 	// Possible values:
-	//   "CLOUD_PROVIDER_UNSPECIFIED" - The cloud provider is unspecified.
-	//   "GOOGLE_CLOUD_PLATFORM" - The cloud provider is Google Cloud.
-	//   "AMAZON_WEB_SERVICES" - The cloud provider is Amazon Web Services.
-	//   "MICROSOFT_AZURE" - The cloud provider is Microsoft Azure.
-	CloudProvider string `json:"cloudProvider,omitempty"`
-	// CreateTime: Output only. Timestamp this resource value configuration was
-	// created.
-	CreateTime string `json:"createTime,omitempty"`
-	// Description: Description of the resource value configuration.
-	Description string `json:"description,omitempty"`
-	// Name: Identifier. Name for the resource value configuration
-	Name string `json:"name,omitempty"`
-	// ResourceLabelsSelector: List of resource labels to search for, evaluated
-	// with `AND`. For example, "resource_labels_selector": {"key": "value", "env":
-	// "prod"} will match resources with labels "key": "value" `AND` "env": "prod"
-	// https://cloud.google.com/resource-manager/docs/creating-managing-labels
+	//   "CLOUD_PROVIDER_UNSPECIFIED"
+	//   "GOOGLE_CLOUD_PLATFORM"
+	//   "AMAZON_WEB_SERVICES"
+	//   "MICROSOFT_AZURE"
+	CloudProvider          string            `json:"cloudProvider,omitempty"`
+	CreateTime             string            `json:"createTime,omitempty"`
+	Description            string            `json:"description,omitempty"`
+	Name                   string            `json:"name,omitempty"`
 	ResourceLabelsSelector map[string]string `json:"resourceLabelsSelector,omitempty"`
-	// ResourceType: Apply resource_value only to resources that match
-	// resource_type. resource_type will be checked with `AND` of other resources.
-	// For example, "storage.googleapis.com/Bucket" with resource_value "HIGH" will
-	// apply "HIGH" value only to "storage.googleapis.com/Bucket" resources.
-	ResourceType string `json:"resourceType,omitempty"`
-	// ResourceValue: Resource value level this expression represents Only required
-	// when there is no Sensitive Data Protection mapping in the request
-	//
+	ResourceType           string            `json:"resourceType,omitempty"`
 	// Possible values:
-	//   "RESOURCE_VALUE_UNSPECIFIED" - Unspecific value
-	//   "HIGH" - High resource value
-	//   "MEDIUM" - Medium resource value
-	//   "LOW" - Low resource value
-	//   "NONE" - No resource value, e.g. ignore these resources
-	ResourceValue string `json:"resourceValue,omitempty"`
-	// Scope: Project or folder to scope this configuration to. For example,
-	// "project/456" would apply this configuration only to resources in
-	// "project/456" scope and will be checked with `AND` of other resources.
-	Scope string `json:"scope,omitempty"`
-	// SensitiveDataProtectionMapping: A mapping of the sensitivity on Sensitive
-	// Data Protection finding to resource values. This mapping can only be used in
-	// combination with a resource_type that is related to BigQuery, e.g.
-	// "bigquery.googleapis.com/Dataset".
+	//   "RESOURCE_VALUE_UNSPECIFIED"
+	//   "HIGH"
+	//   "MEDIUM"
+	//   "LOW"
+	//   "NONE"
+	ResourceValue                  string                                                     `json:"resourceValue,omitempty"`
+	Scope                          string                                                     `json:"scope,omitempty"`
 	SensitiveDataProtectionMapping *GoogleCloudSecuritycenterV2SensitiveDataProtectionMapping `json:"sensitiveDataProtectionMapping,omitempty"`
-	// TagValues: Tag values combined with `AND` to check against. For Google Cloud
-	// resources, they are tag value IDs in the form of "tagValues/123". Example:
-	// `[ "tagValues/123", "tagValues/456", "tagValues/789" ]`
-	// https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing
-	TagValues []string `json:"tagValues,omitempty"`
-	// UpdateTime: Output only. Timestamp this resource value configuration was
-	// last updated.
-	UpdateTime string `json:"updateTime,omitempty"`
+	TagValues                      []string                                                   `json:"tagValues,omitempty"`
+	UpdateTime                     string                                                     `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudProvider") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9789,19 +6667,14 @@ func (s GoogleCloudSecuritycenterV2ResourceValueConfig) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Role: Kubernetes Role or ClusterRole.
 type GoogleCloudSecuritycenterV2Role struct {
-	// Kind: Role type.
-	//
 	// Possible values:
-	//   "KIND_UNSPECIFIED" - Role type is not specified.
-	//   "ROLE" - Kubernetes Role.
-	//   "CLUSTER_ROLE" - Kubernetes ClusterRole.
+	//   "KIND_UNSPECIFIED"
+	//   "ROLE"
+	//   "CLUSTER_ROLE"
 	Kind string `json:"kind,omitempty"`
-	// Name: Role name.
 	Name string `json:"name,omitempty"`
-	// Ns: Role namespace.
-	Ns string `json:"ns,omitempty"`
+	Ns   string `json:"ns,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -9820,17 +6693,11 @@ func (s GoogleCloudSecuritycenterV2Role) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Secret: Details about a secret or credential
-// associated with the finding.
 type GoogleCloudSecuritycenterV2Secret struct {
-	// EnvironmentVariable: The environment variable containing the secret.
 	EnvironmentVariable *GoogleCloudSecuritycenterV2SecretEnvironmentVariable `json:"environmentVariable,omitempty"`
-	// FilePath: The file containing the secret.
-	FilePath *GoogleCloudSecuritycenterV2SecretFilePath `json:"filePath,omitempty"`
-	// Status: The status of the secret.
-	Status *GoogleCloudSecuritycenterV2SecretStatus `json:"status,omitempty"`
-	// Type: The type of secret, for example, GCP_API_KEY.
-	Type string `json:"type,omitempty"`
+	FilePath            *GoogleCloudSecuritycenterV2SecretFilePath            `json:"filePath,omitempty"`
+	Status              *GoogleCloudSecuritycenterV2SecretStatus              `json:"status,omitempty"`
+	Type                string                                                `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnvironmentVariable") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9849,12 +6716,7 @@ func (s GoogleCloudSecuritycenterV2Secret) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2SecretEnvironmentVariable: Environment variable
-// containing the secret.
 type GoogleCloudSecuritycenterV2SecretEnvironmentVariable struct {
-	// Key: Environment variable name as a JSON encoded string. Note that value is
-	// not included since the value contains the secret data, which is sensitive
-	// core content.
 	Key string `json:"key,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -9874,9 +6736,7 @@ func (s GoogleCloudSecuritycenterV2SecretEnvironmentVariable) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2SecretFilePath: File path containing the secret.
 type GoogleCloudSecuritycenterV2SecretFilePath struct {
-	// Path: Path to the file.
 	Path string `json:"path,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Path") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -9896,21 +6756,14 @@ func (s GoogleCloudSecuritycenterV2SecretFilePath) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2SecretStatus: The status of the secret.
 type GoogleCloudSecuritycenterV2SecretStatus struct {
-	// LastUpdatedTime: Time that the secret was found.
 	LastUpdatedTime string `json:"lastUpdatedTime,omitempty"`
-	// Validity: The validity of the secret.
-	//
 	// Possible values:
-	//   "SECRET_VALIDITY_UNSPECIFIED" - Default value; no validation was
-	// attempted.
-	//   "SECRET_VALIDITY_UNSUPPORTED" - There is no mechanism to validate the
-	// secret.
-	//   "SECRET_VALIDITY_FAILED" - Validation is supported but the validation
-	// failed.
-	//   "SECRET_VALIDITY_INVALID" - The secret is confirmed to be invalid.
-	//   "SECRET_VALIDITY_VALID" - The secret is confirmed to be valid.
+	//   "SECRET_VALIDITY_UNSPECIFIED"
+	//   "SECRET_VALIDITY_UNSUPPORTED"
+	//   "SECRET_VALIDITY_FAILED"
+	//   "SECRET_VALIDITY_INVALID"
+	//   "SECRET_VALIDITY_VALID"
 	Validity string `json:"validity,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LastUpdatedTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -9930,16 +6783,9 @@ func (s GoogleCloudSecuritycenterV2SecretStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2SecurityBulletin: SecurityBulletin are
-// notifications of vulnerabilities of Google products.
 type GoogleCloudSecuritycenterV2SecurityBulletin struct {
-	// BulletinId: ID of the bulletin corresponding to the vulnerability.
-	BulletinId string `json:"bulletinId,omitempty"`
-	// SubmissionTime: Submission time of this Security Bulletin.
-	SubmissionTime string `json:"submissionTime,omitempty"`
-	// SuggestedUpgradeVersion: This represents a version that the cluster
-	// receiving this notification should be upgraded to, based on its current
-	// version. For example, 1.15.0
+	BulletinId              string `json:"bulletinId,omitempty"`
+	SubmissionTime          string `json:"submissionTime,omitempty"`
 	SuggestedUpgradeVersion string `json:"suggestedUpgradeVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BulletinId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -9959,46 +6805,10 @@ func (s GoogleCloudSecuritycenterV2SecurityBulletin) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2SecurityMarks: User specified security marks that
-// are attached to the parent Security Command Center resource. Security marks
-// are scoped within a Security Command Center organization -- they can be
-// modified and viewed by all users who have proper permissions on the
-// organization.
 type GoogleCloudSecuritycenterV2SecurityMarks struct {
-	// CanonicalName: The canonical name of the marks. The following list shows
-	// some examples: +
-	// `organizations/{organization_id}/assets/{asset_id}/securityMarks` +
-	// `organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/se
-	// curityMarks` +
-	// `organizations/{organization_id}/sources/{source_id}/locations/{location}/fin
-	// dings/{finding_id}/securityMarks` +
-	// `folders/{folder_id}/assets/{asset_id}/securityMarks` +
-	// `folders/{folder_id}/sources/{source_id}/findings/{finding_id}/securityMarks`
-	//  +
-	// `folders/{folder_id}/sources/{source_id}/locations/{location}/findings/{findi
-	// ng_id}/securityMarks` +
-	// `projects/{project_number}/assets/{asset_id}/securityMarks` +
-	// `projects/{project_number}/sources/{source_id}/findings/{finding_id}/security
-	// Marks` +
-	// `projects/{project_number}/sources/{source_id}/locations/{location}/findings/
-	// {finding_id}/securityMarks`
-	CanonicalName string `json:"canonicalName,omitempty"`
-	// Marks: Mutable user specified security marks belonging to the parent
-	// resource. Constraints are as follows: * Keys and values are treated as case
-	// insensitive * Keys must be between 1 - 256 characters (inclusive) * Keys
-	// must be letters, numbers, underscores, or dashes * Values have leading and
-	// trailing whitespace trimmed, remaining characters must be between 1 - 4096
-	// characters (inclusive)
-	Marks map[string]string `json:"marks,omitempty"`
-	// Name: The relative resource name of the SecurityMarks. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-	// The following list shows some examples: +
-	// `organizations/{organization_id}/assets/{asset_id}/securityMarks` +
-	// `organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/se
-	// curityMarks` +
-	// `organizations/{organization_id}/sources/{source_id}/locations/{location}/fin
-	// dings/{finding_id}/securityMarks`
-	Name string `json:"name,omitempty"`
+	CanonicalName string            `json:"canonicalName,omitempty"`
+	Marks         map[string]string `json:"marks,omitempty"`
+	Name          string            `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CanonicalName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -10017,20 +6827,10 @@ func (s GoogleCloudSecuritycenterV2SecurityMarks) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2SecurityPolicy: Information about the Google
-// Cloud Armor security policy
-// (https://cloud.google.com/armor/docs/security-policy-overview) relevant to
-// the finding.
 type GoogleCloudSecuritycenterV2SecurityPolicy struct {
-	// Name: The name of the Google Cloud Armor security policy, for example,
-	// "my-security-policy".
-	Name string `json:"name,omitempty"`
-	// Preview: Whether or not the associated rule or policy is in preview mode.
-	Preview bool `json:"preview,omitempty"`
-	// Type: The type of Google Cloud Armor security policy for example, 'backend
-	// security policy', 'edge security policy', 'network edge security policy', or
-	// 'always-on DDoS protection'.
-	Type string `json:"type,omitempty"`
+	Name    string `json:"name,omitempty"`
+	Preview bool   `json:"preview,omitempty"`
+	Type    string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -10049,31 +6849,15 @@ func (s GoogleCloudSecuritycenterV2SecurityPolicy) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2SecurityPosture: Represents a posture that is
-// deployed on Google Cloud by the Security Command Center Posture Management
-// service. A posture contains one or more policy sets. A policy set is a group
-// of policies that enforce a set of security rules on Google Cloud.
 type GoogleCloudSecuritycenterV2SecurityPosture struct {
-	// ChangedPolicy: The name of the updated policy, for example,
-	// `projects/{project_id}/policies/{constraint_name}`.
-	ChangedPolicy string `json:"changedPolicy,omitempty"`
-	// Name: Name of the posture, for example, `CIS-Posture`.
-	Name string `json:"name,omitempty"`
-	// Policy: The ID of the updated policy, for example, `compute-policy-1`.
-	Policy string `json:"policy,omitempty"`
-	// PolicyDriftDetails: The details about a change in an updated policy that
-	// violates the deployed posture.
-	PolicyDriftDetails []*GoogleCloudSecuritycenterV2PolicyDriftDetails `json:"policyDriftDetails,omitempty"`
-	// PolicySet: The name of the updated policy set, for example, `cis-policyset`.
-	PolicySet string `json:"policySet,omitempty"`
-	// PostureDeployment: The name of the posture deployment, for example,
-	// `organizations/{org_id}/posturedeployments/{posture_deployment_id}`.
-	PostureDeployment string `json:"postureDeployment,omitempty"`
-	// PostureDeploymentResource: The project, folder, or organization on which the
-	// posture is deployed, for example, `projects/{project_number}`.
-	PostureDeploymentResource string `json:"postureDeploymentResource,omitempty"`
-	// RevisionId: The version of the posture, for example, `c7cfa2a8`.
-	RevisionId string `json:"revisionId,omitempty"`
+	ChangedPolicy             string                                           `json:"changedPolicy,omitempty"`
+	Name                      string                                           `json:"name,omitempty"`
+	Policy                    string                                           `json:"policy,omitempty"`
+	PolicyDriftDetails        []*GoogleCloudSecuritycenterV2PolicyDriftDetails `json:"policyDriftDetails,omitempty"`
+	PolicySet                 string                                           `json:"policySet,omitempty"`
+	PostureDeployment         string                                           `json:"postureDeployment,omitempty"`
+	PostureDeploymentResource string                                           `json:"postureDeploymentResource,omitempty"`
+	RevisionId                string                                           `json:"revisionId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChangedPolicy") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -10092,30 +6876,20 @@ func (s GoogleCloudSecuritycenterV2SecurityPosture) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2SensitiveDataProtectionMapping: Resource value
-// mapping for Sensitive Data Protection findings If any of these mappings have
-// a resource value that is not unspecified, the resource_value field will be
-// ignored when reading this configuration.
 type GoogleCloudSecuritycenterV2SensitiveDataProtectionMapping struct {
-	// HighSensitivityMapping: Resource value mapping for high-sensitivity
-	// Sensitive Data Protection findings
-	//
 	// Possible values:
-	//   "RESOURCE_VALUE_UNSPECIFIED" - Unspecific value
-	//   "HIGH" - High resource value
-	//   "MEDIUM" - Medium resource value
-	//   "LOW" - Low resource value
-	//   "NONE" - No resource value, e.g. ignore these resources
+	//   "RESOURCE_VALUE_UNSPECIFIED"
+	//   "HIGH"
+	//   "MEDIUM"
+	//   "LOW"
+	//   "NONE"
 	HighSensitivityMapping string `json:"highSensitivityMapping,omitempty"`
-	// MediumSensitivityMapping: Resource value mapping for medium-sensitivity
-	// Sensitive Data Protection findings
-	//
 	// Possible values:
-	//   "RESOURCE_VALUE_UNSPECIFIED" - Unspecific value
-	//   "HIGH" - High resource value
-	//   "MEDIUM" - Medium resource value
-	//   "LOW" - Low resource value
-	//   "NONE" - No resource value, e.g. ignore these resources
+	//   "RESOURCE_VALUE_UNSPECIFIED"
+	//   "HIGH"
+	//   "MEDIUM"
+	//   "LOW"
+	//   "NONE"
 	MediumSensitivityMapping string `json:"mediumSensitivityMapping,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "HighSensitivityMapping") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10135,25 +6909,13 @@ func (s GoogleCloudSecuritycenterV2SensitiveDataProtectionMapping) MarshalJSON()
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2SensitivityScore: Score is calculated from of all
-// elements in the data profile. A higher level means the data is more
-// sensitive.
 type GoogleCloudSecuritycenterV2SensitivityScore struct {
-	// Score: The sensitivity score applied to the resource.
-	//
 	// Possible values:
-	//   "SENSITIVITY_SCORE_LEVEL_UNSPECIFIED" - Unused.
-	//   "SENSITIVITY_LOW" - No sensitive information detected. The resource isn't
-	// publicly accessible.
-	//   "SENSITIVITY_UNKNOWN" - Unable to determine sensitivity.
-	//   "SENSITIVITY_MODERATE" - Medium risk. Contains personally identifiable
-	// information (PII), potentially sensitive data, or fields with free-text data
-	// that are at a higher risk of having intermittent sensitive data. Consider
-	// limiting access.
-	//   "SENSITIVITY_HIGH" - High risk. Sensitive personally identifiable
-	// information (SPII) can be present. Exfiltration of data can lead to user
-	// data loss. Re-identification of users might be possible. Consider limiting
-	// usage and or removing SPII.
+	//   "SENSITIVITY_SCORE_LEVEL_UNSPECIFIED"
+	//   "SENSITIVITY_LOW"
+	//   "SENSITIVITY_UNKNOWN"
+	//   "SENSITIVITY_MODERATE"
+	//   "SENSITIVITY_HIGH"
 	Score string `json:"score,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Score") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -10173,19 +6935,8 @@ func (s GoogleCloudSecuritycenterV2SensitivityScore) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2ServiceAccountDelegationInfo: Identity delegation
-// history of an authenticated service account.
 type GoogleCloudSecuritycenterV2ServiceAccountDelegationInfo struct {
-	// PrincipalEmail: The email address of a Google account.
-	PrincipalEmail string `json:"principalEmail,omitempty"`
-	// PrincipalSubject: A string representing the principal_subject associated
-	// with the identity. As compared to `principal_email`, supports principals
-	// that aren't associated with email addresses, such as third party principals.
-	// For most identities, the format will be
-	// `principal://iam.googleapis.com/{identity pool name}/subjects/{subject}`
-	// except for some GKE identities (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD)
-	// that are still in the legacy format `serviceAccount:{identity pool
-	// name}[{subject}]`
+	PrincipalEmail   string `json:"principalEmail,omitempty"`
 	PrincipalSubject string `json:"principalSubject,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PrincipalEmail") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10205,21 +6956,13 @@ func (s GoogleCloudSecuritycenterV2ServiceAccountDelegationInfo) MarshalJSON() (
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2StaticMute: Information about the static mute
-// state. A static mute state overrides any dynamic mute rules that apply to
-// this finding. The static mute state can be set by a static mute rule or by
-// muting the finding directly.
 type GoogleCloudSecuritycenterV2StaticMute struct {
-	// ApplyTime: When the static mute was applied.
 	ApplyTime string `json:"applyTime,omitempty"`
-	// State: The static mute state. If the value is `MUTED` or `UNMUTED`, then the
-	// finding's overall mute state will have the same value.
-	//
 	// Possible values:
-	//   "MUTE_UNSPECIFIED" - Unspecified.
-	//   "MUTED" - Finding has been muted.
-	//   "UNMUTED" - Finding has been unmuted.
-	//   "UNDEFINED" - Finding has never been muted/unmuted.
+	//   "MUTE_UNSPECIFIED"
+	//   "MUTED"
+	//   "UNMUTED"
+	//   "UNDEFINED"
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApplyTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10239,21 +6982,15 @@ func (s GoogleCloudSecuritycenterV2StaticMute) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Subject: Represents a Kubernetes subject.
 type GoogleCloudSecuritycenterV2Subject struct {
-	// Kind: Authentication type for the subject.
-	//
 	// Possible values:
-	//   "AUTH_TYPE_UNSPECIFIED" - Authentication is not specified.
-	//   "USER" - User with valid certificate.
-	//   "SERVICEACCOUNT" - Users managed by Kubernetes API with credentials stored
-	// as secrets.
-	//   "GROUP" - Collection of users.
+	//   "AUTH_TYPE_UNSPECIFIED"
+	//   "USER"
+	//   "SERVICEACCOUNT"
+	//   "GROUP"
 	Kind string `json:"kind,omitempty"`
-	// Name: Name for the subject.
 	Name string `json:"name,omitempty"`
-	// Ns: Namespace for the subject.
-	Ns string `json:"ns,omitempty"`
+	Ns   string `json:"ns,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -10272,23 +7009,13 @@ func (s GoogleCloudSecuritycenterV2Subject) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2TicketInfo: Information about the ticket, if any,
-// that is being used to track the resolution of the issue that is identified
-// by this finding.
 type GoogleCloudSecuritycenterV2TicketInfo struct {
-	// Assignee: The assignee of the ticket in the ticket system.
-	Assignee string `json:"assignee,omitempty"`
-	// Description: The description of the ticket in the ticket system.
+	Assignee    string `json:"assignee,omitempty"`
 	Description string `json:"description,omitempty"`
-	// Id: The identifier of the ticket in the ticket system.
-	Id string `json:"id,omitempty"`
-	// Status: The latest status of the ticket, as reported by the ticket system.
-	Status string `json:"status,omitempty"`
-	// UpdateTime: The time when the ticket was last updated, as reported by the
-	// ticket system.
-	UpdateTime string `json:"updateTime,omitempty"`
-	// Uri: The link to the ticket in the ticket system.
-	Uri string `json:"uri,omitempty"`
+	Id          string `json:"id,omitempty"`
+	Status      string `json:"status,omitempty"`
+	UpdateTime  string `json:"updateTime,omitempty"`
+	Uri         string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Assignee") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -10307,20 +7034,9 @@ func (s GoogleCloudSecuritycenterV2TicketInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2ToxicCombination: Contains details about a group
-// of security issues that, when the issues occur together, represent a greater
-// risk than when the issues occur independently. A group of such issues is
-// referred to as a toxic combination.
 type GoogleCloudSecuritycenterV2ToxicCombination struct {
-	// AttackExposureScore: The Attack exposure score
-	// (https://cloud.google.com/security-command-center/docs/attack-exposure-learn#attack_exposure_scores)
-	// of this toxic combination. The score is a measure of how much this toxic
-	// combination exposes one or more high-value resources to potential attack.
-	AttackExposureScore float64 `json:"attackExposureScore,omitempty"`
-	// RelatedFindings: List of resource names of findings associated with this
-	// toxic combination. For example,
-	// `organizations/123/sources/456/findings/789`.
-	RelatedFindings []string `json:"relatedFindings,omitempty"`
+	AttackExposureScore float64  `json:"attackExposureScore,omitempty"`
+	RelatedFindings     []string `json:"relatedFindings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AttackExposureScore") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -10353,12 +7069,8 @@ func (s *GoogleCloudSecuritycenterV2ToxicCombination) UnmarshalJSON(data []byte)
 	return nil
 }
 
-// GoogleCloudSecuritycenterV2VertexAi: Vertex AI-related information
-// associated with the finding.
 type GoogleCloudSecuritycenterV2VertexAi struct {
-	// Datasets: Datasets associated with the finding.
-	Datasets []*GoogleCloudSecuritycenterV2Dataset `json:"datasets,omitempty"`
-	// Pipelines: Pipelines associated with the finding.
+	Datasets  []*GoogleCloudSecuritycenterV2Dataset  `json:"datasets,omitempty"`
 	Pipelines []*GoogleCloudSecuritycenterV2Pipeline `json:"pipelines,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Datasets") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10378,27 +7090,14 @@ func (s GoogleCloudSecuritycenterV2VertexAi) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2Vulnerability: Refers to common vulnerability
-// fields e.g. cve, cvss, cwe etc.
 type GoogleCloudSecuritycenterV2Vulnerability struct {
-	// Cve: CVE stands for Common Vulnerabilities and Exposures
-	// (https://cve.mitre.org/about/)
-	Cve *GoogleCloudSecuritycenterV2Cve `json:"cve,omitempty"`
-	// Cwes: Represents one or more Common Weakness Enumeration (CWE) information
-	// on this vulnerability.
-	Cwes []*GoogleCloudSecuritycenterV2Cwe `json:"cwes,omitempty"`
-	// FixedPackage: The fixed package is relevant to the finding.
-	FixedPackage *GoogleCloudSecuritycenterV2Package `json:"fixedPackage,omitempty"`
-	// OffendingPackage: The offending package is relevant to the finding.
-	OffendingPackage *GoogleCloudSecuritycenterV2Package `json:"offendingPackage,omitempty"`
-	// ProviderRiskScore: Provider provided risk_score based on multiple factors.
-	// The higher the risk score, the more risky the vulnerability is.
-	ProviderRiskScore int64 `json:"providerRiskScore,omitempty,string"`
-	// Reachable: Represents whether the vulnerability is reachable (detected via
-	// static analysis)
-	Reachable bool `json:"reachable,omitempty"`
-	// SecurityBulletin: The security bulletin is relevant to this finding.
-	SecurityBulletin *GoogleCloudSecuritycenterV2SecurityBulletin `json:"securityBulletin,omitempty"`
+	Cve               *GoogleCloudSecuritycenterV2Cve              `json:"cve,omitempty"`
+	Cwes              []*GoogleCloudSecuritycenterV2Cwe            `json:"cwes,omitempty"`
+	FixedPackage      *GoogleCloudSecuritycenterV2Package          `json:"fixedPackage,omitempty"`
+	OffendingPackage  *GoogleCloudSecuritycenterV2Package          `json:"offendingPackage,omitempty"`
+	ProviderRiskScore int64                                        `json:"providerRiskScore,omitempty,string"`
+	Reachable         bool                                         `json:"reachable,omitempty"`
+	SecurityBulletin  *GoogleCloudSecuritycenterV2SecurityBulletin `json:"securityBulletin,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Cve") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -10417,10 +7116,7 @@ func (s GoogleCloudSecuritycenterV2Vulnerability) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2YaraRuleSignature: A signature corresponding to a
-// YARA rule.
 type GoogleCloudSecuritycenterV2YaraRuleSignature struct {
-	// YaraRule: The name of the YARA rule.
 	YaraRule string `json:"yaraRule,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "YaraRule") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10440,61 +7136,13 @@ func (s GoogleCloudSecuritycenterV2YaraRuleSignature) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GroupAssetsRequest: Request message for grouping by assets.
 type GroupAssetsRequest struct {
-	// CompareDuration: When compare_duration is set, the Asset's "state" property
-	// is updated to indicate whether the asset was added, removed, or remained
-	// present during the compare_duration period of time that precedes the
-	// read_time. This is the time between (read_time - compare_duration) and
-	// read_time. The state value is derived based on the presence of the asset at
-	// the two points in time. Intermediate state changes between the two times
-	// don't affect the result. For example, the results aren't affected if the
-	// asset is removed and re-created again. Possible "state" values when
-	// compare_duration is specified: * "ADDED": indicates that the asset was not
-	// present before compare_duration, but present at reference_time. * "REMOVED":
-	// indicates that the asset was present at the start of compare_duration, but
-	// not present at reference_time. * "ACTIVE": indicates that the asset was
-	// present at both the start and the end of the time period defined by
-	// compare_duration and reference_time. This field is ignored if `state` is not
-	// a field in `group_by`.
 	CompareDuration string `json:"compareDuration,omitempty"`
-	// Filter: Expression that defines the filter to apply across assets. The
-	// expression is a list of zero or more restrictions combined via logical
-	// operators `AND` and `OR`. Parentheses are not supported, and `OR` has higher
-	// precedence than `AND`. Restrictions have the form ` ` and may have a `-`
-	// character in front of them to indicate negation. The fields map to those
-	// defined in the Asset resource. Examples include: * name *
-	// security_center_properties.resource_name * resource_properties.a_property *
-	// security_marks.marks.marka The supported operators are: * `=` for all value
-	// types. * `>`, `<`, `>=`, `<=` for integer values. * `:`, meaning substring
-	// matching, for strings. The supported value types are: * string literals in
-	// quotes. * integer literals without quotes. * boolean literals `true` and
-	// `false` without quotes. For example, `resource_properties.size = 100` is a
-	// valid filter string.
-	Filter string `json:"filter,omitempty"`
-	// GroupBy: Required. Expression that defines what assets fields to use for
-	// grouping. The string value should follow SQL syntax: comma separated list of
-	// fields. For example:
-	// "security_center_properties.resource_project,security_center_properties.proje
-	// ct". The following fields are supported when compare_duration is not set: *
-	// security_center_properties.resource_project *
-	// security_center_properties.resource_type *
-	// security_center_properties.resource_parent The following fields are
-	// supported when compare_duration is set: *
-	// security_center_properties.resource_type
-	GroupBy string `json:"groupBy,omitempty"`
-	// PageSize: The maximum number of results to return in a single response.
-	// Default is 10, minimum is 1, maximum is 1000.
-	PageSize int64 `json:"pageSize,omitempty"`
-	// PageToken: The value returned by the last `GroupAssetsResponse`; indicates
-	// that this is a continuation of a prior `GroupAssets` call, and that the
-	// system should return the next page of data.
-	PageToken string `json:"pageToken,omitempty"`
-	// ReadTime: Time used as a reference point when filtering assets. The filter
-	// is limited to assets existing at the supplied time and their values are
-	// those at that specific time. Absence of this field will default to the API's
-	// version of NOW.
-	ReadTime string `json:"readTime,omitempty"`
+	Filter          string `json:"filter,omitempty"`
+	GroupBy         string `json:"groupBy,omitempty"`
+	PageSize        int64  `json:"pageSize,omitempty"`
+	PageToken       string `json:"pageToken,omitempty"`
+	ReadTime        string `json:"readTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CompareDuration") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -10513,17 +7161,10 @@ func (s GroupAssetsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GroupAssetsResponse: Response message for grouping by assets.
 type GroupAssetsResponse struct {
-	// GroupByResults: Group results. There exists an element for each existing
-	// unique combination of property/values. The element contains a count for the
-	// number of times those specific property/values appear.
 	GroupByResults []*GroupResult `json:"groupByResults,omitempty"`
-	// NextPageToken: Token to retrieve the next page of results, or empty if there
-	// are no more results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-	// ReadTime: Time used for executing the groupBy request.
-	ReadTime string `json:"readTime,omitempty"`
+	NextPageToken  string         `json:"nextPageToken,omitempty"`
+	ReadTime       string         `json:"readTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -10545,37 +7186,12 @@ func (s GroupAssetsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GroupFindingsRequest: Request message for grouping by findings.
 type GroupFindingsRequest struct {
-	// Filter: Expression that defines the filter to apply across findings. The
-	// expression is a list of one or more restrictions combined via logical
-	// operators `AND` and `OR`. Parentheses are not supported, and `OR` has higher
-	// precedence than `AND`. Restrictions have the form ` ` and may have a `-`
-	// character in front of them to indicate negation. Examples include: * name *
-	// source_properties.a_property * security_marks.marks.marka The supported
-	// operators are: * `=` for all value types. * `>`, `<`, `>=`, `<=` for integer
-	// values. * `:`, meaning substring matching, for strings. The supported value
-	// types are: * string literals in quotes. * integer literals without quotes. *
-	// boolean literals `true` and `false` without quotes. For example,
-	// `source_properties.size = 100` is a valid filter string.
-	Filter string `json:"filter,omitempty"`
-	// GroupBy: Required. Expression that defines what assets fields to use for
-	// grouping (including `state`). The string value should follow SQL syntax:
-	// comma separated list of fields. For example: "parent,resource_name". The
-	// following fields are supported: * resource_name * category * state * parent
-	GroupBy string `json:"groupBy,omitempty"`
-	// PageSize: The maximum number of results to return in a single response.
-	// Default is 10, minimum is 1, maximum is 1000.
-	PageSize int64 `json:"pageSize,omitempty"`
-	// PageToken: The value returned by the last `GroupFindingsResponse`; indicates
-	// that this is a continuation of a prior `GroupFindings` call, and that the
-	// system should return the next page of data.
+	Filter    string `json:"filter,omitempty"`
+	GroupBy   string `json:"groupBy,omitempty"`
+	PageSize  int64  `json:"pageSize,omitempty"`
 	PageToken string `json:"pageToken,omitempty"`
-	// ReadTime: Time used as a reference point when filtering findings. The filter
-	// is limited to findings existing at the supplied time and their values are
-	// those at that specific time. Absence of this field will default to the API's
-	// version of NOW.
-	ReadTime string `json:"readTime,omitempty"`
+	ReadTime  string `json:"readTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -10594,17 +7210,10 @@ func (s GroupFindingsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GroupFindingsResponse: Response message for group by findings.
 type GroupFindingsResponse struct {
-	// GroupByResults: Group results. There exists an element for each existing
-	// unique combination of property/values. The element contains a count for the
-	// number of times those specific property/values appear.
 	GroupByResults []*GroupResult `json:"groupByResults,omitempty"`
-	// NextPageToken: Token to retrieve the next page of results, or empty if there
-	// are no more results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-	// ReadTime: Time used for executing the groupBy request.
-	ReadTime string `json:"readTime,omitempty"`
+	NextPageToken  string         `json:"nextPageToken,omitempty"`
+	ReadTime       string         `json:"readTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -10626,17 +7235,12 @@ func (s GroupFindingsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GroupMembership: Contains details about groups of which this finding is a
-// member. A group is a collection of findings that are related in some way.
 type GroupMembership struct {
-	// GroupId: ID of the group.
 	GroupId string `json:"groupId,omitempty"`
-	// GroupType: Type of group.
-	//
 	// Possible values:
-	//   "GROUP_TYPE_UNSPECIFIED" - Default value.
-	//   "GROUP_TYPE_TOXIC_COMBINATION" - Group represents a toxic combination.
-	//   "GROUP_TYPE_CHOKEPOINT" - Group represents a chokepoint.
+	//   "GROUP_TYPE_UNSPECIFIED"
+	//   "GROUP_TYPE_TOXIC_COMBINATION"
+	//   "GROUP_TYPE_CHOKEPOINT"
 	GroupType string `json:"groupType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GroupId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -10656,12 +7260,8 @@ func (s GroupMembership) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GroupResult: Result containing the properties and count of a groupBy
-// request.
 type GroupResult struct {
-	// Count: Total count of resources for the given properties.
-	Count int64 `json:"count,omitempty,string"`
-	// Properties: Properties matching the groupBy fields in the request.
+	Count      int64                `json:"count,omitempty,string"`
 	Properties googleapi.RawMessage `json:"properties,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -10681,13 +7281,8 @@ func (s GroupResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// HttpResponse: The http response returned by the web application.
 type HttpResponse struct {
-	// Path: The http path for which response code was returned by web application,
-	// for example, "https://test-app.a.run.app/test".
-	Path string `json:"path,omitempty"`
-	// StatusCode: The http response code returned by the web application, for
-	// example, 200.
+	Path       string `json:"path,omitempty"`
 	StatusCode string `json:"statusCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Path") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -10707,22 +7302,14 @@ func (s HttpResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IamBinding: Represents a particular IAM binding, which captures a member's
-// role addition, removal, or state.
 type IamBinding struct {
-	// Action: The action that was performed on a Binding.
-	//
 	// Possible values:
-	//   "ACTION_UNSPECIFIED" - Unspecified.
-	//   "ADD" - Addition of a Binding.
-	//   "REMOVE" - Removal of a Binding.
+	//   "ACTION_UNSPECIFIED"
+	//   "ADD"
+	//   "REMOVE"
 	Action string `json:"action,omitempty"`
-	// Member: A single identity requesting access for a Cloud Platform resource,
-	// for example, "foo@google.com".
 	Member string `json:"member,omitempty"`
-	// Role: Role that is assigned to "members". For example, "roles/viewer",
-	// "roles/editor", or "roles/owner".
-	Role string `json:"role,omitempty"`
+	Role   string `json:"role,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -10741,21 +7328,11 @@ func (s IamBinding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Indicator: Represents what's commonly known as an _indicator of compromise_
-// (IoC) in computer forensics. This is an artifact observed on a network or in
-// an operating system that, with high confidence, indicates a computer
-// intrusion. For more information, see Indicator of compromise
-// (https://en.wikipedia.org/wiki/Indicator_of_compromise).
 type Indicator struct {
-	// Domains: List of domains associated to the Finding.
-	Domains []string `json:"domains,omitempty"`
-	// IpAddresses: The list of IP addresses that are associated with the finding.
-	IpAddresses []string `json:"ipAddresses,omitempty"`
-	// Signatures: The list of matched signatures indicating that the given process
-	// is present in the environment.
-	Signatures []*ProcessSignature `json:"signatures,omitempty"`
-	// Uris: The list of URIs associated to the Findings.
-	Uris []string `json:"uris,omitempty"`
+	Domains     []string            `json:"domains,omitempty"`
+	IpAddresses []string            `json:"ipAddresses,omitempty"`
+	Signatures  []*ProcessSignature `json:"signatures,omitempty"`
+	Uris        []string            `json:"uris,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Domains") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -10774,20 +7351,10 @@ func (s Indicator) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// InfoType: Type of information detected by the API.
 type InfoType struct {
-	// Name: Name of the information type. Either a name of your choosing when
-	// creating a CustomInfoType, or one of the names listed at
-	// https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference
-	// when specifying a built-in type. When sending Cloud DLP results to Data
-	// Catalog, infoType names should conform to the pattern
-	// `[A-Za-z0-9$_-]{1,64}`.
-	Name string `json:"name,omitempty"`
-	// SensitivityScore: Optional custom sensitivity for this InfoType. This only
-	// applies to data profiling.
+	Name             string            `json:"name,omitempty"`
 	SensitivityScore *SensitivityScore `json:"sensitivityScore,omitempty"`
-	// Version: Optional version name for this InfoType.
-	Version string `json:"version,omitempty"`
+	Version          string            `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -10806,16 +7373,9 @@ func (s InfoType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IpRule: IP rule information.
 type IpRule struct {
-	// PortRanges: Optional. An optional list of ports to which this rule applies.
-	// This field is only applicable for the UDP or (S)TCP protocols. Each entry
-	// must be either an integer or a range including a min and max port number.
 	PortRanges []*PortRange `json:"portRanges,omitempty"`
-	// Protocol: The IP protocol this rule applies to. This value can either be one
-	// of the following well known protocol strings (TCP, UDP, ICMP, ESP, AH, IPIP,
-	// SCTP) or a string representation of the integer value.
-	Protocol string `json:"protocol,omitempty"`
+	Protocol   string       `json:"protocol,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PortRanges") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -10834,32 +7394,17 @@ func (s IpRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IpRules: IP rules associated with the finding.
 type IpRules struct {
-	// Allowed: Tuple with allowed rules.
-	Allowed *Allowed `json:"allowed,omitempty"`
-	// Denied: Tuple with denied rules.
-	Denied *Denied `json:"denied,omitempty"`
-	// DestinationIpRanges: If destination IP ranges are specified, the firewall
-	// rule applies only to traffic that has a destination IP address in these
-	// ranges. These ranges must be expressed in CIDR format. Only supports IPv4.
+	Allowed             *Allowed `json:"allowed,omitempty"`
+	Denied              *Denied  `json:"denied,omitempty"`
 	DestinationIpRanges []string `json:"destinationIpRanges,omitempty"`
-	// Direction: The direction that the rule is applicable to, one of ingress or
-	// egress.
-	//
 	// Possible values:
-	//   "DIRECTION_UNSPECIFIED" - Unspecified direction value.
-	//   "INGRESS" - Ingress direction value.
-	//   "EGRESS" - Egress direction value.
-	Direction string `json:"direction,omitempty"`
-	// ExposedServices: Name of the network protocol service, such as FTP, that is
-	// exposed by the open port. Follows the naming convention available at:
-	// https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml.
+	//   "DIRECTION_UNSPECIFIED"
+	//   "INGRESS"
+	//   "EGRESS"
+	Direction       string   `json:"direction,omitempty"`
 	ExposedServices []string `json:"exposedServices,omitempty"`
-	// SourceIpRanges: If source IP ranges are specified, the firewall rule applies
-	// only to traffic that has a source IP address in these ranges. These ranges
-	// must be expressed in CIDR format. Only supports IPv4.
-	SourceIpRanges []string `json:"sourceIpRanges,omitempty"`
+	SourceIpRanges  []string `json:"sourceIpRanges,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Allowed") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -10878,25 +7423,16 @@ func (s IpRules) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Job: Describes a job
 type Job struct {
-	// ErrorCode: Optional. If the job did not complete successfully, this field
-	// describes why.
-	ErrorCode int64 `json:"errorCode,omitempty"`
-	// Location: Optional. Gives the location where the job ran, such as `US` or
-	// `europe-west1`
-	Location string `json:"location,omitempty"`
-	// Name: The fully-qualified name for a job. e.g. `projects//jobs/`
-	Name string `json:"name,omitempty"`
-	// State: Output only. State of the job, such as `RUNNING` or `PENDING`.
-	//
+	ErrorCode int64  `json:"errorCode,omitempty"`
+	Location  string `json:"location,omitempty"`
+	Name      string `json:"name,omitempty"`
 	// Possible values:
-	//   "JOB_STATE_UNSPECIFIED" - Unspecified represents an unknown state and
-	// should not be used.
-	//   "PENDING" - Job is scheduled and pending for run
-	//   "RUNNING" - Job in progress
-	//   "SUCCEEDED" - Job has completed with success
-	//   "FAILED" - Job has completed but with failure
+	//   "JOB_STATE_UNSPECIFIED"
+	//   "PENDING"
+	//   "RUNNING"
+	//   "SUCCEEDED"
+	//   "FAILED"
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10916,37 +7452,16 @@ func (s Job) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// KernelRootkit: Kernel mode rootkit signatures.
 type KernelRootkit struct {
-	// Name: Rootkit name, when available.
-	Name string `json:"name,omitempty"`
-	// UnexpectedCodeModification: True if unexpected modifications of kernel code
-	// memory are present.
-	UnexpectedCodeModification bool `json:"unexpectedCodeModification,omitempty"`
-	// UnexpectedFtraceHandler: True if `ftrace` points are present with callbacks
-	// pointing to regions that are not in the expected kernel or module code
-	// range.
-	UnexpectedFtraceHandler bool `json:"unexpectedFtraceHandler,omitempty"`
-	// UnexpectedInterruptHandler: True if interrupt handlers that are are not in
-	// the expected kernel or module code regions are present.
-	UnexpectedInterruptHandler bool `json:"unexpectedInterruptHandler,omitempty"`
-	// UnexpectedKernelCodePages: True if kernel code pages that are not in the
-	// expected kernel or module code regions are present.
-	UnexpectedKernelCodePages bool `json:"unexpectedKernelCodePages,omitempty"`
-	// UnexpectedKprobeHandler: True if `kprobe` points are present with callbacks
-	// pointing to regions that are not in the expected kernel or module code
-	// range.
-	UnexpectedKprobeHandler bool `json:"unexpectedKprobeHandler,omitempty"`
-	// UnexpectedProcessesInRunqueue: True if unexpected processes in the scheduler
-	// run queue are present. Such processes are in the run queue, but not in the
-	// process task list.
-	UnexpectedProcessesInRunqueue bool `json:"unexpectedProcessesInRunqueue,omitempty"`
-	// UnexpectedReadOnlyDataModification: True if unexpected modifications of
-	// kernel read-only data memory are present.
-	UnexpectedReadOnlyDataModification bool `json:"unexpectedReadOnlyDataModification,omitempty"`
-	// UnexpectedSystemCallHandler: True if system call handlers that are are not
-	// in the expected kernel or module code regions are present.
-	UnexpectedSystemCallHandler bool `json:"unexpectedSystemCallHandler,omitempty"`
+	Name                               string `json:"name,omitempty"`
+	UnexpectedCodeModification         bool   `json:"unexpectedCodeModification,omitempty"`
+	UnexpectedFtraceHandler            bool   `json:"unexpectedFtraceHandler,omitempty"`
+	UnexpectedInterruptHandler         bool   `json:"unexpectedInterruptHandler,omitempty"`
+	UnexpectedKernelCodePages          bool   `json:"unexpectedKernelCodePages,omitempty"`
+	UnexpectedKprobeHandler            bool   `json:"unexpectedKprobeHandler,omitempty"`
+	UnexpectedProcessesInRunqueue      bool   `json:"unexpectedProcessesInRunqueue,omitempty"`
+	UnexpectedReadOnlyDataModification bool   `json:"unexpectedReadOnlyDataModification,omitempty"`
+	UnexpectedSystemCallHandler        bool   `json:"unexpectedSystemCallHandler,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -10965,35 +7480,14 @@ func (s KernelRootkit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Kubernetes: Kubernetes-related attributes.
 type Kubernetes struct {
-	// AccessReviews: Provides information on any Kubernetes access reviews
-	// (privilege checks) relevant to the finding.
-	AccessReviews []*AccessReview `json:"accessReviews,omitempty"`
-	// Bindings: Provides Kubernetes role binding information for findings that
-	// involve RoleBindings or ClusterRoleBindings
-	// (https://cloud.google.com/kubernetes-engine/docs/how-to/role-based-access-control).
-	Bindings []*GoogleCloudSecuritycenterV1Binding `json:"bindings,omitempty"`
-	// NodePools: GKE node pools
-	// (https://cloud.google.com/kubernetes-engine/docs/concepts/node-pools)
-	// associated with the finding. This field contains node pool information for
-	// each node, when it is available.
-	NodePools []*NodePool `json:"nodePools,omitempty"`
-	// Nodes: Provides Kubernetes node
-	// (https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-architecture#nodes)
-	// information.
-	Nodes []*Node `json:"nodes,omitempty"`
-	// Objects: Kubernetes objects related to the finding.
-	Objects []*Object `json:"objects,omitempty"`
-	// Pods: Kubernetes Pods
-	// (https://cloud.google.com/kubernetes-engine/docs/concepts/pod) associated
-	// with the finding. This field contains Pod records for each container that is
-	// owned by a Pod.
-	Pods []*Pod `json:"pods,omitempty"`
-	// Roles: Provides Kubernetes role information for findings that involve Roles
-	// or ClusterRoles
-	// (https://cloud.google.com/kubernetes-engine/docs/how-to/role-based-access-control).
-	Roles []*Role `json:"roles,omitempty"`
+	AccessReviews []*AccessReview                       `json:"accessReviews,omitempty"`
+	Bindings      []*GoogleCloudSecuritycenterV1Binding `json:"bindings,omitempty"`
+	NodePools     []*NodePool                           `json:"nodePools,omitempty"`
+	Nodes         []*Node                               `json:"nodes,omitempty"`
+	Objects       []*Object                             `json:"objects,omitempty"`
+	Pods          []*Pod                                `json:"pods,omitempty"`
+	Roles         []*Role                               `json:"roles,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccessReviews") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -11012,14 +7506,8 @@ func (s Kubernetes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Label: Represents a generic name-value label. A label has separate name and
-// value fields to support filtering with the `contains()` function. For more
-// information, see Filtering on array-type fields
-// (https://cloud.google.com/security-command-center/docs/how-to-api-list-findings#array-contains-filtering).
 type Label struct {
-	// Name: Name of the label.
-	Name string `json:"name,omitempty"`
-	// Value: Value that corresponds to the label's name.
+	Name  string `json:"name,omitempty"`
 	Value string `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -11039,17 +7527,11 @@ func (s Label) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListAssetsResponse: Response message for listing assets.
 type ListAssetsResponse struct {
-	// ListAssetsResults: Assets matching the list request.
 	ListAssetsResults []*ListAssetsResult `json:"listAssetsResults,omitempty"`
-	// NextPageToken: Token to retrieve the next page of results, or empty if there
-	// are no more results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-	// ReadTime: Time used for executing the list request.
-	ReadTime string `json:"readTime,omitempty"`
-	// TotalSize: The total number of assets matching the query.
-	TotalSize int64 `json:"totalSize,omitempty"`
+	NextPageToken     string              `json:"nextPageToken,omitempty"`
+	ReadTime          string              `json:"readTime,omitempty"`
+	TotalSize         int64               `json:"totalSize,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -11071,18 +7553,14 @@ func (s ListAssetsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListAssetsResult: Result containing the Asset and its State.
 type ListAssetsResult struct {
-	// Asset: Asset matching the search request.
 	Asset *Asset `json:"asset,omitempty"`
-	// State: State of the asset.
-	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Unspecified state.
-	//   "UNUSED" - Request did not specify use of this field in the result.
-	//   "ADDED" - Asset was added between the points in time.
-	//   "REMOVED" - Asset was removed between the points in time.
-	//   "ACTIVE" - Asset was active at both point(s) in time.
+	//   "STATE_UNSPECIFIED"
+	//   "UNUSED"
+	//   "ADDED"
+	//   "REMOVED"
+	//   "ACTIVE"
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Asset") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -11102,17 +7580,11 @@ func (s ListAssetsResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListFindingsResponse: Response message for listing findings.
 type ListFindingsResponse struct {
-	// Findings: Findings matching the list request.
-	Findings []*GoogleCloudSecuritycenterV1beta1Finding `json:"findings,omitempty"`
-	// NextPageToken: Token to retrieve the next page of results, or empty if there
-	// are no more results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-	// ReadTime: Time used for executing the list request.
-	ReadTime string `json:"readTime,omitempty"`
-	// TotalSize: The total number of findings matching the query.
-	TotalSize int64 `json:"totalSize,omitempty"`
+	Findings      []*GoogleCloudSecuritycenterV1beta1Finding `json:"findings,omitempty"`
+	NextPageToken string                                     `json:"nextPageToken,omitempty"`
+	ReadTime      string                                     `json:"readTime,omitempty"`
+	TotalSize     int64                                      `json:"totalSize,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -11134,18 +7606,10 @@ func (s ListFindingsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListOperationsResponse: The response message for Operations.ListOperations.
 type ListOperationsResponse struct {
-	// NextPageToken: The standard List next-page token.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Operations: A list of operations that matches the specified filter in the
-	// request.
-	Operations []*Operation `json:"operations,omitempty"`
-	// Unreachable: Unordered list. Unreachable resources. Populated when the
-	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections. For example, when attempting to list all resources across all
-	// supported locations.
-	Unreachable []string `json:"unreachable,omitempty"`
+	NextPageToken string       `json:"nextPageToken,omitempty"`
+	Operations    []*Operation `json:"operations,omitempty"`
+	Unreachable   []string     `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -11167,13 +7631,9 @@ func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListSourcesResponse: Response message for listing sources.
 type ListSourcesResponse struct {
-	// NextPageToken: Token to retrieve the next page of results, or empty if there
-	// are no more results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Sources: Sources belonging to the requested parent.
-	Sources []*Source `json:"sources,omitempty"`
+	NextPageToken string    `json:"nextPageToken,omitempty"`
+	Sources       []*Source `json:"sources,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -11195,10 +7655,7 @@ func (s ListSourcesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// LoadBalancer: Contains information related to the load balancer associated
-// with the finding.
 type LoadBalancer struct {
-	// Name: The name of the load balancer associated with the finding.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -11218,9 +7675,7 @@ func (s LoadBalancer) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// LogEntry: An individual entry in a log.
 type LogEntry struct {
-	// CloudLoggingEntry: An individual entry in a log stored in Cloud Logging.
 	CloudLoggingEntry *CloudLoggingEntry `json:"cloudLoggingEntry,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudLoggingEntry") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -11240,13 +7695,9 @@ func (s LogEntry) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MemoryHashSignature: A signature corresponding to memory page hashes.
 type MemoryHashSignature struct {
-	// BinaryFamily: The binary family.
-	BinaryFamily string `json:"binaryFamily,omitempty"`
-	// Detections: The list of memory hash detections contributing to the binary
-	// family match.
-	Detections []*Detection `json:"detections,omitempty"`
+	BinaryFamily string       `json:"binaryFamily,omitempty"`
+	Detections   []*Detection `json:"detections,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BinaryFamily") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -11265,343 +7716,324 @@ func (s MemoryHashSignature) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MitreAttack: MITRE ATT&CK tactics and techniques related to this finding.
-// See: https://attack.mitre.org
 type MitreAttack struct {
-	// AdditionalTactics: Additional MITRE ATT&CK tactics related to this finding,
-	// if any.
-	//
 	// Possible values:
-	//   "TACTIC_UNSPECIFIED" - Unspecified value.
-	//   "RECONNAISSANCE" - TA0043
-	//   "RESOURCE_DEVELOPMENT" - TA0042
-	//   "INITIAL_ACCESS" - TA0001
-	//   "EXECUTION" - TA0002
-	//   "PERSISTENCE" - TA0003
-	//   "PRIVILEGE_ESCALATION" - TA0004
-	//   "DEFENSE_EVASION" - TA0005
-	//   "CREDENTIAL_ACCESS" - TA0006
-	//   "DISCOVERY" - TA0007
-	//   "LATERAL_MOVEMENT" - TA0008
-	//   "COLLECTION" - TA0009
-	//   "COMMAND_AND_CONTROL" - TA0011
-	//   "EXFILTRATION" - TA0010
-	//   "IMPACT" - TA0040
+	//   "TACTIC_UNSPECIFIED"
+	//   "RECONNAISSANCE"
+	//   "RESOURCE_DEVELOPMENT"
+	//   "INITIAL_ACCESS"
+	//   "EXECUTION"
+	//   "PERSISTENCE"
+	//   "PRIVILEGE_ESCALATION"
+	//   "DEFENSE_EVASION"
+	//   "CREDENTIAL_ACCESS"
+	//   "DISCOVERY"
+	//   "LATERAL_MOVEMENT"
+	//   "COLLECTION"
+	//   "COMMAND_AND_CONTROL"
+	//   "EXFILTRATION"
+	//   "IMPACT"
 	AdditionalTactics []string `json:"additionalTactics,omitempty"`
-	// AdditionalTechniques: Additional MITRE ATT&CK techniques related to this
-	// finding, if any, along with any of their respective parent techniques.
-	//
 	// Possible values:
-	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
-	//   "DATA_OBFUSCATION" - T1001
-	//   "DATA_OBFUSCATION_STEGANOGRAPHY" - T1001.002
-	//   "OS_CREDENTIAL_DUMPING" - T1003
-	//   "OS_CREDENTIAL_DUMPING_PROC_FILESYSTEM" - T1003.007
-	//   "OS_CREDENTIAL_DUMPING_ETC_PASSWORD_AND_ETC_SHADOW" - T1003.008
-	//   "DATA_FROM_LOCAL_SYSTEM" - T1005
-	//   "AUTOMATED_EXFILTRATION" - T1020
-	//   "OBFUSCATED_FILES_OR_INFO" - T1027
-	//   "STEGANOGRAPHY" - T1027.003
-	//   "COMPILE_AFTER_DELIVERY" - T1027.004
-	//   "COMMAND_OBFUSCATION" - T1027.010
-	//   "SCHEDULED_TRANSFER" - T1029
-	//   "SYSTEM_OWNER_USER_DISCOVERY" - T1033
-	//   "MASQUERADING" - T1036
-	//   "MATCH_LEGITIMATE_NAME_OR_LOCATION" - T1036.005
-	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS" - T1037
-	//   "STARTUP_ITEMS" - T1037.005
-	//   "NETWORK_SERVICE_DISCOVERY" - T1046
-	//   "SCHEDULED_TASK_JOB" - T1053
-	//   "SCHEDULED_TASK_JOB_CRON" - T1053.003
-	//   "CONTAINER_ORCHESTRATION_JOB" - T1053.007
-	//   "PROCESS_INJECTION" - T1055
-	//   "INPUT_CAPTURE" - T1056
-	//   "INPUT_CAPTURE_KEYLOGGING" - T1056.001
-	//   "PROCESS_DISCOVERY" - T1057
-	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
-	//   "UNIX_SHELL" - T1059.004
-	//   "PYTHON" - T1059.006
-	//   "EXPLOITATION_FOR_PRIVILEGE_ESCALATION" - T1068
-	//   "PERMISSION_GROUPS_DISCOVERY" - T1069
-	//   "CLOUD_GROUPS" - T1069.003
-	//   "INDICATOR_REMOVAL" - T1070
-	//   "INDICATOR_REMOVAL_CLEAR_LINUX_OR_MAC_SYSTEM_LOGS" - T1070.002
-	//   "INDICATOR_REMOVAL_CLEAR_COMMAND_HISTORY" - T1070.003
-	//   "INDICATOR_REMOVAL_FILE_DELETION" - T1070.004
-	//   "INDICATOR_REMOVAL_TIMESTOMP" - T1070.006
-	//   "INDICATOR_REMOVAL_CLEAR_MAILBOX_DATA" - T1070.008
-	//   "APPLICATION_LAYER_PROTOCOL" - T1071
-	//   "DNS" - T1071.004
-	//   "SOFTWARE_DEPLOYMENT_TOOLS" - T1072
-	//   "VALID_ACCOUNTS" - T1078
-	//   "DEFAULT_ACCOUNTS" - T1078.001
-	//   "LOCAL_ACCOUNTS" - T1078.003
-	//   "CLOUD_ACCOUNTS" - T1078.004
-	//   "FILE_AND_DIRECTORY_DISCOVERY" - T1083
-	//   "ACCOUNT_DISCOVERY_LOCAL_ACCOUNT" - T1087.001
-	//   "PROXY" - T1090
-	//   "EXTERNAL_PROXY" - T1090.002
-	//   "MULTI_HOP_PROXY" - T1090.003
-	//   "ACCOUNT_MANIPULATION" - T1098
-	//   "ADDITIONAL_CLOUD_CREDENTIALS" - T1098.001
-	//   "ADDITIONAL_CLOUD_ROLES" - T1098.003
-	//   "SSH_AUTHORIZED_KEYS" - T1098.004
-	//   "ADDITIONAL_CONTAINER_CLUSTER_ROLES" - T1098.006
-	//   "MULTI_STAGE_CHANNELS" - T1104
-	//   "INGRESS_TOOL_TRANSFER" - T1105
-	//   "NATIVE_API" - T1106
-	//   "BRUTE_FORCE" - T1110
-	//   "AUTOMATED_COLLECTION" - T1119
-	//   "SHARED_MODULES" - T1129
-	//   "DATA_ENCODING" - T1132
-	//   "STANDARD_ENCODING" - T1132.001
-	//   "ACCESS_TOKEN_MANIPULATION" - T1134
-	//   "TOKEN_IMPERSONATION_OR_THEFT" - T1134.001
-	//   "CREATE_ACCOUNT" - T1136
-	//   "LOCAL_ACCOUNT" - T1136.001
-	//   "DEOBFUSCATE_DECODE_FILES_OR_INFO" - T1140
-	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
-	//   "SUPPLY_CHAIN_COMPROMISE" - T1195
-	//   "COMPROMISE_SOFTWARE_DEPENDENCIES_AND_DEVELOPMENT_TOOLS" - T1195.001
-	//   "EXPLOITATION_FOR_CLIENT_EXECUTION" - T1203
-	//   "USER_EXECUTION" - T1204
-	//   "EXPLOITATION_FOR_CREDENTIAL_ACCESS" - T1212
-	//   "LINUX_AND_MAC_FILE_AND_DIRECTORY_PERMISSIONS_MODIFICATION" - T1222.002
-	//   "DOMAIN_POLICY_MODIFICATION" - T1484
-	//   "DATA_DESTRUCTION" - T1485
-	//   "DATA_ENCRYPTED_FOR_IMPACT" - T1486
-	//   "SERVICE_STOP" - T1489
-	//   "INHIBIT_SYSTEM_RECOVERY" - T1490
-	//   "FIRMWARE_CORRUPTION" - T1495
-	//   "RESOURCE_HIJACKING" - T1496
-	//   "NETWORK_DENIAL_OF_SERVICE" - T1498
-	//   "CLOUD_SERVICE_DISCOVERY" - T1526
-	//   "STEAL_APPLICATION_ACCESS_TOKEN" - T1528
-	//   "ACCOUNT_ACCESS_REMOVAL" - T1531
-	//   "TRANSFER_DATA_TO_CLOUD_ACCOUNT" - T1537
-	//   "STEAL_WEB_SESSION_COOKIE" - T1539
-	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
-	//   "EVENT_TRIGGERED_EXECUTION" - T1546
-	//   "BOOT_OR_LOGON_AUTOSTART_EXECUTION" - T1547
-	//   "KERNEL_MODULES_AND_EXTENSIONS" - T1547.006
-	//   "SHORTCUT_MODIFICATION" - T1547.009
-	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
-	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SETUID_AND_SETGID" - T1548.001
-	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SUDO_AND_SUDO_CACHING" - T1548.003
-	//   "UNSECURED_CREDENTIALS" - T1552
-	//   "CREDENTIALS_IN_FILES" - T1552.001
-	//   "BASH_HISTORY" - T1552.003
-	//   "PRIVATE_KEYS" - T1552.004
-	//   "SUBVERT_TRUST_CONTROL" - T1553
-	//   "INSTALL_ROOT_CERTIFICATE" - T1553.004
-	//   "COMPROMISE_HOST_SOFTWARE_BINARY" - T1554
-	//   "CREDENTIALS_FROM_PASSWORD_STORES" - T1555
-	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
-	//   "PLUGGABLE_AUTHENTICATION_MODULES" - T1556.003
-	//   "MULTI_FACTOR_AUTHENTICATION" - T1556.006
-	//   "IMPAIR_DEFENSES" - T1562
-	//   "DISABLE_OR_MODIFY_TOOLS" - T1562.001
-	//   "INDICATOR_BLOCKING" - T1562.006
-	//   "DISABLE_OR_MODIFY_LINUX_AUDIT_SYSTEM" - T1562.012
-	//   "HIDE_ARTIFACTS" - T1564
-	//   "HIDDEN_FILES_AND_DIRECTORIES" - T1564.001
-	//   "HIDDEN_USERS" - T1564.002
-	//   "EXFILTRATION_OVER_WEB_SERVICE" - T1567
-	//   "EXFILTRATION_TO_CLOUD_STORAGE" - T1567.002
-	//   "DYNAMIC_RESOLUTION" - T1568
-	//   "LATERAL_TOOL_TRANSFER" - T1570
-	//   "HIJACK_EXECUTION_FLOW" - T1574
-	//   "HIJACK_EXECUTION_FLOW_DYNAMIC_LINKER_HIJACKING" - T1574.006
-	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE" - T1578
-	//   "CREATE_SNAPSHOT" - T1578.001
-	//   "CLOUD_INFRASTRUCTURE_DISCOVERY" - T1580
-	//   "DEVELOP_CAPABILITIES" - T1587
-	//   "DEVELOP_CAPABILITIES_MALWARE" - T1587.001
-	//   "OBTAIN_CAPABILITIES" - T1588
-	//   "OBTAIN_CAPABILITIES_MALWARE" - T1588.001
-	//   "OBTAIN_CAPABILITIES_VULNERABILITIES" - T1588.006
-	//   "ACTIVE_SCANNING" - T1595
-	//   "SCANNING_IP_BLOCKS" - T1595.001
-	//   "STAGE_CAPABILITIES" - T1608
-	//   "UPLOAD_MALWARE" - T1608.001
-	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
-	//   "DEPLOY_CONTAINER" - T1610
-	//   "ESCAPE_TO_HOST" - T1611
-	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
-	//   "REFLECTIVE_CODE_LOADING" - T1620
-	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649
-	//   "FINANCIAL_THEFT" - T1657
+	//   "TECHNIQUE_UNSPECIFIED"
+	//   "DATA_OBFUSCATION"
+	//   "DATA_OBFUSCATION_STEGANOGRAPHY"
+	//   "OS_CREDENTIAL_DUMPING"
+	//   "OS_CREDENTIAL_DUMPING_PROC_FILESYSTEM"
+	//   "OS_CREDENTIAL_DUMPING_ETC_PASSWORD_AND_ETC_SHADOW"
+	//   "DATA_FROM_LOCAL_SYSTEM"
+	//   "AUTOMATED_EXFILTRATION"
+	//   "OBFUSCATED_FILES_OR_INFO"
+	//   "STEGANOGRAPHY"
+	//   "COMPILE_AFTER_DELIVERY"
+	//   "COMMAND_OBFUSCATION"
+	//   "SCHEDULED_TRANSFER"
+	//   "SYSTEM_OWNER_USER_DISCOVERY"
+	//   "MASQUERADING"
+	//   "MATCH_LEGITIMATE_NAME_OR_LOCATION"
+	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS"
+	//   "STARTUP_ITEMS"
+	//   "NETWORK_SERVICE_DISCOVERY"
+	//   "SCHEDULED_TASK_JOB"
+	//   "SCHEDULED_TASK_JOB_CRON"
+	//   "CONTAINER_ORCHESTRATION_JOB"
+	//   "PROCESS_INJECTION"
+	//   "INPUT_CAPTURE"
+	//   "INPUT_CAPTURE_KEYLOGGING"
+	//   "PROCESS_DISCOVERY"
+	//   "COMMAND_AND_SCRIPTING_INTERPRETER"
+	//   "UNIX_SHELL"
+	//   "PYTHON"
+	//   "EXPLOITATION_FOR_PRIVILEGE_ESCALATION"
+	//   "PERMISSION_GROUPS_DISCOVERY"
+	//   "CLOUD_GROUPS"
+	//   "INDICATOR_REMOVAL"
+	//   "INDICATOR_REMOVAL_CLEAR_LINUX_OR_MAC_SYSTEM_LOGS"
+	//   "INDICATOR_REMOVAL_CLEAR_COMMAND_HISTORY"
+	//   "INDICATOR_REMOVAL_FILE_DELETION"
+	//   "INDICATOR_REMOVAL_TIMESTOMP"
+	//   "INDICATOR_REMOVAL_CLEAR_MAILBOX_DATA"
+	//   "APPLICATION_LAYER_PROTOCOL"
+	//   "DNS"
+	//   "SOFTWARE_DEPLOYMENT_TOOLS"
+	//   "VALID_ACCOUNTS"
+	//   "DEFAULT_ACCOUNTS"
+	//   "LOCAL_ACCOUNTS"
+	//   "CLOUD_ACCOUNTS"
+	//   "FILE_AND_DIRECTORY_DISCOVERY"
+	//   "ACCOUNT_DISCOVERY_LOCAL_ACCOUNT"
+	//   "PROXY"
+	//   "EXTERNAL_PROXY"
+	//   "MULTI_HOP_PROXY"
+	//   "ACCOUNT_MANIPULATION"
+	//   "ADDITIONAL_CLOUD_CREDENTIALS"
+	//   "ADDITIONAL_CLOUD_ROLES"
+	//   "SSH_AUTHORIZED_KEYS"
+	//   "ADDITIONAL_CONTAINER_CLUSTER_ROLES"
+	//   "MULTI_STAGE_CHANNELS"
+	//   "INGRESS_TOOL_TRANSFER"
+	//   "NATIVE_API"
+	//   "BRUTE_FORCE"
+	//   "AUTOMATED_COLLECTION"
+	//   "SHARED_MODULES"
+	//   "DATA_ENCODING"
+	//   "STANDARD_ENCODING"
+	//   "ACCESS_TOKEN_MANIPULATION"
+	//   "TOKEN_IMPERSONATION_OR_THEFT"
+	//   "CREATE_ACCOUNT"
+	//   "LOCAL_ACCOUNT"
+	//   "DEOBFUSCATE_DECODE_FILES_OR_INFO"
+	//   "EXPLOIT_PUBLIC_FACING_APPLICATION"
+	//   "SUPPLY_CHAIN_COMPROMISE"
+	//   "COMPROMISE_SOFTWARE_DEPENDENCIES_AND_DEVELOPMENT_TOOLS"
+	//   "EXPLOITATION_FOR_CLIENT_EXECUTION"
+	//   "USER_EXECUTION"
+	//   "EXPLOITATION_FOR_CREDENTIAL_ACCESS"
+	//   "LINUX_AND_MAC_FILE_AND_DIRECTORY_PERMISSIONS_MODIFICATION"
+	//   "DOMAIN_POLICY_MODIFICATION"
+	//   "DATA_DESTRUCTION"
+	//   "DATA_ENCRYPTED_FOR_IMPACT"
+	//   "SERVICE_STOP"
+	//   "INHIBIT_SYSTEM_RECOVERY"
+	//   "FIRMWARE_CORRUPTION"
+	//   "RESOURCE_HIJACKING"
+	//   "NETWORK_DENIAL_OF_SERVICE"
+	//   "CLOUD_SERVICE_DISCOVERY"
+	//   "STEAL_APPLICATION_ACCESS_TOKEN"
+	//   "ACCOUNT_ACCESS_REMOVAL"
+	//   "TRANSFER_DATA_TO_CLOUD_ACCOUNT"
+	//   "STEAL_WEB_SESSION_COOKIE"
+	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS"
+	//   "EVENT_TRIGGERED_EXECUTION"
+	//   "BOOT_OR_LOGON_AUTOSTART_EXECUTION"
+	//   "KERNEL_MODULES_AND_EXTENSIONS"
+	//   "SHORTCUT_MODIFICATION"
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM"
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SETUID_AND_SETGID"
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SUDO_AND_SUDO_CACHING"
+	//   "UNSECURED_CREDENTIALS"
+	//   "CREDENTIALS_IN_FILES"
+	//   "BASH_HISTORY"
+	//   "PRIVATE_KEYS"
+	//   "SUBVERT_TRUST_CONTROL"
+	//   "INSTALL_ROOT_CERTIFICATE"
+	//   "COMPROMISE_HOST_SOFTWARE_BINARY"
+	//   "CREDENTIALS_FROM_PASSWORD_STORES"
+	//   "MODIFY_AUTHENTICATION_PROCESS"
+	//   "PLUGGABLE_AUTHENTICATION_MODULES"
+	//   "MULTI_FACTOR_AUTHENTICATION"
+	//   "IMPAIR_DEFENSES"
+	//   "DISABLE_OR_MODIFY_TOOLS"
+	//   "INDICATOR_BLOCKING"
+	//   "DISABLE_OR_MODIFY_LINUX_AUDIT_SYSTEM"
+	//   "HIDE_ARTIFACTS"
+	//   "HIDDEN_FILES_AND_DIRECTORIES"
+	//   "HIDDEN_USERS"
+	//   "EXFILTRATION_OVER_WEB_SERVICE"
+	//   "EXFILTRATION_TO_CLOUD_STORAGE"
+	//   "DYNAMIC_RESOLUTION"
+	//   "LATERAL_TOOL_TRANSFER"
+	//   "HIJACK_EXECUTION_FLOW"
+	//   "HIJACK_EXECUTION_FLOW_DYNAMIC_LINKER_HIJACKING"
+	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE"
+	//   "CREATE_SNAPSHOT"
+	//   "CLOUD_INFRASTRUCTURE_DISCOVERY"
+	//   "DEVELOP_CAPABILITIES"
+	//   "DEVELOP_CAPABILITIES_MALWARE"
+	//   "OBTAIN_CAPABILITIES"
+	//   "OBTAIN_CAPABILITIES_MALWARE"
+	//   "OBTAIN_CAPABILITIES_VULNERABILITIES"
+	//   "ACTIVE_SCANNING"
+	//   "SCANNING_IP_BLOCKS"
+	//   "STAGE_CAPABILITIES"
+	//   "UPLOAD_MALWARE"
+	//   "CONTAINER_ADMINISTRATION_COMMAND"
+	//   "DEPLOY_CONTAINER"
+	//   "ESCAPE_TO_HOST"
+	//   "CONTAINER_AND_RESOURCE_DISCOVERY"
+	//   "REFLECTIVE_CODE_LOADING"
+	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES"
+	//   "FINANCIAL_THEFT"
 	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
-	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by this
-	// finding, if any.
-	//
 	// Possible values:
-	//   "TACTIC_UNSPECIFIED" - Unspecified value.
-	//   "RECONNAISSANCE" - TA0043
-	//   "RESOURCE_DEVELOPMENT" - TA0042
-	//   "INITIAL_ACCESS" - TA0001
-	//   "EXECUTION" - TA0002
-	//   "PERSISTENCE" - TA0003
-	//   "PRIVILEGE_ESCALATION" - TA0004
-	//   "DEFENSE_EVASION" - TA0005
-	//   "CREDENTIAL_ACCESS" - TA0006
-	//   "DISCOVERY" - TA0007
-	//   "LATERAL_MOVEMENT" - TA0008
-	//   "COLLECTION" - TA0009
-	//   "COMMAND_AND_CONTROL" - TA0011
-	//   "EXFILTRATION" - TA0010
-	//   "IMPACT" - TA0040
+	//   "TACTIC_UNSPECIFIED"
+	//   "RECONNAISSANCE"
+	//   "RESOURCE_DEVELOPMENT"
+	//   "INITIAL_ACCESS"
+	//   "EXECUTION"
+	//   "PERSISTENCE"
+	//   "PRIVILEGE_ESCALATION"
+	//   "DEFENSE_EVASION"
+	//   "CREDENTIAL_ACCESS"
+	//   "DISCOVERY"
+	//   "LATERAL_MOVEMENT"
+	//   "COLLECTION"
+	//   "COMMAND_AND_CONTROL"
+	//   "EXFILTRATION"
+	//   "IMPACT"
 	PrimaryTactic string `json:"primaryTactic,omitempty"`
-	// PrimaryTechniques: The MITRE ATT&CK technique most closely represented by
-	// this finding, if any. primary_techniques is a repeated field because there
-	// are multiple levels of MITRE ATT&CK techniques. If the technique most
-	// closely represented by this finding is a sub-technique (e.g.
-	// `SCANNING_IP_BLOCKS`), both the sub-technique and its parent technique(s)
-	// will be listed (e.g. `SCANNING_IP_BLOCKS`, `ACTIVE_SCANNING`).
-	//
 	// Possible values:
-	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
-	//   "DATA_OBFUSCATION" - T1001
-	//   "DATA_OBFUSCATION_STEGANOGRAPHY" - T1001.002
-	//   "OS_CREDENTIAL_DUMPING" - T1003
-	//   "OS_CREDENTIAL_DUMPING_PROC_FILESYSTEM" - T1003.007
-	//   "OS_CREDENTIAL_DUMPING_ETC_PASSWORD_AND_ETC_SHADOW" - T1003.008
-	//   "DATA_FROM_LOCAL_SYSTEM" - T1005
-	//   "AUTOMATED_EXFILTRATION" - T1020
-	//   "OBFUSCATED_FILES_OR_INFO" - T1027
-	//   "STEGANOGRAPHY" - T1027.003
-	//   "COMPILE_AFTER_DELIVERY" - T1027.004
-	//   "COMMAND_OBFUSCATION" - T1027.010
-	//   "SCHEDULED_TRANSFER" - T1029
-	//   "SYSTEM_OWNER_USER_DISCOVERY" - T1033
-	//   "MASQUERADING" - T1036
-	//   "MATCH_LEGITIMATE_NAME_OR_LOCATION" - T1036.005
-	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS" - T1037
-	//   "STARTUP_ITEMS" - T1037.005
-	//   "NETWORK_SERVICE_DISCOVERY" - T1046
-	//   "SCHEDULED_TASK_JOB" - T1053
-	//   "SCHEDULED_TASK_JOB_CRON" - T1053.003
-	//   "CONTAINER_ORCHESTRATION_JOB" - T1053.007
-	//   "PROCESS_INJECTION" - T1055
-	//   "INPUT_CAPTURE" - T1056
-	//   "INPUT_CAPTURE_KEYLOGGING" - T1056.001
-	//   "PROCESS_DISCOVERY" - T1057
-	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
-	//   "UNIX_SHELL" - T1059.004
-	//   "PYTHON" - T1059.006
-	//   "EXPLOITATION_FOR_PRIVILEGE_ESCALATION" - T1068
-	//   "PERMISSION_GROUPS_DISCOVERY" - T1069
-	//   "CLOUD_GROUPS" - T1069.003
-	//   "INDICATOR_REMOVAL" - T1070
-	//   "INDICATOR_REMOVAL_CLEAR_LINUX_OR_MAC_SYSTEM_LOGS" - T1070.002
-	//   "INDICATOR_REMOVAL_CLEAR_COMMAND_HISTORY" - T1070.003
-	//   "INDICATOR_REMOVAL_FILE_DELETION" - T1070.004
-	//   "INDICATOR_REMOVAL_TIMESTOMP" - T1070.006
-	//   "INDICATOR_REMOVAL_CLEAR_MAILBOX_DATA" - T1070.008
-	//   "APPLICATION_LAYER_PROTOCOL" - T1071
-	//   "DNS" - T1071.004
-	//   "SOFTWARE_DEPLOYMENT_TOOLS" - T1072
-	//   "VALID_ACCOUNTS" - T1078
-	//   "DEFAULT_ACCOUNTS" - T1078.001
-	//   "LOCAL_ACCOUNTS" - T1078.003
-	//   "CLOUD_ACCOUNTS" - T1078.004
-	//   "FILE_AND_DIRECTORY_DISCOVERY" - T1083
-	//   "ACCOUNT_DISCOVERY_LOCAL_ACCOUNT" - T1087.001
-	//   "PROXY" - T1090
-	//   "EXTERNAL_PROXY" - T1090.002
-	//   "MULTI_HOP_PROXY" - T1090.003
-	//   "ACCOUNT_MANIPULATION" - T1098
-	//   "ADDITIONAL_CLOUD_CREDENTIALS" - T1098.001
-	//   "ADDITIONAL_CLOUD_ROLES" - T1098.003
-	//   "SSH_AUTHORIZED_KEYS" - T1098.004
-	//   "ADDITIONAL_CONTAINER_CLUSTER_ROLES" - T1098.006
-	//   "MULTI_STAGE_CHANNELS" - T1104
-	//   "INGRESS_TOOL_TRANSFER" - T1105
-	//   "NATIVE_API" - T1106
-	//   "BRUTE_FORCE" - T1110
-	//   "AUTOMATED_COLLECTION" - T1119
-	//   "SHARED_MODULES" - T1129
-	//   "DATA_ENCODING" - T1132
-	//   "STANDARD_ENCODING" - T1132.001
-	//   "ACCESS_TOKEN_MANIPULATION" - T1134
-	//   "TOKEN_IMPERSONATION_OR_THEFT" - T1134.001
-	//   "CREATE_ACCOUNT" - T1136
-	//   "LOCAL_ACCOUNT" - T1136.001
-	//   "DEOBFUSCATE_DECODE_FILES_OR_INFO" - T1140
-	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
-	//   "SUPPLY_CHAIN_COMPROMISE" - T1195
-	//   "COMPROMISE_SOFTWARE_DEPENDENCIES_AND_DEVELOPMENT_TOOLS" - T1195.001
-	//   "EXPLOITATION_FOR_CLIENT_EXECUTION" - T1203
-	//   "USER_EXECUTION" - T1204
-	//   "EXPLOITATION_FOR_CREDENTIAL_ACCESS" - T1212
-	//   "LINUX_AND_MAC_FILE_AND_DIRECTORY_PERMISSIONS_MODIFICATION" - T1222.002
-	//   "DOMAIN_POLICY_MODIFICATION" - T1484
-	//   "DATA_DESTRUCTION" - T1485
-	//   "DATA_ENCRYPTED_FOR_IMPACT" - T1486
-	//   "SERVICE_STOP" - T1489
-	//   "INHIBIT_SYSTEM_RECOVERY" - T1490
-	//   "FIRMWARE_CORRUPTION" - T1495
-	//   "RESOURCE_HIJACKING" - T1496
-	//   "NETWORK_DENIAL_OF_SERVICE" - T1498
-	//   "CLOUD_SERVICE_DISCOVERY" - T1526
-	//   "STEAL_APPLICATION_ACCESS_TOKEN" - T1528
-	//   "ACCOUNT_ACCESS_REMOVAL" - T1531
-	//   "TRANSFER_DATA_TO_CLOUD_ACCOUNT" - T1537
-	//   "STEAL_WEB_SESSION_COOKIE" - T1539
-	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
-	//   "EVENT_TRIGGERED_EXECUTION" - T1546
-	//   "BOOT_OR_LOGON_AUTOSTART_EXECUTION" - T1547
-	//   "KERNEL_MODULES_AND_EXTENSIONS" - T1547.006
-	//   "SHORTCUT_MODIFICATION" - T1547.009
-	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
-	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SETUID_AND_SETGID" - T1548.001
-	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SUDO_AND_SUDO_CACHING" - T1548.003
-	//   "UNSECURED_CREDENTIALS" - T1552
-	//   "CREDENTIALS_IN_FILES" - T1552.001
-	//   "BASH_HISTORY" - T1552.003
-	//   "PRIVATE_KEYS" - T1552.004
-	//   "SUBVERT_TRUST_CONTROL" - T1553
-	//   "INSTALL_ROOT_CERTIFICATE" - T1553.004
-	//   "COMPROMISE_HOST_SOFTWARE_BINARY" - T1554
-	//   "CREDENTIALS_FROM_PASSWORD_STORES" - T1555
-	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
-	//   "PLUGGABLE_AUTHENTICATION_MODULES" - T1556.003
-	//   "MULTI_FACTOR_AUTHENTICATION" - T1556.006
-	//   "IMPAIR_DEFENSES" - T1562
-	//   "DISABLE_OR_MODIFY_TOOLS" - T1562.001
-	//   "INDICATOR_BLOCKING" - T1562.006
-	//   "DISABLE_OR_MODIFY_LINUX_AUDIT_SYSTEM" - T1562.012
-	//   "HIDE_ARTIFACTS" - T1564
-	//   "HIDDEN_FILES_AND_DIRECTORIES" - T1564.001
-	//   "HIDDEN_USERS" - T1564.002
-	//   "EXFILTRATION_OVER_WEB_SERVICE" - T1567
-	//   "EXFILTRATION_TO_CLOUD_STORAGE" - T1567.002
-	//   "DYNAMIC_RESOLUTION" - T1568
-	//   "LATERAL_TOOL_TRANSFER" - T1570
-	//   "HIJACK_EXECUTION_FLOW" - T1574
-	//   "HIJACK_EXECUTION_FLOW_DYNAMIC_LINKER_HIJACKING" - T1574.006
-	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE" - T1578
-	//   "CREATE_SNAPSHOT" - T1578.001
-	//   "CLOUD_INFRASTRUCTURE_DISCOVERY" - T1580
-	//   "DEVELOP_CAPABILITIES" - T1587
-	//   "DEVELOP_CAPABILITIES_MALWARE" - T1587.001
-	//   "OBTAIN_CAPABILITIES" - T1588
-	//   "OBTAIN_CAPABILITIES_MALWARE" - T1588.001
-	//   "OBTAIN_CAPABILITIES_VULNERABILITIES" - T1588.006
-	//   "ACTIVE_SCANNING" - T1595
-	//   "SCANNING_IP_BLOCKS" - T1595.001
-	//   "STAGE_CAPABILITIES" - T1608
-	//   "UPLOAD_MALWARE" - T1608.001
-	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
-	//   "DEPLOY_CONTAINER" - T1610
-	//   "ESCAPE_TO_HOST" - T1611
-	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
-	//   "REFLECTIVE_CODE_LOADING" - T1620
-	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649
-	//   "FINANCIAL_THEFT" - T1657
+	//   "TECHNIQUE_UNSPECIFIED"
+	//   "DATA_OBFUSCATION"
+	//   "DATA_OBFUSCATION_STEGANOGRAPHY"
+	//   "OS_CREDENTIAL_DUMPING"
+	//   "OS_CREDENTIAL_DUMPING_PROC_FILESYSTEM"
+	//   "OS_CREDENTIAL_DUMPING_ETC_PASSWORD_AND_ETC_SHADOW"
+	//   "DATA_FROM_LOCAL_SYSTEM"
+	//   "AUTOMATED_EXFILTRATION"
+	//   "OBFUSCATED_FILES_OR_INFO"
+	//   "STEGANOGRAPHY"
+	//   "COMPILE_AFTER_DELIVERY"
+	//   "COMMAND_OBFUSCATION"
+	//   "SCHEDULED_TRANSFER"
+	//   "SYSTEM_OWNER_USER_DISCOVERY"
+	//   "MASQUERADING"
+	//   "MATCH_LEGITIMATE_NAME_OR_LOCATION"
+	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS"
+	//   "STARTUP_ITEMS"
+	//   "NETWORK_SERVICE_DISCOVERY"
+	//   "SCHEDULED_TASK_JOB"
+	//   "SCHEDULED_TASK_JOB_CRON"
+	//   "CONTAINER_ORCHESTRATION_JOB"
+	//   "PROCESS_INJECTION"
+	//   "INPUT_CAPTURE"
+	//   "INPUT_CAPTURE_KEYLOGGING"
+	//   "PROCESS_DISCOVERY"
+	//   "COMMAND_AND_SCRIPTING_INTERPRETER"
+	//   "UNIX_SHELL"
+	//   "PYTHON"
+	//   "EXPLOITATION_FOR_PRIVILEGE_ESCALATION"
+	//   "PERMISSION_GROUPS_DISCOVERY"
+	//   "CLOUD_GROUPS"
+	//   "INDICATOR_REMOVAL"
+	//   "INDICATOR_REMOVAL_CLEAR_LINUX_OR_MAC_SYSTEM_LOGS"
+	//   "INDICATOR_REMOVAL_CLEAR_COMMAND_HISTORY"
+	//   "INDICATOR_REMOVAL_FILE_DELETION"
+	//   "INDICATOR_REMOVAL_TIMESTOMP"
+	//   "INDICATOR_REMOVAL_CLEAR_MAILBOX_DATA"
+	//   "APPLICATION_LAYER_PROTOCOL"
+	//   "DNS"
+	//   "SOFTWARE_DEPLOYMENT_TOOLS"
+	//   "VALID_ACCOUNTS"
+	//   "DEFAULT_ACCOUNTS"
+	//   "LOCAL_ACCOUNTS"
+	//   "CLOUD_ACCOUNTS"
+	//   "FILE_AND_DIRECTORY_DISCOVERY"
+	//   "ACCOUNT_DISCOVERY_LOCAL_ACCOUNT"
+	//   "PROXY"
+	//   "EXTERNAL_PROXY"
+	//   "MULTI_HOP_PROXY"
+	//   "ACCOUNT_MANIPULATION"
+	//   "ADDITIONAL_CLOUD_CREDENTIALS"
+	//   "ADDITIONAL_CLOUD_ROLES"
+	//   "SSH_AUTHORIZED_KEYS"
+	//   "ADDITIONAL_CONTAINER_CLUSTER_ROLES"
+	//   "MULTI_STAGE_CHANNELS"
+	//   "INGRESS_TOOL_TRANSFER"
+	//   "NATIVE_API"
+	//   "BRUTE_FORCE"
+	//   "AUTOMATED_COLLECTION"
+	//   "SHARED_MODULES"
+	//   "DATA_ENCODING"
+	//   "STANDARD_ENCODING"
+	//   "ACCESS_TOKEN_MANIPULATION"
+	//   "TOKEN_IMPERSONATION_OR_THEFT"
+	//   "CREATE_ACCOUNT"
+	//   "LOCAL_ACCOUNT"
+	//   "DEOBFUSCATE_DECODE_FILES_OR_INFO"
+	//   "EXPLOIT_PUBLIC_FACING_APPLICATION"
+	//   "SUPPLY_CHAIN_COMPROMISE"
+	//   "COMPROMISE_SOFTWARE_DEPENDENCIES_AND_DEVELOPMENT_TOOLS"
+	//   "EXPLOITATION_FOR_CLIENT_EXECUTION"
+	//   "USER_EXECUTION"
+	//   "EXPLOITATION_FOR_CREDENTIAL_ACCESS"
+	//   "LINUX_AND_MAC_FILE_AND_DIRECTORY_PERMISSIONS_MODIFICATION"
+	//   "DOMAIN_POLICY_MODIFICATION"
+	//   "DATA_DESTRUCTION"
+	//   "DATA_ENCRYPTED_FOR_IMPACT"
+	//   "SERVICE_STOP"
+	//   "INHIBIT_SYSTEM_RECOVERY"
+	//   "FIRMWARE_CORRUPTION"
+	//   "RESOURCE_HIJACKING"
+	//   "NETWORK_DENIAL_OF_SERVICE"
+	//   "CLOUD_SERVICE_DISCOVERY"
+	//   "STEAL_APPLICATION_ACCESS_TOKEN"
+	//   "ACCOUNT_ACCESS_REMOVAL"
+	//   "TRANSFER_DATA_TO_CLOUD_ACCOUNT"
+	//   "STEAL_WEB_SESSION_COOKIE"
+	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS"
+	//   "EVENT_TRIGGERED_EXECUTION"
+	//   "BOOT_OR_LOGON_AUTOSTART_EXECUTION"
+	//   "KERNEL_MODULES_AND_EXTENSIONS"
+	//   "SHORTCUT_MODIFICATION"
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM"
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SETUID_AND_SETGID"
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SUDO_AND_SUDO_CACHING"
+	//   "UNSECURED_CREDENTIALS"
+	//   "CREDENTIALS_IN_FILES"
+	//   "BASH_HISTORY"
+	//   "PRIVATE_KEYS"
+	//   "SUBVERT_TRUST_CONTROL"
+	//   "INSTALL_ROOT_CERTIFICATE"
+	//   "COMPROMISE_HOST_SOFTWARE_BINARY"
+	//   "CREDENTIALS_FROM_PASSWORD_STORES"
+	//   "MODIFY_AUTHENTICATION_PROCESS"
+	//   "PLUGGABLE_AUTHENTICATION_MODULES"
+	//   "MULTI_FACTOR_AUTHENTICATION"
+	//   "IMPAIR_DEFENSES"
+	//   "DISABLE_OR_MODIFY_TOOLS"
+	//   "INDICATOR_BLOCKING"
+	//   "DISABLE_OR_MODIFY_LINUX_AUDIT_SYSTEM"
+	//   "HIDE_ARTIFACTS"
+	//   "HIDDEN_FILES_AND_DIRECTORIES"
+	//   "HIDDEN_USERS"
+	//   "EXFILTRATION_OVER_WEB_SERVICE"
+	//   "EXFILTRATION_TO_CLOUD_STORAGE"
+	//   "DYNAMIC_RESOLUTION"
+	//   "LATERAL_TOOL_TRANSFER"
+	//   "HIJACK_EXECUTION_FLOW"
+	//   "HIJACK_EXECUTION_FLOW_DYNAMIC_LINKER_HIJACKING"
+	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE"
+	//   "CREATE_SNAPSHOT"
+	//   "CLOUD_INFRASTRUCTURE_DISCOVERY"
+	//   "DEVELOP_CAPABILITIES"
+	//   "DEVELOP_CAPABILITIES_MALWARE"
+	//   "OBTAIN_CAPABILITIES"
+	//   "OBTAIN_CAPABILITIES_MALWARE"
+	//   "OBTAIN_CAPABILITIES_VULNERABILITIES"
+	//   "ACTIVE_SCANNING"
+	//   "SCANNING_IP_BLOCKS"
+	//   "STAGE_CAPABILITIES"
+	//   "UPLOAD_MALWARE"
+	//   "CONTAINER_ADMINISTRATION_COMMAND"
+	//   "DEPLOY_CONTAINER"
+	//   "ESCAPE_TO_HOST"
+	//   "CONTAINER_AND_RESOURCE_DISCOVERY"
+	//   "REFLECTIVE_CODE_LOADING"
+	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES"
+	//   "FINANCIAL_THEFT"
 	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
-	// Version: The MITRE ATT&CK version referenced by the above fields. E.g. "8".
-	Version string `json:"version,omitempty"`
+	Version           string   `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalTactics") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -11620,15 +8052,9 @@ func (s MitreAttack) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MuteInfo: Mute information about the finding, including whether the finding
-// has a static mute or any matching dynamic mute rules.
 type MuteInfo struct {
-	// DynamicMuteRecords: The list of dynamic mute rules that currently match the
-	// finding.
 	DynamicMuteRecords []*DynamicMuteRecord `json:"dynamicMuteRecords,omitempty"`
-	// StaticMute: If set, the static mute applied to this finding. Static mutes
-	// override dynamic mutes. If unset, there is no static mute.
-	StaticMute *StaticMute `json:"staticMute,omitempty"`
+	StaticMute         *StaticMute          `json:"staticMute,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DynamicMuteRecords") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -11647,11 +8073,7 @@ func (s MuteInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Network: Contains information about a VPC network associated with the
-// finding.
 type Network struct {
-	// Name: The name of the VPC network resource, for example,
-	// `//compute.googleapis.com/projects/my-project/global/networks/my-network`.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -11671,10 +8093,7 @@ func (s Network) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Node: Kubernetes nodes associated with the finding.
 type Node struct {
-	// Name: Full resource name (https://google.aip.dev/122#full-resource-names) of
-	// the Compute Engine VM running the cluster node.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -11694,11 +8113,8 @@ func (s Node) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// NodePool: Provides GKE node pool information.
 type NodePool struct {
-	// Name: Kubernetes node pool name.
-	Name string `json:"name,omitempty"`
-	// Nodes: Nodes associated with the finding.
+	Name  string  `json:"name,omitempty"`
 	Nodes []*Node `json:"nodes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -11718,18 +8134,11 @@ func (s NodePool) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Notebook: Represents a Jupyter notebook IPYNB file, such as a Colab
-// Enterprise notebook (https://cloud.google.com/colab/docs/introduction) file,
-// that is associated with a finding.
 type Notebook struct {
-	// LastAuthor: The user ID of the latest author to modify the notebook.
-	LastAuthor string `json:"lastAuthor,omitempty"`
-	// Name: The name of the notebook.
-	Name string `json:"name,omitempty"`
-	// NotebookUpdateTime: The most recent time the notebook was updated.
+	LastAuthor         string `json:"lastAuthor,omitempty"`
+	Name               string `json:"name,omitempty"`
 	NotebookUpdateTime string `json:"notebookUpdateTime,omitempty"`
-	// Service: The source notebook service, for example, "Colab Enterprise".
-	Service string `json:"service,omitempty"`
+	Service            string `json:"service,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LastAuthor") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -11748,23 +8157,12 @@ func (s Notebook) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Object: Kubernetes object related to the finding, uniquely identified by
-// GKNN. Used if the object Kind is not one of Pod, Node, NodePool, Binding, or
-// AccessReview.
 type Object struct {
-	// Containers: Pod containers associated with this finding, if any.
 	Containers []*Container `json:"containers,omitempty"`
-	// Group: Kubernetes object group, such as "policy.k8s.io/v1".
-	Group string `json:"group,omitempty"`
-	// Kind: Kubernetes object kind, such as "Namespace".
-	Kind string `json:"kind,omitempty"`
-	// Name: Kubernetes object name. For details see
-	// https://kubernetes.io/docs/concepts/overview/working-with-objects/names/.
-	Name string `json:"name,omitempty"`
-	// Ns: Kubernetes object namespace. Must be a valid DNS label. Named "ns" to
-	// avoid collision with C++ namespace keyword. For details see
-	// https://kubernetes.io/docs/tasks/administer-cluster/namespaces/.
-	Ns string `json:"ns,omitempty"`
+	Group      string       `json:"group,omitempty"`
+	Kind       string       `json:"kind,omitempty"`
+	Name       string       `json:"name,omitempty"`
+	Ns         string       `json:"ns,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Containers") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -11783,31 +8181,11 @@ func (s Object) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Operation: This resource represents a long-running operation that is the
-// result of a network API call.
 type Operation struct {
-	// Done: If the value is `false`, it means the operation is still in progress.
-	// If `true`, the operation is completed, and either `error` or `response` is
-	// available.
-	Done bool `json:"done,omitempty"`
-	// Error: The error result of the operation in case of failure or cancellation.
-	Error *Status `json:"error,omitempty"`
-	// Metadata: Service-specific metadata associated with the operation. It
-	// typically contains progress information and common metadata such as create
-	// time. Some services might not provide such metadata. Any method that returns
-	// a long-running operation should document the metadata type, if any.
+	Done     bool                 `json:"done,omitempty"`
+	Error    *Status              `json:"error,omitempty"`
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-	// Name: The server-assigned name, which is only unique within the same service
-	// that originally returns it. If you use the default HTTP mapping, the `name`
-	// should be a resource name ending with `operations/{unique_id}`.
-	Name string `json:"name,omitempty"`
-	// Response: The normal, successful response of the operation. If the original
-	// method returns no data on success, such as `Delete`, the response is
-	// `google.protobuf.Empty`. If the original method is standard
-	// `Get`/`Create`/`Update`, the response should be the resource. For other
-	// methods, the response should have the type `XxxResponse`, where `Xxx` is the
-	// original method name. For example, if the original method name is
-	// `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.
+	Name     string               `json:"name,omitempty"`
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -11830,11 +8208,7 @@ func (s Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// OrgPolicy: Contains information about the org policies associated with the
-// finding.
 type OrgPolicy struct {
-	// Name: The resource name of the org policy. Example:
-	// "organizations/{organization_id}/policies/{constraint_name}"
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -11854,20 +8228,10 @@ func (s OrgPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// OrganizationSettings: User specified settings that are attached to the
-// Security Command Center organization.
 type OrganizationSettings struct {
-	// AssetDiscoveryConfig: The configuration used for Asset Discovery runs.
 	AssetDiscoveryConfig *AssetDiscoveryConfig `json:"assetDiscoveryConfig,omitempty"`
-	// EnableAssetDiscovery: A flag that indicates if Asset Discovery should be
-	// enabled. If the flag is set to `true`, then discovery of assets will occur.
-	// If it is set to `false`, all historical assets will remain, but discovery of
-	// future assets will not occur.
-	EnableAssetDiscovery bool `json:"enableAssetDiscovery,omitempty"`
-	// Name: The relative resource name of the settings. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-	// Example: "organizations/{organization_id}/organizationSettings".
-	Name string `json:"name,omitempty"`
+	EnableAssetDiscovery bool                  `json:"enableAssetDiscovery,omitempty"`
+	Name                 string                `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -11889,15 +8253,10 @@ func (s OrganizationSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Package: Package is a generic definition of a package.
 type Package struct {
-	// CpeUri: The CPE URI where the vulnerability was detected.
-	CpeUri string `json:"cpeUri,omitempty"`
-	// PackageName: The name of the package where the vulnerability was detected.
-	PackageName string `json:"packageName,omitempty"`
-	// PackageType: Type of package, for example, os, maven, or go.
-	PackageType string `json:"packageType,omitempty"`
-	// PackageVersion: The version of the package.
+	CpeUri         string `json:"cpeUri,omitempty"`
+	PackageName    string `json:"packageName,omitempty"`
+	PackageType    string `json:"packageType,omitempty"`
 	PackageVersion string `json:"packageVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CpeUri") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -11917,14 +8276,9 @@ func (s Package) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Pipeline: Vertex AI training pipeline associated with the finding.
 type Pipeline struct {
-	// DisplayName: The user defined display name of pipeline, e.g.
-	// plants-classification
 	DisplayName string `json:"displayName,omitempty"`
-	// Name: Resource name of the pipeline, e.g.
-	// projects/{project}/locations/{location}/trainingPipelines/5253428229225578496
-	Name string `json:"name,omitempty"`
+	Name        string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -11943,17 +8297,11 @@ func (s Pipeline) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Pod: A Kubernetes Pod.
 type Pod struct {
-	// Containers: Pod containers associated with this finding, if any.
 	Containers []*Container `json:"containers,omitempty"`
-	// Labels: Pod labels. For Kubernetes containers, these are applied to the
-	// container.
-	Labels []*Label `json:"labels,omitempty"`
-	// Name: Kubernetes Pod name.
-	Name string `json:"name,omitempty"`
-	// Ns: Kubernetes Pod namespace.
-	Ns string `json:"ns,omitempty"`
+	Labels     []*Label     `json:"labels,omitempty"`
+	Name       string       `json:"name,omitempty"`
+	Ns         string       `json:"ns,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Containers") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -11972,77 +8320,11 @@ func (s Pod) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Policy: An Identity and Access Management (IAM) policy, which specifies
-// access controls for Google Cloud resources. A `Policy` is a collection of
-// `bindings`. A `binding` binds one or more `members`, or principals, to a
-// single `role`. Principals can be user accounts, service accounts, Google
-// groups, and domains (such as G Suite). A `role` is a named list of
-// permissions; each `role` can be an IAM predefined role or a user-created
-// custom role. For some types of Google Cloud resources, a `binding` can also
-// specify a `condition`, which is a logical expression that allows access to a
-// resource only if the expression evaluates to `true`. A condition can add
-// constraints based on attributes of the request, the resource, or both. To
-// learn which resources support conditions in their IAM policies, see the IAM
-// documentation
-// (https://cloud.google.com/iam/help/conditions/resource-policies). **JSON
-// example:** ``` { "bindings": [ { "role":
-// "roles/resourcemanager.organizationAdmin", "members": [
-// "user:mike@example.com", "group:admins@example.com", "domain:google.com",
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, { "role":
-// "roles/resourcemanager.organizationViewer", "members": [
-// "user:eve@example.com" ], "condition": { "title": "expirable access",
-// "description": "Does not grant access after Sep 2020", "expression":
-// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ], "etag":
-// "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ``` bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
-// role: roles/resourcemanager.organizationAdmin - members: -
-// user:eve@example.com role: roles/resourcemanager.organizationViewer
-// condition: title: expirable access description: Does not grant access after
-// Sep 2020 expression: request.time < timestamp('2020-10-01T00:00:00.000Z')
-// etag: BwWWja0YfJA= version: 3 ``` For a description of IAM and its features,
-// see the IAM documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
-	// AuditConfigs: Specifies cloud audit logging configuration for this policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
-	// Bindings: Associates a list of `members`, or principals, with a `role`.
-	// Optionally, may specify a `condition` that determines how and when the
-	// `bindings` are applied. Each of the `bindings` must contain at least one
-	// principal. The `bindings` in a `Policy` can refer to up to 1,500 principals;
-	// up to 250 of these principals can be Google groups. Each occurrence of a
-	// principal counts towards these limits. For example, if the `bindings` grant
-	// 50 different roles to `user:alice@example.com`, and not to any other
-	// principal, then you can add another 1,450 principals to the `bindings` in
-	// the `Policy`.
-	Bindings []*Binding `json:"bindings,omitempty"`
-	// Etag: `etag` is used for optimistic concurrency control as a way to help
-	// prevent simultaneous updates of a policy from overwriting each other. It is
-	// strongly suggested that systems make use of the `etag` in the
-	// read-modify-write cycle to perform policy updates in order to avoid race
-	// conditions: An `etag` is returned in the response to `getIamPolicy`, and
-	// systems are expected to put that etag in the request to `setIamPolicy` to
-	// ensure that their change will be applied to the same version of the policy.
-	// **Important:** If you use IAM Conditions, you must include the `etag` field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM allows
-	// you to overwrite a version `3` policy with a version `1` policy, and all of
-	// the conditions in the version `3` policy are lost.
-	Etag string `json:"etag,omitempty"`
-	// Version: Specifies the format of the policy. Valid values are `0`, `1`, and
-	// `3`. Requests that specify an invalid value are rejected. Any operation that
-	// affects conditional role bindings must specify version `3`. This requirement
-	// applies to the following operations: * Getting a policy that includes a
-	// conditional role binding * Adding a conditional role binding to a policy *
-	// Changing a conditional role binding in a policy * Removing any role binding,
-	// with or without a condition, from a policy that includes conditions
-	// **Important:** If you use IAM Conditions, you must include the `etag` field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM allows
-	// you to overwrite a version `3` policy with a version `1` policy, and all of
-	// the conditions in the version `3` policy are lost. If a policy does not
-	// include any conditions, operations on that policy may specify any valid
-	// version or leave the field unset. To learn which resources support
-	// conditions in their IAM policies, see the IAM documentation
-	// (https://cloud.google.com/iam/help/conditions/resource-policies).
-	Version int64 `json:"version,omitempty"`
+	Bindings     []*Binding     `json:"bindings,omitempty"`
+	Etag         string         `json:"etag,omitempty"`
+	Version      int64          `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -12064,18 +8346,10 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PolicyDriftDetails: The policy field that violates the deployed posture and
-// its expected and detected values.
 type PolicyDriftDetails struct {
-	// DetectedValue: The detected value that violates the deployed posture, for
-	// example, `false` or `allowed_values={"projects/22831892"}`.
 	DetectedValue string `json:"detectedValue,omitempty"`
-	// ExpectedValue: The value of this field that was configured in a posture, for
-	// example, `true` or `allowed_values={"projects/29831892"}`.
 	ExpectedValue string `json:"expectedValue,omitempty"`
-	// Field: The name of the updated field, for example
-	// constraint.implementation.policy_rules[0].enforce
-	Field string `json:"field,omitempty"`
+	Field         string `json:"field,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DetectedValue") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -12094,26 +8368,11 @@ func (s PolicyDriftDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PolicyViolationSummary: Metadata summarizing policy violations of child
-// resources of the affected resource. `finding_category` and `resource`
-// determine the exact semantics of the counts. For example, when
-// category=DATA_SECURITY_POSTURE_OBJECT_PUBLIC_ACCESS_VIOLATION and
-// resource='storage.googleapis.com/buckets/my-bucket-name' then this counts
-// the number of Cloud Storage objects in my-bucket-name which violate a Public
-// Access control.
 type PolicyViolationSummary struct {
-	// ConformantResourcesCount: Total number of child resources that conform to
-	// the policy.
 	ConformantResourcesCount int64 `json:"conformantResourcesCount,omitempty,string"`
-	// EvaluationErrorsCount: Number of child resources for which errors during
-	// evaluation occurred. The evaluation result for these child resources is
-	// effectively "unknown".
-	EvaluationErrorsCount int64 `json:"evaluationErrorsCount,omitempty,string"`
-	// OutOfScopeResourcesCount: Total count of child resources which were not in
-	// scope for evaluation.
+	EvaluationErrorsCount    int64 `json:"evaluationErrorsCount,omitempty,string"`
 	OutOfScopeResourcesCount int64 `json:"outOfScopeResourcesCount,omitempty,string"`
-	// PolicyViolationsCount: Count of child resources in violation of the policy.
-	PolicyViolationsCount int64 `json:"policyViolationsCount,omitempty,string"`
+	PolicyViolationsCount    int64 `json:"policyViolationsCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "ConformantResourcesCount")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -12132,14 +8391,8 @@ func (s PolicyViolationSummary) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PortRange: A port range which is inclusive of the min and max values. Values
-// are between 0 and 2^16-1. The max can be equal / must be not smaller than
-// the min value. If min and max are equal this indicates that it is a single
-// port.
 type PortRange struct {
-	// Max: Maximum port value.
 	Max int64 `json:"max,omitempty,string"`
-	// Min: Minimum port value.
 	Min int64 `json:"min,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Max") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -12159,35 +8412,18 @@ func (s PortRange) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Process: Represents an operating system process.
 type Process struct {
-	// Args: Process arguments as JSON encoded strings.
-	Args []string `json:"args,omitempty"`
-	// ArgumentsTruncated: True if `args` is incomplete.
-	ArgumentsTruncated bool `json:"argumentsTruncated,omitempty"`
-	// Binary: File information for the process executable.
-	Binary *File `json:"binary,omitempty"`
-	// EnvVariables: Process environment variables.
-	EnvVariables []*EnvironmentVariable `json:"envVariables,omitempty"`
-	// EnvVariablesTruncated: True if `env_variables` is incomplete.
-	EnvVariablesTruncated bool `json:"envVariablesTruncated,omitempty"`
-	// Libraries: File information for libraries loaded by the process.
-	Libraries []*File `json:"libraries,omitempty"`
-	// Name: The process name, as displayed in utilities like `top` and `ps`. This
-	// name can be accessed through `/proc/[pid]/comm` and changed with
-	// `prctl(PR_SET_NAME)`.
-	Name string `json:"name,omitempty"`
-	// ParentPid: The parent process ID.
-	ParentPid int64 `json:"parentPid,omitempty,string"`
-	// Pid: The process ID.
-	Pid int64 `json:"pid,omitempty,string"`
-	// Script: When the process represents the invocation of a script, `binary`
-	// provides information about the interpreter, while `script` provides
-	// information about the script file provided to the interpreter.
-	Script *File `json:"script,omitempty"`
-	// UserId: The ID of the user that executed the process. E.g. If this is the
-	// root user this will always be 0.
-	UserId int64 `json:"userId,omitempty,string"`
+	Args                  []string               `json:"args,omitempty"`
+	ArgumentsTruncated    bool                   `json:"argumentsTruncated,omitempty"`
+	Binary                *File                  `json:"binary,omitempty"`
+	EnvVariables          []*EnvironmentVariable `json:"envVariables,omitempty"`
+	EnvVariablesTruncated bool                   `json:"envVariablesTruncated,omitempty"`
+	Libraries             []*File                `json:"libraries,omitempty"`
+	Name                  string                 `json:"name,omitempty"`
+	ParentPid             int64                  `json:"parentPid,omitempty,string"`
+	Pid                   int64                  `json:"pid,omitempty,string"`
+	Script                *File                  `json:"script,omitempty"`
+	UserId                int64                  `json:"userId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -12206,18 +8442,13 @@ func (s Process) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ProcessSignature: Indicates what signature matched this process.
 type ProcessSignature struct {
-	// MemoryHashSignature: Signature indicating that a binary family was matched.
 	MemoryHashSignature *MemoryHashSignature `json:"memoryHashSignature,omitempty"`
-	// SignatureType: Describes the type of resource associated with the signature.
-	//
 	// Possible values:
-	//   "SIGNATURE_TYPE_UNSPECIFIED" - The default signature type.
-	//   "SIGNATURE_TYPE_PROCESS" - Used for signatures concerning processes.
-	//   "SIGNATURE_TYPE_FILE" - Used for signatures concerning disks.
-	SignatureType string `json:"signatureType,omitempty"`
-	// YaraRuleSignature: Signature indicating that a YARA rule was matched.
+	//   "SIGNATURE_TYPE_UNSPECIFIED"
+	//   "SIGNATURE_TYPE_PROCESS"
+	//   "SIGNATURE_TYPE_FILE"
+	SignatureType     string             `json:"signatureType,omitempty"`
 	YaraRuleSignature *YaraRuleSignature `json:"yaraRuleSignature,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MemoryHashSignature") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -12237,13 +8468,9 @@ func (s ProcessSignature) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Reference: Additional Links
 type Reference struct {
-	// Source: Source of the reference e.g. NVD
 	Source string `json:"source,omitempty"`
-	// Uri: Uri for the mentioned source e.g.
-	// https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-34527.
-	Uri string `json:"uri,omitempty"`
+	Uri    string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Source") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -12262,19 +8489,11 @@ func (s Reference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Requests: Information about the requests relevant to the finding.
 type Requests struct {
-	// LongTermAllowed: Allowed RPS (requests per second) over the long term.
-	LongTermAllowed int64 `json:"longTermAllowed,omitempty"`
-	// LongTermDenied: Denied RPS (requests per second) over the long term.
-	LongTermDenied int64 `json:"longTermDenied,omitempty"`
-	// Ratio: For 'Increasing deny ratio', the ratio is the denied traffic divided
-	// by the allowed traffic. For 'Allowed traffic spike', the ratio is the
-	// allowed traffic in the short term divided by allowed traffic in the long
-	// term.
-	Ratio float64 `json:"ratio,omitempty"`
-	// ShortTermAllowed: Allowed RPS (requests per second) in the short term.
-	ShortTermAllowed int64 `json:"shortTermAllowed,omitempty"`
+	LongTermAllowed  int64   `json:"longTermAllowed,omitempty"`
+	LongTermDenied   int64   `json:"longTermDenied,omitempty"`
+	Ratio            float64 `json:"ratio,omitempty"`
+	ShortTermAllowed int64   `json:"shortTermAllowed,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LongTermAllowed") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -12307,11 +8526,7 @@ func (s *Requests) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// ResourcePath: Represents the path of resources leading up to the resource
-// this finding is about.
 type ResourcePath struct {
-	// Nodes: The list of nodes that make the up resource path, ordered from lowest
-	// level to highest level.
 	Nodes []*ResourcePathNode `json:"nodes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Nodes") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -12331,27 +8546,20 @@ func (s ResourcePath) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ResourcePathNode: A node within the resource path. Each node represents a
-// resource within the resource hierarchy.
 type ResourcePathNode struct {
-	// DisplayName: The display name of the resource this node represents.
 	DisplayName string `json:"displayName,omitempty"`
-	// Id: The ID of the resource this node represents.
-	Id string `json:"id,omitempty"`
-	// NodeType: The type of resource this node represents.
-	//
+	Id          string `json:"id,omitempty"`
 	// Possible values:
-	//   "RESOURCE_PATH_NODE_TYPE_UNSPECIFIED" - Node type is unspecified.
-	//   "GCP_ORGANIZATION" - The node represents a Google Cloud organization.
-	//   "GCP_FOLDER" - The node represents a Google Cloud folder.
-	//   "GCP_PROJECT" - The node represents a Google Cloud project.
-	//   "AWS_ORGANIZATION" - The node represents an AWS organization.
-	//   "AWS_ORGANIZATIONAL_UNIT" - The node represents an AWS organizational
-	// unit.
-	//   "AWS_ACCOUNT" - The node represents an AWS account.
-	//   "AZURE_MANAGEMENT_GROUP" - The node represents an Azure management group.
-	//   "AZURE_SUBSCRIPTION" - The node represents an Azure subscription.
-	//   "AZURE_RESOURCE_GROUP" - The node represents an Azure resource group.
+	//   "RESOURCE_PATH_NODE_TYPE_UNSPECIFIED"
+	//   "GCP_ORGANIZATION"
+	//   "GCP_FOLDER"
+	//   "GCP_PROJECT"
+	//   "AWS_ORGANIZATION"
+	//   "AWS_ORGANIZATIONAL_UNIT"
+	//   "AWS_ACCOUNT"
+	//   "AZURE_MANAGEMENT_GROUP"
+	//   "AZURE_SUBSCRIPTION"
+	//   "AZURE_RESOURCE_GROUP"
 	NodeType string `json:"nodeType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -12371,19 +8579,14 @@ func (s ResourcePathNode) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Role: Kubernetes Role or ClusterRole.
 type Role struct {
-	// Kind: Role type.
-	//
 	// Possible values:
-	//   "KIND_UNSPECIFIED" - Role type is not specified.
-	//   "ROLE" - Kubernetes Role.
-	//   "CLUSTER_ROLE" - Kubernetes ClusterRole.
+	//   "KIND_UNSPECIFIED"
+	//   "ROLE"
+	//   "CLUSTER_ROLE"
 	Kind string `json:"kind,omitempty"`
-	// Name: Role name.
 	Name string `json:"name,omitempty"`
-	// Ns: Role namespace.
-	Ns string `json:"ns,omitempty"`
+	Ns   string `json:"ns,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -12402,21 +8605,14 @@ func (s Role) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RunAssetDiscoveryRequest: Request message for running asset discovery for an
-// organization.
 type RunAssetDiscoveryRequest struct {
 }
 
-// Secret: Details about a secret or credential associated with the finding.
 type Secret struct {
-	// EnvironmentVariable: The environment variable containing the secret.
 	EnvironmentVariable *SecretEnvironmentVariable `json:"environmentVariable,omitempty"`
-	// FilePath: The file containing the secret.
-	FilePath *SecretFilePath `json:"filePath,omitempty"`
-	// Status: The status of the secret.
-	Status *SecretStatus `json:"status,omitempty"`
-	// Type: The type of secret, for example, GCP_API_KEY.
-	Type string `json:"type,omitempty"`
+	FilePath            *SecretFilePath            `json:"filePath,omitempty"`
+	Status              *SecretStatus              `json:"status,omitempty"`
+	Type                string                     `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnvironmentVariable") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -12435,11 +8631,7 @@ func (s Secret) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SecretEnvironmentVariable: Environment variable containing the secret.
 type SecretEnvironmentVariable struct {
-	// Key: Environment variable name as a JSON encoded string. Note that value is
-	// not included since the value contains the secret data, which is sensitive
-	// core content.
 	Key string `json:"key,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -12459,9 +8651,7 @@ func (s SecretEnvironmentVariable) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SecretFilePath: File path containing the secret.
 type SecretFilePath struct {
-	// Path: Path to the file.
 	Path string `json:"path,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Path") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -12481,21 +8671,14 @@ func (s SecretFilePath) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SecretStatus: The status of the secret.
 type SecretStatus struct {
-	// LastUpdatedTime: Time that the secret was found.
 	LastUpdatedTime string `json:"lastUpdatedTime,omitempty"`
-	// Validity: The validity of the secret.
-	//
 	// Possible values:
-	//   "SECRET_VALIDITY_UNSPECIFIED" - Default value; no validation was
-	// attempted.
-	//   "SECRET_VALIDITY_UNSUPPORTED" - There is no mechanism to validate the
-	// secret.
-	//   "SECRET_VALIDITY_FAILED" - Validation is supported but the validation
-	// failed.
-	//   "SECRET_VALIDITY_INVALID" - The secret is confirmed to be invalid.
-	//   "SECRET_VALIDITY_VALID" - The secret is confirmed to be valid.
+	//   "SECRET_VALIDITY_UNSPECIFIED"
+	//   "SECRET_VALIDITY_UNSUPPORTED"
+	//   "SECRET_VALIDITY_FAILED"
+	//   "SECRET_VALIDITY_INVALID"
+	//   "SECRET_VALIDITY_VALID"
 	Validity string `json:"validity,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LastUpdatedTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -12515,16 +8698,9 @@ func (s SecretStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SecurityBulletin: SecurityBulletin are notifications of vulnerabilities of
-// Google products.
 type SecurityBulletin struct {
-	// BulletinId: ID of the bulletin corresponding to the vulnerability.
-	BulletinId string `json:"bulletinId,omitempty"`
-	// SubmissionTime: Submission time of this Security Bulletin.
-	SubmissionTime string `json:"submissionTime,omitempty"`
-	// SuggestedUpgradeVersion: This represents a version that the cluster
-	// receiving this notification should be upgraded to, based on its current
-	// version. For example, 1.15.0
+	BulletinId              string `json:"bulletinId,omitempty"`
+	SubmissionTime          string `json:"submissionTime,omitempty"`
 	SuggestedUpgradeVersion string `json:"suggestedUpgradeVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BulletinId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -12544,29 +8720,12 @@ func (s SecurityBulletin) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SecurityCenterProperties: Security Command Center managed properties. These
-// properties are managed by Security Command Center and cannot be modified by
-// the user.
 type SecurityCenterProperties struct {
-	// ResourceName: Immutable. The full resource name of the Google Cloud resource
-	// this asset represents. This field is immutable after create time. See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource_name
-	ResourceName string `json:"resourceName,omitempty"`
-	// ResourceOwners: Owners of the Google Cloud resource.
-	ResourceOwners []string `json:"resourceOwners,omitempty"`
-	// ResourceParent: The full resource name of the immediate parent of the
-	// resource. See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource_name
-	ResourceParent string `json:"resourceParent,omitempty"`
-	// ResourceProject: The full resource name of the project the resource belongs
-	// to. See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource_name
-	ResourceProject string `json:"resourceProject,omitempty"`
-	// ResourceType: The type of the Google Cloud resource. Examples include:
-	// APPLICATION, PROJECT, and ORGANIZATION. This is a case insensitive field
-	// defined by Security Command Center and/or the producer of the resource and
-	// is immutable after create time.
-	ResourceType string `json:"resourceType,omitempty"`
+	ResourceName    string   `json:"resourceName,omitempty"`
+	ResourceOwners  []string `json:"resourceOwners,omitempty"`
+	ResourceParent  string   `json:"resourceParent,omitempty"`
+	ResourceProject string   `json:"resourceProject,omitempty"`
+	ResourceType    string   `json:"resourceType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ResourceName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -12585,35 +8744,10 @@ func (s SecurityCenterProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SecurityMarks: User specified security marks that are attached to the parent
-// Security Command Center resource. Security marks are scoped within a
-// Security Command Center organization -- they can be modified and viewed by
-// all users who have proper permissions on the organization.
 type SecurityMarks struct {
-	// CanonicalName: The canonical name of the marks. Examples:
-	// "organizations/{organization_id}/assets/{asset_id}/securityMarks"
-	// "folders/{folder_id}/assets/{asset_id}/securityMarks"
-	// "projects/{project_number}/assets/{asset_id}/securityMarks"
-	// "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/se
-	// curityMarks"
-	// "folders/{folder_id}/sources/{source_id}/findings/{finding_id}/securityMarks"
-	//
-	// "projects/{project_number}/sources/{source_id}/findings/{finding_id}/security
-	// Marks"
-	CanonicalName string `json:"canonicalName,omitempty"`
-	// Marks: Mutable user specified security marks belonging to the parent
-	// resource. Constraints are as follows: * Keys and values are treated as case
-	// insensitive * Keys must be between 1 - 256 characters (inclusive) * Keys
-	// must be letters, numbers, underscores, or dashes * Values have leading and
-	// trailing whitespace trimmed, remaining characters must be between 1 - 4096
-	// characters (inclusive)
-	Marks map[string]string `json:"marks,omitempty"`
-	// Name: The relative resource name of the SecurityMarks. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-	// Examples: "organizations/{organization_id}/assets/{asset_id}/securityMarks"
-	// "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/se
-	// curityMarks".
-	Name string `json:"name,omitempty"`
+	CanonicalName string            `json:"canonicalName,omitempty"`
+	Marks         map[string]string `json:"marks,omitempty"`
+	Name          string            `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CanonicalName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -12632,19 +8766,10 @@ func (s SecurityMarks) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SecurityPolicy: Information about the Google Cloud Armor security policy
-// (https://cloud.google.com/armor/docs/security-policy-overview) relevant to
-// the finding.
 type SecurityPolicy struct {
-	// Name: The name of the Google Cloud Armor security policy, for example,
-	// "my-security-policy".
-	Name string `json:"name,omitempty"`
-	// Preview: Whether or not the associated rule or policy is in preview mode.
-	Preview bool `json:"preview,omitempty"`
-	// Type: The type of Google Cloud Armor security policy for example, 'backend
-	// security policy', 'edge security policy', 'network edge security policy', or
-	// 'always-on DDoS protection'.
-	Type string `json:"type,omitempty"`
+	Name    string `json:"name,omitempty"`
+	Preview bool   `json:"preview,omitempty"`
+	Type    string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -12663,31 +8788,15 @@ func (s SecurityPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SecurityPosture: Represents a posture that is deployed on Google Cloud by
-// the Security Command Center Posture Management service. A posture contains
-// one or more policy sets. A policy set is a group of policies that enforce a
-// set of security rules on Google Cloud.
 type SecurityPosture struct {
-	// ChangedPolicy: The name of the updated policy, for example,
-	// `projects/{project_id}/policies/{constraint_name}`.
-	ChangedPolicy string `json:"changedPolicy,omitempty"`
-	// Name: Name of the posture, for example, `CIS-Posture`.
-	Name string `json:"name,omitempty"`
-	// Policy: The ID of the updated policy, for example, `compute-policy-1`.
-	Policy string `json:"policy,omitempty"`
-	// PolicyDriftDetails: The details about a change in an updated policy that
-	// violates the deployed posture.
-	PolicyDriftDetails []*PolicyDriftDetails `json:"policyDriftDetails,omitempty"`
-	// PolicySet: The name of the updated policyset, for example, `cis-policyset`.
-	PolicySet string `json:"policySet,omitempty"`
-	// PostureDeployment: The name of the posture deployment, for example,
-	// `organizations/{org_id}/posturedeployments/{posture_deployment_id}`.
-	PostureDeployment string `json:"postureDeployment,omitempty"`
-	// PostureDeploymentResource: The project, folder, or organization on which the
-	// posture is deployed, for example, `projects/{project_number}`.
-	PostureDeploymentResource string `json:"postureDeploymentResource,omitempty"`
-	// RevisionId: The version of the posture, for example, `c7cfa2a8`.
-	RevisionId string `json:"revisionId,omitempty"`
+	ChangedPolicy             string                `json:"changedPolicy,omitempty"`
+	Name                      string                `json:"name,omitempty"`
+	Policy                    string                `json:"policy,omitempty"`
+	PolicyDriftDetails        []*PolicyDriftDetails `json:"policyDriftDetails,omitempty"`
+	PolicySet                 string                `json:"policySet,omitempty"`
+	PostureDeployment         string                `json:"postureDeployment,omitempty"`
+	PostureDeploymentResource string                `json:"postureDeploymentResource,omitempty"`
+	RevisionId                string                `json:"revisionId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChangedPolicy") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -12706,24 +8815,13 @@ func (s SecurityPosture) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SensitivityScore: Score is calculated from of all elements in the data
-// profile. A higher level means the data is more sensitive.
 type SensitivityScore struct {
-	// Score: The sensitivity score applied to the resource.
-	//
 	// Possible values:
-	//   "SENSITIVITY_SCORE_LEVEL_UNSPECIFIED" - Unused.
-	//   "SENSITIVITY_LOW" - No sensitive information detected. The resource isn't
-	// publicly accessible.
-	//   "SENSITIVITY_UNKNOWN" - Unable to determine sensitivity.
-	//   "SENSITIVITY_MODERATE" - Medium risk. Contains personally identifiable
-	// information (PII), potentially sensitive data, or fields with free-text data
-	// that are at a higher risk of having intermittent sensitive data. Consider
-	// limiting access.
-	//   "SENSITIVITY_HIGH" - High risk. Sensitive personally identifiable
-	// information (SPII) can be present. Exfiltration of data can lead to user
-	// data loss. Re-identification of users might be possible. Consider limiting
-	// usage and or removing SPII.
+	//   "SENSITIVITY_SCORE_LEVEL_UNSPECIFIED"
+	//   "SENSITIVITY_LOW"
+	//   "SENSITIVITY_UNKNOWN"
+	//   "SENSITIVITY_MODERATE"
+	//   "SENSITIVITY_HIGH"
 	Score string `json:"score,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Score") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -12743,19 +8841,8 @@ func (s SensitivityScore) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ServiceAccountDelegationInfo: Identity delegation history of an
-// authenticated service account.
 type ServiceAccountDelegationInfo struct {
-	// PrincipalEmail: The email address of a Google account.
-	PrincipalEmail string `json:"principalEmail,omitempty"`
-	// PrincipalSubject: A string representing the principal_subject associated
-	// with the identity. As compared to `principal_email`, supports principals
-	// that aren't associated with email addresses, such as third party principals.
-	// For most identities, the format will be
-	// `principal://iam.googleapis.com/{identity pool name}/subjects/{subject}`
-	// except for some GKE identities (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD)
-	// that are still in the legacy format `serviceAccount:{identity pool
-	// name}[{subject}]`
+	PrincipalEmail   string `json:"principalEmail,omitempty"`
 	PrincipalSubject string `json:"principalSubject,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PrincipalEmail") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -12775,18 +8862,12 @@ func (s ServiceAccountDelegationInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SetFindingStateRequest: Request message for updating a finding's state.
 type SetFindingStateRequest struct {
-	// StartTime: Optional. The time at which the updated state takes effect. If
-	// not set uses the current time.
 	StartTime string `json:"startTime,omitempty"`
-	// State: Required. The desired State of the finding.
-	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Unspecified state.
-	//   "ACTIVE" - The finding requires attention and has not been addressed yet.
-	//   "INACTIVE" - The finding has been fixed, triaged as a non-issue or
-	// otherwise addressed and is no longer active.
+	//   "STATE_UNSPECIFIED"
+	//   "ACTIVE"
+	//   "INACTIVE"
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "StartTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -12806,17 +8887,9 @@ func (s SetFindingStateRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
-	// Policy: REQUIRED: The complete policy to be applied to the `resource`. The
-	// size of the policy is limited to a few 10s of KB. An empty policy is a valid
-	// policy but certain Google Cloud services (such as Projects) might reject
-	// them.
-	Policy *Policy `json:"policy,omitempty"`
-	// UpdateMask: OPTIONAL: A FieldMask specifying which fields of the policy to
-	// modify. Only the fields in the mask will be modified. If no mask is
-	// provided, the following default mask is used: `paths: "bindings, etag"
-	UpdateMask string `json:"updateMask,omitempty"`
+	Policy     *Policy `json:"policy,omitempty"`
+	UpdateMask string  `json:"updateMask,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -12835,26 +8908,10 @@ func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Source: Security Command Center finding source. A finding source is an
-// entity or a mechanism that can produce a finding. A source is like a
-// container of findings that come from the same scanner, logger, monitor, etc.
 type Source struct {
-	// Description: The description of the source (max of 1024 characters).
-	// Example: "Web Security Scanner is a web security scanner for common
-	// vulnerabilities in App Engine applications. It can automatically scan and
-	// detect four common vulnerabilities, including cross-site-scripting (XSS),
-	// Flash injection, mixed content (HTTP in HTTPS), and outdated/insecure
-	// libraries."
 	Description string `json:"description,omitempty"`
-	// DisplayName: The source's display name. A source's display name must be
-	// unique amongst its siblings, for example, two sources with the same parent
-	// can't share the same display name. The display name must have a length
-	// between 1 and 64 characters (inclusive).
 	DisplayName string `json:"displayName,omitempty"`
-	// Name: The relative resource name of this source. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-	// Example: "organizations/{organization_id}/sources/{source_id}"
-	Name string `json:"name,omitempty"`
+	Name        string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -12876,20 +8933,13 @@ func (s Source) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StaticMute: Information about the static mute state. A static mute state
-// overrides any dynamic mute rules that apply to this finding. The static mute
-// state can be set by a static mute rule or by muting the finding directly.
 type StaticMute struct {
-	// ApplyTime: When the static mute was applied.
 	ApplyTime string `json:"applyTime,omitempty"`
-	// State: The static mute state. If the value is `MUTED` or `UNMUTED`, then the
-	// finding's overall mute state will have the same value.
-	//
 	// Possible values:
-	//   "MUTE_UNSPECIFIED" - Unspecified.
-	//   "MUTED" - Finding has been muted.
-	//   "UNMUTED" - Finding has been unmuted.
-	//   "UNDEFINED" - Finding has never been muted/unmuted.
+	//   "MUTE_UNSPECIFIED"
+	//   "MUTED"
+	//   "UNMUTED"
+	//   "UNDEFINED"
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApplyTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -12909,22 +8959,10 @@ func (s StaticMute) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Status: The `Status` type defines a logical error model that is suitable for
-// different programming environments, including REST APIs and RPC APIs. It is
-// used by gRPC (https://github.com/grpc). Each `Status` message contains three
-// pieces of data: error code, error message, and error details. You can find
-// out more about this error model and how to work with it in the API Design
-// Guide (https://cloud.google.com/apis/design/errors).
 type Status struct {
-	// Code: The status code, which should be an enum value of google.rpc.Code.
-	Code int64 `json:"code,omitempty"`
-	// Details: A list of messages that carry the error details. There is a common
-	// set of message types for APIs to use.
+	Code    int64                  `json:"code,omitempty"`
 	Details []googleapi.RawMessage `json:"details,omitempty"`
-	// Message: A developer-facing error message, which should be in English. Any
-	// user-facing error message should be localized and sent in the
-	// google.rpc.Status.details field, or localized by the client.
-	Message string `json:"message,omitempty"`
+	Message string                 `json:"message,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -12943,21 +8981,15 @@ func (s Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Subject: Represents a Kubernetes subject.
 type Subject struct {
-	// Kind: Authentication type for the subject.
-	//
 	// Possible values:
-	//   "AUTH_TYPE_UNSPECIFIED" - Authentication is not specified.
-	//   "USER" - User with valid certificate.
-	//   "SERVICEACCOUNT" - Users managed by Kubernetes API with credentials stored
-	// as secrets.
-	//   "GROUP" - Collection of users.
+	//   "AUTH_TYPE_UNSPECIFIED"
+	//   "USER"
+	//   "SERVICEACCOUNT"
+	//   "GROUP"
 	Kind string `json:"kind,omitempty"`
-	// Name: Name for the subject.
 	Name string `json:"name,omitempty"`
-	// Ns: Namespace for the subject.
-	Ns string `json:"ns,omitempty"`
+	Ns   string `json:"ns,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -12976,12 +9008,7 @@ func (s Subject) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
 type TestIamPermissionsRequest struct {
-	// Permissions: The set of permissions to check for the `resource`. Permissions
-	// with wildcards (such as `*` or `storage.*`) are not allowed. For more
-	// information see IAM Overview
-	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -13001,11 +9028,7 @@ func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// TestIamPermissionsResponse: Response message for `TestIamPermissions`
-// method.
 type TestIamPermissionsResponse struct {
-	// Permissions: A subset of `TestPermissionsRequest.permissions` that the
-	// caller is allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -13028,22 +9051,13 @@ func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// TicketInfo: Information about the ticket, if any, that is being used to
-// track the resolution of the issue that is identified by this finding.
 type TicketInfo struct {
-	// Assignee: The assignee of the ticket in the ticket system.
-	Assignee string `json:"assignee,omitempty"`
-	// Description: The description of the ticket in the ticket system.
+	Assignee    string `json:"assignee,omitempty"`
 	Description string `json:"description,omitempty"`
-	// Id: The identifier of the ticket in the ticket system.
-	Id string `json:"id,omitempty"`
-	// Status: The latest status of the ticket, as reported by the ticket system.
-	Status string `json:"status,omitempty"`
-	// UpdateTime: The time when the ticket was last updated, as reported by the
-	// ticket system.
-	UpdateTime string `json:"updateTime,omitempty"`
-	// Uri: The link to the ticket in the ticket system.
-	Uri string `json:"uri,omitempty"`
+	Id          string `json:"id,omitempty"`
+	Status      string `json:"status,omitempty"`
+	UpdateTime  string `json:"updateTime,omitempty"`
+	Uri         string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Assignee") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -13062,20 +9076,9 @@ func (s TicketInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ToxicCombination: Contains details about a group of security issues that,
-// when the issues occur together, represent a greater risk than when the
-// issues occur independently. A group of such issues is referred to as a toxic
-// combination.
 type ToxicCombination struct {
-	// AttackExposureScore: The Attack exposure score
-	// (https://cloud.google.com/security-command-center/docs/attack-exposure-learn#attack_exposure_scores)
-	// of this toxic combination. The score is a measure of how much this toxic
-	// combination exposes one or more high-value resources to potential attack.
-	AttackExposureScore float64 `json:"attackExposureScore,omitempty"`
-	// RelatedFindings: List of resource names of findings associated with this
-	// toxic combination. For example,
-	// `organizations/123/sources/456/findings/789`.
-	RelatedFindings []string `json:"relatedFindings,omitempty"`
+	AttackExposureScore float64  `json:"attackExposureScore,omitempty"`
+	RelatedFindings     []string `json:"relatedFindings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AttackExposureScore") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -13108,11 +9111,8 @@ func (s *ToxicCombination) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// VertexAi: Vertex AI-related information associated with the finding.
 type VertexAi struct {
-	// Datasets: Datasets associated with the finding.
-	Datasets []*Dataset `json:"datasets,omitempty"`
-	// Pipelines: Pipelines associated with the finding.
+	Datasets  []*Dataset  `json:"datasets,omitempty"`
 	Pipelines []*Pipeline `json:"pipelines,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Datasets") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -13132,27 +9132,14 @@ func (s VertexAi) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Vulnerability: Refers to common vulnerability fields e.g. cve, cvss, cwe
-// etc.
 type Vulnerability struct {
-	// Cve: CVE stands for Common Vulnerabilities and Exposures
-	// (https://cve.mitre.org/about/)
-	Cve *Cve `json:"cve,omitempty"`
-	// Cwes: Represents one or more Common Weakness Enumeration (CWE) information
-	// on this vulnerability.
-	Cwes []*Cwe `json:"cwes,omitempty"`
-	// FixedPackage: The fixed package is relevant to the finding.
-	FixedPackage *Package `json:"fixedPackage,omitempty"`
-	// OffendingPackage: The offending package is relevant to the finding.
-	OffendingPackage *Package `json:"offendingPackage,omitempty"`
-	// ProviderRiskScore: Provider provided risk_score based on multiple factors.
-	// The higher the risk score, the more risky the vulnerability is.
-	ProviderRiskScore int64 `json:"providerRiskScore,omitempty,string"`
-	// Reachable: Represents whether the vulnerability is reachable (detected via
-	// static analysis)
-	Reachable bool `json:"reachable,omitempty"`
-	// SecurityBulletin: The security bulletin is relevant to this finding.
-	SecurityBulletin *SecurityBulletin `json:"securityBulletin,omitempty"`
+	Cve               *Cve              `json:"cve,omitempty"`
+	Cwes              []*Cwe            `json:"cwes,omitempty"`
+	FixedPackage      *Package          `json:"fixedPackage,omitempty"`
+	OffendingPackage  *Package          `json:"offendingPackage,omitempty"`
+	ProviderRiskScore int64             `json:"providerRiskScore,omitempty,string"`
+	Reachable         bool              `json:"reachable,omitempty"`
+	SecurityBulletin  *SecurityBulletin `json:"securityBulletin,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Cve") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -13171,9 +9158,7 @@ func (s Vulnerability) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// VulnerabilityCountBySeverity: Vulnerability count by severity.
 type VulnerabilityCountBySeverity struct {
-	// SeverityToFindingCount: Key is the Severity enum.
 	SeverityToFindingCount map[string]string `json:"severityToFindingCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SeverityToFindingCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -13193,24 +9178,16 @@ func (s VulnerabilityCountBySeverity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// VulnerabilitySnapshot: Result containing the properties and count of a
-// VulnerabilitySnapshot request.
 type VulnerabilitySnapshot struct {
-	// CloudProvider: The cloud provider for the vulnerability snapshot.
-	//
 	// Possible values:
-	//   "CLOUD_PROVIDER_UNSPECIFIED" - The cloud provider is unspecified.
-	//   "GOOGLE_CLOUD_PLATFORM" - The cloud provider is Google Cloud.
-	//   "AMAZON_WEB_SERVICES" - The cloud provider is Amazon Web Services.
-	//   "MICROSOFT_AZURE" - The cloud provider is Microsoft Azure.
-	CloudProvider string `json:"cloudProvider,omitempty"`
-	// FindingCount: The vulnerability count by severity.
-	FindingCount *VulnerabilityCountBySeverity `json:"findingCount,omitempty"`
-	// Name: Identifier. The vulnerability snapshot name. Format:
-	// //locations//vulnerabilitySnapshots/
-	Name string `json:"name,omitempty"`
-	// SnapshotTime: The time that the snapshot was taken.
-	SnapshotTime string `json:"snapshotTime,omitempty"`
+	//   "CLOUD_PROVIDER_UNSPECIFIED"
+	//   "GOOGLE_CLOUD_PLATFORM"
+	//   "AMAZON_WEB_SERVICES"
+	//   "MICROSOFT_AZURE"
+	CloudProvider string                        `json:"cloudProvider,omitempty"`
+	FindingCount  *VulnerabilityCountBySeverity `json:"findingCount,omitempty"`
+	Name          string                        `json:"name,omitempty"`
+	SnapshotTime  string                        `json:"snapshotTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudProvider") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -13229,9 +9206,7 @@ func (s VulnerabilitySnapshot) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// YaraRuleSignature: A signature corresponding to a YARA rule.
 type YaraRuleSignature struct {
-	// YaraRule: The name of the YARA rule.
 	YaraRule string `json:"yaraRule,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "YaraRule") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -13260,10 +9235,9 @@ type OrganizationsGetOrganizationSettingsCall struct {
 	header_      http.Header
 }
 
-// GetOrganizationSettings: Gets the settings for an organization.
+// GetOrganizationSettings:
 //
-//   - name: Name of the organization to get organization settings for. Its
-//     format is "organizations/[organization_id]/organizationSettings".
+// - name: .
 func (r *OrganizationsService) GetOrganizationSettings(name string) *OrganizationsGetOrganizationSettingsCall {
 	c := &OrganizationsGetOrganizationSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13371,11 +9345,9 @@ type OrganizationsUpdateOrganizationSettingsCall struct {
 	header_              http.Header
 }
 
-// UpdateOrganizationSettings: Updates an organization's settings.
+// UpdateOrganizationSettings:
 //
-//   - name: The relative resource name of the settings. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example: "organizations/{organization_id}/organizationSettings".
+// - name: .
 func (r *OrganizationsService) UpdateOrganizationSettings(name string, organizationsettings *OrganizationSettings) *OrganizationsUpdateOrganizationSettingsCall {
 	c := &OrganizationsUpdateOrganizationSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13383,8 +9355,7 @@ func (r *OrganizationsService) UpdateOrganizationSettings(name string, organizat
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The FieldMask to use
-// when updating the settings resource.
+// UpdateMask sets the optional parameter "updateMask":
 func (c *OrganizationsUpdateOrganizationSettingsCall) UpdateMask(updateMask string) *OrganizationsUpdateOrganizationSettingsCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -13484,11 +9455,9 @@ type OrganizationsAssetsGroupCall struct {
 	header_            http.Header
 }
 
-// Group: Filters an organization's assets and groups them by their specified
-// properties.
+// Group:
 //
-//   - parent: Name of the organization to groupBy. Its format is
-//     "organizations/[organization_id]".
+// - parent: .
 func (r *OrganizationsAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *OrganizationsAssetsGroupCall {
 	c := &OrganizationsAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13611,97 +9580,52 @@ type OrganizationsAssetsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists an organization's assets.
+// List:
 //
-//   - parent: Name of the organization assets should belong to. Its format is
-//     "organizations/[organization_id]".
+// - parent: .
 func (r *OrganizationsAssetsService) List(parent string) *OrganizationsAssetsListCall {
 	c := &OrganizationsAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// CompareDuration sets the optional parameter "compareDuration": When
-// compare_duration is set, the ListAssetResult's "state" attribute is updated
-// to indicate whether the asset was added, removed, or remained present during
-// the compare_duration period of time that precedes the read_time. This is the
-// time between (read_time - compare_duration) and read_time. The state value
-// is derived based on the presence of the asset at the two points in time.
-// Intermediate state changes between the two times don't affect the result.
-// For example, the results aren't affected if the asset is removed and
-// re-created again. Possible "state" values when compare_duration is
-// specified: * "ADDED": indicates that the asset was not present before
-// compare_duration, but present at read_time. * "REMOVED": indicates that the
-// asset was present at the start of compare_duration, but not present at
-// read_time. * "ACTIVE": indicates that the asset was present at both the
-// start and the end of the time period defined by compare_duration and
-// read_time. If compare_duration is not specified, then the only possible
-// state is "UNUSED", which indicates that the asset is present at read_time.
+// CompareDuration sets the optional parameter "compareDuration":
 func (c *OrganizationsAssetsListCall) CompareDuration(compareDuration string) *OrganizationsAssetsListCall {
 	c.urlParams_.Set("compareDuration", compareDuration)
 	return c
 }
 
-// FieldMask sets the optional parameter "fieldMask": A field mask to specify
-// the ListAssetsResult fields to be listed in the response. An empty field
-// mask will list all fields.
+// FieldMask sets the optional parameter "fieldMask":
 func (c *OrganizationsAssetsListCall) FieldMask(fieldMask string) *OrganizationsAssetsListCall {
 	c.urlParams_.Set("fieldMask", fieldMask)
 	return c
 }
 
-// Filter sets the optional parameter "filter": Expression that defines the
-// filter to apply across assets. The expression is a list of zero or more
-// restrictions combined via logical operators `AND` and `OR`. Parentheses are
-// not supported, and `OR` has higher precedence than `AND`. Restrictions have
-// the form ` ` and may have a `-` character in front of them to indicate
-// negation. The fields map to those defined in the Asset resource. Examples
-// include: * name * security_center_properties.resource_name *
-// resource_properties.a_property * security_marks.marks.marka The supported
-// operators are: * `=` for all value types. * `>`, `<`, `>=`, `<=` for integer
-// values. * `:`, meaning substring matching, for strings. The supported value
-// types are: * string literals in quotes. * integer literals without quotes. *
-// boolean literals `true` and `false` without quotes. For example,
-// `resource_properties.size = 100` is a valid filter string.
+// Filter sets the optional parameter "filter":
 func (c *OrganizationsAssetsListCall) Filter(filter string) *OrganizationsAssetsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Expression that defines what
-// fields and order to use for sorting. The string value should follow SQL
-// syntax: comma separated list of fields. For example:
-// "name,resource_properties.a_property". The default sorting order is
-// ascending. To specify descending order for a field, a suffix " desc" should
-// be appended to the field name. For example: "name
-// desc,resource_properties.a_property". Redundant space characters in the
-// syntax are insignificant. "name desc,resource_properties.a_property" and "
-// name desc , resource_properties.a_property " are equivalent.
+// OrderBy sets the optional parameter "orderBy":
 func (c *OrganizationsAssetsListCall) OrderBy(orderBy string) *OrganizationsAssetsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number of
-// results to return in a single response. Default is 10, minimum is 1, maximum
-// is 1000.
+// PageSize sets the optional parameter "pageSize":
 func (c *OrganizationsAssetsListCall) PageSize(pageSize int64) *OrganizationsAssetsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value returned by the
-// last `ListAssetsResponse`; indicates that this is a continuation of a prior
-// `ListAssets` call, and that the system should return the next page of data.
+// PageToken sets the optional parameter "pageToken":
 func (c *OrganizationsAssetsListCall) PageToken(pageToken string) *OrganizationsAssetsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// ReadTime sets the optional parameter "readTime": Time used as a reference
-// point when filtering assets. The filter is limited to assets existing at the
-// supplied time and their values are those at that specific time. Absence of
-// this field will default to the API's version of NOW.
+// ReadTime sets the optional parameter "readTime":
 func (c *OrganizationsAssetsListCall) ReadTime(readTime string) *OrganizationsAssetsListCall {
 	c.urlParams_.Set("readTime", readTime)
 	return c
@@ -13829,13 +9753,9 @@ type OrganizationsAssetsRunDiscoveryCall struct {
 	header_                  http.Header
 }
 
-// RunDiscovery: Runs asset discovery. The discovery is tracked with a
-// long-running operation. This API can only be called with limited frequency
-// for an organization. If it is called too frequently the caller will receive
-// a TOO_MANY_REQUESTS error.
+// RunDiscovery:
 //
-//   - parent: Name of the organization to run asset discovery for. Its format is
-//     "organizations/[organization_id]".
+// - parent: .
 func (r *OrganizationsAssetsService) RunDiscovery(parent string, runassetdiscoveryrequest *RunAssetDiscoveryRequest) *OrganizationsAssetsRunDiscoveryCall {
 	c := &OrganizationsAssetsRunDiscoveryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13936,14 +9856,9 @@ type OrganizationsAssetsUpdateSecurityMarksCall struct {
 	header_                                       http.Header
 }
 
-// UpdateSecurityMarks: Updates security marks.
+// UpdateSecurityMarks:
 //
-//   - name: The relative resource name of the SecurityMarks. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Examples:
-//     "organizations/{organization_id}/assets/{asset_id}/securityMarks"
-//     "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/
-//     securityMarks".
+// - name: .
 func (r *OrganizationsAssetsService) UpdateSecurityMarks(name string, googlecloudsecuritycenterv1beta1securitymarks *GoogleCloudSecuritycenterV1beta1SecurityMarks) *OrganizationsAssetsUpdateSecurityMarksCall {
 	c := &OrganizationsAssetsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13951,15 +9866,13 @@ func (r *OrganizationsAssetsService) UpdateSecurityMarks(name string, googleclou
 	return c
 }
 
-// StartTime sets the optional parameter "startTime": The time at which the
-// updated SecurityMarks take effect.
+// StartTime sets the optional parameter "startTime":
 func (c *OrganizationsAssetsUpdateSecurityMarksCall) StartTime(startTime string) *OrganizationsAssetsUpdateSecurityMarksCall {
 	c.urlParams_.Set("startTime", startTime)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The FieldMask to use
-// when updating the security marks resource.
+// UpdateMask sets the optional parameter "updateMask":
 func (c *OrganizationsAssetsUpdateSecurityMarksCall) UpdateMask(updateMask string) *OrganizationsAssetsUpdateSecurityMarksCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -14059,17 +9972,9 @@ type OrganizationsOperationsCancelCall struct {
 	header_                http.Header
 }
 
-// Cancel: Starts asynchronous cancellation on a long-running operation. The
-// server makes a best effort to cancel the operation, but success is not
-// guaranteed. If the server doesn't support this method, it returns
-// `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or
-// other methods to check whether the cancellation succeeded or whether the
-// operation completed despite cancellation. On successful cancellation, the
-// operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
-// `Code.CANCELLED`.
+// Cancel:
 //
-// - name: The name of the operation resource to be cancelled.
+// - name: .
 func (r *OrganizationsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OrganizationsOperationsCancelCall {
 	c := &OrganizationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14169,12 +10074,9 @@ type OrganizationsOperationsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a long-running operation. This method indicates that the
-// client is no longer interested in the operation result. It does not cancel
-// the operation. If the server doesn't support this method, it returns
-// `google.rpc.Code.UNIMPLEMENTED`.
+// Delete:
 //
-// - name: The name of the operation resource to be deleted.
+// - name: .
 func (r *OrganizationsOperationsService) Delete(name string) *OrganizationsOperationsDeleteCall {
 	c := &OrganizationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14270,11 +10172,9 @@ type OrganizationsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation. Clients can use this
-// method to poll the operation result at intervals as recommended by the API
-// service.
+// Get:
 //
-// - name: The name of the operation resource.
+// - name: .
 func (r *OrganizationsOperationsService) Get(name string) *OrganizationsOperationsGetCall {
 	c := &OrganizationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14381,44 +10281,34 @@ type OrganizationsOperationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists operations that match the specified filter in the request. If
-// the server doesn't support this method, it returns `UNIMPLEMENTED`.
+// List:
 //
-// - name: The name of the operation's parent resource.
+// - name: .
 func (r *OrganizationsOperationsService) List(name string) *OrganizationsOperationsListCall {
 	c := &OrganizationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list filter.
+// Filter sets the optional parameter "filter":
 func (c *OrganizationsOperationsListCall) Filter(filter string) *OrganizationsOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list page
-// size.
+// PageSize sets the optional parameter "pageSize":
 func (c *OrganizationsOperationsListCall) PageSize(pageSize int64) *OrganizationsOperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list page
-// token.
+// PageToken sets the optional parameter "pageToken":
 func (c *OrganizationsOperationsListCall) PageToken(pageToken string) *OrganizationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
-// When set to `true`, operations that are reachable are returned as normal,
-// and those that are unreachable are returned in the
-// ListOperationsResponse.unreachable field. This can only be `true` when
-// reading across collections. For example, when `parent` is set to
-// "projects/example/locations/-". This field is not supported by default and
-// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
-// otherwise in service or product specific documentation.
 func (c *OrganizationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *OrganizationsOperationsListCall {
 	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
@@ -14546,10 +10436,9 @@ type OrganizationsSourcesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a source.
+// Create:
 //
-//   - parent: Resource name of the new source's parent. Its format should be
-//     "organizations/[organization_id]".
+// - parent: .
 func (r *OrganizationsSourcesService) Create(parent string, source *Source) *OrganizationsSourcesCreateCall {
 	c := &OrganizationsSourcesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14650,10 +10539,9 @@ type OrganizationsSourcesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a source.
+// Get:
 //
-//   - name: Relative resource name of the source. Its format is
-//     "organizations/[organization_id]/source/[source_id]".
+// - name: .
 func (r *OrganizationsSourcesService) Get(name string) *OrganizationsSourcesGetCall {
 	c := &OrganizationsSourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14760,11 +10648,9 @@ type OrganizationsSourcesGetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// GetIamPolicy: Gets the access control policy on the specified Source.
+// GetIamPolicy:
 //
-//   - resource: REQUIRED: The resource for which the policy is being requested.
-//     See Resource names (https://cloud.google.com/apis/design/resource_names)
-//     for the appropriate value for this field.
+// - resource: .
 func (r *OrganizationsSourcesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *OrganizationsSourcesGetIamPolicyCall {
 	c := &OrganizationsSourcesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14865,27 +10751,22 @@ type OrganizationsSourcesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all sources belonging to an organization.
+// List:
 //
-//   - parent: Resource name of the parent of sources to list. Its format should
-//     be "organizations/[organization_id]".
+// - parent: .
 func (r *OrganizationsSourcesService) List(parent string) *OrganizationsSourcesListCall {
 	c := &OrganizationsSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number of
-// results to return in a single response. Default is 10, minimum is 1, maximum
-// is 1000.
+// PageSize sets the optional parameter "pageSize":
 func (c *OrganizationsSourcesListCall) PageSize(pageSize int64) *OrganizationsSourcesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value returned by the
-// last `ListSourcesResponse`; indicates that this is a continuation of a prior
-// `ListSources` call, and that the system should return the next page of data.
+// PageToken sets the optional parameter "pageToken":
 func (c *OrganizationsSourcesListCall) PageToken(pageToken string) *OrganizationsSourcesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -15013,11 +10894,9 @@ type OrganizationsSourcesPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a source.
+// Patch:
 //
-//   - name: The relative resource name of this source. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example: "organizations/{organization_id}/sources/{source_id}".
+// - name: .
 func (r *OrganizationsSourcesService) Patch(name string, source *Source) *OrganizationsSourcesPatchCall {
 	c := &OrganizationsSourcesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15025,8 +10904,7 @@ func (r *OrganizationsSourcesService) Patch(name string, source *Source) *Organi
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The FieldMask to use
-// when updating the source resource.
+// UpdateMask sets the optional parameter "updateMask":
 func (c *OrganizationsSourcesPatchCall) UpdateMask(updateMask string) *OrganizationsSourcesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -15125,11 +11003,9 @@ type OrganizationsSourcesSetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// SetIamPolicy: Sets the access control policy on the specified Source.
+// SetIamPolicy:
 //
-//   - resource: REQUIRED: The resource for which the policy is being specified.
-//     See Resource names (https://cloud.google.com/apis/design/resource_names)
-//     for the appropriate value for this field.
+// - resource: .
 func (r *OrganizationsSourcesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *OrganizationsSourcesSetIamPolicyCall {
 	c := &OrganizationsSourcesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -15230,13 +11106,9 @@ type OrganizationsSourcesTestIamPermissionsCall struct {
 	header_                   http.Header
 }
 
-// TestIamPermissions:  Returns the permissions that a caller has on the
-// specified source.
+// TestIamPermissions:
 //
-//   - resource: REQUIRED: The resource for which the policy detail is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
-//     value for this field.
+// - resource: .
 func (r *OrganizationsSourcesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *OrganizationsSourcesTestIamPermissionsCall {
 	c := &OrganizationsSourcesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -15338,11 +11210,9 @@ type OrganizationsSourcesFindingsCreateCall struct {
 	header_                                 http.Header
 }
 
-// Create: Creates a finding. The corresponding source must exist for finding
-// creation to succeed.
+// Create:
 //
-//   - parent: Resource name of the new finding's parent. Its format should be
-//     "organizations/[organization_id]/sources/[source_id]".
+// - parent: .
 func (r *OrganizationsSourcesFindingsService) Create(parent string, googlecloudsecuritycenterv1beta1finding *GoogleCloudSecuritycenterV1beta1Finding) *OrganizationsSourcesFindingsCreateCall {
 	c := &OrganizationsSourcesFindingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15350,10 +11220,7 @@ func (r *OrganizationsSourcesFindingsService) Create(parent string, googleclouds
 	return c
 }
 
-// FindingId sets the optional parameter "findingId": Required. Unique
-// identifier provided by the client within the parent scope. It must be
-// alphanumeric and less than or equal to 32 characters and greater than 0
-// characters in length.
+// FindingId sets the optional parameter "findingId":
 func (c *OrganizationsSourcesFindingsCreateCall) FindingId(findingId string) *OrganizationsSourcesFindingsCreateCall {
 	c.urlParams_.Set("findingId", findingId)
 	return c
@@ -15453,15 +11320,9 @@ type OrganizationsSourcesFindingsGroupCall struct {
 	header_              http.Header
 }
 
-// Group: Filters an organization or source's findings and groups them by their
-// specified properties. To group across all sources provide a `-` as the
-// source id. Example:
-// /v1beta1/organizations/{organization_id}/sources/-/findings
+// Group:
 //
-//   - parent: Name of the source to groupBy. Its format is
-//     "organizations/[organization_id]/sources/[source_id]". To groupBy across
-//     all sources provide a source_id of `-`. For example:
-//     organizations/{organization_id}/sources/-.
+// - parent: .
 func (r *OrganizationsSourcesFindingsService) Group(parent string, groupfindingsrequest *GroupFindingsRequest) *OrganizationsSourcesFindingsGroupCall {
 	c := &OrganizationsSourcesFindingsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15584,80 +11445,46 @@ type OrganizationsSourcesFindingsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists an organization or source's findings. To list across all sources
-// provide a `-` as the source id. Example:
-// /v1beta1/organizations/{organization_id}/sources/-/findings
+// List:
 //
-//   - parent: Name of the source the findings belong to. Its format is
-//     "organizations/[organization_id]/sources/[source_id]". To list across all
-//     sources provide a source_id of `-`. For example:
-//     organizations/{organization_id}/sources/-.
+// - parent: .
 func (r *OrganizationsSourcesFindingsService) List(parent string) *OrganizationsSourcesFindingsListCall {
 	c := &OrganizationsSourcesFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// FieldMask sets the optional parameter "fieldMask": A field mask to specify
-// the Finding fields to be listed in the response. An empty field mask will
-// list all fields.
+// FieldMask sets the optional parameter "fieldMask":
 func (c *OrganizationsSourcesFindingsListCall) FieldMask(fieldMask string) *OrganizationsSourcesFindingsListCall {
 	c.urlParams_.Set("fieldMask", fieldMask)
 	return c
 }
 
-// Filter sets the optional parameter "filter": Expression that defines the
-// filter to apply across findings. The expression is a list of one or more
-// restrictions combined via logical operators `AND` and `OR`. Parentheses are
-// not supported, and `OR` has higher precedence than `AND`. Restrictions have
-// the form ` ` and may have a `-` character in front of them to indicate
-// negation. Examples include: * name * source_properties.a_property *
-// security_marks.marks.marka The supported operators are: * `=` for all value
-// types. * `>`, `<`, `>=`, `<=` for integer values. * `:`, meaning substring
-// matching, for strings. The supported value types are: * string literals in
-// quotes. * integer literals without quotes. * boolean literals `true` and
-// `false` without quotes. For example, `source_properties.size = 100` is a
-// valid filter string.
+// Filter sets the optional parameter "filter":
 func (c *OrganizationsSourcesFindingsListCall) Filter(filter string) *OrganizationsSourcesFindingsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Expression that defines what
-// fields and order to use for sorting. The string value should follow SQL
-// syntax: comma separated list of fields. For example:
-// "name,resource_properties.a_property". The default sorting order is
-// ascending. To specify descending order for a field, a suffix " desc" should
-// be appended to the field name. For example: "name
-// desc,source_properties.a_property". Redundant space characters in the syntax
-// are insignificant. "name desc,source_properties.a_property" and " name desc
-// , source_properties.a_property " are equivalent.
+// OrderBy sets the optional parameter "orderBy":
 func (c *OrganizationsSourcesFindingsListCall) OrderBy(orderBy string) *OrganizationsSourcesFindingsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number of
-// results to return in a single response. Default is 10, minimum is 1, maximum
-// is 1000.
+// PageSize sets the optional parameter "pageSize":
 func (c *OrganizationsSourcesFindingsListCall) PageSize(pageSize int64) *OrganizationsSourcesFindingsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value returned by the
-// last `ListFindingsResponse`; indicates that this is a continuation of a
-// prior `ListFindings` call, and that the system should return the next page
-// of data.
+// PageToken sets the optional parameter "pageToken":
 func (c *OrganizationsSourcesFindingsListCall) PageToken(pageToken string) *OrganizationsSourcesFindingsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// ReadTime sets the optional parameter "readTime": Time used as a reference
-// point when filtering findings. The filter is limited to findings existing at
-// the supplied time and their values are those at that specific time. Absence
-// of this field will default to the API's version of NOW.
+// ReadTime sets the optional parameter "readTime":
 func (c *OrganizationsSourcesFindingsListCall) ReadTime(readTime string) *OrganizationsSourcesFindingsListCall {
 	c.urlParams_.Set("readTime", readTime)
 	return c
@@ -15785,13 +11612,9 @@ type OrganizationsSourcesFindingsPatchCall struct {
 	header_                                 http.Header
 }
 
-// Patch: Creates or updates a finding. The corresponding source must exist for
-// a finding creation to succeed.
+// Patch:
 //
-//   - name: The relative resource name of this finding. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example:
-//     "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}".
+// - name: .
 func (r *OrganizationsSourcesFindingsService) Patch(name string, googlecloudsecuritycenterv1beta1finding *GoogleCloudSecuritycenterV1beta1Finding) *OrganizationsSourcesFindingsPatchCall {
 	c := &OrganizationsSourcesFindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15799,9 +11622,7 @@ func (r *OrganizationsSourcesFindingsService) Patch(name string, googlecloudsecu
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The FieldMask to use
-// when updating the finding resource. This field should not be specified when
-// creating a finding.
+// UpdateMask sets the optional parameter "updateMask":
 func (c *OrganizationsSourcesFindingsPatchCall) UpdateMask(updateMask string) *OrganizationsSourcesFindingsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -15901,12 +11722,9 @@ type OrganizationsSourcesFindingsSetStateCall struct {
 	header_                http.Header
 }
 
-// SetState: Updates the state of a finding.
+// SetState:
 //
-//   - name: The relative resource name of the finding. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example:
-//     "organizations/{organization_id}/sources/{source_id}/finding/{finding_id}".
+// - name: .
 func (r *OrganizationsSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *OrganizationsSourcesFindingsSetStateCall {
 	c := &OrganizationsSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16008,14 +11826,9 @@ type OrganizationsSourcesFindingsUpdateSecurityMarksCall struct {
 	header_                                       http.Header
 }
 
-// UpdateSecurityMarks: Updates security marks.
+// UpdateSecurityMarks:
 //
-//   - name: The relative resource name of the SecurityMarks. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Examples:
-//     "organizations/{organization_id}/assets/{asset_id}/securityMarks"
-//     "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/
-//     securityMarks".
+// - name: .
 func (r *OrganizationsSourcesFindingsService) UpdateSecurityMarks(name string, googlecloudsecuritycenterv1beta1securitymarks *GoogleCloudSecuritycenterV1beta1SecurityMarks) *OrganizationsSourcesFindingsUpdateSecurityMarksCall {
 	c := &OrganizationsSourcesFindingsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16023,15 +11836,13 @@ func (r *OrganizationsSourcesFindingsService) UpdateSecurityMarks(name string, g
 	return c
 }
 
-// StartTime sets the optional parameter "startTime": The time at which the
-// updated SecurityMarks take effect.
+// StartTime sets the optional parameter "startTime":
 func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) StartTime(startTime string) *OrganizationsSourcesFindingsUpdateSecurityMarksCall {
 	c.urlParams_.Set("startTime", startTime)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The FieldMask to use
-// when updating the security marks resource.
+// UpdateMask sets the optional parameter "updateMask":
 func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) UpdateMask(updateMask string) *OrganizationsSourcesFindingsUpdateSecurityMarksCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

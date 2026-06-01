@@ -213,6 +213,7 @@ func NewProjectsLocationsRepositoriesService(s *Service) *ProjectsLocationsRepos
 	rs.MavenArtifacts = NewProjectsLocationsRepositoriesMavenArtifactsService(s)
 	rs.NpmPackages = NewProjectsLocationsRepositoriesNpmPackagesService(s)
 	rs.Packages = NewProjectsLocationsRepositoriesPackagesService(s)
+	rs.PrewarmedArtifacts = NewProjectsLocationsRepositoriesPrewarmedArtifactsService(s)
 	rs.PythonPackages = NewProjectsLocationsRepositoriesPythonPackagesService(s)
 	rs.Rules = NewProjectsLocationsRepositoriesRulesService(s)
 	rs.YumArtifacts = NewProjectsLocationsRepositoriesYumArtifactsService(s)
@@ -243,6 +244,8 @@ type ProjectsLocationsRepositoriesService struct {
 	NpmPackages *ProjectsLocationsRepositoriesNpmPackagesService
 
 	Packages *ProjectsLocationsRepositoriesPackagesService
+
+	PrewarmedArtifacts *ProjectsLocationsRepositoriesPrewarmedArtifactsService
 
 	PythonPackages *ProjectsLocationsRepositoriesPythonPackagesService
 
@@ -371,6 +374,15 @@ func NewProjectsLocationsRepositoriesPackagesVersionsService(s *Service) *Projec
 }
 
 type ProjectsLocationsRepositoriesPackagesVersionsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsRepositoriesPrewarmedArtifactsService(s *Service) *ProjectsLocationsRepositoriesPrewarmedArtifactsService {
+	rs := &ProjectsLocationsRepositoriesPrewarmedArtifactsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsRepositoriesPrewarmedArtifactsService struct {
 	s *Service
 }
 
@@ -674,6 +686,64 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
+}
+
+// CheckPrewarmedArtifactRequest: The request for checking an artifact for
+// streaming.
+type CheckPrewarmedArtifactRequest struct {
+	// StreamLocation: Optional. The location of the prewarmed artifact.
+	// multi-region is not supported for this field.
+	StreamLocation string `json:"streamLocation,omitempty"`
+	// Tag: Optional. The artifact tag
+	// Format:projects/{project}/locations/{location}/repositories/{repository}/pack
+	// ages/{package}/tags/{tag}
+	Tag string `json:"tag,omitempty"`
+	// Version: Optional. The artifact version Format:
+	// projects/{project}/locations/{location}/repositories/{repository}/packages/{p
+	// ackage}/versions/{version}
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StreamLocation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StreamLocation") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CheckPrewarmedArtifactRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckPrewarmedArtifactRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CheckPrewarmedArtifactResponse: The response for checking an artifact for
+// streaming.
+type CheckPrewarmedArtifactResponse struct {
+	// PrewarmedArtifact: The prewarmed artifact that was checked.
+	PrewarmedArtifact *PrewarmedArtifact `json:"prewarmedArtifact,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "PrewarmedArtifact") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PrewarmedArtifact") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CheckPrewarmedArtifactResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckPrewarmedArtifactResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CleanupPolicy: Artifact policy configuration for repository cleanup
@@ -2089,6 +2159,35 @@ func (s ListPackagesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListPrewarmedArtifactsResponse: The response for listing artifacts for
+// streaming.
+type ListPrewarmedArtifactsResponse struct {
+	// NextPageToken: The token to retrieve the next page of prewarmed artifacts,
+	// or empty if there are no more streamings to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// PrewarmedArtifacts: The prewarmed artifacts.
+	PrewarmedArtifacts []*PrewarmedArtifact `json:"prewarmedArtifacts,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListPrewarmedArtifactsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPrewarmedArtifactsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListPythonPackagesResponse: The response from listing python packages.
 type ListPythonPackagesResponse struct {
 	// NextPageToken: The token to retrieve the next page of artifacts, or empty if
@@ -2669,6 +2768,96 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PrewarmArtifactRequest: The request for prewarming an artifact for
+// streaming.
+type PrewarmArtifactRequest struct {
+	// Force: Optional. If true, old artifact will be evicted to make room for the
+	// new artifact.
+	Force bool `json:"force,omitempty"`
+	// RetentionDays: Optional. The retention days of the prewarmed artifact. If
+	// not specified, the artifact will be cached for 3 days.
+	RetentionDays int64 `json:"retentionDays,omitempty,string"`
+	// StreamLocation: Optional. The location to cache the artifact in. If not
+	// specified, the artifact will be cached in the same location as the artifact.
+	// multi-region is not supported for this field.
+	StreamLocation string `json:"streamLocation,omitempty"`
+	// Tag: Optional. The artifact tag
+	// Format:projects/{project}/locations/{location}/repositories/{repository}/pack
+	// ages/{package}/tags/{tag}
+	Tag string `json:"tag,omitempty"`
+	// Version: Optional. The artifact version Format:
+	// projects/{project}/locations/{location}/repositories/{repository}/packages/{p
+	// ackage}/versions/{version}
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Force") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Force") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PrewarmArtifactRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod PrewarmArtifactRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PrewarmArtifactResponse: The response for prewarming an artifact for
+// streaming.
+type PrewarmArtifactResponse struct {
+	// PrewarmedArtifact: The prewarmed artifact that was prewarmed.
+	PrewarmedArtifact *PrewarmedArtifact `json:"prewarmedArtifact,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PrewarmedArtifact") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PrewarmedArtifact") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PrewarmArtifactResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod PrewarmArtifactResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PrewarmedArtifact: PrewarmedArtifact represents a streamed artifact.
+type PrewarmedArtifact struct {
+	// ExpirationTime: The expiration time of the prewarmed artifact.
+	ExpirationTime string `json:"expirationTime,omitempty"`
+	// Location: The location of the prewarmed artifact.
+	Location string `json:"location,omitempty"`
+	// Uri: URL to access the image. Example:
+	// us-west4-docker.pkg.dev/test-project/test-repo/nginx@sha256:e9954c1fc875017be
+	// 1c3e36eca16be2d9e9bccc4bf072163515467d6a823c7cf
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExpirationTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExpirationTime") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PrewarmedArtifact) MarshalJSON() ([]byte, error) {
+	type NoMethod PrewarmedArtifact
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ProjectConfig: The Artifact Registry logging configurations that apply to a
 // Project.
 type ProjectConfig struct {
@@ -2855,6 +3044,64 @@ type RemoteRepositoryConfig struct {
 
 func (s RemoteRepositoryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoteRepositoryConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RemovePrewarmedArtifactRequest: The request for removing an artifact from
+// streaming.
+type RemovePrewarmedArtifactRequest struct {
+	// StreamLocation: Optional. The location of the prewarmed artifact.
+	// multi-region is not supported for this field.
+	StreamLocation string `json:"streamLocation,omitempty"`
+	// Tag: Optional. The artifact tag
+	// Format:projects/{project}/locations/{location}/repositories/{repository}/pack
+	// ages/{package}/tags/{tag}
+	Tag string `json:"tag,omitempty"`
+	// Version: Optional. The artifact version Format:
+	// projects/{project}/locations/{location}/repositories/{repository}/packages/{p
+	// ackage}/versions/{version}
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StreamLocation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StreamLocation") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemovePrewarmedArtifactRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RemovePrewarmedArtifactRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RemovePrewarmedArtifactResponse: The response for removing an artifact from
+// streaming.
+type RemovePrewarmedArtifactResponse struct {
+	// PrewarmedArtifact: The prewarmed artifact that was removed.
+	PrewarmedArtifact *PrewarmedArtifact `json:"prewarmedArtifact,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "PrewarmedArtifact") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PrewarmedArtifact") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemovePrewarmedArtifactResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RemovePrewarmedArtifactResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4348,8 +4595,8 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this service. This
 // method lists locations based on the resource scope provided in the
-// [ListLocationsRequest.name] field: * **Global locations**: If `name` is
-// empty, the method lists the public locations available to all projects. *
+// ListLocationsRequest.name field: * **Global locations**: If `name` is empty,
+// the method lists the public locations available to all projects. *
 // **Project-specific locations**: If `name` follows the format
 // `projects/{project}`, the method lists locations visible to that specific
 // project. This includes public, private, or other project-specific locations
@@ -4366,8 +4613,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -4954,6 +5201,112 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "artifactregistry.projects.locations.operations.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsRepositoriesCheckPrewarmedArtifactCall struct {
+	s                             *Service
+	repository                    string
+	checkprewarmedartifactrequest *CheckPrewarmedArtifactRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// CheckPrewarmedArtifact: Checks an artifact streaming.
+//
+//   - repository: The name of the repository, for example:
+//     `projects/p1/locations/us-central1/repositories/repo1`. If the package or
+//     version ID parts contain slashes, the slashes are escaped.
+func (r *ProjectsLocationsRepositoriesService) CheckPrewarmedArtifact(repository string, checkprewarmedartifactrequest *CheckPrewarmedArtifactRequest) *ProjectsLocationsRepositoriesCheckPrewarmedArtifactCall {
+	c := &ProjectsLocationsRepositoriesCheckPrewarmedArtifactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.repository = repository
+	c.checkprewarmedartifactrequest = checkprewarmedartifactrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesCheckPrewarmedArtifactCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesCheckPrewarmedArtifactCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesCheckPrewarmedArtifactCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesCheckPrewarmedArtifactCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesCheckPrewarmedArtifactCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesCheckPrewarmedArtifactCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.checkprewarmedartifactrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+repository}:checkPrewarmedArtifact")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"repository": c.repository,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "artifactregistry.projects.locations.repositories.checkPrewarmedArtifact", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.checkPrewarmedArtifact" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CheckPrewarmedArtifactResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesCheckPrewarmedArtifactCall) Do(opts ...googleapi.CallOption) (*CheckPrewarmedArtifactResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CheckPrewarmedArtifactResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "artifactregistry.projects.locations.repositories.checkPrewarmedArtifact", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5788,6 +6141,216 @@ func (c *ProjectsLocationsRepositoriesPatchCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "artifactregistry.projects.locations.repositories.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsRepositoriesPrewarmArtifactCall struct {
+	s                      *Service
+	repository             string
+	prewarmartifactrequest *PrewarmArtifactRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// PrewarmArtifact: Prewarms an artifact for streaming.
+//
+//   - repository: The repository name, for example:
+//     `projects/p1/locations/us-central1/repositories/repo1`. If the package or
+//     version ID parts contain slashes, the slashes are escaped.
+func (r *ProjectsLocationsRepositoriesService) PrewarmArtifact(repository string, prewarmartifactrequest *PrewarmArtifactRequest) *ProjectsLocationsRepositoriesPrewarmArtifactCall {
+	c := &ProjectsLocationsRepositoriesPrewarmArtifactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.repository = repository
+	c.prewarmartifactrequest = prewarmartifactrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesPrewarmArtifactCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesPrewarmArtifactCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesPrewarmArtifactCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesPrewarmArtifactCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesPrewarmArtifactCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesPrewarmArtifactCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.prewarmartifactrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+repository}:prewarmArtifact")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"repository": c.repository,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "artifactregistry.projects.locations.repositories.prewarmArtifact", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.prewarmArtifact" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesPrewarmArtifactCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "artifactregistry.projects.locations.repositories.prewarmArtifact", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsRepositoriesRemovePrewarmedArtifactCall struct {
+	s                              *Service
+	repository                     string
+	removeprewarmedartifactrequest *RemovePrewarmedArtifactRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// RemovePrewarmedArtifact: Removes an artifact from streaming.
+//
+//   - repository: The repository name, for example:
+//     `projects/p1/locations/us-central1/repositories/repo1`.
+func (r *ProjectsLocationsRepositoriesService) RemovePrewarmedArtifact(repository string, removeprewarmedartifactrequest *RemovePrewarmedArtifactRequest) *ProjectsLocationsRepositoriesRemovePrewarmedArtifactCall {
+	c := &ProjectsLocationsRepositoriesRemovePrewarmedArtifactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.repository = repository
+	c.removeprewarmedartifactrequest = removeprewarmedartifactrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesRemovePrewarmedArtifactCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesRemovePrewarmedArtifactCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesRemovePrewarmedArtifactCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesRemovePrewarmedArtifactCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesRemovePrewarmedArtifactCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesRemovePrewarmedArtifactCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.removeprewarmedartifactrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+repository}:removePrewarmedArtifact")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"repository": c.repository,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "artifactregistry.projects.locations.repositories.removePrewarmedArtifact", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.removePrewarmedArtifact" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RemovePrewarmedArtifactResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesRemovePrewarmedArtifactCall) Do(opts ...googleapi.CallOption) (*RemovePrewarmedArtifactResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RemovePrewarmedArtifactResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "artifactregistry.projects.locations.repositories.removePrewarmedArtifact", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -10890,6 +11453,161 @@ func (c *ProjectsLocationsRepositoriesPackagesVersionsPatchCall) Do(opts ...goog
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "artifactregistry.projects.locations.repositories.packages.versions.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsRepositoriesPrewarmedArtifactsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all streamed artifacts in a repository.
+//
+//   - parent: The repository of the artifact to list. Format:
+//     projects/{project}/locations/{location}/repositories/{repository}.
+func (r *ProjectsLocationsRepositoriesPrewarmedArtifactsService) List(parent string) *ProjectsLocationsRepositoriesPrewarmedArtifactsListCall {
+	c := &ProjectsLocationsRepositoriesPrewarmedArtifactsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter should only support The
+// location of the prewarmed artifacts. multi-region is not supported for this
+// field.
+func (c *ProjectsLocationsRepositoriesPrewarmedArtifactsListCall) Filter(filter string) *ProjectsLocationsRepositoriesPrewarmedArtifactsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// prewarmed artifacts to return. Maximum page size is 1,000. Default page size
+// is 100.
+func (c *ProjectsLocationsRepositoriesPrewarmedArtifactsListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesPrewarmedArtifactsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The next_page_token value
+// returned from a previous list request, if any.
+func (c *ProjectsLocationsRepositoriesPrewarmedArtifactsListCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesPrewarmedArtifactsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesPrewarmedArtifactsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesPrewarmedArtifactsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRepositoriesPrewarmedArtifactsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsRepositoriesPrewarmedArtifactsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesPrewarmedArtifactsListCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesPrewarmedArtifactsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesPrewarmedArtifactsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesPrewarmedArtifactsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/prewarmedArtifacts")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "artifactregistry.projects.locations.repositories.prewarmedArtifacts.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.prewarmedArtifacts.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListPrewarmedArtifactsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesPrewarmedArtifactsListCall) Do(opts ...googleapi.CallOption) (*ListPrewarmedArtifactsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListPrewarmedArtifactsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "artifactregistry.projects.locations.repositories.prewarmedArtifacts.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsRepositoriesPrewarmedArtifactsListCall) Pages(ctx context.Context, f func(*ListPrewarmedArtifactsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsRepositoriesPythonPackagesGetCall struct {

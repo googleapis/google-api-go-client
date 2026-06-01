@@ -297,15 +297,24 @@ type RequestStatusService struct {
 // AdIdentifiers: Identifiers and other information used to match the
 // conversion event with other online activity (such as ad clicks).
 type AdIdentifiers struct {
+	// Dclid: Optional. The display click ID associated with this event.
+	Dclid string `json:"dclid,omitempty"`
+	// EncryptedUserIds: Optional. Any number of encrypted user IDs.
+	EncryptedUserIds []*EncryptedUserId `json:"encryptedUserIds,omitempty"`
 	// Gbraid: Optional. The click identifier for clicks associated with app events
 	// and originating from iOS devices starting with iOS14.
 	Gbraid string `json:"gbraid,omitempty"`
 	// Gclid: Optional. The Google click ID (gclid) associated with this event.
 	Gclid string `json:"gclid,omitempty"`
+	// ImpressionId: Optional. The impression ID associated with this event.
+	ImpressionId string `json:"impressionId,omitempty"`
 	// LandingPageDeviceInfo: Optional. Information gathered about the device being
 	// used (if any) at the time of landing onto the advertiser’s site after
 	// interacting with the ad.
 	LandingPageDeviceInfo *DeviceInfo `json:"landingPageDeviceInfo,omitempty"`
+	// MatchId: Optional. The match ID field used to join this event with a
+	// previous event.
+	MatchId string `json:"matchId,omitempty"`
 	// MobileDeviceId: Optional. The mobile identifier for advertisers. This would
 	// be IDFA on iOS, AdID on Android, or other platforms’ identifiers for
 	// advertisers.
@@ -316,13 +325,13 @@ type AdIdentifiers struct {
 	// Wbraid: Optional. The click identifier for clicks associated with web events
 	// and originating from iOS devices starting with iOS14.
 	Wbraid string `json:"wbraid,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Gbraid") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Dclid") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Gbraid") to include in API
+	// NullFields is a list of field names (e.g. "Dclid") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -367,6 +376,8 @@ func (s AddressInfo) MarshalJSON() ([]byte, error) {
 
 // AudienceMember: The audience member to be operated on.
 type AudienceMember struct {
+	// CompositeData: Group of multiple identifier types.
+	CompositeData *CompositeData `json:"compositeData,omitempty"`
 	// Consent: Optional. The consent setting for the user.
 	Consent *Consent `json:"consent,omitempty"`
 	// DestinationReferences: Optional. Defines which Destination to send the
@@ -386,13 +397,13 @@ type AudienceMember struct {
 	// UserIdData: Data related to unique identifiers for a user, as defined by the
 	// advertiser.
 	UserIdData *UserIdData `json:"userIdData,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Consent") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "CompositeData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Consent") to include in API
+	// NullFields is a list of field names (e.g. "CompositeData") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -519,6 +530,32 @@ func (s *CartData) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// CompositeData: Composite data holding identifiers and associated data for a
+// user. At least one of `user_data` or `ip_data` is required.
+type CompositeData struct {
+	// IpData: Optional. IP address data representing customer interaction used to
+	// build the audience.
+	IpData []*IpData `json:"ipData,omitempty"`
+	// UserData: Optional. User-provided data that identifies the user.
+	UserData *UserData `json:"userData,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IpData") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IpData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CompositeData) MarshalJSON() ([]byte, error) {
+	type NoMethod CompositeData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Consent: Digital Markets Act (DMA)
 // (//digital-markets-act.ec.europa.eu/index_en) consent settings for the user.
 type Consent struct {
@@ -616,6 +653,37 @@ type CustomVariable struct {
 
 func (s CustomVariable) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomVariable
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DataTypeCount: The count for a specific data type.
+type DataTypeCount struct {
+	// Count: The count for this data type.
+	Count int64 `json:"count,omitempty,string"`
+	// Type: The type of data.
+	//
+	// Possible values:
+	//   "DATA_TYPE_UNSPECIFIED" - The data type is unspecified.
+	//   "EMAIL" - The data is an email address.
+	//   "PHONE_NUMBER" - The data is a phone number.
+	//   "ADDRESS" - The data is a physical address.
+	//   "IP_ADDRESS" - The data is an IP address.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataTypeCount) MarshalJSON() ([]byte, error) {
+	type NoMethod DataTypeCount
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -729,6 +797,52 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// EncryptedUserId: A user identifier issued to be used for attribution. All
+// fields are required if this is used.
+type EncryptedUserId struct {
+	// EncryptedId: Required. The alphanumeric encrypted id.
+	EncryptedId string `json:"encryptedId,omitempty"`
+	// EntityId: Required. The encryption entity ID. This should match the
+	// encryption configuration for ad serving or Data Transfer.
+	EntityId int64 `json:"entityId,omitempty,string"`
+	// EntityType: Required. The encryption entity type. This should match the
+	// encryption configuration for ad serving or Data Transfer.
+	//
+	// Possible values:
+	//   "ENCRYPTION_ENTITY_TYPE_UNSPECIFIED" - Unspecified encryption entity type.
+	//   "CAMPAIGN_MANAGER_ACCOUNT" - Campaign Manager 360 account.
+	//   "CAMPAIGN_MANAGER_ADVERTISER" - Campaign Manager 360 advertiser.
+	//   "DISPLAY_VIDEO_PARTNER" - Display & Video 360 partner.
+	//   "DISPLAY_VIDEO_ADVERTISER" - Display & Video 360 advertiser.
+	//   "GOOGLE_ADS_CUSTOMER" - Google Ads customer.
+	//   "GOOGLE_AD_MANAGER_NETWORK_CODE" - Google Ad Manager network code.
+	EntityType string `json:"entityType,omitempty"`
+	// Source: Required. Describes whether the encrypted cookie was received from
+	// ad serving (the %m macro) or from Data Transfer.
+	//
+	// Possible values:
+	//   "ENCRYPTION_SOURCE_UNSPECIFIED" - Unspecified encryption source.
+	//   "AD_SERVING" - Ad serving encryption source.
+	//   "DATA_TRANSFER" - Data transfer encryption source.
+	Source string `json:"source,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EncryptedId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EncryptedId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EncryptedUserId) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptedUserId
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // EncryptionInfo: Encryption information for the data being ingested.
 type EncryptionInfo struct {
 	// AwsWrappedKeyInfo: Amazon Web Services wrapped key information.
@@ -818,6 +932,37 @@ type ErrorCount struct {
 	//
 	// "PROCESSING_ERROR_REASON_ONE_PER_CLICK_CONVERSION_ACTION_NOT_PERMITTED_WITH_B
 	// RAID" - One-per-click conversion actions cannot be used with BRAIDs.
+	//   "PROCESSING_ERROR_REASON_MATCH_ID_NOT_FOUND" - The match ID can not be
+	// found.
+	//   "PROCESSING_ERROR_REASON_USER_ID_NOT_FOUND_FOR_MATCH_ID" - The user ID can
+	// not be found for the match ID.
+	//   "PROCESSING_ERROR_REASON_USER_ID_NOT_FOUND_FOR_GCLID" - The user ID can
+	// not be found for the GCLID.
+	//   "PROCESSING_ERROR_REASON_USER_ID_NOT_FOUND_FOR_DCLID" - The user ID can
+	// not be found for the DCLID.
+	//   "PROCESSING_ERROR_REASON_INVALID_AD_IDENTIFIERS" - There are ad
+	// identifiers that are invalid.
+	//   "PROCESSING_ERROR_REASON_INVALID_MOBILE_ID_FORMAT" - The mobile ID format
+	// is invalid.
+	//   "PROCESSING_ERROR_REASON_ORIGINAL_CONVERSIONS_NOT_FOUND" - The original
+	// conversions can't be found.
+	//   "PROCESSING_ERROR_REASON_EVENT_ID_DECODE_ERROR" - The event ID (dclid or
+	// impression ID) cannot be decoded.
+	//   "PROCESSING_ERROR_REASON_USER_ID_NOT_FOUND_FOR_IMPRESSION_ID" - The user
+	// ID cannot be found for the given impression ID.
+	//   "PROCESSING_ERROR_REASON_USER_ID_NOT_FOUND" - The user ID cannot be found.
+	//   "PROCESSING_ERROR_REASON_CONVERSION_PRECEDES_CLICK" - The event timestamp
+	// on the event was earlier than the associated click.
+	//   "PROCESSING_ERROR_REASON_TOO_RECENT_CLICK" - The click occurred too
+	// recently.
+	//   "PROCESSING_ERROR_REASON_INVALID_CLICK" - The event can't be attributed to
+	// a click (GCLID). This may be because the click did not come from a Google
+	// Ads campaign, for example.
+	//   "PROCESSING_ERROR_REASON_INVALID_OPERATING_ACCOUNT_FOR_CLICK" - The click
+	// from the event isn't associated with the `operating_account` of the
+	// destination.
+	//   "PROCESSING_ERROR_REASON_CLICK_NOT_FOUND" - A corresponding click can't be
+	// found that matches the provided attributes.
 	Reason string `json:"reason,omitempty"`
 	// RecordCount: The count of records that failed to upload for a given reason.
 	RecordCount int64 `json:"recordCount,omitempty,string"`
@@ -885,6 +1030,9 @@ type Event struct {
 	// Consent: Optional. Information about whether the associated user has
 	// provided different types of consent.
 	Consent *Consent `json:"consent,omitempty"`
+	// ConversionCount: Optional. The conversion quantity associated with the
+	// event, for counting-based conversions.
+	ConversionCount float64 `json:"conversionCount,omitempty"`
 	// ConversionValue: Optional. The conversion value associated with the event,
 	// for value-based conversions.
 	ConversionValue float64 `json:"conversionValue,omitempty"`
@@ -963,6 +1111,7 @@ func (s Event) MarshalJSON() ([]byte, error) {
 func (s *Event) UnmarshalJSON(data []byte) error {
 	type NoMethod Event
 	var s1 struct {
+		ConversionCount gensupport.JSONFloat64 `json:"conversionCount"`
 		ConversionValue gensupport.JSONFloat64 `json:"conversionValue"`
 		*NoMethod
 	}
@@ -970,6 +1119,7 @@ func (s *Event) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
+	s.ConversionCount = float64(s1.ConversionCount)
 	s.ConversionValue = float64(s1.ConversionValue)
 	return nil
 }
@@ -1183,6 +1333,9 @@ func (s IngestAudienceMembersResponse) MarshalJSON() ([]byte, error) {
 // IngestAudienceMembersStatus: The status of the ingest audience members
 // request.
 type IngestAudienceMembersStatus struct {
+	// CompositeDataIngestionStatus: The status of the composite data ingestion to
+	// the destination.
+	CompositeDataIngestionStatus *IngestCompositeDataStatus `json:"compositeDataIngestionStatus,omitempty"`
 	// MobileDataIngestionStatus: The status of the mobile data ingestion to the
 	// destination.
 	MobileDataIngestionStatus *IngestMobileDataStatus `json:"mobileDataIngestionStatus,omitempty"`
@@ -1198,13 +1351,13 @@ type IngestAudienceMembersStatus struct {
 	// UserIdDataIngestionStatus: The status of the user id data ingestion to the
 	// destination.
 	UserIdDataIngestionStatus *IngestUserIdDataStatus `json:"userIdDataIngestionStatus,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MobileDataIngestionStatus")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "CompositeDataIngestionStatus") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MobileDataIngestionStatus") to
+	// NullFields is a list of field names (e.g. "CompositeDataIngestionStatus") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1213,6 +1366,59 @@ type IngestAudienceMembersStatus struct {
 
 func (s IngestAudienceMembersStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod IngestAudienceMembersStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IngestCompositeDataStatus: The status of the composite data ingestion to the
+// destination containing stats related to the ingestion.
+type IngestCompositeDataStatus struct {
+	// DataTypeCounts: The total count of data types sent in the upload request for
+	// the destination, broken down by data type. Includes all data types in the
+	// request, regardless of whether they were successfully ingested or not.
+	DataTypeCounts []*DataTypeCount `json:"dataTypeCounts,omitempty"`
+	// RecordCount: The total count of audience members sent in the upload request
+	// for the destination. Includes all audience members in the request,
+	// regardless of whether they were successfully ingested or not.
+	RecordCount int64 `json:"recordCount,omitempty,string"`
+	// UploadMatchRateRange: The match rate range of the upload.
+	//
+	// Possible values:
+	//   "MATCH_RATE_RANGE_UNKNOWN" - The match rate range is unknown.
+	//   "MATCH_RATE_RANGE_NOT_ELIGIBLE" - The match rate range is not eligible.
+	//   "MATCH_RATE_RANGE_LESS_THAN_20" - The match rate range is less than 20%
+	// (in the interval `[0, 20)`).
+	//   "MATCH_RATE_RANGE_20_TO_30" - The match rate range is between 20% and 30%
+	// (in the interval `[20, 31)`).
+	//   "MATCH_RATE_RANGE_31_TO_40" - The match rate range is between 31% and 40%
+	// (in the interval `[31, 41)`).
+	//   "MATCH_RATE_RANGE_41_TO_50" - The match rate range is between 41% and 50%
+	// (in the interval `[41, 51)`).
+	//   "MATCH_RATE_RANGE_51_TO_60" - The match rate range is between 51% and 60%
+	// (in the interval `[51, 61)`.
+	//   "MATCH_RATE_RANGE_61_TO_70" - The match rate range is between 61% and 70%
+	// (in the interval `[61, 71)`).
+	//   "MATCH_RATE_RANGE_71_TO_80" - The match rate range is between 71% and 80%
+	// (in the interval `[71, 81)`).
+	//   "MATCH_RATE_RANGE_81_TO_90" - The match rate range is between 81% and 90%
+	// (in the interval `[81, 91)`).
+	//   "MATCH_RATE_RANGE_91_TO_100" - The match rate range is between 91% and
+	// 100% (in the interval `[91, 100]`).
+	UploadMatchRateRange string `json:"uploadMatchRateRange,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataTypeCounts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataTypeCounts") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IngestCompositeDataStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod IngestCompositeDataStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1533,6 +1739,37 @@ type IngestedUserListInfo struct {
 
 func (s IngestedUserListInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod IngestedUserListInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IpData: IP address information for a user. We recommend including
+// observe_start_time and observe_end_time to help improve Customer Match match
+// rates.
+type IpData struct {
+	// IpAddress: Required. IP address captured at the time of customer
+	// interaction. Accepts standard string formats for both IPv4 and IPv6.
+	IpAddress string `json:"ipAddress,omitempty"`
+	// ObserveEndTime: Optional. Last recorded interaction time from this IP
+	// address in a session.
+	ObserveEndTime string `json:"observeEndTime,omitempty"`
+	// ObserveStartTime: Optional. First recorded interaction time from this IP
+	// address in a session.
+	ObserveStartTime string `json:"observeStartTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IpAddress") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IpAddress") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IpData) MarshalJSON() ([]byte, error) {
+	type NoMethod IpData
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2141,6 +2378,7 @@ type ProductAccount struct {
 	//   "DATA_PARTNER" - Data Partner.
 	//   "GOOGLE_ANALYTICS_PROPERTY" - Google Analytics.
 	//   "GOOGLE_AD_MANAGER_AUDIENCE_LINK" - Google Ad Manager audience link.
+	//   "FLOODLIGHT_CONFIG" - Floodlight configuration.
 	AccountType string `json:"accountType,omitempty"`
 	// Product: Deprecated. Use `account_type` instead.
 	//
@@ -2274,6 +2512,9 @@ func (s RemoveAudienceMembersResponse) MarshalJSON() ([]byte, error) {
 // RemoveAudienceMembersStatus: The status of the remove audience members
 // request.
 type RemoveAudienceMembersStatus struct {
+	// CompositeDataRemovalStatus: The status of the composite data removal from
+	// the destination.
+	CompositeDataRemovalStatus *RemoveCompositeDataStatus `json:"compositeDataRemovalStatus,omitempty"`
 	// MobileDataRemovalStatus: The status of the mobile data removal from the
 	// destination.
 	MobileDataRemovalStatus *RemoveMobileDataStatus `json:"mobileDataRemovalStatus,omitempty"`
@@ -2289,13 +2530,13 @@ type RemoveAudienceMembersStatus struct {
 	// UserIdDataRemovalStatus: The status of the user id data removal from the
 	// destination.
 	UserIdDataRemovalStatus *RemoveUserIdDataStatus `json:"userIdDataRemovalStatus,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MobileDataRemovalStatus") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "CompositeDataRemovalStatus")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MobileDataRemovalStatus") to
+	// NullFields is a list of field names (e.g. "CompositeDataRemovalStatus") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2304,6 +2545,35 @@ type RemoveAudienceMembersStatus struct {
 
 func (s RemoveAudienceMembersStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoveAudienceMembersStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RemoveCompositeDataStatus: The status of the composite data removal from the
+// destination.
+type RemoveCompositeDataStatus struct {
+	// DataTypeCounts: The total count of data types sent in the removal request,
+	// broken down by data type. Includes all data types in the request, regardless
+	// of whether they were successfully removed or not.
+	DataTypeCounts []*DataTypeCount `json:"dataTypeCounts,omitempty"`
+	// RecordCount: The total count of audience members sent in the removal
+	// request. Includes all audience members in the request, regardless of whether
+	// they were successfully removed or not.
+	RecordCount int64 `json:"recordCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "DataTypeCounts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataTypeCounts") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemoveCompositeDataStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoveCompositeDataStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

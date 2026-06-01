@@ -6110,10 +6110,19 @@ type Rollout struct {
 	// Possible values:
 	//   "STATE_REASON_TYPE_UNSPECIFIED" - Unspecified state reason.
 	//   "PAUSED_BY_USER" - Paused by the user.
-	//   "PAUSED_BY_SYSTEM_CONFIG" - Paused by the RSv2 Orchestrator due to system
-	// config(ex. GKE freeze).
+	//   "PAUSED_BY_SYSTEM_CONFIG" - Paused by system config (ex. GKE freeze).
 	//   "PAUSED_WAITING_FOR_NEXT_STAGE" - Paused waiting for the next stage to
 	// start.
+	//   "CANCELLED_BY_USER" - Cancelled by the user.
+	//   "CANCELLED_PAUSED_TOO_LONG" - Cancelled by the system because it was
+	// paused too long.
+	//   "CANCELLED_SUPERSEDED" - Cancelled by the system because the version is
+	// too old.
+	//   "CANCELLED_INCOMPATIBLE_ROLLOUT_SEQUENCE" - Cancelled by the system
+	// because the rollout sequence is incompatible, for example it has different
+	// number of stages, fleet projects or label selectors than the rollout.
+	//   "CANCELLED_SUPERSEDED_BY_USER_ROLLOUT" - Cancelled because of a new
+	// user-triggered rollout.
 	StateReasonType string `json:"stateReasonType,omitempty"`
 	// Uid: Output only. Google-generated UUID for this resource. This is unique
 	// across all Rollout resources. If a Rollout resource is deleted and another
@@ -6282,11 +6291,12 @@ type RolloutStage struct {
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Default value.
-	//   "PENDING" - The stage is pending.
-	//   "RUNNING" - The stage is running.
-	//   "SOAKING" - The stage is soaking.
+	//   "PENDING" - The stage is waiting for previous stages to complete.
+	//   "RUNNING" - The stage targets are being upgraded.
+	//   "SOAKING" - The stage is waiting for a predetermined time before next
+	// stage.
 	//   "COMPLETED" - The stage is completed.
-	//   "FORCED_SOAKING" - The stage is force soaking.
+	//   "FORCED_SOAKING" - Deprecated: use SOAKING instead.
 	//   "PAUSED" - The stage is paused.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally

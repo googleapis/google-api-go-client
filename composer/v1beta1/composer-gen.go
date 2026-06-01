@@ -2420,6 +2420,9 @@ type UserWorkloadsSecret struct {
 	// "projects/{projectId}/locations/{locationId}/environments/{environmentId}/use
 	// rWorkloadsSecrets/{userWorkloadsSecretId}"
 	Name string `json:"name,omitempty"`
+	// Type: Optional. The "type" field of Kubernetes Secret. For details see:
+	// https://kubernetes.io/docs/concepts/configuration/secret/#secret-types
+	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

@@ -204,10 +204,22 @@ type OrganizationsLocationsAddressGroupsService struct {
 
 func NewOrganizationsLocationsFirewallEndpointsService(s *Service) *OrganizationsLocationsFirewallEndpointsService {
 	rs := &OrganizationsLocationsFirewallEndpointsService{s: s}
+	rs.WildfireVerdictChangeRequests = NewOrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService(s)
 	return rs
 }
 
 type OrganizationsLocationsFirewallEndpointsService struct {
+	s *Service
+
+	WildfireVerdictChangeRequests *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService
+}
+
+func NewOrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService(s *Service) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService {
+	rs := &OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService struct {
 	s *Service
 }
 
@@ -399,10 +411,22 @@ type ProjectsLocationsFirewallEndpointAssociationsService struct {
 
 func NewProjectsLocationsFirewallEndpointsService(s *Service) *ProjectsLocationsFirewallEndpointsService {
 	rs := &ProjectsLocationsFirewallEndpointsService{s: s}
+	rs.WildfireVerdictChangeRequests = NewProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService(s)
 	return rs
 }
 
 type ProjectsLocationsFirewallEndpointsService struct {
+	s *Service
+
+	WildfireVerdictChangeRequests *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService
+}
+
+func NewProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService(s *Service) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService {
+	rs := &ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService struct {
 	s *Service
 }
 
@@ -1874,6 +1898,8 @@ type FirewallEndpoint struct {
 	State string `json:"state,omitempty"`
 	// UpdateTime: Output only. Update time stamp
 	UpdateTime string `json:"updateTime,omitempty"`
+	// WildfireSettings: Optional. Settings for WildFire analysis.
+	WildfireSettings *FirewallEndpointWildfireSettings `json:"wildfireSettings,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1981,16 +2007,60 @@ func (s FirewallEndpointAssociationReference) MarshalJSON() ([]byte, error) {
 
 // FirewallEndpointEndpointSettings: Settings for the endpoint.
 type FirewallEndpointEndpointSettings struct {
+	// ContentCloudRegion: Optional. The content cloud region of the endpoint.
+	//
+	// Possible values:
+	//   "CONTENT_CLOUD_REGION_UNSPECIFIED" - PAN content cloud region not
+	// specified.
+	//   "US_CENTRAL" - us.hawkeye.services-edge.paloaltonetworks.com
+	//   "APAC" - APAC content cloud portal:
+	// apac.hawkeye.services-edge.paloaltonetworks.com
+	//   "INDIA" - India content cloud portal:
+	// in.hawkeye.services-edge.paloaltonetworks.com
+	//   "UK" - UK content cloud portal:
+	// uk.hawkeye.services-edge.paloaltonetworks.com
+	//   "FRANCE" - France content cloud portal:
+	// fr.hawkeye.services-edge.paloaltonetworks.com
+	//   "JAPAN" - Japan content cloud portal:
+	// jp.hawkeye.services-edge.paloaltonetworks.com
+	//   "AUSTRALIA" - Australia content cloud portal:
+	// au.hawkeye.services-edge.paloaltonetworks.com
+	//   "CANADA" - Canada content cloud portal:
+	// ca.hawkeye.services-edge.paloaltonetworks.com
+	//   "SWITZERLAND" - Switzerland content cloud portal:
+	// ch.hawkeye.services-edge.paloaltonetworks.com
+	//   "NETHERLANDS" - Netherlands content cloud portal:
+	// nl.hawkeye.services-edge.paloaltonetworks.com
+	//   "INDONESIA" - Indonesia content cloud portal:
+	// id.hawkeye.services-edge.paloaltonetworks.com
+	//   "QATAR" - Qatar content cloud portal:
+	// qa.hawkeye.services-edge.paloaltonetworks.com
+	//   "TAIWAN" - Taiwan content cloud portal:
+	// tw.hawkeye.services-edge.paloaltonetworks.com
+	//   "POLAND" - Poland content cloud portal:
+	// pl.hawkeye.services-edge.paloaltonetworks.com
+	//   "SOUTH_KOREA" - South Korea content cloud portal:
+	// kr.hawkeye.services-edge.paloaltonetworks.com
+	//   "SAUDI_ARABIA" - Saudi Arabia content cloud portal:
+	// sa.hawkeye.services-edge.paloaltonetworks.com
+	//   "ITALY" - Italy content cloud portal:
+	// it.hawkeye.services-edge.paloaltonetworks.com
+	ContentCloudRegion string `json:"contentCloudRegion,omitempty"`
+	// HttpPartialResponseBlocked: Optional. Whether to block HTTP partial
+	// responses for the endpoint. When this is true, resumption of blocked
+	// malicious HTTP file downloads will be blocked by the firewall. False
+	// provides maximum availability, true provides maximum security.
+	HttpPartialResponseBlocked bool `json:"httpPartialResponseBlocked,omitempty"`
 	// JumboFramesEnabled: Optional. Immutable. Indicates whether Jumbo Frames are
 	// enabled. Default value is false.
 	JumboFramesEnabled bool `json:"jumboFramesEnabled,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "JumboFramesEnabled") to
+	// ForceSendFields is a list of field names (e.g. "ContentCloudRegion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "JumboFramesEnabled") to include
+	// NullFields is a list of field names (e.g. "ContentCloudRegion") to include
 	// in API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1999,6 +2069,113 @@ type FirewallEndpointEndpointSettings struct {
 
 func (s FirewallEndpointEndpointSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod FirewallEndpointEndpointSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FirewallEndpointWildfireSettings: Settings for WildFire analysis.
+type FirewallEndpointWildfireSettings struct {
+	// Enabled: Optional. Indicates whether WildFire analysis is enabled. Default
+	// value is false.
+	Enabled bool `json:"enabled,omitempty"`
+	// WildfireInlineCloudAnalysisSettings: Optional. Settings for WildFire inline
+	// cloud analysis.
+	WildfireInlineCloudAnalysisSettings *FirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettings `json:"wildfireInlineCloudAnalysisSettings,omitempty"`
+	// WildfireRealtimeLookupDuration: Optional. Duration in milliseconds on a file
+	// being held while the WildFire real time signature cloud performs a signature
+	// lookup. Value between 1 to 5000 is valid. Default value is 1000.
+	WildfireRealtimeLookupDuration string `json:"wildfireRealtimeLookupDuration,omitempty"`
+	// WildfireRealtimeLookupTimeoutAction: Optional. Action to take on WildFire
+	// real time signature lookup timeout. Default value is ALLOW.
+	//
+	// Possible values:
+	//   "WILDFIRE_REALTIME_SIGNATURE_LOOKUP_TIMEOUT_ACTION_UNSPECIFIED" - WildFire
+	// real time signature lookup timeout action not specified.
+	//   "ALLOW" - The files that timed out in the signature lookup will be allowed
+	// to transmit.
+	//   "DENY" - The files that timed out in the signature lookup will be denied
+	// to transmit.
+	WildfireRealtimeLookupTimeoutAction string `json:"wildfireRealtimeLookupTimeoutAction,omitempty"`
+	// WildfireRegion: Optional. The region where WildFire analysis will be
+	// performed. PAN supports regions:
+	// https://docs.paloaltonetworks.com/advanced-wildfire/administration/advanced-wildfire-overview/advanced-wildfire-deployments/advanced-wildfire-global-cloud
+	//
+	// Possible values:
+	//   "WILDFIRE_REGION_UNSPECIFIED" - WildFire region not specified.
+	//   "CANADA" - Canada cloud portal: ca.wildfire.paloaltonetworks.com
+	//   "UNITED_STATES" - United States cloud portal:
+	// us-native.wildfire.paloaltonetworks.com
+	//   "JAPAN" - Japan cloud portal: jp.wildfire.paloaltonetworks.com
+	//   "SINGAPORE" - Singapore cloud portal: sg.wildfire.paloaltonetworks.com
+	//   "UNITED_KINGDOM" - United Kingdom cloud portal:
+	// uk.wildfire.paloaltonetworks.com
+	//   "AUSTRALIA" - Australia cloud portal: au.wildfire.paloaltonetworks.com
+	//   "GERMANY" - Germany cloud portal: de.wildfire.paloaltonetworks.com
+	//   "INDIA" - India cloud portal: in.wildfire.paloaltonetworks.com
+	//   "SWITZERLAND" - Switzerland cloud portal: ch.wildfire.paloaltonetworks.com
+	//   "POLAND" - Poland cloud portal: pl.wildfire.paloaltonetworks.com
+	//   "INDONESIA" - Indonesia cloud portal: id.wildfire.paloaltonetworks.com
+	//   "TAIWAN" - Taiwan cloud portal: tw.wildfire.paloaltonetworks.com
+	//   "FRANCE" - France cloud portal: fr.wildfire.paloaltonetworks.com
+	//   "QATAR" - Qatar cloud portal: qatar.wildfire.paloaltonetworks.com
+	//   "SOUTH_KOREA" - South Korea cloud portal: kr.wildfire.paloaltonetworks.com
+	//   "ISRAEL" - Israel cloud portal: il.wildfire.paloaltonetworks.com
+	//   "SAUDI_ARABIA" - Saudi Arabia cloud portal:
+	// sa.wildfire.paloaltonetworks.com
+	//   "SPAIN" - Spain cloud portal: es.wildfire.paloaltonetworks.com
+	WildfireRegion string `json:"wildfireRegion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FirewallEndpointWildfireSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod FirewallEndpointWildfireSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettings:
+// Settings for WildFire inline cloud analysis.
+type FirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettings struct {
+	// MaxAnalysisDuration: Optional. Timeout in milliseconds on a file being held
+	// while WildFire inline cloud analysis is performed. Value between 1 to 240000
+	// is valid. Default value is 30000.
+	MaxAnalysisDuration string `json:"maxAnalysisDuration,omitempty"`
+	// SubmissionTimeoutLoggingDisabled: Optional. Whether to disable WildFire
+	// submission log generation for files that timeout during WildFire inline
+	// cloud analysis.
+	SubmissionTimeoutLoggingDisabled bool `json:"submissionTimeoutLoggingDisabled,omitempty"`
+	// TimeoutAction: Optional. Action to take when WildFire inline cloud analysis
+	// times out. Default value is ALLOW.
+	//
+	// Possible values:
+	//   "WILDFIRE_INLINE_CLOUD_ANALYSIS_TIMEOUT_ACTION_UNSPECIFIED" - WildFire
+	// inline cloud analysis timeout action not specified.
+	//   "ALLOW" - The files that timed out will be allowed to transmit.
+	//   "DENY" - The files that timed out will be denied to transmit.
+	TimeoutAction string `json:"timeoutAction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxAnalysisDuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxAnalysisDuration") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod FirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3622,7 +3799,8 @@ type ListMirroringDeploymentsResponse struct {
 	// page. If this field is omitted, there are no subsequent pages. See
 	// https://google.aip.dev/158 for more details.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Unreachable: Locations that could not be reached.
+	// Unreachable: Unordered list. Locations that could not be reached. See
+	// https://google.aip.dev/217 for more details.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3960,6 +4138,37 @@ type ListUrlListsResponse struct {
 
 func (s ListUrlListsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListUrlListsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListWildfireVerdictChangeRequestsResponse: Message for response to listing
+// WildfireVerdictChangeRequests.
+type ListWildfireVerdictChangeRequestsResponse struct {
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unordered list. Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+	// WildfireVerdictChangeRequests: The list of WildfireVerdictChangeRequests
+	WildfireVerdictChangeRequests []*WildfireVerdictChangeRequest `json:"wildfireVerdictChangeRequests,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListWildfireVerdictChangeRequestsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListWildfireVerdictChangeRequestsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4979,12 +5188,16 @@ type SecurityProfile struct {
 	//   "CUSTOM_MIRRORING" - Profile type for packet mirroring v2
 	//   "CUSTOM_INTERCEPT" - Profile type for TPPI.
 	//   "URL_FILTERING" - Profile type for URL filtering.
+	//   "WILDFIRE_ANALYSIS" - Profile type for WildFire Analysis.
 	Type string `json:"type,omitempty"`
 	// UpdateTime: Output only. Last resource update timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// UrlFilteringProfile: The URL filtering configuration for the
 	// SecurityProfile.
 	UrlFilteringProfile *UrlFilteringProfile `json:"urlFilteringProfile,omitempty"`
+	// WildfireAnalysisProfile: The WildFire Analysis configurations for
+	// SecurityProfile.
+	WildfireAnalysisProfile *WildfireAnalysisProfile `json:"wildfireAnalysisProfile,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -5042,6 +5255,9 @@ type SecurityProfileGroup struct {
 	// UrlFilteringProfile: Optional. Reference to a SecurityProfile with the
 	// UrlFiltering configuration.
 	UrlFilteringProfile string `json:"urlFilteringProfile,omitempty"`
+	// WildfireAnalysisProfile: Optional. Reference to a SecurityProfile with the
+	// WildFire configuration.
+	WildfireAnalysisProfile string `json:"wildfireAnalysisProfile,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -5551,6 +5767,552 @@ type ValidationCA struct {
 
 func (s ValidationCA) MarshalJSON() ([]byte, error) {
 	type NoMethod ValidationCA
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireAnalysisProfile: WildfireAnalysisProfile defines Palo Alto Networks
+// WildFire behavior.
+type WildfireAnalysisProfile struct {
+	// WildfireInlineCloudAnalysisRules: Optional. Configuration for WildFire
+	// inline cloud analysis.
+	WildfireInlineCloudAnalysisRules []*WildfireInlineCloudAnalysisRule `json:"wildfireInlineCloudAnalysisRules,omitempty"`
+	// WildfireInlineMlOverrides: Optional. Configuration for overriding inline ML
+	// WildFire actions per protocol.
+	WildfireInlineMlOverrides []*WildfireInlineMlOverride `json:"wildfireInlineMlOverrides,omitempty"`
+	// WildfireInlineMlSetting: Optional. Settings for WildFire Inline ML analysis.
+	WildfireInlineMlSetting *WildfireInlineMlSettings `json:"wildfireInlineMlSetting,omitempty"`
+	// WildfireInlineMlSettings: Optional. Settings for WildFire Inline ML
+	// analysis.
+	WildfireInlineMlSettings []*WildfireInlineMlSettings `json:"wildfireInlineMlSettings,omitempty"`
+	// WildfireOverrides: Optional. Configuration for overriding WildFire actions
+	// per protocol.
+	WildfireOverrides []*WildfireOverride `json:"wildfireOverrides,omitempty"`
+	// WildfireRealtimeLookup: Optional. Whether to hold the transfer of a file
+	// while the WildFire real-time signature cloud performs a signature lookup.
+	// Default value is false.
+	WildfireRealtimeLookup bool `json:"wildfireRealtimeLookup,omitempty"`
+	// WildfireSubmissionRules: Optional. Configurations for WildFire file
+	// submissions.
+	WildfireSubmissionRules []*WildfireSubmissionRule `json:"wildfireSubmissionRules,omitempty"`
+	// WildfireThreatOverrides: Optional. Configuration for overriding WildFire
+	// threats action by threat_id match.
+	WildfireThreatOverrides []*WildfireThreatOverride `json:"wildfireThreatOverrides,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "WildfireInlineCloudAnalysisRules") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "WildfireInlineCloudAnalysisRules") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireAnalysisProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireAnalysisProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireInlineCloudAnalysisRule: The list of file type configurations to be
+// scanned by WildFire Inline Cloud Analysis.
+type WildfireInlineCloudAnalysisRule struct {
+	// Action: Required. Action to take when a threat is detected using WildFire
+	// Inline Cloud Analysis. The default Value is DENY.
+	//
+	// Possible values:
+	//   "WILDFIRE_INLINE_CLOUD_ANALYSIS_ACTION_UNSPECIFIED" - WildFire Inline
+	// Cloud Analysis action not specified.
+	//   "ALLOW" - The files caught by WildFire Inline Cloud Analysis will be
+	// allowed to transmit.
+	//   "DENY" - The files caught by WildFire Inline Cloud Analysis will be denied
+	// to transmit.
+	//   "ALERT" - The files caught by WildFire Inline Cloud Analysis will be
+	// allowed to transmit, but a wildfire_submission_log entry will be sent to the
+	// consumer project.
+	Action string `json:"action,omitempty"`
+	// CustomFileTypes: Submit a custom list of file types for WildFire analysis.
+	CustomFileTypes *WildfireInlineCloudAnalysisRuleCustomFileTypes `json:"customFileTypes,omitempty"`
+	// Direction: Required. Direction for the file to be analyzed by WildFire
+	// Inline Cloud Analysis.
+	//
+	// Possible values:
+	//   "DIRECTION_UNSPECIFIED" - Direction not specified.
+	//   "UPLOAD" - Upload direction.
+	//   "DOWNLOAD" - Download direction.
+	//   "BOTH" - Both upload and download directions.
+	Direction string `json:"direction,omitempty"`
+	// FileSelectionMode: Required. File selection mode for WildFire inline cloud
+	// analysis.
+	//
+	// Possible values:
+	//   "FILE_SELECTION_MODE_UNSPECIFIED" - File selection mode not specified.
+	//   "ALL_FILE_TYPES" - Submit all the file types for scan.
+	//   "CUSTOM_FILE_TYPES" - Submit a custom list of file types for scan.
+	FileSelectionMode string `json:"fileSelectionMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireInlineCloudAnalysisRule) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireInlineCloudAnalysisRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireInlineCloudAnalysisRuleCustomFileTypes: The options to submit a
+// custom list of file types for scan.
+type WildfireInlineCloudAnalysisRuleCustomFileTypes struct {
+	// FileTypes: Required. File types to be submitted for WildFire inline cloud
+	// analysis.
+	//
+	// Possible values:
+	//   "FILE_TYPE_UNSPECIFIED" - File type not specified.
+	//   "PE" - Portable Executable (PE) files.
+	FileTypes []string `json:"fileTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FileTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireInlineCloudAnalysisRuleCustomFileTypes) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireInlineCloudAnalysisRuleCustomFileTypes
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireInlineMlFileException: Defines the file to exclude from WildFire
+// Inline ML analysis.
+type WildfireInlineMlFileException struct {
+	// Filename: Optional. Name of the file to exclude from WildFire Inline ML
+	// analysis.
+	Filename string `json:"filename,omitempty"`
+	// PartialHash: Required. Machine learning partial hash of the file to exclude
+	// from WildFire Inline ML analysis.
+	PartialHash string `json:"partialHash,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Filename") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Filename") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireInlineMlFileException) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireInlineMlFileException
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireInlineMlOverride: Defines what action to take for WildFire Inline ML
+// threats per protocol.
+type WildfireInlineMlOverride struct {
+	// Action: Required. The action to take for WildFire Inline ML override.
+	//
+	// Possible values:
+	//   "WILDFIRE_THREAT_ACTION_UNSPECIFIED" - Threat action not specified.
+	//   "WILDFIRE_DEFAULT_ACTION" - The default action (as specified by the
+	// vendor) is taken.
+	//   "WILDFIRE_ALLOW" - The packet matching this rule will be allowed to
+	// transmit.
+	//   "WILDFIRE_ALERT" - The packet matching this rule will be allowed to
+	// transmit, but a threat_log entry will be sent to the consumer project.
+	//   "WILDFIRE_DENY" - The packet matching this rule will be dropped, and a
+	// threat_log entry will be sent to the consumer project.
+	Action string `json:"action,omitempty"`
+	// Protocol: Required. Protocol to match for WildFire Inline ML override.
+	//
+	// Possible values:
+	//   "WILDFIRE_PROTOCOL_UNSPECIFIED" - Protocol not specified.
+	//   "WILDFIRE_SMTP" - SMTP protocol
+	//   "WILDFIRE_SMB" - SMB protocol
+	//   "WILDFIRE_POP3" - POP3 protocol
+	//   "WILDFIRE_IMAP" - IMAP protocol
+	//   "WILDFIRE_HTTP2" - HTTP2 protocol
+	//   "WILDFIRE_HTTP" - HTTP protocol
+	//   "WILDFIRE_FTP" - FTP protocol
+	Protocol string `json:"protocol,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireInlineMlOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireInlineMlOverride
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireInlineMlSettings: Defines the settings for WildFire Inline ML
+// analysis.
+type WildfireInlineMlSettings struct {
+	// FileExceptions: Optional. List of files to exclude from WildFire Inline ML
+	// analysis.
+	FileExceptions []*WildfireInlineMlFileException `json:"fileExceptions,omitempty"`
+	// InlineMlConfigs: Optional. List of Inline ML configs to enable in WildFire
+	// Inline ML analysis.
+	InlineMlConfigs []*WildfireInlineMlSettingsInlineMlConfig `json:"inlineMlConfigs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FileExceptions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileExceptions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireInlineMlSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireInlineMlSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireInlineMlSettingsInlineMlConfig: Configuration for WildFire Inline ML
+// analysis per file type.
+type WildfireInlineMlSettingsInlineMlConfig struct {
+	// Action: Required. Action to take when a threat is detected using Inline ML.
+	//
+	// Possible values:
+	//   "INLINE_ML_ACTION_UNSPECIFIED" - Inline ML threat action not specified.
+	//   "DISABLE" - Disable WildFire Inline ML for the associated file type.
+	//   "ALERT" - Enable WildFire Inline ML for the associated file type.
+	// Overrides any protocol level settings with action stricter than ALERT to
+	// ALERT so that the malicious files detected generate a threat log to the
+	// consumer project but are not blocked.
+	//   "ENABLE" - Enable WildFire Inline ML for the associated file type,
+	// malicious files detected will be blocked.
+	Action string `json:"action,omitempty"`
+	// FileType: Required. File type to configure Inline ML for.
+	//
+	// Possible values:
+	//   "INLINE_ML_CONFIG_UNSPECIFIED" - Inline ML config not specified.
+	//   "WINDOWS_EXECUTABLE" - Enable machine learning engine to dynamically
+	// detect malicious PE files.
+	//   "POWERSHELL_SCRIPT1" - Enable machine learning engine to dynamically
+	// identify malicious PowerShell scripts with known length.
+	//   "POWERSHELL_SCRIPT2" - Enable machine learning engine to dynamically
+	// identify malicious PowerShell script without known length.
+	//   "ELF" - Enable machine learning engine to dynamically detect malicious ELF
+	// files.
+	//   "MS_OFFICE" - Enable machine learning engine to dynamically detect
+	// malicious MSOffice (97-03) files.
+	//   "SHELL" - Enable machine learning engine to dynamically detect malicious
+	// Shell files.
+	//   "OOXML" - Enable machine learning engine to dynamically detect malicious
+	// Open Office XML files.
+	//   "MACHO" - Enable machine learning engine to dynamically detect malicious
+	// Mach-O files.
+	FileType string `json:"fileType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireInlineMlSettingsInlineMlConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireInlineMlSettingsInlineMlConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireOverride: Defines what action to take for WildFire threats per
+// protocol.
+type WildfireOverride struct {
+	// Action: Required. Threat action override. For some threat types, only a
+	// subset of actions applies.
+	//
+	// Possible values:
+	//   "WILDFIRE_THREAT_ACTION_UNSPECIFIED" - Threat action not specified.
+	//   "WILDFIRE_DEFAULT_ACTION" - The default action (as specified by the
+	// vendor) is taken.
+	//   "WILDFIRE_ALLOW" - The packet matching this rule will be allowed to
+	// transmit.
+	//   "WILDFIRE_ALERT" - The packet matching this rule will be allowed to
+	// transmit, but a threat_log entry will be sent to the consumer project.
+	//   "WILDFIRE_DENY" - The packet matching this rule will be dropped, and a
+	// threat_log entry will be sent to the consumer project.
+	Action string `json:"action,omitempty"`
+	// Protocol: Required. Protocol to match.
+	//
+	// Possible values:
+	//   "WILDFIRE_PROTOCOL_UNSPECIFIED" - Protocol not specified.
+	//   "WILDFIRE_SMTP" - SMTP protocol
+	//   "WILDFIRE_SMB" - SMB protocol
+	//   "WILDFIRE_POP3" - POP3 protocol
+	//   "WILDFIRE_IMAP" - IMAP protocol
+	//   "WILDFIRE_HTTP2" - HTTP2 protocol
+	//   "WILDFIRE_HTTP" - HTTP protocol
+	//   "WILDFIRE_FTP" - FTP protocol
+	Protocol string `json:"protocol,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireOverride
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireSubmissionRule: Defines the file types to be submitted for WildFire
+// analysis and the direction of the traffic.
+type WildfireSubmissionRule struct {
+	// CustomFileTypes: Submit a custom list of file types for WildFire analysis.
+	CustomFileTypes *WildfireSubmissionRuleCustomFileTypes `json:"customFileTypes,omitempty"`
+	// Direction: Required. Direction for the files to be analyzed by WildFire.
+	//
+	// Possible values:
+	//   "DIRECTION_UNSPECIFIED" - Direction not specified.
+	//   "UPLOAD" - Upload direction.
+	//   "DOWNLOAD" - Download direction.
+	//   "BOTH" - Both upload and download directions.
+	Direction string `json:"direction,omitempty"`
+	// FileSelectionMode: Required. File selection mode for WildFire analysis.
+	//
+	// Possible values:
+	//   "FILE_SELECTION_MODE_UNSPECIFIED" - File selection mode not specified.
+	//   "ALL_FILE_TYPES" - Submit all the file types for scan.
+	//   "CUSTOM_FILE_TYPES" - Submit a custom list of file types for scan.
+	FileSelectionMode string `json:"fileSelectionMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomFileTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomFileTypes") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireSubmissionRule) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireSubmissionRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireSubmissionRuleCustomFileTypes: The options to submit a custom list
+// of file types for scan.
+type WildfireSubmissionRuleCustomFileTypes struct {
+	// FileTypes: Required. File types to be submitted for WildFire analysis.
+	//
+	// Possible values:
+	//   "FILE_TYPE_UNSPECIFIED" - File type not specified.
+	//   "APK" - Android Application Package (APK) files.
+	//   "ARCHIVE" - Roshal Archive (RAR) and 7-Zip (7z) archive files.
+	//   "EMAIL_LINK" - HTTP/HTTPS links contained in SMTP and POP3 email messages.
+	//   "FLASH" - Adobe Flash applets and Flash content embedded in web pages.
+	//   "JAR" - Java applets (JAR/class files types).
+	//   "LINUX" - Executable and Linkable Format (ELF) files.
+	//   "MS_OFFICE" - Files used by Microsoft Office.
+	//   "PDF" - Portable Document Format (PDF) files.
+	//   "PE" - Portable Executable (PE) files.
+	//   "SCRIPT" - Various script files. Jscript (JS), VBScript (VBS), PowerShell
+	// Scripts (PS1), Batch (BAT), HTML Application (HTA).
+	FileTypes []string `json:"fileTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FileTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireSubmissionRuleCustomFileTypes) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireSubmissionRuleCustomFileTypes
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireThreatOverride: Defines what action to take for a specific WildFire
+// threat_id match.
+type WildfireThreatOverride struct {
+	// Action: Required. Threat action override.
+	//
+	// Possible values:
+	//   "WILDFIRE_THREAT_ACTION_UNSPECIFIED" - Threat action not specified.
+	//   "WILDFIRE_DEFAULT_ACTION" - The default action (as specified by the
+	// vendor) is taken.
+	//   "WILDFIRE_ALLOW" - The packet matching this rule will be allowed to
+	// transmit.
+	//   "WILDFIRE_ALERT" - The packet matching this rule will be allowed to
+	// transmit, but a threat_log entry will be sent to the consumer project.
+	//   "WILDFIRE_DENY" - The packet matching this rule will be dropped, and a
+	// threat_log entry will be sent to the consumer project.
+	Action string `json:"action,omitempty"`
+	// ThreatId: Required. Threat ID to match.
+	ThreatId string `json:"threatId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireThreatOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireThreatOverride
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireVerdictChangeRequest: Message for a WildfireVerdictChangeRequest.
+type WildfireVerdictChangeRequest struct {
+	// Comment: Required. The justification for the verdict change request. Max
+	// length 2048 characters.
+	Comment string `json:"comment,omitempty"`
+	// CreateTime: Output only. The timestamp when the WildfireVerdictChangeRequest
+	// was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// FileName: Output only. The file name of the Malware Sample.
+	FileName string `json:"fileName,omitempty"`
+	// FileType: Output only. The file type of the Malware Sample.
+	FileType string `json:"fileType,omitempty"`
+	// FinalVerdict: Output only. The final verdict of the Malware Sample.
+	//
+	// Possible values:
+	//   "WILDFIRE_SAMPLE_VERDICT_UNKNOWN" - Default value. Malware is not yet
+	// classified.
+	//   "BENIGN" - Sample is safe and does not exhibit malicious behavior.
+	//   "MALWARE" - Sample is malware and poses a security threat.
+	//   "GRAYWARE" - Sample does not pose a direct security threat, but might
+	// display otherwise obtrusive behavior.
+	//   "PHISHING" - Link directs users to a phishing site and poses a security
+	// threat.
+	FinalVerdict string `json:"finalVerdict,omitempty"`
+	// Name: Output only. Identifier. The relative name of the
+	// WildfireVerdictChangeRequest. Output only. This is a unique identifier
+	// generated by the third party API. Format:
+	// organizations|projects/{project_or_organization}/locations/{location}/firewal
+	// lEndpoints/{firewall_endpoint}/wildfireVerdictChangeRequests/{wildfire_verdic
+	// t_change_request_id} Where {wildfire_verdict_change_request_id} is the ID in
+	// the format:
+	// ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+	Name string `json:"name,omitempty"`
+	// NewVerdict: Required. The suggested verdict to apply to the Malware Sample.
+	//
+	// Possible values:
+	//   "WILDFIRE_SAMPLE_VERDICT_UNKNOWN" - Default value. Malware is not yet
+	// classified.
+	//   "BENIGN" - Sample is safe and does not exhibit malicious behavior.
+	//   "MALWARE" - Sample is malware and poses a security threat.
+	//   "GRAYWARE" - Sample does not pose a direct security threat, but might
+	// display otherwise obtrusive behavior.
+	//   "PHISHING" - Link directs users to a phishing site and poses a security
+	// threat.
+	NewVerdict string `json:"newVerdict,omitempty"`
+	// OldVerdict: Output only. The original verdict of the Malware Sample.
+	//
+	// Possible values:
+	//   "WILDFIRE_SAMPLE_VERDICT_UNKNOWN" - Default value. Malware is not yet
+	// classified.
+	//   "BENIGN" - Sample is safe and does not exhibit malicious behavior.
+	//   "MALWARE" - Sample is malware and poses a security threat.
+	//   "GRAYWARE" - Sample does not pose a direct security threat, but might
+	// display otherwise obtrusive behavior.
+	//   "PHISHING" - Link directs users to a phishing site and poses a security
+	// threat.
+	OldVerdict string `json:"oldVerdict,omitempty"`
+	// ResolutionTime: Output only. The timestamp when the
+	// WildfireVerdictChangeRequest was resolved.
+	ResolutionTime string `json:"resolutionTime,omitempty"`
+	// Sha256: Required. The SHA256 hash of the Malware Sample to change the
+	// verdict of.
+	Sha256 string `json:"sha256,omitempty"`
+	// SourceRegion: Output only. The region of the file associated with the
+	// Malware Sample.
+	SourceRegion string `json:"sourceRegion,omitempty"`
+	// State: Output only. The review state of the WildfireVerdictChangeRequest.
+	//
+	// Possible values:
+	//   "VERDICT_CHANGE_REQUEST_STATE_UNSPECIFIED" - Default value. Request does
+	// not have a state. This value is unused.
+	//   "OPEN" - Request has been created and review has not started.
+	//   "CLOSED" - Malware Sample has been reviewed and the final verdict has been
+	// updated.
+	//   "PENDING" - Malware Sample is currently being reviewed.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. The timestamp when the WildfireVerdictChangeRequest
+	// was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// WildfireVerdictChangeRequestId: Output only. The ID of the
+	// WildfireVerdictChangeRequest. This is a unique identifier generated by the
+	// third party API. Format:
+	// ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+	WildfireVerdictChangeRequestId string `json:"wildfireVerdictChangeRequestId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Comment") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Comment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireVerdictChangeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireVerdictChangeRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7685,6 +8447,391 @@ func (c *OrganizationsLocationsFirewallEndpointsPatchCall) Do(opts ...googleapi.
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.organizations.locations.firewallEndpoints.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall struct {
+	s                            *Service
+	parent                       string
+	wildfireverdictchangerequest *WildfireVerdictChangeRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// Create: Create WildfireVerdictChangeRequest in a given Firewall Endpoint in
+// an organization and location.
+//
+//   - parent: Parent value for CreateWildfireVerdictChangeRequestRequest. The
+//     parent is a firewall endpoint resource. Format:
+//     organizations|projects/{project_or_organization}/locations/{location}/firew
+//     allEndpoints/{firewall_endpoint}.
+func (r *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService) Create(parent string, wildfireverdictchangerequest *WildfireVerdictChangeRequest) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall {
+	c := &OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.wildfireverdictchangerequest = wildfireverdictchangerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall) Context(ctx context.Context) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.wildfireverdictchangerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/wildfireVerdictChangeRequests")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.organizations.locations.firewallEndpoints.wildfireVerdictChangeRequests.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.organizations.locations.firewallEndpoints.wildfireVerdictChangeRequests.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *WildfireVerdictChangeRequest.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall) Do(opts ...googleapi.CallOption) (*WildfireVerdictChangeRequest, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &WildfireVerdictChangeRequest{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.organizations.locations.firewallEndpoints.wildfireVerdictChangeRequests.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get WildfireVerdictChangeRequest in a given Firewall Endpoint in an
+// organization and location.
+//
+//   - name: Name of the WildfireVerdictChangeRequest to retrieve. Format:
+//     organizations|projects/{project_or_organization}/locations/{location}/firew
+//     allEndpoints/{firewall_endpoint}/wildfireVerdictChangeRequests/{wildfire_ve
+//     rdict_change_request_id} Where {wildfire_verdict_change_request_id} is the
+//     ID in the format:
+//     ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12
+//     }$.
+func (r *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService) Get(name string) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall {
+	c := &OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) Context(ctx context.Context) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.organizations.locations.firewallEndpoints.wildfireVerdictChangeRequests.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.organizations.locations.firewallEndpoints.wildfireVerdictChangeRequests.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *WildfireVerdictChangeRequest.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) Do(opts ...googleapi.CallOption) (*WildfireVerdictChangeRequest, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &WildfireVerdictChangeRequest{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.organizations.locations.firewallEndpoints.wildfireVerdictChangeRequests.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists WildfireVerdictChangeRequests in a given Firewall Endpoint in an
+// organization and location.
+//
+//   - parent: Parent value for ListWildfireVerdictChangeRequestsRequest. The
+//     parent is a firewall endpoint resource. Format:
+//     organizations|projects/{project_or_organization}/locations/{location}/firew
+//     allEndpoints/{firewall_endpoint}.
+func (r *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService) List(parent string) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c := &OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression to filter the
+// results. See AIP-160 for filtering syntax. Supported fields are: - `sha256`
+// (string, equality only, e.g. `sha256 = "...") - `state` (enum, equality
+// only, e.g. `state = "ACTIVE") - `create_time` (timestamp, comparisons, e.g.
+// `create_time > "2026-01-01T00:00:00Z")
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Filter(filter string) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) PageSize(pageSize int64) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) PageToken(pageToken string) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Context(ctx context.Context) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/wildfireVerdictChangeRequests")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.organizations.locations.firewallEndpoints.wildfireVerdictChangeRequests.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.organizations.locations.firewallEndpoints.wildfireVerdictChangeRequests.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListWildfireVerdictChangeRequestsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Do(opts ...googleapi.CallOption) (*ListWildfireVerdictChangeRequestsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListWildfireVerdictChangeRequestsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.organizations.locations.firewallEndpoints.wildfireVerdictChangeRequests.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Pages(ctx context.Context, f func(*ListWildfireVerdictChangeRequestsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type OrganizationsLocationsOperationsCancelCall struct {
@@ -16423,6 +17570,391 @@ func (c *ProjectsLocationsFirewallEndpointsPatchCall) Do(opts ...googleapi.CallO
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall struct {
+	s                            *Service
+	parent                       string
+	wildfireverdictchangerequest *WildfireVerdictChangeRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// Create: Create WildfireVerdictChangeRequest in a given Firewall Endpoint in
+// a project and location.
+//
+//   - parent: Parent value for CreateWildfireVerdictChangeRequestRequest. The
+//     parent is a firewall endpoint resource. Format:
+//     organizations|projects/{project_or_organization}/locations/{location}/firew
+//     allEndpoints/{firewall_endpoint}.
+func (r *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService) Create(parent string, wildfireverdictchangerequest *WildfireVerdictChangeRequest) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall {
+	c := &ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.wildfireverdictchangerequest = wildfireverdictchangerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall) Context(ctx context.Context) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.wildfireverdictchangerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/wildfireVerdictChangeRequests")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.wildfireVerdictChangeRequests.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.firewallEndpoints.wildfireVerdictChangeRequests.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *WildfireVerdictChangeRequest.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall) Do(opts ...googleapi.CallOption) (*WildfireVerdictChangeRequest, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &WildfireVerdictChangeRequest{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.wildfireVerdictChangeRequests.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get WildfireVerdictChangeRequest in a given Firewall Endpoint in a
+// project and location.
+//
+//   - name: Name of the WildfireVerdictChangeRequest to retrieve. Format:
+//     organizations|projects/{project_or_organization}/locations/{location}/firew
+//     allEndpoints/{firewall_endpoint}/wildfireVerdictChangeRequests/{wildfire_ve
+//     rdict_change_request_id} Where {wildfire_verdict_change_request_id} is the
+//     ID in the format:
+//     ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12
+//     }$.
+func (r *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService) Get(name string) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall {
+	c := &ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) Context(ctx context.Context) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.wildfireVerdictChangeRequests.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.firewallEndpoints.wildfireVerdictChangeRequests.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *WildfireVerdictChangeRequest.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) Do(opts ...googleapi.CallOption) (*WildfireVerdictChangeRequest, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &WildfireVerdictChangeRequest{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.wildfireVerdictChangeRequests.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists WildfireVerdictChangeRequests in a given Firewall Endpoint in a
+// project and location.
+//
+//   - parent: Parent value for ListWildfireVerdictChangeRequestsRequest. The
+//     parent is a firewall endpoint resource. Format:
+//     organizations|projects/{project_or_organization}/locations/{location}/firew
+//     allEndpoints/{firewall_endpoint}.
+func (r *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService) List(parent string) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c := &ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression to filter the
+// results. See AIP-160 for filtering syntax. Supported fields are: - `sha256`
+// (string, equality only, e.g. `sha256 = "...") - `state` (enum, equality
+// only, e.g. `state = "ACTIVE") - `create_time` (timestamp, comparisons, e.g.
+// `create_time > "2026-01-01T00:00:00Z")
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Filter(filter string) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) PageSize(pageSize int64) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) PageToken(pageToken string) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Context(ctx context.Context) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/wildfireVerdictChangeRequests")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.wildfireVerdictChangeRequests.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.firewallEndpoints.wildfireVerdictChangeRequests.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListWildfireVerdictChangeRequestsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Do(opts ...googleapi.CallOption) (*ListWildfireVerdictChangeRequestsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListWildfireVerdictChangeRequestsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.wildfireVerdictChangeRequests.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Pages(ctx context.Context, f func(*ListWildfireVerdictChangeRequestsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsGatewaySecurityPoliciesCreateCall struct {

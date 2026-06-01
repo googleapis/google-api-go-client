@@ -429,6 +429,7 @@ type CalendarExportOptions struct {
 	// and Calendar.
 	//   "ICS" - Export as ICS. Only available for Calendar.
 	//   "XML" - Export as XML. Only available for Gemini.
+	//   "JSON" - Export as JSON. Only available for Gemini in Workpace.
 	ExportFormat string `json:"exportFormat,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -993,6 +994,7 @@ type GeminiExportOptions struct {
 	// and Calendar.
 	//   "ICS" - Export as ICS. Only available for Calendar.
 	//   "XML" - Export as XML. Only available for Gemini.
+	//   "JSON" - Export as JSON. Only available for Gemini in Workpace.
 	ExportFormat string `json:"exportFormat,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1063,6 +1065,7 @@ type GroupsExportOptions struct {
 	// and Calendar.
 	//   "ICS" - Export as ICS. Only available for Calendar.
 	//   "XML" - Export as XML. Only available for Gemini.
+	//   "JSON" - Export as JSON. Only available for Gemini in Workpace.
 	ExportFormat string `json:"exportFormat,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1094,6 +1097,7 @@ type HangoutsChatExportOptions struct {
 	// and Calendar.
 	//   "ICS" - Export as ICS. Only available for Calendar.
 	//   "XML" - Export as XML. Only available for Gemini.
+	//   "JSON" - Export as JSON. Only available for Gemini in Workpace.
 	ExportFormat string `json:"exportFormat,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1645,6 +1649,7 @@ type MailExportOptions struct {
 	// and Calendar.
 	//   "ICS" - Export as ICS. Only available for Calendar.
 	//   "XML" - Export as XML. Only available for Gemini.
+	//   "JSON" - Export as JSON. Only available for Gemini in Workpace.
 	ExportFormat string `json:"exportFormat,omitempty"`
 	// ExportLinkedDriveFiles: Optional. To enable exporting linked Drive files,
 	// set to **true**.
@@ -2291,6 +2296,7 @@ type VoiceExportOptions struct {
 	// and Calendar.
 	//   "ICS" - Export as ICS. Only available for Calendar.
 	//   "XML" - Export as XML. Only available for Gemini.
+	//   "JSON" - Export as JSON. Only available for Gemini in Workpace.
 	ExportFormat string `json:"exportFormat,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
 	// unconditionally include in API requests. By default, fields with empty or

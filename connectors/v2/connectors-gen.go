@@ -5641,6 +5641,13 @@ func (c *ProjectsLocationsConnectionsToolsListCall) PageToken(pageToken string) 
 	return c
 }
 
+// ToolNames sets the optional parameter "toolNames": List of tool names for
+// selective tool fetching.
+func (c *ProjectsLocationsConnectionsToolsListCall) ToolNames(toolNames ...string) *ProjectsLocationsConnectionsToolsListCall {
+	c.urlParams_.SetMulti("toolNames", append([]string{}, toolNames...))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.

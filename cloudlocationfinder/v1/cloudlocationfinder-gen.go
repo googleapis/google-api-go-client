@@ -203,8 +203,6 @@ type CloudLocation struct {
 	//   "CLOUD_LOCATION_TYPE_UNSPECIFIED" - Unspecified type.
 	//   "CLOUD_LOCATION_TYPE_REGION" - CloudLocation type for region.
 	//   "CLOUD_LOCATION_TYPE_ZONE" - CloudLocation type for zone.
-	//   "CLOUD_LOCATION_TYPE_REGION_EXTENSION" - CloudLocation type for region
-	// extension.
 	//   "CLOUD_LOCATION_TYPE_GDCC_ZONE" - CloudLocation type for Google
 	// Distributed Cloud Connected Zone.
 	CloudLocationType string `json:"cloudLocationType,omitempty"`

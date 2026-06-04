@@ -5046,6 +5046,22 @@ func (s MeetSpaceLinkData) MarshalJSON() ([]byte, error) {
 // Membership: Represents a membership relation in Google Chat, such as whether
 // a user or Chat app is invited to, part of, or absent from a space.
 type Membership struct {
+	// Affiliation: Output only. A user's relationship to the Workspace
+	// organization that owns the space. In spaces owned by consumer accounts, the
+	// affiliation of all members is `EXTERNAL`.
+	//
+	// Possible values:
+	//   "AFFILIATION_UNSPECIFIED" - Default value. This value is unused.
+	//   "INTERNAL" - An account managed by the same Google Workspace organization
+	// that owns the space.
+	//   "EXTERNAL" - An account external to the Google Workspace organization that
+	// owns the space (e.g., a consumer account, or an account managed by a
+	// different Workspace organization).
+	//   "MANAGED_EXTERNAL" - An account managed by the Workspace organization that
+	// owns the space, but provisioned for a user who is external to the
+	// organization (e.g., a Guest user). To learn more about guests, see
+	// https://support.google.com/chat/answer/16997417.
+	Affiliation string `json:"affiliation,omitempty"`
 	// CreateTime: Optional. Immutable. The creation time of the membership, such
 	// as when a member joined or was invited to join a space. This field is output
 	// only, except when used to import historical memberships in import mode
@@ -5118,13 +5134,13 @@ type Membership struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "Affiliation") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// NullFields is a list of field names (e.g. "Affiliation") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -10550,10 +10566,12 @@ func (r *SpacesMessagesService) Create(parent string, message *Message) *SpacesM
 // authentication]
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app).
 //
-//	"NOTIFICATION_TYPE_SILENT" - Silence the notification as if the recipients
+//	"NOTIFICATION_TYPE_SILENT" - Do not notify recipients, and do not mark the
 //
-// have [Chat Do Not Disturb](https://support.google.com/chat/answer/9093489)
-// enabled or have muted the space. Requires [app authentication]
+// message as unread. This behaves similarly to the user muting the
+// conversation or enabling [Chat Do Not
+// Disturb](https://support.google.com/chat/answer/9093489). Requires [app
+// authentication]
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app).
 func (c *SpacesMessagesCreateCall) CreateMessageNotificationOptionsNotificationType(createMessageNotificationOptionsNotificationType string) *SpacesMessagesCreateCall {
 	c.urlParams_.Set("createMessageNotificationOptions.notificationType", createMessageNotificationOptionsNotificationType)

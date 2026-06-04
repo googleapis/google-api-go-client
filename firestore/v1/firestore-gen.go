@@ -2619,7 +2619,8 @@ type GoogleFirestoreAdminV1Index struct {
 	// index. Only available for Datastore Mode databases.
 	QueryScope string `json:"queryScope,omitempty"`
 	// SearchIndexOptions: Optional. Options for search indexes that are at the
-	// index definition level.
+	// index definition level. This field is only currently supported for indexes
+	// with MONGODB_COMPATIBLE_API ApiScope.
 	SearchIndexOptions *GoogleFirestoreAdminV1SearchIndexOptions `json:"searchIndexOptions,omitempty"`
 	// ShardCount: Optional. The number of shards for the index.
 	ShardCount int64 `json:"shardCount,omitempty"`
@@ -3216,8 +3217,7 @@ func (s GoogleFirestoreAdminV1SearchConfig) MarshalJSON() ([]byte, error) {
 // geo search index for a field.
 type GoogleFirestoreAdminV1SearchGeoSpec struct {
 	// GeoJsonIndexingDisabled: Optional. Disables geoJSON indexing for the field.
-	// By default, geoJSON points are indexed. Firestore GeoPoints are indexed
-	// regardless of this value.
+	// By default, geoJSON points are indexed.
 	GeoJsonIndexingDisabled bool `json:"geoJsonIndexingDisabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GeoJsonIndexingDisabled") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3248,9 +3248,9 @@ type GoogleFirestoreAdminV1SearchIndexOptions struct {
 	// ApiScope: If unspecified, the default behavior is autodetect.
 	TextLanguage string `json:"textLanguage,omitempty"`
 	// TextLanguageOverrideFieldPath: Optional. The field in the document that
-	// specifies which language to use for that specific document. If unspecified,
-	// the language is taken from the "language" field if it exists or from
-	// `text_language` if it does not.
+	// specifies which language to use for that specific document. For indexes with
+	// MONGODB_COMPATIBLE_API ApiScope: if unspecified, the language is taken from
+	// the "language" field if it exists or from `text_language` if it does not.
 	TextLanguageOverrideFieldPath string `json:"textLanguageOverrideFieldPath,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "TextLanguage") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3278,14 +3278,16 @@ type GoogleFirestoreAdminV1SearchTextIndexSpec struct {
 	// Possible values:
 	//   "TEXT_INDEX_TYPE_UNSPECIFIED" - The index type is unspecified. Not a valid
 	// option.
-	//   "TOKENIZED" - Field values are tokenized.
+	//   "TOKENIZED" - Field values are tokenized. This is the only way currently
+	// supported for MONGODB_COMPATIBLE_API.
 	IndexType string `json:"indexType,omitempty"`
 	// MatchType: Required. How to match the text field value.
 	//
 	// Possible values:
 	//   "TEXT_MATCH_TYPE_UNSPECIFIED" - The match type is unspecified. Not a valid
 	// option.
-	//   "MATCH_GLOBALLY" - Match on any indexed field.
+	//   "MATCH_GLOBALLY" - Match on any indexed field. This is the only way
+	// currently supported for MONGODB_COMPATIBLE_API.
 	MatchType string `json:"matchType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IndexType") to
 	// unconditionally include in API requests. By default, fields with empty or

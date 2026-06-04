@@ -4568,6 +4568,8 @@ type User struct {
 	AgreedToTerms bool `json:"agreedToTerms,omitempty"`
 	// Aliases: Output only. The list of the user's alias email addresses.
 	Aliases []string `json:"aliases,omitempty"`
+	// ArchivalTime: Output only. User's account archival time. (Read-only)
+	ArchivalTime string `json:"archivalTime,omitempty"`
 	// Archived: Indicates if user is archived.
 	Archived bool `json:"archived,omitempty"`
 	// ChangePasswordAtNextLogin: Indicates if the user is forced to change their
@@ -4725,6 +4727,8 @@ type User struct {
 	// either by the administrator or by Google at the time of suspension. The
 	// property is returned only if the `suspended` property is `true`.
 	SuspensionReason string `json:"suspensionReason,omitempty"`
+	// SuspensionTime: Output only. User's account suspension time. (Read-only)
+	SuspensionTime string `json:"suspensionTime,omitempty"`
 	// ThumbnailPhotoEtag: Output only. ETag of the user's photo (Read-only)
 	ThumbnailPhotoEtag string `json:"thumbnailPhotoEtag,omitempty"`
 	// ThumbnailPhotoUrl: Output only. The URL of the user's profile photo. The URL

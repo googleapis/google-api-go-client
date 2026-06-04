@@ -268,6 +268,9 @@ type BackfillAllStrategy struct {
 	// PostgresqlExcludedObjects: PostgreSQL data source objects to avoid
 	// backfilling.
 	PostgresqlExcludedObjects *PostgresqlRdbms `json:"postgresqlExcludedObjects,omitempty"`
+	// SaasExcludedObjects: Source catalog data source objects to avoid
+	// backfilling. This is mainly used to represent SaaS applications objects.
+	SaasExcludedObjects *SourceCatalog `json:"saasExcludedObjects,omitempty"`
 	// SalesforceExcludedObjects: Salesforce data source objects to avoid
 	// backfilling
 	SalesforceExcludedObjects *SalesforceOrg `json:"salesforceExcludedObjects,omitempty"`
@@ -577,6 +580,8 @@ type ConnectionProfile struct {
 	BigqueryProfile *BigQueryProfile `json:"bigqueryProfile,omitempty"`
 	// CreateTime: Output only. The create time of the resource.
 	CreateTime string `json:"createTime,omitempty"`
+	// DataverseProfile: Profile for connecting to a Dataverse source.
+	DataverseProfile *DataverseProfile `json:"dataverseProfile,omitempty"`
 	// DisplayName: Required. Display name.
 	DisplayName string `json:"displayName,omitempty"`
 	// ForwardSshConnectivity: Forward SSH tunnel connectivity.
@@ -597,12 +602,17 @@ type ConnectionProfile struct {
 	PostgresqlProfile *PostgresqlProfile `json:"postgresqlProfile,omitempty"`
 	// PrivateConnectivity: Private connectivity.
 	PrivateConnectivity *PrivateConnectivity `json:"privateConnectivity,omitempty"`
+	// SalesforceMarketingCloudProfile: Profile for connecting to a Salesforce
+	// Marketing Cloud source.
+	SalesforceMarketingCloudProfile *SalesforceMarketingCloudProfile `json:"salesforceMarketingCloudProfile,omitempty"`
 	// SalesforceProfile: Profile for connecting to a Salesforce source.
 	SalesforceProfile *SalesforceProfile `json:"salesforceProfile,omitempty"`
 	// SatisfiesPzi: Output only. Reserved for future use.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+	// ServiceNowProfile: Profile for connecting to a ServiceNow source.
+	ServiceNowProfile *ServiceNowProfile `json:"serviceNowProfile,omitempty"`
 	// SpannerProfile: Profile for connecting to a Spanner source.
 	SpannerProfile *SpannerProfile `json:"spannerProfile,omitempty"`
 	// SqlServerProfile: Profile for connecting to a SQLServer source.
@@ -692,6 +702,63 @@ func (s DatasetTemplate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DataverseProfile: Profile for connecting to a Dataverse source.
+type DataverseProfile struct {
+	// EnvironmentUrl: Required. Environment URL of the Microsoft Dataverse
+	// instance. Example: `.crm.dynamics.com`
+	EnvironmentUrl string `json:"environmentUrl,omitempty"`
+	// OauthClientCredentials: Required. Credentials for authenticating with the
+	// Dataverse API.
+	OauthClientCredentials *OauthClientCredentials `json:"oauthClientCredentials,omitempty"`
+	// TenantId: Required. Tenant id of the Microsoft Dataverse instance.
+	TenantId string `json:"tenantId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnvironmentUrl") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnvironmentUrl") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataverseProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod DataverseProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DataverseSourceConfig: Configuration for syncing data from a Dataverse
+// source.
+type DataverseSourceConfig struct {
+	// ExcludeObjects: Optional. The objects to exclude from the stream.
+	ExcludeObjects *SourceCatalog `json:"excludeObjects,omitempty"`
+	// IncludeObjects: Optional. The objects to retrieve from the source.
+	IncludeObjects *SourceCatalog `json:"includeObjects,omitempty"`
+	// PollingInterval: Required. Incremental sync polling interval for all
+	// objects. If not set, a default value of `5 minutes` is used. The duration
+	// must be from `5 minutes` to `24 hours`, inclusive.
+	PollingInterval string `json:"pollingInterval,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExcludeObjects") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExcludeObjects") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataverseSourceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DataverseSourceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DebugInfo: Describes additional debugging info.
 type DebugInfo struct {
 	// Detail: Additional debugging information provided by the server.
@@ -774,6 +841,9 @@ type DiscoverConnectionProfileRequest struct {
 	// SalesforceOrg: Optional. Salesforce organization to enrich with child data
 	// objects and metadata.
 	SalesforceOrg *SalesforceOrg `json:"salesforceOrg,omitempty"`
+	// SourceCatalog: Optional. Source catalog to enrich with child data objects
+	// and metadata. This is mainly used to represent SaaS sources databases.
+	SourceCatalog *SourceCatalog `json:"sourceCatalog,omitempty"`
 	// SpannerDatabase: Optional. Spanner database to enrich with child data
 	// objects and metadata.
 	SpannerDatabase *SpannerDatabase `json:"spannerDatabase,omitempty"`
@@ -810,6 +880,9 @@ type DiscoverConnectionProfileResponse struct {
 	PostgresqlRdbms *PostgresqlRdbms `json:"postgresqlRdbms,omitempty"`
 	// SalesforceOrg: Enriched Salesforce organization.
 	SalesforceOrg *SalesforceOrg `json:"salesforceOrg,omitempty"`
+	// SourceCatalog: Enriched source catalog. This is mainly used to represent
+	// SaaS sources databases.
+	SourceCatalog *SourceCatalog `json:"sourceCatalog,omitempty"`
 	// SpannerDatabase: Enriched Spanner database.
 	SpannerDatabase *SpannerDatabase `json:"spannerDatabase,omitempty"`
 	// SqlServerRdbms: Enriched SQLServer RDBMS object.
@@ -2263,6 +2336,30 @@ func (s Oauth2ClientCredentials) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// OauthClientCredentials: OAuth Client Credentials.
+type OauthClientCredentials struct {
+	// ClientId: Required. Client ID for OAuth Client Credentials.
+	ClientId string `json:"clientId,omitempty"`
+	// ClientSecret: Required. Client secret for OAuth Client Credentials.
+	ClientSecret *Secret `json:"clientSecret,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OauthClientCredentials) MarshalJSON() ([]byte, error) {
+	type NoMethod OauthClientCredentials
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ObjectFilter: Object filter to apply the rules to.
 type ObjectFilter struct {
 	// SourceObjectIdentifier: Specific source object identifier.
@@ -3393,6 +3490,71 @@ func (s SalesforceField) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SalesforceMarketingCloudProfile: Profile for connecting to a Salesforce
+// Marketing Cloud source.
+type SalesforceMarketingCloudProfile struct {
+	// OauthClientCredentials: Required. Input only. Credentials for authenticating
+	// with the Salesforce Marketing Cloud API.
+	OauthClientCredentials *OauthClientCredentials `json:"oauthClientCredentials,omitempty"`
+	// Subdomain: Required. Subdomain for the Salesforce Marketing Cloud
+	// connection. Example: if your specific endpoint is
+	// `https://{your-specific-subdomain}.rest.marketingcloudapis.com/`, the
+	// subdomain is `{your-specific-subdomain}`. Must be 1-63 characters, start and
+	// end with an alphanumeric character, and contain only lowercase letters,
+	// numbers, and hyphens (-).
+	Subdomain string `json:"subdomain,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OauthClientCredentials") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OauthClientCredentials") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SalesforceMarketingCloudProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod SalesforceMarketingCloudProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SalesforceMarketingCloudSourceConfig: Configuration for syncing data from a
+// Salesforce Marketing Cloud source.
+type SalesforceMarketingCloudSourceConfig struct {
+	// ExcludeObjects: Optional. The objects to exclude from the stream.
+	ExcludeObjects *SourceCatalog `json:"excludeObjects,omitempty"`
+	// FullRefreshPollingInterval: Required. Specifies the polling interval for a
+	// full refresh of objects that do not support incremental sync. If not set, a
+	// default value of 24 hours is used. The duration must be between 1 and 24
+	// hours, inclusive.
+	FullRefreshPollingInterval string `json:"fullRefreshPollingInterval,omitempty"`
+	// IncludeObjects: Optional. The objects to retrieve from the source.
+	IncludeObjects *SourceCatalog `json:"includeObjects,omitempty"`
+	// PollingInterval: Required. Incremental sync polling interval for all
+	// objects. If not set, a default value of `5 minutes` is used. The duration
+	// must be from `5 minutes` to `24 hours`, inclusive.
+	PollingInterval string `json:"pollingInterval,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExcludeObjects") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExcludeObjects") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SalesforceMarketingCloudSourceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SalesforceMarketingCloudSourceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SalesforceObject: Salesforce object.
 type SalesforceObject struct {
 	// Fields: Salesforce fields. When unspecified as part of include objects,
@@ -3518,6 +3680,36 @@ func (s SalesforceSourceConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Secret: A confidential piece of information where the actual value is either
+// directly specified in the message as a raw string or stored in GCP secret
+// manager.
+type Secret struct {
+	// RawValue: Optional. Input only. The actual raw value of the secret as plain
+	// text.
+	RawValue string `json:"rawValue,omitempty"`
+	// SecretVersion: Optional. A Secret Manager resource name storing the actual
+	// value of the secret. Supported formats: *
+	// projects/{project}/locations/{location}/secrets/{secret}/versions/{version}
+	// * projects/{project}/secrets/{secret}/versions/{version}
+	SecretVersion string `json:"secretVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RawValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RawValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Secret) MarshalJSON() ([]byte, error) {
+	type NoMethod Secret
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ServerAndClientVerification: Message represents the option where Datastream
 // will enforce the encryption and authenticate the server identity as well as
 // the client identity. ca_certificate, client_certificate and client_key must
@@ -3587,6 +3779,63 @@ func (s ServerVerification) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ServiceNowProfile: Profile for connecting to a ServiceNow source.
+type ServiceNowProfile struct {
+	// Instance: Required. The instance of the ServiceNow account. This is the ``
+	// part of the URL `https://.service-now.com`.
+	Instance string `json:"instance,omitempty"`
+	// OauthClientCredentials: Credentials for authenticating with the ServiceNow
+	// API.
+	OauthClientCredentials *OauthClientCredentials `json:"oauthClientCredentials,omitempty"`
+	// UserPasswordCredentials: User-password authentication.
+	UserPasswordCredentials *UserPasswordCredentials `json:"userPasswordCredentials,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Instance") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Instance") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServiceNowProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceNowProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ServiceNowSourceConfig: Configuration for syncing data from a ServiceNow
+// source.
+type ServiceNowSourceConfig struct {
+	// ExcludeObjects: Optional. The objects to exclude from the stream.
+	ExcludeObjects *SourceCatalog `json:"excludeObjects,omitempty"`
+	// IncludeObjects: Optional. The objects to retrieve from the source.
+	IncludeObjects *SourceCatalog `json:"includeObjects,omitempty"`
+	// PollingInterval: Required. Incremental sync polling interval for all
+	// objects. If not set, a default value of `5 minutes` is used. The duration
+	// must be from `5 minutes` to `24 hours`, inclusive.
+	PollingInterval string `json:"pollingInterval,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExcludeObjects") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExcludeObjects") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServiceNowSourceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceNowSourceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SingleTargetDataset: A single target dataset to which all data will be
 // streamed.
 type SingleTargetDataset struct {
@@ -3612,8 +3861,32 @@ func (s SingleTargetDataset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SourceCatalog: Source catalog.
+type SourceCatalog struct {
+	// Objects: Optional. Source objects in the catalog.
+	Objects []*SourceObject `json:"objects,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Objects") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Objects") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SourceCatalog) MarshalJSON() ([]byte, error) {
+	type NoMethod SourceCatalog
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SourceConfig: The configuration of the stream source.
 type SourceConfig struct {
+	// DataverseSourceConfig: Dataverse data source configuration.
+	DataverseSourceConfig *DataverseSourceConfig `json:"dataverseSourceConfig,omitempty"`
 	// MongodbSourceConfig: MongoDB data source configuration.
 	MongodbSourceConfig *MongodbSourceConfig `json:"mongodbSourceConfig,omitempty"`
 	// MysqlSourceConfig: MySQL data source configuration.
@@ -3622,8 +3895,13 @@ type SourceConfig struct {
 	OracleSourceConfig *OracleSourceConfig `json:"oracleSourceConfig,omitempty"`
 	// PostgresqlSourceConfig: PostgreSQL data source configuration.
 	PostgresqlSourceConfig *PostgresqlSourceConfig `json:"postgresqlSourceConfig,omitempty"`
+	// SalesforceMarketingCloudSourceConfig: Salesforce Marketing Cloud data source
+	// configuration.
+	SalesforceMarketingCloudSourceConfig *SalesforceMarketingCloudSourceConfig `json:"salesforceMarketingCloudSourceConfig,omitempty"`
 	// SalesforceSourceConfig: Salesforce data source configuration.
 	SalesforceSourceConfig *SalesforceSourceConfig `json:"salesforceSourceConfig,omitempty"`
+	// ServiceNowSourceConfig: ServiceNow data source configuration.
+	ServiceNowSourceConfig *ServiceNowSourceConfig `json:"serviceNowSourceConfig,omitempty"`
 	// SourceConnectionProfile: Required. Source connection profile resource.
 	// Format: `projects/{project}/locations/{location}/connectionProfiles/{name}`
 	SourceConnectionProfile string `json:"sourceConnectionProfile,omitempty"`
@@ -3631,15 +3909,15 @@ type SourceConfig struct {
 	SpannerSourceConfig *SpannerSourceConfig `json:"spannerSourceConfig,omitempty"`
 	// SqlServerSourceConfig: SQLServer data source configuration.
 	SqlServerSourceConfig *SqlServerSourceConfig `json:"sqlServerSourceConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MongodbSourceConfig") to
+	// ForceSendFields is a list of field names (e.g. "DataverseSourceConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MongodbSourceConfig") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DataverseSourceConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3675,6 +3953,32 @@ func (s SourceHierarchyDatasets) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SourceObject: Source object.
+type SourceObject struct {
+	// ObjectName: Required. The object name.
+	ObjectName string `json:"objectName,omitempty"`
+	// Properties: Optional. Source properties. When unspecified as part of include
+	// objects, includes everything, when unspecified as part of exclude objects,
+	// excludes nothing.
+	Properties []*SourceProperty `json:"properties,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ObjectName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ObjectName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SourceObject) MarshalJSON() ([]byte, error) {
+	type NoMethod SourceObject
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SourceObjectIdentifier: Represents an identifier of an object in the data
 // source.
 type SourceObjectIdentifier struct {
@@ -3707,6 +4011,35 @@ type SourceObjectIdentifier struct {
 
 func (s SourceObjectIdentifier) MarshalJSON() ([]byte, error) {
 	type NoMethod SourceObjectIdentifier
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SourceProperty: Source property.
+type SourceProperty struct {
+	// PrimaryKey: Optional. Whether or not the property is a primary key.
+	PrimaryKey bool `json:"primaryKey,omitempty"`
+	// Properties: Optional. Source properties. When specified, it means that the
+	// current property contains nested properties of its own. When unspecified as
+	// part of include objects, includes everything, when unspecified as part of
+	// exclude objects, excludes nothing.
+	Properties []*SourceProperty `json:"properties,omitempty"`
+	// PropertyName: Required. The property name.
+	PropertyName string `json:"propertyName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PrimaryKey") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PrimaryKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SourceProperty) MarshalJSON() ([]byte, error) {
+	type NoMethod SourceProperty
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4570,6 +4903,30 @@ type UserCredentials struct {
 
 func (s UserCredentials) MarshalJSON() ([]byte, error) {
 	type NoMethod UserCredentials
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UserPasswordCredentials: User-password credentials.
+type UserPasswordCredentials struct {
+	// Password: Required. Password for the connection.
+	Password *Secret `json:"password,omitempty"`
+	// Username: Required. Username for the connection.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Password") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Password") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UserPasswordCredentials) MarshalJSON() ([]byte, error) {
+	type NoMethod UserPasswordCredentials
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

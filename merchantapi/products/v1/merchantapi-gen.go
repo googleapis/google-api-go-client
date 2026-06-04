@@ -1758,7 +1758,7 @@ type ProductAttributes struct {
 	// QuestionsAndAnswers: Optional. Contains user-, merchant-, and
 	// manufacturer-authored questions and answers
 	// (https://support.google.com/merchants/answer/17085211) about the product.
-	// Max 30 question and answer pairs. Max 5000 characters total. Each question
+	// Max 30 question and answer pairs. Max 10000 characters total. Each question
 	// can have max 1000 characters. Each answer can have max 1000 characters.
 	QuestionsAndAnswers []*QuestionAndAnswer `json:"questionsAndAnswers,omitempty"`
 	// RelatedProducts: Optional. Specifies how other products are related

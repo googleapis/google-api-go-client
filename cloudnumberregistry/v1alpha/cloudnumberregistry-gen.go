@@ -249,14 +249,14 @@ type ProjectsLocationsRegistryBooksService struct {
 
 // AggregatedData: Aggregated data for the RegistryBook.
 type AggregatedData struct {
-	// CustomRangesCount: Output only. Number of custom ranges in the RegistryBook.
+	// CustomRangesCount: Output only. Number of CustomRanges in the RegistryBook.
 	CustomRangesCount int64 `json:"customRangesCount,omitempty"`
-	// CustomRealmsCount: Output only. Number of custom realms in the RegistryBook.
+	// CustomRealmsCount: Output only. Number of custom Realms in the RegistryBook.
 	CustomRealmsCount int64 `json:"customRealmsCount,omitempty"`
-	// DiscoveredRangesCount: Output only. Number of discovered ranges in the
+	// DiscoveredRangesCount: Output only. Number of DiscoveredRanges in the
 	// RegistryBook.
 	DiscoveredRangesCount int64 `json:"discoveredRangesCount,omitempty"`
-	// DiscoveredRealmsCount: Output only. Number of discovered realms in the
+	// DiscoveredRealmsCount: Output only. Number of discovered Realms in the
 	// RegistryBook.
 	DiscoveredRealmsCount int64 `json:"discoveredRealmsCount,omitempty"`
 	// UniqueScopesCount: Output only. Number of scopes unique to the RegistryBook.
@@ -279,11 +279,12 @@ func (s AggregatedData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Attribute: Message describing Attribute object
+// Attribute: A key-value pair representing a custom attribute associated with
+// a resource.
 type Attribute struct {
-	// Key: Required. Key of attribute
+	// Key: Required. The key of the attribute.
 	Key string `json:"key,omitempty"`
-	// Value: Required. Value of attribute
+	// Value: Required. The value of the attribute.
 	Value string `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -307,8 +308,8 @@ func (s Attribute) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
-// CheckAvailabilityIpamAdminScopesResponse: Message for response to checking
-// the availability of IpamAdminScopes
+// CheckAvailabilityIpamAdminScopesResponse: Response message for the
+// CloudNumberRegistry.CheckAvailabilityIpamAdminScopes method.
 type CheckAvailabilityIpamAdminScopesResponse struct {
 	// ScopeAvailabilities: The details of the requested scopes.
 	ScopeAvailabilities []*IpamAdminScopeAvailability `json:"scopeAvailabilities,omitempty"`
@@ -333,7 +334,8 @@ func (s CheckAvailabilityIpamAdminScopesResponse) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CleanupIpamAdminScopeRequest: Message for cleaning up a IpamAdminScope
+// CleanupIpamAdminScopeRequest: Request message for the
+// CloudNumberRegistry.CleanupIpamAdminScope method.
 type CleanupIpamAdminScopeRequest struct {
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server will
@@ -365,32 +367,38 @@ func (s CleanupIpamAdminScopeRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CustomRange: Message describing CustomRange object
+// CustomRange: A CustomRange represents a user-defined IP address range.
 type CustomRange struct {
 	// Attributes: Optional. The attributes of the CustomRange.
 	Attributes []*Attribute `json:"attributes,omitempty"`
-	// Description: Optional. Description of the CustomRange.
+	// Description: Optional. The description of the CustomRange.
 	Description string `json:"description,omitempty"`
 	// Ipv4CidrRange: Optional. The IPv4 CIDR range of the CustomRange.
 	Ipv4CidrRange string `json:"ipv4CidrRange,omitempty"`
 	// Ipv6CidrRange: Optional. The IPv6 CIDR range of the CustomRange.
 	Ipv6CidrRange string `json:"ipv6CidrRange,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. User-defined labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Required. Identifier. name of resource
+	// Name: Required. Identifier. The resource name of the CustomRange, in the
+	// format
+	// `projects/{project}/locations/{location}/customRanges/{custom_range}`.
 	Name string `json:"name,omitempty"`
-	// ParentRange: Optional. The parent range of the CustomRange. Do not allow
-	// setting parent range if realm is specified. Format must follow this pattern:
-	// projects/{project}/locations/{location}/customRanges/{custom_range}
+	// ParentRange: Optional. The resource name of the parent CustomRange, in the
+	// format
+	// `projects/{project}/locations/{location}/customRanges/{custom_range}`. If
+	// specified, the parent CustomRange must be in the same RegistryBook. This
+	// field is mutually exclusive with the `realm` field, as the Realm is
+	// inherited from the parent CustomRange.
 	ParentRange string `json:"parentRange,omitempty"`
-	// Realm: Optional. The realm of the CustomRange. The realm must be in the same
-	// project as the custom range. Do not allow setting realm if parent range is
-	// specified, since the realm should be inherited from the parent range. Format
-	// must follow this pattern:
-	// projects/{project}/locations/{location}/realms/{realm}
+	// Realm: Optional. The resource name of the Realm associated with the
+	// CustomRange, in the format
+	// `projects/{project}/locations/{location}/realms/{realm}`. The Realm must be
+	// in the same project as the CustomRange. This field must not be set if the
+	// `parent_range` field is set, as the Realm will be inherited from the parent
+	// CustomRange.
 	Realm string `json:"realm,omitempty"`
-	// RegistryBook: Output only. The registry book of the CustomRange. This field
-	// is inherited from the realm or parent range depending on which one is
+	// RegistryBook: Output only. The RegistryBook of the CustomRange. This field
+	// is inherited from the Realm or parent CustomRange depending on which one is
 	// specified.
 	RegistryBook string `json:"registryBook,omitempty"`
 
@@ -414,7 +422,8 @@ func (s CustomRange) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DisableIpamAdminScopeRequest: Message for disabling a IpamAdminScope
+// DisableIpamAdminScopeRequest: Request message for the
+// CloudNumberRegistry.DisableIpamAdminScope method.
 type DisableIpamAdminScopeRequest struct {
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server will
@@ -446,14 +455,15 @@ func (s DisableIpamAdminScopeRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DiscoveredRange: Message describing DiscoveredRange object
+// DiscoveredRange: A DiscoveredRange represents an IP address range
+// automatically detected by the discovery pipeline.
 type DiscoveredRange struct {
 	// Attributes: Optional. The attributes of the DiscoveredRange.
 	Attributes []*Attribute `json:"attributes,omitempty"`
-	// ChildCidrOverlapAllowed: Output only. If true, allow child ranges of this
-	// range to overlap with each other.
+	// ChildCidrOverlapAllowed: Output only. If true, allows child DiscoveredRanges
+	// of this DiscoveredRange to overlap with each other.
 	ChildCidrOverlapAllowed bool `json:"childCidrOverlapAllowed,omitempty"`
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. The time at which the DiscoveredRange was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. Description of the DiscoveredRange.
 	Description string `json:"description,omitempty"`
@@ -468,17 +478,24 @@ type DiscoveredRange struct {
 	Ipv4CidrRange string `json:"ipv4CidrRange,omitempty"`
 	// Ipv6CidrRange: Optional. The IPv6 CIDR range of the DiscoveredRange.
 	Ipv6CidrRange string `json:"ipv6CidrRange,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. User-defined labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Required. Identifier. Name of the DiscoveredRange.
+	// Name: Required. Identifier. The resource name of the DiscoveredRange, in the
+	// format
+	// `projects/{project}/locations/{location}/discoveredRanges/{discovered_range}`
+	// .
 	Name string `json:"name,omitempty"`
-	// ParentRange: Optional. The parent range of the DiscoveredRange.
+	// ParentRange: Optional. The resource name of the parent DiscoveredRange, in
+	// the format
+	// `projects/{project}/locations/{location}/discoveredRanges/{discovered_range}`
+	// .
 	ParentRange string `json:"parentRange,omitempty"`
-	// Realm: Optional. The realm of the DiscoveredRange.
+	// Realm: Optional. The Realm of the DiscoveredRange.
 	Realm string `json:"realm,omitempty"`
-	// RegistryBook: Output only. The registry book of the DiscoveredRange.
+	// RegistryBook: Output only. The RegistryBook of the DiscoveredRange.
 	RegistryBook string `json:"registryBook,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// UpdateTime: Output only. The time at which the DiscoveredRange was last
+	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -501,7 +518,8 @@ func (s DiscoveredRange) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DiscoveryMetadata: Discovery metadata of the discovered resource.
+// DiscoveryMetadata: Metadata about a discovered resource, tracking event
+// times, state, and source information.
 type DiscoveryMetadata struct {
 	// CreateTime: Output only. The time when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -518,7 +536,7 @@ type DiscoveryMetadata struct {
 	// SourceSubId: Output only. A single source resource can be the source of
 	// multiple CNR resources. This sub_id is used to distinguish between the
 	// different CNR resources derived from the same upstream resource. For
-	// example, a single subnetwork can be the source of multiple ranges, one for
+	// example, a single subnetwork can be the source of multiple Ranges, one for
 	// each protocol. In this case, the sub_id could be "private-ipv4" or
 	// "private-ipv6".
 	SourceSubId string `json:"sourceSubId,omitempty"`
@@ -563,10 +581,10 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// FindCustomRangeFreeIpRangesResponse: Message for the response to finding
-// free IP ranges.
+// FindCustomRangeFreeIpRangesResponse: Response message for the
+// CloudNumberRegistry.FindCustomRangeFreeIpRanges method.
 type FindCustomRangeFreeIpRangesResponse struct {
-	// FreeIpCidrRanges: Output only. Free IP CIDR ranges found in the CustomRange.
+	// FreeIpCidrRanges: Output only. The free IP CIDR ranges found.
 	FreeIpCidrRanges []string `json:"freeIpCidrRanges,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -589,11 +607,10 @@ func (s FindCustomRangeFreeIpRangesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// FindDiscoveredRangeFreeIpRangesResponse: Message for the response to finding
-// free IP ranges.
+// FindDiscoveredRangeFreeIpRangesResponse: Response message for the
+// CloudNumberRegistry.FindDiscoveredRangeFreeIpRanges method.
 type FindDiscoveredRangeFreeIpRangesResponse struct {
-	// FreeIpCidrRanges: Output only. Free IP CIDR ranges found in the
-	// DiscoveredRange.
+	// FreeIpCidrRanges: Output only. The free IP CIDR ranges found.
 	FreeIpCidrRanges []string `json:"freeIpCidrRanges,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -616,12 +633,14 @@ func (s FindDiscoveredRangeFreeIpRangesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IpamAdminScope: Message describing IpamAdminScope object
+// IpamAdminScope: An IpamAdminScope defines the administrative boundary for IP
+// address discovery and management. It configures which platforms and
+// organizational scopes are enabled for IP tracking.
 type IpamAdminScope struct {
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. The time at which the IpamAdminScope was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// EnabledAddonPlatforms: Required. Addon platforms that are enabled for this
-	// IPAM admin scope. Cloud Number Registry only discovers the IP addresses from
+	// EnabledAddonPlatforms: Required. Add-on platforms that are enabled for this
+	// IpamAdminScope. Cloud Number Registry only discovers the IP addresses from
 	// the enabled platforms.
 	//
 	// Possible values:
@@ -629,9 +648,9 @@ type IpamAdminScope struct {
 	//   "COMPUTE_ENGINE" - Google Compute Engine.
 	//   "GCE" - Deprecated: Use COMPUTE_ENGINE instead.
 	EnabledAddonPlatforms []string `json:"enabledAddonPlatforms,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. User-defined labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Required. Identifier. name of resource
+	// Name: Required. Identifier. The resource name of the IpamAdminScope.
 	Name string `json:"name,omitempty"`
 	// Scopes: Required. Administrative scopes enabled for IP address discovery and
 	// management. For example, "organizations/1234567890". Minimum of 1 scope is
@@ -653,7 +672,8 @@ type IpamAdminScope struct {
 	//   "CLEANUP_IN_PROGRESS" - Cleanup in progress.
 	//   "READY_FOR_DELETION" - Ready for deletion.
 	State string `json:"state,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// UpdateTime: Output only. The time at which the IpamAdminScope was last
+	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -676,8 +696,8 @@ func (s IpamAdminScope) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IpamAdminScopeAvailability: Message for the availability of an
-// IpamAdminScope
+// IpamAdminScopeAvailability: Availability details for a specific
+// IpamAdminScope.
 type IpamAdminScopeAvailability struct {
 	// AdminProject: The admin project of the IpamAdminScope if it exists.
 	AdminProject int64 `json:"adminProject,omitempty,string"`
@@ -708,12 +728,13 @@ func (s IpamAdminScopeAvailability) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListCustomRangesResponse: Message for response to listing CustomRanges
+// ListCustomRangesResponse: Response message for the
+// CloudNumberRegistry.ListCustomRanges method.
 type ListCustomRangesResponse struct {
-	// CustomRanges: The list of CustomRange
+	// CustomRanges: The list of CustomRanges.
 	CustomRanges []*CustomRange `json:"customRanges,omitempty"`
-	// NextPageToken: A token identifying a page of results the server should
-	// return.
+	// NextPageToken: A token to retrieve the next page of results, or empty if
+	// there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
@@ -738,13 +759,13 @@ func (s ListCustomRangesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListDiscoveredRangesResponse: Message for response to listing
-// DiscoveredRanges
+// ListDiscoveredRangesResponse: Response message for the
+// CloudNumberRegistry.ListDiscoveredRanges method.
 type ListDiscoveredRangesResponse struct {
-	// DiscoveredRanges: The list of DiscoveredRange
+	// DiscoveredRanges: The list of DiscoveredRanges.
 	DiscoveredRanges []*DiscoveredRange `json:"discoveredRanges,omitempty"`
-	// NextPageToken: A token identifying a page of results the server should
-	// return.
+	// NextPageToken: A token to retrieve the next page of results, or empty if
+	// there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
@@ -769,12 +790,13 @@ func (s ListDiscoveredRangesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListIpamAdminScopesResponse: Message for response to listing ipamAdminScopes
+// ListIpamAdminScopesResponse: Response message for the
+// CloudNumberRegistry.ListIpamAdminScopes method.
 type ListIpamAdminScopesResponse struct {
-	// IpamAdminScopes: The list of IpamAdminScope
+	// IpamAdminScopes: The list of IpamAdminScopes.
 	IpamAdminScopes []*IpamAdminScope `json:"ipamAdminScopes,omitempty"`
-	// NextPageToken: A token identifying a page of results the server should
-	// return.
+	// NextPageToken: A token to retrieve the next page of results, or empty if
+	// there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
@@ -860,12 +882,13 @@ func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListRealmsResponse: Message for response to listing Realms
+// ListRealmsResponse: Response message for the CloudNumberRegistry.ListRealms
+// method.
 type ListRealmsResponse struct {
 	// NextPageToken: A token identifying a page of results the server should
 	// return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Realms: The list of Realm
+	// Realms: The list of Realms.
 	Realms []*Realm `json:"realms,omitempty"`
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
@@ -890,7 +913,8 @@ func (s ListRealmsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListRegistryBooksResponse: Message for response to listing RegistryBooks
+// ListRegistryBooksResponse: Response message for the
+// CloudNumberRegistry.ListRegistryBooks method.
 type ListRegistryBooksResponse struct {
 	// NextPageToken: A token identifying a page of results the server should
 	// return.
@@ -1043,13 +1067,13 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Range: Message describing either a CustomRange or a DiscoveredRange.
+// Range: Represents either a CustomRange or a DiscoveredRange.
 type Range struct {
-	// CustomRange: A custom range.
+	// CustomRange: A CustomRange.
 	CustomRange *CustomRange `json:"customRange,omitempty"`
-	// DiscoveredRange: A discovered range.
+	// DiscoveredRange: A DiscoveredRange.
 	DiscoveredRange *DiscoveredRange `json:"discoveredRange,omitempty"`
-	// Utilization: The utilization of the range.
+	// Utilization: The utilization of the Range.
 	Utilization *RangeUtilization `json:"utilization,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CustomRange") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1069,15 +1093,16 @@ func (s Range) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RangeUtilization: Message for the utilization of an IP range
+// RangeUtilization: Utilization metrics for an IP Range, including consumed
+// and produced address counts.
 type RangeUtilization struct {
 	// TotalConsumed: Output only. The total number of IP addresses consumed in the
-	// range.
+	// Range.
 	TotalConsumed string `json:"totalConsumed,omitempty"`
 	// TotalProduced: Output only. The total number of IP addresses produced in the
-	// range.
+	// Range.
 	TotalProduced string `json:"totalProduced,omitempty"`
-	// Usage: Output only. The usage of the range as a percentage. This is marked
+	// Usage: Output only. The usage of the Range as a percentage. This is marked
 	// as optional so that we have presence tracking and API responses show 0.0
 	// instead of NULL.
 	Usage float64 `json:"usage,omitempty"`
@@ -1113,36 +1138,39 @@ func (s *RangeUtilization) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Realm: Message describing Realm object
+// Realm: A Realm represents a distinct network domain or security zone. It
+// groups Ranges that share the same traffic and management characteristics.
+// All the ranges in a Realm are routable to each other, meaning that they
+// cannot overlap.
 type Realm struct {
 	// AggregatedData: Output only. Aggregated data for the Realm. Populated only
 	// when the view is AGGREGATE.
 	AggregatedData *RealmAggregatedData `json:"aggregatedData,omitempty"`
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. The time at which the Realm was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DiscoveryMetadata: Output only. Discovery metadata of the realm.
+	// DiscoveryMetadata: Output only. Discovery metadata of the Realm.
 	DiscoveryMetadata *DiscoveryMetadata `json:"discoveryMetadata,omitempty"`
-	// IpVersion: Optional. IP version of the realm.
+	// IpVersion: Optional. IP version of the Realm.
 	//
 	// Possible values:
 	//   "IP_VERSION_UNSPECIFIED" - Unspecified IP version.
 	//   "IPV4" - IPv4 IP version.
 	//   "IPV6" - IPv6 IP version.
 	IpVersion string `json:"ipVersion,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. User-defined labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// ManagementType: Required. Management type of realm.
+	// ManagementType: Required. Management type of the Realm.
 	//
 	// Possible values:
 	//   "MANAGEMENT_TYPE_UNSPECIFIED" - Unspecified management type.
 	//   "CNR" - Managed by Cloud Number Registry.
 	//   "USER" - Managed by User.
 	ManagementType string `json:"managementType,omitempty"`
-	// Name: Required. Identifier. Unique name/ID of the realm
+	// Name: Required. Identifier. The resource name of the Realm.
 	Name string `json:"name,omitempty"`
-	// RegistryBook: Required. URI of the registry book that claims the realm.
+	// RegistryBook: Required. Name of the RegistryBook that claims the Realm.
 	RegistryBook string `json:"registryBook,omitempty"`
-	// TrafficType: Required. Traffic type of realm.
+	// TrafficType: Required. Traffic type of the Realm.
 	//
 	// Possible values:
 	//   "TRAFFIC_TYPE_UNSPECIFIED" - Unspecified traffic type.
@@ -1151,7 +1179,7 @@ type Realm struct {
 	//   "PRIVATE" - Private traffic.
 	//   "LINKLOCAL" - Linklocal traffic.
 	TrafficType string `json:"trafficType,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// UpdateTime: Output only. The time at which the Realm was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1176,10 +1204,9 @@ func (s Realm) MarshalJSON() ([]byte, error) {
 
 // RealmAggregatedData: Aggregated data for the Realm.
 type RealmAggregatedData struct {
-	// CustomRangesCount: Output only. Number of custom ranges in the Realm.
+	// CustomRangesCount: Output only. Number of CustomRanges in the Realm.
 	CustomRangesCount int64 `json:"customRangesCount,omitempty"`
-	// DiscoveredRangesCount: Output only. Number of discovered ranges in the
-	// Realm.
+	// DiscoveredRangesCount: Output only. Number of DiscoveredRanges in the Realm.
 	DiscoveredRangesCount int64 `json:"discoveredRangesCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CustomRangesCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1199,7 +1226,9 @@ func (s RealmAggregatedData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RegistryBook: Message describing RegistryBook object
+// RegistryBook: A RegistryBook organizes and manages IP address space. It
+// claims specific scopes (such as projects) and groups related Realms and
+// Ranges.
 type RegistryBook struct {
 	// AggregatedData: Output only. Aggregated data for the RegistryBook. Populated
 	// only when the view is AGGREGATE.
@@ -1208,15 +1237,16 @@ type RegistryBook struct {
 	// Preview, Only project scope is supported. Each scope is in the format of
 	// projects/{project}. Each scope can only be claimed once.
 	ClaimedScopes []string `json:"claimedScopes,omitempty"`
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. The time at which the RegistryBook was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// IsDefault: Output only. Whether the RegistryBook is the default one.
 	IsDefault bool `json:"isDefault,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. User-defined labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Required. Identifier. name of resource
+	// Name: Required. Identifier. The resource name of the RegistryBook.
 	Name string `json:"name,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// UpdateTime: Output only. The time at which the RegistryBook was last
+	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1239,9 +1269,15 @@ func (s RegistryBook) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SearchIpResourcesRequest: Message for searching IP resources
+// SearchIpResourcesRequest: Request message for the
+// CloudNumberRegistry.SearchIpResources method.
 type SearchIpResourcesRequest struct {
-	// OrderBy: Optional. Hint for how to order the results
+	// OrderBy: Optional. Hint for how to order the results. Supported sort fields
+	// are: - `name`: Sort alphabetically by the resource name. - `create_time`:
+	// Sort by the creation timestamp of the resource. - `update_time`: Sort by the
+	// last update timestamp of the resource. Supported directions are `asc`
+	// (ascending) and `desc` (descending). If unspecified, direction defaults to
+	// `asc`. Only sorting by a single field is supported.
 	OrderBy string `json:"orderBy,omitempty"`
 	// PageSize: Optional. Requested page size. Server may return fewer items than
 	// requested. If unspecified, server will pick an appropriate default.
@@ -1252,31 +1288,32 @@ type SearchIpResourcesRequest struct {
 	// Query: Optional. Search query. This string filters resources in an
 	// AIP-160-like format. It has some limitations. You can only specify top level
 	// conjunctions or attribute level negations. Each restriction can only be used
-	// once except the attribute restriction. The available restrictions for ranges
-	// are: - `realm`: The realm name to search in. - `ip_address`: The IP address
-	// to search for within ranges. - `ip_version`: The IP version to filter by
-	// (e.g., "IPV4", "IPV6"). - `parent_range`: The parent range of the range to
+	// once except the attribute restriction. The available restrictions for Ranges
+	// are: - `realm`: The Realm name to search in. - `ip_address`: The IP address
+	// to search for within Ranges. - `ip_version`: The IP version to filter by
+	// (e.g., "IPV4", "IPV6"). - `parent_range`: The parent Range of the Range to
 	// search for. - `attribute_text`: The attribute text to search for within
-	// ranges. - `attribute`: The attribute key and value to filter by. The
-	// available restrictions for realms are: - `ip_version`: The IP version to
-	// search for. Only one of attribute_text or multiple attribute filters can be
-	// specified. Examples: - `realm=test-realm` - `realm=test-realm AND
+	// Ranges. - `attribute`: The attribute key and value to filter by. The
+	// available restrictions for Realms are: - `ip_version`: The IP version to
+	// search for. - `management_type`: The management type of the Realm (e.g.,
+	// "CNR", "USER"). Only one of attribute_text or multiple attribute filters can
+	// be specified. Examples: - `realm=test-realm` - `realm=test-realm AND
 	// ip_address=10.0.0.0` - `realm=test-realm AND ip_version=IPV6` -
 	// `realm=test-realm AND attribute_text=test` - `ip_address=10.0.0.0 AND
 	// attribute:(key1=value1) AND attribute:(key2=value2)` - `attribute_text=test
 	// AND
 	// parent_range=projects/123/locations/global/discoveredRanges/test-parent-range
-	// `
+	// ` - `management_type=CNR`
 	Query string `json:"query,omitempty"`
 	// SearchResourceTypes: Optional. The type of resources to search for. If not
-	// specified, the server will return ranges.
+	// specified, the server will return Ranges.
 	//
 	// Possible values:
 	//   "SEARCH_RESOURCE_TYPE_UNSPECIFIED" - Unspecified search type.
-	//   "RANGES" - Search for ranges.
-	//   "REALMS" - Search for realms.
+	//   "RANGES" - Search for Ranges.
+	//   "REALMS" - Search for Realms.
 	SearchResourceTypes []string `json:"searchResourceTypes,omitempty"`
-	// ShowUtilization: Optional. Whether to show the utilization of the ranges in
+	// ShowUtilization: Optional. Whether to show the utilization of the Ranges in
 	// the response.
 	ShowUtilization bool `json:"showUtilization,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "OrderBy") to unconditionally
@@ -1297,12 +1334,13 @@ func (s SearchIpResourcesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SearchIpResourcesResponse: Message for response to searching IP resources
+// SearchIpResourcesResponse: Response message for the
+// CloudNumberRegistry.SearchIpResources method.
 type SearchIpResourcesResponse struct {
 	// NextPageToken: A token identifying a page of results the server should
 	// return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Ranges: Deprecated: Use results field instead. The list of ranges matching
+	// Ranges: Deprecated: Use results field instead. The list of Ranges matching
 	// the search query.
 	Ranges []*Range `json:"ranges,omitempty"`
 	// Results: The list of results matching the search query.
@@ -1331,11 +1369,11 @@ func (s SearchIpResourcesResponse) MarshalJSON() ([]byte, error) {
 }
 
 // SearchIpResourcesResult: A result matching the search query, which can be
-// either a range or a realm.
+// either a Range or a Realm.
 type SearchIpResourcesResult struct {
-	// Range: A range matching the search query.
+	// Range: A Range matching the search query.
 	Range *Range `json:"range,omitempty"`
-	// Realm: A realm matching the search query.
+	// Realm: A Realm matching the search query.
 	Realm *Realm `json:"realm,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Range") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1355,12 +1393,12 @@ func (s SearchIpResourcesResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ShowCustomRangeUtilizationResponse: Message for the response to getting the
-// utilization of a CustomRange
+// ShowCustomRangeUtilizationResponse: Response message for the
+// CloudNumberRegistry.ShowCustomRangeUtilization method.
 type ShowCustomRangeUtilizationResponse struct {
 	// CustomRange: The CustomRange resource.
 	CustomRange *CustomRange `json:"customRange,omitempty"`
-	// RangeUtilization: The utilization of the CustomRange.
+	// RangeUtilization: The utilization details of the CustomRange.
 	RangeUtilization *RangeUtilization `json:"rangeUtilization,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1383,12 +1421,12 @@ func (s ShowCustomRangeUtilizationResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ShowDiscoveredRangeUtilizationResponse: Message for the response to getting
-// the utilization of a DiscoveredRange
+// ShowDiscoveredRangeUtilizationResponse: Response message for the
+// CloudNumberRegistry.ShowDiscoveredRangeUtilization method.
 type ShowDiscoveredRangeUtilizationResponse struct {
 	// DiscoveredRange: The DiscoveredRange resource.
 	DiscoveredRange *DiscoveredRange `json:"discoveredRange,omitempty"`
-	// RangeUtilization: The utilization of the DiscoveredRange.
+	// RangeUtilization: The utilization details of the DiscoveredRange.
 	RangeUtilization *RangeUtilization `json:"rangeUtilization,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1738,7 +1776,7 @@ type ProjectsLocationsCustomRangesCreateCall struct {
 
 // Create: Creates a new CustomRange in a given project and location.
 //
-// - parent: Value for parent.
+// - parent: The parent resource name where the CustomRange will be created.
 func (r *ProjectsLocationsCustomRangesService) Create(parent string, customrange *CustomRange) *ProjectsLocationsCustomRangesCreateCall {
 	c := &ProjectsLocationsCustomRangesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1746,8 +1784,9 @@ func (r *ProjectsLocationsCustomRangesService) Create(parent string, customrange
 	return c
 }
 
-// CustomRangeId sets the optional parameter "customRangeId": Required. Id of
-// the requesting object.
+// CustomRangeId sets the optional parameter "customRangeId": Required. The ID
+// to use for the CustomRange, which will become the final segment of the
+// resource name.
 func (c *ProjectsLocationsCustomRangesCreateCall) CustomRangeId(customRangeId string) *ProjectsLocationsCustomRangesCreateCall {
 	c.urlParams_.Set("customRangeId", customRangeId)
 	return c
@@ -1863,7 +1902,7 @@ type ProjectsLocationsCustomRangesDeleteCall struct {
 
 // Delete: Deletes a single CustomRange.
 //
-// - name: Name of the resource.
+// - name: The resource name of the CustomRange to delete.
 func (r *ProjectsLocationsCustomRangesService) Delete(name string) *ProjectsLocationsCustomRangesDeleteCall {
 	c := &ProjectsLocationsCustomRangesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1984,7 +2023,7 @@ type ProjectsLocationsCustomRangesFindFreeIpRangesCall struct {
 
 // FindFreeIpRanges: Finds free IP ranges in a single CustomRange.
 //
-// - name: Name of the CustomRange.
+// - name: The resource name of the CustomRange to search within.
 func (r *ProjectsLocationsCustomRangesService) FindFreeIpRanges(name string) *ProjectsLocationsCustomRangesFindFreeIpRangesCall {
 	c := &ProjectsLocationsCustomRangesFindFreeIpRangesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2124,7 +2163,7 @@ type ProjectsLocationsCustomRangesGetCall struct {
 
 // Get: Gets details of a single CustomRange.
 //
-// - name: Name of the resource.
+// - name: The resource name of the CustomRange to retrieve.
 func (r *ProjectsLocationsCustomRangesService) Get(name string) *ProjectsLocationsCustomRangesGetCall {
 	c := &ProjectsLocationsCustomRangesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2233,14 +2272,15 @@ type ProjectsLocationsCustomRangesListCall struct {
 
 // List: Lists CustomRanges in a given project and location.
 //
-// - parent: Parent value for ListCustomRangesRequest.
+// - parent: The parent resource name, for example `projects/*/locations/*`.
 func (r *ProjectsLocationsCustomRangesService) List(parent string) *ProjectsLocationsCustomRangesListCall {
 	c := &ProjectsLocationsCustomRangesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results.
+// Filter sets the optional parameter "filter": Filter expression to filter the
+// results.
 func (c *ProjectsLocationsCustomRangesListCall) Filter(filter string) *ProjectsLocationsCustomRangesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2392,7 +2432,8 @@ type ProjectsLocationsCustomRangesPatchCall struct {
 
 // Patch: Updates the parameters of a single CustomRange.
 //
-// - name: Identifier. name of resource.
+//   - name: Identifier. The resource name of the CustomRange, in the format
+//     `projects/{project}/locations/{location}/customRanges/{custom_range}`.
 func (r *ProjectsLocationsCustomRangesService) Patch(name string, customrange *CustomRange) *ProjectsLocationsCustomRangesPatchCall {
 	c := &ProjectsLocationsCustomRangesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2523,7 +2564,7 @@ type ProjectsLocationsCustomRangesShowUtilizationCall struct {
 // ShowUtilization: Gets the details of a single CustomRange and its
 // utilization.
 //
-// - name: Name of the resource.
+// - name: The resource name of the CustomRange.
 func (r *ProjectsLocationsCustomRangesService) ShowUtilization(name string) *ProjectsLocationsCustomRangesShowUtilizationCall {
 	c := &ProjectsLocationsCustomRangesShowUtilizationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2633,7 +2674,7 @@ type ProjectsLocationsDiscoveredRangesFindFreeIpRangesCall struct {
 
 // FindFreeIpRanges: Finds free IP ranges in a single DiscoveredRange.
 //
-// - name: Name of the DiscoveredRange.
+// - name: The resource name of the DiscoveredRange to search within.
 func (r *ProjectsLocationsDiscoveredRangesService) FindFreeIpRanges(name string) *ProjectsLocationsDiscoveredRangesFindFreeIpRangesCall {
 	c := &ProjectsLocationsDiscoveredRangesFindFreeIpRangesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2773,7 +2814,7 @@ type ProjectsLocationsDiscoveredRangesGetCall struct {
 
 // Get: Gets details of a single DiscoveredRange.
 //
-// - name: Name of the resource.
+// - name: The resource name of the DiscoveredRange to retrieve.
 func (r *ProjectsLocationsDiscoveredRangesService) Get(name string) *ProjectsLocationsDiscoveredRangesGetCall {
 	c := &ProjectsLocationsDiscoveredRangesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2883,14 +2924,15 @@ type ProjectsLocationsDiscoveredRangesListCall struct {
 
 // List: Lists DiscoveredRanges in a given project and location.
 //
-// - parent: Parent value for ListDiscoveredRangesRequest.
+// - parent: The parent resource name, for example `projects/*/locations/*`.
 func (r *ProjectsLocationsDiscoveredRangesService) List(parent string) *ProjectsLocationsDiscoveredRangesListCall {
 	c := &ProjectsLocationsDiscoveredRangesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results.
+// Filter sets the optional parameter "filter": Filter expression to filter the
+// results.
 func (c *ProjectsLocationsDiscoveredRangesListCall) Filter(filter string) *ProjectsLocationsDiscoveredRangesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3043,7 +3085,7 @@ type ProjectsLocationsDiscoveredRangesShowUtilizationCall struct {
 // ShowUtilization: Gets the details of a single DiscoveredRange and its
 // utilization.
 //
-// - name: Name of the resource.
+// - name: The resource name of the DiscoveredRange.
 func (r *ProjectsLocationsDiscoveredRangesService) ShowUtilization(name string) *ProjectsLocationsDiscoveredRangesShowUtilizationCall {
 	c := &ProjectsLocationsDiscoveredRangesShowUtilizationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3151,18 +3193,18 @@ type ProjectsLocationsIpamAdminScopesCheckAvailabilityCall struct {
 	header_      http.Header
 }
 
-// CheckAvailability: Checks the availability of IPAM admin scopes in a given
+// CheckAvailability: Checks the availability of IpamAdminScopes in a given
 // project and location.
 //
-// - parent: Parent value for the IpamAdminScopes.
+// - parent: The parent resource name, for example `projects/*/locations/*`.
 func (r *ProjectsLocationsIpamAdminScopesService) CheckAvailability(parent string) *ProjectsLocationsIpamAdminScopesCheckAvailabilityCall {
 	c := &ProjectsLocationsIpamAdminScopesCheckAvailabilityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Scopes sets the optional parameter "scopes": Required. The scopes of the
-// IpamAdminScopes to look for.
+// Scopes sets the optional parameter "scopes": Required. The administrative
+// scopes to check for availability.
 func (c *ProjectsLocationsIpamAdminScopesCheckAvailabilityCall) Scopes(scopes ...string) *ProjectsLocationsIpamAdminScopesCheckAvailabilityCall {
 	c.urlParams_.SetMulti("scopes", append([]string{}, scopes...))
 	return c
@@ -3271,7 +3313,7 @@ type ProjectsLocationsIpamAdminScopesCleanupCall struct {
 
 // Cleanup: Cleans up a single IpamAdminScope.
 //
-// - name: Name of the resource.
+// - name: The resource name of the IpamAdminScope to clean up.
 func (r *ProjectsLocationsIpamAdminScopesService) Cleanup(name string, cleanupipamadminscoperequest *CleanupIpamAdminScopeRequest) *ProjectsLocationsIpamAdminScopesCleanupCall {
 	c := &ProjectsLocationsIpamAdminScopesCleanupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3374,7 +3416,7 @@ type ProjectsLocationsIpamAdminScopesCreateCall struct {
 
 // Create: Creates a new IpamAdminScope in a given project and location.
 //
-// - parent: Value for parent.
+// - parent: The parent resource name where the IpamAdminScope will be created.
 func (r *ProjectsLocationsIpamAdminScopesService) Create(parent string, ipamadminscope *IpamAdminScope) *ProjectsLocationsIpamAdminScopesCreateCall {
 	c := &ProjectsLocationsIpamAdminScopesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3383,7 +3425,8 @@ func (r *ProjectsLocationsIpamAdminScopesService) Create(parent string, ipamadmi
 }
 
 // IpamAdminScopeId sets the optional parameter "ipamAdminScopeId": Required.
-// Id of the requesting object.
+// The ID to use for the IpamAdminScope, which will become the final segment of
+// the resource name.
 func (c *ProjectsLocationsIpamAdminScopesCreateCall) IpamAdminScopeId(ipamAdminScopeId string) *ProjectsLocationsIpamAdminScopesCreateCall {
 	c.urlParams_.Set("ipamAdminScopeId", ipamAdminScopeId)
 	return c
@@ -3499,7 +3542,7 @@ type ProjectsLocationsIpamAdminScopesDeleteCall struct {
 
 // Delete: Deletes a single IpamAdminScope.
 //
-// - name: Name of the resource.
+// - name: The resource name of the IpamAdminScope to delete.
 func (r *ProjectsLocationsIpamAdminScopesService) Delete(name string) *ProjectsLocationsIpamAdminScopesDeleteCall {
 	c := &ProjectsLocationsIpamAdminScopesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3620,7 +3663,7 @@ type ProjectsLocationsIpamAdminScopesDisableCall struct {
 
 // Disable: Disables a single IpamAdminScope.
 //
-// - name: Name of the resource.
+// - name: The resource name of the IpamAdminScope to disable.
 func (r *ProjectsLocationsIpamAdminScopesService) Disable(name string, disableipamadminscoperequest *DisableIpamAdminScopeRequest) *ProjectsLocationsIpamAdminScopesDisableCall {
 	c := &ProjectsLocationsIpamAdminScopesDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3723,7 +3766,7 @@ type ProjectsLocationsIpamAdminScopesGetCall struct {
 
 // Get: Gets details of a single IpamAdminScope.
 //
-// - name: Name of the resource.
+// - name: The resource name of the IpamAdminScope to retrieve.
 func (r *ProjectsLocationsIpamAdminScopesService) Get(name string) *ProjectsLocationsIpamAdminScopesGetCall {
 	c := &ProjectsLocationsIpamAdminScopesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3830,23 +3873,24 @@ type ProjectsLocationsIpamAdminScopesListCall struct {
 	header_      http.Header
 }
 
-// List: List all IPAM admin scopes in a given project and location.
+// List: Lists IpamAdminScopes in a given project and location.
 //
-// - parent: Parent value for ListIpamAdminScopesRequest.
+// - parent: The parent resource name, for example `projects/*/locations/*`.
 func (r *ProjectsLocationsIpamAdminScopesService) List(parent string) *ProjectsLocationsIpamAdminScopesListCall {
 	c := &ProjectsLocationsIpamAdminScopesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filter expression to filter the
+// results.
 func (c *ProjectsLocationsIpamAdminScopesListCall) Filter(filter string) *ProjectsLocationsIpamAdminScopesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// results.
 func (c *ProjectsLocationsIpamAdminScopesListCall) OrderBy(orderBy string) *ProjectsLocationsIpamAdminScopesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -3991,7 +4035,7 @@ type ProjectsLocationsIpamAdminScopesPatchCall struct {
 
 // Patch: Updates the parameters of a single IpamAdminScope.
 //
-// - name: Identifier. name of resource.
+// - name: Identifier. The resource name of the IpamAdminScope.
 func (r *ProjectsLocationsIpamAdminScopesService) Patch(name string, ipamadminscope *IpamAdminScope) *ProjectsLocationsIpamAdminScopesPatchCall {
 	c := &ProjectsLocationsIpamAdminScopesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4608,7 +4652,7 @@ type ProjectsLocationsRealmsCreateCall struct {
 
 // Create: Creates a new Realm in a given project and location.
 //
-// - parent: Value for parent.
+// - parent: The parent resource name where the Realm will be created.
 func (r *ProjectsLocationsRealmsService) Create(parent string, realm *Realm) *ProjectsLocationsRealmsCreateCall {
 	c := &ProjectsLocationsRealmsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4616,8 +4660,8 @@ func (r *ProjectsLocationsRealmsService) Create(parent string, realm *Realm) *Pr
 	return c
 }
 
-// RealmId sets the optional parameter "realmId": Required. Id of the
-// requesting object.
+// RealmId sets the optional parameter "realmId": Required. The ID to use for
+// the Realm, which will become the final segment of the resource name.
 func (c *ProjectsLocationsRealmsCreateCall) RealmId(realmId string) *ProjectsLocationsRealmsCreateCall {
 	c.urlParams_.Set("realmId", realmId)
 	return c
@@ -4727,7 +4771,7 @@ type ProjectsLocationsRealmsDeleteCall struct {
 
 // Delete: Deletes a single Realm.
 //
-// - name: Name of the resource.
+// - name: The resource name of the Realm to delete.
 func (r *ProjectsLocationsRealmsService) Delete(name string) *ProjectsLocationsRealmsDeleteCall {
 	c := &ProjectsLocationsRealmsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4842,14 +4886,14 @@ type ProjectsLocationsRealmsGetCall struct {
 
 // Get: Gets details of a single Realm.
 //
-// - name: Name of the resource.
+// - name: The resource name of the Realm to retrieve.
 func (r *ProjectsLocationsRealmsService) Get(name string) *ProjectsLocationsRealmsGetCall {
 	c := &ProjectsLocationsRealmsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// View sets the optional parameter "view": The view of the Realm.
+// View sets the optional parameter "view": The view of the Realm to retrieve.
 //
 // Possible values:
 //
@@ -4966,21 +5010,22 @@ type ProjectsLocationsRealmsListCall struct {
 
 // List: Lists Realms in a given project and location.
 //
-// - parent: Parent value for ListRealmsRequest.
+// - parent: The parent resource name, for example `projects/*/locations/*`.
 func (r *ProjectsLocationsRealmsService) List(parent string) *ProjectsLocationsRealmsListCall {
 	c := &ProjectsLocationsRealmsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filter expression to filter the
+// results.
 func (c *ProjectsLocationsRealmsListCall) Filter(filter string) *ProjectsLocationsRealmsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// results.
 func (c *ProjectsLocationsRealmsListCall) OrderBy(orderBy string) *ProjectsLocationsRealmsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -5001,7 +5046,7 @@ func (c *ProjectsLocationsRealmsListCall) PageToken(pageToken string) *ProjectsL
 	return c
 }
 
-// View sets the optional parameter "view": The view of the Realm.
+// View sets the optional parameter "view": The view of the Realm to retrieve.
 //
 // Possible values:
 //
@@ -5140,7 +5185,7 @@ type ProjectsLocationsRealmsPatchCall struct {
 
 // Patch: Updates the parameters of a single Realm.
 //
-// - name: Identifier. Unique name/ID of the realm.
+// - name: Identifier. The resource name of the Realm.
 func (r *ProjectsLocationsRealmsService) Patch(name string, realm *Realm) *ProjectsLocationsRealmsPatchCall {
 	c := &ProjectsLocationsRealmsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5260,7 +5305,7 @@ type ProjectsLocationsRegistryBooksCreateCall struct {
 
 // Create: Creates a new RegistryBook in a given project and location.
 //
-// - parent: Value for parent.
+// - parent: The parent resource name where the RegistryBook will be created.
 func (r *ProjectsLocationsRegistryBooksService) Create(parent string, registrybook *RegistryBook) *ProjectsLocationsRegistryBooksCreateCall {
 	c := &ProjectsLocationsRegistryBooksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5268,8 +5313,9 @@ func (r *ProjectsLocationsRegistryBooksService) Create(parent string, registrybo
 	return c
 }
 
-// RegistryBookId sets the optional parameter "registryBookId": Required. Id of
-// the requesting object.
+// RegistryBookId sets the optional parameter "registryBookId": Required. The
+// ID to use for the RegistryBook, which will become the final segment of the
+// resource name.
 func (c *ProjectsLocationsRegistryBooksCreateCall) RegistryBookId(registryBookId string) *ProjectsLocationsRegistryBooksCreateCall {
 	c.urlParams_.Set("registryBookId", registryBookId)
 	return c
@@ -5385,7 +5431,7 @@ type ProjectsLocationsRegistryBooksDeleteCall struct {
 
 // Delete: Deletes a single RegistryBook.
 //
-// - name: Name of the resource.
+// - name: The resource name of the RegistryBook to delete.
 func (r *ProjectsLocationsRegistryBooksService) Delete(name string) *ProjectsLocationsRegistryBooksDeleteCall {
 	c := &ProjectsLocationsRegistryBooksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5506,14 +5552,15 @@ type ProjectsLocationsRegistryBooksGetCall struct {
 
 // Get: Gets details of a single RegistryBook.
 //
-// - name: Name of the resource.
+// - name: The resource name of the RegistryBook to retrieve.
 func (r *ProjectsLocationsRegistryBooksService) Get(name string) *ProjectsLocationsRegistryBooksGetCall {
 	c := &ProjectsLocationsRegistryBooksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// View sets the optional parameter "view": The view of the RegistryBook.
+// View sets the optional parameter "view": The view of the RegistryBook to
+// retrieve.
 //
 // Possible values:
 //
@@ -5630,21 +5677,22 @@ type ProjectsLocationsRegistryBooksListCall struct {
 
 // List: Lists RegistryBooks in a given project and location.
 //
-// - parent: Parent value for ListRegistryBooksRequest.
+// - parent: The parent resource name, for example `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistryBooksService) List(parent string) *ProjectsLocationsRegistryBooksListCall {
 	c := &ProjectsLocationsRegistryBooksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filter expression to filter the
+// results.
 func (c *ProjectsLocationsRegistryBooksListCall) Filter(filter string) *ProjectsLocationsRegistryBooksListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// results.
 func (c *ProjectsLocationsRegistryBooksListCall) OrderBy(orderBy string) *ProjectsLocationsRegistryBooksListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -5665,7 +5713,8 @@ func (c *ProjectsLocationsRegistryBooksListCall) PageToken(pageToken string) *Pr
 	return c
 }
 
-// View sets the optional parameter "view": The view of the RegistryBook.
+// View sets the optional parameter "view": The view of the RegistryBook to
+// retrieve.
 //
 // Possible values:
 //
@@ -5804,7 +5853,7 @@ type ProjectsLocationsRegistryBooksPatchCall struct {
 
 // Patch: Updates the parameters of a single RegistryBook.
 //
-// - name: Identifier. name of resource.
+// - name: Identifier. The resource name of the RegistryBook.
 func (r *ProjectsLocationsRegistryBooksService) Patch(name string, registrybook *RegistryBook) *ProjectsLocationsRegistryBooksPatchCall {
 	c := &ProjectsLocationsRegistryBooksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5934,7 +5983,7 @@ type ProjectsLocationsRegistryBooksSearchIpResourcesCall struct {
 
 // SearchIpResources: Searches IP resources in a given RegistryBook.
 //
-// - name: The name of the RegistryBook to search in.
+// - name: The resource name of the RegistryBook to search in.
 func (r *ProjectsLocationsRegistryBooksService) SearchIpResources(name string, searchipresourcesrequest *SearchIpResourcesRequest) *ProjectsLocationsRegistryBooksSearchIpResourcesCall {
 	c := &ProjectsLocationsRegistryBooksSearchIpResourcesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

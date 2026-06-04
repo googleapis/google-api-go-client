@@ -2131,7 +2131,7 @@
       }
     }
   },
-  "revision": "20260528",
+  "revision": "20260601",
   "rootUrl": "https://chromemanagement.googleapis.com/",
   "schemas": {
     "GoogleChromeManagementV1AndroidAppInfo": {
@@ -3996,6 +3996,12 @@
           },
           "readOnly": true,
           "type": "array"
+        },
+        "profileCount": {
+          "description": "Output only. Count of Chrome Profiles with this app installed.",
+          "format": "int64",
+          "readOnly": true,
+          "type": "string"
         },
         "riskAssessment": {
           "$ref": "GoogleChromeManagementV1RiskAssessmentData",

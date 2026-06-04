@@ -1550,6 +1550,11 @@ type Endpoint struct {
 	// CloudFunction: A Cloud Function (https://cloud.google.com/functions).
 	// Applicable only to source endpoint.
 	CloudFunction *CloudFunctionEndpoint `json:"cloudFunction,omitempty"`
+	// CloudRunJob: A Cloud Run (https://cloud.google.com/run)
+	// [job](https://docs.cloud.google.com/run/docs/reference/rest/v2/projects.locat
+	// ions.jobs#Job) URI. Applicable only to source endpoint. The format is:
+	// projects/{project}/locations/{location}/jobs/{job}
+	CloudRunJob string `json:"cloudRunJob,omitempty"`
 	// CloudRunRevision: A Cloud Run (https://cloud.google.com/run)
 	// [revision](https://cloud.google.com/run/docs/reference/rest/v1/namespaces.rev
 	// isions/get) Applicable only to source endpoint.

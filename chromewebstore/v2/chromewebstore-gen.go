@@ -348,7 +348,7 @@ func (s ItemRevisionStatus) MarshalJSON() ([]byte, error) {
 type PublishItemRequest struct {
 	// BlockOnWarnings: Optional. When set to true the request will fail if there
 	// are any warnings during validation and the details will be included in the
-	// error_details. Otherwise warnings are treated as non-blocking and will be
+	// `error.details`. Otherwise warnings are treated as non-blocking and will be
 	// ignored for validation but will be included in the response for inspection.
 	// Defaults to `false` if unset.
 	BlockOnWarnings bool `json:"blockOnWarnings,omitempty"`
@@ -516,9 +516,7 @@ type Warning struct {
 	// issue.
 	Description string `json:"description,omitempty"`
 	// Reason: The reason for the warning. This is a constant value that identifies
-	// the proximate cause of the warning. This should be at most 63 characters and
-	// match a regular expression of `A-Z+[A-Z0-9]`, which represents
-	// UPPER_SNAKE_CASE.
+	// the proximate cause of the warning.
 	Reason string `json:"reason,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or

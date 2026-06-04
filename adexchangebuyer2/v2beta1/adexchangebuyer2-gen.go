@@ -1260,6 +1260,26 @@ func (s ClientUserInvitation) MarshalJSON() ([]byte, error) {
 // CompleteSetupRequest: Request message for indicating that the proposal's
 // setup step is complete.
 type CompleteSetupRequest struct {
+	// ExternalDealIds: The external deal ids of the deals to mark as setup
+	// completed. If empty, all the deals in the proposal will be marked as setup
+	// completed.
+	ExternalDealIds []string `json:"externalDealIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExternalDealIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExternalDealIds") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CompleteSetupRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CompleteSetupRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContactInformation: Contains information on how a buyer or seller can be

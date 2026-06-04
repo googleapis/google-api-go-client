@@ -3622,7 +3622,8 @@ type ListMirroringDeploymentsResponse struct {
 	// page. If this field is omitted, there are no subsequent pages. See
 	// https://google.aip.dev/158 for more details.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Unreachable: Locations that could not be reached.
+	// Unreachable: Unordered list. Locations that could not be reached. See
+	// https://google.aip.dev/217 for more details.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

@@ -2334,6 +2334,8 @@ type GoogleChromeManagementV1InstalledApp struct {
 	OsUserCount int64 `json:"osUserCount,omitempty,string"`
 	// Permissions: Output only. Permissions of the installed app.
 	Permissions []string `json:"permissions,omitempty"`
+	// ProfileCount: Output only. Count of Chrome Profiles with this app installed.
+	ProfileCount int64 `json:"profileCount,omitempty,string"`
 	// RiskAssessment: Output only. If available, the risk assessment data about
 	// this extension.
 	RiskAssessment *GoogleChromeManagementV1RiskAssessmentData `json:"riskAssessment,omitempty"`

@@ -211,6 +211,33 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+// AccessControlsUpdates: Represents updates to existing access-control entries
+// on an object.
+type AccessControlsUpdates struct {
+	// Grants: Optional. Grants to add or update. If a grant for same entity
+	// exists, its role is updated.
+	Grants []*ObjectAccessControl `json:"grants,omitempty"`
+	// RemoveEntities: Optional. Entities for which all grants should be removed.
+	// An entity can't be in both `grants` and `remove_entities`.
+	RemoveEntities []string `json:"removeEntities,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Grants") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Grants") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AccessControlsUpdates) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessControlsUpdates
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Bucket: Describes configuration of a single bucket and its objects to be
 // transformed.
 type Bucket struct {
@@ -240,9 +267,9 @@ func (s Bucket) MarshalJSON() ([]byte, error) {
 
 // BucketList: Describes list of buckets and their objects to be transformed.
 type BucketList struct {
-	// Buckets: Required. List of buckets and their objects to be transformed.
-	// Currently, only one bucket configuration is supported. If multiple buckets
-	// are specified, an error will be returned.
+	// Buckets: Required. List of buckets and their objects to be transformed. You
+	// can specify only one bucket per job. If multiple buckets are specified, an
+	// error occurs.
 	Buckets []*Bucket `json:"buckets,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Buckets") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -284,11 +311,14 @@ type BucketOperation struct {
 	Manifest *Manifest `json:"manifest,omitempty"`
 	// Name: Identifier. The resource name of the BucketOperation. This is defined
 	// by the service. Format:
-	// projects/{project}/locations/global/jobs/{job_id}/bucketOperations/{bucket_op
-	// eration}.
+	// `projects/{project_id}/locations/global/jobs/{job_id}/bucketOperations/{bucke
+	// t_operation}`.
 	Name string `json:"name,omitempty"`
 	// PrefixList: Specifies objects matching a prefix set.
 	PrefixList *PrefixList `json:"prefixList,omitempty"`
+	// ProjectSource: Specifies objects matching the object filters in a project
+	// source.
+	ProjectSource *ProjectSource `json:"projectSource,omitempty"`
 	// PutMetadata: Updates object metadata. Allows updating fixed-key and custom
 	// metadata and fixed-key metadata i.e. Cache-Control, Content-Disposition,
 	// Content-Encoding, Content-Language, Content-Type, Custom-Time.
@@ -297,6 +327,8 @@ type BucketOperation struct {
 	PutObjectHold *PutObjectHold `json:"putObjectHold,omitempty"`
 	// RewriteObject: Rewrite the object and updates metadata like KMS key.
 	RewriteObject *RewriteObject `json:"rewriteObject,omitempty"`
+	// SetObjectAcls: Updates object ACLs.
+	SetObjectAcls *SetObjectAcls `json:"setObjectAcls,omitempty"`
 	// StartTime: Output only. The time that the BucketOperation was started.
 	StartTime string `json:"startTime,omitempty"`
 	// State: Output only. State of the BucketOperation.
@@ -336,9 +368,9 @@ func (s BucketOperation) MarshalJSON() ([]byte, error) {
 type CancelJobRequest struct {
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
 	// unique request ID in case you need to retry your request. Requests with same
-	// `request_id` will be ignored for at least 60 minutes since the first
-	// request. The request ID must be a valid UUID with the exception that zero
-	// UUID is not supported (00000000-0000-0000-0000-000000000000).
+	// `request_id` are ignored for at least 60 minutes since the first request.
+	// The request ID must be a valid UUID with the exception that zero UUID isn't
+	// supported (00000000-0000-0000-0000-000000000000).
 	RequestId string `json:"requestId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RequestId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -419,7 +451,7 @@ func (s Counters) MarshalJSON() ([]byte, error) {
 // CustomContextUpdates: Describes a collection of updates to apply to custom
 // contexts identified by key.
 type CustomContextUpdates struct {
-	// KeysToClear: Optional. Custom contexts to clear by key. A key cannot be
+	// KeysToClear: Optional. Custom contexts to clear by key. A key can't be
 	// present in both `updates` and `keys_to_clear`.
 	KeysToClear []string `json:"keysToClear,omitempty"`
 	// Updates: Optional. Insert or update the existing custom contexts.
@@ -445,15 +477,14 @@ func (s CustomContextUpdates) MarshalJSON() ([]byte, error) {
 // DeleteObject: Describes options to delete an object.
 type DeleteObject struct {
 	// PermanentObjectDeletionEnabled: Required. Controls deletion behavior when
-	// versioning is enabled for the object's bucket. If true both live and
+	// versioning is enabled for the object's bucket. If true, both live and
 	// noncurrent objects will be permanently deleted. Otherwise live objects in
 	// versioned buckets will become noncurrent and objects that were already
 	// noncurrent will be skipped. This setting doesn't have any impact on the Soft
 	// Delete feature. All objects deleted by this service can be be restored for
 	// the duration of the Soft Delete retention duration if enabled. If enabled
-	// and the manifest doesn't specify an object's generation, a GetObjectMetadata
-	// call (a Class B operation) will be made to determine the live object
-	// generation.
+	// and the manifest doesn't specify an object's generation, a
+	// `GetObjectMetadata` call is made to determine the live object generation.
 	PermanentObjectDeletionEnabled bool `json:"permanentObjectDeletionEnabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "PermanentObjectDeletionEnabled") to unconditionally include in API
@@ -615,7 +646,55 @@ func (s ErrorSummary) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Job: The Storage Batch Operations Job description.
+// Expr: Represents a textual expression in the Common Expression Language
+// (CEL) syntax. CEL is a C-like expression language. The syntax and semantics
+// of CEL are documented at https://github.com/google/cel-spec. Example
+// (Comparison): title: "Summary size limit" description: "Determines if a
+// summary is less than 100 chars" expression: "document.summary.size() < 100"
+// Example (Equality): title: "Requestor is owner" description: "Determines if
+// requestor is the document owner" expression: "document.owner ==
+// request.auth.claims.email" Example (Logic): title: "Public documents"
+// description: "Determine whether the document should be publicly visible"
+// expression: "document.type != 'private' && document.type != 'internal'"
+// Example (Data Manipulation): title: "Notification string" description:
+// "Create a notification string with a timestamp." expression: "'New message
+// received at ' + string(document.create_time)" The exact variables and
+// functions that may be referenced within an expression are determined by the
+// service that evaluates it. See the service documentation for additional
+// information.
+type Expr struct {
+	// Description: Optional. Description of the expression. This is a longer text
+	// which describes the expression, e.g. when hovered over it in a UI.
+	Description string `json:"description,omitempty"`
+	// Expression: Textual representation of an expression in Common Expression
+	// Language syntax.
+	Expression string `json:"expression,omitempty"`
+	// Location: Optional. String indicating the location of the expression for
+	// error reporting, e.g. a file name and a position in the file.
+	Location string `json:"location,omitempty"`
+	// Title: Optional. Title for the expression, i.e. a short string describing
+	// its purpose. This can be used e.g. in UIs which allow to enter the
+	// expression.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Expr) MarshalJSON() ([]byte, error) {
+	type NoMethod Expr
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Job: The storage batch operations job description.
 type Job struct {
 	// BucketList: Specifies a list of buckets and their objects to be transformed.
 	BucketList *BucketList `json:"bucketList,omitempty"`
@@ -627,30 +706,34 @@ type Job struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// DeleteObject: Delete objects.
 	DeleteObject *DeleteObject `json:"deleteObject,omitempty"`
-	// Description: Optional. A description provided by the user for the job. Its
-	// max length is 1024 bytes when Unicode-encoded.
+	// Description: Optional. A user-provided description for the job. Maximum
+	// length: 1024 bytes when unicode-encoded.
 	Description string `json:"description,omitempty"`
-	// DryRun: Optional. If true, the job will run in dry run mode, returning the
-	// total object count and, if the object configuration is a prefix list, the
-	// bytes found from source. No transformations will be performed.
+	// DryRun: Optional. If true, the job runs in dry run mode, returning the total
+	// object count and, if the object configuration is a prefix list, the bytes
+	// found from source. No transformations are performed.
 	DryRun bool `json:"dryRun,omitempty"`
 	// ErrorSummaries: Output only. Summarizes errors encountered with sample error
 	// log entries.
 	ErrorSummaries []*ErrorSummary `json:"errorSummaries,omitempty"`
-	// IsMultiBucketJob: Output only. If true, this Job operates on multiple
-	// buckets. Multibucket jobs are subject to different quota limits than
+	// IsMultiBucketJob: Output only. If true, this job operates on multiple
+	// buckets. Multi-bucket jobs are subject to different quota limits than
 	// single-bucket jobs.
 	IsMultiBucketJob bool `json:"isMultiBucketJob,omitempty"`
 	// LoggingConfig: Optional. Logging configuration.
 	LoggingConfig *LoggingConfig `json:"loggingConfig,omitempty"`
-	// Name: Identifier. The resource name of the Job. job_id is unique within the
-	// project, that is either set by the customer or defined by the service.
-	// Format: projects/{project}/locations/global/jobs/{job_id} . For example:
-	// "projects/123456/locations/global/jobs/job01".
+	// Name: Identifier. The resource name of the job. Format:
+	// `projects/{project_id}/locations/global/jobs/{job_id}`. For example:
+	// `projects/123456/locations/global/jobs/job01`. `job_id` is unique in a given
+	// project.
 	Name string `json:"name,omitempty"`
+	// ProjectSource: Specifies a project source and filters to identify objects to
+	// be transformed.
+	ProjectSource *ProjectSource `json:"projectSource,omitempty"`
 	// PutMetadata: Updates object metadata. Allows updating fixed-key and custom
-	// metadata and fixed-key metadata i.e. Cache-Control, Content-Disposition,
-	// Content-Encoding, Content-Language, Content-Type, Custom-Time.
+	// metadata. For example, `Cache-Control`, `Content-Disposition`,
+	// `Content-Encoding`, `Content-Language`, `Content-Type`, `Custom-Time`, and
+	// `Retention configuration`.
 	PutMetadata *PutMetadata `json:"putMetadata,omitempty"`
 	// PutObjectHold: Changes object hold status.
 	PutObjectHold *PutObjectHold `json:"putObjectHold,omitempty"`
@@ -658,6 +741,8 @@ type Job struct {
 	RewriteObject *RewriteObject `json:"rewriteObject,omitempty"`
 	// ScheduleTime: Output only. The time that the job was scheduled.
 	ScheduleTime string `json:"scheduleTime,omitempty"`
+	// SetObjectAcls: Updates object ACLs.
+	SetObjectAcls *SetObjectAcls `json:"setObjectAcls,omitempty"`
 	// State: Output only. State of the job.
 	//
 	// Possible values:
@@ -889,16 +974,24 @@ func (s LoggingConfig) MarshalJSON() ([]byte, error) {
 
 // Manifest: Describes list of objects to be transformed.
 type Manifest struct {
-	// ManifestLocation: Required. `manifest_location` must contain the manifest
-	// source file that is a CSV file in a Google Cloud Storage bucket. Each row in
-	// the file must include the object details i.e. BucketId and Name. Generation
-	// may optionally be specified. When it is not specified the live object is
-	// acted upon. `manifest_location` should either be 1) An absolute path to the
-	// object in the format of `gs://bucket_name/path/file_name.csv`. 2) An
+	// ManifestLocation: Required. Specify the manifest file location. The format
+	// of manifest location can be an absolute path to the object in the format of
+	// `gs://bucket_name/path/object_name`. For example,
+	// `gs://bucket_name/path/object_name.csv`. Alternatively, you can specify an
 	// absolute path with a single wildcard character in the file name, for example
-	// `gs://bucket_name/path/file_name*.csv`. If manifest location is specified
-	// with a wildcard, objects in all manifest files matching the pattern will be
-	// acted upon.
+	// `gs://bucket_name/path/file_name*.csv`. If the manifest location is
+	// specified with a wildcard, objects in all manifest files matching the
+	// pattern will be acted upon. The manifest is a CSV file, uploaded to Cloud
+	// Storage, that contains one object or a list of objects that you want to
+	// process. Each row in the manifest must include the `bucket` and `name` of
+	// the object. You can optionally specify the `generation` of the object. If
+	// you don't specify the `generation`, the current version of the object is
+	// used. You can optionally include a header row with the following format:
+	// `bucket,name,generation`. For example, bucket,name,generation
+	// bucket_1,object_1,generation_1 bucket_1,object_2,generation_2
+	// bucket_1,object_3,generation_3 Note: The manifest file must specify only
+	// objects within the bucket provided to the job. Rows referencing objects in
+	// other buckets are ignored.
 	ManifestLocation string `json:"manifestLocation,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ManifestLocation") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -918,13 +1011,39 @@ func (s Manifest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ObjectCustomContextPayload: Describes the payload of a user defined object
+// ObjectAccessControl: Represents an access control entry on an object.
+type ObjectAccessControl struct {
+	// Entity: Required. The entity holding the permission, in one of the following
+	// forms: * `allUsers` * `allAuthenticatedUsers`
+	Entity string `json:"entity,omitempty"`
+	// Role: Required. The role to grant. Acceptable values are: * `READER` - gives
+	// read access to the object. * `OWNER` - gives owner access to the object.
+	Role string `json:"role,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Entity") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Entity") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ObjectAccessControl) MarshalJSON() ([]byte, error) {
+	type NoMethod ObjectAccessControl
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ObjectCustomContextPayload: Describes the payload of a user-defined object
 // custom context.
 type ObjectCustomContextPayload struct {
-	// Value: The value of the object custom context. If set, `value` must NOT be
-	// an empty string since it is a required field in custom context. If unset,
-	// `value` will be ignored and no changes will be made to the `value` field of
-	// the custom context payload.
+	// Value: The value of the object custom context. If set, `value` can't be an
+	// empty string because it is a required field in custom context. If unset,
+	// `value` is ignored and no changes are made to the `value` field of the
+	// custom context payload.
 	Value string `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -946,17 +1065,22 @@ func (s ObjectCustomContextPayload) MarshalJSON() ([]byte, error) {
 
 // ObjectRetention: Describes options for object retention update.
 type ObjectRetention struct {
-	// RetainUntilTime: Required. The time when the object will be retained until.
-	// UNSET will clear the retention. Must be specified in RFC 3339 format e.g.
-	// YYYY-MM-DD'T'HH:MM:SS.SS'Z' or YYYY-MM-DD'T'HH:MM:SS'Z'.
+	// RetainUntilTime: Required. The object's retention expiration time, during
+	// which, the object is protected from being deleted or overwritten. The time
+	// must be specified in RFC 3339 format, for example `YYYY-MM-DD'T'HH:MM:SS'Z'`
+	// or `YYYY-MM-DD'T'HH:MM:SS.SS'Z'`. To clear an object's retention, both
+	// `retentionMode` and `retainUntilTime` must be left unset (omitted). Setting
+	// `retentionMode` to `RETENTION_MODE_UNSPECIFIED` is treated as a no-op.
+	// Unlike an unset field, it doesn't modify or clear the retention settings.
 	RetainUntilTime string `json:"retainUntilTime,omitempty"`
-	// RetentionMode: Required. The retention mode of the object.
+	// RetentionMode: Required. The retention mode.
 	//
 	// Possible values:
-	//   "RETENTION_MODE_UNSPECIFIED" - If set and retain_until_time is empty,
-	// clears the retention.
-	//   "LOCKED" - Sets the retention mode to locked.
-	//   "UNLOCKED" - Sets the retention mode to unlocked.
+	//   "RETENTION_MODE_UNSPECIFIED" - The retention mode isn't specified.
+	//   "LOCKED" - When the retention mode is `LOCKED`, the `retainUntilTime`
+	// can't be removed or reduced.
+	//   "UNLOCKED" - When the retention mode is `UNLOCKED`, the `retainUntilTime`
+	// can be removed or modified.
 	RetentionMode string `json:"retentionMode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RetainUntilTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1034,7 +1158,7 @@ type OperationMetadata struct {
 	// Job: Output only. The Job associated with the operation.
 	Job *Job `json:"job,omitempty"`
 	// Operation: Output only. The unique operation resource name. Format:
-	// projects/{project}/locations/global/operations/{operation}.
+	// projects/{project_id}/locations/global/operations/{operation}.
 	Operation string `json:"operation,omitempty"`
 	// RequestedCancellation: Output only. Identifies whether the user has
 	// requested cancellation of the operation. Operations that have been cancelled
@@ -1061,10 +1185,10 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 
 // PrefixList: Describes prefixes of objects to be transformed.
 type PrefixList struct {
-	// IncludedObjectPrefixes: Optional. Include prefixes of the objects to be
-	// transformed. * Supports full object name * Supports prefix of the object
-	// name * Wildcards are not supported * Supports empty string for all objects
-	// in a bucket.
+	// IncludedObjectPrefixes: Optional. Specify one or more object prefixes. For
+	// example: * To match one object, use a single prefix, `prefix1`. * To match
+	// multiple objects, use comma-separated prefixes, `prefix1, prefix2`. * To
+	// match all objects, use an empty prefix, `''`
 	IncludedObjectPrefixes []string `json:"includedObjectPrefixes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IncludedObjectPrefixes") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1084,51 +1208,112 @@ func (s PrefixList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ProjectSource: Describes the project source where the objects satisfying the
+// filters will be transformed.
+type ProjectSource struct {
+	// BucketFilters: Optional. Filters expressed in Common Expression Language
+	// (CEL) to apply to buckets to identify buckets with objects to be
+	// transformed.
+	BucketFilters *Expr `json:"bucketFilters,omitempty"`
+	// DryRunJobId: Optional. The unique identifier of a dry run job to use as the
+	// baseline for the current job. Specifying this ID ensures the job is executed
+	// against the same set of objects validated during the dry run. The value
+	// corresponds to the {job_id} segment of the resource name:
+	// `projects/{project_id}/locations/{location}/jobs/{job_id}`.
+	DryRunJobId string `json:"dryRunJobId,omitempty"`
+	// InsightsDatasetConfig: Required. The resource identifier of the Storage
+	// Insights dataset configuration. Storage batch operations uses the latest
+	// snapshot from this dataset as the source to list and filter target objects.
+	// Format:
+	// `projects/{project_id}/locations/{location}/datasetConfigs/{dataset_config}`.
+	InsightsDatasetConfig string `json:"insightsDatasetConfig,omitempty"`
+	// ObjectFilters: Optional. Filters expressed in Common Expression Language
+	// (CEL) to apply to objects to identify objects to be transformed.
+	ObjectFilters *Expr `json:"objectFilters,omitempty"`
+	// Project: Required. Project name of the objects to be transformed. e.g.
+	// projects/my-project or projects/123456.
+	Project string `json:"project,omitempty"`
+	// SnapshotTime: Output only. The snapshot time used by the job to read the
+	// Storage Insights dataset for bucket and object discovery. This field is
+	// populated by the service and reflects the exact timestamp of the dataset
+	// snapshot used.
+	SnapshotTime string `json:"snapshotTime,omitempty"`
+	// TargetLocations: Optional. Specifies the Cloud Storage locations to include
+	// in the job. If provided, only buckets and objects within these locations
+	// will be discovered from the Storage Insights dataset as configured in the
+	// `insights_dataset_config`. If omitted, the job will discover buckets and
+	// objects from all locations configured in the `insights_dataset_config`.
+	TargetLocations *TargetLocations `json:"targetLocations,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BucketFilters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BucketFilters") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProjectSource) MarshalJSON() ([]byte, error) {
+	type NoMethod ProjectSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PutMetadata: Describes options for object metadata update.
 type PutMetadata struct {
-	// CacheControl: Optional. Updates objects Cache-Control fixed metadata. Unset
-	// values will be ignored. Set empty values to clear the metadata.
-	// Additionally, the value for Custom-Time cannot decrease. Refer to
-	// documentation in
-	// https://cloud.google.com/storage/docs/metadata#caching_data.
+	// CacheControl: Optional. Updates the objects `Cache-Control` fixed metadata.
+	// Unset values in the request are ignored. To clear the metadata, set an empty
+	// value. Additionally, the value for `Custom-Time` can't decrease. For
+	// details, see Cache-Control
+	// (https://cloud.google.com/storage/docs/metadata#caching_data).
 	CacheControl string `json:"cacheControl,omitempty"`
-	// ContentDisposition: Optional. Updates objects Content-Disposition fixed
-	// metadata. Unset values will be ignored. Set empty values to clear the
-	// metadata. Refer
-	// https://cloud.google.com/storage/docs/metadata#content-disposition for
-	// additional documentation.
+	// ContentDisposition: Optional. Updates objects `Content-Disposition` fixed
+	// metadata. Unset values in the request are ignored. To clear the metadata,
+	// set an empty value. For details, see Content-Disposition
+	// (https://cloud.google.com/storage/docs/metadata#content-disposition).
 	ContentDisposition string `json:"contentDisposition,omitempty"`
-	// ContentEncoding: Optional. Updates objects Content-Encoding fixed metadata.
-	// Unset values will be ignored. Set empty values to clear the metadata. Refer
-	// to documentation in
-	// https://cloud.google.com/storage/docs/metadata#content-encoding.
+	// ContentEncoding: Optional. Updates the objects `Content-Encoding` fixed
+	// metadata. Unset values in the request are ignored. To clear the metadata,
+	// set an empty value. For details, see Content-Encoding
+	// (https://cloud.google.com/storage/docs/metadata#content-encoding).
 	ContentEncoding string `json:"contentEncoding,omitempty"`
-	// ContentLanguage: Optional. Updates objects Content-Language fixed metadata.
-	// Refer to ISO 639-1 language codes for typical values of this metadata. Max
-	// length 100 characters. Unset values will be ignored. Set empty values to
-	// clear the metadata. Refer to documentation in
-	// https://cloud.google.com/storage/docs/metadata#content-language.
+	// ContentLanguage: Optional. Updates the objects `Content-Language` fixed
+	// metadata. Metadata values must use ISO 639-1 language codes. The maximum
+	// length for metadata values is 100 characters. Unset values in the request
+	// are ignored. To clear the metadata, set an empty value. For details, see
+	// Content-Language
+	// (https://cloud.google.com/storage/docs/metadata#content-language).
 	ContentLanguage string `json:"contentLanguage,omitempty"`
-	// ContentType: Optional. Updates objects Content-Type fixed metadata. Unset
-	// values will be ignored. Set empty values to clear the metadata. Refer to
-	// documentation in https://cloud.google.com/storage/docs/metadata#content-type
+	// ContentType: Optional. Updates objects `Content-Type` fixed metadata. Unset
+	// values in the request are ignored. To clear the metadata, set an empty
+	// value. For details, see Content-Type
+	// (https://cloud.google.com/storage/docs/metadata#content-type).
 	ContentType string `json:"contentType,omitempty"`
-	// CustomMetadata: Optional. Updates objects custom metadata. Adds or sets
-	// individual custom metadata key value pairs on objects. Keys that are set
-	// with empty custom metadata values will have its value cleared. Existing
-	// custom metadata not specified with this flag is not changed. Refer to
-	// documentation in
-	// https://cloud.google.com/storage/docs/metadata#custom-metadata
+	// CustomMetadata: Optional. Updates the object's custom metadata. This
+	// operation adds or sets individual custom metadata key-value pairs. Keys
+	// specified with empty values have their values cleared. Existing custom
+	// metadata keys not included in the request remain unchanged. For details, see
+	// Custom metadata
+	// (https://cloud.google.com/storage/docs/metadata#custom-metadata).
 	CustomMetadata map[string]string `json:"customMetadata,omitempty"`
-	// CustomTime: Optional. Updates objects Custom-Time fixed metadata. Unset
-	// values will be ignored. Set empty values to clear the metadata. Refer to
-	// documentation in https://cloud.google.com/storage/docs/metadata#custom-time.
+	// CustomTime: Optional. Updates the objects `Custom-Time` fixed metadata.
+	// Unset values in the request are ignored. To clear the metadata, set an empty
+	// value. The time must be specified in RFC 3339 format, for example
+	// `YYYY-MM-DD'T'HH:MM:SS'Z'` or `YYYY-MM-DD'T'HH:MM:SS.SS'Z'`. For details,
+	// see Custom-Time
+	// (https://cloud.google.com/storage/docs/metadata#custom-time).
 	CustomTime string `json:"customTime,omitempty"`
-	// ObjectRetention: Optional. Updates objects retention lock configuration.
-	// Unset values will be ignored. Set empty values to clear the retention for
-	// the object with existing `Unlocked` retention mode. Object with existing
-	// `Locked` retention mode cannot be cleared or reduce retain_until_time. Refer
-	// to documentation in https://cloud.google.com/storage/docs/object-lock
+	// ObjectRetention: Optional. Updates an object's retention configuration. To
+	// clear an object's retention, both `retentionMode` and `retainUntilTime` must
+	// be left unset (omitted). Setting `retentionMode` to
+	// `RETENTION_MODE_UNSPECIFIED` is treated as a no-op. Unlike an unset field,
+	// it doesn't modify or clear the retention settings. An object with `LOCKED`
+	// retention mode can't have its retention cleared or its `retainUntilTime`
+	// reduced. For more information, see Object retention
+	// (https://cloud.google.com/storage/docs/batch-operations/create-manage-batch-operation-jobs#retain-until-time).
 	ObjectRetention *ObjectRetention `json:"objectRetention,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CacheControl") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1151,20 +1336,20 @@ func (s PutMetadata) MarshalJSON() ([]byte, error) {
 // PutObjectHold: Describes options to update object hold.
 type PutObjectHold struct {
 	// EventBasedHold: Required. Updates object event based holds state. When
-	// object event based hold is set, object cannot be deleted or replaced. Resets
+	// object event based hold is set, object can't be deleted or replaced. Resets
 	// object's time in the bucket for the purposes of the retention period.
 	//
 	// Possible values:
-	//   "HOLD_STATUS_UNSPECIFIED" - Default value, Object hold status will not be
+	//   "HOLD_STATUS_UNSPECIFIED" - Default value, Object hold status isn't
 	// changed.
 	//   "SET" - Places the hold.
 	//   "UNSET" - Releases the hold.
 	EventBasedHold string `json:"eventBasedHold,omitempty"`
 	// TemporaryHold: Required. Updates object temporary holds state. When object
-	// temporary hold is set, object cannot be deleted or replaced.
+	// temporary hold is set, object can't be deleted or replaced.
 	//
 	// Possible values:
-	//   "HOLD_STATUS_UNSPECIFIED" - Default value, Object hold status will not be
+	//   "HOLD_STATUS_UNSPECIFIED" - Default value, Object hold status isn't
 	// changed.
 	//   "SET" - Places the hold.
 	//   "UNSET" - Releases the hold.
@@ -1189,16 +1374,29 @@ func (s PutObjectHold) MarshalJSON() ([]byte, error) {
 
 // RewriteObject: Describes options for object rewrite.
 type RewriteObject struct {
-	// KmsKey: Required. Resource name of the Cloud KMS key that will be used to
-	// encrypt the object. The Cloud KMS key must be located in same location as
-	// the object. Refer to
+	// KmsKey: Optional. Resource name of the Cloud KMS key that is used to encrypt
+	// the object. The Cloud KMS key must be located in same location as the
+	// object. For details, see
 	// https://cloud.google.com/storage/docs/encryption/using-customer-managed-keys#add-object-key
-	// for additional documentation. Format:
-	// projects/{project}/locations/{location}/keyRings/{keyring}/cryptoKeys/{key}
-	// For example:
-	// "projects/123456/locations/us-central1/keyRings/my-keyring/cryptoKeys/my-key"
+	// Format:
+	// `projects/{project_id}/locations/{location}/keyRings/{keyring}/cryptoKeys/{ke
+	// y}` For example:
+	// `projects/123456/locations/us-central1/keyRings/my-keyring/cryptoKeys/my-key`
 	// . The object will be rewritten and set with the specified KMS key.
 	KmsKey string `json:"kmsKey,omitempty"`
+	// StorageClass: Optional. Rewrites the object to the specified storage class.
+	// Setting this field will perform a full byte copy of the object if the
+	// storage class is different from the object's current storage class. If
+	// Autoclass is enabled on the bucket, storage class changes are ignored by
+	// Cloud Storage.
+	//
+	// Possible values:
+	//   "STORAGE_CLASS_UNSPECIFIED" - The storage class is not specified.
+	//   "STANDARD" - Standard storage class.
+	//   "NEARLINE" - Nearline storage class.
+	//   "COLDLINE" - Coldline storage class.
+	//   "ARCHIVE" - Archive storage class.
+	StorageClass string `json:"storageClass,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "KmsKey") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1214,6 +1412,29 @@ type RewriteObject struct {
 
 func (s RewriteObject) MarshalJSON() ([]byte, error) {
 	type NoMethod RewriteObject
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SetObjectAcls: Describes options for setting object ACLs.
+type SetObjectAcls struct {
+	// AccessControlsUpdates: Required. Add, update, or remove grants from the
+	// object's existing ACLs.
+	AccessControlsUpdates *AccessControlsUpdates `json:"accessControlsUpdates,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccessControlsUpdates") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessControlsUpdates") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SetObjectAcls) MarshalJSON() ([]byte, error) {
+	type NoMethod SetObjectAcls
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1251,11 +1472,47 @@ func (s Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TargetLocations: Describes the Cloud Storage locations to include in a
+// ProjectSource job.
+type TargetLocations struct {
+	// Locations: Required. REQUIRED. A list of Cloud Storage locations (e.g.,
+	// `us-central1`) to include in the job. If `snapshot_time` is omitted, the job
+	// automatically defaults to the most recent snapshot timestamp that is
+	// successfully populated in BOTH the `object_attributes_view` and
+	// `bucket_attributes_view` across ALL specified locations. For details on
+	// Storage Insights dataset snapshots and views, see:
+	// https://docs.cloud.google.com/storage/docs/insights/dataset-tables-and-schemas#schema
+	Locations []string `json:"locations,omitempty"`
+	// SnapshotTime: Optional. OPTIONAL. The exact Storage Insights snapshot
+	// timestamp to use for the job compatible with the RFC 3339 format (e.g.,
+	// `2024-01-02T03:04:05Z`). If specified, this exact snapshot must exist in
+	// BOTH the `object_attributes_view` and `bucket_attributes_view` for every
+	// location listed in `locations`. If the snapshot is missing from either view
+	// in any of the locations, the job fails.
+	SnapshotTime string `json:"snapshotTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Locations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Locations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TargetLocations) MarshalJSON() ([]byte, error) {
+	type NoMethod TargetLocations
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // UpdateObjectCustomContext: Describes options to update object custom
 // contexts.
 type UpdateObjectCustomContext struct {
 	// ClearAll: If set, must be set to true and all existing object custom
-	// contexts will be deleted.
+	// contexts are deleted.
 	ClearAll bool `json:"clearAll,omitempty"`
 	// CustomContextUpdates: A collection of updates to apply to specific custom
 	// contexts. Use this to add, update or delete individual contexts by key.
@@ -1572,7 +1829,7 @@ type ProjectsLocationsJobsCancelCall struct {
 // Cancel: Cancels a batch job.
 //
 //   - name: The `name` of the job to cancel. Format:
-//     projects/{project_id}/locations/global/jobs/{job_id}.
+//     `projects/{project_id}/locations/global/jobs/{job_id}`.
 func (r *ProjectsLocationsJobsService) Cancel(name string, canceljobrequest *CancelJobRequest) *ProjectsLocationsJobsCancelCall {
 	c := &ProjectsLocationsJobsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1676,7 +1933,7 @@ type ProjectsLocationsJobsCreateCall struct {
 
 // Create: Creates a batch job.
 //
-// - parent: Value for parent.
+// - parent: The value for parent.
 func (r *ProjectsLocationsJobsService) Create(parent string, job *Job) *ProjectsLocationsJobsCreateCall {
 	c := &ProjectsLocationsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1684,10 +1941,9 @@ func (r *ProjectsLocationsJobsService) Create(parent string, job *Job) *Projects
 	return c
 }
 
-// JobId sets the optional parameter "jobId": Required. The optional `job_id`
-// for this Job . If not specified, an id is generated. `job_id` should be no
-// more than 128 characters and must include only characters available in DNS
-// names, as defined by RFC-1123.
+// JobId sets the optional parameter "jobId": Required. A unique identifier for
+// the job. `job_id` must be up to 128 characters and must include only
+// characters available in DNS names, as defined by RFC-1123.
 func (c *ProjectsLocationsJobsCreateCall) JobId(jobId string) *ProjectsLocationsJobsCreateCall {
 	c.urlParams_.Set("jobId", jobId)
 	return c
@@ -1695,9 +1951,9 @@ func (c *ProjectsLocationsJobsCreateCall) JobId(jobId string) *ProjectsLocations
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID in case you need to retry
-// your request. Requests with same `request_id` will be ignored for at least
-// 60 minutes since the first request. The request ID must be a valid UUID with
-// the exception that zero UUID is not supported
+// your request. Requests with same `request_id` are ignored for at least 60
+// minutes since the first request. The request ID must be a valid UUID with
+// the exception that zero UUID isn't supported
 // (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsJobsCreateCall) RequestId(requestId string) *ProjectsLocationsJobsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
@@ -1799,7 +2055,7 @@ type ProjectsLocationsJobsDeleteCall struct {
 // Delete: Deletes a batch job.
 //
 //   - name: The `name` of the job to delete. Format:
-//     projects/{project_id}/locations/global/jobs/{job_id} .
+//     `projects/{project_id}/locations/global/jobs/{job_id}`.
 func (r *ProjectsLocationsJobsService) Delete(name string) *ProjectsLocationsJobsDeleteCall {
 	c := &ProjectsLocationsJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1807,10 +2063,9 @@ func (r *ProjectsLocationsJobsService) Delete(name string) *ProjectsLocationsJob
 }
 
 // Force sets the optional parameter "force": If set to true, any child bucket
-// operations of the job will also be deleted. Highly recommended to be set to
-// true by all clients. Users cannot mutate bucket operations directly, so only
-// the jobs.delete permission is required to delete a job (and its child bucket
-// operations).
+// operations of the job are deleted. We recommend setting this to `true`. You
+// can't mutate bucket operations directly, so only the `jobs.delete`
+// permission is required to delete a job (and its child bucket operations).
 func (c *ProjectsLocationsJobsDeleteCall) Force(force bool) *ProjectsLocationsJobsDeleteCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c
@@ -1818,9 +2073,9 @@ func (c *ProjectsLocationsJobsDeleteCall) Force(force bool) *ProjectsLocationsJo
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID in case you need to retry
-// your request. Requests with same `request_id` will be ignored for at least
-// 60 minutes since the first request. The request ID must be a valid UUID with
-// the exception that zero UUID is not supported
+// your request. Requests with same `request_id` are ignored for at least 60
+// minutes since the first request. The request ID must be a valid UUID with
+// the exception that zero UUID isn't supported
 // (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsJobsDeleteCall) RequestId(requestId string) *ProjectsLocationsJobsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
@@ -1918,8 +2173,8 @@ type ProjectsLocationsJobsGetCall struct {
 
 // Get: Gets a batch job.
 //
-//   - name: `name` of the job to retrieve. Format:
-//     projects/{project_id}/locations/global/jobs/{job_id} .
+//   - name: The `name` of the job to retrieve. Format:
+//     `projects/{project_id}/locations/global/jobs/{job_id}`.
 func (r *ProjectsLocationsJobsService) Get(name string) *ProjectsLocationsJobsGetCall {
 	c := &ProjectsLocationsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2043,14 +2298,14 @@ func (c *ProjectsLocationsJobsListCall) Filter(filter string) *ProjectsLocations
 }
 
 // OrderBy sets the optional parameter "orderBy": Field to sort by. Supported
-// fields are name, create_time.
+// fields are `name` and `create_time`.
 func (c *ProjectsLocationsJobsListCall) OrderBy(orderBy string) *ProjectsLocationsJobsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The list page size. default
-// page size is 100.
+// PageSize sets the optional parameter "pageSize": The list page size. The
+// default page size is 100.
 func (c *ProjectsLocationsJobsListCall) PageSize(pageSize int64) *ProjectsLocationsJobsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2186,9 +2441,9 @@ type ProjectsLocationsJobsBucketOperationsGetCall struct {
 
 // Get: Gets a BucketOperation.
 //
-//   - name: `name` of the bucket operation to retrieve. Format:
-//     projects/{project_id}/locations/global/jobs/{job_id}/bucketOperations/{buck
-//     et_operation_id}.
+//   - name: The `name` of the bucket operation to retrieve. Format:
+//     `projects/{project_id}/locations/global/jobs/{job_id}/bucketOperations/{buc
+//     ket_operation_id}`.
 func (r *ProjectsLocationsJobsBucketOperationsService) Get(name string) *ProjectsLocationsJobsBucketOperationsGetCall {
 	c := &ProjectsLocationsJobsBucketOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2298,7 +2553,7 @@ type ProjectsLocationsJobsBucketOperationsListCall struct {
 
 // List: Lists BucketOperations in a given project and job.
 //
-// - parent: Format: projects/{project_id}/locations/global/jobs/{job_id}.
+// - parent: Format: `projects/{project_id}/locations/global/jobs/{job_id}`.
 func (r *ProjectsLocationsJobsBucketOperationsService) List(parent string) *ProjectsLocationsJobsBucketOperationsListCall {
 	c := &ProjectsLocationsJobsBucketOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2313,7 +2568,7 @@ func (c *ProjectsLocationsJobsBucketOperationsListCall) Filter(filter string) *P
 }
 
 // OrderBy sets the optional parameter "orderBy": Field to sort by. Supported
-// fields are name, create_time.
+// fields are `name` and `create_time`.
 func (c *ProjectsLocationsJobsBucketOperationsListCall) OrderBy(orderBy string) *ProjectsLocationsJobsBucketOperationsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c

@@ -6650,8 +6650,7 @@ type ProjectsLocationsCaPoolsCertificatesListCall struct {
 //     within a single CA Pool: `projects/*/locations/*/caPools/*` 2. **All CA
 //     Pools in a Location:** To list certificates across *all* CA Pools in a
 //     given project and location, use the wildcard character (`-`) in place of
-//     the CA Pool ID. Example: `projects/*/locations/*/caPools/-` See
-//     go/ccfe-nested-collections#aggregate-listing for more details.
+//     the CA Pool ID. Example: `projects/*/locations/*/caPools/-`.
 func (r *ProjectsLocationsCaPoolsCertificatesService) List(parent string) *ProjectsLocationsCaPoolsCertificatesListCall {
 	c := &ProjectsLocationsCaPoolsCertificatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

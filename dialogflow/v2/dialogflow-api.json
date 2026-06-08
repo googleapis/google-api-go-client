@@ -8780,7 +8780,7 @@
       }
     }
   },
-  "revision": "20260518",
+  "revision": "20260604",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AdvancedSettings": {
@@ -15706,6 +15706,9 @@
         "disableAgentQueryLogging": {
           "type": "boolean"
         },
+        "disableQuerySearchContext": {
+          "type": "boolean"
+        },
         "enableConversationAugmentedQuery": {
           "type": "boolean"
         },
@@ -15729,6 +15732,23 @@
         },
         "suggestionFeature": {
           "$ref": "GoogleCloudDialogflowV2SuggestionFeature"
+        },
+        "suggestionTriggerEvent": {
+          "enum": [
+            "TRIGGER_EVENT_UNSPECIFIED",
+            "END_OF_UTTERANCE",
+            "MANUAL_CALL",
+            "CUSTOMER_MESSAGE",
+            "AGENT_MESSAGE"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
         },
         "suggestionTriggerSettings": {
           "$ref": "GoogleCloudDialogflowV2HumanAgentAssistantConfigSuggestionTriggerSettings"
@@ -17072,6 +17092,15 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowV2KnowledgeAssistAnswerAdditionalSuggestedQueryResult": {
+      "id": "GoogleCloudDialogflowV2KnowledgeAssistAnswerAdditionalSuggestedQueryResult",
+      "properties": {
+        "suggestedQuery": {
+          "$ref": "GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuery"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswer": {
       "id": "GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswer",
       "properties": {
@@ -17152,6 +17181,24 @@
       "id": "GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuery",
       "properties": {
         "queryText": {
+          "type": "string"
+        },
+        "searchContexts": {
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuerySearchContext"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuerySearchContext": {
+      "id": "GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuerySearchContext",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
           "type": "string"
         }
       },
@@ -19071,6 +19118,12 @@
     "GoogleCloudDialogflowV2SuggestKnowledgeAssistResponse": {
       "id": "GoogleCloudDialogflowV2SuggestKnowledgeAssistResponse",
       "properties": {
+        "additionalSuggestedQueryResults": {
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2KnowledgeAssistAnswerAdditionalSuggestedQueryResult"
+          },
+          "type": "array"
+        },
         "contextSize": {
           "format": "int32",
           "type": "integer"
@@ -22141,6 +22194,15 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerAdditionalSuggestedQueryResult": {
+      "id": "GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerAdditionalSuggestedQueryResult",
+      "properties": {
+        "suggestedQuery": {
+          "$ref": "GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuery"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswer": {
       "id": "GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswer",
       "properties": {
@@ -22221,6 +22283,24 @@
       "id": "GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuery",
       "properties": {
         "queryText": {
+          "type": "string"
+        },
+        "searchContexts": {
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuerySearchContext"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuerySearchContext": {
+      "id": "GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuerySearchContext",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
           "type": "string"
         }
       },
@@ -22982,6 +23062,12 @@
     "GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistResponse": {
       "id": "GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistResponse",
       "properties": {
+        "additionalSuggestedQueryResults": {
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerAdditionalSuggestedQueryResult"
+          },
+          "type": "array"
+        },
         "contextSize": {
           "format": "int32",
           "type": "integer"

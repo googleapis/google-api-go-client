@@ -4979,10 +4979,17 @@ type GoogleCloudDataplexV1DataScan struct {
 	//   "DATA_PROFILE" - Data profile scan.
 	//   "DATA_DISCOVERY" - Data discovery scan.
 	//   "DATA_DOCUMENTATION" - Data documentation scan.
+	//   "UNSTRUCTURED_DATA_PROFILE" - Unstructured data profile scan.
 	Type string `json:"type,omitempty"`
 	// Uid: Output only. System generated globally unique ID for the scan. This ID
 	// will be different if the scan is deleted and re-created with the same name.
 	Uid string `json:"uid,omitempty"`
+	// UnstructuredDataProfileResult: Output only. The result of an unstructured
+	// data profile scan.
+	UnstructuredDataProfileResult *GoogleCloudDataplexV1UnstructuredDataProfileResult `json:"unstructuredDataProfileResult,omitempty"`
+	// UnstructuredDataProfileSpec: Optional. Settings for an unstructured data
+	// profile scan.
+	UnstructuredDataProfileSpec *GoogleCloudDataplexV1UnstructuredDataProfileSpec `json:"unstructuredDataProfileSpec,omitempty"`
 	// UpdateTime: Output only. The time when the scan was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -5452,9 +5459,16 @@ type GoogleCloudDataplexV1DataScanJob struct {
 	//   "DATA_PROFILE" - Data profile scan.
 	//   "DATA_DISCOVERY" - Data discovery scan.
 	//   "DATA_DOCUMENTATION" - Data documentation scan.
+	//   "UNSTRUCTURED_DATA_PROFILE" - Unstructured data profile scan.
 	Type string `json:"type,omitempty"`
 	// Uid: Output only. System generated globally unique ID for the DataScanJob.
 	Uid string `json:"uid,omitempty"`
+	// UnstructuredDataProfileResult: Output only. The result of an unstructured
+	// data profile scan.
+	UnstructuredDataProfileResult *GoogleCloudDataplexV1UnstructuredDataProfileResult `json:"unstructuredDataProfileResult,omitempty"`
+	// UnstructuredDataProfileSpec: Output only. Settings for an unstructured data
+	// profile scan.
+	UnstructuredDataProfileSpec *GoogleCloudDataplexV1UnstructuredDataProfileSpec `json:"unstructuredDataProfileSpec,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -6897,6 +6911,284 @@ func (s GoogleCloudDataplexV1GovernanceEventEntity) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1GraphProfile: Contains the strict structure for
+// graph-profile for semantic inference scan result.
+type GoogleCloudDataplexV1GraphProfile struct {
+	// EdgeTypes: Output only. Edge types.
+	EdgeTypes []*GoogleCloudDataplexV1GraphProfileEdgeType `json:"edgeTypes,omitempty"`
+	// NodeTypes: Output only. Node types.
+	NodeTypes []*GoogleCloudDataplexV1GraphProfileNodeType `json:"nodeTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EdgeTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EdgeTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1GraphProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1GraphProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1GraphProfileEdgeType: Represents a type of edge
+// (relationship) in the graph.
+type GoogleCloudDataplexV1GraphProfileEdgeType struct {
+	// Description: Output only. Description of the edge type.
+	Description string `json:"description,omitempty"`
+	// ExtractionHints: Output only. Extraction hints for the edge.
+	ExtractionHints *GoogleCloudDataplexV1GraphProfileEdgeTypeExtractionHints `json:"extractionHints,omitempty"`
+	// Fields: Output only. Fields of the edge type.
+	Fields []*GoogleCloudDataplexV1GraphProfileField `json:"fields,omitempty"`
+	// ForeignKeys: Output only. Defines the Foreign Key constraints for the edge.
+	ForeignKeys []*GoogleCloudDataplexV1GraphProfileEdgeTypeForeignKey `json:"foreignKeys,omitempty"`
+	// Name: Output only. Name of the edge type.
+	Name string `json:"name,omitempty"`
+	// SourceNodeType: Output only. Source node type.
+	SourceNodeType string `json:"sourceNodeType,omitempty"`
+	// TargetNodeType: Output only. Target node type.
+	TargetNodeType string `json:"targetNodeType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1GraphProfileEdgeType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1GraphProfileEdgeType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1GraphProfileEdgeTypeExtractionHints: Extraction hints
+// (edge-level).
+type GoogleCloudDataplexV1GraphProfileEdgeTypeExtractionHints struct {
+	// Cardinality: Output only. Expected connectivity topology and bounds of this
+	// relationship. Format: "Topology - Description" Example: "1:N - One company
+	// can have multiple financial reports."
+	Cardinality string `json:"cardinality,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Cardinality") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Cardinality") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1GraphProfileEdgeTypeExtractionHints) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1GraphProfileEdgeTypeExtractionHints
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1GraphProfileEdgeTypeForeignKey: Represents a foreign
+// key constraint.
+type GoogleCloudDataplexV1GraphProfileEdgeTypeForeignKey struct {
+	// Description: Output only. Description of the foreign key.
+	Description string `json:"description,omitempty"`
+	// FieldMappings: Output only. Field Mappings. Mappings between local fields
+	// and the fields they reference in the referenced node type.
+	FieldMappings []*GoogleCloudDataplexV1GraphProfileEdgeTypeForeignKeyFieldMapping `json:"fieldMappings,omitempty"`
+	// Name: Output only. Name of the foreign key constraint.
+	Name string `json:"name,omitempty"`
+	// ReferencedNodeType: Output only. The node type this constraint references.
+	ReferencedNodeType string `json:"referencedNodeType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1GraphProfileEdgeTypeForeignKey) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1GraphProfileEdgeTypeForeignKey
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1GraphProfileEdgeTypeForeignKeyFieldMapping: Maps a
+// local field to a referenced field.
+type GoogleCloudDataplexV1GraphProfileEdgeTypeForeignKeyFieldMapping struct {
+	// Field: Output only. Local field name forming part of the foreign key.
+	Field string `json:"field,omitempty"`
+	// ReferencedField: Output only. Field name in the referenced node type.
+	ReferencedField string `json:"referencedField,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Field") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1GraphProfileEdgeTypeForeignKeyFieldMapping) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1GraphProfileEdgeTypeForeignKeyFieldMapping
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1GraphProfileField: Represents a field in a node or edge
+// type.
+type GoogleCloudDataplexV1GraphProfileField struct {
+	// DataType: Output only. The data type of the field, e.g., STRING, INTEGER,
+	// DATE.
+	DataType string `json:"dataType,omitempty"`
+	// Description: Output only. Description of the field.
+	Description string `json:"description,omitempty"`
+	// ExtractionHints: Output only. Extraction hints for the field.
+	ExtractionHints *GoogleCloudDataplexV1GraphProfileFieldExtractionHints `json:"extractionHints,omitempty"`
+	// Fields: Output only. Sub-fields of this field (for STRUCT types).
+	Fields []*GoogleCloudDataplexV1GraphProfileField `json:"fields,omitempty"`
+	// MetadataType: Output only. The mapped metadata type.
+	//
+	// Possible values:
+	//   "METADATA_TYPE_UNSPECIFIED" - Unspecified metadata type.
+	//   "BOOLEAN" - Boolean type.
+	//   "NUMBER" - Numeric type.
+	//   "STRING" - String type.
+	//   "BYTES" - Bytes type.
+	//   "DATETIME" - Date and time type.
+	//   "TIMESTAMP" - Timestamp type.
+	//   "GEOSPATIAL" - Geospatial type.
+	//   "STRUCT" - Struct (record) type.
+	//   "OTHER" - Other types not covered above.
+	MetadataType string `json:"metadataType,omitempty"`
+	// Mode: Output only. The mode of the field.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Unspecified mode.
+	//   "NULLABLE" - Field can be null.
+	//   "REPEATED" - Field can be repeated.
+	//   "REQUIRED" - Field is required.
+	Mode string `json:"mode,omitempty"`
+	// Name: Output only. Name of the field.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1GraphProfileField) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1GraphProfileField
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1GraphProfileFieldExtractionHints: Extraction hints
+// (field-level).
+type GoogleCloudDataplexV1GraphProfileFieldExtractionHints struct {
+	// Normalization: Output only. Standardizes extracted data (e.g., to ISO 3166-1
+	// alpha-2).
+	Normalization string `json:"normalization,omitempty"`
+	// Synthesis: Output only. Generates value from other data instead of direct
+	// extraction (e.g., hashing).
+	Synthesis string `json:"synthesis,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Normalization") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Normalization") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1GraphProfileFieldExtractionHints) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1GraphProfileFieldExtractionHints
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1GraphProfileNodeType: Represents a type of node in the
+// graph.
+type GoogleCloudDataplexV1GraphProfileNodeType struct {
+	// Description: Output only. Description of the node type.
+	Description string `json:"description,omitempty"`
+	// ExtractionHints: Output only. Extraction hints for the node.
+	ExtractionHints *GoogleCloudDataplexV1GraphProfileNodeTypeExtractionHints `json:"extractionHints,omitempty"`
+	// Fields: Output only. Fields of the node type.
+	Fields []*GoogleCloudDataplexV1GraphProfileField `json:"fields,omitempty"`
+	// Name: Output only. Name of the node type.
+	Name string `json:"name,omitempty"`
+	// PrimaryKeys: Output only. Field names forming the primary keys. The order in
+	// this array defines the key's ordinal positions for composite keys.
+	PrimaryKeys []string `json:"primaryKeys,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1GraphProfileNodeType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1GraphProfileNodeType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1GraphProfileNodeTypeExtractionHints: Extraction hints
+// (node-level).
+type GoogleCloudDataplexV1GraphProfileNodeTypeExtractionHints struct {
+	// Cardinality: Output only. Expected occurrence frequency of this node type
+	// within a document. Format: "Bounds - Description" Example: "0:N - A document
+	// may contain multiple people names."
+	Cardinality string `json:"cardinality,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Cardinality") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Cardinality") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1GraphProfileNodeTypeExtractionHints) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1GraphProfileNodeTypeExtractionHints
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1ImportItem: An object that describes the values that
 // you want to set for an entry and its attached aspects when you import
 // metadata. Used when you run a metadata import job. See CreateMetadataJob.You
@@ -8007,6 +8299,9 @@ type GoogleCloudDataplexV1LookupContextRequest struct {
 	// context_budget - If provided, the output will be intelligently truncated on
 	// a best-effort basis to contain approximately the desired amount of
 	// characters. There is no guarantee to achieve the specific amount.
+	// all_schema_fields - If set to true, all schema fields will be returned in
+	// the context (regardless of context_budget value). Otherwise, the list of
+	// schema fields is truncated. Default is false.
 	Options map[string]string `json:"options,omitempty"`
 	// Resources: Required. The entry names to look up the context for. The maximum
 	// number of resources for a request is limited to
@@ -9974,6 +10269,64 @@ type GoogleCloudDataplexV1TriggerSchedule struct {
 
 func (s GoogleCloudDataplexV1TriggerSchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1TriggerSchedule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1UnstructuredDataProfileResult: Contains the result of
+// an unstructured data profile scan.
+type GoogleCloudDataplexV1UnstructuredDataProfileResult struct {
+	// Description: Output only. The inferred description.
+	Description string `json:"description,omitempty"`
+	// GraphProfile: Output only. The inferred graph profile.
+	GraphProfile *GoogleCloudDataplexV1GraphProfile `json:"graphProfile,omitempty"`
+	// PartialFailureMessage: Output only. Optional message for partial failures
+	// (e.g. node type extraction failed).
+	PartialFailureMessage string `json:"partialFailureMessage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1UnstructuredDataProfileResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1UnstructuredDataProfileResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1UnstructuredDataProfileSpec: Contains the specification
+// for an unstructured data profile scan.
+type GoogleCloudDataplexV1UnstructuredDataProfileSpec struct {
+	// CustomizedPrompt: Optional. Customized prompt for unstructured data profile.
+	// The field will be used as part of the prompt, could be some instruction,
+	// specifying skill, or specific area to focus.
+	CustomizedPrompt string `json:"customizedPrompt,omitempty"`
+	// GlobalEndpointEnabled: Optional. Whether to use the global model.
+	GlobalEndpointEnabled bool `json:"globalEndpointEnabled,omitempty"`
+	// GraphProfilePublishingEnabled: Optional. Whether to publish graph-profile as
+	// aspect on the catalog entry.
+	GraphProfilePublishingEnabled bool `json:"graphProfilePublishingEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomizedPrompt") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomizedPrompt") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1UnstructuredDataProfileSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1UnstructuredDataProfileSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

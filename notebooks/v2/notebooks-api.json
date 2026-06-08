@@ -971,7 +971,7 @@
       }
     }
   },
-  "revision": "20260521",
+  "revision": "20260528",
   "rootUrl": "https://notebooks.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -1585,6 +1585,16 @@
       "description": "ConfigImage represents an image release available to create a WbI",
       "id": "ImageRelease",
       "properties": {
+        "description": {
+          "description": "Output only. The description of the image.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "imageFamily": {
+          "description": "Output only. The image family of the image. (ex: workbench-instances or workbench-2603)",
+          "readOnly": true,
+          "type": "string"
+        },
         "imageName": {
           "description": "Output only. The name of the image of the form workbench-instances-vYYYYmmdd--",
           "readOnly": true,

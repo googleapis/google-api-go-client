@@ -1406,6 +1406,7 @@ type Subscription struct {
 	//   "PROCESSING_STATE_CANCELLING" - The subscription is being cancelled.
 	//   "PROCESSING_STATE_RECURRING" - The subscription is recurring.
 	//   "PROCESSING_STATE_RESUMING" - The subscription is being resumed.
+	//   "PROCESSING_STATE_SUSPENDING" - The subscription is being suspended.
 	ProcessingState string `json:"processingState,omitempty"`
 	// Products: Optional. Deprecated: consider using `line_items` as the input.
 	// Required. Resource name that identifies the purchased products. The format

@@ -15,6 +15,28 @@
   "description": "Backup for GKE is a managed Kubernetes workload backup and restore service for GKE clusters.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/kubernetes-engine/docs/add-on/backup-for-gke",
+  "endpoints": [
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://gkebackup.me-central1.rep.googleapis.com/",
+      "location": "me-central1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://gkebackup.me-central2.rep.googleapis.com/",
+      "location": "me-central2"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://gkebackup.me-west1.rep.googleapis.com/",
+      "location": "me-west1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://gkebackup.europe-west6.rep.googleapis.com/",
+      "location": "europe-west6"
+    }
+  ],
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -2338,7 +2360,7 @@
       }
     }
   },
-  "revision": "20260422",
+  "revision": "20260527",
   "rootUrl": "https://gkebackup.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -2475,7 +2497,7 @@
       "type": "object"
     },
     "BDRBackupRestoreJobLog": {
-      "description": "Log entry for Backup and Restore Job for resources using BackupPlan based protection. Next Id: 24",
+      "description": "Log entry for Backup and Restore Job for resources using BackupPlan based protection. Next Id: 25",
       "id": "BDRBackupRestoreJobLog",
       "properties": {
         "backupConsistencyTime": {
@@ -2575,6 +2597,10 @@
         "startTime": {
           "description": "Start time of the job.",
           "format": "google-datetime",
+          "type": "string"
+        },
+        "targetResourceType": {
+          "description": "The target resource type for restore jobs.",
           "type": "string"
         }
       },

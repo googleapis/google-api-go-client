@@ -1036,18 +1036,23 @@ func (s GenerateAccessTokenResponse) MarshalJSON() ([]byte, error) {
 // ImageRelease: ConfigImage represents an image release available to create a
 // WbI
 type ImageRelease struct {
+	// Description: Output only. The description of the image.
+	Description string `json:"description,omitempty"`
+	// ImageFamily: Output only. The image family of the image. (ex:
+	// workbench-instances or workbench-2603)
+	ImageFamily string `json:"imageFamily,omitempty"`
 	// ImageName: Output only. The name of the image of the form
 	// workbench-instances-vYYYYmmdd--
 	ImageName string `json:"imageName,omitempty"`
 	// ReleaseName: Output only. The release of the image of the form m123
 	ReleaseName string `json:"releaseName,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ImageName") to
+	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ImageName") to include in API
+	// NullFields is a list of field names (e.g. "Description") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

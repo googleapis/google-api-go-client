@@ -487,6 +487,50 @@ func (s GoogleCloudAssuredworkloadsV1beta1AssetMoveAnalysis) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsRequest: Request
+// for acknowledging the violations in a batch
+type GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsRequest struct {
+	// AcknowledgeType: Optional. Acknowledge type of specified violations.
+	//
+	// Possible values:
+	//   "ACKNOWLEDGE_TYPE_UNSPECIFIED" - Acknowledge type unspecified.
+	//   "SINGLE_VIOLATION" - Acknowledge only the specific violation.
+	//   "EXISTING_CHILD_RESOURCE_VIOLATIONS" - Acknowledge specified orgPolicy
+	// violation and also associated resource violations.
+	AcknowledgeType string `json:"acknowledgeType,omitempty"`
+	// Comment: Required. Business justification explaining the need for violations
+	// acknowledgement
+	Comment string `json:"comment,omitempty"`
+	// Names: Required. The resource names of the Violations to acknowledge. Format
+	// for each name:
+	// organizations/{organization}/locations/{location}/workloads/{workload}/violat
+	// ions/{violation}
+	Names []string `json:"names,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AcknowledgeType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AcknowledgeType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsResponse:
+// Response for batch violation acknowledgement
+type GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata: Operation
 // metadata to give request details of CreateWorkload.
 type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
@@ -4075,6 +4119,116 @@ func (c *OrganizationsLocationsWorkloadsViolationsAcknowledgeCall) Do(opts ...go
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.organizations.locations.workloads.violations.acknowledge", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsWorkloadsViolationsBatchAcknowledgeViolationsCall struct {
+	s                                                                   *Service
+	parent                                                              string
+	googlecloudassuredworkloadsv1beta1batchacknowledgeviolationsrequest *GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsRequest
+	urlParams_                                                          gensupport.URLParams
+	ctx_                                                                context.Context
+	header_                                                             http.Header
+}
+
+// BatchAcknowledgeViolations: Acknowledges multiple existing violations. By
+// acknowledging violations, users acknowledge the existence of compliance
+// violations in their workload and decide to ignore them due to a valid
+// business justification. Acknowledgement is a permanent operation and it
+// cannot be reverted. This is a batch version of AcknowledgeViolation.
+//
+//   - parent: Optional. The parent resource shared by all violations being
+//     acknowledged. Format:
+//     organizations/{organization}/locations/{location}/workloads/{workload}.
+func (r *OrganizationsLocationsWorkloadsViolationsService) BatchAcknowledgeViolations(parent string, googlecloudassuredworkloadsv1beta1batchacknowledgeviolationsrequest *GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsRequest) *OrganizationsLocationsWorkloadsViolationsBatchAcknowledgeViolationsCall {
+	c := &OrganizationsLocationsWorkloadsViolationsBatchAcknowledgeViolationsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudassuredworkloadsv1beta1batchacknowledgeviolationsrequest = googlecloudassuredworkloadsv1beta1batchacknowledgeviolationsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsWorkloadsViolationsBatchAcknowledgeViolationsCall) Fields(s ...googleapi.Field) *OrganizationsLocationsWorkloadsViolationsBatchAcknowledgeViolationsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsWorkloadsViolationsBatchAcknowledgeViolationsCall) Context(ctx context.Context) *OrganizationsLocationsWorkloadsViolationsBatchAcknowledgeViolationsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsWorkloadsViolationsBatchAcknowledgeViolationsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsWorkloadsViolationsBatchAcknowledgeViolationsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudassuredworkloadsv1beta1batchacknowledgeviolationsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/violations:batchAcknowledgeViolations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "assuredworkloads.organizations.locations.workloads.violations.batchAcknowledgeViolations", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.organizations.locations.workloads.violations.batchAcknowledgeViolations" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsResponse.ServerR
+// esponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsWorkloadsViolationsBatchAcknowledgeViolationsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.organizations.locations.workloads.violations.batchAcknowledgeViolations", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

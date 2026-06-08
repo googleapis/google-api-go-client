@@ -2083,6 +2083,12 @@ type AudioContentTypeAssignedTargetingOptionDetails struct {
 	//   "AUDIO_CONTENT_TYPE_MUSIC" - The audio content type is music.
 	//   "AUDIO_CONTENT_TYPE_BROADCAST" - The audio content type is broadcast.
 	//   "AUDIO_CONTENT_TYPE_PODCAST" - The audio content type is podcast.
+	//   "AUDIO_CONTENT_TYPE_CATCH_UP_RADIO" - The audio content type is catch-up
+	// radio.
+	//   "AUDIO_CONTENT_TYPE_WEB_RADIO" - The audio content type is web radio.
+	//   "AUDIO_CONTENT_TYPE_VIDEO_GAME" - The audio content type is video game.
+	//   "AUDIO_CONTENT_TYPE_TEXT_TO_SPEECH" - The audio content type is
+	// text-to-speech.
 	AudioContentType string `json:"audioContentType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudioContentType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2116,6 +2122,12 @@ type AudioContentTypeTargetingOptionDetails struct {
 	//   "AUDIO_CONTENT_TYPE_MUSIC" - The audio content type is music.
 	//   "AUDIO_CONTENT_TYPE_BROADCAST" - The audio content type is broadcast.
 	//   "AUDIO_CONTENT_TYPE_PODCAST" - The audio content type is podcast.
+	//   "AUDIO_CONTENT_TYPE_CATCH_UP_RADIO" - The audio content type is catch-up
+	// radio.
+	//   "AUDIO_CONTENT_TYPE_WEB_RADIO" - The audio content type is web radio.
+	//   "AUDIO_CONTENT_TYPE_VIDEO_GAME" - The audio content type is video game.
+	//   "AUDIO_CONTENT_TYPE_TEXT_TO_SPEECH" - The audio content type is
+	// text-to-speech.
 	AudioContentType string `json:"audioContentType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudioContentType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4314,7 +4326,8 @@ type ConversionCountingConfig struct {
 	// floodlight config or group. More details here
 	// (https://support.google.com/displayvideo/answer/7409983). Only applicable to
 	// Demand Gen line items. Retrieval and management of Demand Gen resources is
-	// currently in beta. This field is only available to allowlisted users.
+	// currently in beta. This field will begin rolling out to all partners on
+	// *June 10, 2026* and be available to all partners on *June 24, 2026*.
 	PrimaryAttributionModelId int64 `json:"primaryAttributionModelId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "FloodlightActivityConfigs")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -8681,8 +8694,9 @@ type LineItem struct {
 	CreativeIds googleapi.Int64s `json:"creativeIds,omitempty"`
 	// DemandGenSettings: Optional. Settings specific to Demand Gen line items.
 	// Only applicable to Demand Gen line items. Retrieval and management of Demand
-	// Gen resources is currently in beta. This field is only available to
-	// allowlisted users.
+	// Gen resources is currently in beta. This field will begin rolling out to all
+	// partners on *June 10, 2026* and be available to all partners on *June 24,
+	// 2026*.
 	DemandGenSettings *DemandGenSettings `json:"demandGenSettings,omitempty"`
 	// DisplayName: Required. The display name of the line item. Must be UTF-8
 	// encoded with a maximum size of 240 bytes.
@@ -8799,8 +8813,9 @@ type LineItem struct {
 	// digital-out-of-home inventory. Line items of this type and their targeting
 	// cannot be created or updated using the API.
 	//   "LINE_ITEM_TYPE_DEMAND_GEN" - Demand Gen ads. Retrieval and management of
-	// Demand Gen resources is currently in beta. This enum value is only available
-	// to allowlisted users.
+	// Demand Gen resources is currently in beta. This field will begin rolling out
+	// to all partners on *June 10, 2026* and be available to all partners on *June
+	// 24, 2026*.
 	LineItemType string `json:"lineItemType,omitempty"`
 	// MobileApp: The mobile app promoted by the line item. This is applicable only
 	// when line_item_type is either `LINE_ITEM_TYPE_DISPLAY_MOBILE_APP_INSTALL` or
@@ -12593,7 +12608,8 @@ type TargetingExpansionConfig struct {
 	// ExcludeDemographicExpansion: Optional. Whether to exclude demographic
 	// expansion for Optimized Targeting. This field can only be set for Demand Gen
 	// ad groups. Retrieval and management of Demand Gen resources is currently in
-	// beta. This field is only available to allowlisted users.
+	// beta. This field will begin rolling out to all partners on *June 10, 2026*
+	// and be available to all partners on *June 24, 2026*.
 	ExcludeDemographicExpansion bool `json:"excludeDemographicExpansion,omitempty"`
 	// ExcludeFirstPartyAudience: Whether to exclude first-party audiences from use
 	// in targeting expansion. This field was deprecated with the launch of

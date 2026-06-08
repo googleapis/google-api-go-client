@@ -2610,7 +2610,7 @@
       }
     }
   },
-  "revision": "20260522",
+  "revision": "20260529",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "GoogleCloudRunV2BinaryAuthorization": {
@@ -3813,6 +3813,22 @@
           "description": "Output only. Returns true if the Instance is currently being acted upon by the system to bring it into the desired state. When a new Instance is created, or an existing one is updated, Cloud Run will asynchronously perform all necessary steps to bring the Instance to the desired serving state. This process is called reconciliation. While reconciliation is in process, `observed_generation` will have a transient value that might mismatch the intended state. Once reconciliation is over (and this field is false), there are two possible outcomes: reconciliation succeeded and the serving state matches the Instance, or there was an error, and reconciliation failed. This state can be found in `terminal_condition.state`.",
           "readOnly": true,
           "type": "boolean"
+        },
+        "restartPolicy": {
+          "description": "Optional. Restart policy for the Instance.",
+          "enum": [
+            "RESTART_POLICY_UNSPECIFIED",
+            "ALWAYS",
+            "ON_FAILURE",
+            "NEVER"
+          ],
+          "enumDescriptions": [
+            "Unspecified restart policy.",
+            "Always restart the instance.",
+            "Restart if the instance terminates with non-zero exit code.",
+            "Never restart the instance."
+          ],
+          "type": "string"
         },
         "satisfiesPzs": {
           "description": "Output only. Reserved for future use.",

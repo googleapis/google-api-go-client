@@ -772,6 +772,17 @@ type InternalRange struct {
 	// is set as well, and both fields must match. In other words, with IPv6 this
 	// field only works as a redundant parameter.
 	PrefixLength int64 `json:"prefixLength,omitempty"`
+	// RangeStatus: Output only. Status of the Internal Range.
+	//
+	// Possible values:
+	//   "RANGE_STATUS_UNSPECIFIED" - Unspecified status is the default value for
+	// an Internal Range.
+	//   "ACTIVE" - Ranges with ACTIVE status will reserve the CIDR block from the
+	// given VPC.
+	//   "OBSOLETE" - A range becomes OBSOLETE if its VPC network is deleted. An
+	// OBSOLETE range is inactive, doesn't reserve any CIDR blocks, and can only be
+	// deleted or have its labels and description updated.
+	RangeStatus string `json:"rangeStatus,omitempty"`
 	// TargetCidrRange: Optional. Can be set to narrow down or pick a different
 	// address space while searching for a free range. If not set, defaults to the
 	// ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"] address space (for

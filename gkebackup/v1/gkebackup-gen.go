@@ -445,7 +445,7 @@ func (s BDRBackupPlanJobLog) MarshalJSON() ([]byte, error) {
 }
 
 // BDRBackupRestoreJobLog: Log entry for Backup and Restore Job for resources
-// using BackupPlan based protection. Next Id: 24
+// using BackupPlan based protection. Next Id: 25
 type BDRBackupRestoreJobLog struct {
 	// BackupConsistencyTime: Backup consistency time.
 	BackupConsistencyTime string `json:"backupConsistencyTime,omitempty"`
@@ -500,6 +500,8 @@ type BDRBackupRestoreJobLog struct {
 	SourceResourceName string `json:"sourceResourceName,omitempty"`
 	// StartTime: Start time of the job.
 	StartTime string `json:"startTime,omitempty"`
+	// TargetResourceType: The target resource type for restore jobs.
+	TargetResourceType string `json:"targetResourceType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackupConsistencyTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

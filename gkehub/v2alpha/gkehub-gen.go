@@ -3296,6 +3296,13 @@ type ServiceMeshCondition struct {
 	// a fleet. Rollback is no longer allowed.
 	//   "MODERNIZATION_ROLLING_BACK_FLEET" - Rollback is in progress for
 	// modernization of all clusters in a fleet.
+	//   "MODERNIZATION_COMPATIBLE" - Fleet is compatible for modernization.
+	//   "MODERNIZATION_INCOMPATIBLE" - Fleet is not yet compatible for
+	// modernization.
+	//   "MODERNIZATION_INCOMPATIBLE_FLEET_SCALE" - Fleet exceeds service mesh
+	// fleet-level scalability limits.
+	//   "MODERNIZATION_INCOMPATIBLE_FLEET_QUOTA" - Fleet exceeds service mesh
+	// fleet-level quota limits.
 	Code string `json:"code,omitempty"`
 	// Details: A short summary about the issue.
 	Details string `json:"details,omitempty"`

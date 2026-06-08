@@ -1716,6 +1716,34 @@
             },
             "rollouts": {
               "methods": {
+                "cancel": {
+                  "description": "Cancels a paused Rollout. The rollout will not be started on new clusters, however the rollout running on the cluster will be allowed to finish. It's only valid to cancel a paused rollout, otherwise it will return a FAILED_PRECONDITION error.",
+                  "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/rollouts/{rolloutsId}:cancel",
+                  "httpMethod": "POST",
+                  "id": "gkehub.projects.locations.rollouts.cancel",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the rollout to cancel. projects/{project}/locations/{location}/rollouts/{rollout}",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/rollouts/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta/{+name}:cancel",
+                  "request": {
+                    "$ref": "CancelRolloutRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "forceCompleteStage": {
                   "description": "Force-completes a rollout stage. Only the active stage of an active rollout can be force-completed.",
                   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/rollouts/{rolloutsId}:forceCompleteStage",
@@ -1805,6 +1833,62 @@
                   "path": "v1beta/{+parent}/rollouts",
                   "response": {
                     "$ref": "ListRolloutsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "pause": {
+                  "description": "Pauses a running Rollout. The rollout will not be started on new clusters, however the rollout running on the cluster will be allowed to finish.",
+                  "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/rollouts/{rolloutsId}:pause",
+                  "httpMethod": "POST",
+                  "id": "gkehub.projects.locations.rollouts.pause",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the rollout to pause. projects/{project}/locations/{location}/rollouts/{rollout}",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/rollouts/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta/{+name}:pause",
+                  "request": {
+                    "$ref": "PauseRolloutRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "resume": {
+                  "description": "Resume a paused Rollout. The rollout will be resumed and allowed to be started on clusters.",
+                  "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/rollouts/{rolloutsId}:resume",
+                  "httpMethod": "POST",
+                  "id": "gkehub.projects.locations.rollouts.resume",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the rollout to resume. projects/{project}/locations/{location}/rollouts/{rollout}",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/rollouts/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta/{+name}:resume",
+                  "request": {
+                    "$ref": "ResumeRolloutRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -2454,7 +2538,7 @@
       }
     }
   },
-  "revision": "20260525",
+  "revision": "20260529",
   "rootUrl": "https://gkehub.googleapis.com/",
   "schemas": {
     "AppDevExperienceFeatureSpec": {
@@ -2633,6 +2717,12 @@
     "CancelOperationRequest": {
       "description": "The request message for Operations.CancelOperation.",
       "id": "CancelOperationRequest",
+      "properties": {},
+      "type": "object"
+    },
+    "CancelRolloutRequest": {
+      "description": "Request message for cancelling a rollout.",
+      "id": "CancelRolloutRequest",
       "properties": {},
       "type": "object"
     },
@@ -6163,6 +6253,12 @@
       },
       "type": "object"
     },
+    "PauseRolloutRequest": {
+      "description": "Request message for pausing a rollout.",
+      "id": "PauseRolloutRequest",
+      "properties": {},
+      "type": "object"
+    },
     "Policy": {
       "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members`, or principals, to a single `role`. Principals can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** ``` { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } ``` **YAML example:** ``` bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 ``` For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
       "id": "Policy",
@@ -6707,6 +6803,22 @@
         },
         "v1beta1Crd": {
           "description": "Optional. Use `apiextensions/v1beta1` instead of `apiextensions/v1` for CustomResourceDefinition resources. This option should be set for clusters with Kubernetes apiserver versions \u003c1.16.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "ResumeRolloutRequest": {
+      "description": "Request message for resuming a rollout.",
+      "id": "ResumeRolloutRequest",
+      "properties": {
+        "scheduleOffset": {
+          "description": "Optional. The duration to offset the Rollout schedule by.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "validateOnly": {
+          "description": "Optional. If set, resume rollout will be executed in dry-run mode.",
           "type": "boolean"
         }
       },
@@ -7324,7 +7436,11 @@
             "MODERNIZATION_MODERNIZING",
             "MODERNIZATION_MODERNIZED_SOAKING",
             "MODERNIZATION_FINALIZED",
-            "MODERNIZATION_ROLLING_BACK_FLEET"
+            "MODERNIZATION_ROLLING_BACK_FLEET",
+            "MODERNIZATION_COMPATIBLE",
+            "MODERNIZATION_INCOMPATIBLE",
+            "MODERNIZATION_INCOMPATIBLE_FLEET_SCALE",
+            "MODERNIZATION_INCOMPATIBLE_FLEET_QUOTA"
           ],
           "enumDescriptions": [
             "Default Unspecified code",
@@ -7380,7 +7496,11 @@
             "Modernization of one or more clusters in a fleet is in progress.",
             "Modernization of all the fleet's clusters is complete. Soaking before finalizing the modernization.",
             "Modernization is finalized for all clusters in a fleet. Rollback is no longer allowed.",
-            "Rollback is in progress for modernization of all clusters in a fleet."
+            "Rollback is in progress for modernization of all clusters in a fleet.",
+            "Fleet is compatible for modernization.",
+            "Fleet is not yet compatible for modernization.",
+            "Fleet exceeds service mesh fleet-level scalability limits.",
+            "Fleet exceeds service mesh fleet-level quota limits."
           ],
           "type": "string"
         },

@@ -2661,7 +2661,7 @@
       }
     }
   },
-  "revision": "20260517",
+  "revision": "20260526",
   "rootUrl": "https://backupdr.googleapis.com/",
   "schemas": {
     "AbandonBackupRequest": {
@@ -4532,7 +4532,7 @@
           "type": "string"
         },
         "useProjectServiceAccount": {
-          "description": "Optional. Whether to use the project service account for the Compute Engine instance.",
+          "description": "Optional. Whether to use the project service account for the Compute Engine instance restore.",
           "type": "boolean"
         },
         "zone": {
@@ -5145,7 +5145,7 @@
           "type": "string"
         },
         "useProjectServiceAccount": {
-          "description": "Optional. Whether to use the project service account for the disk.",
+          "description": "Optional. Whether to use the project service account for the disk restore.",
           "type": "boolean"
         },
         "zone": {
@@ -6589,7 +6589,7 @@
           "type": "array"
         },
         "useProjectServiceAccount": {
-          "description": "Optional. Whether to use the project service account for the disk.",
+          "description": "Optional. Whether to use the project service account for the disk restore.",
           "type": "boolean"
         }
       },

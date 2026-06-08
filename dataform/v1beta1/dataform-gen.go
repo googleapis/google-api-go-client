@@ -1655,6 +1655,10 @@ type GitRemoteSettings struct {
 	// branch name. This is the default branch name of the Git remote if it is set,
 	// otherwise it is `main`.
 	EffectiveDefaultBranch string `json:"effectiveDefaultBranch,omitempty"`
+	// GitRepositoryLink: Optional. Resource name for the GitRepositoryLink used
+	// for machine credentials. Must be in the format
+	// `projects/*/locations/*/connections/*/gitRepositoryLinks/*`
+	GitRepositoryLink string `json:"gitRepositoryLink,omitempty"`
 	// SshAuthenticationConfig: Optional. Authentication fields for remote uris
 	// using SSH protocol.
 	SshAuthenticationConfig *SshAuthenticationConfig `json:"sshAuthenticationConfig,omitempty"`

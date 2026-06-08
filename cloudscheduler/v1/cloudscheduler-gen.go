@@ -224,16 +224,19 @@ type AppEngineHttpTarget struct {
 	// `X-CloudScheduler-JobName`: This header will contain the job name. *
 	// `X-CloudScheduler-ScheduleTime`: For Cloud Scheduler jobs specified in the
 	// unix-cron format, this header will contain the job schedule as an offset of
-	// UTC parsed according to RFC3339. If the job has a body and the following
-	// headers are not set by the user, Cloud Scheduler sets default values: *
-	// `Content-Type`: This will be set to "application/octet-stream". You can
-	// override this default by explicitly setting `Content-Type` to a particular
-	// media type when creating the job. For example, you can set `Content-Type` to
-	// "application/json". The headers below are output only. They cannot be set
-	// or overridden: * `Content-Length`: This is computed by Cloud Scheduler. *
-	// `X-Google-*`: For Google internal use only. * `X-AppEngine-*`: For Google
-	// internal use only. In addition, some App Engine headers, which contain
-	// job-specific information, are also be sent to the job handler.
+	// UTC parsed according to RFC3339. Remains constant across retries and can be
+	// used for job request deduplication
+	// (https://docs.cloud.google.com/scheduler/docs/overview#job-deduplication).
+	// If the job has a body and the following headers are not set by the user,
+	// Cloud Scheduler sets default values: * `Content-Type`: This will be set to
+	// "application/octet-stream". You can override this default by explicitly
+	// setting `Content-Type` to a particular media type when creating the job. For
+	// example, you can set `Content-Type` to "application/json". The headers
+	// below are output only. They cannot be set or overridden: * `Content-Length`:
+	// This is computed by Cloud Scheduler. * `X-Google-*`: For Google internal use
+	// only. * `X-AppEngine-*`: For Google internal use only. In addition, some App
+	// Engine headers, which contain job-specific information, are also be sent to
+	// the job handler.
 	Headers map[string]string `json:"headers,omitempty"`
 	// HttpMethod: The HTTP method to use for the request. PATCH and OPTIONS are
 	// not permitted.
@@ -405,18 +408,23 @@ type HttpTarget struct {
 	// replaced. A partial list of headers that are ignored or replaced is below: *
 	// Host: This will be computed by Cloud Scheduler and derived from uri. *
 	// `Content-Length`: This will be computed by Cloud Scheduler. * `User-Agent`:
-	// This will be set to "Google-Cloud-Scheduler". * `X-Google-*`: Google
-	// internal use only. * `X-AppEngine-*`: Google internal use only. *
-	// `X-CloudScheduler`: This header will be set to true. *
+	// This will be set to "Google-Cloud-Scheduler". * `X-Google-*`: Used
+	// internally by Google. If present in an external user request, it is replaced
+	// by the internal header. * `X-AppEngine-*`: Used internally by Google. If
+	// present in an external user request, it is replaced by the internal header.
+	// * `X-CloudScheduler`: This header will be set to true. *
 	// `X-CloudScheduler-JobName`: This header will contain the job name. *
 	// `X-CloudScheduler-ScheduleTime`: For Cloud Scheduler jobs specified in the
 	// unix-cron format, this header will contain the job schedule as an offset of
-	// UTC parsed according to RFC3339. If the job has a body and the following
-	// headers are not set by the user, Cloud Scheduler sets default values: *
-	// `Content-Type`: This will be set to "application/octet-stream". You can
-	// override this default by explicitly setting `Content-Type` to a particular
-	// media type when creating the job. For example, you can set `Content-Type` to
-	// "application/json". The total size of headers must be less than 80KB.
+	// UTC parsed according to RFC3339. Remains constant across retries and can be
+	// used for job request deduplication
+	// (https://docs.cloud.google.com/scheduler/docs/overview#job-deduplication).
+	// If the job has a body and the following headers are not set by the user,
+	// Cloud Scheduler sets default values: * `Content-Type`: This will be set to
+	// "application/octet-stream". You can override this default by explicitly
+	// setting `Content-Type` to a particular media type when creating the job. For
+	// example, you can set `Content-Type` to "application/json". The total size
+	// of headers must be less than 80KB.
 	Headers map[string]string `json:"headers,omitempty"`
 	// HttpMethod: Which HTTP method to use for the request.
 	//
@@ -1276,10 +1284,16 @@ type ProjectsLocationsListCall struct {
 }
 
 // List: Lists information about the supported locations for this service. This
-// method can be called in two ways: * **List all public locations:** Use the
-// path `GET /v1/locations`. * **List project-visible locations:** Use the path
-// `GET /v1/projects/{project_id}/locations`. This may include public locations
-// as well as private or other locations specifically visible to the project.
+// method lists locations based on the resource scope provided in the
+// ListLocationsRequest.name field: * **Global locations**: If `name` is empty,
+// the method lists the public locations available to all projects. *
+// **Project-specific locations**: If `name` follows the format
+// `projects/{project}`, the method lists locations visible to that specific
+// project. This includes public, private, or other project-specific locations
+// enabled for the project. For gRPC and client library implementations, the
+// resource name is passed as the `name` field. For direct service calls, the
+// resource name is incorporated into the request path based on the specific
+// service implementation and version.
 //
 // - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
@@ -1289,8 +1303,8 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 }
 
 // ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// use this field unless explicitly documented otherwise. This is primarily for
+// internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

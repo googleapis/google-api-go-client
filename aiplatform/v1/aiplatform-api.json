@@ -32357,21 +32357,27 @@
       }
     }
   },
-  "revision": "20260523",
+  "revision": "20260605",
   "rootUrl": "https://aiplatform.googleapis.com/",
   "schemas": {
     "CloudAiLargeModelsVisionGenerateVideoExperiments": {
       "description": "Experimental parameters for video generation.",
       "id": "CloudAiLargeModelsVisionGenerateVideoExperiments",
       "properties": {
+        "anchorLastFrame": {
+          "description": "Optional. If true, anchors the last frame in video generation by generating a custom border mask.",
+          "type": "boolean"
+        },
         "codec": {
           "description": "Optional. Video codec to use for output.",
           "enum": [
             "VIDEO_CODEC_UNSPECIFIED",
             "VIDEO_CODEC_H264",
-            "VIDEO_CODEC_PRORES"
+            "VIDEO_CODEC_PRORES",
+            "VIDEO_CODEC_DNXHR"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             ""
@@ -32384,6 +32390,14 @@
             "$ref": "CloudAiLargeModelsVisionGenerateVideoExperimentsConditioningFrame"
           },
           "type": "array"
+        },
+        "customParameters": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Generic key-value pairs for experimental parameters. This allows adding new parameters without changing the dataplane binary.",
+          "type": "object"
         },
         "humanPose": {
           "$ref": "CloudAiLargeModelsVisionHumanPose",
@@ -32409,6 +32423,14 @@
         "requestOriginTag": {
           "description": "Optional tag for tracking the source of this request. Allowed values: \"colab\", \"comfyui\", \"curl\", \"flowresearch\", \"vertexstudio\". Unrecognized tags are recorded as \"unknown\" in metrics. Tags do not affect video generation behavior. Up to 16 characters, ASCII alphanumeric, hyphens, and underscores only.",
           "type": "string"
+        },
+        "schedulingConfig": {
+          "$ref": "CloudAiLargeModelsVisionGenerateVideoExperimentsVESchedulingConfig",
+          "description": "Optional. Scheduling configuration."
+        },
+        "seamless": {
+          "$ref": "CloudAiLargeModelsVisionSeamless",
+          "description": "Parameters for seamless (edge-continuous) video generation, enabling temporal looping and/or spatial tessellation."
         },
         "truncateInputVideo": {
           "description": "If true (default), truncate input videos that exceed the model's maximum frame count by applying a frame_selection_config to __video_file__ inputs. Set to false to preserve the existing fail-fast behavior.",
@@ -32437,6 +32459,17 @@
         "image": {
           "$ref": "CloudAiLargeModelsVisionGenerateVideoRequestImage",
           "description": "The image data for this conditioning frame."
+        }
+      },
+      "type": "object"
+    },
+    "CloudAiLargeModelsVisionGenerateVideoExperimentsVESchedulingConfig": {
+      "description": "Scheduling configuration for Veo Experimental.",
+      "id": "CloudAiLargeModelsVisionGenerateVideoExperimentsVESchedulingConfig",
+      "properties": {
+        "enableRetry": {
+          "description": "Optional. If true, enable retries on transient errors with default backoff.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -32810,6 +32843,24 @@
           "description": "Confidence score of the label",
           "format": "float",
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "CloudAiLargeModelsVisionSeamless": {
+      "id": "CloudAiLargeModelsVisionSeamless",
+      "properties": {
+        "loop": {
+          "description": "If true, the generated video will be loopable (seamless time looping).",
+          "type": "boolean"
+        },
+        "tessellateHorizontal": {
+          "description": "If true, the generated video will be tessellatable as a horizontal tessellation.",
+          "type": "boolean"
+        },
+        "tessellateVertical": {
+          "description": "If true, the generated video will be tessellatable as a vertical tessellation.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -33674,11 +33725,11 @@
       "type": "object"
     },
     "GoogleCloudAiplatformV1AutomaticResources": {
-      "description": "A description of resources that to large degree are decided by Vertex AI, and require only a modest additional configuration. Each Model supporting these resources documents its specific guidelines.",
+      "description": "A description of resources that to large degree are decided by Agent Platform, and require only a modest additional configuration. Each Model supporting these resources documents its specific guidelines.",
       "id": "GoogleCloudAiplatformV1AutomaticResources",
       "properties": {
         "maxReplicaCount": {
-          "description": "Immutable. The maximum number of replicas that may be deployed on when the traffic against it increases. If the requested value is too large, the deployment will error, but if deployment succeeds then the ability to scale to that many replicas is guaranteed (barring service outages). If traffic increases beyond what its replicas at maximum may handle, a portion of the traffic will be dropped. If this value is not provided, a no upper bound for scaling under heavy traffic will be assume, though Vertex AI may be unable to scale beyond certain replica number.",
+          "description": "Immutable. The maximum number of replicas that may be deployed on when the traffic against it increases. If the requested value is too large, the deployment will error, but if deployment succeeds then the ability to scale to that many replicas is guaranteed (barring service outages). If traffic increases beyond what its replicas at maximum may handle, a portion of the traffic will be dropped. If this value is not provided, a no upper bound for scaling under heavy traffic will be assume, though Agent Platform may be unable to scale beyond certain replica number.",
           "format": "int32",
           "type": "integer"
         },
@@ -33864,7 +33915,7 @@
           "type": "integer"
         },
         "startingReplicaCount": {
-          "description": "Immutable. The number of machine replicas used at the start of the batch operation. If not set, Vertex AI decides starting number, not greater than max_replica_count",
+          "description": "Immutable. The number of machine replicas used at the start of the batch operation. If not set, Agent Platform decides starting number, not greater than max_replica_count",
           "format": "int32",
           "type": "integer"
         }
@@ -36853,7 +36904,7 @@
           "description": "Required. Immutable. The specification of a single machine being used."
         },
         "maxReplicaCount": {
-          "description": "Immutable. The maximum number of replicas that may be deployed on when the traffic against it increases. If the requested value is too large, the deployment will error, but if deployment succeeds then the ability to scale to that many replicas is guaranteed (barring service outages). If traffic increases beyond what its replicas at maximum may handle, a portion of the traffic will be dropped. If this value is not provided, will use min_replica_count as the default value. The value of this field impacts the charge against Vertex CPU and GPU quotas. Specifically, you will be charged for (max_replica_count * number of cores in the selected machine type) and (max_replica_count * number of GPUs per replica in the selected machine type).",
+          "description": "Immutable. The maximum number of replicas that may be deployed on when the traffic against it increases. If the requested value is too large, the deployment will error, but if deployment succeeds then the ability to scale to that many replicas is guaranteed (barring service outages). If traffic increases beyond what its replicas at maximum may handle, a portion of the traffic will be dropped. If this value is not provided, will use min_replica_count as the default value. The value of this field impacts the charge against Agent Platform CPU and GPU quotas. Specifically, you will be charged for (max_replica_count * number of cores in the selected machine type) and (max_replica_count * number of GPUs per replica in the selected machine type).",
           "format": "int32",
           "type": "integer"
         },
@@ -38298,7 +38349,7 @@
       "properties": {
         "autoraterConfig": {
           "$ref": "GoogleCloudAiplatformV1AutoraterConfig",
-          "description": "Optional. Autorater config used for evaluation."
+          "description": "Optional. Autorater config used for evaluation. Not applicable for predefined metrics (PredefinedMetricSpec); the server uses its own model configuration for predefined metrics and this field is ignored."
         },
         "bleuInput": {
           "$ref": "GoogleCloudAiplatformV1BleuInput",
@@ -46628,7 +46679,7 @@
       "id": "GoogleCloudAiplatformV1MachineSpec",
       "properties": {
         "acceleratorCount": {
-          "description": "The number of accelerators to attach to the machine. For accelerator optimized machine types (https://cloud.google.com/compute/docs/accelerator-optimized-machines), One may set the accelerator_count from 1 to N for machine with N GPUs. If accelerator_count is less than or equal to N / 2, Vertex will co-schedule the replicas of the model into the same VM to save cost. For example, if the machine type is a3-highgpu-8g, which has 8 H100 GPUs, one can set accelerator_count to 1 to 8. If accelerator_count is 1, 2, 3, or 4, Vertex will co-schedule 8, 4, 2, or 2 replicas of the model into the same VM to save cost. When co-scheduling, CPU, memory and storage on the VM will be distributed to replicas on the VM. For example, one can expect a co-scheduled replica requesting 2 GPUs out of a 8-GPU VM will receive 25% of the CPU, memory and storage of the VM. Note that the feature is not compatible with multihost_gpu_node_count. When multihost_gpu_node_count is set, the co-scheduling will not be enabled.",
+          "description": "The number of accelerators to attach to the machine. For [accelerator optimized machine types](https://cloud.google.com/compute/docs/accelerator-optimized-machines), One may set the accelerator_count from 1 to N for machine with N GPUs. If accelerator_count is less than or equal to N / 2, Agent Platform co-schedules the replicas of the model into the same VM to save cost. For example, if the machine type is a3-highgpu-8g, which has 8 H100 GPUs, one can set accelerator_count to 1 to 8. If accelerator_count is 1, 2, 3, or 4, Agent Platform co-schedules 8, 4, 2, or 2 replicas of the model into the same VM to save cost. When co-scheduling, CPU, memory and storage on the VM will be distributed to replicas on the VM. For example, one can expect a co-scheduled replica requesting 2 GPUs out of a 8-GPU VM will receive 25% of the CPU, memory and storage of the VM. Note that the feature is not compatible with multihost_gpu_node_count. When multihost_gpu_node_count is set, the co-scheduling will not be enabled.",
           "format": "int32",
           "type": "integer"
         },
@@ -46704,7 +46755,7 @@
           "type": "string"
         },
         "machineType": {
-          "description": "Immutable. The type of the machine. See the [list of machine types supported for prediction](https://cloud.google.com/vertex-ai/docs/predictions/configure-compute#machine-types) See the [list of machine types supported for custom training](https://cloud.google.com/vertex-ai/docs/training/configure-compute#machine-types). For DeployedModel this field is optional, and the default value is `n1-standard-2`. For BatchPredictionJob or as part of WorkerPoolSpec this field is required.",
+          "description": "Immutable. The type of the machine. See the [list of machine types supported for prediction](https://cloud.google.com/gemini-enterprise-agent-platform/machine-learning/predictions/configure-compute#machine-types) See the [list of machine types supported for custom training](https://cloud.google.com/gemini-enterprise-agent-platform/machine-learning/training/configure-compute#machine-types). For DeployedModel this field is optional, and the default value is `n1-standard-2`. For BatchPredictionJob or as part of WorkerPoolSpec this field is required.",
           "type": "string"
         },
         "reservationAffinity": {
@@ -49749,7 +49800,8 @@
             "INVALID_SPARSE_EMBEDDING",
             "INVALID_EMBEDDING",
             "INVALID_EMBEDDING_METADATA",
-            "EMBEDDING_METADATA_EXCEEDS_SIZE_LIMIT"
+            "EMBEDDING_METADATA_EXCEEDS_SIZE_LIMIT",
+            "DUPLICATE_ID"
           ],
           "enumDescriptions": [
             "Default, shall not be used.",
@@ -49771,7 +49823,8 @@
             "Invalid sparse embedding.",
             "Invalid dense embedding.",
             "Invalid embedding metadata.",
-            "Embedding metadata exceeds size limit."
+            "Embedding metadata exceeds size limit.",
+            "Multiple input records share the same datapoint id. The input conversion pipeline performs non-deterministic last-write-wins de-duplication and emits one error per duplicated id."
           ],
           "type": "string"
         },

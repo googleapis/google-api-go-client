@@ -7789,7 +7789,7 @@
       }
     }
   },
-  "revision": "20260505",
+  "revision": "20260601",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActivateManualTriggerRequest": {
@@ -8932,14 +8932,22 @@
             "AUDIO_CONTENT_TYPE_UNKNOWN",
             "AUDIO_CONTENT_TYPE_MUSIC",
             "AUDIO_CONTENT_TYPE_BROADCAST",
-            "AUDIO_CONTENT_TYPE_PODCAST"
+            "AUDIO_CONTENT_TYPE_PODCAST",
+            "AUDIO_CONTENT_TYPE_CATCH_UP_RADIO",
+            "AUDIO_CONTENT_TYPE_WEB_RADIO",
+            "AUDIO_CONTENT_TYPE_VIDEO_GAME",
+            "AUDIO_CONTENT_TYPE_TEXT_TO_SPEECH"
           ],
           "enumDescriptions": [
             "Audio content type is not specified in this version. This enum is a place holder for a default value and does not represent a real content stream type.",
             "The audio content type is unknown.",
             "The audio content type is music.",
             "The audio content type is broadcast.",
-            "The audio content type is podcast."
+            "The audio content type is podcast.",
+            "The audio content type is catch-up radio.",
+            "The audio content type is web radio.",
+            "The audio content type is video game.",
+            "The audio content type is text-to-speech."
           ],
           "type": "string"
         }
@@ -8957,14 +8965,22 @@
             "AUDIO_CONTENT_TYPE_UNKNOWN",
             "AUDIO_CONTENT_TYPE_MUSIC",
             "AUDIO_CONTENT_TYPE_BROADCAST",
-            "AUDIO_CONTENT_TYPE_PODCAST"
+            "AUDIO_CONTENT_TYPE_PODCAST",
+            "AUDIO_CONTENT_TYPE_CATCH_UP_RADIO",
+            "AUDIO_CONTENT_TYPE_WEB_RADIO",
+            "AUDIO_CONTENT_TYPE_VIDEO_GAME",
+            "AUDIO_CONTENT_TYPE_TEXT_TO_SPEECH"
           ],
           "enumDescriptions": [
             "Audio content type is not specified in this version. This enum is a place holder for a default value and does not represent a real content stream type.",
             "The audio content type is unknown.",
             "The audio content type is music.",
             "The audio content type is broadcast.",
-            "The audio content type is podcast."
+            "The audio content type is podcast.",
+            "The audio content type is catch-up radio.",
+            "The audio content type is web radio.",
+            "The audio content type is video game.",
+            "The audio content type is text-to-speech."
           ],
           "readOnly": true,
           "type": "string"
@@ -10551,7 +10567,7 @@
           "type": "string"
         },
         "primaryAttributionModelId": {
-          "description": "Optional. The attribution model to use for conversion measurement. This attribution model will determine how conversions are counted. The Primary model can be set by you for a floodlight config or group. More details [here](https://support.google.com/displayvideo/answer/7409983). Only applicable to Demand Gen line items. Retrieval and management of Demand Gen resources is currently in beta. This field is only available to allowlisted users.",
+          "description": "Optional. The attribution model to use for conversion measurement. This attribution model will determine how conversions are counted. The Primary model can be set by you for a floodlight config or group. More details [here](https://support.google.com/displayvideo/answer/7409983). Only applicable to Demand Gen line items. Retrieval and management of Demand Gen resources is currently in beta. This field will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*.",
           "format": "int64",
           "type": "string"
         }
@@ -14990,7 +15006,7 @@
         },
         "demandGenSettings": {
           "$ref": "DemandGenSettings",
-          "description": "Optional. Settings specific to Demand Gen line items. Only applicable to Demand Gen line items. Retrieval and management of Demand Gen resources is currently in beta. This field is only available to allowlisted users."
+          "description": "Optional. Settings specific to Demand Gen line items. Only applicable to Demand Gen line items. Retrieval and management of Demand Gen resources is currently in beta. This field will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*."
         },
         "displayName": {
           "description": "Required. The display name of the line item. Must be UTF-8 encoded with a maximum size of 240 bytes.",
@@ -15093,7 +15109,7 @@
             "YouTube video ads that aim to get more views with a variety of ad formats. Line items of this type and their targeting cannot be created or updated using the API.",
             "Display ads served on digital-out-of-home inventory. Line items of this type and their targeting cannot be created or updated using the API.",
             "Video ads served on digital-out-of-home inventory. Line items of this type and their targeting cannot be created or updated using the API.",
-            "Demand Gen ads. Retrieval and management of Demand Gen resources is currently in beta. This enum value is only available to allowlisted users."
+            "Demand Gen ads. Retrieval and management of Demand Gen resources is currently in beta. This field will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*."
           ],
           "type": "string"
         },
@@ -17906,7 +17922,7 @@
       "id": "TargetingExpansionConfig",
       "properties": {
         "excludeDemographicExpansion": {
-          "description": "Optional. Whether to exclude demographic expansion for Optimized Targeting. This field can only be set for Demand Gen ad groups. Retrieval and management of Demand Gen resources is currently in beta. This field is only available to allowlisted users.",
+          "description": "Optional. Whether to exclude demographic expansion for Optimized Targeting. This field can only be set for Demand Gen ad groups. Retrieval and management of Demand Gen resources is currently in beta. This field will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*.",
           "type": "boolean"
         },
         "excludeFirstPartyAudience": {

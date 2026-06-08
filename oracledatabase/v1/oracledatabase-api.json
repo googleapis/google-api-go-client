@@ -3297,7 +3297,7 @@
       }
     }
   },
-  "revision": "20260526",
+  "revision": "20260604",
   "rootUrl": "https://oracledatabase.googleapis.com/",
   "schemas": {
     "AllConnectionStrings": {
@@ -9346,7 +9346,7 @@
           "type": "string"
         },
         "gcpOracleDatabaseId": {
-          "description": "Optional. Database instance id of database in Oracle Database @ Google Cloud. If gcp_oracle_database_id is provided, connection_string must be empty.",
+          "description": "Optional. Autonomous AI Database instance id of database in Oracle Database @ Google Cloud. If gcp_oracle_database_id is provided, connection_string must be empty. Format: projects/{project}/locations/{location}/autonomousDatabases/{autonomous_database}",
           "type": "string"
         },
         "password": {

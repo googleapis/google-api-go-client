@@ -5910,9 +5910,11 @@ type GoldengateOracleConnectionProperties struct {
 	// ConnectionString: Optional. Connect descriptor or Easy Connect Naming method
 	// used to connect to a database.
 	ConnectionString string `json:"connectionString,omitempty"`
-	// GcpOracleDatabaseId: Optional. Database instance id of database in Oracle
-	// Database @ Google Cloud. If gcp_oracle_database_id is provided,
-	// connection_string must be empty.
+	// GcpOracleDatabaseId: Optional. Autonomous AI Database instance id of
+	// database in Oracle Database @ Google Cloud. If gcp_oracle_database_id is
+	// provided, connection_string must be empty. Format:
+	// projects/{project}/locations/{location}/autonomousDatabases/{autonomous_datab
+	// ase}
 	GcpOracleDatabaseId string `json:"gcpOracleDatabaseId,omitempty"`
 	// Password: Optional. Input only. The password Oracle Goldengate uses in plain
 	// text.

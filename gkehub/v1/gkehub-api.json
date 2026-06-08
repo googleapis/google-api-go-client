@@ -2194,7 +2194,7 @@
       }
     }
   },
-  "revision": "20260511",
+  "revision": "20260529",
   "rootUrl": "https://gkehub.googleapis.com/",
   "schemas": {
     "AppDevExperienceFeatureSpec": {
@@ -6437,7 +6437,11 @@
             "MODERNIZATION_MODERNIZING",
             "MODERNIZATION_MODERNIZED_SOAKING",
             "MODERNIZATION_FINALIZED",
-            "MODERNIZATION_ROLLING_BACK_FLEET"
+            "MODERNIZATION_ROLLING_BACK_FLEET",
+            "MODERNIZATION_COMPATIBLE",
+            "MODERNIZATION_INCOMPATIBLE",
+            "MODERNIZATION_INCOMPATIBLE_FLEET_SCALE",
+            "MODERNIZATION_INCOMPATIBLE_FLEET_QUOTA"
           ],
           "enumDescriptions": [
             "Default Unspecified code",
@@ -6493,7 +6497,11 @@
             "Modernization of one or more clusters in a fleet is in progress.",
             "Modernization of all the fleet's clusters is complete. Soaking before finalizing the modernization.",
             "Modernization is finalized for all clusters in a fleet. Rollback is no longer allowed.",
-            "Rollback is in progress for modernization of all clusters in a fleet."
+            "Rollback is in progress for modernization of all clusters in a fleet.",
+            "Fleet is compatible for modernization.",
+            "Fleet is not yet compatible for modernization.",
+            "Fleet exceeds service mesh fleet-level scalability limits.",
+            "Fleet exceeds service mesh fleet-level quota limits."
           ],
           "type": "string"
         },

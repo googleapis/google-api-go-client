@@ -385,11 +385,10 @@ type AcceleratorConfig struct {
 	// (https://cloud.google.com/compute/docs/reference/v1/acceleratorTypes).Examples:
 	// https://www.googleapis.com/compute/v1/projects/[project_id]/zones/[zone]/acceleratorTypes/nvidia-tesla-t4
 	// projects/[project_id]/zones/[zone]/acceleratorTypes/nvidia-tesla-t4
-	// nvidia-tesla-t4Auto Zone Exception: If you are using the Dataproc Auto Zone
-	// Placement
-	// (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/auto-zone#using_auto_zone_placement)
-	// feature, you must use the short name of the accelerator type resource, for
-	// example, nvidia-tesla-t4.
+	// nvidia-tesla-t4Auto Zone Exception: If you are using Auto Zone Placement
+	// (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/auto-zone#using_auto_zone_placement),
+	// you must use the short name of the accelerator type resource, for example,
+	// nvidia-tesla-t4.
 	AcceleratorTypeUri string `json:"acceleratorTypeUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AcceleratorCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1072,7 +1071,7 @@ type AutoscalingConfig struct {
 	// Examples:
 	// https://www.googleapis.com/compute/v1/projects/[project_id]/locations/[dataproc_region]/autoscalingPolicies/[policy_id]
 	// projects/[project_id]/locations/[dataproc_region]/autoscalingPolicies/[policy
-	// _id]Note that the policy must be in the same project and Dataproc region.
+	// _id]Note that the policy must be in the same project and region.
 	PolicyUri string `json:"policyUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PolicyUri") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1583,19 +1582,19 @@ type CancelJobRequest struct {
 }
 
 // Cluster: Describes the identifying information, config, and status of a
-// Dataproc cluster
+// cluster
 type Cluster struct {
 	// ClusterName: Required. The cluster name, which must be unique within a
 	// project. The name must start with a lowercase letter, and can contain up to
 	// 51 lowercase letters, numbers, and hyphens. It cannot end with a hyphen. The
 	// name of a deleted cluster can be reused.
 	ClusterName string `json:"clusterName,omitempty"`
-	// ClusterUuid: Output only. A cluster UUID (Unique Universal Identifier).
-	// Dataproc generates this value when it creates the cluster.
+	// ClusterUuid: Output only. A cluster UUID (Unique Universal Identifier). The
+	// service generates this value when it creates the cluster.
 	ClusterUuid string `json:"clusterUuid,omitempty"`
 	// Config: Optional. The cluster config for a cluster of Compute Engine
-	// Instances. Note that Dataproc may set default values, and values may change
-	// when clusters are updated.Exactly one of ClusterConfig or
+	// Instances. Note that the service may set default values, and values may
+	// change when clusters are updated.Exactly one of ClusterConfig or
 	// VirtualClusterConfig must be specified.
 	Config *ClusterConfig `json:"config,omitempty"`
 	// Labels: Optional. The labels to associate with this cluster. Label keys must
@@ -1617,10 +1616,10 @@ type Cluster struct {
 	// StatusHistory: Output only. The previous cluster status.
 	StatusHistory []*ClusterStatus `json:"statusHistory,omitempty"`
 	// VirtualClusterConfig: Optional. The virtual cluster config is used when
-	// creating a Dataproc cluster that does not directly control the underlying
-	// compute resources, for example, when creating a Dataproc-on-GKE cluster
+	// creating a cluster that does not directly control the underlying compute
+	// resources, for example, when creating a GKE cluster
 	// (https://cloud.google.com/dataproc/docs/guides/dpgke/dataproc-gke-overview).
-	// Dataproc may set default values, and values may change when clusters are
+	// the service may set default values, and values may change when clusters are
 	// updated. Exactly one of config or virtual_cluster_config must be specified.
 	VirtualClusterConfig *VirtualClusterConfig `json:"virtualClusterConfig,omitempty"`
 
@@ -1671,23 +1670,22 @@ type ClusterConfig struct {
 	ClusterType string `json:"clusterType,omitempty"`
 	// ConfigBucket: Optional. A Cloud Storage bucket used to stage job
 	// dependencies, config files, and job driver console output. If you do not
-	// specify a staging bucket, Dataproc determines a Cloud Storage location (US,
-	// ASIA, or EU) for the cluster staging bucket according to the Compute Engine
-	// zone where the cluster is deployed, and then creates and manages this
-	// project-level, per-location bucket (see Dataproc staging and temp buckets
+	// specify a staging bucket, the service will determine a Cloud Storage
+	// location (US, ASIA, or EU) for your cluster's staging bucket according to
+	// the Compute Engine zone where your cluster is deployed, and then create and
+	// manage this project-level, per-location bucket (see staging and temp buckets
 	// (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/staging-bucket)).
 	// This field requires a Cloud Storage bucket name, not a gs://... URI to a
 	// Cloud Storage bucket.
 	ConfigBucket string `json:"configBucket,omitempty"`
-	// DataprocMetricConfig: Optional. The config for Dataproc metrics.
+	// DataprocMetricConfig: Optional. The config for metrics.
 	DataprocMetricConfig *DataprocMetricConfig `json:"dataprocMetricConfig,omitempty"`
 	// DiagnosticBucket: Optional. A Cloud Storage bucket used to collect
 	// checkpoint diagnostic data
 	// (https://cloud.google.com/dataproc/docs/support/diagnose-clusters#checkpoint_diagnostic_data).
-	// If you do not specify a diagnostic bucket, Cloud Dataproc will use the
-	// Dataproc temp bucket to collect the checkpoint diagnostic data. This field
-	// requires a Cloud Storage bucket name, not a gs://... URI to a Cloud Storage
-	// bucket.
+	// If you do not specify a diagnostic bucket, The service will use the temp
+	// bucket to collect the checkpoint diagnostic data. This field requires a
+	// Cloud Storage bucket name, not a gs://... URI to a Cloud Storage bucket.
 	DiagnosticBucket string `json:"diagnosticBucket,omitempty"`
 	// EncryptionConfig: Optional. Encryption settings for the cluster.
 	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
@@ -1705,8 +1703,7 @@ type ClusterConfig struct {
 	// GceClusterConfig: Optional. The shared Compute Engine config settings for
 	// all instances in a cluster.
 	GceClusterConfig *GceClusterConfig `json:"gceClusterConfig,omitempty"`
-	// GkeClusterConfig: Optional. BETA. The Kubernetes Engine config for Dataproc
-	// clusters deployed to The Kubernetes Engine config for Dataproc clusters
+	// GkeClusterConfig: Optional. BETA. The Kubernetes Engine config for clusters
 	// deployed to Kubernetes. These config settings are mutually exclusive with
 	// Compute Engine-based options, such as gce_cluster_config, master_config,
 	// worker_config, secondary_worker_config, and autoscaling_config.
@@ -1736,12 +1733,12 @@ type ClusterConfig struct {
 	SoftwareConfig *SoftwareConfig `json:"softwareConfig,omitempty"`
 	// TempBucket: Optional. A Cloud Storage bucket used to store ephemeral cluster
 	// and jobs data, such as Spark and MapReduce history files. If you do not
-	// specify a temp bucket, Dataproc determines a Cloud Storage location (US,
-	// ASIA, or EU) for the cluster temp bucket according to the Compute Engine
-	// zone where the cluster is deployed, and then creates and manages this
+	// specify a temp bucket, the service will determine a Cloud Storage location
+	// (US, ASIA, or EU) for your cluster's temp bucket according to the Compute
+	// Engine zone where your cluster is deployed, and then create and manage this
 	// project-level, per-location bucket. The default bucket has a TTL of 90 days,
-	// but you can use any TTL (or none) if you specify a bucket (see Dataproc
-	// staging and temp buckets
+	// but you can use any TTL (or none) if you specify a bucket (see staging and
+	// temp buckets
 	// (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/staging-bucket)).
 	// This field requires a Cloud Storage bucket name, not a gs://... URI to a
 	// Cloud Storage bucket.
@@ -1961,7 +1958,7 @@ type ClusterStatus struct {
 	// example, critical daemons are not running or HDFS capacity is
 	// exhausted).Applies to RUNNING state.
 	//   "STALE_STATUS" - The agent-reported status is out of date (may occur if
-	// Dataproc loses communication with Agent).Applies to RUNNING state.
+	// the service loses communication with the Agent).Applies to RUNNING state.
 	Substate string `json:"substate,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Detail") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2101,7 +2098,7 @@ func (s ConsolidatedExecutorSummary) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DataprocMetricConfig: Dataproc metric config.
+// DataprocMetricConfig: Metric config.
 type DataprocMetricConfig struct {
 	// Metrics: Required. Metrics sources to enable.
 	Metrics []*Metric `json:"metrics,omitempty"`
@@ -2142,8 +2139,8 @@ type DiagnoseClusterRequest struct {
 	// default access of the bucket
 	//   "GOOGLE_CLOUD_SUPPORT" - Google Cloud Support group has read access to the
 	// diagnostic tarball
-	//   "GOOGLE_DATAPROC_DIAGNOSE" - Google Cloud Dataproc Diagnose service
-	// account has read access to the diagnostic tarball
+	//   "GOOGLE_DATAPROC_DIAGNOSE" - The diagnose service account has read access
+	// to the diagnostic tarball
 	TarballAccess string `json:"tarballAccess,omitempty"`
 	// TarballGcsDir: Optional. (Optional) The output Cloud Storage directory for
 	// the diagnostic tarball. If not specified, a task-specific directory in the
@@ -2870,13 +2867,13 @@ func (s FlinkJob) MarshalJSON() ([]byte, error) {
 // cluster instances, applicable to all instances in the cluster.
 type GceClusterConfig struct {
 	// AutoZoneExcludeZoneUris: Optional. An optional list of Compute Engine zones
-	// where the Dataproc cluster will not be located when Auto Zone is enabled.
-	// Only one of zone_uri or auto_zone_exclude_zone_uris can be set. If both are
-	// omitted, the service will pick a zone in the cluster Compute Engine region.
-	// If auto_zone_exclude_zone_uris is set and there is more than one
-	// non-excluded zone, the service will pick one of the non-excluded zones.
-	// Otherwise, cluster creation will fail with INVALID_ARGUMENT error.A full
-	// URL, partial URI, or short name are valid. Examples:
+	// where the cluster will not be located when Auto Zone is enabled. Only one of
+	// zone_uri or auto_zone_exclude_zone_uris can be set. If both are omitted, the
+	// service will pick a zone in the cluster Compute Engine region. If
+	// auto_zone_exclude_zone_uris is set and there is more than one non-excluded
+	// zone, the service will pick one of the non-excluded zones. Otherwise,
+	// cluster creation will fail with INVALID_ARGUMENT error.A full URL, partial
+	// URI, or short name are valid. Examples:
 	// https://www.googleapis.com/compute/v1/projects/[project_id]/zones/[zone]
 	// projects/[project_id]/zones/[zone] [zone]
 	AutoZoneExcludeZoneUris []string `json:"autoZoneExcludeZoneUris,omitempty"`
@@ -2889,10 +2886,10 @@ type GceClusterConfig struct {
 	// versions 2.2.x.When set to true: All cluster VMs have internal IP addresses.
 	// Google Private Access
 	// (https://cloud.google.com/vpc/docs/private-google-access) must be enabled to
-	// access Dataproc and other Google Cloud APIs. Off-cluster dependencies must
-	// be configured to be accessible without external IP addresses.When set to
-	// false: Cluster VMs are not restricted to internal IP addresses. Ephemeral
-	// external IP addresses are assigned to each cluster VM.
+	// access the Dataproc API and other Google Cloud APIs. Off-cluster
+	// dependencies must be configured to be accessible without external IP
+	// addresses.When set to false: Cluster VMs are not restricted to internal IP
+	// addresses. Ephemeral external IP addresses are assigned to each cluster VM.
 	InternalIpOnly bool `json:"internalIpOnly,omitempty"`
 	// Metadata: Optional. The Compute Engine metadata entries to add to all
 	// instances (see Project and instance metadata
@@ -2918,24 +2915,24 @@ type GceClusterConfig struct {
 	// configuration inherited from the subnetwork configuration. This is the
 	// default Compute Engine behavior.
 	//   "OUTBOUND" - Enables outbound private IPv6 access to Google Services from
-	// the Dataproc cluster.
+	// the cluster.
 	//   "BIDIRECTIONAL" - Enables bidirectional private IPv6 access between Google
-	// Services and the Dataproc cluster.
+	// Services and the cluster.
 	PrivateIpv6GoogleAccess string `json:"privateIpv6GoogleAccess,omitempty"`
 	// ReservationAffinity: Optional. Reservation Affinity for consuming Zonal
 	// reservation.
 	ReservationAffinity *ReservationAffinity `json:"reservationAffinity,omitempty"`
 	// ResourceManagerTags: Optional. Resource manager tags
 	// (https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing)
-	// to add to all instances (see Use secure tags in Dataproc
+	// to add to all instances (see Use secure tags
 	// (https://cloud.google.com/dataproc/docs/guides/use-secure-tags)).
 	ResourceManagerTags map[string]string `json:"resourceManagerTags,omitempty"`
-	// ServiceAccount: Optional. The Dataproc service account
+	// ServiceAccount: Optional. The VM service account
 	// (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/service-accounts#service_accounts_in_dataproc)
 	// (also see VM Data Plane identity
 	// (https://cloud.google.com/dataproc/docs/concepts/iam/dataproc-principals#vm_service_account_data_plane_identity))
-	// used by Dataproc cluster VM instances to access Google Cloud Platform
-	// services.If not specified, the Compute Engine default service account
+	// used by cluster VM instances to access Google Cloud Platform services.If not
+	// specified, the Compute Engine default service account
 	// (https://cloud.google.com/compute/docs/access/service-accounts#default_service_account)
 	// is used.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
@@ -2963,10 +2960,10 @@ type GceClusterConfig struct {
 	// Tags: The Compute Engine network tags to add to all instances (see Tagging
 	// instances (https://cloud.google.com/vpc/docs/add-remove-network-tags)).
 	Tags []string `json:"tags,omitempty"`
-	// ZoneUri: Optional. The Compute Engine zone where the Dataproc cluster will
-	// be located. If omitted, the service will pick a zone in the cluster's
-	// Compute Engine region. On a get request, zone will always be present.A full
-	// URL, partial URI, or short name are valid. Examples:
+	// ZoneUri: Optional. The Compute Engine zone where the cluster will be
+	// located. If omitted, the service will pick a zone in the cluster's Compute
+	// Engine region. On a get request, zone will always be present.A full URL,
+	// partial URI, or short name are valid. Examples:
 	// https://www.googleapis.com/compute/v1/projects/[project_id]/zones/[zone]
 	// projects/[project_id]/zones/[zone] [zone]
 	ZoneUri string `json:"zoneUri,omitempty"`
@@ -3605,7 +3602,7 @@ type InstanceGroupConfig struct {
 	// instances.The URI can represent an image or image family.Image examples:
 	// https://www.googleapis.com/compute/v1/projects/[project_id]/global/images/[image-id]
 	// projects/[project_id]/global/images/[image-id] image-idImage family
-	// examples. Dataproc will use the most recent image from the family:
+	// examples. The service will use the most recent image from the family:
 	// https://www.googleapis.com/compute/v1/projects/[project_id]/global/images/family/[custom-image-family-name]
 	// projects/[project_id]/global/images/family/[custom-image-family-name]If the
 	// URI is unspecified, it will be inferred from SoftwareConfig.image_version or
@@ -3614,8 +3611,8 @@ type InstanceGroupConfig struct {
 	// InstanceFlexibilityPolicy: Optional. Instance flexibility Policy allowing a
 	// mixture of VM shapes and provisioning models.
 	InstanceFlexibilityPolicy *InstanceFlexibilityPolicy `json:"instanceFlexibilityPolicy,omitempty"`
-	// InstanceNames: Output only. The list of instance names. Dataproc derives the
-	// names from cluster_name, num_instances, and the instance group.
+	// InstanceNames: Output only. The list of instance names, derived from
+	// cluster_name, num_instances, and the instance group.
 	InstanceNames []string `json:"instanceNames,omitempty"`
 	// InstanceReferences: Output only. List of references to Compute Engine
 	// instances.
@@ -3627,18 +3624,17 @@ type InstanceGroupConfig struct {
 	// instances.A full URL, partial URI, or short name are valid. Examples:
 	// https://www.googleapis.com/compute/v1/projects/[project_id]/zones/[zone]/machineTypes/n1-standard-2
 	// projects/[project_id]/zones/[zone]/machineTypes/n1-standard-2
-	// n1-standard-2Auto Zone Exception: If you are using the Dataproc Auto Zone
-	// Placement
-	// (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/auto-zone#using_auto_zone_placement)
-	// feature, you must use the short name of the machine type resource, for
-	// example, n1-standard-2.
+	// n1-standard-2Auto Zone Exception: If you are using Auto Zone Placement
+	// (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/auto-zone#using_auto_zone_placement),
+	// you must use the short name of the machine type resource, for example,
+	// n1-standard-2.
 	MachineTypeUri string `json:"machineTypeUri,omitempty"`
 	// ManagedGroupConfig: Output only. The config for Compute Engine Instance
 	// Group Manager that manages this group. This is only used for preemptible
 	// instance groups.
 	ManagedGroupConfig *ManagedGroupConfig `json:"managedGroupConfig,omitempty"`
 	// MinCpuPlatform: Optional. Specifies the minimum cpu platform for the
-	// Instance Group. See Dataproc -> Minimum CPU Platform
+	// Instance Group. See Minimum CPU Platform
 	// (https://cloud.google.com/dataproc/docs/concepts/compute/dataproc-min-cpu).
 	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 	// MinNumInstances: Optional. The minimum number of primary worker instances to
@@ -3734,7 +3730,7 @@ type InstanceSelection struct {
 	// MachineTypes: Optional. Full machine-type names, e.g. "n1-standard-16".
 	MachineTypes []string `json:"machineTypes,omitempty"`
 	// Rank: Optional. Preference of this instance selection. Lower number means
-	// higher preference. Dataproc will first try to create a VM based on the
+	// higher preference. The service will first try to create a VM based on the
 	// machine-type with priority rank and fallback to next rank based on
 	// availability. Machine types and instance selections with the same priority
 	// have the same preference.
@@ -4230,8 +4226,8 @@ type KerberosConfig struct {
 	// CrossRealmTrustKdc: Optional. The KDC (IP or hostname) for the remote
 	// trusted realm in a cross realm trust relationship.
 	CrossRealmTrustKdc string `json:"crossRealmTrustKdc,omitempty"`
-	// CrossRealmTrustRealm: Optional. The remote realm the Dataproc on-cluster KDC
-	// will trust, should the user enable cross realm trust.
+	// CrossRealmTrustRealm: Optional. The remote realm the on-cluster KDC will
+	// trust, should the user enable cross realm trust.
 	CrossRealmTrustRealm string `json:"crossRealmTrustRealm,omitempty"`
 	// CrossRealmTrustSharedPasswordUri: Optional. The Cloud Storage URI of a KMS
 	// encrypted file containing the shared password between the on-cluster
@@ -4246,14 +4242,14 @@ type KerberosConfig struct {
 	KdcDbKeyUri string `json:"kdcDbKeyUri,omitempty"`
 	// KeyPasswordUri: Optional. The Cloud Storage URI of a KMS encrypted file
 	// containing the password to the user provided key. For the self-signed
-	// certificate, this password is generated by Dataproc.
+	// certificate, this password is generated by the service.
 	KeyPasswordUri string `json:"keyPasswordUri,omitempty"`
 	// KeystorePasswordUri: Optional. The Cloud Storage URI of a KMS encrypted file
 	// containing the password to the user provided keystore. For the self-signed
-	// certificate, this password is generated by Dataproc.
+	// certificate, this password is generated by the service.
 	KeystorePasswordUri string `json:"keystorePasswordUri,omitempty"`
 	// KeystoreUri: Optional. The Cloud Storage URI of the keystore file used for
-	// SSL encryption. If not provided, Dataproc will provide a self-signed
+	// SSL encryption. If not provided, the service will provide a self-signed
 	// certificate.
 	KeystoreUri string `json:"keystoreUri,omitempty"`
 	// KmsKeyUri: Optional. The URI of the KMS key used to encrypt sensitive files.
@@ -4270,10 +4266,10 @@ type KerberosConfig struct {
 	TgtLifetimeHours int64 `json:"tgtLifetimeHours,omitempty"`
 	// TruststorePasswordUri: Optional. The Cloud Storage URI of a KMS encrypted
 	// file containing the password to the user provided truststore. For the
-	// self-signed certificate, this password is generated by Dataproc.
+	// self-signed certificate, this password is generated by the service.
 	TruststorePasswordUri string `json:"truststorePasswordUri,omitempty"`
 	// TruststoreUri: Optional. The Cloud Storage URI of the truststore file used
-	// for SSL encryption. If not provided, Dataproc will provide a self-signed
+	// for SSL encryption. If not provided, the service will provide a self-signed
 	// certificate.
 	TruststoreUri string `json:"truststoreUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CrossRealmTrustAdminServer")
@@ -4776,8 +4772,8 @@ func (s MemoryMetrics) MarshalJSON() ([]byte, error) {
 
 // MetastoreConfig: Specifies a Metastore configuration.
 type MetastoreConfig struct {
-	// DataprocMetastoreService: Required. Resource name of an existing Dataproc
-	// Metastore service.Example:
+	// DataprocMetastoreService: Required. Resource name of an existing Metastore
+	// service.Example:
 	// projects/[project_id]/locations/[dataproc_region]/services/[service-name]
 	DataprocMetastoreService string `json:"dataprocMetastoreService,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataprocMetastoreService")
@@ -4798,7 +4794,7 @@ func (s MetastoreConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Metric: A Dataproc custom metric.
+// Metric: A custom metric.
 type Metric struct {
 	// MetricOverrides: Optional. Specify one or more Custom metrics
 	// (https://cloud.google.com/dataproc/docs/guides/dataproc-metrics#custom_metrics)
@@ -4825,7 +4821,7 @@ type Metric struct {
 	// Possible values:
 	//   "METRIC_SOURCE_UNSPECIFIED" - Required unspecified metric source.
 	//   "MONITORING_AGENT_DEFAULTS" - Monitoring agent metrics. If this source is
-	// enabled, Dataproc enables the monitoring agent in Compute Engine, and
+	// enabled, the service enables the monitoring agent in Compute Engine, and
 	// collects monitoring agent metrics, which are published with an
 	// agent.googleapis.com prefix.
 	//   "HDFS" - HDFS metric source.
@@ -4937,8 +4933,8 @@ func (s NativeSqlExecutionUiData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// NodeGroup: Dataproc Node Group. The Dataproc NodeGroup resource is not
-// related to the Dataproc NodeGroupAffinity resource.
+// NodeGroup: Node Group. The NodeGroup resource is not related to the
+// NodeGroupAffinity resource.
 type NodeGroup struct {
 	// Labels: Optional. Node group labels. Label keys must consist of from 1 to 63
 	// characters and conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt).
@@ -4978,8 +4974,8 @@ func (s NodeGroup) MarshalJSON() ([]byte, error) {
 }
 
 // NodeGroupAffinity: Node Group Affinity for clusters using sole-tenant node
-// groups. The Dataproc NodeGroupAffinity resource is not related to the
-// Dataproc NodeGroup resource.
+// groups. The NodeGroupAffinity resource is not related to the NodeGroup
+// resource.
 type NodeGroupAffinity struct {
 	// NodeGroupUri: Required. The URI of a sole-tenant node group resource
 	// (https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups) that
@@ -5568,16 +5564,16 @@ func (s PropertiesInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ProvisioningModelMix: Defines how Dataproc should create VMs with a mixture
-// of provisioning models.
+// ProvisioningModelMix: Defines how to create VMs with a mixture of
+// provisioning models.
 type ProvisioningModelMix struct {
 	// StandardCapacityBase: Optional. The base capacity that will always use
 	// Standard VMs to avoid risk of more preemption than the minimum capacity you
-	// need. Dataproc will create only standard VMs until it reaches
+	// need. The service will create only standard VMs until it reaches
 	// standard_capacity_base, then it will start using
 	// standard_capacity_percent_above_base to mix Spot with Standard VMs. eg. If
-	// 15 instances are requested and standard_capacity_base is 5, Dataproc will
-	// create 5 standard VMs and then start mixing spot and standard VMs for
+	// 15 instances are requested and standard_capacity_base is 5, the service will
+	// create 5 standard VMs and thenstart mixing spot and standard VMs for
 	// remaining 10 instances.
 	StandardCapacityBase int64 `json:"standardCapacityBase,omitempty"`
 	// StandardCapacityPercentAboveBase: Optional. The percentage of target
@@ -5585,8 +5581,9 @@ type ProvisioningModelMix struct {
 	// VMs. The percentage applies only to the capacity above
 	// standard_capacity_base. eg. If 15 instances are requested and
 	// standard_capacity_base is 5 and standard_capacity_percent_above_base is 30,
-	// Dataproc will create 5 standard VMs and then start mixing spot and standard
-	// VMs for remaining 10 instances. The mix will be 30% standard and 70% spot.
+	// the service will create 5 standard VMs and then start mixing spot and
+	// standard VMs for remaining 10 instances. The mix will be 30% standard and
+	// 70% spot.
 	StandardCapacityPercentAboveBase int64 `json:"standardCapacityPercentAboveBase,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "StandardCapacityBase") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6032,11 +6029,11 @@ type RepairClusterRequest struct {
 	// ClusterUuid: Optional. Specifying the cluster_uuid means the RPC will fail
 	// (with error NOT_FOUND) if a cluster with the specified UUID does not exist.
 	ClusterUuid string `json:"clusterUuid,omitempty"`
-	// DataprocSuperUser: Optional. Whether the request is submitted by Dataproc
-	// super user. If true, IAM will check 'dataproc.clusters.repair' permission
-	// instead of 'dataproc.clusters.update' permission. This is to give Dataproc
-	// superuser the ability to repair clusters without granting the overly broad
-	// update permission.
+	// DataprocSuperUser: Optional. Whether the request is submitted by a super
+	// user. If true, IAM will check 'dataproc.clusters.repair' permission instead
+	// of 'dataproc.clusters.update' permission. This is to give Dataproc superuser
+	// the ability to repair clusters without granting the overly broad update
+	// permission.
 	DataprocSuperUser bool `json:"dataprocSuperUser,omitempty"`
 	// GracefulDecommissionTimeout: Optional. Timeout for graceful YARN
 	// decommissioning. Graceful decommissioning facilitates the removal of cluster
@@ -6045,7 +6042,7 @@ type RepairClusterRequest struct {
 	// default timeout is 0 for forceful decommissioning, and the maximum timeout
 	// period is 1 day. (see JSON Mapping—Duration
 	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).graceful_decommission_timeout
-	// is supported in Dataproc image versions 1.2+.
+	// is supported in image versions 1.2+.
 	GracefulDecommissionTimeout string `json:"gracefulDecommissionTimeout,omitempty"`
 	// NodePools: Optional. Node pools and corresponding repair action to be taken.
 	// All node pools should be unique in this request. i.e. Multiple entries for
@@ -7311,7 +7308,7 @@ func (s SinkProgress) MarshalJSON() ([]byte, error) {
 // cluster.
 type SoftwareConfig struct {
 	// ImageVersion: Optional. The version of software inside the cluster. It must
-	// be one of the supported Dataproc Versions
+	// be one of the supported Image Versions
 	// (https://cloud.google.com/dataproc/docs/concepts/versioning/dataproc-versions#supported-dataproc-image-versions),
 	// such as "1.2" (including a subminor version, such as "1.2.29"), or the
 	// "preview" version
@@ -9466,23 +9463,22 @@ func (s ValueValidation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// VirtualClusterConfig: The Dataproc cluster config for a cluster that does
-// not directly control the underlying compute resources, such as a
-// Dataproc-on-GKE cluster
+// VirtualClusterConfig: The cluster config for a cluster that does not
+// directly control the underlying compute resources, such as a GKE cluster
 // (https://cloud.google.com/dataproc/docs/guides/dpgke/dataproc-gke-overview).
 type VirtualClusterConfig struct {
 	// AuxiliaryServicesConfig: Optional. Configuration of auxiliary services used
 	// by this cluster.
 	AuxiliaryServicesConfig *AuxiliaryServicesConfig `json:"auxiliaryServicesConfig,omitempty"`
-	// KubernetesClusterConfig: Required. The configuration for running the
-	// Dataproc cluster on Kubernetes.
+	// KubernetesClusterConfig: Required. The configuration for running the cluster
+	// on Kubernetes.
 	KubernetesClusterConfig *KubernetesClusterConfig `json:"kubernetesClusterConfig,omitempty"`
 	// StagingBucket: Optional. A Cloud Storage bucket used to stage job
 	// dependencies, config files, and job driver console output. If you do not
-	// specify a staging bucket, Dataproc determines a Cloud Storage location (US,
-	// ASIA, or EU) for your cluster's staging bucket according to the Compute
-	// Engine zone where your cluster is deployed, and then create and manage this
-	// project-level, per-location bucket (see Dataproc staging and temp buckets
+	// specify a staging bucket, the service will determine a Cloud Storage
+	// location (US, ASIA, or EU) for your cluster's staging bucket according to
+	// the Compute Engine zone where your cluster is deployed, and then create and
+	// manage this project-level, per-location bucket (see staging and temp buckets
 	// (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/staging-bucket)).
 	// This field requires a Cloud Storage bucket name, not a gs://... URI to a
 	// Cloud Storage bucket.
@@ -11246,13 +11242,14 @@ func (r *ProjectsLocationsBatchesService) List(parent string) *ProjectsLocations
 // return in the response.A filter is a logical expression constraining the
 // values of various fields in each batch resource. Filters are case sensitive,
 // and may contain multiple clauses combined with logical operators (AND/OR).
-// Supported fields are batch_id, batch_uuid, state, create_time, and
-// labels.e.g. state = RUNNING and create_time < "2023-01-01T00:00:00Z" filters
-// for batches in state RUNNING that were created before 2023-01-01. state =
-// RUNNING and labels.environment=production filters for batches in state in a
-// RUNNING state that have a production environment label.See
-// https://google.aip.dev/assets/misc/ebnf-filtering.txt for a detailed
-// description of the filter syntax and a list of supported comparisons.
+// Supported fields: * batch_id * batch_uuid * state * create_time * labels *
+// runtime_info.cohort_info.cohort e.g. state = RUNNING and create_time <
+// "2023-01-01T00:00:00Z" filters for batches in state RUNNING that were
+// created before 2023-01-01. state = RUNNING and labels.environment=production
+// filters for batches in state in a RUNNING state that have a production
+// environment label.See https://google.aip.dev/assets/misc/ebnf-filtering.txt
+// for a detailed description of the filter syntax and a list of supported
+// comparisons.
 func (c *ProjectsLocationsBatchesListCall) Filter(filter string) *ProjectsLocationsBatchesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -21085,7 +21082,7 @@ type ProjectsRegionsClustersCreateCall struct {
 //
 //   - projectId: The ID of the Google Cloud Platform project that the cluster
 //     belongs to.
-//   - region: The Dataproc region in which to handle the request.
+//   - region: The region in which to handle the request.
 func (r *ProjectsRegionsClustersService) Create(projectId string, region string, cluster *Cluster) *ProjectsRegionsClustersCreateCall {
 	c := &ProjectsRegionsClustersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -21230,7 +21227,7 @@ type ProjectsRegionsClustersDeleteCall struct {
 //   - clusterName: The cluster name.
 //   - projectId: The ID of the Google Cloud Platform project that the cluster
 //     belongs to.
-//   - region: The Dataproc region in which to handle the request.
+//   - region: The region in which to handle the request.
 func (r *ProjectsRegionsClustersService) Delete(projectId string, region string, clusterName string) *ProjectsRegionsClustersDeleteCall {
 	c := &ProjectsRegionsClustersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -21377,7 +21374,7 @@ type ProjectsRegionsClustersDiagnoseCall struct {
 //   - clusterName: The cluster name.
 //   - projectId: The ID of the Google Cloud Platform project that the cluster
 //     belongs to.
-//   - region: The Dataproc region in which to handle the request.
+//   - region: The region in which to handle the request.
 func (r *ProjectsRegionsClustersService) Diagnose(projectId string, region string, clusterName string, diagnoseclusterrequest *DiagnoseClusterRequest) *ProjectsRegionsClustersDiagnoseCall {
 	c := &ProjectsRegionsClustersDiagnoseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -21489,7 +21486,7 @@ type ProjectsRegionsClustersGetCall struct {
 //   - clusterName: The cluster name.
 //   - projectId: The ID of the Google Cloud Platform project that the cluster
 //     belongs to.
-//   - region: The Dataproc region in which to handle the request.
+//   - region: The region in which to handle the request.
 func (r *ProjectsRegionsClustersService) Get(projectId string, region string, clusterName string) *ProjectsRegionsClustersGetCall {
 	c := &ProjectsRegionsClustersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -21825,7 +21822,7 @@ type ProjectsRegionsClustersListCall struct {
 //
 //   - projectId: The ID of the Google Cloud Platform project that the cluster
 //     belongs to.
-//   - region: The Dataproc region in which to handle the request.
+//   - region: The region in which to handle the request.
 func (r *ProjectsRegionsClustersService) List(projectId string, region string) *ProjectsRegionsClustersListCall {
 	c := &ProjectsRegionsClustersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -21999,7 +21996,7 @@ type ProjectsRegionsClustersPatchCall struct {
 //   - clusterName: The cluster name.
 //   - projectId: The ID of the Google Cloud Platform project the cluster belongs
 //     to.
-//   - region: The Dataproc region in which to handle the request.
+//   - region: The region in which to handle the request.
 func (r *ProjectsRegionsClustersService) Patch(projectId string, region string, clusterName string, cluster *Cluster) *ProjectsRegionsClustersPatchCall {
 	c := &ProjectsRegionsClustersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -22016,8 +22013,8 @@ func (r *ProjectsRegionsClustersService) Patch(projectId string, region string, 
 // in progress to finish before forcefully removing nodes (and potentially
 // interrupting jobs). Default timeout is 0 (for forceful decommission), and
 // the maximum allowed timeout is 1 day. (see JSON representation of Duration
-// (https://developers.google.com/protocol-buffers/docs/proto3#json)).Only
-// supported on Dataproc image versions 1.2 and higher.
+// (https://developers.google.com/protocol-buffers/docs/proto3#json)).Supported
+// in image versions 1.2 and higher.
 func (c *ProjectsRegionsClustersPatchCall) GracefulDecommissionTimeout(gracefulDecommissionTimeout string) *ProjectsRegionsClustersPatchCall {
 	c.urlParams_.Set("gracefulDecommissionTimeout", gracefulDecommissionTimeout)
 	return c
@@ -22159,7 +22156,7 @@ type ProjectsRegionsClustersRepairCall struct {
 //   - clusterName: The cluster name.
 //   - projectId: The ID of the Google Cloud Platform project the cluster belongs
 //     to.
-//   - region: The Dataproc region in which to handle the request.
+//   - region: The region in which to handle the request.
 func (r *ProjectsRegionsClustersService) Repair(projectId string, region string, clusterName string, repairclusterrequest *RepairClusterRequest) *ProjectsRegionsClustersRepairCall {
 	c := &ProjectsRegionsClustersRepairCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -22378,7 +22375,7 @@ type ProjectsRegionsClustersStartCall struct {
 //   - clusterName: The cluster name.
 //   - projectId: The ID of the Google Cloud Platform project the cluster belongs
 //     to.
-//   - region: The Dataproc region in which to handle the request.
+//   - region: The region in which to handle the request.
 func (r *ProjectsRegionsClustersService) Start(projectId string, region string, clusterName string, startclusterrequest *StartClusterRequest) *ProjectsRegionsClustersStartCall {
 	c := &ProjectsRegionsClustersStartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -22490,7 +22487,7 @@ type ProjectsRegionsClustersStopCall struct {
 //   - clusterName: The cluster name.
 //   - projectId: The ID of the Google Cloud Platform project the cluster belongs
 //     to.
-//   - region: The Dataproc region in which to handle the request.
+//   - region: The region in which to handle the request.
 func (r *ProjectsRegionsClustersService) Stop(projectId string, region string, clusterName string, stopclusterrequest *StopClusterRequest) *ProjectsRegionsClustersStopCall {
 	c := &ProjectsRegionsClustersStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId

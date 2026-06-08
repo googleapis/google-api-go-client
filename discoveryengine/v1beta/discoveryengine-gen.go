@@ -2501,6 +2501,16 @@ type GoogleCloudDiscoveryengineV1BAPConfig struct {
 	//   "END_USER_AUTHENTICATION" - Connector utilized for End User
 	// Authentication.
 	SupportedConnectorModes []string `json:"supportedConnectorModes,omitempty"`
+	// ToolspecOverride: Optional. Custom toolspec overrides for this connection.
+	// For Enterprise BAP connectors that support admin-curated tool definitions,
+	// this holds the (simplified) per-tool overrides. On Get, populated by the
+	// server by merging persisted overrides with live runtime tool definitions and
+	// trimming the result for UI consumption. On Update, the supplied value
+	// replaces the persisted overrides after server-side validation and merging:
+	// the `base_version` field MUST match the server's current base toolspec
+	// version (otherwise the request is rejected with a user-facing error
+	// directing the admin to re-download the latest tools first).
+	ToolspecOverride *GoogleCloudDiscoveryengineV1BAPConfigToolspecOverride `json:"toolspecOverride,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnabledActions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2516,6 +2526,45 @@ type GoogleCloudDiscoveryengineV1BAPConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1BAPConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1BAPConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1BAPConfigToolspecOverride: Customer-facing view
+// of the admin-curated toolspec for a BAP connection. Holds the (simplified)
+// per-tool definitions surfaced to and editable by the admin in the Discovery
+// Engine UI. Mirrors the shape of the backend
+// `google.cloud.connectorexecution.v1.ToolspecOverride` message, but is
+// intentionally kept as a separate public type so the Discovery Engine API
+// surface can evolve independently of the fed-API surface (AIP-215). Handlers
+// convert between the two via helpers in
+// //cloud/ml/discoveryengine/external_service/v1main/data_connector_service/lib
+// :bap_custom_tool_util.
+type GoogleCloudDiscoveryengineV1BAPConfigToolspecOverride struct {
+	// BaseVersion: Required. Base toolspec version against which `tools` were
+	// authored. On Update, MUST match the server's current stable toolspec version
+	// for the connection; mismatch is rejected with a user-facing error directing
+	// the admin to re-download the latest tools first.
+	BaseVersion string `json:"baseVersion,omitempty"`
+	// Tools: Required. Tool definitions (one Struct per tool) that the admin has
+	// customised on top of the base toolspec returned by the fed API. REQUIRED
+	// because it is the only user-editable field in the modify API; the request
+	// must carry at least one tool.
+	Tools []googleapi.RawMessage `json:"tools,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1BAPConfigToolspecOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1BAPConfigToolspecOverride
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4790,7 +4839,8 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// `disable-onedrive-upload` * `disable-talk-to-content` *
 	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
 	// * `disable-canvas-workspace` * `disable-skills` *
-	// `enable-end-user-sharing-with-groups`
+	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
+	// `multi-agent-orchestration`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -9151,6 +9201,16 @@ type GoogleCloudDiscoveryengineV1alphaBAPConfig struct {
 	//   "END_USER_AUTHENTICATION" - Connector utilized for End User
 	// Authentication.
 	SupportedConnectorModes []string `json:"supportedConnectorModes,omitempty"`
+	// ToolspecOverride: Optional. Custom toolspec overrides for this connection.
+	// For Enterprise BAP connectors that support admin-curated tool definitions,
+	// this holds the (simplified) per-tool overrides. On Get, populated by the
+	// server by merging persisted overrides with live runtime tool definitions and
+	// trimming the result for UI consumption. On Update, the supplied value
+	// replaces the persisted overrides after server-side validation and merging:
+	// the `base_version` field MUST match the server's current base toolspec
+	// version (otherwise the request is rejected with a user-facing error
+	// directing the admin to re-download the latest tools first).
+	ToolspecOverride *GoogleCloudDiscoveryengineV1alphaBAPConfigToolspecOverride `json:"toolspecOverride,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnabledActions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9166,6 +9226,45 @@ type GoogleCloudDiscoveryengineV1alphaBAPConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaBAPConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaBAPConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaBAPConfigToolspecOverride: Customer-facing
+// view of the admin-curated toolspec for a BAP connection. Holds the
+// (simplified) per-tool definitions surfaced to and editable by the admin in
+// the Discovery Engine UI. Mirrors the shape of the backend
+// `google.cloud.connectorexecution.v1.ToolspecOverride` message, but is
+// intentionally kept as a separate public type so the Discovery Engine API
+// surface can evolve independently of the fed-API surface (AIP-215). Handlers
+// convert between the two via helpers in
+// //cloud/ml/discoveryengine/external_service/v1main/data_connector_service/lib
+// :bap_custom_tool_util.
+type GoogleCloudDiscoveryengineV1alphaBAPConfigToolspecOverride struct {
+	// BaseVersion: Required. Base toolspec version against which `tools` were
+	// authored. On Update, MUST match the server's current stable toolspec version
+	// for the connection; mismatch is rejected with a user-facing error directing
+	// the admin to re-download the latest tools first.
+	BaseVersion string `json:"baseVersion,omitempty"`
+	// Tools: Required. Tool definitions (one Struct per tool) that the admin has
+	// customised on top of the base toolspec returned by the fed API. REQUIRED
+	// because it is the only user-editable field in the modify API; the request
+	// must carry at least one tool.
+	Tools []googleapi.RawMessage `json:"tools,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaBAPConfigToolspecOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaBAPConfigToolspecOverride
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11980,7 +12079,8 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// `disable-onedrive-upload` * `disable-talk-to-content` *
 	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
 	// * `disable-canvas-workspace` * `disable-skills` *
-	// `enable-end-user-sharing-with-groups`
+	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
+	// `multi-agent-orchestration`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -24249,7 +24349,8 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// `disable-onedrive-upload` * `disable-talk-to-content` *
 	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
 	// * `disable-canvas-workspace` * `disable-skills` *
-	// `enable-end-user-sharing-with-groups`
+	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
+	// `multi-agent-orchestration`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -24933,6 +25034,111 @@ type GoogleCloudDiscoveryengineV1betaFactChunk struct {
 
 func (s GoogleCloudDiscoveryengineV1betaFactChunk) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaFactChunk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaFeedback: Information about the user
+// feedback. This information will be used for logging and metrics purpose.
+type GoogleCloudDiscoveryengineV1betaFeedback struct {
+	// Comment: Optional. The additional user comment of the feedback if user gives
+	// a thumb down.
+	Comment string `json:"comment,omitempty"`
+	// ComponentVersion: Optional. The version of the component that this report is
+	// being sent from.
+	ComponentVersion string `json:"componentVersion,omitempty"`
+	// ConversationInfo: The related conversation information when user gives
+	// feedback.
+	ConversationInfo *GoogleCloudDiscoveryengineV1betaFeedbackConversationInfo `json:"conversationInfo,omitempty"`
+	// DataTermsAccepted: Optional. Whether the customer accepted data use terms.
+	DataTermsAccepted bool `json:"dataTermsAccepted,omitempty"`
+	// FeedbackSource: Optional. The UI component the user feedback comes from,
+	// which could be GOOGLE_CONSOLE, GOOGLE_WIDGET, GOOGLE_WEBAPP.
+	//
+	// Possible values:
+	//   "FEEDBACK_SOURCE_UNSPECIFIED" - Unspecified feedback source.
+	//   "GOOGLE_CONSOLE" - Feedback source is Google Console.
+	//   "GOOGLE_WIDGET" - Feedback source is Google Widget.
+	//   "GOOGLE_WEBAPP" - Feedback source is Google Webapp.
+	//   "GOOGLE_AGENTSPACE_MOBILE" - Feedback source is Google AgentSpace Mobile
+	// app.
+	FeedbackSource string `json:"feedbackSource,omitempty"`
+	// FeedbackType: Required. Indicate whether the user gives a positive or
+	// negative feedback. If the user gives a negative feedback, there might be
+	// more feedback details.
+	//
+	// Possible values:
+	//   "FEEDBACK_TYPE_UNSPECIFIED" - Unspecified feedback type.
+	//   "LIKE" - The user gives a positive feedback.
+	//   "DISLIKE" - The user gives a negative feedback.
+	FeedbackType string `json:"feedbackType,omitempty"`
+	// LlmModelVersion: The version of the LLM model that was used to generate the
+	// response.
+	LlmModelVersion string `json:"llmModelVersion,omitempty"`
+	// Reasons: Optional. The reason if user gives a thumb down.
+	//
+	// Possible values:
+	//   "REASON_UNSPECIFIED" - Unspecified reason.
+	//   "INACCURATE_RESPONSE" - The response is inaccurate.
+	//   "NOT_RELEVANT" - The response is not relevant.
+	//   "INCOMPREHENSIVE" - The response is incomprehensive.
+	//   "OFFENSIVE_OR_UNSAFE" - The response is offensive or unsafe.
+	//   "FORMAT_AND_STYLES" - The response is not well-formatted.
+	//   "BAD_CITATION" - The response is not well-associated with the query.
+	//   "CANVAS_NOT_GENERATED" - The expected canvas was not generated for the
+	// response.
+	//   "CANVAS_QUALITY_BAD" - The generated canvas is of bad quality (e.g.
+	// inaccurate, incomplete, poorly formatted).
+	//   "CANVAS_EXPORT_FAILED" - Exporting the generated canvas failed (e.g.
+	// download or external export action did not complete successfully).
+	Reasons []string `json:"reasons,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Comment") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Comment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaFeedback) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaFeedback
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaFeedbackConversationInfo: The conversation
+// information such as the question index and session name.
+type GoogleCloudDiscoveryengineV1betaFeedbackConversationInfo struct {
+	// AnswerQueryToken: Optional. The token which could be used to fetch the
+	// answer log.
+	AnswerQueryToken string `json:"answerQueryToken,omitempty"`
+	// AssistToken: Optional. The token which could be used to fetch the assistant
+	// log.
+	AssistToken string `json:"assistToken,omitempty"`
+	// Query: Required. The user's search query.
+	Query *GoogleCloudDiscoveryengineV1betaQuery `json:"query,omitempty"`
+	// QuestionIndex: The index of the user input within the conversation messages.
+	QuestionIndex int64 `json:"questionIndex,omitempty"`
+	// Session: Name of the newly generated or continued session.
+	Session string `json:"session,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnswerQueryToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnswerQueryToken") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaFeedbackConversationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaFeedbackConversationInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -32997,6 +33203,9 @@ type GoogleCloudDiscoveryengineV1betaUserEvent struct {
 	// Finished or stopped midway through a video, song, etc. Custom conversion
 	// value: * `conversion`: Customer defined conversion event.
 	EventType string `json:"eventType,omitempty"`
+	// Feedback: Optional. This field is optional except for the `add-feedback`
+	// event types.
+	Feedback *GoogleCloudDiscoveryengineV1betaFeedback `json:"feedback,omitempty"`
 	// Filter: Optional. The filter syntax consists of an expression language for
 	// constructing a predicate from one or more fields of the documents being
 	// filtered. One example is for `search` events, the associated SearchRequest

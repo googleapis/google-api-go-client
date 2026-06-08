@@ -18,13 +18,33 @@
   "endpoints": [
     {
       "description": "Regional Endpoint",
+      "endpointUrl": "https://config.us-central1.rep.googleapis.com/",
+      "location": "us-central1"
+    },
+    {
+      "description": "Regional Endpoint",
       "endpointUrl": "https://config.us-south1.rep.googleapis.com/",
       "location": "us-south1"
     },
     {
       "description": "Regional Endpoint",
+      "endpointUrl": "https://config.us-west1.rep.googleapis.com/",
+      "location": "us-west1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://config.us-west2.rep.googleapis.com/",
+      "location": "us-west2"
+    },
+    {
+      "description": "Regional Endpoint",
       "endpointUrl": "https://config.us-west3.rep.googleapis.com/",
       "location": "us-west3"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://config.us-east1.rep.googleapis.com/",
+      "location": "us-east1"
     },
     {
       "description": "Regional Endpoint",
@@ -1768,7 +1788,7 @@
       }
     }
   },
-  "revision": "20260513",
+  "revision": "20260527",
   "rootUrl": "https://config.googleapis.com/",
   "schemas": {
     "ApplyResults": {

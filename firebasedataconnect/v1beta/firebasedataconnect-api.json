@@ -1221,7 +1221,7 @@
       }
     }
   },
-  "revision": "20260502",
+  "revision": "20260531",
   "rootUrl": "https://firebasedataconnect.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {
@@ -2346,7 +2346,7 @@
     }
   },
   "servicePath": "",
-  "title": "Firebase Data Connect API",
+  "title": "Firebase SQL Connect API",
   "version": "v1beta",
   "version_module": true
 }

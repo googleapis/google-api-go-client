@@ -217,6 +217,11 @@ type AISkillAnalysisOccurrence struct {
 	// Findings: Findings produced by the analysis.
 	Findings []*Finding `json:"findings,omitempty"`
 	// MaxSeverity: Maximum severity found among findings.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Unspecified severity.
+	//   "CRITICAL" - Critical severity.
+	//   "HIGH" - High severity.
 	MaxSeverity string `json:"maxSeverity,omitempty"`
 	// SkillName: Name of the skill that produced this analysis.
 	SkillName string `json:"skillName,omitempty"`
@@ -1424,12 +1429,24 @@ func (s FileLocation) MarshalJSON() ([]byte, error) {
 type Finding struct {
 	// Category: Category of the finding.
 	Category string `json:"category,omitempty"`
+	// Details: Description of the finding category.
+	Details string `json:"details,omitempty"`
 	// Location: Location (path and line) where the finding was detected.
 	Location *FindingLocation `json:"location,omitempty"`
 	// Scanner: Scanner determines which engine (e.g. static, llm) emitted the
 	// finding.
+	//
+	// Possible values:
+	//   "SCANNER_UNSPECIFIED" - Unspecified scanner.
+	//   "STATIC" - Static scanner.
+	//   "LLM" - LLM scanner.
 	Scanner string `json:"scanner,omitempty"`
 	// Severity: Severity of the finding.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Unspecified severity.
+	//   "CRITICAL" - Critical severity.
+	//   "HIGH" - High severity.
 	Severity string `json:"severity,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Category") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3758,6 +3775,8 @@ type VulnerabilityOccurrence struct {
 	CvssScore float64 `json:"cvssScore,omitempty"`
 	// CvssV2: The cvss v2 score for the vulnerability.
 	CvssV2 *CVSS `json:"cvssV2,omitempty"`
+	// CvssV4: The cvss v4 score for the vulnerability.
+	CvssV4 *CVSS `json:"cvssV4,omitempty"`
 	// CvssVersion: Output only. CVSS version used to populate cvss_score and
 	// severity.
 	//

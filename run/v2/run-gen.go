@@ -1592,6 +1592,14 @@ type GoogleCloudRunV2Instance struct {
 	// and reconciliation failed. This state can be found in
 	// `terminal_condition.state`.
 	Reconciling bool `json:"reconciling,omitempty"`
+	// RestartPolicy: Optional. Restart policy for the Instance.
+	//
+	// Possible values:
+	//   "RESTART_POLICY_UNSPECIFIED" - Unspecified restart policy.
+	//   "ALWAYS" - Always restart the instance.
+	//   "ON_FAILURE" - Restart if the instance terminates with non-zero exit code.
+	//   "NEVER" - Never restart the instance.
+	RestartPolicy string `json:"restartPolicy,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs   bool   `json:"satisfiesPzs,omitempty"`
 	ServiceAccount string `json:"serviceAccount,omitempty"`

@@ -12051,6 +12051,26 @@ func (s GoogleCloudDialogflowV2KnowledgeAssistAnswer) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type GoogleCloudDialogflowV2KnowledgeAssistAnswerAdditionalSuggestedQueryResult struct {
+	SuggestedQuery *GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuery `json:"suggestedQuery,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SuggestedQuery") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SuggestedQuery") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2KnowledgeAssistAnswerAdditionalSuggestedQueryResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2KnowledgeAssistAnswerAdditionalSuggestedQueryResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswer struct {
 	AnswerText       string                                                                       `json:"answerText,omitempty"`
 	EventSource      *GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerEventSource      `json:"eventSource,omitempty"`
@@ -12160,7 +12180,8 @@ func (s GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerGenerativeSou
 }
 
 type GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuery struct {
-	QueryText string `json:"queryText,omitempty"`
+	QueryText      string                                                                     `json:"queryText,omitempty"`
+	SearchContexts []*GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuerySearchContext `json:"searchContexts,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "QueryText") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -12176,6 +12197,27 @@ type GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuery struct {
 
 func (s GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuery
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuerySearchContext struct {
+	Key   string `json:"key,omitempty"`
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuerySearchContext) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuerySearchContext
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12809,18 +12851,20 @@ func (s GoogleCloudDialogflowV2SuggestFaqAnswersResponse) MarshalJSON() ([]byte,
 }
 
 type GoogleCloudDialogflowV2SuggestKnowledgeAssistResponse struct {
-	ContextSize           int64                                         `json:"contextSize,omitempty"`
-	KnowledgeAssistAnswer *GoogleCloudDialogflowV2KnowledgeAssistAnswer `json:"knowledgeAssistAnswer,omitempty"`
-	LatestMessage         string                                        `json:"latestMessage,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ContextSize") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	AdditionalSuggestedQueryResults []*GoogleCloudDialogflowV2KnowledgeAssistAnswerAdditionalSuggestedQueryResult `json:"additionalSuggestedQueryResults,omitempty"`
+	ContextSize                     int64                                                                         `json:"contextSize,omitempty"`
+	KnowledgeAssistAnswer           *GoogleCloudDialogflowV2KnowledgeAssistAnswer                                 `json:"knowledgeAssistAnswer,omitempty"`
+	LatestMessage                   string                                                                        `json:"latestMessage,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AdditionalSuggestedQueryResults") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ContextSize") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdditionalSuggestedQueryResults")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -15149,6 +15193,26 @@ func (s GoogleCloudDialogflowV2beta1KnowledgeAssistAnswer) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerAdditionalSuggestedQueryResult struct {
+	SuggestedQuery *GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuery `json:"suggestedQuery,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SuggestedQuery") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SuggestedQuery") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerAdditionalSuggestedQueryResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerAdditionalSuggestedQueryResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswer struct {
 	AnswerText       string                                                                            `json:"answerText,omitempty"`
 	EventSource      *GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerEventSource      `json:"eventSource,omitempty"`
@@ -15258,7 +15322,8 @@ func (s GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerGenerati
 }
 
 type GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuery struct {
-	QueryText string `json:"queryText,omitempty"`
+	QueryText      string                                                                          `json:"queryText,omitempty"`
+	SearchContexts []*GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuerySearchContext `json:"searchContexts,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "QueryText") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -15274,6 +15339,27 @@ type GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuery struct {
 
 func (s GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuery
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuerySearchContext struct {
+	Key   string `json:"key,omitempty"`
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuerySearchContext) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuerySearchContext
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -16045,18 +16131,20 @@ func (s GoogleCloudDialogflowV2beta1SuggestFaqAnswersResponse) MarshalJSON() ([]
 }
 
 type GoogleCloudDialogflowV2beta1SuggestKnowledgeAssistResponse struct {
-	ContextSize           int64                                              `json:"contextSize,omitempty"`
-	KnowledgeAssistAnswer *GoogleCloudDialogflowV2beta1KnowledgeAssistAnswer `json:"knowledgeAssistAnswer,omitempty"`
-	LatestMessage         string                                             `json:"latestMessage,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ContextSize") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	AdditionalSuggestedQueryResults []*GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerAdditionalSuggestedQueryResult `json:"additionalSuggestedQueryResults,omitempty"`
+	ContextSize                     int64                                                                              `json:"contextSize,omitempty"`
+	KnowledgeAssistAnswer           *GoogleCloudDialogflowV2beta1KnowledgeAssistAnswer                                 `json:"knowledgeAssistAnswer,omitempty"`
+	LatestMessage                   string                                                                             `json:"latestMessage,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AdditionalSuggestedQueryResults") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ContextSize") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdditionalSuggestedQueryResults")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

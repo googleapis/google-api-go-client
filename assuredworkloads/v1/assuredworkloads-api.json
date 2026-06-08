@@ -642,6 +642,34 @@
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
+                    "batchAcknowledgeViolations": {
+                      "description": "Acknowledges multiple existing violations. By acknowledging violations, users acknowledge the existence of compliance violations in their workload and decide to ignore them due to a valid business justification. Acknowledgement is a permanent operation and it cannot be reverted. This is a batch version of AcknowledgeViolation.",
+                      "flatPath": "v1/organizations/{organizationsId}/locations/{locationsId}/workloads/{workloadsId}/violations:batchAcknowledgeViolations",
+                      "httpMethod": "POST",
+                      "id": "assuredworkloads.organizations.locations.workloads.violations.batchAcknowledgeViolations",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "Optional. The parent resource shared by all violations being acknowledged. Format: organizations/{organization}/locations/{location}/workloads/{workload}",
+                          "location": "path",
+                          "pattern": "^organizations/[^/]+/locations/[^/]+/workloads/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+parent}/violations:batchAcknowledgeViolations",
+                      "request": {
+                        "$ref": "GoogleCloudAssuredworkloadsV1BatchAcknowledgeViolationsRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudAssuredworkloadsV1BatchAcknowledgeViolationsResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
                     "get": {
                       "description": "Retrieves Assured Workload Violation based on ID.",
                       "flatPath": "v1/organizations/{organizationsId}/locations/{locationsId}/workloads/{workloadsId}/violations/{violationsId}",
@@ -729,7 +757,7 @@
       }
     }
   },
-  "revision": "20260504",
+  "revision": "20260601",
   "rootUrl": "https://assuredworkloads.googleapis.com/",
   "schemas": {
     "GoogleCloudAssuredworkloadsV1AcknowledgeViolationRequest": {
@@ -913,6 +941,44 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "GoogleCloudAssuredworkloadsV1BatchAcknowledgeViolationsRequest": {
+      "description": "Request for acknowledging the violations in a batch",
+      "id": "GoogleCloudAssuredworkloadsV1BatchAcknowledgeViolationsRequest",
+      "properties": {
+        "acknowledgeType": {
+          "description": "Optional. Acknowledge type of specified violations.",
+          "enum": [
+            "ACKNOWLEDGE_TYPE_UNSPECIFIED",
+            "SINGLE_VIOLATION",
+            "EXISTING_CHILD_RESOURCE_VIOLATIONS"
+          ],
+          "enumDescriptions": [
+            "Acknowledge type unspecified.",
+            "Acknowledge only the specific violation.",
+            "Acknowledge specified orgPolicy violation and also associated resource violations."
+          ],
+          "type": "string"
+        },
+        "comment": {
+          "description": "Required. Business justification explaining the need for violations acknowledgement",
+          "type": "string"
+        },
+        "names": {
+          "description": "Required. The resource names of the Violations to acknowledge. Format for each name: organizations/{organization}/locations/{location}/workloads/{workload}/violations/{violation}",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAssuredworkloadsV1BatchAcknowledgeViolationsResponse": {
+      "description": "Response for batch violation acknowledgement",
+      "id": "GoogleCloudAssuredworkloadsV1BatchAcknowledgeViolationsResponse",
+      "properties": {},
       "type": "object"
     },
     "GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata": {

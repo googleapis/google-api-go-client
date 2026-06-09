@@ -530,6 +530,30 @@ func (s *DataSourceParameter) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// DataplexConfiguration: Configuration for Dataplex destination.
+type DataplexConfiguration struct {
+	// EntryGroup: Required. The Dataplex Universal Catalog entry group for
+	// importing the metadata. entry_group has the format of
+	// `projects/{project_id}/locations/{region}/entryGroups/{entry_group_id}`.
+	EntryGroup string `json:"entryGroup,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EntryGroup") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EntryGroup") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataplexConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod DataplexConfiguration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // EmailPreferences: Represents preferences for sending email notifications for
 // transfer run events.
 type EmailPreferences struct {
@@ -876,6 +900,28 @@ func (s Location) MarshalJSON() ([]byte, error) {
 
 // ManualSchedule: Options customizing manual transfers schedule.
 type ManualSchedule struct {
+}
+
+// MetadataDestination: The metadata destination of the transfer config.
+type MetadataDestination struct {
+	// DataplexConfiguration: The Dataplex Universal Catalog configuration.
+	DataplexConfiguration *DataplexConfiguration `json:"dataplexConfiguration,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataplexConfiguration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataplexConfiguration") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MetadataDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod MetadataDestination
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartitionDetail: Partition details related to hierarchy.
@@ -1256,6 +1302,8 @@ type TransferConfig struct {
 	//   "BIGLAKE" - The managed table is a BigQuery table for Apache Iceberg
 	// (formerly BigLake managed tables), with a BigLake configuration.
 	ManagedTableType string `json:"managedTableType,omitempty"`
+	// MetadataDestination: The metadata destination of the transfer config.
+	MetadataDestination *MetadataDestination `json:"metadataDestination,omitempty"`
 	// Name: Identifier. The resource name of the transfer config. Transfer config
 	// names have the form either
 	// `projects/{project_id}/locations/{region}/transferConfigs/{config_id}` or
@@ -1484,6 +1532,9 @@ type TransferRun struct {
 	EndTime string `json:"endTime,omitempty"`
 	// ErrorStatus: Status of the transfer run.
 	ErrorStatus *Status `json:"errorStatus,omitempty"`
+	// MetadataDestination: Output only. The metadata destination of the transfer
+	// run.
+	MetadataDestination *MetadataDestination `json:"metadataDestination,omitempty"`
 	// Name: Identifier. The resource name of the transfer run. Transfer run names
 	// have the form
 	// `projects/{project_id}/locations/{location}/transferConfigs/{config_id}/runs/

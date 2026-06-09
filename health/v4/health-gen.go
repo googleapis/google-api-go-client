@@ -1935,10 +1935,9 @@ type DataPoint struct {
 	// ef` The `{user}` ID is a system-generated identifier, as described in
 	// Identity.health_user_id. The `{data_type}` ID corresponds to the kebab-case
 	// version of the field names in the DataPoint data union field, e.g.
-	// `total-calories` for the `total_calories` field. The `{data_point}` ID can
-	// be client-provided or system-generated. If client-provided, it must be a
-	// string of 4-63 characters, containing only lowercase letters, numbers, and
-	// hyphens.
+	// `heart-rate` for the `heart_rate` field. The `{data_point}` ID can be
+	// client-provided or system-generated. If client-provided, it must be a string
+	// of 4-63 characters, containing only lowercase letters, numbers, and hyphens.
 	Name string `json:"name,omitempty"`
 	// NutritionLog: Optional. Data for points in the `nutrition-log` session data
 	// type collection.
@@ -2459,18 +2458,187 @@ type Exercise struct {
 	//
 	// Possible values:
 	//   "EXERCISE_TYPE_UNSPECIFIED" - Exercise type is unspecified.
-	//   "RUNNING" - Running type.
-	//   "WALKING" - Walking type.
+	//   "AEROBIC_WORKOUT" - Aerobic workout type.
+	//   "ARCHERY" - Archery type.
+	//   "ASSAULT_BIKE" - Assault bike type.
+	//   "BACKPACKING" - Backpacking type.
+	//   "BADMINTON" - Badminton type.
+	//   "BALLET" - Ballet type.
+	//   "BALLROOM_DANCE" - Ballroom dance type.
+	//   "BARRE_CLASS" - Barre class type.
+	//   "BASEBALL" - Baseball type.
+	//   "BASKETBALL" - Basketball type.
 	//   "BIKING" - Biking type.
-	//   "SWIMMING" - Swimming type.
+	//   "BILLIARDS" - Billiards type.
+	//   "BODY_WEIGHT" - Body weight type.
+	//   "BOOTCAMP" - Bootcamp type.
+	//   "BOWLING" - Bowling type.
+	//   "BOXING" - Boxing type.
+	//   "BREAKDANCING" - Breakdancing type.
+	//   "CALISTHENICS" - Calisthenics type.
+	//   "CANOEING" - Canoeing type.
+	//   "CARDIO_SCULPT" - Cardio sculpt type.
+	//   "CARDIO_WORKOUT" - Cardio workout type.
+	//   "CARPENTRY" - Carpentry type.
+	//   "CHEERLEADING" - Cheerleading type.
+	//   "CIRCUIT_TRAINING" - Circuit training type.
+	//   "CLEANING" - Cleaning type.
+	//   "CLIMBING" - Climbing type.
+	//   "CORE_TRAINING" - Core training type.
+	//   "CRICKET" - Cricket type.
+	//   "CROQUET" - Croquet type.
+	//   "CROSS_COUNTRY_SKI" - Cross country ski type.
+	//   "CROSS_TRAINING" - Cross training type.
+	//   "CROSSFIT" - Crossfit type.
+	//   "CURLING" - Curling type.
+	//   "DANCING" - Dancing type.
+	//   "DIVING" - Diving type.
+	//   "ELECTRIC_BIKE" - Electric bike type.
+	//   "ELECTRIC_SCOOTER" - Electric scooter type.
+	//   "ELLIPTICAL" - Elliptical type.
+	//   "EQUESTRIAN_SPORTS" - Equestrian sports type.
+	//   "EXERCISE_CLASS" - Exercise class type.
+	//   "FENCING" - Fencing type.
+	//   "FIELD_HOCKEY" - Field hockey type.
+	//   "FISHING" - Fishing type.
+	//   "FITNESS_GAMING" - Fitness gaming type.
+	//   "FOILING" - Foiling type.
+	//   "FOOTBALL_AMERICAN" - Football american type.
+	//   "FOOTBALL_AUSTRALIAN" - Football australian type.
+	//   "FREE_WEIGHTS" - Free weights type.
+	//   "FRISBEE_PLAYING_GENERAL" - Frisbee playing general type.
+	//   "FUNCTIONAL_STRENGTH_TRAINING" - Functional strength training type.
+	//   "GARDENING" - Gardening type.
+	//   "GOLF" - Golf type.
+	//   "GYMNASTICS" - Gymnastics type.
+	//   "HANDBALL" - Handball type.
+	//   "HAND_CYCLING" - Hand cycling type.
+	//   "HIIT" - Hiit type.
 	//   "HIKING" - Hiking type.
-	//   "YOGA" - Yoga type.
-	//   "PILATES" - Pilates type.
-	//   "WORKOUT" - Workout type.
-	//   "HIIT" - HIIT type.
-	//   "WEIGHTLIFTING" - Weightlifting type.
-	//   "STRENGTH_TRAINING" - Strength training type.
+	//   "HIP_HOP" - Hip hop type.
+	//   "HOCKEY" - Hockey type.
+	//   "HOEING" - Hoeing type.
+	//   "HOUSEHOLD_CHORES" - Household chores type.
+	//   "HUNTING" - Hunting type.
+	//   "ICE_SKATING" - Ice skating type.
+	//   "INCLINE_RUN" - Incline run type.
+	//   "INCLINE_WALK" - Incline walk type.
+	//   "INDOOR_CLIMBING" - Indoor climbing type.
+	//   "INTERVAL_WORKOUT" - Interval workout type.
+	//   "JAZZ_DANCE" - Jazz dance type.
+	//   "JIU_JITSU" - Jiu jitsu type.
+	//   "JUMPING_ROPE" - Jumping rope type.
+	//   "KARATE" - Karate type.
+	//   "KAYAKING" - Kayaking type.
+	//   "KICKBOXING" - Kickboxing type.
+	//   "KITESURFING" - Kitesurfing type.
+	//   "LACROSSE" - Lacrosse type.
+	//   "MARTIAL_ARTS" - Martial arts type.
+	//   "MEDITATE" - Meditate type.
+	//   "MODERN_DANCE" - Modern dance type.
+	//   "MOTOCROSS" - Motocross type.
+	//   "MOTORCYCLE" - Motorcycle type.
+	//   "MOUNTAIN_BIKE" - Mountain bike type.
+	//   "MOWING_LAWN" - Mowing lawn type.
+	//   "MUAY_THAI" - Muay thai type.
+	//   "MULTISPORT" - Multisport type.
+	//   "MUSICAL_PERFORMANCE" - Musical performance type.
+	//   "NORDIC_WALKING" - Nordic walking type.
+	//   "ORIENTEERING" - Orienteering type.
 	//   "OTHER" - Other type.
+	//   "OUTDOOR_BIKE" - Outdoor bike type.
+	//   "OUTDOOR_WORKOUT" - Outdoor workout type.
+	//   "PADDLEBOARDING" - Paddleboarding type.
+	//   "PADEL" - Padel type.
+	//   "PAINTING" - Painting type.
+	//   "PARAGLIDING" - Paragliding type.
+	//   "PARKOUR" - Parkour type.
+	//   "PICKELBALL" - Pickelball type.
+	//   "PILATES" - Pilates type.
+	//   "POLO" - Polo type.
+	//   "POWERLIFTING" - Powerlifting type.
+	//   "POWER_WALKING" - Power walking type.
+	//   "RACKET_SPORTS" - Racket sports type.
+	//   "RACQUETBALL" - Racquetball type.
+	//   "RESISTANCE_BANDS" - Resistance bands type.
+	//   "ROCK_CLIMBING" - Rock climbing type.
+	//   "ROLLERBLADING" - Rollerblading type.
+	//   "ROLLER_SKATING" - Roller skating type.
+	//   "ROWING" - Rowing type.
+	//   "ROWING_MACHINE" - Rowing machine type.
+	//   "RUCKING" - Rucking type.
+	//   "RUGBY" - Rugby type.
+	//   "RUNNING" - Running type.
+	//   "SAILING" - Sailing type.
+	//   "SCOOTERING" - Scootering type.
+	//   "SCUBA_DIVING" - Scuba diving type.
+	//   "SHOOTING" - Shooting type.
+	//   "SHOVELING" - Shoveling type.
+	//   "SKATEBOARDING" - Skateboarding type.
+	//   "SKATING" - Skating type.
+	//   "SKIING" - Skiing type.
+	//   "SKYDIVING" - Skydiving type.
+	//   "SNORKELING" - Snorkeling type.
+	//   "SNOWBOARDING" - Snowboarding type.
+	//   "SNOWMOBILING" - Snowmobiling type.
+	//   "SNOWSHOEING" - Snowshoeing type.
+	//   "SNOW_SPORT" - Snow sport type.
+	//   "SOCCER" - Soccer type.
+	//   "SOFTBALL" - Softball type.
+	//   "SPEED_SKATING" - Speed skating type.
+	//   "SPINNING" - Spinning type.
+	//   "SPORT" - Sport type.
+	//   "SQUASH" - Squash type.
+	//   "STAIRCLIMBER" - Stairclimber type.
+	//   "STATIONARY_BIKE" - Stationary bike type.
+	//   "STEP_TRAINING" - Step training type.
+	//   "STRENGTH_TRAINING" - Strength training type.
+	//   "STRETCHING" - Stretching type.
+	//   "STROLLER_WALK" - Stroller walk type.
+	//   "SURFING" - Surfing type.
+	//   "SWIMMING" - Swimming type.
+	//   "SWIMMING_OPEN_WATER" - Swimming open water type.
+	//   "SWIMMING_POOL" - Swimming pool type.
+	//   "SYNCHRONIZED_SWIMMING" - Synchronized swimming type.
+	//   "TABATA_WORKOUT" - Tabata workout type.
+	//   "TABLE_TENNIS" - Table tennis type.
+	//   "TAEKWONDO" - Taekwondo type.
+	//   "TAI_CHI" - Tai chi type.
+	//   "TANGO" - Tango type.
+	//   "TENNIS" - Tennis type.
+	//   "TRACK_AND_FIELD" - Track and field type.
+	//   "TRAIL_RUN" - Trail run type.
+	//   "TRAMPOLINE" - Trampoline type.
+	//   "TREADMILL" - Treadmill type.
+	//   "TREADMILL_WALK" - Treadmill walk type.
+	//   "TRX" - Trx type.
+	//   "ULTIMATE_FRISBEE" - Ultimate frisbee type.
+	//   "UNICYCLING" - Unicycling type.
+	//   "VOLLEYBALL" - Volleyball type.
+	//   "VOLLEYBALL_BEACH" - Volleyball beach type.
+	//   "WAKEBOARDING" - Wakeboarding type.
+	//   "WALKING" - Walking type.
+	//   "WALK_WITH_WEIGHTS" - Walk with weights type.
+	//   "WATER_AEROBICS" - Water aerobics type.
+	//   "WATER_JOGGING" - Water jogging type.
+	//   "WATER_POLO" - Water polo type.
+	//   "WATER_SKIING" - Water skiing type.
+	//   "WATER_SPORT" - Water sport type.
+	//   "WATER_VOLLEYBALL" - Water volleyball type.
+	//   "WEEDING" - Weeding type.
+	//   "WEIGHTLIFTING" - Weightlifting type.
+	//   "WEIGHT_MACHINES" - Weight machines type.
+	//   "WEIGHTS" - Weights type.
+	//   "WHEELCHAIR" - Wheelchair type.
+	//   "WINDSURFING" - Windsurfing type.
+	//   "WORKOUT" - Workout type.
+	//   "WRESTLING" - Wrestling type.
+	//   "YOGA" - Yoga type.
+	//   "YOGA_BIKRAM" - Yoga bikram type.
+	//   "YOGA_HATHA" - Yoga hatha type.
+	//   "YOGA_POWER" - Yoga power type.
+	//   "YOGA_VINYASA" - Yoga vinyasa type.
+	//   "ZUMBA" - Zumba type.
 	ExerciseType string `json:"exerciseType,omitempty"`
 	// Interval: Required. Observed exercise interval
 	Interval *SessionTimeInterval `json:"interval,omitempty"`
@@ -4370,10 +4538,9 @@ type ReconciledDataPoint struct {
 	// ef` The `{user}` ID is a system-generated identifier, as described in
 	// Identity.health_user_id. The `{data_type}` ID corresponds to the kebab-case
 	// version of the field names in the DataPoint data union field, e.g.
-	// `total-calories` for the `total_calories` field. The `{data_point}` ID can
-	// be client-provided or system-generated. If client-provided, it must be a
-	// string of 4-63 characters, containing only lowercase letters, numbers, and
-	// hyphens.
+	// `heart-rate` for the `heart_rate` field. The `{data_point}` ID can be
+	// client-provided or system-generated. If client-provided, it must be a string
+	// of 4-63 characters, containing only lowercase letters, numbers, and hyphens.
 	DataPointName string `json:"dataPointName,omitempty"`
 	// Distance: Data for points in the `distance` interval data type collection.
 	Distance *Distance `json:"distance,omitempty"`
@@ -8694,10 +8861,10 @@ type UsersDataTypesDataPointsPatchCall struct {
 //     cdef` The `{user}` ID is a system-generated identifier, as described in
 //     Identity.health_user_id. The `{data_type}` ID corresponds to the
 //     kebab-case version of the field names in the DataPoint data union field,
-//     e.g. `total-calories` for the `total_calories` field. The `{data_point}`
-//     ID can be client-provided or system-generated. If client-provided, it must
-//     be a string of 4-63 characters, containing only lowercase letters,
-//     numbers, and hyphens.
+//     e.g. `heart-rate` for the `heart_rate` field. The `{data_point}` ID can be
+//     client-provided or system-generated. If client-provided, it must be a
+//     string of 4-63 characters, containing only lowercase letters, numbers, and
+//     hyphens.
 func (r *UsersDataTypesDataPointsService) Patch(nameid string, datapoint *DataPoint) *UsersDataTypesDataPointsPatchCall {
 	c := &UsersDataTypesDataPointsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid

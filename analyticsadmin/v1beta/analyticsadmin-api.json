@@ -1788,7 +1788,7 @@
       }
     }
   },
-  "revision": "20260331",
+  "revision": "20260607",
   "rootUrl": "https://analyticsadmin.googleapis.com/",
   "schemas": {
     "GoogleAnalyticsAdminV1betaAccessBetweenFilter": {
@@ -3276,6 +3276,10 @@
       "description": "A virtual resource representing metadata for a Google Analytics property.",
       "id": "GoogleAnalyticsAdminV1betaPropertySummary",
       "properties": {
+        "canEdit": {
+          "description": "If true, then the user has a Google Analytics role that permits them to edit the property.",
+          "type": "boolean"
+        },
         "displayName": {
           "description": "Display name for the property referred to in this property summary.",
           "type": "string"

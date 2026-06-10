@@ -2205,6 +2205,42 @@ func (s ChannelStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ChannelToAffiliateProgramLinkDetails: Information specific to a creator in
+// an affiliate program linked to a YouTube channel.
+type ChannelToAffiliateProgramLinkDetails struct {
+	// MerchantId: Required. Google Merchant Center ID of the partner.
+	MerchantId uint64 `json:"merchantId,omitempty,string"`
+	// ProgramStatus: Required. Affiliate program status.
+	//
+	// Possible values:
+	//   "affiliateProgramStatusUnspecified" - Unspecified status.
+	//   "active" - Channel is active in the affiliate program.
+	//   "inactive" - Channel is inactive in the affiliate program.
+	ProgramStatus string `json:"programStatus,omitempty"`
+	// StatusUpdateReason: Optional. Reason for the last update of the affiliate
+	// program status.
+	StatusUpdateReason string `json:"statusUpdateReason,omitempty"`
+	// StatusUpdateTime: Optional. Timestamp when the affiliate program status was
+	// last updated.
+	StatusUpdateTime string `json:"statusUpdateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MerchantId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MerchantId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ChannelToAffiliateProgramLinkDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ChannelToAffiliateProgramLinkDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ChannelToStoreLinkDetails: Information specific to a store on a
 // merchandising platform linked to a YouTube channel.
 type ChannelToStoreLinkDetails struct {
@@ -7201,6 +7237,9 @@ func (s ThirdPartyLinkListResponse) MarshalJSON() ([]byte, error) {
 // ThirdPartyLinkSnippet: Basic information about a third party account link,
 // including its type and type-specific information.
 type ThirdPartyLinkSnippet struct {
+	// ChannelToAffiliateProgramLink: Information specific to a link between a
+	// channel and an affiliate program of a partner.
+	ChannelToAffiliateProgramLink *ChannelToAffiliateProgramLinkDetails `json:"channelToAffiliateProgramLink,omitempty"`
 	// ChannelToStoreLink: Information specific to a link between a channel and a
 	// store on a merchandising platform.
 	ChannelToStoreLink *ChannelToStoreLinkDetails `json:"channelToStoreLink,omitempty"`
@@ -7211,16 +7250,19 @@ type ThirdPartyLinkSnippet struct {
 	//   "channelToStoreLink" - A link that is connecting (or about to connect) a
 	// channel with a store on a merchandising platform in order to enable retail
 	// commerce capabilities for that channel on YouTube.
+	//   "channelToAffiliateProgramLink" - A link that is connecting (or about to
+	// connect) a channel with an affiliate program of a partner to enable that
+	// channel to earn commissions from that partner through affiliate links.
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ChannelToStoreLink") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "ChannelToAffiliateProgramLink") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ChannelToStoreLink") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ChannelToAffiliateProgramLink")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -18150,6 +18192,11 @@ func (c *ThirdPartyLinksListCall) LinkingToken(linkingToken string) *ThirdPartyL
 //
 // channel with a store on a merchandising platform in order to enable retail
 // commerce capabilities for that channel on YouTube.
+//
+//	"channelToAffiliateProgramLink" - A link that is connecting (or about to
+//
+// connect) a channel with an affiliate program of a partner to enable that
+// channel to earn commissions from that partner through affiliate links.
 func (c *ThirdPartyLinksListCall) Type(type_ string) *ThirdPartyLinksListCall {
 	c.urlParams_.Set("type", type_)
 	return c

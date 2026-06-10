@@ -928,7 +928,8 @@
                             "TARGETING_TYPE_YOUTUBE_VIDEO",
                             "TARGETING_TYPE_YOUTUBE_CHANNEL",
                             "TARGETING_TYPE_SESSION_POSITION",
-                            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+                            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+                            "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
                           ],
                           "enumDescriptions": [
                             "Default value when type is not specified or is unknown in this version.",
@@ -980,7 +981,8 @@
                             "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                             "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                             "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-                            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+                            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+                            "Target ads to a specific YouTube channel pack."
                           ],
                           "location": "path",
                           "pattern": "^[^/]+$",
@@ -1086,7 +1088,8 @@
                             "TARGETING_TYPE_YOUTUBE_VIDEO",
                             "TARGETING_TYPE_YOUTUBE_CHANNEL",
                             "TARGETING_TYPE_SESSION_POSITION",
-                            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+                            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+                            "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
                           ],
                           "enumDescriptions": [
                             "Default value when type is not specified or is unknown in this version.",
@@ -1138,7 +1141,8 @@
                             "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                             "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                             "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-                            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+                            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+                            "Target ads to a specific YouTube channel pack."
                           ],
                           "location": "path",
                           "pattern": "^[^/]+$",
@@ -1241,7 +1245,8 @@
                             "TARGETING_TYPE_YOUTUBE_VIDEO",
                             "TARGETING_TYPE_YOUTUBE_CHANNEL",
                             "TARGETING_TYPE_SESSION_POSITION",
-                            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+                            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+                            "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
                           ],
                           "enumDescriptions": [
                             "Default value when type is not specified or is unknown in this version.",
@@ -1293,7 +1298,8 @@
                             "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                             "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                             "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-                            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+                            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+                            "Target ads to a specific YouTube channel pack."
                           ],
                           "location": "path",
                           "pattern": "^[^/]+$",
@@ -1409,7 +1415,8 @@
                             "TARGETING_TYPE_YOUTUBE_VIDEO",
                             "TARGETING_TYPE_YOUTUBE_CHANNEL",
                             "TARGETING_TYPE_SESSION_POSITION",
-                            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+                            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+                            "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
                           ],
                           "enumDescriptions": [
                             "Default value when type is not specified or is unknown in this version.",
@@ -1461,7 +1468,8 @@
                             "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                             "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                             "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-                            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+                            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+                            "Target ads to a specific YouTube channel pack."
                           ],
                           "location": "path",
                           "pattern": "^[^/]+$",
@@ -3051,7 +3059,8 @@
                             "TARGETING_TYPE_YOUTUBE_VIDEO",
                             "TARGETING_TYPE_YOUTUBE_CHANNEL",
                             "TARGETING_TYPE_SESSION_POSITION",
-                            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+                            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+                            "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
                           ],
                           "enumDescriptions": [
                             "Default value when type is not specified or is unknown in this version.",
@@ -3103,7 +3112,8 @@
                             "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                             "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                             "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-                            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+                            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+                            "Target ads to a specific YouTube channel pack."
                           ],
                           "location": "path",
                           "pattern": "^[^/]+$",
@@ -3209,7 +3219,8 @@
                             "TARGETING_TYPE_YOUTUBE_VIDEO",
                             "TARGETING_TYPE_YOUTUBE_CHANNEL",
                             "TARGETING_TYPE_SESSION_POSITION",
-                            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+                            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+                            "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
                           ],
                           "enumDescriptions": [
                             "Default value when type is not specified or is unknown in this version.",
@@ -3261,7 +3272,8 @@
                             "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                             "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                             "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-                            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+                            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+                            "Target ads to a specific YouTube channel pack."
                           ],
                           "location": "path",
                           "pattern": "^[^/]+$",
@@ -3364,7 +3376,8 @@
                             "TARGETING_TYPE_YOUTUBE_VIDEO",
                             "TARGETING_TYPE_YOUTUBE_CHANNEL",
                             "TARGETING_TYPE_SESSION_POSITION",
-                            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+                            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+                            "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
                           ],
                           "enumDescriptions": [
                             "Default value when type is not specified or is unknown in this version.",
@@ -3416,7 +3429,8 @@
                             "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                             "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                             "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-                            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+                            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+                            "Target ads to a specific YouTube channel pack."
                           ],
                           "location": "path",
                           "pattern": "^[^/]+$",
@@ -3532,7 +3546,8 @@
                             "TARGETING_TYPE_YOUTUBE_VIDEO",
                             "TARGETING_TYPE_YOUTUBE_CHANNEL",
                             "TARGETING_TYPE_SESSION_POSITION",
-                            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+                            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+                            "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
                           ],
                           "enumDescriptions": [
                             "Default value when type is not specified or is unknown in this version.",
@@ -3584,7 +3599,8 @@
                             "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                             "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                             "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-                            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+                            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+                            "Target ads to a specific YouTube channel pack."
                           ],
                           "location": "path",
                           "pattern": "^[^/]+$",
@@ -4411,7 +4427,8 @@
                         "TARGETING_TYPE_YOUTUBE_VIDEO",
                         "TARGETING_TYPE_YOUTUBE_CHANNEL",
                         "TARGETING_TYPE_SESSION_POSITION",
-                        "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+                        "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+                        "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
                       ],
                       "enumDescriptions": [
                         "Default value when type is not specified or is unknown in this version.",
@@ -4463,7 +4480,8 @@
                         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-                        "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+                        "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+                        "Target ads to a specific YouTube channel pack."
                       ],
                       "location": "path",
                       "pattern": "^[^/]+$",
@@ -4560,7 +4578,8 @@
                         "TARGETING_TYPE_YOUTUBE_VIDEO",
                         "TARGETING_TYPE_YOUTUBE_CHANNEL",
                         "TARGETING_TYPE_SESSION_POSITION",
-                        "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+                        "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+                        "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
                       ],
                       "enumDescriptions": [
                         "Default value when type is not specified or is unknown in this version.",
@@ -4612,7 +4631,8 @@
                         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-                        "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+                        "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+                        "Target ads to a specific YouTube channel pack."
                       ],
                       "location": "path",
                       "pattern": "^[^/]+$",
@@ -4706,7 +4726,8 @@
                         "TARGETING_TYPE_YOUTUBE_VIDEO",
                         "TARGETING_TYPE_YOUTUBE_CHANNEL",
                         "TARGETING_TYPE_SESSION_POSITION",
-                        "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+                        "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+                        "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
                       ],
                       "enumDescriptions": [
                         "Default value when type is not specified or is unknown in this version.",
@@ -4758,7 +4779,8 @@
                         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-                        "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+                        "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+                        "Target ads to a specific YouTube channel pack."
                       ],
                       "location": "path",
                       "pattern": "^[^/]+$",
@@ -4865,7 +4887,8 @@
                         "TARGETING_TYPE_YOUTUBE_VIDEO",
                         "TARGETING_TYPE_YOUTUBE_CHANNEL",
                         "TARGETING_TYPE_SESSION_POSITION",
-                        "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+                        "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+                        "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
                       ],
                       "enumDescriptions": [
                         "Default value when type is not specified or is unknown in this version.",
@@ -4917,7 +4940,8 @@
                         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-                        "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+                        "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+                        "Target ads to a specific YouTube channel pack."
                       ],
                       "location": "path",
                       "pattern": "^[^/]+$",
@@ -7311,7 +7335,8 @@
                         "TARGETING_TYPE_YOUTUBE_VIDEO",
                         "TARGETING_TYPE_YOUTUBE_CHANNEL",
                         "TARGETING_TYPE_SESSION_POSITION",
-                        "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+                        "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+                        "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
                       ],
                       "enumDescriptions": [
                         "Default value when type is not specified or is unknown in this version.",
@@ -7363,7 +7388,8 @@
                         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-                        "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+                        "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+                        "Target ads to a specific YouTube channel pack."
                       ],
                       "location": "path",
                       "pattern": "^[^/]+$",
@@ -7460,7 +7486,8 @@
                         "TARGETING_TYPE_YOUTUBE_VIDEO",
                         "TARGETING_TYPE_YOUTUBE_CHANNEL",
                         "TARGETING_TYPE_SESSION_POSITION",
-                        "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+                        "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+                        "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
                       ],
                       "enumDescriptions": [
                         "Default value when type is not specified or is unknown in this version.",
@@ -7512,7 +7539,8 @@
                         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-                        "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+                        "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+                        "Target ads to a specific YouTube channel pack."
                       ],
                       "location": "path",
                       "pattern": "^[^/]+$",
@@ -7606,7 +7634,8 @@
                         "TARGETING_TYPE_YOUTUBE_VIDEO",
                         "TARGETING_TYPE_YOUTUBE_CHANNEL",
                         "TARGETING_TYPE_SESSION_POSITION",
-                        "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+                        "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+                        "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
                       ],
                       "enumDescriptions": [
                         "Default value when type is not specified or is unknown in this version.",
@@ -7658,7 +7687,8 @@
                         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-                        "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+                        "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+                        "Target ads to a specific YouTube channel pack."
                       ],
                       "location": "path",
                       "pattern": "^[^/]+$",
@@ -7765,7 +7795,8 @@
                         "TARGETING_TYPE_YOUTUBE_VIDEO",
                         "TARGETING_TYPE_YOUTUBE_CHANNEL",
                         "TARGETING_TYPE_SESSION_POSITION",
-                        "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+                        "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+                        "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
                       ],
                       "enumDescriptions": [
                         "Default value when type is not specified or is unknown in this version.",
@@ -7817,7 +7848,8 @@
                         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-                        "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+                        "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+                        "Target ads to a specific YouTube channel pack."
                       ],
                       "location": "path",
                       "pattern": "^[^/]+$",
@@ -7972,7 +8004,8 @@
                     "TARGETING_TYPE_YOUTUBE_VIDEO",
                     "TARGETING_TYPE_YOUTUBE_CHANNEL",
                     "TARGETING_TYPE_SESSION_POSITION",
-                    "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+                    "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+                    "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
                   ],
                   "enumDescriptions": [
                     "Default value when type is not specified or is unknown in this version.",
@@ -8024,7 +8057,8 @@
                     "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                     "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                     "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-                    "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+                    "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+                    "Target ads to a specific YouTube channel pack."
                   ],
                   "location": "path",
                   "pattern": "^[^/]+$",
@@ -8128,7 +8162,8 @@
                     "TARGETING_TYPE_YOUTUBE_VIDEO",
                     "TARGETING_TYPE_YOUTUBE_CHANNEL",
                     "TARGETING_TYPE_SESSION_POSITION",
-                    "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+                    "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+                    "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
                   ],
                   "enumDescriptions": [
                     "Default value when type is not specified or is unknown in this version.",
@@ -8180,7 +8215,8 @@
                     "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                     "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                     "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-                    "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+                    "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+                    "Target ads to a specific YouTube channel pack."
                   ],
                   "location": "path",
                   "pattern": "^[^/]+$",
@@ -8257,7 +8293,8 @@
                     "TARGETING_TYPE_YOUTUBE_VIDEO",
                     "TARGETING_TYPE_YOUTUBE_CHANNEL",
                     "TARGETING_TYPE_SESSION_POSITION",
-                    "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+                    "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+                    "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
                   ],
                   "enumDescriptions": [
                     "Default value when type is not specified or is unknown in this version.",
@@ -8309,7 +8346,8 @@
                     "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                     "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
                     "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-                    "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+                    "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+                    "Target ads to a specific YouTube channel pack."
                   ],
                   "location": "path",
                   "pattern": "^[^/]+$",
@@ -8508,7 +8546,7 @@
       }
     }
   },
-  "revision": "20260601",
+  "revision": "20260606",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActiveViewVideoViewabilityMetricConfig": {
@@ -10308,7 +10346,8 @@
             "EXCHANGE_SPOTIFY",
             "EXCHANGE_TUBI",
             "EXCHANGE_SNAP",
-            "EXCHANGE_CADENT"
+            "EXCHANGE_CADENT",
+            "EXCHANGE_EXTE"
           ],
           "enumDescriptions": [
             "Exchange is not specified or is unknown in this version.",
@@ -10399,7 +10438,8 @@
             "Spotify.",
             "Tubi.",
             "Snap.",
-            "Cadent."
+            "Cadent.",
+            "Exte."
           ],
           "type": "string"
         },
@@ -11187,7 +11227,8 @@
             "TARGETING_TYPE_YOUTUBE_VIDEO",
             "TARGETING_TYPE_YOUTUBE_CHANNEL",
             "TARGETING_TYPE_SESSION_POSITION",
-            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+            "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
           ],
           "enumDescriptions": [
             "Default value when type is not specified or is unknown in this version.",
@@ -11239,7 +11280,8 @@
             "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
             "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
             "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+            "Target ads to a specific YouTube channel pack."
           ],
           "readOnly": true,
           "type": "string"
@@ -11267,6 +11309,10 @@
         "youtubeChannelDetails": {
           "$ref": "YoutubeChannelAssignedTargetingOptionDetails",
           "description": "YouTube channel details. This field will be populated when the targeting_type is `TARGETING_TYPE_YOUTUBE_CHANNEL`."
+        },
+        "youtubeChannelPackDetails": {
+          "$ref": "YoutubeChannelPackAssignedTargetingOptionDetails",
+          "description": "YouTube channel pack details. This field will be populated when the targeting_type is `TARGETING_TYPE_YOUTUBE_CHANNEL_PACK`."
         },
         "youtubeVideoDetails": {
           "$ref": "YoutubeVideoAssignedTargetingOptionDetails",
@@ -13437,7 +13483,8 @@
             "TARGETING_TYPE_YOUTUBE_VIDEO",
             "TARGETING_TYPE_YOUTUBE_CHANNEL",
             "TARGETING_TYPE_SESSION_POSITION",
-            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+            "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
           ],
           "enumDescriptions": [
             "Default value when type is not specified or is unknown in this version.",
@@ -13489,7 +13536,8 @@
             "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
             "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
             "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+            "Target ads to a specific YouTube channel pack."
           ],
           "type": "string"
         }
@@ -13543,7 +13591,8 @@
             "SDF_VERSION_8_1",
             "SDF_VERSION_9",
             "SDF_VERSION_9_1",
-            "SDF_VERSION_9_2"
+            "SDF_VERSION_9_2",
+            "SDF_VERSION_10"
           ],
           "enumDeprecated": [
             false,
@@ -13562,6 +13611,7 @@
             true,
             true,
             true,
+            false,
             false,
             false,
             false
@@ -13585,7 +13635,8 @@
             "SDF version 8.1.",
             "SDF version 9. Read the [v9 migration guide](/display-video/api/structured-data-file/v9-migration-guide) before migrating to this version.",
             "SDF version 9.1.",
-            "SDF version 9.2."
+            "SDF version 9.2.",
+            "SDF version 10."
           ],
           "type": "string"
         }
@@ -14569,7 +14620,8 @@
             "TARGETING_TYPE_YOUTUBE_VIDEO",
             "TARGETING_TYPE_YOUTUBE_CHANNEL",
             "TARGETING_TYPE_SESSION_POSITION",
-            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+            "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
           ],
           "enumDescriptions": [
             "Default value when type is not specified or is unknown in this version.",
@@ -14621,7 +14673,8 @@
             "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
             "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
             "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+            "Target ads to a specific YouTube channel pack."
           ],
           "type": "string"
         }
@@ -15873,7 +15926,8 @@
             "EXCHANGE_SPOTIFY",
             "EXCHANGE_TUBI",
             "EXCHANGE_SNAP",
-            "EXCHANGE_CADENT"
+            "EXCHANGE_CADENT",
+            "EXCHANGE_EXTE"
           ],
           "enumDescriptions": [
             "Exchange is not specified or is unknown in this version.",
@@ -15964,7 +16018,8 @@
             "Spotify.",
             "Tubi.",
             "Snap.",
-            "Cadent."
+            "Cadent.",
+            "Exte."
           ],
           "type": "string"
         }
@@ -16080,7 +16135,8 @@
             "EXCHANGE_SPOTIFY",
             "EXCHANGE_TUBI",
             "EXCHANGE_SNAP",
-            "EXCHANGE_CADENT"
+            "EXCHANGE_CADENT",
+            "EXCHANGE_EXTE"
           ],
           "enumDescriptions": [
             "Exchange is not specified or is unknown in this version.",
@@ -16171,7 +16227,8 @@
             "Spotify.",
             "Tubi.",
             "Snap.",
-            "Cadent."
+            "Cadent.",
+            "Exte."
           ],
           "type": "string"
         },
@@ -16288,7 +16345,8 @@
             "EXCHANGE_SPOTIFY",
             "EXCHANGE_TUBI",
             "EXCHANGE_SNAP",
-            "EXCHANGE_CADENT"
+            "EXCHANGE_CADENT",
+            "EXCHANGE_EXTE"
           ],
           "enumDescriptions": [
             "Exchange is not specified or is unknown in this version.",
@@ -16379,7 +16437,8 @@
             "Spotify.",
             "Tubi.",
             "Snap.",
-            "Cadent."
+            "Cadent.",
+            "Exte."
           ],
           "type": "string"
         },
@@ -16497,7 +16556,8 @@
             "EXCHANGE_SPOTIFY",
             "EXCHANGE_TUBI",
             "EXCHANGE_SNAP",
-            "EXCHANGE_CADENT"
+            "EXCHANGE_CADENT",
+            "EXCHANGE_EXTE"
           ],
           "enumDescriptions": [
             "Exchange is not specified or is unknown in this version.",
@@ -16588,7 +16648,8 @@
             "Spotify.",
             "Tubi.",
             "Snap.",
-            "Cadent."
+            "Cadent.",
+            "Exte."
           ],
           "readOnly": true,
           "type": "string"
@@ -17538,7 +17599,8 @@
             "EXCHANGE_SPOTIFY",
             "EXCHANGE_TUBI",
             "EXCHANGE_SNAP",
-            "EXCHANGE_CADENT"
+            "EXCHANGE_CADENT",
+            "EXCHANGE_EXTE"
           ],
           "enumDescriptions": [
             "Exchange is not specified or is unknown in this version.",
@@ -17629,7 +17691,8 @@
             "Spotify.",
             "Tubi.",
             "Snap.",
-            "Cadent."
+            "Cadent.",
+            "Exte."
           ],
           "type": "string"
         },
@@ -21214,7 +21277,8 @@
             "SDF_VERSION_8_1",
             "SDF_VERSION_9",
             "SDF_VERSION_9_1",
-            "SDF_VERSION_9_2"
+            "SDF_VERSION_9_2",
+            "SDF_VERSION_10"
           ],
           "enumDeprecated": [
             false,
@@ -21233,6 +21297,7 @@
             true,
             true,
             true,
+            false,
             false,
             false,
             false
@@ -21256,7 +21321,8 @@
             "SDF version 8.1.",
             "SDF version 9. Read the [v9 migration guide](/display-video/api/structured-data-file/v9-migration-guide) before migrating to this version.",
             "SDF version 9.1.",
-            "SDF version 9.2."
+            "SDF version 9.2.",
+            "SDF version 10."
           ],
           "type": "string"
         }
@@ -21309,7 +21375,8 @@
             "SDF_VERSION_8_1",
             "SDF_VERSION_9",
             "SDF_VERSION_9_1",
-            "SDF_VERSION_9_2"
+            "SDF_VERSION_9_2",
+            "SDF_VERSION_10"
           ],
           "enumDeprecated": [
             false,
@@ -21328,6 +21395,7 @@
             true,
             true,
             true,
+            false,
             false,
             false,
             false
@@ -21351,7 +21419,8 @@
             "SDF version 8.1.",
             "SDF version 9. Read the [v9 migration guide](/display-video/api/structured-data-file/v9-migration-guide) before migrating to this version.",
             "SDF version 9.1.",
-            "SDF version 9.2."
+            "SDF version 9.2.",
+            "SDF version 10."
           ],
           "type": "string"
         }
@@ -21913,7 +21982,8 @@
             "TARGETING_TYPE_YOUTUBE_VIDEO",
             "TARGETING_TYPE_YOUTUBE_CHANNEL",
             "TARGETING_TYPE_SESSION_POSITION",
-            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION"
+            "TARGETING_TYPE_CONTENT_THEME_EXCLUSION",
+            "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK"
           ],
           "enumDescriptions": [
             "Default value when type is not specified or is unknown in this version.",
@@ -21965,7 +22035,8 @@
             "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
             "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
             "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API.",
-            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources."
+            "Filter website content by content themes (for example, religion). Only supported for Advertiser resources. Targeting of this type cannot be created or updated using the API. This targeting is only inherited by child YouTube and Demand Gen line item resources.",
+            "Target ads to a specific YouTube channel pack."
           ],
           "readOnly": true,
           "type": "string"
@@ -22884,6 +22955,22 @@
         },
         "negative": {
           "description": "Indicates if this option is being negatively targeted.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "YoutubeChannelPackAssignedTargetingOptionDetails": {
+      "description": "Details for YouTube channel pack assigned targeting option. This will be populated in the youtube_channel_pack_details field when targeting_type is `TARGETING_TYPE_YOUTUBE_CHANNEL_PACK`.",
+      "id": "YoutubeChannelPackAssignedTargetingOptionDetails",
+      "properties": {
+        "channelPackId": {
+          "description": "Required. The ID of the YouTube channel pack.",
+          "format": "int64",
+          "type": "string"
+        },
+        "negative": {
+          "description": "Optional. Indicates if this option is being negatively targeted.",
           "type": "boolean"
         }
       },

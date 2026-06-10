@@ -3362,11 +3362,13 @@
               "description": "Type of the link to be deleted.",
               "enum": [
                 "linkUnspecified",
-                "channelToStoreLink"
+                "channelToStoreLink",
+                "channelToAffiliateProgramLink"
               ],
               "enumDescriptions": [
                 "",
-                "A link that is connecting (or about to connect) a channel with a store on a merchandising platform in order to enable retail commerce capabilities for that channel on YouTube."
+                "A link that is connecting (or about to connect) a channel with a store on a merchandising platform in order to enable retail commerce capabilities for that channel on YouTube.",
+                "A link that is connecting (or about to connect) a channel with an affiliate program of a partner to enable that channel to earn commissions from that partner through affiliate links."
               ],
               "location": "query",
               "required": true,
@@ -3435,11 +3437,13 @@
               "description": "Get a third party link of the given type.",
               "enum": [
                 "linkUnspecified",
-                "channelToStoreLink"
+                "channelToStoreLink",
+                "channelToAffiliateProgramLink"
               ],
               "enumDescriptions": [
                 "",
-                "A link that is connecting (or about to connect) a channel with a store on a merchandising platform in order to enable retail commerce capabilities for that channel on YouTube."
+                "A link that is connecting (or about to connect) a channel with a store on a merchandising platform in order to enable retail commerce capabilities for that channel on YouTube.",
+                "A link that is connecting (or about to connect) a channel with an affiliate program of a partner to enable that channel to earn commissions from that partner through affiliate links."
               ],
               "location": "query",
               "type": "string"
@@ -4188,7 +4192,7 @@
       }
     }
   },
-  "revision": "20260604",
+  "revision": "20260608",
   "rootUrl": "https://youtube.googleapis.com/",
   "schemas": {
     "AbuseReport": {
@@ -5682,6 +5686,41 @@
         },
         "selfDeclaredMadeForKids": {
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "ChannelToAffiliateProgramLinkDetails": {
+      "description": "Information specific to a creator in an affiliate program linked to a YouTube channel.",
+      "id": "ChannelToAffiliateProgramLinkDetails",
+      "properties": {
+        "merchantId": {
+          "description": "Required. Google Merchant Center ID of the partner.",
+          "format": "uint64",
+          "type": "string"
+        },
+        "programStatus": {
+          "description": "Required. Affiliate program status.",
+          "enum": [
+            "affiliateProgramStatusUnspecified",
+            "active",
+            "inactive"
+          ],
+          "enumDescriptions": [
+            "Unspecified status.",
+            "Channel is active in the affiliate program.",
+            "Channel is inactive in the affiliate program."
+          ],
+          "type": "string"
+        },
+        "statusUpdateReason": {
+          "description": "Optional. Reason for the last update of the affiliate program status.",
+          "type": "string"
+        },
+        "statusUpdateTime": {
+          "description": "Optional. Timestamp when the affiliate program status was last updated.",
+          "format": "google-datetime",
+          "type": "string"
         }
       },
       "type": "object"
@@ -11076,6 +11115,10 @@
       "description": "Basic information about a third party account link, including its type and type-specific information.",
       "id": "ThirdPartyLinkSnippet",
       "properties": {
+        "channelToAffiliateProgramLink": {
+          "$ref": "ChannelToAffiliateProgramLinkDetails",
+          "description": "Information specific to a link between a channel and an affiliate program of a partner."
+        },
         "channelToStoreLink": {
           "$ref": "ChannelToStoreLinkDetails",
           "description": "Information specific to a link between a channel and a store on a merchandising platform."
@@ -11084,11 +11127,13 @@
           "description": "Type of the link named after the entities that are being linked.",
           "enum": [
             "linkUnspecified",
-            "channelToStoreLink"
+            "channelToStoreLink",
+            "channelToAffiliateProgramLink"
           ],
           "enumDescriptions": [
             "",
-            "A link that is connecting (or about to connect) a channel with a store on a merchandising platform in order to enable retail commerce capabilities for that channel on YouTube."
+            "A link that is connecting (or about to connect) a channel with a store on a merchandising platform in order to enable retail commerce capabilities for that channel on YouTube.",
+            "A link that is connecting (or about to connect) a channel with an affiliate program of a partner to enable that channel to earn commissions from that partner through affiliate links."
           ],
           "type": "string"
         }

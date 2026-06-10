@@ -4840,7 +4840,7 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
 	// * `disable-canvas-workspace` * `disable-skills` *
 	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
-	// `multi-agent-orchestration`
+	// `multi-agent-orchestration` * `cross-product-intelligence`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -12080,7 +12080,7 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
 	// * `disable-canvas-workspace` * `disable-skills` *
 	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
-	// `multi-agent-orchestration`
+	// `multi-agent-orchestration` * `cross-product-intelligence`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -24350,7 +24350,7 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
 	// * `disable-canvas-workspace` * `disable-skills` *
 	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
-	// `multi-agent-orchestration`
+	// `multi-agent-orchestration` * `cross-product-intelligence`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:

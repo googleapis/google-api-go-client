@@ -586,7 +586,7 @@
       }
     }
   },
-  "revision": "20260604",
+  "revision": "20260607",
   "rootUrl": "https://paymentsresellersubscription.googleapis.com/",
   "schemas": {
     "Amount": {
@@ -668,7 +668,8 @@
           "description": "Optional. The cycle options for the subscription."
         },
         "parent": {
-          "description": "Required. The parent resource name, which is the identifier of the partner.",
+          "deprecated": true,
+          "description": "Optional. Deprecated: Use the `parent` field in `GenerateUserSessionRequest` instead. The parent resource name, which is the identifier of the partner.",
           "type": "string"
         },
         "subscription": {

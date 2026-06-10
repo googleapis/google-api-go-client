@@ -1196,7 +1196,8 @@
                             "VMWARE",
                             "HELM",
                             "GCE_VM",
-                            "AZURE_VM"
+                            "AZURE_VM",
+                            "AWS_EC2"
                           ],
                           "enumDescriptions": [
                             "This value should not be used.",
@@ -1205,7 +1206,8 @@
                             "Monitoring Point that runs in a VMware hypervisor.",
                             "Monitoring Point that runs on a K8S Helm.",
                             "Monitoring Point that runs as a startup script in a Compute Engine VM.",
-                            "Monitoring Point that runs as a startup script in an Azure VM."
+                            "Monitoring Point that runs as a startup script in an Azure VM.",
+                            "Monitoring Point that runs as a startup script in an AWS EC2 instance."
                           ],
                           "location": "query",
                           "type": "string"
@@ -1795,7 +1797,7 @@
       }
     }
   },
-  "revision": "20260527",
+  "revision": "20260603",
   "rootUrl": "https://networkmanagement.googleapis.com/",
   "schemas": {
     "AbortInfo": {

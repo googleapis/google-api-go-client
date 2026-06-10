@@ -8897,6 +8897,10 @@ func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInst
 //	"AZURE_VM" - Monitoring Point that runs as a startup script in an Azure
 //
 // VM.
+//
+//	"AWS_EC2" - Monitoring Point that runs as a startup script in an AWS EC2
+//
+// instance.
 func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) MonitoringPointType(monitoringPointType string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall {
 	c.urlParams_.Set("monitoringPointType", monitoringPointType)
 	return c

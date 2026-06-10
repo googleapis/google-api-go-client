@@ -330,8 +330,9 @@ func (s CancelSubscriptionResponse) MarshalJSON() ([]byte, error) {
 type CreateSubscriptionIntent struct {
 	// CycleOptions: Optional. The cycle options for the subscription.
 	CycleOptions *CycleOptions `json:"cycleOptions,omitempty"`
-	// Parent: Required. The parent resource name, which is the identifier of the
-	// partner.
+	// Parent: Optional. Deprecated: Use the `parent` field in
+	// `GenerateUserSessionRequest` instead. The parent resource name, which is the
+	// identifier of the partner.
 	Parent string `json:"parent,omitempty"`
 	// Subscription: Required. The Subscription to be created.
 	Subscription *Subscription `json:"subscription,omitempty"`

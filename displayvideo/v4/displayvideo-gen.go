@@ -2724,6 +2724,7 @@ type AlgorithmRulesComparisonValue struct {
 	//   "EXCHANGE_TUBI" - Tubi.
 	//   "EXCHANGE_SNAP" - Snap.
 	//   "EXCHANGE_CADENT" - Cadent.
+	//   "EXCHANGE_EXTE" - Exte.
 	ExchangeValue string `json:"exchangeValue,omitempty"`
 	// Int64Value: Integer value.
 	Int64Value int64 `json:"int64Value,omitempty,string"`
@@ -3747,6 +3748,8 @@ type AssignedTargetingOption struct {
 	// resources. Targeting of this type cannot be created or updated using the
 	// API. This targeting is only inherited by child YouTube and Demand Gen line
 	// item resources.
+	//   "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK" - Target ads to a specific YouTube
+	// channel pack.
 	TargetingType string `json:"targetingType,omitempty"`
 	// ThirdPartyVerifierDetails: Third party verification details. This field will
 	// be populated when the targeting_type is
@@ -3769,6 +3772,9 @@ type AssignedTargetingOption struct {
 	// YoutubeChannelDetails: YouTube channel details. This field will be populated
 	// when the targeting_type is `TARGETING_TYPE_YOUTUBE_CHANNEL`.
 	YoutubeChannelDetails *YoutubeChannelAssignedTargetingOptionDetails `json:"youtubeChannelDetails,omitempty"`
+	// YoutubeChannelPackDetails: YouTube channel pack details. This field will be
+	// populated when the targeting_type is `TARGETING_TYPE_YOUTUBE_CHANNEL_PACK`.
+	YoutubeChannelPackDetails *YoutubeChannelPackAssignedTargetingOptionDetails `json:"youtubeChannelPackDetails,omitempty"`
 	// YoutubeVideoDetails: YouTube video details. This field will be populated
 	// when the targeting_type is `TARGETING_TYPE_YOUTUBE_VIDEO`.
 	YoutubeVideoDetails *YoutubeVideoAssignedTargetingOptionDetails `json:"youtubeVideoDetails,omitempty"`
@@ -6828,6 +6834,8 @@ type CreateAssignedTargetingOptionsRequest struct {
 	// resources. Targeting of this type cannot be created or updated using the
 	// API. This targeting is only inherited by child YouTube and Demand Gen line
 	// item resources.
+	//   "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK" - Target ads to a specific YouTube
+	// channel pack.
 	TargetingType string `json:"targetingType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AssignedTargetingOptions")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -6896,6 +6904,7 @@ type CreateSdfDownloadTaskRequest struct {
 	// migrating to this version.
 	//   "SDF_VERSION_9_1" - SDF version 9.1.
 	//   "SDF_VERSION_9_2" - SDF version 9.2.
+	//   "SDF_VERSION_10" - SDF version 10.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8118,6 +8127,8 @@ type DeleteAssignedTargetingOptionsRequest struct {
 	// resources. Targeting of this type cannot be created or updated using the
 	// API. This targeting is only inherited by child YouTube and Demand Gen line
 	// item resources.
+	//   "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK" - Target ads to a specific YouTube
+	// channel pack.
 	TargetingType string `json:"targetingType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AssignedTargetingOptionIds")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -9516,6 +9527,7 @@ type ExchangeAssignedTargetingOptionDetails struct {
 	//   "EXCHANGE_TUBI" - Tubi.
 	//   "EXCHANGE_SNAP" - Snap.
 	//   "EXCHANGE_CADENT" - Cadent.
+	//   "EXCHANGE_EXTE" - Exte.
 	Exchange string `json:"exchange,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -9655,6 +9667,7 @@ type ExchangeConfigEnabledExchange struct {
 	//   "EXCHANGE_TUBI" - Tubi.
 	//   "EXCHANGE_SNAP" - Snap.
 	//   "EXCHANGE_CADENT" - Cadent.
+	//   "EXCHANGE_EXTE" - Exte.
 	Exchange string `json:"exchange,omitempty"`
 	// GoogleAdManagerAgencyId: Output only. Agency ID of Google Ad Manager. The
 	// field is only relevant when Google Ad Manager is the enabled exchange.
@@ -9778,6 +9791,7 @@ type ExchangeReviewStatus struct {
 	//   "EXCHANGE_TUBI" - Tubi.
 	//   "EXCHANGE_SNAP" - Snap.
 	//   "EXCHANGE_CADENT" - Cadent.
+	//   "EXCHANGE_EXTE" - Exte.
 	Exchange string `json:"exchange,omitempty"`
 	// Status: Status of the exchange review.
 	//
@@ -9904,6 +9918,7 @@ type ExchangeTargetingOptionDetails struct {
 	//   "EXCHANGE_TUBI" - Tubi.
 	//   "EXCHANGE_SNAP" - Snap.
 	//   "EXCHANGE_CADENT" - Cadent.
+	//   "EXCHANGE_EXTE" - Exte.
 	Exchange string `json:"exchange,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10871,6 +10886,7 @@ type GuaranteedOrder struct {
 	//   "EXCHANGE_TUBI" - Tubi.
 	//   "EXCHANGE_SNAP" - Snap.
 	//   "EXCHANGE_CADENT" - Cadent.
+	//   "EXCHANGE_EXTE" - Exte.
 	Exchange string `json:"exchange,omitempty"`
 	// GuaranteedOrderId: Output only. The unique identifier of the guaranteed
 	// order. The guaranteed order IDs have the format
@@ -11690,6 +11706,7 @@ type InventorySource struct {
 	//   "EXCHANGE_TUBI" - Tubi.
 	//   "EXCHANGE_SNAP" - Snap.
 	//   "EXCHANGE_CADENT" - Cadent.
+	//   "EXCHANGE_EXTE" - Exte.
 	Exchange string `json:"exchange,omitempty"`
 	// GuaranteedOrderId: Immutable. The ID of the guaranteed order that this
 	// inventory source belongs to. Only applicable when commitment is
@@ -15944,6 +15961,7 @@ type SdfConfig struct {
 	// migrating to this version.
 	//   "SDF_VERSION_9_1" - SDF version 9.1.
 	//   "SDF_VERSION_9_2" - SDF version 9.2.
+	//   "SDF_VERSION_10" - SDF version 10.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdminEmail") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -16028,6 +16046,7 @@ type SdfDownloadTaskMetadata struct {
 	// migrating to this version.
 	//   "SDF_VERSION_9_1" - SDF version 9.1.
 	//   "SDF_VERSION_9_2" - SDF version 9.2.
+	//   "SDF_VERSION_10" - SDF version 10.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -16748,6 +16767,8 @@ type TargetingOption struct {
 	// resources. Targeting of this type cannot be created or updated using the
 	// API. This targeting is only inherited by child YouTube and Demand Gen line
 	// item resources.
+	//   "TARGETING_TYPE_YOUTUBE_CHANNEL_PACK" - Target ads to a specific YouTube
+	// channel pack.
 	TargetingType string `json:"targetingType,omitempty"`
 	// UserRewardedContentDetails: User rewarded content details.
 	UserRewardedContentDetails *UserRewardedContentTargetingOptionDetails `json:"userRewardedContentDetails,omitempty"`
@@ -18198,6 +18219,33 @@ type YoutubeChannelAssignedTargetingOptionDetails struct {
 
 func (s YoutubeChannelAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod YoutubeChannelAssignedTargetingOptionDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// YoutubeChannelPackAssignedTargetingOptionDetails: Details for YouTube
+// channel pack assigned targeting option. This will be populated in the
+// youtube_channel_pack_details field when targeting_type is
+// `TARGETING_TYPE_YOUTUBE_CHANNEL_PACK`.
+type YoutubeChannelPackAssignedTargetingOptionDetails struct {
+	// ChannelPackId: Required. The ID of the YouTube channel pack.
+	ChannelPackId int64 `json:"channelPackId,omitempty,string"`
+	// Negative: Optional. Indicates if this option is being negatively targeted.
+	Negative bool `json:"negative,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChannelPackId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChannelPackId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s YoutubeChannelPackAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod YoutubeChannelPackAssignedTargetingOptionDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

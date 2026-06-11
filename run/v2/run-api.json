@@ -2610,7 +2610,7 @@
       }
     }
   },
-  "revision": "20260529",
+  "revision": "20260603",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "GoogleCloudRunV2BinaryAuthorization": {
@@ -3004,6 +3004,10 @@
         "resources": {
           "$ref": "GoogleCloudRunV2ResourceRequirements",
           "description": "Compute Resource requirements by this container."
+        },
+        "sandboxLauncher": {
+          "description": "Optional. Indicates that this container can act as a sandbox supervisor and launch sandboxes.",
+          "type": "boolean"
         },
         "sourceCode": {
           "$ref": "GoogleCloudRunV2SourceCode",
@@ -4573,6 +4577,11 @@
           "readOnly": true,
           "type": "boolean"
         },
+        "sandboxes": {
+          "$ref": "GoogleCloudRunV2SandboxConfiguration",
+          "description": "Output only. Configuration for sandboxes.",
+          "readOnly": true
+        },
         "satisfiesPzs": {
           "description": "Output only. Reserved for future use.",
           "readOnly": true,
@@ -4764,6 +4773,10 @@
           "description": "Optional. The unique name for the revision. If this field is omitted, it will be automatically generated based on the Service name.",
           "type": "string"
         },
+        "sandboxes": {
+          "$ref": "GoogleCloudRunV2SandboxConfiguration",
+          "description": "Optional. Configuration for sandboxes."
+        },
         "scaling": {
           "$ref": "GoogleCloudRunV2RevisionScaling",
           "description": "Optional. Scaling settings for this Revision."
@@ -4814,6 +4827,20 @@
         "validateOnly": {
           "description": "Indicates that the request should be validated without actually deleting any resources.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudRunV2SandboxConfiguration": {
+      "description": "Configuration for sandboxes.",
+      "id": "GoogleCloudRunV2SandboxConfiguration",
+      "properties": {
+        "templates": {
+          "description": "Required. Container templates that can be launched through the `sandbox` CLI.",
+          "items": {
+            "$ref": "GoogleCloudRunV2Container"
+          },
+          "type": "array"
         }
       },
       "type": "object"

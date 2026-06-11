@@ -115,6 +115,11 @@
     },
     {
       "description": "Regional Endpoint",
+      "endpointUrl": "https://dataform.europe-west15.rep.googleapis.com/",
+      "location": "europe-west15"
+    },
+    {
+      "description": "Regional Endpoint",
       "endpointUrl": "https://dataform.europe-west2.rep.googleapis.com/",
       "location": "europe-west2"
     },
@@ -3276,7 +3281,7 @@
       }
     }
   },
-  "revision": "20260529",
+  "revision": "20260607",
   "rootUrl": "https://dataform.googleapis.com/",
   "schemas": {
     "ActionErrorTable": {

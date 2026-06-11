@@ -220,6 +220,38 @@ func (s AgentOtherDeviceId) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Component: Component of a provider device.
+type Component struct {
+	// ChildComponents: Optional. Child components.
+	ChildComponents []*Component `json:"childComponents,omitempty"`
+	// DeviceTypes: Required. List of Device types associated with this component.
+	// Supported device types are defined in
+	// cs//depot/google3/home/homeservicelayer/uddm/types/uddm_device_types.proto
+	// and the type string is the enum name, for example: ON_OFF_LIGHT =>
+	// "ON_OFF_LIGHT".
+	DeviceTypes []string `json:"deviceTypes,omitempty"`
+	// Id: Required. ID of the component from the device provider.
+	Id string `json:"id,omitempty"`
+	// TraitData: Required. List of trait data associated with the component.
+	TraitData []*TraitData `json:"traitData,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChildComponents") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChildComponents") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Component) MarshalJSON() ([]byte, error) {
+	type NoMethod Component
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ComponentTraitUpdates: Contains the set of updates for a component.
 type ComponentTraitUpdates struct {
 	// ComponentId: Required. ID of the component from the device provider.
@@ -470,6 +502,28 @@ func (s HomeEvents) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// HomeTraitPayload: Container for UDDM trait data associated with a device.
+type HomeTraitPayload struct {
+	// RootComponent: The root component of the device as reported by the provider.
+	RootComponent *Component `json:"rootComponent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RootComponent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RootComponent") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HomeTraitPayload) MarshalJSON() ([]byte, error) {
+	type NoMethod HomeTraitPayload
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // HomeTraitUpdates: Contains the set of updates for a device.
 type HomeTraitUpdates struct {
 	// Components: Required. Trait updates for each component.
@@ -499,6 +553,21 @@ func (s HomeTraitUpdates) MarshalJSON() ([]byte, error) {
 type QueryRequest struct {
 	// AgentUserId: Required. Third-party user ID.
 	AgentUserId string `json:"agentUserId,omitempty"`
+	// DeviceView: Optional. Specifies the type of device data to be returned in
+	// the response. This allows callers to request traditional Smart Home traits,
+	// Unified Device Data Model (UDDM) traits, or both. If unspecified, defaults
+	// to SMART_HOME_TRAIT_ONLY.
+	//
+	// Possible values:
+	//   "DEVICE_VIEW_UNSPECIFIED" - Default value. Equivalent to
+	// SMART_HOME_TRAIT_ONLY.
+	//   "SMART_HOME_TRAIT_ONLY" - Return only standard Smart Home traits in the
+	// `devices` map.
+	//   "HOME_TRAIT_ONLY" - Return only Unified Device Data Model (UDDM) traits in
+	// the `home_trait_payload` map.
+	//   "HOME_TRAIT_AND_SMART_HOME_TRAIT" - Return both standard Smart Home traits
+	// and UDDM traits.
+	DeviceView string `json:"deviceView,omitempty"`
 	// IncludeDeviceMetadata: Optional. If true, the response will include device
 	// metadata in the device_metadata field.
 	IncludeDeviceMetadata bool `json:"includeDeviceMetadata,omitempty"`
@@ -612,6 +681,10 @@ type QueryResponsePayload struct {
 	// Devices: States of the devices. Map of third-party device ID to struct of
 	// device states.
 	Devices map[string]googleapi.RawMessage `json:"devices,omitempty"`
+	// HomeTraitPayload: Map of device IDs to their Unified Device Data Model
+	// (UDDM) trait payloads. This field is populated when `device_view` is set to
+	// HOME_TRAIT_ONLY or HOME_TRAIT_AND_SMART_HOME_TRAIT.
+	HomeTraitPayload map[string]HomeTraitPayload `json:"homeTraitPayload,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DeviceMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -666,12 +739,22 @@ func (s ReportStateAndNotificationDevice) MarshalJSON() ([]byte, error) {
 // ReportStateAndNotificationRequest: Request type for the
 // `ReportStateAndNotification`
 // (#google.home.graph.v1.HomeGraphApiService.ReportStateAndNotification) call.
-// It may include states, notifications, or both. States and notifications are
-// defined per `device_id` (for example, "123" and "456" in the following
-// example). Example: ```json { "requestId":
+// It may include states, notifications, home_traits, home_events, or any
+// combination thereof. Smart Home Device Traits (SHDT) `states` and
+// `notifications` are defined per `device_id` (for example, "123" and "456" in
+// the following example). Google Home Traits `home_traits` and `home_events`
+// are lists of updates or events, each associated with a `device_id` (for
+// example, "789" in the following example). Example: ```json { "requestId":
 // "ff36a3cc-ec34-11e6-b1a0-64510650abcf", "agentUserId": "1234", "payload": {
 // "devices": { "states": { "123": { "on": true }, "456": { "on": true,
-// "brightness": 10 }, }, } } } ```
+// "brightness": 10 }, }, "homeTraits": [ { "deviceId": "789", "components": [
+// { "componentId": "main", "traitData": [ { "trait": { "@type":
+// "type.googleapis.com/home.graph.v1.OnOffTrait", "onOff": true } } ] } ] } ],
+// "homeEvents": [ { "deviceId": "789", "events": [ { "componentId": "main",
+// "events": [ { "eventId": "event-123", "eventTime": "2026-01-01T00:00:00Z",
+// "event": { "@type":
+// "type.googleapis.com/home.graph.v1.DoorbellPressTrait.DoorbellPressedEvent"
+// } } ] } ] } ] } } } ```
 type ReportStateAndNotificationRequest struct {
 	// AgentUserId: Required. Third-party user ID.
 	AgentUserId string `json:"agentUserId,omitempty"`

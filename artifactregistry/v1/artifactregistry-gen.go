@@ -2774,6 +2774,8 @@ type PrewarmArtifactRequest struct {
 	// Force: Optional. If true, old artifact will be evicted to make room for the
 	// new artifact.
 	Force bool `json:"force,omitempty"`
+	// Platform: Optional. The platform (architecture and OS) of the image or tag.
+	Platform *PrewarmPlatform `json:"platform,omitempty"`
 	// RetentionDays: Optional. The retention days of the prewarmed artifact. If
 	// not specified, the artifact will be cached for 3 days.
 	RetentionDays int64 `json:"retentionDays,omitempty,string"`
@@ -2830,7 +2832,34 @@ func (s PrewarmArtifactResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PrewarmedArtifact: PrewarmedArtifact represents a streamed artifact.
+// PrewarmPlatform: The platform (architecture and OS) of the image. This is a
+// sub-message.
+type PrewarmPlatform struct {
+	// Architecture: Optional. The architecture of the image or tag. For example,
+	// "arm64" or "amd64".
+	Architecture string `json:"architecture,omitempty"`
+	// Os: Optional. The OS of the image or tag. For example, "linux" or "windows".
+	Os string `json:"os,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Architecture") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Architecture") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PrewarmPlatform) MarshalJSON() ([]byte, error) {
+	type NoMethod PrewarmPlatform
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PrewarmedArtifact: PrewarmedArtifact represents a streamed artifact. This is
+// not a request message, so field_behavior annotations are not required.
 type PrewarmedArtifact struct {
 	// ExpirationTime: The expiration time of the prewarmed artifact.
 	ExpirationTime string `json:"expirationTime,omitempty"`

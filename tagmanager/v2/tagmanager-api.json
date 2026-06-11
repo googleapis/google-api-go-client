@@ -519,6 +519,7 @@
             "destinations": {
               "methods": {
                 "get": {
+                  "deprecated": true,
                   "description": "Gets a Destination.",
                   "flatPath": "tagmanager/v2/accounts/{accountsId}/containers/{containersId}/destinations/{destinationsId}",
                   "httpMethod": "GET",
@@ -545,6 +546,7 @@
                   ]
                 },
                 "link": {
+                  "deprecated": true,
                   "description": "Adds a Destination to this Container and removes it from the Container to which it is currently linked.",
                   "flatPath": "tagmanager/v2/accounts/{accountsId}/containers/{containersId}/destinations:link",
                   "httpMethod": "POST",
@@ -3986,7 +3988,7 @@
       }
     }
   },
-  "revision": "20260527",
+  "revision": "20260608",
   "rootUrl": "https://tagmanager.googleapis.com/",
   "schemas": {
     "Account": {
@@ -6593,14 +6595,12 @@
           "enum": [
             "decimalSeparatorTypeUnspecified",
             "period",
-            "comma",
-            "automatic"
+            "comma"
           ],
           "enumDescriptions": [
             "",
             "The option to convert a variable value to a number with a period as the decimal separator.",
-            "The option to convert a variable value to a number with a comma as the decimal separator.",
-            "The option to convert a variable value to a number with automatic decimal separator detection."
+            "The option to convert a variable value to a number with a comma as the decimal separator."
           ],
           "type": "string"
         },

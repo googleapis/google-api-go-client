@@ -2586,6 +2586,7 @@ type Membership struct {
 	//   "GROUP" - Represents group type.
 	//   "SHARED_DRIVE" - Represents Shared drive.
 	//   "CBCM_BROWSER" - Represents a CBCM-managed Chrome Browser type.
+	//   "CHROME_OS_DEVICE" - Represents a ChromeOS-managed ChromeOS device type.
 	//   "OTHER" - Represents other type.
 	Type string `json:"type,omitempty"`
 	// UpdateTime: Output only. The time when the `Membership` was last updated.

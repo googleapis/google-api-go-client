@@ -2714,7 +2714,7 @@
       }
     }
   },
-  "revision": "20260522",
+  "revision": "20260603",
   "rootUrl": "https://artifactregistry.googleapis.com/",
   "schemas": {
     "AptArtifact": {
@@ -4395,6 +4395,10 @@
           "description": "Optional. If true, old artifact will be evicted to make room for the new artifact.",
           "type": "boolean"
         },
+        "platform": {
+          "$ref": "PrewarmPlatform",
+          "description": "Optional. The platform (architecture and OS) of the image or tag."
+        },
         "retentionDays": {
           "description": "Optional. The retention days of the prewarmed artifact. If not specified, the artifact will be cached for 3 days.",
           "format": "int64",
@@ -4426,8 +4430,23 @@
       },
       "type": "object"
     },
+    "PrewarmPlatform": {
+      "description": "The platform (architecture and OS) of the image. This is a sub-message.",
+      "id": "PrewarmPlatform",
+      "properties": {
+        "architecture": {
+          "description": "Optional. The architecture of the image or tag. For example, \"arm64\" or \"amd64\".",
+          "type": "string"
+        },
+        "os": {
+          "description": "Optional. The OS of the image or tag. For example, \"linux\" or \"windows\".",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "PrewarmedArtifact": {
-      "description": "PrewarmedArtifact represents a streamed artifact.",
+      "description": "PrewarmedArtifact represents a streamed artifact. This is not a request message, so field_behavior annotations are not required.",
       "id": "PrewarmedArtifact",
       "properties": {
         "expirationTime": {

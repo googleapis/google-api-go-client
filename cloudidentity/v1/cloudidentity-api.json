@@ -2311,7 +2311,7 @@
       }
     }
   },
-  "revision": "20260601",
+  "revision": "20260608",
   "rootUrl": "https://cloudidentity.googleapis.com/",
   "schemas": {
     "AddIdpCredentialOperationMetadata": {
@@ -4142,6 +4142,7 @@
             "GROUP",
             "SHARED_DRIVE",
             "CBCM_BROWSER",
+            "CHROME_OS_DEVICE",
             "OTHER"
           ],
           "enumDescriptions": [
@@ -4151,6 +4152,7 @@
             "Represents group type.",
             "Represents Shared drive.",
             "Represents a CBCM-managed Chrome Browser type.",
+            "Represents a ChromeOS-managed ChromeOS device type.",
             "Represents other type."
           ],
           "readOnly": true,

@@ -307,22 +307,22 @@ type ProjectsLocationsRulesService struct {
 	s *Service
 }
 
-// ActiveDirectory: Active directory details
+// ActiveDirectory: Active Directory details.
 type ActiveDirectory struct {
-	// DnsAddress: Optional. DNS IP address
+	// DnsAddress: Optional. DNS IP address.
 	DnsAddress string `json:"dnsAddress,omitempty"`
-	// Domain: Optional. human readable form of a domain such as “google.com”.
+	// Domain: Optional. Human readable form of a domain such as “google.com”.
 	Domain string `json:"domain,omitempty"`
-	// DomainUsername: Optional. domain username
+	// DomainUsername: Optional. Domain username.
 	DomainUsername string `json:"domainUsername,omitempty"`
-	// SecretManagerSecret: Required. secret_manager_secret
+	// SecretManagerSecret: Required. Secret Manager secret.
 	SecretManagerSecret string `json:"secretManagerSecret,omitempty"`
-	// Type: Required. active directory type
+	// Type: Required. Active Directory type.
 	//
 	// Possible values:
-	//   "ACTIVE_DIRECTORY_TYPE_UNSPECIFIED" - Unspecified active directory type
-	//   "GCP_MANAGED" - GCP managed active directory type
-	//   "SELF_MANAGED" - Self managed active directory type
+	//   "ACTIVE_DIRECTORY_TYPE_UNSPECIFIED" - Unspecified Active Directory type.
+	//   "GCP_MANAGED" - GCP managed Active Directory type.
+	//   "SELF_MANAGED" - Self managed Active Directory type.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DnsAddress") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -345,32 +345,33 @@ func (s ActiveDirectory) MarshalJSON() ([]byte, error) {
 // Actuation: The Actuation object represents the bootstrap state and output
 // results of deployed infrastructure and software.
 type Actuation struct {
-	// ActuationOutput: Output only. [Output only] Actuation output
+	// ActuationOutput: Output only. Actuation output.
 	ActuationOutput *ActuationOutput `json:"actuationOutput,omitempty"`
-	// DeploymentOutput: Output only. [Output only] Deployment output
+	// DeploymentOutput: Output only. Deployment output.
 	DeploymentOutput []*DeploymentOutput `json:"deploymentOutput,omitempty"`
-	// EndTime: Output only. [Output only] End time stamp
+	// EndTime: Output only. End time stamp.
 	EndTime string `json:"endTime,omitempty"`
-	// Name: The name of actuation resource. The format is
+	// Name: The name of the actuation resource. The format is
 	// projects/{project}/locations/{location}/deployments/{deployment}/actuations/{
-	// actuation}
+	// actuation}.
 	Name string `json:"name,omitempty"`
-	// StartTime: Output only. [Output only] Start time stamp
+	// StartTime: Output only. Start time stamp.
 	StartTime string `json:"startTime,omitempty"`
-	// State: Output only. [Output only] Actuation state
+	// State: Output only. Actuation state.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - state unspecified
-	//   "INFRA_CREATING" - creating infrastructure in backend (terraform applying)
-	//   "SUCCEEDED" - success
-	//   "FAILED" - failed either in infra creating, post infra configuring or
-	// infra destroying
-	//   "POST_INFRA_CONFIGURING" - configure workload after infrastructure is
-	// ready (ansible running)
-	//   "INFRA_DESTROYING" - destroying infrastructure in backend (terraform
-	// destroying)
-	//   "TIMEOUT" - ansible is timeout due to losing heartbeat in post infra
-	// configuring
+	//   "STATE_UNSPECIFIED" - State unspecified.
+	//   "INFRA_CREATING" - Creating infrastructure in backend (Terraform
+	// applying).
+	//   "SUCCEEDED" - Success.
+	//   "FAILED" - Failed either in infra creating, post infra configuring, or
+	// infra destroying.
+	//   "POST_INFRA_CONFIGURING" - Configure workload after infrastructure is
+	// ready (Ansible running).
+	//   "INFRA_DESTROYING" - Destroying infrastructure in backend (Terraform
+	// destroying).
+	//   "TIMEOUT" - Ansible timed out due to losing heartbeat in post infra
+	// configuring.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -393,16 +394,16 @@ func (s Actuation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ActuationOutput: Message for output of Actuation
+// ActuationOutput: Message for output of actuation.
 type ActuationOutput struct {
-	// ActuateLogs: A link to gcs file that store build logs
+	// ActuateLogs: A link to the Cloud Storage file that stores build logs.
 	ActuateLogs string `json:"actuateLogs,omitempty"`
-	// AnsibleError: Output only. error message return from ansible.
+	// AnsibleError: Output only. Error message returned from Ansible.
 	AnsibleError string `json:"ansibleError,omitempty"`
-	// AnsibleFailedTask: Output only. failed task name return from ansible.
+	// AnsibleFailedTask: Output only. Failed task name returned from Ansible.
 	AnsibleFailedTask []string `json:"ansibleFailedTask,omitempty"`
-	// BlueprintId: reference to Blueprint Controller deployment and revision
-	// resource
+	// BlueprintId: Reference to the Blueprint Controller deployment and revision
+	// resource.
 	BlueprintId string `json:"blueprintId,omitempty"`
 	// CloudbuildId: Cloud Build instance UUID associated with this revision,
 	// without any suffix or prefix
@@ -412,31 +413,31 @@ type ActuationOutput struct {
 	//
 	// Possible values:
 	//   "ERROR_CODE_UNSPECIFIED" - No error code was specified.
-	//   "TERRAFORM_FAILED" - general terraform failure
-	//   "PERMISSION_DENIED_IN_TERRAFORM" - permission error in terraform
-	//   "QUOTA_EXCEED_IN_TERRAFORM" - quota related error in terraform
-	//   "ANSIBLE_FAILED" - general ansible failure
-	//   "CONSTRAINT_VIOLATION_IN_TERRAFORM" - constraint related error in
-	// terraform
-	//   "RESOURCE_ALREADY_EXISTS_IN_TERRAFORM" - resource already exists error in
-	// terraform
-	//   "RESOURCE_UNAVAILABLE_IN_TERRAFORM" - resource not found error in
-	// terraform
-	//   "PERMISSION_DENIED_IN_ANSIBLE" - permission denied error in ansible
-	//   "INVALID_SECRET_IN_ANSIBLE" - secret related error in ansible
-	//   "TERRAFORM_DELETION_FAILED" - general terraform failure during deletion
-	//   "RESOURCE_IN_USE_IN_TERRAFORM_DELETION" - resource in use error in
-	// terraform deletion
-	//   "ANSIBLE_START_FAILED" - start up failure in ansible
+	//   "TERRAFORM_FAILED" - General Terraform failure.
+	//   "PERMISSION_DENIED_IN_TERRAFORM" - Permission error in Terraform.
+	//   "QUOTA_EXCEED_IN_TERRAFORM" - Quota related error in Terraform.
+	//   "ANSIBLE_FAILED" - General Ansible failure.
+	//   "CONSTRAINT_VIOLATION_IN_TERRAFORM" - Constraint related error in
+	// Terraform.
+	//   "RESOURCE_ALREADY_EXISTS_IN_TERRAFORM" - Resource already exists error in
+	// Terraform.
+	//   "RESOURCE_UNAVAILABLE_IN_TERRAFORM" - Resource not found error in
+	// Terraform.
+	//   "PERMISSION_DENIED_IN_ANSIBLE" - Permission denied error in Ansible.
+	//   "INVALID_SECRET_IN_ANSIBLE" - Secret related error in Ansible.
+	//   "TERRAFORM_DELETION_FAILED" - General Terraform failure during deletion.
+	//   "RESOURCE_IN_USE_IN_TERRAFORM_DELETION" - Resource in use error in
+	// Terraform deletion.
+	//   "ANSIBLE_START_FAILED" - Startup failure in Ansible.
 	ErrorCode string `json:"errorCode,omitempty"`
-	// ErrorLogs: A link to actuation cloud build log.
+	// ErrorLogs: A link to the actuation Cloud Build log.
 	ErrorLogs string `json:"errorLogs,omitempty"`
-	// HasUserFacingErrorMsg: Output only. whether the error message is user
+	// HasUserFacingErrorMsg: Output only. Whether the error message is user
 	// facing. If true, the error message will be shown in the UI.
 	HasUserFacingErrorMsg bool `json:"hasUserFacingErrorMsg,omitempty"`
-	// TerraformError: Output only. error message return from terraform.
+	// TerraformError: Output only. Error message returned from Terraform.
 	TerraformError string `json:"terraformError,omitempty"`
-	// TerraformTemplate: reference to terraform template used
+	// TerraformTemplate: Reference to the Terraform template used.
 	TerraformTemplate string `json:"terraformTemplate,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActuateLogs") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -754,42 +755,42 @@ func (s AgentStatusServiceStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AppDetails: Message for sap instant details
+// AppDetails: Message for SAP instance details.
 type AppDetails struct {
-	// AppInstanceId: Optional. instance id for app
+	// AppInstanceId: Optional. Instance ID for app.
 	AppInstanceId string `json:"appInstanceId,omitempty"`
-	// AppServiceAccount: Application service account - let custoemrs bring their
-	// own SA for application
+	// AppServiceAccount: Application service account. Let customers bring their
+	// own service account for the application.
 	AppServiceAccount string `json:"appServiceAccount,omitempty"`
-	// AppVmNames: Optional. Customized vm names
+	// AppVmNames: Optional. Customized VM names.
 	AppVmNames []string `json:"appVmNames,omitempty"`
-	// AscsImage: Required. image for ascs server
+	// AscsImage: Required. Image for the ASCS server.
 	AscsImage string `json:"ascsImage,omitempty"`
-	// AscsInstanceId: Optional. instance id for ascs
+	// AscsInstanceId: Optional. Instance ID for ASCS.
 	AscsInstanceId string `json:"ascsInstanceId,omitempty"`
-	// AscsMachineType: Required. ascs_machine_type
+	// AscsMachineType: Required. ASCS machine type.
 	AscsMachineType string `json:"ascsMachineType,omitempty"`
-	// AscsServiceAccount: ASCS service account - let custoemrs bring their own SA
-	// for ASCS
+	// AscsServiceAccount: ASCS service account. Let customers bring their own
+	// service account for ASCS.
 	AscsServiceAccount string `json:"ascsServiceAccount,omitempty"`
-	// AscsVm: Optional. ASCS vm name
+	// AscsVm: Optional. ASCS VM name.
 	AscsVm string `json:"ascsVm,omitempty"`
-	// ErsInstanceId: Optional. instance id for ers
+	// ErsInstanceId: Optional. Instance ID for ERS.
 	ErsInstanceId string `json:"ersInstanceId,omitempty"`
-	// ErsVm: Optional. ERS vm name
+	// ErsVm: Optional. ERS VM name.
 	ErsVm string `json:"ersVm,omitempty"`
-	// Image: Required. image for app server and ascs server
+	// Image: Required. Image for the app server and ASCS server.
 	Image string `json:"image,omitempty"`
-	// MachineType: Required. machine type
+	// MachineType: Required. Machine type.
 	MachineType string `json:"machineType,omitempty"`
-	// SecretManagerSecret: Required. secret_manager_secret
+	// SecretManagerSecret: Required. Secret Manager secret.
 	SecretManagerSecret string `json:"secretManagerSecret,omitempty"`
-	// SharedStorage: Optional. Storage location
+	// SharedStorage: Optional. Storage location.
 	SharedStorage string `json:"sharedStorage,omitempty"`
 	// Sid: Required. The SAP SID is a three-digit server-specific unique
 	// identification code.
 	Sid string `json:"sid,omitempty"`
-	// VmsMultiplier: Required. vms_multiplier
+	// VmsMultiplier: Required. VMs multiplier.
 	VmsMultiplier int64 `json:"vmsMultiplier,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppInstanceId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -979,37 +980,37 @@ func (s ComponentHealth) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Database: Database details
+// Database: Database details.
 type Database struct {
-	// DiskType: Required. disk_type
+	// DiskType: Required. Disk type.
 	DiskType string `json:"diskType,omitempty"`
-	// FloatingIpAddress: Optional. only useful for Linux High Availability setup
+	// FloatingIpAddress: Optional. Only useful for Linux High Availability setup.
 	FloatingIpAddress string `json:"floatingIpAddress,omitempty"`
-	// MachineType: Required. machine type
+	// MachineType: Required. Machine type.
 	MachineType string `json:"machineType,omitempty"`
-	// SecondarySoleTenantNode: Optional. the name of a secondary-sole-tenant
-	// node/node group
+	// SecondarySoleTenantNode: Optional. The name of a secondary-sole-tenant
+	// node/node group.
 	SecondarySoleTenantNode string `json:"secondarySoleTenantNode,omitempty"`
-	// SecondarySoleTenantNodeType: Optional. the type of a secondary-sole-tenant
-	// node/node group e.g. compute.googleapis.com/node-name
+	// SecondarySoleTenantNodeType: Optional. The type of a secondary-sole-tenant
+	// node/node group. E.g., compute.googleapis.com/node-name.
 	SecondarySoleTenantNodeType string `json:"secondarySoleTenantNodeType,omitempty"`
-	// SecretManagerSecret: Required. secret_manager_secret
+	// SecretManagerSecret: Required. Secret Manager secret.
 	SecretManagerSecret string `json:"secretManagerSecret,omitempty"`
-	// Smt: Required. whether simultaneous multithreading is enabled or not
+	// Smt: Required. Whether simultaneous multithreading is enabled or not.
 	Smt bool `json:"smt,omitempty"`
-	// SoleTenantNode: Optional. the name of a primary sole-tenant node/node group
+	// SoleTenantNode: Optional. The name of a primary sole-tenant node/node group.
 	SoleTenantNode string `json:"soleTenantNode,omitempty"`
-	// SoleTenantNodeType: Optional. the type of a primary sole-tenant node/node
-	// group e.g. compute.googleapis.com/node-name
+	// SoleTenantNodeType: Optional. The type of a primary sole-tenant node/node
+	// group. E.g., compute.googleapis.com/node-name.
 	SoleTenantNodeType string `json:"soleTenantNodeType,omitempty"`
-	// TempdbOnSsd: Required. whether to have TempDB on local SSD
+	// TempdbOnSsd: Required. Whether to have TempDB on local SSD.
 	TempdbOnSsd bool `json:"tempdbOnSsd,omitempty"`
-	// TenancyModel: Required. SHARED or SOLE_TENANT
+	// TenancyModel: Required. SHARED or SOLE_TENANT.
 	//
 	// Possible values:
-	//   "TENANCY_MODEL_UNSPECIFIED" - Unspecified tenancy model
-	//   "SHARED" - Shared tenancy model
-	//   "SOLE_TENANT" - Sole Tenant tenancy model
+	//   "TENANCY_MODEL_UNSPECIFIED" - Unspecified tenancy model.
+	//   "SHARED" - Shared tenancy model.
+	//   "SOLE_TENANT" - Sole Tenant tenancy model.
 	TenancyModel string `json:"tenancyModel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DiskType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1029,24 +1030,24 @@ func (s Database) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DatabaseDetails: Message for sap instant details
+// DatabaseDetails: Message for SAP instance details.
 type DatabaseDetails struct {
-	// DatabaseServiceAccount: Database service account - let custoemrs bring their
-	// own SA for database
+	// DatabaseServiceAccount: Database service account. Let customers bring their
+	// own SA for the database.
 	DatabaseServiceAccount string `json:"databaseServiceAccount,omitempty"`
-	// DiskType: Required. disk_type
+	// DiskType: Required. Disk type.
 	DiskType string `json:"diskType,omitempty"`
-	// Image: Required. image for database server
+	// Image: Required. Image for the database server.
 	Image string `json:"image,omitempty"`
-	// InstanceId: Optional. instance id
+	// InstanceId: Optional. Instance ID.
 	InstanceId string `json:"instanceId,omitempty"`
-	// MachineType: Required. machine type
+	// MachineType: Required. Machine type.
 	MachineType string `json:"machineType,omitempty"`
-	// PrimaryDbVm: Optional. primary db vm name
+	// PrimaryDbVm: Optional. Primary DB VM name.
 	PrimaryDbVm string `json:"primaryDbVm,omitempty"`
-	// SecondaryDbVm: Optional. secondary db vm name
+	// SecondaryDbVm: Optional. Secondary DB VM name.
 	SecondaryDbVm string `json:"secondaryDbVm,omitempty"`
-	// SecretManagerSecret: Required. secret_manager_secret
+	// SecretManagerSecret: Required. Secret Manager secret.
 	SecretManagerSecret string `json:"secretManagerSecret,omitempty"`
 	// Sid: Required. The SID is a three-digit server-specific unique
 	// identification code.
@@ -1105,22 +1106,22 @@ func (s DatabaseProperties) MarshalJSON() ([]byte, error) {
 // Deployment: The Deployment object represents user intent for deploying a
 // specific type of workload.
 type Deployment struct {
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. Create time stamp.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: Description of the Deployment
+	// Description: Description of the deployment.
 	Description string `json:"description,omitempty"`
-	// Name: The name of deployment resource. The format will be
-	// 'projects/{project_id}/locations/{location_id}/deployments/{deployment_id}'
+	// Name: The name of the deployment resource. The format is
+	// 'projects/{project_id}/locations/{location_id}/deployments/{deployment_id}'.
 	Name string `json:"name,omitempty"`
-	// SapSystemS4Config: SAP system workload input
+	// SapSystemS4Config: SAP system workload input.
 	SapSystemS4Config *SapSystemS4Config `json:"sapSystemS4Config,omitempty"`
 	// ServiceAccount: User-specified Service Account (SA) credentials to be used
-	// for cloud build Format:
+	// for Cloud Build. Format:
 	// `projects/{projectID}/serviceAccounts/{serviceAccount}` The default Cloud
 	// Build SA will be used initially if this field is not set during deployment
-	// creation
+	// creation.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
-	// SqlServerWorkload: MS SQL workload input
+	// SqlServerWorkload: MS SQL workload input.
 	SqlServerWorkload *SqlServerWorkload `json:"sqlServerWorkload,omitempty"`
 	// State: Output only. Current state of the deployment.
 	//
@@ -1139,20 +1140,20 @@ type Deployment struct {
 	// "project_id": { "input_value": { "string_value": "my-project-id" } },
 	// "zone": { "input_value": { "string_value": "us-central1-a" } } }
 	TerraformVariables map[string]TerraformVariable `json:"terraformVariables,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// UpdateTime: Output only. Update time stamp.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// WorkerPool: Optional. The user-specified Cloud Build worker pool resource in
 	// which the Cloud Build job will execute. Format:
 	// `projects/{project}/locations/{location}/workerPools/{workerPoolId}`. If
 	// this field is unspecified, the default Cloud Build worker pool will be used.
 	WorkerPool string `json:"workerPool,omitempty"`
-	// WorkloadType: Optional. Workload type of the deployment
+	// WorkloadType: Optional. Workload type of the deployment.
 	//
 	// Possible values:
-	//   "WORKLOAD_TYPE_UNSPECIFIED" - Unspecified workload type
-	//   "SAP_S4" - SAP S/4HANA workload type
-	//   "SQL_SERVER" - SQL Server workload type
-	//   "ORACLE" - Oracle workload type
+	//   "WORKLOAD_TYPE_UNSPECIFIED" - Unspecified workload type.
+	//   "SAP_S4" - SAP S/4HANA workload type.
+	//   "SQL_SERVER" - SQL Server workload type.
+	//   "ORACLE" - Oracle workload type.
 	WorkloadType string `json:"workloadType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1175,11 +1176,11 @@ func (s Deployment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DeploymentOutput: Message for output of deployment resource
+// DeploymentOutput: Message for output of deployment resource.
 type DeploymentOutput struct {
-	// Name: name of the resource
+	// Name: Name of the resource.
 	Name string `json:"name,omitempty"`
-	// Type: type of the resource
+	// Type: Type of the resource.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1592,7 +1593,7 @@ func (s InstanceProperties) MarshalJSON() ([]byte, error) {
 
 // ListActuationsResponse: The response object from `ListActuations`.
 type ListActuationsResponse struct {
-	// Actuations: The list of Actuation
+	// Actuations: The list of actuations.
 	Actuations []*Actuation `json:"actuations,omitempty"`
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
 	// next page. If this field is omitted, there are no subsequent pages.
@@ -1620,9 +1621,9 @@ func (s ListActuationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListDeploymentsResponse: Message for response to listing Deployments
+// ListDeploymentsResponse: Message for response to listing deployments.
 type ListDeploymentsResponse struct {
-	// Deployments: The list of Deployment
+	// Deployments: The list of deployments.
 	Deployments []*Deployment `json:"deployments,omitempty"`
 	// NextPageToken: A token identifying a page of results the server should
 	// return.
@@ -1923,37 +1924,38 @@ func (s Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// LocationDetails: Message for sap instant details
+// LocationDetails: Message for SAP instance details.
 type LocationDetails struct {
-	// CreateCommsFirewall: Optional. create firewall, if true, create firewall for
-	// the deployment. This field provides an option to not always create firewall
-	// for the deployment.
+	// CreateCommsFirewall: Optional. Create firewall. If true, creates a firewall
+	// for the deployment. This field provides an option to not always create a
+	// firewall for the deployment.
 	CreateCommsFirewall bool `json:"createCommsFirewall,omitempty"`
-	// CustomTags: Optional. network tags
+	// CustomTags: Optional. Network tags.
 	CustomTags []string `json:"customTags,omitempty"`
-	// DeploymentDnsEnabled: Optional. when user skip DNS configuration from UI,
-	// deployment_dns_enabled=false otherwise deployment_dns_enabled=true
+	// DeploymentDnsEnabled: Optional. When the user skips DNS configuration in the
+	// UI, `deployment_dns_enabled` is false; otherwise `deployment_dns_enabled` is
+	// true.
 	DeploymentDnsEnabled bool `json:"deploymentDnsEnabled,omitempty"`
-	// DnsZone: Optional. dns zone name
+	// DnsZone: Optional. DNS zone name.
 	DnsZone string `json:"dnsZone,omitempty"`
-	// DnsZoneNameSuffix: Optional. dns_zone_name_suffix
+	// DnsZoneNameSuffix: Optional. DNS zone name suffix.
 	DnsZoneNameSuffix string `json:"dnsZoneNameSuffix,omitempty"`
 	// Possible values:
 	//   "INTERNETACCESS_UNSPECIFIED"
 	//   "ALLOW_EXTERNAL_IP"
 	//   "CONFIGURE_NAT"
 	InternetAccess string `json:"internetAccess,omitempty"`
-	// NetworkProject: Optional. network project
+	// NetworkProject: Optional. Network project.
 	NetworkProject string `json:"networkProject,omitempty"`
-	// RegionName: Required. region_name
+	// RegionName: Required. Region name.
 	RegionName string `json:"regionName,omitempty"`
-	// SubnetName: Required. subnet_name
+	// SubnetName: Required. Subnet name.
 	SubnetName string `json:"subnetName,omitempty"`
-	// VpcName: Required. vpc_name
+	// VpcName: Required. VPC name.
 	VpcName string `json:"vpcName,omitempty"`
-	// Zone1Name: Required. zone1_name
+	// Zone1Name: Required. Zone 1 name.
 	Zone1Name string `json:"zone1Name,omitempty"`
-	// Zone2Name: Optional. zone2_name
+	// Zone2Name: Optional. Zone 2 name.
 	Zone2Name string `json:"zone2Name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateCommsFirewall") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2107,19 +2109,19 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Pacemaker: pacemaker configuration
+// Pacemaker: Pacemaker configuration.
 type Pacemaker struct {
-	// BucketNameNodeCertificates: Required. bucket location for node certificates
+	// BucketNameNodeCertificates: Required. Bucket location for node certificates.
 	BucketNameNodeCertificates string `json:"bucketNameNodeCertificates,omitempty"`
-	// PacemakerCluster: Required. pacemaker cluster name
+	// PacemakerCluster: Required. Pacemaker cluster name.
 	PacemakerCluster string `json:"pacemakerCluster,omitempty"`
-	// PacemakerClusterSecret: Required. pacemaker cluster secret name
+	// PacemakerClusterSecret: Required. Pacemaker cluster secret name.
 	PacemakerClusterSecret string `json:"pacemakerClusterSecret,omitempty"`
-	// PacemakerClusterUsername: Required. pacemaker cluster username
+	// PacemakerClusterUsername: Required. Pacemaker cluster username.
 	PacemakerClusterUsername string `json:"pacemakerClusterUsername,omitempty"`
-	// SqlPacemakerSecret: Required. sql pacemaker secret name
+	// SqlPacemakerSecret: Required. SQL Pacemaker secret name.
 	SqlPacemakerSecret string `json:"sqlPacemakerSecret,omitempty"`
-	// SqlPacemakerUsername: Required. sql pacemaker username
+	// SqlPacemakerUsername: Required. SQL Pacemaker username.
 	SqlPacemakerUsername string `json:"sqlPacemakerUsername,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BucketNameNodeCertificates")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -3013,49 +3015,49 @@ func (s SapInstanceProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SapSystemS4Config: Message for sap system workload
+// SapSystemS4Config: Message for SAP system workload.
 type SapSystemS4Config struct {
 	AllowStoppingForUpdate bool `json:"allowStoppingForUpdate,omitempty"`
-	// AnsibleRunnerServiceAccount: Ansible runner service account - let custoemrs
-	// bring their own SA for Ansible runner
+	// AnsibleRunnerServiceAccount: Ansible runner service account. Let customers
+	// bring their own service account for the Ansible runner.
 	AnsibleRunnerServiceAccount string `json:"ansibleRunnerServiceAccount,omitempty"`
-	// App: instance details
+	// App: Instance details.
 	App *AppDetails `json:"app,omitempty"`
-	// Database: database details
+	// Database: Database details.
 	Database *DatabaseDetails `json:"database,omitempty"`
-	// DeploymentModel: Required. two model non-HA and HA supported
+	// DeploymentModel: Required. Supports non-HA and HA models.
 	//
 	// Possible values:
 	//   "DEPLOYMENT_MODEL_UNSPECIFIED"
 	//   "DISTRIBUTED"
 	//   "DISTRIBUTED_HA"
 	DeploymentModel string `json:"deploymentModel,omitempty"`
-	// EnvironmentType: Required. deployment environment
+	// EnvironmentType: Required. Deployment environment.
 	//
 	// Possible values:
-	//   "ENVIRONMENT_TYPE_UNSPECIFIED" - Unspecified environment type
-	//   "NON_PRODUCTION" - Non-production environment type
-	//   "PRODUCTION" - Production environment type
+	//   "ENVIRONMENT_TYPE_UNSPECIFIED" - Unspecified environment type.
+	//   "NON_PRODUCTION" - Non-production environment type.
+	//   "PRODUCTION" - Production environment type.
 	EnvironmentType string `json:"environmentType,omitempty"`
-	// GcpProjectId: the project that infrastructure deployed, current only support
-	// the same project where the deployment resource exist.
+	// GcpProjectId: The project that infrastructure is deployed in. Currently only
+	// supports the same project where the deployment resource exists.
 	GcpProjectId string `json:"gcpProjectId,omitempty"`
-	// Location: database details
+	// Location: Database details.
 	Location *LocationDetails `json:"location,omitempty"`
-	// MediaBucketName: Required. media_bucket_name
+	// MediaBucketName: Required. Media bucket name.
 	MediaBucketName string `json:"mediaBucketName,omitempty"`
-	// SapBootDiskImage: Optional. sap_boot_disk_image
+	// SapBootDiskImage: Optional. SAP boot disk image.
 	SapBootDiskImage string `json:"sapBootDiskImage,omitempty"`
-	// ScalingMethod: Required. support scale up and scale out
+	// ScalingMethod: Required. Supports scale up and scale out.
 	//
 	// Possible values:
 	//   "SCALE_METHOD_UNSPECIFIED"
 	//   "SCALE_UP" - Scale up: Increases the size of a physical machine by
-	// increasing the amount of RAM and CPU available for processing
+	// increasing the amount of RAM and CPU available for processing.
 	//   "SCALE_OUT" - Scale out: Combines multiple independent computers into one
-	// system
+	// system.
 	ScalingMethod string `json:"scalingMethod,omitempty"`
-	// Version: Required. sap hana version
+	// Version: Required. SAP HANA version.
 	//
 	// Possible values:
 	//   "VERSION_UNSPECIFIED"
@@ -3063,7 +3065,7 @@ type SapSystemS4Config struct {
 	//   "S4_HANA_2022"
 	//   "S4_HANA_2023"
 	Version string `json:"version,omitempty"`
-	// VmPrefix: vm_prefix
+	// VmPrefix: VM prefix.
 	VmPrefix string `json:"vmPrefix,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowStoppingForUpdate") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3285,35 +3287,36 @@ func (s ShellCommand) MarshalJSON() ([]byte, error) {
 }
 
 // SqlLocationDetails: Location and networking details for configuring SQL
-// server workload
+// server workload.
 type SqlLocationDetails struct {
-	// DnsZone: Optional. create a new DNS Zone when the field is empty, Only show
-	// for `Using an existing DNS` List of existing DNS Zones tf variable name:
-	// existing_dns_zone_name
+	// DnsZone: Optional. Create a new DNS zone when the field is empty. Only shown
+	// for `Using an existing DNS`. List of existing DNS zones. Terraform variable
+	// name: existing_dns_zone_name.
 	DnsZone string `json:"dnsZone,omitempty"`
-	// GcpProjectId: Required. the project that infrastructure deployed, currently
-	// only supports the same project where the deployment resource exists.
+	// GcpProjectId: Required. The project that infrastructure is deployed in.
+	// Currently only supports the same project where the deployment resource
+	// exists.
 	GcpProjectId string `json:"gcpProjectId,omitempty"`
-	// InternetAccess: Required. Internet Access
+	// InternetAccess: Required. Internet Access.
 	//
 	// Possible values:
-	//   "INTERNET_ACCESS_UNSPECIFIED" - Unspecified internet access
-	//   "ALLOW_EXTERNAL_IP" - Allow external IP
-	//   "CONFIGURE_NAT" - Configure NAT
+	//   "INTERNET_ACCESS_UNSPECIFIED" - Unspecified internet access.
+	//   "ALLOW_EXTERNAL_IP" - Allow external IP.
+	//   "CONFIGURE_NAT" - Configure NAT.
 	InternetAccess string `json:"internetAccess,omitempty"`
-	// Network: Required. network name
+	// Network: Required. Network name.
 	Network string `json:"network,omitempty"`
-	// PrimaryZone: Required. primary zone
+	// PrimaryZone: Required. Primary zone.
 	PrimaryZone string `json:"primaryZone,omitempty"`
-	// Region: Required. region name
+	// Region: Required. Region name.
 	Region string `json:"region,omitempty"`
-	// SecondaryZone: Optional. secondary zone can't be same as primary_zone and is
-	// only for High Availability deployment mode
+	// SecondaryZone: Optional. Secondary zone cannot be the same as primary_zone
+	// and is only for High Availability deployment mode.
 	SecondaryZone string `json:"secondaryZone,omitempty"`
-	// Subnetwork: Required. subnetwork name
+	// Subnetwork: Required. Subnetwork name.
 	Subnetwork string `json:"subnetwork,omitempty"`
-	// TertiaryZone: Optional. teriary zone can't be same as primary_zone and
-	// secondary zone, and it is only for High Availability deployment mode
+	// TertiaryZone: Optional. Tertiary zone cannot be the same as primary_zone and
+	// secondary_zone, and it is only for High Availability deployment mode.
 	TertiaryZone string `json:"tertiaryZone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DnsZone") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3333,95 +3336,95 @@ func (s SqlLocationDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SqlServerWorkload: Message for MS SQL workload
+// SqlServerWorkload: Message for MS SQL workload.
 type SqlServerWorkload struct {
-	// ActiveDirectory: Required. active directory details
+	// ActiveDirectory: Required. Active Directory details.
 	ActiveDirectory *ActiveDirectory `json:"activeDirectory,omitempty"`
-	// ComputeEngineServiceAccount: Compute engine service account - let customers
-	// bring their own SA for Compute engine
+	// ComputeEngineServiceAccount: Compute Engine service account. Let customers
+	// bring their own service account for Compute Engine.
 	ComputeEngineServiceAccount string `json:"computeEngineServiceAccount,omitempty"`
-	// Database: Required. database details
+	// Database: Required. Database details.
 	Database *Database `json:"database,omitempty"`
-	// DeploymentModel: Required. HIGH_AVAILABILITY or SINGLE_INSTANCE
+	// DeploymentModel: Required. HIGH_AVAILABILITY or SINGLE_INSTANCE.
 	//
 	// Possible values:
-	//   "DEPLOYMENT_MODEL_UNSPECIFIED" - Unspecified deployment model
-	//   "HIGH_AVAILABILITY" - High Availability deployment model
-	//   "SINGLE_INSTANCE" - Single Instance deployment model
+	//   "DEPLOYMENT_MODEL_UNSPECIFIED" - Unspecified deployment model.
+	//   "HIGH_AVAILABILITY" - High Availability deployment model.
+	//   "SINGLE_INSTANCE" - Single instance deployment model.
 	DeploymentModel string `json:"deploymentModel,omitempty"`
-	// EnvironmentType: Required. deployment environment
+	// EnvironmentType: Required. Deployment environment.
 	//
 	// Possible values:
-	//   "ENVIRONMENT_TYPE_UNSPECIFIED" - Unspecified environment type
-	//   "NON_PRODUCTION" - Non-production environment type
-	//   "PRODUCTION" - Production environment type
+	//   "ENVIRONMENT_TYPE_UNSPECIFIED" - Unspecified environment type.
+	//   "NON_PRODUCTION" - Non-production environment type.
+	//   "PRODUCTION" - Production environment type.
 	EnvironmentType string `json:"environmentType,omitempty"`
-	// FciType: Optional. SHARED_DISK or S2D
+	// FciType: Optional. SHARED_DISK or S2D.
 	//
 	// Possible values:
-	//   "FCI_TYPE_UNSPECIFIED" - Unspecified FCI type
-	//   "SHARED_DISK" - SHARED DISK FCI type
-	//   "S2D" - S2D FCI type
+	//   "FCI_TYPE_UNSPECIFIED" - Unspecified FCI type.
+	//   "SHARED_DISK" - SHARED DISK FCI type.
+	//   "S2D" - S2D FCI type.
 	FciType string `json:"fciType,omitempty"`
-	// HaType: Optional. AOAG or FCI, it is only needed for High Availability
-	// deployment mode
+	// HaType: Optional. AOAG or FCI. It is only needed for the High Availability
+	// deployment mode.
 	//
 	// Possible values:
-	//   "HA_TYPE_UNSPECIFIED" - Unspecified HA type
-	//   "AOAG" - AOAG HA type
-	//   "FCI" - FCI HA type
+	//   "HA_TYPE_UNSPECIFIED" - Unspecified HA type.
+	//   "AOAG" - AOAG HA type.
+	//   "FCI" - FCI HA type.
 	HaType string `json:"haType,omitempty"`
-	// IsSqlPayg: Required. SQL licensing type
+	// IsSqlPayg: Required. SQL licensing type.
 	IsSqlPayg bool `json:"isSqlPayg,omitempty"`
-	// Location: Required. location details
+	// Location: Required. Location details.
 	Location *SqlLocationDetails `json:"location,omitempty"`
-	// MediaBucket: Required. name of the media storing SQL server installation
-	// files
+	// MediaBucket: Required. Name of the media storing SQL server installation
+	// files.
 	MediaBucket string `json:"mediaBucket,omitempty"`
-	// OperatingSystemType: Required. type of the operating system the SQL server
-	// is going to run on top of
+	// OperatingSystemType: Required. The type of the operating system the SQL
+	// server is going to run on top of.
 	//
 	// Possible values:
-	//   "OPERATING_SYSTEM_TYPE_UNSPECIFIED" - Unspecified operating system type
-	//   "WINDOWS" - Windows operating system type
-	//   "UBUNTU" - Ubuntu operating system type
+	//   "OPERATING_SYSTEM_TYPE_UNSPECIFIED" - Unspecified operating system type.
+	//   "WINDOWS" - Windows operating system type.
+	//   "UBUNTU" - Ubuntu operating system type.
 	//   "RED_HAT_ENTERPRISE_LINUX" - Red Hat Enterprise Linux operating system
-	// type
-	//   "SUSE" - Suse operating system type
+	// type.
+	//   "SUSE" - SUSE operating system type.
 	OperatingSystemType string `json:"operatingSystemType,omitempty"`
-	// OsImage: Required. the image of the operating system
+	// OsImage: Required. The image of the operating system.
 	OsImage string `json:"osImage,omitempty"`
-	// OsImageType: Optional. OS image type, it's used to create boot disks for VM
-	// instances When either Windows licensing type or SQL licensing type is BYOL,
-	// this option is disabled and default to custom image
+	// OsImageType: Optional. OS image type. It's used to create boot disks for VM
+	// instances. When either Windows licensing type or SQL licensing type is BYOL,
+	// this option is disabled and defaults to a custom image.
 	//
 	// Possible values:
-	//   "OS_IMAGE_TYPE_UNSPECIFIED" - Unspecified OS image type
-	//   "PUBLIC_IMAGE" - Public image
-	//   "CUSTOM_IMAGE" - Custom image
+	//   "OS_IMAGE_TYPE_UNSPECIFIED" - Unspecified OS image type.
+	//   "PUBLIC_IMAGE" - Public image.
+	//   "CUSTOM_IMAGE" - Custom image.
 	OsImageType string `json:"osImageType,omitempty"`
-	// Pacemaker: Optional. pacemaker configuration, only applicable for Linux HA
-	// deployments
+	// Pacemaker: Optional. Pacemaker configuration, only applicable for Linux HA
+	// deployments.
 	Pacemaker *Pacemaker `json:"pacemaker,omitempty"`
 	// SqlServerEdition: Optional. SQL Server Edition type, only applicable when
-	// Operating System is Linux
+	// the operating system is Linux.
 	//
 	// Possible values:
-	//   "SQL_SERVER_EDITION_TYPE_UNSPECIFIED" - Unspecified type
-	//   "SQL_SERVER_EDITION_TYPE_DEVELOPER" - Developer type
-	//   "SQL_SERVER_EDITION_TYPE_ENTERPRISE" - Enterprise type
-	//   "SQL_SERVER_EDITION_TYPE_STANDARD" - Standard type
-	//   "SQL_SERVER_EDITION_TYPE_WEB" - Web type
+	//   "SQL_SERVER_EDITION_TYPE_UNSPECIFIED" - Unspecified type.
+	//   "SQL_SERVER_EDITION_TYPE_DEVELOPER" - Developer type.
+	//   "SQL_SERVER_EDITION_TYPE_ENTERPRISE" - Enterprise type.
+	//   "SQL_SERVER_EDITION_TYPE_STANDARD" - Standard type.
+	//   "SQL_SERVER_EDITION_TYPE_WEB" - Web type.
 	SqlServerEdition string `json:"sqlServerEdition,omitempty"`
-	// SqlServerVersion: Optional. 2017 or 2019 or 2022
+	// SqlServerVersion: Optional. 2017, 2019, or 2022.
 	//
 	// Possible values:
-	//   "SQL_SERVER_VERSION_TYPE_UNSPECIFIED" - Unspecified type
-	//   "SQL_SERVER_VERSION_TYPE_2017" - 2017 type
-	//   "SQL_SERVER_VERSION_TYPE_2019" - 2019 type
-	//   "SQL_SERVER_VERSION_TYPE_2022" - 2022 type
+	//   "SQL_SERVER_VERSION_TYPE_UNSPECIFIED" - Unspecified type.
+	//   "SQL_SERVER_VERSION_TYPE_2017" - 2017 type.
+	//   "SQL_SERVER_VERSION_TYPE_2019" - 2019 type.
+	//   "SQL_SERVER_VERSION_TYPE_2022" - 2022 type.
 	SqlServerVersion string `json:"sqlServerVersion,omitempty"`
-	// VmPrefix: Required. should be unique in the project
+	// VmPrefix: Required. Should be unique in the project.
 	VmPrefix string `json:"vmPrefix,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActiveDirectory") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3600,10 +3603,10 @@ func (s Summary) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// TerraformVariable: In order to align with Infra Manager dependency, we
+// TerraformVariable: In order to align with the Infra Manager dependency, we
 // create the same TerraformVariable message to represent a Terraform input
 // variable, by following Infra Manager's API documentation:
-// https://cloud.google.com/infrastructure-manager/docs/reference/rest A
+// https://cloud.google.com/infrastructure-manager/docs/reference/rest. A
 // Terraform input variable.
 type TerraformVariable struct {
 	// InputValue: Optional. Input variable value.
@@ -4145,8 +4148,8 @@ func (r *ProjectsLocationsDeploymentsService) Create(parent string, deployment *
 	return c
 }
 
-// DeploymentId sets the optional parameter "deploymentId": Required. Id of the
-// deployment
+// DeploymentId sets the optional parameter "deploymentId": Required. ID of the
+// deployment.
 func (c *ProjectsLocationsDeploymentsCreateCall) DeploymentId(deploymentId string) *ProjectsLocationsDeploymentsCreateCall {
 	c.urlParams_.Set("deploymentId", deploymentId)
 	return c
@@ -4270,8 +4273,8 @@ func (r *ProjectsLocationsDeploymentsService) Delete(name string) *ProjectsLocat
 }
 
 // Force sets the optional parameter "force": If set to true, any actuation
-// will also be deleted. Followed the best practice from
-// https://aip.dev/135#cascading-delete
+// will also be deleted. Follows the best practice from
+// https://aip.dev/135#cascading-delete.
 func (c *ProjectsLocationsDeploymentsDeleteCall) Force(force bool) *ProjectsLocationsDeploymentsDeleteCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c
@@ -4368,8 +4371,9 @@ type ProjectsLocationsDeploymentsGetCall struct {
 
 // Get: Gets details of a single Deployment.
 //
-//   - name: Name of the resource. The format will be
-//     'projects/{project_id}/locations/{location_id}/deployments/{deployment_id}'.
+//   - name: Name of the resource. The format is
+//     'projects/{project_id}/locations/{location_id}/deployments/{deployment_id}'
+//     .
 func (r *ProjectsLocationsDeploymentsService) Get(name string) *ProjectsLocationsDeploymentsGetCall {
 	c := &ProjectsLocationsDeploymentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4486,8 +4490,8 @@ func (r *ProjectsLocationsDeploymentsService) List(parent string) *ProjectsLocat
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter resource follow
-// https://google.aip.dev/160
+// Filter sets the optional parameter "filter": Filter resource following
+// https://google.aip.dev/160.
 func (c *ProjectsLocationsDeploymentsListCall) Filter(filter string) *ProjectsLocationsDeploymentsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4756,11 +4760,11 @@ type ProjectsLocationsDeploymentsActuationsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single Actuation
+// Delete: Deletes a single Actuation.
 //
-//   - name: The name of the book to delete.
-//     project/{project_id}/locations/{location_id}/deployments/{deployment_id}/ac
-//     tuations/{actuation_id}.
+//   - name: The name of the actuation to delete.
+//     projects/{project}/locations/{location}/deployments/{deployment}/actuations
+//     /{actuation}.
 func (r *ProjectsLocationsDeploymentsActuationsService) Delete(name string) *ProjectsLocationsDeploymentsActuationsDeleteCall {
 	c := &ProjectsLocationsDeploymentsActuationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4975,7 +4979,7 @@ func (r *ProjectsLocationsDeploymentsActuationsService) List(parent string) *Pro
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filtering results.
 func (c *ProjectsLocationsDeploymentsActuationsListCall) Filter(filter string) *ProjectsLocationsDeploymentsActuationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

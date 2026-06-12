@@ -1126,7 +1126,9 @@ type GoogleCloudChannelV1Customer struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// CustomerAttestationState: Optional. Indicate if a customer is attesting
 	// about the correctness of provided information. Only required if creating a
-	// GCP Entitlement.
+	// GCP Entitlement. NOTE: This field will be mandatory for all new GCP
+	// customers starting Aug 31st, 2026 and this field will also be required for
+	// all existing customers purchasing new GCP Entitlements.
 	//
 	// Possible values:
 	//   "CUSTOMER_ATTESTATION_STATE_UNSPECIFIED" - Default value if not set yet

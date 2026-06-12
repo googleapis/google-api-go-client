@@ -642,6 +642,36 @@ func (s DestinationStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DisplayAddress: The display address of the property.
+type DisplayAddress struct {
+	// City: The city such as Seattle, New York, etc.
+	City string `json:"city,omitempty"`
+	// PostalCode: The postal code, such as 94043.
+	PostalCode string `json:"postalCode,omitempty"`
+	// Region: The region(state), such as WA, OH, etc.
+	Region string `json:"region,omitempty"`
+	// StreetName: The street name.
+	StreetName string `json:"streetName,omitempty"`
+	// StreetNumber: The street number.
+	StreetNumber string `json:"streetNumber,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "City") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "City") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DisplayAddress) MarshalJSON() ([]byte, error) {
+	type NoMethod DisplayAddress
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -1069,6 +1099,36 @@ func (s Mileage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PetPolicy: The pet policy of the property.
+type PetPolicy struct {
+	// PetTypes: The pet types allowed.
+	//
+	// Possible values:
+	//   "PET_TYPE_UNSPECIFIED" - Unspecified pet type.
+	//   "CATS" - Cats.
+	//   "LARGE_DOGS" - Large dogs.
+	//   "SMALL_DOGS" - Small dogs.
+	PetTypes []string `json:"petTypes,omitempty"`
+	// PetsAllowed: Whether pets are allowed.
+	PetsAllowed bool `json:"petsAllowed,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PetTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PetTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PetPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod PetPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PickupCost: The pickup cost of the item.
 type PickupCost struct {
 	// FlatRate: Required. The flat rate pickup cost of the item.
@@ -1249,6 +1309,45 @@ type ProductAttributes struct {
 	//   "INFANT" - 3-12 months old.
 	//   "NEWBORN" - 0-3 months old.
 	AgeGroup string `json:"ageGroup,omitempty"`
+	// AmenityFeature: The amenity features for the property.
+	//
+	// Possible values:
+	//   "AMENITY_FEATURE_UNSPECIFIED" - Unspecified amenity feature.
+	//   "BALCONY" - Balcony.
+	//   "BASEMENT" - Basement.
+	//   "BASKETBALL_COURT" - Basketball court.
+	//   "BIKE_STORAGE" - Bike storage.
+	//   "CENTRAL_AC" - Central air conditioning.
+	//   "DISHWASHER" - Dishwasher.
+	//   "DOG_PARK" - Dog park.
+	//   "ELEVATOR" - Elevator.
+	//   "EV_CHARGING" - EV charging.
+	//   "FENCED_LOT" - Fenced lot.
+	//   "FIREPLACE" - Fireplace.
+	//   "FITNESS_CENTER" - Fitness center.
+	//   "FORCED_AIR_HEATING" - Forced air heating.
+	//   "FULLY_FURNISHED" - Fully furnished.
+	//   "GARAGE" - Garage.
+	//   "GATED_COMMUNITY" - Gated community.
+	//   "HARDWOOD_FLOORS" - Hardwood floors.
+	//   "HIGH_SPEED_INTERNET" - High speed internet.
+	//   "INTERCOM" - Intercom.
+	//   "IN_UNIT_WASHER_DRYER" - In-unit washer and dryer.
+	//   "KITCHEN" - Kitchen.
+	//   "LARGE_CLOSETS" - Large closets.
+	//   "MULTISPORT_COURT" - Multisport court.
+	//   "ONSITE_LAUNDRY" - Onsite laundry.
+	//   "OUTDOOR_LOUNGE" - Outdoor lounge.
+	//   "PARKING" - Parking.
+	//   "PATIO" - Patio.
+	//   "PICKLEBALL_COURT" - Pickleball court.
+	//   "POOL" - Pool.
+	//   "REFRIGERATOR" - Refrigerator.
+	//   "SOCCER_FIELD" - Soccer field.
+	//   "TENNIS_COURT" - Tennis court.
+	//   "WALK_IN_CLOSETS" - Walk-in closets.
+	//   "WHEELCHAIR_ACCESS" - Wheelchair accessibility.
+	AmenityFeature []string `json:"amenityFeature,omitempty"`
 	// AutoPricingMinPrice: A safeguard in the [automated discounts]
 	// (https://support.google.com/merchants/answer/10295759) and "Dynamic
 	// Promotions" (https://support.google.com/merchants/answer/13949249) projects,
@@ -1375,6 +1474,8 @@ type ProductAttributes struct {
 	// (http://en.wikipedia.org/wiki/ISO_8601) format. See Disclosure date
 	// (https://support.google.com/merchants/answer/13034208) for more information.
 	DisclosureDate string `json:"disclosureDate,omitempty"`
+	// DisplayAddress: The display address of the property.
+	DisplayAddress *DisplayAddress `json:"displayAddress,omitempty"`
 	// DisplayAdsId: An identifier for an item for dynamic remarketing campaigns.
 	DisplayAdsId string `json:"displayAdsId,omitempty"`
 	// DisplayAdsLink: URL directly to your item's landing page for dynamic
@@ -1584,6 +1685,9 @@ type ProductAttributes struct {
 	// perform better grouping of variant products, and helps identifying common
 	// product characteristics more efficiently.
 	ItemGroupTitle string `json:"itemGroupTitle,omitempty"`
+	// Latitude: The latitude of the property. The value must be between -90
+	// (inclusive) and 90 (inclusive), up to 6 decimal places.
+	Latitude float64 `json:"latitude,omitempty"`
 	// LifestyleImageLinks: Additional URLs of lifestyle images of the item, used
 	// to explicitly identify images that showcase your item in a real-world
 	// context. See the Help Center article
@@ -1595,6 +1699,9 @@ type ProductAttributes struct {
 	// (https://support.google.com/merchants/answer/13871172) for business hosted
 	// local storefront.
 	LinkTemplate string `json:"linkTemplate,omitempty"`
+	// Longitude: The longitude of the property. The value must be between -180
+	// (inclusive) and 180 (inclusive), up to 6 decimal places.
+	Longitude float64 `json:"longitude,omitempty"`
 	// LoyaltyPoints: Loyalty points that users receive after purchasing the item.
 	// Japan only.
 	LoyaltyPoints *LoyaltyPoints `json:"loyaltyPoints,omitempty"`
@@ -1673,6 +1780,18 @@ type ProductAttributes struct {
 	Mpn string `json:"mpn,omitempty"`
 	// Multipack: The number of identical products in a business-defined multipack.
 	Multipack int64 `json:"multipack,omitempty,string"`
+	// Neighborhood: The neighborhood (locality) of the property, such as
+	// `Wallingford`, `Greenwood`, etc.
+	Neighborhood string `json:"neighborhood,omitempty"`
+	// NumberOfBathrooms: The number of bathrooms in the property. The value must
+	// be greater than 0 and a multiple of 0.5.
+	NumberOfBathrooms float64 `json:"numberOfBathrooms,omitempty"`
+	// NumberOfBedrooms: The number of bedrooms in the property. The value must be
+	// greater than or equal to 0 and a multiple of 1.0.
+	NumberOfBedrooms float64 `json:"numberOfBedrooms,omitempty"`
+	// NumberOfUnits: The number of units available for a specific floor plan of
+	// the property. The value must be greater than 0.
+	NumberOfUnits int64 `json:"numberOfUnits,omitempty,string"`
 	// Pattern: The item's pattern
 	// (https://support.google.com/merchants/answer/6324483). For example, polka
 	// dots.
@@ -1688,6 +1807,8 @@ type ProductAttributes struct {
 	// (including Shopping Ads, Display Ads, local inventory ads, Buy on Google,
 	// and free listings).
 	Pause string `json:"pause,omitempty"`
+	// PetPolicy: The pet policy for the property.
+	PetPolicy *PetPolicy `json:"petPolicy,omitempty"`
 	// PickupCost: Optional. The pickup cost
 	// (https://support.google.com/merchants/answer/16988704) for an item when a
 	// customer buys it online and picks it up at a store.
@@ -1734,6 +1855,8 @@ type ProductAttributes struct {
 	Price *Price `json:"price,omitempty"`
 	// ProductDetails: Technical specification or additional product details.
 	ProductDetails []*ProductDetail `json:"productDetails,omitempty"`
+	// ProductFee: The product fee for the property.
+	ProductFee []*ProductFee `json:"productFee,omitempty"`
 	// ProductHeight: The height of the product in the units provided. The value
 	// must be between 0 (exclusive) and 3000 (inclusive).
 	ProductHeight *ProductDimension `json:"productHeight,omitempty"`
@@ -1755,6 +1878,22 @@ type ProductAttributes struct {
 	ProductWidth *ProductDimension `json:"productWidth,omitempty"`
 	// PromotionIds: The unique ID of a promotion.
 	PromotionIds []string `json:"promotionIds,omitempty"`
+	// PropertyName: The name of the property.
+	PropertyName string `json:"propertyName,omitempty"`
+	// PropertyType: The type of property.
+	//
+	// Possible values:
+	//   "PROPERTY_TYPE_UNSPECIFIED" - Unspecified property type.
+	//   "APARTMENT" - Apartment.
+	//   "CONDO" - Condo.
+	//   "LOFT" - Loft.
+	//   "MULTI_FAMILY_HOME" - Multi-family home.
+	//   "PENTHOUSE" - Penthouse.
+	//   "ROOM" - Room.
+	//   "SINGLE_FAMILY_HOME" - Single-family home.
+	//   "STUDIO" - Studio.
+	//   "TOWNHOUSE" - Townhouse.
+	PropertyType string `json:"propertyType,omitempty"`
 	// QuestionsAndAnswers: Optional. Contains user-, merchant-, and
 	// manufacturer-authored questions and answers
 	// (https://support.google.com/merchants/answer/17085211) about the product.
@@ -1803,6 +1942,8 @@ type ProductAttributes struct {
 	// Shopping Ads destination. Countries from this list are removed from
 	// countries configured in data source settings.
 	ShoppingAdsExcludedCountries []string `json:"shoppingAdsExcludedCountries,omitempty"`
+	// ShortTitle: The short title of the item.
+	ShortTitle string `json:"shortTitle,omitempty"`
 	// Size: Size of the item. Only one value is allowed. For variants with
 	// different sizes, insert a separate product for each size with the same
 	// `itemGroupId` value, see Size
@@ -1839,6 +1980,17 @@ type ProductAttributes struct {
 	//   "TALL" - Tall size.
 	//   "PLUS" - Plus size.
 	SizeTypes []string `json:"sizeTypes,omitempty"`
+	// SpecialtyHousingType: The specialty housing type for the property.
+	//
+	// Possible values:
+	//   "SPECIALTY_HOUSING_TYPE_UNSPECIFIED" - Unspecified specialty housing type.
+	//   "CORPORATE" - Corporate housing.
+	//   "LOW_INCOME" - Low income housing.
+	//   "MILITARY" - Military housing.
+	//   "SENIOR" - Senior housing.
+	//   "SHORT_TERM" - Short term housing.
+	//   "STUDENT" - Student housing.
+	SpecialtyHousingType string `json:"specialtyHousingType,omitempty"`
 	// StructuredDescription: Structured description, for algorithmically
 	// (AI)-generated descriptions.
 	StructuredDescription *StructuredDescription `json:"structuredDescription,omitempty"`
@@ -1858,10 +2010,22 @@ type ProductAttributes struct {
 	// Trim: The Trim (https://support.google.com/google-ads/answer/14154176) of
 	// the vehicle model, such as `S`, `SV`, `SL` and others.
 	Trim string `json:"trim,omitempty"`
+	// UnitArea: The unit area of the property, such as `1000 sqft`.
+	UnitArea *UnitArea `json:"unitArea,omitempty"`
 	// UnitPricingBaseMeasure: The preference of the denominator of the unit price.
 	UnitPricingBaseMeasure *UnitPricingBaseMeasure `json:"unitPricingBaseMeasure,omitempty"`
 	// UnitPricingMeasure: The measure and dimension of an item.
 	UnitPricingMeasure *UnitPricingMeasure `json:"unitPricingMeasure,omitempty"`
+	// UtilitiesIncluded: The utilities included for the property.
+	//
+	// Possible values:
+	//   "UTILITIES_INCLUDED_UNSPECIFIED" - Unspecified utilities included.
+	//   "ELECTRICITY" - Electricity.
+	//   "GAS" - Gas.
+	//   "INTERNET" - Internet.
+	//   "TRASH" - Trash.
+	//   "WATER" - Water.
+	UtilitiesIncluded []string `json:"utilitiesIncluded,omitempty"`
 	// VariantOptions: Optional. Contains the list of all variant-identifying
 	// options (https://support.google.com/merchants/answer/17085214) of this
 	// product.
@@ -1942,8 +2106,12 @@ func (s ProductAttributes) MarshalJSON() ([]byte, error) {
 func (s *ProductAttributes) UnmarshalJSON(data []byte) error {
 	type NoMethod ProductAttributes
 	var s1 struct {
-		DisplayAdsValue gensupport.JSONFloat64 `json:"displayAdsValue"`
-		PopularityRank  gensupport.JSONFloat64 `json:"popularityRank"`
+		DisplayAdsValue   gensupport.JSONFloat64 `json:"displayAdsValue"`
+		Latitude          gensupport.JSONFloat64 `json:"latitude"`
+		Longitude         gensupport.JSONFloat64 `json:"longitude"`
+		NumberOfBathrooms gensupport.JSONFloat64 `json:"numberOfBathrooms"`
+		NumberOfBedrooms  gensupport.JSONFloat64 `json:"numberOfBedrooms"`
+		PopularityRank    gensupport.JSONFloat64 `json:"popularityRank"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -1951,6 +2119,10 @@ func (s *ProductAttributes) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.DisplayAdsValue = float64(s1.DisplayAdsValue)
+	s.Latitude = float64(s1.Latitude)
+	s.Longitude = float64(s1.Longitude)
+	s.NumberOfBathrooms = float64(s1.NumberOfBathrooms)
+	s.NumberOfBedrooms = float64(s1.NumberOfBedrooms)
 	s.PopularityRank = float64(s1.PopularityRank)
 	return nil
 }
@@ -2148,6 +2320,36 @@ func (s *ProductDimension) UnmarshalJSON(data []byte) error {
 	}
 	s.Value = float64(s1.Value)
 	return nil
+}
+
+// ProductFee: The product fee attribute containing type and amount.
+type ProductFee struct {
+	// Amount: The amount of product fee.
+	Amount *Price `json:"amount,omitempty"`
+	// Type: The type of product fee.
+	//
+	// Possible values:
+	//   "FEE_TYPE_UNSPECIFIED" - Unspecified fee type.
+	//   "ADMIN_FEE" - Admin fee.
+	//   "APPLICATION_FEE" - Application fee.
+	//   "SECURITY_DEPOSIT" - Security deposit.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Amount") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Amount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProductFee) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductFee
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductInput: This resource represents input data you submit for a product,
@@ -2935,6 +3137,49 @@ type SubscriptionCost struct {
 func (s SubscriptionCost) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionCost
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UnitArea: The unit area of the property.
+type UnitArea struct {
+	// Unit: The unit of area.
+	//
+	// Possible values:
+	//   "UNIT_UNSPECIFIED" - Unspecified unit.
+	//   "SQM" - Square meters.
+	//   "SQFT" - Square feet.
+	Unit string `json:"unit,omitempty"`
+	// Value: The area value.
+	Value float64 `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Unit") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Unit") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UnitArea) MarshalJSON() ([]byte, error) {
+	type NoMethod UnitArea
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *UnitArea) UnmarshalJSON(data []byte) error {
+	type NoMethod UnitArea
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
 }
 
 // UnitPricingBaseMeasure: The UnitPricingBaseMeasure of the product.

@@ -349,7 +349,7 @@ type AdUnit struct {
 	// Video media.
 	AdTypes []string `json:"adTypes,omitempty"`
 	// AdUnitId: The externally visible ID of the ad unit which can be used to
-	// integrate with the AdMob SDK. This is a read only property. Example:
+	// integrate with AdMob. This is a read only property. Example:
 	// ca-app-pub-9876543210987654/0123456789
 	AdUnitId string `json:"adUnitId,omitempty"`
 	// AppId: The externally visible ID of the app this ad unit is associated with.
@@ -547,7 +547,7 @@ type App struct {
 	//   "APPROVED" - The app is approved and can serve ads.
 	AppApprovalState string `json:"appApprovalState,omitempty"`
 	// AppId: The externally visible ID of the app which can be used to integrate
-	// with the AdMob SDK. This is a read only property. Example:
+	// with AdMob. This is a read only property. Example:
 	// ca-app-pub-9876543210987654~0123456789
 	AppId string `json:"appId,omitempty"`
 	// LinkedAppInfo: Immutable. The information for an app that is linked to an

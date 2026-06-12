@@ -1099,6 +1099,9 @@ type InitiatePushTransferRequest struct {
 	// Tag: Required. The Tag of the new registrar. Can be found at List of
 	// registrars (https://nominet.uk/registrar-list/).
 	Tag string `json:"tag,omitempty"`
+	// ValidateOnly: Optional. If set, validates the request without actually
+	// initiating the transfer.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Tag") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -4434,6 +4437,13 @@ func (r *ProjectsLocationsRegistrationsService) Patch(name string, registration 
 // "labels".
 func (c *ProjectsLocationsRegistrationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsRegistrationsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set, validates
+// the request without actually updating the registration.
+func (c *ProjectsLocationsRegistrationsPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsRegistrationsPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 

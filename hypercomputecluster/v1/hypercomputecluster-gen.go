@@ -202,8 +202,8 @@ type ProjectsLocationsOperationsService struct {
 // BootDisk: A Persistent disk (https://cloud.google.com/compute/docs/disks)
 // used as the boot disk for a Compute Engine VM instance.
 type BootDisk struct {
-	// SizeGb: Required. Immutable. Size of the disk in gigabytes. Must be at least
-	// 40GB.
+	// SizeGb: Required. Immutable. The size of the disk in gigabytes (GB), which
+	// must be at least 40 GB.
 	SizeGb int64 `json:"sizeGb,omitempty,string"`
 	// Type: Required. Immutable. Persistent disk type
 	// (https://cloud.google.com/compute/docs/disks#disk-types), in the format
@@ -274,8 +274,8 @@ type Cluster struct {
 	ComputeResources map[string]ComputeResource `json:"computeResources,omitempty"`
 	// CreateTime: Output only. Time that the cluster was originally created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: Optional. User-provided description of the cluster. Maximum of
-	// 2048 characters.
+	// Description: Optional. A description for your cluster. You can use up to
+	// 2,048 characters.
 	Description string `json:"description,omitempty"`
 	// Labels: Optional. Labels
 	// (https://cloud.google.com/compute/docs/labeling-resources) applied to the
@@ -1156,7 +1156,7 @@ type NetworkResource struct {
 	// network resource should be made via the resource's API and will not be
 	// reflected in the configuration.
 	Config *NetworkResourceConfig `json:"config,omitempty"`
-	// Network: Output only. Reference to a network in Google Compute Engine.
+	// Network: Output only. A reference to a network in Google Compute Engine.
 	Network *NetworkReference `json:"network,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Config") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1257,7 +1257,7 @@ type NewFilestoreConfig struct {
 	// one file share must be specified.
 	FileShares []*FileShareConfig `json:"fileShares,omitempty"`
 	// Filestore: Required. Immutable. Name of the Filestore instance to create, in
-	// the format `projects/{project}/locations/{location}/instances/{instance}`
+	// the format `projects/{project}/locations/{location}/instances/{instance}`.
 	Filestore string `json:"filestore,omitempty"`
 	// Protocol: Optional. Immutable. Access protocol to use for all file shares in
 	// the instance. Defaults to NFS V3 if not set.
@@ -1784,8 +1784,8 @@ func (s SlurmLoginNodes) MarshalJSON() ([]byte, error) {
 // groups of compute nodes used by Slurm that are responsible for running
 // workloads submitted to the cluster.
 type SlurmNodeSet struct {
-	// ComputeId: Required. ID of the compute resource on which this nodeset will
-	// run. Must match a key in the cluster's compute_resources.
+	// ComputeId: Required. The ID of the compute resource on which this nodeset
+	// runs. Must match a key in the cluster's compute_resources.
 	ComputeId string `json:"computeId,omitempty"`
 	// ComputeInstance: Optional. If set, indicates that the nodeset should be
 	// backed by Compute Engine instances.
@@ -1963,10 +1963,10 @@ func (s StorageConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageResource: A resource representing a form of persistent storage that
-// can be mounted onto compute resources in the cluster.
+// StorageResource: Represents a form of persistent storage that you can mount
+// onto compute resources in the cluster.
 type StorageResource struct {
-	// Bucket: Output only. Reference to a Google Cloud Storage bucket. Populated
+	// Bucket: Output only. A reference to a Google Cloud Storage bucket. Populated
 	// if and only if the storage resource was configured to use Google Cloud
 	// Storage.
 	Bucket *BucketReference `json:"bucket,omitempty"`
@@ -1976,10 +1976,10 @@ type StorageResource struct {
 	// the storage resource should be made via the resource's API and will not be
 	// reflected in the configuration.
 	Config *StorageResourceConfig `json:"config,omitempty"`
-	// Filestore: Output only. Reference to a Filestore instance. Populated if and
-	// only if the storage resource was configured to use Filestore.
+	// Filestore: Output only. A reference to a Filestore instance. Populated if
+	// and only if the storage resource was configured to use Filestore.
 	Filestore *FilestoreReference `json:"filestore,omitempty"`
-	// Lustre: Output only. Reference to a Managed Lustre instance. Populated if
+	// Lustre: Output only. A reference to a Managed Lustre instance. Populated if
 	// and only if the storage resource was configured to use Managed Lustre.
 	Lustre *LustreReference `json:"lustre,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally

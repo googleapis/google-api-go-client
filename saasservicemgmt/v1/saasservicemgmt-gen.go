@@ -365,6 +365,68 @@ func (s Blueprint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Decimal: A representation of a decimal value, such as 2.5. Clients may
+// convert values into language-native decimal formats, such as Java's
+// BigDecimal
+// (https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/math/BigDecimal.html)
+// or Python's decimal.Decimal
+// (https://docs.python.org/3/library/decimal.html).
+type Decimal struct {
+	// Value: The decimal value, as a string. The string representation consists of
+	// an optional sign, `+` (`U+002B`) or `-` (`U+002D`), followed by a sequence
+	// of zero or more decimal digits ("the integer"), optionally followed by a
+	// fraction, optionally followed by an exponent. An empty string **should** be
+	// interpreted as `0`. The fraction consists of a decimal point followed by
+	// zero or more decimal digits. The string must contain at least one digit in
+	// either the integer or the fraction. The number formed by the sign, the
+	// integer and the fraction is referred to as the significand. The exponent
+	// consists of the character `e` (`U+0065`) or `E` (`U+0045`) followed by one
+	// or more decimal digits. Services **should** normalize decimal values before
+	// storing them by: - Removing an explicitly-provided `+` sign (`+2.5` ->
+	// `2.5`). - Replacing a zero-length integer value with `0` (`.5` -> `0.5`). -
+	// Coercing the exponent character to upper-case, with explicit sign (`2.5e8`
+	// -> `2.5E+8`). - Removing an explicitly-provided zero exponent (`2.5E0` ->
+	// `2.5`). Services **may** perform additional normalization based on its own
+	// needs and the internal decimal implementation selected, such as shifting the
+	// decimal point and exponent value together (example: `2.5E-1` <-> `0.25`).
+	// Additionally, services **may** preserve trailing zeroes in the fraction to
+	// indicate increased precision, but are not required to do so. Note that only
+	// the `.` character is supported to divide the integer and the fraction; `,`
+	// **should not** be supported regardless of locale. Additionally, thousand
+	// separators **should not** be supported. If a service does support them,
+	// values **must** be normalized. The ENBF grammar is: DecimalString = '' |
+	// [Sign] Significand [Exponent]; Sign = '+' | '-'; Significand = Digits '.' |
+	// [Digits] '.' Digits; Exponent = ('e' | 'E') [Sign] Digits; Digits = { '0' |
+	// '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' }; Services **should**
+	// clearly document the range of supported values, the maximum supported
+	// precision (total number of digits), and, if applicable, the scale (number of
+	// digits after the decimal point), as well as how it behaves when receiving
+	// out-of-bounds values. Services **may** choose to accept values passed as
+	// input even when the value has a higher precision or scale than the service
+	// supports, and **should** round the value to fit the supported scale.
+	// Alternatively, the service **may** error with `400 Bad Request`
+	// (`INVALID_ARGUMENT` in gRPC) if precision would be lost. Services **should**
+	// error with `400 Bad Request` (`INVALID_ARGUMENT` in gRPC) if the service
+	// receives a value outside of the supported range.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Decimal) MarshalJSON() ([]byte, error) {
+	type NoMethod Decimal
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Dependency: Dependency represent a single dependency with another unit kind
 // by alias.
 type Dependency struct {
@@ -395,16 +457,6 @@ func (s Dependency) MarshalJSON() ([]byte, error) {
 // underlying resources represented by a Unit. Can only execute if the Unit is
 // currently provisioned.
 type Deprovision struct {
-}
-
-// DeprovisionUnitGroup: DeprovisionUnitGroup is the unit group operation that
-// deprovisions the underlying resources represented by a UnitGroup.
-type DeprovisionUnitGroup struct {
-}
-
-// DetachUnitGroup: DetachUnitGroup is the unit group operation that detaches a
-// provisioned UnitGroup.
-type DetachUnitGroup struct {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -982,11 +1034,6 @@ func (s Provision) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ProvisionUnitGroup: ProvisionUnitGroup is the unit group operation that
-// provisions the underlying resources represented by a UnitGroup.
-type ProvisionUnitGroup struct {
-}
-
 // Release: A new version to be propagated and deployed to units. This includes
 // pointers to packaged blueprints for actuation (e.g Helm or Terraform
 // configuration packages) via artifact registry.
@@ -1312,6 +1359,9 @@ type RolloutKind struct {
 	// unit kind. In other words, this defines the population of target units to be
 	// upgraded by rollouts.
 	UnitKind string `json:"unitKind,omitempty"`
+	// UnitUpdatePacing: Optional. Settings for controlling the pacing of rollouts
+	// i.e. the number of units to be rolled out in parallel in a region.
+	UnitUpdatePacing *UnitUpdatePacing `json:"unitUpdatePacing,omitempty"`
 	// UpdateTime: Output only. The timestamp when the resource was last updated.
 	// Any change to the resource made by users must refresh this value. Changes to
 	// a resource made by the service should refresh this value.
@@ -1540,12 +1590,6 @@ type SaasRelease struct {
 	// standard naming scheme:
 	// "projects/{project}/locations/{location}/saasReleases/{saasRelease}"
 	Name string `json:"name,omitempty"`
-	// Releases: Required. The Releases that are assigned to this SaasRelease.
-	Releases []string `json:"releases,omitempty"`
-	// TierMappings: Required. A mapping between Tiers and UnitKinds that are part
-	// of this SaasRelease. While Tiers are defined as top-level resources, the
-	// mapping between Tiers and Unit Kinds is defined per SaasRelease.
-	TierMappings []*TierMapping `json:"tierMappings,omitempty"`
 	// Uid: Output only. The unique identifier of the resource. UID is unique in
 	// the time and space for this resource within the scope of the service. It is
 	// typically generated by the server on successful creation of a resource and
@@ -1698,54 +1742,6 @@ type Tenant struct {
 
 func (s Tenant) MarshalJSON() ([]byte, error) {
 	type NoMethod Tenant
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// TierMapping: TierMapping describes the mapping between a Tier and its
-// associated UnitKinds.
-type TierMapping struct {
-	// Tier: Required. The tier.
-	Tier      string          `json:"tier,omitempty"`
-	UnitKinds []*TierUnitKind `json:"unitKinds,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Tier") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Tier") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s TierMapping) MarshalJSON() ([]byte, error) {
-	type NoMethod TierMapping
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// TierUnitKind: A description of a single Unit Kind that is part of a Tier.
-type TierUnitKind struct {
-	// InputVariables: Optional. Output only. Input variables for the UnitKind.
-	InputVariables []*UnitVariable `json:"inputVariables,omitempty"`
-	// UnitKind: Required. Immutable. The unique identifier of the UnitKind.
-	UnitKind string `json:"unitKind,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "InputVariables") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "InputVariables") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s TierUnitKind) MarshalJSON() ([]byte, error) {
-	type NoMethod TierUnitKind
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1953,6 +1949,10 @@ type UnitCondition struct {
 	//   "TYPE_FLAGS_CONFIG_INITIALIZED" - Condition type is
 	// flagsConfigInitialized. True when the flags configuration is synchronized
 	// and ready to be served.
+	//   "TYPE_APP_CREATED_OR_ALREADY_EXISTS" - Indicates if AppHub app has been
+	// created or if Apphub app has already existed.
+	//   "TYPE_APP_COMPONENTS_REGISTERED" - Indicates if services and workloads
+	// have been registered with AppHub.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LastTransitionTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2019,23 +2019,6 @@ type UnitGroup struct {
 	// standard naming scheme:
 	// "projects/{project}/locations/{location}/unitGroups/{unitGroup}"
 	Name string `json:"name,omitempty"`
-	// Saas: Required. Immutable. The SaaS that this UnitGroup is created for.
-	Saas string `json:"saas,omitempty"`
-	// SaasRelease: Required. Immutable. Current SaasRelease that the UnitGroup is
-	// provisioned with.
-	SaasRelease string `json:"saasRelease,omitempty"`
-	// State: Optional. Output only. State of the UnitGroup.
-	//
-	// Possible values:
-	//   "UNIT_GROUP_STATE_UNSPECIFIED" - Unspecified state.
-	//   "UNIT_GROUP_STATE_NOT_PROVISIONED" - UnitGroup is not provisioned.
-	//   "UNIT_GROUP_STATE_PROVISIONING" - UnitGroup is being provisioned.
-	//   "UNIT_GROUP_STATE_UPDATING" - UnitGroup is being updated.
-	//   "UNIT_GROUP_STATE_DEPROVISIONING" - UnitGroup is being deprovisioned.
-	//   "UNIT_GROUP_STATE_READY" - UnitGroup has been provisioned and is ready for
-	// use.
-	//   "UNIT_GROUP_STATE_ERROR" - UnitGroup has an error.
-	State string `json:"state,omitempty"`
 	// Uid: Output only. The unique identifier of the resource. UID is unique in
 	// the time and space for this resource within the scope of the service. It is
 	// typically generated by the server on successful creation of a resource and
@@ -2078,11 +2061,6 @@ type UnitGroupOperation struct {
 	Annotations map[string]string `json:"annotations,omitempty"`
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DeprovisionUnitGroup: Optional. Represents a deprovision operation on a
-	// UnitGroup.
-	DeprovisionUnitGroup *DeprovisionUnitGroup `json:"deprovisionUnitGroup,omitempty"`
-	// DetachUnitGroup: Optional. Represents a detach operation on a UnitGroup.
-	DetachUnitGroup *DetachUnitGroup `json:"detachUnitGroup,omitempty"`
 	// Etag: Output only. An opaque value that uniquely identifies a version or
 	// generation of a resource. It can be used to confirm that the client and
 	// server agree on the ordering of a resource being written.
@@ -2095,11 +2073,6 @@ type UnitGroupOperation struct {
 	// "projects/{project}/locations/{location}/unitGroupOperations/{unitGroupOperat
 	// ion}"
 	Name string `json:"name,omitempty"`
-	// ProvisionUnitGroup: Optional. Represents a provision operation on a
-	// UnitGroup.
-	ProvisionUnitGroup *ProvisionUnitGroup `json:"provisionUnitGroup,omitempty"`
-	// Tier: Optional. Tier represents the tier level of the UnitGroupOperation.
-	Tier string `json:"tier,omitempty"`
 	// Uid: Output only. The unique identifier of the resource. UID is unique in
 	// the time and space for this resource within the scope of the service. It is
 	// typically generated by the server on successful creation of a resource and
@@ -2388,6 +2361,37 @@ type UnitOperationCondition struct {
 
 func (s UnitOperationCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod UnitOperationCondition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UnitUpdatePacing: UnitUpdatePacing defines the policy for the maximum number
+// of unit operations that can run for a rollout in parallel in a single
+// region.
+type UnitUpdatePacing struct {
+	// MaxConcurrentOperationsCount: Optional. An absolute cap on concurrent units
+	// operations. If both percent and count are provided, the system uses the
+	// MINIMUM (most restrictive).
+	MaxConcurrentOperationsCount int64 `json:"maxConcurrentOperationsCount,omitempty"`
+	// MaxConcurrentOperationsPercent: Optional. The maximum percentage of total
+	// units in the scope that can be in-flight. Example: 10.5 for 10.5%. If both
+	// percent and count are provided, the system uses the MINIMUM (most
+	// restrictive).
+	MaxConcurrentOperationsPercent *Decimal `json:"maxConcurrentOperationsPercent,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "MaxConcurrentOperationsCount") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxConcurrentOperationsCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UnitUpdatePacing) MarshalJSON() ([]byte, error) {
+	type NoMethod UnitUpdatePacing
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

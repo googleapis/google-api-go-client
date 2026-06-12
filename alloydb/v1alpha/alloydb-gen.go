@@ -1019,6 +1019,9 @@ type ConnectionInfo struct {
 	// verify the X.509 certificate. Expected to be in issuer-to-root order
 	// according to RFC 5246.
 	PemCertificateChain []string `json:"pemCertificateChain,omitempty"`
+	// PscAutoDnsName: Output only. Specifies the DNS name to use with PSC service
+	// automation for the Instance.
+	PscAutoDnsName string `json:"pscAutoDnsName,omitempty"`
 	// PscDnsName: Output only. The DNS name to use with PSC for the Instance.
 	PscDnsName string `json:"pscDnsName,omitempty"`
 	// PublicIpAddress: Output only. The public IP addresses for the Instance. This
@@ -5264,6 +5267,9 @@ type StorageDatabasecenterPartnerapiV1mainResourceMaintenanceInfo struct {
 	// MaintenanceVersion: Optional. Current Maintenance version of the database
 	// resource. Example: "MYSQL_8_0_41.R20250531.01_15"
 	MaintenanceVersion string `json:"maintenanceVersion,omitempty"`
+	// NextAvailableMaintenanceVersions: Optional. List of next available
+	// maintenance versions.
+	NextAvailableMaintenanceVersions []string `json:"nextAvailableMaintenanceVersions,omitempty"`
 	// UpcomingMaintenance: Optional. Upcoming maintenance for the database
 	// resource. This field is populated once SLM generates and publishes upcoming
 	// maintenance window.

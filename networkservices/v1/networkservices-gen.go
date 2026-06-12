@@ -487,7 +487,7 @@ type AgentGateway struct {
 	Name string `json:"name,omitempty"`
 	// NetworkConfig: Optional. Network configuration for the AgentGateway.
 	NetworkConfig *AgentGatewayNetworkConfig `json:"networkConfig,omitempty"`
-	// Protocols: Required. List of protocols supported by an Agent Gateway
+	// Protocols: Optional. Deprecated.
 	//
 	// Possible values:
 	//   "PROTOCOL_UNSPECIFIED" - Unspecified protocol.

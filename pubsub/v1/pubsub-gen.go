@@ -965,6 +965,41 @@ func (s CommitSchemaRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Compression: Configuration for compressing/decompressing message data using
+// a user-specified compression algorithm.
+type Compression struct {
+	// CompressionAlgorithm: Required. Specifies the compression algorithm to use.
+	//
+	// Possible values:
+	//   "COMPRESSION_ALGORITHM_UNSPECIFIED" - Unspecified algorithm.
+	//   "ZLIB" - ZLIB compression.
+	CompressionAlgorithm string `json:"compressionAlgorithm,omitempty"`
+	// CompressionMode: Required. Specifies whether to compress or decompress the
+	// message.
+	//
+	// Possible values:
+	//   "COMPRESSION_MODE_UNSPECIFIED" - Unspecified mode.
+	//   "COMPRESS" - Compress.
+	//   "DECOMPRESS" - Decompress.
+	CompressionMode string `json:"compressionMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CompressionAlgorithm") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CompressionAlgorithm") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Compression) MarshalJSON() ([]byte, error) {
+	type NoMethod Compression
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ConfluentCloud: Ingestion settings for Confluent Cloud.
 type ConfluentCloud struct {
 	// BootstrapServer: Required. The address of the bootstrap server. The format
@@ -1504,6 +1539,8 @@ type MessageTransform struct {
 	// inference requests built from the Pub/Sub message data and provided
 	// parameters will be sent to.
 	AiInference *AIInference `json:"aiInference,omitempty"`
+	// Compression: Optional. Compression/Decompression.
+	Compression *Compression `json:"compression,omitempty"`
 	// Disabled: Optional. If true, the transform is disabled and will not be
 	// applied to messages. Defaults to `false`.
 	Disabled bool `json:"disabled,omitempty"`

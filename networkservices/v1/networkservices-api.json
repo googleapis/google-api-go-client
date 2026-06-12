@@ -3732,7 +3732,7 @@
       }
     }
   },
-  "revision": "20260527",
+  "revision": "20260605",
   "rootUrl": "https://networkservices.googleapis.com/",
   "schemas": {
     "AgentGateway": {
@@ -3778,7 +3778,8 @@
           "description": "Optional. Network configuration for the AgentGateway."
         },
         "protocols": {
-          "description": "Required. List of protocols supported by an Agent Gateway",
+          "deprecated": true,
+          "description": "Optional. Deprecated.",
           "items": {
             "enum": [
               "PROTOCOL_UNSPECIFIED",

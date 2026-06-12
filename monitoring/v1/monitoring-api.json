@@ -753,7 +753,7 @@
       }
     }
   },
-  "revision": "20260402",
+  "revision": "20260604",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -1359,6 +1359,16 @@
           "description": "time_bin_size is used when the data type of the specified dimension is a time type and the bin size is determined by a time duration. If column_type is DATE, this must be a whole value multiple of 1 day. If column_type is TIME, this must be less than or equal to 24 hours.",
           "format": "google-duration",
           "type": "string"
+        },
+        "xMax": {
+          "description": "The maximum value for the x-axis.",
+          "format": "double",
+          "type": "number"
+        },
+        "xMin": {
+          "description": "The minimum value for the x-axis.",
+          "format": "double",
+          "type": "number"
         }
       },
       "type": "object"
@@ -1450,7 +1460,9 @@
             "SERVICE_HEALTH_INCIDENT",
             "SAP_BACKINT",
             "SAP_AVAILABILITY",
-            "SAP_OPERATIONS"
+            "SAP_OPERATIONS",
+            "INTERCONNECT_MAINTENANCE_STARTED",
+            "INTERCONNECT_MAINTENANCE_COMPLETED"
           ],
           "enumDescriptions": [
             "No event type specified.",
@@ -1477,7 +1489,9 @@
             "Incidents from Service Health",
             "Agent for SAP Backint related events.",
             "Agent for SAP availability related events.",
-            "Agent for SAP operations related events."
+            "Agent for SAP operations related events.",
+            "Interconnect maintenance started event.",
+            "Interconnect maintenance completed event."
           ],
           "type": "string"
         },
@@ -2837,6 +2851,10 @@
           "description": "A query used to fetch time series with MQL.",
           "type": "string"
         },
+        "traceQuery": {
+          "$ref": "TraceQuery",
+          "description": "Optional. Preview: Query for traces. This is a preview feature and may be subject to change before final release."
+        },
         "unitOverride": {
           "description": "The unit of data contained in fetched time series. If non-empty, this unit will override any unit that accompanies fetched data. The format is the same as the unit (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.metricDescriptors) field in MetricDescriptor.",
           "type": "string"
@@ -2877,6 +2895,12 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "TraceQuery": {
+      "description": "LINT.IfChange Preview: Query for traces. This is a preview feature and may be subject to change before final release.",
+      "id": "TraceQuery",
+      "properties": {},
       "type": "object"
     },
     "Treemap": {

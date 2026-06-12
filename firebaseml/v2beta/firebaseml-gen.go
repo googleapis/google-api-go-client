@@ -1899,8 +1899,10 @@ func (s GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig) MarshalJSON(
 // GoogleCloudAiplatformV1beta1GoogleMaps: Tool to retrieve public maps data
 // for grounding, powered by Google.
 type GoogleCloudAiplatformV1beta1GoogleMaps struct {
-	// EnableWidget: Optional. If true, include the widget context token in the
-	// response.
+	// EnableWidget: Optional. Deprecated: The Google Maps contextual widget
+	// behavior in Grounding with Google Maps is being deprecated; this field is
+	// planned for removal and no longer has any effect once removed. If true,
+	// include the widget context token in the response.
 	EnableWidget bool `json:"enableWidget,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableWidget") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2203,9 +2205,12 @@ func (s GoogleCloudAiplatformV1beta1GroundingChunkWeb) MarshalJSON() ([]byte, er
 // returns citations for claims in the response. This object contains the
 // retrieved sources.
 type GoogleCloudAiplatformV1beta1GroundingMetadata struct {
-	// GoogleMapsWidgetContextToken: Optional. Output only. A token that can be
-	// used to render a Google Maps widget with the contextual data. This field is
-	// populated only when the grounding source is Google Maps.
+	// GoogleMapsWidgetContextToken: Optional. Output only. Deprecated: The Google
+	// Maps contextual widget behavior in Grounding with Google Maps is being
+	// deprecated; this field is planned for removal and will no longer be
+	// populated once removed. A token that can be used to render a Google Maps
+	// widget with the contextual data. This field is populated only when the
+	// grounding source is Google Maps.
 	GoogleMapsWidgetContextToken string `json:"googleMapsWidgetContextToken,omitempty"`
 	// GroundingChunks: A list of supporting references retrieved from the
 	// grounding source. This field is populated when the grounding source is

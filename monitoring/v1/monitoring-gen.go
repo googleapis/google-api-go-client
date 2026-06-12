@@ -1136,6 +1136,10 @@ type Dimension struct {
 	// If column_type is DATE, this must be a whole value multiple of 1 day. If
 	// column_type is TIME, this must be less than or equal to 24 hours.
 	TimeBinSize string `json:"timeBinSize,omitempty"`
+	// XMax: The maximum value for the x-axis.
+	XMax float64 `json:"xMax,omitempty"`
+	// XMin: The minimum value for the x-axis.
+	XMin float64 `json:"xMin,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Column") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1158,6 +1162,8 @@ func (s *Dimension) UnmarshalJSON(data []byte) error {
 	type NoMethod Dimension
 	var s1 struct {
 		FloatBinSize gensupport.JSONFloat64 `json:"floatBinSize"`
+		XMax         gensupport.JSONFloat64 `json:"xMax"`
+		XMin         gensupport.JSONFloat64 `json:"xMin"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -1165,6 +1171,8 @@ func (s *Dimension) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.FloatBinSize = float64(s1.FloatBinSize)
+	s.XMax = float64(s1.XMax)
+	s.XMin = float64(s1.XMin)
 	return nil
 }
 
@@ -1283,6 +1291,10 @@ type EventAnnotation struct {
 	//   "SAP_BACKINT" - Agent for SAP Backint related events.
 	//   "SAP_AVAILABILITY" - Agent for SAP availability related events.
 	//   "SAP_OPERATIONS" - Agent for SAP operations related events.
+	//   "INTERCONNECT_MAINTENANCE_STARTED" - Interconnect maintenance started
+	// event.
+	//   "INTERCONNECT_MAINTENANCE_COMPLETED" - Interconnect maintenance completed
+	// event.
 	EventType string `json:"eventType,omitempty"`
 	// Filter: string filtering the events - event dependant. Example values:
 	// "resource.labels.pod_name = 'pod-1'"
@@ -3096,6 +3108,9 @@ type TimeSeriesQuery struct {
 	TimeSeriesFilterRatio *TimeSeriesFilterRatio `json:"timeSeriesFilterRatio,omitempty"`
 	// TimeSeriesQueryLanguage: A query used to fetch time series with MQL.
 	TimeSeriesQueryLanguage string `json:"timeSeriesQueryLanguage,omitempty"`
+	// TraceQuery: Optional. Preview: Query for traces. This is a preview feature
+	// and may be subject to change before final release.
+	TraceQuery *TraceQuery `json:"traceQuery,omitempty"`
 	// UnitOverride: The unit of data contained in fetched time series. If
 	// non-empty, this unit will override any unit that accompanies fetched data.
 	// The format is the same as the unit
@@ -3150,6 +3165,11 @@ type TimeSeriesTable struct {
 func (s TimeSeriesTable) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeSeriesTable
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TraceQuery: LINT.IfChange Preview: Query for traces. This is a preview
+// feature and may be subject to change before final release.
+type TraceQuery struct {
 }
 
 // Treemap: A widget that displays hierarchical data as a treemap.

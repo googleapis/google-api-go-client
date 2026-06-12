@@ -281,7 +281,7 @@
       }
     }
   },
-  "revision": "20260602",
+  "revision": "20260611",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "AutomatedDiscounts": {
@@ -775,6 +775,33 @@
       },
       "type": "object"
     },
+    "DisplayAddress": {
+      "description": "The display address of the property.",
+      "id": "DisplayAddress",
+      "properties": {
+        "city": {
+          "description": "The city such as Seattle, New York, etc.",
+          "type": "string"
+        },
+        "postalCode": {
+          "description": "The postal code, such as 94043.",
+          "type": "string"
+        },
+        "region": {
+          "description": "The region(state), such as WA, OH, etc.",
+          "type": "string"
+        },
+        "streetName": {
+          "description": "The street name.",
+          "type": "string"
+        },
+        "streetNumber": {
+          "description": "The street number.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Empty": {
       "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
       "id": "Empty",
@@ -1111,6 +1138,36 @@
       },
       "type": "object"
     },
+    "PetPolicy": {
+      "description": "The pet policy of the property.",
+      "id": "PetPolicy",
+      "properties": {
+        "petTypes": {
+          "description": "The pet types allowed.",
+          "items": {
+            "enum": [
+              "PET_TYPE_UNSPECIFIED",
+              "CATS",
+              "LARGE_DOGS",
+              "SMALL_DOGS"
+            ],
+            "enumDescriptions": [
+              "Unspecified pet type.",
+              "Cats.",
+              "Large dogs.",
+              "Small dogs."
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "petsAllowed": {
+          "description": "Whether pets are allowed.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "PickupCost": {
       "description": "The pickup cost of the item.",
       "id": "PickupCost",
@@ -1266,6 +1323,87 @@
             "0-3 months old."
           ],
           "type": "string"
+        },
+        "amenityFeature": {
+          "description": "The amenity features for the property.",
+          "items": {
+            "enum": [
+              "AMENITY_FEATURE_UNSPECIFIED",
+              "BALCONY",
+              "BASEMENT",
+              "BASKETBALL_COURT",
+              "BIKE_STORAGE",
+              "CENTRAL_AC",
+              "DISHWASHER",
+              "DOG_PARK",
+              "ELEVATOR",
+              "EV_CHARGING",
+              "FENCED_LOT",
+              "FIREPLACE",
+              "FITNESS_CENTER",
+              "FORCED_AIR_HEATING",
+              "FULLY_FURNISHED",
+              "GARAGE",
+              "GATED_COMMUNITY",
+              "HARDWOOD_FLOORS",
+              "HIGH_SPEED_INTERNET",
+              "INTERCOM",
+              "IN_UNIT_WASHER_DRYER",
+              "KITCHEN",
+              "LARGE_CLOSETS",
+              "MULTISPORT_COURT",
+              "ONSITE_LAUNDRY",
+              "OUTDOOR_LOUNGE",
+              "PARKING",
+              "PATIO",
+              "PICKLEBALL_COURT",
+              "POOL",
+              "REFRIGERATOR",
+              "SOCCER_FIELD",
+              "TENNIS_COURT",
+              "WALK_IN_CLOSETS",
+              "WHEELCHAIR_ACCESS"
+            ],
+            "enumDescriptions": [
+              "Unspecified amenity feature.",
+              "Balcony.",
+              "Basement.",
+              "Basketball court.",
+              "Bike storage.",
+              "Central air conditioning.",
+              "Dishwasher.",
+              "Dog park.",
+              "Elevator.",
+              "EV charging.",
+              "Fenced lot.",
+              "Fireplace.",
+              "Fitness center.",
+              "Forced air heating.",
+              "Fully furnished.",
+              "Garage.",
+              "Gated community.",
+              "Hardwood floors.",
+              "High speed internet.",
+              "Intercom.",
+              "In-unit washer and dryer.",
+              "Kitchen.",
+              "Large closets.",
+              "Multisport court.",
+              "Onsite laundry.",
+              "Outdoor lounge.",
+              "Parking.",
+              "Patio.",
+              "Pickleball court.",
+              "Pool.",
+              "Refrigerator.",
+              "Soccer field.",
+              "Tennis court.",
+              "Walk-in closets.",
+              "Wheelchair accessibility."
+            ],
+            "type": "string"
+          },
+          "type": "array"
         },
         "autoPricingMinPrice": {
           "$ref": "Price",
@@ -1461,6 +1599,10 @@
           "description": "The date time when an offer becomes visible in search results across Google’s YouTube surfaces, in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format. See [Disclosure date](https://support.google.com/merchants/answer/13034208) for more information.",
           "format": "google-datetime",
           "type": "string"
+        },
+        "displayAddress": {
+          "$ref": "DisplayAddress",
+          "description": "The display address of the property."
         },
         "displayAdsId": {
           "description": "An identifier for an item for dynamic remarketing campaigns.",
@@ -1749,6 +1891,11 @@
           "description": "Optional. Represents the [title of the product group](https://support.google.com/merchants/answer/17085146) to which this variant product belongs. This can be used along with the [item group id](https://support.google.com/merchants/answer/6324507) attribute. It lets you perform better grouping of variant products, and helps identifying common product characteristics more efficiently.",
           "type": "string"
         },
+        "latitude": {
+          "description": "The latitude of the property. The value must be between -90 (inclusive) and 90 (inclusive), up to 6 decimal places.",
+          "format": "double",
+          "type": "number"
+        },
         "lifestyleImageLinks": {
           "description": "Additional URLs of lifestyle images of the item, used to explicitly identify images that showcase your item in a real-world context. See the [Help Center article](https://support.google.com/merchants/answer/9103186) for more information.",
           "items": {
@@ -1763,6 +1910,11 @@
         "linkTemplate": {
           "description": "[Link template](https://support.google.com/merchants/answer/13871172) for business hosted local storefront.",
           "type": "string"
+        },
+        "longitude": {
+          "description": "The longitude of the property. The value must be between -180 (inclusive) and 180 (inclusive), up to 6 decimal places.",
+          "format": "double",
+          "type": "number"
         },
         "loyaltyPoints": {
           "$ref": "LoyaltyPoints",
@@ -1885,6 +2037,25 @@
           "format": "int64",
           "type": "string"
         },
+        "neighborhood": {
+          "description": "The neighborhood (locality) of the property, such as `Wallingford`, `Greenwood`, etc.",
+          "type": "string"
+        },
+        "numberOfBathrooms": {
+          "description": "The number of bathrooms in the property. The value must be greater than 0 and a multiple of 0.5.",
+          "format": "double",
+          "type": "number"
+        },
+        "numberOfBedrooms": {
+          "description": "The number of bedrooms in the property. The value must be greater than or equal to 0 and a multiple of 1.0.",
+          "format": "double",
+          "type": "number"
+        },
+        "numberOfUnits": {
+          "description": "The number of units available for a specific floor plan of the property. The value must be greater than 0.",
+          "format": "int64",
+          "type": "string"
+        },
         "pattern": {
           "description": "The item's [pattern](https://support.google.com/merchants/answer/6324483). For example, polka dots.",
           "type": "string"
@@ -1902,6 +2073,10 @@
             "You’re currently pausing your product for all Shopping locations (including Shopping Ads, Display Ads, local inventory ads, Buy on Google, and free listings)."
           ],
           "type": "string"
+        },
+        "petPolicy": {
+          "$ref": "PetPolicy",
+          "description": "The pet policy for the property."
         },
         "pickupCost": {
           "$ref": "PickupCost",
@@ -1967,6 +2142,13 @@
           },
           "type": "array"
         },
+        "productFee": {
+          "description": "The product fee for the property.",
+          "items": {
+            "$ref": "ProductFee"
+          },
+          "type": "array"
+        },
         "productHeight": {
           "$ref": "ProductDimension",
           "description": "The height of the product in the units provided. The value must be between 0 (exclusive) and 3000 (inclusive)."
@@ -2003,6 +2185,38 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "propertyName": {
+          "description": "The name of the property.",
+          "type": "string"
+        },
+        "propertyType": {
+          "description": "The type of property.",
+          "enum": [
+            "PROPERTY_TYPE_UNSPECIFIED",
+            "APARTMENT",
+            "CONDO",
+            "LOFT",
+            "MULTI_FAMILY_HOME",
+            "PENTHOUSE",
+            "ROOM",
+            "SINGLE_FAMILY_HOME",
+            "STUDIO",
+            "TOWNHOUSE"
+          ],
+          "enumDescriptions": [
+            "Unspecified property type.",
+            "Apartment.",
+            "Condo.",
+            "Loft.",
+            "Multi-family home.",
+            "Penthouse.",
+            "Room.",
+            "Single-family home.",
+            "Studio.",
+            "Townhouse."
+          ],
+          "type": "string"
         },
         "questionsAndAnswers": {
           "description": "Optional. Contains user-, merchant-, and manufacturer-authored [questions and answers](https://support.google.com/merchants/answer/17085211) about the product. Max 30 question and answer pairs. Max 10000 characters total. Each question can have max 1000 characters. Each answer can have max 1000 characters.",
@@ -2083,6 +2297,10 @@
           },
           "type": "array"
         },
+        "shortTitle": {
+          "description": "The short title of the item.",
+          "type": "string"
+        },
         "size": {
           "description": "Size of the item. Only one value is allowed. For variants with different sizes, insert a separate product for each size with the same `itemGroupId` value, see [Size](https://support.google.com/merchants/answer/6324492).",
           "type": "string"
@@ -2144,6 +2362,28 @@
           },
           "type": "array"
         },
+        "specialtyHousingType": {
+          "description": "The specialty housing type for the property.",
+          "enum": [
+            "SPECIALTY_HOUSING_TYPE_UNSPECIFIED",
+            "CORPORATE",
+            "LOW_INCOME",
+            "MILITARY",
+            "SENIOR",
+            "SHORT_TERM",
+            "STUDENT"
+          ],
+          "enumDescriptions": [
+            "Unspecified specialty housing type.",
+            "Corporate housing.",
+            "Low income housing.",
+            "Military housing.",
+            "Senior housing.",
+            "Short term housing.",
+            "Student housing."
+          ],
+          "type": "string"
+        },
         "structuredDescription": {
           "$ref": "StructuredDescription",
           "description": "Structured description, for algorithmically (AI)-generated descriptions."
@@ -2175,6 +2415,10 @@
           "description": "The [Trim](https://support.google.com/google-ads/answer/14154176) of the vehicle model, such as `S`, `SV`, `SL` and others.",
           "type": "string"
         },
+        "unitArea": {
+          "$ref": "UnitArea",
+          "description": "The unit area of the property, such as `1000 sqft`."
+        },
         "unitPricingBaseMeasure": {
           "$ref": "UnitPricingBaseMeasure",
           "description": "The preference of the denominator of the unit price."
@@ -2182,6 +2426,29 @@
         "unitPricingMeasure": {
           "$ref": "UnitPricingMeasure",
           "description": "The measure and dimension of an item."
+        },
+        "utilitiesIncluded": {
+          "description": "The utilities included for the property.",
+          "items": {
+            "enum": [
+              "UTILITIES_INCLUDED_UNSPECIFIED",
+              "ELECTRICITY",
+              "GAS",
+              "INTERNET",
+              "TRASH",
+              "WATER"
+            ],
+            "enumDescriptions": [
+              "Unspecified utilities included.",
+              "Electricity.",
+              "Gas.",
+              "Internet.",
+              "Trash.",
+              "Water."
+            ],
+            "type": "string"
+          },
+          "type": "array"
         },
         "variantOptions": {
           "description": "Optional. Contains the [list of all variant-identifying options](https://support.google.com/merchants/answer/17085214) of this product.",
@@ -2428,6 +2695,33 @@
           "description": "Required. The dimension value represented as a number. The value can have a maximum precision of four decimal places.",
           "format": "double",
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "ProductFee": {
+      "description": "The product fee attribute containing type and amount.",
+      "id": "ProductFee",
+      "properties": {
+        "amount": {
+          "$ref": "Price",
+          "description": "The amount of product fee."
+        },
+        "type": {
+          "description": "The type of product fee.",
+          "enum": [
+            "FEE_TYPE_UNSPECIFIED",
+            "ADMIN_FEE",
+            "APPLICATION_FEE",
+            "SECURITY_DEPOSIT"
+          ],
+          "enumDescriptions": [
+            "Unspecified fee type.",
+            "Admin fee.",
+            "Application fee.",
+            "Security deposit."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -2975,6 +3269,32 @@
           "description": "The number of subscription periods the buyer has to pay.",
           "format": "int64",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "UnitArea": {
+      "description": "The unit area of the property.",
+      "id": "UnitArea",
+      "properties": {
+        "unit": {
+          "description": "The unit of area.",
+          "enum": [
+            "UNIT_UNSPECIFIED",
+            "SQM",
+            "SQFT"
+          ],
+          "enumDescriptions": [
+            "Unspecified unit.",
+            "Square meters.",
+            "Square feet."
+          ],
+          "type": "string"
+        },
+        "value": {
+          "description": "The area value.",
+          "format": "double",
+          "type": "number"
         }
       },
       "type": "object"

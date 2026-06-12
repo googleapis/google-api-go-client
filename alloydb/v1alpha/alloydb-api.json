@@ -2086,7 +2086,7 @@
       }
     }
   },
-  "revision": "20260520",
+  "revision": "20260605",
   "rootUrl": "https://alloydb.googleapis.com/",
   "schemas": {
     "AuthorizedNetwork": {
@@ -2949,6 +2949,11 @@
           },
           "readOnly": true,
           "type": "array"
+        },
+        "pscAutoDnsName": {
+          "description": "Output only. Specifies the DNS name to use with PSC service automation for the Instance.",
+          "readOnly": true,
+          "type": "string"
         },
         "pscDnsName": {
           "description": "Output only. The DNS name to use with PSC for the Instance.",
@@ -6903,6 +6908,13 @@
         "maintenanceVersion": {
           "description": "Optional. Current Maintenance version of the database resource. Example: \"MYSQL_8_0_41.R20250531.01_15\"",
           "type": "string"
+        },
+        "nextAvailableMaintenanceVersions": {
+          "description": "Optional. List of next available maintenance versions.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "upcomingMaintenance": {
           "$ref": "StorageDatabasecenterPartnerapiV1mainUpcomingMaintenance",

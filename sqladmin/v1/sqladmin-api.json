@@ -15,7 +15,7 @@
   "baseUrl": "https://sqladmin.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "SQL Admin",
-  "description": "API for Cloud SQL database instance management",
+  "description": "Cloud SQL Admin API",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/sql/docs",
   "endpoints": [
@@ -243,6 +243,11 @@
       "description": "Regional Endpoint",
       "endpointUrl": "https://sqladmin.europe-west10.rep.googleapis.com/",
       "location": "europe-west10"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://sqladmin.us-south1.rep.googleapis.com/",
+      "location": "us-south1"
     }
   ],
   "fullyEncodeReservedExpansion": true,
@@ -726,6 +731,38 @@
             }
           },
           "path": "v1/projects/{project}/instances/{instance}/connectSettings",
+          "response": {
+            "$ref": "ConnectSettings"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin"
+          ]
+        },
+        "resolve": {
+          "description": "Retrieves connect settings about a Cloud SQL instance using the instance DNS name.",
+          "flatPath": "v1/dns/{dnsName}/locations/{location}:resolveConnectSettings",
+          "httpMethod": "GET",
+          "id": "sql.connect.resolve",
+          "parameterOrder": [
+            "dnsName",
+            "location"
+          ],
+          "parameters": {
+            "dnsName": {
+              "description": "Required. Cloud SQL instance ID. This does not include the project ID.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "location": {
+              "description": "Required. The region of the instance.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/dns/{dnsName}/locations/{location}:resolveConnectSettings",
           "response": {
             "$ref": "ConnectSettings"
           },
@@ -3022,7 +3059,7 @@
       }
     }
   },
-  "revision": "20260510",
+  "revision": "20260529",
   "rootUrl": "https://sqladmin.googleapis.com/",
   "schemas": {
     "AclEntry": {
@@ -3213,6 +3250,7 @@
             "POSTGRES_17",
             "POSTGRES_18",
             "POSTGRES_19",
+            "POSTGRES_20",
             "SQLSERVER_2019_STANDARD",
             "SQLSERVER_2019_ENTERPRISE",
             "SQLSERVER_2019_EXPRESS",
@@ -3237,6 +3275,7 @@
             false,
             false,
             true,
+            false,
             false,
             false,
             false,
@@ -3327,6 +3366,7 @@
             "The database version is PostgreSQL 17.",
             "The database version is PostgreSQL 18.",
             "The database version is PostgreSQL 19.",
+            "The database version is PostgreSQL 20.",
             "The database version is SQL Server 2019 Standard.",
             "The database version is SQL Server 2019 Enterprise.",
             "The database version is SQL Server 2019 Express.",
@@ -3690,6 +3730,7 @@
             "POSTGRES_17",
             "POSTGRES_18",
             "POSTGRES_19",
+            "POSTGRES_20",
             "SQLSERVER_2019_STANDARD",
             "SQLSERVER_2019_ENTERPRISE",
             "SQLSERVER_2019_EXPRESS",
@@ -3714,6 +3755,7 @@
             false,
             false,
             true,
+            false,
             false,
             false,
             false,
@@ -3804,6 +3846,7 @@
             "The database version is PostgreSQL 17.",
             "The database version is PostgreSQL 18.",
             "The database version is PostgreSQL 19.",
+            "The database version is PostgreSQL 20.",
             "The database version is SQL Server 2019 Standard.",
             "The database version is SQL Server 2019 Enterprise.",
             "The database version is SQL Server 2019 Express.",
@@ -3997,7 +4040,7 @@
           "type": "string"
         },
         "destinationNetwork": {
-          "description": "Optional. The fully qualified URI of the VPC network to which the cloned instance will be connected via Private Services Access for private IP. For example:`projects/my-network-project/global/networks/my-network`. This field is only required for cross-project cloning.",
+          "description": "Optional. The fully qualified URI of the VPC network to which the cloned instance will be connected via private services access for private IP. For example:`projects/my-network-project/global/networks/my-network`. This field is only required for cross-project cloning.",
           "type": "string"
         },
         "destinationProject": {
@@ -4162,6 +4205,7 @@
             "POSTGRES_17",
             "POSTGRES_18",
             "POSTGRES_19",
+            "POSTGRES_20",
             "SQLSERVER_2019_STANDARD",
             "SQLSERVER_2019_ENTERPRISE",
             "SQLSERVER_2019_EXPRESS",
@@ -4186,6 +4230,7 @@
             false,
             false,
             true,
+            false,
             false,
             false,
             false,
@@ -4276,6 +4321,7 @@
             "The database version is PostgreSQL 17.",
             "The database version is PostgreSQL 18.",
             "The database version is PostgreSQL 19.",
+            "The database version is PostgreSQL 20.",
             "The database version is SQL Server 2019 Standard.",
             "The database version is SQL Server 2019 Enterprise.",
             "The database version is SQL Server 2019 Express.",
@@ -4582,6 +4628,7 @@
             "POSTGRES_17",
             "POSTGRES_18",
             "POSTGRES_19",
+            "POSTGRES_20",
             "SQLSERVER_2019_STANDARD",
             "SQLSERVER_2019_ENTERPRISE",
             "SQLSERVER_2019_EXPRESS",
@@ -4606,6 +4653,7 @@
             false,
             false,
             true,
+            false,
             false,
             false,
             false,
@@ -4696,6 +4744,7 @@
             "The database version is PostgreSQL 17.",
             "The database version is PostgreSQL 18.",
             "The database version is PostgreSQL 19.",
+            "The database version is PostgreSQL 20.",
             "The database version is SQL Server 2019 Standard.",
             "The database version is SQL Server 2019 Enterprise.",
             "The database version is SQL Server 2019 Express.",
@@ -5574,6 +5623,7 @@
               "POSTGRES_17",
               "POSTGRES_18",
               "POSTGRES_19",
+              "POSTGRES_20",
               "SQLSERVER_2019_STANDARD",
               "SQLSERVER_2019_ENTERPRISE",
               "SQLSERVER_2019_EXPRESS",
@@ -5598,6 +5648,7 @@
               false,
               false,
               true,
+              false,
               false,
               false,
               false,
@@ -5688,6 +5739,7 @@
               "The database version is PostgreSQL 17.",
               "The database version is PostgreSQL 18.",
               "The database version is PostgreSQL 19.",
+              "The database version is PostgreSQL 20.",
               "The database version is SQL Server 2019 Standard.",
               "The database version is SQL Server 2019 Enterprise.",
               "The database version is SQL Server 2019 Express.",
@@ -6879,7 +6931,8 @@
             "ENHANCED_BACKUP",
             "REPAIR_READ_POOL",
             "CREATE_READ_POOL",
-            "PRE_CHECK_MAJOR_VERSION_UPGRADE"
+            "PRE_CHECK_MAJOR_VERSION_UPGRADE",
+            "SETUP_MIGRATION"
           ],
           "enumDeprecated": [
             false,
@@ -6930,6 +6983,7 @@
             false,
             false,
             true,
+            false,
             false,
             false,
             false,
@@ -6989,7 +7043,8 @@
             "Creates a backup for an Enhanced BackupTier Cloud SQL instance.",
             "Repairs entire read pool or specified read pool nodes in the read pool.",
             "Creates a Cloud SQL read pool instance.",
-            "Pre-checks the major version upgrade operation."
+            "Pre-checks the major version upgrade operation.",
+            "This operation type represents individual steps in a multi-step setup migration workflow: including configuration, replication, switchover/back, and data reseeding, as defined by operation's intent."
           ],
           "type": "string"
         },
@@ -7461,6 +7516,7 @@
             "POSTGRES_17",
             "POSTGRES_18",
             "POSTGRES_19",
+            "POSTGRES_20",
             "SQLSERVER_2019_STANDARD",
             "SQLSERVER_2019_ENTERPRISE",
             "SQLSERVER_2019_EXPRESS",
@@ -7485,6 +7541,7 @@
             false,
             false,
             true,
+            false,
             false,
             false,
             false,
@@ -7575,6 +7632,7 @@
             "The database version is PostgreSQL 17.",
             "The database version is PostgreSQL 18.",
             "The database version is PostgreSQL 19.",
+            "The database version is PostgreSQL 20.",
             "The database version is SQL Server 2019 Standard.",
             "The database version is SQL Server 2019 Enterprise.",
             "The database version is SQL Server 2019 Express.",
@@ -7646,6 +7704,16 @@
           "description": "The IP address of the consumer endpoint.",
           "type": "string"
         },
+        "serviceConnectionPolicy": {
+          "description": "Output only. The service connection policy created automatically for the consumer network when `psc_auto_connection_policy_enabled` is true. It is in the format of: `projects/{project}/regions/{region}/serviceConnectionPolicies/{policy_id}` The `policy_id` is in format of `$NETWORK-$RANDOM`.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "serviceConnectionPolicyCreationResult": {
+          "description": "Output only. The status of service connection policy creation.",
+          "readOnly": true,
+          "type": "string"
+        },
         "status": {
           "description": "The connection status of the consumer endpoint.",
           "type": "string"
@@ -7668,6 +7736,10 @@
           "description": "Optional. The network attachment of the consumer network that the Private Service Connect enabled Cloud SQL instance is authorized to connect via PSC interface. format: projects/PROJECT/regions/REGION/networkAttachments/ID",
           "type": "string"
         },
+        "pscAutoConnectionPolicyEnabled": {
+          "description": "Optional. Whether to set up the PSC service connection policy automatically.",
+          "type": "boolean"
+        },
         "pscAutoConnections": {
           "description": "Optional. The list of settings for requested Private Service Connect consumer endpoints that can be used to connect to this Cloud SQL instance.",
           "items": {
@@ -7676,7 +7748,7 @@
           "type": "array"
         },
         "pscAutoDnsEnabled": {
-          "description": "Optional. Indicates whether PSC DNS automation is enabled for this instance. When enabled, Cloud SQL provisions a universal DNS record across all networks configured with Private Service Connect (PSC) auto-connections. This will default to true for new instances when Private Service Connect is enabled.",
+          "description": "Optional. Indicates whether Private Service Connect DNS automation is enabled for this instance. When enabled, Cloud SQL provisions a universal DNS record across all networks configured with Private Service Connect auto-connections. This will default to true for new instances when Private Service Connect is enabled.",
           "type": "boolean"
         },
         "pscEnabled": {
@@ -7684,7 +7756,7 @@
           "type": "boolean"
         },
         "pscWriteEndpointDnsEnabled": {
-          "description": "Optional. Indicates whether PSC write endpoint DNS automation is enabled for this instance. When enabled, Cloud SQL provisions a universal global DNS record across all networks configured with Private Service Connect (PSC) auto-connections that always points to the cluster primary instance. This feature is only supported for Enterprise Plus edition. This will default to true for new Enterprise Plus instances when `psc_auto_dns_enabled` is enabled.",
+          "description": "Optional. Indicates whether Private Service Connect write endpoint DNS automation is enabled for this instance. When enabled, Cloud SQL provisions a universal global DNS record across all networks configured with Private Service Connect auto-connections that points to the cluster primary instance. This feature is only supported for Enterprise Plus edition. This will default to true for new Enterprise Plus instances when `psc_auto_dns_enabled` is enabled.",
           "type": "boolean"
         }
       },
@@ -9197,6 +9269,7 @@
             "CLOUD_IAM_GROUP",
             "CLOUD_IAM_GROUP_USER",
             "CLOUD_IAM_GROUP_SERVICE_ACCOUNT",
+            "CLOUD_IAM_WORKFORCE_IDENTITY",
             "ENTRAID_USER"
           ],
           "enumDescriptions": [
@@ -9206,6 +9279,7 @@
             "Cloud IAM group. Not used for login.",
             "Read-only. Login for a user that belongs to the Cloud IAM group.",
             "Read-only. Login for a service account that belongs to the Cloud IAM group.",
+            "Cloud IAM workforce identity user managed via workforce identity federation.",
             "Microsoft Entra ID user."
           ],
           "type": "string"

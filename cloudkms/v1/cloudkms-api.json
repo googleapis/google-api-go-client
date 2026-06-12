@@ -31,16 +31,6 @@
     },
     {
       "description": "Regional Endpoint",
-      "endpointUrl": "https://cloudkms.us-west3.rep.googleapis.com/",
-      "location": "us-west3"
-    },
-    {
-      "description": "Regional Endpoint",
-      "endpointUrl": "https://cloudkms.us-central2.rep.googleapis.com/",
-      "location": "us-central2"
-    },
-    {
-      "description": "Regional Endpoint",
       "endpointUrl": "https://cloudkms.us-west4.rep.googleapis.com/",
       "location": "us-west4"
     },
@@ -53,16 +43,6 @@
       "description": "Regional Endpoint",
       "endpointUrl": "https://cloudkms.us-south1.rep.googleapis.com/",
       "location": "us-south1"
-    },
-    {
-      "description": "Regional Endpoint",
-      "endpointUrl": "https://cloudkms.us-east4.rep.googleapis.com/",
-      "location": "us-east4"
-    },
-    {
-      "description": "Regional Endpoint",
-      "endpointUrl": "https://cloudkms.us-west2.rep.googleapis.com/",
-      "location": "us-west2"
     },
     {
       "description": "Regional Endpoint",
@@ -98,6 +78,26 @@
       "description": "Regional Endpoint",
       "endpointUrl": "https://cloudkms.us-west1.rep.googleapis.com/",
       "location": "us-west1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://cloudkms.us-west3.rep.googleapis.com/",
+      "location": "us-west3"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://cloudkms.us-central2.rep.googleapis.com/",
+      "location": "us-central2"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://cloudkms.us-east4.rep.googleapis.com/",
+      "location": "us-east4"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://cloudkms.us-west2.rep.googleapis.com/",
+      "location": "us-west2"
     },
     {
       "description": "Regional Endpoint",
@@ -2967,7 +2967,7 @@
       }
     }
   },
-  "revision": "20260522",
+  "revision": "20260608",
   "rootUrl": "https://cloudkms.googleapis.com/",
   "schemas": {
     "AddQuorumMember": {

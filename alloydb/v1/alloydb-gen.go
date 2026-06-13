@@ -4883,6 +4883,9 @@ type StorageDatabasecenterPartnerapiV1mainResourceMaintenanceInfo struct {
 	// MaintenanceVersion: Optional. Current Maintenance version of the database
 	// resource. Example: "MYSQL_8_0_41.R20250531.01_15"
 	MaintenanceVersion string `json:"maintenanceVersion,omitempty"`
+	// NextAvailableMaintenanceVersions: Optional. List of next available
+	// maintenance versions.
+	NextAvailableMaintenanceVersions []string `json:"nextAvailableMaintenanceVersions,omitempty"`
 	// UpcomingMaintenance: Optional. Upcoming maintenance for the database
 	// resource. This field is populated once SLM generates and publishes upcoming
 	// maintenance window.

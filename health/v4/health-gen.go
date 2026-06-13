@@ -37,7 +37,7 @@
 // By default, all available scopes (see "Constants") are used to authenticate.
 // To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
-//	healthService, err := health.NewService(ctx, option.WithScopes(health.GooglehealthSleepReadonlyScope))
+//	healthService, err := health.NewService(ctx, option.WithScopes(health.GooglehealthSleepWriteonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
@@ -110,11 +110,19 @@ const (
 	// See your Google Health activity and fitness data
 	GooglehealthActivityAndFitnessReadonlyScope = "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly"
 
+	// Add activity and fitness data to Google Health, and edit or delete the data
+	// it adds.
+	GooglehealthActivityAndFitnessWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly"
+
 	// See your Google Health ECG data
 	GooglehealthEcgReadonlyScope = "https://www.googleapis.com/auth/googlehealth.ecg.readonly"
 
 	// See your Google Health health metrics and measurement data
 	GooglehealthHealthMetricsAndMeasurementsReadonlyScope = "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly"
+
+	// Add health metric and measurements data to Google Health, and edit or delete
+	// the data it adds.
+	GooglehealthHealthMetricsAndMeasurementsWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly"
 
 	// See your Google Health Irregular Rhythm Notifications data
 	GooglehealthIrnReadonlyScope = "https://www.googleapis.com/auth/googlehealth.irn.readonly"
@@ -122,14 +130,30 @@ const (
 	// See exercise GPS location data in Google Health
 	GooglehealthLocationReadonlyScope = "https://www.googleapis.com/auth/googlehealth.location.readonly"
 
+	// Add exercise GPS location data to Google Health, and edit or delete the data
+	// it adds.
+	GooglehealthLocationWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.location.writeonly"
+
+	// Add nutrition data to Google Health, and edit or delete the data it adds.
+	GooglehealthNutritionWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.nutrition.writeonly"
+
 	// See your Google Health profile data
 	GooglehealthProfileReadonlyScope = "https://www.googleapis.com/auth/googlehealth.profile.readonly"
+
+	// Add profile data to Google Health, and edit or delete the data it adds.
+	GooglehealthProfileWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.profile.writeonly"
 
 	// See your Google Health settings
 	GooglehealthSettingsReadonlyScope = "https://www.googleapis.com/auth/googlehealth.settings.readonly"
 
+	// Add settings data to Google Health, and edit or delete the data it adds.
+	GooglehealthSettingsWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.settings.writeonly"
+
 	// See your Google Health sleep data
 	GooglehealthSleepReadonlyScope = "https://www.googleapis.com/auth/googlehealth.sleep.readonly"
+
+	// Add sleep data to Google Health, and edit or delete the data it adds.
+	GooglehealthSleepWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.sleep.writeonly"
 )
 
 // NewService creates a new Service.
@@ -137,13 +161,20 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly",
+		"https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly",
 		"https://www.googleapis.com/auth/googlehealth.ecg.readonly",
 		"https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly",
+		"https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
 		"https://www.googleapis.com/auth/googlehealth.irn.readonly",
 		"https://www.googleapis.com/auth/googlehealth.location.readonly",
+		"https://www.googleapis.com/auth/googlehealth.location.writeonly",
+		"https://www.googleapis.com/auth/googlehealth.nutrition.writeonly",
 		"https://www.googleapis.com/auth/googlehealth.profile.readonly",
+		"https://www.googleapis.com/auth/googlehealth.profile.writeonly",
 		"https://www.googleapis.com/auth/googlehealth.settings.readonly",
+		"https://www.googleapis.com/auth/googlehealth.settings.writeonly",
 		"https://www.googleapis.com/auth/googlehealth.sleep.readonly",
+		"https://www.googleapis.com/auth/googlehealth.sleep.writeonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)

@@ -254,6 +254,9 @@ type Categories struct {
 	// Accessibility: The accessibility category, containing all accessibility
 	// related audits.
 	Accessibility *LighthouseCategoryV5 `json:"accessibility,omitempty"`
+	// AgenticBrowsing: The agentic browsing category, containing all agentic
+	// browsing related audits.
+	AgenticBrowsing *LighthouseCategoryV5 `json:"agentic-browsing,omitempty"`
 	// BestPractices: The best practices category, containing all best practices
 	// related audits.
 	BestPractices *LighthouseCategoryV5 `json:"best-practices,omitempty"`

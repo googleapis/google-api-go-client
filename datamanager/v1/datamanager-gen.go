@@ -131,6 +131,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.AccountTypes = NewAccountTypesService(s)
+	s.AdEvents = NewAdEventsService(s)
 	s.AudienceMembers = NewAudienceMembersService(s)
 	s.Events = NewEventsService(s)
 	s.RequestStatus = NewRequestStatusService(s)
@@ -159,6 +160,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	AccountTypes *AccountTypesService
+
+	AdEvents *AdEventsService
 
 	AudienceMembers *AudienceMembersService
 
@@ -267,6 +270,15 @@ type AccountTypesAccountsUserListsService struct {
 	s *Service
 }
 
+func NewAdEventsService(s *Service) *AdEventsService {
+	rs := &AdEventsService{s: s}
+	return rs
+}
+
+type AdEventsService struct {
+	s *Service
+}
+
 func NewAudienceMembersService(s *Service) *AudienceMembersService {
 	rs := &AudienceMembersService{s: s}
 	return rs
@@ -292,6 +304,190 @@ func NewRequestStatusService(s *Service) *RequestStatusService {
 
 type RequestStatusService struct {
 	s *Service
+}
+
+// AdEvent: An ad event.
+type AdEvent struct {
+	// AdFormat: Enum value for ad format.
+	//
+	// Possible values:
+	//   "AD_FORMAT_UNSPECIFIED" - Unspecified ad format.
+	//   "AD_FORMAT_AR" - AR ad.
+	//   "AD_FORMAT_AUDIO" - Audio ad.
+	//   "AD_FORMAT_BANNER" - Banner ad.
+	//   "AD_FORMAT_BUMPER" - Bumper ad.
+	//   "AD_FORMAT_CAROUSEL" - Carousel ad.
+	//   "AD_FORMAT_COLLECTION" - Collection ad.
+	//   "AD_FORMAT_IMAGE" - Image ad.
+	//   "AD_FORMAT_INTERACTIVE" - Interactive ad.
+	//   "AD_FORMAT_INTERSTITIAL" - Interstitial ad.
+	//   "AD_FORMAT_IN_FEED" - In-feed ad.
+	//   "AD_FORMAT_IN_STREAM" - In-stream ad.
+	//   "AD_FORMAT_IN_STREAM_SKIPPABLE" - In-stream skippable ad.
+	//   "AD_FORMAT_IN_STREAM_NON_SKIPPABLE" - In-stream non-skippable ad.
+	//   "AD_FORMAT_NATIVE" - Native ad.
+	//   "AD_FORMAT_SHORTS" - Shorts ad.
+	//   "AD_FORMAT_STORY" - Story ad.
+	//   "AD_FORMAT_SPONSORED" - Sponsored ad.
+	//   "AD_FORMAT_VIDEO" - Video ad.
+	AdFormat string `json:"adFormat,omitempty"`
+	// AdFormatString: String value for ad format.
+	AdFormatString string `json:"adFormatString,omitempty"`
+	// AdGroupId: Optional. The ID of the associated ad group.
+	AdGroupId string `json:"adGroupId,omitempty"`
+	// AdHeight: Optional. The height of the ad in pixels.
+	AdHeight int64 `json:"adHeight,omitempty"`
+	// AdId: Optional. The ID of the associated ad within the group.
+	AdId string `json:"adId,omitempty"`
+	// AdPlacement: Enum value for ad placement.
+	//
+	// Possible values:
+	//   "AD_PLACEMENT_UNSPECIFIED" - Unspecified ad placement.
+	//   "AD_PLACEMENT_DISCOVER" - Discover placement.
+	//   "AD_PLACEMENT_FEED" - Feed placement.
+	//   "AD_PLACEMENT_FOOTER" - Footer placement.
+	//   "AD_PLACEMENT_HEADER" - Header placement.
+	//   "AD_PLACEMENT_HOME" - Home placement.
+	//   "AD_PLACEMENT_IN_CONTENT" - In-content placement.
+	//   "AD_PLACEMENT_PROMOTED" - Promoted placement.
+	//   "AD_PLACEMENT_SEARCH" - Search placement.
+	//   "AD_PLACEMENT_STORY" - Story placement.
+	AdPlacement string `json:"adPlacement,omitempty"`
+	// AdPlacementString: String value for ad placement.
+	AdPlacementString string `json:"adPlacementString,omitempty"`
+	// AdType: Enum value for ad type.
+	//
+	// Possible values:
+	//   "AD_TYPE_UNSPECIFIED" - Unspecified ad type.
+	//   "AD_TYPE_DISPLAY" - Display ad.
+	//   "AD_TYPE_TEXT" - Text ad.
+	//   "AD_TYPE_IMAGE" - Image ad.
+	//   "AD_TYPE_RICH_MEDIA" - Rich media ad.
+	//   "AD_TYPE_HTML" - HTML ad.
+	//   "AD_TYPE_AUDIO" - Audio ad.
+	//   "AD_TYPE_VIDEO" - Video ad.
+	AdType string `json:"adType,omitempty"`
+	// AdTypeString: String value for ad type.
+	AdTypeString string `json:"adTypeString,omitempty"`
+	// AdWidth: Optional. The width of the ad in pixels.
+	AdWidth int64 `json:"adWidth,omitempty"`
+	// AdvertiserId: Required. The ID of the advertiser for the ad event. This must
+	// match the ID sent in the linking flow.
+	AdvertiserId string `json:"advertiserId,omitempty"`
+	// AttributionHint: Optional. The partner-assumed attribution status for this
+	// ad event. This acts only as a signal for how the partner assumed attribution
+	// played out, and does not force an end result in final reports.
+	//
+	// Possible values:
+	//   "ATTRIBUTION_HINT_UNSPECIFIED" - Unknown attribution status.
+	//   "ATTRIBUTION_HINT_CONVERTED" - Converted status.
+	//   "ATTRIBUTION_HINT_NOT_CONVERTED" - Not converted status.
+	AttributionHint string `json:"attributionHint,omitempty"`
+	// CampaignId: Required. The ID of the associated campaign.
+	CampaignId string `json:"campaignId,omitempty"`
+	// CampaignName: Required. The name of the associated campaign.
+	CampaignName string `json:"campaignName,omitempty"`
+	// DeviceInfo: Optional. Information gathered about the device being used when
+	// the ad event happened.
+	DeviceInfo *DeviceInfo `json:"deviceInfo,omitempty"`
+	// EventId: Optional. An ID created and managed by the caller that uniquely
+	// identifies this event. Required if you want to deduplicate ad events that
+	// are included in multiple requests. Otherwise, this field is optional.
+	EventId string `json:"eventId,omitempty"`
+	// EventSubtype: Enum value for event subtype.
+	//
+	// Possible values:
+	//   "EVENT_SUBTYPE_UNSPECIFIED" - Unspecified event subtype.
+	//   "EVENT_SUBTYPE_IMPRESSION" - Impression event.
+	//   "EVENT_SUBTYPE_ENGAGED_VIEW" - Engaged view event.
+	//   "EVENT_SUBTYPE_ONSITE_CLICK" - Onsite click event.
+	//   "EVENT_SUBTYPE_OUTBOUND_CLICK" - Outbound click event.
+	EventSubtype string `json:"eventSubtype,omitempty"`
+	// EventSubtypeString: String value for event subtype.
+	EventSubtypeString string `json:"eventSubtypeString,omitempty"`
+	// EventType: Required. The type of the event.
+	//
+	// Possible values:
+	//   "EVENT_TYPE_UNSPECIFIED" - Unspecified event type.
+	//   "EVENT_TYPE_VIEW" - View event.
+	//   "EVENT_TYPE_CLICK" - Click event.
+	EventType string `json:"eventType,omitempty"`
+	// MeasurementAllowed: Optional. Represents if the row is allowed to be used
+	// for measurement purposes, as governed by applicable privacy laws within
+	// regional jurisdiction.
+	MeasurementAllowed bool `json:"measurementAllowed,omitempty"`
+	// Medium: Required. The medium of the ad, akin to the Google Analytics medium.
+	Medium string `json:"medium,omitempty"`
+	// MobileDeviceId: Optional. The device ID of the device that the ad was served
+	// to.
+	MobileDeviceId string `json:"mobileDeviceId,omitempty"`
+	// Platform: Enum value for platform.
+	//
+	// Possible values:
+	//   "PLATFORM_UNSPECIFIED" - Unspecified platform.
+	//   "PLATFORM_IOS" - iOS platform.
+	//   "PLATFORM_ANDROID" - Android platform.
+	//   "PLATFORM_WEB" - Web platform.
+	Platform string `json:"platform,omitempty"`
+	// PlatformString: String value for platform.
+	PlatformString string `json:"platformString,omitempty"`
+	// PlatformType: Enum value for platform type.
+	//
+	// Possible values:
+	//   "PLATFORM_TYPE_UNSPECIFIED" - Unspecified platform type.
+	//   "PLATFORM_TYPE_MOBILE" - Mobile platform.
+	//   "PLATFORM_TYPE_DESKTOP" - Desktop platform.
+	//   "PLATFORM_TYPE_CTV" - CTV platform.
+	//   "PLATFORM_TYPE_PHONE" - Phone platform.
+	//   "PLATFORM_TYPE_TABLET" - Tablet platform.
+	PlatformType string `json:"platformType,omitempty"`
+	// PlatformTypeString: String value for platform type.
+	PlatformTypeString string `json:"platformTypeString,omitempty"`
+	// RegionCode: Required. The ISO 3166-2 country plus subdivision.
+	RegionCode string `json:"regionCode,omitempty"`
+	// Source: Required. The platform source of the ad, akin to the Google
+	// Analytics source.
+	Source string `json:"source,omitempty"`
+	// TargetingType: Enum value for targeting type.
+	//
+	// Possible values:
+	//   "TARGETING_TYPE_UNSPECIFIED" - Unspecified targeting type.
+	//   "TARGETING_TYPE_AUDIENCE" - Audience targeting.
+	//   "TARGETING_TYPE_CONTEXTUAL" - Contextual targeting.
+	//   "TARGETING_TYPE_DEMOGRAPHIC" - Demographic targeting.
+	//   "TARGETING_TYPE_DEVICE" - Device targeting.
+	//   "TARGETING_TYPE_GEO" - Geo targeting.
+	//   "TARGETING_TYPE_INTEREST" - Interest targeting.
+	//   "TARGETING_TYPE_PURCHASE_INTENT" - Purchase intent targeting.
+	//   "TARGETING_TYPE_REMARKETING" - Remarketing targeting.
+	TargetingType string `json:"targetingType,omitempty"`
+	// TargetingTypeString: String value for targeting type.
+	TargetingTypeString string `json:"targetingTypeString,omitempty"`
+	// Timestamp: Required. The time the event occurred.
+	Timestamp string `json:"timestamp,omitempty"`
+	// UserData: Optional. Multiple pieces of user-provided data, representing the
+	// user the event is associated with. It is possible to provide multiple
+	// instances of the same type of data (e.g. email address). The more data
+	// provided, the more likely a match will be found.
+	UserData *UserData `json:"userData,omitempty"`
+	// ViewabilityInfo: Required. Details of the viewability of the ad served.
+	ViewabilityInfo *ViewabilityInfo `json:"viewabilityInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdFormat") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdFormat") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod AdEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdIdentifiers: Identifiers and other information used to match the
@@ -627,6 +823,28 @@ func (s ContactIdInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CoordinatorKeyInfo: Information about the coordinator key.
+type CoordinatorKeyInfo struct {
+	// KeyId: Required. The ID of the chosen coordinator key.
+	KeyId string `json:"keyId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KeyId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KeyId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CoordinatorKeyInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod CoordinatorKeyInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CustomVariable: Custom variable for ads conversions.
 type CustomVariable struct {
 	// DestinationReferences: Optional. Reference string used to determine which of
@@ -847,6 +1065,10 @@ func (s EncryptedUserId) MarshalJSON() ([]byte, error) {
 type EncryptionInfo struct {
 	// AwsWrappedKeyInfo: Amazon Web Services wrapped key information.
 	AwsWrappedKeyInfo *AwsWrappedKeyInfo `json:"awsWrappedKeyInfo,omitempty"`
+	// CoordinatorKeyInfo: Key information for the chosen coordinator key. This is
+	// not supported for the IngestEvents, IngestAudienceMembers, and
+	// RemoveAudienceMembers methods.
+	CoordinatorKeyInfo *CoordinatorKeyInfo `json:"coordinatorKeyInfo,omitempty"`
 	// GcpWrappedKeyInfo: Google Cloud Platform wrapped key information.
 	GcpWrappedKeyInfo *GcpWrappedKeyInfo `json:"gcpWrappedKeyInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AwsWrappedKeyInfo") to
@@ -1247,6 +1469,39 @@ type GcpWrappedKeyInfo struct {
 func (s GcpWrappedKeyInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GcpWrappedKeyInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IngestAdEventsRequest: Request to upload ad events.
+type IngestAdEventsRequest struct {
+	// AdEvents: Required. Required (at least 1). A list of ad events.
+	AdEvents []*AdEvent `json:"adEvents,omitempty"`
+	// EncryptionInfo: Optional. Information about encryption keys which are used
+	// to encrypt the data.
+	EncryptionInfo *EncryptionInfo `json:"encryptionInfo,omitempty"`
+	// ValidateOnly: Optional. If true, the request is validated, but not executed.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdEvents") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdEvents") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IngestAdEventsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod IngestAdEventsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IngestAdEventsResponse: Response from an ad event ingestion operation.
+type IngestAdEventsResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // IngestAudienceMembersRequest: Request to upload audience members to the
@@ -2304,8 +2559,49 @@ func (s PartnerAudienceInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PartnerCustomerAccount: Represents a customer account in the partner's
+// system.
+type PartnerCustomerAccount struct {
+	// AccountId: Required. The identifier of the customer account in the partner's
+	// ID space.
+	AccountId string `json:"accountId,omitempty"`
+	// AccountName: Optional. The name of the account.
+	AccountName string `json:"accountName,omitempty"`
+	// AccountType: Optional. The type of the account. Can be used to distinguish
+	// between advertiser accounts and business level accounts, for example.
+	AccountType string `json:"accountType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccountId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PartnerCustomerAccount) MarshalJSON() ([]byte, error) {
+	type NoMethod PartnerCustomerAccount
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PartnerLink: A partner link between an owning account and a partner account.
 type PartnerLink struct {
+	// FeatureSet: Optional. Immutable. The set of features supported for the
+	// partner link. If not specified, the system behavior defaults to
+	// FEATURE_SET_AUDIENCE_AND_EVENT_MANAGEMENT.
+	//
+	// Possible values:
+	//   "FEATURE_SET_UNSPECIFIED" - Unspecified feature set. If unspecified, the
+	// system behavior defaults to FEATURE_SET_AUDIENCE_AND_EVENT_MANAGEMENT.
+	//   "FEATURE_SET_AUDIENCE_AND_EVENT_MANAGEMENT" - Indicates a link used for
+	// audience and event management.
+	//   "FEATURE_SET_AD_EVENT_MANAGEMENT" - Indicates a link used for ad event
+	// management.
+	FeatureSet string `json:"featureSet,omitempty"`
 	// Name: Identifier. The name of the partner link. Format:
 	// accountTypes/{account_type}/accounts/{account}/partnerLinks/{partner_link}
 	Name string `json:"name,omitempty"`
@@ -2315,26 +2611,56 @@ type PartnerLink struct {
 	// PartnerAccount: Required. The partner account granted access by the owning
 	// account.
 	PartnerAccount *ProductAccount `json:"partnerAccount,omitempty"`
+	// PartnerCustomerAccount: Optional. The customer account in the partner
+	// system. This is required for partner links with the
+	// FEATURE_SET_AD_EVENT_MANAGEMENT feature set.
+	PartnerCustomerAccount *PartnerCustomerAccount `json:"partnerCustomerAccount,omitempty"`
 	// PartnerLinkId: Output only. The partner link ID.
 	PartnerLinkId string `json:"partnerLinkId,omitempty"`
+	// PartnerLinkMetadata: Optional. Metadata associated with the partner link.
+	// This is optional and only accepted for partner links with the
+	// FEATURE_SET_AD_EVENT_MANAGEMENT.
+	PartnerLinkMetadata *PartnerLinkMetadata `json:"partnerLinkMetadata,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "FeatureSet") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "FeatureSet") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s PartnerLink) MarshalJSON() ([]byte, error) {
 	type NoMethod PartnerLink
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PartnerLinkMetadata: Represents metadata associated with a partner link.
+type PartnerLinkMetadata struct {
+	// ImplicitAccounts: Optional. The list of implicit accounts.
+	ImplicitAccounts []*PartnerCustomerAccount `json:"implicitAccounts,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ImplicitAccounts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ImplicitAccounts") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PartnerLinkMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod PartnerLinkMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2366,7 +2692,7 @@ type ProductAccount struct {
 	// AccountId: Required. The ID of the account. For example, your Google Ads
 	// account ID.
 	AccountId string `json:"accountId,omitempty"`
-	// AccountType: Optional. The type of the account. For example, `GOOGLE_ADS`.
+	// AccountType: Required. The type of the account. For example, `GOOGLE_ADS`.
 	// Either `account_type` or the deprecated `product` is required. If both are
 	// set, the values must match.
 	//
@@ -3590,6 +3916,59 @@ type UserProperty struct {
 
 func (s UserProperty) MarshalJSON() ([]byte, error) {
 	type NoMethod UserProperty
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ViewabilityInfo: Details of the viewability of the ad served.
+type ViewabilityInfo struct {
+	// MediaDuration: Optional. The duration of the ad media.
+	MediaDuration string `json:"mediaDuration,omitempty"`
+	// MediaQuartile: Optional. The amount of the media that was played as discrete
+	// quartiles.
+	//
+	// Possible values:
+	//   "MEDIA_QUARTILE_UNSPECIFIED" - Unspecified media quartile.
+	//   "MEDIA_QUARTILE_START" - Start.
+	//   "MEDIA_QUARTILE_FIRST_QUARTILE" - First quartile.
+	//   "MEDIA_QUARTILE_MIDPOINT" - Midpoint.
+	//   "MEDIA_QUARTILE_THIRD_QUARTILE" - Third quartile.
+	//   "MEDIA_QUARTILE_COMPLETE" - Complete.
+	MediaQuartile string `json:"mediaQuartile,omitempty"`
+	// MediaSkippable: Optional. Whether the ad media was skippable or not.
+	MediaSkippable bool `json:"mediaSkippable,omitempty"`
+	// MediaVolumePercent: Optional. The numerical percent (0-100) of the volume of
+	// the media playback.
+	MediaVolumePercent int64 `json:"mediaVolumePercent,omitempty"`
+	// PlaybackDuration: Optional. The duration of playback of the ad media,
+	// regardless of whether it was viewable or not.
+	PlaybackDuration string `json:"playbackDuration,omitempty"`
+	// ViewType: Required. The type of the event.
+	//
+	// Possible values:
+	//   "VIEW_TYPE_UNSPECIFIED" - Unspecified view type.
+	//   "VIEW_TYPE_MRC_VIEWED" - MRC viewed.
+	//   "VIEW_TYPE_MRC_RENDERED" - MRC rendered.
+	ViewType string `json:"viewType,omitempty"`
+	// ViewableDuration: Optional. The amount of time the ad was viewable for.
+	ViewableDuration string `json:"viewableDuration,omitempty"`
+	// ViewablePercent: Optional. The numerical percent (0-100) of the pixels that
+	// were viewable.
+	ViewablePercent int64 `json:"viewablePercent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MediaDuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MediaDuration") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ViewabilityInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ViewabilityInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5971,6 +6350,104 @@ func (c *AccountTypesAccountsUserListsPatchCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.accountTypes.accounts.userLists.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AdEventsIngestCall struct {
+	s                     *Service
+	ingestadeventsrequest *IngestAdEventsRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Ingest: Uploads a list of AdEvent resources to Google Analytics. This
+// feature is only available to accounts on an allowlist.
+func (r *AdEventsService) Ingest(ingestadeventsrequest *IngestAdEventsRequest) *AdEventsIngestCall {
+	c := &AdEventsIngestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.ingestadeventsrequest = ingestadeventsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdEventsIngestCall) Fields(s ...googleapi.Field) *AdEventsIngestCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdEventsIngestCall) Context(ctx context.Context) *AdEventsIngestCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdEventsIngestCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdEventsIngestCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.ingestadeventsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/adEvents:ingest")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamanager.adEvents.ingest", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamanager.adEvents.ingest" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *IngestAdEventsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AdEventsIngestCall) Do(opts ...googleapi.CallOption) (*IngestAdEventsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &IngestAdEventsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.adEvents.ingest", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

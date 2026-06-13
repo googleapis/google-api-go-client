@@ -201,7 +201,7 @@
       }
     }
   },
-  "revision": "20240829",
+  "revision": "20260610",
   "rootUrl": "https://pagespeedonline.googleapis.com/",
   "schemas": {
     "AuditRefs": {
@@ -264,6 +264,10 @@
         "accessibility": {
           "$ref": "LighthouseCategoryV5",
           "description": "The accessibility category, containing all accessibility related audits."
+        },
+        "agentic-browsing": {
+          "$ref": "LighthouseCategoryV5",
+          "description": "The agentic browsing category, containing all agentic browsing related audits."
         },
         "best-practices": {
           "$ref": "LighthouseCategoryV5",

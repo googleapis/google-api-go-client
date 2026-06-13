@@ -732,6 +732,28 @@
         }
       }
     },
+    "adEvents": {
+      "methods": {
+        "ingest": {
+          "description": "Uploads a list of AdEvent resources to Google Analytics. This feature is only available to accounts on an allowlist.",
+          "flatPath": "v1/adEvents:ingest",
+          "httpMethod": "POST",
+          "id": "datamanager.adEvents.ingest",
+          "parameterOrder": [],
+          "parameters": {},
+          "path": "v1/adEvents:ingest",
+          "request": {
+            "$ref": "IngestAdEventsRequest"
+          },
+          "response": {
+            "$ref": "IngestAdEventsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/datamanager"
+          ]
+        }
+      }
+    },
     "audienceMembers": {
       "methods": {
         "ingest": {
@@ -820,9 +842,321 @@
       }
     }
   },
-  "revision": "20260527",
+  "revision": "20260605",
   "rootUrl": "https://datamanager.googleapis.com/",
   "schemas": {
+    "AdEvent": {
+      "description": "An ad event.",
+      "id": "AdEvent",
+      "properties": {
+        "adFormat": {
+          "description": "Enum value for ad format.",
+          "enum": [
+            "AD_FORMAT_UNSPECIFIED",
+            "AD_FORMAT_AR",
+            "AD_FORMAT_AUDIO",
+            "AD_FORMAT_BANNER",
+            "AD_FORMAT_BUMPER",
+            "AD_FORMAT_CAROUSEL",
+            "AD_FORMAT_COLLECTION",
+            "AD_FORMAT_IMAGE",
+            "AD_FORMAT_INTERACTIVE",
+            "AD_FORMAT_INTERSTITIAL",
+            "AD_FORMAT_IN_FEED",
+            "AD_FORMAT_IN_STREAM",
+            "AD_FORMAT_IN_STREAM_SKIPPABLE",
+            "AD_FORMAT_IN_STREAM_NON_SKIPPABLE",
+            "AD_FORMAT_NATIVE",
+            "AD_FORMAT_SHORTS",
+            "AD_FORMAT_STORY",
+            "AD_FORMAT_SPONSORED",
+            "AD_FORMAT_VIDEO"
+          ],
+          "enumDescriptions": [
+            "Unspecified ad format.",
+            "AR ad.",
+            "Audio ad.",
+            "Banner ad.",
+            "Bumper ad.",
+            "Carousel ad.",
+            "Collection ad.",
+            "Image ad.",
+            "Interactive ad.",
+            "Interstitial ad.",
+            "In-feed ad.",
+            "In-stream ad.",
+            "In-stream skippable ad.",
+            "In-stream non-skippable ad.",
+            "Native ad.",
+            "Shorts ad.",
+            "Story ad.",
+            "Sponsored ad.",
+            "Video ad."
+          ],
+          "type": "string"
+        },
+        "adFormatString": {
+          "description": "String value for ad format.",
+          "type": "string"
+        },
+        "adGroupId": {
+          "description": "Optional. The ID of the associated ad group.",
+          "type": "string"
+        },
+        "adHeight": {
+          "description": "Optional. The height of the ad in pixels.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "adId": {
+          "description": "Optional. The ID of the associated ad within the group.",
+          "type": "string"
+        },
+        "adPlacement": {
+          "description": "Enum value for ad placement.",
+          "enum": [
+            "AD_PLACEMENT_UNSPECIFIED",
+            "AD_PLACEMENT_DISCOVER",
+            "AD_PLACEMENT_FEED",
+            "AD_PLACEMENT_FOOTER",
+            "AD_PLACEMENT_HEADER",
+            "AD_PLACEMENT_HOME",
+            "AD_PLACEMENT_IN_CONTENT",
+            "AD_PLACEMENT_PROMOTED",
+            "AD_PLACEMENT_SEARCH",
+            "AD_PLACEMENT_STORY"
+          ],
+          "enumDescriptions": [
+            "Unspecified ad placement.",
+            "Discover placement.",
+            "Feed placement.",
+            "Footer placement.",
+            "Header placement.",
+            "Home placement.",
+            "In-content placement.",
+            "Promoted placement.",
+            "Search placement.",
+            "Story placement."
+          ],
+          "type": "string"
+        },
+        "adPlacementString": {
+          "description": "String value for ad placement.",
+          "type": "string"
+        },
+        "adType": {
+          "description": "Enum value for ad type.",
+          "enum": [
+            "AD_TYPE_UNSPECIFIED",
+            "AD_TYPE_DISPLAY",
+            "AD_TYPE_TEXT",
+            "AD_TYPE_IMAGE",
+            "AD_TYPE_RICH_MEDIA",
+            "AD_TYPE_HTML",
+            "AD_TYPE_AUDIO",
+            "AD_TYPE_VIDEO"
+          ],
+          "enumDescriptions": [
+            "Unspecified ad type.",
+            "Display ad.",
+            "Text ad.",
+            "Image ad.",
+            "Rich media ad.",
+            "HTML ad.",
+            "Audio ad.",
+            "Video ad."
+          ],
+          "type": "string"
+        },
+        "adTypeString": {
+          "description": "String value for ad type.",
+          "type": "string"
+        },
+        "adWidth": {
+          "description": "Optional. The width of the ad in pixels.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "advertiserId": {
+          "description": "Required. The ID of the advertiser for the ad event. This must match the ID sent in the linking flow.",
+          "type": "string"
+        },
+        "attributionHint": {
+          "description": "Optional. The partner-assumed attribution status for this ad event. This acts only as a signal for how the partner assumed attribution played out, and does not force an end result in final reports.",
+          "enum": [
+            "ATTRIBUTION_HINT_UNSPECIFIED",
+            "ATTRIBUTION_HINT_CONVERTED",
+            "ATTRIBUTION_HINT_NOT_CONVERTED"
+          ],
+          "enumDescriptions": [
+            "Unknown attribution status.",
+            "Converted status.",
+            "Not converted status."
+          ],
+          "type": "string"
+        },
+        "campaignId": {
+          "description": "Required. The ID of the associated campaign.",
+          "type": "string"
+        },
+        "campaignName": {
+          "description": "Required. The name of the associated campaign.",
+          "type": "string"
+        },
+        "deviceInfo": {
+          "$ref": "DeviceInfo",
+          "description": "Optional. Information gathered about the device being used when the ad event happened."
+        },
+        "eventId": {
+          "description": "Optional. An ID created and managed by the caller that uniquely identifies this event. Required if you want to deduplicate ad events that are included in multiple requests. Otherwise, this field is optional.",
+          "type": "string"
+        },
+        "eventSubtype": {
+          "description": "Enum value for event subtype.",
+          "enum": [
+            "EVENT_SUBTYPE_UNSPECIFIED",
+            "EVENT_SUBTYPE_IMPRESSION",
+            "EVENT_SUBTYPE_ENGAGED_VIEW",
+            "EVENT_SUBTYPE_ONSITE_CLICK",
+            "EVENT_SUBTYPE_OUTBOUND_CLICK"
+          ],
+          "enumDescriptions": [
+            "Unspecified event subtype.",
+            "Impression event.",
+            "Engaged view event.",
+            "Onsite click event.",
+            "Outbound click event."
+          ],
+          "type": "string"
+        },
+        "eventSubtypeString": {
+          "description": "String value for event subtype.",
+          "type": "string"
+        },
+        "eventType": {
+          "description": "Required. The type of the event.",
+          "enum": [
+            "EVENT_TYPE_UNSPECIFIED",
+            "EVENT_TYPE_VIEW",
+            "EVENT_TYPE_CLICK"
+          ],
+          "enumDescriptions": [
+            "Unspecified event type.",
+            "View event.",
+            "Click event."
+          ],
+          "type": "string"
+        },
+        "measurementAllowed": {
+          "description": "Optional. Represents if the row is allowed to be used for measurement purposes, as governed by applicable privacy laws within regional jurisdiction.",
+          "type": "boolean"
+        },
+        "medium": {
+          "description": "Required. The medium of the ad, akin to the Google Analytics medium.",
+          "type": "string"
+        },
+        "mobileDeviceId": {
+          "description": "Optional. The device ID of the device that the ad was served to.",
+          "type": "string"
+        },
+        "platform": {
+          "description": "Enum value for platform.",
+          "enum": [
+            "PLATFORM_UNSPECIFIED",
+            "PLATFORM_IOS",
+            "PLATFORM_ANDROID",
+            "PLATFORM_WEB"
+          ],
+          "enumDescriptions": [
+            "Unspecified platform.",
+            "iOS platform.",
+            "Android platform.",
+            "Web platform."
+          ],
+          "type": "string"
+        },
+        "platformString": {
+          "description": "String value for platform.",
+          "type": "string"
+        },
+        "platformType": {
+          "description": "Enum value for platform type.",
+          "enum": [
+            "PLATFORM_TYPE_UNSPECIFIED",
+            "PLATFORM_TYPE_MOBILE",
+            "PLATFORM_TYPE_DESKTOP",
+            "PLATFORM_TYPE_CTV",
+            "PLATFORM_TYPE_PHONE",
+            "PLATFORM_TYPE_TABLET"
+          ],
+          "enumDescriptions": [
+            "Unspecified platform type.",
+            "Mobile platform.",
+            "Desktop platform.",
+            "CTV platform.",
+            "Phone platform.",
+            "Tablet platform."
+          ],
+          "type": "string"
+        },
+        "platformTypeString": {
+          "description": "String value for platform type.",
+          "type": "string"
+        },
+        "regionCode": {
+          "description": "Required. The ISO 3166-2 country plus subdivision.",
+          "type": "string"
+        },
+        "source": {
+          "description": "Required. The platform source of the ad, akin to the Google Analytics source.",
+          "type": "string"
+        },
+        "targetingType": {
+          "description": "Enum value for targeting type.",
+          "enum": [
+            "TARGETING_TYPE_UNSPECIFIED",
+            "TARGETING_TYPE_AUDIENCE",
+            "TARGETING_TYPE_CONTEXTUAL",
+            "TARGETING_TYPE_DEMOGRAPHIC",
+            "TARGETING_TYPE_DEVICE",
+            "TARGETING_TYPE_GEO",
+            "TARGETING_TYPE_INTEREST",
+            "TARGETING_TYPE_PURCHASE_INTENT",
+            "TARGETING_TYPE_REMARKETING"
+          ],
+          "enumDescriptions": [
+            "Unspecified targeting type.",
+            "Audience targeting.",
+            "Contextual targeting.",
+            "Demographic targeting.",
+            "Device targeting.",
+            "Geo targeting.",
+            "Interest targeting.",
+            "Purchase intent targeting.",
+            "Remarketing targeting."
+          ],
+          "type": "string"
+        },
+        "targetingTypeString": {
+          "description": "String value for targeting type.",
+          "type": "string"
+        },
+        "timestamp": {
+          "description": "Required. The time the event occurred.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "userData": {
+          "$ref": "UserData",
+          "description": "Optional. Multiple pieces of user-provided data, representing the user the event is associated with. It is possible to provide multiple instances of the same type of data (e.g. email address). The more data provided, the more likely a match will be found."
+        },
+        "viewabilityInfo": {
+          "$ref": "ViewabilityInfo",
+          "description": "Required. Details of the viewability of the ad served."
+        }
+      },
+      "type": "object"
+    },
     "AdIdentifiers": {
       "description": "Identifiers and other information used to match the conversion event with other online activity (such as ad clicks).",
       "id": "AdIdentifiers",
@@ -1106,6 +1440,17 @@
       },
       "type": "object"
     },
+    "CoordinatorKeyInfo": {
+      "description": "Information about the coordinator key.",
+      "id": "CoordinatorKeyInfo",
+      "properties": {
+        "keyId": {
+          "description": "Required. The ID of the chosen coordinator key.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "CustomVariable": {
       "description": "Custom variable for ads conversions.",
       "id": "CustomVariable",
@@ -1307,6 +1652,10 @@
         "awsWrappedKeyInfo": {
           "$ref": "AwsWrappedKeyInfo",
           "description": "Amazon Web Services wrapped key information."
+        },
+        "coordinatorKeyInfo": {
+          "$ref": "CoordinatorKeyInfo",
+          "description": "Key information for the chosen coordinator key. This is not supported for the IngestEvents, IngestAudienceMembers, and RemoveAudienceMembers methods."
         },
         "gcpWrappedKeyInfo": {
           "$ref": "GcpWrappedKeyInfo",
@@ -1660,6 +2009,34 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "IngestAdEventsRequest": {
+      "description": "Request to upload ad events.",
+      "id": "IngestAdEventsRequest",
+      "properties": {
+        "adEvents": {
+          "description": "Required. Required (at least 1). A list of ad events.",
+          "items": {
+            "$ref": "AdEvent"
+          },
+          "type": "array"
+        },
+        "encryptionInfo": {
+          "$ref": "EncryptionInfo",
+          "description": "Optional. Information about encryption keys which are used to encrypt the data."
+        },
+        "validateOnly": {
+          "description": "Optional. If true, the request is validated, but not executed.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "IngestAdEventsResponse": {
+      "description": "Response from an ad event ingestion operation.",
+      "id": "IngestAdEventsResponse",
+      "properties": {},
       "type": "object"
     },
     "IngestAudienceMembersRequest": {
@@ -2462,10 +2839,43 @@
       },
       "type": "object"
     },
+    "PartnerCustomerAccount": {
+      "description": "Represents a customer account in the partner's system.",
+      "id": "PartnerCustomerAccount",
+      "properties": {
+        "accountId": {
+          "description": "Required. The identifier of the customer account in the partner's ID space.",
+          "type": "string"
+        },
+        "accountName": {
+          "description": "Optional. The name of the account.",
+          "type": "string"
+        },
+        "accountType": {
+          "description": "Optional. The type of the account. Can be used to distinguish between advertiser accounts and business level accounts, for example.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "PartnerLink": {
       "description": "A partner link between an owning account and a partner account.",
       "id": "PartnerLink",
       "properties": {
+        "featureSet": {
+          "description": "Optional. Immutable. The set of features supported for the partner link. If not specified, the system behavior defaults to FEATURE_SET_AUDIENCE_AND_EVENT_MANAGEMENT.",
+          "enum": [
+            "FEATURE_SET_UNSPECIFIED",
+            "FEATURE_SET_AUDIENCE_AND_EVENT_MANAGEMENT",
+            "FEATURE_SET_AD_EVENT_MANAGEMENT"
+          ],
+          "enumDescriptions": [
+            "Unspecified feature set. If unspecified, the system behavior defaults to FEATURE_SET_AUDIENCE_AND_EVENT_MANAGEMENT.",
+            "Indicates a link used for audience and event management.",
+            "Indicates a link used for ad event management."
+          ],
+          "type": "string"
+        },
         "name": {
           "description": "Identifier. The name of the partner link. Format: accountTypes/{account_type}/accounts/{account}/partnerLinks/{partner_link}",
           "type": "string"
@@ -2478,10 +2888,32 @@
           "$ref": "ProductAccount",
           "description": "Required. The partner account granted access by the owning account."
         },
+        "partnerCustomerAccount": {
+          "$ref": "PartnerCustomerAccount",
+          "description": "Optional. The customer account in the partner system. This is required for partner links with the FEATURE_SET_AD_EVENT_MANAGEMENT feature set."
+        },
         "partnerLinkId": {
           "description": "Output only. The partner link ID.",
           "readOnly": true,
           "type": "string"
+        },
+        "partnerLinkMetadata": {
+          "$ref": "PartnerLinkMetadata",
+          "description": "Optional. Metadata associated with the partner link. This is optional and only accepted for partner links with the FEATURE_SET_AD_EVENT_MANAGEMENT."
+        }
+      },
+      "type": "object"
+    },
+    "PartnerLinkMetadata": {
+      "description": "Represents metadata associated with a partner link.",
+      "id": "PartnerLinkMetadata",
+      "properties": {
+        "implicitAccounts": {
+          "description": "Optional. The list of implicit accounts.",
+          "items": {
+            "$ref": "PartnerCustomerAccount"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -2509,7 +2941,7 @@
           "type": "string"
         },
         "accountType": {
-          "description": "Optional. The type of the account. For example, `GOOGLE_ADS`. Either `account_type` or the deprecated `product` is required. If both are set, the values must match.",
+          "description": "Required. The type of the account. For example, `GOOGLE_ADS`. Either `account_type` or the deprecated `product` is required. If both are set, the values must match.",
           "enum": [
             "ACCOUNT_TYPE_UNSPECIFIED",
             "GOOGLE_ADS",
@@ -3580,6 +4012,76 @@
         "value": {
           "description": "Required. The string representation of the value of the user property to use.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ViewabilityInfo": {
+      "description": "Details of the viewability of the ad served.",
+      "id": "ViewabilityInfo",
+      "properties": {
+        "mediaDuration": {
+          "description": "Optional. The duration of the ad media.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "mediaQuartile": {
+          "description": "Optional. The amount of the media that was played as discrete quartiles.",
+          "enum": [
+            "MEDIA_QUARTILE_UNSPECIFIED",
+            "MEDIA_QUARTILE_START",
+            "MEDIA_QUARTILE_FIRST_QUARTILE",
+            "MEDIA_QUARTILE_MIDPOINT",
+            "MEDIA_QUARTILE_THIRD_QUARTILE",
+            "MEDIA_QUARTILE_COMPLETE"
+          ],
+          "enumDescriptions": [
+            "Unspecified media quartile.",
+            "Start.",
+            "First quartile.",
+            "Midpoint.",
+            "Third quartile.",
+            "Complete."
+          ],
+          "type": "string"
+        },
+        "mediaSkippable": {
+          "description": "Optional. Whether the ad media was skippable or not.",
+          "type": "boolean"
+        },
+        "mediaVolumePercent": {
+          "description": "Optional. The numerical percent (0-100) of the volume of the media playback.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "playbackDuration": {
+          "description": "Optional. The duration of playback of the ad media, regardless of whether it was viewable or not.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "viewType": {
+          "description": "Required. The type of the event.",
+          "enum": [
+            "VIEW_TYPE_UNSPECIFIED",
+            "VIEW_TYPE_MRC_VIEWED",
+            "VIEW_TYPE_MRC_RENDERED"
+          ],
+          "enumDescriptions": [
+            "Unspecified view type.",
+            "MRC viewed.",
+            "MRC rendered."
+          ],
+          "type": "string"
+        },
+        "viewableDuration": {
+          "description": "Optional. The amount of time the ad was viewable for.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "viewablePercent": {
+          "description": "Optional. The numerical percent (0-100) of the pixels that were viewable.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"

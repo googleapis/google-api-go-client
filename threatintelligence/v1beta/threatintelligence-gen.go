@@ -316,6 +316,8 @@ type AlertDetail struct {
 	InitialAccessBroker *InitialAccessBrokerAlertDetail `json:"initialAccessBroker,omitempty"`
 	// InsiderThreat: Insider Threat alert detail type.
 	InsiderThreat *InsiderThreatAlertDetail `json:"insiderThreat,omitempty"`
+	// TargetTechnology: Technology Watchlist alert detail type.
+	TargetTechnology *TargetTechnologyAlertDetail `json:"targetTechnology,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataLeak") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -411,6 +413,41 @@ func (s AlertDocumentTranslation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Association: Represents an association with a vulnerability.
+type Association struct {
+	// Id: Required. The ID of the association.
+	Id string `json:"id,omitempty"`
+	// Type: Required. The type of the association.
+	//
+	// Possible values:
+	//   "THREAT_INTEL_OBJECT_TYPE_UNSPECIFIED" - Unspecified object type.
+	//   "THREAT_INTEL_OBJECT_TYPE_THREAT_ACTOR" - Threat actor object type.
+	//   "THREAT_INTEL_OBJECT_TYPE_MALWARE" - Malware object type.
+	//   "THREAT_INTEL_OBJECT_TYPE_REPORT" - Report object type.
+	//   "THREAT_INTEL_OBJECT_TYPE_CAMPAIGN" - Campaign object type.
+	//   "THREAT_INTEL_OBJECT_TYPE_IOC_COLLECTION" - IoC Collection object type.
+	//   "THREAT_INTEL_OBJECT_TYPE_SOFTWARE_AND_TOOLKITS" - Software and toolkits
+	// object type.
+	//   "THREAT_INTEL_OBJECT_TYPE_VULNERABILITY" - Vulnerability object type.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Association) MarshalJSON() ([]byte, error) {
+	type NoMethod Association
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Audit: Tracks basic CRUD facts.
 type Audit struct {
 	// CreateTime: Output only. Time of creation.
@@ -503,6 +540,8 @@ type ConfigurationDetail struct {
 	// DetailType: Output only. Name of the detail type. Will be set by the server
 	// during creation to the name of the field that is set in the detail union.
 	DetailType string `json:"detailType,omitempty"`
+	// TechnologyWatchlist: Technology Watchlist detail config.
+	TechnologyWatchlist *TechnologyWatchListConfig `json:"technologyWatchlist,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CustomerProfile") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1186,6 +1225,8 @@ type FindingDetail struct {
 	InitialAccessBroker *InitialAccessBrokerFindingDetail `json:"initialAccessBroker,omitempty"`
 	// InsiderThreat: Insider Threat finding detail type.
 	InsiderThreat *InsiderThreatFindingDetail `json:"insiderThreat,omitempty"`
+	// TargetTechnology: Technology Watchlist finding detail type.
+	TargetTechnology *TargetTechnologyFindingDetail `json:"targetTechnology,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataLeak") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1648,6 +1689,82 @@ func (s PriorityAnalysis) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ProductFix: Contains details about a product fix.
+type ProductFix struct {
+	// DisplayName: Required. The name of the fix. Ex: "Magento".
+	DisplayName string `json:"displayName,omitempty"`
+	// PublishTime: Optional. The published time of the fix.
+	PublishTime string `json:"publishTime,omitempty"`
+	// SourceId: Required. The source ID of the fix. Ex: "APPSEC-1420".
+	SourceId string `json:"sourceId,omitempty"`
+	// Uri: Optional. The URI of the fix.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProductFix) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductFix
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PublicExploit: Contains details about a public exploit.
+type PublicExploit struct {
+	// ExploitGrade: Optional. The grade of the exploit. Ex: "non-weaponized".
+	//
+	// Possible values:
+	//   "EXPLOIT_GRADE_UNSPECIFIED" - Unspecified exploit grade.
+	//   "UNEVALUATED" - Unevaluated exploit grade.
+	//   "PROOF_OF_CONCEPT" - Proof-of-concept exploit grade.
+	//   "NON_WEAPONIZED" - Non-weaponized exploit grade.
+	//   "WEAPONIZED" - Weaponized exploit grade.
+	//   "SCANNER" - Scanner exploit grade.
+	//   "FAKE" - Fake exploit grade.
+	ExploitGrade string `json:"exploitGrade,omitempty"`
+	// ExploitName: Required. The name of the exploit. Ex: "Magentounauth.php.txt".
+	ExploitName string `json:"exploitName,omitempty"`
+	// ExploitReliability: Optional. The reliability of the exploit. Ex:
+	// "Unreviewed".
+	//
+	// Possible values:
+	//   "EXPLOIT_RELIABILITY_UNSPECIFIED" - Unspecified exploit reliability.
+	//   "UNREVIEWED" - Confirmed exploit reliability.
+	//   "REVIEWED" - Uncorroborated exploit reliability.
+	//   "TESTED" - Unconfirmed exploit reliability.
+	ExploitReliability string `json:"exploitReliability,omitempty"`
+	// ReleaseTime: Optional. The release time of the exploit.
+	ReleaseTime string `json:"releaseTime,omitempty"`
+	// SizeBytes: Optional. The size of the exploit.
+	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
+	// Uri: Optional. The URI of the exploit.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExploitGrade") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExploitGrade") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PublicExploit) MarshalJSON() ([]byte, error) {
+	type NoMethod PublicExploit
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RelevanceAnalysis: Structured relevance analysis for a threat.
 type RelevanceAnalysis struct {
 	// Confidence: The level of confidence in the given verdict.
@@ -1794,6 +1911,155 @@ func (s Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TargetTechnologyAlertDetail: Contains details for a technology watchlist
+// alert.
+type TargetTechnologyAlertDetail struct {
+	// VulnerabilityMatch: Optional. The vulnerability match details.
+	VulnerabilityMatch *VulnerabilityMatch `json:"vulnerabilityMatch,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "VulnerabilityMatch") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "VulnerabilityMatch") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TargetTechnologyAlertDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod TargetTechnologyAlertDetail
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TargetTechnologyFindingDetail: Contains details for a technology watchlist
+// finding.
+type TargetTechnologyFindingDetail struct {
+	// VulnerabilityMatch: Optional. The vulnerability match details.
+	VulnerabilityMatch *VulnerabilityMatch `json:"vulnerabilityMatch,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "VulnerabilityMatch") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "VulnerabilityMatch") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TargetTechnologyFindingDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod TargetTechnologyFindingDetail
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TechnologyWatchListAlertThreshold: TechnologyWatchListAlertThreshold
+// contains the thresholds for alerting.
+type TechnologyWatchListAlertThreshold struct {
+	// CvssScoreMinimum: Optional. The minimum CVSS score for the alert. Evaluates
+	// to CVSS v3 when available with a fallback to v2 and v4. Ex: 7.0. Valid range
+	// is [0.0, 10.0].
+	CvssScoreMinimum float64 `json:"cvssScoreMinimum,omitempty"`
+	// EpssScoreMinimum: Optional. The minimum epss score for the alert. Ex: 0.8.
+	// Valid range is [0.0, 1.0].
+	EpssScoreMinimum float64 `json:"epssScoreMinimum,omitempty"`
+	// ExploitationStates: Optional. The exploitation states of the alert.
+	//
+	// Possible values:
+	//   "EXPLOITATION_STATE_UNSPECIFIED" - Unspecified exploitation state.
+	//   "EXPLOITATION_STATE_NO_KNOWN" - No known exploitation.
+	//   "EXPLOITATION_STATE_REPORTED" - Exploitation has been reported.
+	//   "EXPLOITATION_STATE_SUSPECTED" - Exploitation is suspected.
+	//   "EXPLOITATION_STATE_CONFIRMED" - Exploitation is confirmed.
+	//   "EXPLOITATION_STATE_WIDESPREAD" - Widespread exploitation.
+	ExploitationStates []string `json:"exploitationStates,omitempty"`
+	// PriorityMinimum: Optional. The minimum priority for the alert.
+	//
+	// Possible values:
+	//   "PRIORITY_UNSPECIFIED" - Unspecified priority.
+	//   "P0" - Priority level 0.
+	//   "P1" - Priority level 1.
+	//   "P2" - Priority level 2.
+	//   "P3" - Priority level 3.
+	//   "P4" - Priority level 4.
+	PriorityMinimum string `json:"priorityMinimum,omitempty"`
+	// RiskRatingMinimum: Optional. The minimum risk rating for the alert.
+	//
+	// Possible values:
+	//   "RISK_RATING_UNSPECIFIED" - Unspecified risk rating. This is the default
+	// value when the risk rating is not set.
+	//   "LOW" - Low risk rating.
+	//   "MEDIUM" - Medium risk rating.
+	//   "HIGH" - High risk rating.
+	//   "CRITICAL" - Critical risk rating.
+	//   "UNRATED" - The vulnerability has been assessed, but a specific risk
+	// rating could not be determined or assigned.
+	RiskRatingMinimum string `json:"riskRatingMinimum,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CvssScoreMinimum") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CvssScoreMinimum") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TechnologyWatchListAlertThreshold) MarshalJSON() ([]byte, error) {
+	type NoMethod TechnologyWatchListAlertThreshold
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *TechnologyWatchListAlertThreshold) UnmarshalJSON(data []byte) error {
+	type NoMethod TechnologyWatchListAlertThreshold
+	var s1 struct {
+		CvssScoreMinimum gensupport.JSONFloat64 `json:"cvssScoreMinimum"`
+		EpssScoreMinimum gensupport.JSONFloat64 `json:"epssScoreMinimum"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.CvssScoreMinimum = float64(s1.CvssScoreMinimum)
+	s.EpssScoreMinimum = float64(s1.EpssScoreMinimum)
+	return nil
+}
+
+// TechnologyWatchListConfig: TechnologyWatchListConfig is the configuration
+// for the technology watchlist.
+type TechnologyWatchListConfig struct {
+	// AlertThreshold: Optional. Alert thresholds to effectively reduce noise.
+	AlertThreshold *TechnologyWatchListAlertThreshold `json:"alertThreshold,omitempty"`
+	// Technologies: Optional. List of vendor, technology or cpe fingerprint.
+	// example: Microsoft office 360 Apache Server 3.5
+	// cpe:2.3:a:microsoft:outlook:*:*:*:*:*:*:*:*
+	Technologies []string `json:"technologies,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlertThreshold") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertThreshold") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TechnologyWatchListConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod TechnologyWatchListConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // UpsertConfigurationResponse: Response message for UpsertConfiguration.
 type UpsertConfigurationResponse struct {
 	// Configuration: Output only. Created configuration ID with server assigned
@@ -1818,6 +2084,150 @@ type UpsertConfigurationResponse struct {
 func (s UpsertConfigurationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UpsertConfigurationResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VulnerabilityMatch: Contains details about a vulnerability match.
+type VulnerabilityMatch struct {
+	// Associations: Optional. Associated threat actors, malware, etc. This is
+	// embedded as a snapshot because the details of the association at the time of
+	// the vulnerability match are important for context and reporting.
+	Associations []*Association `json:"associations,omitempty"`
+	// CollectionId: Required. The collection ID of the vulnerability. Ex:
+	// "vulnerability--cve-2025-9876".
+	CollectionId string `json:"collectionId,omitempty"`
+	// CveId: Required. The CVE ID of the vulnerability. Ex: "CVE-2025-9876". See
+	// https://www.cve.org/ for more information.
+	CveId string `json:"cveId,omitempty"`
+	// Cvss3Score: Required. The CVSS score of the vulnerability. Evaluates to CVSS
+	// v3 when available with a fallback to v2 and v4. Example: 6.4.
+	Cvss3Score float64 `json:"cvss3Score,omitempty"`
+	// Description: Required. A description of the vulnerability.
+	Description string `json:"description,omitempty"`
+	// DisclosureTime: Optional. The disclosure time of the vulnerability.
+	DisclosureTime string `json:"disclosureTime,omitempty"`
+	// EpssScore: Optional. The EPSS score, representing the probability of
+	// exploitation. Example: 0.87.
+	EpssScore float64 `json:"epssScore,omitempty"`
+	// ExploitationConsequences: Optional. List of exploitation consequences for
+	// the vulnerability.
+	//
+	// Possible values:
+	//   "EXPLOITATION_CONSEQUENCE_UNSPECIFIED" - Unspecified exploitation
+	// consequence.
+	//   "CODE_EXECUTION" - Code execution consequence.
+	//   "COMMAND_EXECUTION" - Command execution consequence.
+	//   "DATA_LOSS" - Data loss consequence.
+	//   "DATA_MANIPULATION" - Data manipulation consequence.
+	//   "DENIAL_OF_SERVICE" - Denial-of-Service consequence.
+	//   "INFORMATION_DISCLOSURE" - Information disclosure consequence.
+	//   "UNAUTHORIZED_ACCESS" - Unauthorized access consequence.
+	//   "PRIVILEGE_ESCALATION" - Privilege escalation consequence.
+	//   "SANDBOX_ESCAPE" - Sandbox escape consequence.
+	//   "SECURITY_BYPASS" - Security bypass consequence.
+	//   "CONTAINER_ESCAPE" - Container escape consequence.
+	//   "SPOOFING" - Spoofing consequence.
+	ExploitationConsequences []string `json:"exploitationConsequences,omitempty"`
+	// ExploitationState: Required. The exploitation state of the vulnerability.
+	//
+	// Possible values:
+	//   "EXPLOITATION_STATE_UNSPECIFIED" - Unspecified exploitation state.
+	//   "EXPLOITATION_STATE_NO_KNOWN" - No known exploitation.
+	//   "EXPLOITATION_STATE_REPORTED" - Exploitation has been reported.
+	//   "EXPLOITATION_STATE_SUSPECTED" - Exploitation is suspected.
+	//   "EXPLOITATION_STATE_CONFIRMED" - Exploitation is confirmed.
+	//   "EXPLOITATION_STATE_WIDESPREAD" - Widespread exploitation.
+	ExploitationState string `json:"exploitationState,omitempty"`
+	// ExploitationVectors: Optional. List of exploitation vectors for the
+	// vulnerability.
+	//
+	// Possible values:
+	//   "EXPLOITATION_VECTOR_UNSPECIFIED" - Unspecified exploitation vector.
+	//   "ADMINISTRATIVE_INTERFACE" - Administrative interface vector.
+	//   "BLUETOOTH_ACCESS" - Bluetooth access vector.
+	//   "BROWSER" - Browser vector.
+	//   "COMPROMISED_COMMUNICATION_CHANNEL" - Compromised communication channel
+	// vector.
+	//   "EMAIL" - Email vector.
+	//   "EXPOSED_WEB_APPLICATION" - Exposed web application vector.
+	//   "LOCAL_NETWORK_ACCESS" - Local network access vector.
+	//   "MALICIOUS_APPLICATION" - Malicious application vector.
+	//   "MALICIOUS_FILE" - Malicious file vector.
+	//   "MALICIOUS_SERVER" - Malicious server vector.
+	//   "OPEN_PORT" - Open port vector.
+	//   "PHYSICAL_ACCESS" - Physical access vector.
+	//   "SHORT_RANGE_RADIO" - Short range radio vector.
+	//   "UNSPECIFIED_LOCAL_VECTOR" - Unspecified local vector.
+	//   "UNSPECIFIED_REMOTE_VECTOR" - Unspecified remote vector.
+	//   "VPN_ACCESS" - VPN access vector.
+	//   "WIFI_ACCESS" - WiFi access vector.
+	ExploitationVectors []string `json:"exploitationVectors,omitempty"`
+	// MatchedTechnologies: Optional. The specific technologies from the configured
+	// watchlist that triggered the match. Ex: "Apache Struts".
+	MatchedTechnologies []string `json:"matchedTechnologies,omitempty"`
+	// Priority: Optional. The priority level of the vulnerability data. Ex: "P1".
+	//
+	// Possible values:
+	//   "PRIORITY_UNSPECIFIED" - Unspecified priority.
+	//   "P0" - Priority level 0.
+	//   "P1" - Priority level 1.
+	//   "P2" - Priority level 2.
+	//   "P3" - Priority level 3.
+	//   "P4" - Priority level 4.
+	Priority string `json:"priority,omitempty"`
+	// ProductFixes: Optional. List of product fixes for the vulnerability.
+	ProductFixes []*ProductFix `json:"productFixes,omitempty"`
+	// PublicExploits: Optional. List of public exploits.
+	PublicExploits []*PublicExploit `json:"publicExploits,omitempty"`
+	// PubliclyAvailableExploit: Output only. Whether a publicly available exploit
+	// exists.
+	PubliclyAvailableExploit bool `json:"publiclyAvailableExploit,omitempty"`
+	// RiskRating: Required. The risk rating of the vulnerability.
+	//
+	// Possible values:
+	//   "RISK_RATING_UNSPECIFIED" - Unspecified risk rating. This is the default
+	// value when the risk rating is not set.
+	//   "LOW" - Low risk rating.
+	//   "MEDIUM" - Medium risk rating.
+	//   "HIGH" - High risk rating.
+	//   "CRITICAL" - Critical risk rating.
+	//   "UNRATED" - The vulnerability has been assessed, but a specific risk
+	// rating could not be determined or assigned.
+	RiskRating string `json:"riskRating,omitempty"`
+	// Technologies: Required. All technologies affected by the vulnerability. Ex:
+	// "Apache Struts".
+	Technologies []string `json:"technologies,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Associations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Associations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VulnerabilityMatch) MarshalJSON() ([]byte, error) {
+	type NoMethod VulnerabilityMatch
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *VulnerabilityMatch) UnmarshalJSON(data []byte) error {
+	type NoMethod VulnerabilityMatch
+	var s1 struct {
+		Cvss3Score gensupport.JSONFloat64 `json:"cvss3Score"`
+		EpssScore  gensupport.JSONFloat64 `json:"epssScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Cvss3Score = float64(s1.Cvss3Score)
+	s.EpssScore = float64(s1.EpssScore)
+	return nil
 }
 
 type ProjectsGenerateOrgProfileCall struct {

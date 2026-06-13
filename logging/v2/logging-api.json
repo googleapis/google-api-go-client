@@ -135,11 +135,6 @@
     },
     {
       "description": "Regional Endpoint",
-      "endpointUrl": "https://logging.europe-west15.rep.googleapis.com/",
-      "location": "europe-west15"
-    },
-    {
-      "description": "Regional Endpoint",
       "endpointUrl": "https://logging.europe-west2.rep.googleapis.com/",
       "location": "europe-west2"
     },
@@ -215,11 +210,6 @@
     },
     {
       "description": "Regional Endpoint",
-      "endpointUrl": "https://logging.us-central2.rep.googleapis.com/",
-      "location": "us-central2"
-    },
-    {
-      "description": "Regional Endpoint",
       "endpointUrl": "https://logging.us-east1.rep.googleapis.com/",
       "location": "us-east1"
     },
@@ -232,11 +222,6 @@
       "description": "Regional Endpoint",
       "endpointUrl": "https://logging.us-east5.rep.googleapis.com/",
       "location": "us-east5"
-    },
-    {
-      "description": "Regional Endpoint",
-      "endpointUrl": "https://logging.us-east7.rep.googleapis.com/",
-      "location": "us-east7"
     },
     {
       "description": "Regional Endpoint",
@@ -262,11 +247,6 @@
       "description": "Regional Endpoint",
       "endpointUrl": "https://logging.us-west4.rep.googleapis.com/",
       "location": "us-west4"
-    },
-    {
-      "description": "Regional Endpoint",
-      "endpointUrl": "https://logging.us-west8.rep.googleapis.com/",
-      "location": "us-west8"
     },
     {
       "description": "Regional Endpoint",
@@ -9167,7 +9147,7 @@
       }
     }
   },
-  "revision": "20260522",
+  "revision": "20260605",
   "rootUrl": "https://logging.googleapis.com/",
   "schemas": {
     "AppHub": {

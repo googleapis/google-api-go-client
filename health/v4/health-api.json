@@ -8,11 +8,17 @@
         "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly": {
           "description": "See your Google Health activity and fitness data"
         },
+        "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly": {
+          "description": "Add activity and fitness data to Google Health, and edit or delete the data it adds."
+        },
         "https://www.googleapis.com/auth/googlehealth.ecg.readonly": {
           "description": "See your Google Health ECG data"
         },
         "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly": {
           "description": "See your Google Health health metrics and measurement data"
+        },
+        "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly": {
+          "description": "Add health metric and measurements data to Google Health, and edit or delete the data it adds."
         },
         "https://www.googleapis.com/auth/googlehealth.irn.readonly": {
           "description": "See your Google Health Irregular Rhythm Notifications data"
@@ -20,14 +26,29 @@
         "https://www.googleapis.com/auth/googlehealth.location.readonly": {
           "description": "See exercise GPS location data in Google Health"
         },
+        "https://www.googleapis.com/auth/googlehealth.location.writeonly": {
+          "description": "Add exercise GPS location data to Google Health, and edit or delete the data it adds."
+        },
+        "https://www.googleapis.com/auth/googlehealth.nutrition.writeonly": {
+          "description": "Add nutrition data to Google Health, and edit or delete the data it adds."
+        },
         "https://www.googleapis.com/auth/googlehealth.profile.readonly": {
           "description": "See your Google Health profile data"
+        },
+        "https://www.googleapis.com/auth/googlehealth.profile.writeonly": {
+          "description": "Add profile data to Google Health, and edit or delete the data it adds."
         },
         "https://www.googleapis.com/auth/googlehealth.settings.readonly": {
           "description": "See your Google Health settings"
         },
+        "https://www.googleapis.com/auth/googlehealth.settings.writeonly": {
+          "description": "Add settings data to Google Health, and edit or delete the data it adds."
+        },
         "https://www.googleapis.com/auth/googlehealth.sleep.readonly": {
           "description": "See your Google Health sleep data"
+        },
+        "https://www.googleapis.com/auth/googlehealth.sleep.writeonly": {
+          "description": "Add sleep data to Google Health, and edit or delete the data it adds."
         }
       }
     }
@@ -546,7 +567,10 @@
           },
           "response": {
             "$ref": "Profile"
-          }
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/googlehealth.profile.writeonly"
+          ]
         },
         "updateSettings": {
           "description": "Updates the user's settings details.",
@@ -577,7 +601,10 @@
           },
           "response": {
             "$ref": "Settings"
-          }
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/googlehealth.settings.writeonly"
+          ]
         }
       },
       "resources": {
@@ -608,7 +635,14 @@
                   },
                   "response": {
                     "$ref": "Operation"
-                  }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.location.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.nutrition.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.sleep.writeonly"
+                  ]
                 },
                 "create": {
                   "description": "Creates a single identifiable data point.",
@@ -633,7 +667,14 @@
                   },
                   "response": {
                     "$ref": "Operation"
-                  }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.location.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.nutrition.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.sleep.writeonly"
+                  ]
                 },
                 "dailyRollUp": {
                   "description": "Roll up data points over civil time intervals for supported data types.",
@@ -794,7 +835,14 @@
                   },
                   "response": {
                     "$ref": "Operation"
-                  }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.location.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.nutrition.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.sleep.writeonly"
+                  ]
                 },
                 "reconcile": {
                   "description": "Reconcile data points from multiple data sources into a single data stream.",
@@ -948,7 +996,7 @@
       }
     }
   },
-  "revision": "20260607",
+  "revision": "20260611",
   "rootUrl": "https://health.googleapis.com/",
   "schemas": {
     "ActiveEnergyBurned": {

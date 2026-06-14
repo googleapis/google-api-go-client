@@ -118,6 +118,12 @@ const (
 	// organization
 	ChromeManagementReportsReadonlyScope = "https://www.googleapis.com/auth/chrome.management.reports.readonly"
 
+	// Turn Chrome Security Insights on and off and view the data it generates
+	ChromeManagementSecurityinsightsScope = "https://www.googleapis.com/auth/chrome.management.securityinsights"
+
+	// See Chrome Security Insights reports
+	ChromeManagementSecurityinsightsReadonlyScope = "https://www.googleapis.com/auth/chrome.management.securityinsights.readonly"
+
 	// See basic device and telemetry information collected from ChromeOS devices
 	// or users managed within your organization
 	ChromeManagementTelemetryReadonlyScope = "https://www.googleapis.com/auth/chrome.management.telemetry.readonly"
@@ -130,6 +136,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/chrome.management.profiles",
 		"https://www.googleapis.com/auth/chrome.management.profiles.readonly",
 		"https://www.googleapis.com/auth/chrome.management.reports.readonly",
+		"https://www.googleapis.com/auth/chrome.management.securityinsights",
+		"https://www.googleapis.com/auth/chrome.management.securityinsights.readonly",
 		"https://www.googleapis.com/auth/chrome.management.telemetry.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -5039,6 +5047,82 @@ func (s GoogleChromeManagementVersionsV1ConnectorConfigStatus) MarshalJSON() ([]
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementVersionsV1ContentTransfersBreakdown: A content
+// transfers summary for a given breakdown dimension.
+type GoogleChromeManagementVersionsV1ContentTransfersBreakdown struct {
+	// ContentCategory: The content category of the content transfers.
+	ContentCategory string `json:"contentCategory,omitempty"`
+	// EventDomain: The event domain of the content transfers.
+	EventDomain string `json:"eventDomain,omitempty"`
+	// Summary: The summary of content transfers for the breakdown dimension.
+	Summary *GoogleChromeManagementVersionsV1ContentTransfersSummary `json:"summary,omitempty"`
+	// User: The user that transferred the content.
+	User string `json:"user,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContentCategory") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentCategory") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1ContentTransfersBreakdown) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1ContentTransfersBreakdown
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1ContentTransfersSummary: Summary of content
+// transfers for a given metric.
+type GoogleChromeManagementVersionsV1ContentTransfersSummary struct {
+	// Count: The count of the content transfers metric.
+	Count int64 `json:"count,omitempty,string"`
+	// Metric: The type of content transfers metric.
+	//
+	// Possible values:
+	//   "CONTENT_TRANSFERS_METRIC_UNSPECIFIED" - Unspecified content transfers
+	// metric. Defaults to CONTENT_TRANSFERS_METRIC_TOTAL_TRANSFERS.
+	//   "CONTENT_TRANSFERS_METRIC_TOTAL_TRANSFERS" - The total number of content
+	// transfers (sensitive and non-sensitive). This is the sum of the
+	// total_uploads, total_downloads, and total_prints.
+	//   "CONTENT_TRANSFERS_METRIC_TOTAL_UPLOADS" - The total number of content
+	// uploads (sensitive and non-sensitive).
+	//   "CONTENT_TRANSFERS_METRIC_TOTAL_DOWNLOADS" - The total number of content
+	// downloads (sensitive and non-sensitive).
+	//   "CONTENT_TRANSFERS_METRIC_TOTAL_PRINTS" - The total number of content
+	// prints (sensitive and non-sensitive).
+	//   "CONTENT_TRANSFERS_METRIC_TOTAL_SENSITIVE_TRANSFERS" - The total number of
+	// sensitive content transfers. This is the sum of the sensitive_uploads,
+	// sensitive_downloads, and sensitive_prints.
+	//   "CONTENT_TRANSFERS_METRIC_SENSITIVE_UPLOADS" - The number of sensitive
+	// content uploads.
+	//   "CONTENT_TRANSFERS_METRIC_SENSITIVE_DOWNLOADS" - The number of sensitive
+	// content downloads.
+	//   "CONTENT_TRANSFERS_METRIC_SENSITIVE_PRINTS" - The number of sensitive
+	// content prints.
+	Metric string `json:"metric,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1ContentTransfersSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1ContentTransfersSummary
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementVersionsV1CrowdStrikeConfig: CrowdStrike connector
 // config.
 type GoogleChromeManagementVersionsV1CrowdStrikeConfig struct {
@@ -5640,6 +5724,117 @@ func (s GoogleChromeManagementVersionsV1PubSubXdrConfig) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementVersionsV1QueryContentTransfersBreakdownsResponse:
+// Response message for QueryContentTransfersBreakdowns.
+type GoogleChromeManagementVersionsV1QueryContentTransfersBreakdownsResponse struct {
+	// ContentTransfersBreakdowns: The content transfer breakdowns from the
+	// specified insight.
+	ContentTransfersBreakdowns []*GoogleChromeManagementVersionsV1ContentTransfersBreakdown `json:"contentTransfersBreakdowns,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ContentTransfersBreakdowns")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentTransfersBreakdowns") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1QueryContentTransfersBreakdownsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1QueryContentTransfersBreakdownsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1QueryContentTransfersResponse: Response
+// message for QueryContentTransfers.
+type GoogleChromeManagementVersionsV1QueryContentTransfersResponse struct {
+	// Summaries: A collection of summaries for various content transfers metrics.
+	Summaries []*GoogleChromeManagementVersionsV1ContentTransfersSummary `json:"summaries,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Summaries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Summaries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1QueryContentTransfersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1QueryContentTransfersResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1QueryUrlVisitsBreakdownsResponse: Response
+// message for QueryUrlVisitsBreakdowns.
+type GoogleChromeManagementVersionsV1QueryUrlVisitsBreakdownsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// UrlVisitsBreakdowns: The URL visit breakdowns from the specified insight.
+	UrlVisitsBreakdowns []*GoogleChromeManagementVersionsV1UrlVisitsBreakdown `json:"urlVisitsBreakdowns,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1QueryUrlVisitsBreakdownsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1QueryUrlVisitsBreakdownsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1QueryUrlVisitsResponse: Response message for
+// QueryUrlVisits.
+type GoogleChromeManagementVersionsV1QueryUrlVisitsResponse struct {
+	// Summaries: A collection of summaries for various URL visit metrics.
+	Summaries []*GoogleChromeManagementVersionsV1UrlVisitsSummary `json:"summaries,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Summaries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Summaries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1QueryUrlVisitsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1QueryUrlVisitsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementVersionsV1ReportingData: Reporting data of a Chrome
 // browser profile.
 type GoogleChromeManagementVersionsV1ReportingData struct {
@@ -6227,6 +6422,71 @@ func (s GoogleChromeManagementVersionsV1UploadCertificateRequest) MarshalJSON() 
 type GoogleChromeManagementVersionsV1UploadCertificateResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// GoogleChromeManagementVersionsV1UrlVisitsBreakdown: A URL visits summary for
+// a given breakdown dimension.
+type GoogleChromeManagementVersionsV1UrlVisitsBreakdown struct {
+	// EventDomain: The event domain of the URL visits.
+	EventDomain string `json:"eventDomain,omitempty"`
+	// Summary: The summary of URL visits for the breakdown dimension.
+	Summary *GoogleChromeManagementVersionsV1UrlVisitsSummary `json:"summary,omitempty"`
+	// User: The user that visited the URL.
+	User string `json:"user,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EventDomain") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EventDomain") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1UrlVisitsBreakdown) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1UrlVisitsBreakdown
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1UrlVisitsSummary: Summary of URL visits for
+// a given metric.
+type GoogleChromeManagementVersionsV1UrlVisitsSummary struct {
+	// Count: The count of the URL visits metric.
+	Count int64 `json:"count,omitempty,string"`
+	// Metric: The type of URL visits metric.
+	//
+	// Possible values:
+	//   "URL_VISITS_METRIC_UNSPECIFIED" - Unspecified URL visits metric. Defaults
+	// to URL_VISITS_METRIC_TOTAL_SUSPICIOUS_URL_VISITS.
+	//   "URL_VISITS_METRIC_TOTAL_SUSPICIOUS_URL_VISITS" - The total number of
+	// suspicious URL visits. This is the sum of the high_risk_url_visits,
+	// medium_risk_url_visits, and low_risk_url_visits.
+	//   "URL_VISITS_METRIC_HIGH_RISK_URL_VISITS" - The number of suspicious URL
+	// visits with high risk.
+	//   "URL_VISITS_METRIC_MEDIUM_RISK_URL_VISITS" - The number of suspicious URL
+	// visits with medium risk.
+	//   "URL_VISITS_METRIC_LOW_RISK_URL_VISITS" - The number of suspicious URL
+	// visits with low risk.
+	Metric string `json:"metric,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1UrlVisitsSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1UrlVisitsSummary
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementVersionsV1XdrSettings: XDR settings for connector
@@ -8825,6 +9085,737 @@ func (c *CustomersEnterpriseSecurityInsightsEnableCall) Do(opts ...googleapi.Cal
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.enterprise.securityInsights.enable", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type CustomersEnterpriseSecurityInsightsQueryContentTransfersCall struct {
+	s            *Service
+	customer     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// QueryContentTransfers: Returns a high-level summary of content transfers for
+// a given customer.
+//
+// - customer: The customer ID in the format "customers/{customer_id}".
+func (r *CustomersEnterpriseSecurityInsightsService) QueryContentTransfers(customer string) *CustomersEnterpriseSecurityInsightsQueryContentTransfersCall {
+	c := &CustomersEnterpriseSecurityInsightsQueryContentTransfersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter to apply to the
+// request. For syntax, see AIP-160. Data is not available for events older
+// than 180 days, and may be unavailable or inaccurate for time ranges less
+// than 4 hours. If `event_time` is not specified, results will be returned for
+// the last 30 days. Supported fields for filtering: - `event_time` Supported
+// operators: - `>=` and `<=` for `event_time` Supported conjunctions: - `AND`
+// Example: `event_time >= "2024-01-01T00:00:00Z" AND event_time <=
+// "2024-01-02T00:00:00Z"
+func (c *CustomersEnterpriseSecurityInsightsQueryContentTransfersCall) Filter(filter string) *CustomersEnterpriseSecurityInsightsQueryContentTransfersCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersEnterpriseSecurityInsightsQueryContentTransfersCall) Fields(s ...googleapi.Field) *CustomersEnterpriseSecurityInsightsQueryContentTransfersCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CustomersEnterpriseSecurityInsightsQueryContentTransfersCall) IfNoneMatch(entityTag string) *CustomersEnterpriseSecurityInsightsQueryContentTransfersCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersEnterpriseSecurityInsightsQueryContentTransfersCall) Context(ctx context.Context) *CustomersEnterpriseSecurityInsightsQueryContentTransfersCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersEnterpriseSecurityInsightsQueryContentTransfersCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersEnterpriseSecurityInsightsQueryContentTransfersCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/enterprise/securityInsights:queryContentTransfers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.enterprise.securityInsights.queryContentTransfers", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.enterprise.securityInsights.queryContentTransfers" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementVersionsV1QueryContentTransfersResponse.ServerResponse
+// .Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CustomersEnterpriseSecurityInsightsQueryContentTransfersCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementVersionsV1QueryContentTransfersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementVersionsV1QueryContentTransfersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.enterprise.securityInsights.queryContentTransfers", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall struct {
+	s            *Service
+	customer     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// QueryContentTransfersBreakdowns: Returns summaries of content transfers for
+// a given metric and breakdown dimension.
+//
+// - customer: The customer ID in the format "customers/{customer_id}".
+func (r *CustomersEnterpriseSecurityInsightsService) QueryContentTransfersBreakdowns(customer string) *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall {
+	c := &CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	return c
+}
+
+// Breakdown sets the optional parameter "breakdown": The dimension to break
+// down the content transfers by. Defaults to USER.
+//
+// Possible values:
+//
+//	"CONTENT_TRANSFERS_BREAKDOWN_DIMENSION_UNSPECIFIED" - Unspecified
+//
+// breakdown dimension. Defaults to USER.
+//
+//	"USER" - Breakdown by user.
+//	"EVENT_DOMAIN" - Breakdown by event domain.
+//	"CONTENT_CATEGORY" - Breakdown by content category.
+func (c *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall) Breakdown(breakdown string) *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall {
+	c.urlParams_.Set("breakdown", breakdown)
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter to apply to the
+// request. For syntax, see AIP-160. Data is not available for events older
+// than 180 days or more recent than 48 hours ago. If `event_time` is not
+// specified, results will end 48 hours ago. Supported fields for filtering: -
+// `user` - `event_domain` - `content_category` - `event_time` Filtering by
+// `user` or `event_domain` requires the `breakdown` dimension to be set to the
+// corresponding value (e.g., you must set `breakdown = USER` to filter by
+// `user`). Supported operators: - `=` for `user`, `event_domain`, and
+// `content_category`. - `<=` for `event_time`. Supported conjunctions: - `AND`
+// Example: `user = "testuser" AND event_time <= "2024-01-02T00:00:00Z"
+func (c *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall) Filter(filter string) *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// FixedTimeRange sets the optional parameter "fixedTimeRange": The fixed time
+// range to return the breakdowns for. Defaults to FIXED_TIME_RANGE_FOUR_WEEKS.
+// Fixed time ranges are used to allow for precomputation and optimize response
+// times.
+//
+// Possible values:
+//
+//	"FIXED_TIME_RANGE_UNSPECIFIED" - Unspecified fixed time range. Defaults to
+//
+// FIXED_TIME_RANGE_FOUR_WEEKS.
+//
+//	"FIXED_TIME_RANGE_FOUR_HOURS" - Four hours.
+//	"FIXED_TIME_RANGE_ONE_DAY" - One day.
+//	"FIXED_TIME_RANGE_ONE_WEEK" - One week.
+//	"FIXED_TIME_RANGE_FOUR_WEEKS" - Four weeks.
+func (c *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall) FixedTimeRange(fixedTimeRange string) *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall {
+	c.urlParams_.Set("fixedTimeRange", fixedTimeRange)
+	return c
+}
+
+// Metric sets the optional parameter "metric": The metric to return the
+// breakdowns for. Defaults to CONTENT_TRANSFERS_METRIC_TOTAL_TRANSFERS.
+//
+// Possible values:
+//
+//	"CONTENT_TRANSFERS_METRIC_UNSPECIFIED" - Unspecified content transfers
+//
+// metric. Defaults to CONTENT_TRANSFERS_METRIC_TOTAL_TRANSFERS.
+//
+//	"CONTENT_TRANSFERS_METRIC_TOTAL_TRANSFERS" - The total number of content
+//
+// transfers (sensitive and non-sensitive). This is the sum of the
+// total_uploads, total_downloads, and total_prints.
+//
+//	"CONTENT_TRANSFERS_METRIC_TOTAL_UPLOADS" - The total number of content
+//
+// uploads (sensitive and non-sensitive).
+//
+//	"CONTENT_TRANSFERS_METRIC_TOTAL_DOWNLOADS" - The total number of content
+//
+// downloads (sensitive and non-sensitive).
+//
+//	"CONTENT_TRANSFERS_METRIC_TOTAL_PRINTS" - The total number of content
+//
+// prints (sensitive and non-sensitive).
+//
+//	"CONTENT_TRANSFERS_METRIC_TOTAL_SENSITIVE_TRANSFERS" - The total number of
+//
+// sensitive content transfers. This is the sum of the sensitive_uploads,
+// sensitive_downloads, and sensitive_prints.
+//
+//	"CONTENT_TRANSFERS_METRIC_SENSITIVE_UPLOADS" - The number of sensitive
+//
+// content uploads.
+//
+//	"CONTENT_TRANSFERS_METRIC_SENSITIVE_DOWNLOADS" - The number of sensitive
+//
+// content downloads.
+//
+//	"CONTENT_TRANSFERS_METRIC_SENSITIVE_PRINTS" - The number of sensitive
+//
+// content prints.
+func (c *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall) Metric(metric string) *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall {
+	c.urlParams_.Set("metric", metric)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// breakdowns to return. The service may return fewer than this value. If
+// unspecified, at most 50 breakdowns will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
+func (c *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall) PageSize(pageSize int64) *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `QueryContentTransfersBreakdowns` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters provided
+// to `QueryContentTransfersBreakdowns` must match the call that provided the
+// page token.
+func (c *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall) PageToken(pageToken string) *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall) Fields(s ...googleapi.Field) *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall) IfNoneMatch(entityTag string) *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall) Context(ctx context.Context) *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/enterprise/securityInsights:queryContentTransfersBreakdowns")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.enterprise.securityInsights.queryContentTransfersBreakdowns", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.enterprise.securityInsights.queryContentTransfersBreakdowns" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementVersionsV1QueryContentTransfersBreakdownsResponse.Serv
+// erResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementVersionsV1QueryContentTransfersBreakdownsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementVersionsV1QueryContentTransfersBreakdownsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.enterprise.securityInsights.queryContentTransfersBreakdowns", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CustomersEnterpriseSecurityInsightsQueryContentTransfersBreakdownsCall) Pages(ctx context.Context, f func(*GoogleChromeManagementVersionsV1QueryContentTransfersBreakdownsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type CustomersEnterpriseSecurityInsightsQueryUrlVisitsCall struct {
+	s            *Service
+	customer     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// QueryUrlVisits: Returns a high-level summary of URL visits for a given
+// customer.
+//
+// - customer: The customer ID in the format "customers/{customer_id}".
+func (r *CustomersEnterpriseSecurityInsightsService) QueryUrlVisits(customer string) *CustomersEnterpriseSecurityInsightsQueryUrlVisitsCall {
+	c := &CustomersEnterpriseSecurityInsightsQueryUrlVisitsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter to apply to the
+// request. For syntax, see AIP-160. Data is not available for events older
+// than 180 days, and may be unavailable or inaccurate for time ranges less
+// than 4 hours. If `event_time` is not specified, results will be returned for
+// the last 30 days. Supported fields for filtering: - `event_time` Supported
+// operators: - `>=` and `<=` for `event_time` Supported conjunctions: - `AND`
+// Example: `event_time >= "2024-01-01T00:00:00Z" AND event_time <=
+// "2024-01-02T00:00:00Z"
+func (c *CustomersEnterpriseSecurityInsightsQueryUrlVisitsCall) Filter(filter string) *CustomersEnterpriseSecurityInsightsQueryUrlVisitsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersEnterpriseSecurityInsightsQueryUrlVisitsCall) Fields(s ...googleapi.Field) *CustomersEnterpriseSecurityInsightsQueryUrlVisitsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CustomersEnterpriseSecurityInsightsQueryUrlVisitsCall) IfNoneMatch(entityTag string) *CustomersEnterpriseSecurityInsightsQueryUrlVisitsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersEnterpriseSecurityInsightsQueryUrlVisitsCall) Context(ctx context.Context) *CustomersEnterpriseSecurityInsightsQueryUrlVisitsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersEnterpriseSecurityInsightsQueryUrlVisitsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersEnterpriseSecurityInsightsQueryUrlVisitsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/enterprise/securityInsights:queryUrlVisits")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.enterprise.securityInsights.queryUrlVisits", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.enterprise.securityInsights.queryUrlVisits" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementVersionsV1QueryUrlVisitsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomersEnterpriseSecurityInsightsQueryUrlVisitsCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementVersionsV1QueryUrlVisitsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementVersionsV1QueryUrlVisitsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.enterprise.securityInsights.queryUrlVisits", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall struct {
+	s            *Service
+	customer     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// QueryUrlVisitsBreakdowns: Returns summaries of URL visits for a given metric
+// and breakdown dimension.
+//
+// - customer: The customer ID in the format "customers/{customer_id}".
+func (r *CustomersEnterpriseSecurityInsightsService) QueryUrlVisitsBreakdowns(customer string) *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall {
+	c := &CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	return c
+}
+
+// Breakdown sets the optional parameter "breakdown": The dimension to break
+// down the URL visits by. Defaults to USER.
+//
+// Possible values:
+//
+//	"URL_VISITS_BREAKDOWN_DIMENSION_UNSPECIFIED" - Unspecified breakdown
+//
+// dimension. Defaults to USER.
+//
+//	"USER" - Breakdown by user.
+//	"EVENT_DOMAIN" - Breakdown by event domain.
+func (c *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall) Breakdown(breakdown string) *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall {
+	c.urlParams_.Set("breakdown", breakdown)
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter to apply to the
+// request. For syntax, see AIP-160. Data is not available for events older
+// than 180 days or more recent than 48 hours ago. If `event_time` is not
+// specified, results will end 48 hours ago. Supported fields for filtering: -
+// `user` - `event_domain` - `event_time` Filtering by `user` or `event_domain`
+// requires the `breakdown` dimension to be set to the corresponding value
+// (e.g., you must set `breakdown = USER` to filter by `user`). Supported
+// operators: - `=` for `user` and `event_domain`. - `<=` for `event_time`.
+// Supported conjunctions: - `AND` Example: `user = "testuser" AND event_time
+// <= "2024-01-02T00:00:00Z"
+func (c *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall) Filter(filter string) *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// FixedTimeRange sets the optional parameter "fixedTimeRange": The fixed time
+// range to return the breakdowns for. Defaults to FIXED_TIME_RANGE_FOUR_WEEKS.
+// Fixed time ranges are used to allow for precomputation and optimize response
+// times.
+//
+// Possible values:
+//
+//	"FIXED_TIME_RANGE_UNSPECIFIED" - Unspecified fixed time range. Defaults to
+//
+// FIXED_TIME_RANGE_FOUR_WEEKS.
+//
+//	"FIXED_TIME_RANGE_FOUR_HOURS" - Four hours.
+//	"FIXED_TIME_RANGE_ONE_DAY" - One day.
+//	"FIXED_TIME_RANGE_ONE_WEEK" - One week.
+//	"FIXED_TIME_RANGE_FOUR_WEEKS" - Four weeks.
+func (c *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall) FixedTimeRange(fixedTimeRange string) *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall {
+	c.urlParams_.Set("fixedTimeRange", fixedTimeRange)
+	return c
+}
+
+// Metric sets the optional parameter "metric": The metric to return the
+// breakdowns for. Defaults to URL_VISITS_METRIC_TOTAL_SUSPICIOUS_URL_VISITS.
+//
+// Possible values:
+//
+//	"URL_VISITS_METRIC_UNSPECIFIED" - Unspecified URL visits metric. Defaults
+//
+// to URL_VISITS_METRIC_TOTAL_SUSPICIOUS_URL_VISITS.
+//
+//	"URL_VISITS_METRIC_TOTAL_SUSPICIOUS_URL_VISITS" - The total number of
+//
+// suspicious URL visits. This is the sum of the high_risk_url_visits,
+// medium_risk_url_visits, and low_risk_url_visits.
+//
+//	"URL_VISITS_METRIC_HIGH_RISK_URL_VISITS" - The number of suspicious URL
+//
+// visits with high risk.
+//
+//	"URL_VISITS_METRIC_MEDIUM_RISK_URL_VISITS" - The number of suspicious URL
+//
+// visits with medium risk.
+//
+//	"URL_VISITS_METRIC_LOW_RISK_URL_VISITS" - The number of suspicious URL
+//
+// visits with low risk.
+func (c *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall) Metric(metric string) *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall {
+	c.urlParams_.Set("metric", metric)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// breakdowns to return. The service may return fewer than this value. If
+// unspecified, at most 50 breakdowns will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
+func (c *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall) PageSize(pageSize int64) *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `QueryUrlVisitsBreakdowns` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `QueryUrlVisitsBreakdowns` must match the call that provided the page token.
+func (c *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall) PageToken(pageToken string) *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall) Fields(s ...googleapi.Field) *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall) IfNoneMatch(entityTag string) *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall) Context(ctx context.Context) *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/enterprise/securityInsights:queryUrlVisitsBreakdowns")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.enterprise.securityInsights.queryUrlVisitsBreakdowns", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.enterprise.securityInsights.queryUrlVisitsBreakdowns" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementVersionsV1QueryUrlVisitsBreakdownsResponse.ServerRespo
+// nse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementVersionsV1QueryUrlVisitsBreakdownsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementVersionsV1QueryUrlVisitsBreakdownsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.enterprise.securityInsights.queryUrlVisitsBreakdowns", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall) Pages(ctx context.Context, f func(*GoogleChromeManagementVersionsV1QueryUrlVisitsBreakdownsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type CustomersProfilesDeleteCall struct {

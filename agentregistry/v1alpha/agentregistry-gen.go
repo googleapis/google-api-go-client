@@ -267,6 +267,36 @@ type ProjectsLocationsServicesService struct {
 	s *APIService
 }
 
+// A2ASkill: Represents the skills of an Agent.
+type A2ASkill struct {
+	// Description: Output only. A more detailed description of the skill.
+	Description string `json:"description,omitempty"`
+	// Examples: Output only. Example prompts or scenarios this skill can handle.
+	Examples []string `json:"examples,omitempty"`
+	// Id: Output only. A unique identifier for the agent's skill.
+	Id string `json:"id,omitempty"`
+	// Name: Output only. A human-readable name for the agent's skill.
+	Name string `json:"name,omitempty"`
+	// Tags: Output only. Keywords describing the skill.
+	Tags []string `json:"tags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s A2ASkill) MarshalJSON() ([]byte, error) {
+	type NoMethod A2ASkill
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Agent: Represents an Agent. "A2A" below refers to the Agent-to-Agent
 // protocol.
 type Agent struct {
@@ -302,7 +332,7 @@ type Agent struct {
 	Protocols []*Protocol `json:"protocols,omitempty"`
 	// Skills: Output only. Skills the agent possesses, often obtained from the A2A
 	// Agent Card.
-	Skills []*Skill `json:"skills,omitempty"`
+	Skills []*A2ASkill `json:"skills,omitempty"`
 	// Uid: Output only. A universally unique identifier for the Agent.
 	Uid string `json:"uid,omitempty"`
 	// UpdateTime: Output only. Update time.
@@ -1308,36 +1338,6 @@ type Service struct {
 
 func (s Service) MarshalJSON() ([]byte, error) {
 	type NoMethod Service
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// Skill: Represents the skills of an Agent.
-type Skill struct {
-	// Description: Output only. A more detailed description of the skill.
-	Description string `json:"description,omitempty"`
-	// Examples: Output only. Example prompts or scenarios this skill can handle.
-	Examples []string `json:"examples,omitempty"`
-	// Id: Output only. A unique identifier for the agent's skill.
-	Id string `json:"id,omitempty"`
-	// Name: Output only. A human-readable name for the agent's skill.
-	Name string `json:"name,omitempty"`
-	// Tags: Output only. Keywords describing the skill.
-	Tags []string `json:"tags,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Description") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s Skill) MarshalJSON() ([]byte, error) {
-	type NoMethod Skill
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

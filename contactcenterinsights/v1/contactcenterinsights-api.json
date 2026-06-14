@@ -6101,7 +6101,7 @@
       }
     }
   },
-  "revision": "20260601",
+  "revision": "20260612",
   "rootUrl": "https://contactcenterinsights.googleapis.com/",
   "schemas": {
     "GoogleCloudCesV1mainAgentTransfer": {
@@ -7876,7 +7876,7 @@
           "type": "string"
         },
         "metadataJson": {
-          "description": "Input only. JSON metadata encoded as a string. This field is primarily used by Insights integrations with various telephony systems and must be in one of Insight's supported formats.",
+          "description": "Optional. JSON metadata encoded as a string. This field is primarily used by Insights integrations with various telephony systems and must be in one of Insight's supported formats.",
           "type": "string"
         },
         "name": {
@@ -14055,7 +14055,7 @@
           "type": "string"
         },
         "metadataJson": {
-          "description": "Input only. JSON metadata encoded as a string. This field is primarily used by Insights integrations with various telephony systems and must be in one of Insight's supported formats.",
+          "description": "Optional. JSON metadata encoded as a string. This field is primarily used by Insights integrations with various telephony systems and must be in one of Insight's supported formats.",
           "type": "string"
         },
         "name": {
@@ -18646,7 +18646,7 @@
           "type": "string"
         },
         "metadataJson": {
-          "description": "Input only. JSON metadata encoded as a string. This field is primarily used by Insights integrations with various telephony systems and must be in one of Insight's supported formats.",
+          "description": "Optional. JSON metadata encoded as a string. This field is primarily used by Insights integrations with various telephony systems and must be in one of Insight's supported formats.",
           "type": "string"
         },
         "name": {

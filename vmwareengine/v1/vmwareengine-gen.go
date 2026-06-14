@@ -1135,6 +1135,42 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// EncryptionConfig: Encryption configuration for a private cloud.
+type EncryptionConfig struct {
+	// CryptoKeyName: Optional. The resource name of the Cloud KMS key to be used
+	// for CMEK encryption. The format of this field is
+	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{cryp
+	// to_key}`. The key must be in the same region as the private cloud. This key
+	// is used for wrapping the key-encrypting key of vSAN clusters. This field
+	// must be provided when `type` is `CMEK` or `LEGACY_CMEK`, and must not be set
+	// when `type` is `OTHER`.
+	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
+	// Type: Required. The encryption type of the private cloud.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - The default value. This value should never be used.
+	//   "CMEK" - Customer-managed encryption keys (CMEK).
+	//   "LEGACY_CMEK" - Legacy customer-managed encryption keys (CMEK).
+	//   "OTHER" - Other encryption types, such as self-managed external KMS.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CryptoKeyName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CryptoKeyName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EncryptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Expr: Represents a textual expression in the Common Expression Language
 // (CEL) syntax. CEL is a C-like expression language. The syntax and semantics
 // of CEL are documented at https://github.com/google/cel-spec. Example
@@ -3292,6 +3328,9 @@ type PrivateCloud struct {
 	DeleteTime string `json:"deleteTime,omitempty"`
 	// Description: User-provided description for this private cloud.
 	Description string `json:"description,omitempty"`
+	// EncryptionConfig: Optional. Encryption configuration for the private cloud.
+	// If this field is left unspecified, Google default encryption is used.
+	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
 	// ExpireTime: Output only. Time when the resource will be irreversibly
 	// deleted.
 	ExpireTime string `json:"expireTime,omitempty"`

@@ -383,6 +383,13 @@ type SignSshPublicKeyRequest struct {
 	// Expected format:
 	// apps/{app}/services/{service}/versions/{version}/instances/{instance}
 	AppEngineInstance string `json:"appEngineInstance,omitempty"`
+	// CloudRunResource: Optional. The Cloud Run resource to sign the SSH public
+	// key for. Expected formats: -
+	// `projects/{project}/locations/{location}/services/{service}` -
+	// `projects/{project}/locations/{location}/workerPools/{worker_pool}` -
+	// `projects/{project}/locations/{location}/jobs/{job}` -
+	// `projects/{project}/locations/{location}/instances/{instance}`
+	CloudRunResource string `json:"cloudRunResource,omitempty"`
 	// ComputeInstance: The Compute instance to sign the SSH public key for.
 	// Expected format:
 	// projects/{project}/zones/{zone}/instances/{numeric_instance_id}

@@ -343,8 +343,10 @@
                     "$ref": "Operation"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/agentregistry.read-only",
                     "https://www.googleapis.com/auth/agentregistry.read-write",
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only"
                   ]
                 },
                 "delete": {
@@ -374,8 +376,10 @@
                     "$ref": "Operation"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/agentregistry.read-only",
                     "https://www.googleapis.com/auth/agentregistry.read-write",
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only"
                   ]
                 },
                 "fetchAvailable": {
@@ -540,8 +544,10 @@
                     "$ref": "Operation"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/agentregistry.read-only",
                     "https://www.googleapis.com/auth/agentregistry.read-write",
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only"
                   ]
                 }
               }
@@ -905,8 +911,10 @@
                     "$ref": "Operation"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/agentregistry.read-only",
                     "https://www.googleapis.com/auth/agentregistry.read-write",
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only"
                   ]
                 },
                 "delete": {
@@ -936,8 +944,10 @@
                     "$ref": "Operation"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/agentregistry.read-only",
                     "https://www.googleapis.com/auth/agentregistry.read-write",
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only"
                   ]
                 },
                 "get": {
@@ -1048,8 +1058,10 @@
                     "$ref": "Operation"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/agentregistry.read-only",
                     "https://www.googleapis.com/auth/agentregistry.read-write",
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only"
                   ]
                 }
               }
@@ -1059,9 +1071,47 @@
       }
     }
   },
-  "revision": "20260430",
+  "revision": "20260608",
   "rootUrl": "https://agentregistry.googleapis.com/",
   "schemas": {
+    "A2ASkill": {
+      "description": "Represents the skills of an Agent.",
+      "id": "A2ASkill",
+      "properties": {
+        "description": {
+          "description": "Output only. A more detailed description of the skill.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "examples": {
+          "description": "Output only. Example prompts or scenarios this skill can handle.",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "id": {
+          "description": "Output only. A unique identifier for the agent's skill.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. A human-readable name for the agent's skill.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "tags": {
+          "description": "Output only. Keywords describing the skill.",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "Agent": {
       "description": "Represents an Agent. \"A2A\" below refers to the Agent-to-Agent protocol.",
       "id": "Agent",
@@ -1124,7 +1174,7 @@
         "skills": {
           "description": "Output only. Skills the agent possesses, often obtained from the A2A Agent Card.",
           "items": {
-            "$ref": "Skill"
+            "$ref": "A2ASkill"
           },
           "readOnly": true,
           "type": "array"
@@ -1947,44 +1997,6 @@
           "format": "google-datetime",
           "readOnly": true,
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "Skill": {
-      "description": "Represents the skills of an Agent.",
-      "id": "Skill",
-      "properties": {
-        "description": {
-          "description": "Output only. A more detailed description of the skill.",
-          "readOnly": true,
-          "type": "string"
-        },
-        "examples": {
-          "description": "Output only. Example prompts or scenarios this skill can handle.",
-          "items": {
-            "type": "string"
-          },
-          "readOnly": true,
-          "type": "array"
-        },
-        "id": {
-          "description": "Output only. A unique identifier for the agent's skill.",
-          "readOnly": true,
-          "type": "string"
-        },
-        "name": {
-          "description": "Output only. A human-readable name for the agent's skill.",
-          "readOnly": true,
-          "type": "string"
-        },
-        "tags": {
-          "description": "Output only. Keywords describing the skill.",
-          "items": {
-            "type": "string"
-          },
-          "readOnly": true,
-          "type": "array"
         }
       },
       "type": "object"

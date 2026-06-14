@@ -2585,7 +2585,7 @@ type GoogleCloudContactcenterinsightsV1Conversation struct {
 	// phone.
 	//   "CHAT" - The format for conversations that took place over chat.
 	Medium string `json:"medium,omitempty"`
-	// MetadataJson: Input only. JSON metadata encoded as a string. This field is
+	// MetadataJson: Optional. JSON metadata encoded as a string. This field is
 	// primarily used by Insights integrations with various telephony systems and
 	// must be in one of Insight's supported formats.
 	MetadataJson string `json:"metadataJson,omitempty"`
@@ -10648,7 +10648,7 @@ type GoogleCloudContactcenterinsightsV1alpha1Conversation struct {
 	// phone.
 	//   "CHAT" - The format for conversations that took place over chat.
 	Medium string `json:"medium,omitempty"`
-	// MetadataJson: Input only. JSON metadata encoded as a string. This field is
+	// MetadataJson: Optional. JSON metadata encoded as a string. This field is
 	// primarily used by Insights integrations with various telephony systems and
 	// must be in one of Insight's supported formats.
 	MetadataJson string `json:"metadataJson,omitempty"`
@@ -16419,7 +16419,7 @@ type GoogleCloudContactcenterinsightsV1mainConversation struct {
 	// phone.
 	//   "CHAT" - The format for conversations that took place over chat.
 	Medium string `json:"medium,omitempty"`
-	// MetadataJson: Input only. JSON metadata encoded as a string. This field is
+	// MetadataJson: Optional. JSON metadata encoded as a string. This field is
 	// primarily used by Insights integrations with various telephony systems and
 	// must be in one of Insight's supported formats.
 	MetadataJson string `json:"metadataJson,omitempty"`

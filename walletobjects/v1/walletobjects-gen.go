@@ -5506,6 +5506,15 @@ type Message struct {
 	//   "TEXT_AND_NOTIFY" - Renders the message as text on the card details screen
 	// and as an Android notification.
 	MessageType string `json:"messageType,omitempty"`
+	// NotificationBody: Custom push notification body. Allowlist-only field for
+	// TEXT_AND_NOTIFY messages. Max 50 characters, UTF-8 only. Does not persist on
+	// the back of the pass. See
+	// https://developers.google.com/wallet/retail/loyalty-cards/use-cases/trigger-push-notifications#custom-push-notification-text
+	NotificationBody *LocalizedString `json:"notificationBody,omitempty"`
+	// NotificationTitle: Custom push notification title. Allowlist-only field for
+	// TEXT_AND_NOTIFY messages. Max 35 characters, UTF-8 only. Does not persist on
+	// the back of the pass.
+	NotificationTitle *LocalizedString `json:"notificationTitle,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

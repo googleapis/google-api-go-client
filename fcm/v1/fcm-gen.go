@@ -741,13 +741,17 @@ type Message struct {
 	// FcmOptions: Input only. Template for FCM SDK feature options to use across
 	// all platforms.
 	FcmOptions *FcmOptions `json:"fcmOptions,omitempty"`
+	// Fid: Optional. Firebase Installation ID to send a message to.
+	Fid string `json:"fid,omitempty"`
 	// Name: Output Only. The identifier of the message sent, in the format of
 	// `projects/*/messages/{message_id}`.
 	Name string `json:"name,omitempty"`
 	// Notification: Input only. Basic notification template to use across all
 	// platforms.
 	Notification *Notification `json:"notification,omitempty"`
-	// Token: Registration token to send a message to.
+	// Token: Deprecated: Use `fid` instead. Registration token to send a message
+	// to. During the transition period, this field also accepts a Firebase
+	// Installation ID (FID).
 	Token string `json:"token,omitempty"`
 	// Topic: Topic name to send a message to, e.g. "weather". Note: "/topics/"
 	// prefix should not be provided.

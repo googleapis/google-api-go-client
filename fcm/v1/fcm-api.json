@@ -146,7 +146,7 @@
       }
     }
   },
-  "revision": "20260529",
+  "revision": "20260605",
   "rootUrl": "https://fcm.googleapis.com/",
   "schemas": {
     "AndroidConfig": {
@@ -518,6 +518,10 @@
           "$ref": "FcmOptions",
           "description": "Input only. Template for FCM SDK feature options to use across all platforms."
         },
+        "fid": {
+          "description": "Optional. Firebase Installation ID to send a message to.",
+          "type": "string"
+        },
         "name": {
           "description": "Output Only. The identifier of the message sent, in the format of `projects/*/messages/{message_id}`.",
           "type": "string"
@@ -527,7 +531,8 @@
           "description": "Input only. Basic notification template to use across all platforms."
         },
         "token": {
-          "description": "Registration token to send a message to.",
+          "deprecated": true,
+          "description": "Deprecated: Use `fid` instead. Registration token to send a message to. During the transition period, this field also accepts a Firebase Installation ID (FID).",
           "type": "string"
         },
         "topic": {

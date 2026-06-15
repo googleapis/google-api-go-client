@@ -3533,6 +3533,152 @@
                 }
               }
             },
+            "contentPolicies": {
+              "methods": {
+                "create": {
+                  "description": "Create a ContentPolicy.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/contentPolicies",
+                  "httpMethod": "POST",
+                  "id": "dlp.projects.locations.contentPolicies.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization): + Projects scope: `projects/{project_id}/locations/{location_id}` + Organizations scope: `organizations/{org_id}/locations/{location_id}`",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+parent}/contentPolicies",
+                  "request": {
+                    "$ref": "GooglePrivacyDlpV2CreateContentPolicyRequest"
+                  },
+                  "response": {
+                    "$ref": "GooglePrivacyDlpV2ContentPolicy"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "delete": {
+                  "description": "Delete a ContentPolicy.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/contentPolicies/{contentPoliciesId}",
+                  "httpMethod": "DELETE",
+                  "id": "dlp.projects.locations.contentPolicies.delete",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Resource name of the ContentPolicy to be deleted, in the format: `projects/{project}/locations/{location}/contentPolicies/{content_policy}`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/contentPolicies/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "response": {
+                    "$ref": "GoogleProtobufEmpty"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "get": {
+                  "description": "Get a ContentPolicy.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/contentPolicies/{contentPoliciesId}",
+                  "httpMethod": "GET",
+                  "id": "dlp.projects.locations.contentPolicies.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Resource name in the format: `projects/{project}/locations/{location}/contentPolicies/{content_policy}`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/contentPolicies/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "response": {
+                    "$ref": "GooglePrivacyDlpV2ContentPolicy"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Lists ContentPolicies in a parent.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/contentPolicies",
+                  "httpMethod": "GET",
+                  "id": "dlp.projects.locations.contentPolicies.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "Optional. Number of results per page, max 1000.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "Optional. Page token from a previous page to return the next set of results. If set, all other request fields must match the original request.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. Resource name of the organization or project, for example, `organizations/433245324/locations/europe` or `projects/project-id/locations/asia`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+parent}/contentPolicies",
+                  "response": {
+                    "$ref": "GooglePrivacyDlpV2ListContentPoliciesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "patch": {
+                  "description": "Update a ContentPolicy.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/contentPolicies/{contentPoliciesId}",
+                  "httpMethod": "PATCH",
+                  "id": "dlp.projects.locations.contentPolicies.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Resource name in the format: `projects/{project}/locations/{location}/contentPolicies/{content_policy}`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/contentPolicies/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "request": {
+                    "$ref": "GooglePrivacyDlpV2UpdateContentPolicyRequest"
+                  },
+                  "response": {
+                    "$ref": "GooglePrivacyDlpV2ContentPolicy"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            },
             "deidentifyTemplates": {
               "methods": {
                 "create": {
@@ -5128,7 +5274,7 @@
       }
     }
   },
-  "revision": "20260530",
+  "revision": "20260606",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -6631,6 +6777,81 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2ContentPolicy": {
+      "description": "A policy to apply to content based on its inspection findings.",
+      "id": "GooglePrivacyDlpV2ContentPolicy",
+      "properties": {
+        "createTime": {
+          "description": "Output only. The creation timestamp of a contentPolicy; output-only field.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "defaultAction": {
+          "$ref": "GooglePrivacyDlpV2PolicyAction",
+          "description": "Action to take if the content is scanned and no rules match. Defaults to returning an ALLOW verdict if not set."
+        },
+        "displayName": {
+          "description": "Optional. Display name (max 63 chars)",
+          "type": "string"
+        },
+        "errors": {
+          "description": "Output only. A stream of errors encountered when the policy was applied. Output only field. Will return the last 100 errors. Whenever the policy is modified this list will be cleared.",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2Error"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "failedToScanSupportedFileType": {
+          "$ref": "GooglePrivacyDlpV2PolicyAction",
+          "description": "Optional. Action to take if the content is a supported file type and size but fails to be scanned, for example because the file is encrypted or corrupted."
+        },
+        "inputTooLarge": {
+          "$ref": "GooglePrivacyDlpV2PolicyAction",
+          "description": "Optional. Action to take if the content is a supported file type but is too large to be scanned."
+        },
+        "inspectConfig": {
+          "$ref": "GooglePrivacyDlpV2InspectConfig",
+          "description": "Optional. InspectConfig to use to produce findings."
+        },
+        "inspectTemplate": {
+          "$ref": "GooglePrivacyDlpV2InspectTemplate",
+          "deprecated": true,
+          "description": "Optional. InspectTemplate to use to produce findings. Deprecated: use inspect_config instead."
+        },
+        "loggingConfigs": {
+          "description": "Optional. Log the actions taken by the content policy to external systems.",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2LoggingConfig"
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "Output only. Resource name of the policy.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "rules": {
+          "description": "Required. Policies to apply, based on the findings returned by inspection. The first rule to match applies.",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2PolicyRule"
+          },
+          "type": "array"
+        },
+        "unsupportedFileType": {
+          "$ref": "GooglePrivacyDlpV2PolicyAction",
+          "description": "Optional. Action to take if the content is an unsupported file type."
+        },
+        "updateTime": {
+          "description": "Output only. The last update timestamp of a contentPolicy; output-only field.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GooglePrivacyDlpV2Conversation": {
       "description": "Complete conversation or slice of a conversation. It is assumed that all included messages are contiguous and ordered in chronological order.",
       "id": "GooglePrivacyDlpV2Conversation",
@@ -6697,6 +6918,21 @@
         "connection": {
           "$ref": "GooglePrivacyDlpV2Connection",
           "description": "Required. The connection resource."
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2CreateContentPolicyRequest": {
+      "description": "Request message for CreateContentPolicy.",
+      "id": "GooglePrivacyDlpV2CreateContentPolicyRequest",
+      "properties": {
+        "contentPolicy": {
+          "$ref": "GooglePrivacyDlpV2ContentPolicy",
+          "description": "Required. The content_policy resource."
+        },
+        "contentPolicyId": {
+          "description": "Optional. The content policy ID can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `[a-zA-Z\\d-_]+`. The maximum length is 100 characters. If empty, the system will generate a random id.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -9714,6 +9950,21 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2InfoTypeCondition": {
+      "description": "A info type based condition.",
+      "id": "GooglePrivacyDlpV2InfoTypeCondition",
+      "properties": {
+        "anyInfoType": {
+          "$ref": "GoogleProtobufEmpty",
+          "description": "match any info types."
+        },
+        "infoTypes": {
+          "$ref": "GooglePrivacyDlpV2InfoTypes",
+          "description": "match any of these info types."
+        }
+      },
+      "type": "object"
+    },
     "GooglePrivacyDlpV2InfoTypeDescription": {
       "description": "InfoType description.",
       "id": "GooglePrivacyDlpV2InfoTypeDescription",
@@ -9905,6 +10156,20 @@
           "description": "Required. Transformation for each infoType. Cannot specify more than one for a given infoType.",
           "items": {
             "$ref": "GooglePrivacyDlpV2InfoTypeTransformation"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2InfoTypes": {
+      "description": "Info types to match.",
+      "id": "GooglePrivacyDlpV2InfoTypes",
+      "properties": {
+        "infoTypeNames": {
+          "description": "Required. A list of info types to match.",
+          "items": {
+            "type": "string"
           },
           "type": "array"
         }
@@ -10696,6 +10961,24 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2ListContentPoliciesResponse": {
+      "description": "Response message for ListContentPolicies.",
+      "id": "GooglePrivacyDlpV2ListContentPoliciesResponse",
+      "properties": {
+        "contentPolicies": {
+          "description": "List of content policies.",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2ContentPolicy"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "Token to retrieve the next page of results. An empty value means there are no more results.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GooglePrivacyDlpV2ListDeidentifyTemplatesResponse": {
       "description": "Response message for ListDeidentifyTemplates.",
       "id": "GooglePrivacyDlpV2ListDeidentifyTemplatesResponse",
@@ -10922,6 +11205,36 @@
             "Feature may be used anywhere. Default value."
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2LogToBigQuery": {
+      "description": "Configuration for logging content policy actions to BigQuery.",
+      "id": "GooglePrivacyDlpV2LogToBigQuery",
+      "properties": {
+        "datasetId": {
+          "description": "Required. The ID of the dataset containing the BigQuery table to write to.",
+          "type": "string"
+        },
+        "projectId": {
+          "description": "Required. The ID of the project containing the BigQuery table to write to.",
+          "type": "string"
+        },
+        "tableId": {
+          "description": "Required. The ID of the BigQuery table to write to.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2LoggingConfig": {
+      "description": "A single logging configuration.",
+      "id": "GooglePrivacyDlpV2LoggingConfig",
+      "properties": {
+        "logToBigQuery": {
+          "$ref": "GooglePrivacyDlpV2LogToBigQuery",
+          "description": "Optional. Log the actions taken to a BigQuery table."
         }
       },
       "type": "object"
@@ -11225,6 +11538,71 @@
         },
         "name": {
           "description": "The name of the entity. A name matching regex `__.*__` is reserved/read-only. A name must not be more than 1500 bytes when UTF-8 encoded. Cannot be `\"\"`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2PolicyAction": {
+      "description": "A possible action to take when applying a content policy.",
+      "id": "GooglePrivacyDlpV2PolicyAction",
+      "properties": {
+        "returnVerdict": {
+          "description": "Optional. If set, the verdict will be returned to the user.",
+          "enum": [
+            "CONTENT_POLICY_VERDICT_UNSPECIFIED",
+            "ALLOW",
+            "BLOCK"
+          ],
+          "enumDescriptions": [
+            "Not used.",
+            "The policy allows the provided content to be used.",
+            "The policy prevents the provided content from being used. This should result in a blocked file upload, exclusion from training dataset, or other similar block action. (specific action will depend on the caller)."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2PolicyCondition": {
+      "description": "A condition that must match for this rule to apply.",
+      "id": "GooglePrivacyDlpV2PolicyCondition",
+      "properties": {
+        "infoTypeCondition": {
+          "$ref": "GooglePrivacyDlpV2InfoTypeCondition",
+          "description": "A condition based on info types."
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2PolicyRule": {
+      "description": "A single policy rule. The first rule to match from the list above controls the result.",
+      "id": "GooglePrivacyDlpV2PolicyRule",
+      "properties": {
+        "action": {
+          "$ref": "GooglePrivacyDlpV2PolicyAction",
+          "description": "Required. Action to take if this rule applies."
+        },
+        "conditions": {
+          "description": "Optional. Conditions that must match for this rule to apply. All conditions must match (`AND`). For `OR` conditions, use multiple rules.",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2PolicyCondition"
+          },
+          "type": "array"
+        },
+        "returnVerdict": {
+          "deprecated": true,
+          "description": "If set, the verdict will be returned to the user. Deprecated: Use `action` instead.",
+          "enum": [
+            "CONTENT_POLICY_VERDICT_UNSPECIFIED",
+            "ALLOW",
+            "BLOCK"
+          ],
+          "enumDescriptions": [
+            "Not used.",
+            "The policy allows the provided content to be used.",
+            "The policy prevents the provided content from being used. This should result in a blocked file upload, exclusion from training dataset, or other similar block action. (specific action will depend on the caller)."
+          ],
           "type": "string"
         }
       },
@@ -13187,6 +13565,22 @@
         "connection": {
           "$ref": "GooglePrivacyDlpV2Connection",
           "description": "Required. The connection with new values for the relevant fields."
+        },
+        "updateMask": {
+          "description": "Optional. Mask to control which fields get updated.",
+          "format": "google-fieldmask",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2UpdateContentPolicyRequest": {
+      "description": "Request message for UpdateContentPolicy.",
+      "id": "GooglePrivacyDlpV2UpdateContentPolicyRequest",
+      "properties": {
+        "contentPolicy": {
+          "$ref": "GooglePrivacyDlpV2ContentPolicy",
+          "description": "Required. The content_policy with new values for the relevant fields."
         },
         "updateMask": {
           "description": "Optional. Mask to control which fields get updated.",

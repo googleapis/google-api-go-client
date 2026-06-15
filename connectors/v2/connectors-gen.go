@@ -708,6 +708,78 @@ func (s ExecuteActionResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type ExecuteHttpRequestRequest struct {
+	// Headers: HTTP headers to send with the request (e.g., Content-Type:
+	// application/json). Order is preserved and duplicate keys are allowed.
+	Headers []*HttpHeader `json:"headers,omitempty"`
+	// HttpMethod: Required. The HTTP method to use for the request.
+	//
+	// Possible values:
+	//   "HTTP_METHOD_UNSPECIFIED"
+	//   "HTTP_METHOD_GET"
+	//   "HTTP_METHOD_POST"
+	//   "HTTP_METHOD_PUT"
+	//   "HTTP_METHOD_PATCH"
+	//   "HTTP_METHOD_DELETE"
+	//   "HTTP_METHOD_HEAD"
+	//   "HTTP_METHOD_OPTIONS"
+	HttpMethod string `json:"httpMethod,omitempty"`
+	// RawBody: Raw byte payload. Used for all pre-serialized formats including
+	// JSON, XML, GraphQL, and Multipart.
+	RawBody string `json:"rawBody,omitempty"`
+	// Url: Required. The fully resolved absolute target URL. Callers must
+	// pre-encode any query parameters.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Headers") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Headers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExecuteHttpRequestRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecuteHttpRequestRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type ExecuteHttpRequestResponse struct {
+	// Body: The raw response body.
+	Body string `json:"body,omitempty"`
+	// Headers: HTTP headers received in the response. Order is preserved and
+	// duplicate keys are allowed (e.g., multiple Set-Cookie headers).
+	Headers []*HttpHeader `json:"headers,omitempty"`
+	// Reason: The HTTP status reason phrase received from the backend (e.g., "Not
+	// Found"). May be empty if the backend did not provide one.
+	Reason string `json:"reason,omitempty"`
+	// StatusCode: The HTTP status code received from the backend.
+	StatusCode int64 `json:"statusCode,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExecuteHttpRequestResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecuteHttpRequestResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ExecuteSqlQueryRequest: An execute sql query request containing the query
 // and the connection to execute it on.
 type ExecuteSqlQueryRequest struct {
@@ -1030,6 +1102,31 @@ type GetResourceResponse struct {
 
 func (s GetResourceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetResourceResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// HttpHeader: A single HTTP header. Keys are case-insensitive. Multiple
+// headers with the same key may be present.
+type HttpHeader struct {
+	// Key: The header name.
+	Key string `json:"key,omitempty"`
+	// Value: The header value.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HttpHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod HttpHeader
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2917,6 +3014,113 @@ func (c *ProjectsLocationsConnectionsExchangeAuthCodeCall) Do(opts ...googleapi.
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.exchangeAuthCode", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectionsExecuteHttpRequestCall struct {
+	s                         *Service
+	name                      string
+	executehttprequestrequest *ExecuteHttpRequestRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// ExecuteHttpRequest: Executes a generic HTTP request. This supports all
+// payload formats including REST/JSON, GraphQL, XML, SOAP, and Multipart by
+// passing the rendered payload as raw bytes.
+//
+//   - name: Resource name of the Connection. Format:
+//     projects/{project}/locations/{location}/connections/{connection}.
+func (r *ProjectsLocationsConnectionsService) ExecuteHttpRequest(name string, executehttprequestrequest *ExecuteHttpRequestRequest) *ProjectsLocationsConnectionsExecuteHttpRequestCall {
+	c := &ProjectsLocationsConnectionsExecuteHttpRequestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.executehttprequestrequest = executehttprequestrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsExecuteHttpRequestCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsExecuteHttpRequestCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsExecuteHttpRequestCall) Context(ctx context.Context) *ProjectsLocationsConnectionsExecuteHttpRequestCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsExecuteHttpRequestCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsExecuteHttpRequestCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.executehttprequestrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:executeHttpRequest")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.executeHttpRequest", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.executeHttpRequest" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ExecuteHttpRequestResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsExecuteHttpRequestCall) Do(opts ...googleapi.CallOption) (*ExecuteHttpRequestResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ExecuteHttpRequestResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.executeHttpRequest", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

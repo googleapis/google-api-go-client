@@ -488,6 +488,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.ColumnDataProfiles = NewProjectsLocationsColumnDataProfilesService(s)
 	rs.Connections = NewProjectsLocationsConnectionsService(s)
 	rs.Content = NewProjectsLocationsContentService(s)
+	rs.ContentPolicies = NewProjectsLocationsContentPoliciesService(s)
 	rs.DeidentifyTemplates = NewProjectsLocationsDeidentifyTemplatesService(s)
 	rs.DiscoveryConfigs = NewProjectsLocationsDiscoveryConfigsService(s)
 	rs.DlpJobs = NewProjectsLocationsDlpJobsService(s)
@@ -510,6 +511,8 @@ type ProjectsLocationsService struct {
 	Connections *ProjectsLocationsConnectionsService
 
 	Content *ProjectsLocationsContentService
+
+	ContentPolicies *ProjectsLocationsContentPoliciesService
 
 	DeidentifyTemplates *ProjectsLocationsDeidentifyTemplatesService
 
@@ -558,6 +561,15 @@ func NewProjectsLocationsContentService(s *Service) *ProjectsLocationsContentSer
 }
 
 type ProjectsLocationsContentService struct {
+	s *Service
+}
+
+func NewProjectsLocationsContentPoliciesService(s *Service) *ProjectsLocationsContentPoliciesService {
+	rs := &ProjectsLocationsContentPoliciesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsContentPoliciesService struct {
 	s *Service
 }
 
@@ -2637,6 +2649,68 @@ func (s GooglePrivacyDlpV2ContentMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2ContentPolicy: A policy to apply to content based on its
+// inspection findings.
+type GooglePrivacyDlpV2ContentPolicy struct {
+	// CreateTime: Output only. The creation timestamp of a contentPolicy;
+	// output-only field.
+	CreateTime string `json:"createTime,omitempty"`
+	// DefaultAction: Action to take if the content is scanned and no rules match.
+	// Defaults to returning an ALLOW verdict if not set.
+	DefaultAction *GooglePrivacyDlpV2PolicyAction `json:"defaultAction,omitempty"`
+	// DisplayName: Optional. Display name (max 63 chars)
+	DisplayName string `json:"displayName,omitempty"`
+	// Errors: Output only. A stream of errors encountered when the policy was
+	// applied. Output only field. Will return the last 100 errors. Whenever the
+	// policy is modified this list will be cleared.
+	Errors []*GooglePrivacyDlpV2Error `json:"errors,omitempty"`
+	// FailedToScanSupportedFileType: Optional. Action to take if the content is a
+	// supported file type and size but fails to be scanned, for example because
+	// the file is encrypted or corrupted.
+	FailedToScanSupportedFileType *GooglePrivacyDlpV2PolicyAction `json:"failedToScanSupportedFileType,omitempty"`
+	// InputTooLarge: Optional. Action to take if the content is a supported file
+	// type but is too large to be scanned.
+	InputTooLarge *GooglePrivacyDlpV2PolicyAction `json:"inputTooLarge,omitempty"`
+	// InspectConfig: Optional. InspectConfig to use to produce findings.
+	InspectConfig *GooglePrivacyDlpV2InspectConfig `json:"inspectConfig,omitempty"`
+	// InspectTemplate: Optional. InspectTemplate to use to produce findings.
+	// Deprecated: use inspect_config instead.
+	InspectTemplate *GooglePrivacyDlpV2InspectTemplate `json:"inspectTemplate,omitempty"`
+	// LoggingConfigs: Optional. Log the actions taken by the content policy to
+	// external systems.
+	LoggingConfigs []*GooglePrivacyDlpV2LoggingConfig `json:"loggingConfigs,omitempty"`
+	// Name: Output only. Resource name of the policy.
+	Name string `json:"name,omitempty"`
+	// Rules: Required. Policies to apply, based on the findings returned by
+	// inspection. The first rule to match applies.
+	Rules []*GooglePrivacyDlpV2PolicyRule `json:"rules,omitempty"`
+	// UnsupportedFileType: Optional. Action to take if the content is an
+	// unsupported file type.
+	UnsupportedFileType *GooglePrivacyDlpV2PolicyAction `json:"unsupportedFileType,omitempty"`
+	// UpdateTime: Output only. The last update timestamp of a contentPolicy;
+	// output-only field.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2ContentPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2ContentPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2Conversation: Complete conversation or slice of a
 // conversation. It is assumed that all included messages are contiguous and
 // ordered in chronological order.
@@ -2745,6 +2819,34 @@ type GooglePrivacyDlpV2CreateConnectionRequest struct {
 
 func (s GooglePrivacyDlpV2CreateConnectionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CreateConnectionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2CreateContentPolicyRequest: Request message for
+// CreateContentPolicy.
+type GooglePrivacyDlpV2CreateContentPolicyRequest struct {
+	// ContentPolicy: Required. The content_policy resource.
+	ContentPolicy *GooglePrivacyDlpV2ContentPolicy `json:"contentPolicy,omitempty"`
+	// ContentPolicyId: Optional. The content policy ID can contain uppercase and
+	// lowercase letters, numbers, and hyphens; that is, it must match the regular
+	// expression: `[a-zA-Z\d-_]+`. The maximum length is 100 characters. If empty,
+	// the system will generate a random id.
+	ContentPolicyId string `json:"contentPolicyId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContentPolicy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentPolicy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2CreateContentPolicyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2CreateContentPolicyRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6926,6 +7028,30 @@ func (s GooglePrivacyDlpV2InfoTypeCategory) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2InfoTypeCondition: A info type based condition.
+type GooglePrivacyDlpV2InfoTypeCondition struct {
+	// AnyInfoType: match any info types.
+	AnyInfoType *GoogleProtobufEmpty `json:"anyInfoType,omitempty"`
+	// InfoTypes: match any of these info types.
+	InfoTypes *GooglePrivacyDlpV2InfoTypes `json:"infoTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnyInfoType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnyInfoType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2InfoTypeCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2InfoTypeCondition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2InfoTypeDescription: InfoType description.
 type GooglePrivacyDlpV2InfoTypeDescription struct {
 	// Categories: The category of the infoType.
@@ -7152,6 +7278,28 @@ type GooglePrivacyDlpV2InfoTypeTransformations struct {
 
 func (s GooglePrivacyDlpV2InfoTypeTransformations) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2InfoTypeTransformations
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2InfoTypes: Info types to match.
+type GooglePrivacyDlpV2InfoTypes struct {
+	// InfoTypeNames: Required. A list of info types to match.
+	InfoTypeNames []string `json:"infoTypeNames,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InfoTypeNames") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InfoTypeNames") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2InfoTypes) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2InfoTypes
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8230,6 +8378,35 @@ func (s GooglePrivacyDlpV2ListConnectionsResponse) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2ListContentPoliciesResponse: Response message for
+// ListContentPolicies.
+type GooglePrivacyDlpV2ListContentPoliciesResponse struct {
+	// ContentPolicies: List of content policies.
+	ContentPolicies []*GooglePrivacyDlpV2ContentPolicy `json:"contentPolicies,omitempty"`
+	// NextPageToken: Token to retrieve the next page of results. An empty value
+	// means there are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ContentPolicies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentPolicies") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2ListContentPoliciesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2ListContentPoliciesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2ListDeidentifyTemplatesResponse: Response message for
 // ListDeidentifyTemplates.
 type GooglePrivacyDlpV2ListDeidentifyTemplatesResponse struct {
@@ -8583,6 +8760,57 @@ type GooglePrivacyDlpV2LocationSupport struct {
 
 func (s GooglePrivacyDlpV2LocationSupport) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2LocationSupport
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2LogToBigQuery: Configuration for logging content policy
+// actions to BigQuery.
+type GooglePrivacyDlpV2LogToBigQuery struct {
+	// DatasetId: Required. The ID of the dataset containing the BigQuery table to
+	// write to.
+	DatasetId string `json:"datasetId,omitempty"`
+	// ProjectId: Required. The ID of the project containing the BigQuery table to
+	// write to.
+	ProjectId string `json:"projectId,omitempty"`
+	// TableId: Required. The ID of the BigQuery table to write to.
+	TableId string `json:"tableId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DatasetId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DatasetId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2LogToBigQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2LogToBigQuery
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2LoggingConfig: A single logging configuration.
+type GooglePrivacyDlpV2LoggingConfig struct {
+	// LogToBigQuery: Optional. Log the actions taken to a BigQuery table.
+	LogToBigQuery *GooglePrivacyDlpV2LogToBigQuery `json:"logToBigQuery,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LogToBigQuery") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LogToBigQuery") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2LoggingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2LoggingConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9071,6 +9299,95 @@ type GooglePrivacyDlpV2PathElement struct {
 
 func (s GooglePrivacyDlpV2PathElement) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2PathElement
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2PolicyAction: A possible action to take when applying a
+// content policy.
+type GooglePrivacyDlpV2PolicyAction struct {
+	// ReturnVerdict: Optional. If set, the verdict will be returned to the user.
+	//
+	// Possible values:
+	//   "CONTENT_POLICY_VERDICT_UNSPECIFIED" - Not used.
+	//   "ALLOW" - The policy allows the provided content to be used.
+	//   "BLOCK" - The policy prevents the provided content from being used. This
+	// should result in a blocked file upload, exclusion from training dataset, or
+	// other similar block action. (specific action will depend on the caller).
+	ReturnVerdict string `json:"returnVerdict,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ReturnVerdict") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ReturnVerdict") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2PolicyAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2PolicyAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2PolicyCondition: A condition that must match for this rule
+// to apply.
+type GooglePrivacyDlpV2PolicyCondition struct {
+	// InfoTypeCondition: A condition based on info types.
+	InfoTypeCondition *GooglePrivacyDlpV2InfoTypeCondition `json:"infoTypeCondition,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InfoTypeCondition") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InfoTypeCondition") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2PolicyCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2PolicyCondition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2PolicyRule: A single policy rule. The first rule to match
+// from the list above controls the result.
+type GooglePrivacyDlpV2PolicyRule struct {
+	// Action: Required. Action to take if this rule applies.
+	Action *GooglePrivacyDlpV2PolicyAction `json:"action,omitempty"`
+	// Conditions: Optional. Conditions that must match for this rule to apply. All
+	// conditions must match (`AND`). For `OR` conditions, use multiple rules.
+	Conditions []*GooglePrivacyDlpV2PolicyCondition `json:"conditions,omitempty"`
+	// ReturnVerdict: If set, the verdict will be returned to the user. Deprecated:
+	// Use `action` instead.
+	//
+	// Possible values:
+	//   "CONTENT_POLICY_VERDICT_UNSPECIFIED" - Not used.
+	//   "ALLOW" - The policy allows the provided content to be used.
+	//   "BLOCK" - The policy prevents the provided content from being used. This
+	// should result in a blocked file upload, exclusion from training dataset, or
+	// other similar block action. (specific action will depend on the caller).
+	ReturnVerdict string `json:"returnVerdict,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2PolicyRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2PolicyRule
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11833,6 +12150,32 @@ type GooglePrivacyDlpV2UpdateConnectionRequest struct {
 
 func (s GooglePrivacyDlpV2UpdateConnectionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2UpdateConnectionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2UpdateContentPolicyRequest: Request message for
+// UpdateContentPolicy.
+type GooglePrivacyDlpV2UpdateContentPolicyRequest struct {
+	// ContentPolicy: Required. The content_policy with new values for the relevant
+	// fields.
+	ContentPolicy *GooglePrivacyDlpV2ContentPolicy `json:"contentPolicy,omitempty"`
+	// UpdateMask: Optional. Mask to control which fields get updated.
+	UpdateMask string `json:"updateMask,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContentPolicy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentPolicy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2UpdateContentPolicyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2UpdateContentPolicyRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -24658,6 +25001,576 @@ func (c *ProjectsLocationsContentReidentifyCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dlp.projects.locations.content.reidentify", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsContentPoliciesCreateCall struct {
+	s                                            *Service
+	parent                                       string
+	googleprivacydlpv2createcontentpolicyrequest *GooglePrivacyDlpV2CreateContentPolicyRequest
+	urlParams_                                   gensupport.URLParams
+	ctx_                                         context.Context
+	header_                                      http.Header
+}
+
+// Create: Create a ContentPolicy.
+//
+//   - parent: Parent resource name. The format of this value varies depending on
+//     the scope of the request (project or organization): + Projects scope:
+//     `projects/{project_id}/locations/{location_id}` + Organizations scope:
+//     `organizations/{org_id}/locations/{location_id}`.
+func (r *ProjectsLocationsContentPoliciesService) Create(parent string, googleprivacydlpv2createcontentpolicyrequest *GooglePrivacyDlpV2CreateContentPolicyRequest) *ProjectsLocationsContentPoliciesCreateCall {
+	c := &ProjectsLocationsContentPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleprivacydlpv2createcontentpolicyrequest = googleprivacydlpv2createcontentpolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsContentPoliciesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsContentPoliciesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsContentPoliciesCreateCall) Context(ctx context.Context) *ProjectsLocationsContentPoliciesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsContentPoliciesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsContentPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleprivacydlpv2createcontentpolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/contentPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dlp.projects.locations.contentPolicies.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.contentPolicies.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2ContentPolicy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsContentPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ContentPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2ContentPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dlp.projects.locations.contentPolicies.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsContentPoliciesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a ContentPolicy.
+//
+//   - name: Resource name of the ContentPolicy to be deleted, in the format:
+//     `projects/{project}/locations/{location}/contentPolicies/{content_policy}`.
+func (r *ProjectsLocationsContentPoliciesService) Delete(name string) *ProjectsLocationsContentPoliciesDeleteCall {
+	c := &ProjectsLocationsContentPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsContentPoliciesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsContentPoliciesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsContentPoliciesDeleteCall) Context(ctx context.Context) *ProjectsLocationsContentPoliciesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsContentPoliciesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsContentPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dlp.projects.locations.contentPolicies.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.contentPolicies.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsContentPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dlp.projects.locations.contentPolicies.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsContentPoliciesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a ContentPolicy.
+//
+//   - name: Resource name in the format:
+//     `projects/{project}/locations/{location}/contentPolicies/{content_policy}`.
+func (r *ProjectsLocationsContentPoliciesService) Get(name string) *ProjectsLocationsContentPoliciesGetCall {
+	c := &ProjectsLocationsContentPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsContentPoliciesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsContentPoliciesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsContentPoliciesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsContentPoliciesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsContentPoliciesGetCall) Context(ctx context.Context) *ProjectsLocationsContentPoliciesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsContentPoliciesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsContentPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dlp.projects.locations.contentPolicies.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.contentPolicies.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2ContentPolicy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsContentPoliciesGetCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ContentPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2ContentPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dlp.projects.locations.contentPolicies.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsContentPoliciesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists ContentPolicies in a parent.
+//
+//   - parent: Resource name of the organization or project, for example,
+//     `organizations/433245324/locations/europe` or
+//     `projects/project-id/locations/asia`.
+func (r *ProjectsLocationsContentPoliciesService) List(parent string) *ProjectsLocationsContentPoliciesListCall {
+	c := &ProjectsLocationsContentPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of results per page,
+// max 1000.
+func (c *ProjectsLocationsContentPoliciesListCall) PageSize(pageSize int64) *ProjectsLocationsContentPoliciesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token from a
+// previous page to return the next set of results. If set, all other request
+// fields must match the original request.
+func (c *ProjectsLocationsContentPoliciesListCall) PageToken(pageToken string) *ProjectsLocationsContentPoliciesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsContentPoliciesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsContentPoliciesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsContentPoliciesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsContentPoliciesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsContentPoliciesListCall) Context(ctx context.Context) *ProjectsLocationsContentPoliciesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsContentPoliciesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsContentPoliciesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/contentPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dlp.projects.locations.contentPolicies.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.contentPolicies.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2ListContentPoliciesResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsContentPoliciesListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ListContentPoliciesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2ListContentPoliciesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dlp.projects.locations.contentPolicies.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsContentPoliciesListCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2ListContentPoliciesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsContentPoliciesPatchCall struct {
+	s                                            *Service
+	name                                         string
+	googleprivacydlpv2updatecontentpolicyrequest *GooglePrivacyDlpV2UpdateContentPolicyRequest
+	urlParams_                                   gensupport.URLParams
+	ctx_                                         context.Context
+	header_                                      http.Header
+}
+
+// Patch: Update a ContentPolicy.
+//
+//   - name: Resource name in the format:
+//     `projects/{project}/locations/{location}/contentPolicies/{content_policy}`.
+func (r *ProjectsLocationsContentPoliciesService) Patch(name string, googleprivacydlpv2updatecontentpolicyrequest *GooglePrivacyDlpV2UpdateContentPolicyRequest) *ProjectsLocationsContentPoliciesPatchCall {
+	c := &ProjectsLocationsContentPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleprivacydlpv2updatecontentpolicyrequest = googleprivacydlpv2updatecontentpolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsContentPoliciesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsContentPoliciesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsContentPoliciesPatchCall) Context(ctx context.Context) *ProjectsLocationsContentPoliciesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsContentPoliciesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsContentPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleprivacydlpv2updatecontentpolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dlp.projects.locations.contentPolicies.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.contentPolicies.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2ContentPolicy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsContentPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ContentPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2ContentPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dlp.projects.locations.contentPolicies.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

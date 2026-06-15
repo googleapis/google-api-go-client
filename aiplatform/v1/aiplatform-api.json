@@ -32357,7 +32357,7 @@
       }
     }
   },
-  "revision": "20260605",
+  "revision": "20260609",
   "rootUrl": "https://aiplatform.googleapis.com/",
   "schemas": {
     "CloudAiLargeModelsVisionGenerateVideoExperiments": {
@@ -43913,7 +43913,8 @@
       "id": "GoogleCloudAiplatformV1GoogleMaps",
       "properties": {
         "enableWidget": {
-          "description": "Optional. If true, include the widget context token in the response.",
+          "deprecated": true,
+          "description": "Optional. Deprecated: The Google Maps contextual widget behavior in Grounding with Google Maps is being deprecated; this field is planned for removal and no longer has any effect once removed. If true, include the widget context token in the response.",
           "type": "boolean"
         }
       },
@@ -44180,7 +44181,8 @@
       "id": "GoogleCloudAiplatformV1GroundingMetadata",
       "properties": {
         "googleMapsWidgetContextToken": {
-          "description": "Optional. Output only. A token that can be used to render a Google Maps widget with the contextual data. This field is populated only when the grounding source is Google Maps.",
+          "deprecated": true,
+          "description": "Optional. Output only. Deprecated: The Google Maps contextual widget behavior in Grounding with Google Maps is being deprecated; this field is planned for removal and will no longer be populated once removed. A token that can be used to render a Google Maps widget with the contextual data. This field is populated only when the grounding source is Google Maps.",
           "readOnly": true,
           "type": "string"
         },
@@ -63390,15 +63392,23 @@
       "description": "Tool to support computer use.",
       "id": "GoogleCloudAiplatformV1ToolComputerUse",
       "properties": {
+        "enablePromptInjectionDetection": {
+          "description": "Optional. Enables the prompt injection detection check on computer-use request.",
+          "type": "boolean"
+        },
         "environment": {
           "description": "Required. The environment being operated.",
           "enum": [
             "ENVIRONMENT_UNSPECIFIED",
-            "ENVIRONMENT_BROWSER"
+            "ENVIRONMENT_BROWSER",
+            "ENVIRONMENT_MOBILE",
+            "ENVIRONMENT_DESKTOP"
           ],
           "enumDescriptions": [
             "Defaults to browser.",
-            "Operates in a web browser."
+            "Operates in a web browser.",
+            "Operates in a mobile environment.",
+            "Operates in a desktop environment."
           ],
           "type": "string"
         },

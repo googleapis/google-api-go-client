@@ -1316,6 +1316,18 @@ type GoogleCloudPolicytroubleshooterIamV3betaExplainedPABRule struct {
 	//   "RESOURCE_INCLUSION_STATE_UNKNOWN_UNSUPPORTED" - The resource is of an
 	// unsupported type, such as non-CRM resources.
 	CombinedResourceInclusionState string `json:"combinedResourceInclusionState,omitempty"`
+	// CombinedResourceRelevance: The relevance of the combined resource inclusion
+	// state to the overall access state.
+	//
+	// Possible values:
+	//   "HEURISTIC_RELEVANCE_UNSPECIFIED" - Not specified.
+	//   "HEURISTIC_RELEVANCE_NORMAL" - The data point has a limited effect on the
+	// result. Changing the data point is unlikely to affect the overall
+	// determination.
+	//   "HEURISTIC_RELEVANCE_HIGH" - The data point has a strong effect on the
+	// result. Changing the data point is likely to affect the overall
+	// determination.
+	CombinedResourceRelevance string `json:"combinedResourceRelevance,omitempty"`
 	// Effect: Required. The effect of the rule which describes the access
 	// relationship.
 	//
@@ -2341,25 +2353,27 @@ func (s GoogleIamV3PrincipalAccessBoundaryPolicyRule) MarshalJSON() ([]byte, err
 type GoogleIamV3PrincipalAccessBoundaryPolicyRuleOperation struct {
 	// ExcludedPermissions: Optional. Specifies the permissions that this rule
 	// excludes from the set of affected permissions given by `permissions`. The
-	// number of excluded permission strings in this field is limited to 50. If a
-	// permission appears in both `permissions` and `excluded_permissions` then it
-	// will _not_ be subject to the policy effect. The excluded permissions can be
-	// specified using the same syntax as `permissions`.
+	// number of excluded permission strings in this field is limited to 50 across
+	// all rules in the policy. If a permission appears in both `permissions` and
+	// `excluded_permissions` then it will _not_ be subject to the policy effect.
+	// The excluded permissions can be specified using the same syntax as
+	// `permissions`.
 	ExcludedPermissions []string `json:"excludedPermissions,omitempty"`
 	// Permissions: Optional. The permissions that are explicitly affected by this
-	// rule. The number of permission strings in this field is limited to 50. Each
-	// permission uses the format `{service_fqdn}/{resource}.{verb}`, where
-	// `{service_fqdn}` is the fully qualified domain name for the service. `*` can
-	// be used as a wildcard to match all permissions for a specific service,
-	// resource type, or verb. The following formats are supported: *
-	// `{service_fqdn}/{resource}.{verb}`: A specific permission. *
-	// `{service_fqdn}/{resource}.*`: All permissions for a specific resource type.
-	// * `{service_fqdn}/*.*`: All permissions for all resource types under a
-	// specific service. * `{service_fqdn}/*.{verb}`: All permissions with a
-	// specific verb under a specific service. * `*`: All permissions across all
-	// services. For example, `compute.googleapis.com/*.setIamPolicy` refers to all
-	// setIamPolicy permissions for any compute resource. Wildcards expand only to
-	// the permissions specified in the `enforcement_version` of the policy. If the
+	// rule. The number of permission strings in this field is limited to 50 across
+	// all rules in the policy. Each permission uses the format
+	// `{service_fqdn}/{resource}.{verb}`, where `{service_fqdn}` is the fully
+	// qualified domain name for the service. `*` can be used as a wildcard to
+	// match all permissions for a specific service, resource type, or verb. The
+	// following formats are supported: * `{service_fqdn}/{resource}.{verb}`: A
+	// specific permission. * `{service_fqdn}/{resource}.*`: All permissions for a
+	// specific resource type. * `{service_fqdn}/*.*`: All permissions for all
+	// resource types under a specific service. * `{service_fqdn}/*.{verb}`: All
+	// permissions with a specific verb under a specific service. * `*`: All
+	// permissions across all services. For example,
+	// `compute.googleapis.com/*.setIamPolicy` refers to all setIamPolicy
+	// permissions for any compute resource. Wildcards expand only to the
+	// permissions specified in the `enforcement_version` of the policy. If the
 	// `enforcement_version` is updated, the wildcard will automatically expand to
 	// include new permissions in the updated version.
 	Permissions []string `json:"permissions,omitempty"`

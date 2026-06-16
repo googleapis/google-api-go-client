@@ -128,7 +128,7 @@
       }
     }
   },
-  "revision": "20260503",
+  "revision": "20260614",
   "rootUrl": "https://policytroubleshooter.googleapis.com/",
   "schemas": {
     "GoogleCloudPolicytroubleshooterIamV3betaAccessTuple": {
@@ -1023,6 +1023,20 @@
           "readOnly": true,
           "type": "string"
         },
+        "combinedResourceRelevance": {
+          "description": "The relevance of the combined resource inclusion state to the overall access state.",
+          "enum": [
+            "HEURISTIC_RELEVANCE_UNSPECIFIED",
+            "HEURISTIC_RELEVANCE_NORMAL",
+            "HEURISTIC_RELEVANCE_HIGH"
+          ],
+          "enumDescriptions": [
+            "Not specified.",
+            "The data point has a limited effect on the result. Changing the data point is unlikely to affect the overall determination.",
+            "The data point has a strong effect on the result. Changing the data point is likely to affect the overall determination."
+          ],
+          "type": "string"
+        },
         "effect": {
           "description": "Required. The effect of the rule which describes the access relationship.",
           "enum": [
@@ -1673,14 +1687,14 @@
       "id": "GoogleIamV3PrincipalAccessBoundaryPolicyRuleOperation",
       "properties": {
         "excludedPermissions": {
-          "description": "Optional. Specifies the permissions that this rule excludes from the set of affected permissions given by `permissions`. The number of excluded permission strings in this field is limited to 50. If a permission appears in both `permissions` and `excluded_permissions` then it will _not_ be subject to the policy effect. The excluded permissions can be specified using the same syntax as `permissions`.",
+          "description": "Optional. Specifies the permissions that this rule excludes from the set of affected permissions given by `permissions`. The number of excluded permission strings in this field is limited to 50 across all rules in the policy. If a permission appears in both `permissions` and `excluded_permissions` then it will _not_ be subject to the policy effect. The excluded permissions can be specified using the same syntax as `permissions`.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "permissions": {
-          "description": "Optional. The permissions that are explicitly affected by this rule. The number of permission strings in this field is limited to 50. Each permission uses the format `{service_fqdn}/{resource}.{verb}`, where `{service_fqdn}` is the fully qualified domain name for the service. `*` can be used as a wildcard to match all permissions for a specific service, resource type, or verb. The following formats are supported: * `{service_fqdn}/{resource}.{verb}`: A specific permission. * `{service_fqdn}/{resource}.*`: All permissions for a specific resource type. * `{service_fqdn}/*.*`: All permissions for all resource types under a specific service. * `{service_fqdn}/*.{verb}`: All permissions with a specific verb under a specific service. * `*`: All permissions across all services. For example, `compute.googleapis.com/*.setIamPolicy` refers to all setIamPolicy permissions for any compute resource. Wildcards expand only to the permissions specified in the `enforcement_version` of the policy. If the `enforcement_version` is updated, the wildcard will automatically expand to include new permissions in the updated version.",
+          "description": "Optional. The permissions that are explicitly affected by this rule. The number of permission strings in this field is limited to 50 across all rules in the policy. Each permission uses the format `{service_fqdn}/{resource}.{verb}`, where `{service_fqdn}` is the fully qualified domain name for the service. `*` can be used as a wildcard to match all permissions for a specific service, resource type, or verb. The following formats are supported: * `{service_fqdn}/{resource}.{verb}`: A specific permission. * `{service_fqdn}/{resource}.*`: All permissions for a specific resource type. * `{service_fqdn}/*.*`: All permissions for all resource types under a specific service. * `{service_fqdn}/*.{verb}`: All permissions with a specific verb under a specific service. * `*`: All permissions across all services. For example, `compute.googleapis.com/*.setIamPolicy` refers to all setIamPolicy permissions for any compute resource. Wildcards expand only to the permissions specified in the `enforcement_version` of the policy. If the `enforcement_version` is updated, the wildcard will automatically expand to include new permissions in the updated version.",
           "items": {
             "type": "string"
           },

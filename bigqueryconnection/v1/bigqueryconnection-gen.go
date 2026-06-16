@@ -678,6 +678,14 @@ type ConnectorConfiguration struct {
 	Endpoint *ConnectorConfigurationEndpoint `json:"endpoint,omitempty"`
 	// Network: Networking configuration.
 	Network *ConnectorConfigurationNetwork `json:"network,omitempty"`
+	// Parameters: Optional. A map of name-value pairs for connector-specific
+	// parameters. Extra configuration parameters, that are not standardized in
+	// configuration sections. To update a single parameter value call
+	// ConnectionService.UpdateConnection with `update_mask` set to
+	// `configuration.parameters.parameter_id`. If parameter id does not fit
+	// `[a-zA-Z0-9_]+` pattern, it should be escaped with backticks - for example
+	// ``configuration.parameters.`parameter id` ``.
+	Parameters map[string]ConnectorConfigurationParameterValue `json:"parameters,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Asset") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -726,6 +734,14 @@ func (s ConnectorConfigurationAsset) MarshalJSON() ([]byte, error) {
 
 // ConnectorConfigurationAuthentication: Client authentication.
 type ConnectorConfigurationAuthentication struct {
+	// Parameters: Optional. A map of name-value pairs for authentication-specific
+	// parameters. Extra configuration parameters, that are not standardized in
+	// authentication. To update a single parameter value call
+	// ConnectionService.UpdateConnection with `update_mask` set to
+	// `configuration.authentication.parameters.parameter_id`. If parameter id does
+	// not fit `[a-zA-Z0-9_]+` pattern, it should be escaped with backticks - for
+	// example ``configuration.authentication.parameters.`parameter id` ``.
+	Parameters map[string]ConnectorConfigurationParameterValue `json:"parameters,omitempty"`
 	// ServiceAccount: Output only. Google-managed service account associated with
 	// this connection, e.g.,
 	// `service-{project_number}@gcp-sa-bigqueryconnection.iam.gserviceaccount.com`.
@@ -734,15 +750,15 @@ type ConnectorConfigurationAuthentication struct {
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 	// UsernamePassword: Username/password authentication.
 	UsernamePassword *ConnectorConfigurationUsernamePassword `json:"usernamePassword,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ServiceAccount") to
+	// ForceSendFields is a list of field names (e.g. "Parameters") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ServiceAccount") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Parameters") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -796,6 +812,52 @@ type ConnectorConfigurationNetwork struct {
 func (s ConnectorConfigurationNetwork) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectorConfigurationNetwork
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConnectorConfigurationParameterValue: Represents a value for a connector
+// parameter.
+type ConnectorConfigurationParameterValue struct {
+	// BoolValue: A boolean parameter value.
+	BoolValue bool `json:"boolValue,omitempty"`
+	// DoubleValue: A double parameter value.
+	DoubleValue float64 `json:"doubleValue,omitempty"`
+	// Int32Value: An int32 parameter value.
+	Int32Value int64 `json:"int32Value,omitempty"`
+	// SecretValue: A secret parameter value. Allowed only for Authentication
+	// parameters.
+	SecretValue *ConnectorConfigurationSecret `json:"secretValue,omitempty"`
+	// StringValue: A string parameter value.
+	StringValue string `json:"stringValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BoolValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConnectorConfigurationParameterValue) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectorConfigurationParameterValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *ConnectorConfigurationParameterValue) UnmarshalJSON(data []byte) error {
+	type NoMethod ConnectorConfigurationParameterValue
+	var s1 struct {
+		DoubleValue gensupport.JSONFloat64 `json:"doubleValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DoubleValue = float64(s1.DoubleValue)
+	return nil
 }
 
 // ConnectorConfigurationPrivateServiceConnect: Private Service Connect

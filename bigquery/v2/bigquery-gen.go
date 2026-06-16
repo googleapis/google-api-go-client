@@ -3467,14 +3467,15 @@ type ExternalDataConfiguration struct {
 	TimestampFormat string `json:"timestampFormat,omitempty"`
 	// TimestampTargetPrecision: Precisions (maximum number of total digits in base
 	// 10) for seconds of TIMESTAMP types that are allowed to the destination table
-	// for autodetection mode. Available for the formats: CSV, PARQUET, and AVRO.
-	// Possible values include: Not Specified, [], or [6]: timestamp(6) for all
-	// auto detected TIMESTAMP columns [6, 12]: timestamp(6) for all auto detected
-	// TIMESTAMP columns that have less than 6 digits of subseconds. timestamp(12)
-	// for all auto detected TIMESTAMP columns that have more than 6 digits of
-	// subseconds. [12]: timestamp(12) for all auto detected TIMESTAMP columns. The
-	// order of the elements in this array is ignored. Inputs that have higher
-	// precision than the highest target precision in this array will be truncated.
+	// for autodetection mode. Available for the formats: CSV, PARQUET, AVRO, and
+	// Iceberg External Table. Possible values include: Not Specified, [], or [6]:
+	// timestamp(6) for all auto detected TIMESTAMP columns [6, 12]: timestamp(6)
+	// for all auto detected TIMESTAMP columns that have less than 6 digits of
+	// subseconds. timestamp(12) for all auto detected TIMESTAMP columns that have
+	// more than 6 digits of subseconds. [12]: timestamp(12) for all auto detected
+	// TIMESTAMP columns. The order of the elements in this array is ignored.
+	// Inputs that have higher precision than the highest target precision in this
+	// array will be truncated.
 	TimestampTargetPrecision []int64 `json:"timestampTargetPrecision,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Autodetect") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3535,8 +3536,8 @@ type ExternalRuntimeOptions struct {
 	// (https://cloud.google.com/bigquery/docs/user-defined-functions-python#configure-container-limits)
 	ContainerMemory string `json:"containerMemory,omitempty"`
 	// ContainerRequestConcurrency: Optional. Maximum number of requests that a
-	// Cloud Run instance can handle concurrently. If absent or if `0`, a default
-	// concurrency is used.
+	// Python UDF container instance can handle concurrently. If absent or if `0`,
+	// a default concurrency is used.
 	ContainerRequestConcurrency int64 `json:"containerRequestConcurrency,omitempty,string"`
 	// MaxBatchingRows: Optional. Maximum number of rows in each batch sent to the
 	// external runtime. If absent or if 0, BigQuery dynamically decides the number
@@ -5254,14 +5255,15 @@ type JobConfigurationLoad struct {
 	TimestampFormat string `json:"timestampFormat,omitempty"`
 	// TimestampTargetPrecision: Precisions (maximum number of total digits in base
 	// 10) for seconds of TIMESTAMP types that are allowed to the destination table
-	// for autodetection mode. Available for the formats: CSV, PARQUET, and AVRO.
-	// Possible values include: Not Specified, [], or [6]: timestamp(6) for all
-	// auto detected TIMESTAMP columns [6, 12]: timestamp(6) for all auto detected
-	// TIMESTAMP columns that have less than 6 digits of subseconds. timestamp(12)
-	// for all auto detected TIMESTAMP columns that have more than 6 digits of
-	// subseconds. [12]: timestamp(12) for all auto detected TIMESTAMP columns. The
-	// order of the elements in this array is ignored. Inputs that have higher
-	// precision than the highest target precision in this array will be truncated.
+	// for autodetection mode. Available for the formats: CSV, PARQUET, AVRO, and
+	// Iceberg External Table. Possible values include: Not Specified, [], or [6]:
+	// timestamp(6) for all auto detected TIMESTAMP columns [6, 12]: timestamp(6)
+	// for all auto detected TIMESTAMP columns that have less than 6 digits of
+	// subseconds. timestamp(12) for all auto detected TIMESTAMP columns that have
+	// more than 6 digits of subseconds. [12]: timestamp(12) for all auto detected
+	// TIMESTAMP columns. The order of the elements in this array is ignored.
+	// Inputs that have higher precision than the highest target precision in this
+	// array will be truncated.
 	TimestampTargetPrecision []int64 `json:"timestampTargetPrecision,omitempty"`
 	// UseAvroLogicalTypes: Optional. If sourceFormat is set to "AVRO", indicates
 	// whether to interpret logical types as the corresponding BigQuery data type
@@ -11552,7 +11554,8 @@ type DatasetsDeleteCall struct {
 // Delete: Deletes the dataset specified by the datasetId value. Before you can
 // delete a dataset, you must delete all its tables, either manually or by
 // specifying deleteContents. Immediately after deletion, you can create
-// another dataset with the same name.
+// another dataset with the same name. # IAM Permissions Requires the
+// `bigquery.datasets.delete` permission on the dataset.
 //
 // - datasetId: Dataset ID of dataset being deleted.
 // - projectId: Project ID of the dataset being deleted.
@@ -11638,7 +11641,8 @@ type DatasetsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns the dataset specified by datasetID.
+// Get: Returns the dataset specified by datasetID. # IAM Permissions Requires
+// the `bigquery.datasets.get` permission on the dataset.
 //
 // - datasetId: Dataset ID of the requested dataset.
 // - projectId: Project ID of the requested dataset.
@@ -11790,7 +11794,8 @@ type DatasetsInsertCall struct {
 	header_    http.Header
 }
 
-// Insert: Creates a new empty dataset.
+// Insert: Creates a new empty dataset. # IAM Permissions Requires the
+// `bigquery.datasets.create` permission on the project.
 //
 // - projectId: Project ID of the new dataset.
 func (r *DatasetsService) Insert(projectId string, dataset *Dataset) *DatasetsInsertCall {
@@ -11911,7 +11916,9 @@ type DatasetsListCall struct {
 }
 
 // List: Lists all datasets in the specified project to which the user has been
-// granted the READER dataset role.
+// granted the READER dataset role. # IAM Permissions Requires no specific IAM
+// permission(s) to use this method. Results are filtered to only include
+// datasets on which the caller has the `bigquery.datasets.get` permission.
 //
 // - projectId: Project ID of the datasets to be listed.
 func (r *DatasetsService) List(projectId string) *DatasetsListCall {
@@ -12079,7 +12086,9 @@ type DatasetsPatchCall struct {
 // Patch: Updates information in an existing dataset. The update method
 // replaces the entire dataset resource, whereas the patch method only replaces
 // fields that are provided in the submitted dataset resource. This method
-// supports RFC5789 patch semantics.
+// supports RFC5789 patch semantics. # IAM Permissions Requires the following
+// IAM permission(s) to use this method: - `bigquery.datasets.update` on the
+// dataset. - `bigquery.datasets.get` on the dataset.
 //
 // - datasetId: Dataset ID of the dataset being updated.
 // - projectId: Project ID of the dataset being updated.
@@ -12229,7 +12238,10 @@ type DatasetsUndeleteCall struct {
 
 // Undelete: Undeletes a dataset which is within time travel window based on
 // datasetId. If a time is specified, the dataset version deleted at that time
-// is undeleted, else the last live version is undeleted.
+// is undeleted, else the last live version is undeleted. # IAM Permissions
+// Requires the following IAM permission(s) to use this method: -
+// `bigquery.datasets.create` on the project. - `bigquery.datasets.get` on the
+// dataset.
 //
 // - datasetId: Dataset ID of dataset being deleted.
 // - projectId: Project ID of the dataset to be undeleted.
@@ -12338,7 +12350,9 @@ type DatasetsUpdateCall struct {
 
 // Update: Updates information in an existing dataset. The update method
 // replaces the entire dataset resource, whereas the patch method only replaces
-// fields that are provided in the submitted dataset resource.
+// fields that are provided in the submitted dataset resource. # IAM
+// Permissions Requires the `bigquery.datasets.update` permission on the
+// dataset.
 //
 // - datasetId: Dataset ID of the dataset being updated.
 // - projectId: Project ID of the dataset being updated.
@@ -12487,7 +12501,10 @@ type JobsCancelCall struct {
 
 // Cancel: Requests that a job be cancelled. This call will return immediately,
 // and the client will need to poll for the job status to see if the cancel
-// completed successfully. Cancelled jobs may still incur costs.
+// completed successfully. Cancelled jobs may still incur costs. # IAM
+// Permissions Requires the `bigquery.jobs.update` permission on the job
+// resource. If the user matches the creator of the job, the
+// `bigquery.jobs.create` permission on the project is required instead.
 //
 // - jobId: Job ID of the job to cancel.
 // - projectId: Project ID of the job to cancel.
@@ -12601,7 +12618,8 @@ type JobsDeleteCall struct {
 }
 
 // Delete: Requests the deletion of the metadata of a job. This call returns
-// when the job's metadata is deleted.
+// when the job's metadata is deleted. # IAM Permissions Requires the
+// `bigquery.jobs.delete` permission on the job resource.
 //
 //   - jobId: Job ID of the job for which metadata is to be deleted. If this is a
 //     parent job which has child jobs, the metadata from all child jobs will be
@@ -12692,7 +12710,10 @@ type JobsGetCall struct {
 
 // Get: Returns information about a specific job. Job information is available
 // for a six month period after creation. Requires that you're the person who
-// ran the job, or have the Is Owner project role.
+// ran the job, or have the Is Owner project role. # IAM Permissions Requires
+// the `bigquery.jobs.get` permission on the job resource. If the user matches
+// the creator of the job, the `bigquery.jobs.create` permission on the project
+// is required instead.
 //
 // - jobId: Job ID of the requested job.
 // - projectId: Project ID of the requested job.
@@ -12816,7 +12837,12 @@ type JobsGetQueryResultsCall struct {
 	header_      http.Header
 }
 
-// GetQueryResults: RPC to get the results of a query job.
+// GetQueryResults: RPC to get the results of a query job. # IAM Permissions
+// Requires the following IAM permission(s) to use this method: -
+// `bigquery.jobs.get` on the job. - `bigquery.tables.getData` on the
+// destination table. If the user matches the creator of the job, the following
+// IAM permission(s) are required instead: - `bigquery.jobs.create` on the
+// project. - `bigquery.tables.getData` on the destination table.
 //
 // - jobId: Job ID of the query job.
 // - projectId: Project ID of the query job.
@@ -13034,7 +13060,14 @@ type JobsInsertCall struct {
 // configuration directly. * The *Upload* URI is ONLY for the case when you're
 // sending both a load job configuration and a data stream together. In this
 // case, the Upload URI accepts the job configuration and the data as two
-// distinct multipart MIME parts.
+// distinct multipart MIME parts. # IAM Permissions Requires the
+// `bigquery.jobs.create` permission on the project resource. Additional
+// permissions are required depending on the job type: - **Load, Export, and
+// Copy jobs**: Generally require data-level permissions such as
+// `bigquery.tables.export` or access to external storage. - **Query jobs**:
+// Permissions are dependent on the SQL statement. Complex queries (DDL, DCL)
+// may require additional permissions to create reservations, modify IAM
+// policies, or update project settings.
 //
 // - projectId: Project ID of project that will be billed for the job.
 func (r *JobsService) Insert(projectId string, job *Job) *JobsInsertCall {
@@ -13203,7 +13236,12 @@ type JobsListCall struct {
 // information is available for a six month period after creation. The job list
 // is sorted in reverse chronological order, by job creation time. Requires the
 // Can View project role, or the Is Owner project role if you set the allUsers
-// property.
+// property. # IAM Permissions Requires no specific IAM permission(s) to use
+// this method. Users are able to list the jobs they created. Additional access
+// is granted based on the following permissions: - Users with the
+// `bigquery.jobs.listAll` permission can list all jobs with all metadata. -
+// Users with the `bigquery.jobs.list` permission can list all jobs, but with
+// redacted information for jobs they did not create.
 //
 // - projectId: Project ID of the jobs to list.
 func (r *JobsService) List(projectId string) *JobsListCall {
@@ -13403,7 +13441,12 @@ type JobsQueryCall struct {
 }
 
 // Query: Runs a BigQuery SQL query synchronously and returns query results if
-// the query completes within a specified timeout.
+// the query completes within a specified timeout. # IAM Permissions Requires
+// the `bigquery.jobs.create` permission on the project resource. Data-level
+// permissions are highly dependent on the SQL statement being executed. While
+// standard queries require data access (such as `bigquery.tables.getData`),
+// complex operations like DDL or DCL may require permissions to manage
+// reservations, IAM policies, or project settings.
 //
 // - projectId: Project ID of the query request.
 func (r *JobsService) Query(projectId string, queryrequest *QueryRequest) *JobsQueryCall {
@@ -13507,7 +13550,8 @@ type ModelsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the model specified by modelId from the dataset.
+// Delete: Deletes the model specified by modelId from the dataset. # IAM
+// Permissions Requires the `bigquery.models.delete` permission on the model.
 //
 // - datasetId: Dataset ID of the model to delete.
 // - modelId: Model ID of the model to delete.
@@ -13589,7 +13633,8 @@ type ModelsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the specified model resource by model ID.
+// Get: Gets the specified model resource by model ID. # IAM Permissions
+// Requires the `bigquery.models.getMetadata` permission on the model.
 //
 // - datasetId: Dataset ID of the requested model.
 // - modelId: Model ID of the requested model.
@@ -13707,7 +13752,8 @@ type ModelsListCall struct {
 
 // List: Lists all models in the specified dataset. Requires the READER dataset
 // role. After retrieving the list of models, you can get information about a
-// particular model by calling the models.get method.
+// particular model by calling the models.get method. # IAM Permissions
+// Requires the `bigquery.models.list` permission on the dataset.
 //
 // - datasetId: Dataset ID of the models to list.
 // - projectId: Project ID of the models to list.
@@ -13858,7 +13904,8 @@ type ModelsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Patch specific fields in the specified model.
+// Patch: Patch specific fields in the specified model. # IAM Permissions
+// Requires the `bigquery.models.updateMetadata` permission on the model.
 //
 // - datasetId: Dataset ID of the model to patch.
 // - modelId: Model ID of the model to patch.
@@ -13968,7 +14015,10 @@ type ProjectsGetServiceAccountCall struct {
 }
 
 // GetServiceAccount: RPC to get the service account for a project used for
-// interactions with Google Cloud KMS
+// interactions with Google Cloud KMS. Requires the `bigquery.jobs.create`
+// permission on the project resource. This permission is required to authorize
+// the retrieval of the project's service identity for technical management
+// tasks like encryption configuration.
 //
 // - projectId: ID of the project.
 func (r *ProjectsService) GetServiceAccount(projectId string) *ProjectsGetServiceAccountCall {
@@ -14080,7 +14130,11 @@ type ProjectsListCall struct {
 // List: RPC to list projects to which the user has been granted any project
 // role. Users of this method are encouraged to consider the Resource Manager
 // (https://cloud.google.com/resource-manager/docs/) API, which provides the
-// underlying data for this method and has more capabilities.
+// underlying data for this method and has more capabilities. # IAM Permissions
+// Requires no specific IAM permission(s) to use this method. The results are
+// filtered to only include projects on which the caller has been granted a
+// project-level role such as a BigQuery predefined IAM role or a basic role
+// such as Viewer or Owner.
 func (r *ProjectsService) List() *ProjectsListCall {
 	c := &ProjectsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -14222,7 +14276,9 @@ type RoutinesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the routine specified by routineId from the dataset.
+// Delete: Deletes the routine specified by routineId from the dataset. # IAM
+// Permissions Requires the `bigquery.routines.delete` permission on the
+// routine.
 //
 // - datasetId: Dataset ID of the routine to delete.
 // - projectId: Project ID of the routine to delete.
@@ -14304,7 +14360,8 @@ type RoutinesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the specified routine resource by routine ID.
+// Get: Gets the specified routine resource by routine ID. # IAM Permissions
+// Requires the `bigquery.routines.get` permission on the routine.
 //
 // - datasetId: Dataset ID of the requested routine.
 // - projectId: Project ID of the requested routine.
@@ -14534,7 +14591,8 @@ type RoutinesInsertCall struct {
 	header_    http.Header
 }
 
-// Insert: Creates a new routine in the dataset.
+// Insert: Creates a new routine in the dataset. # IAM Permissions Requires the
+// `bigquery.routines.create` permission on the dataset.
 //
 // - datasetId: Dataset ID of the new routine.
 // - projectId: Project ID of the new routine.
@@ -14642,7 +14700,8 @@ type RoutinesListCall struct {
 }
 
 // List: Lists all routines in the specified dataset. Requires the READER
-// dataset role.
+// dataset role. # IAM Permissions Requires the `bigquery.routines.list`
+// permission on the dataset.
 //
 // - datasetId: Dataset ID of the routines to list.
 // - projectId: Project ID of the routines to list.
@@ -15031,7 +15090,8 @@ type RoutinesUpdateCall struct {
 }
 
 // Update: Updates information in an existing routine. The update method
-// replaces the entire Routine resource.
+// replaces the entire Routine resource. # IAM Permissions Requires the
+// `bigquery.routines.update` permission on the routine.
 //
 // - datasetId: Dataset ID of the routine to update.
 // - projectId: Project ID of the routine to update.
@@ -15142,7 +15202,10 @@ type RowAccessPoliciesBatchDeleteCall struct {
 	header_                             http.Header
 }
 
-// BatchDelete: Deletes provided row access policies.
+// BatchDelete: Deletes provided row access policies. # IAM Permissions
+// Requires the following IAM permission(s) on the table: -
+// `bigquery.rowAccessPolicies.delete` -
+// `bigquery.rowAccessPolicies.setIamPolicy`
 //
 // - datasetId: Dataset ID of the table to delete the row access policies.
 // - projectId: Project ID of the table to delete the row access policies.
@@ -15229,7 +15292,10 @@ type RowAccessPoliciesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a row access policy.
+// Delete: Deletes a row access policy. # IAM Permissions Requires the
+// following IAM permission(s) on the table: -
+// `bigquery.rowAccessPolicies.delete` -
+// `bigquery.rowAccessPolicies.setIamPolicy`
 //
 // - datasetId: Dataset ID of the table to delete the row access policy.
 // - policyId: Policy ID of the row access policy.
@@ -15323,7 +15389,8 @@ type RowAccessPoliciesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the specified row access policy by policy ID.
+// Get: Gets the specified row access policy by policy ID. # IAM Permissions
+// Requires the `bigquery.rowAccessPolicies.get` permission on the table.
 //
 // - datasetId: Dataset ID of the table to get the row access policy.
 // - policyId: Policy ID of the row access policy.
@@ -15550,7 +15617,10 @@ type RowAccessPoliciesInsertCall struct {
 	header_         http.Header
 }
 
-// Insert: Creates a row access policy.
+// Insert: Creates a row access policy. # IAM Permissions Requires the
+// following IAM permission(s) on the table: -
+// `bigquery.rowAccessPolicies.create` -
+// `bigquery.rowAccessPolicies.setIamPolicy` - `bigquery.tables.getData`
 //
 // - datasetId: Dataset ID of the table to get the row access policy.
 // - projectId: Project ID of the table to get the row access policy.
@@ -15662,7 +15732,9 @@ type RowAccessPoliciesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all row access policies on the specified table.
+// List: Lists all row access policies on the specified table. # IAM
+// Permissions Requires the `bigquery.rowAccessPolicies.list` permission on the
+// table.
 //
 // - datasetId: Dataset ID of row access policies to list.
 // - projectId: Project ID of the row access policies to list.
@@ -15928,7 +16000,10 @@ type RowAccessPoliciesUpdateCall struct {
 	header_         http.Header
 }
 
-// Update: Updates a row access policy.
+// Update: Updates a row access policy. # IAM Permissions Requires the
+// following IAM permission(s) on the table: -
+// `bigquery.rowAccessPolicies.update` -
+// `bigquery.rowAccessPolicies.setIamPolicy` - `bigquery.tables.getData`
 //
 // - datasetId: Dataset ID of the table to get the row access policy.
 // - policyId: Policy ID of the row access policy.
@@ -16044,7 +16119,10 @@ type TabledataInsertAllCall struct {
 }
 
 // InsertAll: Streams data into BigQuery one record at a time without needing
-// to run a load job.
+// to run a load job. # IAM Permissions Requires the following IAM
+// permission(s) to use this method: - `bigquery.tables.updateData` on the
+// table. - `bigquery.tables.get` on the table. - `bigquery.datasets.get` on
+// the dataset.
 //
 // - datasetId: Dataset ID of the destination.
 // - projectId: Project ID of the destination.
@@ -16156,7 +16234,8 @@ type TabledataListCall struct {
 	header_      http.Header
 }
 
-// List: List the content of a table in rows.
+// List: List the content of a table in rows. # IAM Permissions Requires the
+// `bigquery.tables.getData` permission on the table.
 //
 // - datasetId: Dataset id of the table to list.
 // - projectId: Project id of the table to list.
@@ -16352,7 +16431,8 @@ type TablesDeleteCall struct {
 }
 
 // Delete: Deletes the table specified by tableId from the dataset. If the
-// table contains data, all the data will be deleted.
+// table contains data, all the data will be deleted. # IAM Permissions
+// Requires the `bigquery.tables.delete` permission on the table.
 //
 // - datasetId: Dataset ID of the table to delete.
 // - projectId: Project ID of the table to delete.
@@ -16436,7 +16516,8 @@ type TablesGetCall struct {
 
 // Get: Gets the specified table resource by table ID. This method does not
 // return the data in the table, it only returns the table resource, which
-// describes the structure of this table.
+// describes the structure of this table. # IAM Permissions Requires the
+// `bigquery.tables.get` permission on the table.
 //
 // - datasetId: Dataset ID of the requested table.
 // - projectId: Project ID of the requested table.
@@ -16699,7 +16780,8 @@ type TablesInsertCall struct {
 	header_    http.Header
 }
 
-// Insert: Creates a new, empty table in the dataset.
+// Insert: Creates a new, empty table in the dataset. # IAM Permissions
+// Requires the `bigquery.tables.create` permission on the dataset.
 //
 // - datasetId: Dataset ID of the new table.
 // - projectId: Project ID of the new table.
@@ -16807,7 +16889,8 @@ type TablesListCall struct {
 }
 
 // List: Lists all tables in the specified dataset. Requires the READER dataset
-// role.
+// role. # IAM Permissions Requires the `bigquery.tables.list` permission on
+// the dataset.
 //
 // - datasetId: Dataset ID of the tables to list.
 // - projectId: Project ID of the tables to list.
@@ -16960,7 +17043,9 @@ type TablesPatchCall struct {
 // Patch: Updates information in an existing table. The update method replaces
 // the entire table resource, whereas the patch method only replaces fields
 // that are provided in the submitted table resource. This method supports
-// RFC5789 patch semantics.
+// RFC5789 patch semantics. # IAM Permissions Requires the following IAM
+// permission(s) on the table: - `bigquery.tables.update` -
+// `bigquery.tables.get`
 //
 // - datasetId: Dataset ID of the table to update.
 // - projectId: Project ID of the table to update.
@@ -17298,7 +17383,8 @@ type TablesUpdateCall struct {
 
 // Update: Updates information in an existing table. The update method replaces
 // the entire Table resource, whereas the patch method only replaces fields
-// that are provided in the submitted Table resource.
+// that are provided in the submitted Table resource. # IAM Permissions
+// Requires the `bigquery.tables.update` permission on the table.
 //
 // - datasetId: Dataset ID of the table to update.
 // - projectId: Project ID of the table to update.

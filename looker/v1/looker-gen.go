@@ -603,6 +603,9 @@ func (s IngressIpAllowlistRule) MarshalJSON() ([]byte, error) {
 
 // Instance: A Looker instance.
 type Instance struct {
+	// AcceleratedSecurityPatchEnabled: Optional. Accelerated security patch
+	// enabled for the instance.
+	AcceleratedSecurityPatchEnabled bool `json:"acceleratedSecurityPatchEnabled,omitempty"`
 	// AdminSettings: Looker Instance Admin settings.
 	AdminSettings *AdminSettings `json:"adminSettings,omitempty"`
 	// CatalogIntegrationOptOut: Optional. Indicates whether catalog integration is
@@ -674,18 +677,28 @@ type Instance struct {
 	// PlatformEdition: Platform edition.
 	//
 	// Possible values:
-	//   "PLATFORM_EDITION_UNSPECIFIED" - Platform edition is unspecified.
-	//   "LOOKER_CORE_TRIAL" - Trial.
-	//   "LOOKER_CORE_STANDARD" - Standard.
-	//   "LOOKER_CORE_STANDARD_ANNUAL" - Subscription Standard.
-	//   "LOOKER_CORE_ENTERPRISE_ANNUAL" - Subscription Enterprise.
-	//   "LOOKER_CORE_EMBED_ANNUAL" - Subscription Embed.
-	//   "LOOKER_CORE_NONPROD_STANDARD_ANNUAL" - Nonprod Subscription Standard.
-	//   "LOOKER_CORE_NONPROD_ENTERPRISE_ANNUAL" - Nonprod Subscription Enterprise.
-	//   "LOOKER_CORE_NONPROD_EMBED_ANNUAL" - Nonprod Subscription Embed.
-	//   "LOOKER_CORE_TRIAL_STANDARD" - Trial Standard.
-	//   "LOOKER_CORE_TRIAL_ENTERPRISE" - Trial Enterprise.
-	//   "LOOKER_CORE_TRIAL_EMBED" - Trial Embed.
+	//   "PLATFORM_EDITION_UNSPECIFIED" - Represents an unspecified platform
+	// edition.
+	//   "LOOKER_CORE_TRIAL" - Represents the Looker Core Trial edition.
+	//   "LOOKER_CORE_STANDARD" - Represents the Looker Core Standard edition.
+	//   "LOOKER_CORE_STANDARD_ANNUAL" - Represents the Looker Core Standard Annual
+	// edition.
+	//   "LOOKER_CORE_ENTERPRISE_ANNUAL" - Represents the Looker Core Enterprise
+	// Annual edition.
+	//   "LOOKER_CORE_EMBED_ANNUAL" - Represents the Looker Core Embed Annual
+	// edition.
+	//   "LOOKER_CORE_NONPROD_STANDARD_ANNUAL" - Represents the Looker Core Nonprod
+	// Standard Annual edition.
+	//   "LOOKER_CORE_NONPROD_ENTERPRISE_ANNUAL" - Represents the Looker Core
+	// Nonprod Enterprise Annual edition.
+	//   "LOOKER_CORE_NONPROD_EMBED_ANNUAL" - Represents the Looker Core Nonprod
+	// Embed Annual edition.
+	//   "LOOKER_CORE_TRIAL_STANDARD" - Represents the Looker Core Trial Standard
+	// edition.
+	//   "LOOKER_CORE_TRIAL_ENTERPRISE" - Represents the Looker Core Trial
+	// Enterprise edition.
+	//   "LOOKER_CORE_TRIAL_EMBED" - Represents the Looker Core Trial Embed
+	// edition.
 	PlatformEdition string `json:"platformEdition,omitempty"`
 	// PrivateIpEnabled: Whether private IP is enabled on the Looker instance.
 	PrivateIpEnabled bool `json:"privateIpEnabled,omitempty"`
@@ -697,6 +710,14 @@ type Instance struct {
 	PscEnabled bool `json:"pscEnabled,omitempty"`
 	// PublicIpEnabled: Whether public IP is enabled on the Looker instance.
 	PublicIpEnabled bool `json:"publicIpEnabled,omitempty"`
+	// ReleaseChannel: Optional. The selected release channel for the instance.
+	//
+	// Possible values:
+	//   "RELEASE_CHANNEL_UNSPECIFIED" - Unspecified release channel.
+	//   "RAPID" - Rapid: Most frequent updates.
+	//   "REGULAR" - Regular: Balanced, default for production.
+	//   "STABLE" - Stable: Least frequent, for maximum stability.
+	ReleaseChannel string `json:"releaseChannel,omitempty"`
 	// ReservedRange: Name of a reserved IP address range within the
 	// Instance.consumer_network, to be used for private services access
 	// connection. May or may not be specified in a create request.
@@ -705,6 +726,17 @@ type Instance struct {
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+	// SoftDeleteReason: Output only. The reason for the instance being in a
+	// soft-deleted state.
+	//
+	// Possible values:
+	//   "SOFT_DELETE_REASON_UNSPECIFIED" - Soft delete reason is unspecified. This
+	// is the default value.
+	//   "BILLING_ACCOUNT_ISSUE" - Instance is soft deleted due to billing account
+	// issues.
+	//   "TRIAL_EXPIRED" - Instance is soft deleted due to trial expiration.
+	//   "CUSTOMER_REQUEST" - Instance is soft deleted by the customer.
+	SoftDeleteReason string `json:"softDeleteReason,omitempty"`
 	// State: Output only. The state of the instance.
 	//
 	// Possible values:
@@ -718,6 +750,9 @@ type Instance struct {
 	//   "EXPORTING" - Instance is being exported.
 	//   "IMPORTING" - Instance is importing data.
 	State string `json:"state,omitempty"`
+	// SuspendedTime: Output only. The time when the Looker instance was suspended
+	// (soft deleted).
+	SuspendedTime string `json:"suspendedTime,omitempty"`
 	// UpdateTime: Output only. The time when the Looker instance was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// UserMetadata: Optional. User metadata.
@@ -725,15 +760,16 @@ type Instance struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AdminSettings") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "AcceleratedSecurityPatchEnabled") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AdminSettings") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AcceleratedSecurityPatchEnabled")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1323,6 +1359,10 @@ type TimeOfDay struct {
 func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeOfDay
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UndeleteInstanceRequest: Request options for undeleting an instance.
+type UndeleteInstanceRequest struct {
 }
 
 // UserMetadata: Metadata about users for a Looker instance.
@@ -2204,6 +2244,13 @@ func (c *ProjectsLocationsInstancesListCall) PageToken(pageToken string) *Projec
 	return c
 }
 
+// ShowDeleted sets the optional parameter "showDeleted": Whether to include
+// deleted instances in the response.
+func (c *ProjectsLocationsInstancesListCall) ShowDeleted(showDeleted bool) *ProjectsLocationsInstancesListCall {
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -2635,6 +2682,109 @@ func (c *ProjectsLocationsInstancesRestoreCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "looker.projects.locations.instances.restore", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInstancesUndeleteCall struct {
+	s                       *Service
+	name                    string
+	undeleteinstancerequest *UndeleteInstanceRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Undelete: Undeletes Looker instance.
+//
+// - name: Format: projects/{project}/locations/{location}/instances/{instance}.
+func (r *ProjectsLocationsInstancesService) Undelete(name string, undeleteinstancerequest *UndeleteInstanceRequest) *ProjectsLocationsInstancesUndeleteCall {
+	c := &ProjectsLocationsInstancesUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.undeleteinstancerequest = undeleteinstancerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInstancesUndeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesUndeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInstancesUndeleteCall) Context(ctx context.Context) *ProjectsLocationsInstancesUndeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInstancesUndeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesUndeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.undeleteinstancerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:undelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "looker.projects.locations.instances.undelete", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "looker.projects.locations.instances.undelete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInstancesUndeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "looker.projects.locations.instances.undelete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

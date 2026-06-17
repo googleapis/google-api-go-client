@@ -151,6 +151,58 @@ type FlightsService struct {
 	s *Service
 }
 
+// ComputeDetailedFlightEmissionsRequest: Input definition for the
+// ComputeDetailedFlightEmissions request.
+type ComputeDetailedFlightEmissionsRequest struct {
+	// Flights: Required. Direct flights to return emission estimates for.
+	Flights []*Flight `json:"flights,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Flights") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Flights") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ComputeDetailedFlightEmissionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ComputeDetailedFlightEmissionsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ComputeDetailedFlightEmissionsResponse: Output definition for the
+// ComputeDetailedFlightEmissions response.
+type ComputeDetailedFlightEmissionsResponse struct {
+	// FlightsWithDetailedEmissions: List of flight legs with emission estimates.
+	FlightsWithDetailedEmissions []*FlightWithDetailedEmissions `json:"flightsWithDetailedEmissions,omitempty"`
+	// ModelVersion: The model version under which emission estimates for all
+	// flights in this response were computed.
+	ModelVersion *ModelVersion `json:"modelVersion,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "FlightsWithDetailedEmissions") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FlightsWithDetailedEmissions") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ComputeDetailedFlightEmissionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ComputeDetailedFlightEmissionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ComputeFlightEmissionsRequest: Input definition for the
 // ComputeFlightEmissions request.
 type ComputeFlightEmissionsRequest struct {
@@ -396,6 +448,38 @@ func (s *EasaLabelMetadata) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// EmissionsBreakdown: Details about the various emissions portions of the
+// total emissions_grams_per_pax value. The value of the summed breakdowns
+// should always equal emissions_grams_per_pax.
+type EmissionsBreakdown struct {
+	// TtwEmissionsGramsPerPax: Per-passenger tank-to-wake emission estimate
+	// numbers. Will not be present if emissions could not be computed. For the
+	// list of reasons why emissions could not be computed, see
+	// ComputeFlightEmissions.
+	TtwEmissionsGramsPerPax *EmissionsGramsPerPax `json:"ttwEmissionsGramsPerPax,omitempty"`
+	// WttEmissionsGramsPerPax: Per-passenger well-to-tank emission estimate
+	// numbers. Will not be present if emissions could not be computed. For the
+	// list of reasons why emissions could not be computed, see
+	// ComputeFlightEmissions.
+	WttEmissionsGramsPerPax *EmissionsGramsPerPax `json:"wttEmissionsGramsPerPax,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TtwEmissionsGramsPerPax") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TtwEmissionsGramsPerPax") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EmissionsBreakdown) MarshalJSON() ([]byte, error) {
+	type NoMethod EmissionsBreakdown
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // EmissionsGramsPerPax: Grouped emissions per seating class results.
 type EmissionsGramsPerPax struct {
 	// Business: Emissions for one passenger in business class in grams. This field
@@ -432,6 +516,211 @@ func (s EmissionsGramsPerPax) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// EmissionsMetadata: All additional metadata.
+type EmissionsMetadata struct {
+	// EasaLabelMetadata: Output only. Metadata about the EASA Flight Emissions
+	// Label. Only set when the emissions data source is EASA.
+	EasaLabelMetadata *EasaLabelMetadata `json:"easaLabelMetadata,omitempty"`
+	// EmissionsProvenance: Output only. Details about the provenance of data used
+	// to calculate the emissions data, including the contributing factors with
+	// their data sources.
+	EmissionsProvenance *EmissionsProvenance `json:"emissionsProvenance,omitempty"`
+	// TimWebsiteEmissionsCalculatorUrl: Output only. Link to the
+	// `travelimpactmodel.org` Emissions Calculator website. Example:
+	// https://travelimpactmodel.org/lookup/flight?itinerary=ZRH-BOS-LX-52-20261225.
+	TimWebsiteEmissionsCalculatorUrl string `json:"timWebsiteEmissionsCalculatorUrl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EasaLabelMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EasaLabelMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EmissionsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod EmissionsMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EmissionsProvenance: Information about the provenance of the data used to
+// calculate emissions estimates, including contributing factors and their data
+// sources.
+type EmissionsProvenance struct {
+	// ProvenanceEntries: Output only. All contributing factors used to calculate
+	// emissions.
+	ProvenanceEntries []*EmissionsProvenanceEntry `json:"provenanceEntries,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProvenanceEntries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProvenanceEntries") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EmissionsProvenance) MarshalJSON() ([]byte, error) {
+	type NoMethod EmissionsProvenance
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EmissionsProvenanceEntry: Details about a single contributing factor in
+// emissions calculations.
+type EmissionsProvenanceEntry struct {
+	// CargoMassFractionData: Output only. The cargo mass fraction value. If not
+	// set, the cargo mass fraction value is not available.
+	CargoMassFractionData float64 `json:"cargoMassFractionData,omitempty"`
+	// CargoMassFractionT100Strategy: Output only. Strategy for T100 cargo mass
+	// fraction.
+	//
+	// Possible values:
+	//   "STRATEGY_UNSPECIFIED" - Strategy unspecified.
+	//   "CARRIER_ROUTE_AIRCRAFT_CLASS" - Data by carrier, route, and aircraft
+	// class.
+	//   "ROUTE_AIRCRAFT_CLASS" - Data by route and aircraft class.
+	//   "DISTANCE_AIRCRAFT_CLASS" - Data by distance band and aircraft class.
+	//   "ACTUAL_CARRIER_ROUTE_YEAR_MONTH_AIRCRAFT_CLASS" - Historical data
+	// matching carrier, route, year, month, and aircraft class.
+	CargoMassFractionT100Strategy string `json:"cargoMassFractionT100Strategy,omitempty"`
+	// DataCategory: Output only. Data category of the data source.
+	//
+	// Possible values:
+	//   "DATA_CATEGORY_UNSPECIFIED" - Data category unspecified.
+	//   "PRIMARY" - Primary data, as defined in ISO 14083.
+	//   "MODELED" - Modeled data, as defined in ISO 14083.
+	//   "DEFAULT" - Default value data, as defined in ISO 14083.
+	DataCategory string `json:"dataCategory,omitempty"`
+	// DistanceAdjustmentStrategy: Output only. Strategy for distance adjustment.
+	//
+	// Possible values:
+	//   "STRATEGY_UNSPECIFIED" - Strategy unspecified.
+	//   "ORIGIN_DESTINATION" - Distance adjustment factor determined by origin and
+	// destination airport pair.
+	//   "COUNTRY_PAIR" - Distance adjustment factor determined by origin and
+	// destination country pair.
+	//   "DEFAULT" - The distance adjustment factor is based on the default value
+	// because we did not find an airport- or country-specific adjustment factor.
+	DistanceAdjustmentStrategy string `json:"distanceAdjustmentStrategy,omitempty"`
+	// EstimatedFlightDistanceKm: Output only. The estimated distance flown in CCD
+	// flight phase in kilometers value calculated using the distance adjustment
+	// factor (DAF). If not set, the estimated flight distance value is not
+	// available.
+	EstimatedFlightDistanceKm int64 `json:"estimatedFlightDistanceKm,omitempty"`
+	// FuelBurnEeaStrategy: Output only. Strategy for EEA fuel burn.
+	//
+	// Possible values:
+	//   "STRATEGY_UNSPECIFIED" - Strategy unspecified.
+	//   "AIRCRAFT_MAPPING_FALLBACK_WITH_CORRECTION_FACTOR" - A static correction
+	// factor was applied.
+	//   "AIRCRAFT_MAPPING_EXACT" - Exact aircraft mapping was used.
+	//   "AIRCRAFT_MAPPING_FALLBACK" - Fallback aircraft mapping was used.
+	FuelBurnEeaStrategy string `json:"fuelBurnEeaStrategy,omitempty"`
+	// LoadFactorsChAviationStrategy: Output only. Strategy for CH Aviation load
+	// factors.
+	//
+	// Possible values:
+	//   "STRATEGY_UNSPECIFIED" - Strategy unspecified.
+	//   "CARRIER_MONTH" - Data by carrier and month of travel.
+	//   "ACTUAL_CARRIER_YEAR_MONTH" - Historical data matching carrier, year, and
+	// month.
+	LoadFactorsChAviationStrategy string `json:"loadFactorsChAviationStrategy,omitempty"`
+	// LoadFactorsData: Output only. The load factors data value. If not set, the
+	// load factors value is not available.
+	LoadFactorsData float64 `json:"loadFactorsData,omitempty"`
+	// LoadFactorsT100Strategy: Output only. Strategy for T100 load factors.
+	//
+	// Possible values:
+	//   "STRATEGY_UNSPECIFIED" - Strategy unspecified.
+	//   "CARRIER_ROUTE_MONTH" - Data by carrier, route, and month of travel.
+	//   "CARRIER_MONTH" - Data by carrier and month of travel.
+	//   "ACTUAL_CARRIER_ROUTE_YEAR_MONTH" - Historical data matching carrier,
+	// route, year, and month.
+	LoadFactorsT100Strategy string `json:"loadFactorsT100Strategy,omitempty"`
+	// ProvenanceEntryType: Output only. The type of the provenance entry.
+	//
+	// Possible values:
+	//   "EMISSIONS_PROVENANCE_ENTRY_TYPE_UNSPECIFIED" - Unspecified provenance
+	// entry type.
+	//   "FUEL_BURN" - Fuel burn entry type.
+	//   "LOAD_FACTORS" - Load factors entry type.
+	//   "CARGO_MASS_FRACTION" - Cargo mass fraction entry type.
+	//   "SEATING_CONFIG" - Seating configuration entry type.
+	//   "SEAT_AREA_RATIOS" - Seat area ratios entry type.
+	//   "DISTANCE_ADJUSTMENT" - Distance adjustment entry type.
+	ProvenanceEntryType string `json:"provenanceEntryType,omitempty"`
+	// SeatAreaRatioData: Output only. The seat area ratio value for each seating
+	// class. If not set, the seat area ratio value is not available.
+	SeatAreaRatioData *SeatAreaRatioData `json:"seatAreaRatioData,omitempty"`
+	// SeatAreaRatioIataStrategy: Output only. Strategy for IATA seat area ratios.
+	//
+	// Possible values:
+	//   "STRATEGY_UNSPECIFIED" - Strategy unspecified.
+	//   "NARROW_AIRCRAFT_BODY" - Seat area ratios for narrow body aircraft were
+	// used.
+	//   "WIDE_AIRCRAFT_BODY" - Seat area ratios for wide body aircraft were used.
+	SeatAreaRatioIataStrategy string `json:"seatAreaRatioIataStrategy,omitempty"`
+	// Source: Output only. The source of the data.
+	//
+	// Possible values:
+	//   "DATA_SOURCE_UNSPECIFIED" - Data source unspecified.
+	//   "EEA" - Data provided by the European Environment Agency (EEA).
+	//   "T100" - Data from the T-100 dataset, provided by the US Bureau of
+	// Transportation Statistics.
+	//   "CH_AVIATION" - Data provided by ch-aviation.
+	//   "OAG" - Data provided by the Official Aviation Guide (OAG).
+	//   "OPERATING_CARRIER" - Data provided by the operating carrier.
+	//   "AIRCRAFT_MODEL_TYPICAL" - Typical data based on the aircraft model.
+	//   "GLOBAL_DEFAULT" - A global default value, used when no other data source
+	// is available.
+	//   "IATA" - Data provided by the International Air Transport Association
+	// (IATA).
+	//   "ICL" - Data provided by Imperial College London.
+	Source string `json:"source,omitempty"`
+	// SourceVersion: Output only. The version of the source data. For example,
+	// "2025/04".
+	SourceVersion string `json:"sourceVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CargoMassFractionData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CargoMassFractionData") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EmissionsProvenanceEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod EmissionsProvenanceEntry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *EmissionsProvenanceEntry) UnmarshalJSON(data []byte) error {
+	type NoMethod EmissionsProvenanceEntry
+	var s1 struct {
+		CargoMassFractionData gensupport.JSONFloat64 `json:"cargoMassFractionData"`
+		LoadFactorsData       gensupport.JSONFloat64 `json:"loadFactorsData"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.CargoMassFractionData = float64(s1.CargoMassFractionData)
+	s.LoadFactorsData = float64(s1.LoadFactorsData)
+	return nil
+}
+
 // Flight: All details related to a single request item for a direct flight
 // emission estimates.
 type Flight struct {
@@ -461,6 +750,82 @@ type Flight struct {
 
 func (s Flight) MarshalJSON() ([]byte, error) {
 	type NoMethod Flight
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FlightEmissionsDetails: Details about the specific flight's emissions.
+type FlightEmissionsDetails struct {
+	// ContrailsImpactBucket: Output only. The significance of contrails warming
+	// impact compared to the total CO2e emissions impact.
+	//
+	// Possible values:
+	//   "CONTRAILS_IMPACT_UNSPECIFIED" - The contrails impact is unspecified.
+	//   "CONTRAILS_IMPACT_NEGLIGIBLE" - The contrails impact is negligible
+	// compared to the total CO2e emissions.
+	//   "CONTRAILS_IMPACT_MODERATE" - The contrails impact is comparable to the
+	// total CO2e emissions.
+	//   "CONTRAILS_IMPACT_SEVERE" - The contrails impact is higher than the total
+	// CO2e emissions impact.
+	ContrailsImpactBucket string `json:"contrailsImpactBucket,omitempty"`
+	// EmissionsBreakdown: Output only. Details about the various emissions
+	// portions of the total emissions_grams_per_pax value. The value of the summed
+	// breakdowns should always equal emissions_grams_per_pax.
+	EmissionsBreakdown *EmissionsBreakdown `json:"emissionsBreakdown,omitempty"`
+	// EmissionsGramsPerPax: Output only. Per-passenger emission estimate numbers.
+	// Will not be present if emissions could not be computed. For the list of
+	// reasons why emissions could not be computed, see
+	// ComputeDetailedFlightEmissions
+	EmissionsGramsPerPax *EmissionsGramsPerPax `json:"emissionsGramsPerPax,omitempty"`
+	// Source: Output only. The source of the emissions data.
+	//
+	// Possible values:
+	//   "SOURCE_UNSPECIFIED" - The source of the emissions data is unspecified.
+	//   "TIM" - The emissions data is from the Travel Impact Model.
+	//   "EASA" - The emissions data is from the EASA environmental labels.
+	Source string `json:"source,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContrailsImpactBucket") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContrailsImpactBucket") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FlightEmissionsDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod FlightEmissionsDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FlightWithDetailedEmissions: Direct flight with emission estimates details.
+type FlightWithDetailedEmissions struct {
+	// EmissionsMetadata: Output only. Additional metadata about the flight
+	// emissions calculation.
+	EmissionsMetadata *EmissionsMetadata `json:"emissionsMetadata,omitempty"`
+	// Flight: Output only. Matches the flight identifiers in the request. Note:
+	// all IATA codes are capitalized.
+	Flight *Flight `json:"flight,omitempty"`
+	// FlightEmissionsDetails: Output only. All the flight emissions data.
+	FlightEmissionsDetails *FlightEmissionsDetails `json:"flightEmissionsDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EmissionsMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EmissionsMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FlightWithDetailedEmissions) MarshalJSON() ([]byte, error) {
+	type NoMethod FlightWithDetailedEmissions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -690,6 +1055,57 @@ func (s Scope3FlightSegment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SeatAreaRatioData: Seat area ratio data values. Economy is always 1.0 and
+// serves as the reference point; other class values are relative to economy.
+// All 4 fields are always set whether the seating class exists on the aircraft
+// or not.
+type SeatAreaRatioData struct {
+	// Business: Output only. Business seating class data value.
+	Business float64 `json:"business,omitempty"`
+	// Economy: Output only. Economy seating class data value.
+	Economy float64 `json:"economy,omitempty"`
+	// First: Output only. First seating class data value.
+	First float64 `json:"first,omitempty"`
+	// PremiumEconomy: Output only. Premium economy seating class data value.
+	PremiumEconomy float64 `json:"premiumEconomy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Business") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Business") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SeatAreaRatioData) MarshalJSON() ([]byte, error) {
+	type NoMethod SeatAreaRatioData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *SeatAreaRatioData) UnmarshalJSON(data []byte) error {
+	type NoMethod SeatAreaRatioData
+	var s1 struct {
+		Business       gensupport.JSONFloat64 `json:"business"`
+		Economy        gensupport.JSONFloat64 `json:"economy"`
+		First          gensupport.JSONFloat64 `json:"first"`
+		PremiumEconomy gensupport.JSONFloat64 `json:"premiumEconomy"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Business = float64(s1.Business)
+	s.Economy = float64(s1.Economy)
+	s.First = float64(s1.First)
+	s.PremiumEconomy = float64(s1.PremiumEconomy)
+	return nil
+}
+
 // TypicalFlightEmissions: Typical flight emission estimates for a certain
 // market
 type TypicalFlightEmissions struct {
@@ -718,6 +1134,117 @@ type TypicalFlightEmissions struct {
 func (s TypicalFlightEmissions) MarshalJSON() ([]byte, error) {
 	type NoMethod TypicalFlightEmissions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type FlightsComputeDetailedFlightEmissionsCall struct {
+	s                                     *Service
+	computedetailedflightemissionsrequest *ComputeDetailedFlightEmissionsRequest
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// ComputeDetailedFlightEmissions: Retrieves detailed emission estimates.
+// Detailed Flight Emissions are transparent per-passenger greenhouse gas
+// emission estimates supplemented by comprehensive metadata detailing the
+// calculation methodology, emissions breakdown, contrail impact, and data
+// provenance. Details on how emission estimates are computed are in GitHub
+// (https://github.com/google/travel-impact-model). The response will contain
+// all entries that match the input flight legs, in the same order. If there
+// are no estimates available for a certain flight leg, the response will
+// return the flight leg object with empty emission fields. The request will
+// still be considered successful. Reasons for missing emission estimates
+// include: * The flight is unknown to the server. * The input flight leg is
+// missing one or more identifiers. * The flight date is in the past. * The
+// aircraft type is not supported by the model. * Missing seat configuration.
+// The request can contain up to 100 flight legs. If the request has more than
+// 100 flight legs, it will fail with an INVALID_ARGUMENT error.
+func (r *FlightsService) ComputeDetailedFlightEmissions(computedetailedflightemissionsrequest *ComputeDetailedFlightEmissionsRequest) *FlightsComputeDetailedFlightEmissionsCall {
+	c := &FlightsComputeDetailedFlightEmissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.computedetailedflightemissionsrequest = computedetailedflightemissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FlightsComputeDetailedFlightEmissionsCall) Fields(s ...googleapi.Field) *FlightsComputeDetailedFlightEmissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FlightsComputeDetailedFlightEmissionsCall) Context(ctx context.Context) *FlightsComputeDetailedFlightEmissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FlightsComputeDetailedFlightEmissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FlightsComputeDetailedFlightEmissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.computedetailedflightemissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/flights:computeDetailedFlightEmissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "travelimpactmodel.flights.computeDetailedFlightEmissions", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "travelimpactmodel.flights.computeDetailedFlightEmissions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ComputeDetailedFlightEmissionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FlightsComputeDetailedFlightEmissionsCall) Do(opts ...googleapi.CallOption) (*ComputeDetailedFlightEmissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ComputeDetailedFlightEmissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "travelimpactmodel.flights.computeDetailedFlightEmissions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type FlightsComputeFlightEmissionsCall struct {

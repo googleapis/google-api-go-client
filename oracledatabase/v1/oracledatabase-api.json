@@ -725,6 +725,34 @@
             },
             "cloudExadataInfrastructures": {
               "methods": {
+                "configureExascale": {
+                  "description": "Configures Exascale for a single Exadata Infrastructure.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/cloudExadataInfrastructures/{cloudExadataInfrastructuresId}:configureExascale",
+                  "httpMethod": "POST",
+                  "id": "oracledatabase.projects.locations.cloudExadataInfrastructures.configureExascale",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the Cloud Exadata Infrastructure in the following format: projects/{project}/locations/{location}/cloudExadataInfrastructures/{cloud_exadata_infrastructure}.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/cloudExadataInfrastructures/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}:configureExascale",
+                  "request": {
+                    "$ref": "ConfigureExascaleCloudExadataInfrastructureRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "create": {
                   "description": "Creates a new Exadata Infrastructure in a given project and location.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/cloudExadataInfrastructures",
@@ -2186,31 +2214,6 @@
             },
             "goldengateConnectionTypes": {
               "methods": {
-                "get": {
-                  "description": "Gets details of a single GoldengateConnectionType.",
-                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/goldengateConnectionTypes/{goldengateConnectionTypesId}",
-                  "httpMethod": "GET",
-                  "id": "oracledatabase.projects.locations.goldengateConnectionTypes.get",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "Required. Name of the resource in the format: projects/{project}/locations/{location}/goldengateConnectionTypes/{goldengate_connection_type}",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/locations/[^/]+/goldengateConnectionTypes/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1/{+name}",
-                  "response": {
-                    "$ref": "GoldengateConnectionType"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
                 "list": {
                   "description": "Lists GoldengateConnectionTypes in a given project and location.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/goldengateConnectionTypes",
@@ -2399,31 +2402,6 @@
             },
             "goldengateDeploymentEnvironments": {
               "methods": {
-                "get": {
-                  "description": "Gets details of a single GoldengateDeploymentEnvironment.",
-                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/goldengateDeploymentEnvironments/{goldengateDeploymentEnvironmentsId}",
-                  "httpMethod": "GET",
-                  "id": "oracledatabase.projects.locations.goldengateDeploymentEnvironments.get",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "Required. Name of the resource with the format: projects/{project}/locations/{location}/goldengateDeploymentEnvironments/{goldengate_deployment_environment}",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/locations/[^/]+/goldengateDeploymentEnvironments/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1/{+name}",
-                  "response": {
-                    "$ref": "GoldengateDeploymentEnvironment"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
                 "list": {
                   "description": "Lists GoldengateDeploymentEnvironments in a given project and location.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/goldengateDeploymentEnvironments",
@@ -2464,31 +2442,6 @@
             },
             "goldengateDeploymentTypes": {
               "methods": {
-                "get": {
-                  "description": "Gets details of a single GoldenGateDeploymentType.",
-                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/goldengateDeploymentTypes/{goldengateDeploymentTypesId}",
-                  "httpMethod": "GET",
-                  "id": "oracledatabase.projects.locations.goldengateDeploymentTypes.get",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "Required. The name of the GoldengateDeploymentType to retrieve. Format: projects/{project}/locations/{location}/goldengateDeploymentTypes/{goldengate_deployment_type}",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/locations/[^/]+/goldengateDeploymentTypes/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1/{+name}",
-                  "response": {
-                    "$ref": "GoldengateDeploymentType"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
                 "list": {
                   "description": "Lists GoldenGateDeploymentTypes in a given project and location.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/goldengateDeploymentTypes",
@@ -2539,31 +2492,6 @@
             },
             "goldengateDeploymentVersions": {
               "methods": {
-                "get": {
-                  "description": "Gets details of a single GoldengateDeploymentVersion.",
-                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/goldengateDeploymentVersions/{goldengateDeploymentVersionsId}",
-                  "httpMethod": "GET",
-                  "id": "oracledatabase.projects.locations.goldengateDeploymentVersions.get",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "Required. The name of the GoldengateDeploymentVersion to retrieve. Format: projects/{project}/locations/{location}/goldengateDeploymentVersions/{goldengate_deployment_version}",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/locations/[^/]+/goldengateDeploymentVersions/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1/{+name}",
-                  "response": {
-                    "$ref": "GoldengateDeploymentVersion"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
                 "list": {
                   "description": "Lists GoldengateDeploymentVersions in a given project and location.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/goldengateDeploymentVersions",
@@ -3297,7 +3225,7 @@
       }
     }
   },
-  "revision": "20260604",
+  "revision": "20260615",
   "rootUrl": "https://oracledatabase.googleapis.com/",
   "schemas": {
     "AllConnectionStrings": {
@@ -4636,6 +4564,11 @@
           "readOnly": true,
           "type": "string"
         },
+        "exascaleConfig": {
+          "$ref": "ExascaleConfig",
+          "description": "Output only. The Exascale configuration for the Exadata Infrastructure.",
+          "readOnly": true
+        },
         "maintenanceWindow": {
           "$ref": "MaintenanceWindow",
           "description": "Optional. Maintenance window for repair."
@@ -4787,6 +4720,10 @@
         },
         "exadataInfrastructure": {
           "description": "Required. The name of the Exadata Infrastructure resource on which VM cluster resource is created, in the following format: projects/{project}/locations/{region}/cloudExadataInfrastuctures/{cloud_extradata_infrastructure}",
+          "type": "string"
+        },
+        "exascaleDbStorageVault": {
+          "description": "Optional. The name of ExascaleDbStorageVault associated with the VM Cluster. Format: projects/{project}/locations/{location}/exascaleDbStorageVaults/{exascale_db_storage_vault}",
           "type": "string"
         },
         "gcpOracleZone": {
@@ -5032,6 +4969,21 @@
           "readOnly": true,
           "type": "string"
         },
+        "storageManagementType": {
+          "description": "Output only. The storage management type of the VM Cluster.",
+          "enum": [
+            "STORAGE_MANAGEMENT_TYPE_UNSPECIFIED",
+            "ASM",
+            "EXASCALE"
+          ],
+          "enumDescriptions": [
+            "Unspecified storage management type.",
+            "Automatic Storage Management.",
+            "Exascale storage management."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
         "storageSizeGb": {
           "description": "Output only. The storage allocation for the disk group, in gigabytes (GB).",
           "format": "int32",
@@ -5045,6 +4997,22 @@
         "timeZone": {
           "$ref": "TimeZone",
           "description": "Optional. Time zone of VM Cluster to set. Defaults to UTC if not specified."
+        }
+      },
+      "type": "object"
+    },
+    "ConfigureExascaleCloudExadataInfrastructureRequest": {
+      "description": "The request for `CloudExadataInfrastructure.ConfigureExascale`.",
+      "id": "ConfigureExascaleCloudExadataInfrastructureRequest",
+      "properties": {
+        "requestId": {
+          "description": "Optional. An optional ID to identify the request.",
+          "type": "string"
+        },
+        "totalStorageSizeGb": {
+          "description": "Required. The total storage to be allocated to Exascale in GBs.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"
@@ -6578,6 +6546,25 @@
       },
       "type": "object"
     },
+    "ExascaleConfig": {
+      "description": "Details of the Exascale configuration for the Exadata Infrastructure.",
+      "id": "ExascaleConfig",
+      "properties": {
+        "availableStorageSizeGb": {
+          "description": "Output only. Available storage size for Exascale in GBs.",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        },
+        "totalStorageSizeGb": {
+          "description": "Output only. Total storage size needed for Exascale in GBs.",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "ExascaleDbStorageDetails": {
       "description": "The storage details of the ExascaleDbStorageVault.",
       "id": "ExascaleDbStorageDetails",
@@ -6613,6 +6600,10 @@
         "entitlementId": {
           "description": "Output only. The ID of the subscription entitlement associated with the ExascaleDbStorageVault.",
           "readOnly": true,
+          "type": "string"
+        },
+        "exadataInfrastructure": {
+          "description": "Optional. The Exadata Infrastructure resource on which ExascaleDbStorageVault resource is created, in the following format: projects/{project}/locations/{region}/cloudExadataInfrastuctures/{cloud_extradata_infrastructure}",
           "type": "string"
         },
         "gcpOracleZone": {

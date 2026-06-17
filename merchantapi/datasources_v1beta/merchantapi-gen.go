@@ -304,7 +304,10 @@ type DefaultRule struct {
 	// changing the priority of data sources in the default rule. For example,
 	// providing the following list: [`1001`, `self`] will take attribute values
 	// from supplemental data source `1001`, and fallback to `self` if the
-	// attribute is not set in `1001`.
+	// attribute is not set in `1001`. Warning: The update (patch) and create call
+	// replaces the entire default rule setup. It doesn't work as an addition or
+	// append. If `self` is missing from the list of `take_from_data_sources`, the
+	// API will ignore attributes from the primary data source itself.
 	TakeFromDataSources []*DataSourceReference `json:"takeFromDataSources,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "TakeFromDataSources") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -684,7 +687,11 @@ type PrimaryProductDataSource struct {
 	// (https://github.com/unicode-org/cldr/blob/latest/common/main/en.xml).
 	Countries []string `json:"countries,omitempty"`
 	// DefaultRule: Optional. Default rule management of the data source. If set,
-	// the linked data sources will be replaced.
+	// the linked data sources will be replaced. Warning: The update (patch) and
+	// create call replaces the entire default rule setup. It doesn't work as an
+	// addition or append. If `self` is missing from the list of
+	// `take_from_data_sources`, the API will ignore attributes from the primary
+	// data source itself.
 	DefaultRule *DefaultRule `json:"defaultRule,omitempty"`
 	// Destinations: Optional. A list of destinations describing where products of
 	// the data source can be shown. When retrieving the data source, the list

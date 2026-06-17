@@ -1838,7 +1838,7 @@ type AccountsReportsSearchCall struct {
 // to determine if there are more rows to be requested.
 //
 //   - parent: Id of the account making the call. Must be a standalone account or
-//     an MCA subaccount. Format: accounts/{account}.
+//     a subaccount of an advanced account. Format: accounts/{account}.
 func (r *AccountsReportsService) Search(parent string, searchrequest *SearchRequest) *AccountsReportsSearchCall {
 	c := &AccountsReportsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

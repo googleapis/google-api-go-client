@@ -2677,8 +2677,6 @@ func (s CreateNodePoolRequest) MarshalJSON() ([]byte, error) {
 type CustomImageConfig struct {
 	// Image: The name of the image to use for this node.
 	Image string `json:"image,omitempty"`
-	// ImageFamily: The name of the image family to use for this node.
-	ImageFamily string `json:"imageFamily,omitempty"`
 	// ImageProject: The project containing the image to use for this node.
 	ImageProject string `json:"imageProject,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Image") to unconditionally
@@ -2696,6 +2694,29 @@ type CustomImageConfig struct {
 
 func (s CustomImageConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomImageConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomImageInfo: Contains the custom image info for a node pool.
+type CustomImageInfo struct {
+	// UpgradeMessage: Output only. The human-readable upgrade message for the
+	// custom image.
+	UpgradeMessage string `json:"upgradeMessage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UpgradeMessage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UpgradeMessage") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomImageInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomImageInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6675,6 +6696,9 @@ type NodePoolUpgradeInfo struct {
 	// upgrade is paused.
 	//   "UPGRADE_PAUSED" - UPGRADE_PAUSED indicates the upgrade is paused.
 	AutoUpgradeStatus []string `json:"autoUpgradeStatus,omitempty"`
+	// CustomImageInfo: Output only. Upgrade info for the node pool specific to the
+	// usage of custom images.
+	CustomImageInfo *CustomImageInfo `json:"customImageInfo,omitempty"`
 	// EndOfExtendedSupportTimestamp: The node pool's current minor version's end
 	// of extended support timestamp.
 	EndOfExtendedSupportTimestamp string `json:"endOfExtendedSupportTimestamp,omitempty"`

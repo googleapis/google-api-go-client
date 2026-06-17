@@ -1055,6 +1055,10 @@ type Empty struct {
 
 // ExecutePipelineRequest: The request for Firestore.ExecutePipeline.
 type ExecutePipelineRequest struct {
+	// AutoCommitTransaction: Optional. Automatically commits the transaction after
+	// the pipeline has been executed. Only permitted in combination with
+	// `transaction` or `new_transaction`.
+	AutoCommitTransaction bool `json:"autoCommitTransaction,omitempty"`
 	// NewTransaction: Execute the pipeline in a new transaction. The identifier of
 	// the newly created transaction will be returned in the first response on the
 	// stream. This defaults to a read-only transaction.
@@ -1069,15 +1073,15 @@ type ExecutePipelineRequest struct {
 	// Transaction: Run the query within an already active transaction. The value
 	// here is the opaque transaction ID to execute the query in.
 	Transaction string `json:"transaction,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "NewTransaction") to
+	// ForceSendFields is a list of field names (e.g. "AutoCommitTransaction") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "NewTransaction") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AutoCommitTransaction") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

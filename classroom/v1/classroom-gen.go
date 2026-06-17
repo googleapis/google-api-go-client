@@ -580,9 +580,9 @@ type AddOnAttachment struct {
 	// `courseId`, `itemId`, `itemType`, `attachmentId`, and `submissionId` query
 	// parameters set. This is the same `submissionId` returned in the
 	// `AddOnContext.studentContext`
-	// (//devsite.google.com/classroom/reference/rest/v1/AddOnContext#StudentContext
-	// ) field when a student views the attachment. If the URI is omitted or
-	// removed, `max_points` will also be discarded.
+	// (/workspace/classroom/reference/rest/v1/AddOnContext#StudentContext) field
+	// when a student views the attachment. If the URI is omitted or removed,
+	// `max_points` will also be discarded.
 	StudentWorkReviewUri *EmbedUri `json:"studentWorkReviewUri,omitempty"`
 	// TeacherViewUri: Required. URI to show the teacher view of the attachment.
 	// The URI will be opened in an iframe with the `courseId`, `itemId`,
@@ -652,7 +652,10 @@ type AddOnAttachmentStudentSubmission struct {
 	PostSubmissionState string `json:"postSubmissionState,omitempty"`
 	// UserId: Identifier for the student that owns this submission. Requires the
 	// user to be a teacher in the course and have permission to read student
-	// submissions. Read-only.
+	// submissions. See `courseWork.studentSubmissions.get`
+	// (/workspace/classroom/reference/rest/v1/courses.courseWork.studentSubmissions
+	// /get#authorization-scopes) for the list of acceptable OAuth scopes for this
+	// field. Read-only.
 	UserId string `json:"userId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

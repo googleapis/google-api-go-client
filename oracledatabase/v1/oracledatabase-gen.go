@@ -1658,6 +1658,9 @@ type CloudExadataInfrastructureProperties struct {
 	// DbServerVersion: Output only. The software version of the database servers
 	// (dom0) in the Exadata Infrastructure.
 	DbServerVersion string `json:"dbServerVersion,omitempty"`
+	// ExascaleConfig: Output only. The Exascale configuration for the Exadata
+	// Infrastructure.
+	ExascaleConfig *ExascaleConfig `json:"exascaleConfig,omitempty"`
 	// MaintenanceWindow: Optional. Maintenance window for repair.
 	MaintenanceWindow *MaintenanceWindow `json:"maintenanceWindow,omitempty"`
 	// MaxCpuCount: Output only. The total number of CPU cores available.
@@ -1774,6 +1777,11 @@ type CloudVmCluster struct {
 	// projects/{project}/locations/{region}/cloudExadataInfrastuctures/{cloud_extra
 	// data_infrastructure}
 	ExadataInfrastructure string `json:"exadataInfrastructure,omitempty"`
+	// ExascaleDbStorageVault: Optional. The name of ExascaleDbStorageVault
+	// associated with the VM Cluster. Format:
+	// projects/{project}/locations/{location}/exascaleDbStorageVaults/{exascale_db_
+	// storage_vault}
+	ExascaleDbStorageVault string `json:"exascaleDbStorageVault,omitempty"`
 	// GcpOracleZone: Output only. The GCP Oracle zone where Oracle CloudVmCluster
 	// is hosted. This will be the same as the gcp_oracle_zone of the
 	// CloudExadataInfrastructure. Example: us-east4-b-r2.
@@ -1920,6 +1928,15 @@ type CloudVmClusterProperties struct {
 	//   "MAINTENANCE_IN_PROGRESS" - Indicates that the resource is in maintenance
 	// in progress state.
 	State string `json:"state,omitempty"`
+	// StorageManagementType: Output only. The storage management type of the VM
+	// Cluster.
+	//
+	// Possible values:
+	//   "STORAGE_MANAGEMENT_TYPE_UNSPECIFIED" - Unspecified storage management
+	// type.
+	//   "ASM" - Automatic Storage Management.
+	//   "EXASCALE" - Exascale storage management.
+	StorageManagementType string `json:"storageManagementType,omitempty"`
 	// StorageSizeGb: Output only. The storage allocation for the disk group, in
 	// gigabytes (GB).
 	StorageSizeGb int64 `json:"storageSizeGb,omitempty"`
@@ -1960,6 +1977,32 @@ func (s *CloudVmClusterProperties) UnmarshalJSON(data []byte) error {
 	s.DataStorageSizeTb = float64(s1.DataStorageSizeTb)
 	s.OcpuCount = float64(s1.OcpuCount)
 	return nil
+}
+
+// ConfigureExascaleCloudExadataInfrastructureRequest: The request for
+// `CloudExadataInfrastructure.ConfigureExascale`.
+type ConfigureExascaleCloudExadataInfrastructureRequest struct {
+	// RequestId: Optional. An optional ID to identify the request.
+	RequestId string `json:"requestId,omitempty"`
+	// TotalStorageSizeGb: Required. The total storage to be allocated to Exascale
+	// in GBs.
+	TotalStorageSizeGb int64 `json:"totalStorageSizeGb,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequestId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigureExascaleCloudExadataInfrastructureRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigureExascaleCloudExadataInfrastructureRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomerContact: The CustomerContact reference as defined by Oracle.
@@ -3352,6 +3395,33 @@ func (s ExadbVmClusterStorageDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ExascaleConfig: Details of the Exascale configuration for the Exadata
+// Infrastructure.
+type ExascaleConfig struct {
+	// AvailableStorageSizeGb: Output only. Available storage size for Exascale in
+	// GBs.
+	AvailableStorageSizeGb int64 `json:"availableStorageSizeGb,omitempty"`
+	// TotalStorageSizeGb: Output only. Total storage size needed for Exascale in
+	// GBs.
+	TotalStorageSizeGb int64 `json:"totalStorageSizeGb,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AvailableStorageSizeGb") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AvailableStorageSizeGb") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExascaleConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ExascaleConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ExascaleDbStorageDetails: The storage details of the ExascaleDbStorageVault.
 type ExascaleDbStorageDetails struct {
 	// AvailableSizeGbs: Output only. The available storage capacity for the
@@ -3392,6 +3462,11 @@ type ExascaleDbStorageVault struct {
 	// EntitlementId: Output only. The ID of the subscription entitlement
 	// associated with the ExascaleDbStorageVault.
 	EntitlementId string `json:"entitlementId,omitempty"`
+	// ExadataInfrastructure: Optional. The Exadata Infrastructure resource on
+	// which ExascaleDbStorageVault resource is created, in the following format:
+	// projects/{project}/locations/{region}/cloudExadataInfrastuctures/{cloud_extra
+	// data_infrastructure}
+	ExadataInfrastructure string `json:"exadataInfrastructure,omitempty"`
 	// GcpOracleZone: Optional. The GCP Oracle zone where Oracle
 	// ExascaleDbStorageVault is hosted. Example: us-east4-b-r2. If not specified,
 	// the system will pick a zone based on availability.
@@ -4241,9 +4316,6 @@ type GoldengateConnectionType struct {
 	// TechnologyTypes: Output only. The technology type of the Goldengate
 	// Connection Type resource.
 	TechnologyTypes []string `json:"technologyTypes,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
 	// ForceSendFields is a list of field names (e.g. "ConnectionType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4480,9 +4552,6 @@ type GoldengateDeploymentEnvironment struct {
 	// StorageUsageLimitGbPerCpuCore: Output only. The storage usage limit per CPU
 	// core in GBs of the Goldengate Deployment Environment resource.
 	StorageUsageLimitGbPerCpuCore int64 `json:"storageUsageLimitGbPerCpuCore,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
 	// ForceSendFields is a list of field names (e.g. "AutoScalingEnabled") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4782,9 +4851,6 @@ type GoldengateDeploymentType struct {
 	// TargetTechnologies: Output only. The target technologies of the Goldengate
 	// Deployment Type resource.
 	TargetTechnologies []string `json:"targetTechnologies,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
 	// ForceSendFields is a list of field names (e.g. "Category") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4817,9 +4883,6 @@ type GoldengateDeploymentVersion struct {
 	// Properties: Output only. The technology type of the Goldengate Deployment
 	// Version resource.
 	Properties *GoldengateDeploymentVersionProperties `json:"properties,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -10525,6 +10588,112 @@ func (c *ProjectsLocationsAutonomousDbVersionsListCall) Pages(ctx context.Contex
 	}
 }
 
+type ProjectsLocationsCloudExadataInfrastructuresConfigureExascaleCall struct {
+	s                                                  *Service
+	name                                               string
+	configureexascalecloudexadatainfrastructurerequest *ConfigureExascaleCloudExadataInfrastructureRequest
+	urlParams_                                         gensupport.URLParams
+	ctx_                                               context.Context
+	header_                                            http.Header
+}
+
+// ConfigureExascale: Configures Exascale for a single Exadata Infrastructure.
+//
+//   - name: The name of the Cloud Exadata Infrastructure in the following
+//     format:
+//     projects/{project}/locations/{location}/cloudExadataInfrastructures/{cloud_
+//     exadata_infrastructure}.
+func (r *ProjectsLocationsCloudExadataInfrastructuresService) ConfigureExascale(name string, configureexascalecloudexadatainfrastructurerequest *ConfigureExascaleCloudExadataInfrastructureRequest) *ProjectsLocationsCloudExadataInfrastructuresConfigureExascaleCall {
+	c := &ProjectsLocationsCloudExadataInfrastructuresConfigureExascaleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.configureexascalecloudexadatainfrastructurerequest = configureexascalecloudexadatainfrastructurerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCloudExadataInfrastructuresConfigureExascaleCall) Fields(s ...googleapi.Field) *ProjectsLocationsCloudExadataInfrastructuresConfigureExascaleCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCloudExadataInfrastructuresConfigureExascaleCall) Context(ctx context.Context) *ProjectsLocationsCloudExadataInfrastructuresConfigureExascaleCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCloudExadataInfrastructuresConfigureExascaleCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCloudExadataInfrastructuresConfigureExascaleCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.configureexascalecloudexadatainfrastructurerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:configureExascale")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.cloudExadataInfrastructures.configureExascale", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.cloudExadataInfrastructures.configureExascale" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCloudExadataInfrastructuresConfigureExascaleCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.cloudExadataInfrastructures.configureExascale", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsCloudExadataInfrastructuresCreateCall struct {
 	s                          *Service
 	parent                     string
@@ -15756,118 +15925,6 @@ func (c *ProjectsLocationsGoldengateConnectionAssignmentsTestCall) Do(opts ...go
 	return ret, nil
 }
 
-type ProjectsLocationsGoldengateConnectionTypesGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets details of a single GoldengateConnectionType.
-//
-//   - name: Name of the resource in the format:
-//     projects/{project}/locations/{location}/goldengateConnectionTypes/{goldenga
-//     te_connection_type}.
-func (r *ProjectsLocationsGoldengateConnectionTypesService) Get(name string) *ProjectsLocationsGoldengateConnectionTypesGetCall {
-	c := &ProjectsLocationsGoldengateConnectionTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsGoldengateConnectionTypesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateConnectionTypesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsGoldengateConnectionTypesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGoldengateConnectionTypesGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsGoldengateConnectionTypesGetCall) Context(ctx context.Context) *ProjectsLocationsGoldengateConnectionTypesGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsGoldengateConnectionTypesGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsGoldengateConnectionTypesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnectionTypes.get", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "oracledatabase.projects.locations.goldengateConnectionTypes.get" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoldengateConnectionType.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsGoldengateConnectionTypesGetCall) Do(opts ...googleapi.CallOption) (*GoldengateConnectionType, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoldengateConnectionType{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnectionTypes.get", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
 type ProjectsLocationsGoldengateConnectionTypesListCall struct {
 	s            *Service
 	parent       string
@@ -16540,118 +16597,6 @@ func (c *ProjectsLocationsGoldengateConnectionsListCall) Pages(ctx context.Conte
 	}
 }
 
-type ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets details of a single GoldengateDeploymentEnvironment.
-//
-//   - name: Name of the resource with the format:
-//     projects/{project}/locations/{location}/goldengateDeploymentEnvironments/{g
-//     oldengate_deployment_environment}.
-func (r *ProjectsLocationsGoldengateDeploymentEnvironmentsService) Get(name string) *ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall {
-	c := &ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall) Context(ctx context.Context) *ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeploymentEnvironments.get", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "oracledatabase.projects.locations.goldengateDeploymentEnvironments.get" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoldengateDeploymentEnvironment.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsGoldengateDeploymentEnvironmentsGetCall) Do(opts ...googleapi.CallOption) (*GoldengateDeploymentEnvironment, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoldengateDeploymentEnvironment{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeploymentEnvironments.get", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
 type ProjectsLocationsGoldengateDeploymentEnvironmentsListCall struct {
 	s            *Service
 	parent       string
@@ -16800,118 +16745,6 @@ func (c *ProjectsLocationsGoldengateDeploymentEnvironmentsListCall) Pages(ctx co
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-type ProjectsLocationsGoldengateDeploymentTypesGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets details of a single GoldenGateDeploymentType.
-//
-//   - name: The name of the GoldengateDeploymentType to retrieve. Format:
-//     projects/{project}/locations/{location}/goldengateDeploymentTypes/{goldenga
-//     te_deployment_type}.
-func (r *ProjectsLocationsGoldengateDeploymentTypesService) Get(name string) *ProjectsLocationsGoldengateDeploymentTypesGetCall {
-	c := &ProjectsLocationsGoldengateDeploymentTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsGoldengateDeploymentTypesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateDeploymentTypesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsGoldengateDeploymentTypesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGoldengateDeploymentTypesGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsGoldengateDeploymentTypesGetCall) Context(ctx context.Context) *ProjectsLocationsGoldengateDeploymentTypesGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsGoldengateDeploymentTypesGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsGoldengateDeploymentTypesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeploymentTypes.get", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "oracledatabase.projects.locations.goldengateDeploymentTypes.get" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoldengateDeploymentType.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsGoldengateDeploymentTypesGetCall) Do(opts ...googleapi.CallOption) (*GoldengateDeploymentType, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoldengateDeploymentType{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeploymentTypes.get", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
 }
 
 type ProjectsLocationsGoldengateDeploymentTypesListCall struct {
@@ -17078,118 +16911,6 @@ func (c *ProjectsLocationsGoldengateDeploymentTypesListCall) Pages(ctx context.C
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-type ProjectsLocationsGoldengateDeploymentVersionsGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets details of a single GoldengateDeploymentVersion.
-//
-//   - name: The name of the GoldengateDeploymentVersion to retrieve. Format:
-//     projects/{project}/locations/{location}/goldengateDeploymentVersions/{golde
-//     ngate_deployment_version}.
-func (r *ProjectsLocationsGoldengateDeploymentVersionsService) Get(name string) *ProjectsLocationsGoldengateDeploymentVersionsGetCall {
-	c := &ProjectsLocationsGoldengateDeploymentVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsGoldengateDeploymentVersionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateDeploymentVersionsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsGoldengateDeploymentVersionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGoldengateDeploymentVersionsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsGoldengateDeploymentVersionsGetCall) Context(ctx context.Context) *ProjectsLocationsGoldengateDeploymentVersionsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsGoldengateDeploymentVersionsGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsGoldengateDeploymentVersionsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeploymentVersions.get", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "oracledatabase.projects.locations.goldengateDeploymentVersions.get" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoldengateDeploymentVersion.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsGoldengateDeploymentVersionsGetCall) Do(opts ...googleapi.CallOption) (*GoldengateDeploymentVersion, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoldengateDeploymentVersion{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeploymentVersions.get", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
 }
 
 type ProjectsLocationsGoldengateDeploymentVersionsListCall struct {

@@ -408,8 +408,8 @@ type AccountsNotificationsubscriptionsCreateCall struct {
 
 // Create: Creates a notification subscription for a business. For standalone
 // or subaccounts accounts, the business can create a subscription for self.
-// For MCAs, the business can create a subscription for all managed accounts or
-// for a specific subaccount. See Decode notifications
+// For advanced accounts, the business can create a subscription for all
+// managed accounts or for a specific subaccount. See Decode notifications
 // (/merchant/api/guides/accounts/notifications#decode_notifications) for
 // information on how to decode the notification payload and how to interpret
 // its contents. We will allow the following types of notification

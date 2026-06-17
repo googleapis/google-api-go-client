@@ -6873,7 +6873,7 @@ func (s *SearchQualityMetadata) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// SearchRequest: The search API request. NEXT ID: 25
+// SearchRequest: The search API request. NEXT ID: 26
 type SearchRequest struct {
 	// ContextAttributes: Context attributes for the request which will be used to
 	// adjust ranking of search results. The maximum number of elements is 10.
@@ -6917,7 +6917,7 @@ func (s SearchRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SearchResponse: The search API response. NEXT ID: 19
+// SearchResponse: The search API response. NEXT ID: 20
 type SearchResponse struct {
 	// DebugInfo: Debugging information about the response.
 	DebugInfo *ResponseDebugInfo `json:"debugInfo,omitempty"`
@@ -6965,7 +6965,7 @@ func (s SearchResponse) MarshalJSON() ([]byte, error) {
 }
 
 // SearchResult: Results containing indexed information for a document. Next
-// ID: 16
+// ID: 17
 type SearchResult struct {
 	// ClusteredResults: If source is clustered, provide list of clustered results.
 	// There will only be one level of clustered results. If current source is not

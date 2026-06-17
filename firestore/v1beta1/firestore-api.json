@@ -1431,7 +1431,7 @@
       }
     }
   },
-  "revision": "20260427",
+  "revision": "20260608",
   "rootUrl": "https://firestore.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -1921,6 +1921,10 @@
       "description": "The request for Firestore.ExecutePipeline.",
       "id": "ExecutePipelineRequest",
       "properties": {
+        "autoCommitTransaction": {
+          "description": "Optional. Automatically commits the transaction after the pipeline has been executed. Only permitted in combination with `transaction` or `new_transaction`.",
+          "type": "boolean"
+        },
         "newTransaction": {
           "$ref": "TransactionOptions",
           "description": "Execute the pipeline in a new transaction. The identifier of the newly created transaction will be returned in the first response on the stream. This defaults to a read-only transaction."

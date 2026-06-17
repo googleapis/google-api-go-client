@@ -3456,6 +3456,7 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	//   "GOOGLE_CHAT" - Google Chat connector.
 	//   "GOOGLE_SITES" - Google Sites connector.
 	//   "REMOTE_MCP" - Remote MCP based connector.
+	//   "GOOGLE_WORKSPACE" - Google Workspace connector.
 	ConnectorType string `json:"connectorType,omitempty"`
 	// CreateEuaSaas: Optional. Whether the END USER AUTHENTICATION connector is
 	// created in SaaS.
@@ -4834,13 +4835,13 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
 	// `bi-directional-audio` * `feedback` * `session-sharing` *
 	// `personalization-memory` * `personalization-suggested-highlights` *
-	// `disable-mobile-app-access` * `disable-agent-sharing` *
-	// `disable-image-generation` * `disable-video-generation` *
-	// `disable-onedrive-upload` * `disable-talk-to-content` *
-	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
-	// * `disable-canvas-workspace` * `disable-skills` *
-	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
-	// `multi-agent-orchestration` * `cross-product-intelligence`
+	// `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` *
+	// `disable-video-generation` * `disable-onedrive-upload` *
+	// `disable-talk-to-content` * `disable-google-drive-upload` *
+	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
+	// `disable-skills` * `enable-end-user-sharing-with-groups` *
+	// `single-agent-orchestration` * `multi-agent-orchestration` *
+	// `cross-product-intelligence`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -5341,6 +5342,8 @@ type GoogleCloudDiscoveryengineV1EngineSearchEngineConfig struct {
 	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - Gemini Enterprise EDU Pro tier for
 	// emerging market.
 	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Gemini Frontline Starter tier.
+	//   "SUBSCRIPTION_TIER_CONSUMPTION_ONLY" - Represents the Gemini Enterprise
+	// Consumption-only tier: $0 subscription billed purely on usage (PAYG).
 	RequiredSubscriptionTier string `json:"requiredSubscriptionTier,omitempty"`
 	// SearchAddOns: The add-on that this search engine enables.
 	//
@@ -5893,6 +5896,8 @@ type GoogleCloudDiscoveryengineV1LicenseConfig struct {
 	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - Gemini Enterprise EDU Pro tier for
 	// emerging market.
 	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Gemini Frontline Starter tier.
+	//   "SUBSCRIPTION_TIER_CONSUMPTION_ONLY" - Represents the Gemini Enterprise
+	// Consumption-only tier: $0 subscription billed purely on usage (PAYG).
 	SubscriptionTier string `json:"subscriptionTier,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoRenew") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6020,6 +6025,9 @@ func (s GoogleCloudDiscoveryengineV1Project) MarshalJSON() ([]byte, error) {
 // also include the update type to indicate the type of update performed on the
 // configurable billing configuration in the UpdateProject operation.
 type GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus struct {
+	// AgentSearchTokenSubscriptionStatuses: Output only. Per-model Agent Search
+	// TPM subscription status.
+	AgentSearchTokenSubscriptionStatuses []*GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatusAgentSearchTokenSubscriptionStatus `json:"agentSearchTokenSubscriptionStatuses,omitempty"`
 	// EffectiveIndexingCoreThreshold: Optional. The currently effective Indexing
 	// Core threshold. This is the threshold against which Indexing Core usage is
 	// compared for overage calculations.
@@ -6057,21 +6065,104 @@ type GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus struct {
 	//   "SCALE_DOWN" - Subscription was scaled down (thresholds decreased).
 	UpdateType string `json:"updateType,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
-	// "EffectiveIndexingCoreThreshold") to unconditionally include in API
+	// "AgentSearchTokenSubscriptionStatuses") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from
 	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EffectiveIndexingCoreThreshold")
-	// to include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "AgentSearchTokenSubscriptionStatuses") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatusAgentSearchTokenS
+// ubscriptionStatus: Per-model Agent Search TPM subscription status. One entry
+// per active `core_subscription.agent_search_token_subscriptions[*]` entry in
+// the customer-provided config; populated by UpdateProject and GetProject. The
+// lifecycle scalars on this message (`start_time`, `terminate_time`,
+// `update_type`, `tpm_threshold_next_update_time`) are per (project,
+// model_version) — siblings of the whole-relationship `start_time` /
+// `terminate_time` / `update_type` on the enclosing ConfigurableBillingStatus,
+// but scoped to this specific Agent Search TPM subscription instead of to the
+// overall customer-configurable- pricing relationship. This per-instance
+// granularity is intentional: the underlying SubV3 storage is per-(project,
+// model_version), so each model has its own activation, termination, and
+// deferred-update clock; surfacing that on the response gives customers the
+// granularity they need to manage per-model commitments independently. QPM /
+// IndexingCore differ — their storage is one row per (project, location), so
+// their lifecycle is represented only by the whole- relationship scalars on
+// ConfigurableBillingStatus.
+type GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatusAgentSearchTokenSubscriptionStatus struct {
+	// EffectiveTpmThreshold: Output only. The currently effective TPM threshold.
+	// Reflects scale-up immediately and scale-down at the next billing cycle,
+	// matching `effective_search_qpm_threshold` semantics.
+	EffectiveTpmThreshold int64 `json:"effectiveTpmThreshold,omitempty,string"`
+	// ModelVersion: Output only. The Gemini model version this status corresponds
+	// to. Matches CoreSubscription.AgentSearchTokenSubscription.model_version (a
+	// stable Gemini model version from the Gemini Enterprise Agent Platform
+	// model-versions registry; see
+	// https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/model-versions#gemini-models).
+	ModelVersion string `json:"modelVersion,omitempty"`
+	// StartTime: Output only. When this (project, model_version) Agent Search TPM
+	// subscription was first activated. Set once on first activation of this model
+	// version and never moved by subsequent threshold updates; on termination +
+	// re-activation a new value is recorded. Does NOT move the whole-relationship
+	// `start_time` on the enclosing ConfigurableBillingStatus, which continues to
+	// represent the first activation of the overall customer-configurable-pricing
+	// relationship.
+	StartTime string `json:"startTime,omitempty"`
+	// TerminateTime: Output only. If set, the scheduled effective time at which
+	// this (project, model_version) Agent Search TPM subscription will terminate.
+	// Populated when the customer removes this entry from
+	// `core_subscription.agent_search_token_subscriptions[*]`. Does NOT move the
+	// whole-relationship `terminate_time` on the enclosing
+	// ConfigurableBillingStatus, which is populated only when the entire
+	// customer-configurable-pricing relationship is being torn down.
+	TerminateTime string `json:"terminateTime,omitempty"`
+	// TpmThresholdNextUpdateTime: Output only. The earliest next update time for
+	// the TPM subscription threshold for this (project, model_version). Populated
+	// only after a successful update.
+	TpmThresholdNextUpdateTime string `json:"tpmThresholdNextUpdateTime,omitempty"`
+	// UpdateType: Output only. The type of the most recent update to this
+	// (project, model_version) subscription, as performed by the most recent
+	// UpdateProject call. `UPDATE_TYPE_UNSPECIFIED` indicates this model_version
+	// was not touched by the most recent UpdateProject (its
+	// `effective_tpm_threshold` reflects an earlier update). The
+	// whole-relationship `update_type` on the enclosing ConfigurableBillingStatus
+	// continues to summarize the direction of the most recent update across all
+	// surfaces in the project (QPM, IndexingCore, and Agent Search TPM together).
+	//
+	// Possible values:
+	//   "UPDATE_TYPE_UNSPECIFIED" - Unspecified update type.
+	//   "CREATE" - Configurable billing was created/enabled.
+	//   "DELETE" - Configurable billing was deleted/disabled.
+	//   "SCALE_UP" - Subscription was scaled up (thresholds increased).
+	//   "SCALE_DOWN" - Subscription was scaled down (thresholds decreased).
+	UpdateType string `json:"updateType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EffectiveTpmThreshold") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EffectiveTpmThreshold") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatusAgentSearchTokenSubscriptionStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatusAgentSearchTokenSubscriptionStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10482,6 +10573,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	//   "GOOGLE_CHAT" - Google Chat connector.
 	//   "GOOGLE_SITES" - Google Sites connector.
 	//   "REMOTE_MCP" - Remote MCP based connector.
+	//   "GOOGLE_WORKSPACE" - Google Workspace connector.
 	ConnectorType string `json:"connectorType,omitempty"`
 	// CreateEuaSaas: Optional. Whether the END USER AUTHENTICATION connector is
 	// created in SaaS.
@@ -12074,13 +12166,13 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
 	// `bi-directional-audio` * `feedback` * `session-sharing` *
 	// `personalization-memory` * `personalization-suggested-highlights` *
-	// `disable-mobile-app-access` * `disable-agent-sharing` *
-	// `disable-image-generation` * `disable-video-generation` *
-	// `disable-onedrive-upload` * `disable-talk-to-content` *
-	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
-	// * `disable-canvas-workspace` * `disable-skills` *
-	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
-	// `multi-agent-orchestration` * `cross-product-intelligence`
+	// `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` *
+	// `disable-video-generation` * `disable-onedrive-upload` *
+	// `disable-talk-to-content` * `disable-google-drive-upload` *
+	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
+	// `disable-skills` * `enable-end-user-sharing-with-groups` *
+	// `single-agent-orchestration` * `multi-agent-orchestration` *
+	// `cross-product-intelligence`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -12646,6 +12738,8 @@ type GoogleCloudDiscoveryengineV1alphaEngineSearchEngineConfig struct {
 	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - Gemini Enterprise EDU Pro tier for
 	// emerging market.
 	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Gemini Frontline Starter tier.
+	//   "SUBSCRIPTION_TIER_CONSUMPTION_ONLY" - Represents the Gemini Enterprise
+	// Consumption-only tier: $0 subscription billed purely on usage (PAYG).
 	RequiredSubscriptionTier string `json:"requiredSubscriptionTier,omitempty"`
 	// SearchAddOns: The add-on that this search engine enables.
 	//
@@ -13784,6 +13878,8 @@ type GoogleCloudDiscoveryengineV1alphaLicenseConfig struct {
 	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - Gemini Enterprise EDU Pro tier for
 	// emerging market.
 	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Gemini Frontline Starter tier.
+	//   "SUBSCRIPTION_TIER_CONSUMPTION_ONLY" - Represents the Gemini Enterprise
+	// Consumption-only tier: $0 subscription billed purely on usage (PAYG).
 	SubscriptionTier string `json:"subscriptionTier,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AlertPolicyResourceConfig")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -14090,6 +14186,9 @@ func (s GoogleCloudDiscoveryengineV1alphaProject) MarshalJSON() ([]byte, error) 
 // indicate the type of update performed on the configurable billing
 // configuration in the UpdateProject operation.
 type GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus struct {
+	// AgentSearchTokenSubscriptionStatuses: Output only. Per-model Agent Search
+	// TPM subscription status.
+	AgentSearchTokenSubscriptionStatuses []*GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatusAgentSearchTokenSubscriptionStatus `json:"agentSearchTokenSubscriptionStatuses,omitempty"`
 	// EffectiveIndexingCoreThreshold: Optional. The currently effective Indexing
 	// Core threshold. This is the threshold against which Indexing Core usage is
 	// compared for overage calculations.
@@ -14127,21 +14226,104 @@ type GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus struct {
 	//   "SCALE_DOWN" - Subscription was scaled down (thresholds decreased).
 	UpdateType string `json:"updateType,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
-	// "EffectiveIndexingCoreThreshold") to unconditionally include in API
+	// "AgentSearchTokenSubscriptionStatuses") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from
 	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EffectiveIndexingCoreThreshold")
-	// to include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "AgentSearchTokenSubscriptionStatuses") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatusAgentSearchT
+// okenSubscriptionStatus: Per-model Agent Search TPM subscription status. One
+// entry per active `core_subscription.agent_search_token_subscriptions[*]`
+// entry in the customer-provided config; populated by UpdateProject and
+// GetProject. The lifecycle scalars on this message (`start_time`,
+// `terminate_time`, `update_type`, `tpm_threshold_next_update_time`) are per
+// (project, model_version) — siblings of the whole-relationship `start_time`
+// / `terminate_time` / `update_type` on the enclosing
+// ConfigurableBillingStatus, but scoped to this specific Agent Search TPM
+// subscription instead of to the overall customer-configurable- pricing
+// relationship. This per-instance granularity is intentional: the underlying
+// SubV3 storage is per-(project, model_version), so each model has its own
+// activation, termination, and deferred-update clock; surfacing that on the
+// response gives customers the granularity they need to manage per-model
+// commitments independently. QPM / IndexingCore differ — their storage is
+// one row per (project, location), so their lifecycle is represented only by
+// the whole- relationship scalars on ConfigurableBillingStatus.
+type GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatusAgentSearchTokenSubscriptionStatus struct {
+	// EffectiveTpmThreshold: Output only. The currently effective TPM threshold.
+	// Reflects scale-up immediately and scale-down at the next billing cycle,
+	// matching `effective_search_qpm_threshold` semantics.
+	EffectiveTpmThreshold int64 `json:"effectiveTpmThreshold,omitempty,string"`
+	// ModelVersion: Output only. The Gemini model version this status corresponds
+	// to. Matches CoreSubscription.AgentSearchTokenSubscription.model_version (a
+	// stable Gemini model version from the Gemini Enterprise Agent Platform
+	// model-versions registry; see
+	// https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/model-versions#gemini-models).
+	ModelVersion string `json:"modelVersion,omitempty"`
+	// StartTime: Output only. When this (project, model_version) Agent Search TPM
+	// subscription was first activated. Set once on first activation of this model
+	// version and never moved by subsequent threshold updates; on termination +
+	// re-activation a new value is recorded. Does NOT move the whole-relationship
+	// `start_time` on the enclosing ConfigurableBillingStatus, which continues to
+	// represent the first activation of the overall customer-configurable-pricing
+	// relationship.
+	StartTime string `json:"startTime,omitempty"`
+	// TerminateTime: Output only. If set, the scheduled effective time at which
+	// this (project, model_version) Agent Search TPM subscription will terminate.
+	// Populated when the customer removes this entry from
+	// `core_subscription.agent_search_token_subscriptions[*]`. Does NOT move the
+	// whole-relationship `terminate_time` on the enclosing
+	// ConfigurableBillingStatus, which is populated only when the entire
+	// customer-configurable-pricing relationship is being torn down.
+	TerminateTime string `json:"terminateTime,omitempty"`
+	// TpmThresholdNextUpdateTime: Output only. The earliest next update time for
+	// the TPM subscription threshold for this (project, model_version). Populated
+	// only after a successful update.
+	TpmThresholdNextUpdateTime string `json:"tpmThresholdNextUpdateTime,omitempty"`
+	// UpdateType: Output only. The type of the most recent update to this
+	// (project, model_version) subscription, as performed by the most recent
+	// UpdateProject call. `UPDATE_TYPE_UNSPECIFIED` indicates this model_version
+	// was not touched by the most recent UpdateProject (its
+	// `effective_tpm_threshold` reflects an earlier update). The
+	// whole-relationship `update_type` on the enclosing ConfigurableBillingStatus
+	// continues to summarize the direction of the most recent update across all
+	// surfaces in the project (QPM, IndexingCore, and Agent Search TPM together).
+	//
+	// Possible values:
+	//   "UPDATE_TYPE_UNSPECIFIED" - Unspecified update type.
+	//   "CREATE" - Configurable billing was created/enabled.
+	//   "DELETE" - Configurable billing was deleted/disabled.
+	//   "SCALE_UP" - Subscription was scaled up (thresholds increased).
+	//   "SCALE_DOWN" - Subscription was scaled down (thresholds decreased).
+	UpdateType string `json:"updateType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EffectiveTpmThreshold") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EffectiveTpmThreshold") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatusAgentSearchTokenSubscriptionStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatusAgentSearchTokenSubscriptionStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -24344,13 +24526,13 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
 	// `bi-directional-audio` * `feedback` * `session-sharing` *
 	// `personalization-memory` * `personalization-suggested-highlights` *
-	// `disable-mobile-app-access` * `disable-agent-sharing` *
-	// `disable-image-generation` * `disable-video-generation` *
-	// `disable-onedrive-upload` * `disable-talk-to-content` *
-	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
-	// * `disable-canvas-workspace` * `disable-skills` *
-	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
-	// `multi-agent-orchestration` * `cross-product-intelligence`
+	// `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` *
+	// `disable-video-generation` * `disable-onedrive-upload` *
+	// `disable-talk-to-content` * `disable-google-drive-upload` *
+	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
+	// `disable-skills` * `enable-end-user-sharing-with-groups` *
+	// `single-agent-orchestration` * `multi-agent-orchestration` *
+	// `cross-product-intelligence`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -24854,6 +25036,8 @@ type GoogleCloudDiscoveryengineV1betaEngineSearchEngineConfig struct {
 	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - Gemini Enterprise EDU Pro tier for
 	// emerging market.
 	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Gemini Frontline Starter tier.
+	//   "SUBSCRIPTION_TIER_CONSUMPTION_ONLY" - Represents the Gemini Enterprise
+	// Consumption-only tier: $0 subscription billed purely on usage (PAYG).
 	RequiredSubscriptionTier string `json:"requiredSubscriptionTier,omitempty"`
 	// SearchAddOns: The add-on that this search engine enables.
 	//
@@ -26447,6 +26631,8 @@ type GoogleCloudDiscoveryengineV1betaLicenseConfig struct {
 	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - Gemini Enterprise EDU Pro tier for
 	// emerging market.
 	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Gemini Frontline Starter tier.
+	//   "SUBSCRIPTION_TIER_CONSUMPTION_ONLY" - Represents the Gemini Enterprise
+	// Consumption-only tier: $0 subscription billed purely on usage (PAYG).
 	SubscriptionTier string `json:"subscriptionTier,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -27498,6 +27684,9 @@ func (s GoogleCloudDiscoveryengineV1betaProject) MarshalJSON() ([]byte, error) {
 // also include the update type to indicate the type of update performed on the
 // configurable billing configuration in the UpdateProject operation.
 type GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus struct {
+	// AgentSearchTokenSubscriptionStatuses: Output only. Per-model Agent Search
+	// TPM subscription status.
+	AgentSearchTokenSubscriptionStatuses []*GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatusAgentSearchTokenSubscriptionStatus `json:"agentSearchTokenSubscriptionStatuses,omitempty"`
 	// EffectiveIndexingCoreThreshold: Optional. The currently effective Indexing
 	// Core threshold. This is the threshold against which Indexing Core usage is
 	// compared for overage calculations.
@@ -27535,21 +27724,104 @@ type GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus struct {
 	//   "SCALE_DOWN" - Subscription was scaled down (thresholds decreased).
 	UpdateType string `json:"updateType,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
-	// "EffectiveIndexingCoreThreshold") to unconditionally include in API
+	// "AgentSearchTokenSubscriptionStatuses") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from
 	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EffectiveIndexingCoreThreshold")
-	// to include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "AgentSearchTokenSubscriptionStatuses") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatusAgentSearchTo
+// kenSubscriptionStatus: Per-model Agent Search TPM subscription status. One
+// entry per active `core_subscription.agent_search_token_subscriptions[*]`
+// entry in the customer-provided config; populated by UpdateProject and
+// GetProject. The lifecycle scalars on this message (`start_time`,
+// `terminate_time`, `update_type`, `tpm_threshold_next_update_time`) are per
+// (project, model_version) — siblings of the whole-relationship `start_time`
+// / `terminate_time` / `update_type` on the enclosing
+// ConfigurableBillingStatus, but scoped to this specific Agent Search TPM
+// subscription instead of to the overall customer-configurable- pricing
+// relationship. This per-instance granularity is intentional: the underlying
+// SubV3 storage is per-(project, model_version), so each model has its own
+// activation, termination, and deferred-update clock; surfacing that on the
+// response gives customers the granularity they need to manage per-model
+// commitments independently. QPM / IndexingCore differ — their storage is
+// one row per (project, location), so their lifecycle is represented only by
+// the whole- relationship scalars on ConfigurableBillingStatus.
+type GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatusAgentSearchTokenSubscriptionStatus struct {
+	// EffectiveTpmThreshold: Output only. The currently effective TPM threshold.
+	// Reflects scale-up immediately and scale-down at the next billing cycle,
+	// matching `effective_search_qpm_threshold` semantics.
+	EffectiveTpmThreshold int64 `json:"effectiveTpmThreshold,omitempty,string"`
+	// ModelVersion: Output only. The Gemini model version this status corresponds
+	// to. Matches CoreSubscription.AgentSearchTokenSubscription.model_version (a
+	// stable Gemini model version from the Gemini Enterprise Agent Platform
+	// model-versions registry; see
+	// https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/model-versions#gemini-models).
+	ModelVersion string `json:"modelVersion,omitempty"`
+	// StartTime: Output only. When this (project, model_version) Agent Search TPM
+	// subscription was first activated. Set once on first activation of this model
+	// version and never moved by subsequent threshold updates; on termination +
+	// re-activation a new value is recorded. Does NOT move the whole-relationship
+	// `start_time` on the enclosing ConfigurableBillingStatus, which continues to
+	// represent the first activation of the overall customer-configurable-pricing
+	// relationship.
+	StartTime string `json:"startTime,omitempty"`
+	// TerminateTime: Output only. If set, the scheduled effective time at which
+	// this (project, model_version) Agent Search TPM subscription will terminate.
+	// Populated when the customer removes this entry from
+	// `core_subscription.agent_search_token_subscriptions[*]`. Does NOT move the
+	// whole-relationship `terminate_time` on the enclosing
+	// ConfigurableBillingStatus, which is populated only when the entire
+	// customer-configurable-pricing relationship is being torn down.
+	TerminateTime string `json:"terminateTime,omitempty"`
+	// TpmThresholdNextUpdateTime: Output only. The earliest next update time for
+	// the TPM subscription threshold for this (project, model_version). Populated
+	// only after a successful update.
+	TpmThresholdNextUpdateTime string `json:"tpmThresholdNextUpdateTime,omitempty"`
+	// UpdateType: Output only. The type of the most recent update to this
+	// (project, model_version) subscription, as performed by the most recent
+	// UpdateProject call. `UPDATE_TYPE_UNSPECIFIED` indicates this model_version
+	// was not touched by the most recent UpdateProject (its
+	// `effective_tpm_threshold` reflects an earlier update). The
+	// whole-relationship `update_type` on the enclosing ConfigurableBillingStatus
+	// continues to summarize the direction of the most recent update across all
+	// surfaces in the project (QPM, IndexingCore, and Agent Search TPM together).
+	//
+	// Possible values:
+	//   "UPDATE_TYPE_UNSPECIFIED" - Unspecified update type.
+	//   "CREATE" - Configurable billing was created/enabled.
+	//   "DELETE" - Configurable billing was deleted/disabled.
+	//   "SCALE_UP" - Subscription was scaled up (thresholds increased).
+	//   "SCALE_DOWN" - Subscription was scaled down (thresholds decreased).
+	UpdateType string `json:"updateType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EffectiveTpmThreshold") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EffectiveTpmThreshold") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatusAgentSearchTokenSubscriptionStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatusAgentSearchTokenSubscriptionStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

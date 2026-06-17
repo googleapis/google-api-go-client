@@ -2753,7 +2753,7 @@
       }
     }
   },
-  "revision": "20260519",
+  "revision": "20260602",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -4838,12 +4838,20 @@
           "description": "The name of the image to use for this node.",
           "type": "string"
         },
-        "imageFamily": {
-          "description": "The name of the image family to use for this node.",
-          "type": "string"
-        },
         "imageProject": {
           "description": "The project containing the image to use for this node.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CustomImageInfo": {
+      "description": "Contains the custom image info for a node pool.",
+      "id": "CustomImageInfo",
+      "properties": {
+        "upgradeMessage": {
+          "description": "Output only. The human-readable upgrade message for the custom image.",
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -7800,6 +7808,11 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "customImageInfo": {
+          "$ref": "CustomImageInfo",
+          "description": "Output only. Upgrade info for the node pool specific to the usage of custom images.",
+          "readOnly": true
         },
         "endOfExtendedSupportTimestamp": {
           "description": "The node pool's current minor version's end of extended support timestamp.",

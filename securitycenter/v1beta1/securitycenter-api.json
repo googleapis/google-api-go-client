@@ -869,7 +869,7 @@
       }
     }
   },
-  "revision": "20260526",
+  "revision": "20260615",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Access": {
@@ -2357,6 +2357,10 @@
           "type": "string"
         },
         "networkIngressFirewallPolicy": {
+          "type": "string"
+        },
+        "networkPathInsightsGenerationTime": {
+          "format": "google-datetime",
           "type": "string"
         },
         "privateIpAddress": {
@@ -5230,6 +5234,10 @@
           "type": "string"
         },
         "networkIngressFirewallPolicy": {
+          "type": "string"
+        },
+        "networkPathInsightsGenerationTime": {
+          "format": "google-datetime",
           "type": "string"
         },
         "privateIpAddress": {

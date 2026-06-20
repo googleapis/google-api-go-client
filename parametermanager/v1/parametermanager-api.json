@@ -250,16 +250,6 @@
       "description": "Regional Endpoint",
       "endpointUrl": "https://parametermanager.eu.rep.googleapis.com/",
       "location": "eu"
-    },
-    {
-      "description": "Regional Endpoint",
-      "endpointUrl": "https://parametermanager.ca.rep.googleapis.com/",
-      "location": "ca"
-    },
-    {
-      "description": "Regional Endpoint",
-      "endpointUrl": "https://parametermanager.in.rep.googleapis.com/",
-      "location": "in"
     }
   ],
   "fullyEncodeReservedExpansion": true,
@@ -841,7 +831,7 @@
       }
     }
   },
-  "revision": "20260422",
+  "revision": "20260610",
   "rootUrl": "https://parametermanager.googleapis.com/",
   "schemas": {
     "Empty": {

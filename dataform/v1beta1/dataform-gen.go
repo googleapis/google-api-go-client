@@ -3631,6 +3631,32 @@ func (s Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TableUpdateTrigger: Represents a table update trigger configuration.
+type TableUpdateTrigger struct {
+	// Table: The target table to trigger the workflow.
+	Table *Target `json:"table,omitempty"`
+	// TriggerUpdateTime: Output only. The modification time of this table that
+	// resulted in an invocation of the workflow. This would be updated by the
+	// triggering service after a successful workflow invocation.
+	TriggerUpdateTime string `json:"triggerUpdateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Table") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Table") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TableUpdateTrigger) MarshalJSON() ([]byte, error) {
+	type NoMethod TableUpdateTrigger
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Target: Represents an action identifier. If the action writes output, the
 // output will be written to the referenced database object.
 type Target struct {
@@ -3799,6 +3825,34 @@ func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TriggerEvaluationRecord: A record of an attempt to evaluate trigger
+// conditions.
+type TriggerEvaluationRecord struct {
+	// EvaluationTime: Output only. The timestamp of this trigger evaluation
+	// attempt.
+	EvaluationTime string `json:"evaluationTime,omitempty"`
+	// Status: Output only. The status of the trigger evaluation. Success is
+	// indicated by a code of 0 (OK). Message will only be present if the status
+	// code is non-zero.
+	Status *Status `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EvaluationTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EvaluationTime") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TriggerEvaluationRecord) MarshalJSON() ([]byte, error) {
+	type NoMethod TriggerEvaluationRecord
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // UncommittedFileChange: Represents the Git state of a file with uncommitted
 // changes.
 type UncommittedFileChange struct {
@@ -3868,6 +3922,10 @@ type WorkflowConfig struct {
 	// UpdateTime: Output only. The timestamp of when the WorkflowConfig was last
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
+	// WorkflowTriggerConfig: Optional. Optional trigger configuration for this
+	// workflow. If present, the workflow will be triggered based on the specified
+	// triggers.
+	WorkflowTriggerConfig *WorkflowTriggerConfig `json:"workflowTriggerConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -4009,6 +4067,76 @@ type WorkflowInvocationAction struct {
 
 func (s WorkflowInvocationAction) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkflowInvocationAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkflowTrigger: The trigger definition to invoke a workflow.
+type WorkflowTrigger struct {
+	// TableUpdateTrigger: The table update trigger configuration.
+	TableUpdateTrigger *TableUpdateTrigger `json:"tableUpdateTrigger,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TableUpdateTrigger") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TableUpdateTrigger") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkflowTrigger) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkflowTrigger
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkflowTriggerConfig: Represents a trigger configuration for a workflow.
+type WorkflowTriggerConfig struct {
+	// Condition: Optional. The condition to use when triggering the workflow.
+	//
+	// Possible values:
+	//   "CONDITION_UNSPECIFIED" - If CONDITION_UNSPECIFIED, the default value is
+	// ANY.
+	//   "ALL" - If ALL, all the trigger config conditions must be met before a
+	// workflow is invoked.
+	//   "ANY" - If ANY, at least one of the trigger config conditions must be met
+	// before a workflow is invoked.
+	Condition string `json:"condition,omitempty"`
+	// LastSuccessfulEvaluationTime: Output only. The timestamp of the last
+	// successful trigger evaluation.
+	LastSuccessfulEvaluationTime string `json:"lastSuccessfulEvaluationTime,omitempty"`
+	// MaxWaitDuration: Optional. The effective maximum wait time duration for the
+	// trigger condition to be met. If not specified, the workflow won't be
+	// triggered until conditions are met.
+	MaxWaitDuration string `json:"maxWaitDuration,omitempty"`
+	// MinExecutionDuration: Optional. Minimum duration between two consecutive
+	// executions. If not specified, the workflow will be executed every time
+	// trigger conditions are met and no ongoing workflow execution.
+	MinExecutionDuration string `json:"minExecutionDuration,omitempty"`
+	// RecentTriggerEvaluationRecords: Output only. Records of the 10 most recent
+	// trigger evaluations, ordered in descending order of `evaluation_time`.
+	// Updated whenever the service evaluates the trigger conditions (via polling
+	// or upon receiving a push event).
+	RecentTriggerEvaluationRecords []*TriggerEvaluationRecord `json:"recentTriggerEvaluationRecords,omitempty"`
+	// WorkflowTriggers: Required. The trigger definitions to invoke a workflow.
+	WorkflowTriggers []*WorkflowTrigger `json:"workflowTriggers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Condition") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Condition") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkflowTriggerConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkflowTriggerConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

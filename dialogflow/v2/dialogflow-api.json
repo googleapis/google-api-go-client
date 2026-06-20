@@ -8780,7 +8780,7 @@
       }
     }
   },
-  "revision": "20260604",
+  "revision": "20260616",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AdvancedSettings": {
@@ -17095,8 +17095,13 @@
     "GoogleCloudDialogflowV2KnowledgeAssistAnswerAdditionalSuggestedQueryResult": {
       "id": "GoogleCloudDialogflowV2KnowledgeAssistAnswerAdditionalSuggestedQueryResult",
       "properties": {
+        "answerRecord": {
+          "readOnly": true,
+          "type": "string"
+        },
         "suggestedQuery": {
-          "$ref": "GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuery"
+          "$ref": "GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuery",
+          "readOnly": true
         }
       },
       "type": "object"
@@ -17896,6 +17901,15 @@
             "OUTPUT_AUDIO_ENCODING_OGG_OPUS",
             "OUTPUT_AUDIO_ENCODING_MULAW",
             "OUTPUT_AUDIO_ENCODING_ALAW"
+          ],
+          "enumDeprecated": [
+            false,
+            false,
+            true,
+            false,
+            false,
+            false,
+            false
           ],
           "enumDescriptions": [
             "",
@@ -19717,6 +19731,15 @@
             "OUTPUT_AUDIO_ENCODING_OGG_OPUS",
             "OUTPUT_AUDIO_ENCODING_MULAW",
             "OUTPUT_AUDIO_ENCODING_ALAW"
+          ],
+          "enumDeprecated": [
+            false,
+            false,
+            true,
+            false,
+            false,
+            false,
+            false
           ],
           "enumDescriptions": [
             "",
@@ -22197,8 +22220,13 @@
     "GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerAdditionalSuggestedQueryResult": {
       "id": "GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerAdditionalSuggestedQueryResult",
       "properties": {
+        "answerRecord": {
+          "readOnly": true,
+          "type": "string"
+        },
         "suggestedQuery": {
-          "$ref": "GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuery"
+          "$ref": "GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuery",
+          "readOnly": true
         }
       },
       "type": "object"

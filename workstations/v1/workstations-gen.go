@@ -728,6 +728,9 @@ type GceHyperdiskBalancedHighAvailability struct {
 	// disk from the archival snapshot. A value of "0s" indicates that the disk
 	// will never be archived.
 	ArchiveTimeout string `json:"archiveTimeout,omitempty"`
+	// MaxSizeGb: Optional. Maximum size in GB to which this persistent directory
+	// can be resized. Defaults to unlimited if not set.
+	MaxSizeGb int64 `json:"maxSizeGb,omitempty"`
 	// ReclaimPolicy: Optional. Whether the persistent disk should be deleted when
 	// the workstation is deleted. Valid values are `DELETE` and `RETAIN`. Defaults
 	// to `DELETE`.
@@ -983,6 +986,9 @@ type GceRegionalPersistentDisk struct {
 	// with. The workstation image must support this file system type. Must be
 	// empty if source_snapshot is set. Defaults to "ext4".
 	FsType string `json:"fsType,omitempty"`
+	// MaxSizeGb: Optional. Maximum size in GB to which this persistent directory
+	// can be resized. Defaults to unlimited if not set.
+	MaxSizeGb int64 `json:"maxSizeGb,omitempty"`
 	// ReclaimPolicy: Optional. Whether the persistent disk should be deleted when
 	// the workstation is deleted. Valid values are `DELETE` and `RETAIN`. Defaults
 	// to `DELETE`.
@@ -1916,6 +1922,9 @@ type Workstation struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. Full name of this workstation.
 	Name string `json:"name,omitempty"`
+	// PersistentDirectories: Optional. Directories to persist across workstation
+	// sessions.
+	PersistentDirectories []*WorkstationPersistentDirectory `json:"persistentDirectories,omitempty"`
 	// Reconciling: Output only. Indicates whether this workstation is currently
 	// being updated to match its intended state.
 	Reconciling bool `json:"reconciling,omitempty"`
@@ -2226,6 +2235,33 @@ type WorkstationConfig struct {
 
 func (s WorkstationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkstationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkstationPersistentDirectory: A directory to persist across workstation
+// sessions. Updates to this field will only take effect on this workstation
+// after it is restarted.
+type WorkstationPersistentDirectory struct {
+	// MountPath: Optional. The mount path of the persistent directory.
+	MountPath string `json:"mountPath,omitempty"`
+	// SizeGb: Optional. Size of the persistent directory in GB. If specified in an
+	// update request, this is the desired size of the directory.
+	SizeGb int64 `json:"sizeGb,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MountPath") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MountPath") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkstationPersistentDirectory) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkstationPersistentDirectory
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

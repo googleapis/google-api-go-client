@@ -28609,22 +28609,23 @@ func (s InstanceGroupManagerInstanceFlexibilityPolicyInstanceSelection) MarshalJ
 }
 
 type InstanceGroupManagerInstanceLifecyclePolicy struct {
-	// DefaultActionOnFailure: The action that a MIG performs on a failed or an
-	// unhealthy VM.
-	// A VM is marked as unhealthy when the application running on that
-	// VM fails a health check.
+	// DefaultActionOnFailure: The action that a MIG performs on a failed VM. If
+	// the value of the
+	// onFailedHealthCheck field is `DEFAULT_ACTION`, then the same action
+	// also
+	// applies to the VMs on which your application fails a health check.
 	// Valid values are
 	//
-	//    - REPAIR (default): MIG automatically repairs a failed or
-	//    an unhealthy VM by recreating it. For more information, see About
+	//    - REPAIR (default): MIG automatically repairs a failed VM
+	//    by recreating it. For more information, see About
 	//    repairing VMs in a MIG.
-	//    - DO_NOTHING: MIG does not repair a failed or an unhealthy
-	//    VM.
+	//    - DO_NOTHING: MIG does not repair a failed VM.
 	//
 	// Possible values:
-	//   "DO_NOTHING" - MIG does not repair a failed or an unhealthy VM.
-	//   "REPAIR" - (Default) MIG automatically repairs a failed or an unhealthy
-	// VM by recreating it. For more information, see About
+	//   "DO_NOTHING" - MIG does not repair a failed VM.
+	//   "REPAIR" - (default): MIG automatically repairs a failed VM by recreating
+	// it.
+	// For more information, see About
 	// repairing VMs in a MIG.
 	DefaultActionOnFailure string `json:"defaultActionOnFailure,omitempty"`
 	// ForceUpdateOnRepair: A bit indicating whether to forcefully apply the
@@ -57265,6 +57266,9 @@ func (s ReservationAggregatedListWarningData) MarshalJSON() ([]byte, error) {
 
 // ReservationBlock: Represents a reservation block resource.
 type ReservationBlock struct {
+	// BlockHealthInfo: Output only. [Output Only] Health information for the
+	// reservation block.
+	BlockHealthInfo *ReservationBlockHealthInfo `json:"blockHealthInfo,omitempty"`
 	// Count: Output only. [Output Only] The number of resources that are allocated
 	// in this
 	// reservation block.
@@ -57272,9 +57276,6 @@ type ReservationBlock struct {
 	// CreationTimestamp: Output only. [Output Only] Creation timestamp inRFC3339
 	// text format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
-	// HealthInfo: Output only. [Output Only] Health information for the
-	// reservation block.
-	HealthInfo *ReservationBlockHealthInfo `json:"healthInfo,omitempty"`
 	// Id: Output only. [Output Only] The unique identifier for the resource. This
 	// identifier is
 	// defined by the server.
@@ -57329,15 +57330,15 @@ type ReservationBlock struct {
 	// Zone: Output only. [Output Only] Zone in which the reservation block
 	// resides.
 	Zone string `json:"zone,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "BlockHealthInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Count") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BlockHealthInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -58237,9 +58238,6 @@ type ReservationSubBlock struct {
 	// CreationTimestamp: Output only. [Output Only] Creation timestamp inRFC3339
 	// text format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
-	// HealthInfo: Output only. [Output Only] Health information for the
-	// reservation subBlock.
-	HealthInfo *ReservationSubBlockHealthInfo `json:"healthInfo,omitempty"`
 	// Id: Output only. [Output Only] The unique identifier for the resource. This
 	// identifier is
 	// defined by the server.
@@ -58281,6 +58279,9 @@ type ReservationSubBlock struct {
 	//   "INVALID"
 	//   "READY" - Reservation subBlock has allocated all its resources.
 	Status string `json:"status,omitempty"`
+	// SubBlockHealthInfo: Output only. [Output Only] Health information for the
+	// reservation subBlock.
+	SubBlockHealthInfo *ReservationSubBlockHealthInfo `json:"subBlockHealthInfo,omitempty"`
 	// Zone: Output only. [Output Only] Zone in which the reservation subBlock
 	// resides.
 	Zone string `json:"zone,omitempty"`
@@ -63010,6 +63011,13 @@ type RouterNat struct {
 	// must be valid static external IPs that have been assigned to the NAT.
 	// These IPs should be used for updating/patching a NAT only.
 	DrainNatIps []string `json:"drainNatIps,omitempty"`
+	// EffectiveTcpTimeWaitTimeoutSec: Output only. Effective timeout (in seconds)
+	// for TCP connections that are in TIME_WAIT
+	// state. This value is equal to tcp_time_wait_timeout_sec.
+	// If tcp_time_wait_timeout_sec isn't set, the effective timeout is 30s
+	// or
+	// 120s. The field is output only.
+	EffectiveTcpTimeWaitTimeoutSec int64 `json:"effectiveTcpTimeWaitTimeoutSec,omitempty"`
 	// EnableDynamicPortAllocation: Enable Dynamic Port Allocation.
 	//
 	//
@@ -65623,19 +65631,49 @@ func (s SecurityPolicyAssociation) MarshalJSON() ([]byte, error) {
 
 type SecurityPolicyDdosProtectionConfig struct {
 	// Possible values:
+	//   "DDOS_ADAPTIVE_PROTECTION_UNSPECIFIED"
+	//   "DISABLED"
+	//   "ENABLED"
+	//   "PREVIEW"
+	//   "UNSPECIFIED_ADAPTIVE_PROTECTION"
+	DdosAdaptiveProtection string `json:"ddosAdaptiveProtection,omitempty"`
+	// DdosImpactedBaselineThreshold: DDoS Protection for Network Load Balancers
+	// (and VMs with public IPs)
+	// builds DDoS mitigations that minimize collateral damage. It quantifies
+	// this as the fraction of a non-abuse baseline that's
+	// inadvertently
+	// blocked.
+	//
+	// Rules whose collateral damage exceeds ddosImpactedBaselineThreshold will
+	// not be deployed. Using a lower value will prioritize keeping
+	// collateral
+	// damage low, possibly at the cost of its effectiveness in rate limiting
+	// some or all of the attack. It should typically be unset, so Advanced
+	// DDoS
+	// (and Adaptive Protection) uses the best mitigation it can find. Setting
+	// the threshold is advised if there are logs for false positive
+	// detections
+	// with high collateral damage, and will cause Advanced DDoS to attempt to
+	// find a less aggressive rule that satisfies the constraint. If a
+	// suitable
+	// rule cannot be found, the system falls back to either no mitigation
+	// for
+	// smaller attacks or broader network throttles for larger ones.
+	DdosImpactedBaselineThreshold float64 `json:"ddosImpactedBaselineThreshold,omitempty"`
+	// Possible values:
 	//   "ADVANCED"
 	//   "ADVANCED_PREVIEW"
 	//   "STANDARD"
 	DdosProtection string `json:"ddosProtection,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DdosProtection") to
+	// ForceSendFields is a list of field names (e.g. "DdosAdaptiveProtection") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DdosProtection") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DdosAdaptiveProtection") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -65643,6 +65681,20 @@ type SecurityPolicyDdosProtectionConfig struct {
 func (s SecurityPolicyDdosProtectionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SecurityPolicyDdosProtectionConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *SecurityPolicyDdosProtectionConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod SecurityPolicyDdosProtectionConfig
+	var s1 struct {
+		DdosImpactedBaselineThreshold gensupport.JSONFloat64 `json:"ddosImpactedBaselineThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DdosImpactedBaselineThreshold = float64(s1.DdosImpactedBaselineThreshold)
+	return nil
 }
 
 type SecurityPolicyList struct {
@@ -66958,6 +67010,10 @@ type ServiceAttachment struct {
 	// which
 	// cannot be a dash.
 	Name string `json:"name,omitempty"`
+	// NatIpsPerEndpoint: The number of NAT IP addresses to be allocated per
+	// connected endpoint.
+	// If not specified, the default value is 1.
+	NatIpsPerEndpoint int64 `json:"natIpsPerEndpoint,omitempty"`
 	// NatSubnets: An array of URLs where each entry is the URL of a subnet
 	// provided
 	// by the service producer to use for NAT in this service attachment.

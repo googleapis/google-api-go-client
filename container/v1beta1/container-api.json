@@ -2837,7 +2837,7 @@
       }
     }
   },
-  "revision": "20260602",
+  "revision": "20260609",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -9200,13 +9200,15 @@
             "UNSPECIFIED",
             "NO_RESERVATION",
             "ANY_RESERVATION",
-            "SPECIFIC_RESERVATION"
+            "SPECIFIC_RESERVATION",
+            "ANY_RESERVATION_THEN_FAIL"
           ],
           "enumDescriptions": [
             "Default value. This should not be used.",
             "Do not consume from any reserved capacity.",
             "Consume any reservation available.",
-            "Must consume from a specific reservation. Must specify key value fields for specifying the reservations."
+            "Must consume from a specific reservation. Must specify key value fields for specifying the reservations.",
+            "Consume any reservation available. If no reservation is available, fail the node creation."
           ],
           "type": "string"
         },
@@ -10606,6 +10608,10 @@
         "machineType": {
           "description": "Optional. The desired machine type for nodes in the node pool. Initiates an upgrade operation that migrates the nodes in the node pool to the specified machine type.",
           "type": "string"
+        },
+        "maintenancePolicy": {
+          "$ref": "NodePoolMaintenancePolicy",
+          "description": "Optional. Specifies the maintenance policy for the node pool, including maintenance exclusion options."
         },
         "maxRunDuration": {
           "description": "The maximum duration for the nodes to exist. If unspecified, the nodes can exist indefinitely.",

@@ -996,7 +996,7 @@
       }
     }
   },
-  "revision": "20260611",
+  "revision": "20260618",
   "rootUrl": "https://health.googleapis.com/",
   "schemas": {
     "ActiveEnergyBurned": {
@@ -5163,7 +5163,7 @@
           "type": "boolean"
         },
         "processed": {
-          "description": "Output only. Sleep and sleep stages algorithms finished processing.",
+          "description": "Output only. Sleep and sleep stages algorithms finished processing. A `true` value indicates whether all data processing for the session is complete. A `false` value means sleep period is detected but sleep stages is still processing.",
           "readOnly": true,
           "type": "boolean"
         },

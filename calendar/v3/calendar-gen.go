@@ -3395,6 +3395,10 @@ func (c *CalendarListListCall) MaxResults(maxResults int64) *CalendarListListCal
 //	"owner" - The user can read and modify events and access control lists.
 //	"reader" - The user can read events that are not private.
 //	"writer" - The user can read and modify events.
+//	"writerWithoutPrivateAccess" - The user can read and modify events that
+//
+// aren't private. The user can read free/busy information about private
+// events. The user can't modify private events.
 func (c *CalendarListListCall) MinAccessRole(minAccessRole string) *CalendarListListCall {
 	c.urlParams_.Set("minAccessRole", minAccessRole)
 	return c
@@ -3815,6 +3819,10 @@ func (c *CalendarListWatchCall) MaxResults(maxResults int64) *CalendarListWatchC
 //	"owner" - The user can read and modify events and access control lists.
 //	"reader" - The user can read events that are not private.
 //	"writer" - The user can read and modify events.
+//	"writerWithoutPrivateAccess" - The user can read and modify events that
+//
+// aren't private. The user can read free/busy information about private
+// events. The user can't modify private events.
 func (c *CalendarListWatchCall) MinAccessRole(minAccessRole string) *CalendarListWatchCall {
 	c.urlParams_.Set("minAccessRole", minAccessRole)
 	return c

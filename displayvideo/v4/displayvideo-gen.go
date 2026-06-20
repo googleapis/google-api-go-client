@@ -954,9 +954,8 @@ type AdGroup struct {
 	//   "AD_GROUP_FORMAT_MASTHEAD" - Masthead Ad that is surfaced on the top slot
 	// on the YouTube homepage.
 	//   "AD_GROUP_FORMAT_DEMAND_GEN" - Demand Gen ads. Retrieval and management of
-	// Demand Gen resources is currently in beta. This field will begin rolling out
-	// to all partners on *June 10, 2026* and be available to all partners on *June
-	// 24, 2026*.
+	// Demand Gen resources is currently rolling out. This field will be available
+	// to all partners by *June 24, 2026*.
 	AdGroupFormat string `json:"adGroupFormat,omitempty"`
 	// AdGroupId: Output only. The unique ID of the ad group. Assigned by the
 	// system.
@@ -1050,33 +1049,32 @@ type AdGroupAd struct {
 	BumperAd *BumperAd `json:"bumperAd,omitempty"`
 	// DcmTrackingInfo: Optional. The DCM tracking ad info. Only valid for Demand
 	// Gen ads. To remove the DCM tracking ad info, please leave this field empty.
-	// Retrieval and management of Demand Gen resources is currently in beta. This
-	// field will begin rolling out to all partners on *June 10, 2026* and be
-	// available to all partners on *June 24, 2026*.
+	// Retrieval and management of Demand Gen resources is currently rolling out.
+	// This field will be available to all partners by *June 24, 2026*.
 	DcmTrackingInfo *DcmTrackingInfo `json:"dcmTrackingInfo,omitempty"`
 	// DemandGenCarouselAd: Details of a Demand Gen carousel ad
 	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
 	// -NC#CarouselAd). Retrieval and management of Demand Gen resources is
-	// currently in beta. This field will begin rolling out to all partners on
-	// *June 10, 2026* and be available to all partners on *June 24, 2026*.
+	// currently rolling out. This field will be available to all partners by *June
+	// 24, 2026*.
 	DemandGenCarouselAd *DemandGenCarouselAd `json:"demandGenCarouselAd,omitempty"`
 	// DemandGenImageAd: Details of a Demand Gen image ad
 	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
 	// -NC#ImageAd). Retrieval and management of Demand Gen resources is currently
-	// in beta. This field will begin rolling out to all partners on *June 10,
-	// 2026* and be available to all partners on *June 24, 2026*.
+	// rolling out. This field will be available to all partners by *June 24,
+	// 2026*.
 	DemandGenImageAd *DemandGenImageAd `json:"demandGenImageAd,omitempty"`
 	// DemandGenProductAd: Details of a Demand Gen product ad
 	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
 	// -NC#Product-onlyAd). Retrieval and management of Demand Gen resources is
-	// currently in beta. This field will begin rolling out to all partners on
-	// *June 10, 2026* and be available to all partners on *June 24, 2026*.
+	// currently rolling out. This field will be available to all partners by *June
+	// 24, 2026*.
 	DemandGenProductAd *DemandGenProductAd `json:"demandGenProductAd,omitempty"`
 	// DemandGenVideoAd: Details of a Demand Gen video ad
 	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
 	// -NC#VideoAd). Retrieval and management of Demand Gen resources is currently
-	// in beta. This field will begin rolling out to all partners on *June 10,
-	// 2026* and be available to all partners on *June 24, 2026*.
+	// rolling out. This field will be available to all partners by *June 24,
+	// 2026*.
 	DemandGenVideoAd *DemandGenVideoAd `json:"demandGenVideoAd,omitempty"`
 	// DisplayName: Required. The display name of the ad. Must be UTF-8 encoded
 	// with a maximum size of 255 bytes.
@@ -2956,6 +2954,8 @@ type AlgorithmRulesSignal struct {
 	// Value is stored in the videoPlayerSizeValue field of the comparison value.
 	//   "COMPLETED_IN_VIEW_AUDIBLE" - Whether the ad was completed in view and
 	// audible. Value is stored in the boolValue field of the comparison value.
+	//   "AUDIO_COMPLETED" - Whether the audio ad was completed. Value is stored in
+	// the boolValue field of the comparison value.
 	ActiveViewSignal string `json:"activeViewSignal,omitempty"`
 	// ClickSignal: Signal based on clicks. This field is only supported for
 	// allowlisted partners.
@@ -3084,6 +3084,8 @@ type AlgorithmRulesSignalValue struct {
 	// Value is stored in the videoPlayerSizeValue field of the comparison value.
 	//   "COMPLETED_IN_VIEW_AUDIBLE" - Whether the ad was completed in view and
 	// audible. Value is stored in the boolValue field of the comparison value.
+	//   "AUDIO_COMPLETED" - Whether the audio ad was completed. Value is stored in
+	// the boolValue field of the comparison value.
 	ActiveViewSignal string `json:"activeViewSignal,omitempty"`
 	// FloodlightActivityConversionSignal: Signal based on floodlight conversion
 	// events. This field is only supported for allowlisted partners.
@@ -6596,8 +6598,8 @@ type ConversionCountingConfig struct {
 	// floodlight config or group. More details here
 	// (https://support.google.com/displayvideo/answer/7409983). Only applicable to
 	// Demand Gen line items. Retrieval and management of Demand Gen resources is
-	// currently in beta. This field will begin rolling out to all partners on
-	// *June 10, 2026* and be available to all partners on *June 24, 2026*.
+	// currently rolling out. This field will be available to all partners by *June
+	// 24, 2026*.
 	PrimaryAttributionModelId int64 `json:"primaryAttributionModelId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "FloodlightActivityConfigs")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -12415,9 +12417,8 @@ type LineItem struct {
 	CreativeIds googleapi.Int64s `json:"creativeIds,omitempty"`
 	// DemandGenSettings: Optional. Settings specific to Demand Gen line items.
 	// Only applicable to Demand Gen line items. Retrieval and management of Demand
-	// Gen resources is currently in beta. This field will begin rolling out to all
-	// partners on *June 10, 2026* and be available to all partners on *June 24,
-	// 2026*.
+	// Gen resources is currently rolling out. This field will be available to all
+	// partners by *June 24, 2026*.
 	DemandGenSettings *DemandGenSettings `json:"demandGenSettings,omitempty"`
 	// DisplayName: Required. The display name of the line item. Must be UTF-8
 	// encoded with a maximum size of 240 bytes.
@@ -12534,9 +12535,8 @@ type LineItem struct {
 	// digital-out-of-home inventory. Line items of this type and their targeting
 	// cannot be created or updated using the API.
 	//   "LINE_ITEM_TYPE_DEMAND_GEN" - Demand Gen ads. Retrieval and management of
-	// Demand Gen resources is currently in beta. This field will begin rolling out
-	// to all partners on *June 10, 2026* and be available to all partners on *June
-	// 24, 2026*.
+	// Demand Gen resources is currently rolling out. This field will be available
+	// to all partners by *June 24, 2026*.
 	LineItemType string `json:"lineItemType,omitempty"`
 	// MobileApp: The mobile app promoted by the line item. This is applicable only
 	// when line_item_type is either `LINE_ITEM_TYPE_DISPLAY_MOBILE_APP_INSTALL` or
@@ -16561,9 +16561,9 @@ type TargetingExpansionConfig struct {
 	EnableOptimizedTargeting bool `json:"enableOptimizedTargeting,omitempty"`
 	// ExcludeDemographicExpansion: Optional. Whether to exclude demographic
 	// expansion for Optimized Targeting. This field can only be set for Demand Gen
-	// ad groups. Retrieval and management of Demand Gen resources is currently in
-	// beta. This field will begin rolling out to all partners on *June 10, 2026*
-	// and be available to all partners on *June 24, 2026*.
+	// ad groups. Retrieval and management of Demand Gen resources is currently
+	// rolling out. This field will be available to all partners by *June 24,
+	// 2026*.
 	ExcludeDemographicExpansion bool `json:"excludeDemographicExpansion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudienceExpansionLevel") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -20015,9 +20015,8 @@ type AdvertisersAdGroupAdsCreateCall struct {
 }
 
 // Create: Creates an ad group ad. This method is only supported for Demand Gen
-// ads. Retrieval and management of Demand Gen resources is currently in beta.
-// This method will begin rolling out to all partners on *June 10, 2026* and be
-// available to all partners on *June 24, 2026*.
+// ads. Retrieval and management of Demand Gen resources is currently rolling
+// out. This method will be available to all partners by *June 24, 2026*.
 //
 //   - advertiserId: Output only. The unique ID of the advertiser the ad belongs
 //     to.
@@ -20122,9 +20121,8 @@ type AdvertisersAdGroupAdsDeleteCall struct {
 }
 
 // Delete: Deletes an ad group ad. This method is only supported for Demand Gen
-// ads. Retrieval and management of Demand Gen resources is currently in beta.
-// This method will begin rolling out to all partners on *June 10, 2026* and be
-// available to all partners on *June 24, 2026*.
+// ads. Retrieval and management of Demand Gen resources is currently rolling
+// out. This method will be available to all partners by *June 24, 2026*.
 //
 //   - adGroupAdId: The ID of the ad to delete. Only Demand Gen ads are
 //     supported.
@@ -20518,9 +20516,8 @@ type AdvertisersAdGroupAdsPatchCall struct {
 }
 
 // Patch: Updates an ad group ad. This method is only supported for Demand Gen
-// ads. Retrieval and management of Demand Gen resources is currently in beta.
-// This method will begin rolling out to all partners on *June 10, 2026* and be
-// available to all partners on *June 24, 2026*.
+// ads. Retrieval and management of Demand Gen resources is currently rolling
+// out. This method will be available to all partners by *June 24, 2026*.
 //
 //   - adGroupAdId: Output only. The unique ID of the ad. Assigned by the system.
 //   - advertiserId: Output only. The unique ID of the advertiser the ad belongs
@@ -20642,9 +20639,8 @@ type AdvertisersAdGroupsBulkEditAssignedTargetingOptionsCall struct {
 // group, and then create the assigned targeting options provided in
 // BulkEditAdGroupAssignedTargetingOptionsRequest.create_requests. This method
 // is only supported for Demand Gen ad groups. Retrieval and management of
-// Demand Gen resources is currently in beta. This method will begin rolling
-// out to all partners on *June 10, 2026* and be available to all partners on
-// *June 24, 2026*.
+// Demand Gen resources is currently rolling out. This method will be available
+// to all partners by *June 24, 2026*.
 //
 // - advertiserId: The ID of the advertiser the ad groups belong to.
 func (r *AdvertisersAdGroupsService) BulkEditAssignedTargetingOptions(advertiserId int64, bulkeditadgroupassignedtargetingoptionsrequest *BulkEditAdGroupAssignedTargetingOptionsRequest) *AdvertisersAdGroupsBulkEditAssignedTargetingOptionsCall {
@@ -20939,9 +20935,8 @@ type AdvertisersAdGroupsCreateCall struct {
 
 // Create: Creates a new ad group. Returns the newly created ad group if
 // successful. This method is only supported for Demand Gen ad groups.
-// Retrieval and management of Demand Gen resources is currently in beta. This
-// method will begin rolling out to all partners on *June 10, 2026* and be
-// available to all partners on *June 24, 2026*.
+// Retrieval and management of Demand Gen resources is currently rolling out.
+// This method will be available to all partners by *June 24, 2026*.
 //
 //   - advertiserId: Output only. The unique ID of the advertiser the ad group
 //     belongs to.
@@ -21047,9 +21042,8 @@ type AdvertisersAdGroupsDeleteCall struct {
 
 // Delete: Deletes a AdGroup. Returns error code `NOT_FOUND` if the ad group
 // does not exist. This method is only supported for Demand Gen ad groups.
-// Retrieval and management of Demand Gen resources is currently in beta. This
-// method will begin rolling out to all partners on *June 10, 2026* and be
-// available to all partners on *June 24, 2026*.
+// Retrieval and management of Demand Gen resources is currently rolling out.
+// This method will be available to all partners by *June 24, 2026*.
 //
 // - adGroupId: The ID of the ad group to delete.
 // - advertiserId: The ID of the advertiser this ad group belongs to.
@@ -21443,9 +21437,8 @@ type AdvertisersAdGroupsPatchCall struct {
 
 // Patch: Updates an existing ad group. Returns the updated ad group if
 // successful. This method is only supported for Demand Gen ad groups.
-// Retrieval and management of Demand Gen resources is currently in beta. This
-// method will begin rolling out to all partners on *June 10, 2026* and be
-// available to all partners on *June 24, 2026*.
+// Retrieval and management of Demand Gen resources is currently rolling out.
+// This method will be available to all partners by *June 24, 2026*.
 //
 //   - adGroupId: Output only. The unique ID of the ad group. Assigned by the
 //     system.
@@ -21564,9 +21557,9 @@ type AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsCreateCall struct 
 
 // Create: Assigns a targeting option to an ad group. Returns the assigned
 // targeting option if successful. This method is only supported for Demand Gen
-// ad groups. Retrieval and management of Demand Gen resources is currently in
-// beta. This method will begin rolling out to all partners on *June 10, 2026*
-// and be available to all partners on *June 24, 2026*.
+// ad groups. Retrieval and management of Demand Gen resources is currently
+// rolling out. This method will be available to all partners by *June 24,
+// 2026*.
 //
 //   - adGroupId: The ID of the ad group the assigned targeting option will
 //     belong to.
@@ -21690,9 +21683,8 @@ type AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsDeleteCall struct 
 // Delete: Deletes an assigned targeting option from an ad group. This method
 // is only supported for Demand Gen ad groups with the AdGroupFormat
 // `AD_GROUP_FORMAT_DEMAND_GEN`. Retrieval and management of Demand Gen
-// resources is currently in beta. This method will begin rolling out to all
-// partners on *June 10, 2026* and be available to all partners on *June 24,
-// 2026*.
+// resources is currently rolling out. This method will be available to all
+// partners by *June 24, 2026*.
 //
 //   - adGroupId: The ID of the ad group the assigned targeting option belongs
 //     to.

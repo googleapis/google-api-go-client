@@ -721,6 +721,11 @@
                           "location": "query",
                           "type": "string"
                         },
+                        "orderBy": {
+                          "description": "Optional. Actionable sorting delegation.",
+                          "location": "query",
+                          "type": "string"
+                        },
                         "pageSize": {
                           "description": "Optional. Page size.",
                           "format": "int32",
@@ -757,7 +762,7 @@
       }
     }
   },
-  "revision": "20260601",
+  "revision": "20260615",
   "rootUrl": "https://assuredworkloads.googleapis.com/",
   "schemas": {
     "GoogleCloudAssuredworkloadsV1AcknowledgeViolationRequest": {
@@ -1005,6 +1010,7 @@
             "EU_DATA_BOUNDARY_AND_SUPPORT",
             "ISRAEL_DATA_BOUNDARY_AND_SUPPORT",
             "JAPAN_DATA_BOUNDARY",
+            "SWITZERLAND_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS",
             "KSA_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS",
             "REGIONAL_DATA_BOUNDARY",
             "US_DATA_BOUNDARY_AND_SUPPORT",
@@ -1035,6 +1041,7 @@
             "US_REGIONAL_ACCESS"
           ],
           "enumDeprecated": [
+            false,
             false,
             false,
             false,
@@ -1099,6 +1106,7 @@
             "European Union (EU) Data Boundary and Support",
             "Israel Data Boundary and Support",
             "Japan Data Boundary",
+            "Switzerland Data Boundary with Access Justifications",
             "Kingdom of Saudi Arabia (KSA) Data Boundary with Access Justifications",
             "Data boundary for one of Assured Workloads' *Free tier* control packages. Determines the region by specifying the data location during workload creation.",
             "United States (US) Data Boundary and Support",
@@ -1165,6 +1173,11 @@
         "nextPageToken": {
           "description": "The next page token. Returns empty if reached the last page.",
           "type": "string"
+        },
+        "totalSize": {
+          "description": "The total number of violations.",
+          "format": "int32",
+          "type": "integer"
         },
         "violations": {
           "description": "List of Violations under a Workload.",
@@ -1752,6 +1765,7 @@
             "EU_DATA_BOUNDARY_AND_SUPPORT",
             "ISRAEL_DATA_BOUNDARY_AND_SUPPORT",
             "JAPAN_DATA_BOUNDARY",
+            "SWITZERLAND_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS",
             "KSA_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS",
             "REGIONAL_DATA_BOUNDARY",
             "US_DATA_BOUNDARY_AND_SUPPORT",
@@ -1782,6 +1796,7 @@
             "US_REGIONAL_ACCESS"
           ],
           "enumDeprecated": [
+            false,
             false,
             false,
             false,
@@ -1846,6 +1861,7 @@
             "European Union (EU) Data Boundary and Support",
             "Israel Data Boundary and Support",
             "Japan Data Boundary",
+            "Switzerland Data Boundary with Access Justifications",
             "Kingdom of Saudi Arabia (KSA) Data Boundary with Access Justifications",
             "Data boundary for one of Assured Workloads' *Free tier* control packages. Determines the region by specifying the data location during workload creation.",
             "United States (US) Data Boundary and Support",

@@ -2029,26 +2029,27 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 }
 
 type ExternalExposure struct {
-	BackendBucket                string          `json:"backendBucket,omitempty"`
-	BackendService               string          `json:"backendService,omitempty"`
-	ExposedApplication           string          `json:"exposedApplication,omitempty"`
-	ExposedEndpoint              string          `json:"exposedEndpoint,omitempty"`
-	ExposedService               string          `json:"exposedService,omitempty"`
-	ForwardingRule               string          `json:"forwardingRule,omitempty"`
-	HostnameUri                  string          `json:"hostnameUri,omitempty"`
-	HttpResponse                 []*HttpResponse `json:"httpResponse,omitempty"`
-	InstanceGroup                string          `json:"instanceGroup,omitempty"`
-	InternalBackendService       string          `json:"internalBackendService,omitempty"`
-	LoadBalancerFirewallPolicy   string          `json:"loadBalancerFirewallPolicy,omitempty"`
-	NetworkEndpointGroup         string          `json:"networkEndpointGroup,omitempty"`
-	NetworkIngressFirewallPolicy string          `json:"networkIngressFirewallPolicy,omitempty"`
-	PrivateIpAddress             string          `json:"privateIpAddress,omitempty"`
-	PrivatePort                  string          `json:"privatePort,omitempty"`
-	PscNetworkAttachment         string          `json:"pscNetworkAttachment,omitempty"`
-	PscServiceAttachment         string          `json:"pscServiceAttachment,omitempty"`
-	PublicIpAddress              string          `json:"publicIpAddress,omitempty"`
-	PublicPort                   string          `json:"publicPort,omitempty"`
-	ServiceFirewallPolicy        string          `json:"serviceFirewallPolicy,omitempty"`
+	BackendBucket                     string          `json:"backendBucket,omitempty"`
+	BackendService                    string          `json:"backendService,omitempty"`
+	ExposedApplication                string          `json:"exposedApplication,omitempty"`
+	ExposedEndpoint                   string          `json:"exposedEndpoint,omitempty"`
+	ExposedService                    string          `json:"exposedService,omitempty"`
+	ForwardingRule                    string          `json:"forwardingRule,omitempty"`
+	HostnameUri                       string          `json:"hostnameUri,omitempty"`
+	HttpResponse                      []*HttpResponse `json:"httpResponse,omitempty"`
+	InstanceGroup                     string          `json:"instanceGroup,omitempty"`
+	InternalBackendService            string          `json:"internalBackendService,omitempty"`
+	LoadBalancerFirewallPolicy        string          `json:"loadBalancerFirewallPolicy,omitempty"`
+	NetworkEndpointGroup              string          `json:"networkEndpointGroup,omitempty"`
+	NetworkIngressFirewallPolicy      string          `json:"networkIngressFirewallPolicy,omitempty"`
+	NetworkPathInsightsGenerationTime string          `json:"networkPathInsightsGenerationTime,omitempty"`
+	PrivateIpAddress                  string          `json:"privateIpAddress,omitempty"`
+	PrivatePort                       string          `json:"privatePort,omitempty"`
+	PscNetworkAttachment              string          `json:"pscNetworkAttachment,omitempty"`
+	PscServiceAttachment              string          `json:"pscServiceAttachment,omitempty"`
+	PublicIpAddress                   string          `json:"publicIpAddress,omitempty"`
+	PublicPort                        string          `json:"publicPort,omitempty"`
+	ServiceFirewallPolicy             string          `json:"serviceFirewallPolicy,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackendBucket") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4541,26 +4542,27 @@ func (s GoogleCloudSecuritycenterV2Exfiltration) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudSecuritycenterV2ExternalExposure struct {
-	BackendBucket                string                                     `json:"backendBucket,omitempty"`
-	BackendService               string                                     `json:"backendService,omitempty"`
-	ExposedApplication           string                                     `json:"exposedApplication,omitempty"`
-	ExposedEndpoint              string                                     `json:"exposedEndpoint,omitempty"`
-	ExposedService               string                                     `json:"exposedService,omitempty"`
-	ForwardingRule               string                                     `json:"forwardingRule,omitempty"`
-	HostnameUri                  string                                     `json:"hostnameUri,omitempty"`
-	HttpResponse                 []*GoogleCloudSecuritycenterV2HttpResponse `json:"httpResponse,omitempty"`
-	InstanceGroup                string                                     `json:"instanceGroup,omitempty"`
-	InternalBackendService       string                                     `json:"internalBackendService,omitempty"`
-	LoadBalancerFirewallPolicy   string                                     `json:"loadBalancerFirewallPolicy,omitempty"`
-	NetworkEndpointGroup         string                                     `json:"networkEndpointGroup,omitempty"`
-	NetworkIngressFirewallPolicy string                                     `json:"networkIngressFirewallPolicy,omitempty"`
-	PrivateIpAddress             string                                     `json:"privateIpAddress,omitempty"`
-	PrivatePort                  string                                     `json:"privatePort,omitempty"`
-	PscNetworkAttachment         string                                     `json:"pscNetworkAttachment,omitempty"`
-	PscServiceAttachment         string                                     `json:"pscServiceAttachment,omitempty"`
-	PublicIpAddress              string                                     `json:"publicIpAddress,omitempty"`
-	PublicPort                   string                                     `json:"publicPort,omitempty"`
-	ServiceFirewallPolicy        string                                     `json:"serviceFirewallPolicy,omitempty"`
+	BackendBucket                     string                                     `json:"backendBucket,omitempty"`
+	BackendService                    string                                     `json:"backendService,omitempty"`
+	ExposedApplication                string                                     `json:"exposedApplication,omitempty"`
+	ExposedEndpoint                   string                                     `json:"exposedEndpoint,omitempty"`
+	ExposedService                    string                                     `json:"exposedService,omitempty"`
+	ForwardingRule                    string                                     `json:"forwardingRule,omitempty"`
+	HostnameUri                       string                                     `json:"hostnameUri,omitempty"`
+	HttpResponse                      []*GoogleCloudSecuritycenterV2HttpResponse `json:"httpResponse,omitempty"`
+	InstanceGroup                     string                                     `json:"instanceGroup,omitempty"`
+	InternalBackendService            string                                     `json:"internalBackendService,omitempty"`
+	LoadBalancerFirewallPolicy        string                                     `json:"loadBalancerFirewallPolicy,omitempty"`
+	NetworkEndpointGroup              string                                     `json:"networkEndpointGroup,omitempty"`
+	NetworkIngressFirewallPolicy      string                                     `json:"networkIngressFirewallPolicy,omitempty"`
+	NetworkPathInsightsGenerationTime string                                     `json:"networkPathInsightsGenerationTime,omitempty"`
+	PrivateIpAddress                  string                                     `json:"privateIpAddress,omitempty"`
+	PrivatePort                       string                                     `json:"privatePort,omitempty"`
+	PscNetworkAttachment              string                                     `json:"pscNetworkAttachment,omitempty"`
+	PscServiceAttachment              string                                     `json:"pscServiceAttachment,omitempty"`
+	PublicIpAddress                   string                                     `json:"publicIpAddress,omitempty"`
+	PublicPort                        string                                     `json:"publicPort,omitempty"`
+	ServiceFirewallPolicy             string                                     `json:"serviceFirewallPolicy,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackendBucket") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

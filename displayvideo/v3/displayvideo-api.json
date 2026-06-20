@@ -377,7 +377,7 @@
         "adGroupAds": {
           "methods": {
             "create": {
-              "description": "Creates an ad group ad. This method is only supported for Demand Gen ads. Retrieval and management of Demand Gen resources is currently in beta. This method will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*.",
+              "description": "Creates an ad group ad. This method is only supported for Demand Gen ads. Retrieval and management of Demand Gen resources is currently rolling out. This method will be available to all partners by *June 24, 2026*.",
               "flatPath": "v3/advertisers/{advertisersId}/adGroupAds",
               "httpMethod": "POST",
               "id": "displayvideo.advertisers.adGroupAds.create",
@@ -406,7 +406,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes an ad group ad. This method is only supported for Demand Gen ads. Retrieval and management of Demand Gen resources is currently in beta. This method will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*.",
+              "description": "Deletes an ad group ad. This method is only supported for Demand Gen ads. Retrieval and management of Demand Gen resources is currently rolling out. This method will be available to all partners by *June 24, 2026*.",
               "flatPath": "v3/advertisers/{advertisersId}/adGroupAds/{adGroupAdsId}",
               "httpMethod": "DELETE",
               "id": "displayvideo.advertisers.adGroupAds.delete",
@@ -523,7 +523,7 @@
               ]
             },
             "patch": {
-              "description": "Updates an ad group ad. This method is only supported for Demand Gen ads. Retrieval and management of Demand Gen resources is currently in beta. This method will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*.",
+              "description": "Updates an ad group ad. This method is only supported for Demand Gen ads. Retrieval and management of Demand Gen resources is currently rolling out. This method will be available to all partners by *June 24, 2026*.",
               "flatPath": "v3/advertisers/{advertisersId}/adGroupAds/{adGroupAdsId}",
               "httpMethod": "PATCH",
               "id": "displayvideo.advertisers.adGroupAds.patch",
@@ -571,7 +571,7 @@
         "adGroups": {
           "methods": {
             "bulkEditAssignedTargetingOptions": {
-              "description": "Bulk edits targeting options for multiple ad groups. The same set of delete and create requests will be applied to all specified ad groups. Specifically, the operation will delete the assigned targeting options provided in BulkEditAdGroupAssignedTargetingOptionsRequest.delete_requests from each ad group, and then create the assigned targeting options provided in BulkEditAdGroupAssignedTargetingOptionsRequest.create_requests. This method is only supported for Demand Gen ad groups. Retrieval and management of Demand Gen resources is currently in beta. This method will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*.",
+              "description": "Bulk edits targeting options for multiple ad groups. The same set of delete and create requests will be applied to all specified ad groups. Specifically, the operation will delete the assigned targeting options provided in BulkEditAdGroupAssignedTargetingOptionsRequest.delete_requests from each ad group, and then create the assigned targeting options provided in BulkEditAdGroupAssignedTargetingOptionsRequest.create_requests. This method is only supported for Demand Gen ad groups. Retrieval and management of Demand Gen resources is currently rolling out. This method will be available to all partners by *June 24, 2026*.",
               "flatPath": "v3/advertisers/{advertisersId}/adGroups:bulkEditAssignedTargetingOptions",
               "httpMethod": "POST",
               "id": "displayvideo.advertisers.adGroups.bulkEditAssignedTargetingOptions",
@@ -654,7 +654,7 @@
               ]
             },
             "create": {
-              "description": "Creates a new ad group. Returns the newly created ad group if successful. This method is only supported for Demand Gen ad groups. Retrieval and management of Demand Gen resources is currently in beta. This method will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*.",
+              "description": "Creates a new ad group. Returns the newly created ad group if successful. This method is only supported for Demand Gen ad groups. Retrieval and management of Demand Gen resources is currently rolling out. This method will be available to all partners by *June 24, 2026*.",
               "flatPath": "v3/advertisers/{advertisersId}/adGroups",
               "httpMethod": "POST",
               "id": "displayvideo.advertisers.adGroups.create",
@@ -683,7 +683,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes a AdGroup. Returns error code `NOT_FOUND` if the ad group does not exist. This method is only supported for Demand Gen ad groups. Retrieval and management of Demand Gen resources is currently in beta. This method will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*.",
+              "description": "Deletes a AdGroup. Returns error code `NOT_FOUND` if the ad group does not exist. This method is only supported for Demand Gen ad groups. Retrieval and management of Demand Gen resources is currently rolling out. This method will be available to all partners by *June 24, 2026*.",
               "flatPath": "v3/advertisers/{advertisersId}/adGroups/{adGroupsId}",
               "httpMethod": "DELETE",
               "id": "displayvideo.advertisers.adGroups.delete",
@@ -800,7 +800,7 @@
               ]
             },
             "patch": {
-              "description": "Updates an existing ad group. Returns the updated ad group if successful. This method is only supported for Demand Gen ad groups. Retrieval and management of Demand Gen resources is currently in beta. This method will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*.",
+              "description": "Updates an existing ad group. Returns the updated ad group if successful. This method is only supported for Demand Gen ad groups. Retrieval and management of Demand Gen resources is currently rolling out. This method will be available to all partners by *June 24, 2026*.",
               "flatPath": "v3/advertisers/{advertisersId}/adGroups/{adGroupsId}",
               "httpMethod": "PATCH",
               "id": "displayvideo.advertisers.adGroups.patch",
@@ -850,7 +850,7 @@
                 "assignedTargetingOptions": {
                   "methods": {
                     "create": {
-                      "description": "Assigns a targeting option to an ad group. Returns the assigned targeting option if successful. This method is only supported for Demand Gen ad groups. Retrieval and management of Demand Gen resources is currently in beta. This method will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*.",
+                      "description": "Assigns a targeting option to an ad group. Returns the assigned targeting option if successful. This method is only supported for Demand Gen ad groups. Retrieval and management of Demand Gen resources is currently rolling out. This method will be available to all partners by *June 24, 2026*.",
                       "flatPath": "v3/advertisers/{advertisersId}/adGroups/{adGroupsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions",
                       "httpMethod": "POST",
                       "id": "displayvideo.advertisers.adGroups.targetingTypes.assignedTargetingOptions.create",
@@ -1002,7 +1002,7 @@
                       ]
                     },
                     "delete": {
-                      "description": "Deletes an assigned targeting option from an ad group. This method is only supported for Demand Gen ad groups with the AdGroupFormat `AD_GROUP_FORMAT_DEMAND_GEN`. Retrieval and management of Demand Gen resources is currently in beta. This method will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*.",
+                      "description": "Deletes an assigned targeting option from an ad group. This method is only supported for Demand Gen ad groups with the AdGroupFormat `AD_GROUP_FORMAT_DEMAND_GEN`. Retrieval and management of Demand Gen resources is currently rolling out. This method will be available to all partners by *June 24, 2026*.",
                       "flatPath": "v3/advertisers/{advertisersId}/adGroups/{adGroupsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions/{assignedTargetingOptionsId}",
                       "httpMethod": "DELETE",
                       "id": "displayvideo.advertisers.adGroups.targetingTypes.assignedTargetingOptions.delete",
@@ -8546,7 +8546,7 @@
       }
     }
   },
-  "revision": "20260606",
+  "revision": "20260617",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActiveViewVideoViewabilityMetricConfig": {
@@ -8692,7 +8692,7 @@
             "Responsive ads.",
             "[Effective reach ad groups] (https://support.google.com/displayvideo/answer/9173684), including in-stream and bumper ads.",
             "Masthead Ad that is surfaced on the top slot on the YouTube homepage.",
-            "Demand Gen ads. Retrieval and management of Demand Gen resources is currently in beta. This field will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*."
+            "Demand Gen ads. Retrieval and management of Demand Gen resources is currently rolling out. This field will be available to all partners by *June 24, 2026*."
           ],
           "type": "string"
         },
@@ -8807,23 +8807,23 @@
         },
         "dcmTrackingInfo": {
           "$ref": "DcmTrackingInfo",
-          "description": "Optional. The DCM tracking ad info. Only valid for Demand Gen ads. To remove the DCM tracking ad info, please leave this field empty. Retrieval and management of Demand Gen resources is currently in beta. This field will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*."
+          "description": "Optional. The DCM tracking ad info. Only valid for Demand Gen ads. To remove the DCM tracking ad info, please leave this field empty. Retrieval and management of Demand Gen resources is currently rolling out. This field will be available to all partners by *June 24, 2026*."
         },
         "demandGenCarouselAd": {
           "$ref": "DemandGenCarouselAd",
-          "description": "Details of a [Demand Gen carousel ad](//support.google.com/displayvideo/answer/15598924?\u0026sjid=11207068802760924844-NC#CarouselAd). Retrieval and management of Demand Gen resources is currently in beta. This field will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*."
+          "description": "Details of a [Demand Gen carousel ad](//support.google.com/displayvideo/answer/15598924?\u0026sjid=11207068802760924844-NC#CarouselAd). Retrieval and management of Demand Gen resources is currently rolling out. This field will be available to all partners by *June 24, 2026*."
         },
         "demandGenImageAd": {
           "$ref": "DemandGenImageAd",
-          "description": "Details of a [Demand Gen image ad](//support.google.com/displayvideo/answer/15598924?\u0026sjid=11207068802760924844-NC#ImageAd). Retrieval and management of Demand Gen resources is currently in beta. This field will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*."
+          "description": "Details of a [Demand Gen image ad](//support.google.com/displayvideo/answer/15598924?\u0026sjid=11207068802760924844-NC#ImageAd). Retrieval and management of Demand Gen resources is currently rolling out. This field will be available to all partners by *June 24, 2026*."
         },
         "demandGenProductAd": {
           "$ref": "DemandGenProductAd",
-          "description": "Details of a [Demand Gen product ad](//support.google.com/displayvideo/answer/15598924?\u0026sjid=11207068802760924844-NC#Product-onlyAd). Retrieval and management of Demand Gen resources is currently in beta. This field will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*."
+          "description": "Details of a [Demand Gen product ad](//support.google.com/displayvideo/answer/15598924?\u0026sjid=11207068802760924844-NC#Product-onlyAd). Retrieval and management of Demand Gen resources is currently rolling out. This field will be available to all partners by *June 24, 2026*."
         },
         "demandGenVideoAd": {
           "$ref": "DemandGenVideoAd",
-          "description": "Details of a [Demand Gen video ad](//support.google.com/displayvideo/answer/15598924?\u0026sjid=11207068802760924844-NC#VideoAd). Retrieval and management of Demand Gen resources is currently in beta. This field will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*."
+          "description": "Details of a [Demand Gen video ad](//support.google.com/displayvideo/answer/15598924?\u0026sjid=11207068802760924844-NC#VideoAd). Retrieval and management of Demand Gen resources is currently rolling out. This field will be available to all partners by *June 24, 2026*."
         },
         "displayName": {
           "description": "Required. The display name of the ad. Must be UTF-8 encoded with a maximum size of 255 bytes.",
@@ -10619,7 +10619,8 @@
             "VIDEO_COMPLETED",
             "TIME_ON_SCREEN",
             "VIDEO_PLAYER_SIZE",
-            "COMPLETED_IN_VIEW_AUDIBLE"
+            "COMPLETED_IN_VIEW_AUDIBLE",
+            "AUDIO_COMPLETED"
           ],
           "enumDescriptions": [
             "Unknown signal.",
@@ -10628,7 +10629,8 @@
             "Whether the video was completed. Value is stored in the boolValue field of the comparison value.",
             "The time the ad was on screen in seconds. Value is stored in the int64Value field of the comparison value.",
             "The size of the video player displaying the ad. Value is stored in the videoPlayerSizeValue field of the comparison value.",
-            "Whether the ad was completed in view and audible. Value is stored in the boolValue field of the comparison value."
+            "Whether the ad was completed in view and audible. Value is stored in the boolValue field of the comparison value.",
+            "Whether the audio ad was completed. Value is stored in the boolValue field of the comparison value."
           ],
           "type": "string"
         },
@@ -10735,7 +10737,8 @@
             "VIDEO_COMPLETED",
             "TIME_ON_SCREEN",
             "VIDEO_PLAYER_SIZE",
-            "COMPLETED_IN_VIEW_AUDIBLE"
+            "COMPLETED_IN_VIEW_AUDIBLE",
+            "AUDIO_COMPLETED"
           ],
           "enumDescriptions": [
             "Unknown signal.",
@@ -10744,7 +10747,8 @@
             "Whether the video was completed. Value is stored in the boolValue field of the comparison value.",
             "The time the ad was on screen in seconds. Value is stored in the int64Value field of the comparison value.",
             "The size of the video player displaying the ad. Value is stored in the videoPlayerSizeValue field of the comparison value.",
-            "Whether the ad was completed in view and audible. Value is stored in the boolValue field of the comparison value."
+            "Whether the ad was completed in view and audible. Value is stored in the boolValue field of the comparison value.",
+            "Whether the audio ad was completed. Value is stored in the boolValue field of the comparison value."
           ],
           "type": "string"
         },
@@ -13376,7 +13380,7 @@
           "type": "string"
         },
         "primaryAttributionModelId": {
-          "description": "Optional. The attribution model to use for conversion measurement. This attribution model will determine how conversions are counted. The Primary model can be set by you for a floodlight config or group. More details [here](https://support.google.com/displayvideo/answer/7409983). Only applicable to Demand Gen line items. Retrieval and management of Demand Gen resources is currently in beta. This field will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*.",
+          "description": "Optional. The attribution model to use for conversion measurement. This attribution model will determine how conversions are counted. The Primary model can be set by you for a floodlight config or group. More details [here](https://support.google.com/displayvideo/answer/7409983). Only applicable to Demand Gen line items. Retrieval and management of Demand Gen resources is currently rolling out. This field will be available to all partners by *June 24, 2026*.",
           "format": "int64",
           "type": "string"
         }
@@ -18770,7 +18774,7 @@
         },
         "demandGenSettings": {
           "$ref": "DemandGenSettings",
-          "description": "Optional. Settings specific to Demand Gen line items. Only applicable to Demand Gen line items. Retrieval and management of Demand Gen resources is currently in beta. This field will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*."
+          "description": "Optional. Settings specific to Demand Gen line items. Only applicable to Demand Gen line items. Retrieval and management of Demand Gen resources is currently rolling out. This field will be available to all partners by *June 24, 2026*."
         },
         "displayName": {
           "description": "Required. The display name of the line item. Must be UTF-8 encoded with a maximum size of 240 bytes.",
@@ -18873,7 +18877,7 @@
             "YouTube video ads that aim to get more views with a variety of ad formats. Line items of this type and their targeting cannot be created or updated using the API.",
             "Display ads served on digital-out-of-home inventory. Line items of this type and their targeting cannot be created or updated using the API.",
             "Video ads served on digital-out-of-home inventory. Line items of this type and their targeting cannot be created or updated using the API.",
-            "Demand Gen ads. Retrieval and management of Demand Gen resources is currently in beta. This field will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*."
+            "Demand Gen ads. Retrieval and management of Demand Gen resources is currently rolling out. This field will be available to all partners by *June 24, 2026*."
           ],
           "type": "string"
         },
@@ -21786,7 +21790,7 @@
           "type": "boolean"
         },
         "excludeDemographicExpansion": {
-          "description": "Optional. Whether to exclude demographic expansion for Optimized Targeting. This field can only be set for Demand Gen ad groups. Retrieval and management of Demand Gen resources is currently in beta. This field will begin rolling out to all partners on *June 10, 2026* and be available to all partners on *June 24, 2026*.",
+          "description": "Optional. Whether to exclude demographic expansion for Optimized Targeting. This field can only be set for Demand Gen ad groups. Retrieval and management of Demand Gen resources is currently rolling out. This field will be available to all partners by *June 24, 2026*.",
           "type": "boolean"
         }
       },

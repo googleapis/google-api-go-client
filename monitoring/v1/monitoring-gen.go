@@ -2541,6 +2541,32 @@ func (s SourceContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SpanAttributeFilter: Span attribute key and list of values to be used for
+// filtering.
+type SpanAttributeFilter struct {
+	// Key: Key of the attribute
+	Key string `json:"key,omitempty"`
+	// Value: List of attribute values for given key. Multiple values will be OR'd
+	// together.
+	Value []string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SpanAttributeFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod SpanAttributeFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SpanContext: The context of a span. This is attached to an Exemplar in
 // Distribution values during aggregation.It contains the name of a span with
 // format: projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]
@@ -2567,6 +2593,61 @@ type SpanContext struct {
 
 func (s SpanContext) MarshalJSON() ([]byte, error) {
 	type NoMethod SpanContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SpanFilters: First version of span filtering that is supported by the Trace
+// component.
+type SpanFilters struct {
+	// ApphubServices: Optional. Filtering for spans containing one of the Apphub
+	// service IDs in the list. Multiple values will be OR'd together. Example:
+	// "service-id1", "service-id2"
+	ApphubServices []string `json:"apphubServices,omitempty"`
+	// ApphubWorkloads: Optional. Filtering for spans containing one of the Apphub
+	// workload IDs in the list. Multiple values will be OR'd together. Example:
+	// "workload-id1", "workload-id2"
+	ApphubWorkloads []string `json:"apphubWorkloads,omitempty"`
+	// ApplicationIds: Optional. Filtering for spans containing one of the Apphub
+	// Application IDs in the list. Multiple values will be OR'd together.
+	ApplicationIds []string `json:"applicationIds,omitempty"`
+	// Attributes: Optional. List of span attribute filters. Each
+	// SpanAttributeFilter key must be unique. Multiple attribute filters will be
+	// AND'd together.
+	Attributes []*SpanAttributeFilter `json:"attributes,omitempty"`
+	// DisplayNames: Optional. Filtering for spans containing one of the span
+	// display names in the list. Multiple values will be OR'd together.
+	DisplayNames []string `json:"displayNames,omitempty"`
+	// IsRootSpan: Optional. Filters for root spans only if set to true. A root
+	// span is a span without a defined parent span ID.
+	IsRootSpan bool `json:"isRootSpan,omitempty"`
+	// Kinds: Optional. Filtering for spans containing one of the kinds in the
+	// list. Multiple values will be OR'd together.
+	Kinds []string `json:"kinds,omitempty"`
+	// MaxDuration: Optional. Filtering for spans with a maximum duration.
+	MaxDuration string `json:"maxDuration,omitempty"`
+	// MinDuration: Optional. Filtering for spans with a minimum duration.
+	MinDuration string `json:"minDuration,omitempty"`
+	// Services: Optional. Filtering for spans containing one of the services in
+	// the list. Multiple values will be OR'd together.
+	Services []string `json:"services,omitempty"`
+	// Status: Optional. Filtering for spans containing one of the statuses in the
+	// list. Multiple values will be OR'd together.
+	Status []string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApphubServices") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApphubServices") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SpanFilters) MarshalJSON() ([]byte, error) {
+	type NoMethod SpanFilters
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3170,6 +3251,39 @@ func (s TimeSeriesTable) MarshalJSON() ([]byte, error) {
 // TraceQuery: LINT.IfChange Preview: Query for traces. This is a preview
 // feature and may be subject to change before final release.
 type TraceQuery struct {
+	// ResourceContainer: Optional. The resource name of the project or Trace scope
+	// to fetch data from. If empty, the widget will default to the project's
+	// default Trace scope. If scope cannot be determined, then we fallback to the
+	// current project. Optional.
+	ResourceContainer string `json:"resourceContainer,omitempty"`
+	// SpanDataValue: The type of span data value to be displayed on the chart.
+	// Required.
+	//
+	// Possible values:
+	//   "SPAN_DATA_VALUE_UNSPECIFIED" - We are required to have an UNSPECIFIED
+	// value for enums. This should not be used in practice.
+	//   "SPAN_COUNT" - Span count data value
+	//   "SPAN_DURATION" - Span duration data value
+	//   "SPAN_DURATION_PERCENTILES" - Span duration percentiles data value
+	SpanDataValue string `json:"spanDataValue,omitempty"`
+	// SpanFilters: First version of span filtering that we will support. Required.
+	SpanFilters *SpanFilters `json:"spanFilters,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ResourceContainer") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ResourceContainer") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TraceQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod TraceQuery
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Treemap: A widget that displays hierarchical data as a treemap.

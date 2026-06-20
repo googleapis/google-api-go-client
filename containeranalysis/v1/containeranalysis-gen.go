@@ -282,6 +282,11 @@ type AISkillAnalysisOccurrence struct {
 	// Findings: Findings produced by the analysis.
 	Findings []*Finding `json:"findings,omitempty"`
 	// MaxSeverity: Maximum severity found among findings.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Unspecified severity.
+	//   "CRITICAL" - Critical severity.
+	//   "HIGH" - High severity.
 	MaxSeverity string `json:"maxSeverity,omitempty"`
 	// SkillName: Name of the skill that produced this analysis.
 	SkillName string `json:"skillName,omitempty"`
@@ -2281,6 +2286,7 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions struct {
 	//   "E2_HIGHCPU_8" - Highcpu e2 machine with 8 CPUs.
 	//   "E2_HIGHCPU_32" - Highcpu e2 machine with 32 CPUs.
 	//   "E2_MEDIUM" - E2 machine with 1 CPU.
+	//   "E2_STANDARD_2" - E2 machine with 2 CPUs.
 	MachineType string `json:"machineType,omitempty"`
 	// Pool: Optional. Specification for execution on a `WorkerPool`. See running
 	// builds in a private pool
@@ -4164,12 +4170,24 @@ func (s FileHashes) MarshalJSON() ([]byte, error) {
 type Finding struct {
 	// Category: Category of the finding.
 	Category string `json:"category,omitempty"`
+	// Details: Description of the finding category.
+	Details string `json:"details,omitempty"`
 	// Location: Location (path and line) where the finding was detected.
 	Location *FindingLocation `json:"location,omitempty"`
 	// Scanner: Scanner determines which engine (e.g. static, llm) emitted the
 	// finding.
+	//
+	// Possible values:
+	//   "SCANNER_UNSPECIFIED" - Unspecified scanner.
+	//   "STATIC" - Static scanner.
+	//   "LLM" - LLM scanner.
 	Scanner string `json:"scanner,omitempty"`
 	// Severity: Severity of the finding.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Unspecified severity.
+	//   "CRITICAL" - Critical severity.
+	//   "HIGH" - High severity.
 	Severity string `json:"severity,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Category") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7024,6 +7042,8 @@ type VulnerabilityNote struct {
 	CvssV2 *CVSS `json:"cvssV2,omitempty"`
 	// CvssV3: The full description of the CVSSv3 for this vulnerability.
 	CvssV3 *CVSSv3 `json:"cvssV3,omitempty"`
+	// CvssV4: The full description of the v4 CVSS for this vulnerability.
+	CvssV4 *CVSS `json:"cvssV4,omitempty"`
 	// CvssVersion: CVSS version used to populate cvss_score and severity.
 	//
 	// Possible values:
@@ -7095,6 +7115,8 @@ type VulnerabilityOccurrence struct {
 	CvssScore float64 `json:"cvssScore,omitempty"`
 	// CvssV2: The cvss v2 score for the vulnerability.
 	CvssV2 *CVSS `json:"cvssV2,omitempty"`
+	// CvssV4: The cvss v4 score for the vulnerability.
+	CvssV4 *CVSS `json:"cvssV4,omitempty"`
 	// CvssVersion: Output only. CVSS version used to populate cvss_score and
 	// severity.
 	//

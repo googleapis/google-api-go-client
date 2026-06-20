@@ -15,6 +15,13 @@
   "description": "Allows administrators to create managed developer environments in the cloud. ",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/workstations",
+  "endpoints": [
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://rep-wkstn.us-central1.rep.googleapis.com/",
+      "location": "us-central1"
+    }
+  ],
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -1175,7 +1182,7 @@
       }
     }
   },
-  "revision": "20260526",
+  "revision": "20260604",
   "rootUrl": "https://workstations.googleapis.com/",
   "schemas": {
     "Accelerator": {
@@ -1446,6 +1453,11 @@
           "format": "google-duration",
           "type": "string"
         },
+        "maxSizeGb": {
+          "description": "Optional. Maximum size in GB to which this persistent directory can be resized. Defaults to unlimited if not set.",
+          "format": "int32",
+          "type": "integer"
+        },
         "reclaimPolicy": {
           "description": "Optional. Whether the persistent disk should be deleted when the workstation is deleted. Valid values are `DELETE` and `RETAIN`. Defaults to `DELETE`.",
           "enum": [
@@ -1634,6 +1646,11 @@
         "fsType": {
           "description": "Optional. Type of file system that the disk should be formatted with. The workstation image must support this file system type. Must be empty if source_snapshot is set. Defaults to `\"ext4\"`.",
           "type": "string"
+        },
+        "maxSizeGb": {
+          "description": "Optional. Maximum size in GB to which this persistent directory can be resized. Defaults to unlimited if not set.",
+          "format": "int32",
+          "type": "integer"
         },
         "reclaimPolicy": {
           "description": "Optional. Whether the persistent disk should be deleted when the workstation is deleted. Valid values are `DELETE` and `RETAIN`. Defaults to `DELETE`.",

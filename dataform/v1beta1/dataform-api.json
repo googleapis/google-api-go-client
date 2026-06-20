@@ -3281,7 +3281,7 @@
       }
     }
   },
-  "revision": "20260607",
+  "revision": "20260615",
   "rootUrl": "https://dataform.googleapis.com/",
   "schemas": {
     "ActionErrorTable": {
@@ -5671,6 +5671,23 @@
       },
       "type": "object"
     },
+    "TableUpdateTrigger": {
+      "description": "Represents a table update trigger configuration.",
+      "id": "TableUpdateTrigger",
+      "properties": {
+        "table": {
+          "$ref": "Target",
+          "description": "The target table to trigger the workflow."
+        },
+        "triggerUpdateTime": {
+          "description": "Output only. The modification time of this table that resulted in an invocation of the workflow. This would be updated by the triggering service after a successful workflow invocation.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Target": {
       "description": "Represents an action identifier. If the action writes output, the output will be written to the referenced database object.",
       "id": "Target",
@@ -5781,6 +5798,24 @@
       },
       "type": "object"
     },
+    "TriggerEvaluationRecord": {
+      "description": "A record of an attempt to evaluate trigger conditions.",
+      "id": "TriggerEvaluationRecord",
+      "properties": {
+        "evaluationTime": {
+          "description": "Output only. The timestamp of this trigger evaluation attempt.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "status": {
+          "$ref": "Status",
+          "description": "Output only. The status of the trigger evaluation. Success is indicated by a code of 0 (OK). Message will only be present if the status code is non-zero.",
+          "readOnly": true
+        }
+      },
+      "type": "object"
+    },
     "UncommittedFileChange": {
       "description": "Represents the Git state of a file with uncommitted changes.",
       "id": "UncommittedFileChange",
@@ -5863,6 +5898,10 @@
           "format": "google-datetime",
           "readOnly": true,
           "type": "string"
+        },
+        "workflowTriggerConfig": {
+          "$ref": "WorkflowTriggerConfig",
+          "description": "Optional. Optional trigger configuration for this workflow. If present, the workflow will be triggered based on the specified triggers."
         }
       },
       "type": "object"
@@ -6003,6 +6042,69 @@
           "$ref": "Target",
           "description": "Output only. This action's identifier. Unique within the workflow invocation.",
           "readOnly": true
+        }
+      },
+      "type": "object"
+    },
+    "WorkflowTrigger": {
+      "description": "The trigger definition to invoke a workflow.",
+      "id": "WorkflowTrigger",
+      "properties": {
+        "tableUpdateTrigger": {
+          "$ref": "TableUpdateTrigger",
+          "description": "The table update trigger configuration."
+        }
+      },
+      "type": "object"
+    },
+    "WorkflowTriggerConfig": {
+      "description": "Represents a trigger configuration for a workflow.",
+      "id": "WorkflowTriggerConfig",
+      "properties": {
+        "condition": {
+          "description": "Optional. The condition to use when triggering the workflow.",
+          "enum": [
+            "CONDITION_UNSPECIFIED",
+            "ALL",
+            "ANY"
+          ],
+          "enumDescriptions": [
+            "If CONDITION_UNSPECIFIED, the default value is ANY.",
+            "If ALL, all the trigger config conditions must be met before a workflow is invoked.",
+            "If ANY, at least one of the trigger config conditions must be met before a workflow is invoked."
+          ],
+          "type": "string"
+        },
+        "lastSuccessfulEvaluationTime": {
+          "description": "Output only. The timestamp of the last successful trigger evaluation.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "maxWaitDuration": {
+          "description": "Optional. The effective maximum wait time duration for the trigger condition to be met. If not specified, the workflow won't be triggered until conditions are met.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "minExecutionDuration": {
+          "description": "Optional. Minimum duration between two consecutive executions. If not specified, the workflow will be executed every time trigger conditions are met and no ongoing workflow execution.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "recentTriggerEvaluationRecords": {
+          "description": "Output only. Records of the 10 most recent trigger evaluations, ordered in descending order of `evaluation_time`. Updated whenever the service evaluates the trigger conditions (via polling or upon receiving a push event).",
+          "items": {
+            "$ref": "TriggerEvaluationRecord"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "workflowTriggers": {
+          "description": "Required. The trigger definitions to invoke a workflow.",
+          "items": {
+            "$ref": "WorkflowTrigger"
+          },
+          "type": "array"
         }
       },
       "type": "object"

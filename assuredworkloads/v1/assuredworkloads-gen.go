@@ -566,6 +566,8 @@ type GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata struct {
 	// Support
 	//   "ISRAEL_DATA_BOUNDARY_AND_SUPPORT" - Israel Data Boundary and Support
 	//   "JAPAN_DATA_BOUNDARY" - Japan Data Boundary
+	//   "SWITZERLAND_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS" - Switzerland Data
+	// Boundary with Access Justifications
 	//   "KSA_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS" - Kingdom of Saudi Arabia
 	// (KSA) Data Boundary with Access Justifications
 	//   "REGIONAL_DATA_BOUNDARY" - Data boundary for one of Assured Workloads'
@@ -692,6 +694,8 @@ type GoogleCloudAssuredworkloadsV1EnableResourceMonitoringResponse struct {
 type GoogleCloudAssuredworkloadsV1ListViolationsResponse struct {
 	// NextPageToken: The next page token. Returns empty if reached the last page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// TotalSize: The total number of violations.
+	TotalSize int64 `json:"totalSize,omitempty"`
 	// Violations: List of Violations under a Workload.
 	Violations []*GoogleCloudAssuredworkloadsV1Violation `json:"violations,omitempty"`
 
@@ -1429,6 +1433,8 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	// Support
 	//   "ISRAEL_DATA_BOUNDARY_AND_SUPPORT" - Israel Data Boundary and Support
 	//   "JAPAN_DATA_BOUNDARY" - Japan Data Boundary
+	//   "SWITZERLAND_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS" - Switzerland Data
+	// Boundary with Access Justifications
 	//   "KSA_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS" - Kingdom of Saudi Arabia
 	// (KSA) Data Boundary with Access Justifications
 	//   "REGIONAL_DATA_BOUNDARY" - Data boundary for one of Assured Workloads'
@@ -4404,6 +4410,13 @@ func (c *OrganizationsLocationsWorkloadsViolationsListCall) IntervalEndTime(inte
 // start of the time window.
 func (c *OrganizationsLocationsWorkloadsViolationsListCall) IntervalStartTime(intervalStartTime string) *OrganizationsLocationsWorkloadsViolationsListCall {
 	c.urlParams_.Set("interval.startTime", intervalStartTime)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Actionable sorting
+// delegation.
+func (c *OrganizationsLocationsWorkloadsViolationsListCall) OrderBy(orderBy string) *OrganizationsLocationsWorkloadsViolationsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 

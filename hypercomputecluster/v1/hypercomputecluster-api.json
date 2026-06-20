@@ -498,7 +498,7 @@
       }
     }
   },
-  "revision": "20260606",
+  "revision": "20260610",
   "rootUrl": "https://hypercomputecluster.googleapis.com/",
   "schemas": {
     "BootDisk": {
@@ -506,12 +506,12 @@
       "id": "BootDisk",
       "properties": {
         "sizeGb": {
-          "description": "Required. Immutable. The size of the disk in gigabytes (GB), which must be at least 40 GB.",
+          "description": "Optional. The size of the disk in gigabytes (GB), which must be at least 40 GB.",
           "format": "int64",
           "type": "string"
         },
         "type": {
-          "description": "Required. Immutable. [Persistent disk type](https://cloud.google.com/compute/docs/disks#disk-types), in the format `projects/{project}/zones/{zone}/diskTypes/{disk_type}`.",
+          "description": "Optional. [Persistent disk type](https://cloud.google.com/compute/docs/disks#disk-types), in the format `projects/{project}/zones/{zone}/diskTypes/{disk_type}`.",
           "type": "string"
         }
       },

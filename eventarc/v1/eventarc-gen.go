@@ -458,10 +458,10 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Channel: A representation of the Channel resource. A Channel is a resource
-// on which event providers publish their events. The published events are
-// delivered through the transport associated with the channel. Note that a
-// channel is associated with exactly one event provider.
+// Channel: Represents a subscriber's intent to receive events from an event
+// provider. Published events are delivered using the transport associated with
+// the Channel resource. A channel is associated with exactly one event
+// provider.
 type Channel struct {
 	// ActivationToken: Output only. The activation token for the channel. The
 	// token must be used by the provider to register the channel for publishing.
@@ -910,8 +910,9 @@ func (s GKE) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleApiSource: A GoogleApiSource represents a subscription of 1P events
-// from a MessageBus.
+// GoogleApiSource: Represents a subscription to first-party events for a
+// MessageBus resource. A GoogleApiSource resource lets you configure the
+// delivery of events from Google API sources to a designated bus.
 type GoogleApiSource struct {
 	// Annotations: Optional. Resource annotations.
 	Annotations map[string]string `json:"annotations,omitempty"`
@@ -974,11 +975,11 @@ func (s GoogleApiSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChannelConfig: A GoogleChannelConfig is a resource that stores the
-// custom settings respected by Eventarc first-party triggers in the matching
-// region. Once configured, first-party event data will be protected using the
-// specified custom managed encryption key instead of Google-managed encryption
-// keys.
+// GoogleChannelConfig: Can be used to customize security settings for Eventarc
+// first-party triggers in a specific region. Once the GoogleChannelConfig
+// resource is configured, first-party event data is protected using the
+// specified customer-managed encryption key instead of a Google-managed
+// encryption key.
 type GoogleChannelConfig struct {
 	// CryptoKeyName: Optional. Resource name of a KMS crypto key (managed by the
 	// user) used to encrypt/decrypt their event data. It must match the pattern

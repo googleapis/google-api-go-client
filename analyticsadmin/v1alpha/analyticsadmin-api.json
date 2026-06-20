@@ -1130,6 +1130,40 @@
           "scopes": [
             "https://www.googleapis.com/auth/analytics.edit"
           ]
+        },
+        "updateReportingIdentitySettings": {
+          "description": "Updates the reporting identity settings for this property.",
+          "flatPath": "v1alpha/properties/{propertiesId}/reportingIdentitySettings",
+          "httpMethod": "PATCH",
+          "id": "analyticsadmin.properties.updateReportingIdentitySettings",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Output only. Identifier. Resource name for this reporting identity settings singleton resource. Format: properties/{property_id}/reportingIdentitySettings Example: \"properties/1234/reportingIdentitySettings\"",
+              "location": "path",
+              "pattern": "^properties/[^/]+/reportingIdentitySettings$",
+              "required": true,
+              "type": "string"
+            },
+            "updateMask": {
+              "description": "Optional. The list of fields to be updated. Field names must be in snake case (for example, \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields. If omitted, the service will treat it as an implied field mask equivalent to all fields that are populated.",
+              "format": "google-fieldmask",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "v1alpha/{+name}",
+          "request": {
+            "$ref": "GoogleAnalyticsAdminV1alphaReportingIdentitySettings"
+          },
+          "response": {
+            "$ref": "GoogleAnalyticsAdminV1alphaReportingIdentitySettings"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/analytics.edit"
+          ]
         }
       },
       "resources": {
@@ -5112,7 +5146,7 @@
       }
     }
   },
-  "revision": "20260607",
+  "revision": "20260616",
   "rootUrl": "https://analyticsadmin.googleapis.com/",
   "schemas": {
     "GoogleAnalyticsAdminV1alphaAccessBetweenFilter": {

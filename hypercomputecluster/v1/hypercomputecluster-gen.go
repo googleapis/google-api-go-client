@@ -202,10 +202,10 @@ type ProjectsLocationsOperationsService struct {
 // BootDisk: A Persistent disk (https://cloud.google.com/compute/docs/disks)
 // used as the boot disk for a Compute Engine VM instance.
 type BootDisk struct {
-	// SizeGb: Required. Immutable. The size of the disk in gigabytes (GB), which
-	// must be at least 40 GB.
+	// SizeGb: Optional. The size of the disk in gigabytes (GB), which must be at
+	// least 40 GB.
 	SizeGb int64 `json:"sizeGb,omitempty,string"`
-	// Type: Required. Immutable. Persistent disk type
+	// Type: Optional. Persistent disk type
 	// (https://cloud.google.com/compute/docs/disks#disk-types), in the format
 	// `projects/{project}/zones/{zone}/diskTypes/{disk_type}`.
 	Type string `json:"type,omitempty"`

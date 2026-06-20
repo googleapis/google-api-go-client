@@ -602,6 +602,9 @@ type CorpusQuery struct {
 	// DriveQuery: Service-specific options for Drive holds. If set, **CorpusType**
 	// must be **DRIVE**.
 	DriveQuery *HeldDriveQuery `json:"driveQuery,omitempty"`
+	// GeminiQuery: Service-specific options for Gemini holds. If set,
+	// **CorpusType** must be **GEMINI**.
+	GeminiQuery *HeldGeminiQuery `json:"geminiQuery,omitempty"`
 	// GroupsQuery: Service-specific options for Groups holds. If set,
 	// **CorpusType** must be **GROUPS**.
 	GroupsQuery *HeldGroupsQuery `json:"groupsQuery,omitempty"`
@@ -1233,6 +1236,10 @@ type HeldDriveQuery struct {
 func (s HeldDriveQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod HeldDriveQuery
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// HeldGeminiQuery: Options for Gemini holds.
+type HeldGeminiQuery struct {
 }
 
 // HeldGroupsQuery: Query options for group holds.

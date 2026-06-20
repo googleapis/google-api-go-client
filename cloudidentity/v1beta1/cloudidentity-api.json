@@ -1438,7 +1438,7 @@
               ]
             },
             "searchDirectGroups": {
-              "description": "Searches direct groups of a member.",
+              "description": "Searches direct groups of a member. Groups for which the actor does not have the permission to view memberships are silently filtered out.",
               "flatPath": "v1beta1/groups/{groupsId}/memberships:searchDirectGroups",
               "httpMethod": "GET",
               "id": "cloudidentity.groups.memberships.searchDirectGroups",
@@ -2349,7 +2349,7 @@
       }
     }
   },
-  "revision": "20260601",
+  "revision": "20260617",
   "rootUrl": "https://cloudidentity.googleapis.com/",
   "schemas": {
     "AddIdpCredentialOperationMetadata": {

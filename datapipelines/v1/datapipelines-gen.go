@@ -605,8 +605,8 @@ type GoogleCloudDatapipelinesV1Pipeline struct {
 	// location.
 	Name string `json:"name,omitempty"`
 	// PipelineSources: Immutable. The sources of the pipeline (for example,
-	// Dataplex). The keys and values are set by the corresponding sources during
-	// pipeline creation.
+	// Knowledge Catalog). The keys and values are set by the corresponding sources
+	// during pipeline creation.
 	PipelineSources map[string]string `json:"pipelineSources,omitempty"`
 	// ScheduleInfo: Internal scheduling information for a pipeline. If this
 	// information is provided, periodic jobs will be created per the schedule. If

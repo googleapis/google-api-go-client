@@ -1208,7 +1208,7 @@
       }
     }
   },
-  "revision": "20260528",
+  "revision": "20260615",
   "rootUrl": "https://vault.googleapis.com/",
   "schemas": {
     "AccountCount": {
@@ -1494,6 +1494,10 @@
         "driveQuery": {
           "$ref": "HeldDriveQuery",
           "description": "Service-specific options for Drive holds. If set, **CorpusType** must be **DRIVE**."
+        },
+        "geminiQuery": {
+          "$ref": "HeldGeminiQuery",
+          "description": "Service-specific options for Gemini holds. If set, **CorpusType** must be **GEMINI**."
         },
         "groupsQuery": {
           "$ref": "HeldGroupsQuery",
@@ -2016,6 +2020,12 @@
           "type": "boolean"
         }
       },
+      "type": "object"
+    },
+    "HeldGeminiQuery": {
+      "description": "Options for Gemini holds.",
+      "id": "HeldGeminiQuery",
+      "properties": {},
       "type": "object"
     },
     "HeldGroupsQuery": {

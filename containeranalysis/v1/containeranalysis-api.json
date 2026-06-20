@@ -1715,7 +1715,7 @@
       }
     }
   },
-  "revision": "20260521",
+  "revision": "20260610",
   "rootUrl": "https://containeranalysis.googleapis.com/",
   "schemas": {
     "AISkillAnalysisNote": {
@@ -1737,6 +1737,16 @@
         },
         "maxSeverity": {
           "description": "Maximum severity found among findings.",
+          "enum": [
+            "SEVERITY_UNSPECIFIED",
+            "CRITICAL",
+            "HIGH"
+          ],
+          "enumDescriptions": [
+            "Unspecified severity.",
+            "Critical severity.",
+            "High severity."
+          ],
           "type": "string"
         },
         "skillName": {
@@ -3608,12 +3618,14 @@
             "N1_HIGHCPU_32",
             "E2_HIGHCPU_8",
             "E2_HIGHCPU_32",
-            "E2_MEDIUM"
+            "E2_MEDIUM",
+            "E2_STANDARD_2"
           ],
           "enumDeprecated": [
             false,
             true,
             true,
+            false,
             false,
             false,
             false
@@ -3624,7 +3636,8 @@
             "Highcpu machine with 32 CPUs.",
             "Highcpu e2 machine with 8 CPUs.",
             "Highcpu e2 machine with 32 CPUs.",
-            "E2 machine with 1 CPU."
+            "E2 machine with 1 CPU.",
+            "E2 machine with 2 CPUs."
           ],
           "type": "string"
         },
@@ -5135,16 +5148,40 @@
           "description": "Category of the finding.",
           "type": "string"
         },
+        "details": {
+          "description": "Description of the finding category.",
+          "type": "string"
+        },
         "location": {
           "$ref": "FindingLocation",
           "description": "Location (path and line) where the finding was detected."
         },
         "scanner": {
           "description": "Scanner determines which engine (e.g. static, llm) emitted the finding.",
+          "enum": [
+            "SCANNER_UNSPECIFIED",
+            "STATIC",
+            "LLM"
+          ],
+          "enumDescriptions": [
+            "Unspecified scanner.",
+            "Static scanner.",
+            "LLM scanner."
+          ],
           "type": "string"
         },
         "severity": {
           "description": "Severity of the finding.",
+          "enum": [
+            "SEVERITY_UNSPECIFIED",
+            "CRITICAL",
+            "HIGH"
+          ],
+          "enumDescriptions": [
+            "Unspecified severity.",
+            "Critical severity.",
+            "High severity."
+          ],
           "type": "string"
         }
       },
@@ -7435,6 +7472,10 @@
           "$ref": "CVSSv3",
           "description": "The full description of the CVSSv3 for this vulnerability."
         },
+        "cvssV4": {
+          "$ref": "CVSS",
+          "description": "The full description of the v4 CVSS for this vulnerability."
+        },
         "cvssVersion": {
           "description": "CVSS version used to populate cvss_score and severity.",
           "enum": [
@@ -7505,6 +7546,10 @@
         "cvssV2": {
           "$ref": "CVSS",
           "description": "The cvss v2 score for the vulnerability."
+        },
+        "cvssV4": {
+          "$ref": "CVSS",
+          "description": "The cvss v4 score for the vulnerability."
         },
         "cvssVersion": {
           "description": "Output only. CVSS version used to populate cvss_score and severity.",

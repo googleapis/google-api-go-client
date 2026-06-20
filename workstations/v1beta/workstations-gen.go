@@ -742,6 +742,9 @@ type GceHyperdiskBalancedHighAvailability struct {
 	// disk from the archival snapshot. A value of "0s" indicates that the disk
 	// will never be archived.
 	ArchiveTimeout string `json:"archiveTimeout,omitempty"`
+	// MaxSizeGb: Optional. Maximum size in GB to which this persistent directory
+	// can be resized. Defaults to unlimited if not set.
+	MaxSizeGb int64 `json:"maxSizeGb,omitempty"`
 	// ReclaimPolicy: Optional. Whether the persistent disk should be deleted when
 	// the workstation is deleted. Valid values are `DELETE` and `RETAIN`. Defaults
 	// to `DELETE`.
@@ -1011,6 +1014,9 @@ type GceRegionalPersistentDisk struct {
 	// with. The workstation image must support this file system type. Must be
 	// empty if source_snapshot is set. Defaults to "ext4".
 	FsType string `json:"fsType,omitempty"`
+	// MaxSizeGb: Optional. Maximum size in GB to which this persistent directory
+	// can be resized. Defaults to unlimited if not set.
+	MaxSizeGb int64 `json:"maxSizeGb,omitempty"`
 	// ReclaimPolicy: Optional. Whether the persistent disk should be deleted when
 	// the workstation is deleted. Valid values are `DELETE` and `RETAIN`. Defaults
 	// to `DELETE`.

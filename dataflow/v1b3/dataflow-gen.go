@@ -1852,8 +1852,15 @@ type ExecutionStageState struct {
 	// indicates that the batch job's associated resources are currently being
 	// cleaned up after a successful run. Currently, this is an opt-in feature,
 	// please reach out to Cloud support team if you are interested.
-	//   "JOB_STATE_PAUSING" - `JOB_STATE_PAUSING` is not implemented yet.
-	//   "JOB_STATE_PAUSED" - `JOB_STATE_PAUSED` is not implemented yet.
+	//   "JOB_STATE_PAUSING" - `JOB_STATE_PAUSING` indicates that the job is in the
+	// process of pausing. A pausing job will stop processing, archive in-flight
+	// Shuffle data, and transition to `JOB_STATE_PAUSED`. Jobs in this state can
+	// transition to `JOB_STATE_CANCELLING` if cancellation is requested, or can
+	// transition back to `JOB_STATE_RUNNING` if the pause fails to complete.
+	//   "JOB_STATE_PAUSED" - `JOB_STATE_PAUSED` indicates that the job is not
+	// currently processing. Jobs in this state can transition back to
+	// `JOB_STATE_RUNNING` to continue processing where they left off, or can
+	// transition to `JOB_STATE_CANCELLING` if cancellation is requested.
 	ExecutionStageState string `json:"executionStageState,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CurrentStateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2755,8 +2762,15 @@ type Job struct {
 	// indicates that the batch job's associated resources are currently being
 	// cleaned up after a successful run. Currently, this is an opt-in feature,
 	// please reach out to Cloud support team if you are interested.
-	//   "JOB_STATE_PAUSING" - `JOB_STATE_PAUSING` is not implemented yet.
-	//   "JOB_STATE_PAUSED" - `JOB_STATE_PAUSED` is not implemented yet.
+	//   "JOB_STATE_PAUSING" - `JOB_STATE_PAUSING` indicates that the job is in the
+	// process of pausing. A pausing job will stop processing, archive in-flight
+	// Shuffle data, and transition to `JOB_STATE_PAUSED`. Jobs in this state can
+	// transition to `JOB_STATE_CANCELLING` if cancellation is requested, or can
+	// transition back to `JOB_STATE_RUNNING` if the pause fails to complete.
+	//   "JOB_STATE_PAUSED" - `JOB_STATE_PAUSED` indicates that the job is not
+	// currently processing. Jobs in this state can transition back to
+	// `JOB_STATE_RUNNING` to continue processing where they left off, or can
+	// transition to `JOB_STATE_CANCELLING` if cancellation is requested.
 	CurrentState string `json:"currentState,omitempty"`
 	// CurrentStateTime: The timestamp associated with the current state.
 	CurrentStateTime string `json:"currentStateTime,omitempty"`
@@ -2862,8 +2876,15 @@ type Job struct {
 	// indicates that the batch job's associated resources are currently being
 	// cleaned up after a successful run. Currently, this is an opt-in feature,
 	// please reach out to Cloud support team if you are interested.
-	//   "JOB_STATE_PAUSING" - `JOB_STATE_PAUSING` is not implemented yet.
-	//   "JOB_STATE_PAUSED" - `JOB_STATE_PAUSED` is not implemented yet.
+	//   "JOB_STATE_PAUSING" - `JOB_STATE_PAUSING` indicates that the job is in the
+	// process of pausing. A pausing job will stop processing, archive in-flight
+	// Shuffle data, and transition to `JOB_STATE_PAUSED`. Jobs in this state can
+	// transition to `JOB_STATE_CANCELLING` if cancellation is requested, or can
+	// transition back to `JOB_STATE_RUNNING` if the pause fails to complete.
+	//   "JOB_STATE_PAUSED" - `JOB_STATE_PAUSED` indicates that the job is not
+	// currently processing. Jobs in this state can transition back to
+	// `JOB_STATE_RUNNING` to continue processing where they left off, or can
+	// transition to `JOB_STATE_CANCELLING` if cancellation is requested.
 	RequestedState string `json:"requestedState,omitempty"`
 	// RuntimeUpdatableParams: This field may ONLY be modified at runtime using the
 	// projects.jobs.update method to adjust job behavior. This field has no effect

@@ -10302,16 +10302,17 @@ func (s GoogleCloudDialogflowV2KnowledgeAssistAnswer) MarshalJSON() ([]byte, err
 }
 
 type GoogleCloudDialogflowV2KnowledgeAssistAnswerAdditionalSuggestedQueryResult struct {
+	AnswerRecord   string                                                      `json:"answerRecord,omitempty"`
 	SuggestedQuery *GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuery `json:"suggestedQuery,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SuggestedQuery") to
+	// ForceSendFields is a list of field names (e.g. "AnswerRecord") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SuggestedQuery") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AnswerRecord") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -16172,16 +16173,17 @@ func (s GoogleCloudDialogflowV2beta1KnowledgeAssistAnswer) MarshalJSON() ([]byte
 }
 
 type GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerAdditionalSuggestedQueryResult struct {
+	AnswerRecord   string                                                           `json:"answerRecord,omitempty"`
 	SuggestedQuery *GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerSuggestedQuery `json:"suggestedQuery,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SuggestedQuery") to
+	// ForceSendFields is a list of field names (e.g. "AnswerRecord") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SuggestedQuery") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AnswerRecord") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

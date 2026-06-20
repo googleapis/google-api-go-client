@@ -7740,6 +7740,18 @@ func (c *ProjectsLocationsInsightsConfigsDeploymentEventsListCall) Filter(filter
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Field to use to order the
+// list of DeploymentEvents. Expects AIP-132 format "field_name asc" or
+// "field_name desc", e.g. "deploy_time desc" Supported fields for ordering
+// are: deploy_time, update_time. Currently, only sorting by a single field is
+// supported. If this field is not provided, the list will be sorted by
+// "deploy_time desc". For more details on the ordering syntax, see
+// https://google.aip.dev/132#ordering.
+func (c *ProjectsLocationsInsightsConfigsDeploymentEventsListCall) OrderBy(orderBy string) *ProjectsLocationsInsightsConfigsDeploymentEventsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // deployment events to return. The service may return fewer than this value.
 // If unspecified, at most 50 deployment events will be returned. The maximum

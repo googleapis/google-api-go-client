@@ -8599,7 +8599,9 @@ type GroupsMembershipsSearchDirectGroupsCall struct {
 	header_      http.Header
 }
 
-// SearchDirectGroups: Searches direct groups of a member.
+// SearchDirectGroups: Searches direct groups of a member. Groups for which the
+// actor does not have the permission to view memberships are silently filtered
+// out.
 //
 //   - parent: Resource name
 //     (https://cloud.google.com/apis/design/resource_names) of the group to

@@ -5338,7 +5338,9 @@ type SleepMetadata struct {
 	// durations.
 	Nap bool `json:"nap,omitempty"`
 	// Processed: Output only. Sleep and sleep stages algorithms finished
-	// processing.
+	// processing. A `true` value indicates whether all data processing for the
+	// session is complete. A `false` value means sleep period is detected but
+	// sleep stages is still processing.
 	Processed bool `json:"processed,omitempty"`
 	// StagesStatus: Output only. Sleep stages algorithm processing status.
 	//

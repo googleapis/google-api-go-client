@@ -1903,6 +1903,9 @@ type WebAppConfig struct {
 	// If the request asks for the V2 config format, this field will be populated
 	// instead of `realtime_database_instance_uri`.
 	RealtimeDatabaseUrl string `json:"realtimeDatabaseUrl,omitempty"`
+	// RecaptchaSiteKey: Optional. Recaptcha Enterprise site key associated with
+	// the Firebase App.
+	RecaptchaSiteKey string `json:"recaptchaSiteKey,omitempty"`
 	// StorageBucket: **DEPRECATED.** _Instead, find the name of the default Cloud
 	// Storage for Firebase bucket using the list endpoint
 	// (https://firebase.google.com/docs/reference/rest/storage/rest/v1beta/projects.buckets/list)

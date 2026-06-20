@@ -8455,6 +8455,8 @@ type ReservationAffinity struct {
 	//   "ANY_RESERVATION" - Consume any reservation available.
 	//   "SPECIFIC_RESERVATION" - Must consume from a specific reservation. Must
 	// specify key value fields for specifying the reservations.
+	//   "ANY_RESERVATION_THEN_FAIL" - Consume any reservation available. If no
+	// reservation is available, fail the node creation.
 	ConsumeReservationType string `json:"consumeReservationType,omitempty"`
 	// Key: Corresponds to the label key of a reservation resource. To target a
 	// SPECIFIC_RESERVATION by name, specify
@@ -10323,6 +10325,9 @@ type UpdateNodePoolRequest struct {
 	// Initiates an upgrade operation that migrates the nodes in the node pool to
 	// the specified machine type.
 	MachineType string `json:"machineType,omitempty"`
+	// MaintenancePolicy: Optional. Specifies the maintenance policy for the node
+	// pool, including maintenance exclusion options.
+	MaintenancePolicy *NodePoolMaintenancePolicy `json:"maintenancePolicy,omitempty"`
 	// MaxRunDuration: The maximum duration for the nodes to exist. If unspecified,
 	// the nodes can exist indefinitely.
 	MaxRunDuration string `json:"maxRunDuration,omitempty"`

@@ -224,6 +224,38 @@
                 }
               }
             },
+            "violations": {
+              "methods": {
+                "batchAcknowledgeViolations": {
+                  "description": "Acknowledges multiple existing violations. By acknowledging violations, users acknowledge the existence of compliance violations in their workload and decide to ignore them due to a valid business justification. Acknowledgement is a permanent operation and it cannot be reverted. This is a batch version of AcknowledgeViolation.",
+                  "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/violations:batchAcknowledgeViolations",
+                  "httpMethod": "POST",
+                  "id": "assuredworkloads.organizations.locations.violations.batchAcknowledgeViolations",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Optional. The parent resource shared by all violations being acknowledged. Format: organizations/{organization}/locations/{location}/workloads/{workload}",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+parent}/violations:batchAcknowledgeViolations",
+                  "request": {
+                    "$ref": "GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsRequest"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            },
             "workloads": {
               "methods": {
                 "analyzeWorkloadMove": {
@@ -693,6 +725,11 @@
                           "location": "query",
                           "type": "string"
                         },
+                        "orderBy": {
+                          "description": "Optional. Actionable sorting delegation.",
+                          "location": "query",
+                          "type": "string"
+                        },
                         "pageSize": {
                           "description": "Optional. Page size.",
                           "format": "int32",
@@ -725,11 +762,43 @@
               }
             }
           }
+        },
+        "violations": {
+          "methods": {
+            "batchAcknowledgeViolations": {
+              "description": "Acknowledges multiple existing violations. By acknowledging violations, users acknowledge the existence of compliance violations in their workload and decide to ignore them due to a valid business justification. Acknowledgement is a permanent operation and it cannot be reverted. This is a batch version of AcknowledgeViolation.",
+              "flatPath": "v1beta1/organizations/{organizationsId}/violations:batchAcknowledgeViolations",
+              "httpMethod": "POST",
+              "id": "assuredworkloads.organizations.violations.batchAcknowledgeViolations",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Optional. The parent resource shared by all violations being acknowledged. Format: organizations/{organization}/locations/{location}/workloads/{workload}",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1beta1/{+parent}/violations:batchAcknowledgeViolations",
+              "request": {
+                "$ref": "GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsRequest"
+              },
+              "response": {
+                "$ref": "GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            }
+          }
         }
       }
     }
   },
-  "revision": "20260601",
+  "revision": "20260615",
   "rootUrl": "https://assuredworkloads.googleapis.com/",
   "schemas": {
     "GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationRequest": {
@@ -977,6 +1046,7 @@
             "EU_DATA_BOUNDARY_AND_SUPPORT",
             "ISRAEL_DATA_BOUNDARY_AND_SUPPORT",
             "JAPAN_DATA_BOUNDARY",
+            "SWITZERLAND_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS",
             "KSA_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS",
             "REGIONAL_DATA_BOUNDARY",
             "US_DATA_BOUNDARY_AND_SUPPORT",
@@ -1007,6 +1077,7 @@
             "US_REGIONAL_ACCESS"
           ],
           "enumDeprecated": [
+            false,
             false,
             false,
             false,
@@ -1071,6 +1142,7 @@
             "European Union (EU) Data Boundary and Support",
             "Israel Data Boundary and Support",
             "Japan Data Boundary",
+            "Switzerland Data Boundary with Access Justifications",
             "Kingdom of Saudi Arabia (KSA) Data Boundary with Access Justifications",
             "Data boundary for one of Assured Workloads' *Free tier* control packages. Determines the region by specifying the data location during workload creation.",
             "United States (US) Data Boundary and Support",
@@ -1144,6 +1216,11 @@
         "nextPageToken": {
           "description": "The next page token. Returns empty if reached the last page.",
           "type": "string"
+        },
+        "totalSize": {
+          "description": "The total number of violations.",
+          "format": "int32",
+          "type": "integer"
         },
         "violations": {
           "description": "List of Violations under a Workload.",
@@ -1722,6 +1799,7 @@
             "EU_DATA_BOUNDARY_AND_SUPPORT",
             "ISRAEL_DATA_BOUNDARY_AND_SUPPORT",
             "JAPAN_DATA_BOUNDARY",
+            "SWITZERLAND_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS",
             "KSA_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS",
             "REGIONAL_DATA_BOUNDARY",
             "US_DATA_BOUNDARY_AND_SUPPORT",
@@ -1752,6 +1830,7 @@
             "US_REGIONAL_ACCESS"
           ],
           "enumDeprecated": [
+            false,
             false,
             false,
             false,
@@ -1816,6 +1895,7 @@
             "European Union (EU) Data Boundary and Support",
             "Israel Data Boundary and Support",
             "Japan Data Boundary",
+            "Switzerland Data Boundary with Access Justifications",
             "Kingdom of Saudi Arabia (KSA) Data Boundary with Access Justifications",
             "Data boundary for one of Assured Workloads' *Free tier* control packages. Determines the region by specifying the data location during workload creation.",
             "United States (US) Data Boundary and Support",

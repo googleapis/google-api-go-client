@@ -2036,19 +2036,33 @@ func (s CohortInfo) MarshalJSON() ([]byte, error) {
 }
 
 // ConfidentialInstanceConfig: Confidential Instance Config for clusters using
-// Confidential VMs (https://cloud.google.com/compute/confidential-vm/docs)
+// Confidential VMs
+// (https://cloud.google.com/confidential-computing/confidential-vm/docs)
 type ConfidentialInstanceConfig struct {
+	// ConfidentialInstanceType: Optional. Defines the type of Confidential Compute
+	// technology to use.
+	//
+	// Possible values:
+	//   "CONFIDENTIAL_INSTANCE_TYPE_UNSPECIFIED" - Confidential Instance Type is
+	// not specified.
+	//   "SEV" - AMD Secure Encrypted Virtualization
+	// (https://cloud.google.com/confidential-computing/confidential-vm/docs/confidential-vm-overview#amd_sev)
+	//   "SEV_SNP" - AMD Secure Encrypted Virtualization-Secure Nested Paging
+	// (https://cloud.google.com/confidential-computing/confidential-vm/docs/confidential-vm-overview#amd_sev-snp)
+	//   "TDX" - Intel Trust Domain Extensions
+	// (https://cloud.google.com/confidential-computing/confidential-vm/docs/confidential-vm-overview#intel_tdx)
+	ConfidentialInstanceType string `json:"confidentialInstanceType,omitempty"`
 	// EnableConfidentialCompute: Optional. Deprecated: Use
 	// 'confidential_instance_type' instead. Defines whether the instance should
 	// have confidential compute enabled.
 	EnableConfidentialCompute bool `json:"enableConfidentialCompute,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EnableConfidentialCompute")
+	// ForceSendFields is a list of field names (e.g. "ConfidentialInstanceType")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EnableConfidentialCompute") to
+	// NullFields is a list of field names (e.g. "ConfidentialInstanceType") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2879,7 +2893,7 @@ type GceClusterConfig struct {
 	AutoZoneExcludeZoneUris []string `json:"autoZoneExcludeZoneUris,omitempty"`
 	// ConfidentialInstanceConfig: Optional. Confidential Instance Config for
 	// clusters using Confidential VMs
-	// (https://cloud.google.com/compute/confidential-vm/docs).
+	// (https://cloud.google.com/confidential-computing/confidential-vm/docs).
 	ConfidentialInstanceConfig *ConfidentialInstanceConfig `json:"confidentialInstanceConfig,omitempty"`
 	// InternalIpOnly: Optional. This setting applies to subnetwork-enabled
 	// networks. It is set to true by default in clusters created with image
@@ -3107,6 +3121,13 @@ type GkeNodeConfig struct {
 	// CONTROLLER role or in the DEFAULT node pool if the CONTROLLER role is not
 	// assigned (the DEFAULT node pool will assume the CONTROLLER role).
 	Preemptible bool `json:"preemptible,omitempty"`
+	// ServiceAccount: Optional. Specifies the service account
+	// (https://cloud.google.com/dataproc/docs/guides/dpgke/dataproc-gke-iam) to be
+	// used by the node pools. Specify the email address of the service account or
+	// its full resource name.Format:
+	// projects/{project}/serviceAccounts/{service_account_email} or
+	// {service_account_email}.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
 	// Spot: Optional. Whether the nodes are created as Spot VM instances
 	// (https://cloud.google.com/compute/docs/instances/spot). Spot VMs are the
 	// latest update to legacy preemptible VMs. Spot VMs do not have a maximum

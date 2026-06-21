@@ -84,6 +84,11 @@
     },
     {
       "description": "Regional Endpoint",
+      "endpointUrl": "https://dataproc.us-west4.rep.googleapis.com/",
+      "location": "us-west4"
+    },
+    {
+      "description": "Regional Endpoint",
       "endpointUrl": "https://dataproc.us-west8.rep.googleapis.com/",
       "location": "us-west8"
     },
@@ -5224,7 +5229,7 @@
       }
     }
   },
-  "revision": "20260524",
+  "revision": "20260612",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -6563,9 +6568,25 @@
       "type": "object"
     },
     "ConfidentialInstanceConfig": {
-      "description": "Confidential Instance Config for clusters using Confidential VMs (https://cloud.google.com/compute/confidential-vm/docs)",
+      "description": "Confidential Instance Config for clusters using Confidential VMs (https://cloud.google.com/confidential-computing/confidential-vm/docs)",
       "id": "ConfidentialInstanceConfig",
       "properties": {
+        "confidentialInstanceType": {
+          "description": "Optional. Defines the type of Confidential Compute technology to use.",
+          "enum": [
+            "CONFIDENTIAL_INSTANCE_TYPE_UNSPECIFIED",
+            "SEV",
+            "SEV_SNP",
+            "TDX"
+          ],
+          "enumDescriptions": [
+            "Confidential Instance Type is not specified.",
+            "AMD Secure Encrypted Virtualization (https://cloud.google.com/confidential-computing/confidential-vm/docs/confidential-vm-overview#amd_sev)",
+            "AMD Secure Encrypted Virtualization-Secure Nested Paging (https://cloud.google.com/confidential-computing/confidential-vm/docs/confidential-vm-overview#amd_sev-snp)",
+            "Intel Trust Domain Extensions (https://cloud.google.com/confidential-computing/confidential-vm/docs/confidential-vm-overview#intel_tdx)"
+          ],
+          "type": "string"
+        },
         "enableConfidentialCompute": {
           "deprecated": true,
           "description": "Optional. Deprecated: Use 'confidential_instance_type' instead. Defines whether the instance should have confidential compute enabled.",
@@ -7362,7 +7383,7 @@
         },
         "confidentialInstanceConfig": {
           "$ref": "ConfidentialInstanceConfig",
-          "description": "Optional. Confidential Instance Config for clusters using Confidential VMs (https://cloud.google.com/compute/confidential-vm/docs)."
+          "description": "Optional. Confidential Instance Config for clusters using Confidential VMs (https://cloud.google.com/confidential-computing/confidential-vm/docs)."
         },
         "internalIpOnly": {
           "description": "Optional. This setting applies to subnetwork-enabled networks. It is set to true by default in clusters created with image versions 2.2.x.When set to true: All cluster VMs have internal IP addresses. Google Private Access (https://cloud.google.com/vpc/docs/private-google-access) must be enabled to access the Dataproc API and other Google Cloud APIs. Off-cluster dependencies must be configured to be accessible without external IP addresses.When set to false: Cluster VMs are not restricted to internal IP addresses. Ephemeral external IP addresses are assigned to each cluster VM.",
@@ -7520,6 +7541,10 @@
         "preemptible": {
           "description": "Optional. Whether the nodes are created as legacy preemptible VM instances (https://cloud.google.com/compute/docs/instances/preemptible). Also see Spot VMs, preemptible VM instances without a maximum lifetime. Legacy and Spot preemptible nodes cannot be used in a node pool with the CONTROLLER role or in the DEFAULT node pool if the CONTROLLER role is not assigned (the DEFAULT node pool will assume the CONTROLLER role).",
           "type": "boolean"
+        },
+        "serviceAccount": {
+          "description": "Optional. Specifies the service account (https://cloud.google.com/dataproc/docs/guides/dpgke/dataproc-gke-iam) to be used by the node pools. Specify the email address of the service account or its full resource name.Format: projects/{project}/serviceAccounts/{service_account_email} or {service_account_email}.",
+          "type": "string"
         },
         "spot": {
           "description": "Optional. Whether the nodes are created as Spot VM instances (https://cloud.google.com/compute/docs/instances/spot). Spot VMs are the latest update to legacy preemptible VMs. Spot VMs do not have a maximum lifetime. Legacy and Spot preemptible nodes cannot be used in a node pool with the CONTROLLER role or in the DEFAULT node pool if the CONTROLLER role is not assigned (the DEFAULT node pool will assume the CONTROLLER role).",

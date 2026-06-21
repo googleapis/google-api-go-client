@@ -3271,6 +3271,11 @@ type ServiceMeshCondition struct {
 	//   "NON_STANDARD_BINARY_USAGE" - Non-standard binary usage error code
 	//   "UNSUPPORTED_GATEWAY_CLASS" - Unsupported gateway class error code
 	//   "MANAGED_CNI_NOT_ENABLED" - Managed CNI not enabled error code
+	//   "MISSING_CONTROL_PLANE_CONFIG" - Missing control plane configuration error
+	// code
+	//   "SHARED_VPC_MISSING_PERMISSIONS" - Shared VPC missing permissions error
+	// code
+	//   "REQUIRED_ORG_POLICY_DISABLED" - Required org policy disabled error code
 	//   "MODERNIZATION_SCHEDULED" - Modernization is scheduled for a cluster.
 	//   "MODERNIZATION_IN_PROGRESS" - Modernization is in progress for a cluster.
 	//   "MODERNIZATION_COMPLETED" - Modernization is completed for a cluster.

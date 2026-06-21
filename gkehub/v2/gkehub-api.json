@@ -554,7 +554,7 @@
       }
     }
   },
-  "revision": "20260529",
+  "revision": "20260616",
   "rootUrl": "https://gkehub.googleapis.com/",
   "schemas": {
     "AppDevExperienceState": {
@@ -3154,6 +3154,9 @@
             "NON_STANDARD_BINARY_USAGE",
             "UNSUPPORTED_GATEWAY_CLASS",
             "MANAGED_CNI_NOT_ENABLED",
+            "MISSING_CONTROL_PLANE_CONFIG",
+            "SHARED_VPC_MISSING_PERMISSIONS",
+            "REQUIRED_ORG_POLICY_DISABLED",
             "MODERNIZATION_SCHEDULED",
             "MODERNIZATION_IN_PROGRESS",
             "MODERNIZATION_COMPLETED",
@@ -3214,6 +3217,9 @@
             "Non-standard binary usage error code",
             "Unsupported gateway class error code",
             "Managed CNI not enabled error code",
+            "Missing control plane configuration error code",
+            "Shared VPC missing permissions error code",
+            "Required org policy disabled error code",
             "Modernization is scheduled for a cluster.",
             "Modernization is in progress for a cluster.",
             "Modernization is completed for a cluster.",

@@ -624,9 +624,10 @@ func (s BigQueryConfig) MarshalJSON() ([]byte, error) {
 
 // BigtableConfig: Configuration for a Bigtable subscription. The Pub/Sub
 // message will be written to a Bigtable row as follows: - row key:
-// subscription name and message ID delimited by #. - columns: message bytes
-// written to a single column family "data" with an empty-string column
-// qualifier. - cell timestamp: the message publish timestamp.
+// subscription name, message ID hash, and message ID delimited by `#`. -
+// columns: message bytes written to a single column family `data` with an
+// empty-string column qualifier. - cell timestamp: the message publish
+// timestamp.
 type BigtableConfig struct {
 	// AppProfileId: Optional. The app profile to use for the Bigtable writes. If
 	// not specified, the "default" application profile will be used. The app
@@ -659,7 +660,7 @@ type BigtableConfig struct {
 	// ([instructions]({$universe.dns_names.final_documentation_domain}/service-usag
 	// e/docs/enable-disable))
 	//   "SCHEMA_MISMATCH" - Cannot write to Bigtable because of a missing column
-	// family ("data"), or if there is no structured row key for the subscription
+	// family (`data`), or if there is no structured row key for the subscription
 	// name + message ID, if because the app profile is not configured for
 	// single-cluster routing.
 	//   "IN_TRANSIT_LOCATION_RESTRICTION" - Cannot write to the destination

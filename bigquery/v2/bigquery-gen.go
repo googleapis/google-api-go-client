@@ -6043,8 +6043,11 @@ type JobStatistics2 struct {
 	TotalServicesSkuSlotMs int64 `json:"totalServicesSkuSlotMs,omitempty,string"`
 	// TotalSlotMs: Output only. Slot-milliseconds for the job.
 	TotalSlotMs int64 `json:"totalSlotMs,omitempty,string"`
-	// TransferredBytes: Output only. Total bytes transferred for cross-cloud
-	// queries such as Cross Cloud Transfer and CREATE TABLE AS SELECT (CTAS).
+	// TransferredBytes: Output only. Total bytes transferred for BigQuery Omni
+	// queries from the remote cloud back to Google Cloud. This tracks data
+	// movement over Google-managed connections (like query results). It doesn't
+	// include input data read from the external data lake (for example, S3)
+	// because that data stays within the remote cloud.
 	TransferredBytes int64 `json:"transferredBytes,omitempty,string"`
 	// UndeclaredQueryParameters: Output only. GoogleSQL only: list of undeclared
 	// query parameters detected during a dry run validation.

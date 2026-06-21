@@ -2123,7 +2123,7 @@ func (s RolloutControl) MarshalJSON() ([]byte, error) {
 }
 
 // RolloutKind: An object that describes various settings of Rollout execution.
-// Includes built-in policies across GCP and GDC, and customizable policies.
+// Includes built-in and customizable policies.
 type RolloutKind struct {
 	// Annotations: Optional. Annotations is an unstructured key-value map stored
 	// with a resource that may be set by external tools to store and retrieve
@@ -2673,7 +2673,7 @@ type Unit struct {
 	// is controlled by the user or by the system. Immutable once created.
 	//
 	// Possible values:
-	//   "MANAGEMENT_MODE_UNSPECIFIED"
+	//   "MANAGEMENT_MODE_UNSPECIFIED" - Unspecified management mode.
 	//   "MANAGEMENT_MODE_USER" - Unit's lifecycle is managed by the user.
 	//   "MANAGEMENT_MODE_SYSTEM" - The system will decide when to deprovision and
 	// delete the unit. User still can deprovision or delete the unit manually.
@@ -2727,7 +2727,7 @@ type Unit struct {
 	// state of the unit.
 	//
 	// Possible values:
-	//   "SYSTEM_MANAGED_STATE_UNSPECIFIED"
+	//   "SYSTEM_MANAGED_STATE_UNSPECIFIED" - Unspecified system managed state.
 	//   "SYSTEM_MANAGED_STATE_ACTIVE" - Unit has dependents attached.
 	//   "SYSTEM_MANAGED_STATE_INACTIVE" - Unit has no dependencies attached, but
 	// attachment is allowed.
@@ -2981,9 +2981,9 @@ type UnitKind struct {
 	// boundary the Unit Kind represents.
 	//
 	// Possible values:
-	//   "BOUNDARY_TYPE_UNSPECIFIED"
+	//   "BOUNDARY_TYPE_UNSPECIFIED" - Unspecified boundary type.
 	//   "BOUNDARY_TYPE_TENANT_PROJECT" - Tenant project boundary.
-	//   "BOUNDARY_TYPE_MANAGED_PROJECT"
+	//   "BOUNDARY_TYPE_MANAGED_PROJECT" - Managed project boundary.
 	BoundaryType string `json:"boundaryType,omitempty"`
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -3005,8 +3005,8 @@ type UnitKind struct {
 	// server agree on the ordering of a resource being written.
 	Etag string `json:"etag,omitempty"`
 	// InputVariableMappings: Optional. List of inputVariables for this release
-	// that will either be retrieved from a dependency’s outputVariables, or will
-	// be passed on to a dependency’s inputVariables. Maximum 100.
+	// that will either be retrieved from a dependency's outputVariables, or will
+	// be passed on to a dependency's inputVariables. Maximum 100.
 	InputVariableMappings []*VariableMapping `json:"inputVariableMappings,omitempty"`
 	// Labels: Optional. The labels on the resource, which can be used for
 	// categorization. similar to Kubernetes resource labels.
@@ -3079,7 +3079,8 @@ type UnitOperation struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// DeleteTime: Output only. The timestamp when the resource was marked for
 	// deletion (deletion is an asynchronous operation).
-	DeleteTime  string       `json:"deleteTime,omitempty"`
+	DeleteTime string `json:"deleteTime,omitempty"`
+	// Deprovision: Optional. Deprovision operation.
 	Deprovision *Deprovision `json:"deprovision,omitempty"`
 	// EngineState: Optional. Output only. The engine state for on-going deployment
 	// engine operation(s). This field is opaque for external usage.
@@ -3101,7 +3102,8 @@ type UnitOperation struct {
 	// Etag: Output only. An opaque value that uniquely identifies a version or
 	// generation of a resource. It can be used to confirm that the client and
 	// server agree on the ordering of a resource being written.
-	Etag       string      `json:"etag,omitempty"`
+	Etag string `json:"etag,omitempty"`
+	// FlagUpdate: Optional. Flag update operation.
 	FlagUpdate *FlagUpdate `json:"flagUpdate,omitempty"`
 	// Labels: Optional. The labels on the resource, which can be used for
 	// categorization. similar to Kubernetes resource labels.
@@ -3150,8 +3152,9 @@ type UnitOperation struct {
 	// UpdateTime: Output only. The timestamp when the resource was last updated.
 	// Any change to the resource made by users must refresh this value. Changes to
 	// a resource made by the service should refresh this value.
-	UpdateTime string   `json:"updateTime,omitempty"`
-	Upgrade    *Upgrade `json:"upgrade,omitempty"`
+	UpdateTime string `json:"updateTime,omitempty"`
+	// Upgrade: Optional. Upgrade operation.
+	Upgrade *Upgrade `json:"upgrade,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

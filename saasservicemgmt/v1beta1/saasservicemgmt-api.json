@@ -3218,7 +3218,7 @@
       }
     }
   },
-  "revision": "20260603",
+  "revision": "20260610",
   "rootUrl": "https://saasservicemgmt.googleapis.com/",
   "schemas": {
     "Aggregate": {
@@ -4694,7 +4694,7 @@
       "type": "object"
     },
     "RolloutKind": {
-      "description": "An object that describes various settings of Rollout execution. Includes built-in policies across GCP and GDC, and customizable policies.",
+      "description": "An object that describes various settings of Rollout execution. Includes built-in and customizable policies.",
       "id": "RolloutKind",
       "properties": {
         "annotations": {
@@ -5220,7 +5220,7 @@
             "MANAGEMENT_MODE_SYSTEM"
           ],
           "enumDescriptions": [
-            "",
+            "Unspecified management mode.",
             "Unit's lifecycle is managed by the user.",
             "The system will decide when to deprovision and delete the unit. User still can deprovision or delete the unit manually."
           ],
@@ -5315,7 +5315,7 @@
             "SYSTEM_MANAGED_STATE_DECOMMISSIONED"
           ],
           "enumDescriptions": [
-            "",
+            "Unspecified system managed state.",
             "Unit has dependents attached.",
             "Unit has no dependencies attached, but attachment is allowed.",
             "Unit has no dependencies attached, and attachment is not allowed."
@@ -5549,9 +5549,9 @@
             "BOUNDARY_TYPE_MANAGED_PROJECT"
           ],
           "enumDescriptions": [
-            "",
+            "Unspecified boundary type.",
             "Tenant project boundary.",
-            ""
+            "Managed project boundary."
           ],
           "readOnly": true,
           "type": "string"
@@ -5586,7 +5586,7 @@
           "type": "string"
         },
         "inputVariableMappings": {
-          "description": "Optional. List of inputVariables for this release that will either be retrieved from a dependency’s outputVariables, or will be passed on to a dependency’s inputVariables. Maximum 100.",
+          "description": "Optional. List of inputVariables for this release that will either be retrieved from a dependency's outputVariables, or will be passed on to a dependency's inputVariables. Maximum 100.",
           "items": {
             "$ref": "VariableMapping"
           },
@@ -5664,7 +5664,8 @@
           "type": "string"
         },
         "deprovision": {
-          "$ref": "Deprovision"
+          "$ref": "Deprovision",
+          "description": "Optional. Deprovision operation."
         },
         "engineState": {
           "description": "Optional. Output only. The engine state for on-going deployment engine operation(s). This field is opaque for external usage.",
@@ -5698,7 +5699,8 @@
           "type": "string"
         },
         "flagUpdate": {
-          "$ref": "FlagUpdate"
+          "$ref": "FlagUpdate",
+          "description": "Optional. Flag update operation."
         },
         "labels": {
           "additionalProperties": {
@@ -5766,7 +5768,8 @@
           "type": "string"
         },
         "upgrade": {
-          "$ref": "Upgrade"
+          "$ref": "Upgrade",
+          "description": "Optional. Upgrade operation."
         }
       },
       "type": "object"

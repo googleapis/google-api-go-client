@@ -331,13 +331,12 @@ type AclPolicy struct {
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Not set.
-	//   "ACTIVE" - ACL Policy has been created and is fully usable. Since ACL
-	// Policy creation is synchronous and not an LRO, there is no CREATING state.
-	//   "UPDATING" - ACL Policy is being updated.
-	//   "DELETING" - ACL Policy is being deleted.
+	//   "ACTIVE" - ACL policy has been created and is fully usable. Since ACL
+	// policy creation is synchronous and not an LRO, there is no CREATING state.
+	//   "UPDATING" - ACL policy is being updated.
+	//   "DELETING" - ACL policy is being deleted.
 	State string `json:"state,omitempty"`
-	// Version: Output only. The version of the ACL policy. Used in drift
-	// resolution.
+	// Version: Output only. Deprecated: Used in drift resolution.
 	Version int64 `json:"version,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -520,7 +519,7 @@ type AvailabilityConfiguration struct {
 	// zone in a region (it is highly available).
 	//
 	// Possible values:
-	//   "AVAILABILITY_TYPE_UNSPECIFIED"
+	//   "AVAILABILITY_TYPE_UNSPECIFIED" - Unspecified availability type.
 	//   "ZONAL" - Zonal available instance.
 	//   "REGIONAL" - Regional available instance.
 	//   "MULTI_REGIONAL" - Multi regional instance
@@ -827,7 +826,7 @@ type BackupRun struct {
 	// Status: The status of this run. REQUIRED
 	//
 	// Possible values:
-	//   "STATUS_UNSPECIFIED"
+	//   "STATUS_UNSPECIFIED" - Unspecified status.
 	//   "SUCCESSFUL" - The backup was successful.
 	//   "FAILED" - The backup was unsuccessful.
 	Status string `json:"status,omitempty"`
@@ -904,9 +903,8 @@ func (s CertificateAuthority) MarshalJSON() ([]byte, error) {
 type Cluster struct {
 	// AclPolicy: Optional. The ACL policy to be applied to the cluster.
 	AclPolicy string `json:"aclPolicy,omitempty"`
-	// AclPolicyInSync: Optional. Output only. Indicates whether the ACL rules
-	// applied to the cluster are in sync with the latest ACL policy rules. This
-	// field is only applicable if the ACL policy is set for the cluster.
+	// AclPolicyInSync: Optional. Output only. Deprecated: Indicates whether the
+	// ACL rules applied to the cluster are in sync.
 	AclPolicyInSync bool `json:"aclPolicyInSync,omitempty"`
 	// AllowFewerZonesDeployment: Optional. Immutable. Deprecated, do not use.
 	AllowFewerZonesDeployment bool `json:"allowFewerZonesDeployment,omitempty"`
@@ -1467,7 +1465,7 @@ type DatabaseResourceFeed struct {
 	// FeedType: Required. Type feed to be ingested into condor
 	//
 	// Possible values:
-	//   "FEEDTYPE_UNSPECIFIED"
+	//   "FEEDTYPE_UNSPECIFIED" - Unspecified feed type. Not expected to be used.
 	//   "RESOURCE_METADATA" - Database resource metadata feed from control plane
 	//   "OBSERVABILITY_DATA" - Database resource monitoring data
 	//   "SECURITY_FINDING_DATA" - Database resource security health signal data
@@ -1476,13 +1474,17 @@ type DatabaseResourceFeed struct {
 	//   "CONFIG_BASED_SIGNAL_DATA" - Database config based signal data
 	//   "BACKUPDR_METADATA" - Database resource metadata from BackupDR
 	//   "DATABASE_RESOURCE_SIGNAL_DATA" - Database resource signal data
-	FeedType                 string                                    `json:"feedType,omitempty"`
-	ObservabilityMetricData  *ObservabilityMetricData                  `json:"observabilityMetricData,omitempty"`
+	FeedType string `json:"feedType,omitempty"`
+	// ObservabilityMetricData: Observability metric data.
+	ObservabilityMetricData *ObservabilityMetricData `json:"observabilityMetricData,omitempty"`
+	// RecommendationSignalData: Database resource recommendation signal data.
 	RecommendationSignalData *DatabaseResourceRecommendationSignalData `json:"recommendationSignalData,omitempty"`
-	ResourceHealthSignalData *DatabaseResourceHealthSignalData         `json:"resourceHealthSignalData,omitempty"`
+	// ResourceHealthSignalData: Database resource health signal data.
+	ResourceHealthSignalData *DatabaseResourceHealthSignalData `json:"resourceHealthSignalData,omitempty"`
 	// ResourceId: Primary key associated with the Resource. resource_id is
 	// available in individual feed level as well.
-	ResourceId       *DatabaseResourceId       `json:"resourceId,omitempty"`
+	ResourceId *DatabaseResourceId `json:"resourceId,omitempty"`
+	// ResourceMetadata: Database resource metadata.
 	ResourceMetadata *DatabaseResourceMetadata `json:"resourceMetadata,omitempty"`
 	// SkipIngestion: Optional. If true, the feed won't be ingested by DB Center.
 	// This indicates that the feed is intentionally skipped. For example, BackupDR
@@ -1538,7 +1540,7 @@ type DatabaseResourceHealthSignalData struct {
 	// Provider: Cloud provider name. Ex: GCP/AWS/Azure/OnPrem/SelfManaged
 	//
 	// Possible values:
-	//   "PROVIDER_UNSPECIFIED"
+	//   "PROVIDER_UNSPECIFIED" - Unspecified provider.
 	//   "GCP" - Google cloud platform provider
 	//   "AWS" - Amazon web service
 	//   "AZURE" - Azure web service
@@ -1826,7 +1828,14 @@ type DatabaseResourceHealthSignalData struct {
 	//   "SIGNAL_TYPE_PERFORMANCE_KPI_CHANGE" - Change in performance KPIs.
 	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Database version nearing end
 	// of life.
+	//   "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK" - Indicates a high risk of
+	// maintenance downtime.
+	//   "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME" - Indicates both a
+	// low cache hit rate and a risk of maintenance downtime.
 	SignalType string `json:"signalType,omitempty"`
+	// State: Required. The state of the signal, such as if it's ACTIVE or
+	// RESOLVED.
+	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
 	//   "ACTIVE" - The signal requires attention and has not been addressed yet.
@@ -1859,7 +1868,7 @@ type DatabaseResourceId struct {
 	// GCP/AWS/Azure/OnPrem/SelfManaged
 	//
 	// Possible values:
-	//   "PROVIDER_UNSPECIFIED"
+	//   "PROVIDER_UNSPECIFIED" - Unspecified provider.
 	//   "GCP" - Google cloud platform provider
 	//   "AWS" - Amazon web service
 	//   "AZURE" - Azure web service
@@ -2012,6 +2021,8 @@ type DatabaseResourceMetadata struct {
 	//   "MODE_NATIVE" - Native mode.
 	//   "MODE_MONGODB_COMPATIBLE" - MongoDB compatible mode.
 	//   "MODE_DATASTORE" - Datastore mode.
+	//   "MODE_CLUSTER_ENABLED" - Memorystore/ValKey: Cluster enabled mode.
+	//   "MODE_CLUSTER_DISABLED" - Memorystore/ValKey: Cluster disabled mode.
 	Modes []string `json:"modes,omitempty"`
 	// PrimaryResourceId: Identifier for this resource's immediate parent/primary
 	// resource if the current resource is a replica or derived form of another
@@ -2357,6 +2368,10 @@ type DatabaseResourceRecommendationSignalData struct {
 	//   "SIGNAL_TYPE_PERFORMANCE_KPI_CHANGE" - Change in performance KPIs.
 	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Database version nearing end
 	// of life.
+	//   "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK" - Indicates a high risk of
+	// maintenance downtime.
+	//   "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME" - Indicates both a
+	// low cache hit rate and a risk of maintenance downtime.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3177,9 +3192,10 @@ type InternalResourceMetadata struct {
 	BackupRun *BackupRun `json:"backupRun,omitempty"`
 	// IsDeletionProtectionEnabled: Whether deletion protection is enabled for this
 	// internal resource.
-	IsDeletionProtectionEnabled bool                `json:"isDeletionProtectionEnabled,omitempty"`
-	Product                     *Product            `json:"product,omitempty"`
-	ResourceId                  *DatabaseResourceId `json:"resourceId,omitempty"`
+	IsDeletionProtectionEnabled bool `json:"isDeletionProtectionEnabled,omitempty"`
+	// Product: The product this resource represents.
+	Product    *Product            `json:"product,omitempty"`
+	ResourceId *DatabaseResourceId `json:"resourceId,omitempty"`
 	// ResourceName: Required. internal resource name for spanner this will be
 	// database name
 	// e.g."spanner.googleapis.com/projects/123/abc/instances/inst1/databases/db1"
@@ -3240,7 +3256,7 @@ type ListAclPoliciesResponse struct {
 	// NextPageToken: Token to retrieve the next page of results, or empty if there
 	// are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Unreachable: Locations that could not be reached.
+	// Unreachable: Unordered list. Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4060,7 +4076,7 @@ type Product struct {
 	//   "ENGINE_MEMORYSTORE_FOR_REDIS" - Memorystore with Redis dialect.
 	//   "ENGINE_MEMORYSTORE_FOR_REDIS_CLUSTER" - Memorystore with Redis cluster
 	// dialect.
-	//   "ENGINE_MEMORSTORE_FOR_VALKEY" - Memorystore with Valkey dialect.
+	//   "ENGINE_MEMORYSTORE_FOR_VALKEY" - Memorystore with Valkey.
 	//   "ENGINE_OTHER" - Other refers to rest of other database engine. This is to
 	// be when engine is known, but it is not present in this enum.
 	//   "ENGINE_FIRESTORE_WITH_NATIVE_MODE" - Firestore with native mode.
@@ -4681,7 +4697,8 @@ type RetentionSettings struct {
 	// DurationBasedRetention: Duration based retention period i.e. 172800 seconds
 	// (2 days)
 	DurationBasedRetention string `json:"durationBasedRetention,omitempty"`
-	QuantityBasedRetention int64  `json:"quantityBasedRetention,omitempty"`
+	// QuantityBasedRetention: Quantity based retention period i.e. 7 backups
+	QuantityBasedRetention int64 `json:"quantityBasedRetention,omitempty"`
 	// RetentionUnit: The unit that 'retained_backups' represents.
 	//
 	// Possible values:
@@ -4694,7 +4711,9 @@ type RetentionSettings struct {
 	//   "DURATION" - Retention will be by duration, eg. "retain the backups for
 	// 172800 seconds (2 days)".
 	//   "RETENTION_UNIT_OTHER" - For rest of the other category
-	RetentionUnit      string `json:"retentionUnit,omitempty"`
+	RetentionUnit string `json:"retentionUnit,omitempty"`
+	// TimeBasedRetention: Duration based retention period i.e. 172800 seconds (2
+	// days)
 	TimeBasedRetention string `json:"timeBasedRetention,omitempty"`
 	// TimestampBasedRetentionTime: Timestamp based retention period i.e.
 	// 2024-05-01T00:00:00Z
@@ -5165,6 +5184,10 @@ type ZoneDistributionConfig struct {
 	// be used to allocate all resources in that zone. This is not applicable to
 	// MULTI_ZONE, and would be ignored for MULTI_ZONE clusters.
 	Zone string `json:"zone,omitempty"`
+	// Zones: Optional. Specify the zones of a multi-zone cluster where Redis
+	// Cluster allocates resources. This flag isn't applicable for single-zone
+	// clusters.
+	Zones []string `json:"zones,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Mode") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -5587,7 +5610,7 @@ type ProjectsLocationsAclPoliciesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates an ACL Policy. The creation is executed synchronously and
+// Create: Creates an ACL policy. The creation is executed synchronously and
 // the policy is available for use immediately after the RPC returns.
 //
 //   - parent: The resource name of the cluster location using the form:
@@ -5601,7 +5624,7 @@ func (r *ProjectsLocationsAclPoliciesService) Create(parent string, aclpolicy *A
 }
 
 // AclPolicyId sets the optional parameter "aclPolicyId": Required. The logical
-// name of the ACL Policy in the customer project with the following
+// name of the ACL policy in the customer project with the following
 // restrictions: * Must contain only lowercase letters, numbers, and hyphens. *
 // Must start with a letter. * Must be between 1-63 characters. * Must end with
 // a number or a letter. * Must be unique within the customer project /
@@ -5710,11 +5733,11 @@ type ProjectsLocationsAclPoliciesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a specific Acl Policy. This action will delete the Acl
-// Policy and all the rules associated with it. An ACL policy cannot be deleted
+// Delete: Deletes a specific ACL policy. This action will delete the ACL
+// policy and all the rules associated with it. An ACL policy cannot be deleted
 // if it is attached to a cluster.
 //
-//   - name: Redis ACL Policy resource name using the form:
+//   - name: Redis ACL policy resource name using the form:
 //     `projects/{project_id}/locations/{location_id}/aclPolicies/{acl_policy_id}`
 //     where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsAclPoliciesService) Delete(name string) *ProjectsLocationsAclPoliciesDeleteCall {
@@ -5826,9 +5849,9 @@ type ProjectsLocationsAclPoliciesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the details of a specific Redis Cluster ACL Policy.
+// Get: Gets the details of a specific Redis Cluster ACL policy.
 //
-//   - name: Redis ACL Policy resource name using the form:
+//   - name: Redis ACL policy resource name using the form:
 //     `projects/{project_id}/locations/{location_id}/aclPolicies/{acl_policy_id}`
 //     where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsAclPoliciesService) Get(name string) *ProjectsLocationsAclPoliciesGetCall {
@@ -5937,13 +5960,13 @@ type ProjectsLocationsAclPoliciesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all ACL Policies owned by a project in either the specified
+// List: Lists all ACL policies owned by a project in either the specified
 // location (region) or all locations. The location should have the following
 // format: * `projects/{project_id}/locations/{location_id}` If `location_id`
 // is specified as `-` (wildcard), then all regions available to the project
 // are queried, and the results are aggregated.
 //
-//   - parent: The resource name of the cluster location using the form:
+//   - parent: The resource name of the ACL policy location using the form:
 //     `projects/{project_id}/locations/{location_id}` where `location_id` refers
 //     to a Google Cloud region.
 func (r *ProjectsLocationsAclPoliciesService) List(parent string) *ProjectsLocationsAclPoliciesListCall {
@@ -6097,7 +6120,7 @@ type ProjectsLocationsAclPoliciesPatchCall struct {
 // clusters, then the operation returns a SUCCESS status. If Memorystore can't
 // apply the policy to all clusters, then to ensure eventual consistency,
 // Memorystore uses reconciliation to apply the policy to the failed clusters.
-// Completed longrunning.Operation will contain the new ACL Policy object in
+// Completed longrunning.Operation will contain the new ACL policy object in
 // the response field.
 //
 // - name: Identifier. Full resource path of the ACL policy.

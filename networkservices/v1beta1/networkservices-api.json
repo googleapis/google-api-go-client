@@ -3277,7 +3277,7 @@
       }
     }
   },
-  "revision": "20260605",
+  "revision": "20260610",
   "rootUrl": "https://networkservices.googleapis.com/",
   "schemas": {
     "AgentGateway": {
@@ -3448,6 +3448,24 @@
         "networkAttachment": {
           "description": "Optional. The URI of the Network Attachment resource.",
           "type": "string"
+        },
+        "trustConfig": {
+          "$ref": "AgentGatewayNetworkConfigEgressTrustConfig",
+          "description": "Optional. TrustConfig defines the trust configuration for egress."
+        }
+      },
+      "type": "object"
+    },
+    "AgentGatewayNetworkConfigEgressTrustConfig": {
+      "description": "TrustConfig defines the trust configuration for egress.",
+      "id": "AgentGatewayNetworkConfigEgressTrustConfig",
+      "properties": {
+        "pemCertificates": {
+          "description": "Required. PEM encoded root certificates used to validate the identity of the upstream servers/destinations during egress connections.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"

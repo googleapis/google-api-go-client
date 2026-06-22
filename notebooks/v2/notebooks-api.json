@@ -971,7 +971,7 @@
       }
     }
   },
-  "revision": "20260528",
+  "revision": "20260610",
   "rootUrl": "https://notebooks.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -1269,7 +1269,7 @@
           "type": "string"
         },
         "diskType": {
-          "description": "Optional. Input only. Indicates the type of the disk.",
+          "description": "Optional. Indicates the type of the disk.",
           "enum": [
             "DISK_TYPE_UNSPECIFIED",
             "PD_STANDARD",

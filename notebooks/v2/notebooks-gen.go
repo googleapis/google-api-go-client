@@ -632,7 +632,7 @@ type DataDisk struct {
 	// instance, up to a maximum of 64000 GB (64 TB). If not specified, this
 	// defaults to 100.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
-	// DiskType: Optional. Input only. Indicates the type of the disk.
+	// DiskType: Optional. Indicates the type of the disk.
 	//
 	// Possible values:
 	//   "DISK_TYPE_UNSPECIFIED" - Disk type not set.

@@ -8431,7 +8431,7 @@
       }
     }
   },
-  "revision": "20260616",
+  "revision": "20260622",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AdvancedSettings": {
@@ -17798,18 +17798,6 @@
       },
       "type": "object"
     },
-    "GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationModelConfig": {
-      "id": "GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationModelConfig",
-      "properties": {
-        "baselineModelVersion": {
-          "type": "string"
-        },
-        "model": {
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationProcessConfig": {
       "id": "GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationProcessConfig",
       "properties": {
@@ -17871,9 +17859,6 @@
     "GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionFeatureConfig": {
       "id": "GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionFeatureConfig",
       "properties": {
-        "conversationModelConfig": {
-          "$ref": "GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationModelConfig"
-        },
         "conversationProcessConfig": {
           "$ref": "GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationProcessConfig"
         },

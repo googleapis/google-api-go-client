@@ -2596,7 +2596,7 @@
       }
     }
   },
-  "revision": "20260616",
+  "revision": "20260623",
   "rootUrl": "https://gkehub.googleapis.com/",
   "schemas": {
     "AppDevExperienceFeatureSpec": {
@@ -3069,6 +3069,10 @@
         "fleetobservability": {
           "$ref": "FleetObservabilityFeatureSpec",
           "description": "FleetObservability feature spec."
+        },
+        "mesh": {
+          "$ref": "ServiceMeshFeatureSpec",
+          "description": "Servicemesh feature spec."
         },
         "multiclusteringress": {
           "$ref": "MultiClusterIngressFeatureSpec",
@@ -6957,8 +6961,8 @@
           "enum": [
             "ROLLOUT_INTENT_UNSPECIFIED",
             "REGULAR_UPGRADE",
-            "FORCE_PATCH",
-            "END_OF_LIFE_ENFORCEMENT"
+            "CONTROL_PLANE_PATCH_ENFORCEMENT",
+            "END_OF_SUPPORT_ENFORCEMENT"
           ],
           "enumDescriptions": [
             "The default value.",
@@ -7569,6 +7573,9 @@
             "MISSING_CONTROL_PLANE_CONFIG",
             "SHARED_VPC_MISSING_PERMISSIONS",
             "REQUIRED_ORG_POLICY_DISABLED",
+            "MODERNIZATION_INCOMPATIBLE_POD_ANNOTATION",
+            "MODERNIZATION_INCOMPATIBLE_CONFIG",
+            "MODERNIZATION_INCOMPATIBLE_GATEWAY_POD_SCALE",
             "MODERNIZATION_SCHEDULED",
             "MODERNIZATION_IN_PROGRESS",
             "MODERNIZATION_COMPLETED",
@@ -7632,6 +7639,9 @@
             "Missing control plane configuration error code",
             "Shared VPC missing permissions error code",
             "Required org policy disabled error code",
+            "One or more Pods have unsupported annotations.",
+            "Incompatible config found in the cluster.",
+            "Gateway pods per cluster limit exceeded.",
             "Modernization is scheduled for a cluster.",
             "Modernization is in progress for a cluster.",
             "Modernization is completed for a cluster.",
@@ -7773,6 +7783,27 @@
             "NEEDS_ATTENTION means that the component is ready, but some user intervention is required. (For example that the user should migrate workloads to a new control plane revision.)",
             "DEGRADED means that the component is ready, but operating in a degraded state.",
             "DEPROVISIONING means that deprovisioning is in progress."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ServiceMeshFeatureSpec": {
+      "description": "**Service Mesh**: Spec for the fleet for the servicemesh feature",
+      "id": "ServiceMeshFeatureSpec",
+      "properties": {
+        "modernizationCompatibility": {
+          "description": "Optional. Specifies modernization compatibility for the fleet.",
+          "enum": [
+            "MODERNIZATION_COMPATIBILITY_UNSPECIFIED",
+            "VALIDATION_ENABLED",
+            "VALIDATION_DISABLED"
+          ],
+          "enumDescriptions": [
+            "Unspecified.",
+            "Google should report modernization eligibility gaps.",
+            "Google should not report modernization eligibility gaps."
           ],
           "type": "string"
         }

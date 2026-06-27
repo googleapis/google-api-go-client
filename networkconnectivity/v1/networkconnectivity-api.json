@@ -3898,7 +3898,7 @@
       }
     }
   },
-  "revision": "20260514",
+  "revision": "20260618",
   "rootUrl": "https://networkconnectivity.googleapis.com/",
   "schemas": {
     "AcceptHubSpokeRequest": {
@@ -4183,7 +4183,7 @@
           "type": "string"
         },
         "serviceClass": {
-          "description": "Required. Immutable. The service class identifier which authorizes this AutomatedDnsRecord. Any API calls targeting this AutomatedDnsRecord must have `networkconnectivity.serviceclasses.use` IAM permission for the provided service class.",
+          "description": "Required. Immutable. The service class identifier which authorizes this AutomatedDnsRecord. Any API calls targeting this AutomatedDnsRecord must have `networkconnectivity.serviceClasses.use` IAM permission for the provided service class.",
           "type": "string"
         },
         "state": {

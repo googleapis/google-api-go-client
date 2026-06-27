@@ -195,7 +195,7 @@
                   ],
                   "parameters": {
                     "clusterId": {
-                      "description": "Required. ID of the cluster to create. Must conform to [RFC-1034](https://datatracker.ietf.org/doc/html/rfc1034) (lower-case, alphanumeric, and at most 63 characters).",
+                      "description": "Required. The ID of the cluster to create. The cluster ID must start with a lowercase letter (`a`-`z`), use only lowercase letters or numbers, and contain up to 10 characters. For example, specify `cluster001`.",
                       "location": "query",
                       "type": "string"
                     },
@@ -498,7 +498,7 @@
       }
     }
   },
-  "revision": "20260610",
+  "revision": "20260617",
   "rootUrl": "https://hypercomputecluster.googleapis.com/",
   "schemas": {
     "BootDisk": {
@@ -1666,7 +1666,7 @@
           "description": "Optional. If set, indicates that the nodeset should be backed by Compute Engine instances."
         },
         "id": {
-          "description": "Required. Identifier for the nodeset, which allows it to be referenced by partitions. Must conform to [RFC-1034](https://datatracker.ietf.org/doc/html/rfc1034) (lower-case, alphanumeric, and at most 63 characters).",
+          "description": "Required. The ID for the nodeset, which allows it to be referenced by cluster partitions. The nodeset ID must start with a lowercase letter (`a`-`z`), use only lowercase letters or numbers, and contain up to 15 characters. For example, specify `nodeset001`.",
           "type": "string"
         },
         "maxDynamicNodeCount": {

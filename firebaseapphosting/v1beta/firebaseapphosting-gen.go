@@ -539,6 +539,8 @@ type BuildSource struct {
 	Codebase *CodebaseSource `json:"codebase,omitempty"`
 	// Container: An Artifact Registry container image source.
 	Container *ContainerSource `json:"container,omitempty"`
+	// LocallyBuilt: A source that was pre-built locally.
+	LocallyBuilt *LocallyBuiltSource `json:"locallyBuilt,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Archive") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1545,6 +1547,50 @@ type LiveMigrationStep struct {
 
 func (s LiveMigrationStep) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveMigrationStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LocallyBuiltSource: The URI of an storage archive to use as the build
+// source.
+type LocallyBuiltSource struct {
+	// Description: Optional. An optional message that describes the uploaded
+	// version of the source code.
+	Description string `json:"description,omitempty"`
+	// Env: Optional. Supplied runtime environment variables for a specific build.
+	// Provided at Build creation time and immutable afterwards.
+	Env []*EnvironmentVariable `json:"env,omitempty"`
+	// RootDirectory: Optional. The directory relative to the root of the archive
+	// to use as the root for the deployed web app. Defaults to use the root of the
+	// repository if not provided. If deploying a monorepo
+	// (https://firebase.google.com/docs/app-hosting/monorepos), this should be the
+	// directory that contains the built source of the app.
+	RootDirectory string `json:"rootDirectory,omitempty"`
+	// RunCommand: Optional. The command to run to start the app. If provided, it
+	// will override apphosting's default run commands. See `Override build and run
+	// scripts`
+	// (https://firebase.google.com/docs/app-hosting/configure#override-scripts)
+	RunCommand string `json:"runCommand,omitempty"`
+	// RunConfig: Optional. Additional configuration of the Cloud Run `service`
+	// (https://cloud.google.com/run/docs/reference/rest/v2/projects.locations.services#resource:-service).
+	RunConfig *RunConfig `json:"runConfig,omitempty"`
+	// UserStorageUri: URI to an archive in Cloud Storage. The object must be a
+	// gzipped archive file (.tar.gz) containing source to deploy.
+	UserStorageUri string `json:"userStorageUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LocallyBuiltSource) MarshalJSON() ([]byte, error) {
+	type NoMethod LocallyBuiltSource
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

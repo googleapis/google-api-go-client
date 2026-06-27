@@ -3276,6 +3276,12 @@ type ServiceMeshCondition struct {
 	//   "SHARED_VPC_MISSING_PERMISSIONS" - Shared VPC missing permissions error
 	// code
 	//   "REQUIRED_ORG_POLICY_DISABLED" - Required org policy disabled error code
+	//   "MODERNIZATION_INCOMPATIBLE_POD_ANNOTATION" - One or more Pods have
+	// unsupported annotations.
+	//   "MODERNIZATION_INCOMPATIBLE_CONFIG" - Incompatible config found in the
+	// cluster.
+	//   "MODERNIZATION_INCOMPATIBLE_GATEWAY_POD_SCALE" - Gateway pods per cluster
+	// limit exceeded.
 	//   "MODERNIZATION_SCHEDULED" - Modernization is scheduled for a cluster.
 	//   "MODERNIZATION_IN_PROGRESS" - Modernization is in progress for a cluster.
 	//   "MODERNIZATION_COMPLETED" - Modernization is completed for a cluster.

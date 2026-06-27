@@ -232,6 +232,7 @@ func NewAdvertisersService(s *Service) *AdvertisersService {
 	rs.LineItems = NewAdvertisersLineItemsService(s)
 	rs.LocationLists = NewAdvertisersLocationListsService(s)
 	rs.NegativeKeywordLists = NewAdvertisersNegativeKeywordListsService(s)
+	rs.ReachForecast = NewAdvertisersReachForecastService(s)
 	rs.TargetingTypes = NewAdvertisersTargetingTypesService(s)
 	return rs
 }
@@ -262,6 +263,8 @@ type AdvertisersService struct {
 	LocationLists *AdvertisersLocationListsService
 
 	NegativeKeywordLists *AdvertisersNegativeKeywordListsService
+
+	ReachForecast *AdvertisersReachForecastService
 
 	TargetingTypes *AdvertisersTargetingTypesService
 }
@@ -503,6 +506,15 @@ func NewAdvertisersNegativeKeywordListsNegativeKeywordsService(s *Service) *Adve
 }
 
 type AdvertisersNegativeKeywordListsNegativeKeywordsService struct {
+	s *Service
+}
+
+func NewAdvertisersReachForecastService(s *Service) *AdvertisersReachForecastService {
+	rs := &AdvertisersReachForecastService{s: s}
+	return rs
+}
+
+type AdvertisersReachForecastService struct {
 	s *Service
 }
 
@@ -2088,6 +2100,104 @@ type Adloox struct {
 
 func (s Adloox) MarshalJSON() ([]byte, error) {
 	type NoMethod Adloox
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdvancedProductTargeting: Product-specific targeting overrides.
+type AdvancedProductTargeting struct {
+	// AgeRange: Optional. The age range to target.
+	//
+	// Possible values:
+	//   "PLANNABLE_AGE_RANGE_UNSPECIFIED" - Not specified.
+	//   "PLANNABLE_AGE_RANGE_18_24" - 18 to 24 years old.
+	//   "PLANNABLE_AGE_RANGE_18_34" - 18 to 34 years old.
+	//   "PLANNABLE_AGE_RANGE_18_44" - 18 to 44 years old.
+	//   "PLANNABLE_AGE_RANGE_18_49" - 18 to 49 years old.
+	//   "PLANNABLE_AGE_RANGE_18_54" - 18 to 54 years old.
+	//   "PLANNABLE_AGE_RANGE_18_64" - 18 to 64 years old.
+	//   "PLANNABLE_AGE_RANGE_18_65_UP" - 18 to 65+ years old.
+	//   "PLANNABLE_AGE_RANGE_21_34" - 21 to 34 years old.
+	//   "PLANNABLE_AGE_RANGE_21_44" - 21 to 44 years old.
+	//   "PLANNABLE_AGE_RANGE_21_49" - 21 to 49 years old.
+	//   "PLANNABLE_AGE_RANGE_21_54" - 21 to 54 years old.
+	//   "PLANNABLE_AGE_RANGE_21_64" - 21 to 64 years old.
+	//   "PLANNABLE_AGE_RANGE_21_65_UP" - 21 to 65+ years old.
+	//   "PLANNABLE_AGE_RANGE_25_34" - 25 to 34 years old.
+	//   "PLANNABLE_AGE_RANGE_25_44" - 25 to 44 years old.
+	//   "PLANNABLE_AGE_RANGE_25_49" - 25 to 49 years old.
+	//   "PLANNABLE_AGE_RANGE_25_54" - 25 to 54 years old.
+	//   "PLANNABLE_AGE_RANGE_25_64" - 25 to 64 years old.
+	//   "PLANNABLE_AGE_RANGE_25_65_UP" - 25 to 65+ years old.
+	//   "PLANNABLE_AGE_RANGE_35_44" - 35 to 44 years old.
+	//   "PLANNABLE_AGE_RANGE_35_49" - 35 to 49 years old.
+	//   "PLANNABLE_AGE_RANGE_35_54" - 35 to 54 years old.
+	//   "PLANNABLE_AGE_RANGE_35_64" - 35 to 64 years old.
+	//   "PLANNABLE_AGE_RANGE_35_65_UP" - 35 to 65+ years old.
+	//   "PLANNABLE_AGE_RANGE_45_54" - 45 to 54 years old.
+	//   "PLANNABLE_AGE_RANGE_45_64" - 45 to 64 years old.
+	//   "PLANNABLE_AGE_RANGE_45_65_UP" - 45 to 65+ years old.
+	//   "PLANNABLE_AGE_RANGE_50_65_UP" - 50 to 65+ years old.
+	//   "PLANNABLE_AGE_RANGE_55_64" - 55 to 64 years old.
+	//   "PLANNABLE_AGE_RANGE_55_65_UP" - 55 to 65+ years old.
+	//   "PLANNABLE_AGE_RANGE_65_UP" - 65+ years old.
+	AgeRange string `json:"ageRange,omitempty"`
+	// DateRange: Optional. The date range to target.
+	DateRange *DateRange `json:"dateRange,omitempty"`
+	// Devices: Optional. The devices to target.
+	//
+	// Possible values:
+	//   "DEVICE_TYPE_UNSPECIFIED" - Default value when device type is not
+	// specified in this version. This enum is a placeholder for default value and
+	// does not represent a real device type option.
+	//   "DEVICE_TYPE_COMPUTER" - Computer.
+	//   "DEVICE_TYPE_CONNECTED_TV" - Connected TV.
+	//   "DEVICE_TYPE_SMART_PHONE" - Smart phone.
+	//   "DEVICE_TYPE_TABLET" - Tablet.
+	//   "DEVICE_TYPE_CONNECTED_DEVICE" - Connected device.
+	Devices []string `json:"devices,omitempty"`
+	// FrequencyCap: Optional. The frequency cap for the specific product.
+	FrequencyCap *FrequencyCap `json:"frequencyCap,omitempty"`
+	// Genders: Optional. The gender options to target.
+	//
+	// Possible values:
+	//   "GENDER_UNSPECIFIED" - Default value when gender is not specified in this
+	// version. This enum is a place holder for default value and does not
+	// represent a real gender option.
+	//   "GENDER_MALE" - The audience gender is male.
+	//   "GENDER_FEMALE" - The audience gender is female.
+	//   "GENDER_UNKNOWN" - The audience gender is unknown.
+	Genders []string `json:"genders,omitempty"`
+	// PlannableLocationIds: Optional. Plannable location IDs to target.
+	PlannableLocationIds googleapi.Int64s `json:"plannableLocationIds,omitempty"`
+	// SurfaceTargetingSettings: Optional. Plannable surfaces to target.
+	SurfaceTargetingSettings *SurfaceTargetingSettings `json:"surfaceTargetingSettings,omitempty"`
+	// TargetFrequency: Optional. The average number of times the ads will show to
+	// the same person over a certain period of time.
+	TargetFrequency *TargetFrequency `json:"targetFrequency,omitempty"`
+	// UserInterestIds: Optional. The user interest IDs to target. Plannable user
+	// interests can be retrieved using the `RetrievePlannableUserInterests`
+	// method.
+	UserInterestIds []string `json:"userInterestIds,omitempty"`
+	// UserListIds: Optional. The user list IDs to target. Plannable user lists can
+	// be retrieved using the `RetrievePlannableUserInterests` method.
+	UserListIds []string `json:"userListIds,omitempty"`
+	// YoutubeSelectSettings: Optional. YouTube Select settings.
+	YoutubeSelectSettings *YouTubeSelectSettings `json:"youtubeSelectSettings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgeRange") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgeRange") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdvancedProductTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod AdvancedProductTargeting
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5476,6 +5586,30 @@ type CampaignBudget struct {
 
 func (s CampaignBudget) MarshalJSON() ([]byte, error) {
 	type NoMethod CampaignBudget
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CampaignDuration: The duration of the reach plan.
+type CampaignDuration struct {
+	// DateRange: Required. The date range the plan covers.
+	DateRange *DateRange `json:"dateRange,omitempty"`
+	// DurationDays: Required. The number of days the plan covers.
+	DurationDays int64 `json:"durationDays,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DateRange") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DateRange") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CampaignDuration) MarshalJSON() ([]byte, error) {
+	type NoMethod CampaignDuration
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9342,6 +9476,46 @@ func (s EditInventorySourceReadWriteAccessorsRequestAdvertisersUpdate) MarshalJS
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// EffectiveFrequencyBreakdown: A breakdown of the number of unique people
+// reached at a given effective frequency.
+type EffectiveFrequencyBreakdown struct {
+	// EffectiveCoviewReach: The number of unique individuals, including
+	// co-viewers, exactly matching the targeting that were served the ad at least
+	// the number of times dictated by the effective_frequency.
+	EffectiveCoviewReach int64 `json:"effectiveCoviewReach,omitempty,string"`
+	// EffectiveFrequency: The set effective frequency.
+	EffectiveFrequency int64 `json:"effectiveFrequency,omitempty"`
+	// OnTargetEffectiveCoviewReach: The total number of unique individuals,
+	// including co-viewers that were served the ad at least the number of times
+	// dictated by the effective_frequency. This includes individuals that may fall
+	// outside of targeting.
+	OnTargetEffectiveCoviewReach int64 `json:"onTargetEffectiveCoviewReach,omitempty,string"`
+	// OnTargetReach: The number of unique individuals exactly matching the
+	// targeting that were served the ad at least the number of times dictated by
+	// the effective_frequency.
+	OnTargetReach int64 `json:"onTargetReach,omitempty,string"`
+	// TotalReach: The total number of unique individuals that were served the ad
+	// at least the number of times dictated by the effective_frequency. This
+	// includes individuals that may fall outside of targeting.
+	TotalReach int64 `json:"totalReach,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "EffectiveCoviewReach") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EffectiveCoviewReach") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EffectiveFrequencyBreakdown) MarshalJSON() ([]byte, error) {
+	type NoMethod EffectiveFrequencyBreakdown
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -10469,6 +10643,81 @@ type GenderTargetingOptionDetails struct {
 
 func (s GenderTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GenderTargetingOptionDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenerateReachForecastRequest: Request message for
+// ReachForecastService.GenerateReachForecast.
+type GenerateReachForecastRequest struct {
+	// CampaignDuration: Required. The duration of the planned campaign.
+	CampaignDuration *CampaignDuration `json:"campaignDuration,omitempty"`
+	// CurrencyCode: Required. The currency code for the plan in ISO 4217 format.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+	// EffectiveFrequencyBreakdownLimit: Optional. The highest minimum effective
+	// frequency to include in
+	// PlannedProductForecast.effective_frequency_breakdowns. Must be between 1 and
+	// 10, inclusive. If not specified,
+	// PlannedProductForecast.effective_frequency_breakdowns will not be populated.
+	// If set, this value will also be used as the minimum effective frequency for
+	// reach metrics reporting. This field cannot be combined with the
+	// min_effective_frequency field.
+	EffectiveFrequencyBreakdownLimit int64 `json:"effectiveFrequencyBreakdownLimit,omitempty"`
+	// MinEffectiveFrequency: Optional. The minimum effective frequency for the
+	// reported reach metrics. This is the smallest number of times a customer must
+	// be exposed to the ad for it to be considered effective. This setting only
+	// impacts reporting. Must be between 1 and 10, inclusive. If not specified, a
+	// default of 1 is applied. This field cannot be combined with
+	// effective_frequency_breakdown_limit.
+	MinEffectiveFrequency int64 `json:"minEffectiveFrequency,omitempty"`
+	// PlannedProducts: Required. The list of line items to include in the
+	// forecast.
+	PlannedProducts []*PlannedProduct `json:"plannedProducts,omitempty"`
+	// Targeting: Required. The targeting parameters of the planned campaign.
+	Targeting *Targeting `json:"targeting,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CampaignDuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CampaignDuration") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateReachForecastRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateReachForecastRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenerateReachForecastResponse: Response message for
+// ReachForecastService.GenerateReachForecast.
+type GenerateReachForecastResponse struct {
+	// OnTargetAudienceMetrics: The estimated audience sizes for the targeted
+	// geography.
+	OnTargetAudienceMetrics *OnTargetAudienceMetrics `json:"onTargetAudienceMetrics,omitempty"`
+	// ReachCurve: The generated forecast curve.
+	ReachCurve *ReachCurve `json:"reachCurve,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "OnTargetAudienceMetrics") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OnTargetAudienceMetrics") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateReachForecastResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateReachForecastResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -14527,6 +14776,31 @@ func (s OnScreenPositionTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// OnTargetAudienceMetrics: Estimated audience sizes for a targeted geography.
+type OnTargetAudienceMetrics struct {
+	// CensusAudienceSize: Size of the audience based on the census data of the
+	// targeted geography.
+	CensusAudienceSize int64 `json:"censusAudienceSize,omitempty,string"`
+	// YoutubeAudienceSize: Estimated size of the YouTube audience.
+	YoutubeAudienceSize int64 `json:"youtubeAudienceSize,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "CensusAudienceSize") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CensusAudienceSize") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OnTargetAudienceMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod OnTargetAudienceMetrics
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // OperatingSystemAssignedTargetingOptionDetails: Assigned operating system
 // targeting option details. This will be populated in the
 // operating_system_details field when targeting_type is
@@ -15310,6 +15584,346 @@ func (s PerformanceGoalBidStrategy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PlannableLocation: A plannable location used for forecasting.
+type PlannableLocation struct {
+	// DisplayName: Output only. The display name of the location, for example
+	// "Algeria".
+	DisplayName string `json:"displayName,omitempty"`
+	// GeoRegionType: Output only. The type of location.
+	//
+	// Possible values:
+	//   "GEO_REGION_TYPE_UNKNOWN" - The geographic region type is unknown.
+	//   "GEO_REGION_TYPE_OTHER" - The geographic region type is other.
+	//   "GEO_REGION_TYPE_COUNTRY" - The geographic region is a country.
+	//   "GEO_REGION_TYPE_REGION" - The geographic region type is region.
+	//   "GEO_REGION_TYPE_TERRITORY" - The geographic region is a territory.
+	//   "GEO_REGION_TYPE_PROVINCE" - The geographic region is a province.
+	//   "GEO_REGION_TYPE_STATE" - The geographic region is a state.
+	//   "GEO_REGION_TYPE_PREFECTURE" - The geographic region is a prefecture.
+	//   "GEO_REGION_TYPE_GOVERNORATE" - The geographic region is a governorate.
+	//   "GEO_REGION_TYPE_CANTON" - The geographic region is a canton.
+	//   "GEO_REGION_TYPE_UNION_TERRITORY" - The geographic region is a union
+	// territory.
+	//   "GEO_REGION_TYPE_AUTONOMOUS_COMMUNITY" - The geographic region is an
+	// autonomous community.
+	//   "GEO_REGION_TYPE_DMA_REGION" - The geographic region is a designated
+	// market area (DMA) region.
+	//   "GEO_REGION_TYPE_METRO" - The geographic region type is metro.
+	//   "GEO_REGION_TYPE_CONGRESSIONAL_DISTRICT" - The geographic region is a
+	// congressional district.
+	//   "GEO_REGION_TYPE_COUNTY" - The geographic region is a county.
+	//   "GEO_REGION_TYPE_MUNICIPALITY" - The geographic region is a municipality.
+	//   "GEO_REGION_TYPE_CITY" - The geographic region is a city.
+	//   "GEO_REGION_TYPE_POSTAL_CODE" - The geographic region targeting type is
+	// postal code.
+	//   "GEO_REGION_TYPE_DEPARTMENT" - The geographic region targeting type is
+	// department.
+	//   "GEO_REGION_TYPE_AIRPORT" - The geographic region is an airport.
+	//   "GEO_REGION_TYPE_TV_REGION" - The geographic region is a TV region.
+	//   "GEO_REGION_TYPE_OKRUG" - The geographic region is an okrug.
+	//   "GEO_REGION_TYPE_BOROUGH" - The geographic region is a borough.
+	//   "GEO_REGION_TYPE_CITY_REGION" - The geographic region is a city region.
+	//   "GEO_REGION_TYPE_ARRONDISSEMENT" - The geographic region is an
+	// arrondissement.
+	//   "GEO_REGION_TYPE_NEIGHBORHOOD" - The geographic region is a neighborhood.
+	//   "GEO_REGION_TYPE_UNIVERSITY" - The geographic region is a university.
+	//   "GEO_REGION_TYPE_DISTRICT" - The geographic region is a district.
+	//   "GEO_REGION_TYPE_NATIONAL_PARK" - The geographic region is a national
+	// park.
+	//   "GEO_REGION_TYPE_BARRIO" - The geographic region is a barrio.
+	//   "GEO_REGION_TYPE_SUB_WARD" - The geographic region is a sub ward.
+	//   "GEO_REGION_TYPE_MUNICIPALITY_DISTRICT" - The geographic region is a
+	// municipality district.
+	//   "GEO_REGION_TYPE_SUB_DISTRICT" - The geographic region is a sub district.
+	//   "GEO_REGION_TYPE_QUARTER" - The geographic region is a quarter.
+	//   "GEO_REGION_TYPE_DIVISION" - The geographic region is a division.
+	//   "GEO_REGION_TYPE_COMMUNE" - The geographic region is a commune.
+	//   "GEO_REGION_TYPE_COLLOQUIAL_AREA" - The geographic region is a colloquial
+	// area.
+	//   "GEO_REGION_TYPE_POST_TOWN" - The geographic region is a post town.
+	//   "GEO_REGION_TYPE_WARD" - The geographic region is a ward.
+	GeoRegionType string `json:"geoRegionType,omitempty"`
+	// Name: Output only. The resource name of the plannable location.
+	Name string `json:"name,omitempty"`
+	// PlannableLocationId: Output only. The plannable location ID.
+	PlannableLocationId int64 `json:"plannableLocationId,omitempty,string"`
+	// RegionCode: Output only. The region code of the location, for example "DZ"
+	// for Algeria.
+	RegionCode string `json:"regionCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PlannableLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod PlannableLocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PlannableTargeting: Targeting capabilities for a given product.
+type PlannableTargeting struct {
+	// AgeRanges: Output only. Allowed plannable age ranges for the product. Actual
+	// targeting is computed by mapping this age range onto standard Google age
+	// targeting.
+	//
+	// Possible values:
+	//   "PLANNABLE_AGE_RANGE_UNSPECIFIED" - Not specified.
+	//   "PLANNABLE_AGE_RANGE_18_24" - 18 to 24 years old.
+	//   "PLANNABLE_AGE_RANGE_18_34" - 18 to 34 years old.
+	//   "PLANNABLE_AGE_RANGE_18_44" - 18 to 44 years old.
+	//   "PLANNABLE_AGE_RANGE_18_49" - 18 to 49 years old.
+	//   "PLANNABLE_AGE_RANGE_18_54" - 18 to 54 years old.
+	//   "PLANNABLE_AGE_RANGE_18_64" - 18 to 64 years old.
+	//   "PLANNABLE_AGE_RANGE_18_65_UP" - 18 to 65+ years old.
+	//   "PLANNABLE_AGE_RANGE_21_34" - 21 to 34 years old.
+	//   "PLANNABLE_AGE_RANGE_21_44" - 21 to 44 years old.
+	//   "PLANNABLE_AGE_RANGE_21_49" - 21 to 49 years old.
+	//   "PLANNABLE_AGE_RANGE_21_54" - 21 to 54 years old.
+	//   "PLANNABLE_AGE_RANGE_21_64" - 21 to 64 years old.
+	//   "PLANNABLE_AGE_RANGE_21_65_UP" - 21 to 65+ years old.
+	//   "PLANNABLE_AGE_RANGE_25_34" - 25 to 34 years old.
+	//   "PLANNABLE_AGE_RANGE_25_44" - 25 to 44 years old.
+	//   "PLANNABLE_AGE_RANGE_25_49" - 25 to 49 years old.
+	//   "PLANNABLE_AGE_RANGE_25_54" - 25 to 54 years old.
+	//   "PLANNABLE_AGE_RANGE_25_64" - 25 to 64 years old.
+	//   "PLANNABLE_AGE_RANGE_25_65_UP" - 25 to 65+ years old.
+	//   "PLANNABLE_AGE_RANGE_35_44" - 35 to 44 years old.
+	//   "PLANNABLE_AGE_RANGE_35_49" - 35 to 49 years old.
+	//   "PLANNABLE_AGE_RANGE_35_54" - 35 to 54 years old.
+	//   "PLANNABLE_AGE_RANGE_35_64" - 35 to 64 years old.
+	//   "PLANNABLE_AGE_RANGE_35_65_UP" - 35 to 65+ years old.
+	//   "PLANNABLE_AGE_RANGE_45_54" - 45 to 54 years old.
+	//   "PLANNABLE_AGE_RANGE_45_64" - 45 to 64 years old.
+	//   "PLANNABLE_AGE_RANGE_45_65_UP" - 45 to 65+ years old.
+	//   "PLANNABLE_AGE_RANGE_50_65_UP" - 50 to 65+ years old.
+	//   "PLANNABLE_AGE_RANGE_55_64" - 55 to 64 years old.
+	//   "PLANNABLE_AGE_RANGE_55_65_UP" - 55 to 65+ years old.
+	//   "PLANNABLE_AGE_RANGE_65_UP" - 65+ years old.
+	AgeRanges []string `json:"ageRanges,omitempty"`
+	// Devices: Output only. Targetable devices for the ad product.
+	//
+	// Possible values:
+	//   "DEVICE_TYPE_UNSPECIFIED" - Default value when device type is not
+	// specified in this version. This enum is a placeholder for default value and
+	// does not represent a real device type option.
+	//   "DEVICE_TYPE_COMPUTER" - Computer.
+	//   "DEVICE_TYPE_CONNECTED_TV" - Connected TV.
+	//   "DEVICE_TYPE_SMART_PHONE" - Smart phone.
+	//   "DEVICE_TYPE_TABLET" - Tablet.
+	//   "DEVICE_TYPE_CONNECTED_DEVICE" - Connected device.
+	Devices []string `json:"devices,omitempty"`
+	// Genders: Output only. Targetable genders for the ad product.
+	//
+	// Possible values:
+	//   "GENDER_UNSPECIFIED" - Default value when gender is not specified in this
+	// version. This enum is a place holder for default value and does not
+	// represent a real gender option.
+	//   "GENDER_MALE" - The audience gender is male.
+	//   "GENDER_FEMALE" - The audience gender is female.
+	//   "GENDER_UNKNOWN" - The audience gender is unknown.
+	Genders []string `json:"genders,omitempty"`
+	// Networks: Output only. Targetable networks for the ad product.
+	//
+	// Possible values:
+	//   "PLANNABLE_NETWORK_UNSPECIFIED" - Not specified.
+	//   "PLANNABLE_NETWORK_YOUTUBE" - YouTube.
+	//   "PLANNABLE_NETWORK_GOOGLE_VIDEO_PARTNERS" - Google Video Partners.
+	//   "PLANNABLE_NETWORK_YOUTUBE_AND_GOOGLE_VIDEO_PARTNERS" - YouTube and Google
+	// Video Partners.
+	Networks []string `json:"networks,omitempty"`
+	// SurfaceTargetingCombinations: Output only. Targetable surface combinations
+	// for the ad product.
+	SurfaceTargetingCombinations *SurfaceTargetingCombinations `json:"surfaceTargetingCombinations,omitempty"`
+	// YoutubeSelectLineups: Output only. Targetable YouTube Select Lineups for the
+	// ad product.
+	YoutubeSelectLineups []*YouTubeSelectLineUp `json:"youtubeSelectLineups,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgeRanges") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgeRanges") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PlannableTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod PlannableTargeting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PlannableUserInterest: A plannable user interest used for targeting.
+type PlannableUserInterest struct {
+	// UserInterest: Output only. The identifier for the user interest. The
+	// product_category specified in the request dictates the field populated in
+	// the object. * user_interest_category is populated for "Youtube". *
+	// user_interest_user_list is populated for "Open Auction".
+	UserInterest *UserInterest `json:"userInterest,omitempty"`
+	// UserInterestDisplayName: Output only. The display name of the interest, for
+	// example "Outdoor Enthusiasts".
+	UserInterestDisplayName string `json:"userInterestDisplayName,omitempty"`
+	// UserInterestPath: Output only. The category path of the interest.
+	UserInterestPath string `json:"userInterestPath,omitempty"`
+	// UserInterestType: Output only. The type of audience, e.g., "AFFINITY",
+	// "IN_MARKET".
+	UserInterestType string `json:"userInterestType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UserInterest") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UserInterest") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PlannableUserInterest) MarshalJSON() ([]byte, error) {
+	type NoMethod PlannableUserInterest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PlannableUserList: A plannable user list used for reach forecasting.
+type PlannableUserList struct {
+	// DisplayName: Output only. The display name of the user list.
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: Output only. The resource name identifying the user list. Format:
+	// `advertisers/{advertiser_id}/userLists/{user_list_id}`
+	Name string `json:"name,omitempty"`
+	// PlannableStatus: Output only. The plannability status of the user list.
+	//
+	// Possible values:
+	//   "PLANNABLE_STATUS_UNSPECIFIED" - Unspecified plannability status.
+	//   "PLANNABLE" - The user list is plannable.
+	//   "UNPLANNABLE" - The user list is unplannable.
+	PlannableStatus string `json:"plannableStatus,omitempty"`
+	// UserListType: Output only. The type of the user list.
+	//
+	// Possible values:
+	//   "USER_LIST_TYPE_UNSPECIFIED" - Unspecified user list type.
+	//   "FIRST_PARTY" - A first-party user list.
+	//   "THIRD_PARTY" - A third-party user list.
+	UserListType string `json:"userListType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PlannableUserList) MarshalJSON() ([]byte, error) {
+	type NoMethod PlannableUserList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PlannedProduct: Configuration for a specific product in the plan.
+type PlannedProduct struct {
+	// AdvancedProductTargeting: Optional. Optional line item level targeting
+	// overrides.
+	AdvancedProductTargeting *AdvancedProductTargeting `json:"advancedProductTargeting,omitempty"`
+	// BudgetMicros: Required. The budget for this product in micros.
+	BudgetMicros int64 `json:"budgetMicros,omitempty,string"`
+	// PlannableProductCode: Required. The code for the product, e.g.
+	// "VIDEO_REACH_CAMPAIGN".
+	PlannableProductCode string `json:"plannableProductCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdvancedProductTargeting")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdvancedProductTargeting") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PlannedProduct) MarshalJSON() ([]byte, error) {
+	type NoMethod PlannedProduct
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PlannedProductForecast: Performance metrics for a forecast point.
+type PlannedProductForecast struct {
+	// EffectiveFrequencyBreakdowns: A list of effective frequency breakdowns.
+	EffectiveFrequencyBreakdowns []*EffectiveFrequencyBreakdown `json:"effectiveFrequencyBreakdowns,omitempty"`
+	// OnTargetImpressions: Number of on-target impressions.
+	OnTargetImpressions int64 `json:"onTargetImpressions,omitempty,string"`
+	// OnTargetReach: Number of unique people reached that match the on-target
+	// definition.
+	OnTargetReach int64 `json:"onTargetReach,omitempty,string"`
+	// TotalImpressions: Total number of impressions.
+	TotalImpressions int64 `json:"totalImpressions,omitempty,string"`
+	// TotalReach: Total number of unique people reached.
+	TotalReach int64 `json:"totalReach,omitempty,string"`
+	// TrueviewViews: Number of TrueView views.
+	TrueviewViews int64 `json:"trueviewViews,omitempty,string"`
+	// ViewableImpressions: Number of viewable impressions.
+	ViewableImpressions int64 `json:"viewableImpressions,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g.
+	// "EffectiveFrequencyBreakdowns") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EffectiveFrequencyBreakdowns") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PlannedProductForecast) MarshalJSON() ([]byte, error) {
+	type NoMethod PlannedProductForecast
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PlannedProductReachForecast: Performance forecast for a specific product.
+type PlannedProductReachForecast struct {
+	// CostMicros: The cost in micros for this product.
+	CostMicros int64 `json:"costMicros,omitempty,string"`
+	// PlannableProductCode: The code for the product.
+	PlannableProductCode string `json:"plannableProductCode,omitempty"`
+	// PlannedProductForecast: Performance metrics for the product.
+	PlannedProductForecast *PlannedProductForecast `json:"plannedProductForecast,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CostMicros") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CostMicros") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PlannedProductReachForecast) MarshalJSON() ([]byte, error) {
+	type NoMethod PlannedProductReachForecast
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PoiAssignedTargetingOptionDetails: Details for assigned POI targeting
 // option. This will be populated in the details field of an
 // AssignedTargetingOption when targeting_type is `TARGETING_TYPE_POI`.
@@ -15573,6 +16187,38 @@ func (s ProductMatchDimension) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ProductMetadata: Metadata for a plannable product.
+type ProductMetadata struct {
+	// DisplayName: Output only. The name associated with the ad product. For
+	// example: "Video View Campaign".
+	DisplayName string `json:"displayName,omitempty"`
+	// PlannableProductCode: Output only. The plannable product code (e.g.
+	// "YOUTUBE_REACH_MIX").
+	PlannableProductCode string `json:"plannableProductCode,omitempty"`
+	// PlannableProductDescription: Output only. The plain-text description of the
+	// ad product.
+	PlannableProductDescription string `json:"plannableProductDescription,omitempty"`
+	// PlannableTargeting: Output only. The targeting capabilities available for
+	// this product.
+	PlannableTargeting *PlannableTargeting `json:"plannableTargeting,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProductMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ProximityLocationListAssignedTargetingOptionDetails: Targeting details for
 // proximity location list. This will be populated in the details field of an
 // AssignedTargetingOption when targeting_type is
@@ -15668,6 +16314,55 @@ type RateDetails struct {
 
 func (s RateDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod RateDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReachCurve: The generated reach curve.
+type ReachCurve struct {
+	// ReachForecasts: Points along the curve, ordered by cost.
+	ReachForecasts []*ReachForecast `json:"reachForecasts,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ReachForecasts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ReachForecasts") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReachCurve) MarshalJSON() ([]byte, error) {
+	type NoMethod ReachCurve
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReachForecast: A single point in the reach curve.
+type ReachForecast struct {
+	// CostMicros: Total cost for this point in micros.
+	CostMicros int64 `json:"costMicros,omitempty,string"`
+	// Forecast: Aggregate forecast for the entire plan.
+	Forecast *PlannedProductForecast `json:"forecast,omitempty"`
+	// PlannedProductReachForecasts: Breakdown for individual products at this cost
+	// point.
+	PlannedProductReachForecasts []*PlannedProductReachForecast `json:"plannedProductReachForecasts,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CostMicros") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CostMicros") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReachForecast) MarshalJSON() ([]byte, error) {
+	type NoMethod ReachForecast
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -15827,6 +16522,111 @@ type ReplaceSitesResponse struct {
 
 func (s ReplaceSitesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ReplaceSitesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RetrievePlannableLocationsResponse: Response for RetrievePlannableLocations
+type RetrievePlannableLocationsResponse struct {
+	// PlannableLocations: Output only. The list of plannable locations.
+	PlannableLocations []*PlannableLocation `json:"plannableLocations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "PlannableLocations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PlannableLocations") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RetrievePlannableLocationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RetrievePlannableLocationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RetrievePlannableProductsResponse: Response for RetrievePlannableProducts
+type RetrievePlannableProductsResponse struct {
+	// ProductMetadata: Output only. The list of product metadata showing targeting
+	// possibilities.
+	ProductMetadata []*ProductMetadata `json:"productMetadata,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ProductMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProductMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RetrievePlannableProductsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RetrievePlannableProductsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RetrievePlannableUserInterestsResponse: Response for
+// RetrievePlannableUserInterests.
+type RetrievePlannableUserInterestsResponse struct {
+	// PlannableUserInterests: The list of plannable user interests (Google
+	// Audiences).
+	PlannableUserInterests []*PlannableUserInterest `json:"plannableUserInterests,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "PlannableUserInterests") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PlannableUserInterests") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RetrievePlannableUserInterestsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RetrievePlannableUserInterestsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RetrievePlannableUserListsResponse: Response for RetrievePlannableUserLists.
+type RetrievePlannableUserListsResponse struct {
+	// NextPageToken: Output only. A token to retrieve the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// PlannableUserLists: Output only. The list of plannable user lists.
+	PlannableUserLists []*PlannableUserList `json:"plannableUserLists,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RetrievePlannableUserListsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RetrievePlannableUserListsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -16475,6 +17275,114 @@ func (s SubExchangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SurfaceTargetingCombination: A valid combination of surfaces.
+type SurfaceTargetingCombination struct {
+	// Choices: Output only. The combination of surfaces.
+	//
+	// Possible values:
+	//   "PLANNABLE_SURFACE_UNSPECIFIED" - Not specified.
+	//   "PLANNABLE_SURFACE_IN_FEED" - In-feed.
+	//   "PLANNABLE_SURFACE_IN_STREAM_BUMPER" - In-stream bumper.
+	//   "PLANNABLE_SURFACE_IN_STREAM_NON_SKIPPABLE" - In-stream non-skippable.
+	//   "PLANNABLE_SURFACE_IN_STREAM_SKIPPABLE" - In-stream skippable.
+	//   "PLANNABLE_SURFACE_SHORTS" - Shorts.
+	//   "PLANNABLE_SURFACE_DISCOVER_FEED" - Discover feed.
+	//   "PLANNABLE_SURFACE_GMAIL" - Gmail.
+	//   "PLANNABLE_SURFACE_GOOGLE_DISPLAY_NETWORK" - Google Display Network.
+	//   "PLANNABLE_SURFACE_IN_STREAM_NON_SKIPPABLE_THIRTY_SECONDS" - In-stream
+	// non-skippable (30 seconds).
+	Choices []string `json:"choices,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Choices") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Choices") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SurfaceTargetingCombination) MarshalJSON() ([]byte, error) {
+	type NoMethod SurfaceTargetingCombination
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SurfaceTargetingCombinations: Surface targeting rules.
+type SurfaceTargetingCombinations struct {
+	// AvailableSurfaceTypes: Output only. The surface types available.
+	//
+	// Possible values:
+	//   "PLANNABLE_SURFACE_UNSPECIFIED" - Not specified.
+	//   "PLANNABLE_SURFACE_IN_FEED" - In-feed.
+	//   "PLANNABLE_SURFACE_IN_STREAM_BUMPER" - In-stream bumper.
+	//   "PLANNABLE_SURFACE_IN_STREAM_NON_SKIPPABLE" - In-stream non-skippable.
+	//   "PLANNABLE_SURFACE_IN_STREAM_SKIPPABLE" - In-stream skippable.
+	//   "PLANNABLE_SURFACE_SHORTS" - Shorts.
+	//   "PLANNABLE_SURFACE_DISCOVER_FEED" - Discover feed.
+	//   "PLANNABLE_SURFACE_GMAIL" - Gmail.
+	//   "PLANNABLE_SURFACE_GOOGLE_DISPLAY_NETWORK" - Google Display Network.
+	//   "PLANNABLE_SURFACE_IN_STREAM_NON_SKIPPABLE_THIRTY_SECONDS" - In-stream
+	// non-skippable (30 seconds).
+	AvailableSurfaceTypes []string `json:"availableSurfaceTypes,omitempty"`
+	// ValidSurfaceCombinations: Output only. Valid combinations of surfaces that
+	// can be selected together.
+	ValidSurfaceCombinations []*SurfaceTargetingCombination `json:"validSurfaceCombinations,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AvailableSurfaceTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AvailableSurfaceTypes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SurfaceTargetingCombinations) MarshalJSON() ([]byte, error) {
+	type NoMethod SurfaceTargetingCombinations
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SurfaceTargetingSettings: Surface targeting selection.
+type SurfaceTargetingSettings struct {
+	// Surfaces: Optional. The surfaces to target.
+	//
+	// Possible values:
+	//   "PLANNABLE_SURFACE_UNSPECIFIED" - Not specified.
+	//   "PLANNABLE_SURFACE_IN_FEED" - In-feed.
+	//   "PLANNABLE_SURFACE_IN_STREAM_BUMPER" - In-stream bumper.
+	//   "PLANNABLE_SURFACE_IN_STREAM_NON_SKIPPABLE" - In-stream non-skippable.
+	//   "PLANNABLE_SURFACE_IN_STREAM_SKIPPABLE" - In-stream skippable.
+	//   "PLANNABLE_SURFACE_SHORTS" - Shorts.
+	//   "PLANNABLE_SURFACE_DISCOVER_FEED" - Discover feed.
+	//   "PLANNABLE_SURFACE_GMAIL" - Gmail.
+	//   "PLANNABLE_SURFACE_GOOGLE_DISPLAY_NETWORK" - Google Display Network.
+	//   "PLANNABLE_SURFACE_IN_STREAM_NON_SKIPPABLE_THIRTY_SECONDS" - In-stream
+	// non-skippable (30 seconds).
+	Surfaces []string `json:"surfaces,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Surfaces") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Surfaces") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SurfaceTargetingSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod SurfaceTargetingSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TargetFrequency: Setting that controls the average number of times the ads
 // will show to the same person over a certain period of time.
 type TargetFrequency struct {
@@ -16519,6 +17427,88 @@ type TargetFrequency struct {
 
 func (s TargetFrequency) MarshalJSON() ([]byte, error) {
 	type NoMethod TargetFrequency
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Targeting: Targeting settings for a planned campaign.
+type Targeting struct {
+	// AgeRange: Optional. The age range to target.
+	//
+	// Possible values:
+	//   "PLANNABLE_AGE_RANGE_UNSPECIFIED" - Not specified.
+	//   "PLANNABLE_AGE_RANGE_18_24" - 18 to 24 years old.
+	//   "PLANNABLE_AGE_RANGE_18_34" - 18 to 34 years old.
+	//   "PLANNABLE_AGE_RANGE_18_44" - 18 to 44 years old.
+	//   "PLANNABLE_AGE_RANGE_18_49" - 18 to 49 years old.
+	//   "PLANNABLE_AGE_RANGE_18_54" - 18 to 54 years old.
+	//   "PLANNABLE_AGE_RANGE_18_64" - 18 to 64 years old.
+	//   "PLANNABLE_AGE_RANGE_18_65_UP" - 18 to 65+ years old.
+	//   "PLANNABLE_AGE_RANGE_21_34" - 21 to 34 years old.
+	//   "PLANNABLE_AGE_RANGE_21_44" - 21 to 44 years old.
+	//   "PLANNABLE_AGE_RANGE_21_49" - 21 to 49 years old.
+	//   "PLANNABLE_AGE_RANGE_21_54" - 21 to 54 years old.
+	//   "PLANNABLE_AGE_RANGE_21_64" - 21 to 64 years old.
+	//   "PLANNABLE_AGE_RANGE_21_65_UP" - 21 to 65+ years old.
+	//   "PLANNABLE_AGE_RANGE_25_34" - 25 to 34 years old.
+	//   "PLANNABLE_AGE_RANGE_25_44" - 25 to 44 years old.
+	//   "PLANNABLE_AGE_RANGE_25_49" - 25 to 49 years old.
+	//   "PLANNABLE_AGE_RANGE_25_54" - 25 to 54 years old.
+	//   "PLANNABLE_AGE_RANGE_25_64" - 25 to 64 years old.
+	//   "PLANNABLE_AGE_RANGE_25_65_UP" - 25 to 65+ years old.
+	//   "PLANNABLE_AGE_RANGE_35_44" - 35 to 44 years old.
+	//   "PLANNABLE_AGE_RANGE_35_49" - 35 to 49 years old.
+	//   "PLANNABLE_AGE_RANGE_35_54" - 35 to 54 years old.
+	//   "PLANNABLE_AGE_RANGE_35_64" - 35 to 64 years old.
+	//   "PLANNABLE_AGE_RANGE_35_65_UP" - 35 to 65+ years old.
+	//   "PLANNABLE_AGE_RANGE_45_54" - 45 to 54 years old.
+	//   "PLANNABLE_AGE_RANGE_45_64" - 45 to 64 years old.
+	//   "PLANNABLE_AGE_RANGE_45_65_UP" - 45 to 65+ years old.
+	//   "PLANNABLE_AGE_RANGE_50_65_UP" - 50 to 65+ years old.
+	//   "PLANNABLE_AGE_RANGE_55_64" - 55 to 64 years old.
+	//   "PLANNABLE_AGE_RANGE_55_65_UP" - 55 to 65+ years old.
+	//   "PLANNABLE_AGE_RANGE_65_UP" - 65+ years old.
+	AgeRange string `json:"ageRange,omitempty"`
+	// Devices: Optional. The devices to target.
+	//
+	// Possible values:
+	//   "DEVICE_TYPE_UNSPECIFIED" - Default value when device type is not
+	// specified in this version. This enum is a placeholder for default value and
+	// does not represent a real device type option.
+	//   "DEVICE_TYPE_COMPUTER" - Computer.
+	//   "DEVICE_TYPE_CONNECTED_TV" - Connected TV.
+	//   "DEVICE_TYPE_SMART_PHONE" - Smart phone.
+	//   "DEVICE_TYPE_TABLET" - Tablet.
+	//   "DEVICE_TYPE_CONNECTED_DEVICE" - Connected device.
+	Devices []string `json:"devices,omitempty"`
+	// Genders: Optional. The gender options to target.
+	//
+	// Possible values:
+	//   "GENDER_UNSPECIFIED" - Default value when gender is not specified in this
+	// version. This enum is a place holder for default value and does not
+	// represent a real gender option.
+	//   "GENDER_MALE" - The audience gender is male.
+	//   "GENDER_FEMALE" - The audience gender is female.
+	//   "GENDER_UNKNOWN" - The audience gender is unknown.
+	Genders []string `json:"genders,omitempty"`
+	// PlannableLocationIds: Required. IDs of plannable locations to target.
+	// Plannable locations can be retrieved using the `RetrievePlannableLocations`
+	// method.
+	PlannableLocationIds googleapi.Int64s `json:"plannableLocationIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgeRange") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgeRange") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Targeting) MarshalJSON() ([]byte, error) {
+	type NoMethod Targeting
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -17306,6 +18296,34 @@ func (s User) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// UserInterest: The identifier for a user interest.
+type UserInterest struct {
+	// UserInterestCategory: Output only. The resource name of the interest
+	// category. Populated when `product_category` is "Youtube". Format:
+	// customers/{customer_id}/userInterests/{user_interest_id}
+	UserInterestCategory string `json:"userInterestCategory,omitempty"`
+	// UserInterestUserList: Output only. The resource name of the user list.
+	// Populated when `product_category` is "Open Auction". Format:
+	// customers/{customer_id}/userLists/{user_list_id}
+	UserInterestUserList string `json:"userInterestUserList,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UserInterestCategory") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UserInterestCategory") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UserInterest) MarshalJSON() ([]byte, error) {
+	type NoMethod UserInterest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // UserRewardedContentAssignedTargetingOptionDetails: User rewarded content
 // targeting option details. This will be populated in the
 // user_rewarded_content_details field when targeting_type is
@@ -17732,6 +18750,53 @@ type ViewabilityTargetingOptionDetails struct {
 
 func (s ViewabilityTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ViewabilityTargetingOptionDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// YouTubeSelectLineUp: A Plannable YouTube Select Lineup for product
+// targeting.
+type YouTubeSelectLineUp struct {
+	// DisplayName: Output only. The display name of the YouTube Select Lineup.
+	DisplayName string `json:"displayName,omitempty"`
+	// LineupId: Output only. The ID of the YouTube Select Lineup.
+	LineupId int64 `json:"lineupId,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s YouTubeSelectLineUp) MarshalJSON() ([]byte, error) {
+	type NoMethod YouTubeSelectLineUp
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// YouTubeSelectSettings: Settings for YouTube Select Lineups.
+type YouTubeSelectSettings struct {
+	// LineupId: Optional. The ID of the YouTube Select Lineup.
+	LineupId int64 `json:"lineupId,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "LineupId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LineupId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s YouTubeSelectSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod YouTubeSelectSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -30529,6 +31594,631 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsReplaceCall) Do(opts ...
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.negativeKeywordLists.negativeKeywords.replace", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type AdvertisersReachForecastGenerateReachForecastCall struct {
+	s                            *Service
+	advertiserId                 int64
+	generatereachforecastrequest *GenerateReachForecastRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// GenerateReachForecast: Generates a reach forecast for a given advertiser and
+// targeting configuration.
+//
+// - advertiserId: The ID of the advertiser that will run the planned campaign.
+func (r *AdvertisersReachForecastService) GenerateReachForecast(advertiserId int64, generatereachforecastrequest *GenerateReachForecastRequest) *AdvertisersReachForecastGenerateReachForecastCall {
+	c := &AdvertisersReachForecastGenerateReachForecastCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.generatereachforecastrequest = generatereachforecastrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersReachForecastGenerateReachForecastCall) Fields(s ...googleapi.Field) *AdvertisersReachForecastGenerateReachForecastCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersReachForecastGenerateReachForecastCall) Context(ctx context.Context) *AdvertisersReachForecastGenerateReachForecastCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersReachForecastGenerateReachForecastCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersReachForecastGenerateReachForecastCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.generatereachforecastrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/advertisers/{+advertiserId}/reachForecast:generateReachForecast")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.reachForecast.generateReachForecast", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.reachForecast.generateReachForecast" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenerateReachForecastResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersReachForecastGenerateReachForecastCall) Do(opts ...googleapi.CallOption) (*GenerateReachForecastResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenerateReachForecastResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.reachForecast.generateReachForecast", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AdvertisersReachForecastRetrievePlannableLocationsCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// RetrievePlannableLocations: Retrieves the list of countries where reach
+// forecasting is supported.
+//
+// - advertiserId: The ID of the advertiser to list plannable locations for.
+func (r *AdvertisersReachForecastService) RetrievePlannableLocations(advertiserId int64) *AdvertisersReachForecastRetrievePlannableLocationsCall {
+	c := &AdvertisersReachForecastRetrievePlannableLocationsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersReachForecastRetrievePlannableLocationsCall) Fields(s ...googleapi.Field) *AdvertisersReachForecastRetrievePlannableLocationsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AdvertisersReachForecastRetrievePlannableLocationsCall) IfNoneMatch(entityTag string) *AdvertisersReachForecastRetrievePlannableLocationsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersReachForecastRetrievePlannableLocationsCall) Context(ctx context.Context) *AdvertisersReachForecastRetrievePlannableLocationsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersReachForecastRetrievePlannableLocationsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersReachForecastRetrievePlannableLocationsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/advertisers/{+advertiserId}/reachForecast:retrievePlannableLocations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.reachForecast.retrievePlannableLocations", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.reachForecast.retrievePlannableLocations" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RetrievePlannableLocationsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersReachForecastRetrievePlannableLocationsCall) Do(opts ...googleapi.CallOption) (*RetrievePlannableLocationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RetrievePlannableLocationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.reachForecast.retrievePlannableLocations", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AdvertisersReachForecastRetrievePlannableProductsCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// RetrievePlannableProducts: Retrieves the list of products that can be
+// planned for a location.
+//
+// - advertiserId: The ID of the advertiser to list plannable products for.
+func (r *AdvertisersReachForecastService) RetrievePlannableProducts(advertiserId int64) *AdvertisersReachForecastRetrievePlannableProductsCall {
+	c := &AdvertisersReachForecastRetrievePlannableProductsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// PlannableLocationId sets the optional parameter "plannableLocationId":
+// Required. The ID of the plannable location.
+func (c *AdvertisersReachForecastRetrievePlannableProductsCall) PlannableLocationId(plannableLocationId string) *AdvertisersReachForecastRetrievePlannableProductsCall {
+	c.urlParams_.Set("plannableLocationId", plannableLocationId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersReachForecastRetrievePlannableProductsCall) Fields(s ...googleapi.Field) *AdvertisersReachForecastRetrievePlannableProductsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AdvertisersReachForecastRetrievePlannableProductsCall) IfNoneMatch(entityTag string) *AdvertisersReachForecastRetrievePlannableProductsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersReachForecastRetrievePlannableProductsCall) Context(ctx context.Context) *AdvertisersReachForecastRetrievePlannableProductsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersReachForecastRetrievePlannableProductsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersReachForecastRetrievePlannableProductsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/advertisers/{+advertiserId}/reachForecast:retrievePlannableProducts")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.reachForecast.retrievePlannableProducts", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.reachForecast.retrievePlannableProducts" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RetrievePlannableProductsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersReachForecastRetrievePlannableProductsCall) Do(opts ...googleapi.CallOption) (*RetrievePlannableProductsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RetrievePlannableProductsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.reachForecast.retrievePlannableProducts", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AdvertisersReachForecastRetrievePlannableUserInterestsCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// RetrievePlannableUserInterests: Retrieves Google Audiences (User Interests)
+// available for forecasting.
+//
+//   - advertiserId: The ID of the advertiser to list plannable user interests
+//     for.
+func (r *AdvertisersReachForecastService) RetrievePlannableUserInterests(advertiserId int64) *AdvertisersReachForecastRetrievePlannableUserInterestsCall {
+	c := &AdvertisersReachForecastRetrievePlannableUserInterestsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// ProductCategory sets the optional parameter "productCategory": Required. The
+// product category to retrieve plannable user interests for.
+//
+// Possible values:
+//
+//	"PLANNABLE_PRODUCT_CATEGORY_UNSPECIFIED" - Not specified.
+//	"YOUTUBE" - YouTube.
+//	"OPEN_AUCTION" - Open Auction.
+func (c *AdvertisersReachForecastRetrievePlannableUserInterestsCall) ProductCategory(productCategory string) *AdvertisersReachForecastRetrievePlannableUserInterestsCall {
+	c.urlParams_.Set("productCategory", productCategory)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersReachForecastRetrievePlannableUserInterestsCall) Fields(s ...googleapi.Field) *AdvertisersReachForecastRetrievePlannableUserInterestsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AdvertisersReachForecastRetrievePlannableUserInterestsCall) IfNoneMatch(entityTag string) *AdvertisersReachForecastRetrievePlannableUserInterestsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersReachForecastRetrievePlannableUserInterestsCall) Context(ctx context.Context) *AdvertisersReachForecastRetrievePlannableUserInterestsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersReachForecastRetrievePlannableUserInterestsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersReachForecastRetrievePlannableUserInterestsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/advertisers/{+advertiserId}/reachForecast:retrievePlannableUserInterests")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.reachForecast.retrievePlannableUserInterests", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.reachForecast.retrievePlannableUserInterests" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RetrievePlannableUserInterestsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersReachForecastRetrievePlannableUserInterestsCall) Do(opts ...googleapi.CallOption) (*RetrievePlannableUserInterestsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RetrievePlannableUserInterestsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.reachForecast.retrievePlannableUserInterests", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AdvertisersReachForecastRetrievePlannableUserListsCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// RetrievePlannableUserLists: Retrieves first and third party user lists
+// available for forecasting.
+//
+//   - advertiserId: The ID of the advertiser to retrieve plannable user lists
+//     for.
+func (r *AdvertisersReachForecastService) RetrievePlannableUserLists(advertiserId int64) *AdvertisersReachForecastRetrievePlannableUserListsCall {
+	c := &AdvertisersReachForecastRetrievePlannableUserListsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by plannable
+// user list properties. Supported syntax: * Filter expressions are made up of
+// one or more restrictions. * Restrictions can be combined by `AND` or `OR`
+// logical operators. * A restriction has the form of `{field} {operator}
+// {value}`. * The `updateTime` field must use the `GREATER THAN OR EQUAL TO
+// (>=)` or `LESS THAN OR EQUAL TO (<=)` operators. * All other fields must use
+// the `EQUALS (=)` operator. Supported fields: * `plannableStatus` Examples: *
+// All plannable user lists: `plannableStatus="PLANNABLE" The length of this
+// field should be no more than 500 characters. Reference our filter `LIST`
+// requests (/display-video/api/guides/how-tos/filters) guide for more
+// information.
+func (c *AdvertisersReachForecastRetrievePlannableUserListsCall) Filter(filter string) *AdvertisersReachForecastRetrievePlannableUserListsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Must
+// be between `1` and `5000`. If unspecified will default to `5000`.
+func (c *AdvertisersReachForecastRetrievePlannableUserListsCall) PageSize(pageSize int64) *AdvertisersReachForecastRetrievePlannableUserListsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return. Typically, this is the value of
+// next_page_token returned from the previous call to
+// `RetrievePlannableUserLists` method. If not specified, the first page of
+// results will be returned.
+func (c *AdvertisersReachForecastRetrievePlannableUserListsCall) PageToken(pageToken string) *AdvertisersReachForecastRetrievePlannableUserListsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersReachForecastRetrievePlannableUserListsCall) Fields(s ...googleapi.Field) *AdvertisersReachForecastRetrievePlannableUserListsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AdvertisersReachForecastRetrievePlannableUserListsCall) IfNoneMatch(entityTag string) *AdvertisersReachForecastRetrievePlannableUserListsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersReachForecastRetrievePlannableUserListsCall) Context(ctx context.Context) *AdvertisersReachForecastRetrievePlannableUserListsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersReachForecastRetrievePlannableUserListsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersReachForecastRetrievePlannableUserListsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/advertisers/{+advertiserId}/reachForecast:retrievePlannableUserLists")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.reachForecast.retrievePlannableUserLists", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.reachForecast.retrievePlannableUserLists" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RetrievePlannableUserListsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersReachForecastRetrievePlannableUserListsCall) Do(opts ...googleapi.CallOption) (*RetrievePlannableUserListsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RetrievePlannableUserListsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.reachForecast.retrievePlannableUserLists", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersReachForecastRetrievePlannableUserListsCall) Pages(ctx context.Context, f func(*RetrievePlannableUserListsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall struct {

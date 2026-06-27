@@ -1212,6 +1212,31 @@ func (s GoogleIdentityAccesscontextmanagerV1AccessPolicy) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleIdentityAccesscontextmanagerV1AddRequestHeader: Adds a request header
+// to the API.
+type GoogleIdentityAccesscontextmanagerV1AddRequestHeader struct {
+	// Key: HTTP header key.
+	Key string `json:"key,omitempty"`
+	// Value: HTTP header value.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleIdentityAccesscontextmanagerV1AddRequestHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1AddRequestHeader
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleIdentityAccesscontextmanagerV1ApiOperation: Identification for an API
 // Operation.
 type GoogleIdentityAccesscontextmanagerV1ApiOperation struct {
@@ -1542,6 +1567,9 @@ type GoogleIdentityAccesscontextmanagerV1EgressSource struct {
 	// single `*` is specified for `access_level`, then all EgressSources will be
 	// allowed.
 	AccessLevel string `json:"accessLevel,omitempty"`
+	// PscEndpoint: Requests from this PSC will be allowed from access perimeter
+	// data.
+	PscEndpoint *GoogleIdentityAccesscontextmanagerV1PrivateServiceConnectEndpoint `json:"pscEndpoint,omitempty"`
 	// Resource: A Google Cloud resource from the service perimeter that you want
 	// to allow to access data outside the perimeter. This field supports only
 	// projects. The project format is `projects/{project_number}`. You can't use
@@ -1711,6 +1739,9 @@ type GoogleIdentityAccesscontextmanagerV1IngressSource struct {
 	// `accessPolicies/MY_POLICY/accessLevels/MY_LEVEL`. If a single `*` is
 	// specified for `access_level`, then all IngressSources will be allowed.
 	AccessLevel string `json:"accessLevel,omitempty"`
+	// PscEndpoint: Requests from this PSC will be allowed to access perimeter
+	// data.
+	PscEndpoint *GoogleIdentityAccesscontextmanagerV1PrivateServiceConnectEndpoint `json:"pscEndpoint,omitempty"`
 	// Resource: A Google Cloud resource that is allowed to ingress the perimeter.
 	// Requests from these resources will be allowed to access perimeter data.
 	// Currently only projects and VPCs are allowed. Project format:
@@ -1803,6 +1834,29 @@ func (s GoogleIdentityAccesscontextmanagerV1MethodSelector) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleIdentityAccesscontextmanagerV1Modifier: Modifier to apply to the API
+// requests.
+type GoogleIdentityAccesscontextmanagerV1Modifier struct {
+	// AddRequestHeader: Adds additional HTTP request headers.
+	AddRequestHeader *GoogleIdentityAccesscontextmanagerV1AddRequestHeader `json:"addRequestHeader,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AddRequestHeader") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AddRequestHeader") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleIdentityAccesscontextmanagerV1Modifier) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1Modifier
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleIdentityAccesscontextmanagerV1OsConstraint: A restriction on the OS
 // type and version of devices making requests.
 type GoogleIdentityAccesscontextmanagerV1OsConstraint struct {
@@ -1842,6 +1896,61 @@ type GoogleIdentityAccesscontextmanagerV1OsConstraint struct {
 
 func (s GoogleIdentityAccesscontextmanagerV1OsConstraint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1OsConstraint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1PrivateServiceConnectEndpoint: Specifies
+// the PSC an API call refers to.
+type GoogleIdentityAccesscontextmanagerV1PrivateServiceConnectEndpoint struct {
+	// ForwardingRule: The global forwarding rule identifier. Forwarding rule
+	// format:
+	// `//compute.googleapis.com/projects/{PROJECT_ID}/global/forwardingRules/{FORWA
+	// RDING_RULE_ID}`.
+	ForwardingRule string `json:"forwardingRule,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ForwardingRule") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ForwardingRule") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleIdentityAccesscontextmanagerV1PrivateServiceConnectEndpoint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1PrivateServiceConnectEndpoint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1ServicePattern: Service patterns used to
+// allow access.
+type GoogleIdentityAccesscontextmanagerV1ServicePattern struct {
+	// Modifiers: Modifiers to apply to the requests that match the URL pattern.
+	Modifiers []*GoogleIdentityAccesscontextmanagerV1Modifier `json:"modifiers,omitempty"`
+	// Pattern: URL pattern to allow. Only patterns of ".googleapis.com/*",
+	// "www.googleapis.com//*" and "*.appspot.com/* forms are supported, where
+	// should be alphanumerical name.
+	Pattern string `json:"pattern,omitempty"`
+	// Service: Supported service to allow.
+	Service string `json:"service,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Modifiers") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Modifiers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleIdentityAccesscontextmanagerV1ServicePattern) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1ServicePattern
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1978,6 +2087,9 @@ func (s GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig) MarshalJSON(
 // GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices: Specifies how
 // APIs are allowed to communicate within the Service Perimeter.
 type GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices struct {
+	// AllowedServicePatterns: Specifies which Google services are allowed to be
+	// accessed from VPC networks in the service perimeter.
+	AllowedServicePatterns []*GoogleIdentityAccesscontextmanagerV1ServicePattern `json:"allowedServicePatterns,omitempty"`
 	// AllowedServices: The list of APIs usable within the Service Perimeter. Must
 	// be empty unless 'enable_restriction' is True. You can specify a list of
 	// individual services, as well as include the 'RESTRICTED-SERVICES' value,
@@ -1986,15 +2098,26 @@ type GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices struct {
 	// EnableRestriction: Whether to restrict API calls within the Service
 	// Perimeter to the list of APIs specified in 'allowed_services'.
 	EnableRestriction bool `json:"enableRestriction,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AllowedServices") to
+	// ServicePatternsEnforcementScopes: Defines the enforcement scopes of service
+	// patterns.
+	//
+	// Possible values:
+	//   "SERVICE_PATTERNS_ENFORCEMENT_SCOPE_UNSPECIFIED" - Default value. This can
+	// not be used.
+	//   "GOOGLE_APIS_VIA_PRIVATE_PATH" - Enables VPC Accessible Services
+	// enforcement for all APIs (including unsupported APIs) for Private Google
+	// Access configured with Private VIP and Private Service Connect Endpoint for
+	// Global Google APIs that uses 'all-apis' bundle.
+	ServicePatternsEnforcementScopes []string `json:"servicePatternsEnforcementScopes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowedServicePatterns") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AllowedServices") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AllowedServicePatterns") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

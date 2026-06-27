@@ -2587,7 +2587,7 @@
       }
     }
   },
-  "revision": "20260511",
+  "revision": "20260620",
   "rootUrl": "https://datamigration.googleapis.com/",
   "schemas": {
     "AlloyDbConnectionProfile": {
@@ -5318,6 +5318,10 @@
           "description": "The resource labels for migration job to use to annotate any related underlying resources such as Compute Engine VMs. An object containing a list of \"key\": \"value\" pairs. Example: `{ \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }`.",
           "type": "object"
         },
+        "mysqlHomogeneousConfig": {
+          "$ref": "MySqlHomogeneousConfig",
+          "description": "Optional. Configuration for MySQL homogeneous migration."
+        },
         "name": {
           "description": "The name (URI) of this migration job resource, in the form of: projects/{project}/locations/{location}/migrationJobs/{migrationJob}.",
           "type": "string"
@@ -5518,7 +5522,9 @@
             "READY_FOR_PROMOTE",
             "PROMOTE_IN_PROGRESS",
             "PROMOTED",
-            "DIFF_BACKUP"
+            "DIFF_BACKUP",
+            "CREATING_BACKUP",
+            "RESTORING_BACKUP"
           ],
           "enumDescriptions": [
             "The phase of the migration job is unknown.",
@@ -5527,7 +5533,9 @@
             "The migration job object is ready to be promoted.",
             "The migration job object is in running the promote phase.",
             "The migration job is promoted.",
-            "The migration job object is in the differential backup phase."
+            "The migration job object is in the differential backup phase.",
+            "The migration job object is creating a fully managed backup of the source.",
+            "The migration job object is restoring a fully managed backup to the destination."
           ],
           "readOnly": true,
           "type": "string"
@@ -5783,6 +5791,17 @@
         "username": {
           "description": "Required. The username that Database Migration Service will use to connect to the database. The value is encrypted when stored in Database Migration Service.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "MySqlHomogeneousConfig": {
+      "description": "Configuration for MySQL to MySQL migrations.",
+      "id": "MySqlHomogeneousConfig",
+      "properties": {
+        "isPrimaryDestination": {
+          "description": "Optional. Whether the destination for the migration job is a primary instance.",
+          "type": "boolean"
         }
       },
       "type": "object"

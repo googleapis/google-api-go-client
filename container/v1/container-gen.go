@@ -4885,6 +4885,7 @@ type LoggingComponentConfig struct {
 	//   "KCP_SSHD" - kcp-sshd
 	//   "KCP_CONNECTION" - kcp connection logs
 	//   "KCP_HPA" - horizontal pod autoscaler decision logs
+	//   "KCP_VPA" - vertical pod autoscaler decision logs
 	EnableComponents []string `json:"enableComponents,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableComponents") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6423,13 +6424,14 @@ type NodePool struct {
 	Autoscaling *NodePoolAutoscaling `json:"autoscaling,omitempty"`
 	// BestEffortProvisioning: Enable best effort provisioning for nodes
 	BestEffortProvisioning *BestEffortProvisioning `json:"bestEffortProvisioning,omitempty"`
-	// Conditions: Which conditions caused the current node pool state.
+	// Conditions: Output only. Which conditions caused the current node pool
+	// state.
 	Conditions []*StatusCondition `json:"conditions,omitempty"`
 	// Config: The node configuration of the pool.
 	Config *NodeConfig `json:"config,omitempty"`
-	// Etag: This checksum is computed by the server based on the value of node
-	// pool fields, and may be sent on update requests to ensure the client has an
-	// up-to-date value before proceeding.
+	// Etag: Output only. This checksum is computed by the server based on the
+	// value of node pool fields, and may be sent on update requests to ensure the
+	// client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 	// InitialNodeCount: The initial node count for the pool. You must ensure that
 	// your Compute Engine resource quota (https://cloud.google.com/compute/quotas)
@@ -7748,7 +7750,8 @@ type ReleaseChannel struct {
 	// to.
 	//
 	// Possible values:
-	//   "UNSPECIFIED" - No channel specified.
+	//   "UNSPECIFIED" - Deprecated: No channel specified. it will be removed in
+	// the future, use RAPID, REGULAR, STABLE or EXTENDED instead.
 	//   "RAPID" - RAPID channel is offered on an early access basis for customers
 	// who want to test new releases. WARNING: Versions available in the RAPID
 	// Channel may be subject to unresolved issues with no known workaround and are
@@ -7786,7 +7789,8 @@ type ReleaseChannelConfig struct {
 	// Channel: The release channel this configuration applies to.
 	//
 	// Possible values:
-	//   "UNSPECIFIED" - No channel specified.
+	//   "UNSPECIFIED" - Deprecated: No channel specified. it will be removed in
+	// the future, use RAPID, REGULAR, STABLE or EXTENDED instead.
 	//   "RAPID" - RAPID channel is offered on an early access basis for customers
 	// who want to test new releases. WARNING: Versions available in the RAPID
 	// Channel may be subject to unresolved issues with no known workaround and are

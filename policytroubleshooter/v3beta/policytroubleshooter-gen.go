@@ -163,6 +163,42 @@ type IamService struct {
 	s *Service
 }
 
+// GoogleCloudPolicytroubleshooterIamV3betaAccessContext: Information about the
+// principal, resource, and permission for the ErrorInfoId.
+type GoogleCloudPolicytroubleshooterIamV3betaAccessContext struct {
+	// Name: The relative resource name, not including the / prefix. For example,
+	// `projects/project-id`, `projects/-/serviceAccounts/11112222`
+	Name string `json:"name,omitempty"`
+	// Parent: The full resource name of the parent where IAM policy is configured.
+	// For example, `//cloudresourcemanager.googleapis.com/folders/444446666`
+	Parent string `json:"parent,omitempty"`
+	// Permission: Required. The IAM permission name provided by the user in the
+	// access denied request.
+	Permission string `json:"permission,omitempty"`
+	// Principal: The email address of the principal who requested access. For
+	// example, `alice@example.com` or
+	// `my-service-account@my-project.iam.gserviceaccount.com`. The principal must
+	// be a Google Account or a service account. Other types of principals are not
+	// supported.
+	Principal string `json:"principal,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPolicytroubleshooterIamV3betaAccessContext) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPolicytroubleshooterIamV3betaAccessContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudPolicytroubleshooterIamV3betaAccessTuple: Information about the
 // principal, resource, and permission to check.
 type GoogleCloudPolicytroubleshooterIamV3betaAccessTuple struct {
@@ -1553,6 +1589,81 @@ func (s GoogleCloudPolicytroubleshooterIamV3betaPABPolicyExplanation) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPolicytroubleshooterIamV3betaTroubleshootIamPolicyErrorRequest:
+// Request to troubleshoot access denial with the IAM error identifier.
+type GoogleCloudPolicytroubleshooterIamV3betaTroubleshootIamPolicyErrorRequest struct {
+	// ErrorInfoId: This identifier is returned in the `ErrorInfo.metadata` with
+	// key 'error_info_id' when an access requests is denied by the IAM service.
+	ErrorInfoId string `json:"errorInfoId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorInfoId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorInfoId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPolicytroubleshooterIamV3betaTroubleshootIamPolicyErrorRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPolicytroubleshooterIamV3betaTroubleshootIamPolicyErrorRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPolicytroubleshooterIamV3betaTroubleshootIamPolicyErrorResponse:
+// Response for troubleshoot access denial with the IAM error identifier.
+type GoogleCloudPolicytroubleshooterIamV3betaTroubleshootIamPolicyErrorResponse struct {
+	// AccessContext: The access context associated with the ErrorInfoId.
+	AccessContext *GoogleCloudPolicytroubleshooterIamV3betaAccessContext `json:"accessContext,omitempty"`
+	// AllowPolicyExplanation: An explanation of how the applicable IAM allow
+	// policies affect the final access state.
+	AllowPolicyExplanation *GoogleCloudPolicytroubleshooterIamV3betaAllowPolicyExplanation `json:"allowPolicyExplanation,omitempty"`
+	// DenyPolicyExplanation: An explanation of how the applicable IAM deny
+	// policies affect the final access state.
+	DenyPolicyExplanation *GoogleCloudPolicytroubleshooterIamV3betaDenyPolicyExplanation `json:"denyPolicyExplanation,omitempty"`
+	// OverallAccessState: Indicates whether the principal has the permission to
+	// access the resource, based on evaluating all types of the applicable IAM
+	// policies.
+	//
+	// Possible values:
+	//   "OVERALL_ACCESS_STATE_UNSPECIFIED" - Not specified.
+	//   "OVERALL_ACCESS_STATE_CAN_ACCESS" - The principal has the permission.
+	//   "OVERALL_ACCESS_STATE_CANNOT_ACCESS" - The principal doesn't have the
+	// permission.
+	//   "OVERALL_ACCESS_STATE_UNKNOWN_INFO" - The principal might have the
+	// permission, but the sender can't access all of the information needed to
+	// fully evaluate the principal's access.
+	//   "OVERALL_ACCESS_STATE_UNKNOWN_CONDITIONAL" - The principal might have the
+	// permission, but Policy Troubleshooter can't fully evaluate the principal's
+	// access because of the missing context to evaluate the condition.
+	OverallAccessState string `json:"overallAccessState,omitempty"`
+	// PabPolicyExplanation: An explanation of how the applicable principal access
+	// boundary policies affect the final access state.
+	PabPolicyExplanation *GoogleCloudPolicytroubleshooterIamV3betaPABPolicyExplanation `json:"pabPolicyExplanation,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AccessContext") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessContext") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPolicytroubleshooterIamV3betaTroubleshootIamPolicyErrorResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPolicytroubleshooterIamV3betaTroubleshootIamPolicyErrorResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudPolicytroubleshooterIamV3betaTroubleshootIamPolicyRequest:
 // Request for TroubleshootIamPolicy.
 type GoogleCloudPolicytroubleshooterIamV3betaTroubleshootIamPolicyRequest struct {
@@ -2573,5 +2684,103 @@ func (c *IamTroubleshootCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPoli
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "policytroubleshooter.iam.troubleshoot", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type IamTroubleshootErrorCall struct {
+	s                                                                         *Service
+	googlecloudpolicytroubleshooteriamv3betatroubleshootiampolicyerrorrequest *GoogleCloudPolicytroubleshooterIamV3betaTroubleshootIamPolicyErrorRequest
+	urlParams_                                                                gensupport.URLParams
+	ctx_                                                                      context.Context
+	header_                                                                   http.Header
+}
+
+// TroubleshootError: Checks the access request associated with the error
+// identifier and explains why the access is denied by IAM policies.
+func (r *IamService) TroubleshootError(googlecloudpolicytroubleshooteriamv3betatroubleshootiampolicyerrorrequest *GoogleCloudPolicytroubleshooterIamV3betaTroubleshootIamPolicyErrorRequest) *IamTroubleshootErrorCall {
+	c := &IamTroubleshootErrorCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googlecloudpolicytroubleshooteriamv3betatroubleshootiampolicyerrorrequest = googlecloudpolicytroubleshooteriamv3betatroubleshootiampolicyerrorrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *IamTroubleshootErrorCall) Fields(s ...googleapi.Field) *IamTroubleshootErrorCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *IamTroubleshootErrorCall) Context(ctx context.Context) *IamTroubleshootErrorCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *IamTroubleshootErrorCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *IamTroubleshootErrorCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudpolicytroubleshooteriamv3betatroubleshootiampolicyerrorrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3beta/iam:troubleshootError")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "policytroubleshooter.iam.troubleshootError", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "policytroubleshooter.iam.troubleshootError" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPolicytroubleshooterIamV3betaTroubleshootIamPolicyErrorResponse.S
+// erverResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *IamTroubleshootErrorCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPolicytroubleshooterIamV3betaTroubleshootIamPolicyErrorResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudPolicytroubleshooterIamV3betaTroubleshootIamPolicyErrorResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "policytroubleshooter.iam.troubleshootError", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

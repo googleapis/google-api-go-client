@@ -3536,8 +3536,10 @@ type ExternalRuntimeOptions struct {
 	// (https://cloud.google.com/bigquery/docs/user-defined-functions-python#configure-container-limits)
 	ContainerMemory string `json:"containerMemory,omitempty"`
 	// ContainerRequestConcurrency: Optional. Maximum number of requests that a
-	// Python UDF container instance can handle concurrently. If absent or if `0`,
-	// a default concurrency is used.
+	// Python UDF instance can handle concurrently. If absent or if `0`, the
+	// default concurrency value is used. For more information, see Configure
+	// container limits for Python UDFs
+	// (https://cloud.google.com/bigquery/docs/user-defined-functions-python#configure-container-limits).
 	ContainerRequestConcurrency int64 `json:"containerRequestConcurrency,omitempty,string"`
 	// MaxBatchingRows: Optional. Maximum number of rows in each batch sent to the
 	// external runtime. If absent or if 0, BigQuery dynamically decides the number

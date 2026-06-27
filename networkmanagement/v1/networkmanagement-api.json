@@ -1797,7 +1797,7 @@
       }
     }
   },
-  "revision": "20260603",
+  "revision": "20260617",
   "rootUrl": "https://networkmanagement.googleapis.com/",
   "schemas": {
     "AbortInfo": {
@@ -1961,7 +1961,7 @@
           "type": "array"
         },
         "resourceUri": {
-          "description": "URI of the resource that caused the abort.",
+          "description": "URI of the resource that caused the abort. Format: * `projects/{project_id}/global/networks/{network_id}` (VPC network) * `projects/{project_id}/zones/{zone}/instances/{instance_id}` (VM instance)",
           "type": "string"
         }
       },
@@ -1995,7 +1995,7 @@
           "type": "string"
         },
         "uri": {
-          "description": "URI of an App Engine version.",
+          "description": "URI of the App Engine version. Format: `apps/{app_id}/services/{service_id}/versions/{version_id}`",
           "type": "string"
         }
       },
@@ -2101,7 +2101,7 @@
           "type": "string"
         },
         "uri": {
-          "description": "URI of a Cloud Function.",
+          "description": "URI of the Cloud Function. Format: `projects/{project_id}/locations/{location}/functions/{function_id}`",
           "type": "string"
         },
         "versionId": {
@@ -2125,7 +2125,7 @@
           "type": "string"
         },
         "uri": {
-          "description": "URI of a Cloud Run job.",
+          "description": "URI of the Cloud Run job. Format: `projects/{project_id}/locations/{location}/jobs/{job_id}`",
           "type": "string"
         }
       },
@@ -2160,11 +2160,11 @@
           "type": "string"
         },
         "serviceUri": {
-          "description": "URI of Cloud Run service this revision belongs to.",
+          "description": "URI of Cloud Run service this revision belongs to. Format: `projects/{project_id}/locations/{location}/services/{service_id}`",
           "type": "string"
         },
         "uri": {
-          "description": "URI of a Cloud Run revision.",
+          "description": "URI of the Cloud Run revision. Format: `projects/{project_id}/locations/{location}/revisions/{revision_id}`",
           "type": "string"
         }
       },
@@ -2187,7 +2187,7 @@
           "type": "string"
         },
         "networkUri": {
-          "description": "URI of a Cloud SQL instance network or empty string if the instance does not have one.",
+          "description": "URI of a Cloud SQL instance network or empty string if the instance does not have one. In format \"projects/{project}/global/networks/{network}\".",
           "type": "string"
         },
         "region": {
@@ -2195,7 +2195,7 @@
           "type": "string"
         },
         "uri": {
-          "description": "URI of a Cloud SQL instance.",
+          "description": "URI of a Cloud SQL instance in format \"projects/{project}/instances/{instance}\"",
           "type": "string"
         }
       },
@@ -2315,7 +2315,7 @@
           "type": "string"
         },
         "resourceUri": {
-          "description": "URI of the resource that the packet is delivered to.",
+          "description": "URI of the resource that the packet is delivered to. For example: * `\"projects/{project}/zones/{zone}/instances/{instance}\"` * `\"projects/{project}/regions/{region}/networkEndpointGroups/{network_endpoint_group}\"`",
           "type": "string"
         },
         "storageBucket": {
@@ -2382,7 +2382,7 @@
       "id": "DirectVpcEgressConnectionInfo",
       "properties": {
         "networkUri": {
-          "description": "URI of direct access network.",
+          "description": "URI of the VPC network for direct egress. Format: `projects/{project_id}/global/networks/{network_id}`",
           "type": "string"
         },
         "region": {
@@ -2398,7 +2398,7 @@
           "type": "string"
         },
         "subnetworkUri": {
-          "description": "URI of direct access subnetwork.",
+          "description": "URI of the subnetwork for direct egress. Format: `projects/{project_id}/regions/{region}/subnetworks/{subnetwork_id}`",
           "type": "string"
         }
       },
@@ -2649,7 +2649,7 @@
           "type": "string"
         },
         "resourceUri": {
-          "description": "URI of the resource that caused the drop.",
+          "description": "URI of the resource that caused the drop. Format: * `projects/{project_id}/global/firewalls/{firewall_id}` (firewall rule) * `projects/{project_id}/global/routes/{route_id}` (route)",
           "type": "string"
         },
         "sourceGeolocationCode": {
@@ -2835,6 +2835,10 @@
           "description": "A [Cloud SQL](https://cloud.google.com/sql) instance URI.",
           "type": "string"
         },
+        "dmsPrivateConnection": {
+          "description": "A [DMS Private Connection](https://docs.cloud.google.com/database-migration/docs/reference/rest/v1/projects.locations.privateConnections) name format: projects/{project}/locations/{location}/privateConnections/{privateConnection}.",
+          "type": "string"
+        },
         "forwardingRule": {
           "description": "A forwarding rule and its corresponding IP address represent the frontend configuration of a Google Cloud load balancer. Forwarding rules are also used for protocol forwarding, Private Service Connect and other network services to provide forwarding information in the control plane. Applicable only to destination endpoint. Format: `projects/{project}/global/forwardingRules/{id}` or `projects/{project}/regions/{region}/forwardingRules/{id}`",
           "type": "string"
@@ -2963,7 +2967,7 @@
           "type": "string"
         },
         "destinationNetworkUri": {
-          "description": "URI of the network where this packet is sent to.",
+          "description": "URI of the network where this packet is sent to. Format: `projects/{project_id}/global/networks/{network_id}`",
           "type": "string"
         },
         "destinationPort": {
@@ -2984,7 +2988,7 @@
           "type": "string"
         },
         "sourceNetworkUri": {
-          "description": "URI of the network where this packet originates from.",
+          "description": "URI of the network where this packet originates from. Format: `projects/{project_id}/global/networks/{network_id}`",
           "type": "string"
         },
         "sourcePort": {
@@ -3067,7 +3071,7 @@
           "type": "string"
         },
         "networkUri": {
-          "description": "The URI of the VPC network that the firewall rule is associated with. This field is not applicable to hierarchical firewall policy rules.",
+          "description": "The URI of the VPC network that the firewall rule is associated with in format \"projects/{project}/global/networks/{network}\". This field is not applicable to hierarchical firewall policy rules.",
           "type": "string"
         },
         "policy": {
@@ -3080,7 +3084,7 @@
           "type": "integer"
         },
         "policyUri": {
-          "description": "The URI of the firewall policy that this rule is associated with. This field is not applicable to VPC firewall rules and implied VPC firewall rules.",
+          "description": "The URI of the firewall policy that this rule is associated with. This field is not applicable to VPC firewall rules and implied VPC firewall rules. Format: * `locations/global/firewallPolicies/{policy_id}` (hierarchical policy) * `projects/{project_id}/global/firewallPolicies/{policy_id}` (global network firewall policy) * `projects/{project_id}/regions/{region}/firewallPolicies/{policy_id}` (regional network firewall policy)",
           "type": "string"
         },
         "priority": {
@@ -3117,7 +3121,7 @@
           "type": "string"
         },
         "uri": {
-          "description": "The URI of the firewall rule. This field is not applicable to implied VPC firewall rules.",
+          "description": "The URI of the firewall rule in format \"projects/{project}/global/firewalls/{firewall}\". This field is not applicable to implied VPC firewall rules.",
           "type": "string"
         }
       },
@@ -3132,7 +3136,7 @@
           "type": "string"
         },
         "resourceUri": {
-          "description": "URI of the resource that the packet is forwarded to.",
+          "description": "URI of the resource that the packet is forwarded to. Format: * `projects/{project_id}/global/networks/{network_id}` (VPC peering network) * `projects/{project_id}/regions/{region}/vpnGateways/{vpn_gateway_id}` (VPN gateway)",
           "type": "string"
         },
         "target": {
@@ -3202,7 +3206,7 @@
           "type": "string"
         },
         "networkUri": {
-          "description": "Network URI.",
+          "description": "URI of a VPC network where the forwarding rule is located in format \"projects/{project}/global/networks/{network}\".",
           "type": "string"
         },
         "pscGoogleApiTarget": {
@@ -3210,7 +3214,7 @@
           "type": "string"
         },
         "pscServiceAttachmentUri": {
-          "description": "URI of the PSC service attachment this forwarding rule targets (if applicable).",
+          "description": "URI of the PSC service attachment this forwarding rule targets (if applicable) in format \"projects/{project}/regions/{region}/serviceAttachments/{service_attachment}\".",
           "type": "string"
         },
         "region": {
@@ -3222,7 +3226,7 @@
           "type": "string"
         },
         "uri": {
-          "description": "URI of the forwarding rule.",
+          "description": "URI of the forwarding rule in format \"projects/{project}/global/forwardingRules/{forwarding_rule}\" (global) or \"projects/{project}/regions/{region}/forwardingRules/{forwarding_rule}\" (regional).",
           "type": "string"
         },
         "vip": {
@@ -3237,11 +3241,11 @@
       "id": "GKEMasterInfo",
       "properties": {
         "clusterNetworkUri": {
-          "description": "URI of a GKE cluster network.",
+          "description": "URI of the GKE cluster network. Format: `projects/{project_id}/global/networks/{network_id}`",
           "type": "string"
         },
         "clusterUri": {
-          "description": "URI of a GKE cluster.",
+          "description": "URI of the GKE cluster. Format: * `projects/{project_id}/locations/{location}/clusters/{cluster_id}` (regional cluster) * `projects/{project_id}/zones/{zone}/clusters/{cluster_id}` (zonal cluster)",
           "type": "string"
         },
         "dnsEndpoint": {
@@ -3359,7 +3363,7 @@
           "type": "string"
         },
         "networkUri": {
-          "description": "URI of the network containing the GKE Pod.",
+          "description": "URI of the network containing the GKE Pod. Format: `projects/{project_id}/global/networks/{network_id}`",
           "type": "string"
         },
         "podUri": {
@@ -3489,7 +3493,7 @@
           "type": "string"
         },
         "uri": {
-          "description": "URI of a hybrid subnet.",
+          "description": "URI of the hybrid subnet. Format: `projects/{project_id}/regions/{region}/subnetworks/{subnetwork_id}`",
           "type": "string"
         }
       },
@@ -3523,11 +3527,11 @@
           "type": "array"
         },
         "networkUri": {
-          "description": "URI of a Compute Engine network.",
+          "description": "URI of a Compute Engine network in format \"projects/{project}/global/networks/{network}\"",
           "type": "string"
         },
         "pscNetworkAttachmentUri": {
-          "description": "URI of the PSC network attachment the NIC is attached to (if relevant).",
+          "description": "URI of the PSC network attachment the NIC is attached to (if relevant) in format \"projects/{project}/regions/{region}/networkAttachments/{network_attachment}\"",
           "type": "string"
         },
         "running": {
@@ -3555,7 +3559,7 @@
           "type": "string"
         },
         "uri": {
-          "description": "URI of a Compute Engine instance.",
+          "description": "URI of a Compute Engine instance in format \"projects/{project}/zones/{zone}/instances/{instance}\"",
           "type": "string"
         }
       },
@@ -3566,7 +3570,7 @@
       "id": "InterconnectAttachmentInfo",
       "properties": {
         "cloudRouterUri": {
-          "description": "URI of the Cloud Router to be used for dynamic routing.",
+          "description": "URI of the Cloud Router to be used for dynamic routing. Format: `projects/{project_id}/regions/{region}/routers/{router_id}`",
           "type": "string"
         },
         "displayName": {
@@ -3574,7 +3578,7 @@
           "type": "string"
         },
         "interconnectUri": {
-          "description": "URI of the Interconnect where the Interconnect attachment is configured.",
+          "description": "URI of the Interconnect. Format: `projects/{project_id}/global/interconnects/{interconnect_id}`",
           "type": "string"
         },
         "l2AttachmentMatchedIpAddress": {
@@ -3604,7 +3608,7 @@
           "type": "string"
         },
         "uri": {
-          "description": "URI of an Interconnect attachment.",
+          "description": "URI of the Interconnect attachment. Format: `projects/{project_id}/regions/{region}/interconnectAttachments/{attachment_id}`",
           "type": "string"
         }
       },
@@ -3878,7 +3882,7 @@
           "type": "string"
         },
         "uri": {
-          "description": "URI of a Compute Engine instance or network endpoint.",
+          "description": "URI of the backend instance or network endpoint. Format: * `projects/{project_id}/zones/{zone}/instances/{instance_id}` (instance) * `projects/{project_id}/zones/{zone}/networkEndpointGroups/{neg_id}` (zonal NEG) * `projects/{project_id}/regions/{region}/networkEndpointGroups/{neg_id}` (regional NEG) * `projects/{project_id}/global/networkEndpointGroups/{neg_id}` (global NEG)",
           "type": "string"
         }
       },
@@ -3889,11 +3893,11 @@
       "id": "LoadBalancerBackendInfo",
       "properties": {
         "backendBucketUri": {
-          "description": "URI of the backend bucket this backend targets (if applicable).",
+          "description": "URI of the backend bucket this backend targets (if applicable) in format \"projects/{project}/global/backendBuckets/{backend_bucket}\".",
           "type": "string"
         },
         "backendServiceUri": {
-          "description": "URI of the backend service this backend belongs to (if applicable).",
+          "description": "URI of the backend service this backend belongs to (if applicable) in format \"projects/{project}/regions/{region}/backendServices/{backend_service}\" (regional) or \"projects/{project}/global/backendServices/{backend_service}\" (global).",
           "type": "string"
         },
         "healthCheckFirewallsConfigState": {
@@ -3916,15 +3920,15 @@
           "type": "string"
         },
         "healthCheckUri": {
-          "description": "URI of the health check attached to this backend (if applicable).",
+          "description": "URI of the health check attached to this backend (if applicable). Format: * `projects/{project_id}/global/healthChecks/{health_check_id}` * `projects/{project_id}/regions/{region}/healthChecks/{health_check_id}` * `projects/{project_id}/global/httpHealthChecks/{health_check_id}` (legacy)",
           "type": "string"
         },
         "instanceGroupUri": {
-          "description": "URI of the instance group this backend belongs to (if applicable).",
+          "description": "URI of the instance group this backend belongs to (if applicable) in format \"projects/{project}/zones/{zone}/instanceGroups/{instance_group}\".",
           "type": "string"
         },
         "instanceUri": {
-          "description": "URI of the backend instance (if applicable). Populated for instance group backends, and zonal NEG backends.",
+          "description": "URI of the backend instance (if applicable) in format \"projects/{project}/zones/{zone}/instances/{instance}\". Populated for instance group backends, and zonal NEG backends.",
           "type": "string"
         },
         "name": {
@@ -3932,7 +3936,7 @@
           "type": "string"
         },
         "networkEndpointGroupUri": {
-          "description": "URI of the network endpoint group this backend belongs to (if applicable).",
+          "description": "URI of the network endpoint group this backend belongs to (if applicable) Format: * `projects/{project_id}/zones/{zone}/networkEndpointGroups/{neg_id}` (zonal NEG) * `projects/{project_id}/regions/{region}/networkEndpointGroups/{neg_id}` (regional NEG) * `projects/{project_id}/global/networkEndpointGroups/{neg_id}` (global NEG)",
           "type": "string"
         },
         "pscGoogleApiTarget": {
@@ -3940,7 +3944,7 @@
           "type": "string"
         },
         "pscServiceAttachmentUri": {
-          "description": "URI of the PSC service attachment this PSC NEG backend targets (if applicable).",
+          "description": "URI of the PSC service attachment this PSC NEG backend targets (if applicable) in format \"projects/{project}/regions/{region}/serviceAttachments/{service_attachment}\".",
           "type": "string"
         }
       },
@@ -3967,7 +3971,7 @@
           "type": "string"
         },
         "backendUri": {
-          "description": "Backend configuration URI.",
+          "description": "URI of the backend associated with the load balancer. Format: * `projects/{project_id}/regions/{region}/backendServices/{backend_service_id}` * `projects/{project_id}/global/backendServices/{backend_service_id}` * `projects/{project_id}/regions/{region}/targetPools/{target_pool_id}` * `projects/{project_id}/zones/{zone}/targetInstances/{target_instance_id}`",
           "type": "string"
         },
         "backends": {
@@ -4230,7 +4234,7 @@
           "type": "string"
         },
         "networkUri": {
-          "description": "URI of the network where NAT translation takes place.",
+          "description": "URI of the VPC network where NAT translation takes place. Format: `projects/{project_id}/global/networks/{network_id}`",
           "type": "string"
         },
         "newDestinationIp": {
@@ -4274,7 +4278,7 @@
           "type": "string"
         },
         "routerUri": {
-          "description": "Uri of the Cloud Router. Only valid when type is CLOUD_NAT.",
+          "description": "URI of the Cloud Router. Only valid when type is CLOUD_NAT. Format: `projects/{project_id}/regions/{region}/routers/{router_id}`",
           "type": "string"
         },
         "type": {
@@ -4313,7 +4317,7 @@
           "type": "string"
         },
         "matchedSubnetUri": {
-          "description": "URI of the subnet matching the source IP address of the test.",
+          "description": "URI of the subnet matching the source IP address of the test in format \"projects/{project}/regions/{region}/subnetworks/{subnetwork}\"",
           "type": "string"
         },
         "region": {
@@ -4321,7 +4325,7 @@
           "type": "string"
         },
         "uri": {
-          "description": "URI of a Compute Engine network.",
+          "description": "URI of a Compute Engine network in format \"projects/{project}/global/networks/{network}\"",
           "type": "string"
         }
       },
@@ -4565,7 +4569,7 @@
       "id": "NgfwPacketInspectionInfo",
       "properties": {
         "securityProfileGroupUri": {
-          "description": "URI of the security profile group associated with this firewall packet inspection.",
+          "description": "URI of the security profile group associated with this firewall packet inspection. Format: `organizations/{organization_id}/locations/global/securityProfileGroups/{security_profile_group_id}`",
           "type": "string"
         }
       },
@@ -4811,7 +4815,7 @@
       "id": "ProxyConnectionInfo",
       "properties": {
         "networkUri": {
-          "description": "URI of the network where connection is proxied.",
+          "description": "URI of the VPC network where connection is proxied. Format: `projects/{project_id}/global/networks/{network_id}`",
           "type": "string"
         },
         "newDestinationIp": {
@@ -4855,7 +4859,7 @@
           "type": "string"
         },
         "subnetUri": {
-          "description": "Uri of proxy subnet.",
+          "description": "URI of the proxy subnet. Format: `projects/{project_id}/regions/{region}/subnetworks/{subnetwork_id}`",
           "type": "string"
         }
       },
@@ -4967,7 +4971,7 @@
           "type": "string"
         },
         "networkUri": {
-          "description": "URI of a Cloud Redis Instance network.",
+          "description": "URI of a Cloud Redis Instance network in format \"projects/{project}/global/networks/{network}\".",
           "type": "string"
         },
         "primaryEndpointIp": {
@@ -4983,7 +4987,7 @@
           "type": "string"
         },
         "uri": {
-          "description": "URI of a Cloud Redis Instance.",
+          "description": "URI of a Cloud Redis Instance in format \"projects/{project}/locations/{location}/instances/{instance}\"",
           "type": "string"
         }
       },
@@ -5005,7 +5009,7 @@
           "type": "string"
         },
         "advertisedRouteSourceRouterUri": {
-          "description": "For ADVERTISED dynamic routes, the URI of the Cloud Router that advertised the corresponding IP prefix.",
+          "description": "For ADVERTISED dynamic routes, the URI of the Cloud Router that advertised the corresponding IP prefix in format \"projects/{project}/regions/{region}/routers/{router}\".",
           "type": "string"
         },
         "destIpRange": {
@@ -5031,19 +5035,19 @@
           "type": "array"
         },
         "nccHubRouteUri": {
-          "description": "For PEERING_SUBNET and PEERING_DYNAMIC routes that are advertised by NCC Hub, the URI of the corresponding route in NCC Hub's routing table.",
+          "description": "For PEERING_SUBNET and PEERING_DYNAMIC routes that are advertised by NCC Hub, the URI of the corresponding route in NCC Hub's routing table. Format: `projects/{project_id}/locations/global/hubs/{hub_id}/routeTables/{route_table_id}/routes/{route_id}`",
           "type": "string"
         },
         "nccHubUri": {
-          "description": "URI of the NCC Hub the route is advertised by. PEERING_SUBNET and PEERING_DYNAMIC routes that are advertised by NCC Hub only.",
+          "description": "URI of the NCC Hub the route is advertised by in format \"projects/{project}/locations/global/hubs/{hub}\". PEERING_SUBNET and PEERING_DYNAMIC routes that are advertised by NCC Hub only.",
           "type": "string"
         },
         "nccSpokeUri": {
-          "description": "URI of the destination NCC Spoke. PEERING_SUBNET and PEERING_DYNAMIC routes that are advertised by NCC Hub only.",
+          "description": "URI of the destination NCC Spoke in format \"projects/{project}/locations/{location}/spokes/{spoke}\" (regional) or \"projects/{project}/locations/global/spokes/{spoke}\" (global). PEERING_SUBNET and PEERING_DYNAMIC routes that are advertised by NCC Hub only.",
           "type": "string"
         },
         "networkUri": {
-          "description": "URI of a VPC network where route is located.",
+          "description": "URI of a VPC network where route is located in format \"projects/{project}/global/networks/{network}\".",
           "type": "string"
         },
         "nextHop": {
@@ -5052,7 +5056,7 @@
           "type": "string"
         },
         "nextHopNetworkUri": {
-          "description": "URI of a VPC network where the next hop resource is located.",
+          "description": "URI of a VPC network where the next hop resource is located in format \"projects/{project}/global/networks/{network}\".",
           "type": "string"
         },
         "nextHopType": {
@@ -5100,7 +5104,7 @@
           "type": "string"
         },
         "originatingRouteUri": {
-          "description": "For PEERING_SUBNET and PEERING_STATIC routes, the URI of the originating SUBNET/STATIC route.",
+          "description": "For PEERING_SUBNET and PEERING_STATIC routes, the URI of the originating SUBNET/STATIC route. Format: `projects/{project_id}/global/routes/{route_id}`",
           "type": "string"
         },
         "priority": {
@@ -5172,7 +5176,7 @@
           "type": "array"
         },
         "uri": {
-          "description": "URI of a route. SUBNET, STATIC, PEERING_SUBNET (only for peering network) and POLICY_BASED routes only.",
+          "description": "URI of a route in format \"projects/{project}/global/routes/{route}\". SUBNET, STATIC, PEERING_SUBNET (only for peering network) and POLICY_BASED routes only.",
           "type": "string"
         }
       },
@@ -5194,7 +5198,7 @@
       "id": "ServerlessNegInfo",
       "properties": {
         "negUri": {
-          "description": "URI of the serverless network endpoint group.",
+          "description": "URI of the serverless network endpoint group in format \"projects/{project}/regions/{region}/networkEndpointGroups/{network_endpoint_group}\".",
           "type": "string"
         }
       },
@@ -5723,7 +5727,7 @@
           "type": "string"
         },
         "uri": {
-          "description": "URI of a VPC connector.",
+          "description": "URI of a VPC connector. Format: `projects/{project_id}/locations/{location}/connectors/{connector_id}`",
           "type": "string"
         }
       },
@@ -5889,7 +5893,7 @@
           "type": "string"
         },
         "networkUri": {
-          "description": "URI of a Compute Engine network where the VPN gateway is configured.",
+          "description": "URI of the VPC network where the VPN gateway is configured. Format: `projects/{project_id}/global/networks/{network_id}`",
           "type": "string"
         },
         "region": {
@@ -5897,11 +5901,11 @@
           "type": "string"
         },
         "uri": {
-          "description": "URI of a VPN gateway.",
+          "description": "URI of the VPN gateway. Format: * `projects/{project_id}/regions/{region}/vpnGateways/{vpn_gateway_id}` (HA VPN gateway) * `projects/{project_id}/regions/{region}/targetVpnGateways/{target_vpn_gateway_id}` (Classic VPN gateway)",
           "type": "string"
         },
         "vpnTunnelUri": {
-          "description": "A VPN tunnel that is associated with this VPN gateway. There may be multiple VPN tunnels configured on a VPN gateway, and only the one relevant to the test is displayed.",
+          "description": "URI of the VPN tunnel associated with the VPN gateway. There may be multiple VPN tunnels configured on a VPN gateway, and only the one relevant to the test is displayed. Format: `projects/{project_id}/regions/{region}/vpnTunnels/{vpn_tunnel_id}`",
           "type": "string"
         }
       },
@@ -5916,7 +5920,7 @@
           "type": "string"
         },
         "networkUri": {
-          "description": "URI of a Compute Engine network where the VPN tunnel is configured.",
+          "description": "URI of the VPC network where the VPN tunnel is configured. Format: `projects/{project_id}/global/networks/{network_id}`",
           "type": "string"
         },
         "region": {
@@ -5924,7 +5928,7 @@
           "type": "string"
         },
         "remoteGateway": {
-          "description": "URI of a VPN gateway at remote end of the tunnel.",
+          "description": "URI of a VPN gateway at remote end of the tunnel. Format: * `projects/{project_id}/regions/{region}/vpnGateways/{vpn_gateway_id}` (GCP HA VPN gateway) * `projects/{project_id}/global/peerVpnGateways/{peer_vpn_gateway_id}` (GCP peer VPN gateway)",
           "type": "string"
         },
         "remoteGatewayIp": {
@@ -5948,7 +5952,7 @@
           "type": "string"
         },
         "sourceGateway": {
-          "description": "URI of the VPN gateway at local end of the tunnel.",
+          "description": "URI of the VPN gateway at local end of the tunnel. Format: * `projects/{project_id}/regions/{region}/vpnGateways/{vpn_gateway_id}` (HA VPN gateway) * `projects/{project_id}/regions/{region}/targetVpnGateways/{target_vpn_gateway_id}` (Classic VPN gateway)",
           "type": "string"
         },
         "sourceGatewayIp": {
@@ -5956,7 +5960,7 @@
           "type": "string"
         },
         "uri": {
-          "description": "URI of a VPN tunnel.",
+          "description": "URI of the VPN tunnel. Format: `projects/{project_id}/regions/{region}/vpnTunnels/{vpn_tunnel_id}`",
           "type": "string"
         }
       },

@@ -4031,6 +4031,12 @@ type GoogleCloudAiplatformV1beta1ToolParallelAiSearch struct {
 	// "include_domains": ["google.com", "wikipedia.org"], "exclude_domains":
 	// ["example.com"] }, "fetch_policy": { "max_age_seconds": 3600 } }
 	CustomConfigs googleapi.RawMessage `json:"customConfigs,omitempty"`
+	// EnableDataRetention: Optional. Instructs Vertex Grounding to use Parallel's
+	// Zero Data Retention Marketplace product. If this value is "false" or
+	// omitted, the Parallel Web Search for Grounding standard subscription will be
+	// used. If this value is "true", the Parallel Web Search for Grounding - ZDR
+	// subscription will be used.
+	EnableDataRetention bool `json:"enableDataRetention,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApiKey") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

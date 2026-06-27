@@ -869,7 +869,7 @@
       }
     }
   },
-  "revision": "20260615",
+  "revision": "20260619",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Access": {
@@ -2639,6 +2639,9 @@
           },
           "type": "array"
         },
+        "iamDetails": {
+          "$ref": "GoogleCloudSecuritycenterV1IamDetails"
+        },
         "indicator": {
           "$ref": "Indicator"
         },
@@ -3119,6 +3122,30 @@
         },
         "ticketInfo": {
           "$ref": "TicketInfo"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudSecuritycenterV1IamDetails": {
+      "id": "GoogleCloudSecuritycenterV1IamDetails",
+      "properties": {
+        "iamRolePermissions": {
+          "items": {
+            "$ref": "GoogleCloudSecuritycenterV1IamRolePermission"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudSecuritycenterV1IamRolePermission": {
+      "id": "GoogleCloudSecuritycenterV1IamRolePermission",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
         }
       },
       "type": "object"
@@ -5568,6 +5595,9 @@
           },
           "type": "array"
         },
+        "iamDetails": {
+          "$ref": "GoogleCloudSecuritycenterV2IamDetails"
+        },
         "indicator": {
           "$ref": "GoogleCloudSecuritycenterV2Indicator"
         },
@@ -5852,6 +5882,30 @@
           "type": "string"
         },
         "member": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudSecuritycenterV2IamDetails": {
+      "id": "GoogleCloudSecuritycenterV2IamDetails",
+      "properties": {
+        "iamRolePermissions": {
+          "items": {
+            "$ref": "GoogleCloudSecuritycenterV2IamRolePermission"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudSecuritycenterV2IamRolePermission": {
+      "id": "GoogleCloudSecuritycenterV2IamRolePermission",
+      "properties": {
+        "name": {
           "type": "string"
         },
         "role": {

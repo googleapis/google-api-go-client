@@ -1488,8 +1488,8 @@ type GoogleCloudRunV2Instance struct {
 	//   "SHUTDOWN" - Shuts down existing instances, and prevents creation of new
 	// ones.
 	EncryptionKeyRevocationAction string `json:"encryptionKeyRevocationAction,omitempty"`
-	// EncryptionKeyShutdownDuration: If encryption_key_revocation_action is
-	// SHUTDOWN, the duration before shutting down all instances. The minimum
+	// EncryptionKeyShutdownDuration: If `encryption_key_revocation_action` is
+	// `SHUTDOWN`, the duration before shutting down all instances. The minimum
 	// increment is 1 hour.
 	EncryptionKeyShutdownDuration string `json:"encryptionKeyShutdownDuration,omitempty"`
 	// Etag: Optional. A system-generated fingerprint for this version of the
@@ -1500,7 +1500,7 @@ type GoogleCloudRunV2Instance struct {
 	ExpireTime string `json:"expireTime,omitempty"`
 	// Generation: Output only. A number that monotonically increases every time
 	// the user modifies the desired state. Please note that unlike v1, this is an
-	// int64 value. As with most Google APIs, its JSON representation will be a
+	// `int64` value. As with most Google APIs, its JSON representation will be a
 	// `string` instead of an `integer`.
 	Generation int64 `json:"generation,omitempty,string"`
 	// GpuZonalRedundancyDisabled: Optional. True if GPU zonal redundancy is
@@ -1510,7 +1510,7 @@ type GoogleCloudRunV2Instance struct {
 	IapEnabled bool `json:"iapEnabled,omitempty"`
 	// Ingress: Optional. Provides the ingress settings for this Instance. On
 	// output, returns the currently observed ingress settings, or
-	// INGRESS_TRAFFIC_UNSPECIFIED if no revision is active.
+	// `INGRESS_TRAFFIC_UNSPECIFIED` if no revision is active.
 	//
 	// Possible values:
 	//   "INGRESS_TRAFFIC_UNSPECIFIED" - Unspecified
@@ -1521,7 +1521,8 @@ type GoogleCloudRunV2Instance struct {
 	//   "INGRESS_TRAFFIC_NONE" - No ingress traffic is allowed.
 	Ingress string `json:"ingress,omitempty"`
 	// InvokerIamDisabled: Optional. Disables IAM permission check for
-	// run.routes.invoke for callers of this Instance. For more information, visit
+	// `run.routes.invoke` for callers of this Instance. For more information,
+	// visit
 	// https://cloud.google.com/run/docs/securing/managing-access#invoker_check.
 	InvokerIamDisabled bool              `json:"invokerIamDisabled,omitempty"`
 	Labels             map[string]string `json:"labels,omitempty"`
@@ -1529,11 +1530,12 @@ type GoogleCloudRunV2Instance struct {
 	LastModifier string `json:"lastModifier,omitempty"`
 	// LaunchStage: The launch stage as defined by Google Cloud Platform Launch
 	// Stages (https://cloud.google.com/terms/launch-stages). Cloud Run supports
-	// `ALPHA`, `BETA`, and `GA`. If no value is specified, GA is assumed. Set the
-	// launch stage to a preview stage on input to allow use of preview features in
-	// that stage. On read (or output), describes whether the resource uses preview
-	// features. For example, if ALPHA is provided as input, but only BETA and
-	// GA-level features are used, this field will be BETA on output.
+	// `ALPHA`, `BETA`, and `GA`. If no value is specified, `GA` is assumed. Set
+	// the launch stage to a preview stage on input to allow use of preview
+	// features in that stage. On read (or output), describes whether the resource
+	// uses preview features. For example, if `ALPHA` is provided as input, but
+	// only `BETA` and `GA`-level features are used, this field will be `BETA` on
+	// output.
 	//
 	// Possible values:
 	//   "LAUNCH_STAGE_UNSPECIFIED" - Do not use this default value.
@@ -1570,27 +1572,26 @@ type GoogleCloudRunV2Instance struct {
 	LaunchStage string `json:"launchStage,omitempty"`
 	// LogUri: Output only. The Google Console URI to obtain logs for the Instance.
 	LogUri string `json:"logUri,omitempty"`
-	// Name: The fully qualified name of this Instance. In CreateInstanceRequest,
+	// Name: The fully qualified name of this Instance. In `CreateInstanceRequest`,
 	// this field is ignored, and instead composed from
-	// CreateInstanceRequest.parent and CreateInstanceRequest.instance_id. Format:
-	// projects/{project}/locations/{location}/instances/{instance_id}
+	// `CreateInstanceRequest.parent` and `CreateInstanceRequest.instance_id`.
 	Name string `json:"name,omitempty"`
 	// NodeSelector: Optional. The node selector for the instance.
 	NodeSelector *GoogleCloudRunV2NodeSelector `json:"nodeSelector,omitempty"`
 	// ObservedGeneration: Output only. The generation of this Instance currently
 	// serving traffic. See comments in `reconciling` for additional information on
 	// reconciliation process in Cloud Run. Please note that unlike v1, this is an
-	// int64 value. As with most Google APIs, its JSON representation will be a
+	// `int64` value. As with most Google APIs, its JSON representation will be a
 	// `string` instead of an `integer`.
 	ObservedGeneration int64 `json:"observedGeneration,omitempty,string"`
-	// Reconciling: Output only. Returns true if the Instance is currently being
+	// Reconciling: Output only. Returns `true` if the Instance is currently being
 	// acted upon by the system to bring it into the desired state. When a new
 	// Instance is created, or an existing one is updated, Cloud Run will
 	// asynchronously perform all necessary steps to bring the Instance to the
 	// desired serving state. This process is called reconciliation. While
 	// reconciliation is in process, `observed_generation` will have a transient
 	// value that might mismatch the intended state. Once reconciliation is over
-	// (and this field is false), there are two possible outcomes: reconciliation
+	// (and this field is `false`), there are two possible outcomes: reconciliation
 	// succeeded and the serving state matches the Instance, or there was an error,
 	// and reconciliation failed. This state can be found in
 	// `terminal_condition.state`.
@@ -2469,8 +2470,6 @@ type GoogleCloudRunV2Revision struct {
 	// still in progress. See comments in `Service.reconciling` for additional
 	// information on reconciliation process in Cloud Run.
 	Reconciling bool `json:"reconciling,omitempty"`
-	// Sandboxes: Output only. Configuration for sandboxes.
-	Sandboxes *GoogleCloudRunV2SandboxConfiguration `json:"sandboxes,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Scaling: Scaling settings for this revision.
@@ -2672,8 +2671,6 @@ type GoogleCloudRunV2RevisionTemplate struct {
 	// Revision: Optional. The unique name for the revision. If this field is
 	// omitted, it will be automatically generated based on the Service name.
 	Revision string `json:"revision,omitempty"`
-	// Sandboxes: Optional. Configuration for sandboxes.
-	Sandboxes *GoogleCloudRunV2SandboxConfiguration `json:"sandboxes,omitempty"`
 	// Scaling: Optional. Scaling settings for this Revision.
 	Scaling *GoogleCloudRunV2RevisionScaling `json:"scaling,omitempty"`
 	// ServiceAccount: Optional. Email address of the IAM service account
@@ -2739,29 +2736,6 @@ type GoogleCloudRunV2RunJobRequest struct {
 
 func (s GoogleCloudRunV2RunJobRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2RunJobRequest
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudRunV2SandboxConfiguration: Configuration for sandboxes.
-type GoogleCloudRunV2SandboxConfiguration struct {
-	// Templates: Required. Container templates that can be launched through the
-	// `sandbox` CLI.
-	Templates []*GoogleCloudRunV2Container `json:"templates,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Templates") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Templates") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudRunV2SandboxConfiguration) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunV2SandboxConfiguration
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7265,7 +7239,7 @@ type ProjectsLocationsInstancesCreateCall struct {
 
 // Create: Creates an Instance.
 //
-// - parent: .
+// - parent: The location and project in which this Instance should be created.
 func (r *ProjectsLocationsInstancesService) Create(parent string, googlecloudrunv2instance *GoogleCloudRunV2Instance) *ProjectsLocationsInstancesCreateCall {
 	c := &ProjectsLocationsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7384,9 +7358,9 @@ type ProjectsLocationsInstancesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a Instance
+// Delete: Deletes an Instance
 //
-// - name: .
+// - name: The name of the Instance to delete.
 func (r *ProjectsLocationsInstancesService) Delete(name string) *ProjectsLocationsInstancesDeleteCall {
 	c := &ProjectsLocationsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7498,9 +7472,9 @@ type ProjectsLocationsInstancesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a Instance
+// Get: Gets an Instance
 //
-// - name: .
+// - name: The name of the Instance to retrieve.
 func (r *ProjectsLocationsInstancesService) Get(name string) *ProjectsLocationsInstancesGetCall {
 	c := &ProjectsLocationsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7740,9 +7714,7 @@ type ProjectsLocationsInstancesListCall struct {
 
 // List: Lists Instances. Results are sorted by creation time, descending.
 //
-//   - parent: The location and project to list resources on. Format:
-//     projects/{project}/locations/{location}, where {project} can be project id
-//     or number.
+// - parent: The location and project to list resources on.
 func (r *ProjectsLocationsInstancesService) List(parent string) *ProjectsLocationsInstancesListCall {
 	c := &ProjectsLocationsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7894,10 +7866,9 @@ type ProjectsLocationsInstancesPatchCall struct {
 
 // Patch: Updates an Instance.
 //
-//   - name: The fully qualified name of this Instance. In CreateInstanceRequest,
-//     this field is ignored, and instead composed from
-//     CreateInstanceRequest.parent and CreateInstanceRequest.instance_id.
-//     Format: projects/{project}/locations/{location}/instances/{instance_id}.
+//   - name: The fully qualified name of this Instance. In
+//     `CreateInstanceRequest`, this field is ignored, and instead composed from
+//     `CreateInstanceRequest.parent` and `CreateInstanceRequest.instance_id`.
 func (r *ProjectsLocationsInstancesService) Patch(name string, googlecloudrunv2instance *GoogleCloudRunV2Instance) *ProjectsLocationsInstancesPatchCall {
 	c := &ProjectsLocationsInstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7905,10 +7876,10 @@ func (r *ProjectsLocationsInstancesService) Patch(name string, googlecloudrunv2i
 	return c
 }
 
-// AllowMissing sets the optional parameter "allowMissing": If set to true, and
-// if the Instance does not exist, it will create a new one. The caller must
-// have 'run.instances.create' permissions if this is set to true and the
-// Instance does not exist.
+// AllowMissing sets the optional parameter "allowMissing": If set to `true`,
+// and if the Instance does not exist, it will create a new one. The caller
+// must have `run.instances.create` permissions if this is set to `true` and
+// the Instance does not exist.
 func (c *ProjectsLocationsInstancesPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsInstancesPatchCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
@@ -8132,9 +8103,7 @@ type ProjectsLocationsInstancesStartCall struct {
 
 // Start: Starts an Instance.
 //
-//   - name: The name of the Instance to stop. Format:
-//     `projects/{project}/locations/{location}/instances/{instance}`, where
-//     `{project}` can be project id or number.
+// - name: The name of the Instance to start.
 func (r *ProjectsLocationsInstancesService) Start(name string, googlecloudrunv2startinstancerequest *GoogleCloudRunV2StartInstanceRequest) *ProjectsLocationsInstancesStartCall {
 	c := &ProjectsLocationsInstancesStartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8238,9 +8207,7 @@ type ProjectsLocationsInstancesStopCall struct {
 
 // Stop: Stops an Instance.
 //
-//   - name: The name of the Instance to stop. Format:
-//     `projects/{project}/locations/{location}/instances/{instance}`, where
-//     `{project}` can be project id or number.
+// - name: The name of the Instance to stop.
 func (r *ProjectsLocationsInstancesService) Stop(name string, googlecloudrunv2stopinstancerequest *GoogleCloudRunV2StopInstanceRequest) *ProjectsLocationsInstancesStopCall {
 	c := &ProjectsLocationsInstancesStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

@@ -6101,7 +6101,7 @@
       }
     }
   },
-  "revision": "20260612",
+  "revision": "20260623",
   "rootUrl": "https://contactcenterinsights.googleapis.com/",
   "schemas": {
     "GoogleCloudCesV1mainAgentTransfer": {
@@ -7686,6 +7686,10 @@
       "description": "The action to be taken when the chart is clicked.",
       "id": "GoogleCloudContactcenterinsightsV1ChartAction",
       "properties": {
+        "conversationFilter": {
+          "description": "The conversation filter string.",
+          "type": "string"
+        },
         "redirectAction": {
           "$ref": "GoogleCloudContactcenterinsightsV1RedirectAction",
           "description": "Redirect action."

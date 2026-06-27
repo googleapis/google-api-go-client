@@ -1076,6 +1076,8 @@ type CommonFeatureSpec struct {
 	Dataplanev2 *DataplaneV2FeatureSpec `json:"dataplanev2,omitempty"`
 	// Fleetobservability: FleetObservability feature spec.
 	Fleetobservability *FleetObservabilityFeatureSpec `json:"fleetobservability,omitempty"`
+	// Mesh: Servicemesh feature spec.
+	Mesh *ServiceMeshFeatureSpec `json:"mesh,omitempty"`
 	// Multiclusteringress: Multicluster Ingress-specific spec.
 	Multiclusteringress *MultiClusterIngressFeatureSpec `json:"multiclusteringress,omitempty"`
 	// Rbacrolebindingactuation: RBAC Role Binding Actuation feature spec
@@ -5819,9 +5821,9 @@ type Rollout struct {
 	// Possible values:
 	//   "ROLLOUT_INTENT_UNSPECIFIED" - The default value.
 	//   "REGULAR_UPGRADE" - A standard rollout.
-	//   "FORCE_PATCH" - A mandatory upgrade for clusters that haven't been patched
-	// within the allowed window.
-	//   "END_OF_LIFE_ENFORCEMENT" - A mandatory upgrade for clusters that have
+	//   "CONTROL_PLANE_PATCH_ENFORCEMENT" - A mandatory upgrade for clusters that
+	// haven't been patched within the allowed window.
+	//   "END_OF_SUPPORT_ENFORCEMENT" - A mandatory upgrade for clusters that have
 	// reached its end of support.
 	Intent string `json:"intent,omitempty"`
 	// Labels: Optional. Labels for this Rollout.
@@ -6367,6 +6369,12 @@ type ServiceMeshCondition struct {
 	//   "SHARED_VPC_MISSING_PERMISSIONS" - Shared VPC missing permissions error
 	// code
 	//   "REQUIRED_ORG_POLICY_DISABLED" - Required org policy disabled error code
+	//   "MODERNIZATION_INCOMPATIBLE_POD_ANNOTATION" - One or more Pods have
+	// unsupported annotations.
+	//   "MODERNIZATION_INCOMPATIBLE_CONFIG" - Incompatible config found in the
+	// cluster.
+	//   "MODERNIZATION_INCOMPATIBLE_GATEWAY_POD_SCALE" - Gateway pods per cluster
+	// limit exceeded.
 	//   "MODERNIZATION_SCHEDULED" - Modernization is scheduled for a cluster.
 	//   "MODERNIZATION_IN_PROGRESS" - Modernization is in progress for a cluster.
 	//   "MODERNIZATION_COMPLETED" - Modernization is completed for a cluster.
@@ -6519,6 +6527,37 @@ type ServiceMeshDataPlaneManagement struct {
 
 func (s ServiceMeshDataPlaneManagement) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceMeshDataPlaneManagement
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ServiceMeshFeatureSpec: **Service Mesh**: Spec for the fleet for the
+// servicemesh feature
+type ServiceMeshFeatureSpec struct {
+	// ModernizationCompatibility: Optional. Specifies modernization compatibility
+	// for the fleet.
+	//
+	// Possible values:
+	//   "MODERNIZATION_COMPATIBILITY_UNSPECIFIED" - Unspecified.
+	//   "VALIDATION_ENABLED" - Google should report modernization eligibility
+	// gaps.
+	//   "VALIDATION_DISABLED" - Google should not report modernization eligibility
+	// gaps.
+	ModernizationCompatibility string `json:"modernizationCompatibility,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ModernizationCompatibility")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ModernizationCompatibility") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServiceMeshFeatureSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceMeshFeatureSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

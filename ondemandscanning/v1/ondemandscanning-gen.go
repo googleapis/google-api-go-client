@@ -810,9 +810,22 @@ type CVSS struct {
 	//   "IMPACT_NONE" - No impact (N). Defined in CVSS v2, v3, v4.
 	//   "IMPACT_PARTIAL" - Partial impact (P). Defined in CVSS v2.
 	//   "IMPACT_COMPLETE" - Complete impact (C). Defined in CVSS v2.
-	ConfidentialityImpact string  `json:"confidentialityImpact,omitempty"`
-	ExploitabilityScore   float64 `json:"exploitabilityScore,omitempty"`
-	ImpactScore           float64 `json:"impactScore,omitempty"`
+	ConfidentialityImpact string `json:"confidentialityImpact,omitempty"`
+	// ExploitMaturity: Exploit Maturity (E). Defined in CVSS v4.
+	//
+	// Possible values:
+	//   "EXPLOIT_MATURITY_UNSPECIFIED" - Unspecified.
+	//   "EXPLOIT_MATURITY_NOT_DEFINED" - Exploit maturity: Not defined (E:X).
+	// Defined in CVSS v4.
+	//   "EXPLOIT_MATURITY_ATTACKED" - Exploit maturity: Attacked (E:A). Defined in
+	// CVSS v4.
+	//   "EXPLOIT_MATURITY_POC" - Exploit maturity: Proof-of-concept (E:P). Defined
+	// in CVSS v4.
+	//   "EXPLOIT_MATURITY_UNREPORTED" - Exploit maturity: Unreported (E:U).
+	// Defined in CVSS v4.
+	ExploitMaturity     string  `json:"exploitMaturity,omitempty"`
+	ExploitabilityScore float64 `json:"exploitabilityScore,omitempty"`
+	ImpactScore         float64 `json:"impactScore,omitempty"`
 	// IntegrityImpact: Integrity Impact (I). Defined in CVSS v2, v3.
 	//
 	// Possible values:
@@ -1444,6 +1457,7 @@ type Finding struct {
 	//   "SCANNER_UNSPECIFIED" - Unspecified scanner.
 	//   "STATIC" - Static scanner.
 	//   "LLM" - LLM scanner.
+	//   "WS_POLICY" - WS_POLICY scanner.
 	Scanner string `json:"scanner,omitempty"`
 	// Severity: Severity of the finding.
 	//
@@ -1984,6 +1998,36 @@ func (s InTotoStatement) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// IngestionSource: Indicates where an extracted package originates from.
+type IngestionSource struct {
+	// AttachmentUri: The attachment URI that this package was extracted from.
+	AttachmentUri string `json:"attachmentUri,omitempty"`
+	// ResourceUrl: The resource URL of the resource that was scanned to find this
+	// package.
+	ResourceUrl string `json:"resourceUrl,omitempty"`
+	// Possible values:
+	//   "SOURCE_UNSPECIFIED"
+	//   "DOCKER_IMAGE"
+	//   "SBOM_ATTACHMENT"
+	Source string `json:"source,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttachmentUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttachmentUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IngestionSource) MarshalJSON() ([]byte, error) {
+	type NoMethod IngestionSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Justification: Justification provides the justification when the state of
 // the assessment if NOT_AFFECTED.
 type Justification struct {
@@ -2516,8 +2560,12 @@ type PackageData struct {
 	FileLocation []*FileLocation `json:"fileLocation,omitempty"`
 	// HashDigest: HashDigest stores the SHA512 hash digest of the jar file if the
 	// package is of type Maven. This field will be unset for non Maven packages.
-	HashDigest   string        `json:"hashDigest,omitempty"`
-	LayerDetails *LayerDetails `json:"layerDetails,omitempty"`
+	HashDigest string `json:"hashDigest,omitempty"`
+	// IngestionSources: The list of sources that were scanned to find this
+	// package. This can be a Docker image, an SBOM attachment, or both, for
+	// example.
+	IngestionSources []*IngestionSource `json:"ingestionSources,omitempty"`
+	LayerDetails     *LayerDetails      `json:"layerDetails,omitempty"`
 	// Licenses: The list of licenses found that are related to a given package.
 	// Note that licenses may also be stored on the BinarySourceInfo. If there is
 	// no BinarySourceInfo (because there's no concept of source vs binary), then

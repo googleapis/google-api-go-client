@@ -5324,6 +5324,7 @@ type LoggingComponentConfig struct {
 	//   "KCP_SSHD" - kcp-sshd
 	//   "KCP_CONNECTION" - kcp connection logs
 	//   "KCP_HPA" - horizontal pod autoscaler decision logs
+	//   "KCP_VPA" - vertical pod autoscaler decision logs
 	EnableComponents []string `json:"enableComponents,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableComponents") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8361,7 +8362,8 @@ type ReleaseChannel struct {
 	// to.
 	//
 	// Possible values:
-	//   "UNSPECIFIED" - No channel specified.
+	//   "UNSPECIFIED" - Deprecated: No channel specified. it will be removed in
+	// the future, use RAPID, REGULAR, STABLE or EXTENDED instead.
 	//   "RAPID" - RAPID channel is offered on an early access basis for customers
 	// who want to test new releases. WARNING: Versions available in the RAPID
 	// Channel may be subject to unresolved issues with no known workaround and are
@@ -8402,7 +8404,8 @@ type ReleaseChannelConfig struct {
 	// Channel: The release channel this configuration applies to.
 	//
 	// Possible values:
-	//   "UNSPECIFIED" - No channel specified.
+	//   "UNSPECIFIED" - Deprecated: No channel specified. it will be removed in
+	// the future, use RAPID, REGULAR, STABLE or EXTENDED instead.
 	//   "RAPID" - RAPID channel is offered on an early access basis for customers
 	// who want to test new releases. WARNING: Versions available in the RAPID
 	// Channel may be subject to unresolved issues with no known workaround and are

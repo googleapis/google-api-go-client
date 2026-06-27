@@ -3301,6 +3301,9 @@ type MigrationJob struct {
 	// of "key": "value" pairs. Example: `{ "name": "wrench", "mass": "1.3kg",
 	// "count": "3" }`.
 	Labels map[string]string `json:"labels,omitempty"`
+	// MysqlHomogeneousConfig: Optional. Configuration for MySQL homogeneous
+	// migration.
+	MysqlHomogeneousConfig *MySqlHomogeneousConfig `json:"mysqlHomogeneousConfig,omitempty"`
 	// Name: The name (URI) of this migration job resource, in the form of:
 	// projects/{project}/locations/{location}/migrationJobs/{migrationJob}.
 	Name string `json:"name,omitempty"`
@@ -3441,6 +3444,10 @@ type MigrationJobObject struct {
 	//   "PROMOTED" - The migration job is promoted.
 	//   "DIFF_BACKUP" - The migration job object is in the differential backup
 	// phase.
+	//   "CREATING_BACKUP" - The migration job object is creating a fully managed
+	// backup of the source.
+	//   "RESTORING_BACKUP" - The migration job object is restoring a fully managed
+	// backup to the destination.
 	Phase string `json:"phase,omitempty"`
 	// SourceObject: The object identifier in the data source.
 	SourceObject *SourceObjectIdentifier `json:"sourceObject,omitempty"`
@@ -3727,6 +3734,29 @@ type MySqlConnectionProfile struct {
 
 func (s MySqlConnectionProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod MySqlConnectionProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MySqlHomogeneousConfig: Configuration for MySQL to MySQL migrations.
+type MySqlHomogeneousConfig struct {
+	// IsPrimaryDestination: Optional. Whether the destination for the migration
+	// job is a primary instance.
+	IsPrimaryDestination bool `json:"isPrimaryDestination,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsPrimaryDestination") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsPrimaryDestination") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MySqlHomogeneousConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod MySqlHomogeneousConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

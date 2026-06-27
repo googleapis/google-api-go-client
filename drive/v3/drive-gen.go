@@ -1910,6 +1910,9 @@ type FileCapabilities struct {
 	// CanAcceptOwnership: Output only. Whether the current user is the pending
 	// owner of the file. Not populated for shared drive files.
 	CanAcceptOwnership bool `json:"canAcceptOwnership,omitempty"`
+	// CanAccessViaGenAi: Whether the current user can access this file via Gen AI
+	// features.
+	CanAccessViaGenAi bool `json:"canAccessViaGenAi,omitempty"`
 	// CanAddChildren: Output only. Whether the current user can add children to
 	// this folder. This is always `false` when the item isn't a folder.
 	CanAddChildren bool `json:"canAddChildren,omitempty"`

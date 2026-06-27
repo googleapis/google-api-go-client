@@ -5274,7 +5274,7 @@
       }
     }
   },
-  "revision": "20260606",
+  "revision": "20260620",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -6767,6 +6767,13 @@
       "description": "Metadata on content to be scanned.",
       "id": "GooglePrivacyDlpV2ContentMetadata",
       "properties": {
+        "fileLabels": {
+          "description": "Optional. The file labels associated with the content.",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2FileLabel"
+          },
+          "type": "array"
+        },
         "properties": {
           "description": "User provided key-value pairs of content metadata.",
           "items": {
@@ -7172,6 +7179,10 @@
             "A finding of this custom info type will be excluded from final results, but can still affect rule execution."
           ],
           "type": "string"
+        },
+        "fileLabelInfoType": {
+          "$ref": "GooglePrivacyDlpV2FileLabelInfoType",
+          "description": "File label to detect."
         },
         "infoType": {
           "$ref": "GooglePrivacyDlpV2InfoType",
@@ -9147,6 +9158,36 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2FileLabel": {
+      "description": "Represents a file label.",
+      "id": "GooglePrivacyDlpV2FileLabel",
+      "properties": {
+        "googleDriveLabel": {
+          "$ref": "GooglePrivacyDlpV2GoogleDriveLabelMetadata",
+          "description": "Google Drive labels published by Google."
+        },
+        "sensitivityLabel": {
+          "$ref": "GooglePrivacyDlpV2SensitivityLabelMetadata",
+          "description": "Sensitivity labels published by Microsoft."
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2FileLabelInfoType": {
+      "description": "Configuration for a custom infoType that detects file labels.",
+      "id": "GooglePrivacyDlpV2FileLabelInfoType",
+      "properties": {
+        "googleDriveLabel": {
+          "$ref": "GooglePrivacyDlpV2GoogleDriveLabel",
+          "description": "Google Drive labels published by Google."
+        },
+        "sensitivityLabel": {
+          "$ref": "GooglePrivacyDlpV2SensitivityLabel",
+          "description": "Sensitivity labels published by Microsoft."
+        }
+      },
+      "type": "object"
+    },
     "GooglePrivacyDlpV2FileSet": {
       "description": "Set of files to scan.",
       "id": "GooglePrivacyDlpV2FileSet",
@@ -9517,6 +9558,42 @@
       "description": "Processing occurs in the global region.",
       "id": "GooglePrivacyDlpV2GlobalProcessing",
       "properties": {},
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2GoogleDriveLabel": {
+      "description": "Google Drive labels published by Google.",
+      "id": "GooglePrivacyDlpV2GoogleDriveLabel",
+      "properties": {
+        "labelFieldsToMatch": {
+          "description": "The field values of the Google Drive label to match.",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2LabelField"
+          },
+          "type": "array"
+        },
+        "labelId": {
+          "description": "The [label ID](https://developers.google.com/workspace/drive/labels/guides/overview) of the Google Drive label.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2GoogleDriveLabelMetadata": {
+      "description": "Google Drive labels published by Google.",
+      "id": "GooglePrivacyDlpV2GoogleDriveLabelMetadata",
+      "properties": {
+        "labelFields": {
+          "description": "The field values of the Google Drive label",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2LabelFieldMetadata"
+          },
+          "type": "array"
+        },
+        "labelId": {
+          "description": "The [label ID](https://developers.google.com/workspace/drive/labels/guides/overview) of the Google Drive label.",
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "GooglePrivacyDlpV2HotwordRule": {
@@ -10852,6 +10929,36 @@
             "$ref": "GooglePrivacyDlpV2LDiversityHistogramBucket"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2LabelField": {
+      "description": "The field values of the Google Drive label to match.",
+      "id": "GooglePrivacyDlpV2LabelField",
+      "properties": {
+        "id": {
+          "description": "The identifier of the Label Field.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value of the Label Field to match.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2LabelFieldMetadata": {
+      "description": "The field values of the Google Drive label",
+      "id": "GooglePrivacyDlpV2LabelFieldMetadata",
+      "properties": {
+        "id": {
+          "description": "The identifier of the Label Field.",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "GooglePrivacyDlpV2Value",
+          "description": "The value of the Label Field."
         }
       },
       "type": "object"
@@ -12551,6 +12658,28 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2SensitivityLabel": {
+      "description": "Sensitivity labels published by Microsoft.",
+      "id": "GooglePrivacyDlpV2SensitivityLabel",
+      "properties": {
+        "guid": {
+          "description": "The GUID of the sensitivity label.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2SensitivityLabelMetadata": {
+      "description": "Sensitivity labels published by Microsoft.",
+      "id": "GooglePrivacyDlpV2SensitivityLabelMetadata",
+      "properties": {
+        "guid": {
+          "description": "Required. The GUID of the sensitivity label.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GooglePrivacyDlpV2SensitivityScore": {
       "description": "Score is calculated from of all elements in the data profile. A higher level means the data is more sensitive.",
       "id": "GooglePrivacyDlpV2SensitivityScore",
@@ -12645,7 +12774,8 @@
           "description": "Current version of the stored info type."
         },
         "name": {
-          "description": "Resource name.",
+          "description": "Output only. Resource name.",
+          "readOnly": true,
           "type": "string"
         },
         "pendingVersions": {
@@ -12705,19 +12835,21 @@
           "description": "StoredInfoType configuration."
         },
         "createTime": {
-          "description": "Create timestamp of the version. Read-only, determined by the system when the version is created.",
+          "description": "Output only. Create timestamp of the version. Read-only, determined by the system when the version is created.",
           "format": "google-datetime",
+          "readOnly": true,
           "type": "string"
         },
         "errors": {
-          "description": "Errors that occurred when creating this storedInfoType version, or anomalies detected in the storedInfoType data that render it unusable. Only the five most recent errors will be displayed, with the most recent error appearing first. For example, some of the data for stored custom dictionaries is put in the user's Cloud Storage bucket, and if this data is modified or deleted by the user or another system, the dictionary becomes invalid. If any errors occur, fix the problem indicated by the error message and use the UpdateStoredInfoType API method to create another version of the storedInfoType to continue using it, reusing the same `config` if it was not the source of the error.",
+          "description": "Output only. Errors that occurred when creating this storedInfoType version, or anomalies detected in the storedInfoType data that render it unusable. Only the five most recent errors will be displayed, with the most recent error appearing first. For example, some of the data for stored custom dictionaries is put in the user's Cloud Storage bucket, and if this data is modified or deleted by the user or another system, the dictionary becomes invalid. If any errors occur, fix the problem indicated by the error message and use the UpdateStoredInfoType API method to create another version of the storedInfoType to continue using it, reusing the same `config` if it was not the source of the error.",
           "items": {
             "$ref": "GooglePrivacyDlpV2Error"
           },
+          "readOnly": true,
           "type": "array"
         },
         "state": {
-          "description": "Stored info type version state. Read-only, updated by the system during dictionary creation.",
+          "description": "Output only. Stored info type version state. Read-only, updated by the system during dictionary creation.",
           "enum": [
             "STORED_INFO_TYPE_STATE_UNSPECIFIED",
             "PENDING",
@@ -12732,11 +12864,13 @@
             "StoredInfoType creation failed. All relevant error messages are returned in the `StoredInfoTypeVersion` message.",
             "StoredInfoType is no longer valid because artifacts stored in user-controlled storage were modified. To fix an invalid StoredInfoType, use the `UpdateStoredInfoType` method to create a new version."
           ],
+          "readOnly": true,
           "type": "string"
         },
         "stats": {
           "$ref": "GooglePrivacyDlpV2StoredInfoTypeStats",
-          "description": "Statistics about this storedInfoType version."
+          "description": "Output only. Statistics about this storedInfoType version.",
+          "readOnly": true
         }
       },
       "type": "object"

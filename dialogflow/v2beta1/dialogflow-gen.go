@@ -11349,27 +11349,6 @@ func (s GoogleCloudDialogflowV2beta1HumanAgentAssistantConfig) MarshalJSON() ([]
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationModelConfig struct {
-	BaselineModelVersion string `json:"baselineModelVersion,omitempty"`
-	Model                string `json:"model,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BaselineModelVersion") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BaselineModelVersion") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationModelConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationModelConfig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationProcessConfig struct {
 	RecentSentencesCount int64 `json:"recentSentencesCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RecentSentencesCount") to
@@ -11441,7 +11420,6 @@ func (s GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionConfig) M
 }
 
 type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionFeatureConfig struct {
-	ConversationModelConfig           *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationModelConfig   `json:"conversationModelConfig,omitempty"`
 	ConversationProcessConfig         *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationProcessConfig `json:"conversationProcessConfig,omitempty"`
 	DisableAgentQueryLogging          bool                                                                            `json:"disableAgentQueryLogging,omitempty"`
 	DisableQuerySearchContext         bool                                                                            `json:"disableQuerySearchContext,omitempty"`
@@ -11461,13 +11439,13 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionFeatureConfi
 	//   "AGENT_MESSAGE"
 	SuggestionTriggerEvent    string                                                                          `json:"suggestionTriggerEvent,omitempty"`
 	SuggestionTriggerSettings *GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionTriggerSettings `json:"suggestionTriggerSettings,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ConversationModelConfig") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "ConversationProcessConfig")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ConversationModelConfig") to
+	// NullFields is a list of field names (e.g. "ConversationProcessConfig") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

@@ -364,7 +364,7 @@
       }
     }
   },
-  "revision": "20260612",
+  "revision": "20260619",
   "rootUrl": "https://databasecenter.googleapis.com/",
   "schemas": {
     "AdditionalDetail": {
@@ -536,7 +536,9 @@
             "SIGNAL_TYPE_DATABOOST_DISABLED",
             "SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES",
             "SIGNAL_TYPE_EXTENDED_SUPPORT",
-            "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE"
+            "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE",
+            "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK",
+            "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME"
           ],
           "enumDescriptions": [
             "Unspecified.",
@@ -638,7 +640,9 @@
             "Databoost is disabled.",
             "Recommended maintenance policy.",
             "Resource version is in extended support.",
-            "Represents a database version nearing end of life."
+            "Represents a database version nearing end of life.",
+            "Indicates a high risk of maintenance downtime.",
+            "Indicates both a low cache hit rate and a risk of maintenance downtime."
           ],
           "type": "string"
         }
@@ -1606,7 +1610,9 @@
             "SIGNAL_TYPE_DATABOOST_DISABLED",
             "SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES",
             "SIGNAL_TYPE_EXTENDED_SUPPORT",
-            "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE"
+            "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE",
+            "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK",
+            "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME"
           ],
           "enumDescriptions": [
             "Unspecified.",
@@ -1708,7 +1714,9 @@
             "Databoost is disabled.",
             "Recommended maintenance policy.",
             "Resource version is in extended support.",
-            "Represents a database version nearing end of life."
+            "Represents a database version nearing end of life.",
+            "Indicates a high risk of maintenance downtime.",
+            "Indicates both a low cache hit rate and a risk of maintenance downtime."
           ],
           "type": "string"
         }
@@ -2708,7 +2716,9 @@
             "SIGNAL_TYPE_DATABOOST_DISABLED",
             "SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES",
             "SIGNAL_TYPE_EXTENDED_SUPPORT",
-            "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE"
+            "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE",
+            "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK",
+            "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME"
           ],
           "enumDescriptions": [
             "Unspecified.",
@@ -2810,7 +2820,9 @@
             "Databoost is disabled.",
             "Recommended maintenance policy.",
             "Resource version is in extended support.",
-            "Represents a database version nearing end of life."
+            "Represents a database version nearing end of life.",
+            "Indicates a high risk of maintenance downtime.",
+            "Indicates both a low cache hit rate and a risk of maintenance downtime."
           ],
           "type": "string"
         }
@@ -2941,7 +2953,9 @@
             "SIGNAL_TYPE_DATABOOST_DISABLED",
             "SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES",
             "SIGNAL_TYPE_EXTENDED_SUPPORT",
-            "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE"
+            "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE",
+            "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK",
+            "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME"
           ],
           "enumDescriptions": [
             "Unspecified.",
@@ -3043,7 +3057,9 @@
             "Databoost is disabled.",
             "Recommended maintenance policy.",
             "Resource version is in extended support.",
-            "Represents a database version nearing end of life."
+            "Represents a database version nearing end of life.",
+            "Indicates a high risk of maintenance downtime.",
+            "Indicates both a low cache hit rate and a risk of maintenance downtime."
           ],
           "type": "string"
         }
@@ -3186,7 +3202,9 @@
             "SIGNAL_TYPE_DATABOOST_DISABLED",
             "SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES",
             "SIGNAL_TYPE_EXTENDED_SUPPORT",
-            "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE"
+            "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE",
+            "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK",
+            "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME"
           ],
           "enumDescriptions": [
             "Unspecified.",
@@ -3288,7 +3306,9 @@
             "Databoost is disabled.",
             "Recommended maintenance policy.",
             "Resource version is in extended support.",
-            "Represents a database version nearing end of life."
+            "Represents a database version nearing end of life.",
+            "Indicates a high risk of maintenance downtime.",
+            "Indicates both a low cache hit rate and a risk of maintenance downtime."
           ],
           "type": "string"
         }
@@ -3406,7 +3426,9 @@
               "SIGNAL_TYPE_DATABOOST_DISABLED",
               "SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES",
               "SIGNAL_TYPE_EXTENDED_SUPPORT",
-              "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE"
+              "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE",
+              "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK",
+              "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME"
             ],
             "enumDescriptions": [
               "Unspecified.",
@@ -3508,7 +3530,9 @@
               "Databoost is disabled.",
               "Recommended maintenance policy.",
               "Resource version is in extended support.",
-              "Represents a database version nearing end of life."
+              "Represents a database version nearing end of life.",
+              "Indicates a high risk of maintenance downtime.",
+              "Indicates both a low cache hit rate and a risk of maintenance downtime."
             ],
             "type": "string"
           },

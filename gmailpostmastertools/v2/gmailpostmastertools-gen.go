@@ -37,7 +37,7 @@
 // By default, all available scopes (see "Constants") are used to authenticate.
 // To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
-//	gmailpostmastertoolsService, err := gmailpostmastertools.NewService(ctx, option.WithScopes(gmailpostmastertools.PostmasterTrafficReadonlyScope))
+//	gmailpostmastertoolsService, err := gmailpostmastertools.NewService(ctx, option.WithScopes(gmailpostmastertools.PostmasterUserScope))
 //
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
@@ -113,6 +113,10 @@ const (
 	// Get email traffic metrics for the domains you have registered with
 	// Postmaster Tools
 	PostmasterTrafficReadonlyScope = "https://www.googleapis.com/auth/postmaster.traffic.readonly"
+
+	// View and manage users for the domains you have registered with Postmaster
+	// Tools
+	PostmasterUserScope = "https://www.googleapis.com/auth/postmaster.user"
 )
 
 // NewService creates a new Service.
@@ -121,6 +125,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/postmaster",
 		"https://www.googleapis.com/auth/postmaster.domain",
 		"https://www.googleapis.com/auth/postmaster.traffic.readonly",
+		"https://www.googleapis.com/auth/postmaster.user",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -183,6 +188,7 @@ type DomainStatsService struct {
 func NewDomainsService(s *Service) *DomainsService {
 	rs := &DomainsService{s: s}
 	rs.DomainStats = NewDomainsDomainStatsService(s)
+	rs.Users = NewDomainsUsersService(s)
 	return rs
 }
 
@@ -190,6 +196,8 @@ type DomainsService struct {
 	s *Service
 
 	DomainStats *DomainsDomainStatsService
+
+	Users *DomainsUsersService
 }
 
 func NewDomainsDomainStatsService(s *Service) *DomainsDomainStatsService {
@@ -198,6 +206,15 @@ func NewDomainsDomainStatsService(s *Service) *DomainsDomainStatsService {
 }
 
 type DomainsDomainStatsService struct {
+	s *Service
+}
+
+func NewDomainsUsersService(s *Service) *DomainsUsersService {
+	rs := &DomainsUsersService{s: s}
+	return rs
+}
+
+type DomainsUsersService struct {
 	s *Service
 }
 
@@ -426,6 +443,65 @@ func (s ComplianceStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CreateDomainRequest: Developer Preview
+// (https://developers.google.com/workspace/preview): Request message for
+// CreateDomain.
+type CreateDomainRequest struct {
+	// DomainId: Required. The domain to add. e.g., "example.com"
+	DomainId string `json:"domainId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DomainId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DomainId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateDomainRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateDomainRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CreateUserRequest: Developer Preview
+// (https://developers.google.com/workspace/preview): Request message for
+// CreateUser.
+type CreateUserRequest struct {
+	// Permission: Optional. Specifies the permission level to give the user for
+	// the specified domain. If not specified, the default value for this field is
+	// READER.
+	//
+	// Possible values:
+	//   "PERMISSION_UNSPECIFIED" - Unspecified permission.
+	//   "READER" - User has read access to the domain.
+	//   "ADMIN" - User has admin access to the domain.
+	//   "OWNER" - User has owner access to the domain.
+	//   "NONE" - User has no access to the domain.
+	Permission string `json:"permission,omitempty"`
+	// UserId: Required. The user to create.
+	UserId string `json:"userId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Permission") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Permission") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateUserRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateUserRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Date: Represents a whole or partial calendar date, such as a birthday. The
 // time of day and time zone are either specified elsewhere or are
 // insignificant. The date is relative to the Gregorian Calendar. This can
@@ -532,6 +608,44 @@ func (s DateRanges) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DeliverabilityStatusVerdict: Developer Preview
+// (https://developers.google.com/workspace/preview): Verdict of domain
+// deliverability status.
+type DeliverabilityStatusVerdict struct {
+	// Reason: Output only. The specific reason for the compliance verdict.
+	//
+	// Possible values:
+	//   "REASON_UNSPECIFIED" - Unspecified.
+	//   "MESSAGE_VOLUME_LOW" - Not enough outgoing email.
+	//   "SMTP_ERRORS_HIGH" - Many messages with delivery errors.
+	//   "SENDER_NOT_COMPLIANT" - The sender does not meet the sender requirements.
+	//   "SPAM_RATE_HIGH" - The spam rate is above 0.1%.
+	//   "USER_FEEDBACK_NEGATIVE" - Indicates users do not want to receive email
+	// messages.
+	//   "USER_FEEDBACK_LOW" - Users do not take action on messages.
+	//   "USER_FEEDBACK_POSITIVE" - Users signal they want to receive email
+	// messages.
+	Reason string `json:"reason,omitempty"`
+	// State: Output only. The compliance state.
+	State *ComplianceStatus `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Reason") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Reason") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeliverabilityStatusVerdict) MarshalJSON() ([]byte, error) {
+	type NoMethod DeliverabilityStatusVerdict
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Domain: Information about a domain registered by the user.
 type Domain struct {
 	// CreateTime: Output only. Immutable. The timestamp at which the domain was
@@ -549,6 +663,7 @@ type Domain struct {
 	// Possible values:
 	//   "PERMISSION_UNSPECIFIED" - Unspecified permission.
 	//   "READER" - User has read access to the domain.
+	//   "ADMIN" - User has admin access to the domain.
 	//   "OWNER" - User has owner access to the domain.
 	//   "NONE" - User has no access to the domain.
 	Permission string `json:"permission,omitempty"`
@@ -583,6 +698,8 @@ func (s Domain) MarshalJSON() ([]byte, error) {
 
 // DomainComplianceData: Compliance data for a given domain.
 type DomainComplianceData struct {
+	// DeliverabilityStatusVerdict: Output only. Deliverability status verdict.
+	DeliverabilityStatusVerdict *DeliverabilityStatusVerdict `json:"deliverabilityStatusVerdict,omitempty"`
 	// DomainId: Domain that this data is for.
 	DomainId string `json:"domainId,omitempty"`
 	// HonorUnsubscribeVerdict: Unsubscribe honoring compliance verdict.
@@ -592,15 +709,15 @@ type DomainComplianceData struct {
 	// RowData: Data for each of the rows of the table. Each message contains all
 	// the data that backs a single row.
 	RowData []*ComplianceRowData `json:"rowData,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DomainId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "DeliverabilityStatusVerdict") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DomainId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DeliverabilityStatusVerdict") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -682,6 +799,52 @@ func (s DomainStat) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DomainVerificationToken: Developer Preview
+// (https://developers.google.com/workspace/preview): The DNS token a user can
+// use to verify ownership of a domain.
+type DomainVerificationToken struct {
+	// Name: Identifier. The resource name of the domain verification token.
+	// Format: domains/{domain}/verificationToken
+	Name string `json:"name,omitempty"`
+	// Token: The verification token.
+	Token string `json:"token,omitempty"`
+	// VerificationMethod: The verification method used.
+	//
+	// Possible values:
+	//   "DOMAIN_VERIFICATION_METHOD_UNSPECIFIED" - Unspecified.
+	//   "TXT" - Generate a DNS TXT verification token.
+	//   "CNAME" - Generate a DNS CNAME verification token.
+	VerificationMethod string `json:"verificationMethod,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DomainVerificationToken) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainVerificationToken
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // HonorUnsubscribeVerdict: Compliance verdict for whether a sender meets the
 // unsubscribe honoring compliance requirement.
 type HonorUnsubscribeVerdict struct {
@@ -741,6 +904,36 @@ type ListDomainsResponse struct {
 
 func (s ListDomainsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDomainsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListUsersResponse: Developer Preview
+// (https://developers.google.com/workspace/preview): Response message for
+// ListUsers.
+type ListUsersResponse struct {
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Users: The users that have access to the domain.
+	Users []*User `json:"users,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListUsersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListUsersResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1015,6 +1208,86 @@ func (s TimeQuery) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// User: Developer Preview (https://developers.google.com/workspace/preview):
+// Information about a user's access to a domain.
+type User struct {
+	// AccessGranter: Output only. The user that added the current user.
+	AccessGranter string `json:"accessGranter,omitempty"`
+	// CreateTime: Output only. The time the user was granted access.
+	CreateTime string `json:"createTime,omitempty"`
+	// Name: Identifier. The resource name of the user. Format: users/{user} Note:
+	// {user} is the user's email address.
+	Name string `json:"name,omitempty"`
+	// Permission: The permission level that the user has for the specified domain.
+	//
+	// Possible values:
+	//   "PERMISSION_UNSPECIFIED" - Unspecified permission.
+	//   "READER" - User has read access to the domain.
+	//   "ADMIN" - User has admin access to the domain.
+	//   "OWNER" - User has owner access to the domain.
+	//   "NONE" - User has no access to the domain.
+	Permission string `json:"permission,omitempty"`
+	// User: The user's email address.
+	User string `json:"user,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AccessGranter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessGranter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s User) MarshalJSON() ([]byte, error) {
+	type NoMethod User
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VerifyDomainRequest: Developer Preview
+// (https://developers.google.com/workspace/preview): Request message for
+// VerifyDomain.
+type VerifyDomainRequest struct {
+	// VerificationMethod: Required. The verification method used. Must be
+	// specified, i.e. TXT or CNAME.
+	//
+	// Possible values:
+	//   "DOMAIN_VERIFICATION_METHOD_UNSPECIFIED" - Unspecified.
+	//   "TXT" - Generate a DNS TXT verification token.
+	//   "CNAME" - Generate a DNS CNAME verification token.
+	VerificationMethod string `json:"verificationMethod,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "VerificationMethod") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "VerificationMethod") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VerifyDomainRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod VerifyDomainRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VerifyDomainResponse: Developer Preview
+// (https://developers.google.com/workspace/preview): Response message for
+// VerifyDomain.
+type VerifyDomainResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 type DomainStatsBatchQueryCall struct {
 	s                            *Service
 	batchquerydomainstatsrequest *BatchQueryDomainStatsRequest
@@ -1111,6 +1384,204 @@ func (c *DomainStatsBatchQueryCall) Do(opts ...googleapi.CallOption) (*BatchQuer
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gmailpostmastertools.domainStats.batchQuery", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type DomainsCreateCall struct {
+	s                   *Service
+	createdomainrequest *CreateDomainRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Create: Developer Preview (https://developers.google.com/workspace/preview):
+// Adds a domain to the user's account. Returns INVALID_ARGUMENT if a domain is
+// not provided. Returns ALREADY_EXISTS if the domain is already registered by
+// the user.
+func (r *DomainsService) Create(createdomainrequest *CreateDomainRequest) *DomainsCreateCall {
+	c := &DomainsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.createdomainrequest = createdomainrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *DomainsCreateCall) Fields(s ...googleapi.Field) *DomainsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *DomainsCreateCall) Context(ctx context.Context) *DomainsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *DomainsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DomainsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.createdomainrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/domains")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gmailpostmastertools.domains.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmailpostmastertools.domains.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Domain.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *DomainsCreateCall) Do(opts ...googleapi.CallOption) (*Domain, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Domain{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gmailpostmastertools.domains.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type DomainsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Developer Preview (https://developers.google.com/workspace/preview):
+// Deletes a domain from the user's account. Returns NOT_FOUND if the domain is
+// not registered by the user.
+//
+// - name: The domain to delete.
+func (r *DomainsService) Delete(name string) *DomainsDeleteCall {
+	c := &DomainsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *DomainsDeleteCall) Fields(s ...googleapi.Field) *DomainsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *DomainsDeleteCall) Context(ctx context.Context) *DomainsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *DomainsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DomainsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gmailpostmastertools.domains.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmailpostmastertools.domains.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *DomainsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gmailpostmastertools.domains.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1341,6 +1812,133 @@ func (c *DomainsGetComplianceStatusCall) Do(opts ...googleapi.CallOption) (*Doma
 	return ret, nil
 }
 
+type DomainsGetVerificationTokenCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetVerificationToken: Developer Preview
+// (https://developers.google.com/workspace/preview): Gets a verification token
+// used for verifying a user's ownership over a domain.
+//
+//   - name: The resource name of the verification token to retrieve. Format:
+//     `domains/{domain}/verificationToken`.
+func (r *DomainsService) GetVerificationToken(name string) *DomainsGetVerificationTokenCall {
+	c := &DomainsGetVerificationTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// VerificationMethod sets the optional parameter "verificationMethod":
+// Required. The verification method used. Must be specified, i.e. TXT or
+// CNAME.
+//
+// Possible values:
+//
+//	"DOMAIN_VERIFICATION_METHOD_UNSPECIFIED" - Unspecified.
+//	"TXT" - Generate a DNS TXT verification token.
+//	"CNAME" - Generate a DNS CNAME verification token.
+func (c *DomainsGetVerificationTokenCall) VerificationMethod(verificationMethod string) *DomainsGetVerificationTokenCall {
+	c.urlParams_.Set("verificationMethod", verificationMethod)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *DomainsGetVerificationTokenCall) Fields(s ...googleapi.Field) *DomainsGetVerificationTokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DomainsGetVerificationTokenCall) IfNoneMatch(entityTag string) *DomainsGetVerificationTokenCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *DomainsGetVerificationTokenCall) Context(ctx context.Context) *DomainsGetVerificationTokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *DomainsGetVerificationTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DomainsGetVerificationTokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gmailpostmastertools.domains.getVerificationToken", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmailpostmastertools.domains.getVerificationToken" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DomainVerificationToken.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *DomainsGetVerificationTokenCall) Do(opts ...googleapi.CallOption) (*DomainVerificationToken, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DomainVerificationToken{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gmailpostmastertools.domains.getVerificationToken", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type DomainsListCall struct {
 	s            *Service
 	urlParams_   gensupport.URLParams
@@ -1483,6 +2081,112 @@ func (c *DomainsListCall) Pages(ctx context.Context, f func(*ListDomainsResponse
 	}
 }
 
+type DomainsVerifyCall struct {
+	s                   *Service
+	name                string
+	verifydomainrequest *VerifyDomainRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Verify: Developer Preview (https://developers.google.com/workspace/preview):
+// Verifies a user's ownership of a domain at the DNS level. Note that this is
+// distinct from checking if the user has OWNER status within IRDB.
+//
+// - name: The domain to verify.
+func (r *DomainsService) Verify(name string, verifydomainrequest *VerifyDomainRequest) *DomainsVerifyCall {
+	c := &DomainsVerifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.verifydomainrequest = verifydomainrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *DomainsVerifyCall) Fields(s ...googleapi.Field) *DomainsVerifyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *DomainsVerifyCall) Context(ctx context.Context) *DomainsVerifyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *DomainsVerifyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DomainsVerifyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.verifydomainrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:verify")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gmailpostmastertools.domains.verify", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmailpostmastertools.domains.verify" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *VerifyDomainResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *DomainsVerifyCall) Do(opts ...googleapi.CallOption) (*VerifyDomainResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &VerifyDomainResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gmailpostmastertools.domains.verify", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type DomainsDomainStatsQueryCall struct {
 	s                       *Service
 	parent                  string
@@ -1610,4 +2314,584 @@ func (c *DomainsDomainStatsQueryCall) Pages(ctx context.Context, f func(*QueryDo
 		}
 		c.querydomainstatsrequest.PageToken = x.NextPageToken
 	}
+}
+
+type DomainsUsersCreateCall struct {
+	s                 *Service
+	parent            string
+	createuserrequest *CreateUserRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Create: Developer Preview (https://developers.google.com/workspace/preview):
+// Creates a user, who has access to a domain. Returns INVALID_ARGUMENT if a
+// user is not provided.
+//
+//   - parent: The parent resource where this user will be created. Format:
+//     domains/{domain}.
+func (r *DomainsUsersService) Create(parent string, createuserrequest *CreateUserRequest) *DomainsUsersCreateCall {
+	c := &DomainsUsersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.createuserrequest = createuserrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *DomainsUsersCreateCall) Fields(s ...googleapi.Field) *DomainsUsersCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *DomainsUsersCreateCall) Context(ctx context.Context) *DomainsUsersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *DomainsUsersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DomainsUsersCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.createuserrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/users")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gmailpostmastertools.domains.users.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmailpostmastertools.domains.users.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *User.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *DomainsUsersCreateCall) Do(opts ...googleapi.CallOption) (*User, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &User{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gmailpostmastertools.domains.users.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type DomainsUsersDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Developer Preview (https://developers.google.com/workspace/preview):
+// Deletes a user from a domain. Returns NOT_FOUND if the user does not exist.
+//
+//   - name: The resource name of the user to delete. Format:
+//     domains/{domain}/users/{user}.
+func (r *DomainsUsersService) Delete(name string) *DomainsUsersDeleteCall {
+	c := &DomainsUsersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *DomainsUsersDeleteCall) Fields(s ...googleapi.Field) *DomainsUsersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *DomainsUsersDeleteCall) Context(ctx context.Context) *DomainsUsersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *DomainsUsersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DomainsUsersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gmailpostmastertools.domains.users.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmailpostmastertools.domains.users.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *DomainsUsersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gmailpostmastertools.domains.users.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type DomainsUsersGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Developer Preview (https://developers.google.com/workspace/preview):
+// Retrieves detailed information about a user that has access to a domain.
+// Returns NOT_FOUND if the user does not exist.
+//
+//   - name: The resource name of the user to retrieve. Format:
+//     `domains/{domain}/users/{user}`.
+func (r *DomainsUsersService) Get(name string) *DomainsUsersGetCall {
+	c := &DomainsUsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *DomainsUsersGetCall) Fields(s ...googleapi.Field) *DomainsUsersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DomainsUsersGetCall) IfNoneMatch(entityTag string) *DomainsUsersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *DomainsUsersGetCall) Context(ctx context.Context) *DomainsUsersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *DomainsUsersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DomainsUsersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gmailpostmastertools.domains.users.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmailpostmastertools.domains.users.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *User.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *DomainsUsersGetCall) Do(opts ...googleapi.CallOption) (*User, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &User{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gmailpostmastertools.domains.users.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type DomainsUsersListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Developer Preview (https://developers.google.com/workspace/preview):
+// Lists the users that have access to a domain.
+//
+//   - parent: The parent resource name for which to list users. Format:
+//     `domains/{domain}`.
+func (r *DomainsUsersService) List(parent string) *DomainsUsersListCall {
+	c := &DomainsUsersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer users than requested. If unspecified, the default value for
+// this field is 10. The maximum value for this field is 200.
+func (c *DomainsUsersListCall) PageSize(pageSize int64) *DomainsUsersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The next_page_token value
+// returned from a previous List request, if any.
+func (c *DomainsUsersListCall) PageToken(pageToken string) *DomainsUsersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *DomainsUsersListCall) Fields(s ...googleapi.Field) *DomainsUsersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DomainsUsersListCall) IfNoneMatch(entityTag string) *DomainsUsersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *DomainsUsersListCall) Context(ctx context.Context) *DomainsUsersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *DomainsUsersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DomainsUsersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/users")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gmailpostmastertools.domains.users.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmailpostmastertools.domains.users.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListUsersResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *DomainsUsersListCall) Do(opts ...googleapi.CallOption) (*ListUsersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListUsersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gmailpostmastertools.domains.users.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *DomainsUsersListCall) Pages(ctx context.Context, f func(*ListUsersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type DomainsUsersPatchCall struct {
+	s          *Service
+	name       string
+	user       *User
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Developer Preview (https://developers.google.com/workspace/preview):
+// Updates a user for a domain. Only Owners and Admins can execute this RPC,
+// only a user's domain permission will be allowed to be updated. Returns
+// NOT_FOUND if the user does not exist. Returns INVALID_ARGUMENT if a
+// permission is not provided or is PERMISSION_UNSPECIFIED, NONE, or OWNER.
+//
+//   - name: Identifier. The resource name of the user. Format: users/{user}
+//     Note: {user} is the user's email address.
+func (r *DomainsUsersService) Patch(name string, user *User) *DomainsUsersPatchCall {
+	c := &DomainsUsersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.user = user
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update.
+func (c *DomainsUsersPatchCall) UpdateMask(updateMask string) *DomainsUsersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *DomainsUsersPatchCall) Fields(s ...googleapi.Field) *DomainsUsersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *DomainsUsersPatchCall) Context(ctx context.Context) *DomainsUsersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *DomainsUsersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DomainsUsersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.user)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "gmailpostmastertools.domains.users.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmailpostmastertools.domains.users.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *User.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *DomainsUsersPatchCall) Do(opts ...googleapi.CallOption) (*User, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &User{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "gmailpostmastertools.domains.users.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }

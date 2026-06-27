@@ -554,7 +554,7 @@
       }
     }
   },
-  "revision": "20260616",
+  "revision": "20260623",
   "rootUrl": "https://gkehub.googleapis.com/",
   "schemas": {
     "AppDevExperienceState": {
@@ -3157,6 +3157,9 @@
             "MISSING_CONTROL_PLANE_CONFIG",
             "SHARED_VPC_MISSING_PERMISSIONS",
             "REQUIRED_ORG_POLICY_DISABLED",
+            "MODERNIZATION_INCOMPATIBLE_POD_ANNOTATION",
+            "MODERNIZATION_INCOMPATIBLE_CONFIG",
+            "MODERNIZATION_INCOMPATIBLE_GATEWAY_POD_SCALE",
             "MODERNIZATION_SCHEDULED",
             "MODERNIZATION_IN_PROGRESS",
             "MODERNIZATION_COMPLETED",
@@ -3220,6 +3223,9 @@
             "Missing control plane configuration error code",
             "Shared VPC missing permissions error code",
             "Required org policy disabled error code",
+            "One or more Pods have unsupported annotations.",
+            "Incompatible config found in the cluster.",
+            "Gateway pods per cluster limit exceeded.",
             "Modernization is scheduled for a cluster.",
             "Modernization is in progress for a cluster.",
             "Modernization is completed for a cluster.",

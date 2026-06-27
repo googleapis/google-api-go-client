@@ -437,6 +437,12 @@ type LocalInventoryAttributes struct {
 	// InstoreProductLocation: Optional. Location of the product inside the store.
 	// Maximum length is 20 bytes.
 	InstoreProductLocation string `json:"instoreProductLocation,omitempty"`
+	// LocalShippingLabel: Optional. Specifies a label associated with the shipping
+	// for the `LocalInventory` resource. Can be used to group local shipping
+	// services to this particular inventory item. For accepted field format, see
+	// the Local delivery
+	// (https://support.google.com/merchants/answer/14819809#localdelivery)
+	LocalShippingLabel string `json:"localShippingLabel,omitempty"`
 	// LoyaltyPrograms: Optional. An optional list of loyalty programs containing
 	// applicable loyalty member prices for this product at this store. This field
 	// is used to show store-specific member prices on Local Inventory Ads (LIA).

@@ -3631,7 +3631,8 @@ type SalesforceProfile struct {
 	Domain string `json:"domain,omitempty"`
 	// Oauth2ClientCredentials: Connected app authentication.
 	Oauth2ClientCredentials *Oauth2ClientCredentials `json:"oauth2ClientCredentials,omitempty"`
-	// UserCredentials: User-password authentication.
+	// UserCredentials: Deprecated: Salesforce is retiring Username-Password
+	// authentication. Use `oauth2_client_credentials` instead.
 	UserCredentials *UserCredentials `json:"userCredentials,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Domain") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4870,7 +4871,8 @@ func (s TimeUnitPartition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UserCredentials: Username-password credentials.
+// UserCredentials: Deprecated: Salesforce is retiring Username-Password
+// authentication. Use `Oauth2ClientCredentials` instead.
 type UserCredentials struct {
 	// Password: Optional. Password for the Salesforce connection. Mutually
 	// exclusive with the `secret_manager_stored_password` field.

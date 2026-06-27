@@ -396,7 +396,9 @@ type AbortInfo struct {
 	// request but lacks access to. In this case, analysis is aborted with the
 	// PERMISSION_DENIED cause.
 	ProjectsMissingPermission []string `json:"projectsMissingPermission,omitempty"`
-	// ResourceUri: URI of the resource that caused the abort.
+	// ResourceUri: URI of the resource that caused the abort. Format: *
+	// `projects/{project_id}/global/networks/{network_id}` (VPC network) *
+	// `projects/{project_id}/zones/{zone}/instances/{instance_id}` (VM instance)
 	ResourceUri string `json:"resourceUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Cause") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -450,7 +452,8 @@ type AppEngineVersionInfo struct {
 	Environment string `json:"environment,omitempty"`
 	// Runtime: Runtime of the App Engine version.
 	Runtime string `json:"runtime,omitempty"`
-	// Uri: URI of an App Engine version.
+	// Uri: URI of the App Engine version. Format:
+	// `apps/{app_id}/services/{service_id}/versions/{version_id}`
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -678,7 +681,8 @@ type CloudFunctionInfo struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Location: Location in which the Cloud Function is deployed.
 	Location string `json:"location,omitempty"`
-	// Uri: URI of a Cloud Function.
+	// Uri: URI of the Cloud Function. Format:
+	// `projects/{project_id}/locations/{location}/functions/{function_id}`
 	Uri string `json:"uri,omitempty"`
 	// VersionId: Latest successfully deployed version id of the Cloud Function.
 	VersionId int64 `json:"versionId,omitempty,string"`
@@ -706,7 +710,8 @@ type CloudRunJobInfo struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Location: Location in which this job is deployed.
 	Location string `json:"location,omitempty"`
-	// Uri: URI of a Cloud Run job.
+	// Uri: URI of the Cloud Run job. Format:
+	// `projects/{project_id}/locations/{location}/jobs/{job_id}`
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -762,9 +767,11 @@ type CloudRunRevisionInfo struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Location: Location in which this revision is deployed.
 	Location string `json:"location,omitempty"`
-	// ServiceUri: URI of Cloud Run service this revision belongs to.
+	// ServiceUri: URI of Cloud Run service this revision belongs to. Format:
+	// `projects/{project_id}/locations/{location}/services/{service_id}`
 	ServiceUri string `json:"serviceUri,omitempty"`
-	// Uri: URI of a Cloud Run revision.
+	// Uri: URI of the Cloud Run revision. Format:
+	// `projects/{project_id}/locations/{location}/revisions/{revision_id}`
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -794,11 +801,13 @@ type CloudSQLInstanceInfo struct {
 	// InternalIp: Internal IP address of a Cloud SQL instance.
 	InternalIp string `json:"internalIp,omitempty"`
 	// NetworkUri: URI of a Cloud SQL instance network or empty string if the
-	// instance does not have one.
+	// instance does not have one. In format
+	// "projects/{project}/global/networks/{network}".
 	NetworkUri string `json:"networkUri,omitempty"`
 	// Region: Region in which the Cloud SQL instance is running.
 	Region string `json:"region,omitempty"`
-	// Uri: URI of a Cloud SQL instance.
+	// Uri: URI of a Cloud SQL instance in format
+	// "projects/{project}/instances/{instance}"
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -920,7 +929,10 @@ type DeliverInfo struct {
 	// PscGoogleApiTarget: PSC Google API target the packet is delivered to (if
 	// applicable).
 	PscGoogleApiTarget string `json:"pscGoogleApiTarget,omitempty"`
-	// ResourceUri: URI of the resource that the packet is delivered to.
+	// ResourceUri: URI of the resource that the packet is delivered to. For
+	// example: * "projects/{project}/zones/{zone}/instances/{instance}" *
+	// "projects/{project}/regions/{region}/networkEndpointGroups/{network_endpoint
+	// _group}"
 	ResourceUri string `json:"resourceUri,omitempty"`
 	// StorageBucket: Name of the Cloud Storage Bucket the packet is delivered to
 	// (if applicable).
@@ -986,7 +998,8 @@ func (s DeliverInfo) MarshalJSON() ([]byte, error) {
 // DirectVpcEgressConnectionInfo: For display only. Metadata associated with a
 // serverless direct VPC egress connection.
 type DirectVpcEgressConnectionInfo struct {
-	// NetworkUri: URI of direct access network.
+	// NetworkUri: URI of the VPC network for direct egress. Format:
+	// `projects/{project_id}/global/networks/{network_id}`
 	NetworkUri string `json:"networkUri,omitempty"`
 	// Region: Region in which the Direct VPC egress is deployed.
 	Region string `json:"region,omitempty"`
@@ -994,7 +1007,8 @@ type DirectVpcEgressConnectionInfo struct {
 	SelectedIpAddress string `json:"selectedIpAddress,omitempty"`
 	// SelectedIpRange: Selected IP range.
 	SelectedIpRange string `json:"selectedIpRange,omitempty"`
-	// SubnetworkUri: URI of direct access subnetwork.
+	// SubnetworkUri: URI of the subnetwork for direct egress. Format:
+	// `projects/{project_id}/regions/{region}/subnetworks/{subnetwork_id}`
 	SubnetworkUri string `json:"subnetworkUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NetworkUri") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1305,7 +1319,9 @@ type DropInfo struct {
 	DestinationIp string `json:"destinationIp,omitempty"`
 	// Region: Region of the dropped packet (if relevant).
 	Region string `json:"region,omitempty"`
-	// ResourceUri: URI of the resource that caused the drop.
+	// ResourceUri: URI of the resource that caused the drop. Format: *
+	// `projects/{project_id}/global/firewalls/{firewall_id}` (firewall rule) *
+	// `projects/{project_id}/global/routes/{route_id}` (route)
 	ResourceUri string `json:"resourceUri,omitempty"`
 	// SourceGeolocationCode: Geolocation (region code) of the source IP address
 	// (if relevant).
@@ -1649,6 +1665,7 @@ type EndpointInfo struct {
 	// DestinationIp: Destination IP address.
 	DestinationIp string `json:"destinationIp,omitempty"`
 	// DestinationNetworkUri: URI of the network where this packet is sent to.
+	// Format: `projects/{project_id}/global/networks/{network_id}`
 	DestinationNetworkUri string `json:"destinationNetworkUri,omitempty"`
 	// DestinationPort: Destination port. Only valid when protocol is TCP or UDP.
 	DestinationPort int64 `json:"destinationPort,omitempty"`
@@ -1660,6 +1677,7 @@ type EndpointInfo struct {
 	// SourceIp: Source IP address.
 	SourceIp string `json:"sourceIp,omitempty"`
 	// SourceNetworkUri: URI of the network where this packet originates from.
+	// Format: `projects/{project_id}/global/networks/{network_id}`
 	SourceNetworkUri string `json:"sourceNetworkUri,omitempty"`
 	// SourcePort: Source port. Only valid when protocol is TCP or UDP.
 	SourcePort int64 `json:"sourcePort,omitempty"`
@@ -1782,7 +1800,8 @@ type FirewallInfo struct {
 	// Connectivity Test in the BypassFirewallChecks mode
 	FirewallRuleType string `json:"firewallRuleType,omitempty"`
 	// NetworkUri: The URI of the VPC network that the firewall rule is associated
-	// with. This field is not applicable to hierarchical firewall policy rules.
+	// with in format "projects/{project}/global/networks/{network}". This field is
+	// not applicable to hierarchical firewall policy rules.
 	NetworkUri string `json:"networkUri,omitempty"`
 	// Policy: The name of the firewall policy that this rule is associated with.
 	// This field is not applicable to VPC firewall rules and implied VPC firewall
@@ -1794,7 +1813,12 @@ type FirewallInfo struct {
 	PolicyPriority int64 `json:"policyPriority,omitempty"`
 	// PolicyUri: The URI of the firewall policy that this rule is associated with.
 	// This field is not applicable to VPC firewall rules and implied VPC firewall
-	// rules.
+	// rules. Format: * `locations/global/firewallPolicies/{policy_id}`
+	// (hierarchical policy) *
+	// `projects/{project_id}/global/firewallPolicies/{policy_id}` (global network
+	// firewall policy) *
+	// `projects/{project_id}/regions/{region}/firewallPolicies/{policy_id}`
+	// (regional network firewall policy)
 	PolicyUri string `json:"policyUri,omitempty"`
 	// Priority: The priority of the firewall rule.
 	Priority int64 `json:"priority,omitempty"`
@@ -1813,8 +1837,9 @@ type FirewallInfo struct {
 	//   "INTERNAL_MANAGED_LB" - Firewall rule applies to internal managed load
 	// balancers.
 	TargetType string `json:"targetType,omitempty"`
-	// Uri: The URI of the firewall rule. This field is not applicable to implied
-	// VPC firewall rules.
+	// Uri: The URI of the firewall rule in format
+	// "projects/{project}/global/firewalls/{firewall}". This field is not
+	// applicable to implied VPC firewall rules.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1838,7 +1863,10 @@ func (s FirewallInfo) MarshalJSON() ([]byte, error) {
 type ForwardInfo struct {
 	// IpAddress: IP address of the target (if applicable).
 	IpAddress string `json:"ipAddress,omitempty"`
-	// ResourceUri: URI of the resource that the packet is forwarded to.
+	// ResourceUri: URI of the resource that the packet is forwarded to. Format: *
+	// `projects/{project_id}/global/networks/{network_id}` (VPC peering network) *
+	// `projects/{project_id}/regions/{region}/vpnGateways/{vpn_gateway_id}` (VPN
+	// gateway)
 	ResourceUri string `json:"resourceUri,omitempty"`
 	// Target: Target type where this packet is forwarded to.
 	//
@@ -1890,20 +1918,26 @@ type ForwardingRuleInfo struct {
 	// MatchedProtocol: Protocol defined in the forwarding rule that matches the
 	// packet.
 	MatchedProtocol string `json:"matchedProtocol,omitempty"`
-	// NetworkUri: Network URI.
+	// NetworkUri: URI of a VPC network where the forwarding rule is located in
+	// format "projects/{project}/global/networks/{network}".
 	NetworkUri string `json:"networkUri,omitempty"`
 	// PscGoogleApiTarget: PSC Google API target this forwarding rule targets (if
 	// applicable).
 	PscGoogleApiTarget string `json:"pscGoogleApiTarget,omitempty"`
 	// PscServiceAttachmentUri: URI of the PSC service attachment this forwarding
-	// rule targets (if applicable).
+	// rule targets (if applicable) in format
+	// "projects/{project}/regions/{region}/serviceAttachments/{service_attachment}"
+	// .
 	PscServiceAttachmentUri string `json:"pscServiceAttachmentUri,omitempty"`
 	// Region: Region of the forwarding rule. Set only for regional forwarding
 	// rules.
 	Region string `json:"region,omitempty"`
 	// Target: Target type of the forwarding rule.
 	Target string `json:"target,omitempty"`
-	// Uri: URI of the forwarding rule.
+	// Uri: URI of the forwarding rule in format
+	// "projects/{project}/global/forwardingRules/{forwarding_rule}" (global) or
+	// "projects/{project}/regions/{region}/forwardingRules/{forwarding_rule}"
+	// (regional).
 	Uri string `json:"uri,omitempty"`
 	// Vip: VIP of the forwarding rule.
 	Vip string `json:"vip,omitempty"`
@@ -1928,9 +1962,13 @@ func (s ForwardingRuleInfo) MarshalJSON() ([]byte, error) {
 // GKEMasterInfo: For display only. Metadata associated with a Google
 // Kubernetes Engine (GKE) cluster master.
 type GKEMasterInfo struct {
-	// ClusterNetworkUri: URI of a GKE cluster network.
+	// ClusterNetworkUri: URI of the GKE cluster network. Format:
+	// `projects/{project_id}/global/networks/{network_id}`
 	ClusterNetworkUri string `json:"clusterNetworkUri,omitempty"`
-	// ClusterUri: URI of a GKE cluster.
+	// ClusterUri: URI of the GKE cluster. Format: *
+	// `projects/{project_id}/locations/{location}/clusters/{cluster_id}` (regional
+	// cluster) * `projects/{project_id}/zones/{zone}/clusters/{cluster_id}` (zonal
+	// cluster)
 	ClusterUri string `json:"clusterUri,omitempty"`
 	// DnsEndpoint: DNS endpoint of a GKE cluster control plane.
 	DnsEndpoint string `json:"dnsEndpoint,omitempty"`
@@ -2033,7 +2071,8 @@ type GkePodInfo struct {
 	// IpAddress: IP address of a GKE Pod. If the Pod is dual-stack, this is the IP
 	// address relevant to the trace.
 	IpAddress string `json:"ipAddress,omitempty"`
-	// NetworkUri: URI of the network containing the GKE Pod.
+	// NetworkUri: URI of the network containing the GKE Pod. Format:
+	// `projects/{project_id}/global/networks/{network_id}`
 	NetworkUri string `json:"networkUri,omitempty"`
 	// PodUri: URI of a GKE Pod. For Pods in regional Clusters, the URI format is:
 	// `projects/{project}/locations/{location}/clusters/{cluster}/k8s/namespaces/{n
@@ -2113,7 +2152,8 @@ type HybridSubnetInfo struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Region: Name of a Google Cloud region where the hybrid subnet is configured.
 	Region string `json:"region,omitempty"`
-	// Uri: URI of a hybrid subnet.
+	// Uri: URI of the hybrid subnet. Format:
+	// `projects/{project_id}/regions/{region}/subnetworks/{subnetwork_id}`
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2146,10 +2186,12 @@ type InstanceInfo struct {
 	InternalIp string `json:"internalIp,omitempty"`
 	// NetworkTags: Network tags configured on the instance.
 	NetworkTags []string `json:"networkTags,omitempty"`
-	// NetworkUri: URI of a Compute Engine network.
+	// NetworkUri: URI of a Compute Engine network in format
+	// "projects/{project}/global/networks/{network}"
 	NetworkUri string `json:"networkUri,omitempty"`
 	// PscNetworkAttachmentUri: URI of the PSC network attachment the NIC is
-	// attached to (if relevant).
+	// attached to (if relevant) in format
+	// "projects/{project}/regions/{region}/networkAttachments/{network_attachment}"
 	PscNetworkAttachmentUri string `json:"pscNetworkAttachmentUri,omitempty"`
 	// Running: Indicates whether the Compute Engine instance is running.
 	// Deprecated: use the `status` field instead.
@@ -2163,7 +2205,8 @@ type InstanceInfo struct {
 	//   "RUNNING" - The instance is running.
 	//   "NOT_RUNNING" - The instance has any status other than "RUNNING".
 	Status string `json:"status,omitempty"`
-	// Uri: URI of a Compute Engine instance.
+	// Uri: URI of a Compute Engine instance in format
+	// "projects/{project}/zones/{zone}/instances/{instance}"
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2187,11 +2230,12 @@ func (s InstanceInfo) MarshalJSON() ([]byte, error) {
 // Interconnect attachment.
 type InterconnectAttachmentInfo struct {
 	// CloudRouterUri: URI of the Cloud Router to be used for dynamic routing.
+	// Format: `projects/{project_id}/regions/{region}/routers/{router_id}`
 	CloudRouterUri string `json:"cloudRouterUri,omitempty"`
 	// DisplayName: Name of an Interconnect attachment.
 	DisplayName string `json:"displayName,omitempty"`
-	// InterconnectUri: URI of the Interconnect where the Interconnect attachment
-	// is configured.
+	// InterconnectUri: URI of the Interconnect. Format:
+	// `projects/{project_id}/global/interconnects/{interconnect_id}`
 	InterconnectUri string `json:"interconnectUri,omitempty"`
 	// L2AttachmentMatchedIpAddress: Appliance IP address that was matched for
 	// L2_DEDICATED attachments.
@@ -2209,7 +2253,9 @@ type InterconnectAttachmentInfo struct {
 	// partner.
 	//   "L2_DEDICATED" - Attachment to a L2 interconnect, created by the customer.
 	Type string `json:"type,omitempty"`
-	// Uri: URI of an Interconnect attachment.
+	// Uri: URI of the Interconnect attachment. Format:
+	// `projects/{project_id}/regions/{region}/interconnectAttachments/{attachment_i
+	// d}`
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudRouterUri") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2470,7 +2516,13 @@ type LoadBalancerBackend struct {
 	// fail. Then, the backend will be marked unhealthy and will not receive
 	// traffic sent to the load balancer.
 	HealthCheckFirewallState string `json:"healthCheckFirewallState,omitempty"`
-	// Uri: URI of a Compute Engine instance or network endpoint.
+	// Uri: URI of the backend instance or network endpoint. Format: *
+	// `projects/{project_id}/zones/{zone}/instances/{instance_id}` (instance) *
+	// `projects/{project_id}/zones/{zone}/networkEndpointGroups/{neg_id}` (zonal
+	// NEG) *
+	// `projects/{project_id}/regions/{region}/networkEndpointGroups/{neg_id}`
+	// (regional NEG) *
+	// `projects/{project_id}/global/networkEndpointGroups/{neg_id}` (global NEG)
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2494,10 +2546,14 @@ func (s LoadBalancerBackend) MarshalJSON() ([]byte, error) {
 // balancer backend.
 type LoadBalancerBackendInfo struct {
 	// BackendBucketUri: URI of the backend bucket this backend targets (if
-	// applicable).
+	// applicable) in format
+	// "projects/{project}/global/backendBuckets/{backend_bucket}".
 	BackendBucketUri string `json:"backendBucketUri,omitempty"`
 	// BackendServiceUri: URI of the backend service this backend belongs to (if
-	// applicable).
+	// applicable) in format
+	// "projects/{project}/regions/{region}/backendServices/{backend_service}"
+	// (regional) or "projects/{project}/global/backendServices/{backend_service}"
+	// (global).
 	BackendServiceUri string `json:"backendServiceUri,omitempty"`
 	// HealthCheckFirewallsConfigState: Output only. Health check firewalls
 	// configuration state for the backend. This is a result of the static firewall
@@ -2524,12 +2580,17 @@ type LoadBalancerBackendInfo struct {
 	// https://cloud.google.com/network-intelligence-center/docs/connectivity-tests/concepts/overview#unsupported-configs
 	HealthCheckFirewallsConfigState string `json:"healthCheckFirewallsConfigState,omitempty"`
 	// HealthCheckUri: URI of the health check attached to this backend (if
-	// applicable).
+	// applicable). Format: *
+	// `projects/{project_id}/global/healthChecks/{health_check_id}` *
+	// `projects/{project_id}/regions/{region}/healthChecks/{health_check_id}` *
+	// `projects/{project_id}/global/httpHealthChecks/{health_check_id}` (legacy)
 	HealthCheckUri string `json:"healthCheckUri,omitempty"`
 	// InstanceGroupUri: URI of the instance group this backend belongs to (if
-	// applicable).
+	// applicable) in format
+	// "projects/{project}/zones/{zone}/instanceGroups/{instance_group}".
 	InstanceGroupUri string `json:"instanceGroupUri,omitempty"`
-	// InstanceUri: URI of the backend instance (if applicable). Populated for
+	// InstanceUri: URI of the backend instance (if applicable) in format
+	// "projects/{project}/zones/{zone}/instances/{instance}". Populated for
 	// instance group backends, and zonal NEG backends.
 	InstanceUri string `json:"instanceUri,omitempty"`
 	// Name: Display name of the backend. For example, it might be an instance name
@@ -2537,13 +2598,20 @@ type LoadBalancerBackendInfo struct {
 	// endpoint group backends.
 	Name string `json:"name,omitempty"`
 	// NetworkEndpointGroupUri: URI of the network endpoint group this backend
-	// belongs to (if applicable).
+	// belongs to (if applicable) Format: *
+	// `projects/{project_id}/zones/{zone}/networkEndpointGroups/{neg_id}` (zonal
+	// NEG) *
+	// `projects/{project_id}/regions/{region}/networkEndpointGroups/{neg_id}`
+	// (regional NEG) *
+	// `projects/{project_id}/global/networkEndpointGroups/{neg_id}` (global NEG)
 	NetworkEndpointGroupUri string `json:"networkEndpointGroupUri,omitempty"`
 	// PscGoogleApiTarget: PSC Google API target this PSC NEG backend targets (if
 	// applicable).
 	PscGoogleApiTarget string `json:"pscGoogleApiTarget,omitempty"`
 	// PscServiceAttachmentUri: URI of the PSC service attachment this PSC NEG
-	// backend targets (if applicable).
+	// backend targets (if applicable) in format
+	// "projects/{project}/regions/{region}/serviceAttachments/{service_attachment}"
+	// .
 	PscServiceAttachmentUri string `json:"pscServiceAttachmentUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackendBucketUri") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2574,7 +2642,11 @@ type LoadBalancerInfo struct {
 	//   "TARGET_POOL" - Target Pool as the load balancer's backend.
 	//   "TARGET_INSTANCE" - Target Instance as the load balancer's backend.
 	BackendType string `json:"backendType,omitempty"`
-	// BackendUri: Backend configuration URI.
+	// BackendUri: URI of the backend associated with the load balancer. Format: *
+	// `projects/{project_id}/regions/{region}/backendServices/{backend_service_id}`
+	//  * `projects/{project_id}/global/backendServices/{backend_service_id}` *
+	// `projects/{project_id}/regions/{region}/targetPools/{target_pool_id}` *
+	// `projects/{project_id}/zones/{zone}/targetInstances/{target_instance_id}`
 	BackendUri string `json:"backendUri,omitempty"`
 	// Backends: Information for the loadbalancer backends.
 	Backends []*LoadBalancerBackend `json:"backends,omitempty"`
@@ -2664,7 +2736,8 @@ type NatInfo struct {
 	// NatGatewayName: The name of Cloud NAT Gateway. Only valid when type is
 	// CLOUD_NAT.
 	NatGatewayName string `json:"natGatewayName,omitempty"`
-	// NetworkUri: URI of the network where NAT translation takes place.
+	// NetworkUri: URI of the VPC network where NAT translation takes place.
+	// Format: `projects/{project_id}/global/networks/{network_id}`
 	NetworkUri string `json:"networkUri,omitempty"`
 	// NewDestinationIp: Destination IP address after NAT translation.
 	NewDestinationIp string `json:"newDestinationIp,omitempty"`
@@ -2688,7 +2761,8 @@ type NatInfo struct {
 	OldSourcePort int64 `json:"oldSourcePort,omitempty"`
 	// Protocol: IP protocol in string format, for example: "TCP", "UDP", "ICMP".
 	Protocol string `json:"protocol,omitempty"`
-	// RouterUri: Uri of the Cloud Router. Only valid when type is CLOUD_NAT.
+	// RouterUri: URI of the Cloud Router. Only valid when type is CLOUD_NAT.
+	// Format: `projects/{project_id}/regions/{region}/routers/{router_id}`
 	RouterUri string `json:"routerUri,omitempty"`
 	// Type: Type of NAT.
 	//
@@ -2729,11 +2803,13 @@ type NetworkInfo struct {
 	// the test.
 	MatchedIpRange string `json:"matchedIpRange,omitempty"`
 	// MatchedSubnetUri: URI of the subnet matching the source IP address of the
-	// test.
+	// test in format
+	// "projects/{project}/regions/{region}/subnetworks/{subnetwork}"
 	MatchedSubnetUri string `json:"matchedSubnetUri,omitempty"`
 	// Region: The region of the subnet matching the source IP address of the test.
 	Region string `json:"region,omitempty"`
-	// Uri: URI of a Compute Engine network.
+	// Uri: URI of a Compute Engine network in format
+	// "projects/{project}/global/networks/{network}"
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2757,7 +2833,9 @@ func (s NetworkInfo) MarshalJSON() ([]byte, error) {
 // 7 packet inspection by the firewall.
 type NgfwPacketInspectionInfo struct {
 	// SecurityProfileGroupUri: URI of the security profile group associated with
-	// this firewall packet inspection.
+	// this firewall packet inspection. Format:
+	// `organizations/{organization_id}/locations/global/securityProfileGroups/{secu
+	// rity_profile_group_id}`
 	SecurityProfileGroupUri string `json:"securityProfileGroupUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SecurityProfileGroupUri") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3046,7 +3124,8 @@ func (s ProbingDetails) MarshalJSON() ([]byte, error) {
 // ProxyConnectionInfo: For display only. Metadata associated with
 // ProxyConnection.
 type ProxyConnectionInfo struct {
-	// NetworkUri: URI of the network where connection is proxied.
+	// NetworkUri: URI of the VPC network where connection is proxied. Format:
+	// `projects/{project_id}/global/networks/{network_id}`
 	NetworkUri string `json:"networkUri,omitempty"`
 	// NewDestinationIp: Destination IP address of a new connection.
 	NewDestinationIp string `json:"newDestinationIp,omitempty"`
@@ -3070,7 +3149,8 @@ type ProxyConnectionInfo struct {
 	OldSourcePort int64 `json:"oldSourcePort,omitempty"`
 	// Protocol: IP protocol in string format, for example: "TCP", "UDP", "ICMP".
 	Protocol string `json:"protocol,omitempty"`
-	// SubnetUri: Uri of proxy subnet.
+	// SubnetUri: URI of the proxy subnet. Format:
+	// `projects/{project_id}/regions/{region}/subnetworks/{subnetwork_id}`
 	SubnetUri string `json:"subnetUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NetworkUri") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3216,7 +3296,8 @@ func (s RedisClusterInfo) MarshalJSON() ([]byte, error) {
 type RedisInstanceInfo struct {
 	// DisplayName: Name of a Cloud Redis Instance.
 	DisplayName string `json:"displayName,omitempty"`
-	// NetworkUri: URI of a Cloud Redis Instance network.
+	// NetworkUri: URI of a Cloud Redis Instance network in format
+	// "projects/{project}/global/networks/{network}".
 	NetworkUri string `json:"networkUri,omitempty"`
 	// PrimaryEndpointIp: Primary endpoint IP address of a Cloud Redis Instance.
 	PrimaryEndpointIp string `json:"primaryEndpointIp,omitempty"`
@@ -3225,7 +3306,8 @@ type RedisInstanceInfo struct {
 	ReadEndpointIp string `json:"readEndpointIp,omitempty"`
 	// Region: Region in which the Cloud Redis Instance is defined.
 	Region string `json:"region,omitempty"`
-	// Uri: URI of a Cloud Redis Instance.
+	// Uri: URI of a Cloud Redis Instance in format
+	// "projects/{project}/locations/{location}/instances/{instance}"
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3260,7 +3342,8 @@ type RouteInfo struct {
 	// not used in new tests.
 	AdvertisedRouteNextHopUri string `json:"advertisedRouteNextHopUri,omitempty"`
 	// AdvertisedRouteSourceRouterUri: For ADVERTISED dynamic routes, the URI of
-	// the Cloud Router that advertised the corresponding IP prefix.
+	// the Cloud Router that advertised the corresponding IP prefix in format
+	// "projects/{project}/regions/{region}/routers/{router}".
 	AdvertisedRouteSourceRouterUri string `json:"advertisedRouteSourceRouterUri,omitempty"`
 	// DestIpRange: Destination IP range of the route.
 	DestIpRange string `json:"destIpRange,omitempty"`
@@ -3273,22 +3356,29 @@ type RouteInfo struct {
 	InstanceTags []string `json:"instanceTags,omitempty"`
 	// NccHubRouteUri: For PEERING_SUBNET and PEERING_DYNAMIC routes that are
 	// advertised by NCC Hub, the URI of the corresponding route in NCC Hub's
-	// routing table.
+	// routing table. Format:
+	// `projects/{project_id}/locations/global/hubs/{hub_id}/routeTables/{route_tabl
+	// e_id}/routes/{route_id}`
 	NccHubRouteUri string `json:"nccHubRouteUri,omitempty"`
-	// NccHubUri: URI of the NCC Hub the route is advertised by. PEERING_SUBNET and
+	// NccHubUri: URI of the NCC Hub the route is advertised by in format
+	// "projects/{project}/locations/global/hubs/{hub}". PEERING_SUBNET and
 	// PEERING_DYNAMIC routes that are advertised by NCC Hub only.
 	NccHubUri string `json:"nccHubUri,omitempty"`
-	// NccSpokeUri: URI of the destination NCC Spoke. PEERING_SUBNET and
-	// PEERING_DYNAMIC routes that are advertised by NCC Hub only.
+	// NccSpokeUri: URI of the destination NCC Spoke in format
+	// "projects/{project}/locations/{location}/spokes/{spoke}" (regional) or
+	// "projects/{project}/locations/global/spokes/{spoke}" (global).
+	// PEERING_SUBNET and PEERING_DYNAMIC routes that are advertised by NCC Hub
+	// only.
 	NccSpokeUri string `json:"nccSpokeUri,omitempty"`
-	// NetworkUri: URI of a VPC network where route is located.
+	// NetworkUri: URI of a VPC network where route is located in format
+	// "projects/{project}/global/networks/{network}".
 	NetworkUri string `json:"networkUri,omitempty"`
 	// NextHop: String type of the next hop of the route (for example, "VPN
 	// tunnel"). Deprecated in favor of the next_hop_type and next_hop_uri fields,
 	// not used in new tests.
 	NextHop string `json:"nextHop,omitempty"`
 	// NextHopNetworkUri: URI of a VPC network where the next hop resource is
-	// located.
+	// located in format "projects/{project}/global/networks/{network}".
 	NextHopNetworkUri string `json:"nextHopNetworkUri,omitempty"`
 	// NextHopType: Type of next hop.
 	//
@@ -3327,7 +3417,8 @@ type RouteInfo struct {
 	// route.
 	OriginatingRouteDisplayName string `json:"originatingRouteDisplayName,omitempty"`
 	// OriginatingRouteUri: For PEERING_SUBNET and PEERING_STATIC routes, the URI
-	// of the originating SUBNET/STATIC route.
+	// of the originating SUBNET/STATIC route. Format:
+	// `projects/{project_id}/global/routes/{route_id}`
 	OriginatingRouteUri string `json:"originatingRouteUri,omitempty"`
 	// Priority: Priority of the route.
 	Priority int64 `json:"priority,omitempty"`
@@ -3368,8 +3459,9 @@ type RouteInfo struct {
 	SrcIpRange string `json:"srcIpRange,omitempty"`
 	// SrcPortRanges: Source port ranges of the route. POLICY_BASED routes only.
 	SrcPortRanges []string `json:"srcPortRanges,omitempty"`
-	// Uri: URI of a route. SUBNET, STATIC, PEERING_SUBNET (only for peering
-	// network) and POLICY_BASED routes only.
+	// Uri: URI of a route in format "projects/{project}/global/routes/{route}".
+	// SUBNET, STATIC, PEERING_SUBNET (only for peering network) and POLICY_BASED
+	// routes only.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdvertisedRouteNextHopUri")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -3416,7 +3508,9 @@ func (s ServerlessExternalConnectionInfo) MarshalJSON() ([]byte, error) {
 // ServerlessNegInfo: For display only. Metadata associated with the serverless
 // network endpoint group backend.
 type ServerlessNegInfo struct {
-	// NegUri: URI of the serverless network endpoint group.
+	// NegUri: URI of the serverless network endpoint group in format
+	// "projects/{project}/regions/{region}/networkEndpointGroups/{network_endpoint_
+	// group}".
 	NegUri string `json:"negUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NegUri") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3936,7 +4030,8 @@ type VpcConnectorInfo struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Location: Location in which the VPC connector is deployed.
 	Location string `json:"location,omitempty"`
-	// Uri: URI of a VPC connector.
+	// Uri: URI of a VPC connector. Format:
+	// `projects/{project_id}/locations/{location}/connectors/{connector_id}`
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4098,16 +4193,21 @@ type VpnGatewayInfo struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// IpAddress: IP address of the VPN gateway.
 	IpAddress string `json:"ipAddress,omitempty"`
-	// NetworkUri: URI of a Compute Engine network where the VPN gateway is
-	// configured.
+	// NetworkUri: URI of the VPC network where the VPN gateway is configured.
+	// Format: `projects/{project_id}/global/networks/{network_id}`
 	NetworkUri string `json:"networkUri,omitempty"`
 	// Region: Name of a Google Cloud region where this VPN gateway is configured.
 	Region string `json:"region,omitempty"`
-	// Uri: URI of a VPN gateway.
+	// Uri: URI of the VPN gateway. Format: *
+	// `projects/{project_id}/regions/{region}/vpnGateways/{vpn_gateway_id}` (HA
+	// VPN gateway) *
+	// `projects/{project_id}/regions/{region}/targetVpnGateways/{target_vpn_gateway
+	// _id}` (Classic VPN gateway)
 	Uri string `json:"uri,omitempty"`
-	// VpnTunnelUri: A VPN tunnel that is associated with this VPN gateway. There
+	// VpnTunnelUri: URI of the VPN tunnel associated with the VPN gateway. There
 	// may be multiple VPN tunnels configured on a VPN gateway, and only the one
-	// relevant to the test is displayed.
+	// relevant to the test is displayed. Format:
+	// `projects/{project_id}/regions/{region}/vpnTunnels/{vpn_tunnel_id}`
 	VpnTunnelUri string `json:"vpnTunnelUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4132,12 +4232,16 @@ func (s VpnGatewayInfo) MarshalJSON() ([]byte, error) {
 type VpnTunnelInfo struct {
 	// DisplayName: Name of a VPN tunnel.
 	DisplayName string `json:"displayName,omitempty"`
-	// NetworkUri: URI of a Compute Engine network where the VPN tunnel is
-	// configured.
+	// NetworkUri: URI of the VPC network where the VPN tunnel is configured.
+	// Format: `projects/{project_id}/global/networks/{network_id}`
 	NetworkUri string `json:"networkUri,omitempty"`
 	// Region: Name of a Google Cloud region where this VPN tunnel is configured.
 	Region string `json:"region,omitempty"`
-	// RemoteGateway: URI of a VPN gateway at remote end of the tunnel.
+	// RemoteGateway: URI of a VPN gateway at remote end of the tunnel. Format: *
+	// `projects/{project_id}/regions/{region}/vpnGateways/{vpn_gateway_id}` (GCP
+	// HA VPN gateway) *
+	// `projects/{project_id}/global/peerVpnGateways/{peer_vpn_gateway_id}` (GCP
+	// peer VPN gateway)
 	RemoteGateway string `json:"remoteGateway,omitempty"`
 	// RemoteGatewayIp: Remote VPN gateway's IP address.
 	RemoteGatewayIp string `json:"remoteGatewayIp,omitempty"`
@@ -4149,11 +4253,16 @@ type VpnTunnelInfo struct {
 	//   "POLICY_BASED" - Policy based routing.
 	//   "DYNAMIC" - Dynamic (BGP) routing.
 	RoutingType string `json:"routingType,omitempty"`
-	// SourceGateway: URI of the VPN gateway at local end of the tunnel.
+	// SourceGateway: URI of the VPN gateway at local end of the tunnel. Format: *
+	// `projects/{project_id}/regions/{region}/vpnGateways/{vpn_gateway_id}` (HA
+	// VPN gateway) *
+	// `projects/{project_id}/regions/{region}/targetVpnGateways/{target_vpn_gateway
+	// _id}` (Classic VPN gateway)
 	SourceGateway string `json:"sourceGateway,omitempty"`
 	// SourceGatewayIp: Local VPN gateway's IP address.
 	SourceGatewayIp string `json:"sourceGatewayIp,omitempty"`
-	// Uri: URI of a VPN tunnel.
+	// Uri: URI of the VPN tunnel. Format:
+	// `projects/{project_id}/regions/{region}/vpnTunnels/{vpn_tunnel_id}`
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or

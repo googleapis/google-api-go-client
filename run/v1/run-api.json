@@ -459,6 +459,11 @@
     },
     {
       "description": "Regional Endpoint",
+      "endpointUrl": "https://run.us-east7.rep.googleapis.com/",
+      "location": "us-east7"
+    },
+    {
+      "description": "Regional Endpoint",
       "endpointUrl": "https://run.us-south1.rep.googleapis.com/",
       "location": "us-south1"
     },
@@ -486,11 +491,6 @@
       "description": "Regional Endpoint",
       "endpointUrl": "https://run.us-west8.rep.googleapis.com/",
       "location": "us-west8"
-    },
-    {
-      "description": "Regional Endpoint",
-      "endpointUrl": "https://run.us-east7.rep.googleapis.com/",
-      "location": "us-east7"
     }
   ],
   "fullyEncodeReservedExpansion": true,
@@ -1062,7 +1062,7 @@
         "instances": {
           "methods": {
             "create": {
-              "description": "Create a Instance.",
+              "description": "Create an Instance.",
               "flatPath": "apis/run.googleapis.com/v1/namespaces/{namespacesId}/instances",
               "httpMethod": "POST",
               "id": "run.namespaces.instances.create",
@@ -1071,7 +1071,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. The namespace in which the Instance should be created. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
+                  "description": "Required. The resource's parent. In Cloud Run, it may be one of the following: * `{project_id_or_number}` * `namespaces/{project_id_or_number}` * `namespaces/{project_id_or_number}/instances` * `projects/{project_id_or_number}/locations/{region}` * `projects/{project_id_or_number}/regions/{region}` Parent resource namespace.",
                   "location": "path",
                   "pattern": "^namespaces/[^/]+$",
                   "required": true,
@@ -1091,7 +1091,7 @@
               ]
             },
             "delete": {
-              "description": "Delete a Instance.",
+              "description": "Delete an Instance.",
               "flatPath": "apis/run.googleapis.com/v1/namespaces/{namespacesId}/instances/{instancesId}",
               "httpMethod": "DELETE",
               "id": "run.namespaces.instances.delete",
@@ -1110,7 +1110,7 @@
                   "type": "string"
                 },
                 "name": {
-                  "description": "Required. The name of the Instance to delete. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
+                  "description": "Required. The fully qualified name of the Instance to delete. It can be any of the following forms: * `namespaces/{project_id_or_number}/instances/{instance_name}` (only when the `endpoint` is regional) * `projects/{project_id_or_number}/locations/{region}/instances/{instance_name}` * `projects/{project_id_or_number}/regions/{region}/instances/{instance_name}` Parent resource namespace.",
                   "location": "path",
                   "pattern": "^namespaces/[^/]+/instances/[^/]+$",
                   "required": true,
@@ -1141,7 +1141,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The name of the Instance to retrieve. It takes the form namespaces/{namespace}/instances/{Instance_name} and the `endpoint` must be regional. Replace {namespace} with the project ID or number.",
+                  "description": "Required. The fully qualified name of the Instance to retrieve. It can be any of the following forms: * `namespaces/{project_id_or_number}/instances/{instance_name}` (only when the `endpoint` is regional) * `projects/{project_id_or_number}/locations/{region}/instances/{instance_name}` * `projects/{project_id_or_number}/regions/{region}/instances/{instance_name}` Parent resource namespace.",
                   "location": "path",
                   "pattern": "^namespaces/[^/]+/instances/[^/]+$",
                   "required": true,
@@ -1194,7 +1194,7 @@
                   "type": "integer"
                 },
                 "parent": {
-                  "description": "Required. The namespace from which the Instances should be listed. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
+                  "description": "Required. The parent from where the resources should be listed. In Cloud Run, it may be one of the following: * `{project_id_or_number}` * `namespaces/{project_id_or_number}` * `namespaces/{project_id_or_number}/instances` * `projects/{project_id_or_number}/locations/{region}` * `projects/{project_id_or_number}/regions/{region}` Parent resource namespace.",
                   "location": "path",
                   "pattern": "^namespaces/[^/]+$",
                   "required": true,
@@ -1231,7 +1231,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The name of the Instance being replaced. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
+                  "description": "Required. The fully qualified name of the Instance being replaced. It can be any of the following forms: * `namespaces/{project_id_or_number}/instances/{instance_name}` (only when the `endpoint` is regional) * `projects/{project_id_or_number}/locations/{region}/instances/{instance_name}` * `projects/{project_id_or_number}/regions/{region}/instances/{instance_name}` Parent resource namespace.",
                   "location": "path",
                   "pattern": "^namespaces/[^/]+/instances/[^/]+$",
                   "required": true,
@@ -2653,7 +2653,7 @@
             "instances": {
               "methods": {
                 "getIamPolicy": {
-                  "description": "Get the IAM Access Control policy currently in effect for the given instance. This result does not include any inherited policies.",
+                  "description": "Gets the IAM Access Control policy currently in effect for the given instance. This result does not include any inherited policies.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:getIamPolicy",
                   "httpMethod": "GET",
                   "id": "run.projects.locations.instances.getIamPolicy",
@@ -3612,7 +3612,7 @@
       }
     }
   },
-  "revision": "20260612",
+  "revision": "20260619",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "Addressable": {
@@ -6260,7 +6260,7 @@
       "type": "object"
     },
     "Instance": {
-      "description": "Instance represents the configuration of a single Instance, which references a container image which is run to completion.",
+      "description": "An Instance represents the configuration of a single instance that references a container image and runs to completion.",
       "id": "Instance",
       "properties": {
         "apiVersion": {
@@ -6277,11 +6277,11 @@
         },
         "spec": {
           "$ref": "InstanceSpec",
-          "description": "Optional. Specification of the desired behavior of a Instance."
+          "description": "Optional. Specification of the desired behavior of an Instance."
         },
         "status": {
           "$ref": "InstanceStatus",
-          "description": "Output only. Current status of a Instance.",
+          "description": "Output only. Current status of an Instance.",
           "readOnly": true
         }
       },
@@ -6344,7 +6344,7 @@
       "type": "object"
     },
     "InstanceStatus": {
-      "description": "InstanceStatus represents the current state of a Instance.",
+      "description": "InstanceStatus represents the current state of an Instance.",
       "id": "InstanceStatus",
       "properties": {
         "conditions": {
@@ -6928,7 +6928,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. In Cloud Run, annotations with 'run.googleapis.com/' and 'autoscaling.knative.dev' are restricted, and the accepted annotations will be different depending on the resource type. * `autoscaling.knative.dev/maxScale`: Revision. * `autoscaling.knative.dev/minScale`: Revision. * `run.googleapis.com/base-images`: Service, Revision. * `run.googleapis.com/binary-authorization-breakglass`: Service, Job, * `run.googleapis.com/binary-authorization`: Service, Job, Execution. * `run.googleapis.com/build-base-image`: Service. * `run.googleapis.com/build-enable-automatic-updates`: Service. * `run.googleapis.com/build-environment-variables`: Service. * `run.googleapis.com/build-function-target`: Service, Revision. * `run.googleapis.com/build-id`: Service, Revision. * `run.googleapis.com/build-image-uri`: Service. * `run.googleapis.com/build-name`: Service. * `run.googleapis.com/build-service-account`: Service. * `run.googleapis.com/build-source-location`: Service, Revision. * `run.googleapis.com/build-worker-pool`: Service. * `run.googleapis.com/client-name`: All resources. * `run.googleapis.com/cloudsql-instances`: Revision, Execution . * `run.googleapis.com/container-dependencies`: Revision . * `run.googleapis.com/cpu-throttling`: Revision. * `run.googleapis.com/custom-audiences`: Service. * `run.googleapis.com/default-url-disabled`: Service. * `run.googleapis.com/description`: Service. * `run.googleapis.com/encryption-key-shutdown-hours`: Revision * `run.googleapis.com/encryption-key`: Revision, Execution . * `run.googleapis.com/execution-environment`: Revision, Execution . * `run.googleapis.com/gc-traffic-tags`: Service. * `run.googleapis.com/gpu-zonal-redundancy-disabled`: Revision. * `run.googleapis.com/health-check-disabled`: Revision. * `run.googleapis.com/ingress`: Service, Instance. * `run.googleapis.com/invoker-iam-disabled`: Service, Instance. * `run.googleapis.com/launch-stage`: Service, Job. * `run.googleapis.com/minScale`: Service. * `run.googleapis.com/maxScale`: Service. * `run.googleapis.com/manualInstanceCount`: Service. * `run.googleapis.com/network-interfaces`: Revision, Execution. * `run.googleapis.com/post-key-revocation-action-type`: Revision. `run.googleapis.com/scalingMode`: Service. * `run.googleapis.com/secrets`: Revision, Execution. * `run.googleapis.com/secure-session-agent`: Revision. * `run.googleapis.com/sessionAffinity`: Revision. * `run.googleapis.com/startup-cpu-boost`: Revision. * `run.googleapis.com/vpc-access-connector`: Revision, Execution . * `run.googleapis.com/vpc-access-egress`: Revision, Execution.",
+          "description": "Unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. In Cloud Run, annotations with 'run.googleapis.com/' and 'autoscaling.knative.dev' are restricted, and the accepted annotations will be different depending on the resource type. * `autoscaling.knative.dev/maxScale`: Revision. * `autoscaling.knative.dev/minScale`: Revision. * `run.googleapis.com/base-images`: Service, Revision. * `run.googleapis.com/binary-authorization-breakglass`: Service, Job, * `run.googleapis.com/binary-authorization`: Service, Job, Execution. * `run.googleapis.com/build-base-image`: Service. * `run.googleapis.com/build-enable-automatic-updates`: Service. * `run.googleapis.com/build-environment-variables`: Service. * `run.googleapis.com/build-function-target`: Service, Revision. * `run.googleapis.com/build-id`: Service, Revision. * `run.googleapis.com/build-image-uri`: Service. * `run.googleapis.com/build-name`: Service. * `run.googleapis.com/build-service-account`: Service. * `run.googleapis.com/build-source-location`: Service, Revision. * `run.googleapis.com/build-worker-pool`: Service. * `run.googleapis.com/client-name`: All resources. * `run.googleapis.com/cloudsql-instances`: Revision, Execution, Instance. * `run.googleapis.com/container-dependencies`: Revision . * `run.googleapis.com/cpu-throttling`: Revision. * `run.googleapis.com/custom-audiences`: Service. * `run.googleapis.com/default-url-disabled`: Service. * `run.googleapis.com/description`: Service. * `run.googleapis.com/encryption-key-shutdown-hours`: Revision * `run.googleapis.com/encryption-key`: Revision, Execution, Instance. * `run.googleapis.com/execution-environment`: Revision, Execution. * `run.googleapis.com/gc-traffic-tags`: Service. * `run.googleapis.com/gpu-zonal-redundancy-disabled`: Revision. * `run.googleapis.com/health-check-disabled`: Revision. * `run.googleapis.com/ingress`: Service, Instance. * `run.googleapis.com/invoker-iam-disabled`: Service, Instance. * `run.googleapis.com/launch-stage`: Service, Job. * `run.googleapis.com/minScale`: Service. * `run.googleapis.com/maxScale`: Service. * `run.googleapis.com/manualInstanceCount`: Service. * `run.googleapis.com/network-interfaces`: Revision, Execution. * `run.googleapis.com/post-key-revocation-action-type`: Revision. `run.googleapis.com/scalingMode`: Service. * `run.googleapis.com/secrets`: Revision, Execution. * `run.googleapis.com/secure-session-agent`: Revision. * `run.googleapis.com/sessionAffinity`: Revision. * `run.googleapis.com/startup-cpu-boost`: Revision. * `run.googleapis.com/vpc-access-connector`: Revision, Execution . * `run.googleapis.com/vpc-access-egress`: Revision, Execution.",
           "type": "object"
         },
         "clusterName": {
@@ -7253,13 +7253,6 @@
         "runtimeClassName": {
           "description": "Optional. Runtime. Leave unset for default.",
           "type": "string"
-        },
-        "sandboxes": {
-          "description": "Optional. Container templates that can be launched through the `sandbox` CLI.",
-          "items": {
-            "$ref": "Container"
-          },
-          "type": "array"
         },
         "serviceAccountName": {
           "description": "Email address of the IAM service account associated with the revision of the service. The service account represents the identity of the running revision, and determines what permissions the revision has. If not provided, the revision will use the project's default service account.",

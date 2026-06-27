@@ -4790,6 +4790,10 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	//   "APP_TYPE_UNSPECIFIED" - All non specified apps.
 	//   "APP_TYPE_INTRANET" - App type for intranet search and Agentspace.
 	AppType string `json:"appType,omitempty"`
+	// AssociatedAgentRegistry: Optional. The Agent registry containing the agents,
+	// MCP servers and tools associated with this engine. Field is required if the
+	// engine has an Agent Gateway setting.
+	AssociatedAgentRegistry string `json:"associatedAgentRegistry,omitempty"`
 	// ChatEngineConfig: Configurations for the Chat Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_CHAT.
 	ChatEngineConfig *GoogleCloudDiscoveryengineV1EngineChatEngineConfig `json:"chatEngineConfig,omitempty"`
@@ -4841,7 +4845,7 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
 	// `disable-skills` * `enable-end-user-sharing-with-groups` *
 	// `single-agent-orchestration` * `multi-agent-orchestration` *
-	// `cross-product-intelligence`
+	// `cross-product-intelligence` * `deep-research`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -12121,6 +12125,10 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	//   "APP_TYPE_UNSPECIFIED" - All non specified apps.
 	//   "APP_TYPE_INTRANET" - App type for intranet search and Agentspace.
 	AppType string `json:"appType,omitempty"`
+	// AssociatedAgentRegistry: Optional. The Agent registry containing the agents,
+	// MCP servers and tools associated with this engine. Field is required if the
+	// engine has an Agent Gateway setting.
+	AssociatedAgentRegistry string `json:"associatedAgentRegistry,omitempty"`
 	// ChatEngineConfig: Configurations for the Chat Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_CHAT.
 	ChatEngineConfig *GoogleCloudDiscoveryengineV1alphaEngineChatEngineConfig `json:"chatEngineConfig,omitempty"`
@@ -12172,7 +12180,7 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
 	// `disable-skills` * `enable-end-user-sharing-with-groups` *
 	// `single-agent-orchestration` * `multi-agent-orchestration` *
-	// `cross-product-intelligence`
+	// `cross-product-intelligence` * `deep-research`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -24481,6 +24489,10 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	//   "APP_TYPE_UNSPECIFIED" - All non specified apps.
 	//   "APP_TYPE_INTRANET" - App type for intranet search and Agentspace.
 	AppType string `json:"appType,omitempty"`
+	// AssociatedAgentRegistry: Optional. The Agent registry containing the agents,
+	// MCP servers and tools associated with this engine. Field is required if the
+	// engine has an Agent Gateway setting.
+	AssociatedAgentRegistry string `json:"associatedAgentRegistry,omitempty"`
 	// ChatEngineConfig: Configurations for the Chat Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_CHAT.
 	ChatEngineConfig *GoogleCloudDiscoveryengineV1betaEngineChatEngineConfig `json:"chatEngineConfig,omitempty"`
@@ -24532,7 +24544,7 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
 	// `disable-skills` * `enable-end-user-sharing-with-groups` *
 	// `single-agent-orchestration` * `multi-agent-orchestration` *
-	// `cross-product-intelligence`
+	// `cross-product-intelligence` * `deep-research`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -32825,6 +32837,10 @@ type GoogleCloudDiscoveryengineV1betaStreamAssistResponse struct {
 	// AssistToken: A global unique ID that identifies the current pair of request
 	// and stream of responses. Used for feedback and support.
 	AssistToken string `json:"assistToken,omitempty"`
+	// ConnectorAuthErrors: Per-connector authentication errors encountered during
+	// the request. Present when one or more connectors failed authentication but
+	// the request proceeded with the remaining connectors.
+	ConnectorAuthErrors []*GoogleCloudDiscoveryengineV1betaStreamAssistResponseConnectorAuthError `json:"connectorAuthErrors,omitempty"`
 	// InvocationTools: The tool names of the tools that were invoked.
 	InvocationTools []string `json:"invocationTools,omitempty"`
 	// InvokedSkills: The skills executed during the turn.
@@ -32850,6 +32866,32 @@ type GoogleCloudDiscoveryengineV1betaStreamAssistResponse struct {
 
 func (s GoogleCloudDiscoveryengineV1betaStreamAssistResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaStreamAssistResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaStreamAssistResponseConnectorAuthError:
+// Describes an authentication error for a specific data connector.
+type GoogleCloudDiscoveryengineV1betaStreamAssistResponseConnectorAuthError struct {
+	// DataConnector: Resource name of the data connector that failed
+	// authentication.
+	DataConnector string `json:"dataConnector,omitempty"`
+	// ErrorMessage: Human-readable error message describing the auth failure.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataConnector") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataConnector") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaStreamAssistResponseConnectorAuthError) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaStreamAssistResponseConnectorAuthError
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -66926,9 +66968,9 @@ func (c *ProjectsLocationsUserStoresUserLicensesListCall) OrderBy(orderBy string
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Server
-// may return fewer items than requested. If unspecified, defaults to 10. The
-// maximum value is 50; values above 50 will be coerced to 50. If this field is
-// negative, an INVALID_ARGUMENT error is returned.
+// may return fewer items than requested. If unspecified, defaults to 100. The
+// maximum value is 1000; values above 1000 will be coerced to 1000. If this
+// field is negative, an INVALID_ARGUMENT error is returned.
 func (c *ProjectsLocationsUserStoresUserLicensesListCall) PageSize(pageSize int64) *ProjectsLocationsUserStoresUserLicensesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

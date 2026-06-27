@@ -161,7 +161,7 @@
       }
     }
   },
-  "revision": "20260615",
+  "revision": "20260624",
   "rootUrl": "https://travelimpactmodel.googleapis.com/",
   "schemas": {
     "ComputeDetailedFlightEmissionsRequest": {
@@ -568,11 +568,6 @@
           "readOnly": true,
           "type": "string"
         },
-        "seatAreaRatioData": {
-          "$ref": "SeatAreaRatioData",
-          "description": "Output only. The seat area ratio value for each seating class. If not set, the seat area ratio value is not available.",
-          "readOnly": true
-        },
         "seatAreaRatioIataStrategy": {
           "description": "Output only. Strategy for IATA seat area ratios.",
           "enum": [
@@ -903,37 +898,6 @@
         "origin": {
           "description": "Optional. 3-character [IATA airport code](https://www.iata.org/en/publications/directories/code-search/) for flight origin, e.g. `YVR`. This is used to match specific flight if provided alongside destination, carrier, and flight number. If there is no match, we will first try to match the flight to a typical flight between the provided origin and destination airports. Otherwise, we will use the distance-based emissions model if the flight distance is provided.",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "SeatAreaRatioData": {
-      "description": "Seat area ratio data values. Economy is always 1.0 and serves as the reference point; other class values are relative to economy. All 4 fields are always set whether the seating class exists on the aircraft or not.",
-      "id": "SeatAreaRatioData",
-      "properties": {
-        "business": {
-          "description": "Output only. Business seating class data value.",
-          "format": "double",
-          "readOnly": true,
-          "type": "number"
-        },
-        "economy": {
-          "description": "Output only. Economy seating class data value.",
-          "format": "double",
-          "readOnly": true,
-          "type": "number"
-        },
-        "first": {
-          "description": "Output only. First seating class data value.",
-          "format": "double",
-          "readOnly": true,
-          "type": "number"
-        },
-        "premiumEconomy": {
-          "description": "Output only. Premium economy seating class data value.",
-          "format": "double",
-          "readOnly": true,
-          "type": "number"
         }
       },
       "type": "object"

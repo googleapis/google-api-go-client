@@ -4779,7 +4779,7 @@ type RollUpDataPointsRequest struct {
 	// other data types is 90 days.
 	Range *Interval `json:"range,omitempty"`
 	// WindowSize: Required. The size of the time window to group data points into
-	// before applying the aggregation functions.
+	// before applying the aggregation functions. Must be at least 1 second.
 	WindowSize string `json:"windowSize,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataSourceFamily") to
 	// unconditionally include in API requests. By default, fields with empty or

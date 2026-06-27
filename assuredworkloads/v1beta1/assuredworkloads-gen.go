@@ -551,8 +551,27 @@ func (s GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsRequest) Mar
 // GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsResponse:
 // Response for batch violation acknowledgement
 type GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsResponse struct {
+	// AcknowledgedViolationsCount: Count of acknowledged violations.
+	AcknowledgedViolationsCount int64 `json:"acknowledgedViolationsCount,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AcknowledgedViolationsCount") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AcknowledgedViolationsCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata: Operation

@@ -1104,6 +1104,10 @@ func (c *PagespeedapiRunpagespeedCall) CaptchaToken(captchaToken string) *Pagesp
 //	"SEO" - Search Engine Optimization (SEO), category pertaining to a
 //
 // website's ability to be indexed by search engines.
+//
+//	"AGENTIC_BROWSING" - Agentic Browsing, category pertaining to a website's
+//
+// ability to be rendered by an agentic browsing system.
 func (c *PagespeedapiRunpagespeedCall) Category(category ...string) *PagespeedapiRunpagespeedCall {
 	c.urlParams_.SetMulti("category", append([]string{}, category...))
 	return c

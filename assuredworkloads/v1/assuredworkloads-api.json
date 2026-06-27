@@ -145,10 +145,108 @@
         }
       }
     },
+    "folders": {
+      "resources": {
+        "locations": {
+          "resources": {
+            "dbFindingSummaries": {
+              "methods": {
+                "list": {
+                  "description": "Lists the finding summary by category for a given scope.",
+                  "flatPath": "v1/folders/{foldersId}/locations/{locationsId}/dbFindingSummaries",
+                  "httpMethod": "GET",
+                  "id": "assuredworkloads.folders.locations.dbFindingSummaries.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "filter": {
+                      "description": "Optional. The filtering results.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "pageSize": {
+                      "description": "Optional. The requested page size. The server might return fewer items than requested. If unspecified, the server picks an appropriate default.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "Optional. A token that identifies the page of results that the server should return.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The parent scope for the framework overview page. Formats: - projects/{project}/locations/{location} - folders/{folder}/locations/{location} - organizations/{organization}/locations/{location}",
+                      "location": "path",
+                      "pattern": "^folders/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/dbFindingSummaries",
+                  "response": {
+                    "$ref": "GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "organizations": {
       "resources": {
         "locations": {
           "resources": {
+            "dbFindingSummaries": {
+              "methods": {
+                "list": {
+                  "description": "Lists the finding summary by category for a given scope.",
+                  "flatPath": "v1/organizations/{organizationsId}/locations/{locationsId}/dbFindingSummaries",
+                  "httpMethod": "GET",
+                  "id": "assuredworkloads.organizations.locations.dbFindingSummaries.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "filter": {
+                      "description": "Optional. The filtering results.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "pageSize": {
+                      "description": "Optional. The requested page size. The server might return fewer items than requested. If unspecified, the server picks an appropriate default.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "Optional. A token that identifies the page of results that the server should return.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The parent scope for the framework overview page. Formats: - projects/{project}/locations/{location} - folders/{folder}/locations/{location} - organizations/{organization}/locations/{location}",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/dbFindingSummaries",
+                  "response": {
+                    "$ref": "GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            },
             "operations": {
               "methods": {
                 "get": {
@@ -760,9 +858,62 @@
           }
         }
       }
+    },
+    "projects": {
+      "resources": {
+        "locations": {
+          "resources": {
+            "dbFindingSummaries": {
+              "methods": {
+                "list": {
+                  "description": "Lists the finding summary by category for a given scope.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dbFindingSummaries",
+                  "httpMethod": "GET",
+                  "id": "assuredworkloads.projects.locations.dbFindingSummaries.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "filter": {
+                      "description": "Optional. The filtering results.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "pageSize": {
+                      "description": "Optional. The requested page size. The server might return fewer items than requested. If unspecified, the server picks an appropriate default.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "Optional. A token that identifies the page of results that the server should return.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The parent scope for the framework overview page. Formats: - projects/{project}/locations/{location} - folders/{folder}/locations/{location} - organizations/{organization}/locations/{location}",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/dbFindingSummaries",
+                  "response": {
+                    "$ref": "GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
-  "revision": "20260615",
+  "revision": "20260623",
   "rootUrl": "https://assuredworkloads.googleapis.com/",
   "schemas": {
     "GoogleCloudAssuredworkloadsV1AcknowledgeViolationRequest": {
@@ -983,7 +1134,13 @@
     "GoogleCloudAssuredworkloadsV1BatchAcknowledgeViolationsResponse": {
       "description": "Response for batch violation acknowledgement",
       "id": "GoogleCloudAssuredworkloadsV1BatchAcknowledgeViolationsResponse",
-      "properties": {},
+      "properties": {
+        "acknowledgedViolationsCount": {
+          "description": "Count of acknowledged violations.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
       "type": "object"
     },
     "GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata": {
@@ -1154,6 +1311,89 @@
       },
       "type": "object"
     },
+    "GoogleCloudAssuredworkloadsV1DbFindingSummary": {
+      "description": "The details for a finding.",
+      "id": "GoogleCloudAssuredworkloadsV1DbFindingSummary",
+      "properties": {
+        "findingCategory": {
+          "description": "Output only. The category of the finding.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "findingClass": {
+          "description": "Output only. The class of the finding.",
+          "enum": [
+            "FINDING_CLASS_UNSPECIFIED",
+            "THREAT",
+            "VULNERABILITY",
+            "MISCONFIGURATION",
+            "OBSERVATION",
+            "SCC_ERROR",
+            "POSTURE_VIOLATION",
+            "TOXIC_COMBINATION",
+            "SENSITIVE_DATA_RISK",
+            "CHOKEPOINT"
+          ],
+          "enumDescriptions": [
+            "Default value. This value is unused.",
+            "The activity is unwanted or malicious.",
+            "A potential weakness in software that increases risk to confidentiality, integrity, and availability.",
+            "A potential weakness in a cloud resource or asset configuration that increases risk.",
+            "A security observation that is for informational purposes.",
+            "An error that prevents Security Command Center from functioning properly.",
+            "A potential security risk that's due to a change in the security posture.",
+            "A combination of security issues that represent a more severe security problem when taken together.",
+            "A potential security risk to data assets that contain sensitive data.",
+            "A resource or resource group where high risk attack paths converge, based on attack path simulations (APS)."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
+        "findingCount": {
+          "description": "Output only. The count of the finding.",
+          "format": "int64",
+          "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "description": "Identifier. The name of the finding summary.",
+          "type": "string"
+        },
+        "relatedFrameworks": {
+          "description": "Optional. The list of compliance frameworks that the finding belongs to.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "severity": {
+          "description": "Output only. The severity of the finding.",
+          "enum": [
+            "SEVERITY_UNSPECIFIED",
+            "CRITICAL",
+            "HIGH",
+            "MEDIUM",
+            "LOW"
+          ],
+          "enumDescriptions": [
+            "Default value. This value is unused.",
+            "A critical vulnerability is easily discoverable by an external actor, exploitable, and results in the direct ability to execute arbitrary code, exfiltrate data, and otherwise gain additional access and privileges to cloud resources and workloads. Examples include publicly accessible unprotected user data and public SSH access with weak or no passwords. A critical threat is a threat that can access, modify, or delete data or execute unauthorized code within existing resources.",
+            "A high-risk vulnerability can be easily discovered and exploited in combination with other vulnerabilities to gain direct access and the ability to execute arbitrary code, exfiltrate data, and otherwise gain additional access and privileges to cloud resources and workloads. An example is a database with weak or no passwords that is only accessible internally. This database could easily be compromised by an actor that had access to the internal network. A high-risk threat is a threat that can create new computational resources in an environment but can't access data or execute code in existing resources.",
+            "A medium-risk vulnerability can be used by an actor to gain access to resources or privileges that enable them to eventually (through multiple steps or a complex exploit) gain access and the ability to execute arbitrary code or exfiltrate data. An example is a service account with access to more projects than it should have. If an actor gains access to the service account, they could potentially use that access to manipulate a project the service account was not intended to. A medium-risk threat can cause operational impact but might not access data or execute unauthorized code.",
+            "A low-risk vulnerability hampers a security organization's ability to detect vulnerabilities or active threats in their deployment, or prevents the root cause investigation of security issues. An example is monitoring and logs being disabled for resource configurations and access. A low-risk threat is a threat that has obtained minimal access to an environment but can't access data, execute code, or create resources."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Output only. The last updated time of the finding.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudAssuredworkloadsV1EnableComplianceUpdatesResponse": {
       "description": "Response for EnableComplianceUpdates endpoint.",
       "id": "GoogleCloudAssuredworkloadsV1EnableComplianceUpdatesResponse",
@@ -1164,6 +1404,25 @@
       "description": "Response for EnableResourceMonitoring endpoint.",
       "id": "GoogleCloudAssuredworkloadsV1EnableResourceMonitoringResponse",
       "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse": {
+      "description": "The response message for ListDbFindingSummaries.",
+      "id": "GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse",
+      "properties": {
+        "dbFindingSummaries": {
+          "description": "List of finding summary by category.",
+          "items": {
+            "$ref": "GoogleCloudAssuredworkloadsV1DbFindingSummary"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "Output only. The token to retrieve the next page of results.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "GoogleCloudAssuredworkloadsV1ListViolationsResponse": {

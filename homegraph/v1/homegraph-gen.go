@@ -960,15 +960,18 @@ func (s SyncResponsePayload) MarshalJSON() ([]byte, error) {
 
 // TraitData: Contains the trait payload for a single trait.
 type TraitData struct {
+	// CommitTime: Other metadata for the trait. The time the client update was
+	// committed in the server.
+	CommitTime string `json:"commitTime,omitempty"`
 	// Trait: The Provider Home API trait payload.
 	Trait googleapi.RawMessage `json:"trait,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Trait") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "CommitTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Trait") to include in API
+	// NullFields is a list of field names (e.g. "CommitTime") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

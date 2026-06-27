@@ -3788,8 +3788,8 @@ func (s HTTPHeader) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Instance: Instance represents the configuration of a single Instance, which
-// references a container image which is run to completion.
+// Instance: An Instance represents the configuration of a single instance that
+// references a container image and runs to completion.
 type Instance struct {
 	// ApiVersion: Optional. APIVersion defines the versioned schema of this
 	// representation of an object. Servers should convert recognized schemas to
@@ -3801,9 +3801,9 @@ type Instance struct {
 	Kind string `json:"kind,omitempty"`
 	// Metadata: Optional. Standard object's metadata.
 	Metadata *ObjectMeta `json:"metadata,omitempty"`
-	// Spec: Optional. Specification of the desired behavior of a Instance.
+	// Spec: Optional. Specification of the desired behavior of an Instance.
 	Spec *InstanceSpec `json:"spec,omitempty"`
-	// Status: Output only. Current status of a Instance.
+	// Status: Output only. Current status of an Instance.
 	Status *InstanceStatus `json:"status,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3894,7 +3894,7 @@ func (s InstanceSplit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// InstanceStatus: InstanceStatus represents the current state of a Instance.
+// InstanceStatus: InstanceStatus represents the current state of an Instance.
 type InstanceStatus struct {
 	// Conditions: Output only. Conditions communicate information about
 	// ongoing/complete reconciliation processes that bring the "spec" inline with
@@ -4607,15 +4607,15 @@ type ObjectMeta struct {
 	// `run.googleapis.com/build-source-location`: Service, Revision. *
 	// `run.googleapis.com/build-worker-pool`: Service. *
 	// `run.googleapis.com/client-name`: All resources. *
-	// `run.googleapis.com/cloudsql-instances`: Revision, Execution . *
+	// `run.googleapis.com/cloudsql-instances`: Revision, Execution, Instance. *
 	// `run.googleapis.com/container-dependencies`: Revision . *
 	// `run.googleapis.com/cpu-throttling`: Revision. *
 	// `run.googleapis.com/custom-audiences`: Service. *
 	// `run.googleapis.com/default-url-disabled`: Service. *
 	// `run.googleapis.com/description`: Service. *
 	// `run.googleapis.com/encryption-key-shutdown-hours`: Revision *
-	// `run.googleapis.com/encryption-key`: Revision, Execution . *
-	// `run.googleapis.com/execution-environment`: Revision, Execution . *
+	// `run.googleapis.com/encryption-key`: Revision, Execution, Instance. *
+	// `run.googleapis.com/execution-environment`: Revision, Execution. *
 	// `run.googleapis.com/gc-traffic-tags`: Service. *
 	// `run.googleapis.com/gpu-zonal-redundancy-disabled`: Revision. *
 	// `run.googleapis.com/health-check-disabled`: Revision. *
@@ -5027,9 +5027,6 @@ type RevisionSpec struct {
 	NodeSelector map[string]string `json:"nodeSelector,omitempty"`
 	// RuntimeClassName: Optional. Runtime. Leave unset for default.
 	RuntimeClassName string `json:"runtimeClassName,omitempty"`
-	// Sandboxes: Optional. Container templates that can be launched through the
-	// `sandbox` CLI.
-	Sandboxes []*Container `json:"sandboxes,omitempty"`
 	// ServiceAccountName: Email address of the IAM service account associated with
 	// the revision of the service. The service account represents the identity of
 	// the running revision, and determines what permissions the revision has. If
@@ -7658,11 +7655,15 @@ type NamespacesInstancesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Create a Instance.
+// Create: Create an Instance.
 //
-//   - parent: The namespace in which the Instance should be created. Replace
-//     {namespace} with the project ID or number. It takes the form
-//     namespaces/{namespace}. For example: namespaces/PROJECT_ID.
+//   - parent: The resource's parent. In Cloud Run, it may be one of the
+//     following: * `{project_id_or_number}` *
+//     `namespaces/{project_id_or_number}` *
+//     `namespaces/{project_id_or_number}/instances` *
+//     `projects/{project_id_or_number}/locations/{region}` *
+//     `projects/{project_id_or_number}/regions/{region}` Parent resource
+//     namespace.
 func (r *NamespacesInstancesService) Create(parent string, instance *Instance) *NamespacesInstancesCreateCall {
 	c := &NamespacesInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7762,11 +7763,16 @@ type NamespacesInstancesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete a Instance.
+// Delete: Delete an Instance.
 //
-//   - name: The name of the Instance to delete. Replace {namespace} with the
-//     project ID or number. It takes the form namespaces/{namespace}. For
-//     example: namespaces/PROJECT_ID.
+//   - name: The fully qualified name of the Instance to delete. It can be any of
+//     the following forms: *
+//     `namespaces/{project_id_or_number}/instances/{instance_name}` (only when
+//     the `endpoint` is regional) *
+//     `projects/{project_id_or_number}/locations/{region}/instances/{instance_nam
+//     e}` *
+//     `projects/{project_id_or_number}/regions/{region}/instances/{instance_name}
+//     ` Parent resource namespace.
 func (r *NamespacesInstancesService) Delete(name string) *NamespacesInstancesDeleteCall {
 	c := &NamespacesInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7888,9 +7894,14 @@ type NamespacesInstancesGetCall struct {
 
 // Get: Get an Instance.
 //
-//   - name: The name of the Instance to retrieve. It takes the form
-//     namespaces/{namespace}/instances/{Instance_name} and the `endpoint` must
-//     be regional. Replace {namespace} with the project ID or number.
+//   - name: The fully qualified name of the Instance to retrieve. It can be any
+//     of the following forms: *
+//     `namespaces/{project_id_or_number}/instances/{instance_name}` (only when
+//     the `endpoint` is regional) *
+//     `projects/{project_id_or_number}/locations/{region}/instances/{instance_nam
+//     e}` *
+//     `projects/{project_id_or_number}/regions/{region}/instances/{instance_name}
+//     ` Parent resource namespace.
 func (r *NamespacesInstancesService) Get(name string) *NamespacesInstancesGetCall {
 	c := &NamespacesInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7999,9 +8010,13 @@ type NamespacesInstancesListCall struct {
 
 // List: List Instances. Results are sorted by creation time, descending.
 //
-//   - parent: The namespace from which the Instances should be listed. Replace
-//     {namespace} with the project ID or number. It takes the form
-//     namespaces/{namespace}. For example: namespaces/PROJECT_ID.
+//   - parent: The parent from where the resources should be listed. In Cloud
+//     Run, it may be one of the following: * `{project_id_or_number}` *
+//     `namespaces/{project_id_or_number}` *
+//     `namespaces/{project_id_or_number}/instances` *
+//     `projects/{project_id_or_number}/locations/{region}` *
+//     `projects/{project_id_or_number}/regions/{region}` Parent resource
+//     namespace.
 func (r *NamespacesInstancesService) List(parent string) *NamespacesInstancesListCall {
 	c := &NamespacesInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8160,9 +8175,14 @@ type NamespacesInstancesReplaceInstanceCall struct {
 
 // ReplaceInstance: Replace an Instance.
 //
-//   - name: The name of the Instance being replaced. Replace {namespace} with
-//     the project ID or number. It takes the form namespaces/{namespace}. For
-//     example: namespaces/PROJECT_ID.
+//   - name: The fully qualified name of the Instance being replaced. It can be
+//     any of the following forms: *
+//     `namespaces/{project_id_or_number}/instances/{instance_name}` (only when
+//     the `endpoint` is regional) *
+//     `projects/{project_id_or_number}/locations/{region}/instances/{instance_nam
+//     e}` *
+//     `projects/{project_id_or_number}/regions/{region}/instances/{instance_name}
+//     ` Parent resource namespace.
 func (r *NamespacesInstancesService) ReplaceInstance(name string, instance *Instance) *NamespacesInstancesReplaceInstanceCall {
 	c := &NamespacesInstancesReplaceInstanceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12670,7 +12690,7 @@ type ProjectsLocationsInstancesGetIamPolicyCall struct {
 	header_      http.Header
 }
 
-// GetIamPolicy: Get the IAM Access Control policy currently in effect for the
+// GetIamPolicy: Gets the IAM Access Control policy currently in effect for the
 // given instance. This result does not include any inherited policies.
 //
 //   - resource: REQUIRED: The resource for which the policy is being requested.

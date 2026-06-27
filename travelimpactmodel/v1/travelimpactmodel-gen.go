@@ -656,9 +656,6 @@ type EmissionsProvenanceEntry struct {
 	//   "SEAT_AREA_RATIOS" - Seat area ratios entry type.
 	//   "DISTANCE_ADJUSTMENT" - Distance adjustment entry type.
 	ProvenanceEntryType string `json:"provenanceEntryType,omitempty"`
-	// SeatAreaRatioData: Output only. The seat area ratio value for each seating
-	// class. If not set, the seat area ratio value is not available.
-	SeatAreaRatioData *SeatAreaRatioData `json:"seatAreaRatioData,omitempty"`
 	// SeatAreaRatioIataStrategy: Output only. Strategy for IATA seat area ratios.
 	//
 	// Possible values:
@@ -1053,57 +1050,6 @@ type Scope3FlightSegment struct {
 func (s Scope3FlightSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod Scope3FlightSegment
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// SeatAreaRatioData: Seat area ratio data values. Economy is always 1.0 and
-// serves as the reference point; other class values are relative to economy.
-// All 4 fields are always set whether the seating class exists on the aircraft
-// or not.
-type SeatAreaRatioData struct {
-	// Business: Output only. Business seating class data value.
-	Business float64 `json:"business,omitempty"`
-	// Economy: Output only. Economy seating class data value.
-	Economy float64 `json:"economy,omitempty"`
-	// First: Output only. First seating class data value.
-	First float64 `json:"first,omitempty"`
-	// PremiumEconomy: Output only. Premium economy seating class data value.
-	PremiumEconomy float64 `json:"premiumEconomy,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Business") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Business") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s SeatAreaRatioData) MarshalJSON() ([]byte, error) {
-	type NoMethod SeatAreaRatioData
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-func (s *SeatAreaRatioData) UnmarshalJSON(data []byte) error {
-	type NoMethod SeatAreaRatioData
-	var s1 struct {
-		Business       gensupport.JSONFloat64 `json:"business"`
-		Economy        gensupport.JSONFloat64 `json:"economy"`
-		First          gensupport.JSONFloat64 `json:"first"`
-		PremiumEconomy gensupport.JSONFloat64 `json:"premiumEconomy"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Business = float64(s1.Business)
-	s.Economy = float64(s1.Economy)
-	s.First = float64(s1.First)
-	s.PremiumEconomy = float64(s1.PremiumEconomy)
-	return nil
 }
 
 // TypicalFlightEmissions: Typical flight emission estimates for a certain

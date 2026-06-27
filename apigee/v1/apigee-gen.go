@@ -2208,6 +2208,16 @@ type GoogleCloudApigeeV1ApiProduct struct {
 	// cannot be specified for both the API product and operation group; otherwise
 	// the call will fail.
 	OperationGroup *GoogleCloudApigeeV1OperationGroup `json:"operationGroup,omitempty"`
+	// PayloadOperationGroup: Optional. Configuration used to group Apigee proxies
+	// with payload-based operations and quotas. Unlike `operation_group`, which
+	// matches on the URL path, this grouping matches on operation identifiers
+	// extracted from the request payload (for example, JSON-RPC method and tool
+	// names). This enables fine-grained authorization and quota enforcement for
+	// protocols such as MCP where multiple operations share a single endpoint.
+	// **Note:** The `proxies` and `api_resources` settings cannot be specified for
+	// both the API product and payload operation group; otherwise the call will
+	// fail.
+	PayloadOperationGroup *GoogleCloudApigeeV1PayloadOperationGroup `json:"payloadOperationGroup,omitempty"`
 	// Proxies: Comma-separated list of API proxy names to which this API product
 	// is bound. By specifying API proxies, you can associate resources in the API
 	// product with specific API proxies, preventing developers from accessing
@@ -8833,6 +8843,91 @@ func (s GoogleCloudApigeeV1OrganizationProjectMapping) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1PayloadOperation: Represents a single operation
+// identifier extracted from the request payload.
+type GoogleCloudApigeeV1PayloadOperation struct {
+	// Operation: Required. The operation name extracted from the request payload
+	// at runtime by the ParsePayload policy. For example, for MCP protocol
+	// requests, this could be "tools/list" or "tools/call/get_weather".
+	// Wildcards are not supported.
+	Operation string `json:"operation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Operation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Operation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1PayloadOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1PayloadOperation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1PayloadOperationConfig: Binds the payload operations in
+// an API proxy with the associated quota enforcement.
+type GoogleCloudApigeeV1PayloadOperationConfig struct {
+	// ApiSource: Required. Name of the API proxy with which the payload operations
+	// and quota are associated.
+	ApiSource string `json:"apiSource,omitempty"`
+	// Attributes: Optional. Custom attributes associated with the operation.
+	Attributes []*GoogleCloudApigeeV1Attribute `json:"attributes,omitempty"`
+	// Operations: Required. List of payload operations for the API proxy to which
+	// quota will be applied.
+	Operations []*GoogleCloudApigeeV1PayloadOperation `json:"operations,omitempty"`
+	// Quota: Optional. Quota parameters to be enforced for the operations and API
+	// source combination. If none are specified, quota enforcement will not be
+	// done unless a quota is defined at the API product level.
+	Quota *GoogleCloudApigeeV1Quota `json:"quota,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiSource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiSource") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1PayloadOperationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1PayloadOperationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1PayloadOperationGroup: List of payload operation
+// configuration details associated with Apigee API proxies. Payload operations
+// enable governance of protocols where operations are embedded in the request
+// body (such as JSON-RPC) rather than defined by the URL path.
+type GoogleCloudApigeeV1PayloadOperationGroup struct {
+	// OperationConfigs: Required. List of payload operation configurations for
+	// Apigee API proxies that are associated with this API product.
+	OperationConfigs []*GoogleCloudApigeeV1PayloadOperationConfig `json:"operationConfigs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OperationConfigs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OperationConfigs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1PayloadOperationGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1PayloadOperationGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudApigeeV1PodStatus struct {
 	// AppVersion: Version of the application running in the pod.
 	AppVersion string `json:"appVersion,omitempty"`
@@ -12494,6 +12589,18 @@ type GoogleCloudApigeeV1TraceConfig struct {
 	// environment. You can also override the configuration for a specific API
 	// proxy using the distributed trace configuration overrides API.
 	SamplingConfig *GoogleCloudApigeeV1TraceSamplingConfig `json:"samplingConfig,omitempty"`
+	// TraceProtocol: Optional. The trace protocol to use. Configuration
+	// Requirements (if trace_protocol is OTLP): - Allowed Exporters: CLOUD_TRACE
+	// or OPEN_TELEMETRY_COLLECTOR. - If Exporter is OPEN_TELEMETRY_COLLECTOR: -
+	// endpoint refers to a valid OTLP collector URL. - If Exporter is CLOUD_TRACE:
+	// - endpoint refers to a valid project ID.
+	//
+	// Possible values:
+	//   "TRACE_PROTOCOL_UNSPECIFIED" - Protocol unspecified. Defaults to
+	// OPEN_CENSUS.
+	//   "OPEN_CENSUS" - Uses OpenCensus protocol.
+	//   "OTLP" - Uses OpenTelemetry Protocol (OTLP).
+	TraceProtocol string `json:"traceProtocol,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

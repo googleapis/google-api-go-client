@@ -694,8 +694,8 @@ type LightSettings struct {
 	// Color: Required. Set `color` of the LED with google.type.Color
 	// (https://github.com/googleapis/googleapis/blob/master/google/type/color.proto).
 	Color *Color `json:"color,omitempty"`
-	// LightOffDuration: Required. Along with `light_on_duration `, define the
-	// blink rate of LED flashes. Resolution defined by proto.Duration
+	// LightOffDuration: Required. Along with `light_on_duration`, define the blink
+	// rate of LED flashes. Resolution defined by proto.Duration
 	// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.Duration)
 	LightOffDuration string `json:"lightOffDuration,omitempty"`
 	// LightOnDuration: Required. Along with `light_off_duration`, define the blink
@@ -741,7 +741,7 @@ type Message struct {
 	// FcmOptions: Input only. Template for FCM SDK feature options to use across
 	// all platforms.
 	FcmOptions *FcmOptions `json:"fcmOptions,omitempty"`
-	// Fid: Optional. Firebase Installation ID to send a message to.
+	// Fid: Firebase Installation ID to send a message to.
 	Fid string `json:"fid,omitempty"`
 	// Name: Output Only. The identifier of the message sent, in the format of
 	// `projects/*/messages/{message_id}`.

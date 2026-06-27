@@ -52,6 +52,21 @@
       "description": "Regional Endpoint",
       "endpointUrl": "https://discoveryengine.in.rep.googleapis.com/",
       "location": "in"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://discoveryengine.asia-southeast1.rep.googleapis.com/",
+      "location": "asia-southeast1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://discoveryengine.europe-west3.rep.googleapis.com/",
+      "location": "europe-west3"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://discoveryengine.ca.rep.googleapis.com/",
+      "location": "ca"
     }
   ],
   "fullyEncodeReservedExpansion": true,
@@ -9393,7 +9408,7 @@
                           "type": "string"
                         },
                         "pageSize": {
-                          "description": "Optional. Requested page size. Server may return fewer items than requested. If unspecified, defaults to 10. The maximum value is 50; values above 50 will be coerced to 50. If this field is negative, an INVALID_ARGUMENT error is returned.",
+                          "description": "Optional. Requested page size. Server may return fewer items than requested. If unspecified, defaults to 100. The maximum value is 1000; values above 1000 will be coerced to 1000. If this field is negative, an INVALID_ARGUMENT error is returned.",
                           "format": "int32",
                           "location": "query",
                           "type": "integer"
@@ -9509,7 +9524,7 @@
       }
     }
   },
-  "revision": "20260614",
+  "revision": "20260620",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiDistribution": {
@@ -12238,6 +12253,10 @@
           ],
           "type": "string"
         },
+        "associatedAgentRegistry": {
+          "description": "Optional. The Agent registry containing the agents, MCP servers and tools associated with this engine. Field is required if the engine has an Agent Gateway setting.",
+          "type": "string"
+        },
         "chatEngineConfig": {
           "$ref": "GoogleCloudDiscoveryengineV1EngineChatEngineConfig",
           "description": "Configurations for the Chat Engine. Only applicable if solution_type is SOLUTION_TYPE_CHAT."
@@ -12310,7 +12329,7 @@
             ],
             "type": "string"
           },
-          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `disable-skills` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence`",
+          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `disable-skills` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `deep-research`",
           "type": "object"
         },
         "industryVertical": {
@@ -18031,6 +18050,10 @@
           ],
           "type": "string"
         },
+        "associatedAgentRegistry": {
+          "description": "Optional. The Agent registry containing the agents, MCP servers and tools associated with this engine. Field is required if the engine has an Agent Gateway setting.",
+          "type": "string"
+        },
         "chatEngineConfig": {
           "$ref": "GoogleCloudDiscoveryengineV1alphaEngineChatEngineConfig",
           "description": "Configurations for the Chat Engine. Only applicable if solution_type is SOLUTION_TYPE_CHAT."
@@ -18103,7 +18126,7 @@
             ],
             "type": "string"
           },
-          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `disable-skills` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence`",
+          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `disable-skills` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `deep-research`",
           "type": "object"
         },
         "industryVertical": {
@@ -27133,6 +27156,10 @@
           ],
           "type": "string"
         },
+        "associatedAgentRegistry": {
+          "description": "Optional. The Agent registry containing the agents, MCP servers and tools associated with this engine. Field is required if the engine has an Agent Gateway setting.",
+          "type": "string"
+        },
         "chatEngineConfig": {
           "$ref": "GoogleCloudDiscoveryengineV1betaEngineChatEngineConfig",
           "description": "Configurations for the Chat Engine. Only applicable if solution_type is SOLUTION_TYPE_CHAT."
@@ -27205,7 +27232,7 @@
             ],
             "type": "string"
           },
-          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `disable-skills` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence`",
+          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `disable-skills` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `deep-research`",
           "type": "object"
         },
         "industryVertical": {
@@ -32947,6 +32974,13 @@
           "description": "A global unique ID that identifies the current pair of request and stream of responses. Used for feedback and support.",
           "type": "string"
         },
+        "connectorAuthErrors": {
+          "description": "Per-connector authentication errors encountered during the request. Present when one or more connectors failed authentication but the request proceeded with the remaining connectors.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1betaStreamAssistResponseConnectorAuthError"
+          },
+          "type": "array"
+        },
         "invocationTools": {
           "description": "The tool names of the tools that were invoked.",
           "items": {
@@ -32964,6 +32998,21 @@
         "sessionInfo": {
           "$ref": "GoogleCloudDiscoveryengineV1betaStreamAssistResponseSessionInfo",
           "description": "Session information. Only included in the final StreamAssistResponse of the response stream."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaStreamAssistResponseConnectorAuthError": {
+      "description": "Describes an authentication error for a specific data connector.",
+      "id": "GoogleCloudDiscoveryengineV1betaStreamAssistResponseConnectorAuthError",
+      "properties": {
+        "dataConnector": {
+          "description": "Resource name of the data connector that failed authentication.",
+          "type": "string"
+        },
+        "errorMessage": {
+          "description": "Human-readable error message describing the auth failure.",
+          "type": "string"
         }
       },
       "type": "object"

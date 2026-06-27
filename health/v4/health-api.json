@@ -996,7 +996,7 @@
       }
     }
   },
-  "revision": "20260618",
+  "revision": "20260620",
   "rootUrl": "https://health.googleapis.com/",
   "schemas": {
     "ActiveEnergyBurned": {
@@ -4672,7 +4672,7 @@
           "description": "Required. Closed-open range of data points that will be rolled up. The maximum range for `calories-in-heart-rate-zone`, `heart-rate`, `active-minutes` and `total-calories` is 14 days. The maximum range for all other data types is 90 days."
         },
         "windowSize": {
-          "description": "Required. The size of the time window to group data points into before applying the aggregation functions.",
+          "description": "Required. The size of the time window to group data points into before applying the aggregation functions. Must be at least 1 second.",
           "format": "google-duration",
           "type": "string"
         }

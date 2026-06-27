@@ -6331,7 +6331,7 @@
       }
     }
   },
-  "revision": "20260524",
+  "revision": "20260617",
   "rootUrl": "https://networksecurity.googleapis.com/",
   "schemas": {
     "AddAddressGroupItemsRequest": {
@@ -9451,6 +9451,12 @@
         "network": {
           "description": "Immutable. The VPC network that is associated. for example: `projects/123456789/global/networks/my-network`. See https://google.aip.dev/124.",
           "type": "string"
+        },
+        "networkCookie": {
+          "description": "Output only. Identifier used by the data-path. See the NSI GENEVE format for more details: https://docs.cloud.google.com/network-security-integration/docs/understand-geneve#network_id",
+          "format": "uint32",
+          "readOnly": true,
+          "type": "integer"
         },
         "reconciling": {
           "description": "Output only. The current state of the resource does not match the user's intended state, and the system is working to reconcile them. This part of the normal operation (e.g. adding a new location to the target deployment group). See https://google.aip.dev/128.",

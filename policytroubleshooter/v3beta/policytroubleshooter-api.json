@@ -124,13 +124,54 @@
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform"
           ]
+        },
+        "troubleshootError": {
+          "description": "Checks the access request associated with the error identifier and explains why the access is denied by IAM policies.",
+          "flatPath": "v3beta/iam:troubleshootError",
+          "httpMethod": "POST",
+          "id": "policytroubleshooter.iam.troubleshootError",
+          "parameterOrder": [],
+          "parameters": {},
+          "path": "v3beta/iam:troubleshootError",
+          "request": {
+            "$ref": "GoogleCloudPolicytroubleshooterIamV3betaTroubleshootIamPolicyErrorRequest"
+          },
+          "response": {
+            "$ref": "GoogleCloudPolicytroubleshooterIamV3betaTroubleshootIamPolicyErrorResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
         }
       }
     }
   },
-  "revision": "20260614",
+  "revision": "20260623",
   "rootUrl": "https://policytroubleshooter.googleapis.com/",
   "schemas": {
+    "GoogleCloudPolicytroubleshooterIamV3betaAccessContext": {
+      "description": "Information about the principal, resource, and permission for the ErrorInfoId.",
+      "id": "GoogleCloudPolicytroubleshooterIamV3betaAccessContext",
+      "properties": {
+        "name": {
+          "description": "The relative resource name, not including the / prefix. For example, `projects/project-id`, `projects/-/serviceAccounts/11112222`",
+          "type": "string"
+        },
+        "parent": {
+          "description": "The full resource name of the parent where IAM policy is configured. For example, `//cloudresourcemanager.googleapis.com/folders/444446666`",
+          "type": "string"
+        },
+        "permission": {
+          "description": "Required. The IAM permission name provided by the user in the access denied request.",
+          "type": "string"
+        },
+        "principal": {
+          "description": "The email address of the principal who requested access. For example, `alice@example.com` or `my-service-account@my-project.iam.gserviceaccount.com`. The principal must be a Google Account or a service account. Other types of principals are not supported.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudPolicytroubleshooterIamV3betaAccessTuple": {
       "description": "Information about the principal, resource, and permission to check.",
       "id": "GoogleCloudPolicytroubleshooterIamV3betaAccessTuple",
@@ -1223,6 +1264,58 @@
             "The data point has a strong effect on the result. Changing the data point is likely to affect the overall determination."
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudPolicytroubleshooterIamV3betaTroubleshootIamPolicyErrorRequest": {
+      "description": "Request to troubleshoot access denial with the IAM error identifier.",
+      "id": "GoogleCloudPolicytroubleshooterIamV3betaTroubleshootIamPolicyErrorRequest",
+      "properties": {
+        "errorInfoId": {
+          "description": "This identifier is returned in the `ErrorInfo.metadata` with key 'error_info_id' when an access requests is denied by the IAM service.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudPolicytroubleshooterIamV3betaTroubleshootIamPolicyErrorResponse": {
+      "description": "Response for troubleshoot access denial with the IAM error identifier.",
+      "id": "GoogleCloudPolicytroubleshooterIamV3betaTroubleshootIamPolicyErrorResponse",
+      "properties": {
+        "accessContext": {
+          "$ref": "GoogleCloudPolicytroubleshooterIamV3betaAccessContext",
+          "description": "The access context associated with the ErrorInfoId."
+        },
+        "allowPolicyExplanation": {
+          "$ref": "GoogleCloudPolicytroubleshooterIamV3betaAllowPolicyExplanation",
+          "description": "An explanation of how the applicable IAM allow policies affect the final access state."
+        },
+        "denyPolicyExplanation": {
+          "$ref": "GoogleCloudPolicytroubleshooterIamV3betaDenyPolicyExplanation",
+          "description": "An explanation of how the applicable IAM deny policies affect the final access state."
+        },
+        "overallAccessState": {
+          "description": "Indicates whether the principal has the permission to access the resource, based on evaluating all types of the applicable IAM policies.",
+          "enum": [
+            "OVERALL_ACCESS_STATE_UNSPECIFIED",
+            "OVERALL_ACCESS_STATE_CAN_ACCESS",
+            "OVERALL_ACCESS_STATE_CANNOT_ACCESS",
+            "OVERALL_ACCESS_STATE_UNKNOWN_INFO",
+            "OVERALL_ACCESS_STATE_UNKNOWN_CONDITIONAL"
+          ],
+          "enumDescriptions": [
+            "Not specified.",
+            "The principal has the permission.",
+            "The principal doesn't have the permission.",
+            "The principal might have the permission, but the sender can't access all of the information needed to fully evaluate the principal's access.",
+            "The principal might have the permission, but Policy Troubleshooter can't fully evaluate the principal's access because of the missing context to evaluate the condition."
+          ],
+          "type": "string"
+        },
+        "pabPolicyExplanation": {
+          "$ref": "GoogleCloudPolicytroubleshooterIamV3betaPABPolicyExplanation",
+          "description": "An explanation of how the applicable principal access boundary policies affect the final access state."
         }
       },
       "type": "object"

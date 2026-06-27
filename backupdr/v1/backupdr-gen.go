@@ -3182,7 +3182,7 @@ type FetchAccessTokenResponse struct {
 	ExpireTime string `json:"expireTime,omitempty"`
 	// ReadLocation: The location in bucket that can be used for reading.
 	ReadLocation string `json:"readLocation,omitempty"`
-	// Token: The downscoped token that was created.
+	// Token: Input only. The downscoped token that was created.
 	Token string `json:"token,omitempty"`
 	// WriteLocation: The location in bucket that can be used for writing.
 	WriteLocation string `json:"writeLocation,omitempty"`

@@ -798,7 +798,7 @@
       }
     }
   },
-  "revision": "20260615",
+  "revision": "20260623",
   "rootUrl": "https://assuredworkloads.googleapis.com/",
   "schemas": {
     "GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationRequest": {
@@ -1019,7 +1019,13 @@
     "GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsResponse": {
       "description": "Response for batch violation acknowledgement",
       "id": "GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsResponse",
-      "properties": {},
+      "properties": {
+        "acknowledgedViolationsCount": {
+          "description": "Count of acknowledged violations.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
       "type": "object"
     },
     "GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata": {

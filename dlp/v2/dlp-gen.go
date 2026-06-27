@@ -2629,15 +2629,17 @@ func (s GooglePrivacyDlpV2ContentLocation) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2ContentMetadata: Metadata on content to be scanned.
 type GooglePrivacyDlpV2ContentMetadata struct {
+	// FileLabels: Optional. The file labels associated with the content.
+	FileLabels []*GooglePrivacyDlpV2FileLabel `json:"fileLabels,omitempty"`
 	// Properties: User provided key-value pairs of content metadata.
 	Properties []*GooglePrivacyDlpV2KeyValueMetadataProperty `json:"properties,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Properties") to
+	// ForceSendFields is a list of field names (e.g. "FileLabels") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Properties") to include in API
+	// NullFields is a list of field names (e.g. "FileLabels") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3260,6 +3262,8 @@ type GooglePrivacyDlpV2CustomInfoType struct {
 	//   "EXCLUSION_TYPE_EXCLUDE" - A finding of this custom info type will be
 	// excluded from final results, but can still affect rule execution.
 	ExclusionType string `json:"exclusionType,omitempty"`
+	// FileLabelInfoType: File label to detect.
+	FileLabelInfoType *GooglePrivacyDlpV2FileLabelInfoType `json:"fileLabelInfoType,omitempty"`
 	// InfoType: CustomInfoType can either be a new infoType, or an extension of
 	// built-in infoType, when the name matches one of existing infoTypes and that
 	// infoType is specified in `InspectContent.info_types` field. Specifying the
@@ -6036,6 +6040,55 @@ func (s GooglePrivacyDlpV2FileExtensionInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2FileLabel: Represents a file label.
+type GooglePrivacyDlpV2FileLabel struct {
+	// GoogleDriveLabel: Google Drive labels published by Google.
+	GoogleDriveLabel *GooglePrivacyDlpV2GoogleDriveLabelMetadata `json:"googleDriveLabel,omitempty"`
+	// SensitivityLabel: Sensitivity labels published by Microsoft.
+	SensitivityLabel *GooglePrivacyDlpV2SensitivityLabelMetadata `json:"sensitivityLabel,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GoogleDriveLabel") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GoogleDriveLabel") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2FileLabel) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2FileLabel
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2FileLabelInfoType: Configuration for a custom infoType
+// that detects file labels.
+type GooglePrivacyDlpV2FileLabelInfoType struct {
+	// GoogleDriveLabel: Google Drive labels published by Google.
+	GoogleDriveLabel *GooglePrivacyDlpV2GoogleDriveLabel `json:"googleDriveLabel,omitempty"`
+	// SensitivityLabel: Sensitivity labels published by Microsoft.
+	SensitivityLabel *GooglePrivacyDlpV2SensitivityLabel `json:"sensitivityLabel,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GoogleDriveLabel") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GoogleDriveLabel") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2FileLabelInfoType) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2FileLabelInfoType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2FileSet: Set of files to scan.
 type GooglePrivacyDlpV2FileSet struct {
 	// RegexFileSet: The regex-filtered set of files to scan. Exactly one of `url`
@@ -6477,6 +6530,59 @@ type GooglePrivacyDlpV2FullyInside struct {
 
 // GooglePrivacyDlpV2GlobalProcessing: Processing occurs in the global region.
 type GooglePrivacyDlpV2GlobalProcessing struct {
+}
+
+// GooglePrivacyDlpV2GoogleDriveLabel: Google Drive labels published by Google.
+type GooglePrivacyDlpV2GoogleDriveLabel struct {
+	// LabelFieldsToMatch: The field values of the Google Drive label to match.
+	LabelFieldsToMatch []*GooglePrivacyDlpV2LabelField `json:"labelFieldsToMatch,omitempty"`
+	// LabelId: The label ID
+	// (https://developers.google.com/workspace/drive/labels/guides/overview) of
+	// the Google Drive label.
+	LabelId string `json:"labelId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LabelFieldsToMatch") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LabelFieldsToMatch") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2GoogleDriveLabel) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2GoogleDriveLabel
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2GoogleDriveLabelMetadata: Google Drive labels published by
+// Google.
+type GooglePrivacyDlpV2GoogleDriveLabelMetadata struct {
+	// LabelFields: The field values of the Google Drive label
+	LabelFields []*GooglePrivacyDlpV2LabelFieldMetadata `json:"labelFields,omitempty"`
+	// LabelId: The label ID
+	// (https://developers.google.com/workspace/drive/labels/guides/overview) of
+	// the Google Drive label.
+	LabelId string `json:"labelId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LabelFields") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LabelFields") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2GoogleDriveLabelMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2GoogleDriveLabelMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2HotwordRule: The rule that adjusts the likelihood of
@@ -8211,6 +8317,56 @@ type GooglePrivacyDlpV2LDiversityResult struct {
 
 func (s GooglePrivacyDlpV2LDiversityResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2LDiversityResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2LabelField: The field values of the Google Drive label to
+// match.
+type GooglePrivacyDlpV2LabelField struct {
+	// Id: The identifier of the Label Field.
+	Id string `json:"id,omitempty"`
+	// Value: The value of the Label Field to match.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2LabelField) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2LabelField
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2LabelFieldMetadata: The field values of the Google Drive
+// label
+type GooglePrivacyDlpV2LabelFieldMetadata struct {
+	// Id: The identifier of the Label Field.
+	Id string `json:"id,omitempty"`
+	// Value: The value of the Label Field.
+	Value *GooglePrivacyDlpV2Value `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2LabelFieldMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2LabelFieldMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10770,6 +10926,52 @@ func (s GooglePrivacyDlpV2SelectedInfoTypes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2SensitivityLabel: Sensitivity labels published by
+// Microsoft.
+type GooglePrivacyDlpV2SensitivityLabel struct {
+	// Guid: The GUID of the sensitivity label.
+	Guid string `json:"guid,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Guid") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Guid") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2SensitivityLabel) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2SensitivityLabel
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2SensitivityLabelMetadata: Sensitivity labels published by
+// Microsoft.
+type GooglePrivacyDlpV2SensitivityLabelMetadata struct {
+	// Guid: Required. The GUID of the sensitivity label.
+	Guid string `json:"guid,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Guid") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Guid") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2SensitivityLabelMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2SensitivityLabelMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2SensitivityScore: Score is calculated from of all elements
 // in the data profile. A higher level means the data is more sensitive.
 type GooglePrivacyDlpV2SensitivityScore struct {
@@ -10901,7 +11103,7 @@ func (s GooglePrivacyDlpV2StorageMetadataLabel) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2StoredInfoType struct {
 	// CurrentVersion: Current version of the stored info type.
 	CurrentVersion *GooglePrivacyDlpV2StoredInfoTypeVersion `json:"currentVersion,omitempty"`
-	// Name: Resource name.
+	// Name: Output only. Resource name.
 	Name string `json:"name,omitempty"`
 	// PendingVersions: Pending versions of the stored info type. Empty if no
 	// versions are pending.
@@ -10989,22 +11191,22 @@ func (s GooglePrivacyDlpV2StoredInfoTypeStats) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2StoredInfoTypeVersion struct {
 	// Config: StoredInfoType configuration.
 	Config *GooglePrivacyDlpV2StoredInfoTypeConfig `json:"config,omitempty"`
-	// CreateTime: Create timestamp of the version. Read-only, determined by the
-	// system when the version is created.
+	// CreateTime: Output only. Create timestamp of the version. Read-only,
+	// determined by the system when the version is created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Errors: Errors that occurred when creating this storedInfoType version, or
-	// anomalies detected in the storedInfoType data that render it unusable. Only
-	// the five most recent errors will be displayed, with the most recent error
-	// appearing first. For example, some of the data for stored custom
-	// dictionaries is put in the user's Cloud Storage bucket, and if this data is
-	// modified or deleted by the user or another system, the dictionary becomes
-	// invalid. If any errors occur, fix the problem indicated by the error message
-	// and use the UpdateStoredInfoType API method to create another version of the
-	// storedInfoType to continue using it, reusing the same `config` if it was not
-	// the source of the error.
+	// Errors: Output only. Errors that occurred when creating this storedInfoType
+	// version, or anomalies detected in the storedInfoType data that render it
+	// unusable. Only the five most recent errors will be displayed, with the most
+	// recent error appearing first. For example, some of the data for stored
+	// custom dictionaries is put in the user's Cloud Storage bucket, and if this
+	// data is modified or deleted by the user or another system, the dictionary
+	// becomes invalid. If any errors occur, fix the problem indicated by the error
+	// message and use the UpdateStoredInfoType API method to create another
+	// version of the storedInfoType to continue using it, reusing the same
+	// `config` if it was not the source of the error.
 	Errors []*GooglePrivacyDlpV2Error `json:"errors,omitempty"`
-	// State: Stored info type version state. Read-only, updated by the system
-	// during dictionary creation.
+	// State: Output only. Stored info type version state. Read-only, updated by
+	// the system during dictionary creation.
 	//
 	// Possible values:
 	//   "STORED_INFO_TYPE_STATE_UNSPECIFIED" - Unused
@@ -11016,7 +11218,7 @@ type GooglePrivacyDlpV2StoredInfoTypeVersion struct {
 	// user-controlled storage were modified. To fix an invalid StoredInfoType, use
 	// the `UpdateStoredInfoType` method to create a new version.
 	State string `json:"state,omitempty"`
-	// Stats: Statistics about this storedInfoType version.
+	// Stats: Output only. Statistics about this storedInfoType version.
 	Stats *GooglePrivacyDlpV2StoredInfoTypeStats `json:"stats,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Config") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

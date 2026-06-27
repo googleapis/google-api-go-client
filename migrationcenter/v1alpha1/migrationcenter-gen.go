@@ -753,6 +753,9 @@ type Asset struct {
 	// AwsElasticNetworkInterfaceDetails: Output only. Asset information specific
 	// for AWS Elastic Network Interfaces.
 	AwsElasticNetworkInterfaceDetails *AwsElasticNetworkInterfaceDetails `json:"awsElasticNetworkInterfaceDetails,omitempty"`
+	// AwsElasticacheClusterDetails: Output only. Asset information specific for
+	// AWS ElastiCache Clusters.
+	AwsElasticacheClusterDetails *AwsElastiCacheClusterDetails `json:"awsElasticacheClusterDetails,omitempty"`
 	// AwsElbLoadBalancerDetails: Output only. Asset information specific for AWS
 	// Load Balancers.
 	AwsElbLoadBalancerDetails *AwsElbLoadBalancerDetails `json:"awsElbLoadBalancerDetails,omitempty"`
@@ -896,6 +899,9 @@ type AssetFrame struct {
 	// AwsElasticNetworkInterfaceDetails: Optional. Asset information specific for
 	// AWS Elastic Network Interfaces.
 	AwsElasticNetworkInterfaceDetails *AwsElasticNetworkInterfaceDetails `json:"awsElasticNetworkInterfaceDetails,omitempty"`
+	// AwsElasticacheClusterDetails: Optional. Asset information specific for AWS
+	// ElastiCache Clusters.
+	AwsElasticacheClusterDetails *AwsElastiCacheClusterDetails `json:"awsElasticacheClusterDetails,omitempty"`
 	// AwsElbLoadBalancerDetails: Asset information specific for AWS Load
 	// Balancers.
 	AwsElbLoadBalancerDetails *AwsElbLoadBalancerDetails `json:"awsElbLoadBalancerDetails,omitempty"`
@@ -1290,6 +1296,10 @@ type AwsEfsFileSystemDetails struct {
 
 // AwsEksClusterDetails: Asset information specific for AWS EKS clusters.
 type AwsEksClusterDetails struct {
+}
+
+// AwsElastiCacheClusterDetails: Details of an AWS ElastiCache Cluster.
+type AwsElastiCacheClusterDetails struct {
 }
 
 // AwsElasticIpAddressDetails: Asset information specific for AWS Elastic IP

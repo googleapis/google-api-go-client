@@ -2753,7 +2753,7 @@
       }
     }
   },
-  "revision": "20260609",
+  "revision": "20260616",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -6369,7 +6369,8 @@
               "CONTROLLER_MANAGER",
               "KCP_SSHD",
               "KCP_CONNECTION",
-              "KCP_HPA"
+              "KCP_HPA",
+              "KCP_VPA"
             ],
             "enumDescriptions": [
               "Default value. This shouldn't be used.",
@@ -6380,7 +6381,8 @@
               "kube-controller-manager",
               "kcp-sshd",
               "kcp connection logs",
-              "horizontal pod autoscaler decision logs"
+              "horizontal pod autoscaler decision logs",
+              "vertical pod autoscaler decision logs"
             ],
             "type": "string"
           },
@@ -7558,10 +7560,11 @@
           "description": "Enable best effort provisioning for nodes"
         },
         "conditions": {
-          "description": "Which conditions caused the current node pool state.",
+          "description": "Output only. Which conditions caused the current node pool state.",
           "items": {
             "$ref": "StatusCondition"
           },
+          "readOnly": true,
           "type": "array"
         },
         "config": {
@@ -7569,7 +7572,8 @@
           "description": "The node configuration of the pool."
         },
         "etag": {
-          "description": "This checksum is computed by the server based on the value of node pool fields, and may be sent on update requests to ensure the client has an up-to-date value before proceeding.",
+          "description": "Output only. This checksum is computed by the server based on the value of node pool fields, and may be sent on update requests to ensure the client has an up-to-date value before proceeding.",
+          "readOnly": true,
           "type": "string"
         },
         "initialNodeCount": {
@@ -8554,8 +8558,15 @@
             "STABLE",
             "EXTENDED"
           ],
+          "enumDeprecated": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
           "enumDescriptions": [
-            "No channel specified.",
+            "Deprecated: No channel specified. it will be removed in the future, use RAPID, REGULAR, STABLE or EXTENDED instead.",
             "RAPID channel is offered on an early access basis for customers who want to test new releases. WARNING: Versions available in the RAPID Channel may be subject to unresolved issues with no known workaround and are not subject to any SLAs.",
             "Clusters subscribed to REGULAR receive versions that are considered GA quality. REGULAR is intended for production users who want to take advantage of new features.",
             "Clusters subscribed to STABLE receive versions that are known to be stable and reliable in production.",
@@ -8579,8 +8590,15 @@
             "STABLE",
             "EXTENDED"
           ],
+          "enumDeprecated": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
           "enumDescriptions": [
-            "No channel specified.",
+            "Deprecated: No channel specified. it will be removed in the future, use RAPID, REGULAR, STABLE or EXTENDED instead.",
             "RAPID channel is offered on an early access basis for customers who want to test new releases. WARNING: Versions available in the RAPID Channel may be subject to unresolved issues with no known workaround and are not subject to any SLAs.",
             "Clusters subscribed to REGULAR receive versions that are considered GA quality. REGULAR is intended for production users who want to take advantage of new features.",
             "Clusters subscribed to STABLE receive versions that are known to be stable and reliable in production.",

@@ -2661,7 +2661,7 @@
       }
     }
   },
-  "revision": "20260526",
+  "revision": "20260621",
   "rootUrl": "https://backupdr.googleapis.com/",
   "schemas": {
     "AbandonBackupRequest": {
@@ -5268,7 +5268,7 @@
           "type": "string"
         },
         "token": {
-          "description": "The downscoped token that was created.",
+          "description": "Input only. The downscoped token that was created.",
           "type": "string"
         },
         "writeLocation": {

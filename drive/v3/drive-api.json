@@ -3038,7 +3038,7 @@
       }
     }
   },
-  "revision": "20260428",
+  "revision": "20260624",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {
@@ -4147,6 +4147,10 @@
           "properties": {
             "canAcceptOwnership": {
               "description": "Output only. Whether the current user is the pending owner of the file. Not populated for shared drive files.",
+              "type": "boolean"
+            },
+            "canAccessViaGenAi": {
+              "description": "Whether the current user can access this file via Gen AI features.",
               "type": "boolean"
             },
             "canAddChildren": {

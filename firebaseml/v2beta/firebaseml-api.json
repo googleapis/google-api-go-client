@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20260612",
+  "revision": "20260620",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -3226,6 +3226,10 @@
           },
           "description": "Optional. Custom configs for ParallelAiSearch. This field can be used to pass any parameter from the Parallel.ai Search API. See the Parallel.ai documentation for the full list of available parameters and their usage: https://docs.parallel.ai/api-reference/search-beta/search Currently only `source_policy`, `excerpts`, `max_results`, `mode`, `fetch_policy` can be set via this field. For example: { \"source_policy\": { \"include_domains\": [\"google.com\", \"wikipedia.org\"], \"exclude_domains\": [\"example.com\"] }, \"fetch_policy\": { \"max_age_seconds\": 3600 } }",
           "type": "object"
+        },
+        "enableDataRetention": {
+          "description": "Optional. Instructs Vertex Grounding to use Parallel's Zero Data Retention Marketplace product. If this value is \"false\" or omitted, the Parallel Web Search for Grounding standard subscription will be used. If this value is \"true\", the Parallel Web Search for Grounding - ZDR subscription will be used.",
+          "type": "boolean"
         }
       },
       "type": "object"

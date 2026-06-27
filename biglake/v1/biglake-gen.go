@@ -6,7 +6,7 @@
 
 // Package biglake provides access to the BigLake API.
 //
-// For product documentation, see: https://cloud.google.com/bigquery/
+// For product documentation, see: https://cloud.google.com/products/lakehouse
 //
 // # Library status
 //

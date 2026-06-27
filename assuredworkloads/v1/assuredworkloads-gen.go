@@ -120,7 +120,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Assuredworkloads = NewAssuredworkloadsService(s)
+	s.Folders = NewFoldersService(s)
 	s.Organizations = NewOrganizationsService(s)
+	s.Projects = NewProjectsService(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -147,7 +149,11 @@ type Service struct {
 
 	Assuredworkloads *AssuredworkloadsService
 
+	Folders *FoldersService
+
 	Organizations *OrganizationsService
+
+	Projects *ProjectsService
 }
 
 func (s *Service) userAgent() string {
@@ -166,6 +172,39 @@ type AssuredworkloadsService struct {
 	s *Service
 }
 
+func NewFoldersService(s *Service) *FoldersService {
+	rs := &FoldersService{s: s}
+	rs.Locations = NewFoldersLocationsService(s)
+	return rs
+}
+
+type FoldersService struct {
+	s *Service
+
+	Locations *FoldersLocationsService
+}
+
+func NewFoldersLocationsService(s *Service) *FoldersLocationsService {
+	rs := &FoldersLocationsService{s: s}
+	rs.DbFindingSummaries = NewFoldersLocationsDbFindingSummariesService(s)
+	return rs
+}
+
+type FoldersLocationsService struct {
+	s *Service
+
+	DbFindingSummaries *FoldersLocationsDbFindingSummariesService
+}
+
+func NewFoldersLocationsDbFindingSummariesService(s *Service) *FoldersLocationsDbFindingSummariesService {
+	rs := &FoldersLocationsDbFindingSummariesService{s: s}
+	return rs
+}
+
+type FoldersLocationsDbFindingSummariesService struct {
+	s *Service
+}
+
 func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs := &OrganizationsService{s: s}
 	rs.Locations = NewOrganizationsLocationsService(s)
@@ -180,6 +219,7 @@ type OrganizationsService struct {
 
 func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService {
 	rs := &OrganizationsLocationsService{s: s}
+	rs.DbFindingSummaries = NewOrganizationsLocationsDbFindingSummariesService(s)
 	rs.Operations = NewOrganizationsLocationsOperationsService(s)
 	rs.Workloads = NewOrganizationsLocationsWorkloadsService(s)
 	return rs
@@ -188,9 +228,20 @@ func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService
 type OrganizationsLocationsService struct {
 	s *Service
 
+	DbFindingSummaries *OrganizationsLocationsDbFindingSummariesService
+
 	Operations *OrganizationsLocationsOperationsService
 
 	Workloads *OrganizationsLocationsWorkloadsService
+}
+
+func NewOrganizationsLocationsDbFindingSummariesService(s *Service) *OrganizationsLocationsDbFindingSummariesService {
+	rs := &OrganizationsLocationsDbFindingSummariesService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsDbFindingSummariesService struct {
+	s *Service
 }
 
 func NewOrganizationsLocationsOperationsService(s *Service) *OrganizationsLocationsOperationsService {
@@ -232,6 +283,39 @@ func NewOrganizationsLocationsWorkloadsViolationsService(s *Service) *Organizati
 }
 
 type OrganizationsLocationsWorkloadsViolationsService struct {
+	s *Service
+}
+
+func NewProjectsService(s *Service) *ProjectsService {
+	rs := &ProjectsService{s: s}
+	rs.Locations = NewProjectsLocationsService(s)
+	return rs
+}
+
+type ProjectsService struct {
+	s *Service
+
+	Locations *ProjectsLocationsService
+}
+
+func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
+	rs := &ProjectsLocationsService{s: s}
+	rs.DbFindingSummaries = NewProjectsLocationsDbFindingSummariesService(s)
+	return rs
+}
+
+type ProjectsLocationsService struct {
+	s *Service
+
+	DbFindingSummaries *ProjectsLocationsDbFindingSummariesService
+}
+
+func NewProjectsLocationsDbFindingSummariesService(s *Service) *ProjectsLocationsDbFindingSummariesService {
+	rs := &ProjectsLocationsDbFindingSummariesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDbFindingSummariesService struct {
 	s *Service
 }
 
@@ -527,8 +611,27 @@ func (s GoogleCloudAssuredworkloadsV1BatchAcknowledgeViolationsRequest) MarshalJ
 // GoogleCloudAssuredworkloadsV1BatchAcknowledgeViolationsResponse: Response
 // for batch violation acknowledgement
 type GoogleCloudAssuredworkloadsV1BatchAcknowledgeViolationsResponse struct {
+	// AcknowledgedViolationsCount: Count of acknowledged violations.
+	AcknowledgedViolationsCount int64 `json:"acknowledgedViolationsCount,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AcknowledgedViolationsCount") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AcknowledgedViolationsCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1BatchAcknowledgeViolationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1BatchAcknowledgeViolationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata: Operation
@@ -675,6 +778,94 @@ func (s GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAssuredworkloadsV1DbFindingSummary: The details for a finding.
+type GoogleCloudAssuredworkloadsV1DbFindingSummary struct {
+	// FindingCategory: Output only. The category of the finding.
+	FindingCategory string `json:"findingCategory,omitempty"`
+	// FindingClass: Output only. The class of the finding.
+	//
+	// Possible values:
+	//   "FINDING_CLASS_UNSPECIFIED" - Default value. This value is unused.
+	//   "THREAT" - The activity is unwanted or malicious.
+	//   "VULNERABILITY" - A potential weakness in software that increases risk to
+	// confidentiality, integrity, and availability.
+	//   "MISCONFIGURATION" - A potential weakness in a cloud resource or asset
+	// configuration that increases risk.
+	//   "OBSERVATION" - A security observation that is for informational purposes.
+	//   "SCC_ERROR" - An error that prevents Security Command Center from
+	// functioning properly.
+	//   "POSTURE_VIOLATION" - A potential security risk that's due to a change in
+	// the security posture.
+	//   "TOXIC_COMBINATION" - A combination of security issues that represent a
+	// more severe security problem when taken together.
+	//   "SENSITIVE_DATA_RISK" - A potential security risk to data assets that
+	// contain sensitive data.
+	//   "CHOKEPOINT" - A resource or resource group where high risk attack paths
+	// converge, based on attack path simulations (APS).
+	FindingClass string `json:"findingClass,omitempty"`
+	// FindingCount: Output only. The count of the finding.
+	FindingCount int64 `json:"findingCount,omitempty,string"`
+	// Name: Identifier. The name of the finding summary.
+	Name string `json:"name,omitempty"`
+	// RelatedFrameworks: Optional. The list of compliance frameworks that the
+	// finding belongs to.
+	RelatedFrameworks []string `json:"relatedFrameworks,omitempty"`
+	// Severity: Output only. The severity of the finding.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Default value. This value is unused.
+	//   "CRITICAL" - A critical vulnerability is easily discoverable by an
+	// external actor, exploitable, and results in the direct ability to execute
+	// arbitrary code, exfiltrate data, and otherwise gain additional access and
+	// privileges to cloud resources and workloads. Examples include publicly
+	// accessible unprotected user data and public SSH access with weak or no
+	// passwords. A critical threat is a threat that can access, modify, or delete
+	// data or execute unauthorized code within existing resources.
+	//   "HIGH" - A high-risk vulnerability can be easily discovered and exploited
+	// in combination with other vulnerabilities to gain direct access and the
+	// ability to execute arbitrary code, exfiltrate data, and otherwise gain
+	// additional access and privileges to cloud resources and workloads. An
+	// example is a database with weak or no passwords that is only accessible
+	// internally. This database could easily be compromised by an actor that had
+	// access to the internal network. A high-risk threat is a threat that can
+	// create new computational resources in an environment but can't access data
+	// or execute code in existing resources.
+	//   "MEDIUM" - A medium-risk vulnerability can be used by an actor to gain
+	// access to resources or privileges that enable them to eventually (through
+	// multiple steps or a complex exploit) gain access and the ability to execute
+	// arbitrary code or exfiltrate data. An example is a service account with
+	// access to more projects than it should have. If an actor gains access to the
+	// service account, they could potentially use that access to manipulate a
+	// project the service account was not intended to. A medium-risk threat can
+	// cause operational impact but might not access data or execute unauthorized
+	// code.
+	//   "LOW" - A low-risk vulnerability hampers a security organization's ability
+	// to detect vulnerabilities or active threats in their deployment, or prevents
+	// the root cause investigation of security issues. An example is monitoring
+	// and logs being disabled for resource configurations and access. A low-risk
+	// threat is a threat that has obtained minimal access to an environment but
+	// can't access data, execute code, or create resources.
+	Severity string `json:"severity,omitempty"`
+	// UpdateTime: Output only. The last updated time of the finding.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FindingCategory") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FindingCategory") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1DbFindingSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1DbFindingSummary
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAssuredworkloadsV1EnableComplianceUpdatesResponse: Response for
 // EnableComplianceUpdates endpoint.
 type GoogleCloudAssuredworkloadsV1EnableComplianceUpdatesResponse struct {
@@ -687,6 +878,34 @@ type GoogleCloudAssuredworkloadsV1EnableComplianceUpdatesResponse struct {
 type GoogleCloudAssuredworkloadsV1EnableResourceMonitoringResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse: The response
+// message for ListDbFindingSummaries.
+type GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse struct {
+	// DbFindingSummaries: List of finding summary by category.
+	DbFindingSummaries []*GoogleCloudAssuredworkloadsV1DbFindingSummary `json:"dbFindingSummaries,omitempty"`
+	// NextPageToken: Output only. The token to retrieve the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DbFindingSummaries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DbFindingSummaries") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1ListViolationsResponse: Response of
@@ -2300,6 +2519,316 @@ func (c *AssuredworkloadsRevertArchivedResourceEventsCall) Do(opts ...googleapi.
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.assuredworkloads.revertArchivedResourceEvents", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type FoldersLocationsDbFindingSummariesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the finding summary by category for a given scope.
+//
+//   - parent: The parent scope for the framework overview page. Formats: -
+//     projects/{project}/locations/{location} -
+//     folders/{folder}/locations/{location} -
+//     organizations/{organization}/locations/{location}.
+func (r *FoldersLocationsDbFindingSummariesService) List(parent string) *FoldersLocationsDbFindingSummariesListCall {
+	c := &FoldersLocationsDbFindingSummariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filtering results.
+func (c *FoldersLocationsDbFindingSummariesListCall) Filter(filter string) *FoldersLocationsDbFindingSummariesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The requested page size.
+// The server might return fewer items than requested. If unspecified, the
+// server picks an appropriate default.
+func (c *FoldersLocationsDbFindingSummariesListCall) PageSize(pageSize int64) *FoldersLocationsDbFindingSummariesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token that identifies
+// the page of results that the server should return.
+func (c *FoldersLocationsDbFindingSummariesListCall) PageToken(pageToken string) *FoldersLocationsDbFindingSummariesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsDbFindingSummariesListCall) Fields(s ...googleapi.Field) *FoldersLocationsDbFindingSummariesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FoldersLocationsDbFindingSummariesListCall) IfNoneMatch(entityTag string) *FoldersLocationsDbFindingSummariesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsDbFindingSummariesListCall) Context(ctx context.Context) *FoldersLocationsDbFindingSummariesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsDbFindingSummariesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsDbFindingSummariesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dbFindingSummaries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "assuredworkloads.folders.locations.dbFindingSummaries.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.folders.locations.dbFindingSummaries.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersLocationsDbFindingSummariesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.folders.locations.dbFindingSummaries.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersLocationsDbFindingSummariesListCall) Pages(ctx context.Context, f func(*GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationsLocationsDbFindingSummariesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the finding summary by category for a given scope.
+//
+//   - parent: The parent scope for the framework overview page. Formats: -
+//     projects/{project}/locations/{location} -
+//     folders/{folder}/locations/{location} -
+//     organizations/{organization}/locations/{location}.
+func (r *OrganizationsLocationsDbFindingSummariesService) List(parent string) *OrganizationsLocationsDbFindingSummariesListCall {
+	c := &OrganizationsLocationsDbFindingSummariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filtering results.
+func (c *OrganizationsLocationsDbFindingSummariesListCall) Filter(filter string) *OrganizationsLocationsDbFindingSummariesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The requested page size.
+// The server might return fewer items than requested. If unspecified, the
+// server picks an appropriate default.
+func (c *OrganizationsLocationsDbFindingSummariesListCall) PageSize(pageSize int64) *OrganizationsLocationsDbFindingSummariesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token that identifies
+// the page of results that the server should return.
+func (c *OrganizationsLocationsDbFindingSummariesListCall) PageToken(pageToken string) *OrganizationsLocationsDbFindingSummariesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsDbFindingSummariesListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsDbFindingSummariesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsDbFindingSummariesListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsDbFindingSummariesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsDbFindingSummariesListCall) Context(ctx context.Context) *OrganizationsLocationsDbFindingSummariesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsDbFindingSummariesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsDbFindingSummariesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dbFindingSummaries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "assuredworkloads.organizations.locations.dbFindingSummaries.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.organizations.locations.dbFindingSummaries.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsDbFindingSummariesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.organizations.locations.dbFindingSummaries.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsDbFindingSummariesListCall) Pages(ctx context.Context, f func(*GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type OrganizationsLocationsOperationsGetCall struct {
@@ -4529,6 +5058,161 @@ func (c *OrganizationsLocationsWorkloadsViolationsListCall) Do(opts ...googleapi
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *OrganizationsLocationsWorkloadsViolationsListCall) Pages(ctx context.Context, f func(*GoogleCloudAssuredworkloadsV1ListViolationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsDbFindingSummariesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the finding summary by category for a given scope.
+//
+//   - parent: The parent scope for the framework overview page. Formats: -
+//     projects/{project}/locations/{location} -
+//     folders/{folder}/locations/{location} -
+//     organizations/{organization}/locations/{location}.
+func (r *ProjectsLocationsDbFindingSummariesService) List(parent string) *ProjectsLocationsDbFindingSummariesListCall {
+	c := &ProjectsLocationsDbFindingSummariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filtering results.
+func (c *ProjectsLocationsDbFindingSummariesListCall) Filter(filter string) *ProjectsLocationsDbFindingSummariesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The requested page size.
+// The server might return fewer items than requested. If unspecified, the
+// server picks an appropriate default.
+func (c *ProjectsLocationsDbFindingSummariesListCall) PageSize(pageSize int64) *ProjectsLocationsDbFindingSummariesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token that identifies
+// the page of results that the server should return.
+func (c *ProjectsLocationsDbFindingSummariesListCall) PageToken(pageToken string) *ProjectsLocationsDbFindingSummariesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDbFindingSummariesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDbFindingSummariesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDbFindingSummariesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDbFindingSummariesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDbFindingSummariesListCall) Context(ctx context.Context) *ProjectsLocationsDbFindingSummariesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDbFindingSummariesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDbFindingSummariesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dbFindingSummaries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "assuredworkloads.projects.locations.dbFindingSummaries.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.projects.locations.dbFindingSummaries.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDbFindingSummariesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.projects.locations.dbFindingSummaries.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDbFindingSummariesListCall) Pages(ctx context.Context, f func(*GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

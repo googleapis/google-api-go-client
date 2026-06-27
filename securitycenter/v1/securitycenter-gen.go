@@ -2947,18 +2947,19 @@ type Finding struct {
 	//   "CHOKEPOINT"
 	//   "EXTERNAL_EXPOSURE"
 	//   "SECRET"
-	FindingClass     string             `json:"findingClass,omitempty"`
-	GroupMemberships []*GroupMembership `json:"groupMemberships,omitempty"`
-	IamBindings      []*IamBinding      `json:"iamBindings,omitempty"`
-	Indicator        *Indicator         `json:"indicator,omitempty"`
-	IpRules          *IpRules           `json:"ipRules,omitempty"`
-	Job              *Job               `json:"job,omitempty"`
-	KernelRootkit    *KernelRootkit     `json:"kernelRootkit,omitempty"`
-	Kubernetes       *Kubernetes        `json:"kubernetes,omitempty"`
-	LoadBalancers    []*LoadBalancer    `json:"loadBalancers,omitempty"`
-	LogEntries       []*LogEntry        `json:"logEntries,omitempty"`
-	MitreAttack      *MitreAttack       `json:"mitreAttack,omitempty"`
-	ModuleName       string             `json:"moduleName,omitempty"`
+	FindingClass     string                                 `json:"findingClass,omitempty"`
+	GroupMemberships []*GroupMembership                     `json:"groupMemberships,omitempty"`
+	IamBindings      []*IamBinding                          `json:"iamBindings,omitempty"`
+	IamDetails       *GoogleCloudSecuritycenterV1IamDetails `json:"iamDetails,omitempty"`
+	Indicator        *Indicator                             `json:"indicator,omitempty"`
+	IpRules          *IpRules                               `json:"ipRules,omitempty"`
+	Job              *Job                                   `json:"job,omitempty"`
+	KernelRootkit    *KernelRootkit                         `json:"kernelRootkit,omitempty"`
+	Kubernetes       *Kubernetes                            `json:"kubernetes,omitempty"`
+	LoadBalancers    []*LoadBalancer                        `json:"loadBalancers,omitempty"`
+	LogEntries       []*LogEntry                            `json:"logEntries,omitempty"`
+	MitreAttack      *MitreAttack                           `json:"mitreAttack,omitempty"`
+	ModuleName       string                                 `json:"moduleName,omitempty"`
 	// Possible values:
 	//   "MUTE_UNSPECIFIED"
 	//   "MUTED"
@@ -3332,6 +3333,47 @@ type GoogleCloudSecuritycenterV1ExternalSystem struct {
 
 func (s GoogleCloudSecuritycenterV1ExternalSystem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1ExternalSystem
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudSecuritycenterV1IamDetails struct {
+	IamRolePermissions []*GoogleCloudSecuritycenterV1IamRolePermission `json:"iamRolePermissions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IamRolePermissions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IamRolePermissions") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV1IamDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1IamDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudSecuritycenterV1IamRolePermission struct {
+	Name string `json:"name,omitempty"`
+	Role string `json:"role,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV1IamRolePermission) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1IamRolePermission
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5555,6 +5597,7 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	FindingClass     string                                        `json:"findingClass,omitempty"`
 	GroupMemberships []*GoogleCloudSecuritycenterV2GroupMembership `json:"groupMemberships,omitempty"`
 	IamBindings      []*GoogleCloudSecuritycenterV2IamBinding      `json:"iamBindings,omitempty"`
+	IamDetails       *GoogleCloudSecuritycenterV2IamDetails        `json:"iamDetails,omitempty"`
 	Indicator        *GoogleCloudSecuritycenterV2Indicator         `json:"indicator,omitempty"`
 	IpRules          *GoogleCloudSecuritycenterV2IpRules           `json:"ipRules,omitempty"`
 	Job              *GoogleCloudSecuritycenterV2Job               `json:"job,omitempty"`
@@ -5765,6 +5808,47 @@ type GoogleCloudSecuritycenterV2IamBinding struct {
 
 func (s GoogleCloudSecuritycenterV2IamBinding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2IamBinding
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudSecuritycenterV2IamDetails struct {
+	IamRolePermissions []*GoogleCloudSecuritycenterV2IamRolePermission `json:"iamRolePermissions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IamRolePermissions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IamRolePermissions") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2IamDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2IamDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudSecuritycenterV2IamRolePermission struct {
+	Name string `json:"name,omitempty"`
+	Role string `json:"role,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2IamRolePermission) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2IamRolePermission
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

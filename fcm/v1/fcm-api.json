@@ -146,7 +146,7 @@
       }
     }
   },
-  "revision": "20260605",
+  "revision": "20260619",
   "rootUrl": "https://fcm.googleapis.com/",
   "schemas": {
     "AndroidConfig": {
@@ -479,7 +479,7 @@
           "description": "Required. Set `color` of the LED with [google.type.Color](https://github.com/googleapis/googleapis/blob/master/google/type/color.proto)."
         },
         "lightOffDuration": {
-          "description": "Required. Along with `light_on_duration `, define the blink rate of LED flashes. Resolution defined by [proto.Duration](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.Duration)",
+          "description": "Required. Along with `light_on_duration`, define the blink rate of LED flashes. Resolution defined by [proto.Duration](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.Duration)",
           "format": "google-duration",
           "type": "string"
         },
@@ -519,7 +519,7 @@
           "description": "Input only. Template for FCM SDK feature options to use across all platforms."
         },
         "fid": {
-          "description": "Optional. Firebase Installation ID to send a message to.",
+          "description": "Firebase Installation ID to send a message to.",
           "type": "string"
         },
         "name": {

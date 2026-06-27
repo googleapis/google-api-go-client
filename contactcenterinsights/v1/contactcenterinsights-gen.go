@@ -2406,17 +2406,19 @@ func (s GoogleCloudContactcenterinsightsV1Chart) MarshalJSON() ([]byte, error) {
 // GoogleCloudContactcenterinsightsV1ChartAction: The action to be taken when
 // the chart is clicked.
 type GoogleCloudContactcenterinsightsV1ChartAction struct {
+	// ConversationFilter: The conversation filter string.
+	ConversationFilter string `json:"conversationFilter,omitempty"`
 	// RedirectAction: Redirect action.
 	RedirectAction *GoogleCloudContactcenterinsightsV1RedirectAction `json:"redirectAction,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RedirectAction") to
+	// ForceSendFields is a list of field names (e.g. "ConversationFilter") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RedirectAction") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ConversationFilter") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

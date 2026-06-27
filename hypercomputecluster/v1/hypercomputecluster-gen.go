@@ -1790,10 +1790,10 @@ type SlurmNodeSet struct {
 	// ComputeInstance: Optional. If set, indicates that the nodeset should be
 	// backed by Compute Engine instances.
 	ComputeInstance *ComputeInstanceSlurmNodeSet `json:"computeInstance,omitempty"`
-	// Id: Required. Identifier for the nodeset, which allows it to be referenced
-	// by partitions. Must conform to RFC-1034
-	// (https://datatracker.ietf.org/doc/html/rfc1034) (lower-case, alphanumeric,
-	// and at most 63 characters).
+	// Id: Required. The ID for the nodeset, which allows it to be referenced by
+	// cluster partitions. The nodeset ID must start with a lowercase letter
+	// (`a`-`z`), use only lowercase letters or numbers, and contain up to 15
+	// characters. For example, specify `nodeset001`.
 	Id string `json:"id,omitempty"`
 	// MaxDynamicNodeCount: Optional. Controls how many additional nodes a cluster
 	// can bring online to handle workloads. Set this value to enable dynamic node
@@ -2398,10 +2398,10 @@ func (r *ProjectsLocationsClustersService) Create(parent string, cluster *Cluste
 	return c
 }
 
-// ClusterId sets the optional parameter "clusterId": Required. ID of the
-// cluster to create. Must conform to RFC-1034
-// (https://datatracker.ietf.org/doc/html/rfc1034) (lower-case, alphanumeric,
-// and at most 63 characters).
+// ClusterId sets the optional parameter "clusterId": Required. The ID of the
+// cluster to create. The cluster ID must start with a lowercase letter
+// (`a`-`z`), use only lowercase letters or numbers, and contain up to 10
+// characters. For example, specify `cluster001`.
 func (c *ProjectsLocationsClustersCreateCall) ClusterId(clusterId string) *ProjectsLocationsClustersCreateCall {
 	c.urlParams_.Set("clusterId", clusterId)
 	return c

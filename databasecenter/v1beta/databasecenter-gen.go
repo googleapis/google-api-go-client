@@ -458,6 +458,10 @@ type AdditionalDetail struct {
 	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Resource version is in extended support.
 	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Represents a database version
 	// nearing end of life.
+	//   "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK" - Indicates a high risk of
+	// maintenance downtime.
+	//   "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME" - Indicates both a
+	// low cache hit rate and a risk of maintenance downtime.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutomatedBackupPolicyInfo")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -1572,6 +1576,10 @@ type IssueStats struct {
 	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Resource version is in extended support.
 	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Represents a database version
 	// nearing end of life.
+	//   "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK" - Indicates a high risk of
+	// maintenance downtime.
+	//   "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME" - Indicates both a
+	// low cache hit rate and a risk of maintenance downtime.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DeltaDetails") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2835,6 +2843,10 @@ type Signal struct {
 	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Resource version is in extended support.
 	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Represents a database version
 	// nearing end of life.
+	//   "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK" - Indicates a high risk of
+	// maintenance downtime.
+	//   "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME" - Indicates both a
+	// low cache hit rate and a risk of maintenance downtime.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalDetails") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3090,6 +3102,10 @@ type SignalFilter struct {
 	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Resource version is in extended support.
 	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Represents a database version
 	// nearing end of life.
+	//   "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK" - Indicates a high risk of
+	// maintenance downtime.
+	//   "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME" - Indicates both a
+	// low cache hit rate and a risk of maintenance downtime.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SignalStatus") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3361,6 +3377,10 @@ type SignalProductsFilters struct {
 	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Resource version is in extended support.
 	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Represents a database version
 	// nearing end of life.
+	//   "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK" - Indicates a high risk of
+	// maintenance downtime.
+	//   "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME" - Indicates both a
+	// low cache hit rate and a risk of maintenance downtime.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Products") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3604,6 +3624,10 @@ type SignalTypeGroup struct {
 	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Resource version is in extended support.
 	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Represents a database version
 	// nearing end of life.
+	//   "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK" - Indicates a high risk of
+	// maintenance downtime.
+	//   "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME" - Indicates both a
+	// low cache hit rate and a risk of maintenance downtime.
 	SignalTypes []string `json:"signalTypes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or

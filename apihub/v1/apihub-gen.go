@@ -34,6 +34,11 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	apihubService, err := apihub.NewService(ctx, option.WithScopes(apihub.CloudPlatformScope))
+//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -98,6 +103,14 @@ const mtlsBasePath = "https://apihub.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// See your Google Cloud API hub data and the email address of your Google
+	// Account
+	ApihubReadonlyScope = "https://www.googleapis.com/auth/apihub.readonly"
+
+	// See, edit, configure, and delete your Google Cloud API hub data and see the
+	// email address for your Google Account
+	ApihubReadwriteScope = "https://www.googleapis.com/auth/apihub.readwrite"
+
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
@@ -106,6 +119,8 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/apihub.readonly",
+		"https://www.googleapis.com/auth/apihub.readwrite",
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.

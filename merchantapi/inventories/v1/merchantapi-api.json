@@ -300,7 +300,7 @@
       }
     }
   },
-  "revision": "20260527",
+  "revision": "20260624",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -453,6 +453,10 @@
         },
         "instoreProductLocation": {
           "description": "Optional. Location of the product inside the store. Maximum length is 20 bytes.",
+          "type": "string"
+        },
+        "localShippingLabel": {
+          "description": "Optional. Specifies a label associated with the shipping for the `LocalInventory` resource. Can be used to group local shipping services to this particular inventory item. For accepted field format, see the [Local delivery](https://support.google.com/merchants/answer/14819809#localdelivery)",
           "type": "string"
         },
         "loyaltyPrograms": {

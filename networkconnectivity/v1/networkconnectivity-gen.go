@@ -825,7 +825,7 @@ type AutomatedDnsRecord struct {
 	RecordType string `json:"recordType,omitempty"`
 	// ServiceClass: Required. Immutable. The service class identifier which
 	// authorizes this AutomatedDnsRecord. Any API calls targeting this
-	// AutomatedDnsRecord must have `networkconnectivity.serviceclasses.use` IAM
+	// AutomatedDnsRecord must have `networkconnectivity.serviceClasses.use` IAM
 	// permission for the provided service class.
 	ServiceClass string `json:"serviceClass,omitempty"`
 	// State: Output only. The current operational state of this AutomatedDnsRecord

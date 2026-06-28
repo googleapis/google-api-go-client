@@ -1250,6 +1250,15 @@ type ObjectConditions struct {
 	// information, see Filtering objects from transfers
 	// (/storage-transfer/docs/filtering-objects-from-transfers).
 	IncludePrefixes []string `json:"includePrefixes,omitempty"`
+	// IncludeStorageClasses: Optional. If specified, objects in the source
+	// matching any of the storage classes in this field will be transferred.
+	// Objects in storage classes not included in this field will be skipped. If
+	// empty, the default behavior regarding the storage classes is applied. This
+	// includes all storage classes except "GLACIER" as per default behavior.
+	// Currently, this field only supports S3 data source. For the list of valid
+	// Amazon S3 storage classnames, please refer to the AWS documentation:
+	// https://docs.aws.amazon.com/AmazonS3/latest/userguide/sc-howtoset.html
+	IncludeStorageClasses []string `json:"includeStorageClasses,omitempty"`
 	// LastModifiedBefore: If specified, only objects with a "last modification
 	// time" before this timestamp and objects that don't have a "last modification
 	// time" are transferred.
@@ -1901,7 +1910,7 @@ type TransferOptions struct {
 	// delete_objects_unique_in_sink are mutually exclusive.
 	DeleteObjectsFromSourceAfterTransfer bool `json:"deleteObjectsFromSourceAfterTransfer,omitempty"`
 	// DeleteObjectsUniqueInSink: Whether objects that exist only in the sink
-	// should be deleted. **Note:** This option and
+	// should be deleted from the sink. **Note:** This option and
 	// delete_objects_from_source_after_transfer are mutually exclusive.
 	DeleteObjectsUniqueInSink bool `json:"deleteObjectsUniqueInSink,omitempty"`
 	// MetadataOptions: Represents the selected metadata options for a transfer

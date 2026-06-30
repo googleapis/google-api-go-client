@@ -6408,7 +6408,7 @@ type ProjectsSubscribersCreateCall struct {
 // is reachable and correctly validates the `Authorization` header.
 //
 //   - parent: The parent resource where this subscriber will be created. Format:
-//     projects/{project} Example: projects/my-project-123.
+//     projects/{project_number} Example: projects/1234567890.
 func (r *ProjectsSubscribersService) Create(parent string, createsubscriberpayload *CreateSubscriberPayload) *ProjectsSubscribersCreateCall {
 	c := &ProjectsSubscribersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

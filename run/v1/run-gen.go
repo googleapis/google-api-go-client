@@ -4624,14 +4624,14 @@ type ObjectMeta struct {
 	// `run.googleapis.com/launch-stage`: Service, Job. *
 	// `run.googleapis.com/minScale`: Service. * `run.googleapis.com/maxScale`:
 	// Service. * `run.googleapis.com/manualInstanceCount`: Service. *
-	// `run.googleapis.com/network-interfaces`: Revision, Execution. *
+	// `run.googleapis.com/network-interfaces`: Revision, Execution, Instance. *
 	// `run.googleapis.com/post-key-revocation-action-type`: Revision.
 	// `run.googleapis.com/scalingMode`: Service. * `run.googleapis.com/secrets`:
 	// Revision, Execution. * `run.googleapis.com/secure-session-agent`: Revision.
 	// * `run.googleapis.com/sessionAffinity`: Revision. *
 	// `run.googleapis.com/startup-cpu-boost`: Revision. *
-	// `run.googleapis.com/vpc-access-connector`: Revision, Execution . *
-	// `run.googleapis.com/vpc-access-egress`: Revision, Execution.
+	// `run.googleapis.com/vpc-access-connector`: Revision, Execution. *
+	// `run.googleapis.com/vpc-access-egress`: Revision, Execution, Instance.
 	Annotations map[string]string `json:"annotations,omitempty"`
 	// ClusterName: Not supported by Cloud Run
 	ClusterName string `json:"clusterName,omitempty"`
@@ -5600,6 +5600,26 @@ func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 
 // StartInstanceRequest: Request message for starting a stopped Instance.
 type StartInstanceRequest struct {
+	// DryRun: Optional. Indicates that the server should validate the request and
+	// populate default values without persisting the request. Supported values:
+	// `all`
+	DryRun string `json:"dryRun,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DryRun") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DryRun") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StartInstanceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod StartInstanceRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: Status is a return value for calls that don't return other objects.
@@ -5723,6 +5743,26 @@ func (s StatusDetails) MarshalJSON() ([]byte, error) {
 
 // StopInstanceRequest: Request message for stopping a running Instance.
 type StopInstanceRequest struct {
+	// DryRun: Optional. Indicates that the server should validate the request and
+	// populate default values without persisting the request. Supported values:
+	// `all`
+	DryRun string `json:"dryRun,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DryRun") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DryRun") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StopInstanceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod StopInstanceRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TCPSocketAction: TCPSocketAction describes an action based on opening a
@@ -7671,6 +7711,14 @@ func (r *NamespacesInstancesService) Create(parent string, instance *Instance) *
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": Indicates that the server
+// should validate the request and populate default values without persisting
+// the request. Supported values: `all`
+func (c *NamespacesInstancesCreateCall) DryRun(dryRun string) *NamespacesInstancesCreateCall {
+	c.urlParams_.Set("dryRun", dryRun)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -7783,6 +7831,14 @@ func (r *NamespacesInstancesService) Delete(name string) *NamespacesInstancesDel
 // ignores this parameter.
 func (c *NamespacesInstancesDeleteCall) ApiVersion(apiVersion string) *NamespacesInstancesDeleteCall {
 	c.urlParams_.Set("apiVersion", apiVersion)
+	return c
+}
+
+// DryRun sets the optional parameter "dryRun": Indicates that the server
+// should validate the request and populate default values without persisting
+// the request. Supported values: `all`
+func (c *NamespacesInstancesDeleteCall) DryRun(dryRun string) *NamespacesInstancesDeleteCall {
+	c.urlParams_.Set("dryRun", dryRun)
 	return c
 }
 
@@ -8190,6 +8246,14 @@ func (r *NamespacesInstancesService) ReplaceInstance(name string, instance *Inst
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": Indicates that the server
+// should validate the request and populate default values without persisting
+// the request. Supported values: `all`
+func (c *NamespacesInstancesReplaceInstanceCall) DryRun(dryRun string) *NamespacesInstancesReplaceInstanceCall {
+	c.urlParams_.Set("dryRun", dryRun)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -8505,6 +8569,14 @@ func (r *NamespacesJobsService) Create(parent string, job *Job) *NamespacesJobsC
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": Indicates that the server
+// should validate the request and populate default values without persisting
+// the request. Supported values: `all`
+func (c *NamespacesJobsCreateCall) DryRun(dryRun string) *NamespacesJobsCreateCall {
+	c.urlParams_.Set("dryRun", dryRun)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -8612,6 +8684,14 @@ func (r *NamespacesJobsService) Delete(name string) *NamespacesJobsDeleteCall {
 // ignores this parameter.
 func (c *NamespacesJobsDeleteCall) ApiVersion(apiVersion string) *NamespacesJobsDeleteCall {
 	c.urlParams_.Set("apiVersion", apiVersion)
+	return c
+}
+
+// DryRun sets the optional parameter "dryRun": Indicates that the server
+// should validate the request and populate default values without persisting
+// the request. Supported values: `all`
+func (c *NamespacesJobsDeleteCall) DryRun(dryRun string) *NamespacesJobsDeleteCall {
+	c.urlParams_.Set("dryRun", dryRun)
 	return c
 }
 
@@ -9005,6 +9085,14 @@ func (r *NamespacesJobsService) ReplaceJob(name string, job *Job) *NamespacesJob
 	c := &NamespacesJobsReplaceJobCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.job = job
+	return c
+}
+
+// DryRun sets the optional parameter "dryRun": Indicates that the server
+// should validate the request and populate default values without persisting
+// the request. Supported values: `all`
+func (c *NamespacesJobsReplaceJobCall) DryRun(dryRun string) *NamespacesJobsReplaceJobCall {
+	c.urlParams_.Set("dryRun", dryRun)
 	return c
 }
 

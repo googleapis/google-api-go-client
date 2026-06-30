@@ -3748,6 +3748,11 @@ func (s InstanceReference) MarshalJSON() ([]byte, error) {
 // InstanceSelection: Defines machines types and a rank to which the machines
 // types belong.
 type InstanceSelection struct {
+	// DiskConfig: Optional. Disk configuration to apply to the instances in this
+	// instance selection. If specified on any entry in instanceSelectionList, then
+	// it must be specified on every entry in instanceSelectionList and the
+	// instanceGroupConfig must not specify any diskConfig.
+	DiskConfig *DiskConfig `json:"diskConfig,omitempty"`
 	// MachineTypes: Optional. Full machine-type names, e.g. "n1-standard-16".
 	MachineTypes []string `json:"machineTypes,omitempty"`
 	// Rank: Optional. Preference of this instance selection. Lower number means
@@ -3756,13 +3761,13 @@ type InstanceSelection struct {
 	// availability. Machine types and instance selections with the same priority
 	// have the same preference.
 	Rank int64 `json:"rank,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MachineTypes") to
+	// ForceSendFields is a list of field names (e.g. "DiskConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MachineTypes") to include in API
+	// NullFields is a list of field names (e.g. "DiskConfig") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20260620",
+  "revision": "20260628",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -3228,6 +3228,11 @@
           "type": "object"
         },
         "enableDataRetention": {
+          "deprecated": true,
+          "description": "Optional. Deprecated: Use `enable_zero_data_retention` instead. Instructs Vertex Grounding to use Parallel's Zero Data Retention Marketplace product. If this value is \"false\" or omitted, the Parallel Web Search for Grounding standard subscription will be used. If this value is \"true\", the Parallel Web Search for Grounding - ZDR subscription will be used.",
+          "type": "boolean"
+        },
+        "enableZeroDataRetention": {
           "description": "Optional. Instructs Vertex Grounding to use Parallel's Zero Data Retention Marketplace product. If this value is \"false\" or omitted, the Parallel Web Search for Grounding standard subscription will be used. If this value is \"true\", the Parallel Web Search for Grounding - ZDR subscription will be used.",
           "type": "boolean"
         }

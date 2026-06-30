@@ -204,7 +204,7 @@
       }
     }
   },
-  "revision": "20260624",
+  "revision": "20260629",
   "rootUrl": "https://pagespeedonline.googleapis.com/",
   "schemas": {
     "AuditRefs": {
@@ -481,6 +481,20 @@
             "$ref": "AuditRefs"
           },
           "type": "array"
+        },
+        "categoryScoreDisplayMode": {
+          "description": "Optional. How the category score should be displayed (e.g. as a fraction).",
+          "enum": [
+            "CATEGORY_SCORE_DISPLAY_MODE_UNSPECIFIED",
+            "GAUGE",
+            "FRACTION"
+          ],
+          "enumDescriptions": [
+            "Default UNDEFINED category.",
+            "Display the score as a standard circular gauge (default)",
+            "Display the score as a fraction, e.g. \"3/5\""
+          ],
+          "type": "string"
         },
         "description": {
           "description": "A more detailed description of the category and its importance.",

@@ -456,6 +456,31 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
+                "getRefreshableClones": {
+                  "description": "Gets the refreshable clones for a given Autonomous Database.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/autonomousDatabases/{autonomousDatabasesId}:getRefreshableClones",
+                  "httpMethod": "GET",
+                  "id": "oracledatabase.projects.locations.autonomousDatabases.getRefreshableClones",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The Autonomous Database resource whose refreshable clones are to be listed. Format: projects/{project}/locations/{location}/autonomousDatabases/{autonomous_database}",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/autonomousDatabases/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}:getRefreshableClones",
+                  "response": {
+                    "$ref": "AutonomousDatabaseRefreshableClones"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "list": {
                   "description": "Lists the Autonomous Databases in a given project and location.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/autonomousDatabases",
@@ -533,6 +558,34 @@
                   "path": "v1/{+name}",
                   "request": {
                     "$ref": "AutonomousDatabase"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "refresh": {
+                  "description": "Refreshes the refreshable clone of an Autonomous Database.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/autonomousDatabases/{autonomousDatabasesId}:refresh",
+                  "httpMethod": "POST",
+                  "id": "oracledatabase.projects.locations.autonomousDatabases.refresh",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the AutonomousDatabase resource. Format: projects/{project}/location/{location}/autonomousDatabases/{autonomous_database}",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/autonomousDatabases/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}:refresh",
+                  "request": {
+                    "$ref": "RefreshAutonomousDatabaseRequest"
                   },
                   "response": {
                     "$ref": "Operation"
@@ -3225,7 +3278,7 @@
       }
     }
   },
-  "revision": "20260615",
+  "revision": "20260629",
   "rootUrl": "https://oracledatabase.googleapis.com/",
   "schemas": {
     "AllConnectionStrings": {
@@ -4087,6 +4140,10 @@
           "description": "Optional. Immutable. The private endpoint label for the Autonomous Database.",
           "type": "string"
         },
+        "refreshableClone": {
+          "description": "Optional. Indicates if the Autonomous Database is a refreshable clone. This field is used in update flow to connect / disconnect a refreshable clone from its source database.",
+          "type": "boolean"
+        },
         "refreshableMode": {
           "description": "Output only. The refresh mode of the cloned Autonomous Database.",
           "enum": [
@@ -4236,6 +4293,37 @@
         "vaultId": {
           "description": "Optional. Immutable. The ID of the Oracle Cloud Infrastructure vault.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AutonomousDatabaseRefreshableClone": {
+      "description": "An Autonomous Database refreshable clone",
+      "id": "AutonomousDatabaseRefreshableClone",
+      "properties": {
+        "name": {
+          "description": "Output only. The GCP resource name of the Autonomous Database.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "region": {
+          "description": "Output only. The Google Cloud region where the refreshable clone exists.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AutonomousDatabaseRefreshableClones": {
+      "description": "Response message for getting the Autonomous Database refreshable clones.",
+      "id": "AutonomousDatabaseRefreshableClones",
+      "properties": {
+        "autonomousDatabaseRefreshableClones": {
+          "description": "The list of Autonomous Database refreshable clones.",
+          "items": {
+            "$ref": "AutonomousDatabaseRefreshableClone"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -11154,6 +11242,18 @@
       },
       "type": "object"
     },
+    "RefreshAutonomousDatabaseRequest": {
+      "description": "Request message for RefreshAutonomousDatabase method.",
+      "id": "RefreshAutonomousDatabaseRequest",
+      "properties": {
+        "refreshCutoffTime": {
+          "description": "Required. The timestamp to which the Autonomous Database refreshable clone will be refreshed. Changes made in the primary database after this timestamp are not part of the data refresh.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "RemoveVirtualMachineExadbVmClusterRequest": {
       "description": "The request for `ExadbVmCluster.RemoveVirtualMachine`.",
       "id": "RemoveVirtualMachineExadbVmClusterRequest",
@@ -11251,6 +11351,21 @@
       "description": "The source configuration for the standby Autonomous Database.",
       "id": "SourceConfig",
       "properties": {
+        "autoRefreshFrequencySeconds": {
+          "description": "Optional. The frequency in seconds a refreshable clone is refreshed after auto-refresh is enabled.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "autoRefreshPointLagSeconds": {
+          "description": "Optional. The time, in seconds, the data of the automatic refreshable clone lags the primary database at the point of refresh.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "autoRefreshStartTime": {
+          "description": "Optional. The date and time that auto-refreshing will begin for an Autonomous Database refreshable clone. This value controls only the start time for the first refresh operation.",
+          "format": "google-datetime",
+          "type": "string"
+        },
         "automaticBackupsReplicationEnabled": {
           "description": "Optional. This field specifies if the replication of automatic backups is enabled when creating a Data Guard.",
           "type": "boolean"
@@ -11258,6 +11373,67 @@
         "autonomousDatabase": {
           "description": "Optional. The name of the primary Autonomous Database that is used to create a Peer Autonomous Database from a source.",
           "type": "string"
+        },
+        "autonomousDatabaseBackup": {
+          "description": "Optional. The name of the Autonomous Database Backup resource with the format: projects/{project}/locations/{region}/autonomousDatabaseBackups/{autonomous_database_backup} Required when source_type is BACKUP_FROM_ID.",
+          "type": "string"
+        },
+        "backupTime": {
+          "description": "Optional. The timestamp specified for the point-in-time clone of the source Autonomous Database. This field is only applicable in case of BACKUP_FROM_TIMESTAMP source type and when use_latest_available_backup is false.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "cloneType": {
+          "description": "Optional. The clone type of the Autonomous Database. This field is only applicable in case of cloning",
+          "enum": [
+            "CLONE_TYPE_UNSPECIFIED",
+            "FULL",
+            "METADATA"
+          ],
+          "enumDescriptions": [
+            "Default unspecified value.",
+            "Creates a new database with the source database's data and metadata.",
+            "Creates a new database that includes all the source database schema metadata, but none of the source database data."
+          ],
+          "type": "string"
+        },
+        "refreshableMode": {
+          "description": "Optional. The refresh mode of the clone.",
+          "enum": [
+            "REFRESHABLE_MODE_UNSPECIFIED",
+            "AUTOMATIC",
+            "MANUAL"
+          ],
+          "enumDescriptions": [
+            "Default unspecified value.",
+            "Automatic refresh.",
+            "Manual refresh."
+          ],
+          "type": "string"
+        },
+        "sourceType": {
+          "description": "Optional. The source type of the Autonomous Database.",
+          "enum": [
+            "SOURCE_TYPE_UNSPECIFIED",
+            "CLONE_DATABASE",
+            "CROSS_REGION_DISASTER_RECOVERY",
+            "CLONE_TO_REFRESHABLE",
+            "BACKUP_FROM_ID",
+            "BACKUP_FROM_TIMESTAMP"
+          ],
+          "enumDescriptions": [
+            "Default unspecified value.",
+            "Clone database from an existing database specified in autonomous_database field.",
+            "Create a cross-region disaster recovery peer adb from an existing adb.",
+            "Create a refreshable clone from an existing database specified in autonomous_database field.",
+            "Create clone from the backup resource.",
+            "Create clone from backup specified by backup_time field, or use latest available backup if use_latest_available_backup is true. The autonomous_database field must specify the source database to clone from."
+          ],
+          "type": "string"
+        },
+        "useLatestAvailableBackup": {
+          "description": "Optional. Clone from latest available backup timestamp. This field is only applicable in case of BACKUP_FROM_TIMESTAMP source type.",
+          "type": "boolean"
         }
       },
       "type": "object"

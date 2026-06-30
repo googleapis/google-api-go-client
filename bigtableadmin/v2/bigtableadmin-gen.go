@@ -2923,6 +2923,9 @@ type Instance struct {
 	// Enterprise Plus tier come at a higher cost than the Enterprise tier. Any
 	// Enterprise Plus features must be disabled before downgrading to Enterprise.
 	Edition string `json:"edition,omitempty"`
+	// KnowledgeCatalogRegion: Output only. The region where Knowledge Catalog data
+	// is synced to and stored, including user-created aspects.
+	KnowledgeCatalogRegion string `json:"knowledgeCatalogRegion,omitempty"`
 	// Labels: Labels are a flexible and lightweight mechanism for organizing cloud
 	// resources into groups that reflect a customer's organizational needs and
 	// deployment strategies. They can be used to filter resources and aggregate

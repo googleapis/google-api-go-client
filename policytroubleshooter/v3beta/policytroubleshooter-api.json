@@ -146,7 +146,7 @@
       }
     }
   },
-  "revision": "20260623",
+  "revision": "20260628",
   "rootUrl": "https://policytroubleshooter.googleapis.com/",
   "schemas": {
     "GoogleCloudPolicytroubleshooterIamV3betaAccessContext": {
@@ -1082,11 +1082,13 @@
           "description": "Required. The effect of the rule which describes the access relationship.",
           "enum": [
             "EFFECT_UNSPECIFIED",
-            "ALLOW"
+            "ALLOW",
+            "DENY"
           ],
           "enumDescriptions": [
             "Effect unspecified.",
-            "Allows access to the resources in this rule."
+            "Allows access to the resources in this rule.",
+            "Denies access to the resources in this rule."
           ],
           "type": "string"
         },
@@ -1095,6 +1097,14 @@
           "items": {
             "$ref": "GoogleCloudPolicytroubleshooterIamV3betaExplainedPABRuleExplainedResource"
           },
+          "type": "array"
+        },
+        "pabUnsupportedFeatures": {
+          "description": "Output only. Unsupported features detected in this rule. Supported values: * `OPERATION`: Permission Subsetting (Operation constraints). See google.iam.v3.PrincipalAccessBoundaryPolicyRule.operation.",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
           "type": "array"
         },
         "relevance": {
@@ -1753,13 +1763,22 @@
           "description": "Required. The access relationship of principals to the resources in this rule.",
           "enum": [
             "EFFECT_UNSPECIFIED",
-            "ALLOW"
+            "ALLOW",
+            "DENY"
           ],
           "enumDescriptions": [
             "Effect unspecified.",
-            "Allows access to the resources in this rule."
+            "Allows access to the resources in this rule.",
+            "Denies access to the resources in this rule."
           ],
           "type": "string"
+        },
+        "excludedResources": {
+          "description": "Optional. A list of Resource Manager resources. If an excluded resource is listed in the rule, then the rule does not apply for that resource and its descendants. This takes precedence over the `resources` field. The number of excluded resources in this field is limited to 500 across all rules in the policy. The following resource types are supported: * Organizations, such as `//cloudresourcemanager.googleapis.com/organizations/123`. * Folders, such as `//cloudresourcemanager.googleapis.com/folders/123`. * Projects, such as `//cloudresourcemanager.googleapis.com/projects/123` or `//cloudresourcemanager.googleapis.com/projects/my-project-id`.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "operation": {
           "$ref": "GoogleIamV3PrincipalAccessBoundaryPolicyRuleOperation",

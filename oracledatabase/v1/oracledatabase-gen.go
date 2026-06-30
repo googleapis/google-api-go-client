@@ -1233,6 +1233,10 @@ type AutonomousDatabaseProperties struct {
 	// PrivateEndpointLabel: Optional. Immutable. The private endpoint label for
 	// the Autonomous Database.
 	PrivateEndpointLabel string `json:"privateEndpointLabel,omitempty"`
+	// RefreshableClone: Optional. Indicates if the Autonomous Database is a
+	// refreshable clone. This field is used in update flow to connect / disconnect
+	// a refreshable clone from its source database.
+	RefreshableClone bool `json:"refreshableClone,omitempty"`
 	// RefreshableMode: Output only. The refresh mode of the cloned Autonomous
 	// Database.
 	//
@@ -1363,6 +1367,60 @@ func (s *AutonomousDatabaseProperties) UnmarshalJSON(data []byte) error {
 	s.ComputeCount = float64(s1.ComputeCount)
 	s.TotalAutoBackupStorageSizeGbs = float64(s1.TotalAutoBackupStorageSizeGbs)
 	return nil
+}
+
+// AutonomousDatabaseRefreshableClone: An Autonomous Database refreshable clone
+type AutonomousDatabaseRefreshableClone struct {
+	// Name: Output only. The GCP resource name of the Autonomous Database.
+	Name string `json:"name,omitempty"`
+	// Region: Output only. The Google Cloud region where the refreshable clone
+	// exists.
+	Region string `json:"region,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutonomousDatabaseRefreshableClone) MarshalJSON() ([]byte, error) {
+	type NoMethod AutonomousDatabaseRefreshableClone
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AutonomousDatabaseRefreshableClones: Response message for getting the
+// Autonomous Database refreshable clones.
+type AutonomousDatabaseRefreshableClones struct {
+	// AutonomousDatabaseRefreshableClones: The list of Autonomous Database
+	// refreshable clones.
+	AutonomousDatabaseRefreshableClones []*AutonomousDatabaseRefreshableClone `json:"autonomousDatabaseRefreshableClones,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AutonomousDatabaseRefreshableClones") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "AutonomousDatabaseRefreshableClones") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutonomousDatabaseRefreshableClones) MarshalJSON() ([]byte, error) {
+	type NoMethod AutonomousDatabaseRefreshableClones
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AutonomousDatabaseStandbySummary: Autonomous Data Guard standby database
@@ -8052,6 +8110,31 @@ func (s PolarisIcebergCatalog) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RefreshAutonomousDatabaseRequest: Request message for
+// RefreshAutonomousDatabase method.
+type RefreshAutonomousDatabaseRequest struct {
+	// RefreshCutoffTime: Required. The timestamp to which the Autonomous Database
+	// refreshable clone will be refreshed. Changes made in the primary database
+	// after this timestamp are not part of the data refresh.
+	RefreshCutoffTime string `json:"refreshCutoffTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RefreshCutoffTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RefreshCutoffTime") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RefreshAutonomousDatabaseRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RefreshAutonomousDatabaseRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RemoveVirtualMachineExadbVmClusterRequest: The request for
 // `ExadbVmCluster.RemoveVirtualMachine`.
 type RemoveVirtualMachineExadbVmClusterRequest struct {
@@ -8176,24 +8259,80 @@ func (s ScheduledOperationDetails) MarshalJSON() ([]byte, error) {
 
 // SourceConfig: The source configuration for the standby Autonomous Database.
 type SourceConfig struct {
+	// AutoRefreshFrequencySeconds: Optional. The frequency in seconds a
+	// refreshable clone is refreshed after auto-refresh is enabled.
+	AutoRefreshFrequencySeconds int64 `json:"autoRefreshFrequencySeconds,omitempty"`
+	// AutoRefreshPointLagSeconds: Optional. The time, in seconds, the data of the
+	// automatic refreshable clone lags the primary database at the point of
+	// refresh.
+	AutoRefreshPointLagSeconds int64 `json:"autoRefreshPointLagSeconds,omitempty"`
+	// AutoRefreshStartTime: Optional. The date and time that auto-refreshing will
+	// begin for an Autonomous Database refreshable clone. This value controls only
+	// the start time for the first refresh operation.
+	AutoRefreshStartTime string `json:"autoRefreshStartTime,omitempty"`
 	// AutomaticBackupsReplicationEnabled: Optional. This field specifies if the
 	// replication of automatic backups is enabled when creating a Data Guard.
 	AutomaticBackupsReplicationEnabled bool `json:"automaticBackupsReplicationEnabled,omitempty"`
 	// AutonomousDatabase: Optional. The name of the primary Autonomous Database
 	// that is used to create a Peer Autonomous Database from a source.
 	AutonomousDatabase string `json:"autonomousDatabase,omitempty"`
+	// AutonomousDatabaseBackup: Optional. The name of the Autonomous Database
+	// Backup resource with the format:
+	// projects/{project}/locations/{region}/autonomousDatabaseBackups/{autonomous_d
+	// atabase_backup} Required when source_type is BACKUP_FROM_ID.
+	AutonomousDatabaseBackup string `json:"autonomousDatabaseBackup,omitempty"`
+	// BackupTime: Optional. The timestamp specified for the point-in-time clone of
+	// the source Autonomous Database. This field is only applicable in case of
+	// BACKUP_FROM_TIMESTAMP source type and when use_latest_available_backup is
+	// false.
+	BackupTime string `json:"backupTime,omitempty"`
+	// CloneType: Optional. The clone type of the Autonomous Database. This field
+	// is only applicable in case of cloning
+	//
+	// Possible values:
+	//   "CLONE_TYPE_UNSPECIFIED" - Default unspecified value.
+	//   "FULL" - Creates a new database with the source database's data and
+	// metadata.
+	//   "METADATA" - Creates a new database that includes all the source database
+	// schema metadata, but none of the source database data.
+	CloneType string `json:"cloneType,omitempty"`
+	// RefreshableMode: Optional. The refresh mode of the clone.
+	//
+	// Possible values:
+	//   "REFRESHABLE_MODE_UNSPECIFIED" - Default unspecified value.
+	//   "AUTOMATIC" - Automatic refresh.
+	//   "MANUAL" - Manual refresh.
+	RefreshableMode string `json:"refreshableMode,omitempty"`
+	// SourceType: Optional. The source type of the Autonomous Database.
+	//
+	// Possible values:
+	//   "SOURCE_TYPE_UNSPECIFIED" - Default unspecified value.
+	//   "CLONE_DATABASE" - Clone database from an existing database specified in
+	// autonomous_database field.
+	//   "CROSS_REGION_DISASTER_RECOVERY" - Create a cross-region disaster recovery
+	// peer adb from an existing adb.
+	//   "CLONE_TO_REFRESHABLE" - Create a refreshable clone from an existing
+	// database specified in autonomous_database field.
+	//   "BACKUP_FROM_ID" - Create clone from the backup resource.
+	//   "BACKUP_FROM_TIMESTAMP" - Create clone from backup specified by
+	// backup_time field, or use latest available backup if
+	// use_latest_available_backup is true. The autonomous_database field must
+	// specify the source database to clone from.
+	SourceType string `json:"sourceType,omitempty"`
+	// UseLatestAvailableBackup: Optional. Clone from latest available backup
+	// timestamp. This field is only applicable in case of BACKUP_FROM_TIMESTAMP
+	// source type.
+	UseLatestAvailableBackup bool `json:"useLatestAvailableBackup,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
-	// "AutomaticBackupsReplicationEnabled") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted from
-	// API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// "AutoRefreshFrequencySeconds") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g.
-	// "AutomaticBackupsReplicationEnabled") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted from API
-	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
-	// more details.
+	// NullFields is a list of field names (e.g. "AutoRefreshFrequencySeconds") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
@@ -9624,6 +9763,120 @@ func (c *ProjectsLocationsAutonomousDatabasesGetCall) Do(opts ...googleapi.CallO
 	return ret, nil
 }
 
+type ProjectsLocationsAutonomousDatabasesGetRefreshableClonesCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetRefreshableClones: Gets the refreshable clones for a given Autonomous
+// Database.
+//
+//   - name: The Autonomous Database resource whose refreshable clones are to be
+//     listed. Format:
+//     projects/{project}/locations/{location}/autonomousDatabases/{autonomous_dat
+//     abase}.
+func (r *ProjectsLocationsAutonomousDatabasesService) GetRefreshableClones(name string) *ProjectsLocationsAutonomousDatabasesGetRefreshableClonesCall {
+	c := &ProjectsLocationsAutonomousDatabasesGetRefreshableClonesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutonomousDatabasesGetRefreshableClonesCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutonomousDatabasesGetRefreshableClonesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAutonomousDatabasesGetRefreshableClonesCall) IfNoneMatch(entityTag string) *ProjectsLocationsAutonomousDatabasesGetRefreshableClonesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutonomousDatabasesGetRefreshableClonesCall) Context(ctx context.Context) *ProjectsLocationsAutonomousDatabasesGetRefreshableClonesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutonomousDatabasesGetRefreshableClonesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutonomousDatabasesGetRefreshableClonesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:getRefreshableClones")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.autonomousDatabases.getRefreshableClones", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.autonomousDatabases.getRefreshableClones" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AutonomousDatabaseRefreshableClones.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutonomousDatabasesGetRefreshableClonesCall) Do(opts ...googleapi.CallOption) (*AutonomousDatabaseRefreshableClones, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AutonomousDatabaseRefreshableClones{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.autonomousDatabases.getRefreshableClones", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsAutonomousDatabasesListCall struct {
 	s            *Service
 	parent       string
@@ -9910,6 +10163,111 @@ func (c *ProjectsLocationsAutonomousDatabasesPatchCall) Do(opts ...googleapi.Cal
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.autonomousDatabases.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAutonomousDatabasesRefreshCall struct {
+	s                                *Service
+	name                             string
+	refreshautonomousdatabaserequest *RefreshAutonomousDatabaseRequest
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Refresh: Refreshes the refreshable clone of an Autonomous Database.
+//
+//   - name: The name of the AutonomousDatabase resource. Format:
+//     projects/{project}/location/{location}/autonomousDatabases/{autonomous_data
+//     base}.
+func (r *ProjectsLocationsAutonomousDatabasesService) Refresh(name string, refreshautonomousdatabaserequest *RefreshAutonomousDatabaseRequest) *ProjectsLocationsAutonomousDatabasesRefreshCall {
+	c := &ProjectsLocationsAutonomousDatabasesRefreshCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.refreshautonomousdatabaserequest = refreshautonomousdatabaserequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutonomousDatabasesRefreshCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutonomousDatabasesRefreshCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutonomousDatabasesRefreshCall) Context(ctx context.Context) *ProjectsLocationsAutonomousDatabasesRefreshCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutonomousDatabasesRefreshCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutonomousDatabasesRefreshCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.refreshautonomousdatabaserequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:refresh")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.autonomousDatabases.refresh", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.autonomousDatabases.refresh" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutonomousDatabasesRefreshCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.autonomousDatabases.refresh", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

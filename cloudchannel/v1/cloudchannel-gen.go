@@ -2759,6 +2759,8 @@ type GoogleCloudChannelV1PriceByResource struct {
 	// for all usage SKUs on a billing account. Currently, only applicable to
 	// Google Cloud.
 	//   "SUBSCRIPTION" - For Google Cloud subscriptions like Anthos or SAP.
+	//   "AI_CREDITS" - As of June 2026, this field is mapped to WS Credits on
+	// commerce side.
 	ResourceType string `json:"resourceType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Price") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

@@ -514,6 +514,14 @@ func (s *LighthouseAuditResultV5) UnmarshalJSON(data []byte) error {
 type LighthouseCategoryV5 struct {
 	// AuditRefs: An array of references to all the audit members of this category.
 	AuditRefs []*AuditRefs `json:"auditRefs,omitempty"`
+	// CategoryScoreDisplayMode: Optional. How the category score should be
+	// displayed (e.g. as a fraction).
+	//
+	// Possible values:
+	//   "CATEGORY_SCORE_DISPLAY_MODE_UNSPECIFIED" - Default UNDEFINED category.
+	//   "GAUGE" - Display the score as a standard circular gauge (default)
+	//   "FRACTION" - Display the score as a fraction, e.g. "3/5"
+	CategoryScoreDisplayMode string `json:"categoryScoreDisplayMode,omitempty"`
 	// Description: A more detailed description of the category and its importance.
 	Description string `json:"description,omitempty"`
 	// Id: The string identifier of the category.

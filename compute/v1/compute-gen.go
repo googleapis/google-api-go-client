@@ -57266,9 +57266,6 @@ func (s ReservationAggregatedListWarningData) MarshalJSON() ([]byte, error) {
 
 // ReservationBlock: Represents a reservation block resource.
 type ReservationBlock struct {
-	// BlockHealthInfo: Output only. [Output Only] Health information for the
-	// reservation block.
-	BlockHealthInfo *ReservationBlockHealthInfo `json:"blockHealthInfo,omitempty"`
 	// Count: Output only. [Output Only] The number of resources that are allocated
 	// in this
 	// reservation block.
@@ -57276,6 +57273,9 @@ type ReservationBlock struct {
 	// CreationTimestamp: Output only. [Output Only] Creation timestamp inRFC3339
 	// text format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+	// HealthInfo: Output only. [Output Only] Health information for the
+	// reservation block.
+	HealthInfo *ReservationBlockHealthInfo `json:"healthInfo,omitempty"`
 	// Id: Output only. [Output Only] The unique identifier for the resource. This
 	// identifier is
 	// defined by the server.
@@ -57330,15 +57330,15 @@ type ReservationBlock struct {
 	// Zone: Output only. [Output Only] Zone in which the reservation block
 	// resides.
 	Zone string `json:"zone,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BlockHealthInfo") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BlockHealthInfo") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -58238,6 +58238,9 @@ type ReservationSubBlock struct {
 	// CreationTimestamp: Output only. [Output Only] Creation timestamp inRFC3339
 	// text format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+	// HealthInfo: Output only. [Output Only] Health information for the
+	// reservation subBlock.
+	HealthInfo *ReservationSubBlockHealthInfo `json:"healthInfo,omitempty"`
 	// Id: Output only. [Output Only] The unique identifier for the resource. This
 	// identifier is
 	// defined by the server.
@@ -58279,9 +58282,6 @@ type ReservationSubBlock struct {
 	//   "INVALID"
 	//   "READY" - Reservation subBlock has allocated all its resources.
 	Status string `json:"status,omitempty"`
-	// SubBlockHealthInfo: Output only. [Output Only] Health information for the
-	// reservation subBlock.
-	SubBlockHealthInfo *ReservationSubBlockHealthInfo `json:"subBlockHealthInfo,omitempty"`
 	// Zone: Output only. [Output Only] Zone in which the reservation subBlock
 	// resides.
 	Zone string `json:"zone,omitempty"`

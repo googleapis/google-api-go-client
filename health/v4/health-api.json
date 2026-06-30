@@ -164,7 +164,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. The parent resource where this subscriber will be created. Format: projects/{project} Example: projects/my-project-123",
+                  "description": "Required. The parent resource where this subscriber will be created. Format: projects/{project_number} Example: projects/1234567890",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -996,7 +996,7 @@
       }
     }
   },
-  "revision": "20260620",
+  "revision": "20260629",
   "rootUrl": "https://health.googleapis.com/",
   "schemas": {
     "ActiveEnergyBurned": {

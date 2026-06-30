@@ -1370,11 +1370,16 @@ type GoogleCloudPolicytroubleshooterIamV3betaExplainedPABRule struct {
 	// Possible values:
 	//   "EFFECT_UNSPECIFIED" - Effect unspecified.
 	//   "ALLOW" - Allows access to the resources in this rule.
+	//   "DENY" - Denies access to the resources in this rule.
 	Effect string `json:"effect,omitempty"`
 	// ExplainedResources: List of resources that were explained to check the
 	// principal's access to specified resource, with annotations to indicate how
 	// each resource contributes to the overall access state.
 	ExplainedResources []*GoogleCloudPolicytroubleshooterIamV3betaExplainedPABRuleExplainedResource `json:"explainedResources,omitempty"`
+	// PabUnsupportedFeatures: Output only. Unsupported features detected in this
+	// rule. Supported values: * `OPERATION`: Permission Subsetting (Operation
+	// constraints). See google.iam.v3.PrincipalAccessBoundaryPolicyRule.operation.
+	PabUnsupportedFeatures []string `json:"pabUnsupportedFeatures,omitempty"`
 	// Relevance: The relevance of this rule to the overall access state.
 	//
 	// Possible values:
@@ -2426,7 +2431,19 @@ type GoogleIamV3PrincipalAccessBoundaryPolicyRule struct {
 	// Possible values:
 	//   "EFFECT_UNSPECIFIED" - Effect unspecified.
 	//   "ALLOW" - Allows access to the resources in this rule.
+	//   "DENY" - Denies access to the resources in this rule.
 	Effect string `json:"effect,omitempty"`
+	// ExcludedResources: Optional. A list of Resource Manager resources. If an
+	// excluded resource is listed in the rule, then the rule does not apply for
+	// that resource and its descendants. This takes precedence over the
+	// `resources` field. The number of excluded resources in this field is limited
+	// to 500 across all rules in the policy. The following resource types are
+	// supported: * Organizations, such as
+	// `//cloudresourcemanager.googleapis.com/organizations/123`. * Folders, such
+	// as `//cloudresourcemanager.googleapis.com/folders/123`. * Projects, such as
+	// `//cloudresourcemanager.googleapis.com/projects/123` or
+	// `//cloudresourcemanager.googleapis.com/projects/my-project-id`.
+	ExcludedResources []string `json:"excludedResources,omitempty"`
 	// Operation: Optional. The operation attributes that determine whether this
 	// rule applies to a request. If this field is not specified, the rule applies
 	// to all operations.

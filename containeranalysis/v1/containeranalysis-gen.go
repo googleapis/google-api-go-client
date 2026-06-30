@@ -1147,9 +1147,22 @@ type CVSS struct {
 	//   "IMPACT_NONE" - No impact (N). Defined in CVSS v2, v3, v4.
 	//   "IMPACT_PARTIAL" - Partial impact (P). Defined in CVSS v2.
 	//   "IMPACT_COMPLETE" - Complete impact (C). Defined in CVSS v2.
-	ConfidentialityImpact string  `json:"confidentialityImpact,omitempty"`
-	ExploitabilityScore   float64 `json:"exploitabilityScore,omitempty"`
-	ImpactScore           float64 `json:"impactScore,omitempty"`
+	ConfidentialityImpact string `json:"confidentialityImpact,omitempty"`
+	// ExploitMaturity: Exploit Maturity (E). Defined in CVSS v4.
+	//
+	// Possible values:
+	//   "EXPLOIT_MATURITY_UNSPECIFIED" - Unspecified.
+	//   "EXPLOIT_MATURITY_NOT_DEFINED" - Exploit maturity: Not defined (E:X).
+	// Defined in CVSS v4.
+	//   "EXPLOIT_MATURITY_ATTACKED" - Exploit maturity: Attacked (E:A). Defined in
+	// CVSS v4.
+	//   "EXPLOIT_MATURITY_POC" - Exploit maturity: Proof-of-concept (E:P). Defined
+	// in CVSS v4.
+	//   "EXPLOIT_MATURITY_UNREPORTED" - Exploit maturity: Unreported (E:U).
+	// Defined in CVSS v4.
+	ExploitMaturity     string  `json:"exploitMaturity,omitempty"`
+	ExploitabilityScore float64 `json:"exploitabilityScore,omitempty"`
+	ImpactScore         float64 `json:"impactScore,omitempty"`
 	// IntegrityImpact: Integrity Impact (I). Defined in CVSS v2, v3.
 	//
 	// Possible values:
@@ -4181,6 +4194,7 @@ type Finding struct {
 	//   "SCANNER_UNSPECIFIED" - Unspecified scanner.
 	//   "STATIC" - Static scanner.
 	//   "LLM" - LLM scanner.
+	//   "WS_POLICY" - WS_POLICY scanner.
 	Scanner string `json:"scanner,omitempty"`
 	// Severity: Severity of the finding.
 	//

@@ -3194,7 +3194,7 @@
       }
     }
   },
-  "revision": "20260514",
+  "revision": "20260624",
   "rootUrl": "https://bigtableadmin.googleapis.com/",
   "schemas": {
     "AppProfile": {
@@ -4830,6 +4830,11 @@
             "The Enterprise edition. This is the default offering that is designed to meet the needs of most enterprise workloads.",
             "The Enterprise Plus edition. This is a premium tier that is designed for demanding, multi-tenant workloads requiring the highest levels of performance, scale, and global availability. The nodes in the Enterprise Plus tier come at a higher cost than the Enterprise tier. Any Enterprise Plus features must be disabled before downgrading to Enterprise."
           ],
+          "type": "string"
+        },
+        "knowledgeCatalogRegion": {
+          "description": "Output only. The region where Knowledge Catalog data is synced to and stored, including user-created aspects.",
+          "readOnly": true,
           "type": "string"
         },
         "labels": {

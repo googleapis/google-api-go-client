@@ -4385,6 +4385,10 @@ type MirroringEndpointGroupAssociation struct {
 	// `projects/123456789/global/networks/my-network`. See
 	// https://google.aip.dev/124.
 	Network string `json:"network,omitempty"`
+	// NetworkCookie: Output only. Identifier used by the data-path. See the NSI
+	// GENEVE format for more details:
+	// https://docs.cloud.google.com/network-security-integration/docs/understand-geneve#network_id
+	NetworkCookie int64 `json:"networkCookie,omitempty"`
 	// Reconciling: Output only. The current state of the resource does not match
 	// the user's intended state, and the system is working to reconcile them. This
 	// part of the normal operation (e.g. adding a new location to the target

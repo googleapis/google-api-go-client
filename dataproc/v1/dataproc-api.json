@@ -5229,7 +5229,7 @@
       }
     }
   },
-  "revision": "20260612",
+  "revision": "20260625",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -7982,6 +7982,10 @@
       "description": "Defines machines types and a rank to which the machines types belong.",
       "id": "InstanceSelection",
       "properties": {
+        "diskConfig": {
+          "$ref": "DiskConfig",
+          "description": "Optional. Disk configuration to apply to the instances in this instance selection. If specified on any entry in instanceSelectionList, then it must be specified on every entry in instanceSelectionList and the instanceGroupConfig must not specify any diskConfig."
+        },
         "machineTypes": {
           "description": "Optional. Full machine-type names, e.g. \"n1-standard-16\".",
           "items": {

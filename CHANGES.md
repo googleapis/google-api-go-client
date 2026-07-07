@@ -1,5 +1,12 @@
 # Changes
 
+## [0.287.1](https://github.com/googleapis/google-api-go-client/compare/v0.287.0...v0.287.1) (2026-07-07)
+
+
+### Documentation
+
+* Remove old TODO file ([#3645](https://github.com/googleapis/google-api-go-client/issues/3645)) ([9d7a6b8](https://github.com/googleapis/google-api-go-client/commit/9d7a6b8ba7ca7fda1fda4373714a8aff1e930e6f))
+
 ## [0.287.0](https://github.com/googleapis/google-api-go-client/compare/v0.286.0...v0.287.0) (2026-06-30)
 
 

@@ -870,6 +870,10 @@ type CuratedPackage struct {
 	// in auctions for inventory in this curated package. Can be used to filter the
 	// response of the curatedPackages.list method.
 	FloorPriceCpm *Money `json:"floorPriceCpm,omitempty"`
+	// MillipercentOfMediaFee: Optional. The fee will be charged as a percentage of
+	// the impression cost, represented in millipercent. For example, 1% is
+	// represented as 1000.
+	MillipercentOfMediaFee int64 `json:"millipercentOfMediaFee,omitempty,string"`
 	// Name: Identifier. The unique resource name for the curated package. Format:
 	// `curators/{accountId}/curatedPackages/{curatedPackageId}`
 	Name string `json:"name,omitempty"`
@@ -917,6 +921,10 @@ type DataSegment struct {
 	CpmFee *Money `json:"cpmFee,omitempty"`
 	// CreateTime: Output only. Time the data segment was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// MillipercentOfMediaFee: Optional. The fee will be charged as a percentage of
+	// the impression cost, represented in millipercent. For example, 1% is
+	// represented as 1000.
+	MillipercentOfMediaFee int64 `json:"millipercentOfMediaFee,omitempty,string"`
 	// Name: Immutable. Identifier. The unique identifier for the data segment.
 	// Account ID corresponds to the account ID that created the segment. v1alpha
 	// format: `buyers/{accountId}/dataSegments/{curatorDataSegmentId}` v1beta

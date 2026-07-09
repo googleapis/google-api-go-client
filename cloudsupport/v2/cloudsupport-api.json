@@ -604,7 +604,7 @@
     "supportEventSubscriptions": {
       "methods": {
         "create": {
-          "description": "Creates a support event subscription for an organization.",
+          "description": "Creates a support event subscription for an organization. EXAMPLES: cURL: ```shell parent=\"organizations/123456789\" curl \\ --request POST \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ --header 'Content-Type: application/json' \\ --data '{ \"pub_sub_topic\": \"projects/my-project/topics/my-topic\" }' \\ \"https://cloudsupport.googleapis.com/v2/$parent/supportEventSubscriptions\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = supportApiService.supportEventSubscriptions().create( parent=\"organizations/123456789\", body={ \"pub_sub_topic\": \"projects/my-project/topics/my-topic\" }, ) print(request.execute()) ```",
           "flatPath": "v2/{v2Id}/{v2Id1}/supportEventSubscriptions",
           "httpMethod": "POST",
           "id": "cloudsupport.supportEventSubscriptions.create",
@@ -632,7 +632,7 @@
           ]
         },
         "delete": {
-          "description": "Soft deletes a support event subscription.",
+          "description": "Soft deletes a support event subscription. EXAMPLES: cURL: ```shell support_event_subscription=\"organizations/123456789/supportEventSubscriptions/abcdef123456\" curl \\ --request DELETE \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$support_event_subscription\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = supportApiService).supportEventSubscriptions().delete( name=\"organizations/123456789/supportEventSubscriptions/abcdef123456\" ) print(request.execute()) ```",
           "flatPath": "v2/{v2Id}/{v2Id1}/supportEventSubscriptions/{supportEventSubscriptionsId}",
           "httpMethod": "DELETE",
           "id": "cloudsupport.supportEventSubscriptions.delete",
@@ -656,8 +656,36 @@
             "https://www.googleapis.com/auth/cloud-platform"
           ]
         },
+        "expunge": {
+          "description": "Expunges a support event subscription.",
+          "flatPath": "v2/{v2Id}/{v2Id1}/supportEventSubscriptions/{supportEventSubscriptionsId}:expunge",
+          "httpMethod": "POST",
+          "id": "cloudsupport.supportEventSubscriptions.expunge",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The name of the support event subscription to expunge. Format: organizations/{organization_id}/supportEventSubscriptions/{subscription_id}",
+              "location": "path",
+              "pattern": "^[^/]+/[^/]+/supportEventSubscriptions/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v2/{+name}:expunge",
+          "request": {
+            "$ref": "ExpungeSupportEventSubscriptionRequest"
+          },
+          "response": {
+            "$ref": "Empty"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        },
         "get": {
-          "description": "Gets a support event subscription.",
+          "description": "Gets a support event subscription. EXAMPLES: cURL: ```shell support_event_subscription=\"organizations/123456789/supportEventSubscriptions/abcdef123456\" curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$support_event_subscription\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = supportApiService.supportEventSubscriptions().get( name=\"organizations/123456789/supportEventSubscriptions/abcdef123456\" ) print(request.execute()) ```",
           "flatPath": "v2/{v2Id}/{v2Id1}/supportEventSubscriptions/{supportEventSubscriptionsId}",
           "httpMethod": "GET",
           "id": "cloudsupport.supportEventSubscriptions.get",
@@ -682,7 +710,7 @@
           ]
         },
         "list": {
-          "description": "Lists support event subscriptions.",
+          "description": "Lists support event subscriptions. EXAMPLES: cURL: ```shell parent=\"organizations/123456789\" curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$parent/supportEventSubscriptions\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = supportApiService.supportEventSubscriptions().list( parent=\"organizations/123456789\" ) print(request.execute()) ```",
           "flatPath": "v2/{v2Id}/{v2Id1}/supportEventSubscriptions",
           "httpMethod": "GET",
           "id": "cloudsupport.supportEventSubscriptions.list",
@@ -728,7 +756,7 @@
           ]
         },
         "patch": {
-          "description": "Updates a support event subscription.",
+          "description": "Updates a support event subscription. EXAMPLES: cURL: ```shell support_event_subscription=\"organizations/123456789/supportEventSubscriptions/abcdef123456\" curl \\ --request PATCH \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ --header \"Content-Type: application/json\" \\ --data '{ \"pub_sub_topic\": \"projects/my-project/topics/new-topic\" }' \\ \"https://cloudsupport.googleapis.com/v2/$support_event_subscription?updateMask=pub_sub_topic\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = supportApiService.supportEventSubscriptions().patch( name=\"organizations/123456789/supportEventSubscriptions/abcdef123456\", body={ \"pub_sub_topic\": \"projects/my-project/topics/new-topic\" }, ) print(request.execute()) ```",
           "flatPath": "v2/{v2Id}/{v2Id1}/supportEventSubscriptions/{supportEventSubscriptionsId}",
           "httpMethod": "PATCH",
           "id": "cloudsupport.supportEventSubscriptions.patch",
@@ -762,7 +790,7 @@
           ]
         },
         "undelete": {
-          "description": "Undeletes a support event subscription.",
+          "description": "Undeletes a support event subscription. EXAMPLES: cURL: ```shell support_event_subscription=\"organizations/123456789/supportEventSubscriptions/abcdef123456\" curl \\ --request POST \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$support_event_subscription:undelete\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = supportApiService.supportEventSubscriptions().undelete( name=\"organizations/123456789/supportEventSubscriptions/abcdef123456\" ) print(request.execute()) ``` Undeletes a support event subscription.",
           "flatPath": "v2/{v2Id}/{v2Id1}/supportEventSubscriptions/{supportEventSubscriptionsId}:undelete",
           "httpMethod": "POST",
           "id": "cloudsupport.supportEventSubscriptions.undelete",
@@ -792,7 +820,7 @@
       }
     }
   },
-  "revision": "20260623",
+  "revision": "20260707",
   "rootUrl": "https://cloudsupport.googleapis.com/",
   "schemas": {
     "Actor": {
@@ -1285,6 +1313,12 @@
       },
       "type": "object"
     },
+    "Empty": {
+      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
+      "id": "Empty",
+      "properties": {},
+      "type": "object"
+    },
     "EscalateCaseRequest": {
       "description": "The request message for the EscalateCase endpoint.",
       "id": "EscalateCaseRequest",
@@ -1321,6 +1355,12 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "ExpungeSupportEventSubscriptionRequest": {
+      "description": "Request message for ExpungeSupportEventSubscription.",
+      "id": "ExpungeSupportEventSubscriptionRequest",
+      "properties": {},
       "type": "object"
     },
     "ListAttachmentsResponse": {

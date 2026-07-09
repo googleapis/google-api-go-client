@@ -492,9 +492,61 @@ type UsersSpacesThreadsService struct {
 	s *Service
 }
 
+// AccessPermissionSetting: An access permission setting.
+type AccessPermissionSetting struct {
+	// Principals: Optional. Unordered list. Allowed principals for this
+	// permission.
+	Principals []*Principal `json:"principals,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Principals") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Principals") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AccessPermissionSetting) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessPermissionSetting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AccessPermissionSettings: Access permission settings for a space.
+type AccessPermissionSettings struct {
+	// DiscoverSpaceSetting: Optional. Access permission setting for discovering
+	// the space.
+	DiscoverSpaceSetting *AccessPermissionSetting `json:"discoverSpaceSetting,omitempty"`
+	// JoinSpaceSetting: Optional. Access permission setting for joining the space.
+	JoinSpaceSetting *AccessPermissionSetting `json:"joinSpaceSetting,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DiscoverSpaceSetting") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DiscoverSpaceSetting") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AccessPermissionSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessPermissionSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AccessSettings: Represents the access setting
 // (https://support.google.com/chat/answer/11971020) of the space.
 type AccessSettings struct {
+	// AccessPermissionSettings: Optional. Access permission settings for the
+	// space. To set the target audience when creating a space, specify the
+	// `accessSettings.audience` field in your request.
+	AccessPermissionSettings *AccessPermissionSettings `json:"accessPermissionSettings,omitempty"`
 	// AccessState: Output only. Indicates the access state of the space.
 	//
 	// Possible values:
@@ -532,15 +584,15 @@ type AccessSettings struct {
 	// Setting the target audience requires user authentication
 	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
 	Audience string `json:"audience,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AccessState") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AccessPermissionSettings")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AccessState") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AccessPermissionSettings") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -940,6 +992,40 @@ type AttachmentDataRef struct {
 
 func (s AttachmentDataRef) MarshalJSON() ([]byte, error) {
 	type NoMethod AttachmentDataRef
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Audience: A target audience in Google Chat. A target audience represents a
+// group of users within a Google Workspace organization, defined by an
+// administrator. Target audiences are used to configure access and visibility
+// settings for resources, such as making a space discoverable to a specific
+// group of users. For more details, see Target audiences
+// (https://support.google.com/a/answer/9934697) and Make a space discoverable
+// to a target audience
+// (https://developers.google.com/workspace/chat/space-target-audience).
+type Audience struct {
+	// Name: The resource name of the target audience
+	// (https://support.google.com/a/answer/9934697) who can discover or join the
+	// space. For details, see Make a space discoverable to a target audience
+	// (https://developers.google.com/workspace/chat/space-target-audience).
+	// Format: `audiences/{audience}` To use the default target audience for the
+	// Google Workspace organization, set to `audiences/default`.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Audience) MarshalJSON() ([]byte, error) {
+	type NoMethod Audience
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6046,6 +6132,28 @@ func (s PositionSectionResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Principal: A principal representing an entity granted access.
+type Principal struct {
+	// Audience: An audience.
+	Audience *Audience `json:"audience,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Audience") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Audience") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Principal) MarshalJSON() ([]byte, error) {
+	type NoMethod Principal
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // QuotedMessageMetadata: Information about a message that another message
 // quotes. When you update a message, you can't add or replace the
 // `quotedMessageMetadata` field, but you can remove it. For example usage, see
@@ -9386,6 +9494,20 @@ func (r *SpacesService) Patch(name string, space *Space) *SpacesPatchCall {
 // learn more, see Make a space discoverable to specific users
 // (https://developers.google.com/workspace/chat/space-target-audience).
 // `access_settings.audience` is not supported with `useAdminAccess`.
+// `access_settings.access_permission_settings`: Updates the access permission
+// settings (https://support.google.com/chat/answer/11971020) of who can
+// discover and join the space where `spaceType` field is `SPACE`. Principals
+// allowed to join the space must also be allowed to discover it. To update
+// access permission settings for a space, the authenticating user must be a
+// space manager or assistant manager and omit all other field masks in the
+// request. You can't update this field if the space is in import mode
+// (https://developers.google.com/workspace/chat/import-data-overview). To
+// learn more, see Make a space discoverable to specific users
+// (https://developers.google.com/workspace/chat/space-target-audience).
+// `access_settings.access_permission_settings` is not supported with
+// `useAdminAccess`. The supported field masks include: -
+// `access_settings.access_permission_settings.discoverSpaceSetting` -
+// `access_settings.access_permission_settings.joinSpaceSetting`
 // `permission_settings`: Supports changing the permission settings
 // (https://support.google.com/chat/answer/13340792) of a space. When updating
 // permission settings, you can only specify `permissionSettings` field masks;
@@ -12595,7 +12717,7 @@ func (c *SpacesSpaceEventsListCall) Pages(ctx context.Context, f func(*ListSpace
 	}
 }
 
-type UsersAvailabilityGetAvailabilityCall struct {
+type UsersAvailabilityGetCall struct {
 	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
@@ -12604,9 +12726,9 @@ type UsersAvailabilityGetAvailabilityCall struct {
 	header_      http.Header
 }
 
-// GetAvailability: Returns availability information for a human user in Google
-// Chat. For example, this can be used to check if a user is online or away, or
-// to retrieve their custom status message. This method only retrieves the
+// Get: Returns availability information for a human user in Google Chat. For
+// example, this can be used to check if a user is online or away, or to
+// retrieve their custom status message. This method only retrieves the
 // authenticated user's availability. Requires user authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 // with one of the following authorization scopes
@@ -12619,8 +12741,8 @@ type UsersAvailabilityGetAvailabilityCall struct {
 //     API or Admin SDK directory API. For example, `users/123456789`. The user's
 //     email address or `me` can also be used as an alias to refer to the caller.
 //     For example, `users/user@example.com` or `users/me`.
-func (r *UsersAvailabilityService) GetAvailability(name string) *UsersAvailabilityGetAvailabilityCall {
-	c := &UsersAvailabilityGetAvailabilityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *UsersAvailabilityService) Get(name string) *UsersAvailabilityGetCall {
+	c := &UsersAvailabilityGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
@@ -12628,7 +12750,7 @@ func (r *UsersAvailabilityService) GetAvailability(name string) *UsersAvailabili
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *UsersAvailabilityGetAvailabilityCall) Fields(s ...googleapi.Field) *UsersAvailabilityGetAvailabilityCall {
+func (c *UsersAvailabilityGetCall) Fields(s ...googleapi.Field) *UsersAvailabilityGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -12636,27 +12758,27 @@ func (c *UsersAvailabilityGetAvailabilityCall) Fields(s ...googleapi.Field) *Use
 // IfNoneMatch sets an optional parameter which makes the operation fail if the
 // object's ETag matches the given value. This is useful for getting updates
 // only after the object has changed since the last request.
-func (c *UsersAvailabilityGetAvailabilityCall) IfNoneMatch(entityTag string) *UsersAvailabilityGetAvailabilityCall {
+func (c *UsersAvailabilityGetCall) IfNoneMatch(entityTag string) *UsersAvailabilityGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *UsersAvailabilityGetAvailabilityCall) Context(ctx context.Context) *UsersAvailabilityGetAvailabilityCall {
+func (c *UsersAvailabilityGetCall) Context(ctx context.Context) *UsersAvailabilityGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *UsersAvailabilityGetAvailabilityCall) Header() http.Header {
+func (c *UsersAvailabilityGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *UsersAvailabilityGetAvailabilityCall) doRequest(alt string) (*http.Response, error) {
+func (c *UsersAvailabilityGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -12673,16 +12795,16 @@ func (c *UsersAvailabilityGetAvailabilityCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chat.users.availability.getAvailability", "request", internallog.HTTPRequest(req, nil))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chat.users.availability.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "chat.users.availability.getAvailability" call.
+// Do executes the "chat.users.availability.get" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *Availability.ServerResponse.Header or (if a response was returned at all)
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
-func (c *UsersAvailabilityGetAvailabilityCall) Do(opts ...googleapi.CallOption) (*Availability, error) {
+func (c *UsersAvailabilityGetCall) Do(opts ...googleapi.CallOption) (*Availability, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -12712,7 +12834,7 @@ func (c *UsersAvailabilityGetAvailabilityCall) Do(opts ...googleapi.CallOption) 
 	if err != nil {
 		return nil, err
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.users.availability.getAvailability", "response", internallog.HTTPResponse(res, b))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.users.availability.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -12954,7 +13076,7 @@ type UsersAvailabilityMarkAsDoNotDisturbCall struct {
 	header_                   http.Header
 }
 
-// MarkAsDoNotDisturb: Marks user as`DO_NOT_DISTURB` in Google Chat. Sets a
+// MarkAsDoNotDisturb: Marks user as `DO_NOT_DISTURB` in Google Chat. Sets a
 // user's availability state to `DO_NOT_DISTURB` until a specified expiration
 // time. When in `DO_NOT_DISTURB`, users typically won't receive notifications.
 // This method only updates the authenticated user's availability. Requires
@@ -13060,7 +13182,7 @@ func (c *UsersAvailabilityMarkAsDoNotDisturbCall) Do(opts ...googleapi.CallOptio
 	return ret, nil
 }
 
-type UsersAvailabilityUpdateAvailabilityCall struct {
+type UsersAvailabilityPatchCall struct {
 	s            *Service
 	name         string
 	availability *Availability
@@ -13069,10 +13191,9 @@ type UsersAvailabilityUpdateAvailabilityCall struct {
 	header_      http.Header
 }
 
-// UpdateAvailability: Updates availability information for a human user. Only
-// the `custom_status` field can be updated through this method. This method
-// only updates the authenticated user's availability. Requires user
-// authentication
+// Patch: Updates availability information for a human user. Only the
+// `custom_status` field can be updated through this method. This method only
+// updates the authenticated user's availability. Requires user authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 // with one of the following authorization scopes
 // (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
@@ -13083,8 +13204,8 @@ type UsersAvailabilityUpdateAvailabilityCall struct {
 //     People API or Admin SDK directory API. For example, `users/123456789`. The
 //     user's email address or `me` can also be used as an alias to refer to the
 //     caller. For example, `users/user@example.com` or `users/me`.
-func (r *UsersAvailabilityService) UpdateAvailability(name string, availability *Availability) *UsersAvailabilityUpdateAvailabilityCall {
-	c := &UsersAvailabilityUpdateAvailabilityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *UsersAvailabilityService) Patch(name string, availability *Availability) *UsersAvailabilityPatchCall {
+	c := &UsersAvailabilityPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.availability = availability
 	return c
@@ -13092,7 +13213,7 @@ func (r *UsersAvailabilityService) UpdateAvailability(name string, availability 
 
 // UpdateMask sets the optional parameter "updateMask": Required. The list of
 // fields to update. The only field that can be updated is `custom_status`.
-func (c *UsersAvailabilityUpdateAvailabilityCall) UpdateMask(updateMask string) *UsersAvailabilityUpdateAvailabilityCall {
+func (c *UsersAvailabilityPatchCall) UpdateMask(updateMask string) *UsersAvailabilityPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
@@ -13100,27 +13221,27 @@ func (c *UsersAvailabilityUpdateAvailabilityCall) UpdateMask(updateMask string) 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *UsersAvailabilityUpdateAvailabilityCall) Fields(s ...googleapi.Field) *UsersAvailabilityUpdateAvailabilityCall {
+func (c *UsersAvailabilityPatchCall) Fields(s ...googleapi.Field) *UsersAvailabilityPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *UsersAvailabilityUpdateAvailabilityCall) Context(ctx context.Context) *UsersAvailabilityUpdateAvailabilityCall {
+func (c *UsersAvailabilityPatchCall) Context(ctx context.Context) *UsersAvailabilityPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *UsersAvailabilityUpdateAvailabilityCall) Header() http.Header {
+func (c *UsersAvailabilityPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *UsersAvailabilityUpdateAvailabilityCall) doRequest(alt string) (*http.Response, error) {
+func (c *UsersAvailabilityPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.availability)
 	if err != nil {
@@ -13138,16 +13259,16 @@ func (c *UsersAvailabilityUpdateAvailabilityCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chat.users.availability.updateAvailability", "request", internallog.HTTPRequest(req, body.Bytes()))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chat.users.availability.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "chat.users.availability.updateAvailability" call.
+// Do executes the "chat.users.availability.patch" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *Availability.ServerResponse.Header or (if a response was returned at all)
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
-func (c *UsersAvailabilityUpdateAvailabilityCall) Do(opts ...googleapi.CallOption) (*Availability, error) {
+func (c *UsersAvailabilityPatchCall) Do(opts ...googleapi.CallOption) (*Availability, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -13177,7 +13298,7 @@ func (c *UsersAvailabilityUpdateAvailabilityCall) Do(opts ...googleapi.CallOptio
 	if err != nil {
 		return nil, err
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.users.availability.updateAvailability", "response", internallog.HTTPResponse(res, b))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.users.availability.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

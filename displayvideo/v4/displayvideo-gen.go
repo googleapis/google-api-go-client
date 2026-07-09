@@ -965,9 +965,7 @@ type AdGroup struct {
 	// in-stream and bumper ads.
 	//   "AD_GROUP_FORMAT_MASTHEAD" - Masthead Ad that is surfaced on the top slot
 	// on the YouTube homepage.
-	//   "AD_GROUP_FORMAT_DEMAND_GEN" - Demand Gen ads. Retrieval and management of
-	// Demand Gen resources is currently rolling out. This field will be available
-	// to all partners by *June 24, 2026*.
+	//   "AD_GROUP_FORMAT_DEMAND_GEN" - Demand Gen ads.
 	AdGroupFormat string `json:"adGroupFormat,omitempty"`
 	// AdGroupId: Output only. The unique ID of the ad group. Assigned by the
 	// system.
@@ -1061,32 +1059,22 @@ type AdGroupAd struct {
 	BumperAd *BumperAd `json:"bumperAd,omitempty"`
 	// DcmTrackingInfo: Optional. The DCM tracking ad info. Only valid for Demand
 	// Gen ads. To remove the DCM tracking ad info, please leave this field empty.
-	// Retrieval and management of Demand Gen resources is currently rolling out.
-	// This field will be available to all partners by *June 24, 2026*.
 	DcmTrackingInfo *DcmTrackingInfo `json:"dcmTrackingInfo,omitempty"`
 	// DemandGenCarouselAd: Details of a Demand Gen carousel ad
 	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
-	// -NC#CarouselAd). Retrieval and management of Demand Gen resources is
-	// currently rolling out. This field will be available to all partners by *June
-	// 24, 2026*.
+	// -NC#CarouselAd).
 	DemandGenCarouselAd *DemandGenCarouselAd `json:"demandGenCarouselAd,omitempty"`
 	// DemandGenImageAd: Details of a Demand Gen image ad
 	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
-	// -NC#ImageAd). Retrieval and management of Demand Gen resources is currently
-	// rolling out. This field will be available to all partners by *June 24,
-	// 2026*.
+	// -NC#ImageAd).
 	DemandGenImageAd *DemandGenImageAd `json:"demandGenImageAd,omitempty"`
 	// DemandGenProductAd: Details of a Demand Gen product ad
 	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
-	// -NC#Product-onlyAd). Retrieval and management of Demand Gen resources is
-	// currently rolling out. This field will be available to all partners by *June
-	// 24, 2026*.
+	// -NC#Product-onlyAd).
 	DemandGenProductAd *DemandGenProductAd `json:"demandGenProductAd,omitempty"`
 	// DemandGenVideoAd: Details of a Demand Gen video ad
 	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
-	// -NC#VideoAd). Retrieval and management of Demand Gen resources is currently
-	// rolling out. This field will be available to all partners by *June 24,
-	// 2026*.
+	// -NC#VideoAd).
 	DemandGenVideoAd *DemandGenVideoAd `json:"demandGenVideoAd,omitempty"`
 	// DisplayName: Required. The display name of the ad. Must be UTF-8 encoded
 	// with a maximum size of 255 bytes.
@@ -2167,6 +2155,15 @@ type AdvancedProductTargeting struct {
 	//   "GENDER_FEMALE" - The audience gender is female.
 	//   "GENDER_UNKNOWN" - The audience gender is unknown.
 	Genders []string `json:"genders,omitempty"`
+	// Network: Optional. The network to target.
+	//
+	// Possible values:
+	//   "PLANNABLE_NETWORK_UNSPECIFIED" - Not specified.
+	//   "PLANNABLE_NETWORK_YOUTUBE" - YouTube.
+	//   "PLANNABLE_NETWORK_GOOGLE_VIDEO_PARTNERS" - Google Video Partners.
+	//   "PLANNABLE_NETWORK_YOUTUBE_AND_GOOGLE_VIDEO_PARTNERS" - YouTube and Google
+	// Video Partners.
+	Network string `json:"network,omitempty"`
 	// PlannableLocationIds: Optional. Plannable location IDs to target.
 	PlannableLocationIds googleapi.Int64s `json:"plannableLocationIds,omitempty"`
 	// SurfaceTargetingSettings: Optional. Plannable surfaces to target.
@@ -6144,28 +6141,30 @@ func (s Consent) MarshalJSON() ([]byte, error) {
 
 // ContactInfo: Contact information defining a Customer Match audience member.
 type ContactInfo struct {
-	// CountryCode: Country code of the member. Must also be set with the following
-	// fields: * hashed_first_name * hashed_last_name * zip_codes
+	// CountryCode: Optional. Country code of the member. Must also be set with the
+	// following fields: * country_code * hashed_first_name * hashed_last_name *
+	// zip_codes
 	CountryCode string `json:"countryCode,omitempty"`
-	// HashedEmails: A list of SHA256 hashed email of the member. Before hashing,
-	// remove all whitespace and make sure the string is all lowercase.
+	// HashedEmails: Optional. A list of SHA256 hashed email of the member. Before
+	// hashing, remove all whitespace and make sure the string is all lowercase.
 	HashedEmails []string `json:"hashedEmails,omitempty"`
-	// HashedFirstName: SHA256 hashed first name of the member. Before hashing,
-	// remove all whitespace and make sure the string is all lowercase. Must also
-	// be set with the following fields: * country_code * hashed_last_name *
-	// zip_codes
+	// HashedFirstName: Optional. SHA256 hashed first name of the member. Before
+	// hashing, remove all whitespace and make sure the string is all lowercase.
+	// Must also be set with the following fields: * country_code *
+	// hashed_last_name * zip_codes
 	HashedFirstName string `json:"hashedFirstName,omitempty"`
-	// HashedLastName: SHA256 hashed last name of the member. Before hashing,
-	// remove all whitespace and make sure the string is all lowercase. Must also
-	// be set with the following fields: * country_code * hashed_first_name *
-	// zip_codes
+	// HashedLastName: Optional. SHA256 hashed last name of the member. Before
+	// hashing, remove all whitespace and make sure the string is all lowercase.
+	// Must also be set with the following fields: * country_code *
+	// hashed_first_name * zip_codes
 	HashedLastName string `json:"hashedLastName,omitempty"`
-	// HashedPhoneNumbers: A list of SHA256 hashed phone numbers of the member.
-	// Before hashing, all phone numbers must be formatted using the E.164 format
-	// (//en.wikipedia.org/wiki/E.164) and include the country calling code.
+	// HashedPhoneNumbers: Optional. A list of SHA256 hashed phone numbers of the
+	// member. Before hashing, all phone numbers must be formatted using the E.164
+	// format (https://en.wikipedia.org/wiki/E.164) and include the country calling
+	// code.
 	HashedPhoneNumbers []string `json:"hashedPhoneNumbers,omitempty"`
-	// ZipCodes: A list of zip codes of the member. Must also be set with the
-	// following fields: * country_code * hashed_first_name * hashed_last_name
+	// ZipCodes: Optional. A list of zip codes of the member. Must also be set with
+	// the following fields: * country_code * hashed_first_name * hashed_last_name
 	ZipCodes []string `json:"zipCodes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CountryCode") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6193,9 +6192,9 @@ type ContactInfoList struct {
 	// ad_user_data or ad_personalization fields are set to
 	// `CONSENT_STATUS_DENIED`, the request will return an error.
 	Consent *Consent `json:"consent,omitempty"`
-	// ContactInfos: A list of ContactInfo objects defining Customer Match audience
-	// members. The size of members after splitting the contact_infos mustn't be
-	// greater than 500,000.
+	// ContactInfos: Optional. A list of ContactInfo objects defining Customer
+	// Match audience members. The size of members after splitting the
+	// contact_infos mustn't be greater than 500,000.
 	ContactInfos []*ContactInfo `json:"contactInfos,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Consent") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6731,9 +6730,7 @@ type ConversionCountingConfig struct {
 	// conversions are counted. The Primary model can be set by you for a
 	// floodlight config or group. More details here
 	// (https://support.google.com/displayvideo/answer/7409983). Only applicable to
-	// Demand Gen line items. Retrieval and management of Demand Gen resources is
-	// currently rolling out. This field will be available to all partners by *June
-	// 24, 2026*.
+	// Demand Gen line items.
 	PrimaryAttributionModelId int64 `json:"primaryAttributionModelId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "FloodlightActivityConfigs")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -8354,7 +8351,10 @@ func (s DemandGenBiddingStrategy) MarshalJSON() ([]byte, error) {
 
 // DemandGenCarouselAd: Details for a Demand Gen carousel ad.
 type DemandGenCarouselAd struct {
-	// BusinessName: Required. The business name shown on the ad.
+	// BusinessName: Required. The business name shown on the ad. *Warning*:
+	// Starting **July 13, 2026**, this setting will no longer be required if a
+	// default value is set at the advertiser level. If left unset, the default
+	// value will be applied.
 	BusinessName string `json:"businessName,omitempty"`
 	// Cards: Required. The list of cards shown on the ad.
 	Cards []*CarouselCard `json:"cards,omitempty"`
@@ -8370,7 +8370,10 @@ type DemandGenCarouselAd struct {
 	FinalUrlSuffix string `json:"finalUrlSuffix,omitempty"`
 	// Headline: Required. The headline of the ad.
 	Headline string `json:"headline,omitempty"`
-	// Logo: Required. The logo image used by this ad.
+	// Logo: Required. The logo image used by this ad. *Warning*: Starting **July
+	// 13, 2026**, this setting will no longer be required if a default value is
+	// set at the advertiser level. If left unset, the default value will be
+	// applied.
 	Logo *ImageAsset `json:"logo,omitempty"`
 	// TrackingUrl: Output only. The URL address loaded in the background for
 	// tracking purposes.
@@ -8398,7 +8401,10 @@ func (s DemandGenCarouselAd) MarshalJSON() ([]byte, error) {
 
 // DemandGenImageAd: Details for a Demand Gen image ad.
 type DemandGenImageAd struct {
-	// BusinessName: Required. The business name shown on the ad.
+	// BusinessName: Required. The business name shown on the ad. *Warning*:
+	// Starting **July 13, 2026**, this setting will no longer be required if a
+	// default value is set at the advertiser level. If left unset, the default
+	// value will be applied.
 	BusinessName string `json:"businessName,omitempty"`
 	// CallToAction: Required. The call-to-action button shown on the ad.
 	CallToAction string `json:"callToAction,omitempty"`
@@ -8417,7 +8423,10 @@ type DemandGenImageAd struct {
 	FinalUrlSuffix string `json:"finalUrlSuffix,omitempty"`
 	// Headlines: Required. The list of headlines shown on the ad.
 	Headlines []string `json:"headlines,omitempty"`
-	// LogoImages: The list of logo images shown on the ad.
+	// LogoImages: The list of logo images shown on the ad. *Warning*: Starting
+	// **July 13, 2026**, this setting will no longer be required if a default
+	// value is set at the advertiser level. If left unset, the default value will
+	// be applied.
 	LogoImages []*ImageAsset `json:"logoImages,omitempty"`
 	// MarketingImages: The list of marketing images shown on the ad.
 	MarketingImages []*ImageAsset `json:"marketingImages,omitempty"`
@@ -8452,7 +8461,10 @@ func (s DemandGenImageAd) MarshalJSON() ([]byte, error) {
 
 // DemandGenProductAd: Details for a Demand Gen product ad.
 type DemandGenProductAd struct {
-	// BusinessName: Required. The business name shown on the ad.
+	// BusinessName: Required. The business name shown on the ad. *Warning*:
+	// Starting **July 13, 2026**, this setting will no longer be required if a
+	// default value is set at the advertiser level. If left unset, the default
+	// value will be applied.
 	BusinessName string `json:"businessName,omitempty"`
 	// CallToAction: Required. The call-to-action button shown on the ad. The
 	// supported values are: * `AUTOMATED` * `APPLY_NOW` * `BOOK_NOW` *
@@ -8498,7 +8510,10 @@ type DemandGenProductAd struct {
 	FinalUrlSuffix string `json:"finalUrlSuffix,omitempty"`
 	// Headline: Required. The headline of the ad.
 	Headline string `json:"headline,omitempty"`
-	// Logo: Required. The logo image used by this ad.
+	// Logo: Required. The logo image used by this ad. *Warning*: Starting **July
+	// 13, 2026**, this setting will no longer be required if a default value is
+	// set at the advertiser level. If left unset, the default value will be
+	// applied.
 	Logo *ImageAsset `json:"logo,omitempty"`
 	// TrackingUrl: Output only. The URL address loaded in the background for
 	// tracking purposes.
@@ -8557,7 +8572,10 @@ func (s DemandGenSettings) MarshalJSON() ([]byte, error) {
 
 // DemandGenVideoAd: Details for a Demand Gen video ad.
 type DemandGenVideoAd struct {
-	// BusinessName: Required. The business name shown on the ad.
+	// BusinessName: Required. The business name shown on the ad. *Warning*:
+	// Starting **July 13, 2026**, this setting will no longer be required if a
+	// default value is set at the advertiser level. If left unset, the default
+	// value will be applied.
 	BusinessName string `json:"businessName,omitempty"`
 	// CallToAction: Required. The call-to-action button shown on the ad. The
 	// supported values are: * `AUTOMATED` * `LEARN_MORE` * `GET_QUOTE` *
@@ -8609,7 +8627,10 @@ type DemandGenVideoAd struct {
 	FinalUrlSuffix string `json:"finalUrlSuffix,omitempty"`
 	// Headlines: Required. The list of headlines shown on the ad.
 	Headlines []string `json:"headlines,omitempty"`
-	// Logo: Required. The logo image used by this ad.
+	// Logo: Required. The logo image used by this ad. *Warning*: Starting **July
+	// 13, 2026**, this setting will no longer be required if a default value is
+	// set at the advertiser level. If left unset, the default value will be
+	// applied.
 	Logo *ImageAsset `json:"logo,omitempty"`
 	// LongHeadlines: Required. The list of long headlines shown on the ad.
 	LongHeadlines []string `json:"longHeadlines,omitempty"`
@@ -9295,7 +9316,7 @@ func (s DuplicateLineItemResponse) MarshalJSON() ([]byte, error) {
 }
 
 // EditCustomerMatchMembersRequest: Request message for
-// FirstAndThirdPartyAudienceService.EditCustomerMatchMembers.
+// FirstPartyAndPartnerAudienceService.EditCustomerMatchMembers.
 type EditCustomerMatchMembersRequest struct {
 	// AddedContactInfoList: Input only. A list of contact information to define
 	// the members to be added.
@@ -9331,7 +9352,7 @@ func (s EditCustomerMatchMembersRequest) MarshalJSON() ([]byte, error) {
 }
 
 // EditCustomerMatchMembersResponse: The response of
-// FirstAndThirdPartyAudienceService.EditCustomerMatchMembers.
+// FirstPartyAndPartnerAudienceService.EditCustomerMatchMembers.
 type EditCustomerMatchMembersResponse struct {
 	// FirstPartyAndPartnerAudienceId: Required. The ID of the updated Customer
 	// Match FirstPartyAndPartnerAudience.
@@ -9473,46 +9494,6 @@ type EditInventorySourceReadWriteAccessorsRequestAdvertisersUpdate struct {
 
 func (s EditInventorySourceReadWriteAccessorsRequestAdvertisersUpdate) MarshalJSON() ([]byte, error) {
 	type NoMethod EditInventorySourceReadWriteAccessorsRequestAdvertisersUpdate
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// EffectiveFrequencyBreakdown: A breakdown of the number of unique people
-// reached at a given effective frequency.
-type EffectiveFrequencyBreakdown struct {
-	// EffectiveCoviewReach: The number of unique individuals, including
-	// co-viewers, exactly matching the targeting that were served the ad at least
-	// the number of times dictated by the effective_frequency.
-	EffectiveCoviewReach int64 `json:"effectiveCoviewReach,omitempty,string"`
-	// EffectiveFrequency: The set effective frequency.
-	EffectiveFrequency int64 `json:"effectiveFrequency,omitempty"`
-	// OnTargetEffectiveCoviewReach: The total number of unique individuals,
-	// including co-viewers that were served the ad at least the number of times
-	// dictated by the effective_frequency. This includes individuals that may fall
-	// outside of targeting.
-	OnTargetEffectiveCoviewReach int64 `json:"onTargetEffectiveCoviewReach,omitempty,string"`
-	// OnTargetReach: The number of unique individuals exactly matching the
-	// targeting that were served the ad at least the number of times dictated by
-	// the effective_frequency.
-	OnTargetReach int64 `json:"onTargetReach,omitempty,string"`
-	// TotalReach: The total number of unique individuals that were served the ad
-	// at least the number of times dictated by the effective_frequency. This
-	// includes individuals that may fall outside of targeting.
-	TotalReach int64 `json:"totalReach,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "EffectiveCoviewReach") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EffectiveCoviewReach") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s EffectiveFrequencyBreakdown) MarshalJSON() ([]byte, error) {
-	type NoMethod EffectiveFrequencyBreakdown
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10190,9 +10171,10 @@ type FirstPartyAndPartnerAudience struct {
 	// customers to known Mobile device IDs.
 	//   "CUSTOMER_MATCH_USER_ID" - Audience was generated through matching
 	// customers to known User IDs.
-	//   "ACTIVITY_BASED" - Audience was created based on campaign activity.
-	//   "FREQUENCY_CAP" - Audience was created based on excluding the number of
-	// impressions they were served.
+	//   "ACTIVITY_BASED" - Deprecated: Audience was created based on campaign
+	// activity.
+	//   "FREQUENCY_CAP" - Deprecated: Audience was created based on excluding the
+	// number of impressions they were served.
 	//   "TAG_BASED" - Audience was created based on custom variables attached to
 	// pixel.
 	//   "YOUTUBE_USERS" - Audience was created based on past interactions with
@@ -10653,21 +10635,11 @@ type GenerateReachForecastRequest struct {
 	CampaignDuration *CampaignDuration `json:"campaignDuration,omitempty"`
 	// CurrencyCode: Required. The currency code for the plan in ISO 4217 format.
 	CurrencyCode string `json:"currencyCode,omitempty"`
-	// EffectiveFrequencyBreakdownLimit: Optional. The highest minimum effective
-	// frequency to include in
-	// PlannedProductForecast.effective_frequency_breakdowns. Must be between 1 and
-	// 10, inclusive. If not specified,
-	// PlannedProductForecast.effective_frequency_breakdowns will not be populated.
-	// If set, this value will also be used as the minimum effective frequency for
-	// reach metrics reporting. This field cannot be combined with the
-	// min_effective_frequency field.
-	EffectiveFrequencyBreakdownLimit int64 `json:"effectiveFrequencyBreakdownLimit,omitempty"`
 	// MinEffectiveFrequency: Optional. The minimum effective frequency for the
 	// reported reach metrics. This is the smallest number of times a customer must
 	// be exposed to the ad for it to be considered effective. This setting only
 	// impacts reporting. Must be between 1 and 10, inclusive. If not specified, a
-	// default of 1 is applied. This field cannot be combined with
-	// effective_frequency_breakdown_limit.
+	// default of 1 is applied.
 	MinEffectiveFrequency int64 `json:"minEffectiveFrequency,omitempty"`
 	// PlannedProducts: Required. The list of line items to include in the
 	// forecast.
@@ -12665,9 +12637,7 @@ type LineItem struct {
 	// CreativeIds: The IDs of the creatives associated with the line item.
 	CreativeIds googleapi.Int64s `json:"creativeIds,omitempty"`
 	// DemandGenSettings: Optional. Settings specific to Demand Gen line items.
-	// Only applicable to Demand Gen line items. Retrieval and management of Demand
-	// Gen resources is currently rolling out. This field will be available to all
-	// partners by *June 24, 2026*.
+	// Only applicable to Demand Gen line items.
 	DemandGenSettings *DemandGenSettings `json:"demandGenSettings,omitempty"`
 	// DisplayName: Required. The display name of the line item. Must be UTF-8
 	// encoded with a maximum size of 240 bytes.
@@ -12783,9 +12753,7 @@ type LineItem struct {
 	//   "LINE_ITEM_TYPE_VIDEO_OUT_OF_HOME" - Video ads served on
 	// digital-out-of-home inventory. Line items of this type and their targeting
 	// cannot be created or updated using the API.
-	//   "LINE_ITEM_TYPE_DEMAND_GEN" - Demand Gen ads. Retrieval and management of
-	// Demand Gen resources is currently rolling out. This field will be available
-	// to all partners by *June 24, 2026*.
+	//   "LINE_ITEM_TYPE_DEMAND_GEN" - Demand Gen ads.
 	LineItemType string `json:"lineItemType,omitempty"`
 	// MobileApp: The mobile app promoted by the line item. This is applicable only
 	// when line_item_type is either `LINE_ITEM_TYPE_DISPLAY_MOBILE_APP_INSTALL` or
@@ -14318,9 +14286,9 @@ type MobileDeviceIdList struct {
 	// ad_user_data or ad_personalization fields are set to
 	// `CONSENT_STATUS_DENIED`, the request will return an error.
 	Consent *Consent `json:"consent,omitempty"`
-	// MobileDeviceIds: A list of mobile device IDs defining Customer Match
-	// audience members. The size of mobile_device_ids mustn't be greater than
-	// 500,000.
+	// MobileDeviceIds: Optional. A list of mobile device IDs defining Customer
+	// Match audience members. The size of mobile_device_ids mustn't be greater
+	// than 500,000.
 	MobileDeviceIds []string `json:"mobileDeviceIds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Consent") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -15645,6 +15613,9 @@ type PlannableLocation struct {
 	GeoRegionType string `json:"geoRegionType,omitempty"`
 	// Name: Output only. The resource name of the plannable location.
 	Name string `json:"name,omitempty"`
+	// ParentPlannableLocationId: Output only. The parent plannable location ID,
+	// for example the country ID for subgeos.
+	ParentPlannableLocationId int64 `json:"parentPlannableLocationId,omitempty,string"`
 	// PlannableLocationId: Output only. The plannable location ID.
 	PlannableLocationId int64 `json:"plannableLocationId,omitempty,string"`
 	// RegionCode: Output only. The region code of the location, for example "DZ"
@@ -15665,6 +15636,49 @@ type PlannableLocation struct {
 
 func (s PlannableLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod PlannableLocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PlannableProductCoreAttributes: Core attributes for a plannable product.
+type PlannableProductCoreAttributes struct {
+	// BuyingMethod: Output only. The buying method.
+	//
+	// Possible values:
+	//   "PLANNABLE_BUYING_METHOD_UNSPECIFIED" - Not specified.
+	//   "PLANNABLE_BUYING_METHOD_AUCTION" - Auction.
+	//   "PLANNABLE_BUYING_METHOD_RESERVATION" - Reservation.
+	BuyingMethod string `json:"buyingMethod,omitempty"`
+	// CostModel: Output only. The cost model.
+	//
+	// Possible values:
+	//   "PLANNABLE_COST_MODEL_UNSPECIFIED" - Not specified.
+	//   "PLANNABLE_COST_MODEL_CPM" - CPM.
+	//   "PLANNABLE_COST_MODEL_CPV" - CPV.
+	//   "PLANNABLE_COST_MODEL_CPC" - CPC.
+	//   "PLANNABLE_COST_MODEL_CPA" - CPA.
+	CostModel string `json:"costModel,omitempty"`
+	// ProductCategory: Output only. The product category.
+	//
+	// Possible values:
+	//   "PLANNABLE_PRODUCT_CATEGORY_UNSPECIFIED" - Not specified.
+	//   "YOUTUBE" - YouTube.
+	//   "OPEN_AUCTION" - Open Auction.
+	ProductCategory string `json:"productCategory,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BuyingMethod") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BuyingMethod") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PlannableProductCoreAttributes) MarshalJSON() ([]byte, error) {
+	type NoMethod PlannableProductCoreAttributes
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -15708,6 +15722,9 @@ type PlannableTargeting struct {
 	//   "PLANNABLE_AGE_RANGE_55_65_UP" - 55 to 65+ years old.
 	//   "PLANNABLE_AGE_RANGE_65_UP" - 65+ years old.
 	AgeRanges []string `json:"ageRanges,omitempty"`
+	// DefaultYoutubeSelectLineup: Output only. The default YouTube Select Lineup
+	// for this product, if applicable.
+	DefaultYoutubeSelectLineup *YouTubeSelectLineUp `json:"defaultYoutubeSelectLineup,omitempty"`
 	// Devices: Output only. Targetable devices for the ad product.
 	//
 	// Possible values:
@@ -15730,7 +15747,7 @@ type PlannableTargeting struct {
 	//   "GENDER_FEMALE" - The audience gender is female.
 	//   "GENDER_UNKNOWN" - The audience gender is unknown.
 	Genders []string `json:"genders,omitempty"`
-	// Networks: Output only. Targetable networks for the ad product.
+	// Network: Output only. Targetable network for the ad product.
 	//
 	// Possible values:
 	//   "PLANNABLE_NETWORK_UNSPECIFIED" - Not specified.
@@ -15738,7 +15755,7 @@ type PlannableTargeting struct {
 	//   "PLANNABLE_NETWORK_GOOGLE_VIDEO_PARTNERS" - Google Video Partners.
 	//   "PLANNABLE_NETWORK_YOUTUBE_AND_GOOGLE_VIDEO_PARTNERS" - YouTube and Google
 	// Video Partners.
-	Networks []string `json:"networks,omitempty"`
+	Network string `json:"network,omitempty"`
 	// SurfaceTargetingCombinations: Output only. Targetable surface combinations
 	// for the ad product.
 	SurfaceTargetingCombinations *SurfaceTargetingCombinations `json:"surfaceTargetingCombinations,omitempty"`
@@ -15865,8 +15882,6 @@ func (s PlannedProduct) MarshalJSON() ([]byte, error) {
 
 // PlannedProductForecast: Performance metrics for a forecast point.
 type PlannedProductForecast struct {
-	// EffectiveFrequencyBreakdowns: A list of effective frequency breakdowns.
-	EffectiveFrequencyBreakdowns []*EffectiveFrequencyBreakdown `json:"effectiveFrequencyBreakdowns,omitempty"`
 	// OnTargetImpressions: Number of on-target impressions.
 	OnTargetImpressions int64 `json:"onTargetImpressions,omitempty,string"`
 	// OnTargetReach: Number of unique people reached that match the on-target
@@ -15880,15 +15895,15 @@ type PlannedProductForecast struct {
 	TrueviewViews int64 `json:"trueviewViews,omitempty,string"`
 	// ViewableImpressions: Number of viewable impressions.
 	ViewableImpressions int64 `json:"viewableImpressions,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g.
-	// "EffectiveFrequencyBreakdowns") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
-	// for more details.
+	// ForceSendFields is a list of field names (e.g. "OnTargetImpressions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EffectiveFrequencyBreakdowns") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "OnTargetImpressions") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -16195,6 +16210,9 @@ type ProductMetadata struct {
 	// PlannableProductCode: Output only. The plannable product code (e.g.
 	// "YOUTUBE_REACH_MIX").
 	PlannableProductCode string `json:"plannableProductCode,omitempty"`
+	// PlannableProductCoreAttributes: Output only. Core attributes for this
+	// product.
+	PlannableProductCoreAttributes *PlannableProductCoreAttributes `json:"plannableProductCoreAttributes,omitempty"`
 	// PlannableProductDescription: Output only. The plain-text description of the
 	// ad product.
 	PlannableProductDescription string `json:"plannableProductDescription,omitempty"`
@@ -17327,6 +17345,22 @@ type SurfaceTargetingCombinations struct {
 	//   "PLANNABLE_SURFACE_IN_STREAM_NON_SKIPPABLE_THIRTY_SECONDS" - In-stream
 	// non-skippable (30 seconds).
 	AvailableSurfaceTypes []string `json:"availableSurfaceTypes,omitempty"`
+	// DefaultSurfaceTypes: Output only. The default surface types for this
+	// product.
+	//
+	// Possible values:
+	//   "PLANNABLE_SURFACE_UNSPECIFIED" - Not specified.
+	//   "PLANNABLE_SURFACE_IN_FEED" - In-feed.
+	//   "PLANNABLE_SURFACE_IN_STREAM_BUMPER" - In-stream bumper.
+	//   "PLANNABLE_SURFACE_IN_STREAM_NON_SKIPPABLE" - In-stream non-skippable.
+	//   "PLANNABLE_SURFACE_IN_STREAM_SKIPPABLE" - In-stream skippable.
+	//   "PLANNABLE_SURFACE_SHORTS" - Shorts.
+	//   "PLANNABLE_SURFACE_DISCOVER_FEED" - Discover feed.
+	//   "PLANNABLE_SURFACE_GMAIL" - Gmail.
+	//   "PLANNABLE_SURFACE_GOOGLE_DISPLAY_NETWORK" - Google Display Network.
+	//   "PLANNABLE_SURFACE_IN_STREAM_NON_SKIPPABLE_THIRTY_SECONDS" - In-stream
+	// non-skippable (30 seconds).
+	DefaultSurfaceTypes []string `json:"defaultSurfaceTypes,omitempty"`
 	// ValidSurfaceCombinations: Output only. Valid combinations of surfaces that
 	// can be selected together.
 	ValidSurfaceCombinations []*SurfaceTargetingCombination `json:"validSurfaceCombinations,omitempty"`
@@ -17551,9 +17585,7 @@ type TargetingExpansionConfig struct {
 	EnableOptimizedTargeting bool `json:"enableOptimizedTargeting,omitempty"`
 	// ExcludeDemographicExpansion: Optional. Whether to exclude demographic
 	// expansion for Optimized Targeting. This field can only be set for Demand Gen
-	// ad groups. Retrieval and management of Demand Gen resources is currently
-	// rolling out. This field will be available to all partners by *June 24,
-	// 2026*.
+	// ad groups.
 	ExcludeDemographicExpansion bool `json:"excludeDemographicExpansion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudienceExpansionLevel") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -17794,7 +17826,8 @@ type ThirdPartyMeasurementConfigs struct {
 	// lift. The following third-party vendors are applicable: *
 	// `THIRD_PARTY_VENDOR_DYNATA` * `THIRD_PARTY_VENDOR_KANTAR` *
 	// `THIRD_PARTY_VENDOR_INTAGE` * `THIRD_PARTY_VENDOR_NIELSEN` *
-	// `THIRD_PARTY_VENDOR_MACROMILL`
+	// `THIRD_PARTY_VENDOR_MACROMILL` *Warning*: Starting **July 13, 2026**, this
+	// field will no longer support `THIRD_PARTY_VENDOR_NIELSEN`.
 	BrandLiftVendorConfigs []*ThirdPartyVendorConfig `json:"brandLiftVendorConfigs,omitempty"`
 	// BrandSafetyVendorConfigs: Optional. The third-party vendors measuring brand
 	// safety. The following third-party vendors are applicable: *
@@ -21080,8 +21113,7 @@ type AdvertisersAdGroupAdsCreateCall struct {
 }
 
 // Create: Creates an ad group ad. This method is only supported for Demand Gen
-// ads. Retrieval and management of Demand Gen resources is currently rolling
-// out. This method will be available to all partners by *June 24, 2026*.
+// ads.
 //
 //   - advertiserId: Output only. The unique ID of the advertiser the ad belongs
 //     to.
@@ -21186,8 +21218,7 @@ type AdvertisersAdGroupAdsDeleteCall struct {
 }
 
 // Delete: Deletes an ad group ad. This method is only supported for Demand Gen
-// ads. Retrieval and management of Demand Gen resources is currently rolling
-// out. This method will be available to all partners by *June 24, 2026*.
+// ads.
 //
 //   - adGroupAdId: The ID of the ad to delete. Only Demand Gen ads are
 //     supported.
@@ -21581,8 +21612,7 @@ type AdvertisersAdGroupAdsPatchCall struct {
 }
 
 // Patch: Updates an ad group ad. This method is only supported for Demand Gen
-// ads. Retrieval and management of Demand Gen resources is currently rolling
-// out. This method will be available to all partners by *June 24, 2026*.
+// ads.
 //
 //   - adGroupAdId: Output only. The unique ID of the ad. Assigned by the system.
 //   - advertiserId: Output only. The unique ID of the advertiser the ad belongs
@@ -21703,9 +21733,7 @@ type AdvertisersAdGroupsBulkEditAssignedTargetingOptionsCall struct {
 // BulkEditAdGroupAssignedTargetingOptionsRequest.delete_requests from each ad
 // group, and then create the assigned targeting options provided in
 // BulkEditAdGroupAssignedTargetingOptionsRequest.create_requests. This method
-// is only supported for Demand Gen ad groups. Retrieval and management of
-// Demand Gen resources is currently rolling out. This method will be available
-// to all partners by *June 24, 2026*.
+// is only supported for Demand Gen ad groups.
 //
 // - advertiserId: The ID of the advertiser the ad groups belong to.
 func (r *AdvertisersAdGroupsService) BulkEditAssignedTargetingOptions(advertiserId int64, bulkeditadgroupassignedtargetingoptionsrequest *BulkEditAdGroupAssignedTargetingOptionsRequest) *AdvertisersAdGroupsBulkEditAssignedTargetingOptionsCall {
@@ -22000,8 +22028,6 @@ type AdvertisersAdGroupsCreateCall struct {
 
 // Create: Creates a new ad group. Returns the newly created ad group if
 // successful. This method is only supported for Demand Gen ad groups.
-// Retrieval and management of Demand Gen resources is currently rolling out.
-// This method will be available to all partners by *June 24, 2026*.
 //
 //   - advertiserId: Output only. The unique ID of the advertiser the ad group
 //     belongs to.
@@ -22107,8 +22133,6 @@ type AdvertisersAdGroupsDeleteCall struct {
 
 // Delete: Deletes a AdGroup. Returns error code `NOT_FOUND` if the ad group
 // does not exist. This method is only supported for Demand Gen ad groups.
-// Retrieval and management of Demand Gen resources is currently rolling out.
-// This method will be available to all partners by *June 24, 2026*.
 //
 // - adGroupId: The ID of the ad group to delete.
 // - advertiserId: The ID of the advertiser this ad group belongs to.
@@ -22502,8 +22526,6 @@ type AdvertisersAdGroupsPatchCall struct {
 
 // Patch: Updates an existing ad group. Returns the updated ad group if
 // successful. This method is only supported for Demand Gen ad groups.
-// Retrieval and management of Demand Gen resources is currently rolling out.
-// This method will be available to all partners by *June 24, 2026*.
 //
 //   - adGroupId: Output only. The unique ID of the ad group. Assigned by the
 //     system.
@@ -22622,9 +22644,7 @@ type AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsCreateCall struct 
 
 // Create: Assigns a targeting option to an ad group. Returns the assigned
 // targeting option if successful. This method is only supported for Demand Gen
-// ad groups. Retrieval and management of Demand Gen resources is currently
-// rolling out. This method will be available to all partners by *June 24,
-// 2026*.
+// ad groups.
 //
 //   - adGroupId: The ID of the ad group the assigned targeting option will
 //     belong to.
@@ -22747,9 +22767,7 @@ type AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsDeleteCall struct 
 
 // Delete: Deletes an assigned targeting option from an ad group. This method
 // is only supported for Demand Gen ad groups with the AdGroupFormat
-// `AD_GROUP_FORMAT_DEMAND_GEN`. Retrieval and management of Demand Gen
-// resources is currently rolling out. This method will be available to all
-// partners by *June 24, 2026*.
+// `AD_GROUP_FORMAT_DEMAND_GEN`.
 //
 //   - adGroupId: The ID of the ad group the assigned targeting option belongs
 //     to.
@@ -32079,13 +32097,15 @@ func (r *AdvertisersReachForecastService) RetrievePlannableUserLists(advertiserI
 // user list properties. Supported syntax: * Filter expressions are made up of
 // one or more restrictions. * Restrictions can be combined by `AND` or `OR`
 // logical operators. * A restriction has the form of `{field} {operator}
-// {value}`. * The `updateTime` field must use the `GREATER THAN OR EQUAL TO
-// (>=)` or `LESS THAN OR EQUAL TO (<=)` operators. * All other fields must use
-// the `EQUALS (=)` operator. Supported fields: * `plannableStatus` Examples: *
-// All plannable user lists: `plannableStatus="PLANNABLE" The length of this
-// field should be no more than 500 characters. Reference our filter `LIST`
-// requests (/display-video/api/guides/how-tos/filters) guide for more
-// information.
+// {value}`. * The `displayName` field must use the `HAS (:)` operator. * All
+// other fields must use the `EQUALS (=)` operator. Supported fields: *
+// `plannableStatus` * `displayName` * `userListType` * `name` Examples: * All
+// plannable user lists: `plannableStatus="PLANNABLE" * Plannable user lists
+// with display name containing "Shopping": `plannableStatus="PLANNABLE" AND
+// displayName:"Shopping" * First party user lists:
+// `userListType="FIRST_PARTY" The length of this field should be no more than
+// 500 characters. Reference our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more information.
 func (c *AdvertisersReachForecastRetrievePlannableUserListsCall) Filter(filter string) *AdvertisersReachForecastRetrievePlannableUserListsCall {
 	c.urlParams_.Set("filter", filter)
 	return c

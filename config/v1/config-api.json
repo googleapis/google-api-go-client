@@ -1788,7 +1788,7 @@
       }
     }
   },
-  "revision": "20260610",
+  "revision": "20260623",
   "rootUrl": "https://config.googleapis.com/",
   "schemas": {
     "ApplyResults": {
@@ -2261,6 +2261,11 @@
         "applyResults": {
           "$ref": "ApplyResults",
           "description": "Outputs and artifacts from applying a deployment."
+        },
+        "applyResultsAvailable": {
+          "description": "Output only. Indicating if early apply results are available.",
+          "readOnly": true,
+          "type": "boolean"
         },
         "build": {
           "description": "Output only. Cloud Build instance UUID associated with this operation.",

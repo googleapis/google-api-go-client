@@ -110,7 +110,7 @@
         "aggregateProductStatuses": {
           "methods": {
             "list": {
-              "description": "Lists the `AggregateProductStatuses` resources for your merchant account. The response might contain fewer items than specified by `pageSize`. If `pageToken` was returned in previous request, it can be used to obtain additional results.",
+              "description": "Lists the `AggregateProductStatuses` resources for your merchant account. The response might contain fewer items than specified by `pageSize`. If `pageToken` was returned in previous request, it can be used to obtain additional results. This method can only be accessed by standalone accounts and sub-accounts of an advanced account. To retrieve product statuses for sub-accounts, you must first call the accounts.listSubaccounts method to obtain a list of sub-accounts, and then call `accounts.aggregateProductStatuses.list` for each sub-account individually.",
               "flatPath": "issueresolution/v1/accounts/{accountsId}/aggregateProductStatuses",
               "httpMethod": "GET",
               "id": "merchantapi.accounts.aggregateProductStatuses.list",
@@ -135,7 +135,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. The account to list aggregate product statuses for. Format: `accounts/{account}`",
+                  "description": "Required. The account to list aggregate product statuses for. Format: `accounts/{account}` Can only be sub-accounts and standalone accounts.",
                   "location": "path",
                   "pattern": "^accounts/[^/]+$",
                   "required": true,
@@ -268,7 +268,7 @@
       }
     }
   },
-  "revision": "20260527",
+  "revision": "20260707",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "Action": {

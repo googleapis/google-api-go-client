@@ -8431,7 +8431,7 @@
       }
     }
   },
-  "revision": "20260622",
+  "revision": "20260701",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AdvancedSettings": {
@@ -14884,9 +14884,17 @@
           "enum": [
             "MESSAGE_TYPE_UNSPECIFIED",
             "TRANSCRIPT",
-            "END_OF_SINGLE_UTTERANCE"
+            "DTMF_DIGITS",
+            "END_OF_SINGLE_UTTERANCE",
+            "PARTIAL_DTMF_DIGITS",
+            "SPEECH_ACTIVITY_BEGIN",
+            "SPEECH_ACTIVITY_END"
           ],
           "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
             "",
             "",
             ""
@@ -18338,6 +18346,9 @@
         "enableAutomaticPunctuation": {
           "type": "boolean"
         },
+        "enableVoiceActivityEvents": {
+          "type": "boolean"
+        },
         "enableWordInfo": {
           "type": "boolean"
         },
@@ -20851,6 +20862,13 @@
     "GoogleCloudDialogflowV2beta1SearchKnowledgeDebugInfo": {
       "id": "GoogleCloudDialogflowV2beta1SearchKnowledgeDebugInfo",
       "properties": {
+        "cesDebugInfo": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "type": "object"
+        },
         "datastoreResponseReason": {
           "enum": [
             "DATASTORE_RESPONSE_REASON_UNSPECIFIED",
@@ -21471,9 +21489,13 @@
             "TRANSCRIPT",
             "END_OF_SINGLE_UTTERANCE",
             "DTMF_DIGITS",
-            "PARTIAL_DTMF_DIGITS"
+            "PARTIAL_DTMF_DIGITS",
+            "SPEECH_ACTIVITY_BEGIN",
+            "SPEECH_ACTIVITY_END"
           ],
           "enumDescriptions": [
+            "",
+            "",
             "",
             "",
             "",

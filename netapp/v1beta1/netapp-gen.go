@@ -2120,6 +2120,13 @@ func (s Location) MarshalJSON() ([]byte, error) {
 
 // LocationMetadata: Metadata for a given google.cloud.location.Location.
 type LocationMetadata struct {
+	// FlexPerformanceTier: Output only. Indicates the flex performance tier of
+	// this location.
+	//
+	// Possible values:
+	//   "FLEX_PERFORMANCE_TIER_UNSPECIFIED" - Unspecified flex performance tier.
+	//   "LIMITED" - Flex performance tier is limited.
+	FlexPerformanceTier string `json:"flexPerformanceTier,omitempty"`
 	// HasOntapProxy: Output only. Indicates if the location has ONTAP Proxy
 	// support.
 	HasOntapProxy bool `json:"hasOntapProxy,omitempty"`
@@ -2142,15 +2149,15 @@ type LocationMetadata struct {
 	//   "STANDARD" - Standard service level.
 	//   "FLEX" - Flex service level.
 	SupportedServiceLevels []string `json:"supportedServiceLevels,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "HasOntapProxy") to
+	// ForceSendFields is a list of field names (e.g. "FlexPerformanceTier") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "HasOntapProxy") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "FlexPerformanceTier") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

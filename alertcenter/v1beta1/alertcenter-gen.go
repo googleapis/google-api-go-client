@@ -1918,6 +1918,7 @@ type RuleViolationInfo struct {
 	// Possible values:
 	//   "AGENT_TYPE_UNSPECIFIED" - Unspecified agent type.
 	//   "STUDIO" - Studio agent type.
+	//   "WORK_AGENT" - Work Agent agent type.
 	AgentType string `json:"agentType,omitempty"`
 	// DataSource: Source of the data.
 	//

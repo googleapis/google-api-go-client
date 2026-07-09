@@ -763,6 +763,101 @@ func (s ArimaSingleModelForecastingMetrics) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ArrowRecordBatch: Arrow RecordBatch. This feature is not yet available.
+type ArrowRecordBatch struct {
+	// SerializedRecordBatch: IPC-serialized Arrow RecordBatch.
+	SerializedRecordBatch string `json:"serializedRecordBatch,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SerializedRecordBatch") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SerializedRecordBatch") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ArrowRecordBatch) MarshalJSON() ([]byte, error) {
+	type NoMethod ArrowRecordBatch
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ArrowSchema: Arrow schema as specified in
+// https://arrow.apache.org/docs/python/api/datatypes.html and serialized to
+// bytes using IPC:
+// https://arrow.apache.org/docs/format/Columnar.html#serialization-and-interprocess-communication-ipc
+// See code samples on how this message can be deserialized. This feature is
+// not yet available.
+type ArrowSchema struct {
+	// SerializedSchema: IPC serialized Arrow schema.
+	SerializedSchema string `json:"serializedSchema,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SerializedSchema") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SerializedSchema") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ArrowSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod ArrowSchema
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ArrowSerializationOptions: Contains options specific to Arrow Serialization.
+// This feature is not yet available.
+type ArrowSerializationOptions struct {
+	// BufferCompression: The compression codec to use for Arrow buffers in
+	// serialized record batches.
+	//
+	// Possible values:
+	//   "COMPRESSION_UNSPECIFIED" - If unspecified no compression will be used.
+	//   "LZ4_FRAME" - LZ4 Frame
+	// (https://github.com/lz4/lz4/blob/dev/doc/lz4_Frame_format.md)
+	//   "ZSTD" - Zstandard compression.
+	BufferCompression string `json:"bufferCompression,omitempty"`
+	// PicosTimestampPrecision: Optional. Set timestamp precision option. If not
+	// set, the default precision is microseconds.
+	//
+	// Possible values:
+	//   "PICOS_TIMESTAMP_PRECISION_UNSPECIFIED" - Unspecified timestamp precision.
+	// The default precision is microseconds.
+	//   "TIMESTAMP_PRECISION_MICROS" - Timestamp values returned in the results
+	// will be truncated to microsecond level precision. The value will be encoded
+	// as Arrow TIMESTAMP type in a 64 bit integer.
+	//   "TIMESTAMP_PRECISION_NANOS" - Timestamp values returned in the results
+	// will be truncated to nanosecond level precision. The value will be encoded
+	// as Arrow TIMESTAMP type in a 64 bit integer.
+	//   "TIMESTAMP_PRECISION_PICOS" - Timestamp values returned in the results
+	// will contain full precision picosecond value. The value will be encoded as a
+	// string which conforms to ISO 8601 format.
+	PicosTimestampPrecision string `json:"picosTimestampPrecision,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BufferCompression") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BufferCompression") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ArrowSerializationOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ArrowSerializationOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must have one
@@ -3925,7 +4020,7 @@ type GeneratedExpressionInfo struct {
 	// asynchronously.
 	Asynchronous bool `json:"asynchronous,omitempty"`
 	// GenerationExpression: Optional. The generation expression (e.g.
-	// AI.EMBED(...)) used to generated the field.
+	// AI.EMBED(...)) used to generate the field.
 	GenerationExpression string `json:"generationExpression,omitempty"`
 	// Stored: Optional. Whether the generated column is stored in the table.
 	Stored bool `json:"stored,omitempty"`
@@ -7686,6 +7781,9 @@ func (s QueryParameterValue) MarshalJSON() ([]byte, error) {
 
 // QueryRequest: Describes the format of the jobs.query request.
 type QueryRequest struct {
+	// ArrowSerializationOptions: Optional. Options specific to the Apache Arrow
+	// output format.
+	ArrowSerializationOptions *ArrowSerializationOptions `json:"arrowSerializationOptions,omitempty"`
 	// ConnectionProperties: Optional. Connection properties which can modify the
 	// query behavior.
 	ConnectionProperties []*ConnectionProperty `json:"connectionProperties,omitempty"`
@@ -7775,6 +7873,23 @@ type QueryRequest struct {
 	Query string `json:"query,omitempty"`
 	// QueryParameters: Query parameters for GoogleSQL queries.
 	QueryParameters []*QueryParameter `json:"queryParameters,omitempty"`
+	// QueryResultsFormat: Optional. The query results format. If the value is
+	// anything other than `STRUCT_ENCODING` or unspecified: * The schema of the
+	// results will be provided in `QueryResponse.results_schema` field. * The
+	// results of the first page will be provided in `QueryResponse.results` field.
+	// * The `QueryResponse.rows` will not be populated. * The
+	// `QueryResponse.schema` for `QueryResponse.rows` will also not be populated
+	// since it is the schema of the `QueryResponse.rows`. This feature is not yet
+	// available.
+	//
+	// Possible values:
+	//   "QUERY_RESULTS_FORMAT_UNSPECIFIED" - If unspecified it will default to
+	// struct `QueryResponse.rows` (`STRUCT_ENCODING`)
+	//   "STRUCT_ENCODING" - Default encoding of results as struct in
+	// `QueryResponse.rows`
+	//   "ARROW" - Arrow is a standard open source column-based message format. See
+	// https://arrow.apache.org/ for more details.
+	QueryResultsFormat string `json:"queryResultsFormat,omitempty"`
 	// RequestId: Optional. A unique user provided identifier to ensure idempotent
 	// behavior for queries. Note that this is different from the job_id. It has
 	// the following properties: 1. It is case-sensitive, limited to up to 36 ASCII
@@ -7831,15 +7946,15 @@ type QueryRequest struct {
 	// result table. This may incur a performance penalty. This option cannot be
 	// used with Legacy SQL. This feature is not yet available.
 	WriteIncrementalResults bool `json:"writeIncrementalResults,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ConnectionProperties") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "ArrowSerializationOptions")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ConnectionProperties") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ArrowSerializationOptions") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -7850,6 +7965,11 @@ func (s QueryRequest) MarshalJSON() ([]byte, error) {
 }
 
 type QueryResponse struct {
+	// ArrowRecordBatch: Output only. Serialized row data in Arrow RecordBatch
+	// format.
+	ArrowRecordBatch *ArrowRecordBatch `json:"arrowRecordBatch,omitempty"`
+	// ArrowSchema: Output only. Arrow schema
+	ArrowSchema *ArrowSchema `json:"arrowSchema,omitempty"`
 	// CacheHit: Whether the query result was fetched from the query cache.
 	CacheHit bool `json:"cacheHit,omitempty"`
 	// CreationTime: Output only. Creation time of this query, in milliseconds
@@ -7893,6 +8013,9 @@ type QueryResponse struct {
 	// NumDmlAffectedRows: Output only. The number of rows affected by a DML
 	// statement. Present only for DML statements INSERT, UPDATE or DELETE.
 	NumDmlAffectedRows int64 `json:"numDmlAffectedRows,omitempty,string"`
+	// PageRowCount: Output only. The number of rows out of `total_rows` returned
+	// in this response. This feature is not yet available.
+	PageRowCount int64 `json:"pageRowCount,omitempty,string"`
 	// PageToken: A token used for paging results. A non-empty token indicates that
 	// additional results are available. To see additional results, query the
 	// `jobs.getQueryResults`
@@ -7933,15 +8056,15 @@ type QueryResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CacheHit") to
+	// ForceSendFields is a list of field names (e.g. "ArrowRecordBatch") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CacheHit") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ArrowRecordBatch") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

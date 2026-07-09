@@ -11964,7 +11964,7 @@
       }
     }
   },
-  "revision": "20260622",
+  "revision": "20260626",
   "rootUrl": "https://apigee.googleapis.com/",
   "schemas": {
     "EdgeConfigstoreBundleBadBundle": {
@@ -19188,7 +19188,7 @@
       "type": "object"
     },
     "GoogleCloudApigeeV1RuntimeTraceConfig": {
-      "description": "NEXT ID: 10 RuntimeTraceConfig defines the configurations for distributed trace in an environment.",
+      "description": "NEXT ID: 11 RuntimeTraceConfig defines the configurations for distributed trace in an environment.",
       "id": "GoogleCloudApigeeV1RuntimeTraceConfig",
       "properties": {
         "endpoint": {
@@ -19242,6 +19242,20 @@
           "$ref": "GoogleCloudApigeeV1RuntimeTraceSamplingConfig",
           "description": "Trace configuration for all API proxies in an environment."
         },
+        "spanSemantics": {
+          "description": "Optional. The span semantics to use. Configuration Requirements (if `span_semantics` is `OTEL`): - `trace_protocol` must be `OTLP`.",
+          "enum": [
+            "SPAN_SEMANTICS_UNSPECIFIED",
+            "LEGACY",
+            "OTEL"
+          ],
+          "enumDescriptions": [
+            "Semantics unspecified. Defaults to LEGACY.",
+            "Uses Apigee legacy span and attribute names.",
+            "Uses OpenTelemetry semantic-convention-aligned span and attribute names."
+          ],
+          "type": "string"
+        },
         "traceProtocol": {
           "description": "Optional. The trace protocol to use.",
           "enum": [
@@ -19260,7 +19274,7 @@
       "type": "object"
     },
     "GoogleCloudApigeeV1RuntimeTraceConfigOverride": {
-      "description": "NEXT ID: 9 Trace configuration override for a specific API proxy in an environment.",
+      "description": "NEXT ID: 10 Trace configuration override for a specific API proxy in an environment.",
       "id": "GoogleCloudApigeeV1RuntimeTraceConfigOverride",
       "properties": {
         "apiProxy": {
@@ -19288,6 +19302,20 @@
         "samplingConfig": {
           "$ref": "GoogleCloudApigeeV1RuntimeTraceSamplingConfig",
           "description": "Trace configuration override for a specific API proxy in an environment."
+        },
+        "spanSemantics": {
+          "description": "Optional. The span semantics to use. Configuration Requirements (if `span_semantics` is `OTEL`): - `trace_protocol` must be `OTLP`.",
+          "enum": [
+            "SPAN_SEMANTICS_UNSPECIFIED",
+            "LEGACY",
+            "OTEL"
+          ],
+          "enumDescriptions": [
+            "Semantics unspecified. Defaults to LEGACY.",
+            "Uses Apigee legacy span and attribute names.",
+            "Uses OpenTelemetry semantic-convention-aligned span and attribute names."
+          ],
+          "type": "string"
         },
         "traceProtocol": {
           "description": "Optional. The trace protocol to use.",
@@ -21301,6 +21329,20 @@
         "samplingConfig": {
           "$ref": "GoogleCloudApigeeV1TraceSamplingConfig",
           "description": "Distributed trace configuration for all API proxies in an environment. You can also override the configuration for a specific API proxy using the distributed trace configuration overrides API."
+        },
+        "spanSemantics": {
+          "description": "Optional. The span semantics to use. Configuration Requirements (if span_semantics is OTEL): - trace_protocol must be OTLP.",
+          "enum": [
+            "SPAN_SEMANTICS_UNSPECIFIED",
+            "LEGACY",
+            "OTEL"
+          ],
+          "enumDescriptions": [
+            "Semantics unspecified. Defaults to LEGACY.",
+            "Uses Apigee legacy span and attribute names.",
+            "Uses OpenTelemetry semantic-convention-aligned span and attribute names."
+          ],
+          "type": "string"
         },
         "traceProtocol": {
           "description": "Optional. The trace protocol to use. Configuration Requirements (if trace_protocol is OTLP): - Allowed Exporters: CLOUD_TRACE or OPEN_TELEMETRY_COLLECTOR. - If Exporter is OPEN_TELEMETRY_COLLECTOR: - endpoint refers to a valid OTLP collector URL. - If Exporter is CLOUD_TRACE: - endpoint refers to a valid project ID.",

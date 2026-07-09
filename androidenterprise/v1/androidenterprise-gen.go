@@ -1183,7 +1183,7 @@ type EnrollmentToken struct {
 	// ranging from 1 minute to `Durations.MAX_VALUE`
 	// (https://developers.google.com/protocol-buffers/docs/reference/java/com/google/protobuf/util/Durations.html#MAX_VALUE),
 	// approximately 10,000 years. If not specified, the default duration is 1
-	// hour.
+	// hour. In the JSON REST API, this is represented as a string (e.g., `3600s`).
 	Duration string `json:"duration,omitempty"`
 	// EnrollmentTokenType: [Required] The type of the enrollment token.
 	//

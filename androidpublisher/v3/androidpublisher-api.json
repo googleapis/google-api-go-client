@@ -4662,6 +4662,37 @@
           "scopes": [
             "https://www.googleapis.com/auth/androidpublisher"
           ]
+        },
+        "reviewrefund": {
+          "description": "Provide refund preference and purchase usage for a chargeback request",
+          "flatPath": "androidpublisher/v3/applications/{packageName}/orders/{orderId}:reviewrefund",
+          "httpMethod": "POST",
+          "id": "androidpublisher.orders.reviewrefund",
+          "parameterOrder": [
+            "packageName",
+            "orderId"
+          ],
+          "parameters": {
+            "orderId": {
+              "description": "Required. The order ID provided to the user when the subscription or in-app order was purchased.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "packageName": {
+              "description": "Required. The package name of the application for which this subscription or in-app item was purchased (for example, 'com.some.thing').",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "androidpublisher/v3/applications/{packageName}/orders/{orderId}:reviewrefund",
+          "request": {
+            "$ref": "OrdersReviewRefundRequest"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/androidpublisher"
+          ]
         }
       }
     },
@@ -5654,7 +5685,7 @@
       }
     }
   },
-  "revision": "20260625",
+  "revision": "20260706",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Abi": {
@@ -7001,6 +7032,29 @@
       },
       "type": "object"
     },
+    "CoarseLocation": {
+      "description": "Coarse Geographic location details for where the consumption happened.",
+      "id": "CoarseLocation",
+      "properties": {
+        "administrativeArea": {
+          "description": "Optional. Highest administrative subdivision which is used for postal addresses of a country or region. For example, this can be a state, a province, an oblast, or a prefecture. For Spain, this is the province and not the autonomous community (for example, \"Barcelona\" and not \"Catalonia\"). Many countries don't use an administrative area in postal addresses. For example, in Switzerland, this should be left unpopulated.",
+          "type": "string"
+        },
+        "locality": {
+          "description": "Optional. Generally refers to the city or town portion of the address. Examples: US city, IT comune, UK post town. In regions of the world where localities are not well defined or do not fit into this structure well, leave `locality` empty.",
+          "type": "string"
+        },
+        "regionCode": {
+          "description": "Required. [CLDR region code](https://cldr.unicode.org/) of the country/region of the address. This value is never inferred and you must ensure the value is correct. Example: \"CH\" for Switzerland.",
+          "type": "string"
+        },
+        "sublocality": {
+          "description": "Optional. Sublocality of the address. For example, this can be a neighborhood, borough, or district. For most addresses, you can omit this.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Comment": {
       "description": "An entry of conversation between user and developer.",
       "id": "Comment",
@@ -7012,6 +7066,38 @@
         "userComment": {
           "$ref": "UserComment",
           "description": "A comment from a user."
+        }
+      },
+      "type": "object"
+    },
+    "ConsumptionUsageEvent": {
+      "description": "List of events, each representing an instance where the user consumed or used the purchased item or service.",
+      "id": "ConsumptionUsageEvent",
+      "properties": {
+        "consumptionItemDescription": {
+          "description": "Optional. Free form text that allows developers to provide more info on the item consumed. Maximum length is 5000 characters.",
+          "type": "string"
+        },
+        "consumptionTime": {
+          "description": "Optional. Time when the user consumed, used, downloaded, opened, or streamed the content.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "ipAddress": {
+          "description": "Optional. The IP address from which the consumption occurred.",
+          "type": "string"
+        },
+        "location": {
+          "$ref": "CoarseLocation",
+          "description": "Optional. Geographic location where the consumption occurred."
+        },
+        "obfuscatedAccountId": {
+          "description": "Optional. Obfuscated string that is uniquely associated with the purchaser's user account in the app. https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setObfuscatedAccountId(java.lang.String)",
+          "type": "string"
+        },
+        "obfuscatedProfileId": {
+          "description": "Optional. Obfuscated string that is uniquely associated with the purchaser's user profile in the app. https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setObfuscatedProfileId(java.lang.String)",
+          "type": "string"
         }
       },
       "type": "object"
@@ -10122,6 +10208,49 @@
         "refundEvent": {
           "$ref": "RefundEvent",
           "description": "Details of when the order was fully refunded."
+        }
+      },
+      "type": "object"
+    },
+    "OrdersReviewRefundRequest": {
+      "description": "Request for the orders.reviewrefund API.",
+      "id": "OrdersReviewRefundRequest",
+      "properties": {
+        "consumptionPercentageMilliunits": {
+          "description": "Optional. Percentage of the In-App purchase the customer consumed, in milliunits. Minimum: 0 Maximum: 100,000. For paid apps, this can be omitted. Example : 45200 represents 45.2%.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "consumptionUsageEvents": {
+          "description": "Optional. List of events, each representing an instance where the user consumed or used the purchased item or service. Lists with over 1000 items will be rejected.",
+          "items": {
+            "$ref": "ConsumptionUsageEvent"
+          },
+          "type": "array"
+        },
+        "pendingRefundToken": {
+          "description": "Required. The pending refund token included in the pending refund review notification.",
+          "type": "string"
+        },
+        "refundPreference": {
+          "description": "Required. Indicates your preference, based on your operational logic, as to whether the Play Store should grant the refund.",
+          "enum": [
+            "REFUND_PREFERENCE_UNSPECIFIED",
+            "DECLINE",
+            "APPROVE",
+            "NEUTRAL"
+          ],
+          "enumDescriptions": [
+            "Refund preference unspecified. This value is not used.",
+            "Developer prefers that Play declines the refund.",
+            "Developer prefers that Play grants the refund in full.",
+            "Developer has no preference about Google Play's decision to issue a refund"
+          ],
+          "type": "string"
+        },
+        "sampleContentProvided": {
+          "description": "Required. Indicates whether you provided a free sample, trial, or information about the functionality prior to the purchase.",
+          "type": "boolean"
         }
       },
       "type": "object"

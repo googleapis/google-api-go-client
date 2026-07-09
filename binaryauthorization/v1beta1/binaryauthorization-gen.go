@@ -736,6 +736,7 @@ type PkixPublicKey struct {
 	//   "ECDSA_P521_SHA512" - ECDSA on the NIST P-521 curve with a SHA512 digest.
 	//   "EC_SIGN_P521_SHA512" - ECDSA on the NIST P-521 curve with a SHA512
 	// digest.
+	//   "ML_DSA_65" - ML-DSA-65 Post-Quantum Cryptography signature algorithm.
 	SignatureAlgorithm string `json:"signatureAlgorithm,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PublicKeyPem") to
 	// unconditionally include in API requests. By default, fields with empty or

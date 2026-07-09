@@ -445,7 +445,7 @@ func (s BDRBackupPlanJobLog) MarshalJSON() ([]byte, error) {
 }
 
 // BDRBackupRestoreJobLog: Log entry for Backup and Restore Job for resources
-// using BackupPlan based protection. Next Id: 25
+// using BackupPlan based protection. Next Id: 26
 type BDRBackupRestoreJobLog struct {
 	// BackupConsistencyTime: Backup consistency time.
 	BackupConsistencyTime string `json:"backupConsistencyTime,omitempty"`
@@ -500,6 +500,8 @@ type BDRBackupRestoreJobLog struct {
 	SourceResourceName string `json:"sourceResourceName,omitempty"`
 	// StartTime: Start time of the job.
 	StartTime string `json:"startTime,omitempty"`
+	// StorageTier: The storage tier associated with the backup.
+	StorageTier string `json:"storageTier,omitempty"`
 	// TargetResourceType: The target resource type for restore jobs.
 	TargetResourceType string `json:"targetResourceType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackupConsistencyTime") to

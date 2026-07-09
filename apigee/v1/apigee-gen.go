@@ -10237,7 +10237,7 @@ func (s GoogleCloudApigeeV1RuntimeConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1RuntimeTraceConfig: NEXT ID: 10 RuntimeTraceConfig
+// GoogleCloudApigeeV1RuntimeTraceConfig: NEXT ID: 11 RuntimeTraceConfig
 // defines the configurations for distributed trace in an environment.
 type GoogleCloudApigeeV1RuntimeTraceConfig struct {
 	// Endpoint: Endpoint of the exporter.
@@ -10276,6 +10276,16 @@ type GoogleCloudApigeeV1RuntimeTraceConfig struct {
 	RevisionId string `json:"revisionId,omitempty"`
 	// SamplingConfig: Trace configuration for all API proxies in an environment.
 	SamplingConfig *GoogleCloudApigeeV1RuntimeTraceSamplingConfig `json:"samplingConfig,omitempty"`
+	// SpanSemantics: Optional. The span semantics to use. Configuration
+	// Requirements (if `span_semantics` is `OTEL`): - `trace_protocol` must be
+	// `OTLP`.
+	//
+	// Possible values:
+	//   "SPAN_SEMANTICS_UNSPECIFIED" - Semantics unspecified. Defaults to LEGACY.
+	//   "LEGACY" - Uses Apigee legacy span and attribute names.
+	//   "OTEL" - Uses OpenTelemetry semantic-convention-aligned span and attribute
+	// names.
+	SpanSemantics string `json:"spanSemantics,omitempty"`
 	// TraceProtocol: Optional. The trace protocol to use.
 	//
 	// Possible values:
@@ -10302,7 +10312,7 @@ func (s GoogleCloudApigeeV1RuntimeTraceConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1RuntimeTraceConfigOverride: NEXT ID: 9 Trace
+// GoogleCloudApigeeV1RuntimeTraceConfigOverride: NEXT ID: 10 Trace
 // configuration override for a specific API proxy in an environment.
 type GoogleCloudApigeeV1RuntimeTraceConfigOverride struct {
 	// ApiProxy: Name of the API proxy that will have its trace configuration
@@ -10327,6 +10337,16 @@ type GoogleCloudApigeeV1RuntimeTraceConfigOverride struct {
 	// SamplingConfig: Trace configuration override for a specific API proxy in an
 	// environment.
 	SamplingConfig *GoogleCloudApigeeV1RuntimeTraceSamplingConfig `json:"samplingConfig,omitempty"`
+	// SpanSemantics: Optional. The span semantics to use. Configuration
+	// Requirements (if `span_semantics` is `OTEL`): - `trace_protocol` must be
+	// `OTLP`.
+	//
+	// Possible values:
+	//   "SPAN_SEMANTICS_UNSPECIFIED" - Semantics unspecified. Defaults to LEGACY.
+	//   "LEGACY" - Uses Apigee legacy span and attribute names.
+	//   "OTEL" - Uses OpenTelemetry semantic-convention-aligned span and attribute
+	// names.
+	SpanSemantics string `json:"spanSemantics,omitempty"`
 	// TraceProtocol: Optional. The trace protocol to use.
 	//
 	// Possible values:
@@ -12589,6 +12609,15 @@ type GoogleCloudApigeeV1TraceConfig struct {
 	// environment. You can also override the configuration for a specific API
 	// proxy using the distributed trace configuration overrides API.
 	SamplingConfig *GoogleCloudApigeeV1TraceSamplingConfig `json:"samplingConfig,omitempty"`
+	// SpanSemantics: Optional. The span semantics to use. Configuration
+	// Requirements (if span_semantics is OTEL): - trace_protocol must be OTLP.
+	//
+	// Possible values:
+	//   "SPAN_SEMANTICS_UNSPECIFIED" - Semantics unspecified. Defaults to LEGACY.
+	//   "LEGACY" - Uses Apigee legacy span and attribute names.
+	//   "OTEL" - Uses OpenTelemetry semantic-convention-aligned span and attribute
+	// names.
+	SpanSemantics string `json:"spanSemantics,omitempty"`
 	// TraceProtocol: Optional. The trace protocol to use. Configuration
 	// Requirements (if trace_protocol is OTLP): - Allowed Exporters: CLOUD_TRACE
 	// or OPEN_TELEMETRY_COLLECTOR. - If Exporter is OPEN_TELEMETRY_COLLECTOR: -

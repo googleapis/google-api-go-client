@@ -741,12 +741,12 @@
         },
         "resolve": {
           "description": "Retrieves connect settings about a Cloud SQL instance using the instance DNS name.",
-          "flatPath": "sql/v1beta4/dns/{dnsName}/locations/{location}:resolveConnectSettings",
+          "flatPath": "sql/v1beta4/locations/{location}/dns/{dnsName}:resolveConnectSettings",
           "httpMethod": "GET",
           "id": "sql.connect.resolve",
           "parameterOrder": [
-            "dnsName",
-            "location"
+            "location",
+            "dnsName"
           ],
           "parameters": {
             "dnsName": {
@@ -762,7 +762,7 @@
               "type": "string"
             }
           },
-          "path": "sql/v1beta4/dns/{dnsName}/locations/{location}:resolveConnectSettings",
+          "path": "sql/v1beta4/locations/{location}/dns/{dnsName}:resolveConnectSettings",
           "response": {
             "$ref": "ConnectSettings"
           },
@@ -1765,6 +1765,16 @@
               "location": "path",
               "required": true,
               "type": "string"
+            },
+            "reconcilePscNetworking": {
+              "description": "Optional. Set PSC config to the same value as the existing config to reconcile the PSC networking.",
+              "location": "query",
+              "type": "boolean"
+            },
+            "reconcilePscNetworkingForce": {
+              "description": "Optional. Set PSC config to the same value as the existing config and force reconcile the PSC networking.",
+              "location": "query",
+              "type": "boolean"
             }
           },
           "path": "sql/v1beta4/projects/{project}/instances/{instance}",
@@ -3059,7 +3069,7 @@
       }
     }
   },
-  "revision": "20260529",
+  "revision": "20260627",
   "rootUrl": "https://sqladmin.googleapis.com/",
   "schemas": {
     "AclEntry": {
@@ -3561,7 +3571,8 @@
           "type": "boolean"
         },
         "replicationLogArchivingEnabled": {
-          "description": "Reserved for future use.",
+          "deprecated": true,
+          "description": "Optional. Deprecated: replication_log_archiving_enabled is deprecated and will be removed from a future version of the API. Use point_in_time_recovery_enabled instead.",
           "type": "boolean"
         },
         "startTime": {
@@ -4149,6 +4160,11 @@
             "V2 speckle instance.",
             "On premises instance."
           ],
+          "type": "string"
+        },
+        "connectionName": {
+          "description": "Optional. Output only. Connection name of the Cloud SQL instance used in connection strings, in the format project:region:instance.",
+          "readOnly": true,
           "type": "string"
         },
         "customSubjectAlternativeNames": {
@@ -6933,7 +6949,8 @@
             "REPAIR_READ_POOL",
             "CREATE_READ_POOL",
             "PRE_CHECK_MAJOR_VERSION_UPGRADE",
-            "SETUP_MIGRATION"
+            "SETUP_MIGRATION",
+            "AGENT_SEND_MESSAGE"
           ],
           "enumDeprecated": [
             false,
@@ -6984,6 +7001,7 @@
             false,
             false,
             true,
+            false,
             false,
             false,
             false,
@@ -7045,7 +7063,8 @@
             "Repairs entire read pool or specified read pool nodes in the read pool.",
             "Creates a Cloud SQL read pool instance.",
             "Pre-checks for major version upgrade.",
-            "This operation type represents individual steps in a multi-step setup migration workflow: including configuration, replication, switchover/back, and data reseeding, as defined by operation's intent."
+            "This operation type represents individual steps in a multi-step setup migration workflow: including configuration, replication, switchover/back, and data reseeding, as defined by operation's intent.",
+            "Sends a message to a Cloud SQL agent."
           ],
           "type": "string"
         },
@@ -7282,9 +7301,24 @@
       "description": "Performance capture configuration.",
       "id": "PerformanceCaptureConfig",
       "properties": {
+        "cpuUtilizationThresholdPercent": {
+          "description": "Optional. Specifies the minimum percentage of CPU utilization to trigger the performance capture. Valid integers range from `10` to `99`. Enter `0` to disable the check.",
+          "format": "int32",
+          "type": "integer"
+        },
         "enabled": {
           "description": "Optional. Enables or disables the performance capture feature.",
           "type": "boolean"
+        },
+        "historyListLengthThresholdCount": {
+          "description": "Optional. Specifies the minimum number of undo log entries in the history list length to trigger the performance capture. Valid integers range from `10000` to `10000000`. Enter `0` to disable the check.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "memoryUsageThresholdPercent": {
+          "description": "Optional. Specifies the minimum percentage of memory usage to trigger the performance capture. Valid integers range from `10` to `99`. Enter `0` to disable the check.",
+          "format": "int32",
+          "type": "integer"
         },
         "probeThreshold": {
           "description": "Optional. Specifies the minimum number of consecutive probe threshold that triggers performance capture.",
@@ -7306,8 +7340,44 @@
           "format": "int32",
           "type": "integer"
         },
+        "semaphoreWaitThresholdCount": {
+          "description": "Optional. Specifies the minimum allowed number of semaphore waits to trigger the performance capture. Valid integers range from `10` to `10000`. Enter `0` to disable the check.",
+          "format": "int32",
+          "type": "integer"
+        },
         "transactionDurationThreshold": {
           "description": "Optional. Specifies the amount of time in seconds that a transaction needs to have been open before the watcher starts recording it.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "transactionKillExcludedUserHosts": {
+          "description": "Optional. Specifies a customer-defined list of users to exclude from transaction termination. Entries can be in the format 'user@host' or just 'user'. A standalone 'user' implies 'user@%', excluding the user from any host. Wildcard '%' is allowed in the host part of the 'user@host' format. Example: `[\"app_user\", \"db_admin@10.1.2.3\", \"report_user@%\"]`",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "transactionKillThresholdSeconds": {
+          "description": "Optional. Specifies the amount of time in seconds that a transaction needs to have been open before the watcher starts terminating it. Valid integers range from `60` to `604800` (7 days). Enter `0` to disable. If enabled (i.e., \u003e 0), this value must be greater than or equal to `transaction_duration_threshold`. Configurations where `0 \u003c transaction_kill_threshold_seconds \u003c transaction_duration_threshold` will be rejected.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "transactionKillType": {
+          "description": "Optional. Determines which transactions are allowed to be terminated when they exceed `transaction_kill_threshold_seconds`. This allows protecting write-heavy transactions from auto-termination if desired. Defaults to `READ_ONLY_TRANSACTIONS` if unspecified.",
+          "enum": [
+            "TRANSACTION_KILL_TYPE_UNSPECIFIED",
+            "READ_ONLY_TRANSACTIONS",
+            "ALL_TRANSACTIONS"
+          ],
+          "enumDescriptions": [
+            "Unspecified.",
+            "Only read-only transactions are eligible for termination.",
+            "All transactions are eligible for termination, including those with write operations (such as INSERT, UPDATE, DELETE, or DDL)."
+          ],
+          "type": "string"
+        },
+        "transactionLockWaitThresholdCount": {
+          "description": "Optional. Specifies the minimum allowed number of transactions in lock wait state to trigger the performance capture. Valid integers range from `10` to `10000`. Enter `0` to disable the check.",
           "format": "int32",
           "type": "integer"
         }
@@ -7701,6 +7771,23 @@
           "description": "Optional. This is the project ID of consumer service project of this consumer endpoint. Optional. This is only applicable if consumer_network is a shared vpc network.",
           "type": "string"
         },
+        "instanceAutoDnsStatus": {
+          "description": "Output only. The status of automated DNS provisioning.",
+          "enum": [
+            "AUTO_DNS_STATUS_UNSPECIFIED",
+            "AUTO_DNS_OK",
+            "AUTO_DNS_FAILED",
+            "AUTO_DNS_UNKNOWN"
+          ],
+          "enumDescriptions": [
+            "Unspecified status. This means status is missing from dependency service.",
+            "DNS provisioning is OK.",
+            "DNS provisioning failed.",
+            "DNS provisioning status is not recognized by Cloud SQL."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
         "ipAddress": {
           "description": "The IP address of the consumer endpoint.",
           "type": "string"
@@ -7717,6 +7804,23 @@
         },
         "status": {
           "description": "The connection status of the consumer endpoint.",
+          "type": "string"
+        },
+        "writeEndpointAutoDnsStatus": {
+          "description": "Output only. The status of automated DNS provisioning for the write endpoint.",
+          "enum": [
+            "AUTO_DNS_STATUS_UNSPECIFIED",
+            "AUTO_DNS_OK",
+            "AUTO_DNS_FAILED",
+            "AUTO_DNS_UNKNOWN"
+          ],
+          "enumDescriptions": [
+            "Unspecified status. This means status is missing from dependency service.",
+            "DNS provisioning is OK.",
+            "DNS provisioning failed.",
+            "DNS provisioning status is not recognized by Cloud SQL."
+          ],
+          "readOnly": true,
           "type": "string"
         }
       },

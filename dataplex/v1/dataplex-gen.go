@@ -2881,6 +2881,9 @@ type GoogleCloudDataplexV1DataDomain struct {
 	// projects/{project_id_or_number}/locations/{location}/dataDomains/{parent_data
 	// _domain_id} This field is immutable after creation.
 	ParentDataDomain string `json:"parentDataDomain,omitempty"`
+	// PolicyMember: Output only. Output-only policy member strings of this
+	// resource.
+	PolicyMember *GoogleIamV1ResourcePolicyMember `json:"policyMember,omitempty"`
 	// Uid: Output only. System-generated globally unique ID for the DataDomain.
 	Uid string `json:"uid,omitempty"`
 	// UpdateTime: Output only. The time at which the DataDomain was last updated.
@@ -11220,6 +11223,42 @@ type GoogleIamV1Policy struct {
 
 func (s GoogleIamV1Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1Policy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIamV1ResourcePolicyMember: Output-only policy member strings of a
+// Google Cloud resource's built-in identity.
+type GoogleIamV1ResourcePolicyMember struct {
+	// IamPolicyNamePrincipal: Output only. IAM policy binding member referring to
+	// a Google Cloud resource by user-assigned name (https://google.aip.dev/122).
+	// If a resource is deleted and recreated with the same name, the binding will
+	// be applicable to the new resource.Example:
+	// principal://parametermanager.googleapis.com/projects/12345/name/locations/us-
+	// central1-a/parameters/my-parameter
+	IamPolicyNamePrincipal string `json:"iamPolicyNamePrincipal,omitempty"`
+	// IamPolicyUidPrincipal: Output only. IAM policy binding member referring to a
+	// Google Cloud resource by system-assigned unique identifier
+	// (https://google.aip.dev/148#uid). If a resource is deleted and recreated
+	// with the same name, the binding will not be applicable to the new
+	// resourceExample:
+	// principal://parametermanager.googleapis.com/projects/12345/uid/locations/us-c
+	// entral1-a/parameters/a918fed5
+	IamPolicyUidPrincipal string `json:"iamPolicyUidPrincipal,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IamPolicyNamePrincipal") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IamPolicyNamePrincipal") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleIamV1ResourcePolicyMember) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIamV1ResourcePolicyMember
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -236,6 +236,35 @@
                     "https://www.googleapis.com/auth/container.read-only"
                   ]
                 },
+                "completeControlPlaneUpgrade": {
+                  "description": "CompleteControlPlaneUpgrade completes the rollback-safe upgrade by performing the step two upgrade for a specific cluster.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:completeControlPlaneUpgrade",
+                  "httpMethod": "POST",
+                  "id": "container.projects.locations.clusters.completeControlPlaneUpgrade",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name (project, location, cluster) of the cluster to complete upgrade. Specified in the format `projects/*/locations/*/clusters/*`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}:completeControlPlaneUpgrade",
+                  "request": {
+                    "$ref": "CompleteControlPlaneUpgradeRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/container"
+                  ]
+                },
                 "completeIpRotation": {
                   "description": "Completes master IP rotation.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:completeIpRotation",
@@ -1436,6 +1465,35 @@
                   "path": "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/addons",
                   "request": {
                     "$ref": "SetAddonsConfigRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/container"
+                  ]
+                },
+                "completeControlPlaneUpgrade": {
+                  "description": "CompleteControlPlaneUpgrade completes the rollback-safe upgrade by performing the step two upgrade for a specific cluster.",
+                  "flatPath": "v1/projects/{projectsId}/zones/{zonesId}/clusters/{clustersId}:completeControlPlaneUpgrade",
+                  "httpMethod": "POST",
+                  "id": "container.projects.zones.clusters.completeControlPlaneUpgrade",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name (project, location, cluster) of the cluster to complete upgrade. Specified in the format `projects/*/locations/*/clusters/*`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/zones/[^/]+/clusters/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}:completeControlPlaneUpgrade",
+                  "request": {
+                    "$ref": "CompleteControlPlaneUpgradeRequest"
                   },
                   "response": {
                     "$ref": "Operation"
@@ -2753,7 +2811,7 @@
       }
     }
   },
-  "revision": "20260616",
+  "revision": "20260626",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -3667,6 +3725,11 @@
           "readOnly": true,
           "type": "string"
         },
+        "currentEmulatedVersion": {
+          "description": "Output only. The current emulated version of the master endpoint. The version is in minor version format, e.g. 1.30. No value or empty string means the cluster has no emulated version.",
+          "readOnly": true,
+          "type": "string"
+        },
         "currentMasterVersion": {
           "description": "Output only. The current software version of the master endpoint.",
           "readOnly": true,
@@ -3910,6 +3973,10 @@
         "resourceUsageExportConfig": {
           "$ref": "ResourceUsageExportConfig",
           "description": "Configuration for exporting resource usages. Resource usage export is disabled when this config is unspecified."
+        },
+        "rollbackSafeUpgrade": {
+          "$ref": "RollbackSafeUpgrade",
+          "description": "Optional. The rollback safe upgrade information of the cluster. This field is used when user manually triggers a rollback safe upgrade."
         },
         "satisfiesPzi": {
           "description": "Output only. Reserved for future use.",
@@ -4213,6 +4280,10 @@
           "$ref": "DNSConfig",
           "description": "DNSConfig contains clusterDNS config for this cluster."
         },
+        "desiredEmulatedVersion": {
+          "description": "Optional. The desired emulated version for the cluster.",
+          "type": "string"
+        },
         "desiredEnableCiliumClusterwideNetworkPolicy": {
           "description": "Enable/Disable Cilium Clusterwide Network Policy for the cluster.",
           "type": "boolean"
@@ -4430,6 +4501,10 @@
           "$ref": "ResourceUsageExportConfig",
           "description": "The desired configuration for exporting resource usage."
         },
+        "desiredRollbackSafeUpgrade": {
+          "$ref": "RollbackSafeUpgrade",
+          "description": "Optional. The desired rollback safe upgrade configuration."
+        },
         "desiredSecretManagerConfig": {
           "$ref": "SecretManagerConfig",
           "description": "Enable/Disable Secret Manager Config."
@@ -4564,12 +4639,28 @@
           },
           "type": "array"
         },
+        "rollbackSafeUpgradeStatus": {
+          "$ref": "RollbackSafeUpgradeStatus",
+          "description": "Output only. The cluster's rollback-safe upgrade status.",
+          "readOnly": true
+        },
         "upgradeDetails": {
           "description": "The list of past auto upgrades.",
           "items": {
             "$ref": "UpgradeDetails"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "CompleteControlPlaneUpgradeRequest": {
+      "description": "CompleteControlPlaneUpgradeRequest sets the name of target cluster to complete upgrade.",
+      "id": "CompleteControlPlaneUpgradeRequest",
+      "properties": {
+        "version": {
+          "description": "Optional. API request version that initiates this operation.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -8763,6 +8854,49 @@
       },
       "type": "object"
     },
+    "RollbackSafeUpgrade": {
+      "description": "RollbackSafeUpgrade is the configuration for the rollback safe upgrade.",
+      "id": "RollbackSafeUpgrade",
+      "properties": {
+        "controlPlaneSoakDuration": {
+          "description": "Optional. A user-defined period for the cluster remains in the rollbackable state. ex: {seconds: 21600}.",
+          "format": "google-duration",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RollbackSafeUpgradeStatus": {
+      "description": "RollbackSafeUpgradeStatus contains the rollback-safe upgrade status of a cluster.",
+      "id": "RollbackSafeUpgradeStatus",
+      "properties": {
+        "controlPlaneUpgradeRollbackEndTime": {
+          "description": "Output only. The rollback-safe mode expiration time.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "mode": {
+          "description": "Output only. The mode of the rollback-safe upgrade.",
+          "enum": [
+            "MODE_UNSPECIFIED",
+            "KCP_MINOR_UPGRADE_ROLLBACK_SAFE_MODE"
+          ],
+          "enumDescriptions": [
+            "MODE_UNSPECIFIED means it's in regular upgrade mode.",
+            "KCP_MINOR_UPGRADE_ROLLBACK_SAFE_MODE means it's in rollback-safe mode after a KCP minor version step-one upgrade."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
+        "previousVersion": {
+          "description": "Output only. The GKE version that the cluster previously used before step-one upgrade.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "RotationConfig": {
       "description": "RotationConfig is config for secret manager auto rotation.",
       "id": "RotationConfig",
@@ -10099,6 +10233,11 @@
           "format": "google-datetime",
           "type": "string"
         },
+        "initialEmulatedVersion": {
+          "description": "Output only. The emulated version before the upgrade.",
+          "readOnly": true,
+          "type": "string"
+        },
         "initialVersion": {
           "description": "The version before the upgrade.",
           "type": "string"
@@ -10141,6 +10280,11 @@
           "readOnly": true,
           "type": "string"
         },
+        "targetEmulatedVersion": {
+          "description": "Output only. The emulated version after the upgrade.",
+          "readOnly": true,
+          "type": "string"
+        },
         "targetVersion": {
           "description": "The version after the upgrade.",
           "type": "string"
@@ -10152,6 +10296,11 @@
       "description": "UpgradeEvent is a notification sent to customers by the cluster server when a resource is upgrading.",
       "id": "UpgradeEvent",
       "properties": {
+        "currentEmulatedVersion": {
+          "description": "Output only. The current emulated version before the upgrade.",
+          "readOnly": true,
+          "type": "string"
+        },
         "currentVersion": {
           "description": "The current version before the upgrade.",
           "type": "string"
@@ -10183,6 +10332,11 @@
           ],
           "type": "string"
         },
+        "targetEmulatedVersion": {
+          "description": "Output only. The target emulated version for the upgrade.",
+          "readOnly": true,
+          "type": "string"
+        },
         "targetVersion": {
           "description": "The target version for the upgrade.",
           "type": "string"
@@ -10194,6 +10348,11 @@
       "description": "UpgradeInfoEvent is a notification sent to customers about the upgrade information of a resource.",
       "id": "UpgradeInfoEvent",
       "properties": {
+        "currentEmulatedVersion": {
+          "description": "Output only. The current emulated version before the upgrade.",
+          "readOnly": true,
+          "type": "string"
+        },
         "currentVersion": {
           "description": "The current version before the upgrade.",
           "type": "string"
@@ -10284,6 +10443,11 @@
             "FAILED indicates the upgrade has failed.",
             "CANCELED indicates the upgrade has canceled."
           ],
+          "readOnly": true,
+          "type": "string"
+        },
+        "targetEmulatedVersion": {
+          "description": "Output only. The target emulated version for the upgrade.",
           "readOnly": true,
           "type": "string"
         },

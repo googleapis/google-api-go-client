@@ -2933,7 +2933,7 @@
       }
     }
   },
-  "revision": "20260518",
+  "revision": "20260628",
   "rootUrl": "https://netapp.googleapis.com/",
   "schemas": {
     "ActiveDirectory": {
@@ -4572,6 +4572,19 @@
       "description": "Metadata for a given google.cloud.location.Location.",
       "id": "LocationMetadata",
       "properties": {
+        "flexPerformanceTier": {
+          "description": "Output only. Indicates the flex performance tier of this location.",
+          "enum": [
+            "FLEX_PERFORMANCE_TIER_UNSPECIFIED",
+            "LIMITED"
+          ],
+          "enumDescriptions": [
+            "Unspecified flex performance tier.",
+            "Flex performance tier is limited."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
         "hasOntapProxy": {
           "description": "Output only. Indicates if the location has ONTAP Proxy support.",
           "readOnly": true,

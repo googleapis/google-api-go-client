@@ -8038,7 +8038,7 @@
       }
     }
   },
-  "revision": "20260619",
+  "revision": "20260623",
   "rootUrl": "https://dataplex.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -10021,6 +10021,11 @@
         "parentDataDomain": {
           "description": "Optional. Immutable. The resource name of the parent DataDomain. Empty if this is a top-level DataDomain. Format: projects/{project_id_or_number}/locations/{location}/dataDomains/{parent_data_domain_id} This field is immutable after creation.",
           "type": "string"
+        },
+        "policyMember": {
+          "$ref": "GoogleIamV1ResourcePolicyMember",
+          "description": "Output only. Output-only policy member strings of this resource.",
+          "readOnly": true
         },
         "uid": {
           "description": "Output only. System-generated globally unique ID for the DataDomain.",
@@ -16730,6 +16735,23 @@
           "description": "Specifies the format of the policy.Valid values are 0, 1, and 3. Requests that specify an invalid value are rejected.Any operation that affects conditional role bindings must specify version 3. This requirement applies to the following operations: Getting a policy that includes a conditional role binding Adding a conditional role binding to a policy Changing a conditional role binding in a policy Removing any role binding, with or without a condition, from a policy that includes conditionsImportant: If you use IAM Conditions, you must include the etag field whenever you call setIamPolicy. If you omit this field, then IAM allows you to overwrite a version 3 policy with a version 1 policy, and all of the conditions in the version 3 policy are lost.If a policy does not include any conditions, operations on that policy may specify any valid version or leave the field unset.To learn which resources support conditions in their IAM policies, see the IAM documentation (https://cloud.google.com/iam/help/conditions/resource-policies).",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleIamV1ResourcePolicyMember": {
+      "description": "Output-only policy member strings of a Google Cloud resource's built-in identity.",
+      "id": "GoogleIamV1ResourcePolicyMember",
+      "properties": {
+        "iamPolicyNamePrincipal": {
+          "description": "Output only. IAM policy binding member referring to a Google Cloud resource by user-assigned name (https://google.aip.dev/122). If a resource is deleted and recreated with the same name, the binding will be applicable to the new resource.Example: principal://parametermanager.googleapis.com/projects/12345/name/locations/us-central1-a/parameters/my-parameter",
+          "readOnly": true,
+          "type": "string"
+        },
+        "iamPolicyUidPrincipal": {
+          "description": "Output only. IAM policy binding member referring to a Google Cloud resource by system-assigned unique identifier (https://google.aip.dev/148#uid). If a resource is deleted and recreated with the same name, the binding will not be applicable to the new resourceExample: principal://parametermanager.googleapis.com/projects/12345/uid/locations/us-central1-a/parameters/a918fed5",
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"

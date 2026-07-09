@@ -3732,7 +3732,7 @@
       }
     }
   },
-  "revision": "20260610",
+  "revision": "20260626",
   "rootUrl": "https://networkservices.googleapis.com/",
   "schemas": {
     "AgentGateway": {
@@ -3794,7 +3794,7 @@
           "type": "array"
         },
         "registries": {
-          "description": "Optional. A list of Agent registries containing the agents, MCP servers and tools governed by the Agent Gateway. Note: Currently limited to project-scoped registries Must be of format `//agentregistry.googleapis.com/projects/{project}/locations/{location}/",
+          "description": "Optional. A list of Agent registries containing the agents, MCP servers and tools governed by the Agent Gateway. Note: Currently limited to project-scoped registries Must be of format `//agentregistry.googleapis.com/projects/{project}/locations/{location}/`",
           "items": {
             "type": "string"
           },
@@ -3903,24 +3903,6 @@
         "networkAttachment": {
           "description": "Optional. The URI of the Network Attachment resource.",
           "type": "string"
-        },
-        "trustConfig": {
-          "$ref": "AgentGatewayNetworkConfigEgressTrustConfig",
-          "description": "Optional. TrustConfig defines the trust configuration for egress."
-        }
-      },
-      "type": "object"
-    },
-    "AgentGatewayNetworkConfigEgressTrustConfig": {
-      "description": "TrustConfig defines the trust configuration for egress.",
-      "id": "AgentGatewayNetworkConfigEgressTrustConfig",
-      "properties": {
-        "pemCertificates": {
-          "description": "Required. PEM encoded root certificates used to validate the identity of the upstream servers/destinations during egress connections.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
         }
       },
       "type": "object"

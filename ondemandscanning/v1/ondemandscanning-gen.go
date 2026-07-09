@@ -1458,6 +1458,7 @@ type Finding struct {
 	//   "STATIC" - Static scanner.
 	//   "LLM" - LLM scanner.
 	//   "WS_POLICY" - WS_POLICY scanner.
+	//   "GOOGLE_ANTIVIRUS" - Google AntiVirus Service scanner.
 	Scanner string `json:"scanner,omitempty"`
 	// Severity: Severity of the finding.
 	//

@@ -833,6 +833,9 @@ func (s DeploymentGroupRevision) MarshalJSON() ([]byte, error) {
 type DeploymentOperationMetadata struct {
 	// ApplyResults: Outputs and artifacts from applying a deployment.
 	ApplyResults *ApplyResults `json:"applyResults,omitempty"`
+	// ApplyResultsAvailable: Output only. Indicating if early apply results are
+	// available.
+	ApplyResultsAvailable bool `json:"applyResultsAvailable,omitempty"`
 	// Build: Output only. Cloud Build instance UUID associated with this
 	// operation.
 	Build string `json:"build,omitempty"`

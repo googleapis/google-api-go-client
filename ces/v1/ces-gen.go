@@ -721,10 +721,6 @@ type AgentTool struct {
 	Description string `json:"description,omitempty"`
 	// Name: Required. The name of the agent tool.
 	Name string `json:"name,omitempty"`
-	// RootAgent: Optional. Deprecated: Use `agent` instead. The resource name of
-	// the root agent that is the entry point of the tool. Format:
-	// `projects/{project}/locations/{location}/agents/{agent}`
-	RootAgent string `json:"rootAgent,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Agent") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1199,10 +1195,10 @@ type BargeInConfig struct {
 	// preceding agent message. This should not be used in scenarios where agent
 	// responses are displayed visually.
 	BargeInAwareness bool `json:"bargeInAwareness,omitempty"`
-	// DisableBargeIn: Optional. Disables user barge-in while the agent is
-	// speaking. If true, user input during agent response playback will be
-	// ignored. Deprecated: `disable_barge_in` is deprecated in favor of
-	// `disable_barge_in_control` in ChannelProfile.
+	// DisableBargeIn: Optional. Deprecated: `disable_barge_in` is deprecated in
+	// favor of `disable_barge_in_control` in ChannelProfile. Disables user
+	// barge-in while the agent is speaking. If true, user input during agent
+	// response playback will be ignored.
 	DisableBargeIn bool `json:"disableBargeIn,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BargeInAwareness") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1429,6 +1425,8 @@ type ChannelProfile struct {
 	//   "FIVE9" - Five9 channel.
 	//   "CONTACT_CENTER_INTEGRATION" - Third party contact center integration
 	// channel.
+	//   "WHATSAPP" - WhatsApp channel.
+	//   "INSTAGRAM" - Instagram channel.
 	ChannelType string `json:"channelType,omitempty"`
 	// DisableBargeInControl: Optional. Whether to disable user barge-in control in
 	// the conversation. - **true**: User interruptions are disabled while the
@@ -1437,6 +1435,8 @@ type ChannelProfile struct {
 	DisableBargeInControl bool `json:"disableBargeInControl,omitempty"`
 	// DisableDtmf: Optional. Whether to disable DTMF (dual-tone multi-frequency).
 	DisableDtmf bool `json:"disableDtmf,omitempty"`
+	// InstagramConfig: Optional. Configuration specific to Instagram deployments.
+	InstagramConfig *ChannelProfileInstagramConfig `json:"instagramConfig,omitempty"`
 	// NoiseSuppressionLevel: Optional. The noise suppression level of the channel
 	// profile. Available values are "low", "moderate", "high", "very_high".
 	NoiseSuppressionLevel string `json:"noiseSuppressionLevel,omitempty"`
@@ -1446,6 +1446,8 @@ type ChannelProfile struct {
 	ProfileId string `json:"profileId,omitempty"`
 	// WebWidgetConfig: Optional. The configuration for the web widget.
 	WebWidgetConfig *ChannelProfileWebWidgetConfig `json:"webWidgetConfig,omitempty"`
+	// WhatsappConfig: Optional. Configuration specific to WhatsApp deployments.
+	WhatsappConfig *ChannelProfileWhatsAppConfig `json:"whatsappConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChannelType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1461,6 +1463,29 @@ type ChannelProfile struct {
 
 func (s ChannelProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ChannelProfileInstagramConfig: Configuration specific to Instagram
+// deployments.
+type ChannelProfileInstagramConfig struct {
+	// InstagramAccountId: Required. The Instagram Account ID.
+	InstagramAccountId string `json:"instagramAccountId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InstagramAccountId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InstagramAccountId") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ChannelProfileInstagramConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ChannelProfileInstagramConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1571,6 +1596,31 @@ func (s ChannelProfileWebWidgetConfigSecuritySettings) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ChannelProfileWhatsAppConfig: Configuration specific to WhatsApp
+// deployments.
+type ChannelProfileWhatsAppConfig struct {
+	// PhoneNumberId: Required. The Meta phone number ID.
+	PhoneNumberId string `json:"phoneNumberId,omitempty"`
+	// WabaId: Required. The WhatsApp Business Account ID.
+	WabaId string `json:"wabaId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PhoneNumberId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PhoneNumberId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ChannelProfileWhatsAppConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ChannelProfileWhatsAppConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Chunk: A chunk of content within a message.
 type Chunk struct {
 	// AgentTransfer: Optional. Agent transfer event.
@@ -1637,21 +1687,24 @@ func (s Citations) MarshalJSON() ([]byte, error) {
 
 // CitationsCitedChunk: Piece of cited information.
 type CitationsCitedChunk struct {
+	// RequiresAttribution: Whether this citation requires attribution to be shown
+	// to the end users.
+	RequiresAttribution bool `json:"requiresAttribution,omitempty"`
 	// Text: Text used for citation.
 	Text string `json:"text,omitempty"`
 	// Title: Title of the cited document.
 	Title string `json:"title,omitempty"`
 	// Uri: URI used for citation.
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "RequiresAttribution") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Text") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "RequiresAttribution") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2590,11 +2643,17 @@ type Deployment struct {
 	Etag string `json:"etag,omitempty"`
 	// ExperimentConfig: Optional. Experiment configuration for the deployment.
 	ExperimentConfig *ExperimentConfig `json:"experimentConfig,omitempty"`
+	// InstagramCredentials: Optional. Input only. Ephemeral Instagram credentials
+	// required when configuring a Instagram channel profile.
+	InstagramCredentials *InstagramCredentials `json:"instagramCredentials,omitempty"`
 	// Name: Identifier. The resource name of the deployment. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/deployments/{deployment}`
 	Name string `json:"name,omitempty"`
 	// UpdateTime: Output only. Timestamp when this deployment was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
+	// WhatsappCredentials: Optional. Input only. Ephemeral WhatsApp credentials
+	// required when configuring a WhatsApp channel profile.
+	WhatsappCredentials *WhatsAppCredentials `json:"whatsappCredentials,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -3189,6 +3248,12 @@ func (s ExecuteToolRequest) MarshalJSON() ([]byte, error) {
 
 // ExecuteToolResponse: Response message for ToolService.ExecuteTool.
 type ExecuteToolResponse struct {
+	// Citations: Citations that provide the source information for the tool's
+	// execution.
+	Citations *Citations `json:"citations,omitempty"`
+	// GoogleSearchSuggestions: The suggestions returned from Google Search as a
+	// result of invoking the Google Search Tool during the tool execution.
+	GoogleSearchSuggestions *GoogleSearchSuggestions `json:"googleSearchSuggestions,omitempty"`
 	// Response: The tool execution result in JSON object format. Use "output" key
 	// to specify tool response and "error" key to specify error details (if any).
 	// If "output" and "error" keys are not specified, then whole "response" is
@@ -3204,13 +3269,13 @@ type ExecuteToolResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Response") to
+	// ForceSendFields is a list of field names (e.g. "Citations") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Response") to include in API
+	// NullFields is a list of field names (e.g. "Citations") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -4079,6 +4144,29 @@ func (s InputAudioConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InstagramCredentials: Ephemeral Meta credentials for Instagram native
+// integration.
+type InstagramCredentials struct {
+	// AuthCode: Required. The Meta auth code provided by the embedded signup flow.
+	AuthCode string `json:"authCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstagramCredentials) MarshalJSON() ([]byte, error) {
+	type NoMethod InstagramCredentials
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // LanguageSettings: Language settings of the app.
 type LanguageSettings struct {
 	// DefaultLanguageCode: Optional. The default language code of the app.
@@ -4114,6 +4202,289 @@ type LanguageSettings struct {
 
 func (s LanguageSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod LanguageSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1APIKeySecurityScheme: Defines a security scheme using an API key.
+type LfA2aV1APIKeySecurityScheme struct {
+	// Description: An optional description for the security scheme.
+	Description string `json:"description,omitempty"`
+	// Location: Required. The location of the API key. Valid values are "query",
+	// "header", or "cookie".
+	Location string `json:"location,omitempty"`
+	// Name: Required. The name of the header, query, or cookie parameter to be
+	// used.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1APIKeySecurityScheme) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1APIKeySecurityScheme
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1AgentCapabilities: Defines optional capabilities supported by an
+// agent.
+type LfA2aV1AgentCapabilities struct {
+	// ExtendedAgentCard: Indicates if the agent supports providing an extended
+	// agent card when authenticated.
+	ExtendedAgentCard bool `json:"extendedAgentCard,omitempty"`
+	// Extensions: A list of protocol extensions supported by the agent.
+	Extensions []*LfA2aV1AgentExtension `json:"extensions,omitempty"`
+	// PushNotifications: Indicates if the agent supports sending push
+	// notifications for asynchronous task updates.
+	PushNotifications bool `json:"pushNotifications,omitempty"`
+	// Streaming: Indicates if the agent supports streaming responses.
+	Streaming bool `json:"streaming,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExtendedAgentCard") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExtendedAgentCard") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1AgentCapabilities) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1AgentCapabilities
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1AgentCard: A self-describing manifest for an agent. It provides
+// essential metadata including the agent's identity, capabilities, skills,
+// supported communication methods, and security requirements. Next ID: 20
+type LfA2aV1AgentCard struct {
+	// Capabilities: Required. A2A Capability set supported by the agent.
+	Capabilities *LfA2aV1AgentCapabilities `json:"capabilities,omitempty"`
+	// DefaultInputModes: Required. protolint:enable
+	// REPEATED_FIELD_NAMES_PLURALIZED The set of interaction modes that the agent
+	// supports across all skills. This can be overridden per skill. Defined as
+	// media types.
+	DefaultInputModes []string `json:"defaultInputModes,omitempty"`
+	// DefaultOutputModes: Required. The media types supported as outputs from this
+	// agent.
+	DefaultOutputModes []string `json:"defaultOutputModes,omitempty"`
+	// Description: Required. A human-readable description of the agent, assisting
+	// users and other agents in understanding its purpose. Example: "Agent that
+	// helps users with recipes and cooking."
+	Description string `json:"description,omitempty"`
+	// DocumentationUrl: A URL providing additional documentation about the agent.
+	DocumentationUrl string `json:"documentationUrl,omitempty"`
+	// IconUrl: Optional. A URL to an icon for the agent.
+	IconUrl string `json:"iconUrl,omitempty"`
+	// Name: Required. A human readable name for the agent. Example: "Recipe Agent"
+	Name string `json:"name,omitempty"`
+	// Provider: The service provider of the agent.
+	Provider *LfA2aV1AgentProvider `json:"provider,omitempty"`
+	// SecurityRequirements: Security requirements for contacting the agent.
+	SecurityRequirements []*LfA2aV1SecurityRequirement `json:"securityRequirements,omitempty"`
+	// SecuritySchemes: The security scheme details used for authenticating with
+	// this agent.
+	SecuritySchemes map[string]LfA2aV1SecurityScheme `json:"securitySchemes,omitempty"`
+	// Signatures: JSON Web Signatures computed for this `AgentCard`.
+	Signatures []*LfA2aV1AgentCardSignature `json:"signatures,omitempty"`
+	// Skills: Required. Skills represent the abilities of an agent. It is largely
+	// a descriptive concept but represents a more focused set of behaviors that
+	// the agent is likely to succeed at.
+	Skills []*LfA2aV1AgentSkill `json:"skills,omitempty"`
+	// SupportedInterfaces: Required. Ordered list of supported interfaces. The
+	// first entry is preferred.
+	SupportedInterfaces []*LfA2aV1AgentInterface `json:"supportedInterfaces,omitempty"`
+	// Version: Required. The version of the agent. Example: "1.0.0"
+	Version string `json:"version,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Capabilities") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Capabilities") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1AgentCard) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1AgentCard
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1AgentCardSignature: AgentCardSignature represents a JWS signature of
+// an AgentCard. This follows the JSON format of an RFC 7515 JSON Web Signature
+// (JWS).
+type LfA2aV1AgentCardSignature struct {
+	// Header: The unprotected JWS header values.
+	Header googleapi.RawMessage `json:"header,omitempty"`
+	// Protected: Required. Required. The protected JWS header for the signature.
+	// This is always a base64url-encoded JSON object.
+	Protected string `json:"protected,omitempty"`
+	// Signature: Required. The computed signature, base64url-encoded.
+	Signature string `json:"signature,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Header") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Header") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1AgentCardSignature) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1AgentCardSignature
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1AgentExtension: A declaration of a protocol extension supported by an
+// Agent.
+type LfA2aV1AgentExtension struct {
+	// Description: A human-readable description of how this agent uses the
+	// extension.
+	Description string `json:"description,omitempty"`
+	// Params: Optional. Extension-specific configuration parameters.
+	Params googleapi.RawMessage `json:"params,omitempty"`
+	// Required: If true, the client must understand and comply with the
+	// extension's requirements.
+	Required bool `json:"required,omitempty"`
+	// Uri: The unique URI identifying the extension.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1AgentExtension) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1AgentExtension
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1AgentInterface: Declares a combination of a target URL, transport and
+// protocol version for interacting with the agent. This allows agents to
+// expose the same functionality over multiple protocol binding mechanisms.
+type LfA2aV1AgentInterface struct {
+	// ProtocolBinding: Required. The protocol binding supported at this URL. This
+	// is an open form string, to be easily extended for other protocol bindings.
+	// The core ones officially supported are `JSONRPC`, `GRPC` and `HTTP+JSON`.
+	ProtocolBinding string `json:"protocolBinding,omitempty"`
+	// ProtocolVersion: Required. The version of the A2A protocol this interface
+	// exposes. Use the latest supported minor version per major version. Examples:
+	// "0.3", "1.0"
+	ProtocolVersion string `json:"protocolVersion,omitempty"`
+	// Tenant: Tenant ID to be used in the request when calling the agent.
+	Tenant string `json:"tenant,omitempty"`
+	// Url: Required. The URL where this interface is available. Must be a valid
+	// absolute HTTPS URL in production. Example: "https://api.example.com/a2a/v1",
+	// "https://grpc.example.com/a2a"
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProtocolBinding") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProtocolBinding") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1AgentInterface) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1AgentInterface
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1AgentProvider: Represents the service provider of an agent.
+type LfA2aV1AgentProvider struct {
+	// Organization: Required. The name of the agent provider's organization.
+	// Example: "Google"
+	Organization string `json:"organization,omitempty"`
+	// Url: Required. A URL for the agent provider's website or relevant
+	// documentation. Example: "https://ai.google.dev"
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Organization") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Organization") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1AgentProvider) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1AgentProvider
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1AgentSkill: Represents a distinct capability or function that an
+// agent can perform.
+type LfA2aV1AgentSkill struct {
+	// Description: Required. A detailed description of the skill.
+	Description string `json:"description,omitempty"`
+	// Examples: Example prompts or scenarios that this skill can handle.
+	Examples []string `json:"examples,omitempty"`
+	// Id: Required. A unique identifier for the agent's skill.
+	Id string `json:"id,omitempty"`
+	// InputModes: The set of supported input media types for this skill,
+	// overriding the agent's defaults.
+	InputModes []string `json:"inputModes,omitempty"`
+	// Name: Required. A human-readable name for the skill.
+	Name string `json:"name,omitempty"`
+	// OutputModes: The set of supported output media types for this skill,
+	// overriding the agent's defaults.
+	OutputModes []string `json:"outputModes,omitempty"`
+	// SecurityRequirements: Security schemes necessary for this skill.
+	SecurityRequirements []*LfA2aV1SecurityRequirement `json:"securityRequirements,omitempty"`
+	// Tags: Required. A set of keywords describing the skill's capabilities.
+	Tags []string `json:"tags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1AgentSkill) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1AgentSkill
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4181,6 +4552,155 @@ func (s LfA2aV1AuthenticationInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// LfA2aV1AuthorizationCodeOAuthFlow: Defines configuration details for the
+// OAuth 2.0 Authorization Code flow.
+type LfA2aV1AuthorizationCodeOAuthFlow struct {
+	// AuthorizationUrl: Required. The authorization URL to be used for this flow.
+	AuthorizationUrl string `json:"authorizationUrl,omitempty"`
+	// PkceRequired: Indicates if PKCE (RFC 7636) is required for this flow. PKCE
+	// should always be used for public clients and is recommended for all clients.
+	PkceRequired bool `json:"pkceRequired,omitempty"`
+	// RefreshUrl: The URL to be used for obtaining refresh tokens.
+	RefreshUrl string `json:"refreshUrl,omitempty"`
+	// Scopes: Required. The available scopes for the OAuth2 security scheme.
+	Scopes map[string]string `json:"scopes,omitempty"`
+	// TokenUrl: Required. The token URL to be used for this flow.
+	TokenUrl string `json:"tokenUrl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthorizationUrl") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthorizationUrl") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1AuthorizationCodeOAuthFlow) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1AuthorizationCodeOAuthFlow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1ClientCredentialsOAuthFlow: Defines configuration details for the
+// OAuth 2.0 Client Credentials flow.
+type LfA2aV1ClientCredentialsOAuthFlow struct {
+	// RefreshUrl: The URL to be used for obtaining refresh tokens.
+	RefreshUrl string `json:"refreshUrl,omitempty"`
+	// Scopes: Required. The available scopes for the OAuth2 security scheme.
+	Scopes map[string]string `json:"scopes,omitempty"`
+	// TokenUrl: Required. The token URL to be used for this flow.
+	TokenUrl string `json:"tokenUrl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RefreshUrl") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RefreshUrl") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1ClientCredentialsOAuthFlow) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1ClientCredentialsOAuthFlow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1DeviceCodeOAuthFlow: Defines configuration details for the OAuth 2.0
+// Device Code flow (RFC 8628). This flow is designed for input-constrained
+// devices such as IoT devices, and CLI tools where the user authenticates on a
+// separate device.
+type LfA2aV1DeviceCodeOAuthFlow struct {
+	// DeviceAuthorizationUrl: Required. The device authorization endpoint URL.
+	DeviceAuthorizationUrl string `json:"deviceAuthorizationUrl,omitempty"`
+	// RefreshUrl: The URL to be used for obtaining refresh tokens.
+	RefreshUrl string `json:"refreshUrl,omitempty"`
+	// Scopes: Required. The available scopes for the OAuth2 security scheme.
+	Scopes map[string]string `json:"scopes,omitempty"`
+	// TokenUrl: Required. The token URL to be used for this flow.
+	TokenUrl string `json:"tokenUrl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeviceAuthorizationUrl") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeviceAuthorizationUrl") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1DeviceCodeOAuthFlow) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1DeviceCodeOAuthFlow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1HTTPAuthSecurityScheme: Defines a security scheme using HTTP
+// authentication.
+type LfA2aV1HTTPAuthSecurityScheme struct {
+	// BearerFormat: A hint to the client to identify how the bearer token is
+	// formatted (e.g., "JWT"). Primarily for documentation purposes.
+	BearerFormat string `json:"bearerFormat,omitempty"`
+	// Description: An optional description for the security scheme.
+	Description string `json:"description,omitempty"`
+	// Scheme: Required. The name of the HTTP Authentication scheme to be used in
+	// the Authorization header, as defined in RFC7235 (e.g., "Bearer"). This value
+	// should be registered in the IANA Authentication Scheme registry.
+	Scheme string `json:"scheme,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BearerFormat") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BearerFormat") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1HTTPAuthSecurityScheme) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1HTTPAuthSecurityScheme
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1ImplicitOAuthFlow: Deprecated: Use Authorization Code + PKCE instead.
+type LfA2aV1ImplicitOAuthFlow struct {
+	// AuthorizationUrl: The authorization URL to be used for this flow. This MUST
+	// be in the form of a URL. The OAuth2 standard requires the use of TLS
+	AuthorizationUrl string `json:"authorizationUrl,omitempty"`
+	// RefreshUrl: The URL to be used for obtaining refresh tokens. This MUST be in
+	// the form of a URL. The OAuth2 standard requires the use of TLS.
+	RefreshUrl string `json:"refreshUrl,omitempty"`
+	// Scopes: The available scopes for the OAuth2 security scheme. A map between
+	// the scope name and a short description for it. The map MAY be empty.
+	Scopes map[string]string `json:"scopes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthorizationUrl") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthorizationUrl") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1ImplicitOAuthFlow) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1ImplicitOAuthFlow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // LfA2aV1Message: `Message` is one unit of communication between client and
 // server. It can be associated with a context and/or a task. For server
 // messages, `context_id` must be provided, and `task_id` only if a task was
@@ -4233,6 +4753,115 @@ func (s LfA2aV1Message) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// LfA2aV1MutualTlsSecurityScheme: Defines a security scheme using mTLS
+// authentication.
+type LfA2aV1MutualTlsSecurityScheme struct {
+	// Description: An optional description for the security scheme.
+	Description string `json:"description,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1MutualTlsSecurityScheme) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1MutualTlsSecurityScheme
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1OAuth2SecurityScheme: Defines a security scheme using OAuth 2.0.
+type LfA2aV1OAuth2SecurityScheme struct {
+	// Description: An optional description for the security scheme.
+	Description string `json:"description,omitempty"`
+	// Flows: Required. An object containing configuration information for the
+	// supported OAuth 2.0 flows.
+	Flows *LfA2aV1OAuthFlows `json:"flows,omitempty"`
+	// Oauth2MetadataUrl: URL to the OAuth2 authorization server metadata RFC 8414
+	// (https://datatracker.ietf.org/doc/html/rfc8414). TLS is required.
+	Oauth2MetadataUrl string `json:"oauth2MetadataUrl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1OAuth2SecurityScheme) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1OAuth2SecurityScheme
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1OAuthFlows: Defines the configuration for the supported OAuth 2.0
+// flows.
+type LfA2aV1OAuthFlows struct {
+	// AuthorizationCode: Configuration for the OAuth Authorization Code flow.
+	AuthorizationCode *LfA2aV1AuthorizationCodeOAuthFlow `json:"authorizationCode,omitempty"`
+	// ClientCredentials: Configuration for the OAuth Client Credentials flow.
+	ClientCredentials *LfA2aV1ClientCredentialsOAuthFlow `json:"clientCredentials,omitempty"`
+	// DeviceCode: Configuration for the OAuth Device Code flow.
+	DeviceCode *LfA2aV1DeviceCodeOAuthFlow `json:"deviceCode,omitempty"`
+	// Implicit: Deprecated: Use Authorization Code + PKCE instead.
+	Implicit *LfA2aV1ImplicitOAuthFlow `json:"implicit,omitempty"`
+	// Password: Deprecated: Use Authorization Code + PKCE or Device Code.
+	Password *LfA2aV1PasswordOAuthFlow `json:"password,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthorizationCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthorizationCode") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1OAuthFlows) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1OAuthFlows
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1OpenIdConnectSecurityScheme: Defines a security scheme using OpenID
+// Connect.
+type LfA2aV1OpenIdConnectSecurityScheme struct {
+	// Description: An optional description for the security scheme.
+	Description string `json:"description,omitempty"`
+	// OpenIdConnectUrl: Required. The OpenID Connect Discovery URL
+	// (https://openid.net/specs/openid-connect-discovery-1_0.html) for the OIDC
+	// provider's metadata.
+	OpenIdConnectUrl string `json:"openIdConnectUrl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1OpenIdConnectSecurityScheme) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1OpenIdConnectSecurityScheme
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // LfA2aV1Part: `Part` represents a container for a section of communication
 // content. Parts can be purely textual, some sort of file (image, video, etc)
 // or a structured data blob (i.e. JSON).
@@ -4270,6 +4899,91 @@ type LfA2aV1Part struct {
 
 func (s LfA2aV1Part) MarshalJSON() ([]byte, error) {
 	type NoMethod LfA2aV1Part
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1PasswordOAuthFlow: Deprecated: Use Authorization Code + PKCE or
+// Device Code.
+type LfA2aV1PasswordOAuthFlow struct {
+	// RefreshUrl: The URL to be used for obtaining refresh tokens. This MUST be in
+	// the form of a URL. The OAuth2 standard requires the use of TLS.
+	RefreshUrl string `json:"refreshUrl,omitempty"`
+	// Scopes: The available scopes for the OAuth2 security scheme. A map between
+	// the scope name and a short description for it. The map MAY be empty.
+	Scopes map[string]string `json:"scopes,omitempty"`
+	// TokenUrl: The token URL to be used for this flow. This MUST be in the form
+	// of a URL. The OAuth2 standard requires the use of TLS.
+	TokenUrl string `json:"tokenUrl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RefreshUrl") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RefreshUrl") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1PasswordOAuthFlow) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1PasswordOAuthFlow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1SecurityRequirement: Defines the security requirements for an agent.
+type LfA2aV1SecurityRequirement struct {
+	// Schemes: A map of security schemes to the required scopes.
+	Schemes map[string]LfA2aV1StringList `json:"schemes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Schemes") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Schemes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1SecurityRequirement) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1SecurityRequirement
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1SecurityScheme: Defines a security scheme that can be used to secure
+// an agent's endpoints. This is a discriminated union type based on the
+// OpenAPI 3.2 Security Scheme Object. See:
+// https://spec.openapis.org/oas/v3.2.0.html#security-scheme-object
+type LfA2aV1SecurityScheme struct {
+	// ApiKeySecurityScheme: API key-based authentication.
+	ApiKeySecurityScheme *LfA2aV1APIKeySecurityScheme `json:"apiKeySecurityScheme,omitempty"`
+	// HttpAuthSecurityScheme: HTTP authentication (Basic, Bearer, etc.).
+	HttpAuthSecurityScheme *LfA2aV1HTTPAuthSecurityScheme `json:"httpAuthSecurityScheme,omitempty"`
+	// MtlsSecurityScheme: Mutual TLS authentication.
+	MtlsSecurityScheme *LfA2aV1MutualTlsSecurityScheme `json:"mtlsSecurityScheme,omitempty"`
+	// Oauth2SecurityScheme: OAuth 2.0 authentication.
+	Oauth2SecurityScheme *LfA2aV1OAuth2SecurityScheme `json:"oauth2SecurityScheme,omitempty"`
+	// OpenIdConnectSecurityScheme: OpenID Connect authentication.
+	OpenIdConnectSecurityScheme *LfA2aV1OpenIdConnectSecurityScheme `json:"openIdConnectSecurityScheme,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiKeySecurityScheme") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiKeySecurityScheme") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1SecurityScheme) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1SecurityScheme
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4365,6 +5079,29 @@ type LfA2aV1SendMessageResponse struct {
 
 func (s LfA2aV1SendMessageResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LfA2aV1SendMessageResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1StringList: protolint:disable REPEATED_FIELD_NAMES_PLURALIZED A list
+// of strings.
+type LfA2aV1StringList struct {
+	// List: The individual string values.
+	List []string `json:"list,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "List") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "List") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1StringList) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1StringList
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4913,6 +5650,10 @@ type LoggingSettings struct {
 	// of unredacted audio. This can be used to maintain a raw audio copy when
 	// audio redaction is enabled, typically for auditing or monitoring purposes.
 	UnredactedAudioRecordingConfig *AudioRecordingConfig `json:"unredactedAudioRecordingConfig,omitempty"`
+	// UnredactedBigqueryExportSettings: Optional. Configures the BigQuery export
+	// behaviors for the app. The unredacted conversation data will be exported to
+	// BigQuery tables if it is enabled.
+	UnredactedBigqueryExportSettings *BigQueryExportSettings `json:"unredactedBigqueryExportSettings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudioRecordingConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6135,6 +6876,8 @@ type SessionOutput struct {
 	// Citations: Citations that provide the source information for the agent's
 	// generated text.
 	Citations *Citations `json:"citations,omitempty"`
+	// Context: Context messages for external supervision guardrails.
+	Context []googleapi.RawMessage `json:"context,omitempty"`
 	// DiagnosticInfo: Optional. Diagnostic information contains execution details
 	// during the processing of the input. Only populated in the last SessionOutput
 	// (with `turn_completed=true`) for each turn.
@@ -6992,6 +7735,37 @@ type WebSearchQuery struct {
 
 func (s WebSearchQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod WebSearchQuery
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WhatsAppCredentials: Ephemeral Meta credentials for WhatsApp native
+// integration.
+type WhatsAppCredentials struct {
+	// AuthCode: Required. The Meta auth code provided by the embedded signup flow.
+	AuthCode string `json:"authCode,omitempty"`
+	// BusinessAccountId: Required. The Business Account ID to use for the phone
+	// number.
+	BusinessAccountId string `json:"businessAccountId,omitempty"`
+	// PhoneNumber: Required. The phone number to register with WhatsApp.
+	PhoneNumber string `json:"phoneNumber,omitempty"`
+	// Pin: Required. The 6-digit PIN created by the user for two-step
+	// verification.
+	Pin string `json:"pin,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WhatsAppCredentials) MarshalJSON() ([]byte, error) {
+	type NoMethod WhatsAppCredentials
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7941,6 +8715,117 @@ func (c *ProjectsLocationsAppsGetCall) Do(opts ...googleapi.CallOption) (*App, e
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAppsGetExtendedAgentCardCall struct {
+	s            *Service
+	tenant       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetExtendedAgentCard: Gets the extended agent card for the authenticated
+// agent.
+//
+// - tenant: Optional. Tenant ID, provided as a path parameter.
+func (r *ProjectsLocationsAppsService) GetExtendedAgentCard(tenant string) *ProjectsLocationsAppsGetExtendedAgentCardCall {
+	c := &ProjectsLocationsAppsGetExtendedAgentCardCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.tenant = tenant
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsGetExtendedAgentCardCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsGetExtendedAgentCardCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAppsGetExtendedAgentCardCall) IfNoneMatch(entityTag string) *ProjectsLocationsAppsGetExtendedAgentCardCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsGetExtendedAgentCardCall) Context(ctx context.Context) *ProjectsLocationsAppsGetExtendedAgentCardCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsGetExtendedAgentCardCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsGetExtendedAgentCardCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/extendedAgentCard")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"tenant": c.tenant,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.getExtendedAgentCard", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.getExtendedAgentCard" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *LfA2aV1AgentCard.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAppsGetExtendedAgentCardCall) Do(opts ...googleapi.CallOption) (*LfA2aV1AgentCard, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &LfA2aV1AgentCard{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.getExtendedAgentCard", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

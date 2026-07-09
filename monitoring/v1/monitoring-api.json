@@ -753,7 +753,7 @@
       }
     }
   },
-  "revision": "20260611",
+  "revision": "20260705",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -1462,7 +1462,9 @@
             "SAP_AVAILABILITY",
             "SAP_OPERATIONS",
             "INTERCONNECT_MAINTENANCE_STARTED",
-            "INTERCONNECT_MAINTENANCE_COMPLETED"
+            "INTERCONNECT_MAINTENANCE_COMPLETED",
+            "VPN_TRAFFIC_SELECTOR_NARROWING",
+            "VPN_MAINTENANCE"
           ],
           "enumDescriptions": [
             "No event type specified.",
@@ -1491,7 +1493,9 @@
             "Agent for SAP availability related events.",
             "Agent for SAP operations related events.",
             "Interconnect maintenance started event.",
-            "Interconnect maintenance completed event."
+            "Interconnect maintenance completed event.",
+            "VPN traffic selector narrowing event.",
+            "VPN maintenance event."
           ],
           "type": "string"
         },

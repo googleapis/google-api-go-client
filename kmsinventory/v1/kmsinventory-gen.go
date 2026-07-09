@@ -522,6 +522,7 @@ type GoogleCloudKmsV1CryptoKey struct {
 	//   "MAC" - CryptoKeys with this purpose may be used with MacSign.
 	//   "KEY_ENCAPSULATION" - CryptoKeys with this purpose may be used with
 	// GetPublicKey and Decapsulate.
+	//   "AES_WRAPPING" - CryptoKeys with this purpose may be used for AES key
 	Purpose string `json:"purpose,omitempty"`
 	// RotationPeriod: next_rotation_time will be advanced by this period when the
 	// service automatically rotates a key. Must be at least 24 hours and at most
@@ -643,6 +644,8 @@ type GoogleCloudKmsV1CryptoKeyVersion struct {
 	//   "PQ_SIGN_ML_DSA_87_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
 	// Digital Signature Algorithm, at security level 5. Randomized version
 	// supporting externally-computed message representatives.
+	//   "AES_256_KWP" - AES key wrap with zero padding algorithm (RFC 5649). Can
+	// only be used by keys with purpose AES_WRAPPING.
 	Algorithm string `json:"algorithm,omitempty"`
 	// Attestation: Output only. Statement that was generated and signed by the HSM
 	// at key creation time. Use this statement to verify attributes of the key as
@@ -673,6 +676,10 @@ type GoogleCloudKmsV1CryptoKeyVersion struct {
 	// GenerationFailureReason: Output only. The root cause of the most recent
 	// generation failure. Only present if state is GENERATION_FAILED.
 	GenerationFailureReason string `json:"generationFailureReason,omitempty"`
+	// HsmTrusted: Output only. Field indicating that the key wrapping key is
+	// trusted. This field is only valid for key purpose AES_256_WRAPPING, and
+	// protection level HSM_SINGLE_TENANT.
+	HsmTrusted bool `json:"hsmTrusted,omitempty"`
 	// ImportFailureReason: Output only. The root cause of the most recent import
 	// failure. Only present if state is IMPORT_FAILED.
 	ImportFailureReason string `json:"importFailureReason,omitempty"`
@@ -739,6 +746,12 @@ type GoogleCloudKmsV1CryptoKeyVersion struct {
 	// destroyed. Additional details can be found in
 	// CryptoKeyVersion.external_destruction_failure_reason.
 	State string `json:"state,omitempty"`
+	// TrustedWrappingEnabled: Immutable. Field indicating that the key may be
+	// wrapped by a trusted key. This field can be set for all key purposes except
+	// ENCRYPT_DECRYPT, and is only valid for keys with protection level
+	// HSM_SINGLE_TENANT. This field can only be set at creation or import time via
+	// CreateCryptoKeyVersion, or ImportCryptoKeyVersion.
+	TrustedWrappingEnabled bool `json:"trustedWrappingEnabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Algorithm") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -848,6 +861,8 @@ type GoogleCloudKmsV1CryptoKeyVersionTemplate struct {
 	//   "PQ_SIGN_ML_DSA_87_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
 	// Digital Signature Algorithm, at security level 5. Randomized version
 	// supporting externally-computed message representatives.
+	//   "AES_256_KWP" - AES key wrap with zero padding algorithm (RFC 5649). Can
+	// only be used by keys with purpose AES_WRAPPING.
 	Algorithm string `json:"algorithm,omitempty"`
 	// ProtectionLevel: ProtectionLevel to use when creating a CryptoKeyVersion
 	// based on this template. Immutable. Defaults to SOFTWARE.
@@ -885,22 +900,28 @@ func (s GoogleCloudKmsV1CryptoKeyVersionTemplate) MarshalJSON() ([]byte, error) 
 // configuring a CryptoKeyVersion that are specific to the EXTERNAL protection
 // level and EXTERNAL_VPC protection levels.
 type GoogleCloudKmsV1ExternalProtectionLevelOptions struct {
-	// EkmConnectionKeyPath: The path to the external key material on the EKM when
-	// using EkmConnection e.g., "v0/my/key". Set this field instead of
+	// EkmConnectionBackendOverride: Optional. The resource name of the backend
+	// environment where the key material of CryptoKeyVersions is associated with.
+	// Setting this field overrides the CryptoKeyBackend. This field may be set
+	// when CryptoKeyVersions is set to EXTERNAL_VPC. Format:
+	// `projects/*/locations/*/ekmConnections/*`.
+	EkmConnectionBackendOverride string `json:"ekmConnectionBackendOverride,omitempty"`
+	// EkmConnectionKeyPath: Optional. The path to the external key material on the
+	// EKM when using EkmConnection e.g., "v0/my/key". Set this field instead of
 	// external_key_uri when using an EkmConnection.
 	EkmConnectionKeyPath string `json:"ekmConnectionKeyPath,omitempty"`
-	// ExternalKeyUri: The URI for an external resource that this CryptoKeyVersion
-	// represents.
+	// ExternalKeyUri: Optional. The URI for an external resource that this
+	// CryptoKeyVersion represents.
 	ExternalKeyUri string `json:"externalKeyUri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EkmConnectionKeyPath") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "EkmConnectionBackendOverride") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EkmConnectionKeyPath") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "EkmConnectionBackendOverride") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

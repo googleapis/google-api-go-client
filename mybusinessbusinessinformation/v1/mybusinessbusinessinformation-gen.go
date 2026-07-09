@@ -2072,10 +2072,14 @@ type AccountsLocationsListCall struct {
 
 // List: Lists the locations for the specified account.
 //
-//   - parent: The name of the account to fetch locations from. If the parent
-//     Account is of AccountType PERSONAL, only Locations that are directly owned
-//     by the Account are returned, otherwise it will return all accessible
-//     locations from the Account, either directly or indirectly.
+//   - parent: The name of the account to fetch locations from. * **Specific
+//     Account ID**: If the account is of type `AccountType.PERSONAL`, the
+//     response returns only locations directly owned by that account. For all
+//     other types (e.g., `AccountType.LOCATION_GROUP`), it returns all
+//     accessible locations. * **Wildcard (`-`)**: Using `accounts/-` identifies
+//     the authenticated user. This scope defaults to `AccountType.PERSONAL` but
+//     includes both directly and indirectly owned locations (e.g., those
+//     accessible via member groups).
 func (r *AccountsLocationsService) List(parent string) *AccountsLocationsListCall {
 	c := &AccountsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

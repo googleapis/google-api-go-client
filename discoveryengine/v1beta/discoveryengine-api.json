@@ -9524,7 +9524,7 @@
       }
     }
   },
-  "revision": "20260620",
+  "revision": "20260706",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiDistribution": {
@@ -11240,6 +11240,14 @@
           "$ref": "GoogleTypeDateTime",
           "description": "Defines the scheduled time for the next data synchronization. This field requires hour , minute, and time_zone from the [IANA Time Zone Database](https://www.iana.org/time-zones). This is utilized when the data connector has a refresh interval greater than 1 day. When the hours or minutes are not specified, we will assume a sync time of 0:00. The user must provide a time zone to avoid ambiguity."
         },
+        "oauthStaticIpAddresses": {
+          "description": "Output only. The static IP addresses used by this connector for OAuth APIs (e.g. end user authentication). These are surfaced separately from `static_ip_addresses` so that customers can apply granular firewall settings for OAuth endpoints. Only populated for connectors that have static IP enabled and are used for actions and/or federated search.",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "params": {
           "additionalProperties": {
             "description": "Properties of the object.",
@@ -12254,7 +12262,8 @@
           "type": "string"
         },
         "associatedAgentRegistry": {
-          "description": "Optional. The Agent registry containing the agents, MCP servers and tools associated with this engine. Field is required if the engine has an Agent Gateway setting.",
+          "description": "Output only. The Agent registry containing the agents, MCP servers and tools associated with this engine. Derived server-side from the linked Agent Gateway's registry.",
+          "readOnly": true,
           "type": "string"
         },
         "chatEngineConfig": {
@@ -12329,7 +12338,7 @@
             ],
             "type": "string"
           },
-          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `disable-skills` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `deep-research`",
+          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `disable-skills` * `disable-projects` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `deep-research`",
           "type": "object"
         },
         "industryVertical": {
@@ -12655,7 +12664,7 @@
       "id": "GoogleCloudDiscoveryengineV1EngineSearchEngineConfig",
       "properties": {
         "requiredSubscriptionTier": {
-          "description": "Optional. The required subscription tier of this engine. They cannot be modified after engine creation. If the required subscription tier is search, user with higher license tier like assist can still access the standalone app associated with this engine.",
+          "description": "Optional. The required subscription tier of this engine. If the required subscription tier is search, user with higher license tier like assist can still access the standalone app associated with this engine. Web grounding feature is only available on the app if it is set as SubscriptionTier.SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT.",
           "enum": [
             "SUBSCRIPTION_TIER_UNSPECIFIED",
             "SUBSCRIPTION_TIER_SEARCH",
@@ -14414,7 +14423,8 @@
             "GOOGLE_CHAT",
             "GOOGLE_GROUPS",
             "GOOGLE_KEEP",
-            "GOOGLE_PEOPLE"
+            "GOOGLE_PEOPLE",
+            "GOOGLE_WORKSPACE"
           ],
           "enumDescriptions": [
             "Defaults to an unspecified Workspace type.",
@@ -14425,7 +14435,8 @@
             "Workspace Data Store contains Chat data",
             "Workspace Data Store contains Groups data",
             "Workspace Data Store contains Keep data",
-            "Workspace Data Store contains People data"
+            "Workspace Data Store contains People data",
+            "Workspace Data Store contains all Workspace apps data"
           ],
           "type": "string"
         }
@@ -14663,6 +14674,385 @@
           },
           "description": "Optional. Parameters used to instantiate a notification. Used for notifications that are triggered when registered. Not stored. * Gemini Business welcome emails. * Gemini Business user invitation emails.",
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationInsights": {
+      "description": "Evaluation insights for a program.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationInsights",
+      "properties": {
+        "insights": {
+          "description": "Optional. List of evaluation insights.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationInsightsAlphaEvolveEvaluationInsight"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationInsightsAlphaEvolveEvaluationInsight": {
+      "description": "A single evaluation insight.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationInsightsAlphaEvolveEvaluationInsight",
+      "properties": {
+        "label": {
+          "description": "Optional. Label of the insight.",
+          "type": "string"
+        },
+        "text": {
+          "description": "Optional. Text of the insight.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationScores": {
+      "description": "Contains the evaluation scores for the target metrics to optimize.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationScores",
+      "properties": {
+        "scores": {
+          "description": "Required. List of evaluation scores.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationScoresAlphaEvolveEvaluationScore"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationScoresAlphaEvolveEvaluationScore": {
+      "description": "Score for a single metric.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationScoresAlphaEvolveEvaluationScore",
+      "properties": {
+        "metric": {
+          "description": "Required. Name of the metric.",
+          "type": "string"
+        },
+        "score": {
+          "description": "Required. Score of a program for this metric.",
+          "format": "float",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperiment": {
+      "description": "An experiment is a single run of the AlphaEvolve agent, an evolutionary coding agent powered by LLM for algorithm discovery and optimization.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperiment",
+      "properties": {
+        "config": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfig",
+          "description": "Required. Experiment configuration."
+        },
+        "createTime": {
+          "description": "Output only. Time when the experiment was created.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "initialAlphaEvolveProgram": {
+          "description": "Output only. Specifies the name of the seed program used to start the experiment.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "description": "Identifier. The full resource name of the experiment. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/sessions/{session}/alphaEvolveExperiments/{alpha_evolve_experiment}`",
+          "type": "string"
+        },
+        "state": {
+          "description": "Output only. The state of the experiment.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "CREATED",
+            "RUNNING",
+            "PAUSED",
+            "COMPLETED",
+            "FAILED"
+          ],
+          "enumDescriptions": [
+            "Default value. This value is unused.",
+            "The experiment is created.",
+            "The experiment is running.",
+            "The experiment is paused.",
+            "The experiment is completed.",
+            "The experiment has failed."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
+        "stats": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentStats",
+          "description": "Output only. Experiment stats.",
+          "readOnly": true
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfig": {
+      "description": "Configuration of an experiment.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfig",
+      "properties": {
+        "evolutionSettings": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettings",
+          "description": "Optional. Evolution settings for the experiment."
+        },
+        "generationSettings": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigGenerationSettings",
+          "description": "Optional. Generation settings for the experiment, controlling how new program candidates are generated, including things LLM parameters and user-provided context and prompts."
+        },
+        "problemDescription": {
+          "description": "Required. Description of the problem to be solved by the experiment.",
+          "type": "string"
+        },
+        "programLanguage": {
+          "description": "Required. Primary programming language of the code being optimized.",
+          "type": "string"
+        },
+        "runSettings": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigRunSettings",
+          "description": "Required. Run settings for the experiment, controlling the overall behavior of the experiment run."
+        },
+        "title": {
+          "description": "Required. Title of the experiment.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettings": {
+      "description": "Evolution settings for the experiment.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettings",
+      "properties": {
+        "parentSamplingConfig": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettingsParentSamplingConfig",
+          "description": "Optional. Parent sampling configuration."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettingsParentSamplingConfig": {
+      "description": "Configuration for parent sampling.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettingsParentSamplingConfig",
+      "properties": {
+        "paretoSamplingConfig": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettingsParentSamplingConfigParetoSamplingConfig",
+          "description": "Optional. Pareto sampling configuration."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettingsParentSamplingConfigParetoSamplingConfig": {
+      "description": "Configuration for Pareto sampling.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettingsParentSamplingConfigParetoSamplingConfig",
+      "properties": {
+        "paretoSamplingProbability": {
+          "description": "Optional. Probability [0.0, 1.0] of sampling parent programs from the Pareto frontier instead of normal fitness-based sampling during candidate generation. Useful when optimizing multiple metrics simultaneously. Default 0.0 (disabled). Only effective when evaluation returns multiple metrics in scores_to_optimize.",
+          "format": "float",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigGenerationSettings": {
+      "description": "Generation settings for the experiment.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigGenerationSettings",
+      "properties": {
+        "context": {
+          "description": "Optional. Additional user-provided context to be used during generation.",
+          "type": "string"
+        },
+        "includeFullProgramInPrompt": {
+          "description": "Optional. When true, the LLM prompt includes the full program text (both mutable EVOLVE-BLOCK regions and immutable boilerplate). When false (default), only the mutable EVOLVE-BLOCK regions are shown, saving context window.",
+          "type": "boolean"
+        },
+        "models": {
+          "description": "Optional. Per-model configuration. See `ModelConfig` for details. If left unset, the server selects a default model.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigGenerationSettingsModelConfig"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigGenerationSettingsModelConfig": {
+      "description": "Per-model configuration. Mutually exclusive with `model_mixture` and `model`: when `models` is set, both `model_mixture` and `model` must be left unset. The same allowed-model list and at-most-2-models rule as for `model_mixture` apply. In addition, each entry may specify a per-model `temperature` for LLM sampling. Unlike `model_mixture`, weights here are *relative*: only their ratios matter (the server normalizes them), so callers may use any positive numbers without having to ensure they sum to 1.0.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigGenerationSettingsModelConfig",
+      "properties": {
+        "name": {
+          "description": "Required. Model name (e.g. `gemini-2.5-flash`, `gemini-3.1-pro-preview`). See `model_mixture` for the list of allowed models.",
+          "type": "string"
+        },
+        "weight": {
+          "description": "Optional. Relative weight for this model in the mixture. Must be a finite, strictly positive value. Weights across all entries are normalized server-side, so they need not sum to 1.0. Defaults to 1.0 when unset, which is convenient when configuring a single model or an even mixture. Some Pro-tier models are capped at most 50% of the total weight; requests violating that cap are rejected with INVALID_ARGUMENT.",
+          "format": "float",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigRunSettings": {
+      "description": "Run settings for the experiment.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigRunSettings",
+      "properties": {
+        "concurrency": {
+          "description": "Required. Maximum number of programs that can be generated in parallel. Must be positive.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "maxDuration": {
+          "description": "Optional. Maximum duration of the experiment. If unset, defaults to 24 hours.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "maxPrograms": {
+          "description": "Required. Maximum number of programs to generate during the experiment run. The initial program counts towards this limit. Must be greater than 1.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentStats": {
+      "description": "Stats about the experiment.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentStats",
+      "properties": {
+        "candidatesCount": {
+          "description": "Output only. Number of candidates generated.",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        },
+        "evaluatedCandidatesCount": {
+          "description": "Output only. Number of candidates evaluated.",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        },
+        "inputTokenCount": {
+          "description": "Output only. Number of billed input tokens consumed by the experiment.",
+          "format": "int64",
+          "readOnly": true,
+          "type": "string"
+        },
+        "outputTokenCount": {
+          "description": "Output only. Number of billed output tokens consumed by the experiment.",
+          "format": "int64",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAlphaEvolveProgram": {
+      "description": "Represents a single program to be used within the context of an AlphaEvolve experiment.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveProgram",
+      "properties": {
+        "content": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveProgramContent",
+          "description": "Optional. Content of the program."
+        },
+        "createTime": {
+          "description": "Output only. Time when the program was created.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "evaluation": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveProgramEvaluation",
+          "description": "Optional. Evaluation results for the program."
+        },
+        "lockToken": {
+          "description": "Optional. Lock token for the program.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Identifier. Unique identifier for the program. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/sessions/{session}/alphaEvolveExperiments/{alpha_evolve_experiment}/alphaEvolvePrograms/{alpha_evolve_program}`",
+          "type": "string"
+        },
+        "parentPrograms": {
+          "description": "Output only. Optionally specifies which parent programs this program was evolved from. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/sessions/{session}/alphaEvolveExperiments/{alpha_evolve_experiment}/alphaEvolvePrograms/{alpha_evolve_program}`",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "state": {
+          "description": "Output only. State of the program.",
+          "enum": [
+            "PROGRAM_STATE_UNSPECIFIED",
+            "INITIALIZED",
+            "GENERATING",
+            "EVALUATING",
+            "COMPLETED"
+          ],
+          "enumDescriptions": [
+            "Default value. This value is unused.",
+            "The program is initialized.",
+            "The program is in generation.",
+            "The program is pending evaluation.",
+            "The program is completed."
+          ],
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAlphaEvolveProgramContent": {
+      "description": "A self-contained message containing the content of a program. Can represent a collection of files.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveProgramContent",
+      "properties": {
+        "description": {
+          "description": "Optional. Description of the program.",
+          "type": "string"
+        },
+        "files": {
+          "description": "Required. A list of source files that make up the overall program.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveSourceFile"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAlphaEvolveProgramEvaluation": {
+      "description": "Evaluation results for a program candidate.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveProgramEvaluation",
+      "properties": {
+        "insights": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationInsights",
+          "description": "Optional. Represents various insights about the candidate, which are not directly used as optimization target, but that can be used to improve subsequent generations, and as such can be used to construct the evolution prompt."
+        },
+        "scores": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationScores",
+          "description": "Optional. Contains the evaluation scores for the target metrics to optimize."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAlphaEvolveSourceFile": {
+      "description": "A single source file with its path, content and metadata.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAlphaEvolveSourceFile",
+      "properties": {
+        "content": {
+          "description": "Required. The raw content of the file. This is a string and not bytes, because it should be ultimately processed by the LLM as text.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Optional. Additional description of the file.",
+          "type": "string"
+        },
+        "path": {
+          "description": "Required. The relative path of the file, including the filename. e.g., \"src/main.py\", \"utils/helpers.js\", \"README.md\"",
+          "type": "string"
+        },
+        "programLanguage": {
+          "description": "Optional. The programming language of the file.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -16923,6 +17313,14 @@
           "$ref": "GoogleTypeDateTime",
           "description": "Defines the scheduled time for the next data synchronization. This field requires hour , minute, and time_zone from the [IANA Time Zone Database](https://www.iana.org/time-zones). This is utilized when the data connector has a refresh interval greater than 1 day. When the hours or minutes are not specified, we will assume a sync time of 0:00. The user must provide a time zone to avoid ambiguity."
         },
+        "oauthStaticIpAddresses": {
+          "description": "Output only. The static IP addresses used by this connector for OAuth APIs (e.g. end user authentication). These are surfaced separately from `static_ip_addresses` so that customers can apply granular firewall settings for OAuth endpoints. Only populated for connectors that have static IP enabled and are used for actions and/or federated search.",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "params": {
           "additionalProperties": {
             "description": "Properties of the object.",
@@ -17763,6 +18161,11 @@
           "description": "The number of end users under the user store that were successfully deleted.",
           "format": "int64",
           "type": "string"
+        },
+        "updateTime": {
+          "description": "Operation last update time. If the operation is done, this is also the finish time.",
+          "format": "google-datetime",
+          "type": "string"
         }
       },
       "type": "object"
@@ -18051,7 +18454,8 @@
           "type": "string"
         },
         "associatedAgentRegistry": {
-          "description": "Optional. The Agent registry containing the agents, MCP servers and tools associated with this engine. Field is required if the engine has an Agent Gateway setting.",
+          "description": "Output only. The Agent registry containing the agents, MCP servers and tools associated with this engine. Derived server-side from the linked Agent Gateway's registry.",
+          "readOnly": true,
           "type": "string"
         },
         "chatEngineConfig": {
@@ -18126,7 +18530,7 @@
             ],
             "type": "string"
           },
-          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `disable-skills` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `deep-research`",
+          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `disable-skills` * `disable-projects` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `deep-research`",
           "type": "object"
         },
         "industryVertical": {
@@ -18517,7 +18921,7 @@
       "id": "GoogleCloudDiscoveryengineV1alphaEngineSearchEngineConfig",
       "properties": {
         "requiredSubscriptionTier": {
-          "description": "Optional. The required subscription tier of this engine. They cannot be modified after engine creation. If the required subscription tier is search, user with higher license tier like assist can still access the standalone app associated with this engine.",
+          "description": "Optional. The required subscription tier of this engine. If the required subscription tier is search, user with higher license tier like assist can still access the standalone app associated with this engine. Web grounding feature is only available on the app if it is set as SubscriptionTier.SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT.",
           "enum": [
             "SUBSCRIPTION_TIER_UNSPECIFIED",
             "SUBSCRIPTION_TIER_SEARCH",
@@ -20518,6 +20922,25 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1alphaResumeExperimentMetadata": {
+      "description": "Metadata for AlphaEvolveService.ResumeExperiment long running operation.",
+      "id": "GoogleCloudDiscoveryengineV1alphaResumeExperimentMetadata",
+      "properties": {
+        "createTime": {
+          "description": "Output only. The time the operation was created.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Output only. The time the operation was last updated.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1alphaSafetyRating": {
       "description": "Safety rating corresponding to the generated content.",
       "id": "GoogleCloudDiscoveryengineV1alphaSafetyRating",
@@ -21877,6 +22300,36 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1alphaStartExperimentMetadata": {
+      "description": "Metadata for AlphaEvolveService.StartExperiment long running operation.",
+      "id": "GoogleCloudDiscoveryengineV1alphaStartExperimentMetadata",
+      "properties": {
+        "createTime": {
+          "description": "Output only. The time the operation was created.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Output only. The time the operation was last updated.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaStartExperimentRequest": {
+      "description": "Request message for AlphaEvolveService.StartExperiment.",
+      "id": "GoogleCloudDiscoveryengineV1alphaStartExperimentRequest",
+      "properties": {
+        "name": {
+          "description": "Required. Experiment to start. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/sessions/{session}/alphaEvolveExperiments/{alpha_evolve_experiment}`",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1alphaTargetSite": {
       "description": "A target site for the SiteSearchEngine.",
       "id": "GoogleCloudDiscoveryengineV1alphaTargetSite",
@@ -22278,7 +22731,8 @@
             "GOOGLE_CHAT",
             "GOOGLE_GROUPS",
             "GOOGLE_KEEP",
-            "GOOGLE_PEOPLE"
+            "GOOGLE_PEOPLE",
+            "GOOGLE_WORKSPACE"
           ],
           "enumDescriptions": [
             "Defaults to an unspecified Workspace type.",
@@ -22289,7 +22743,8 @@
             "Workspace Data Store contains Chat data",
             "Workspace Data Store contains Groups data",
             "Workspace Data Store contains Keep data",
-            "Workspace Data Store contains People data"
+            "Workspace Data Store contains People data",
+            "Workspace Data Store contains all Workspace apps data"
           ],
           "type": "string"
         }
@@ -27157,7 +27612,8 @@
           "type": "string"
         },
         "associatedAgentRegistry": {
-          "description": "Optional. The Agent registry containing the agents, MCP servers and tools associated with this engine. Field is required if the engine has an Agent Gateway setting.",
+          "description": "Output only. The Agent registry containing the agents, MCP servers and tools associated with this engine. Derived server-side from the linked Agent Gateway's registry.",
+          "readOnly": true,
           "type": "string"
         },
         "chatEngineConfig": {
@@ -27232,7 +27688,7 @@
             ],
             "type": "string"
           },
-          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `disable-skills` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `deep-research`",
+          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `disable-skills` * `disable-projects` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `deep-research`",
           "type": "object"
         },
         "industryVertical": {
@@ -27558,7 +28014,7 @@
       "id": "GoogleCloudDiscoveryengineV1betaEngineSearchEngineConfig",
       "properties": {
         "requiredSubscriptionTier": {
-          "description": "Optional. The required subscription tier of this engine. They cannot be modified after engine creation. If the required subscription tier is search, user with higher license tier like assist can still access the standalone app associated with this engine.",
+          "description": "Optional. The required subscription tier of this engine. If the required subscription tier is search, user with higher license tier like assist can still access the standalone app associated with this engine. Web grounding feature is only available on the app if it is set as SubscriptionTier.SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT.",
           "enum": [
             "SUBSCRIPTION_TIER_UNSPECIFIED",
             "SUBSCRIPTION_TIER_SEARCH",
@@ -33648,7 +34104,8 @@
             "GOOGLE_CHAT",
             "GOOGLE_GROUPS",
             "GOOGLE_KEEP",
-            "GOOGLE_PEOPLE"
+            "GOOGLE_PEOPLE",
+            "GOOGLE_WORKSPACE"
           ],
           "enumDescriptions": [
             "Defaults to an unspecified Workspace type.",
@@ -33659,7 +34116,8 @@
             "Workspace Data Store contains Chat data",
             "Workspace Data Store contains Groups data",
             "Workspace Data Store contains Keep data",
-            "Workspace Data Store contains People data"
+            "Workspace Data Store contains People data",
+            "Workspace Data Store contains all Workspace apps data"
           ],
           "type": "string"
         }

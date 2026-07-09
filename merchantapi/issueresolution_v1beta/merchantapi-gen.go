@@ -1525,10 +1525,14 @@ type AccountsAggregateProductStatusesListCall struct {
 // List: Lists the `AggregateProductStatuses` resources for your merchant
 // account. The response might contain fewer items than specified by
 // `pageSize`. If `pageToken` was returned in previous request, it can be used
-// to obtain additional results.
+// to obtain additional results. This method can only be accessed by standalone
+// accounts and sub-accounts of an advanced account. To retrieve product
+// statuses for sub-accounts, you must first call the accounts.listSubaccounts
+// method to obtain a list of sub-accounts, and then call
+// `accounts.aggregateProductStatuses.list` for each sub-account individually.
 //
 //   - parent: The account to list aggregate product statuses for. Format:
-//     `accounts/{account}`.
+//     `accounts/{account}` Can only be sub-accounts and standalone accounts.
 func (r *AccountsAggregateProductStatusesService) List(parent string) *AccountsAggregateProductStatusesListCall {
 	c := &AccountsAggregateProductStatusesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

@@ -423,7 +423,7 @@
       }
     }
   },
-  "revision": "20260525",
+  "revision": "20260706",
   "rootUrl": "https://alertcenter.googleapis.com/",
   "schemas": {
     "AbuseDetected": {
@@ -1856,11 +1856,13 @@
           "description": "Optional. Agent type that triggered the rule.",
           "enum": [
             "AGENT_TYPE_UNSPECIFIED",
-            "STUDIO"
+            "STUDIO",
+            "WORK_AGENT"
           ],
           "enumDescriptions": [
             "Unspecified agent type.",
-            "Studio agent type."
+            "Studio agent type.",
+            "Work Agent agent type."
           ],
           "type": "string"
         },

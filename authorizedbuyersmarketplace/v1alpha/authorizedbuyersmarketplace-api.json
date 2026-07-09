@@ -1806,7 +1806,7 @@
       }
     }
   },
-  "revision": "20260609",
+  "revision": "20260708",
   "rootUrl": "https://authorizedbuyersmarketplace.googleapis.com/",
   "schemas": {
     "AcceptProposalRequest": {
@@ -2279,6 +2279,11 @@
           "$ref": "Money",
           "description": "Optional. The minimum CPM a buyer has to bid to participate in auctions for inventory in this curated package. Can be used to filter the response of the curatedPackages.list method."
         },
+        "millipercentOfMediaFee": {
+          "description": "Optional. The fee will be charged as a percentage of the impression cost, represented in millipercent. For example, 1% is represented as 1000.",
+          "format": "int64",
+          "type": "string"
+        },
         "name": {
           "description": "Identifier. The unique resource name for the curated package. Format: `curators/{accountId}/curatedPackages/{curatedPackageId}`",
           "type": "string"
@@ -2323,6 +2328,11 @@
           "description": "Output only. Time the data segment was created.",
           "format": "google-datetime",
           "readOnly": true,
+          "type": "string"
+        },
+        "millipercentOfMediaFee": {
+          "description": "Optional. The fee will be charged as a percentage of the impression cost, represented in millipercent. For example, 1% is represented as 1000.",
+          "format": "int64",
           "type": "string"
         },
         "name": {

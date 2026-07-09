@@ -5151,7 +5151,7 @@
       }
     }
   },
-  "revision": "20260616",
+  "revision": "20260701",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AdvancedSettings": {
@@ -16747,9 +16747,17 @@
           "enum": [
             "MESSAGE_TYPE_UNSPECIFIED",
             "TRANSCRIPT",
-            "END_OF_SINGLE_UTTERANCE"
+            "DTMF_DIGITS",
+            "END_OF_SINGLE_UTTERANCE",
+            "PARTIAL_DTMF_DIGITS",
+            "SPEECH_ACTIVITY_BEGIN",
+            "SPEECH_ACTIVITY_END"
           ],
           "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
             "",
             "",
             ""
@@ -19648,9 +19656,13 @@
             "TRANSCRIPT",
             "END_OF_SINGLE_UTTERANCE",
             "DTMF_DIGITS",
-            "PARTIAL_DTMF_DIGITS"
+            "PARTIAL_DTMF_DIGITS",
+            "SPEECH_ACTIVITY_BEGIN",
+            "SPEECH_ACTIVITY_END"
           ],
           "enumDescriptions": [
+            "",
+            "",
             "",
             "",
             "",

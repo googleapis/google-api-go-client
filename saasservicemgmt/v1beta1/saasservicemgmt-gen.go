@@ -499,9 +499,8 @@ func (s Blueprint) MarshalJSON() ([]byte, error) {
 }
 
 // ComponentRef: ComponentRef represents a reference to a component resource.
-// Next ID: 4
 type ComponentRef struct {
-	// Component: Name of the component in composite.Components
+	// Component: Optional. Name of the component in composite.Components
 	Component string `json:"component,omitempty"`
 	// CompositeRef: Reference to the Composite ApplicationTemplate.
 	CompositeRef *CompositeRef `json:"compositeRef,omitempty"`
@@ -528,7 +527,6 @@ func (s ComponentRef) MarshalJSON() ([]byte, error) {
 }
 
 // CompositeRef: CompositeRef represents a reference to a composite resource.
-// Next ID: 4
 type CompositeRef struct {
 	// ApplicationTemplate: Required. Reference to the ApplicationTemplate
 	// resource.
@@ -967,14 +965,14 @@ type FlagRelease struct {
 	// all_flags, or flag_sets can be set. It used to be the ultimate source to
 	// truth and has been moved to effective_flag_revisions.
 	FlagRevisions []string `json:"flagRevisions,omitempty"`
-	// FlagRevisionsRelease: Optional. Immutable. Specifies the release consists of
-	// a list of flag revisions.
+	// FlagRevisionsRelease: Optional. Immutable. Specifies the release consisting
+	// of a list of flag revisions.
 	FlagRevisionsRelease *FlagRevisionList `json:"flagRevisionsRelease,omitempty"`
 	// FlagSets: Optional. Immutable. DEPRECATED: Use flag_sets_release instead.
 	// Flag sets to be rolled out. Only one of flag_revisions, all_flags, or
 	// flag_sets can be set.
 	FlagSets []string `json:"flagSets,omitempty"`
-	// FlagSetsRelease: Optional. Immutable. Specifies the release consists of a
+	// FlagSetsRelease: Optional. Immutable. Specifies the release consisting of a
 	// list of flag sets.
 	FlagSetsRelease *FlagSetList `json:"flagSetsRelease,omitempty"`
 	// Labels: Optional. The labels on the resource, which can be used for
@@ -2974,8 +2972,8 @@ type UnitKind struct {
 	// AppParams: AppParams contains the parameters for creating an AppHub
 	// Application.
 	AppParams *AppParams `json:"appParams,omitempty"`
-	// ApplicationTemplateComponent: Output only. Reference to component and
-	// revision in a composite ApplicationTemplate.
+	// ApplicationTemplateComponent: Optional. Reference to component and revision
+	// in a composite ApplicationTemplate.
 	ApplicationTemplateComponent *ComponentRef `json:"applicationTemplateComponent,omitempty"`
 	// BoundaryType: Optional. Output only. BoundaryType describes the type of
 	// boundary the Unit Kind represents.

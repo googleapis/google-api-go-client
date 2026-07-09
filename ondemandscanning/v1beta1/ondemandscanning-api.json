@@ -344,7 +344,7 @@
       }
     }
   },
-  "revision": "20260622",
+  "revision": "20260706",
   "rootUrl": "https://ondemandscanning.googleapis.com/",
   "schemas": {
     "AISkillAnalysisOccurrence": {
@@ -1481,13 +1481,15 @@
             "SCANNER_UNSPECIFIED",
             "STATIC",
             "LLM",
-            "WS_POLICY"
+            "WS_POLICY",
+            "GOOGLE_ANTIVIRUS"
           ],
           "enumDescriptions": [
             "Unspecified scanner.",
             "Static scanner.",
             "LLM scanner.",
-            "WS_POLICY scanner."
+            "WS_POLICY scanner.",
+            "Google AntiVirus Service scanner."
           ],
           "type": "string"
         },

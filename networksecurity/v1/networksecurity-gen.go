@@ -4940,7 +4940,7 @@ type SecurityProfileGroup struct {
 	// CustomMirroring configuration.
 	CustomMirroringProfile string `json:"customMirroringProfile,omitempty"`
 	// DataPathId: Output only. Identifier used by the data-path. Unique within
-	// {container, location}.
+	// \{container, location\}.
 	DataPathId uint64 `json:"dataPathId,omitempty,string"`
 	// Description: Optional. An optional description of the profile group. Max
 	// length 2048 characters.

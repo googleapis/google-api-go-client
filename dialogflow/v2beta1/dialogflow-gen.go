@@ -8259,7 +8259,11 @@ type GoogleCloudDialogflowV2StreamingRecognitionResult struct {
 	// Possible values:
 	//   "MESSAGE_TYPE_UNSPECIFIED"
 	//   "TRANSCRIPT"
+	//   "DTMF_DIGITS"
 	//   "END_OF_SINGLE_UTTERANCE"
+	//   "PARTIAL_DTMF_DIGITS"
+	//   "SPEECH_ACTIVITY_BEGIN"
+	//   "SPEECH_ACTIVITY_END"
 	MessageType     string                                   `json:"messageType,omitempty"`
 	SpeechEndOffset string                                   `json:"speechEndOffset,omitempty"`
 	SpeechWordInfo  []*GoogleCloudDialogflowV2SpeechWordInfo `json:"speechWordInfo,omitempty"`
@@ -12017,6 +12021,7 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	DefaultNoSpeechTimeout         string                                     `json:"defaultNoSpeechTimeout,omitempty"`
 	DisableNoSpeechRecognizedEvent bool                                       `json:"disableNoSpeechRecognizedEvent,omitempty"`
 	EnableAutomaticPunctuation     bool                                       `json:"enableAutomaticPunctuation,omitempty"`
+	EnableVoiceActivityEvents      bool                                       `json:"enableVoiceActivityEvents,omitempty"`
 	EnableWordInfo                 bool                                       `json:"enableWordInfo,omitempty"`
 	LanguageCode                   string                                     `json:"languageCode,omitempty"`
 	Model                          string                                     `json:"model,omitempty"`
@@ -14798,6 +14803,7 @@ func (s GoogleCloudDialogflowV2beta1SearchKnowledgeAnswerAnswerSource) MarshalJS
 }
 
 type GoogleCloudDialogflowV2beta1SearchKnowledgeDebugInfo struct {
+	CesDebugInfo googleapi.RawMessage `json:"cesDebugInfo,omitempty"`
 	// Possible values:
 	//   "DATASTORE_RESPONSE_REASON_UNSPECIFIED"
 	//   "NONE"
@@ -14813,15 +14819,15 @@ type GoogleCloudDialogflowV2beta1SearchKnowledgeDebugInfo struct {
 	IngestedContextReferenceDebugInfo *GoogleCloudDialogflowV2beta1IngestedContextReferenceDebugInfo               `json:"ingestedContextReferenceDebugInfo,omitempty"`
 	SearchKnowledgeBehavior           *GoogleCloudDialogflowV2beta1SearchKnowledgeDebugInfoSearchKnowledgeBehavior `json:"searchKnowledgeBehavior,omitempty"`
 	ServiceLatency                    *GoogleCloudDialogflowV2beta1ServiceLatency                                  `json:"serviceLatency,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DatastoreResponseReason") to
+	// ForceSendFields is a list of field names (e.g. "CesDebugInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DatastoreResponseReason") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CesDebugInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -15534,6 +15540,8 @@ type GoogleCloudDialogflowV2beta1StreamingRecognitionResult struct {
 	//   "END_OF_SINGLE_UTTERANCE"
 	//   "DTMF_DIGITS"
 	//   "PARTIAL_DTMF_DIGITS"
+	//   "SPEECH_ACTIVITY_BEGIN"
+	//   "SPEECH_ACTIVITY_END"
 	MessageType     string                                        `json:"messageType,omitempty"`
 	SpeechEndOffset string                                        `json:"speechEndOffset,omitempty"`
 	SpeechWordInfo  []*GoogleCloudDialogflowV2beta1SpeechWordInfo `json:"speechWordInfo,omitempty"`

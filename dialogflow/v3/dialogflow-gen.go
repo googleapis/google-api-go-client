@@ -12770,7 +12770,11 @@ type GoogleCloudDialogflowV2StreamingRecognitionResult struct {
 	// Possible values:
 	//   "MESSAGE_TYPE_UNSPECIFIED"
 	//   "TRANSCRIPT"
+	//   "DTMF_DIGITS"
 	//   "END_OF_SINGLE_UTTERANCE"
+	//   "PARTIAL_DTMF_DIGITS"
+	//   "SPEECH_ACTIVITY_BEGIN"
+	//   "SPEECH_ACTIVITY_END"
 	MessageType     string                                   `json:"messageType,omitempty"`
 	SpeechEndOffset string                                   `json:"speechEndOffset,omitempty"`
 	SpeechWordInfo  []*GoogleCloudDialogflowV2SpeechWordInfo `json:"speechWordInfo,omitempty"`
@@ -16027,6 +16031,8 @@ type GoogleCloudDialogflowV2beta1StreamingRecognitionResult struct {
 	//   "END_OF_SINGLE_UTTERANCE"
 	//   "DTMF_DIGITS"
 	//   "PARTIAL_DTMF_DIGITS"
+	//   "SPEECH_ACTIVITY_BEGIN"
+	//   "SPEECH_ACTIVITY_END"
 	MessageType     string                                        `json:"messageType,omitempty"`
 	SpeechEndOffset string                                        `json:"speechEndOffset,omitempty"`
 	SpeechWordInfo  []*GoogleCloudDialogflowV2beta1SpeechWordInfo `json:"speechWordInfo,omitempty"`

@@ -644,7 +644,7 @@
               "type": "string"
             },
             "updateMask": {
-              "description": "Required. The updated field paths, comma separated if there are multiple. You can update the following fields for a space: `space_details`: Updates the space's description and guidelines. You must pass both description and guidelines in the update request as `SpaceDetails`. If you only want to update one of the fields, pass the existing value for the other field. `display_name`: Only supports updating the display name for spaces where `spaceType` field is `SPACE`. If you receive the error message `ALREADY_EXISTS`, try a different value. An existing space within the Google Workspace organization might already use this display name. `space_type`: Only supports changing a `GROUP_CHAT` space type to `SPACE`. Include `display_name` together with `space_type` in the update mask and ensure that the specified space has a non-empty display name and the `SPACE` space type. Including the `space_type` mask and the `SPACE` type in the specified space when updating the display name is optional if the existing space already has the `SPACE` type. Trying to update the space type in other ways results in an invalid argument error. `space_type` is not supported with `useAdminAccess`. `space_history_state`: Updates [space history settings](https://support.google.com/chat/answer/7664687) by turning history on or off for the space. Only supported if history settings are enabled for the Google Workspace organization. To update the space history state, you must omit all other field masks in your request. `space_history_state` is not supported with `useAdminAccess`. `access_settings.audience`: Updates the [access setting](https://support.google.com/chat/answer/11971020) of who can discover the space, join the space, and preview the messages in named space where `spaceType` field is `SPACE`. If the existing space has a target audience, you can remove the audience and restrict space access by omitting a value for this field mask. To update access settings for a space, the authenticating user must be a space manager and omit all other field masks in your request. You can't update this field if the space is in [import mode](https://developers.google.com/workspace/chat/import-data-overview). To learn more, see [Make a space discoverable to specific users](https://developers.google.com/workspace/chat/space-target-audience). `access_settings.audience` is not supported with `useAdminAccess`. `permission_settings`: Supports changing the [permission settings](https://support.google.com/chat/answer/13340792) of a space. When updating permission settings, you can only specify `permissionSettings` field masks; you cannot update other field masks at the same time. The supported field masks include: - `permission_settings.manageMembersAndGroups` - `permission_settings.modifySpaceDetails` - `permission_settings.toggleHistory` - `permission_settings.useAtMentionAll` - `permission_settings.manageApps` - `permission_settings.manageWebhooks` - `permission_settings.replyMessages`",
+              "description": "Required. The updated field paths, comma separated if there are multiple. You can update the following fields for a space: `space_details`: Updates the space's description and guidelines. You must pass both description and guidelines in the update request as `SpaceDetails`. If you only want to update one of the fields, pass the existing value for the other field. `display_name`: Only supports updating the display name for spaces where `spaceType` field is `SPACE`. If you receive the error message `ALREADY_EXISTS`, try a different value. An existing space within the Google Workspace organization might already use this display name. `space_type`: Only supports changing a `GROUP_CHAT` space type to `SPACE`. Include `display_name` together with `space_type` in the update mask and ensure that the specified space has a non-empty display name and the `SPACE` space type. Including the `space_type` mask and the `SPACE` type in the specified space when updating the display name is optional if the existing space already has the `SPACE` type. Trying to update the space type in other ways results in an invalid argument error. `space_type` is not supported with `useAdminAccess`. `space_history_state`: Updates [space history settings](https://support.google.com/chat/answer/7664687) by turning history on or off for the space. Only supported if history settings are enabled for the Google Workspace organization. To update the space history state, you must omit all other field masks in your request. `space_history_state` is not supported with `useAdminAccess`. `access_settings.audience`: Updates the [access setting](https://support.google.com/chat/answer/11971020) of who can discover the space, join the space, and preview the messages in named space where `spaceType` field is `SPACE`. If the existing space has a target audience, you can remove the audience and restrict space access by omitting a value for this field mask. To update access settings for a space, the authenticating user must be a space manager and omit all other field masks in your request. You can't update this field if the space is in [import mode](https://developers.google.com/workspace/chat/import-data-overview). To learn more, see [Make a space discoverable to specific users](https://developers.google.com/workspace/chat/space-target-audience). `access_settings.audience` is not supported with `useAdminAccess`. `access_settings.access_permission_settings`: Updates the [access permission settings](https://support.google.com/chat/answer/11971020) of who can discover and join the space where `spaceType` field is `SPACE`. Principals allowed to join the space must also be allowed to discover it. To update access permission settings for a space, the authenticating user must be a space manager or assistant manager and omit all other field masks in the request. You can't update this field if the space is in [import mode](https://developers.google.com/workspace/chat/import-data-overview). To learn more, see [Make a space discoverable to specific users](https://developers.google.com/workspace/chat/space-target-audience). `access_settings.access_permission_settings` is not supported with `useAdminAccess`. The supported field masks include: - `access_settings.access_permission_settings.discoverSpaceSetting` - `access_settings.access_permission_settings.joinSpaceSetting` `permission_settings`: Supports changing the [permission settings](https://support.google.com/chat/answer/13340792) of a space. When updating permission settings, you can only specify `permissionSettings` field masks; you cannot update other field masks at the same time. The supported field masks include: - `permission_settings.manageMembersAndGroups` - `permission_settings.modifySpaceDetails` - `permission_settings.toggleHistory` - `permission_settings.useAtMentionAll` - `permission_settings.manageApps` - `permission_settings.manageWebhooks` - `permission_settings.replyMessages`",
               "format": "google-fieldmask",
               "location": "query",
               "type": "string"
@@ -1463,11 +1463,11 @@
       "resources": {
         "availability": {
           "methods": {
-            "getAvailability": {
+            "get": {
               "description": "Returns availability information for a human user in Google Chat. For example, this can be used to check if a user is online or away, or to retrieve their custom status message. This method only retrieves the authenticated user's availability. Requires [user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user) with one of the following [authorization scopes](https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes): - `https://www.googleapis.com/auth/chat.users.availability.readonly` - `https://www.googleapis.com/auth/chat.users.availability`",
               "flatPath": "v1/users/{usersId}/availability",
               "httpMethod": "GET",
-              "id": "chat.users.availability.getAvailability",
+              "id": "chat.users.availability.get",
               "parameterOrder": [
                 "name"
               ],
@@ -1549,7 +1549,7 @@
               ]
             },
             "markAsDoNotDisturb": {
-              "description": "Marks user as`DO_NOT_DISTURB` in Google Chat. Sets a user's availability state to `DO_NOT_DISTURB` until a specified expiration time. When in `DO_NOT_DISTURB`, users typically won't receive notifications. This method only updates the authenticated user's availability. Requires [user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user) with [authorization scope](https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes): - `https://www.googleapis.com/auth/chat.users.availability`",
+              "description": "Marks user as `DO_NOT_DISTURB` in Google Chat. Sets a user's availability state to `DO_NOT_DISTURB` until a specified expiration time. When in `DO_NOT_DISTURB`, users typically won't receive notifications. This method only updates the authenticated user's availability. Requires [user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user) with [authorization scope](https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes): - `https://www.googleapis.com/auth/chat.users.availability`",
               "flatPath": "v1/users/{usersId}/availability:markAsDoNotDisturb",
               "httpMethod": "POST",
               "id": "chat.users.availability.markAsDoNotDisturb",
@@ -1577,11 +1577,11 @@
                 "https://www.googleapis.com/auth/chat.users.readstate"
               ]
             },
-            "updateAvailability": {
+            "patch": {
               "description": "Updates availability information for a human user. Only the `custom_status` field can be updated through this method. This method only updates the authenticated user's availability. Requires [user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user) with one of the following [authorization scopes](https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes): - `https://www.googleapis.com/auth/chat.users.availability`",
               "flatPath": "v1/users/{usersId}/availability",
               "httpMethod": "PATCH",
-              "id": "chat.users.availability.updateAvailability",
+              "id": "chat.users.availability.patch",
               "parameterOrder": [
                 "name"
               ],
@@ -2008,13 +2008,46 @@
       }
     }
   },
-  "revision": "20260623",
+  "revision": "20260705",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
+    "AccessPermissionSetting": {
+      "description": "An access permission setting.",
+      "id": "AccessPermissionSetting",
+      "properties": {
+        "principals": {
+          "description": "Optional. Unordered list. Allowed principals for this permission.",
+          "items": {
+            "$ref": "Principal"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "AccessPermissionSettings": {
+      "description": "Access permission settings for a space.",
+      "id": "AccessPermissionSettings",
+      "properties": {
+        "discoverSpaceSetting": {
+          "$ref": "AccessPermissionSetting",
+          "description": "Optional. Access permission setting for discovering the space."
+        },
+        "joinSpaceSetting": {
+          "$ref": "AccessPermissionSetting",
+          "description": "Optional. Access permission setting for joining the space."
+        }
+      },
+      "type": "object"
+    },
     "AccessSettings": {
       "description": "Represents the [access setting](https://support.google.com/chat/answer/11971020) of the space.",
       "id": "AccessSettings",
       "properties": {
+        "accessPermissionSettings": {
+          "$ref": "AccessPermissionSettings",
+          "description": "Optional. Access permission settings for the space. To set the target audience when creating a space, specify the `accessSettings.audience` field in your request."
+        },
         "accessState": {
           "description": "Output only. Indicates the access state of the space.",
           "enum": [
@@ -2311,6 +2344,17 @@
         },
         "resourceName": {
           "description": "Optional. The resource name of the attachment data. This field is used with the media API to download the attachment data.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Audience": {
+      "description": "A target audience in Google Chat. A target audience represents a group of users within a Google Workspace organization, defined by an administrator. Target audiences are used to configure access and visibility settings for resources, such as making a space discoverable to a specific group of users. For more details, see [Target audiences](https://support.google.com/a/answer/9934697) and [Make a space discoverable to a target audience](https://developers.google.com/workspace/chat/space-target-audience).",
+      "id": "Audience",
+      "properties": {
+        "name": {
+          "description": "The resource name of the [target audience](https://support.google.com/a/answer/9934697) who can discover or join the space. For details, see [Make a space discoverable to a target audience](https://developers.google.com/workspace/chat/space-target-audience). Format: `audiences/{audience}` To use the default target audience for the Google Workspace organization, set to `audiences/default`.",
           "type": "string"
         }
       },
@@ -5709,6 +5753,17 @@
         "section": {
           "$ref": "GoogleChatV1Section",
           "description": "The updated section."
+        }
+      },
+      "type": "object"
+    },
+    "Principal": {
+      "description": "A principal representing an entity granted access.",
+      "id": "Principal",
+      "properties": {
+        "audience": {
+          "$ref": "Audience",
+          "description": "An audience."
         }
       },
       "type": "object"

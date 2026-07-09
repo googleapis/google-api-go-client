@@ -3554,6 +3554,12 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	// minutes are not specified, we will assume a sync time of 0:00. The user must
 	// provide a time zone to avoid ambiguity.
 	NextSyncTime *GoogleTypeDateTime `json:"nextSyncTime,omitempty"`
+	// OauthStaticIpAddresses: Output only. The static IP addresses used by this
+	// connector for OAuth APIs (e.g. end user authentication). These are surfaced
+	// separately from `static_ip_addresses` so that customers can apply granular
+	// firewall settings for OAuth endpoints. Only populated for connectors that
+	// have static IP enabled and are used for actions and/or federated search.
+	OauthStaticIpAddresses []string `json:"oauthStaticIpAddresses,omitempty"`
 	// Params: Required data connector parameters in structured json format.
 	Params googleapi.RawMessage `json:"params,omitempty"`
 	// PrivateConnectivityProjectId: Output only. The tenant project ID associated
@@ -4790,9 +4796,9 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	//   "APP_TYPE_UNSPECIFIED" - All non specified apps.
 	//   "APP_TYPE_INTRANET" - App type for intranet search and Agentspace.
 	AppType string `json:"appType,omitempty"`
-	// AssociatedAgentRegistry: Optional. The Agent registry containing the agents,
-	// MCP servers and tools associated with this engine. Field is required if the
-	// engine has an Agent Gateway setting.
+	// AssociatedAgentRegistry: Output only. The Agent registry containing the
+	// agents, MCP servers and tools associated with this engine. Derived
+	// server-side from the linked Agent Gateway's registry.
 	AssociatedAgentRegistry string `json:"associatedAgentRegistry,omitempty"`
 	// ChatEngineConfig: Configurations for the Chat Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_CHAT.
@@ -4843,9 +4849,9 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// `disable-video-generation` * `disable-onedrive-upload` *
 	// `disable-talk-to-content` * `disable-google-drive-upload` *
 	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
-	// `disable-skills` * `enable-end-user-sharing-with-groups` *
-	// `single-agent-orchestration` * `multi-agent-orchestration` *
-	// `cross-product-intelligence` * `deep-research`
+	// `disable-skills` * `disable-projects` *
+	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
+	// `multi-agent-orchestration` * `cross-product-intelligence` * `deep-research`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -5322,9 +5328,10 @@ func (s GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigRecomme
 // Search Engine.
 type GoogleCloudDiscoveryengineV1EngineSearchEngineConfig struct {
 	// RequiredSubscriptionTier: Optional. The required subscription tier of this
-	// engine. They cannot be modified after engine creation. If the required
-	// subscription tier is search, user with higher license tier like assist can
-	// still access the standalone app associated with this engine.
+	// engine. If the required subscription tier is search, user with higher
+	// license tier like assist can still access the standalone app associated with
+	// this engine. Web grounding feature is only available on the app if it is set
+	// as SubscriptionTier.SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT.
 	//
 	// Possible values:
 	//   "SUBSCRIPTION_TIER_UNSPECIFIED" - Default value.
@@ -7628,6 +7635,7 @@ type GoogleCloudDiscoveryengineV1WorkspaceConfig struct {
 	//   "GOOGLE_GROUPS" - Workspace Data Store contains Groups data
 	//   "GOOGLE_KEEP" - Workspace Data Store contains Keep data
 	//   "GOOGLE_PEOPLE" - Workspace Data Store contains People data
+	//   "GOOGLE_WORKSPACE" - Workspace Data Store contains all Workspace apps data
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DasherCustomerId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7984,6 +7992,568 @@ type GoogleCloudDiscoveryengineV1alphaAlertPolicyResourceConfigAlertEnrollment s
 
 func (s GoogleCloudDiscoveryengineV1alphaAlertPolicyResourceConfigAlertEnrollment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaAlertPolicyResourceConfigAlertEnrollment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationInsights: Evaluation
+// insights for a program.
+type GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationInsights struct {
+	// Insights: Optional. List of evaluation insights.
+	Insights []*GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationInsightsAlphaEvolveEvaluationInsight `json:"insights,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Insights") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Insights") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationInsights) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationInsights
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationInsightsAlphaEvolveEval
+// uationInsight: A single evaluation insight.
+type GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationInsightsAlphaEvolveEvaluationInsight struct {
+	// Label: Optional. Label of the insight.
+	Label string `json:"label,omitempty"`
+	// Text: Optional. Text of the insight.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Label") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Label") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationInsightsAlphaEvolveEvaluationInsight) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationInsightsAlphaEvolveEvaluationInsight
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationScores: Contains the
+// evaluation scores for the target metrics to optimize.
+type GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationScores struct {
+	// Scores: Required. List of evaluation scores.
+	Scores []*GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationScoresAlphaEvolveEvaluationScore `json:"scores,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Scores") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Scores") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationScores) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationScores
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationScoresAlphaEvolveEvalua
+// tionScore: Score for a single metric.
+type GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationScoresAlphaEvolveEvaluationScore struct {
+	// Metric: Required. Name of the metric.
+	Metric string `json:"metric,omitempty"`
+	// Score: Required. Score of a program for this metric.
+	Score float64 `json:"score,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Metric") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Metric") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationScoresAlphaEvolveEvaluationScore) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationScoresAlphaEvolveEvaluationScore
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationScoresAlphaEvolveEvaluationScore) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationScoresAlphaEvolveEvaluationScore
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperiment: An experiment is a
+// single run of the AlphaEvolve agent, an evolutionary coding agent powered by
+// LLM for algorithm discovery and optimization.
+type GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperiment struct {
+	// Config: Required. Experiment configuration.
+	Config *GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfig `json:"config,omitempty"`
+	// CreateTime: Output only. Time when the experiment was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// InitialAlphaEvolveProgram: Output only. Specifies the name of the seed
+	// program used to start the experiment.
+	InitialAlphaEvolveProgram string `json:"initialAlphaEvolveProgram,omitempty"`
+	// Name: Identifier. The full resource name of the experiment. Format:
+	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
+	// gine}/sessions/{session}/alphaEvolveExperiments/{alpha_evolve_experiment}`
+	Name string `json:"name,omitempty"`
+	// State: Output only. The state of the experiment.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "CREATED" - The experiment is created.
+	//   "RUNNING" - The experiment is running.
+	//   "PAUSED" - The experiment is paused.
+	//   "COMPLETED" - The experiment is completed.
+	//   "FAILED" - The experiment has failed.
+	State string `json:"state,omitempty"`
+	// Stats: Output only. Experiment stats.
+	Stats *GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentStats `json:"stats,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Config") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Config") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperiment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperiment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfig: Configuration
+// of an experiment.
+type GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfig struct {
+	// EvolutionSettings: Optional. Evolution settings for the experiment.
+	EvolutionSettings *GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettings `json:"evolutionSettings,omitempty"`
+	// GenerationSettings: Optional. Generation settings for the experiment,
+	// controlling how new program candidates are generated, including things LLM
+	// parameters and user-provided context and prompts.
+	GenerationSettings *GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigGenerationSettings `json:"generationSettings,omitempty"`
+	// ProblemDescription: Required. Description of the problem to be solved by the
+	// experiment.
+	ProblemDescription string `json:"problemDescription,omitempty"`
+	// ProgramLanguage: Required. Primary programming language of the code being
+	// optimized.
+	ProgramLanguage string `json:"programLanguage,omitempty"`
+	// RunSettings: Required. Run settings for the experiment, controlling the
+	// overall behavior of the experiment run.
+	RunSettings *GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigRunSettings `json:"runSettings,omitempty"`
+	// Title: Required. Title of the experiment.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EvolutionSettings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EvolutionSettings") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettings
+// : Evolution settings for the experiment.
+type GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettings struct {
+	// ParentSamplingConfig: Optional. Parent sampling configuration.
+	ParentSamplingConfig *GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettingsParentSamplingConfig `json:"parentSamplingConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ParentSamplingConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ParentSamplingConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettings
+// ParentSamplingConfig: Configuration for parent sampling.
+type GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettingsParentSamplingConfig struct {
+	// ParetoSamplingConfig: Optional. Pareto sampling configuration.
+	ParetoSamplingConfig *GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettingsParentSamplingConfigParetoSamplingConfig `json:"paretoSamplingConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ParetoSamplingConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ParetoSamplingConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettingsParentSamplingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettingsParentSamplingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettings
+// ParentSamplingConfigParetoSamplingConfig: Configuration for Pareto sampling.
+type GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettingsParentSamplingConfigParetoSamplingConfig struct {
+	// ParetoSamplingProbability: Optional. Probability [0.0, 1.0] of sampling
+	// parent programs from the Pareto frontier instead of normal fitness-based
+	// sampling during candidate generation. Useful when optimizing multiple
+	// metrics simultaneously. Default 0.0 (disabled). Only effective when
+	// evaluation returns multiple metrics in scores_to_optimize.
+	ParetoSamplingProbability float64 `json:"paretoSamplingProbability,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ParetoSamplingProbability")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ParetoSamplingProbability") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettingsParentSamplingConfigParetoSamplingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettingsParentSamplingConfigParetoSamplingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettingsParentSamplingConfigParetoSamplingConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigEvolutionSettingsParentSamplingConfigParetoSamplingConfig
+	var s1 struct {
+		ParetoSamplingProbability gensupport.JSONFloat64 `json:"paretoSamplingProbability"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ParetoSamplingProbability = float64(s1.ParetoSamplingProbability)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigGenerationSetting
+// s: Generation settings for the experiment.
+type GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigGenerationSettings struct {
+	// Context: Optional. Additional user-provided context to be used during
+	// generation.
+	Context string `json:"context,omitempty"`
+	// IncludeFullProgramInPrompt: Optional. When true, the LLM prompt includes the
+	// full program text (both mutable EVOLVE-BLOCK regions and immutable
+	// boilerplate). When false (default), only the mutable EVOLVE-BLOCK regions
+	// are shown, saving context window.
+	IncludeFullProgramInPrompt bool `json:"includeFullProgramInPrompt,omitempty"`
+	// Models: Optional. Per-model configuration. See `ModelConfig` for details. If
+	// left unset, the server selects a default model.
+	Models []*GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigGenerationSettingsModelConfig `json:"models,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Context") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Context") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigGenerationSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigGenerationSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigGenerationSetting
+// sModelConfig: Per-model configuration. Mutually exclusive with
+// `model_mixture` and `model`: when `models` is set, both `model_mixture` and
+// `model` must be left unset. The same allowed-model list and at-most-2-models
+// rule as for `model_mixture` apply. In addition, each entry may specify a
+// per-model `temperature` for LLM sampling. Unlike `model_mixture`, weights
+// here are *relative*: only their ratios matter (the server normalizes them),
+// so callers may use any positive numbers without having to ensure they sum to
+// 1.0.
+type GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigGenerationSettingsModelConfig struct {
+	// Name: Required. Model name (e.g. `gemini-2.5-flash`,
+	// `gemini-3.1-pro-preview`). See `model_mixture` for the list of allowed
+	// models.
+	Name string `json:"name,omitempty"`
+	// Weight: Optional. Relative weight for this model in the mixture. Must be a
+	// finite, strictly positive value. Weights across all entries are normalized
+	// server-side, so they need not sum to 1.0. Defaults to 1.0 when unset, which
+	// is convenient when configuring a single model or an even mixture. Some
+	// Pro-tier models are capped at most 50% of the total weight; requests
+	// violating that cap are rejected with INVALID_ARGUMENT.
+	Weight float64 `json:"weight,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigGenerationSettingsModelConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigGenerationSettingsModelConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigGenerationSettingsModelConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigGenerationSettingsModelConfig
+	var s1 struct {
+		Weight gensupport.JSONFloat64 `json:"weight"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Weight = float64(s1.Weight)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigRunSettings: Run
+// settings for the experiment.
+type GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigRunSettings struct {
+	// Concurrency: Required. Maximum number of programs that can be generated in
+	// parallel. Must be positive.
+	Concurrency int64 `json:"concurrency,omitempty"`
+	// MaxDuration: Optional. Maximum duration of the experiment. If unset,
+	// defaults to 24 hours.
+	MaxDuration string `json:"maxDuration,omitempty"`
+	// MaxPrograms: Required. Maximum number of programs to generate during the
+	// experiment run. The initial program counts towards this limit. Must be
+	// greater than 1.
+	MaxPrograms int64 `json:"maxPrograms,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Concurrency") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Concurrency") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigRunSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigRunSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentStats: Stats about the
+// experiment.
+type GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentStats struct {
+	// CandidatesCount: Output only. Number of candidates generated.
+	CandidatesCount int64 `json:"candidatesCount,omitempty"`
+	// EvaluatedCandidatesCount: Output only. Number of candidates evaluated.
+	EvaluatedCandidatesCount int64 `json:"evaluatedCandidatesCount,omitempty"`
+	// InputTokenCount: Output only. Number of billed input tokens consumed by the
+	// experiment.
+	InputTokenCount int64 `json:"inputTokenCount,omitempty,string"`
+	// OutputTokenCount: Output only. Number of billed output tokens consumed by
+	// the experiment.
+	OutputTokenCount int64 `json:"outputTokenCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "CandidatesCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CandidatesCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentStats) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentStats
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAlphaEvolveProgram: Represents a single
+// program to be used within the context of an AlphaEvolve experiment.
+type GoogleCloudDiscoveryengineV1alphaAlphaEvolveProgram struct {
+	// Content: Optional. Content of the program.
+	Content *GoogleCloudDiscoveryengineV1alphaAlphaEvolveProgramContent `json:"content,omitempty"`
+	// CreateTime: Output only. Time when the program was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Evaluation: Optional. Evaluation results for the program.
+	Evaluation *GoogleCloudDiscoveryengineV1alphaAlphaEvolveProgramEvaluation `json:"evaluation,omitempty"`
+	// LockToken: Optional. Lock token for the program.
+	LockToken string `json:"lockToken,omitempty"`
+	// Name: Identifier. Unique identifier for the program. Format:
+	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
+	// gine}/sessions/{session}/alphaEvolveExperiments/{alpha_evolve_experiment}/alp
+	// haEvolvePrograms/{alpha_evolve_program}`
+	Name string `json:"name,omitempty"`
+	// ParentPrograms: Output only. Optionally specifies which parent programs this
+	// program was evolved from. Format:
+	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
+	// gine}/sessions/{session}/alphaEvolveExperiments/{alpha_evolve_experiment}/alp
+	// haEvolvePrograms/{alpha_evolve_program}`
+	ParentPrograms []string `json:"parentPrograms,omitempty"`
+	// State: Output only. State of the program.
+	//
+	// Possible values:
+	//   "PROGRAM_STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "INITIALIZED" - The program is initialized.
+	//   "GENERATING" - The program is in generation.
+	//   "EVALUATING" - The program is pending evaluation.
+	//   "COMPLETED" - The program is completed.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAlphaEvolveProgram) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlphaEvolveProgram
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAlphaEvolveProgramContent: A self-contained
+// message containing the content of a program. Can represent a collection of
+// files.
+type GoogleCloudDiscoveryengineV1alphaAlphaEvolveProgramContent struct {
+	// Description: Optional. Description of the program.
+	Description string `json:"description,omitempty"`
+	// Files: Required. A list of source files that make up the overall program.
+	Files []*GoogleCloudDiscoveryengineV1alphaAlphaEvolveSourceFile `json:"files,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAlphaEvolveProgramContent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlphaEvolveProgramContent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAlphaEvolveProgramEvaluation: Evaluation
+// results for a program candidate.
+type GoogleCloudDiscoveryengineV1alphaAlphaEvolveProgramEvaluation struct {
+	// Insights: Optional. Represents various insights about the candidate, which
+	// are not directly used as optimization target, but that can be used to
+	// improve subsequent generations, and as such can be used to construct the
+	// evolution prompt.
+	Insights *GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationInsights `json:"insights,omitempty"`
+	// Scores: Optional. Contains the evaluation scores for the target metrics to
+	// optimize.
+	Scores *GoogleCloudDiscoveryengineV1alphaAlphaEvolveEvaluationScores `json:"scores,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Insights") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Insights") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAlphaEvolveProgramEvaluation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlphaEvolveProgramEvaluation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAlphaEvolveSourceFile: A single source file
+// with its path, content and metadata.
+type GoogleCloudDiscoveryengineV1alphaAlphaEvolveSourceFile struct {
+	// Content: Required. The raw content of the file. This is a string and not
+	// bytes, because it should be ultimately processed by the LLM as text.
+	Content string `json:"content,omitempty"`
+	// Description: Optional. Additional description of the file.
+	Description string `json:"description,omitempty"`
+	// Path: Required. The relative path of the file, including the filename. e.g.,
+	// "src/main.py", "utils/helpers.js", "README.md"
+	Path string `json:"path,omitempty"`
+	// ProgramLanguage: Optional. The programming language of the file.
+	ProgramLanguage string `json:"programLanguage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAlphaEvolveSourceFile) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlphaEvolveSourceFile
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10678,6 +11248,12 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// minutes are not specified, we will assume a sync time of 0:00. The user must
 	// provide a time zone to avoid ambiguity.
 	NextSyncTime *GoogleTypeDateTime `json:"nextSyncTime,omitempty"`
+	// OauthStaticIpAddresses: Output only. The static IP addresses used by this
+	// connector for OAuth APIs (e.g. end user authentication). These are surfaced
+	// separately from `static_ip_addresses` so that customers can apply granular
+	// firewall settings for OAuth endpoints. Only populated for connectors that
+	// have static IP enabled and are used for actions and/or federated search.
+	OauthStaticIpAddresses []string `json:"oauthStaticIpAddresses,omitempty"`
 	// Params: Required data connector parameters in structured json format.
 	Params googleapi.RawMessage `json:"params,omitempty"`
 	// PrivateConnectivityProjectId: Output only. The tenant project ID associated
@@ -11740,6 +12316,9 @@ type GoogleCloudDiscoveryengineV1alphaDeleteUserStoreMetadata struct {
 	// SuccessCount: The number of end users under the user store that were
 	// successfully deleted.
 	SuccessCount int64 `json:"successCount,omitempty,string"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FailureCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -12125,9 +12704,9 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	//   "APP_TYPE_UNSPECIFIED" - All non specified apps.
 	//   "APP_TYPE_INTRANET" - App type for intranet search and Agentspace.
 	AppType string `json:"appType,omitempty"`
-	// AssociatedAgentRegistry: Optional. The Agent registry containing the agents,
-	// MCP servers and tools associated with this engine. Field is required if the
-	// engine has an Agent Gateway setting.
+	// AssociatedAgentRegistry: Output only. The Agent registry containing the
+	// agents, MCP servers and tools associated with this engine. Derived
+	// server-side from the linked Agent Gateway's registry.
 	AssociatedAgentRegistry string `json:"associatedAgentRegistry,omitempty"`
 	// ChatEngineConfig: Configurations for the Chat Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_CHAT.
@@ -12178,9 +12757,9 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// `disable-video-generation` * `disable-onedrive-upload` *
 	// `disable-talk-to-content` * `disable-google-drive-upload` *
 	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
-	// `disable-skills` * `enable-end-user-sharing-with-groups` *
-	// `single-agent-orchestration` * `multi-agent-orchestration` *
-	// `cross-product-intelligence` * `deep-research`
+	// `disable-skills` * `disable-projects` *
+	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
+	// `multi-agent-orchestration` * `cross-product-intelligence` * `deep-research`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -12722,9 +13301,10 @@ func (s GoogleCloudDiscoveryengineV1alphaEngineRecommendationMetadata) MarshalJS
 // for a Search Engine.
 type GoogleCloudDiscoveryengineV1alphaEngineSearchEngineConfig struct {
 	// RequiredSubscriptionTier: Optional. The required subscription tier of this
-	// engine. They cannot be modified after engine creation. If the required
-	// subscription tier is search, user with higher license tier like assist can
-	// still access the standalone app associated with this engine.
+	// engine. If the required subscription tier is search, user with higher
+	// license tier like assist can still access the standalone app associated with
+	// this engine. Web grounding feature is only available on the app if it is set
+	// as SubscriptionTier.SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT.
 	//
 	// Possible values:
 	//   "SUBSCRIPTION_TIER_UNSPECIFIED" - Default value.
@@ -15310,6 +15890,31 @@ func (s GoogleCloudDiscoveryengineV1alphaReplacePatientFilterRequest) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaResumeExperimentMetadata: Metadata for
+// AlphaEvolveService.ResumeExperiment long running operation.
+type GoogleCloudDiscoveryengineV1alphaResumeExperimentMetadata struct {
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateTime: Output only. The time the operation was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaResumeExperimentMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaResumeExperimentMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaSafetyRating: Safety rating corresponding
 // to the generated content.
 type GoogleCloudDiscoveryengineV1alphaSafetyRating struct {
@@ -17340,6 +17945,56 @@ func (s GoogleCloudDiscoveryengineV1alphaSitemap) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaStartExperimentMetadata: Metadata for
+// AlphaEvolveService.StartExperiment long running operation.
+type GoogleCloudDiscoveryengineV1alphaStartExperimentMetadata struct {
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateTime: Output only. The time the operation was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaStartExperimentMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaStartExperimentMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaStartExperimentRequest: Request message for
+// AlphaEvolveService.StartExperiment.
+type GoogleCloudDiscoveryengineV1alphaStartExperimentRequest struct {
+	// Name: Required. Experiment to start. Format:
+	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
+	// gine}/sessions/{session}/alphaEvolveExperiments/{alpha_evolve_experiment}`
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaStartExperimentRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaStartExperimentRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaTargetSite: A target site for the
 // SiteSearchEngine.
 type GoogleCloudDiscoveryengineV1alphaTargetSite struct {
@@ -17875,6 +18530,7 @@ type GoogleCloudDiscoveryengineV1alphaWorkspaceConfig struct {
 	//   "GOOGLE_GROUPS" - Workspace Data Store contains Groups data
 	//   "GOOGLE_KEEP" - Workspace Data Store contains Keep data
 	//   "GOOGLE_PEOPLE" - Workspace Data Store contains People data
+	//   "GOOGLE_WORKSPACE" - Workspace Data Store contains all Workspace apps data
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DasherCustomerId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -24489,9 +25145,9 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	//   "APP_TYPE_UNSPECIFIED" - All non specified apps.
 	//   "APP_TYPE_INTRANET" - App type for intranet search and Agentspace.
 	AppType string `json:"appType,omitempty"`
-	// AssociatedAgentRegistry: Optional. The Agent registry containing the agents,
-	// MCP servers and tools associated with this engine. Field is required if the
-	// engine has an Agent Gateway setting.
+	// AssociatedAgentRegistry: Output only. The Agent registry containing the
+	// agents, MCP servers and tools associated with this engine. Derived
+	// server-side from the linked Agent Gateway's registry.
 	AssociatedAgentRegistry string `json:"associatedAgentRegistry,omitempty"`
 	// ChatEngineConfig: Configurations for the Chat Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_CHAT.
@@ -24542,9 +25198,9 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// `disable-video-generation` * `disable-onedrive-upload` *
 	// `disable-talk-to-content` * `disable-google-drive-upload` *
 	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
-	// `disable-skills` * `enable-end-user-sharing-with-groups` *
-	// `single-agent-orchestration` * `multi-agent-orchestration` *
-	// `cross-product-intelligence` * `deep-research`
+	// `disable-skills` * `disable-projects` *
+	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
+	// `multi-agent-orchestration` * `cross-product-intelligence` * `deep-research`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -25024,9 +25680,10 @@ func (s GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigRec
 // a Search Engine.
 type GoogleCloudDiscoveryengineV1betaEngineSearchEngineConfig struct {
 	// RequiredSubscriptionTier: Optional. The required subscription tier of this
-	// engine. They cannot be modified after engine creation. If the required
-	// subscription tier is search, user with higher license tier like assist can
-	// still access the standalone app associated with this engine.
+	// engine. If the required subscription tier is search, user with higher
+	// license tier like assist can still access the standalone app associated with
+	// this engine. Web grounding feature is only available on the app if it is set
+	// as SubscriptionTier.SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT.
 	//
 	// Possible values:
 	//   "SUBSCRIPTION_TIER_UNSPECIFIED" - Default value.
@@ -33796,6 +34453,7 @@ type GoogleCloudDiscoveryengineV1betaWorkspaceConfig struct {
 	//   "GOOGLE_GROUPS" - Workspace Data Store contains Groups data
 	//   "GOOGLE_KEEP" - Workspace Data Store contains Keep data
 	//   "GOOGLE_PEOPLE" - Workspace Data Store contains People data
+	//   "GOOGLE_WORKSPACE" - Workspace Data Store contains all Workspace apps data
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DasherCustomerId") to
 	// unconditionally include in API requests. By default, fields with empty or

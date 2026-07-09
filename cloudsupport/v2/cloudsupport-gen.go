@@ -778,6 +778,15 @@ func (s DownloadParameters) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // EscalateCaseRequest: The request message for the EscalateCase endpoint.
 type EscalateCaseRequest struct {
 	// Escalation: The escalation information to be sent with the escalation
@@ -832,6 +841,11 @@ type Escalation struct {
 func (s Escalation) MarshalJSON() ([]byte, error) {
 	type NoMethod Escalation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExpungeSupportEventSubscriptionRequest: Request message for
+// ExpungeSupportEventSubscription.
+type ExpungeSupportEventSubscriptionRequest struct {
 }
 
 // ListAttachmentsResponse: The response message for the ListAttachments
@@ -3334,7 +3348,20 @@ type SupportEventSubscriptionsCreateCall struct {
 	header_                  http.Header
 }
 
-// Create: Creates a support event subscription for an organization.
+// Create: Creates a support event subscription for an organization. EXAMPLES:
+// cURL: ```shell parent="organizations/123456789" curl \ --request POST \
+// --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+// --header 'Content-Type: application/json' \ --data '{ "pub_sub_topic":
+// "projects/my-project/topics/my-topic" }' \
+// "https://cloudsupport.googleapis.com/v2/$parent/supportEventSubscriptions"
+// ``` Python: ```python import googleapiclient.discovery api_version = "v2"
+// supportApiService = googleapiclient.discovery.build(
+// serviceName="cloudsupport", version=api_version,
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?ver
+// sion={api_version}", ) request =
+// supportApiService.supportEventSubscriptions().create(
+// parent="organizations/123456789", body={ "pub_sub_topic":
+// "projects/my-project/topics/my-topic" }, ) print(request.execute()) ```
 //
 //   - parent: The parent resource name where the support event subscription will
 //     be created. Format: organizations/{organization_id}.
@@ -3438,7 +3465,19 @@ type SupportEventSubscriptionsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Soft deletes a support event subscription.
+// Delete: Soft deletes a support event subscription. EXAMPLES: cURL: ```shell
+// support_event_subscription="organizations/123456789/supportEventSubscriptions
+// /abcdef123456" curl \ --request DELETE \ --header "Authorization: Bearer
+// $(gcloud auth print-access-token)" \
+// "https://cloudsupport.googleapis.com/v2/$support_event_subscription" ```
+// Python: ```python import googleapiclient.discovery api_version = "v2"
+// supportApiService = googleapiclient.discovery.build(
+// serviceName="cloudsupport", version=api_version,
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?ver
+// sion={api_version}", ) request =
+// supportApiService).supportEventSubscriptions().delete(
+// name="organizations/123456789/supportEventSubscriptions/abcdef123456" )
+// print(request.execute()) ```
 //
 //   - name: The name of the support event subscription to delete. Format:
 //     organizations/{organization_id}/supportEventSubscriptions/{subscription_id}.
@@ -3529,6 +3568,110 @@ func (c *SupportEventSubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) (
 	return ret, nil
 }
 
+type SupportEventSubscriptionsExpungeCall struct {
+	s                                      *Service
+	name                                   string
+	expungesupporteventsubscriptionrequest *ExpungeSupportEventSubscriptionRequest
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// Expunge: Expunges a support event subscription.
+//
+//   - name: The name of the support event subscription to expunge. Format:
+//     organizations/{organization_id}/supportEventSubscriptions/{subscription_id}.
+func (r *SupportEventSubscriptionsService) Expunge(name string, expungesupporteventsubscriptionrequest *ExpungeSupportEventSubscriptionRequest) *SupportEventSubscriptionsExpungeCall {
+	c := &SupportEventSubscriptionsExpungeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.expungesupporteventsubscriptionrequest = expungesupporteventsubscriptionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *SupportEventSubscriptionsExpungeCall) Fields(s ...googleapi.Field) *SupportEventSubscriptionsExpungeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *SupportEventSubscriptionsExpungeCall) Context(ctx context.Context) *SupportEventSubscriptionsExpungeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *SupportEventSubscriptionsExpungeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SupportEventSubscriptionsExpungeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.expungesupporteventsubscriptionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:expunge")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudsupport.supportEventSubscriptions.expunge", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudsupport.supportEventSubscriptions.expunge" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *SupportEventSubscriptionsExpungeCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudsupport.supportEventSubscriptions.expunge", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type SupportEventSubscriptionsGetCall struct {
 	s            *Service
 	name         string
@@ -3538,7 +3681,19 @@ type SupportEventSubscriptionsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a support event subscription.
+// Get: Gets a support event subscription. EXAMPLES: cURL: ```shell
+// support_event_subscription="organizations/123456789/supportEventSubscriptions
+// /abcdef123456" curl \ --header "Authorization: Bearer $(gcloud auth
+// print-access-token)" \
+// "https://cloudsupport.googleapis.com/v2/$support_event_subscription" ```
+// Python: ```python import googleapiclient.discovery api_version = "v2"
+// supportApiService = googleapiclient.discovery.build(
+// serviceName="cloudsupport", version=api_version,
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?ver
+// sion={api_version}", ) request =
+// supportApiService.supportEventSubscriptions().get(
+// name="organizations/123456789/supportEventSubscriptions/abcdef123456" )
+// print(request.execute()) ```
 //
 //   - name: The name of the support event subscription to retrieve. Format:
 //     organizations/{organization_id}/supportEventSubscriptions/{subscription_id}.
@@ -3649,7 +3804,17 @@ type SupportEventSubscriptionsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists support event subscriptions.
+// List: Lists support event subscriptions. EXAMPLES: cURL: ```shell
+// parent="organizations/123456789" curl \ --header "Authorization: Bearer
+// $(gcloud auth print-access-token)" \
+// "https://cloudsupport.googleapis.com/v2/$parent/supportEventSubscriptions"
+// ``` Python: ```python import googleapiclient.discovery api_version = "v2"
+// supportApiService = googleapiclient.discovery.build(
+// serviceName="cloudsupport", version=api_version,
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?ver
+// sion={api_version}", ) request =
+// supportApiService.supportEventSubscriptions().list(
+// parent="organizations/123456789" ) print(request.execute()) ```
 //
 //   - parent: The fully qualified name of the Cloud resource to list support
 //     event subscriptions under. Format: organizations/{organization_id}.
@@ -3815,7 +3980,22 @@ type SupportEventSubscriptionsPatchCall struct {
 	header_                  http.Header
 }
 
-// Patch: Updates a support event subscription.
+// Patch: Updates a support event subscription. EXAMPLES: cURL: ```shell
+// support_event_subscription="organizations/123456789/supportEventSubscriptions
+// /abcdef123456" curl \ --request PATCH \ --header "Authorization: Bearer
+// $(gcloud auth print-access-token)" \ --header "Content-Type:
+// application/json" \ --data '{ "pub_sub_topic":
+// "projects/my-project/topics/new-topic" }' \
+// "https://cloudsupport.googleapis.com/v2/$support_event_subscription?updateMas
+// k=pub_sub_topic" ``` Python: ```python import googleapiclient.discovery
+// api_version = "v2" supportApiService = googleapiclient.discovery.build(
+// serviceName="cloudsupport", version=api_version,
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?ver
+// sion={api_version}", ) request =
+// supportApiService.supportEventSubscriptions().patch(
+// name="organizations/123456789/supportEventSubscriptions/abcdef123456",
+// body={ "pub_sub_topic": "projects/my-project/topics/new-topic" }, )
+// print(request.execute()) ```
 //
 // - name: Identifier. The resource name of the support event subscription.
 func (r *SupportEventSubscriptionsService) Patch(name string, supporteventsubscription *SupportEventSubscription) *SupportEventSubscriptionsPatchCall {
@@ -3926,7 +4106,21 @@ type SupportEventSubscriptionsUndeleteCall struct {
 	header_                                 http.Header
 }
 
-// Undelete: Undeletes a support event subscription.
+// Undelete: Undeletes a support event subscription. EXAMPLES: cURL: ```shell
+// support_event_subscription="organizations/123456789/supportEventSubscriptions
+// /abcdef123456" curl \ --request POST \ --header "Authorization: Bearer
+// $(gcloud auth print-access-token)" \
+// "https://cloudsupport.googleapis.com/v2/$support_event_subscription:undelete"
+//
+//	``` Python: ```python import googleapiclient.discovery api_version = "v2"
+//
+// supportApiService = googleapiclient.discovery.build(
+// serviceName="cloudsupport", version=api_version,
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?ver
+// sion={api_version}", ) request =
+// supportApiService.supportEventSubscriptions().undelete(
+// name="organizations/123456789/supportEventSubscriptions/abcdef123456" )
+// print(request.execute()) ``` Undeletes a support event subscription.
 //
 //   - name: The name of the support event subscription to undelete. Format:
 //     organizations/{organization_id}/supportEventSubscriptions/{subscription_id}.

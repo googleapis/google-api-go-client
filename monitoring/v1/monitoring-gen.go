@@ -1295,6 +1295,8 @@ type EventAnnotation struct {
 	// event.
 	//   "INTERCONNECT_MAINTENANCE_COMPLETED" - Interconnect maintenance completed
 	// event.
+	//   "VPN_TRAFFIC_SELECTOR_NARROWING" - VPN traffic selector narrowing event.
+	//   "VPN_MAINTENANCE" - VPN maintenance event.
 	EventType string `json:"eventType,omitempty"`
 	// Filter: string filtering the events - event dependant. Example values:
 	// "resource.labels.pod_name = 'pod-1'"

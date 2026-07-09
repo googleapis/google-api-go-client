@@ -2075,6 +2075,18 @@ type SoftwareConfig struct {
 	// format. Certain Apache Airflow configuration property values are blocked
 	// (/composer/docs/concepts/airflow-configurations), and cannot be overridden.
 	AirflowConfigOverrides map[string]string `json:"airflowConfigOverrides,omitempty"`
+	// AuditLogsReplicationMode: Optional. The selected mode of audit logs
+	// replication. This field is supported for Cloud Composer environments in
+	// versions composer-3-airflow-*.*.*-build.* and newer.
+	//
+	// Possible values:
+	//   "AUDIT_LOGS_REPLICATION_MODE_UNSPECIFIED" - The user's choice of logs
+	// replication mode is unspecified.
+	//   "AUDIT_LOGS_REPLICATION_DISABLED" - The user opted out of audit logs
+	// replication.
+	//   "AUDIT_LOGS_REPLICATION_ENABLED" - The user opted in to audit logs
+	// replication.
+	AuditLogsReplicationMode string `json:"auditLogsReplicationMode,omitempty"`
 	// CloudDataLineageIntegration: Optional. The configuration for Cloud Data
 	// Lineage integration.
 	CloudDataLineageIntegration *CloudDataLineageIntegration `json:"cloudDataLineageIntegration,omitempty"`

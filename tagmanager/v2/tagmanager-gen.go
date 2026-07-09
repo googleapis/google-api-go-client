@@ -721,176 +721,6 @@ func (s Client) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-type CompilerErrorLite struct {
-	ErrorMessage string `json:"errorMessage,omitempty"`
-	// Possible values:
-	//   "unknownErrorType" - Unknown error type. Place holder for the enum's
-	// default value; not valid.
-	//   "duplicateAutoEventName" - There are multiple auto-event instances with
-	// the same name. parent - N EntityKeys each with their auto_event_key
-	// populated.
-	//   "duplicateConditionId" - There are multiple conditions with the same id.
-	// parent - N EntityKeys each with their condition_key populated.
-	//   "duplicateDefaultMacro" - There are multiple default macros with the same
-	// name. parent - N EntityKeys each with their macro_key populated. context -
-	// The macro name.
-	//   "duplicateTagName" - There are multiple tag instances with the same name.
-	// parent - N EntityKeys each with their tag_key populated.
-	//   "internalCompilerError" - An internal compiler invariant was broken.
-	// parent - 1 EntityKey which may have macro_key, condition_key, or tag_key
-	// populated. It's also possible that no keys are populated. context - An
-	// internal string (shouldn't be shown to the user) describing the problem.
-	//   "invalidMacroKey" - An macro instance key was invalid e.g. foo#bar parent
-	// - 1 EntityKey with one of the following populated: macro_key, condition_key,
-	// tag_key. context - The string of the invalid name.
-	//   "invalidNumberPredicateArgs" - Wrong number of args passed to a predicate.
-	// parent - 1 EntityKey with its condition_key populated.
-	//   "invalidMacroFormat" - Macro format was invalid e.g. foo#bar parent - 1
-	// EntityKey with one of the following populated: condition_key, tag_key.
-	// context - The full string of the invalid macro and surrounding literals.
-	//   "invalidMacroNameReference" - A macro name was referenced instead of a
-	// macro key. parent - 1 EntityKey with one of the following populated:
-	// condition_key, tag_key. context - The name of the invalid macro name.
-	//   "invalidMacroParameter" - Macro had an invalid parameter. This could be
-	// anything from a parameter being a complex type or a macro parameter
-	// containing a macro reference. parent - 1 EntityKey with its macro_key
-	// populated. context - The value of the offending parameter if it is
-	// string-able.
-	//   "invalidUsageContext" - Usage context of a container was invalid.
-	// Currently, this error can occur when a container context specifies both web
-	// and mobile. The UI shouldn't allowed creating such a mixed container. parent
-	// - not set context - The description of the context
-	//   "invalidRegex" - Contents of an Regex predicate had an invalid pattern.
-	// parent - 1 EntityKey with one of the following populated: condition_key.
-	// context - The offending pattern.
-	//   "macroCycle" - There was a macro whose resolution would depend on itself.
-	// parent - N EntityKeys each with their macro_key, trigger_key, or
-	// condition_key populated. This represents the macro cycle. context - Empty.
-	//   "unknownConditionId" - A condition id was used which doesn't exist in the
-	// conditions list. parent - 1 EntityKey with its tag_key populated. context -
-	// The integer id of the missing conditional.
-	//   "unknownMacroInstance" - A macro name was used which doesn't exist in the
-	// macro list. parent - 1 EntityKey with one of the following populated:
-	// condition_key, tag_key. context - The name of the missing macro instance.
-	//   "invalidManualEscaping" - User-provided escaping inappropriate for the
-	// context in which it is used. parent - 1 EntityKey with one of the following
-	// populated: macro_key, condition_key, tag_key. context - Empty.
-	//   "invalidHtmlCssJs" - Auto-escaped content is not valid HTML, CSS or
-	// JavaScript. parent - 1 EntityKey with one of the following populated:
-	// tag_key. context - Empty.
-	//   "macroInCommentsError" - Macro reference found inside an HTML, CSS or
-	// JavaScript comment. parent - 1 EntityKey with one of the following
-	// populated: tag_key. context - Empty.
-	//   "jsCompilerError" - Contents of an HTML script tag could not be compiled
-	// by JsCompiler. parent - 1 EntityKey with one of the following populated:
-	// tag_key. context - Empty.
-	//   "jsonError" - Contents of a ConfigurationValue script tag could not be
-	// parsed by the JSON parser. parent - 1 EntityKey with one of the following
-	// populated: tag_key. context - Empty.
-	//   "invalidTagParameter" - Tag had an invalid parameter. This could be
-	// anything from a parameter being a complex type or a macro parameter
-	// containing a macro reference. parent - 1 EntityKey with its tag_key
-	// populated. context - The value of the offending parameter if it is
-	// string-able.
-	//   "javascriptTooLong" - An arbitrary HTML tag contains a piece of javascript
-	// with too many contiguous non-whitespace characters (e.g. a long array with
-	// no spaces between elements or an extremely long variable name).
-	//   "unknownTagInstance" - A tag name was used which doesn't exist in the
-	// input tag list. parent - 1 EntityKey with tag_key populated. context - The
-	// name of the missing tag instance.
-	//   "invalidTagReference" - A tag name was used which doesn't exist in the
-	// compiled tag list. This happens if a tag is dependent on another tag, but
-	// the other tag has no rules attached to it and is pruned in the compiler.
-	// parent - 1 EntityKey with tag_key populated. context - The name of the
-	// missing tag instance.
-	//   "unknownTriggerId" - A trigger id was used which doesn't exist in the
-	// triggers list. parent - 1 EntityKey parent of the unknown trigger. context -
-	// The id of the missing trigger instance.
-	//   "customTriggerMissingEventFilter" - A trigger of type custom trigger was
-	// created that doesn't include a custom event filter. parent - 1 EntityKey
-	// with its trigger_key populated. context - Empty.
-	//   "duplicateTriggerId" - There are multiple triggers with the same id.
-	// parent - N EntityKeys each with their trigger_key populated. context -
-	// Empty.
-	//   "unsupportedTriggerType" - There is an unknown or unsupported trigger
-	// type. parent - 1 EntityKey with its trigger_key populated. context - The
-	// trigger type.
-	//   "invalidTriggerParameter" - A trigger has an invalid parameter. parent - 1
-	// EntityKey with its trigger_key populated. context - The invalid field.
-	//   "duplicateExperimentId" - There are multiple experiments with the same id.
-	// parent - N EntityKeys each with their experiment_key populated. context -
-	// Empty.
-	//   "pixieCompilerError" - Contents of a pixie tag/macro could not be compiled
-	// by Pixie Parser. parent - 1 EntityKey with one of the following populated:
-	// tag_key, macro_key. context - Empty.
-	//   "macroNotServerSideResolvable" - The macro cannot be resolved at server
-	// side. parent - 1 EntityKey indicating the entity in which this macro is
-	// used. context - The macro name.
-	//   "invalidBlockingTrigger" - The trigger cannot be used in blocking
-	// predicates (i.e. only All/Some pages triggers work for AMP, NS etc.) parent
-	// - 1 EntityKey indicating the tag in which this trigger is used. context -
-	// The trigger name.
-	//   "lineTooLong" - A line in the input text is too long.
-	//   "invalidTypeInSelect" - The value of a SELECT parameter in a vendor
-	// template instance does not point to an allowed vendor template instance. For
-	// details, see the documentation of the typesInSelect property in a vendor
-	// template. parent - 1 EntityKey indicating the tag/macro with this parameter.
-	// context - The parameter name.
-	//   "gaExperimentMacroIsDeprecated" - The input container version contains a
-	// deprecated GA content experiment macro that needs to be removed.
-	//   "unsafeHtmlContent" - Reminder: new error types will be treated as
-	// internal errors and trigger alerts unless they are handled in
-	// j/c/g/analytics/containertag/compiler/ErrorReporter.java&l=104 Please also
-	// remember to add new error types to CTUI at
-	// j/c/g/analytics/containertag/ui/app/components/container/compilererror/ HTML
-	// is not sanitized and contains unsafe content.
-	//   "unsafeHtmlAttributeValue" - HTML attribute is not sanitized and the value
-	// is unsafe.
-	//   "unsafeCssContent" - CSS is not sanitized and contains unsafe content.
-	//   "parameterReferenceNotFound" - The specified parameter was not found in
-	// the referenced entity. parent - 1 EntityKey with tag_key populated. context
-	// - The missing parameter in the form of ".".
-	//   "invalidCustomTemplateRuntimeCode" - The custom template has invalid
-	// runtime code. parent - Entity key for the custom template. context - The
-	// error message.
-	//   "conflictingDestinationRouting" - The container version contains a Google
-	// tag tag and a destination tag that use the same destination ID. parent -
-	// Entity key for the conflicting Google tag. context - The Google tag tag
-	// name.
-	//   "missingRequiredActivity" - The container version has routing
-	// destinations, but is missing required activity instances. parent - Empty.
-	// context - Empty. proposed_change - The proposed change to add the missing
-	// activities.
-	//   "unresolvableDestinationTag" - The container version contains a product
-	// destination tag with a destination ID value that cannot be resolved
-	// statically. parent - Entity key of the destination tag. context - The name
-	// of the variable that could not be resolved. If the destination ID was a
-	// template value, then this will be the serialized value.
-	//   "invalidDestinationTag" - The container version contains a product
-	// destination tag with a destination ID value that is in an invalid format.
-	// parent - Entity key of the destination tag. context - The invalid
-	// destination ID.
-	//   "tosRequiredForThirdPartyTags" - GTM ToS is required for publishing
-	// versions with 3P tags. parent - not set context - Empty.
-	ErrorType string `json:"errorType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ErrorMessage") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s CompilerErrorLite) MarshalJSON() ([]byte, error) {
-	type NoMethod CompilerErrorLite
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // Condition: Represents a predicate.
 type Condition struct {
 	// Parameter: A list of named parameters (key/value), depending on the
@@ -1257,8 +1087,6 @@ func (s CreateContainerVersionRequestVersionOptions) MarshalJSON() ([]byte, erro
 type CreateContainerVersionResponse struct {
 	// CompilerError: Compiler errors or not.
 	CompilerError bool `json:"compilerError,omitempty"`
-	// CompilerErrors: Compiler error details.
-	CompilerErrors []*CompilerErrorLite `json:"compilerErrors,omitempty"`
 	// ContainerVersion: The container version created.
 	ContainerVersion *ContainerVersion `json:"containerVersion,omitempty"`
 	// NewWorkspacePath: Auto generated workspace path created as a result of
@@ -2263,8 +2091,6 @@ func (s ProposedChange) MarshalJSON() ([]byte, error) {
 type PublishContainerVersionResponse struct {
 	// CompilerError: Compiler errors or not.
 	CompilerError bool `json:"compilerError,omitempty"`
-	// CompilerErrors: Compiler error details.
-	CompilerErrors []*CompilerErrorLite `json:"compilerErrors,omitempty"`
 	// ContainerVersion: The container version created.
 	ContainerVersion *ContainerVersion `json:"containerVersion,omitempty"`
 
@@ -2292,8 +2118,6 @@ func (s PublishContainerVersionResponse) MarshalJSON() ([]byte, error) {
 type QuickPreviewResponse struct {
 	// CompilerError: Were there compiler errors or not.
 	CompilerError bool `json:"compilerError,omitempty"`
-	// CompilerErrors: Compiler error details.
-	CompilerErrors []*CompilerErrorLite `json:"compilerErrors,omitempty"`
 	// ContainerVersion: The quick previewed container version.
 	ContainerVersion *ContainerVersion `json:"containerVersion,omitempty"`
 	// SyncStatus: Whether quick previewing failed when syncing the workspace to
@@ -3125,6 +2949,8 @@ type VariableFormatValue struct {
 	// period as the decimal separator.
 	//   "comma" - The option to convert a variable value to a number with a comma
 	// as the decimal separator.
+	//   "automatic" - The option to convert a variable value to a number with
+	// automatic decimal separator detection.
 	ConvertToNumber string `json:"convertToNumber,omitempty"`
 	// ConvertTrueToValue: The value to convert if a variable value is true.
 	ConvertTrueToValue *Parameter `json:"convertTrueToValue,omitempty"`

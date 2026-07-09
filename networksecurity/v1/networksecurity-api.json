@@ -6131,7 +6131,7 @@
       }
     }
   },
-  "revision": "20260617",
+  "revision": "20260625",
   "rootUrl": "https://networksecurity.googleapis.com/",
   "schemas": {
     "AddAddressGroupItemsRequest": {
@@ -9571,7 +9571,7 @@
           "type": "string"
         },
         "dataPathId": {
-          "description": "Output only. Identifier used by the data-path. Unique within {container, location}.",
+          "description": "Output only. Identifier used by the data-path. Unique within \\{container, location\\}.",
           "format": "uint64",
           "readOnly": true,
           "type": "string"

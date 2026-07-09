@@ -894,6 +894,8 @@ type SignatureInfo struct {
 	//   "PQ_SIGN_ML_DSA_87_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
 	// Digital Signature Algorithm, at security level 5. Randomized version
 	// supporting externally-computed message representatives.
+	//   "AES_256_KWP" - AES key wrap with zero padding algorithm (RFC 5649). Can
+	// only be used by keys with purpose AES_WRAPPING.
 	GoogleKeyAlgorithm string `json:"googleKeyAlgorithm,omitempty"`
 	// GooglePublicKeyPem: The public key for the Google default signing, encoded
 	// in PEM format. The signature was created using a private key which may be

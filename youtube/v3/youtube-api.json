@@ -4192,7 +4192,7 @@
       }
     }
   },
-  "revision": "20260608",
+  "revision": "20260707",
   "rootUrl": "https://youtube.googleapis.com/",
   "schemas": {
     "AbuseReport": {
@@ -9041,6 +9041,7 @@
       "type": "object"
     },
     "LiveChatMessageDeletedDetails": {
+      "deprecated": true,
       "id": "LiveChatMessageDeletedDetails",
       "properties": {
         "deletedMessageId": {
@@ -9106,6 +9107,7 @@
       "type": "object"
     },
     "LiveChatMessageRetractedDetails": {
+      "deprecated": true,
       "id": "LiveChatMessageRetractedDetails",
       "properties": {
         "retractedMessageId": {
@@ -9119,7 +9121,7 @@
       "id": "LiveChatMessageSnippet",
       "properties": {
         "authorChannelId": {
-          "description": "The ID of the user that authored this message, this field is not always filled. textMessageEvent - the user that wrote the message fanFundingEvent - the user that funded the broadcast newSponsorEvent - the user that just became a sponsor memberMilestoneChatEvent - the member that sent the message membershipGiftingEvent - the user that made the purchase giftMembershipReceivedEvent - the user that received the gift membership messageDeletedEvent - the moderator that took the action messageRetractedEvent - the author that retracted their message userBannedEvent - the moderator that took the action superChatEvent - the user that made the purchase superStickerEvent - the user that made the purchase pollEvent - the user that created the poll",
+          "description": "The ID of the user that authored this message, this field is not always filled. textMessageEvent - the user that wrote the message fanFundingEvent - the user that funded the broadcast newSponsorEvent - the user that just became a sponsor memberMilestoneChatEvent - the member that sent the message membershipGiftingEvent - the user that made the purchase giftMembershipReceivedEvent - the user that received the gift membership messageDeletedEvent - the moderator that took the action. Unused. messageRetractedEvent - the author that retracted their message. Unused. userBannedEvent - the moderator that took the action superChatEvent - the user that made the purchase superStickerEvent - the user that made the purchase pollEvent - the user that created the poll",
           "type": "string"
         },
         "displayMessage": {
@@ -9155,10 +9157,12 @@
           "description": "Details about the Membership Gifting event, this is only set if the type is 'membershipGiftingEvent'."
         },
         "messageDeletedDetails": {
-          "$ref": "LiveChatMessageDeletedDetails"
+          "$ref": "LiveChatMessageDeletedDetails",
+          "deprecated": true
         },
         "messageRetractedDetails": {
-          "$ref": "LiveChatMessageRetractedDetails"
+          "$ref": "LiveChatMessageRetractedDetails",
+          "deprecated": true
         },
         "newSponsorDetails": {
           "$ref": "LiveChatNewSponsorDetails",
@@ -9206,6 +9210,26 @@
             "superStickerEvent",
             "pollEvent",
             "giftEvent"
+          ],
+          "enumDeprecated": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false
           ],
           "enumDescriptions": [
             "",

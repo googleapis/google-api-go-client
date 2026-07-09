@@ -142,7 +142,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.CombinedAudiences = NewCombinedAudiencesService(s)
 	s.CustomBiddingAlgorithms = NewCustomBiddingAlgorithmsService(s)
 	s.CustomLists = NewCustomListsService(s)
-	s.FirstAndThirdPartyAudiences = NewFirstAndThirdPartyAudiencesService(s)
 	s.FloodlightGroups = NewFloodlightGroupsService(s)
 	s.GoogleAudiences = NewGoogleAudiencesService(s)
 	s.GuaranteedOrders = NewGuaranteedOrdersService(s)
@@ -183,8 +182,6 @@ type Service struct {
 	CustomBiddingAlgorithms *CustomBiddingAlgorithmsService
 
 	CustomLists *CustomListsService
-
-	FirstAndThirdPartyAudiences *FirstAndThirdPartyAudiencesService
 
 	FloodlightGroups *FloodlightGroupsService
 
@@ -512,15 +509,6 @@ type CustomListsService struct {
 	s *Service
 }
 
-func NewFirstAndThirdPartyAudiencesService(s *Service) *FirstAndThirdPartyAudiencesService {
-	rs := &FirstAndThirdPartyAudiencesService{s: s}
-	return rs
-}
-
-type FirstAndThirdPartyAudiencesService struct {
-	s *Service
-}
-
 func NewFloodlightGroupsService(s *Service) *FloodlightGroupsService {
 	rs := &FloodlightGroupsService{s: s}
 	rs.FloodlightActivities = NewFloodlightGroupsFloodlightActivitiesService(s)
@@ -804,9 +792,7 @@ type AdGroup struct {
 	// in-stream and bumper ads.
 	//   "AD_GROUP_FORMAT_MASTHEAD" - Masthead Ad that is surfaced on the top slot
 	// on the YouTube homepage.
-	//   "AD_GROUP_FORMAT_DEMAND_GEN" - Demand Gen ads. Retrieval and management of
-	// Demand Gen resources is currently rolling out. This field will be available
-	// to all partners by *June 24, 2026*.
+	//   "AD_GROUP_FORMAT_DEMAND_GEN" - Demand Gen ads.
 	AdGroupFormat string `json:"adGroupFormat,omitempty"`
 	// AdGroupId: Output only. The unique ID of the ad group. Assigned by the
 	// system.
@@ -900,32 +886,22 @@ type AdGroupAd struct {
 	BumperAd *BumperAd `json:"bumperAd,omitempty"`
 	// DcmTrackingInfo: Optional. The DCM tracking ad info. Only valid for Demand
 	// Gen ads. To remove the DCM tracking ad info, please leave this field empty.
-	// Retrieval and management of Demand Gen resources is currently rolling out.
-	// This field will be available to all partners by *June 24, 2026*.
 	DcmTrackingInfo *DcmTrackingInfo `json:"dcmTrackingInfo,omitempty"`
 	// DemandGenCarouselAd: Details of a Demand Gen carousel ad
 	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
-	// -NC#CarouselAd). Retrieval and management of Demand Gen resources is
-	// currently rolling out. This field will be available to all partners by *June
-	// 24, 2026*.
+	// -NC#CarouselAd).
 	DemandGenCarouselAd *DemandGenCarouselAd `json:"demandGenCarouselAd,omitempty"`
 	// DemandGenImageAd: Details of a Demand Gen image ad
 	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
-	// -NC#ImageAd). Retrieval and management of Demand Gen resources is currently
-	// rolling out. This field will be available to all partners by *June 24,
-	// 2026*.
+	// -NC#ImageAd).
 	DemandGenImageAd *DemandGenImageAd `json:"demandGenImageAd,omitempty"`
 	// DemandGenProductAd: Details of a Demand Gen product ad
 	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
-	// -NC#Product-onlyAd). Retrieval and management of Demand Gen resources is
-	// currently rolling out. This field will be available to all partners by *June
-	// 24, 2026*.
+	// -NC#Product-onlyAd).
 	DemandGenProductAd *DemandGenProductAd `json:"demandGenProductAd,omitempty"`
 	// DemandGenVideoAd: Details of a Demand Gen video ad
 	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
-	// -NC#VideoAd). Retrieval and management of Demand Gen resources is currently
-	// rolling out. This field will be available to all partners by *June 24,
-	// 2026*.
+	// -NC#VideoAd).
 	DemandGenVideoAd *DemandGenVideoAd `json:"demandGenVideoAd,omitempty"`
 	// DisplayName: Required. The display name of the ad. Must be UTF-8 encoded
 	// with a maximum size of 255 bytes.
@@ -5773,115 +5749,6 @@ func (s CommonInStreamAttribute) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Consent: User consent status.
-type Consent struct {
-	// AdPersonalization: Represents consent for ad personalization.
-	//
-	// Possible values:
-	//   "CONSENT_STATUS_UNSPECIFIED" - Type value is not specified or is unknown
-	// in this version.
-	//   "CONSENT_STATUS_GRANTED" - Consent is granted.
-	//   "CONSENT_STATUS_DENIED" - Consent is denied.
-	AdPersonalization string `json:"adPersonalization,omitempty"`
-	// AdUserData: Represents consent for ad user data.
-	//
-	// Possible values:
-	//   "CONSENT_STATUS_UNSPECIFIED" - Type value is not specified or is unknown
-	// in this version.
-	//   "CONSENT_STATUS_GRANTED" - Consent is granted.
-	//   "CONSENT_STATUS_DENIED" - Consent is denied.
-	AdUserData string `json:"adUserData,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AdPersonalization") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AdPersonalization") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s Consent) MarshalJSON() ([]byte, error) {
-	type NoMethod Consent
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// ContactInfo: Contact information defining a Customer Match audience member.
-type ContactInfo struct {
-	// CountryCode: Country code of the member. Must also be set with the following
-	// fields: * hashed_first_name * hashed_last_name * zip_codes
-	CountryCode string `json:"countryCode,omitempty"`
-	// HashedEmails: A list of SHA256 hashed email of the member. Before hashing,
-	// remove all whitespace and make sure the string is all lowercase.
-	HashedEmails []string `json:"hashedEmails,omitempty"`
-	// HashedFirstName: SHA256 hashed first name of the member. Before hashing,
-	// remove all whitespace and make sure the string is all lowercase. Must also
-	// be set with the following fields: * country_code * hashed_last_name *
-	// zip_codes
-	HashedFirstName string `json:"hashedFirstName,omitempty"`
-	// HashedLastName: SHA256 hashed last name of the member. Before hashing,
-	// remove all whitespace and make sure the string is all lowercase. Must also
-	// be set with the following fields: * country_code * hashed_first_name *
-	// zip_codes
-	HashedLastName string `json:"hashedLastName,omitempty"`
-	// HashedPhoneNumbers: A list of SHA256 hashed phone numbers of the member.
-	// Before hashing, all phone numbers must be formatted using the E.164 format
-	// (//en.wikipedia.org/wiki/E.164) and include the country calling code.
-	HashedPhoneNumbers []string `json:"hashedPhoneNumbers,omitempty"`
-	// ZipCodes: A list of zip codes of the member. Must also be set with the
-	// following fields: * country_code * hashed_first_name * hashed_last_name
-	ZipCodes []string `json:"zipCodes,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CountryCode") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CountryCode") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ContactInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod ContactInfo
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// ContactInfoList: Wrapper message for a list of contact information defining
-// Customer Match audience members.
-type ContactInfoList struct {
-	// Consent: Input only. The consent setting for the users in contact_infos.
-	// Leaving this field unset indicates that consent is not specified. If
-	// ad_user_data or ad_personalization fields are set to
-	// `CONSENT_STATUS_DENIED`, the request will return an error.
-	Consent *Consent `json:"consent,omitempty"`
-	// ContactInfos: A list of ContactInfo objects defining Customer Match audience
-	// members. The size of members after splitting the contact_infos mustn't be
-	// greater than 500,000.
-	ContactInfos []*ContactInfo `json:"contactInfos,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Consent") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Consent") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ContactInfoList) MarshalJSON() ([]byte, error) {
-	type NoMethod ContactInfoList
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // ContentDurationAssignedTargetingOptionDetails: Details for content duration
 // assigned targeting option. This will be populated in the
 // content_duration_details field when targeting_type is
@@ -6398,9 +6265,7 @@ type ConversionCountingConfig struct {
 	// conversions are counted. The Primary model can be set by you for a
 	// floodlight config or group. More details here
 	// (https://support.google.com/displayvideo/answer/7409983). Only applicable to
-	// Demand Gen line items. Retrieval and management of Demand Gen resources is
-	// currently rolling out. This field will be available to all partners by *June
-	// 24, 2026*.
+	// Demand Gen line items.
 	PrimaryAttributionModelId int64 `json:"primaryAttributionModelId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "FloodlightActivityConfigs")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -7917,7 +7782,10 @@ func (s DemandGenBiddingStrategy) MarshalJSON() ([]byte, error) {
 
 // DemandGenCarouselAd: Details for a Demand Gen carousel ad.
 type DemandGenCarouselAd struct {
-	// BusinessName: Required. The business name shown on the ad.
+	// BusinessName: Required. The business name shown on the ad. *Warning*:
+	// Starting **July 13, 2026**, this setting will no longer be required if a
+	// default value is set at the advertiser level. If left unset, the default
+	// value will be applied.
 	BusinessName string `json:"businessName,omitempty"`
 	// Cards: Required. The list of cards shown on the ad.
 	Cards []*CarouselCard `json:"cards,omitempty"`
@@ -7933,7 +7801,10 @@ type DemandGenCarouselAd struct {
 	FinalUrlSuffix string `json:"finalUrlSuffix,omitempty"`
 	// Headline: Required. The headline of the ad.
 	Headline string `json:"headline,omitempty"`
-	// Logo: Required. The logo image used by this ad.
+	// Logo: Required. The logo image used by this ad. *Warning*: Starting **July
+	// 13, 2026**, this setting will no longer be required if a default value is
+	// set at the advertiser level. If left unset, the default value will be
+	// applied.
 	Logo *ImageAsset `json:"logo,omitempty"`
 	// TrackingUrl: Output only. The URL address loaded in the background for
 	// tracking purposes.
@@ -7961,7 +7832,10 @@ func (s DemandGenCarouselAd) MarshalJSON() ([]byte, error) {
 
 // DemandGenImageAd: Details for a Demand Gen image ad.
 type DemandGenImageAd struct {
-	// BusinessName: Required. The business name shown on the ad.
+	// BusinessName: Required. The business name shown on the ad. *Warning*:
+	// Starting **July 13, 2026**, this setting will no longer be required if a
+	// default value is set at the advertiser level. If left unset, the default
+	// value will be applied.
 	BusinessName string `json:"businessName,omitempty"`
 	// CallToAction: Required. The call-to-action button shown on the ad.
 	CallToAction string `json:"callToAction,omitempty"`
@@ -7980,7 +7854,10 @@ type DemandGenImageAd struct {
 	FinalUrlSuffix string `json:"finalUrlSuffix,omitempty"`
 	// Headlines: Required. The list of headlines shown on the ad.
 	Headlines []string `json:"headlines,omitempty"`
-	// LogoImages: The list of logo images shown on the ad.
+	// LogoImages: The list of logo images shown on the ad. *Warning*: Starting
+	// **July 13, 2026**, this setting will no longer be required if a default
+	// value is set at the advertiser level. If left unset, the default value will
+	// be applied.
 	LogoImages []*ImageAsset `json:"logoImages,omitempty"`
 	// MarketingImages: The list of marketing images shown on the ad.
 	MarketingImages []*ImageAsset `json:"marketingImages,omitempty"`
@@ -8015,7 +7892,10 @@ func (s DemandGenImageAd) MarshalJSON() ([]byte, error) {
 
 // DemandGenProductAd: Details for a Demand Gen product ad.
 type DemandGenProductAd struct {
-	// BusinessName: Required. The business name shown on the ad.
+	// BusinessName: Required. The business name shown on the ad. *Warning*:
+	// Starting **July 13, 2026**, this setting will no longer be required if a
+	// default value is set at the advertiser level. If left unset, the default
+	// value will be applied.
 	BusinessName string `json:"businessName,omitempty"`
 	// CallToAction: Required. The call-to-action button shown on the ad. The
 	// supported values are: * `AUTOMATED` * `APPLY_NOW` * `BOOK_NOW` *
@@ -8061,7 +7941,10 @@ type DemandGenProductAd struct {
 	FinalUrlSuffix string `json:"finalUrlSuffix,omitempty"`
 	// Headline: Required. The headline of the ad.
 	Headline string `json:"headline,omitempty"`
-	// Logo: Required. The logo image used by this ad.
+	// Logo: Required. The logo image used by this ad. *Warning*: Starting **July
+	// 13, 2026**, this setting will no longer be required if a default value is
+	// set at the advertiser level. If left unset, the default value will be
+	// applied.
 	Logo *ImageAsset `json:"logo,omitempty"`
 	// TrackingUrl: Output only. The URL address loaded in the background for
 	// tracking purposes.
@@ -8120,7 +8003,10 @@ func (s DemandGenSettings) MarshalJSON() ([]byte, error) {
 
 // DemandGenVideoAd: Details for a Demand Gen video ad.
 type DemandGenVideoAd struct {
-	// BusinessName: Required. The business name shown on the ad.
+	// BusinessName: Required. The business name shown on the ad. *Warning*:
+	// Starting **July 13, 2026**, this setting will no longer be required if a
+	// default value is set at the advertiser level. If left unset, the default
+	// value will be applied.
 	BusinessName string `json:"businessName,omitempty"`
 	// CallToAction: Required. The call-to-action button shown on the ad. The
 	// supported values are: * `AUTOMATED` * `LEARN_MORE` * `GET_QUOTE` *
@@ -8172,7 +8058,10 @@ type DemandGenVideoAd struct {
 	FinalUrlSuffix string `json:"finalUrlSuffix,omitempty"`
 	// Headlines: Required. The list of headlines shown on the ad.
 	Headlines []string `json:"headlines,omitempty"`
-	// Logo: Required. The logo image used by this ad.
+	// Logo: Required. The logo image used by this ad. *Warning*: Starting **July
+	// 13, 2026**, this setting will no longer be required if a default value is
+	// set at the advertiser level. If left unset, the default value will be
+	// applied.
 	Logo *ImageAsset `json:"logo,omitempty"`
 	// LongHeadlines: Required. The list of long headlines shown on the ad.
 	LongHeadlines []string `json:"longHeadlines,omitempty"`
@@ -8854,69 +8743,6 @@ type DuplicateLineItemResponse struct {
 
 func (s DuplicateLineItemResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DuplicateLineItemResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// EditCustomerMatchMembersRequest: Request message for
-// FirstAndThirdPartyAudienceService.EditCustomerMatchMembers.
-type EditCustomerMatchMembersRequest struct {
-	// AddedContactInfoList: Input only. A list of contact information to define
-	// the members to be added.
-	AddedContactInfoList *ContactInfoList `json:"addedContactInfoList,omitempty"`
-	// AddedMobileDeviceIdList: Input only. A list of mobile device IDs to define
-	// the members to be added.
-	AddedMobileDeviceIdList *MobileDeviceIdList `json:"addedMobileDeviceIdList,omitempty"`
-	// AdvertiserId: Required. The ID of the owner advertiser of the updated
-	// Customer Match FirstAndThirdPartyAudience.
-	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
-	// RemovedContactInfoList: Input only. A list of contact information to define
-	// the members to be removed.
-	RemovedContactInfoList *ContactInfoList `json:"removedContactInfoList,omitempty"`
-	// RemovedMobileDeviceIdList: Input only. A list of mobile device IDs to define
-	// the members to be removed.
-	RemovedMobileDeviceIdList *MobileDeviceIdList `json:"removedMobileDeviceIdList,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AddedContactInfoList") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AddedContactInfoList") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s EditCustomerMatchMembersRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod EditCustomerMatchMembersRequest
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// EditCustomerMatchMembersResponse: The response of
-// FirstAndThirdPartyAudienceService.EditCustomerMatchMembers.
-type EditCustomerMatchMembersResponse struct {
-	// FirstAndThirdPartyAudienceId: Required. The ID of the updated Customer Match
-	// FirstAndThirdPartyAudience.
-	FirstAndThirdPartyAudienceId int64 `json:"firstAndThirdPartyAudienceId,omitempty,string"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g.
-	// "FirstAndThirdPartyAudienceId") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
-	// for more details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FirstAndThirdPartyAudienceId") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s EditCustomerMatchMembersResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod EditCustomerMatchMembersResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9615,143 +9441,6 @@ type ExitEvent struct {
 
 func (s ExitEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod ExitEvent
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// FirstAndThirdPartyAudience: Describes a first or third party audience list
-// used for targeting. First party audiences are created via usage of client
-// data. Third party audiences are provided by Third Party data providers and
-// can only be licensed to customers.
-type FirstAndThirdPartyAudience struct {
-	// ActiveDisplayAudienceSize: Output only. The estimated audience size for the
-	// Display network in the past month. If the size is less than 1000, the number
-	// will be hidden and 0 will be returned due to privacy reasons. Otherwise, the
-	// number will be rounded off to two significant digits. Only returned in GET
-	// request.
-	ActiveDisplayAudienceSize int64 `json:"activeDisplayAudienceSize,omitempty,string"`
-	// AppId: The app_id matches with the type of the mobile_device_ids being
-	// uploaded. Only applicable to audience_type `CUSTOMER_MATCH_DEVICE_ID`
-	AppId string `json:"appId,omitempty"`
-	// AudienceSource: Output only. The source of the audience.
-	//
-	// Possible values:
-	//   "AUDIENCE_SOURCE_UNSPECIFIED" - Default value when audience source is not
-	// specified or is unknown.
-	//   "DISPLAY_VIDEO_360" - Originated from Display & Video 360.
-	//   "CAMPAIGN_MANAGER" - Originated from Campaign Manager 360.
-	//   "AD_MANAGER" - Originated from Google Ad Manager.
-	//   "SEARCH_ADS_360" - Originated from Search Ads 360.
-	//   "YOUTUBE" - Originated from Youtube.
-	//   "ADS_DATA_HUB" - Originated from Ads Data Hub.
-	AudienceSource string `json:"audienceSource,omitempty"`
-	// AudienceType: The type of the audience.
-	//
-	// Possible values:
-	//   "AUDIENCE_TYPE_UNSPECIFIED" - Default value when type is not specified or
-	// is unknown.
-	//   "CUSTOMER_MATCH_CONTACT_INFO" - Audience was generated through matching
-	// customers to known contact information.
-	//   "CUSTOMER_MATCH_DEVICE_ID" - Audience was generated through matching
-	// customers to known Mobile device IDs.
-	//   "CUSTOMER_MATCH_USER_ID" - Audience was generated through matching
-	// customers to known User IDs.
-	//   "ACTIVITY_BASED" - Audience was created based on campaign activity.
-	//   "FREQUENCY_CAP" - Audience was created based on excluding the number of
-	// impressions they were served.
-	//   "TAG_BASED" - Audience was created based on custom variables attached to
-	// pixel.
-	//   "YOUTUBE_USERS" - Audience was created based on past interactions with
-	// videos, YouTube ads, or YouTube channel.
-	//   "LICENSED" - Subtype of third party audience type.
-	AudienceType string `json:"audienceType,omitempty"`
-	// ContactInfoList: Input only. A list of contact information to define the
-	// initial audience members. Only applicable to audience_type
-	// `CUSTOMER_MATCH_CONTACT_INFO`
-	ContactInfoList *ContactInfoList `json:"contactInfoList,omitempty"`
-	// Description: The user-provided description of the audience. Only applicable
-	// to first party audiences.
-	Description string `json:"description,omitempty"`
-	// DisplayAudienceSize: Output only. The estimated audience size for the
-	// Display network. If the size is less than 1000, the number will be hidden
-	// and 0 will be returned due to privacy reasons. Otherwise, the number will be
-	// rounded off to two significant digits. Only returned in GET request.
-	DisplayAudienceSize int64 `json:"displayAudienceSize,omitempty,string"`
-	// DisplayDesktopAudienceSize: Output only. The estimated desktop audience size
-	// in Display network. If the size is less than 1000, the number will be hidden
-	// and 0 will be returned due to privacy reasons. Otherwise, the number will be
-	// rounded off to two significant digits. Only applicable to first party
-	// audiences. Only returned in GET request.
-	DisplayDesktopAudienceSize int64 `json:"displayDesktopAudienceSize,omitempty,string"`
-	// DisplayMobileAppAudienceSize: Output only. The estimated mobile app audience
-	// size in Display network. If the size is less than 1000, the number will be
-	// hidden and 0 will be returned due to privacy reasons. Otherwise, the number
-	// will be rounded off to two significant digits. Only applicable to first
-	// party audiences. Only returned in GET request.
-	DisplayMobileAppAudienceSize int64 `json:"displayMobileAppAudienceSize,omitempty,string"`
-	// DisplayMobileWebAudienceSize: Output only. The estimated mobile web audience
-	// size in Display network. If the size is less than 1000, the number will be
-	// hidden and 0 will be returned due to privacy reasons. Otherwise, the number
-	// will be rounded off to two significant digits. Only applicable to first
-	// party audiences. Only returned in GET request.
-	DisplayMobileWebAudienceSize int64 `json:"displayMobileWebAudienceSize,omitempty,string"`
-	// DisplayName: The display name of the first and third party audience.
-	DisplayName string `json:"displayName,omitempty"`
-	// FirstAndThirdPartyAudienceId: Output only. The unique ID of the first and
-	// third party audience. Assigned by the system.
-	FirstAndThirdPartyAudienceId int64 `json:"firstAndThirdPartyAudienceId,omitempty,string"`
-	// FirstAndThirdPartyAudienceType: Whether the audience is a first or third
-	// party audience.
-	//
-	// Possible values:
-	//   "FIRST_AND_THIRD_PARTY_AUDIENCE_TYPE_UNSPECIFIED" - Default value when
-	// type is not specified or is unknown.
-	//   "FIRST_AND_THIRD_PARTY_AUDIENCE_TYPE_FIRST_PARTY" - Audience that is
-	// created via usage of client data.
-	//   "FIRST_AND_THIRD_PARTY_AUDIENCE_TYPE_THIRD_PARTY" - Audience that is
-	// provided by Third Party data providers.
-	FirstAndThirdPartyAudienceType string `json:"firstAndThirdPartyAudienceType,omitempty"`
-	// GmailAudienceSize: Output only. The estimated audience size for Gmail
-	// network. If the size is less than 1000, the number will be hidden and 0 will
-	// be returned due to privacy reasons. Otherwise, the number will be rounded
-	// off to two significant digits. Only applicable to first party audiences.
-	// Only returned in GET request.
-	GmailAudienceSize int64 `json:"gmailAudienceSize,omitempty,string"`
-	// MembershipDurationDays: The duration in days that an entry remains in the
-	// audience after the qualifying event. The set value must be greater than 0
-	// and less than or equal to 540. Only applicable to first party audiences.
-	// This field is required if one of the following audience_type is used: *
-	// `CUSTOMER_MATCH_CONTACT_INFO` * `CUSTOMER_MATCH_DEVICE_ID`
-	MembershipDurationDays int64 `json:"membershipDurationDays,omitempty,string"`
-	// MobileDeviceIdList: Input only. A list of mobile device IDs to define the
-	// initial audience members. Only applicable to audience_type
-	// `CUSTOMER_MATCH_DEVICE_ID`
-	MobileDeviceIdList *MobileDeviceIdList `json:"mobileDeviceIdList,omitempty"`
-	// Name: Output only. The resource name of the first and third party audience.
-	Name string `json:"name,omitempty"`
-	// YoutubeAudienceSize: Output only. The estimated audience size for YouTube
-	// network. If the size is less than 1000, the number will be hidden and 0 will
-	// be returned due to privacy reasons. Otherwise, the number will be rounded
-	// off to two significant digits. Only applicable to first party audiences.
-	// Only returned in GET request.
-	YoutubeAudienceSize int64 `json:"youtubeAudienceSize,omitempty,string"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ActiveDisplayAudienceSize")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ActiveDisplayAudienceSize") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s FirstAndThirdPartyAudience) MarshalJSON() ([]byte, error) {
-	type NoMethod FirstAndThirdPartyAudience
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11619,9 +11308,7 @@ type LineItem struct {
 	// CreativeIds: The IDs of the creatives associated with the line item.
 	CreativeIds googleapi.Int64s `json:"creativeIds,omitempty"`
 	// DemandGenSettings: Optional. Settings specific to Demand Gen line items.
-	// Only applicable to Demand Gen line items. Retrieval and management of Demand
-	// Gen resources is currently rolling out. This field will be available to all
-	// partners by *June 24, 2026*.
+	// Only applicable to Demand Gen line items.
 	DemandGenSettings *DemandGenSettings `json:"demandGenSettings,omitempty"`
 	// DisplayName: Required. The display name of the line item. Must be UTF-8
 	// encoded with a maximum size of 240 bytes.
@@ -11737,9 +11424,7 @@ type LineItem struct {
 	//   "LINE_ITEM_TYPE_VIDEO_OUT_OF_HOME" - Video ads served on
 	// digital-out-of-home inventory. Line items of this type and their targeting
 	// cannot be created or updated using the API.
-	//   "LINE_ITEM_TYPE_DEMAND_GEN" - Demand Gen ads. Retrieval and management of
-	// Demand Gen resources is currently rolling out. This field will be available
-	// to all partners by *June 24, 2026*.
+	//   "LINE_ITEM_TYPE_DEMAND_GEN" - Demand Gen ads.
 	LineItemType string `json:"lineItemType,omitempty"`
 	// MobileApp: The mobile app promoted by the line item. This is applicable only
 	// when line_item_type is either `LINE_ITEM_TYPE_DISPLAY_MOBILE_APP_INSTALL` or
@@ -12402,37 +12087,6 @@ type ListCustomListsResponse struct {
 
 func (s ListCustomListsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCustomListsResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-type ListFirstAndThirdPartyAudiencesResponse struct {
-	// FirstAndThirdPartyAudiences: The list of first and third party audiences.
-	// Audience size properties will not be included. This list will be absent if
-	// empty.
-	FirstAndThirdPartyAudiences []*FirstAndThirdPartyAudience `json:"firstAndThirdPartyAudiences,omitempty"`
-	// NextPageToken: A token to retrieve the next page of results. Pass this value
-	// in the page_token field in the subsequent call to
-	// `ListFirstAndThirdPartyAudiences` method to retrieve the next page of
-	// results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g.
-	// "FirstAndThirdPartyAudiences") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
-	// for more details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FirstAndThirdPartyAudiences") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ListFirstAndThirdPartyAudiencesResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ListFirstAndThirdPartyAudiencesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13169,36 +12823,6 @@ type MobileApp struct {
 
 func (s MobileApp) MarshalJSON() ([]byte, error) {
 	type NoMethod MobileApp
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// MobileDeviceIdList: Wrapper message for a list of mobile device IDs defining
-// Customer Match audience members.
-type MobileDeviceIdList struct {
-	// Consent: Input only. The consent setting for the users in mobile_device_ids.
-	// Leaving this field unset indicates that consent is not specified. If
-	// ad_user_data or ad_personalization fields are set to
-	// `CONSENT_STATUS_DENIED`, the request will return an error.
-	Consent *Consent `json:"consent,omitempty"`
-	// MobileDeviceIds: A list of mobile device IDs defining Customer Match
-	// audience members. The size of mobile_device_ids mustn't be greater than
-	// 500,000.
-	MobileDeviceIds []string `json:"mobileDeviceIds,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Consent") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Consent") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s MobileDeviceIdList) MarshalJSON() ([]byte, error) {
-	type NoMethod MobileDeviceIdList
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -15632,9 +15256,7 @@ type TargetingExpansionConfig struct {
 	EnableOptimizedTargeting bool `json:"enableOptimizedTargeting,omitempty"`
 	// ExcludeDemographicExpansion: Optional. Whether to exclude demographic
 	// expansion for Optimized Targeting. This field can only be set for Demand Gen
-	// ad groups. Retrieval and management of Demand Gen resources is currently
-	// rolling out. This field will be available to all partners by *June 24,
-	// 2026*.
+	// ad groups.
 	ExcludeDemographicExpansion bool `json:"excludeDemographicExpansion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudienceExpansionLevel") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -15875,7 +15497,8 @@ type ThirdPartyMeasurementConfigs struct {
 	// lift. The following third-party vendors are applicable: *
 	// `THIRD_PARTY_VENDOR_DYNATA` * `THIRD_PARTY_VENDOR_KANTAR` *
 	// `THIRD_PARTY_VENDOR_INTAGE` * `THIRD_PARTY_VENDOR_NIELSEN` *
-	// `THIRD_PARTY_VENDOR_MACROMILL`
+	// `THIRD_PARTY_VENDOR_MACROMILL` *Warning*: Starting **July 13, 2026**, this
+	// field will no longer support `THIRD_PARTY_VENDOR_NIELSEN`.
 	BrandLiftVendorConfigs []*ThirdPartyVendorConfig `json:"brandLiftVendorConfigs,omitempty"`
 	// BrandSafetyVendorConfigs: Optional. The third-party vendors measuring brand
 	// safety. The following third-party vendors are applicable: *
@@ -18052,8 +17675,7 @@ type AdvertisersAdGroupAdsCreateCall struct {
 }
 
 // Create: Creates an ad group ad. This method is only supported for Demand Gen
-// ads. Retrieval and management of Demand Gen resources is currently rolling
-// out. This method will be available to all partners by *June 24, 2026*.
+// ads.
 //
 //   - advertiserId: Output only. The unique ID of the advertiser the ad belongs
 //     to.
@@ -18158,8 +17780,7 @@ type AdvertisersAdGroupAdsDeleteCall struct {
 }
 
 // Delete: Deletes an ad group ad. This method is only supported for Demand Gen
-// ads. Retrieval and management of Demand Gen resources is currently rolling
-// out. This method will be available to all partners by *June 24, 2026*.
+// ads.
 //
 //   - adGroupAdId: The ID of the ad to delete. Only Demand Gen ads are
 //     supported.
@@ -18553,8 +18174,7 @@ type AdvertisersAdGroupAdsPatchCall struct {
 }
 
 // Patch: Updates an ad group ad. This method is only supported for Demand Gen
-// ads. Retrieval and management of Demand Gen resources is currently rolling
-// out. This method will be available to all partners by *June 24, 2026*.
+// ads.
 //
 //   - adGroupAdId: Output only. The unique ID of the ad. Assigned by the system.
 //   - advertiserId: Output only. The unique ID of the advertiser the ad belongs
@@ -18675,9 +18295,7 @@ type AdvertisersAdGroupsBulkEditAssignedTargetingOptionsCall struct {
 // BulkEditAdGroupAssignedTargetingOptionsRequest.delete_requests from each ad
 // group, and then create the assigned targeting options provided in
 // BulkEditAdGroupAssignedTargetingOptionsRequest.create_requests. This method
-// is only supported for Demand Gen ad groups. Retrieval and management of
-// Demand Gen resources is currently rolling out. This method will be available
-// to all partners by *June 24, 2026*.
+// is only supported for Demand Gen ad groups.
 //
 // - advertiserId: The ID of the advertiser the ad groups belong to.
 func (r *AdvertisersAdGroupsService) BulkEditAssignedTargetingOptions(advertiserId int64, bulkeditadgroupassignedtargetingoptionsrequest *BulkEditAdGroupAssignedTargetingOptionsRequest) *AdvertisersAdGroupsBulkEditAssignedTargetingOptionsCall {
@@ -18972,8 +18590,6 @@ type AdvertisersAdGroupsCreateCall struct {
 
 // Create: Creates a new ad group. Returns the newly created ad group if
 // successful. This method is only supported for Demand Gen ad groups.
-// Retrieval and management of Demand Gen resources is currently rolling out.
-// This method will be available to all partners by *June 24, 2026*.
 //
 //   - advertiserId: Output only. The unique ID of the advertiser the ad group
 //     belongs to.
@@ -19079,8 +18695,6 @@ type AdvertisersAdGroupsDeleteCall struct {
 
 // Delete: Deletes a AdGroup. Returns error code `NOT_FOUND` if the ad group
 // does not exist. This method is only supported for Demand Gen ad groups.
-// Retrieval and management of Demand Gen resources is currently rolling out.
-// This method will be available to all partners by *June 24, 2026*.
 //
 // - adGroupId: The ID of the ad group to delete.
 // - advertiserId: The ID of the advertiser this ad group belongs to.
@@ -19474,8 +19088,6 @@ type AdvertisersAdGroupsPatchCall struct {
 
 // Patch: Updates an existing ad group. Returns the updated ad group if
 // successful. This method is only supported for Demand Gen ad groups.
-// Retrieval and management of Demand Gen resources is currently rolling out.
-// This method will be available to all partners by *June 24, 2026*.
 //
 //   - adGroupId: Output only. The unique ID of the ad group. Assigned by the
 //     system.
@@ -19594,9 +19206,7 @@ type AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsCreateCall struct 
 
 // Create: Assigns a targeting option to an ad group. Returns the assigned
 // targeting option if successful. This method is only supported for Demand Gen
-// ad groups. Retrieval and management of Demand Gen resources is currently
-// rolling out. This method will be available to all partners by *June 24,
-// 2026*.
+// ad groups.
 //
 //   - adGroupId: The ID of the ad group the assigned targeting option will
 //     belong to.
@@ -19719,9 +19329,7 @@ type AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsDeleteCall struct 
 
 // Delete: Deletes an assigned targeting option from an ad group. This method
 // is only supported for Demand Gen ad groups with the AdGroupFormat
-// `AD_GROUP_FORMAT_DEMAND_GEN`. Retrieval and management of Demand Gen
-// resources is currently rolling out. This method will be available to all
-// partners by *June 24, 2026*.
+// `AD_GROUP_FORMAT_DEMAND_GEN`.
 //
 //   - adGroupId: The ID of the ad group the assigned targeting option belongs
 //     to.
@@ -30469,647 +30077,6 @@ func (c *CustomListsListCall) Pages(ctx context.Context, f func(*ListCustomLists
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-type FirstAndThirdPartyAudiencesCreateCall struct {
-	s                          *Service
-	firstandthirdpartyaudience *FirstAndThirdPartyAudience
-	urlParams_                 gensupport.URLParams
-	ctx_                       context.Context
-	header_                    http.Header
-}
-
-// Create: Creates a FirstAndThirdPartyAudience. Only supported for the
-// following audience_type: * `CUSTOMER_MATCH_CONTACT_INFO` *
-// `CUSTOMER_MATCH_DEVICE_ID`
-func (r *FirstAndThirdPartyAudiencesService) Create(firstandthirdpartyaudience *FirstAndThirdPartyAudience) *FirstAndThirdPartyAudiencesCreateCall {
-	c := &FirstAndThirdPartyAudiencesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.firstandthirdpartyaudience = firstandthirdpartyaudience
-	return c
-}
-
-// AdvertiserId sets the optional parameter "advertiserId": Required. The ID of
-// the advertiser under whom the FirstAndThirdPartyAudience will be created.
-func (c *FirstAndThirdPartyAudiencesCreateCall) AdvertiserId(advertiserId int64) *FirstAndThirdPartyAudiencesCreateCall {
-	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *FirstAndThirdPartyAudiencesCreateCall) Fields(s ...googleapi.Field) *FirstAndThirdPartyAudiencesCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *FirstAndThirdPartyAudiencesCreateCall) Context(ctx context.Context) *FirstAndThirdPartyAudiencesCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *FirstAndThirdPartyAudiencesCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *FirstAndThirdPartyAudiencesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.firstandthirdpartyaudience)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/firstAndThirdPartyAudiences")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.firstAndThirdPartyAudiences.create", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "displayvideo.firstAndThirdPartyAudiences.create" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *FirstAndThirdPartyAudience.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *FirstAndThirdPartyAudiencesCreateCall) Do(opts ...googleapi.CallOption) (*FirstAndThirdPartyAudience, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &FirstAndThirdPartyAudience{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.firstAndThirdPartyAudiences.create", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type FirstAndThirdPartyAudiencesEditCustomerMatchMembersCall struct {
-	s                               *Service
-	firstAndThirdPartyAudienceId    int64
-	editcustomermatchmembersrequest *EditCustomerMatchMembersRequest
-	urlParams_                      gensupport.URLParams
-	ctx_                            context.Context
-	header_                         http.Header
-}
-
-// EditCustomerMatchMembers: Updates the member list of a Customer Match
-// audience. Only supported for the following audience_type: *
-// `CUSTOMER_MATCH_CONTACT_INFO` * `CUSTOMER_MATCH_DEVICE_ID`
-//
-//   - firstAndThirdPartyAudienceId: The ID of the Customer Match
-//     FirstAndThirdPartyAudience whose members will be edited.
-func (r *FirstAndThirdPartyAudiencesService) EditCustomerMatchMembers(firstAndThirdPartyAudienceId int64, editcustomermatchmembersrequest *EditCustomerMatchMembersRequest) *FirstAndThirdPartyAudiencesEditCustomerMatchMembersCall {
-	c := &FirstAndThirdPartyAudiencesEditCustomerMatchMembersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.firstAndThirdPartyAudienceId = firstAndThirdPartyAudienceId
-	c.editcustomermatchmembersrequest = editcustomermatchmembersrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *FirstAndThirdPartyAudiencesEditCustomerMatchMembersCall) Fields(s ...googleapi.Field) *FirstAndThirdPartyAudiencesEditCustomerMatchMembersCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *FirstAndThirdPartyAudiencesEditCustomerMatchMembersCall) Context(ctx context.Context) *FirstAndThirdPartyAudiencesEditCustomerMatchMembersCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *FirstAndThirdPartyAudiencesEditCustomerMatchMembersCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *FirstAndThirdPartyAudiencesEditCustomerMatchMembersCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.editcustomermatchmembersrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/firstAndThirdPartyAudiences/{+firstAndThirdPartyAudienceId}:editCustomerMatchMembers")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"firstAndThirdPartyAudienceId": strconv.FormatInt(c.firstAndThirdPartyAudienceId, 10),
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.firstAndThirdPartyAudiences.editCustomerMatchMembers", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "displayvideo.firstAndThirdPartyAudiences.editCustomerMatchMembers" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *EditCustomerMatchMembersResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *FirstAndThirdPartyAudiencesEditCustomerMatchMembersCall) Do(opts ...googleapi.CallOption) (*EditCustomerMatchMembersResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &EditCustomerMatchMembersResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.firstAndThirdPartyAudiences.editCustomerMatchMembers", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type FirstAndThirdPartyAudiencesGetCall struct {
-	s                            *Service
-	firstAndThirdPartyAudienceId int64
-	urlParams_                   gensupport.URLParams
-	ifNoneMatch_                 string
-	ctx_                         context.Context
-	header_                      http.Header
-}
-
-// Get: Gets a first and third party audience.
-//
-//   - firstAndThirdPartyAudienceId: The ID of the first and third party audience
-//     to fetch.
-func (r *FirstAndThirdPartyAudiencesService) Get(firstAndThirdPartyAudienceId int64) *FirstAndThirdPartyAudiencesGetCall {
-	c := &FirstAndThirdPartyAudiencesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.firstAndThirdPartyAudienceId = firstAndThirdPartyAudienceId
-	return c
-}
-
-// AdvertiserId sets the optional parameter "advertiserId": The ID of the
-// advertiser that has access to the fetched first and third party audience.
-func (c *FirstAndThirdPartyAudiencesGetCall) AdvertiserId(advertiserId int64) *FirstAndThirdPartyAudiencesGetCall {
-	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
-	return c
-}
-
-// PartnerId sets the optional parameter "partnerId": The ID of the partner
-// that has access to the fetched first and third party audience.
-func (c *FirstAndThirdPartyAudiencesGetCall) PartnerId(partnerId int64) *FirstAndThirdPartyAudiencesGetCall {
-	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *FirstAndThirdPartyAudiencesGetCall) Fields(s ...googleapi.Field) *FirstAndThirdPartyAudiencesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *FirstAndThirdPartyAudiencesGetCall) IfNoneMatch(entityTag string) *FirstAndThirdPartyAudiencesGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *FirstAndThirdPartyAudiencesGetCall) Context(ctx context.Context) *FirstAndThirdPartyAudiencesGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *FirstAndThirdPartyAudiencesGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *FirstAndThirdPartyAudiencesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/firstAndThirdPartyAudiences/{+firstAndThirdPartyAudienceId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"firstAndThirdPartyAudienceId": strconv.FormatInt(c.firstAndThirdPartyAudienceId, 10),
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.firstAndThirdPartyAudiences.get", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "displayvideo.firstAndThirdPartyAudiences.get" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *FirstAndThirdPartyAudience.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *FirstAndThirdPartyAudiencesGetCall) Do(opts ...googleapi.CallOption) (*FirstAndThirdPartyAudience, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &FirstAndThirdPartyAudience{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.firstAndThirdPartyAudiences.get", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type FirstAndThirdPartyAudiencesListCall struct {
-	s            *Service
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists first and third party audiences. The order is defined by the
-// order_by parameter.
-func (r *FirstAndThirdPartyAudiencesService) List() *FirstAndThirdPartyAudiencesListCall {
-	c := &FirstAndThirdPartyAudiencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	return c
-}
-
-// AdvertiserId sets the optional parameter "advertiserId": The ID of the
-// advertiser that has access to the fetched first and third party audiences.
-func (c *FirstAndThirdPartyAudiencesListCall) AdvertiserId(advertiserId int64) *FirstAndThirdPartyAudiencesListCall {
-	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
-	return c
-}
-
-// Filter sets the optional parameter "filter": Allows filtering by first and
-// third party audience fields. Supported syntax: * Filter expressions for
-// first and third party audiences can only contain at most one restriction. *
-// A restriction has the form of `{field} {operator} {value}`. * All fields
-// must use the `HAS (:)` operator. Supported fields: * `displayName` Examples:
-// * All first and third party audiences for which the display name contains
-// "Google": `displayName:"Google". The length of this field should be no more
-// than 500 characters. Reference our filter `LIST` requests
-// (/display-video/api/guides/how-tos/filters) guide for more information.
-func (c *FirstAndThirdPartyAudiencesListCall) Filter(filter string) *FirstAndThirdPartyAudiencesListCall {
-	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// OrderBy sets the optional parameter "orderBy": Field by which to sort the
-// list. Acceptable values are: * `firstAndThirdPartyAudienceId` (default) *
-// `displayName` The default sorting order is ascending. To specify descending
-// order for a field, a suffix "desc" should be added to the field name.
-// Example: `displayName desc`.
-func (c *FirstAndThirdPartyAudiencesListCall) OrderBy(orderBy string) *FirstAndThirdPartyAudiencesListCall {
-	c.urlParams_.Set("orderBy", orderBy)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Requested page size. Must
-// be between `1` and `5000`. If unspecified, this value defaults to `5000`.
-// Returns error code `INVALID_ARGUMENT` if an invalid value is specified.
-func (c *FirstAndThirdPartyAudiencesListCall) PageSize(pageSize int64) *FirstAndThirdPartyAudiencesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A token identifying a
-// page of results the server should return. Typically, this is the value of
-// next_page_token returned from the previous call to
-// `ListFirstAndThirdPartyAudiences` method. If not specified, the first page
-// of results will be returned.
-func (c *FirstAndThirdPartyAudiencesListCall) PageToken(pageToken string) *FirstAndThirdPartyAudiencesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// PartnerId sets the optional parameter "partnerId": The ID of the partner
-// that has access to the fetched first and third party audiences.
-func (c *FirstAndThirdPartyAudiencesListCall) PartnerId(partnerId int64) *FirstAndThirdPartyAudiencesListCall {
-	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *FirstAndThirdPartyAudiencesListCall) Fields(s ...googleapi.Field) *FirstAndThirdPartyAudiencesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *FirstAndThirdPartyAudiencesListCall) IfNoneMatch(entityTag string) *FirstAndThirdPartyAudiencesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *FirstAndThirdPartyAudiencesListCall) Context(ctx context.Context) *FirstAndThirdPartyAudiencesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *FirstAndThirdPartyAudiencesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *FirstAndThirdPartyAudiencesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/firstAndThirdPartyAudiences")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.firstAndThirdPartyAudiences.list", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "displayvideo.firstAndThirdPartyAudiences.list" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *ListFirstAndThirdPartyAudiencesResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *FirstAndThirdPartyAudiencesListCall) Do(opts ...googleapi.CallOption) (*ListFirstAndThirdPartyAudiencesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &ListFirstAndThirdPartyAudiencesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.firstAndThirdPartyAudiences.list", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *FirstAndThirdPartyAudiencesListCall) Pages(ctx context.Context, f func(*ListFirstAndThirdPartyAudiencesResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken"))
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-type FirstAndThirdPartyAudiencesPatchCall struct {
-	s                            *Service
-	firstAndThirdPartyAudienceId int64
-	firstandthirdpartyaudience   *FirstAndThirdPartyAudience
-	urlParams_                   gensupport.URLParams
-	ctx_                         context.Context
-	header_                      http.Header
-}
-
-// Patch: Updates an existing FirstAndThirdPartyAudience. Only supported for
-// the following audience_type: * `CUSTOMER_MATCH_CONTACT_INFO` *
-// `CUSTOMER_MATCH_DEVICE_ID`
-//
-//   - firstAndThirdPartyAudienceId: Output only. The unique ID of the first and
-//     third party audience. Assigned by the system.
-func (r *FirstAndThirdPartyAudiencesService) Patch(firstAndThirdPartyAudienceId int64, firstandthirdpartyaudience *FirstAndThirdPartyAudience) *FirstAndThirdPartyAudiencesPatchCall {
-	c := &FirstAndThirdPartyAudiencesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.firstAndThirdPartyAudienceId = firstAndThirdPartyAudienceId
-	c.firstandthirdpartyaudience = firstandthirdpartyaudience
-	return c
-}
-
-// AdvertiserId sets the optional parameter "advertiserId": Required. The ID of
-// the owner advertiser of the updated FirstAndThirdPartyAudience.
-func (c *FirstAndThirdPartyAudiencesPatchCall) AdvertiserId(advertiserId int64) *FirstAndThirdPartyAudiencesPatchCall {
-	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": Required. The mask to
-// control which fields to update. Updates are only supported for the following
-// fields: * `displayName` * `description` * `membershipDurationDays`
-func (c *FirstAndThirdPartyAudiencesPatchCall) UpdateMask(updateMask string) *FirstAndThirdPartyAudiencesPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *FirstAndThirdPartyAudiencesPatchCall) Fields(s ...googleapi.Field) *FirstAndThirdPartyAudiencesPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *FirstAndThirdPartyAudiencesPatchCall) Context(ctx context.Context) *FirstAndThirdPartyAudiencesPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *FirstAndThirdPartyAudiencesPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *FirstAndThirdPartyAudiencesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.firstandthirdpartyaudience)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/firstAndThirdPartyAudiences/{+firstAndThirdPartyAudienceId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"firstAndThirdPartyAudienceId": strconv.FormatInt(c.firstAndThirdPartyAudienceId, 10),
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.firstAndThirdPartyAudiences.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "displayvideo.firstAndThirdPartyAudiences.patch" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *FirstAndThirdPartyAudience.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *FirstAndThirdPartyAudiencesPatchCall) Do(opts ...googleapi.CallOption) (*FirstAndThirdPartyAudience, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &FirstAndThirdPartyAudience{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.firstAndThirdPartyAudiences.patch", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
 }
 
 type FloodlightGroupsGetCall struct {

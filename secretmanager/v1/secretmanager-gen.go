@@ -504,6 +504,34 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CloudSQLSingleUserCredentials: These are the credentials required for Cloud
+// SQL DB for Single user Managed Rotation.
+type CloudSQLSingleUserCredentials struct {
+	// InstanceId: Required. Instance ID of the Cloud SQL instance.
+	InstanceId string `json:"instanceId,omitempty"`
+	// Password: Optional. Password of the Cloud SQL instance. If this is not
+	// provided, a random password will be generated.
+	Password string `json:"password,omitempty"`
+	// Username: Required. Username of the Cloud SQL instance.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InstanceId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InstanceId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudSQLSingleUserCredentials) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudSQLSingleUserCredentials
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CustomerManagedEncryption: Configuration for encrypting secret payloads
 // using customer-managed encryption keys (CMEK).
 type CustomerManagedEncryption struct {
@@ -614,6 +642,30 @@ func (s DisableSecretVersionRequest) MarshalJSON() ([]byte, error) {
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// EnableManagedRotationRequest: Request message for
+// SecretManagerService.EnableManagedRotation.
+type EnableManagedRotationRequest struct {
+	// CloudSqlSingleUserCredentials: Credentials required for Cloud SQL DB for
+	// Single user Managed Rotation.
+	CloudSqlSingleUserCredentials *CloudSQLSingleUserCredentials `json:"cloudSqlSingleUserCredentials,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "CloudSqlSingleUserCredentials") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudSqlSingleUserCredentials")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EnableManagedRotationRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod EnableManagedRotationRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EnableSecretVersionRequest: Request message for
@@ -817,6 +869,40 @@ type Location struct {
 
 func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ManagedRotationStatus: Represents the status of a managed rotation. This is
+// applicable only to Typed Secrets. It indicates whether the rotation is
+// active and any errors that may have occurred during the asynchronous managed
+// rotation.
+type ManagedRotationStatus struct {
+	// Error: Output only. Displays customer-facing issues that occurred during an
+	// asynchronous managed rotation. For example, if there are some permission
+	// errors.
+	Error *Status `json:"error,omitempty"`
+	// State: Output only. Indicates whether the Managed Rotation is active or not.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not specified. This value is unused and invalid.
+	//   "ACTIVE" - Indicates that the Managed rotation is ACTIVE.
+	//   "INACTIVE" - Indicates that the Managed rotation is INACTIVE.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ManagedRotationStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod ManagedRotationStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1140,10 +1226,54 @@ func (s ReplicationStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ResourcePolicyMember: Output-only policy member strings of a Google Cloud
+// resource's built-in identity.
+type ResourcePolicyMember struct {
+	// IamPolicyNamePrincipal: Output only. IAM policy binding member referring to
+	// a Google Cloud resource by user-assigned name (https://google.aip.dev/122).
+	// If a resource is deleted and recreated with the same name, the binding will
+	// be applicable to the new resource. Example:
+	// `principal://parametermanager.googleapis.com/projects/12345/name/locations/us
+	// -central1-a/parameters/my-parameter`
+	IamPolicyNamePrincipal string `json:"iamPolicyNamePrincipal,omitempty"`
+	// IamPolicyUidPrincipal: Output only. IAM policy binding member referring to a
+	// Google Cloud resource by system-assigned unique identifier
+	// (https://google.aip.dev/148#uid). If a resource is deleted and recreated
+	// with the same name, the binding will not be applicable to the new resource
+	// Example:
+	// `principal://parametermanager.googleapis.com/projects/12345/uid/locations/us-
+	// central1-a/parameters/a918fed5`
+	IamPolicyUidPrincipal string `json:"iamPolicyUidPrincipal,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IamPolicyNamePrincipal") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IamPolicyNamePrincipal") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResourcePolicyMember) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourcePolicyMember
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RotateSecretRequest: Request message for SecretManagerService.RotateSecret.
+type RotateSecretRequest struct {
+}
+
 // Rotation: The rotation time and period for a Secret. At next_rotation_time,
 // Secret Manager will send a Pub/Sub notification to the topics configured on
 // the Secret. Secret.topics must be set to configure rotation.
 type Rotation struct {
+	// ManagedRotationStatus: Output only. The current status of the managed
+	// rotation. This field is only applicable to Typed Secrets. This field is set
+	// by the service and cannot be set by the user.
+	ManagedRotationStatus *ManagedRotationStatus `json:"managedRotationStatus,omitempty"`
 	// NextRotationTime: Optional. Timestamp in UTC at which the Secret is
 	// scheduled to rotate. Cannot be set to less than 300s (5 min) in the future
 	// and at most 3153600000s (100 years). next_rotation_time MUST be set if
@@ -1155,15 +1285,15 @@ type Rotation struct {
 	// next_rotation_time will be advanced by this period when the service
 	// automatically sends rotation notifications.
 	RotationPeriod string `json:"rotationPeriod,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "NextRotationTime") to
+	// ForceSendFields is a list of field names (e.g. "ManagedRotationStatus") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "NextRotationTime") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ManagedRotationStatus") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1211,6 +1341,10 @@ type Secret struct {
 	// Name: Output only. The resource name of the Secret in the format
 	// `projects/*/secrets/*`.
 	Name string `json:"name,omitempty"`
+	// PolicyMember: Output only. Defines the policy member for the secret. This
+	// will be used to check if the caller has the permission to perform certain
+	// operations on the typed secret.
+	PolicyMember *ResourcePolicyMember `json:"policyMember,omitempty"`
 	// Replication: Optional. Immutable. The replication policy of the secret data
 	// attached to the Secret. The replication policy cannot be changed after the
 	// Secret has been created.
@@ -1218,6 +1352,24 @@ type Secret struct {
 	// Rotation: Optional. Rotation policy attached to the Secret. May be excluded
 	// if there is no rotation policy.
 	Rotation *Rotation `json:"rotation,omitempty"`
+	// SecretType: Optional. Immutable. This defines the type of the secret.
+	// Enforces certain structural requirements on the SecretVersions. For secret
+	// of type UNSPECIFIED, the SecretVersions can be of any type.
+	//
+	// Possible values:
+	//   "SECRET_TYPE_UNSPECIFIED" - Applicable to all secrets which do not have
+	// any restriction on the SecretVersions.
+	//   "CLOUD_SQL_DB_CREDENTIALS" - Applicable to secrets which are used for the
+	// managed rotation feature for Cloud SQL Single User.
+	//   "ACCESS_KEY" - Applicable to secrets where the payload contains an access
+	// key.
+	//   "CERTIFICATE" - Applicable to secrets where the payload contains a
+	// certificate.
+	//   "OTHER_DB_CREDENTIALS" - Applicable to secrets where the payload contains
+	// database credentials.
+	//   "OTHER" - Applicable to secrets whose type doesn't belong to any of the
+	// above defined types.
+	SecretType string `json:"secretType,omitempty"`
 	// Tags: Optional. Input only. Immutable. Mapping of Tag keys/values directly
 	// bound to this resource. For example: "123/environment": "production",
 	// "123/costCenter": "marketing" Tags are used to organize and group resources.
@@ -2156,6 +2308,114 @@ func (c *ProjectsLocationsSecretsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	return ret, nil
 }
 
+type ProjectsLocationsSecretsEnableManagedRotationCall struct {
+	s                            *Service
+	parent                       string
+	enablemanagedrotationrequest *EnableManagedRotationRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// EnableManagedRotation: Enables the managed rotation feature for a Secret.
+// This method can only be triggered once for a secret. In order to do further
+// rotations, RotateSecret should be used. This method will add a secret
+// version and update the password in Cloud SQL.
+//
+//   - parent: The resource name of the Secret to associate with the
+//     SecretVersion in the format `projects/*/secrets/*` or
+//     `projects/*/locations/*/secrets/*`.
+func (r *ProjectsLocationsSecretsService) EnableManagedRotation(parent string, enablemanagedrotationrequest *EnableManagedRotationRequest) *ProjectsLocationsSecretsEnableManagedRotationCall {
+	c := &ProjectsLocationsSecretsEnableManagedRotationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.enablemanagedrotationrequest = enablemanagedrotationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSecretsEnableManagedRotationCall) Fields(s ...googleapi.Field) *ProjectsLocationsSecretsEnableManagedRotationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSecretsEnableManagedRotationCall) Context(ctx context.Context) *ProjectsLocationsSecretsEnableManagedRotationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSecretsEnableManagedRotationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSecretsEnableManagedRotationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.enablemanagedrotationrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:enableManagedRotation")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "secretmanager.projects.locations.secrets.enableManagedRotation", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "secretmanager.projects.locations.secrets.enableManagedRotation" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SecretVersion.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSecretsEnableManagedRotationCall) Do(opts ...googleapi.CallOption) (*SecretVersion, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SecretVersion{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "secretmanager.projects.locations.secrets.enableManagedRotation", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsSecretsGetCall struct {
 	s            *Service
 	name         string
@@ -2660,6 +2920,113 @@ func (c *ProjectsLocationsSecretsPatchCall) Do(opts ...googleapi.CallOption) (*S
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "secretmanager.projects.locations.secrets.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSecretsRotateSecretCall struct {
+	s                   *Service
+	parent              string
+	rotatesecretrequest *RotateSecretRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// RotateSecret: Do a managed rotation for a Secret. This can only be triggered
+// after Managed rotation has been enabled. This method will add a secret
+// version and update the password in Cloud SQL.
+//
+//   - parent: The resource name of the Secret to associate with the
+//     SecretVersion in the format `projects/*/secrets/*` or
+//     `projects/*/locations/*/secrets/*`.
+func (r *ProjectsLocationsSecretsService) RotateSecret(parent string, rotatesecretrequest *RotateSecretRequest) *ProjectsLocationsSecretsRotateSecretCall {
+	c := &ProjectsLocationsSecretsRotateSecretCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.rotatesecretrequest = rotatesecretrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSecretsRotateSecretCall) Fields(s ...googleapi.Field) *ProjectsLocationsSecretsRotateSecretCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSecretsRotateSecretCall) Context(ctx context.Context) *ProjectsLocationsSecretsRotateSecretCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSecretsRotateSecretCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSecretsRotateSecretCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.rotatesecretrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:rotateSecret")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "secretmanager.projects.locations.secrets.rotateSecret", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "secretmanager.projects.locations.secrets.rotateSecret" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SecretVersion.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSecretsRotateSecretCall) Do(opts ...googleapi.CallOption) (*SecretVersion, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SecretVersion{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "secretmanager.projects.locations.secrets.rotateSecret", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3916,6 +4283,114 @@ func (c *ProjectsSecretsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, er
 	return ret, nil
 }
 
+type ProjectsSecretsEnableManagedRotationCall struct {
+	s                            *Service
+	parent                       string
+	enablemanagedrotationrequest *EnableManagedRotationRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// EnableManagedRotation: Enables the managed rotation feature for a Secret.
+// This method can only be triggered once for a secret. In order to do further
+// rotations, RotateSecret should be used. This method will add a secret
+// version and update the password in Cloud SQL.
+//
+//   - parent: The resource name of the Secret to associate with the
+//     SecretVersion in the format `projects/*/secrets/*` or
+//     `projects/*/locations/*/secrets/*`.
+func (r *ProjectsSecretsService) EnableManagedRotation(parent string, enablemanagedrotationrequest *EnableManagedRotationRequest) *ProjectsSecretsEnableManagedRotationCall {
+	c := &ProjectsSecretsEnableManagedRotationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.enablemanagedrotationrequest = enablemanagedrotationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsSecretsEnableManagedRotationCall) Fields(s ...googleapi.Field) *ProjectsSecretsEnableManagedRotationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsSecretsEnableManagedRotationCall) Context(ctx context.Context) *ProjectsSecretsEnableManagedRotationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsSecretsEnableManagedRotationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSecretsEnableManagedRotationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.enablemanagedrotationrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:enableManagedRotation")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "secretmanager.projects.secrets.enableManagedRotation", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "secretmanager.projects.secrets.enableManagedRotation" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SecretVersion.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsSecretsEnableManagedRotationCall) Do(opts ...googleapi.CallOption) (*SecretVersion, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SecretVersion{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "secretmanager.projects.secrets.enableManagedRotation", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsSecretsGetCall struct {
 	s            *Service
 	name         string
@@ -4420,6 +4895,113 @@ func (c *ProjectsSecretsPatchCall) Do(opts ...googleapi.CallOption) (*Secret, er
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "secretmanager.projects.secrets.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsSecretsRotateSecretCall struct {
+	s                   *Service
+	parent              string
+	rotatesecretrequest *RotateSecretRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// RotateSecret: Do a managed rotation for a Secret. This can only be triggered
+// after Managed rotation has been enabled. This method will add a secret
+// version and update the password in Cloud SQL.
+//
+//   - parent: The resource name of the Secret to associate with the
+//     SecretVersion in the format `projects/*/secrets/*` or
+//     `projects/*/locations/*/secrets/*`.
+func (r *ProjectsSecretsService) RotateSecret(parent string, rotatesecretrequest *RotateSecretRequest) *ProjectsSecretsRotateSecretCall {
+	c := &ProjectsSecretsRotateSecretCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.rotatesecretrequest = rotatesecretrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsSecretsRotateSecretCall) Fields(s ...googleapi.Field) *ProjectsSecretsRotateSecretCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsSecretsRotateSecretCall) Context(ctx context.Context) *ProjectsSecretsRotateSecretCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsSecretsRotateSecretCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSecretsRotateSecretCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.rotatesecretrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:rotateSecret")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "secretmanager.projects.secrets.rotateSecret", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "secretmanager.projects.secrets.rotateSecret" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SecretVersion.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsSecretsRotateSecretCall) Do(opts ...googleapi.CallOption) (*SecretVersion, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SecretVersion{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "secretmanager.projects.secrets.rotateSecret", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

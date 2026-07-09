@@ -357,6 +357,8 @@ type Document struct {
 	// Content: Output only. Contains the full content of the document in Markdown
 	// format.
 	Content string `json:"content,omitempty"`
+	// ContentLengthBytes: Output only. The length of the `content` field in bytes.
+	ContentLengthBytes int64 `json:"contentLengthBytes,omitempty"`
 	// DataSource: Output only. Specifies the data source of the document. Example
 	// data source: `firebase.google.com`
 	DataSource string `json:"dataSource,omitempty"`
@@ -380,8 +382,9 @@ type Document struct {
 	//   "DOCUMENT_VIEW_UNSPECIFIED" - The default / unset value. See each API
 	// method for its default value if DocumentView is not specified.
 	//   "DOCUMENT_VIEW_BASIC" - Includes only the basic metadata fields: - `name`
-	// - `uri` - `data_source` - `title` - `description` - `update_time` - `view`
-	// This is the default of view for DeveloperKnowledge.SearchDocumentChunks.
+	// - `uri` - `data_source` - `title` - `description` - `update_time` - `view` -
+	// `content_length_bytes` This is the default of view for
+	// DeveloperKnowledge.SearchDocumentChunks.
 	//   "DOCUMENT_VIEW_FULL" - Includes all Document fields.
 	//   "DOCUMENT_VIEW_CONTENT" - Includes the `DOCUMENT_VIEW_BASIC` fields and
 	// the `content` field. This is the default of view for
@@ -542,8 +545,9 @@ func (c *DocumentsBatchGetCall) Names(names ...string) *DocumentsBatchGetCall {
 //
 //	"DOCUMENT_VIEW_BASIC" - Includes only the basic metadata fields: - `name`
 //
-// - `uri` - `data_source` - `title` - `description` - `update_time` - `view`
-// This is the default of view for DeveloperKnowledge.SearchDocumentChunks.
+// - `uri` - `data_source` - `title` - `description` - `update_time` - `view` -
+// `content_length_bytes` This is the default of view for
+// DeveloperKnowledge.SearchDocumentChunks.
 //
 //	"DOCUMENT_VIEW_FULL" - Includes all Document fields.
 //	"DOCUMENT_VIEW_CONTENT" - Includes the `DOCUMENT_VIEW_BASIC` fields and
@@ -676,8 +680,9 @@ func (r *DocumentsService) Get(name string) *DocumentsGetCall {
 //
 //	"DOCUMENT_VIEW_BASIC" - Includes only the basic metadata fields: - `name`
 //
-// - `uri` - `data_source` - `title` - `description` - `update_time` - `view`
-// This is the default of view for DeveloperKnowledge.SearchDocumentChunks.
+// - `uri` - `data_source` - `title` - `description` - `update_time` - `view` -
+// `content_length_bytes` This is the default of view for
+// DeveloperKnowledge.SearchDocumentChunks.
 //
 //	"DOCUMENT_VIEW_FULL" - Includes all Document fields.
 //	"DOCUMENT_VIEW_CONTENT" - Includes the `DOCUMENT_VIEW_BASIC` fields and
@@ -803,25 +808,28 @@ func (r *DocumentsService) SearchDocumentChunks() *DocumentsSearchDocumentChunks
 // search results. The expression supports a subset of the syntax described at
 // https://google.aip.dev/160. While `SearchDocumentChunks` returns
 // DocumentChunks, the filter is applied to `DocumentChunk.document` fields.
-// Supported fields for filtering: * `data_source` (STRING): The source of the
-// document, e.g. `docs.cloud.google.com`. See
+// Supported fields for filtering: * `content_length_bytes` (INTEGER): The
+// length of the `Document.content` field in bytes. * `data_source` (STRING):
+// The source of the document, e.g. `docs.cloud.google.com`. See
 // https://developers.google.com/knowledge/reference/corpus-reference for the
 // complete list of data sources in the corpus. * `update_time` (TIMESTAMP):
 // The timestamp of when the document was last meaningfully updated. A
 // meaningful update is one that changes document's markdown content or
 // metadata. * `uri` (STRING): The document URI, e.g.
-// `https://docs.cloud.google.com/bigquery/docs/tables`. STRING fields support
-// `=` (equals) and `!=` (not equals) operators for **exact match** on the
-// whole string. Partial match, prefix match, and regexp match are not
-// supported. TIMESTAMP fields support `=`, `<`, `<=`, `>`, and `>=` operators.
-// Timestamps must be in RFC-3339 format, e.g., "2025-01-01T00:00:00Z". You
-// can combine expressions using `AND`, `OR`, and `NOT` (or `-`) logical
-// operators. `OR` has higher precedence than `AND`. Use parentheses for
-// explicit precedence grouping. Examples: * `data_source =
-// "docs.cloud.google.com" OR data_source = "firebase.google.com" *
-// `data_source != "firebase.google.com" * `update_time <
-// "2024-01-01T00:00:00Z" * `update_time >= "2025-01-22T00:00:00Z" AND
-// (data_source = "developer.chrome.com" OR data_source = "web.dev")` * `uri =
+// `https://docs.cloud.google.com/bigquery/docs/tables`. INTEGER fields support
+// `=`, `<`, `<=`, `>`, and `>=` operators. STRING fields support `=` (equals)
+// and `!=` (not equals) operators for **exact match** on the whole string.
+// Partial match, prefix match, and regexp match are not supported. TIMESTAMP
+// fields support `=`, `<`, `<=`, `>`, and `>=` operators. Timestamps must be
+// in RFC-3339 format, e.g., "2025-01-01T00:00:00Z". You can combine
+// expressions using `AND`, `OR`, and `NOT` (or `-`) logical operators. `OR`
+// has higher precedence than `AND`. Use parentheses for explicit precedence
+// grouping. Examples: * Filter by `Document.content_length_bytes`:
+// `content_length_bytes < 50000` * `data_source = "docs.cloud.google.com" OR
+// data_source = "firebase.google.com" * `data_source !=
+// "firebase.google.com" * `update_time < "2024-01-01T00:00:00Z" *
+// `update_time >= "2025-01-22T00:00:00Z" AND (data_source =
+// "developer.chrome.com" OR data_source = "web.dev")` * `uri =
 // "https://docs.cloud.google.com/release-notes" The `filter` string must not
 // exceed 500 characters; values longer than 500 characters will result in an
 // `INVALID_ARGUMENT` error.
@@ -832,8 +840,8 @@ func (c *DocumentsSearchDocumentChunksCall) Filter(filter string) *DocumentsSear
 
 // PageSize sets the optional parameter "pageSize": Specifies the maximum
 // number of results to return. The service may return fewer than this value.
-// If unspecified, at most 5 results will be returned. The maximum value is 20;
-// values above 20 will result in an INVALID_ARGUMENT error.
+// If unspecified, at most 5 results will be returned. The maximum value is
+// 100; values above 100 will be coerced to 100.
 func (c *DocumentsSearchDocumentChunksCall) PageSize(pageSize int64) *DocumentsSearchDocumentChunksCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

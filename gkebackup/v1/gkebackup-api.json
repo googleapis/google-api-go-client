@@ -2560,7 +2560,7 @@
       }
     }
   },
-  "revision": "20260608",
+  "revision": "20260624",
   "rootUrl": "https://gkebackup.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -2697,7 +2697,7 @@
       "type": "object"
     },
     "BDRBackupRestoreJobLog": {
-      "description": "Log entry for Backup and Restore Job for resources using BackupPlan based protection. Next Id: 25",
+      "description": "Log entry for Backup and Restore Job for resources using BackupPlan based protection. Next Id: 26",
       "id": "BDRBackupRestoreJobLog",
       "properties": {
         "backupConsistencyTime": {
@@ -2797,6 +2797,10 @@
         "startTime": {
           "description": "Start time of the job.",
           "format": "google-datetime",
+          "type": "string"
+        },
+        "storageTier": {
+          "description": "The storage tier associated with the backup.",
           "type": "string"
         },
         "targetResourceType": {

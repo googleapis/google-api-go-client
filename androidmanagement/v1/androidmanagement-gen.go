@@ -6443,7 +6443,10 @@ type Policy struct {
 	// supported types. If the default application is successfully set for at least
 	// one app type on a profile, users are prevented from changing any default
 	// applications on that profile.Only one DefaultApplicationSetting is allowed
-	// for each DefaultApplicationType.See Default application settings
+	// for each DefaultApplicationType.Warning: Do not configure this and
+	// persistent_preferred_activities for the same intent domain, such as web
+	// browsing. Setting both for the same intent domain can lead to unpredictable
+	// behavior.See Default application settings
 	// (https://developers.google.com/android/management/default-application-settings)
 	// guide for more details.
 	DefaultApplicationSettings []*DefaultApplicationSetting `json:"defaultApplicationSettings,omitempty"`
@@ -6689,7 +6692,10 @@ type Policy struct {
 	// packages in this list are permitted. If this field is present, but the list
 	// is empty, then only system input methods are permitted.
 	PermittedInputMethods *PackageNameList `json:"permittedInputMethods,omitempty"`
-	// PersistentPreferredActivities: Default intent handler activities.
+	// PersistentPreferredActivities: Default intent handler activities.Warning: Do
+	// not configure this and default_application_settings for the same intent
+	// domain, such as web browsing. Setting both for the same intent domain can
+	// lead to unpredictable behavior.
 	PersistentPreferredActivities []*PersistentPreferredActivity `json:"persistentPreferredActivities,omitempty"`
 	// PersonalUsagePolicies: Policies managing personal usage on a company-owned
 	// device.
@@ -8332,15 +8338,15 @@ type UsageLog struct {
 	//
 	// Possible values:
 	//   "LOG_TYPE_UNSPECIFIED" - This value is not used.
-	//   "SECURITY_LOGS" - Enable logging of on-device security events, like when
-	// the device password is incorrectly entered or removable storage is mounted.
-	// See UsageLogEvent for a complete description of the logged security events.
-	// Supported for fully managed devices on Android 7 and above. Supported for
-	// company-owned devices with a work profile on Android 12 and above, on which
-	// only security events from the work profile are logged. Can be overridden by
-	// the application delegated scope SECURITY_LOGS
-	//   "NETWORK_ACTIVITY_LOGS" - Enable logging of on-device network events, like
-	// DNS lookups and TCP connections. See UsageLogEvent for a complete
+	//   "SECURITY_LOGS" - Enable logging of on-device security events, such as
+	// when the device password is incorrectly entered or removable storage is
+	// mounted. See UsageLogEvent for a complete description of the logged security
+	// events. Supported for fully managed devices on Android 7 and above.
+	// Supported for company-owned devices with a work profile on Android 12 and
+	// above, on which only security events from the work profile are logged. Can
+	// be overridden by the application delegated scope SECURITY_LOGS
+	//   "NETWORK_ACTIVITY_LOGS" - Enable logging of on-device network events, such
+	// as DNS lookups and TCP connections. See UsageLogEvent for a complete
 	// description of the logged network events. Supported for fully managed
 	// devices on Android 8 and above. Supported for company-owned devices with a
 	// work profile on Android 12 and above, on which only network events from the
@@ -8353,15 +8359,15 @@ type UsageLog struct {
 	//
 	// Possible values:
 	//   "LOG_TYPE_UNSPECIFIED" - This value is not used.
-	//   "SECURITY_LOGS" - Enable logging of on-device security events, like when
-	// the device password is incorrectly entered or removable storage is mounted.
-	// See UsageLogEvent for a complete description of the logged security events.
-	// Supported for fully managed devices on Android 7 and above. Supported for
-	// company-owned devices with a work profile on Android 12 and above, on which
-	// only security events from the work profile are logged. Can be overridden by
-	// the application delegated scope SECURITY_LOGS
-	//   "NETWORK_ACTIVITY_LOGS" - Enable logging of on-device network events, like
-	// DNS lookups and TCP connections. See UsageLogEvent for a complete
+	//   "SECURITY_LOGS" - Enable logging of on-device security events, such as
+	// when the device password is incorrectly entered or removable storage is
+	// mounted. See UsageLogEvent for a complete description of the logged security
+	// events. Supported for fully managed devices on Android 7 and above.
+	// Supported for company-owned devices with a work profile on Android 12 and
+	// above, on which only security events from the work profile are logged. Can
+	// be overridden by the application delegated scope SECURITY_LOGS
+	//   "NETWORK_ACTIVITY_LOGS" - Enable logging of on-device network events, such
+	// as DNS lookups and TCP connections. See UsageLogEvent for a complete
 	// description of the logged network events. Supported for fully managed
 	// devices on Android 8 and above. Supported for company-owned devices with a
 	// work profile on Android 12 and above, on which only network events from the

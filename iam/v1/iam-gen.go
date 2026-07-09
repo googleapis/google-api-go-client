@@ -3161,12 +3161,14 @@ func (s ServiceAccount) MarshalJSON() ([]byte, error) {
 }
 
 // ServiceAccountKey: Represents a service account key. A service account has
-// two sets of key-pairs: user-managed, and system-managed. User-managed
-// key-pairs can be created and deleted by users. Users are responsible for
-// rotating these keys periodically to ensure security of their service
-// accounts. Users retain the private key of these key-pairs, and Google
-// retains ONLY the public key. System-managed keys are automatically rotated
-// by Google, and are used for signing for a maximum of two weeks. The rotation
+// two sets of key-pairs: user-managed and system-managed. System-managed keys
+// are also called _Google-owned and managed keys_. User-managed key-pairs can
+// be created and deleted by users. Users are responsible for rotating these
+// keys periodically to ensure security of their service accounts. Users retain
+// the private key of these key-pairs, and Google retains ONLY the public key.
+// System-managed keys that are actively used for signing are rotated regularly
+// according to security best practices
+// (https://docs.cloud.google.com/iam/docs/key-rotation#timing). The rotation
 // process is probabilistic, and usage of the new key will gradually ramp up
 // and down over the key's lifetime. If you cache the public key set for a
 // service account, we recommend that you update the cache every 15 minutes.

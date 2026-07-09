@@ -4330,9 +4330,7 @@ type ConversionCountingConfig struct {
 	// conversions are counted. The Primary model can be set by you for a
 	// floodlight config or group. More details here
 	// (https://support.google.com/displayvideo/answer/7409983). Only applicable to
-	// Demand Gen line items. Retrieval and management of Demand Gen resources is
-	// currently rolling out. This field will be available to all partners by *June
-	// 24, 2026*.
+	// Demand Gen line items.
 	PrimaryAttributionModelId int64 `json:"primaryAttributionModelId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "FloodlightActivityConfigs")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -8708,9 +8706,7 @@ type LineItem struct {
 	// CreativeIds: The IDs of the creatives associated with the line item.
 	CreativeIds googleapi.Int64s `json:"creativeIds,omitempty"`
 	// DemandGenSettings: Optional. Settings specific to Demand Gen line items.
-	// Only applicable to Demand Gen line items. Retrieval and management of Demand
-	// Gen resources is currently rolling out. This field will be available to all
-	// partners by *June 24, 2026*.
+	// Only applicable to Demand Gen line items.
 	DemandGenSettings *DemandGenSettings `json:"demandGenSettings,omitempty"`
 	// DisplayName: Required. The display name of the line item. Must be UTF-8
 	// encoded with a maximum size of 240 bytes.
@@ -8826,9 +8822,7 @@ type LineItem struct {
 	//   "LINE_ITEM_TYPE_VIDEO_OUT_OF_HOME" - Video ads served on
 	// digital-out-of-home inventory. Line items of this type and their targeting
 	// cannot be created or updated using the API.
-	//   "LINE_ITEM_TYPE_DEMAND_GEN" - Demand Gen ads. Retrieval and management of
-	// Demand Gen resources is currently rolling out. This field will be available
-	// to all partners by *June 24, 2026*.
+	//   "LINE_ITEM_TYPE_DEMAND_GEN" - Demand Gen ads.
 	LineItemType string `json:"lineItemType,omitempty"`
 	// MobileApp: The mobile app promoted by the line item. This is applicable only
 	// when line_item_type is either `LINE_ITEM_TYPE_DISPLAY_MOBILE_APP_INSTALL` or
@@ -12622,9 +12616,7 @@ func (s TargetFrequency) MarshalJSON() ([]byte, error) {
 type TargetingExpansionConfig struct {
 	// ExcludeDemographicExpansion: Optional. Whether to exclude demographic
 	// expansion for Optimized Targeting. This field can only be set for Demand Gen
-	// ad groups. Retrieval and management of Demand Gen resources is currently
-	// rolling out. This field will be available to all partners by *June 24,
-	// 2026*.
+	// ad groups.
 	ExcludeDemographicExpansion bool `json:"excludeDemographicExpansion,omitempty"`
 	// ExcludeFirstPartyAudience: Whether to exclude first-party audiences from use
 	// in targeting expansion. This field was deprecated with the launch of
@@ -12887,7 +12879,8 @@ type ThirdPartyMeasurementConfigs struct {
 	// lift. The following third-party vendors are applicable: *
 	// `THIRD_PARTY_VENDOR_DYNATA` * `THIRD_PARTY_VENDOR_KANTAR` *
 	// `THIRD_PARTY_VENDOR_INTAGE` * `THIRD_PARTY_VENDOR_NIELSEN` *
-	// `THIRD_PARTY_VENDOR_MACROMILL`
+	// `THIRD_PARTY_VENDOR_MACROMILL` *Warning*: Starting **July 13, 2026**, this
+	// field will no longer support `THIRD_PARTY_VENDOR_NIELSEN`.
 	BrandLiftVendorConfigs []*ThirdPartyVendorConfig `json:"brandLiftVendorConfigs,omitempty"`
 	// BrandSafetyVendorConfigs: Optional. The third-party vendors measuring brand
 	// safety. The following third-party vendors are applicable: *

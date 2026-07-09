@@ -682,7 +682,9 @@ type BackupConfiguration struct {
 	Location string `json:"location,omitempty"`
 	// PointInTimeRecoveryEnabled: Whether point in time recovery is enabled.
 	PointInTimeRecoveryEnabled bool `json:"pointInTimeRecoveryEnabled,omitempty"`
-	// ReplicationLogArchivingEnabled: Reserved for future use.
+	// ReplicationLogArchivingEnabled: Optional. Deprecated:
+	// replication_log_archiving_enabled is deprecated and will be removed from a
+	// future version of the API. Use point_in_time_recovery_enabled instead.
 	ReplicationLogArchivingEnabled bool `json:"replicationLogArchivingEnabled,omitempty"`
 	// StartTime: Start time for the daily backup configuration in UTC timezone in
 	// the 24 hour format - `HH:MM`.
@@ -1201,6 +1203,9 @@ type ConnectSettings struct {
 	//   "SECOND_GEN" - V2 speckle instance.
 	//   "EXTERNAL" - On premises instance.
 	BackendType string `json:"backendType,omitempty"`
+	// ConnectionName: Optional. Output only. Connection name of the Cloud SQL
+	// instance used in connection strings, in the format project:region:instance.
+	ConnectionName string `json:"connectionName,omitempty"`
 	// CustomSubjectAlternativeNames: Custom subject alternative names for the
 	// server certificate.
 	CustomSubjectAlternativeNames []string `json:"customSubjectAlternativeNames,omitempty"`
@@ -4528,8 +4533,21 @@ func (s PerformDiskShrinkContext) MarshalJSON() ([]byte, error) {
 
 // PerformanceCaptureConfig: Performance capture configuration.
 type PerformanceCaptureConfig struct {
+	// CpuUtilizationThresholdPercent: Optional. Specifies the minimum percentage
+	// of CPU utilization to trigger the performance capture. Valid integers range
+	// from `10` to `99`. Enter `0` to disable the check.
+	CpuUtilizationThresholdPercent int64 `json:"cpuUtilizationThresholdPercent,omitempty"`
 	// Enabled: Optional. Enables or disables the performance capture feature.
 	Enabled bool `json:"enabled,omitempty"`
+	// HistoryListLengthThresholdCount: Optional. Specifies the minimum number of
+	// undo log entries in the history list length to trigger the performance
+	// capture. Valid integers range from `10000` to `10000000`. Enter `0` to
+	// disable the check.
+	HistoryListLengthThresholdCount int64 `json:"historyListLengthThresholdCount,omitempty"`
+	// MemoryUsageThresholdPercent: Optional. Specifies the minimum percentage of
+	// memory usage to trigger the performance capture. Valid integers range from
+	// `10` to `99`. Enter `0` to disable the check.
+	MemoryUsageThresholdPercent int64 `json:"memoryUsageThresholdPercent,omitempty"`
 	// ProbeThreshold: Optional. Specifies the minimum number of consecutive probe
 	// threshold that triggers performance capture.
 	ProbeThreshold int64 `json:"probeThreshold,omitempty"`
@@ -4545,19 +4563,57 @@ type PerformanceCaptureConfig struct {
 	// seconds replica must be lagging behind primary instance to trigger the
 	// performance capture on replica.
 	SecondsBehindSourceThreshold int64 `json:"secondsBehindSourceThreshold,omitempty"`
+	// SemaphoreWaitThresholdCount: Optional. Specifies the minimum allowed number
+	// of semaphore waits to trigger the performance capture. Valid integers range
+	// from `10` to `10000`. Enter `0` to disable the check.
+	SemaphoreWaitThresholdCount int64 `json:"semaphoreWaitThresholdCount,omitempty"`
 	// TransactionDurationThreshold: Optional. Specifies the amount of time in
 	// seconds that a transaction needs to have been open before the watcher starts
 	// recording it.
 	TransactionDurationThreshold int64 `json:"transactionDurationThreshold,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// TransactionKillExcludedUserHosts: Optional. Specifies a customer-defined
+	// list of users to exclude from transaction termination. Entries can be in the
+	// format 'user@host' or just 'user'. A standalone 'user' implies 'user@%',
+	// excluding the user from any host. Wildcard '%' is allowed in the host part
+	// of the 'user@host' format. Example: `["app_user", "db_admin@10.1.2.3",
+	// "report_user@%"]`
+	TransactionKillExcludedUserHosts []string `json:"transactionKillExcludedUserHosts,omitempty"`
+	// TransactionKillThresholdSeconds: Optional. Specifies the amount of time in
+	// seconds that a transaction needs to have been open before the watcher starts
+	// terminating it. Valid integers range from `60` to `604800` (7 days). Enter
+	// `0` to disable. If enabled (i.e., > 0), this value must be greater than or
+	// equal to `transaction_duration_threshold`. Configurations where `0 <
+	// transaction_kill_threshold_seconds < transaction_duration_threshold` will be
+	// rejected.
+	TransactionKillThresholdSeconds int64 `json:"transactionKillThresholdSeconds,omitempty"`
+	// TransactionKillType: Optional. Determines which transactions are allowed to
+	// be terminated when they exceed `transaction_kill_threshold_seconds`. This
+	// allows protecting write-heavy transactions from auto-termination if desired.
+	// Defaults to `READ_ONLY_TRANSACTIONS` if unspecified.
+	//
+	// Possible values:
+	//   "TRANSACTION_KILL_TYPE_UNSPECIFIED" - Unspecified.
+	//   "READ_ONLY_TRANSACTIONS" - Only read-only transactions are eligible for
+	// termination.
+	//   "ALL_TRANSACTIONS" - All transactions are eligible for termination,
+	// including those with write operations (such as INSERT, UPDATE, DELETE, or
+	// DDL).
+	TransactionKillType string `json:"transactionKillType,omitempty"`
+	// TransactionLockWaitThresholdCount: Optional. Specifies the minimum allowed
+	// number of transactions in lock wait state to trigger the performance
+	// capture. Valid integers range from `10` to `10000`. Enter `0` to disable the
+	// check.
+	TransactionLockWaitThresholdCount int64 `json:"transactionLockWaitThresholdCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "CpuUtilizationThresholdPercent") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Enabled") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CpuUtilizationThresholdPercent")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4853,6 +4909,17 @@ type PscAutoConnectionConfig struct {
 	// project of this consumer endpoint. This is only applicable if
 	// `consumer_network` is a shared VPC network.
 	ConsumerProject string `json:"consumerProject,omitempty"`
+	// InstanceAutoDnsStatus: Output only. The status of automated DNS
+	// provisioning.
+	//
+	// Possible values:
+	//   "AUTO_DNS_STATUS_UNSPECIFIED" - Unspecified status. This means status is
+	// missing from dependency service.
+	//   "AUTO_DNS_OK" - DNS provisioning is OK.
+	//   "AUTO_DNS_FAILED" - DNS provisioning failed.
+	//   "AUTO_DNS_UNKNOWN" - DNS provisioning status is not recognized by Cloud
+	// SQL.
+	InstanceAutoDnsStatus string `json:"instanceAutoDnsStatus,omitempty"`
 	// IpAddress: The IP address of the consumer endpoint.
 	IpAddress string `json:"ipAddress,omitempty"`
 	// ServiceConnectionPolicy: Output only. The service connection policy created
@@ -4866,6 +4933,17 @@ type PscAutoConnectionConfig struct {
 	ServiceConnectionPolicyCreationResult string `json:"serviceConnectionPolicyCreationResult,omitempty"`
 	// Status: The connection status of the consumer endpoint.
 	Status string `json:"status,omitempty"`
+	// WriteEndpointAutoDnsStatus: Output only. The status of automated DNS
+	// provisioning for the write endpoint.
+	//
+	// Possible values:
+	//   "AUTO_DNS_STATUS_UNSPECIFIED" - Unspecified status. This means status is
+	// missing from dependency service.
+	//   "AUTO_DNS_OK" - DNS provisioning is OK.
+	//   "AUTO_DNS_FAILED" - DNS provisioning failed.
+	//   "AUTO_DNS_UNKNOWN" - DNS provisioning status is not recognized by Cloud
+	// SQL.
+	WriteEndpointAutoDnsStatus string `json:"writeEndpointAutoDnsStatus,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConsumerNetwork") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -8103,8 +8181,8 @@ func (c *ConnectGetCall) Do(opts ...googleapi.CallOption) (*ConnectSettings, err
 
 type ConnectResolveCall struct {
 	s            *Service
-	dnsName      string
 	location     string
+	dnsName      string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -8116,10 +8194,10 @@ type ConnectResolveCall struct {
 //
 // - dnsName: Cloud SQL instance ID. This does not include the project ID.
 // - location: The region of the instance.
-func (r *ConnectService) Resolve(dnsName string, location string) *ConnectResolveCall {
+func (r *ConnectService) Resolve(location string, dnsName string) *ConnectResolveCall {
 	c := &ConnectResolveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.dnsName = dnsName
 	c.location = location
+	c.dnsName = dnsName
 	return c
 }
 
@@ -8161,7 +8239,7 @@ func (c *ConnectResolveCall) doRequest(alt string) (*http.Response, error) {
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/dns/{dnsName}/locations/{location}:resolveConnectSettings")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/locations/{location}/dns/{dnsName}:resolveConnectSettings")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
@@ -8169,8 +8247,8 @@ func (c *ConnectResolveCall) doRequest(alt string) (*http.Response, error) {
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"dnsName":  c.dnsName,
 		"location": c.location,
+		"dnsName":  c.dnsName,
 	})
 	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.connect.resolve", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
@@ -11307,6 +11385,22 @@ func (r *InstancesService) Patch(project string, instance string, databaseinstan
 	c.project = project
 	c.instance = instance
 	c.databaseinstance = databaseinstance
+	return c
+}
+
+// ReconcilePscNetworking sets the optional parameter "reconcilePscNetworking":
+// Set PSC config to the same value as the existing config to reconcile the PSC
+// networking.
+func (c *InstancesPatchCall) ReconcilePscNetworking(reconcilePscNetworking bool) *InstancesPatchCall {
+	c.urlParams_.Set("reconcilePscNetworking", fmt.Sprint(reconcilePscNetworking))
+	return c
+}
+
+// ReconcilePscNetworkingForce sets the optional parameter
+// "reconcilePscNetworkingForce": Set PSC config to the same value as the
+// existing config and force reconcile the PSC networking.
+func (c *InstancesPatchCall) ReconcilePscNetworkingForce(reconcilePscNetworkingForce bool) *InstancesPatchCall {
+	c.urlParams_.Set("reconcilePscNetworkingForce", fmt.Sprint(reconcilePscNetworkingForce))
 	return c
 }
 

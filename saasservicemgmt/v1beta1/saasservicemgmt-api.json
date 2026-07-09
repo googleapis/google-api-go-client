@@ -3218,7 +3218,7 @@
       }
     }
   },
-  "revision": "20260610",
+  "revision": "20260624",
   "rootUrl": "https://saasservicemgmt.googleapis.com/",
   "schemas": {
     "Aggregate": {
@@ -3316,11 +3316,11 @@
       "type": "object"
     },
     "ComponentRef": {
-      "description": "ComponentRef represents a reference to a component resource. Next ID: 4",
+      "description": "ComponentRef represents a reference to a component resource.",
       "id": "ComponentRef",
       "properties": {
         "component": {
-          "description": "Name of the component in composite.Components",
+          "description": "Optional. Name of the component in composite.Components",
           "type": "string"
         },
         "compositeRef": {
@@ -3335,7 +3335,7 @@
       "type": "object"
     },
     "CompositeRef": {
-      "description": "CompositeRef represents a reference to a composite resource. Next ID: 4",
+      "description": "CompositeRef represents a reference to a composite resource.",
       "id": "CompositeRef",
       "properties": {
         "applicationTemplate": {
@@ -3744,7 +3744,7 @@
         },
         "flagRevisionsRelease": {
           "$ref": "FlagRevisionList",
-          "description": "Optional. Immutable. Specifies the release consists of a list of flag revisions."
+          "description": "Optional. Immutable. Specifies the release consisting of a list of flag revisions."
         },
         "flagSets": {
           "deprecated": true,
@@ -3756,7 +3756,7 @@
         },
         "flagSetsRelease": {
           "$ref": "FlagSetList",
-          "description": "Optional. Immutable. Specifies the release consists of a list of flag sets."
+          "description": "Optional. Immutable. Specifies the release consisting of a list of flag sets."
         },
         "labels": {
           "additionalProperties": {
@@ -5538,8 +5538,7 @@
         },
         "applicationTemplateComponent": {
           "$ref": "ComponentRef",
-          "description": "Output only. Reference to component and revision in a composite ApplicationTemplate.",
-          "readOnly": true
+          "description": "Optional. Reference to component and revision in a composite ApplicationTemplate."
         },
         "boundaryType": {
           "description": "Optional. Output only. BoundaryType describes the type of boundary the Unit Kind represents.",

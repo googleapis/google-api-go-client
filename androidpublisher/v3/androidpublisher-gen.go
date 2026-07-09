@@ -2602,6 +2602,46 @@ func (s CancellationEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CoarseLocation: Coarse Geographic location details for where the consumption
+// happened.
+type CoarseLocation struct {
+	// AdministrativeArea: Optional. Highest administrative subdivision which is
+	// used for postal addresses of a country or region. For example, this can be a
+	// state, a province, an oblast, or a prefecture. For Spain, this is the
+	// province and not the autonomous community (for example, "Barcelona" and not
+	// "Catalonia"). Many countries don't use an administrative area in postal
+	// addresses. For example, in Switzerland, this should be left unpopulated.
+	AdministrativeArea string `json:"administrativeArea,omitempty"`
+	// Locality: Optional. Generally refers to the city or town portion of the
+	// address. Examples: US city, IT comune, UK post town. In regions of the world
+	// where localities are not well defined or do not fit into this structure
+	// well, leave `locality` empty.
+	Locality string `json:"locality,omitempty"`
+	// RegionCode: Required. CLDR region code (https://cldr.unicode.org/) of the
+	// country/region of the address. This value is never inferred and you must
+	// ensure the value is correct. Example: "CH" for Switzerland.
+	RegionCode string `json:"regionCode,omitempty"`
+	// Sublocality: Optional. Sublocality of the address. For example, this can be
+	// a neighborhood, borough, or district. For most addresses, you can omit this.
+	Sublocality string `json:"sublocality,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdministrativeArea") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdministrativeArea") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CoarseLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod CoarseLocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Comment: An entry of conversation between user and developer.
 type Comment struct {
 	// DeveloperComment: A comment from a developer.
@@ -2623,6 +2663,46 @@ type Comment struct {
 
 func (s Comment) MarshalJSON() ([]byte, error) {
 	type NoMethod Comment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConsumptionUsageEvent: List of events, each representing an instance where
+// the user consumed or used the purchased item or service.
+type ConsumptionUsageEvent struct {
+	// ConsumptionItemDescription: Optional. Free form text that allows developers
+	// to provide more info on the item consumed. Maximum length is 5000
+	// characters.
+	ConsumptionItemDescription string `json:"consumptionItemDescription,omitempty"`
+	// ConsumptionTime: Optional. Time when the user consumed, used, downloaded,
+	// opened, or streamed the content.
+	ConsumptionTime string `json:"consumptionTime,omitempty"`
+	// IpAddress: Optional. The IP address from which the consumption occurred.
+	IpAddress string `json:"ipAddress,omitempty"`
+	// Location: Optional. Geographic location where the consumption occurred.
+	Location *CoarseLocation `json:"location,omitempty"`
+	// ObfuscatedAccountId: Optional. Obfuscated string that is uniquely associated
+	// with the purchaser's user account in the app.
+	// https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setObfuscatedAccountId(java.lang.String)
+	ObfuscatedAccountId string `json:"obfuscatedAccountId,omitempty"`
+	// ObfuscatedProfileId: Optional. Obfuscated string that is uniquely associated
+	// with the purchaser's user profile in the app.
+	// https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setObfuscatedProfileId(java.lang.String)
+	ObfuscatedProfileId string `json:"obfuscatedProfileId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConsumptionItemDescription")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConsumptionItemDescription") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConsumptionUsageEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod ConsumptionUsageEvent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6557,6 +6637,52 @@ type OrderHistory struct {
 
 func (s OrderHistory) MarshalJSON() ([]byte, error) {
 	type NoMethod OrderHistory
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OrdersReviewRefundRequest: Request for the orders.reviewrefund API.
+type OrdersReviewRefundRequest struct {
+	// ConsumptionPercentageMilliunits: Optional. Percentage of the In-App purchase
+	// the customer consumed, in milliunits. Minimum: 0 Maximum: 100,000. For paid
+	// apps, this can be omitted. Example : 45200 represents 45.2%.
+	ConsumptionPercentageMilliunits int64 `json:"consumptionPercentageMilliunits,omitempty"`
+	// ConsumptionUsageEvents: Optional. List of events, each representing an
+	// instance where the user consumed or used the purchased item or service.
+	// Lists with over 1000 items will be rejected.
+	ConsumptionUsageEvents []*ConsumptionUsageEvent `json:"consumptionUsageEvents,omitempty"`
+	// PendingRefundToken: Required. The pending refund token included in the
+	// pending refund review notification.
+	PendingRefundToken string `json:"pendingRefundToken,omitempty"`
+	// RefundPreference: Required. Indicates your preference, based on your
+	// operational logic, as to whether the Play Store should grant the refund.
+	//
+	// Possible values:
+	//   "REFUND_PREFERENCE_UNSPECIFIED" - Refund preference unspecified. This
+	// value is not used.
+	//   "DECLINE" - Developer prefers that Play declines the refund.
+	//   "APPROVE" - Developer prefers that Play grants the refund in full.
+	//   "NEUTRAL" - Developer has no preference about Google Play's decision to
+	// issue a refund
+	RefundPreference string `json:"refundPreference,omitempty"`
+	// SampleContentProvided: Required. Indicates whether you provided a free
+	// sample, trial, or information about the functionality prior to the purchase.
+	SampleContentProvided bool `json:"sampleContentProvided,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ConsumptionPercentageMilliunits") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConsumptionPercentageMilliunits")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OrdersReviewRefundRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod OrdersReviewRefundRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -24045,6 +24171,92 @@ func (c *OrdersRefundCall) Do(opts ...googleapi.CallOption) error {
 		return gensupport.WrapError(err)
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.orders.refund", "response", internallog.HTTPResponse(res, nil))
+	return nil
+}
+
+type OrdersReviewrefundCall struct {
+	s                         *Service
+	packageName               string
+	orderId                   string
+	ordersreviewrefundrequest *OrdersReviewRefundRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Reviewrefund: Provide refund preference and purchase usage for a chargeback
+// request
+//
+//   - orderId: The order ID provided to the user when the subscription or in-app
+//     order was purchased.
+//   - packageName: The package name of the application for which this
+//     subscription or in-app item was purchased (for example, 'com.some.thing').
+func (r *OrdersService) Reviewrefund(packageName string, orderId string, ordersreviewrefundrequest *OrdersReviewRefundRequest) *OrdersReviewrefundCall {
+	c := &OrdersReviewrefundCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.orderId = orderId
+	c.ordersreviewrefundrequest = ordersreviewrefundrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrdersReviewrefundCall) Fields(s ...googleapi.Field) *OrdersReviewrefundCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrdersReviewrefundCall) Context(ctx context.Context) *OrdersReviewrefundCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrdersReviewrefundCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrdersReviewrefundCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.ordersreviewrefundrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/orders/{orderId}:reviewrefund")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"orderId":     c.orderId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.orders.reviewrefund", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.orders.reviewrefund" call.
+func (c *OrdersReviewrefundCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return gensupport.WrapError(err)
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.orders.reviewrefund", "response", internallog.HTTPResponse(res, nil))
 	return nil
 }
 

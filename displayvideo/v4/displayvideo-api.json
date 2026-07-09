@@ -562,7 +562,7 @@
         "adGroupAds": {
           "methods": {
             "create": {
-              "description": "Creates an ad group ad. This method is only supported for Demand Gen ads. Retrieval and management of Demand Gen resources is currently rolling out. This method will be available to all partners by *June 24, 2026*.",
+              "description": "Creates an ad group ad. This method is only supported for Demand Gen ads.",
               "flatPath": "v4/advertisers/{advertisersId}/adGroupAds",
               "httpMethod": "POST",
               "id": "displayvideo.advertisers.adGroupAds.create",
@@ -591,7 +591,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes an ad group ad. This method is only supported for Demand Gen ads. Retrieval and management of Demand Gen resources is currently rolling out. This method will be available to all partners by *June 24, 2026*.",
+              "description": "Deletes an ad group ad. This method is only supported for Demand Gen ads.",
               "flatPath": "v4/advertisers/{advertisersId}/adGroupAds/{adGroupAdsId}",
               "httpMethod": "DELETE",
               "id": "displayvideo.advertisers.adGroupAds.delete",
@@ -708,7 +708,7 @@
               ]
             },
             "patch": {
-              "description": "Updates an ad group ad. This method is only supported for Demand Gen ads. Retrieval and management of Demand Gen resources is currently rolling out. This method will be available to all partners by *June 24, 2026*.",
+              "description": "Updates an ad group ad. This method is only supported for Demand Gen ads.",
               "flatPath": "v4/advertisers/{advertisersId}/adGroupAds/{adGroupAdsId}",
               "httpMethod": "PATCH",
               "id": "displayvideo.advertisers.adGroupAds.patch",
@@ -756,7 +756,7 @@
         "adGroups": {
           "methods": {
             "bulkEditAssignedTargetingOptions": {
-              "description": "Bulk edits targeting options for multiple ad groups. The same set of delete and create requests will be applied to all specified ad groups. Specifically, the operation will delete the assigned targeting options provided in BulkEditAdGroupAssignedTargetingOptionsRequest.delete_requests from each ad group, and then create the assigned targeting options provided in BulkEditAdGroupAssignedTargetingOptionsRequest.create_requests. This method is only supported for Demand Gen ad groups. Retrieval and management of Demand Gen resources is currently rolling out. This method will be available to all partners by *June 24, 2026*.",
+              "description": "Bulk edits targeting options for multiple ad groups. The same set of delete and create requests will be applied to all specified ad groups. Specifically, the operation will delete the assigned targeting options provided in BulkEditAdGroupAssignedTargetingOptionsRequest.delete_requests from each ad group, and then create the assigned targeting options provided in BulkEditAdGroupAssignedTargetingOptionsRequest.create_requests. This method is only supported for Demand Gen ad groups.",
               "flatPath": "v4/advertisers/{advertisersId}/adGroups:bulkEditAssignedTargetingOptions",
               "httpMethod": "POST",
               "id": "displayvideo.advertisers.adGroups.bulkEditAssignedTargetingOptions",
@@ -839,7 +839,7 @@
               ]
             },
             "create": {
-              "description": "Creates a new ad group. Returns the newly created ad group if successful. This method is only supported for Demand Gen ad groups. Retrieval and management of Demand Gen resources is currently rolling out. This method will be available to all partners by *June 24, 2026*.",
+              "description": "Creates a new ad group. Returns the newly created ad group if successful. This method is only supported for Demand Gen ad groups.",
               "flatPath": "v4/advertisers/{advertisersId}/adGroups",
               "httpMethod": "POST",
               "id": "displayvideo.advertisers.adGroups.create",
@@ -868,7 +868,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes a AdGroup. Returns error code `NOT_FOUND` if the ad group does not exist. This method is only supported for Demand Gen ad groups. Retrieval and management of Demand Gen resources is currently rolling out. This method will be available to all partners by *June 24, 2026*.",
+              "description": "Deletes a AdGroup. Returns error code `NOT_FOUND` if the ad group does not exist. This method is only supported for Demand Gen ad groups.",
               "flatPath": "v4/advertisers/{advertisersId}/adGroups/{adGroupsId}",
               "httpMethod": "DELETE",
               "id": "displayvideo.advertisers.adGroups.delete",
@@ -985,7 +985,7 @@
               ]
             },
             "patch": {
-              "description": "Updates an existing ad group. Returns the updated ad group if successful. This method is only supported for Demand Gen ad groups. Retrieval and management of Demand Gen resources is currently rolling out. This method will be available to all partners by *June 24, 2026*.",
+              "description": "Updates an existing ad group. Returns the updated ad group if successful. This method is only supported for Demand Gen ad groups.",
               "flatPath": "v4/advertisers/{advertisersId}/adGroups/{adGroupsId}",
               "httpMethod": "PATCH",
               "id": "displayvideo.advertisers.adGroups.patch",
@@ -1035,7 +1035,7 @@
                 "assignedTargetingOptions": {
                   "methods": {
                     "create": {
-                      "description": "Assigns a targeting option to an ad group. Returns the assigned targeting option if successful. This method is only supported for Demand Gen ad groups. Retrieval and management of Demand Gen resources is currently rolling out. This method will be available to all partners by *June 24, 2026*.",
+                      "description": "Assigns a targeting option to an ad group. Returns the assigned targeting option if successful. This method is only supported for Demand Gen ad groups.",
                       "flatPath": "v4/advertisers/{advertisersId}/adGroups/{adGroupsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions",
                       "httpMethod": "POST",
                       "id": "displayvideo.advertisers.adGroups.targetingTypes.assignedTargetingOptions.create",
@@ -1187,7 +1187,7 @@
                       ]
                     },
                     "delete": {
-                      "description": "Deletes an assigned targeting option from an ad group. This method is only supported for Demand Gen ad groups with the AdGroupFormat `AD_GROUP_FORMAT_DEMAND_GEN`. Retrieval and management of Demand Gen resources is currently rolling out. This method will be available to all partners by *June 24, 2026*.",
+                      "description": "Deletes an assigned targeting option from an ad group. This method is only supported for Demand Gen ad groups with the AdGroupFormat `AD_GROUP_FORMAT_DEMAND_GEN`.",
                       "flatPath": "v4/advertisers/{advertisersId}/adGroups/{adGroupsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions/{assignedTargetingOptionsId}",
                       "httpMethod": "DELETE",
                       "id": "displayvideo.advertisers.adGroups.targetingTypes.assignedTargetingOptions.delete",
@@ -5123,7 +5123,7 @@
                   "type": "string"
                 },
                 "filter": {
-                  "description": "Optional. Allows filtering by plannable user list properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. * A restriction has the form of `{field} {operator} {value}`. * The `updateTime` field must use the `GREATER THAN OR EQUAL TO (\u003e=)` or `LESS THAN OR EQUAL TO (\u003c=)` operators. * All other fields must use the `EQUALS (=)` operator. Supported fields: * `plannableStatus` Examples: * All plannable user lists: `plannableStatus=\"PLANNABLE\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
+                  "description": "Optional. Allows filtering by plannable user list properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. * A restriction has the form of `{field} {operator} {value}`. * The `displayName` field must use the `HAS (:)` operator. * All other fields must use the `EQUALS (=)` operator. Supported fields: * `plannableStatus` * `displayName` * `userListType` * `name` Examples: * All plannable user lists: `plannableStatus=\"PLANNABLE\"` * Plannable user lists with display name containing \"Shopping\": `plannableStatus=\"PLANNABLE\" AND displayName:\"Shopping\"` * First party user lists: `userListType=\"FIRST_PARTY\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
                   "location": "query",
                   "type": "string"
                 },
@@ -9574,7 +9574,7 @@
       }
     }
   },
-  "revision": "20260623",
+  "revision": "20260708",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActiveViewVideoViewabilityMetricConfig": {
@@ -9776,7 +9776,7 @@
             "Responsive ads.",
             "[Effective reach ad groups] (https://support.google.com/displayvideo/answer/9173684), including in-stream and bumper ads.",
             "Masthead Ad that is surfaced on the top slot on the YouTube homepage.",
-            "Demand Gen ads. Retrieval and management of Demand Gen resources is currently rolling out. This field will be available to all partners by *June 24, 2026*."
+            "Demand Gen ads."
           ],
           "type": "string"
         },
@@ -9891,23 +9891,23 @@
         },
         "dcmTrackingInfo": {
           "$ref": "DcmTrackingInfo",
-          "description": "Optional. The DCM tracking ad info. Only valid for Demand Gen ads. To remove the DCM tracking ad info, please leave this field empty. Retrieval and management of Demand Gen resources is currently rolling out. This field will be available to all partners by *June 24, 2026*."
+          "description": "Optional. The DCM tracking ad info. Only valid for Demand Gen ads. To remove the DCM tracking ad info, please leave this field empty."
         },
         "demandGenCarouselAd": {
           "$ref": "DemandGenCarouselAd",
-          "description": "Details of a [Demand Gen carousel ad](//support.google.com/displayvideo/answer/15598924?\u0026sjid=11207068802760924844-NC#CarouselAd). Retrieval and management of Demand Gen resources is currently rolling out. This field will be available to all partners by *June 24, 2026*."
+          "description": "Details of a [Demand Gen carousel ad](//support.google.com/displayvideo/answer/15598924?\u0026sjid=11207068802760924844-NC#CarouselAd)."
         },
         "demandGenImageAd": {
           "$ref": "DemandGenImageAd",
-          "description": "Details of a [Demand Gen image ad](//support.google.com/displayvideo/answer/15598924?\u0026sjid=11207068802760924844-NC#ImageAd). Retrieval and management of Demand Gen resources is currently rolling out. This field will be available to all partners by *June 24, 2026*."
+          "description": "Details of a [Demand Gen image ad](//support.google.com/displayvideo/answer/15598924?\u0026sjid=11207068802760924844-NC#ImageAd)."
         },
         "demandGenProductAd": {
           "$ref": "DemandGenProductAd",
-          "description": "Details of a [Demand Gen product ad](//support.google.com/displayvideo/answer/15598924?\u0026sjid=11207068802760924844-NC#Product-onlyAd). Retrieval and management of Demand Gen resources is currently rolling out. This field will be available to all partners by *June 24, 2026*."
+          "description": "Details of a [Demand Gen product ad](//support.google.com/displayvideo/answer/15598924?\u0026sjid=11207068802760924844-NC#Product-onlyAd)."
         },
         "demandGenVideoAd": {
           "$ref": "DemandGenVideoAd",
-          "description": "Details of a [Demand Gen video ad](//support.google.com/displayvideo/answer/15598924?\u0026sjid=11207068802760924844-NC#VideoAd). Retrieval and management of Demand Gen resources is currently rolling out. This field will be available to all partners by *June 24, 2026*."
+          "description": "Details of a [Demand Gen video ad](//support.google.com/displayvideo/answer/15598924?\u0026sjid=11207068802760924844-NC#VideoAd)."
         },
         "displayName": {
           "description": "Required. The display name of the ad. Must be UTF-8 encoded with a maximum size of 255 bytes.",
@@ -11032,6 +11032,22 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "network": {
+          "description": "Optional. The network to target.",
+          "enum": [
+            "PLANNABLE_NETWORK_UNSPECIFIED",
+            "PLANNABLE_NETWORK_YOUTUBE",
+            "PLANNABLE_NETWORK_GOOGLE_VIDEO_PARTNERS",
+            "PLANNABLE_NETWORK_YOUTUBE_AND_GOOGLE_VIDEO_PARTNERS"
+          ],
+          "enumDescriptions": [
+            "Not specified.",
+            "YouTube.",
+            "Google Video Partners.",
+            "YouTube and Google Video Partners."
+          ],
+          "type": "string"
         },
         "plannableLocationIds": {
           "description": "Optional. Plannable location IDs to target.",
@@ -14209,33 +14225,33 @@
       "id": "ContactInfo",
       "properties": {
         "countryCode": {
-          "description": "Country code of the member. Must also be set with the following fields: * hashed_first_name * hashed_last_name * zip_codes",
+          "description": "Optional. Country code of the member. Must also be set with the following fields: * country_code * hashed_first_name * hashed_last_name * zip_codes",
           "type": "string"
         },
         "hashedEmails": {
-          "description": "A list of SHA256 hashed email of the member. Before hashing, remove all whitespace and make sure the string is all lowercase.",
+          "description": "Optional. A list of SHA256 hashed email of the member. Before hashing, remove all whitespace and make sure the string is all lowercase.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "hashedFirstName": {
-          "description": "SHA256 hashed first name of the member. Before hashing, remove all whitespace and make sure the string is all lowercase. Must also be set with the following fields: * country_code * hashed_last_name * zip_codes",
+          "description": "Optional. SHA256 hashed first name of the member. Before hashing, remove all whitespace and make sure the string is all lowercase. Must also be set with the following fields: * country_code * hashed_last_name * zip_codes",
           "type": "string"
         },
         "hashedLastName": {
-          "description": "SHA256 hashed last name of the member. Before hashing, remove all whitespace and make sure the string is all lowercase. Must also be set with the following fields: * country_code * hashed_first_name * zip_codes",
+          "description": "Optional. SHA256 hashed last name of the member. Before hashing, remove all whitespace and make sure the string is all lowercase. Must also be set with the following fields: * country_code * hashed_first_name * zip_codes",
           "type": "string"
         },
         "hashedPhoneNumbers": {
-          "description": "A list of SHA256 hashed phone numbers of the member. Before hashing, all phone numbers must be formatted using the [E.164 format](//en.wikipedia.org/wiki/E.164) and include the country calling code.",
+          "description": "Optional. A list of SHA256 hashed phone numbers of the member. Before hashing, all phone numbers must be formatted using the [E.164 format](https://en.wikipedia.org/wiki/E.164) and include the country calling code.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "zipCodes": {
-          "description": "A list of zip codes of the member. Must also be set with the following fields: * country_code * hashed_first_name * hashed_last_name",
+          "description": "Optional. A list of zip codes of the member. Must also be set with the following fields: * country_code * hashed_first_name * hashed_last_name",
           "items": {
             "type": "string"
           },
@@ -14253,7 +14269,7 @@
           "description": "Input only. The consent setting for the users in contact_infos. Leaving this field unset indicates that consent is not specified. If ad_user_data or ad_personalization fields are set to `CONSENT_STATUS_DENIED`, the request will return an error."
         },
         "contactInfos": {
-          "description": "A list of ContactInfo objects defining Customer Match audience members. The size of members after splitting the contact_infos mustn't be greater than 500,000.",
+          "description": "Optional. A list of ContactInfo objects defining Customer Match audience members. The size of members after splitting the contact_infos mustn't be greater than 500,000.",
           "items": {
             "$ref": "ContactInfo"
           },
@@ -14671,7 +14687,7 @@
           "type": "string"
         },
         "primaryAttributionModelId": {
-          "description": "Optional. The attribution model to use for conversion measurement. This attribution model will determine how conversions are counted. The Primary model can be set by you for a floodlight config or group. More details [here](https://support.google.com/displayvideo/answer/7409983). Only applicable to Demand Gen line items. Retrieval and management of Demand Gen resources is currently rolling out. This field will be available to all partners by *June 24, 2026*.",
+          "description": "Optional. The attribution model to use for conversion measurement. This attribution model will determine how conversions are counted. The Primary model can be set by you for a floodlight config or group. More details [here](https://support.google.com/displayvideo/answer/7409983). Only applicable to Demand Gen line items.",
           "format": "int64",
           "type": "string"
         }
@@ -16105,7 +16121,7 @@
       "id": "DemandGenCarouselAd",
       "properties": {
         "businessName": {
-          "description": "Required. The business name shown on the ad.",
+          "description": "Required. The business name shown on the ad. *Warning*: Starting **July 13, 2026**, this setting will no longer be required if a default value is set at the advertiser level. If left unset, the default value will be applied.",
           "type": "string"
         },
         "cards": {
@@ -16140,7 +16156,7 @@
         },
         "logo": {
           "$ref": "ImageAsset",
-          "description": "Required. The logo image used by this ad."
+          "description": "Required. The logo image used by this ad. *Warning*: Starting **July 13, 2026**, this setting will no longer be required if a default value is set at the advertiser level. If left unset, the default value will be applied."
         },
         "trackingUrl": {
           "description": "Output only. The URL address loaded in the background for tracking purposes.",
@@ -16159,7 +16175,7 @@
       "id": "DemandGenImageAd",
       "properties": {
         "businessName": {
-          "description": "Required. The business name shown on the ad.",
+          "description": "Required. The business name shown on the ad. *Warning*: Starting **July 13, 2026**, this setting will no longer be required if a default value is set at the advertiser level. If left unset, the default value will be applied.",
           "type": "string"
         },
         "callToAction": {
@@ -16200,7 +16216,7 @@
           "type": "array"
         },
         "logoImages": {
-          "description": "The list of logo images shown on the ad.",
+          "description": "The list of logo images shown on the ad. *Warning*: Starting **July 13, 2026**, this setting will no longer be required if a default value is set at the advertiser level. If left unset, the default value will be applied.",
           "items": {
             "$ref": "ImageAsset"
           },
@@ -16244,7 +16260,7 @@
       "id": "DemandGenProductAd",
       "properties": {
         "businessName": {
-          "description": "Required. The business name shown on the ad.",
+          "description": "Required. The business name shown on the ad. *Warning*: Starting **July 13, 2026**, this setting will no longer be required if a default value is set at the advertiser level. If left unset, the default value will be applied.",
           "type": "string"
         },
         "callToAction": {
@@ -16326,7 +16342,7 @@
         },
         "logo": {
           "$ref": "ImageAsset",
-          "description": "Required. The logo image used by this ad."
+          "description": "Required. The logo image used by this ad. *Warning*: Starting **July 13, 2026**, this setting will no longer be required if a default value is set at the advertiser level. If left unset, the default value will be applied."
         },
         "trackingUrl": {
           "description": "Output only. The URL address loaded in the background for tracking purposes.",
@@ -16365,7 +16381,7 @@
       "id": "DemandGenVideoAd",
       "properties": {
         "businessName": {
-          "description": "Required. The business name shown on the ad.",
+          "description": "Required. The business name shown on the ad. *Warning*: Starting **July 13, 2026**, this setting will no longer be required if a default value is set at the advertiser level. If left unset, the default value will be applied.",
           "type": "string"
         },
         "callToAction": {
@@ -16461,7 +16477,7 @@
         },
         "logo": {
           "$ref": "ImageAsset",
-          "description": "Required. The logo image used by this ad."
+          "description": "Required. The logo image used by this ad. *Warning*: Starting **July 13, 2026**, this setting will no longer be required if a default value is set at the advertiser level. If left unset, the default value will be applied."
         },
         "longHeadlines": {
           "description": "Required. The list of long headlines shown on the ad.",
@@ -17053,7 +17069,7 @@
       "type": "object"
     },
     "EditCustomerMatchMembersRequest": {
-      "description": "Request message for FirstAndThirdPartyAudienceService.EditCustomerMatchMembers.",
+      "description": "Request message for FirstPartyAndPartnerAudienceService.EditCustomerMatchMembers.",
       "id": "EditCustomerMatchMembersRequest",
       "properties": {
         "addedContactInfoList": {
@@ -17081,7 +17097,7 @@
       "type": "object"
     },
     "EditCustomerMatchMembersResponse": {
-      "description": "The response of FirstAndThirdPartyAudienceService.EditCustomerMatchMembers.",
+      "description": "The response of FirstPartyAndPartnerAudienceService.EditCustomerMatchMembers.",
       "id": "EditCustomerMatchMembersResponse",
       "properties": {
         "firstPartyAndPartnerAudienceId": {
@@ -17181,38 +17197,6 @@
             "type": "string"
           },
           "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "EffectiveFrequencyBreakdown": {
-      "description": "A breakdown of the number of unique people reached at a given effective frequency.",
-      "id": "EffectiveFrequencyBreakdown",
-      "properties": {
-        "effectiveCoviewReach": {
-          "description": "The number of unique individuals, including co-viewers, exactly matching the targeting that were served the ad at least the number of times dictated by the effective_frequency.",
-          "format": "int64",
-          "type": "string"
-        },
-        "effectiveFrequency": {
-          "description": "The set effective frequency.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "onTargetEffectiveCoviewReach": {
-          "description": "The total number of unique individuals, including co-viewers that were served the ad at least the number of times dictated by the effective_frequency. This includes individuals that may fall outside of targeting.",
-          "format": "int64",
-          "type": "string"
-        },
-        "onTargetReach": {
-          "description": "The number of unique individuals exactly matching the targeting that were served the ad at least the number of times dictated by the effective_frequency.",
-          "format": "int64",
-          "type": "string"
-        },
-        "totalReach": {
-          "description": "The total number of unique individuals that were served the ad at least the number of times dictated by the effective_frequency. This includes individuals that may fall outside of targeting.",
-          "format": "int64",
-          "type": "string"
         }
       },
       "type": "object"
@@ -18201,8 +18185,8 @@
             "Audience was generated through matching customers to known contact information.",
             "Audience was generated through matching customers to known Mobile device IDs.",
             "Audience was generated through matching customers to known User IDs.",
-            "Audience was created based on campaign activity.",
-            "Audience was created based on excluding the number of impressions they were served.",
+            "Deprecated: Audience was created based on campaign activity.",
+            "Deprecated: Audience was created based on excluding the number of impressions they were served.",
             "Audience was created based on custom variables attached to pixel.",
             "Audience was created based on past interactions with videos, YouTube ads, or YouTube channel.",
             "Audience has been licensed for use from a third party.",
@@ -18636,13 +18620,8 @@
           "description": "Required. The currency code for the plan in ISO 4217 format.",
           "type": "string"
         },
-        "effectiveFrequencyBreakdownLimit": {
-          "description": "Optional. The highest minimum effective frequency to include in PlannedProductForecast.effective_frequency_breakdowns. Must be between 1 and 10, inclusive. If not specified, PlannedProductForecast.effective_frequency_breakdowns will not be populated. If set, this value will also be used as the minimum effective frequency for reach metrics reporting. This field cannot be combined with the min_effective_frequency field.",
-          "format": "int32",
-          "type": "integer"
-        },
         "minEffectiveFrequency": {
-          "description": "Optional. The minimum effective frequency for the reported reach metrics. This is the smallest number of times a customer must be exposed to the ad for it to be considered effective. This setting only impacts reporting. Must be between 1 and 10, inclusive. If not specified, a default of 1 is applied. This field cannot be combined with effective_frequency_breakdown_limit.",
+          "description": "Optional. The minimum effective frequency for the reported reach metrics. This is the smallest number of times a customer must be exposed to the ad for it to be considered effective. This setting only impacts reporting. Must be between 1 and 10, inclusive. If not specified, a default of 1 is applied.",
           "format": "int32",
           "type": "integer"
         },
@@ -20746,7 +20725,7 @@
         },
         "demandGenSettings": {
           "$ref": "DemandGenSettings",
-          "description": "Optional. Settings specific to Demand Gen line items. Only applicable to Demand Gen line items. Retrieval and management of Demand Gen resources is currently rolling out. This field will be available to all partners by *June 24, 2026*."
+          "description": "Optional. Settings specific to Demand Gen line items. Only applicable to Demand Gen line items."
         },
         "displayName": {
           "description": "Required. The display name of the line item. Must be UTF-8 encoded with a maximum size of 240 bytes.",
@@ -20849,7 +20828,7 @@
             "YouTube video ads that aim to get more views with a variety of ad formats. Line items of this type and their targeting cannot be created or updated using the API.",
             "Display ads served on digital-out-of-home inventory. Line items of this type and their targeting cannot be created or updated using the API.",
             "Video ads served on digital-out-of-home inventory. Line items of this type and their targeting cannot be created or updated using the API.",
-            "Demand Gen ads. Retrieval and management of Demand Gen resources is currently rolling out. This field will be available to all partners by *June 24, 2026*."
+            "Demand Gen ads."
           ],
           "type": "string"
         },
@@ -21886,7 +21865,7 @@
           "description": "Input only. The consent setting for the users in mobile_device_ids. Leaving this field unset indicates that consent is not specified. If ad_user_data or ad_personalization fields are set to `CONSENT_STATUS_DENIED`, the request will return an error."
         },
         "mobileDeviceIds": {
-          "description": "A list of mobile device IDs defining Customer Match audience members. The size of mobile_device_ids mustn't be greater than 500,000.",
+          "description": "Optional. A list of mobile device IDs defining Customer Match audience members. The size of mobile_device_ids mustn't be greater than 500,000.",
           "items": {
             "type": "string"
           },
@@ -22933,6 +22912,12 @@
           "readOnly": true,
           "type": "string"
         },
+        "parentPlannableLocationId": {
+          "description": "Output only. The parent plannable location ID, for example the country ID for subgeos.",
+          "format": "int64",
+          "readOnly": true,
+          "type": "string"
+        },
         "plannableLocationId": {
           "description": "Output only. The plannable location ID.",
           "format": "int64",
@@ -22941,6 +22926,62 @@
         },
         "regionCode": {
           "description": "Output only. The region code of the location, for example \"DZ\" for Algeria.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PlannableProductCoreAttributes": {
+      "description": "Core attributes for a plannable product.",
+      "id": "PlannableProductCoreAttributes",
+      "properties": {
+        "buyingMethod": {
+          "description": "Output only. The buying method.",
+          "enum": [
+            "PLANNABLE_BUYING_METHOD_UNSPECIFIED",
+            "PLANNABLE_BUYING_METHOD_AUCTION",
+            "PLANNABLE_BUYING_METHOD_RESERVATION"
+          ],
+          "enumDescriptions": [
+            "Not specified.",
+            "Auction.",
+            "Reservation."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
+        "costModel": {
+          "description": "Output only. The cost model.",
+          "enum": [
+            "PLANNABLE_COST_MODEL_UNSPECIFIED",
+            "PLANNABLE_COST_MODEL_CPM",
+            "PLANNABLE_COST_MODEL_CPV",
+            "PLANNABLE_COST_MODEL_CPC",
+            "PLANNABLE_COST_MODEL_CPA"
+          ],
+          "enumDescriptions": [
+            "Not specified.",
+            "CPM.",
+            "CPV.",
+            "CPC.",
+            "CPA."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
+        "productCategory": {
+          "description": "Output only. The product category.",
+          "enum": [
+            "PLANNABLE_PRODUCT_CATEGORY_UNSPECIFIED",
+            "YOUTUBE",
+            "OPEN_AUCTION"
+          ],
+          "enumDescriptions": [
+            "Not specified.",
+            "YouTube.",
+            "Open Auction."
+          ],
           "readOnly": true,
           "type": "string"
         }
@@ -23027,6 +23068,11 @@
           "readOnly": true,
           "type": "array"
         },
+        "defaultYoutubeSelectLineup": {
+          "$ref": "YouTubeSelectLineUp",
+          "description": "Output only. The default YouTube Select Lineup for this product, if applicable.",
+          "readOnly": true
+        },
         "devices": {
           "description": "Output only. Targetable devices for the ad product.",
           "items": {
@@ -23071,25 +23117,22 @@
           "readOnly": true,
           "type": "array"
         },
-        "networks": {
-          "description": "Output only. Targetable networks for the ad product.",
-          "items": {
-            "enum": [
-              "PLANNABLE_NETWORK_UNSPECIFIED",
-              "PLANNABLE_NETWORK_YOUTUBE",
-              "PLANNABLE_NETWORK_GOOGLE_VIDEO_PARTNERS",
-              "PLANNABLE_NETWORK_YOUTUBE_AND_GOOGLE_VIDEO_PARTNERS"
-            ],
-            "enumDescriptions": [
-              "Not specified.",
-              "YouTube.",
-              "Google Video Partners.",
-              "YouTube and Google Video Partners."
-            ],
-            "type": "string"
-          },
+        "network": {
+          "description": "Output only. Targetable network for the ad product.",
+          "enum": [
+            "PLANNABLE_NETWORK_UNSPECIFIED",
+            "PLANNABLE_NETWORK_YOUTUBE",
+            "PLANNABLE_NETWORK_GOOGLE_VIDEO_PARTNERS",
+            "PLANNABLE_NETWORK_YOUTUBE_AND_GOOGLE_VIDEO_PARTNERS"
+          ],
+          "enumDescriptions": [
+            "Not specified.",
+            "YouTube.",
+            "Google Video Partners.",
+            "YouTube and Google Video Partners."
+          ],
           "readOnly": true,
-          "type": "array"
+          "type": "string"
         },
         "surfaceTargetingCombinations": {
           "$ref": "SurfaceTargetingCombinations",
@@ -23205,13 +23248,6 @@
       "description": "Performance metrics for a forecast point.",
       "id": "PlannedProductForecast",
       "properties": {
-        "effectiveFrequencyBreakdowns": {
-          "description": "A list of effective frequency breakdowns.",
-          "items": {
-            "$ref": "EffectiveFrequencyBreakdown"
-          },
-          "type": "array"
-        },
         "onTargetImpressions": {
           "description": "Number of on-target impressions.",
           "format": "int64",
@@ -23465,6 +23501,11 @@
           "description": "Output only. The plannable product code (e.g. \"YOUTUBE_REACH_MIX\").",
           "readOnly": true,
           "type": "string"
+        },
+        "plannableProductCoreAttributes": {
+          "$ref": "PlannableProductCoreAttributes",
+          "description": "Output only. Core attributes for this product.",
+          "readOnly": true
         },
         "plannableProductDescription": {
           "description": "Output only. The plain-text description of the ad product.",
@@ -24385,6 +24426,38 @@
           "readOnly": true,
           "type": "array"
         },
+        "defaultSurfaceTypes": {
+          "description": "Output only. The default surface types for this product.",
+          "items": {
+            "enum": [
+              "PLANNABLE_SURFACE_UNSPECIFIED",
+              "PLANNABLE_SURFACE_IN_FEED",
+              "PLANNABLE_SURFACE_IN_STREAM_BUMPER",
+              "PLANNABLE_SURFACE_IN_STREAM_NON_SKIPPABLE",
+              "PLANNABLE_SURFACE_IN_STREAM_SKIPPABLE",
+              "PLANNABLE_SURFACE_SHORTS",
+              "PLANNABLE_SURFACE_DISCOVER_FEED",
+              "PLANNABLE_SURFACE_GMAIL",
+              "PLANNABLE_SURFACE_GOOGLE_DISPLAY_NETWORK",
+              "PLANNABLE_SURFACE_IN_STREAM_NON_SKIPPABLE_THIRTY_SECONDS"
+            ],
+            "enumDescriptions": [
+              "Not specified.",
+              "In-feed.",
+              "In-stream bumper.",
+              "In-stream non-skippable.",
+              "In-stream skippable.",
+              "Shorts.",
+              "Discover feed.",
+              "Gmail.",
+              "Google Display Network.",
+              "In-stream non-skippable (30 seconds)."
+            ],
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "validSurfaceCombinations": {
           "description": "Output only. Valid combinations of surfaces that can be selected together.",
           "items": {
@@ -24644,7 +24717,7 @@
           "type": "boolean"
         },
         "excludeDemographicExpansion": {
-          "description": "Optional. Whether to exclude demographic expansion for Optimized Targeting. This field can only be set for Demand Gen ad groups. Retrieval and management of Demand Gen resources is currently rolling out. This field will be available to all partners by *June 24, 2026*.",
+          "description": "Optional. Whether to exclude demographic expansion for Optimized Targeting. This field can only be set for Demand Gen ad groups.",
           "type": "boolean"
         }
       },
@@ -24919,7 +24992,7 @@
       "id": "ThirdPartyMeasurementConfigs",
       "properties": {
         "brandLiftVendorConfigs": {
-          "description": "Optional. The third-party vendors measuring brand lift. The following third-party vendors are applicable: * `THIRD_PARTY_VENDOR_DYNATA` * `THIRD_PARTY_VENDOR_KANTAR` * `THIRD_PARTY_VENDOR_INTAGE` * `THIRD_PARTY_VENDOR_NIELSEN` * `THIRD_PARTY_VENDOR_MACROMILL`",
+          "description": "Optional. The third-party vendors measuring brand lift. The following third-party vendors are applicable: * `THIRD_PARTY_VENDOR_DYNATA` * `THIRD_PARTY_VENDOR_KANTAR` * `THIRD_PARTY_VENDOR_INTAGE` * `THIRD_PARTY_VENDOR_NIELSEN` * `THIRD_PARTY_VENDOR_MACROMILL` *Warning*: Starting **July 13, 2026**, this field will no longer support `THIRD_PARTY_VENDOR_NIELSEN`.",
           "items": {
             "$ref": "ThirdPartyVendorConfig"
           },

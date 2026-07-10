@@ -2596,7 +2596,7 @@
       }
     }
   },
-  "revision": "20260623",
+  "revision": "20260706",
   "rootUrl": "https://gkehub.googleapis.com/",
   "schemas": {
     "AppDevExperienceFeatureSpec": {
@@ -6966,7 +6966,7 @@
           ],
           "enumDescriptions": [
             "The default value.",
-            "A standard rollout.",
+            "A standard rollout for the whole sequence.",
             "A mandatory upgrade for clusters that haven't been patched within the allowed window.",
             "A mandatory upgrade for clusters that have reached its end of support."
           ],

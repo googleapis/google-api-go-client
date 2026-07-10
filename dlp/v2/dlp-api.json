@@ -5274,7 +5274,7 @@
       }
     }
   },
-  "revision": "20260620",
+  "revision": "20260704",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -8686,20 +8686,23 @@
           "type": "array"
         },
         "createTime": {
-          "description": "Time when the job was created.",
+          "description": "Output only. Time when the job was created.",
           "format": "google-datetime",
+          "readOnly": true,
           "type": "string"
         },
         "endTime": {
-          "description": "Time when the job finished.",
+          "description": "Output only. Time when the job finished.",
           "format": "google-datetime",
+          "readOnly": true,
           "type": "string"
         },
         "errors": {
-          "description": "A stream of errors encountered running the job.",
+          "description": "Output only. A stream of errors encountered running the job.",
           "items": {
             "$ref": "GooglePrivacyDlpV2Error"
           },
+          "readOnly": true,
           "type": "array"
         },
         "inspectDetails": {
@@ -8707,16 +8710,19 @@
           "description": "Results from inspecting a data source."
         },
         "jobTriggerName": {
-          "description": "If created by a job trigger, the resource name of the trigger that instantiated the job.",
+          "description": "Output only. If created by a job trigger, the resource name of the trigger that instantiated the job.",
+          "readOnly": true,
           "type": "string"
         },
         "lastModified": {
-          "description": "Time when the job was last modified by the system.",
+          "description": "Output only. Time when the job was last modified by the system.",
           "format": "google-datetime",
+          "readOnly": true,
           "type": "string"
         },
         "name": {
-          "description": "The server-assigned name.",
+          "description": "Output only. The server-assigned name.",
+          "readOnly": true,
           "type": "string"
         },
         "riskDetails": {
@@ -8724,12 +8730,13 @@
           "description": "Results from analyzing risk of a data source."
         },
         "startTime": {
-          "description": "Time when the job started.",
+          "description": "Output only. Time when the job started.",
           "format": "google-datetime",
+          "readOnly": true,
           "type": "string"
         },
         "state": {
-          "description": "State of a job.",
+          "description": "Output only. State of a job.",
           "enum": [
             "JOB_STATE_UNSPECIFIED",
             "PENDING",
@@ -8748,6 +8755,7 @@
             "The job had an error and did not complete.",
             "The job is currently accepting findings via hybridInspect. A hybrid job in ACTIVE state may continue to have findings added to it through the calling of hybridInspect. After the job has finished no more calls to hybridInspect may be made. ACTIVE jobs can transition to DONE."
           ],
+          "readOnly": true,
           "type": "string"
         },
         "type": {

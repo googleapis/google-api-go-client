@@ -406,7 +406,10 @@ func (s Backend) MarshalJSON() ([]byte, error) {
 // nodejs20, nodejs22, nodejs24, nodejs. Runtime "nodejs" means that nodejs
 // version will be determined at build time. If not specified or specified with
 // a value that is not in the list above, the default runtime `nodejs` will be
-// used and Automatic Base Image Updates will be disabled.
+// used and Automatic Base Image Updates will be disabled. See Firebase
+// documentation
+// (https://firebase.google.com/docs/app-hosting/frameworks-tooling#managing_runtime_versions)
+// for more details.
 type BackendRuntime struct {
 	// Value: Optional. The value of the runtime.
 	Value string `json:"value,omitempty"`

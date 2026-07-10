@@ -3147,6 +3147,34 @@ func (s DesiredEnterpriseConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DiskIoScheduler: DiskIoScheduler contains the configuration for the disk IO
+// scheduler.
+type DiskIoScheduler struct {
+	// NodeAttachedDiskIoScheduler: Optional. Configures the IO scheduler for the
+	// attached disks. Supported values are `mq-deadline`, `bfq`, `kyber`, `none`.
+	NodeAttachedDiskIoScheduler string `json:"nodeAttachedDiskIoScheduler,omitempty"`
+	// NodeSystemIoScheduler: Optional. Configures the IO scheduler for the boot
+	// disk or ephemeral lssd that runs node system workloads. Supported values are
+	// `mq-deadline`, `bfq`, `kyber`, `none`.
+	NodeSystemIoScheduler string `json:"nodeSystemIoScheduler,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "NodeAttachedDiskIoScheduler") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NodeAttachedDiskIoScheduler") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DiskIoScheduler) MarshalJSON() ([]byte, error) {
+	type NoMethod DiskIoScheduler
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DisruptionBudget: DisruptionBudget defines the upgrade disruption budget for
 // the cluster control plane.
 type DisruptionBudget struct {
@@ -4594,6 +4622,30 @@ func (s K8sBetaAPIConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// KubeletCertInfo: Contains expiry information about the kubelet certificate.
+type KubeletCertInfo struct {
+	// NonTpmBootstrapCertExpireTime: Output only.
+	NonTpmBootstrapCertExpireTime string `json:"nonTpmBootstrapCertExpireTime,omitempty"`
+	// TpmBootstrapCertExpireTime: Output only.
+	TpmBootstrapCertExpireTime string `json:"tpmBootstrapCertExpireTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "NonTpmBootstrapCertExpireTime") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NonTpmBootstrapCertExpireTime")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s KubeletCertInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod KubeletCertInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // KubernetesDashboard: Configuration for the Kubernetes Dashboard.
 type KubernetesDashboard struct {
 	// Disabled: Whether the Kubernetes Dashboard is enabled for this cluster.
@@ -4661,6 +4713,9 @@ type LinuxNodeConfig struct {
 	// CustomNodeInit: Optional. Allow users to run arbitrary bash script or
 	// container on the node.
 	CustomNodeInit *CustomNodeInit `json:"customNodeInit,omitempty"`
+	// DiskIoScheduler: Optional. Controls the configuration for the disk IO
+	// scheduler.
+	DiskIoScheduler *DiskIoScheduler `json:"diskIoScheduler,omitempty"`
 	// Hugepages: Optional. Amounts for 2M and 1G hugepages
 	Hugepages *HugepagesConfig `json:"hugepages,omitempty"`
 	// NodeKernelModuleLoading: Optional. Configuration for kernel module loading
@@ -4668,6 +4723,9 @@ type LinuxNodeConfig struct {
 	// Container-Optimized OS image that enforces kernel module signature
 	// verification.
 	NodeKernelModuleLoading *NodeKernelModuleLoading `json:"nodeKernelModuleLoading,omitempty"`
+	// NodeVfioConfig: Optional. Contains VFIO-related configurations for this
+	// node.
+	NodeVfioConfig *NodeVfioConfig `json:"nodeVfioConfig,omitempty"`
 	// SwapConfig: Optional. Enables and configures swap space on nodes. If
 	// omitted, swap is disabled.
 	SwapConfig *SwapConfig `json:"swapConfig,omitempty"`
@@ -4686,11 +4744,12 @@ type LinuxNodeConfig struct {
 	// net.netfilter.nf_conntrack_tcp_timeout_time_wait
 	// net.netfilter.nf_conntrack_tcp_timeout_established
 	// net.netfilter.nf_conntrack_acct kernel.keys.maxkeys kernel.keys.maxbytes
-	// kernel.shmmni kernel.shmmax kernel.shmall kernel.perf_event_paranoid
-	// kernel.sched_rt_runtime_us kernel.softlockup_panic kernel.yama.ptrace_scope
-	// kernel.kptr_restrict kernel.dmesg_restrict kernel.sysrq fs.aio-max-nr
-	// fs.file-max fs.inotify.max_user_instances fs.inotify.max_user_watches
-	// fs.nr_open vm.dirty_background_ratio vm.dirty_background_bytes
+	// kernel.shmmni kernel.shmmax kernel.shmall kernel.core_pattern
+	// kernel.perf_event_paranoid kernel.sched_rt_runtime_us
+	// kernel.softlockup_panic kernel.yama.ptrace_scope kernel.kptr_restrict
+	// kernel.dmesg_restrict kernel.sysrq fs.aio-max-nr fs.file-max
+	// fs.inotify.max_user_instances fs.inotify.max_user_watches fs.nr_open
+	// vm.dirty_background_ratio vm.dirty_background_bytes
 	// vm.dirty_expire_centisecs vm.dirty_ratio vm.dirty_bytes
 	// vm.dirty_writeback_centisecs vm.max_map_count vm.overcommit_memory
 	// vm.overcommit_ratio vm.vfs_cache_pressure vm.swappiness
@@ -6484,6 +6543,9 @@ type NodePool struct {
 	// associated with this node pool. During the node pool blue-green upgrade
 	// operation, the URLs contain both blue and green resources.
 	InstanceGroupUrls []string `json:"instanceGroupUrls,omitempty"`
+	// KubeletCertInfo: Output only. Contains expiry information about the kubelet
+	// certificate.
+	KubeletCertInfo *KubeletCertInfo `json:"kubeletCertInfo,omitempty"`
 	// Locations: The list of Google Compute Engine zones
 	// (https://cloud.google.com/compute/docs/zones#available) in which the
 	// NodePool's nodes should be located. If this value is unspecified during node
@@ -6870,6 +6932,38 @@ type NodeTaints struct {
 
 func (s NodeTaints) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeTaints
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NodeVfioConfig: Configuration settings for VFIO (Virtual Function I/O) on a
+// node. VFIO allows safe, unprivileged, userspace drivers to access I/O
+// devices.
+type NodeVfioConfig struct {
+	// DmaEntryLimit: Optional. Specifies the maximum number of DMA entries (pages)
+	// that can be mapped by the VFIO IOMMU type 1 driver for a container. This
+	// limit affects the total amount of host memory that can be pinned for direct
+	// device access, which is often critical for high-performance devices like
+	// TPUs and GPUs. This setting corresponds to the kernel parameter at:
+	// `/sys/module/vfio_iommu_type1/parameters/dma_entry_limit`. The default value
+	// in the kernel is `65535`. Higher values may be needed for workloads mapping
+	// large memory regions. Supported values are integers between `65535` and
+	// `4194304`.
+	DmaEntryLimit int64 `json:"dmaEntryLimit,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DmaEntryLimit") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DmaEntryLimit") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NodeVfioConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod NodeVfioConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9494,9 +9588,12 @@ func (s TimeWindow) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// TopologyManager: TopologyManager defines the configuration options for
-// Topology Manager feature. See
-// https://kubernetes.io/docs/tasks/administer-cluster/topology-manager/
+// TopologyManager: TopologyManager defines the configuration options for the
+// `kubelet` Topology Manager component
+// (https://kubernetes.io/docs/tasks/administer-cluster/topology-manager/). For
+// more information about the supported machine types and versions for the
+// Topology Manager in GKE, see Customizing node system configuration
+// (https://docs.cloud.google.com/kubernetes-engine/docs/how-to/node-system-config#kubelet-resource-managers).
 type TopologyManager struct {
 	// Policy: Configures the strategy for resource alignment. Allowed values are:
 	// * none: the default policy, and does not perform any topology alignment. *

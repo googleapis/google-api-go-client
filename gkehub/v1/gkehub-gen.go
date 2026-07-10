@@ -5657,7 +5657,7 @@ type Rollout struct {
 	//
 	// Possible values:
 	//   "ROLLOUT_INTENT_UNSPECIFIED" - The default value.
-	//   "REGULAR_UPGRADE" - A standard rollout.
+	//   "REGULAR_UPGRADE" - A standard rollout for the whole sequence.
 	//   "CONTROL_PLANE_PATCH_ENFORCEMENT" - A mandatory upgrade for clusters that
 	// haven't been patched within the allowed window.
 	//   "END_OF_SUPPORT_ENFORCEMENT" - A mandatory upgrade for clusters that have

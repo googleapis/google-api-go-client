@@ -90,11 +90,6 @@
     },
     {
       "description": "Regional Endpoint",
-      "endpointUrl": "https://dataform.europe-north2.rep.googleapis.com/",
-      "location": "europe-north2"
-    },
-    {
-      "description": "Regional Endpoint",
       "endpointUrl": "https://dataform.europe-southwest1.rep.googleapis.com/",
       "location": "europe-southwest1"
     },
@@ -112,11 +107,6 @@
       "description": "Regional Endpoint",
       "endpointUrl": "https://dataform.europe-west12.rep.googleapis.com/",
       "location": "europe-west12"
-    },
-    {
-      "description": "Regional Endpoint",
-      "endpointUrl": "https://dataform.europe-west15.rep.googleapis.com/",
-      "location": "europe-west15"
     },
     {
       "description": "Regional Endpoint",
@@ -175,11 +165,6 @@
     },
     {
       "description": "Regional Endpoint",
-      "endpointUrl": "https://dataform.northamerica-south1.rep.googleapis.com/",
-      "location": "northamerica-south1"
-    },
-    {
-      "description": "Regional Endpoint",
       "endpointUrl": "https://dataform.southamerica-east1.rep.googleapis.com/",
       "location": "southamerica-east1"
     },
@@ -207,11 +192,6 @@
       "description": "Regional Endpoint",
       "endpointUrl": "https://dataform.us-east5.rep.googleapis.com/",
       "location": "us-east5"
-    },
-    {
-      "description": "Regional Endpoint",
-      "endpointUrl": "https://dataform.us-east7.rep.googleapis.com/",
-      "location": "us-east7"
     },
     {
       "description": "Regional Endpoint",
@@ -3240,7 +3220,7 @@
       }
     }
   },
-  "revision": "20260621",
+  "revision": "20260702",
   "rootUrl": "https://dataform.googleapis.com/",
   "schemas": {
     "ActionErrorTable": {

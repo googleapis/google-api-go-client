@@ -1138,7 +1138,7 @@
       }
     }
   },
-  "revision": "20260618",
+  "revision": "20260630",
   "rootUrl": "https://firebaseapphosting.googleapis.com/",
   "schemas": {
     "ArchiveSource": {
@@ -1299,7 +1299,7 @@
       "type": "object"
     },
     "BackendRuntime": {
-      "description": "Runtime is a string that represents the runtime that is used to build the backend. Users can specify one of the following runtimes: nodejs20, nodejs22, nodejs24, nodejs. Runtime \"nodejs\" means that nodejs version will be determined at build time. If not specified or specified with a value that is not in the list above, the default runtime `nodejs` will be used and Automatic Base Image Updates will be disabled.",
+      "description": "Runtime is a string that represents the runtime that is used to build the backend. Users can specify one of the following runtimes: nodejs20, nodejs22, nodejs24, nodejs. Runtime \"nodejs\" means that nodejs version will be determined at build time. If not specified or specified with a value that is not in the list above, the default runtime `nodejs` will be used and Automatic Base Image Updates will be disabled. See [Firebase documentation](https://firebase.google.com/docs/app-hosting/frameworks-tooling#managing_runtime_versions) for more details.",
       "id": "BackendRuntime",
       "properties": {
         "value": {

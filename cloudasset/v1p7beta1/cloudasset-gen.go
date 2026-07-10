@@ -34,6 +34,11 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	cloudassetService, err := cloudasset.NewService(ctx, option.WithScopes(cloudasset.CloudassetScope))
+//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -101,12 +106,17 @@ const (
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// See, edit, configure, and delete your Google Cloud Asset data and see the
+	// email address for your Google Account
+	CloudassetScope = "https://www.googleapis.com/auth/cloudasset"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
+		"https://www.googleapis.com/auth/cloudasset",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -1567,8 +1577,9 @@ type GoogleIdentityAccesscontextmanagerV1EgressSource struct {
 	// single `*` is specified for `access_level`, then all EgressSources will be
 	// allowed.
 	AccessLevel string `json:"accessLevel,omitempty"`
-	// PscEndpoint: Requests from this PSC will be allowed from access perimeter
-	// data.
+	// PscEndpoint: A PrivateServiceConnectEndpoint that is allowed to access data
+	// outside the perimeter. The Private Service Connect endpoint may be in any
+	// organization, not just the organization that the perimeter is defined in.
 	PscEndpoint *GoogleIdentityAccesscontextmanagerV1PrivateServiceConnectEndpoint `json:"pscEndpoint,omitempty"`
 	// Resource: A Google Cloud resource from the service perimeter that you want
 	// to allow to access data outside the perimeter. This field supports only
@@ -1739,8 +1750,9 @@ type GoogleIdentityAccesscontextmanagerV1IngressSource struct {
 	// `accessPolicies/MY_POLICY/accessLevels/MY_LEVEL`. If a single `*` is
 	// specified for `access_level`, then all IngressSources will be allowed.
 	AccessLevel string `json:"accessLevel,omitempty"`
-	// PscEndpoint: Requests from this PSC will be allowed to access perimeter
-	// data.
+	// PscEndpoint: A PrivateServiceConnectEndpoint that is allowed to access the
+	// perimeter. The Private Service Connect endpoint may be in any organization,
+	// not just the organization that the perimeter is defined in.
 	PscEndpoint *GoogleIdentityAccesscontextmanagerV1PrivateServiceConnectEndpoint `json:"pscEndpoint,omitempty"`
 	// Resource: A Google Cloud resource that is allowed to ingress the perimeter.
 	// Requests from these resources will be allowed to access perimeter data.
@@ -1900,10 +1912,10 @@ func (s GoogleIdentityAccesscontextmanagerV1OsConstraint) MarshalJSON() ([]byte,
 }
 
 // GoogleIdentityAccesscontextmanagerV1PrivateServiceConnectEndpoint: Specifies
-// the PSC an API call refers to.
+// the Private Service Connect endpoint that an API call refers to.
 type GoogleIdentityAccesscontextmanagerV1PrivateServiceConnectEndpoint struct {
-	// ForwardingRule: The global forwarding rule identifier. Forwarding rule
-	// format:
+	// ForwardingRule: The full resource name of the global forwarding rule that
+	// identifies a Private Service Connect endpoint. Forwarding rule format:
 	// `//compute.googleapis.com/projects/{PROJECT_ID}/global/forwardingRules/{FORWA
 	// RDING_RULE_ID}`.
 	ForwardingRule string `json:"forwardingRule,omitempty"`

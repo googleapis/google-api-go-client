@@ -364,7 +364,7 @@
       }
     }
   },
-  "revision": "20260619",
+  "revision": "20260702",
   "rootUrl": "https://databasecenter.googleapis.com/",
   "schemas": {
     "AdditionalDetail": {
@@ -538,7 +538,8 @@
             "SIGNAL_TYPE_EXTENDED_SUPPORT",
             "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE",
             "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK",
-            "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME"
+            "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME",
+            "SIGNAL_TYPE_MISSING_ENHANCED_PROTECTION"
           ],
           "enumDescriptions": [
             "Unspecified.",
@@ -642,7 +643,8 @@
             "Resource version is in extended support.",
             "Represents a database version nearing end of life.",
             "Indicates a high risk of maintenance downtime.",
-            "Indicates both a low cache hit rate and a risk of maintenance downtime."
+            "Indicates both a low cache hit rate and a risk of maintenance downtime.",
+            "Indicates that the resource is missing enhanced protection."
           ],
           "type": "string"
         }
@@ -1612,7 +1614,8 @@
             "SIGNAL_TYPE_EXTENDED_SUPPORT",
             "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE",
             "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK",
-            "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME"
+            "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME",
+            "SIGNAL_TYPE_MISSING_ENHANCED_PROTECTION"
           ],
           "enumDescriptions": [
             "Unspecified.",
@@ -1716,7 +1719,8 @@
             "Resource version is in extended support.",
             "Represents a database version nearing end of life.",
             "Indicates a high risk of maintenance downtime.",
-            "Indicates both a low cache hit rate and a risk of maintenance downtime."
+            "Indicates both a low cache hit rate and a risk of maintenance downtime.",
+            "Indicates that the resource is missing enhanced protection."
           ],
           "type": "string"
         }
@@ -2718,7 +2722,8 @@
             "SIGNAL_TYPE_EXTENDED_SUPPORT",
             "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE",
             "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK",
-            "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME"
+            "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME",
+            "SIGNAL_TYPE_MISSING_ENHANCED_PROTECTION"
           ],
           "enumDescriptions": [
             "Unspecified.",
@@ -2822,7 +2827,8 @@
             "Resource version is in extended support.",
             "Represents a database version nearing end of life.",
             "Indicates a high risk of maintenance downtime.",
-            "Indicates both a low cache hit rate and a risk of maintenance downtime."
+            "Indicates both a low cache hit rate and a risk of maintenance downtime.",
+            "Indicates that the resource is missing enhanced protection."
           ],
           "type": "string"
         }
@@ -2955,7 +2961,8 @@
             "SIGNAL_TYPE_EXTENDED_SUPPORT",
             "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE",
             "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK",
-            "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME"
+            "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME",
+            "SIGNAL_TYPE_MISSING_ENHANCED_PROTECTION"
           ],
           "enumDescriptions": [
             "Unspecified.",
@@ -3059,7 +3066,8 @@
             "Resource version is in extended support.",
             "Represents a database version nearing end of life.",
             "Indicates a high risk of maintenance downtime.",
-            "Indicates both a low cache hit rate and a risk of maintenance downtime."
+            "Indicates both a low cache hit rate and a risk of maintenance downtime.",
+            "Indicates that the resource is missing enhanced protection."
           ],
           "type": "string"
         }
@@ -3204,7 +3212,8 @@
             "SIGNAL_TYPE_EXTENDED_SUPPORT",
             "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE",
             "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK",
-            "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME"
+            "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME",
+            "SIGNAL_TYPE_MISSING_ENHANCED_PROTECTION"
           ],
           "enumDescriptions": [
             "Unspecified.",
@@ -3308,7 +3317,8 @@
             "Resource version is in extended support.",
             "Represents a database version nearing end of life.",
             "Indicates a high risk of maintenance downtime.",
-            "Indicates both a low cache hit rate and a risk of maintenance downtime."
+            "Indicates both a low cache hit rate and a risk of maintenance downtime.",
+            "Indicates that the resource is missing enhanced protection."
           ],
           "type": "string"
         }
@@ -3428,7 +3438,8 @@
               "SIGNAL_TYPE_EXTENDED_SUPPORT",
               "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE",
               "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK",
-              "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME"
+              "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME",
+              "SIGNAL_TYPE_MISSING_ENHANCED_PROTECTION"
             ],
             "enumDescriptions": [
               "Unspecified.",
@@ -3532,7 +3543,8 @@
               "Resource version is in extended support.",
               "Represents a database version nearing end of life.",
               "Indicates a high risk of maintenance downtime.",
-              "Indicates both a low cache hit rate and a risk of maintenance downtime."
+              "Indicates both a low cache hit rate and a risk of maintenance downtime.",
+              "Indicates that the resource is missing enhanced protection."
             ],
             "type": "string"
           },

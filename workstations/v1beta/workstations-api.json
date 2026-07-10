@@ -1210,7 +1210,7 @@
       }
     }
   },
-  "revision": "20260622",
+  "revision": "20260705",
   "rootUrl": "https://workstations.googleapis.com/",
   "schemas": {
     "Accelerator": {
@@ -1946,24 +1946,29 @@
       "type": "object"
     },
     "OAuthToken": {
-      "description": "OAuth token.",
+      "description": "Represents an OAuth 2.0 access token and its associated metadata.",
       "id": "OAuthToken",
       "properties": {
         "accessToken": {
-          "description": "Required. The OAuth token.",
+          "description": "Required. The OAuth 2.0 access token value.",
           "type": "string"
         },
         "email": {
-          "description": "Optional. The email address encapsulated in the OAuth token.",
+          "description": "Optional. The email address associated with the OAuth 2.0 access token.",
           "type": "string"
         },
         "expireTime": {
-          "description": "Optional. The time the OAuth access token will expire. This should be the time the access token was generated plus the expires_in offset returned from the Access Token Response.",
+          "description": "Optional. The time the OAuth access token will expire. This should be the time the access token was generated plus the expires_in offset returned from the Access Token Response. Only one of `expire_time` or `expires_in` should be specified.",
           "format": "google-datetime",
           "type": "string"
         },
+        "expiresIn": {
+          "description": "Optional. The lifetime duration of the access token. Only one of `expire_time` or `expires_in` should be specified.",
+          "format": "google-duration",
+          "type": "string"
+        },
         "scopes": {
-          "description": "Optional. The scopes encapsulated in the OAuth token. See https://developers.google.com/identity/protocols/oauth2/scopes for more information.",
+          "description": "Optional. The scopes associated with the OAuth 2.0 access token. See https://developers.google.com/identity/protocols/oauth2/scopes for more information.",
           "type": "string"
         }
       },
@@ -2149,7 +2154,7 @@
       "properties": {
         "applicationDefaultCredentials": {
           "$ref": "OAuthToken",
-          "description": "Optional. Credentials used by Cloud Client Libraries, Google API Client Libraries, and other tooling within the user conainer: https://cloud.google.com/docs/authentication/application-default-credentials"
+          "description": "Optional. Credentials used by Cloud Client Libraries, Google API Client Libraries, and other tooling within the user container. For more information, see https://cloud.google.com/docs/authentication/application-default-credentials"
         }
       },
       "type": "object"

@@ -5407,26 +5407,27 @@ func (s GooglePrivacyDlpV2DiscoveryVertexDatasetGenerationCadence) MarshalJSON()
 type GooglePrivacyDlpV2DlpJob struct {
 	// ActionDetails: Events that should occur after the job has completed.
 	ActionDetails []*GooglePrivacyDlpV2ActionDetails `json:"actionDetails,omitempty"`
-	// CreateTime: Time when the job was created.
+	// CreateTime: Output only. Time when the job was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// EndTime: Time when the job finished.
+	// EndTime: Output only. Time when the job finished.
 	EndTime string `json:"endTime,omitempty"`
-	// Errors: A stream of errors encountered running the job.
+	// Errors: Output only. A stream of errors encountered running the job.
 	Errors []*GooglePrivacyDlpV2Error `json:"errors,omitempty"`
 	// InspectDetails: Results from inspecting a data source.
 	InspectDetails *GooglePrivacyDlpV2InspectDataSourceDetails `json:"inspectDetails,omitempty"`
-	// JobTriggerName: If created by a job trigger, the resource name of the
-	// trigger that instantiated the job.
+	// JobTriggerName: Output only. If created by a job trigger, the resource name
+	// of the trigger that instantiated the job.
 	JobTriggerName string `json:"jobTriggerName,omitempty"`
-	// LastModified: Time when the job was last modified by the system.
+	// LastModified: Output only. Time when the job was last modified by the
+	// system.
 	LastModified string `json:"lastModified,omitempty"`
-	// Name: The server-assigned name.
+	// Name: Output only. The server-assigned name.
 	Name string `json:"name,omitempty"`
 	// RiskDetails: Results from analyzing risk of a data source.
 	RiskDetails *GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails `json:"riskDetails,omitempty"`
-	// StartTime: Time when the job started.
+	// StartTime: Output only. Time when the job started.
 	StartTime string `json:"startTime,omitempty"`
-	// State: State of a job.
+	// State: Output only. State of a job.
 	//
 	// Possible values:
 	//   "JOB_STATE_UNSPECIFIED" - Unused.

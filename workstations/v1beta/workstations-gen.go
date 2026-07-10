@@ -1401,17 +1401,23 @@ func (s ListWorkstationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// OAuthToken: OAuth token.
+// OAuthToken: Represents an OAuth 2.0 access token and its associated
+// metadata.
 type OAuthToken struct {
-	// AccessToken: Required. The OAuth token.
+	// AccessToken: Required. The OAuth 2.0 access token value.
 	AccessToken string `json:"accessToken,omitempty"`
-	// Email: Optional. The email address encapsulated in the OAuth token.
+	// Email: Optional. The email address associated with the OAuth 2.0 access
+	// token.
 	Email string `json:"email,omitempty"`
 	// ExpireTime: Optional. The time the OAuth access token will expire. This
 	// should be the time the access token was generated plus the expires_in offset
-	// returned from the Access Token Response.
+	// returned from the Access Token Response. Only one of `expire_time` or
+	// `expires_in` should be specified.
 	ExpireTime string `json:"expireTime,omitempty"`
-	// Scopes: Optional. The scopes encapsulated in the OAuth token. See
+	// ExpiresIn: Optional. The lifetime duration of the access token. Only one of
+	// `expire_time` or `expires_in` should be specified.
+	ExpiresIn string `json:"expiresIn,omitempty"`
+	// Scopes: Optional. The scopes associated with the OAuth 2.0 access token. See
 	// https://developers.google.com/identity/protocols/oauth2/scopes for more
 	// information.
 	Scopes string `json:"scopes,omitempty"`
@@ -1707,7 +1713,7 @@ func (s PrivateClusterConfig) MarshalJSON() ([]byte, error) {
 type PushCredentialsRequest struct {
 	// ApplicationDefaultCredentials: Optional. Credentials used by Cloud Client
 	// Libraries, Google API Client Libraries, and other tooling within the user
-	// conainer:
+	// container. For more information, see
 	// https://cloud.google.com/docs/authentication/application-default-credentials
 	ApplicationDefaultCredentials *OAuthToken `json:"applicationDefaultCredentials,omitempty"`
 	// ForceSendFields is a list of field names (e.g.

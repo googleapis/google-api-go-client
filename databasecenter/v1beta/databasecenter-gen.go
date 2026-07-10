@@ -462,6 +462,8 @@ type AdditionalDetail struct {
 	// maintenance downtime.
 	//   "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME" - Indicates both a
 	// low cache hit rate and a risk of maintenance downtime.
+	//   "SIGNAL_TYPE_MISSING_ENHANCED_PROTECTION" - Indicates that the resource is
+	// missing enhanced protection.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutomatedBackupPolicyInfo")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -1580,6 +1582,8 @@ type IssueStats struct {
 	// maintenance downtime.
 	//   "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME" - Indicates both a
 	// low cache hit rate and a risk of maintenance downtime.
+	//   "SIGNAL_TYPE_MISSING_ENHANCED_PROTECTION" - Indicates that the resource is
+	// missing enhanced protection.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DeltaDetails") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2847,6 +2851,8 @@ type Signal struct {
 	// maintenance downtime.
 	//   "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME" - Indicates both a
 	// low cache hit rate and a risk of maintenance downtime.
+	//   "SIGNAL_TYPE_MISSING_ENHANCED_PROTECTION" - Indicates that the resource is
+	// missing enhanced protection.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalDetails") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3106,6 +3112,8 @@ type SignalFilter struct {
 	// maintenance downtime.
 	//   "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME" - Indicates both a
 	// low cache hit rate and a risk of maintenance downtime.
+	//   "SIGNAL_TYPE_MISSING_ENHANCED_PROTECTION" - Indicates that the resource is
+	// missing enhanced protection.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SignalStatus") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3381,6 +3389,8 @@ type SignalProductsFilters struct {
 	// maintenance downtime.
 	//   "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME" - Indicates both a
 	// low cache hit rate and a risk of maintenance downtime.
+	//   "SIGNAL_TYPE_MISSING_ENHANCED_PROTECTION" - Indicates that the resource is
+	// missing enhanced protection.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Products") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3628,6 +3638,8 @@ type SignalTypeGroup struct {
 	// maintenance downtime.
 	//   "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME" - Indicates both a
 	// low cache hit rate and a risk of maintenance downtime.
+	//   "SIGNAL_TYPE_MISSING_ENHANCED_PROTECTION" - Indicates that the resource is
+	// missing enhanced protection.
 	SignalTypes []string `json:"signalTypes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or

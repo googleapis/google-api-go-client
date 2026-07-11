@@ -1456,7 +1456,7 @@
       }
     }
   },
-  "revision": "20260527",
+  "revision": "20260708",
   "rootUrl": "https://cloudnumberregistry.googleapis.com/",
   "schemas": {
     "AggregatedData": {
@@ -2262,7 +2262,7 @@
           "type": "object"
         },
         "managementType": {
-          "description": "Required. Management type of the Realm.",
+          "description": "Optional. Management type of the Realm.",
           "enum": [
             "MANAGEMENT_TYPE_UNSPECIFIED",
             "CNR",

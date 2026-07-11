@@ -422,6 +422,10 @@ type Certificate struct {
 	Scope string `json:"scope,omitempty"`
 	// SelfManaged: If set, defines data of a self-managed certificate.
 	SelfManaged *SelfManagedCertificate `json:"selfManaged,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: "123/environment": "production",
+	// "123/costCenter": "marketing"
+	Tags map[string]string `json:"tags,omitempty"`
 	// UpdateTime: Output only. The last update timestamp of a Certificate.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// UsedBy: Output only. The list of resources that use this Certificate.
@@ -531,6 +535,10 @@ type CertificateIssuanceConfig struct {
 	// of the certificate lifetime to wait before renewing the certificate. Must be
 	// a number between 1-99, inclusive.
 	RotationWindowPercentage int64 `json:"rotationWindowPercentage,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: "123/environment": "production",
+	// "123/costCenter": "marketing"
+	Tags map[string]string `json:"tags,omitempty"`
 	// UpdateTime: Output only. The last update timestamp of a
 	// CertificateIssuanceConfig.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -572,6 +580,10 @@ type CertificateMap struct {
 	// Map names must be unique globally and match pattern
 	// `projects/*/locations/*/certificateMaps/*`.
 	Name string `json:"name,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: "123/environment": "production",
+	// "123/costCenter": "marketing"
+	Tags map[string]string `json:"tags,omitempty"`
 	// UpdateTime: Output only. The update timestamp of a Certificate Map.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -678,6 +690,10 @@ type DnsAuthorization struct {
 	// DnsAuthorization names must be unique globally and match pattern
 	// `projects/*/locations/*/dnsAuthorizations/*`.
 	Name string `json:"name,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: "123/environment": "production",
+	// "123/costCenter": "marketing"
+	Tags map[string]string `json:"tags,omitempty"`
 	// Type: Optional. Immutable. Type of DnsAuthorization. If unset during
 	// resource creation the following default will be used: - in location
 	// `global`: FIXED_RECORD, - in other locations: PER_PROJECT_RECORD.
@@ -1521,6 +1537,10 @@ type TrustConfig struct {
 	// SpiffeTrustStores: Optional. Defines a mapping from a trust domain to a
 	// TrustStore. This is used for SPIFFE certificate validation.
 	SpiffeTrustStores map[string]TrustStore `json:"spiffeTrustStores,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: "123/environment": "production",
+	// "123/costCenter": "marketing"
+	Tags map[string]string `json:"tags,omitempty"`
 	// TrustStores: Optional. Set of trust stores to perform validation against.
 	// This field is supported when TrustConfig is configured with Load Balancers,
 	// currently not supported for SPIFFE certificate validation. Only one

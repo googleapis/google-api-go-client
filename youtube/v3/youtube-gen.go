@@ -1231,6 +1231,31 @@ func (s BatchGetStatsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BrandPartner: Details about the brand partner linked to the video for
+// Creator Initiated Linking (CIL). Next ID: 6
+type BrandPartner struct {
+	// ChannelHandle: Required. Channel handle, must begin with "@"
+	ChannelHandle string `json:"channelHandle,omitempty"`
+	// ChannelId: Required. External Channel ID, must begin with "UC"
+	ChannelId string `json:"channelId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChannelHandle") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChannelHandle") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BrandPartner) MarshalJSON() ([]byte, error) {
+	type NoMethod BrandPartner
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Caption: A *caption* resource represents a YouTube caption track. A caption
 // track is associated with exactly one YouTube video.
 type Caption struct {
@@ -7397,7 +7422,8 @@ type TokenPagination struct {
 type Video struct {
 	// AgeGating: Age restriction details related to a video. This data can only be
 	// retrieved by the video owner.
-	AgeGating *VideoAgeGating `json:"ageGating,omitempty"`
+	AgeGating    *VideoAgeGating `json:"ageGating,omitempty"`
+	BrandPartner *BrandPartner   `json:"brandPartner,omitempty"`
 	// ContentDetails: The contentDetails object contains information about the
 	// video content, including the length of the video and its aspect ratio.
 	ContentDetails *VideoContentDetails `json:"contentDetails,omitempty"`

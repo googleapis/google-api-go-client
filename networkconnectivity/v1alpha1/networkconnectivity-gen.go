@@ -782,6 +782,10 @@ type InternalRange struct {
 	//   "OBSOLETE" - A range becomes OBSOLETE if its VPC network is deleted. An
 	// OBSOLETE range is inactive, doesn't reserve any CIDR blocks, and can only be
 	// deleted or have its labels and description updated.
+	//   "CREATING" - Ranges with CREATING state are in the process of being
+	// created.
+	//   "DELETING" - Ranges with DELETING state are in the process of being
+	// deleted.
 	RangeStatus string `json:"rangeStatus,omitempty"`
 	// TargetCidrRange: Optional. Can be set to narrow down or pick a different
 	// address space while searching for a free range. If not set, defaults to the

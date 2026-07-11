@@ -261,10 +261,22 @@ type ProjectsLocationsAppsConversationsService struct {
 
 func NewProjectsLocationsAppsDeploymentsService(s *Service) *ProjectsLocationsAppsDeploymentsService {
 	rs := &ProjectsLocationsAppsDeploymentsService{s: s}
+	rs.Message = NewProjectsLocationsAppsDeploymentsMessageService(s)
 	return rs
 }
 
 type ProjectsLocationsAppsDeploymentsService struct {
+	s *Service
+
+	Message *ProjectsLocationsAppsDeploymentsMessageService
+}
+
+func NewProjectsLocationsAppsDeploymentsMessageService(s *Service) *ProjectsLocationsAppsDeploymentsMessageService {
+	rs := &ProjectsLocationsAppsDeploymentsMessageService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAppsDeploymentsMessageService struct {
 	s *Service
 }
 
@@ -324,10 +336,22 @@ type ProjectsLocationsAppsToolsetsService struct {
 
 func NewProjectsLocationsAppsVersionsService(s *Service) *ProjectsLocationsAppsVersionsService {
 	rs := &ProjectsLocationsAppsVersionsService{s: s}
+	rs.Message = NewProjectsLocationsAppsVersionsMessageService(s)
 	return rs
 }
 
 type ProjectsLocationsAppsVersionsService struct {
+	s *Service
+
+	Message *ProjectsLocationsAppsVersionsMessageService
+}
+
+func NewProjectsLocationsAppsVersionsMessageService(s *Service) *ProjectsLocationsAppsVersionsMessageService {
+	rs := &ProjectsLocationsAppsVersionsMessageService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAppsVersionsMessageService struct {
 	s *Service
 }
 
@@ -1422,6 +1446,8 @@ type ChannelProfile struct {
 	//   "GOOGLE_TELEPHONY_PLATFORM" - Google Telephony Platform channel.
 	//   "CONTACT_CENTER_AS_A_SERVICE" - Contact Center as a Service (CCaaS)
 	// channel.
+	//   "CONTACT_CENTER_AS_A_SERVICE_CHAT" - Contact Center as a Service (CCaaS
+	// Chat) channel.
 	//   "FIVE9" - Five9 channel.
 	//   "CONTACT_CENTER_INTEGRATION" - Third party contact center integration
 	// channel.
@@ -1469,17 +1495,24 @@ func (s ChannelProfile) MarshalJSON() ([]byte, error) {
 // ChannelProfileInstagramConfig: Configuration specific to Instagram
 // deployments.
 type ChannelProfileInstagramConfig struct {
+	// Description: Output only. The description of the Meta business page or
+	// profile.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Output only. The fetched Meta business page name.
+	DisplayName string `json:"displayName,omitempty"`
 	// InstagramAccountId: Required. The Instagram Account ID.
 	InstagramAccountId string `json:"instagramAccountId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "InstagramAccountId") to
+	// ThumbnailUrl: Output only. The fetched Meta business profile thumbnail URL.
+	ThumbnailUrl string `json:"thumbnailUrl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "InstagramAccountId") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1599,17 +1632,26 @@ func (s ChannelProfileWebWidgetConfigSecuritySettings) MarshalJSON() ([]byte, er
 // ChannelProfileWhatsAppConfig: Configuration specific to WhatsApp
 // deployments.
 type ChannelProfileWhatsAppConfig struct {
+	// Description: Output only. The description of the Meta business page or
+	// profile.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Output only. The fetched Meta business page name.
+	DisplayName string `json:"displayName,omitempty"`
+	// PhoneNumber: Optional. The phone number in E.164 format.
+	PhoneNumber string `json:"phoneNumber,omitempty"`
 	// PhoneNumberId: Required. The Meta phone number ID.
 	PhoneNumberId string `json:"phoneNumberId,omitempty"`
+	// ThumbnailUrl: Output only. The fetched Meta business profile thumbnail URL.
+	ThumbnailUrl string `json:"thumbnailUrl,omitempty"`
 	// WabaId: Required. The WhatsApp Business Account ID.
 	WabaId string `json:"wabaId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "PhoneNumberId") to
+	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PhoneNumberId") to include in API
+	// NullFields is a list of field names (e.g. "Description") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3315,10 +3357,10 @@ type ExperimentConfigVersionRelease struct {
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
-	//   "PENDING" - Pending state. Experiment is pending and not valid.
+	//   "PENDING" - Deprecated: This state is no longer used.
 	//   "RUNNING" - Running state. Experiment is running and valid.
-	//   "DONE" - Done state. Experiment is done and no longer valid.
-	//   "EXPIRED" - Expired state. Experiment is expired and no longer valid.
+	//   "DONE" - Deprecated: This state is no longer used.
+	//   "EXPIRED" - Deprecated: This state is no longer used.
 	State string `json:"state,omitempty"`
 	// TrafficAllocations: Optional. Traffic allocations for the version release.
 	TrafficAllocations []*ExperimentConfigVersionReleaseTrafficAllocation `json:"trafficAllocations,omitempty"`
@@ -4149,6 +4191,9 @@ func (s InputAudioConfig) MarshalJSON() ([]byte, error) {
 type InstagramCredentials struct {
 	// AuthCode: Required. The Meta auth code provided by the embedded signup flow.
 	AuthCode string `json:"authCode,omitempty"`
+	// ConversationProfileId: Optional. The Conversation Profile ID to use for the
+	// deployment.
+	ConversationProfileId string `json:"conversationProfileId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthCode") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7013,6 +7058,12 @@ func (s Status) MarshalJSON() ([]byte, error) {
 // SynthesizeSpeechConfig: Configuration for how the agent response should be
 // synthesized.
 type SynthesizeSpeechConfig struct {
+	// Instruction: Optional. The instruction used to synthesize speech when using
+	// a generative model.
+	Instruction string `json:"instruction,omitempty"`
+	// Model: Optional. The model used to synthesize audio. Currently supported
+	// values: - "gemini-3.1-flash-tts-preview" If empty, Chirp3-HD is used.
+	Model string `json:"model,omitempty"`
 	// SpeakingRate: Optional. The speaking rate/speed in the range [0.25, 2.0].
 	// 1.0 is the normal native speed supported by the specific voice. 2.0 is twice
 	// as fast, and 0.5 is half as fast. Values outside of the range [0.25, 2.0]
@@ -7024,13 +7075,19 @@ type SynthesizeSpeechConfig struct {
 	// (https://cloud.google.com/text-to-speech/docs/voices) from Cloud
 	// Text-to-Speech.
 	Voice string `json:"voice,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SpeakingRate") to
+	// VoiceSampleGcsUri: Optional. The Cloud Storage URI to the audio sample for
+	// voice cloning. The audio sample should be a mono-channel, 24kHz WAV file.
+	// Note: Please make sure the CES service agent
+	// `service-@gcp-sa-ces.iam.gserviceaccount.com` has `storage.objects.get`
+	// permission to the Cloud Storage object.
+	VoiceSampleGcsUri string `json:"voiceSampleGcsUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Instruction") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SpeakingRate") to include in API
+	// NullFields is a list of field names (e.g. "Instruction") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -7421,6 +7478,10 @@ type Toolset struct {
 	// OpenApiToolset: Optional. A toolset that contains a list of tools that are
 	// defined by an OpenAPI schema.
 	OpenApiToolset *OpenApiToolset `json:"openApiToolset,omitempty"`
+	// Timeout: Optional. The timeout for the toolset execution. If not set, the
+	// default timeout is 30 seconds for `SYNCHRONOUS` toolsets and 60 seconds for
+	// `ASYNCHRONOUS` toolsets.
+	Timeout string `json:"timeout,omitempty"`
 	// ToolFakeConfig: Optional. Configuration for tools behavior in fake mode.
 	ToolFakeConfig *ToolFakeConfig `json:"toolFakeConfig,omitempty"`
 	// UpdateTime: Output only. Timestamp when the toolset was last updated.
@@ -7746,11 +7807,16 @@ type WhatsAppCredentials struct {
 	// BusinessAccountId: Required. The Business Account ID to use for the phone
 	// number.
 	BusinessAccountId string `json:"businessAccountId,omitempty"`
+	// ConversationProfileId: Optional. The Conversation Profile ID to use for the
+	// deployment.
+	ConversationProfileId string `json:"conversationProfileId,omitempty"`
 	// PhoneNumber: Required. The phone number to register with WhatsApp.
 	PhoneNumber string `json:"phoneNumber,omitempty"`
 	// Pin: Required. The 6-digit PIN created by the user for two-step
 	// verification.
 	Pin string `json:"pin,omitempty"`
+	// WabaId: Required. The WhatsApp Business Account ID.
+	WabaId string `json:"wabaId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthCode") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -11065,6 +11131,117 @@ func (c *ProjectsLocationsAppsDeploymentsGetCall) Do(opts ...googleapi.CallOptio
 	return ret, nil
 }
 
+type ProjectsLocationsAppsDeploymentsGetExtendedAgentCardCall struct {
+	s            *Service
+	tenant       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetExtendedAgentCard: Gets the extended agent card for the authenticated
+// agent.
+//
+// - tenant: Optional. Tenant ID, provided as a path parameter.
+func (r *ProjectsLocationsAppsDeploymentsService) GetExtendedAgentCard(tenant string) *ProjectsLocationsAppsDeploymentsGetExtendedAgentCardCall {
+	c := &ProjectsLocationsAppsDeploymentsGetExtendedAgentCardCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.tenant = tenant
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsDeploymentsGetExtendedAgentCardCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsDeploymentsGetExtendedAgentCardCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAppsDeploymentsGetExtendedAgentCardCall) IfNoneMatch(entityTag string) *ProjectsLocationsAppsDeploymentsGetExtendedAgentCardCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsDeploymentsGetExtendedAgentCardCall) Context(ctx context.Context) *ProjectsLocationsAppsDeploymentsGetExtendedAgentCardCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsDeploymentsGetExtendedAgentCardCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsDeploymentsGetExtendedAgentCardCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/extendedAgentCard")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"tenant": c.tenant,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.deployments.getExtendedAgentCard", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.deployments.getExtendedAgentCard" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *LfA2aV1AgentCard.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAppsDeploymentsGetExtendedAgentCardCall) Do(opts ...googleapi.CallOption) (*LfA2aV1AgentCard, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &LfA2aV1AgentCard{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.deployments.getExtendedAgentCard", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsAppsDeploymentsListCall struct {
 	s            *Service
 	parent       string
@@ -11332,6 +11509,110 @@ func (c *ProjectsLocationsAppsDeploymentsPatchCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.deployments.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAppsDeploymentsMessageSendCall struct {
+	s                         *Service
+	tenant                    string
+	lfa2av1sendmessagerequest *LfA2aV1SendMessageRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Send: Sends a message to an agent.
+//
+// - tenant: Optional. Tenant ID, provided as a path parameter.
+func (r *ProjectsLocationsAppsDeploymentsMessageService) Send(tenant string, lfa2av1sendmessagerequest *LfA2aV1SendMessageRequest) *ProjectsLocationsAppsDeploymentsMessageSendCall {
+	c := &ProjectsLocationsAppsDeploymentsMessageSendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.tenant = tenant
+	c.lfa2av1sendmessagerequest = lfa2av1sendmessagerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsDeploymentsMessageSendCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsDeploymentsMessageSendCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsDeploymentsMessageSendCall) Context(ctx context.Context) *ProjectsLocationsAppsDeploymentsMessageSendCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsDeploymentsMessageSendCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsDeploymentsMessageSendCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.lfa2av1sendmessagerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/message:send")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"tenant": c.tenant,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.deployments.message.send", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.deployments.message.send" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *LfA2aV1SendMessageResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAppsDeploymentsMessageSendCall) Do(opts ...googleapi.CallOption) (*LfA2aV1SendMessageResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &LfA2aV1SendMessageResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.deployments.message.send", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14628,6 +14909,117 @@ func (c *ProjectsLocationsAppsVersionsGetCall) Do(opts ...googleapi.CallOption) 
 	return ret, nil
 }
 
+type ProjectsLocationsAppsVersionsGetExtendedAgentCardCall struct {
+	s            *Service
+	tenant       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetExtendedAgentCard: Gets the extended agent card for the authenticated
+// agent.
+//
+// - tenant: Optional. Tenant ID, provided as a path parameter.
+func (r *ProjectsLocationsAppsVersionsService) GetExtendedAgentCard(tenant string) *ProjectsLocationsAppsVersionsGetExtendedAgentCardCall {
+	c := &ProjectsLocationsAppsVersionsGetExtendedAgentCardCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.tenant = tenant
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsVersionsGetExtendedAgentCardCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsVersionsGetExtendedAgentCardCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAppsVersionsGetExtendedAgentCardCall) IfNoneMatch(entityTag string) *ProjectsLocationsAppsVersionsGetExtendedAgentCardCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsVersionsGetExtendedAgentCardCall) Context(ctx context.Context) *ProjectsLocationsAppsVersionsGetExtendedAgentCardCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsVersionsGetExtendedAgentCardCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsVersionsGetExtendedAgentCardCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/extendedAgentCard")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"tenant": c.tenant,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.versions.getExtendedAgentCard", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.versions.getExtendedAgentCard" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *LfA2aV1AgentCard.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAppsVersionsGetExtendedAgentCardCall) Do(opts ...googleapi.CallOption) (*LfA2aV1AgentCard, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &LfA2aV1AgentCard{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.versions.getExtendedAgentCard", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsAppsVersionsListCall struct {
 	s            *Service
 	parent       string
@@ -14891,6 +15283,110 @@ func (c *ProjectsLocationsAppsVersionsRestoreCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.versions.restore", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAppsVersionsMessageSendCall struct {
+	s                         *Service
+	tenant                    string
+	lfa2av1sendmessagerequest *LfA2aV1SendMessageRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Send: Sends a message to an agent.
+//
+// - tenant: Optional. Tenant ID, provided as a path parameter.
+func (r *ProjectsLocationsAppsVersionsMessageService) Send(tenant string, lfa2av1sendmessagerequest *LfA2aV1SendMessageRequest) *ProjectsLocationsAppsVersionsMessageSendCall {
+	c := &ProjectsLocationsAppsVersionsMessageSendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.tenant = tenant
+	c.lfa2av1sendmessagerequest = lfa2av1sendmessagerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsVersionsMessageSendCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsVersionsMessageSendCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsVersionsMessageSendCall) Context(ctx context.Context) *ProjectsLocationsAppsVersionsMessageSendCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsVersionsMessageSendCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsVersionsMessageSendCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.lfa2av1sendmessagerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+tenant}/message:send")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"tenant": c.tenant,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.versions.message.send", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.versions.message.send" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *LfA2aV1SendMessageResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAppsVersionsMessageSendCall) Do(opts ...googleapi.CallOption) (*LfA2aV1SendMessageResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &LfA2aV1SendMessageResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.versions.message.send", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -2250,7 +2250,7 @@
               "image/png",
               "application/octet-stream"
             ],
-            "maxSize": "2097152",
+            "maxSize": "52428800",
             "protocols": {
               "resumable": {
                 "multipart": true,
@@ -2360,7 +2360,7 @@
               "image/png",
               "application/octet-stream"
             ],
-            "maxSize": "2097152",
+            "maxSize": "52428800",
             "protocols": {
               "resumable": {
                 "multipart": true,
@@ -3499,7 +3499,7 @@
               "image/png",
               "application/octet-stream"
             ],
-            "maxSize": "2097152",
+            "maxSize": "52428800",
             "protocols": {
               "resumable": {
                 "multipart": true,
@@ -4192,7 +4192,7 @@
       }
     }
   },
-  "revision": "20260707",
+  "revision": "20260709",
   "rootUrl": "https://youtube.googleapis.com/",
   "schemas": {
     "AbuseReport": {
@@ -4685,6 +4685,21 @@
         "kind": {
           "default": "youtube#batchGetStatsResponse",
           "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#batchGetStatsResponse\".",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "BrandPartner": {
+      "description": "Details about the brand partner linked to the video for Creator Initiated Linking (CIL). Next ID: 6",
+      "id": "BrandPartner",
+      "properties": {
+        "channelHandle": {
+          "description": "Required. Channel handle, must begin with \"@\"",
+          "type": "string"
+        },
+        "channelId": {
+          "description": "Required. External Channel ID, must begin with \"UC\"",
           "type": "string"
         }
       },
@@ -11279,6 +11294,9 @@
         "ageGating": {
           "$ref": "VideoAgeGating",
           "description": "Age restriction details related to a video. This data can only be retrieved by the video owner."
+        },
+        "brandPartner": {
+          "$ref": "BrandPartner"
         },
         "contentDetails": {
           "$ref": "VideoContentDetails",

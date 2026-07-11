@@ -1159,7 +1159,7 @@ type Realm struct {
 	IpVersion string `json:"ipVersion,omitempty"`
 	// Labels: Optional. User-defined labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// ManagementType: Required. Management type of the Realm.
+	// ManagementType: Optional. Management type of the Realm.
 	//
 	// Possible values:
 	//   "MANAGEMENT_TYPE_UNSPECIFIED" - Unspecified management type.

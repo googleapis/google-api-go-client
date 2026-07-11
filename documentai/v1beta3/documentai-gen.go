@@ -649,7 +649,7 @@ func (s GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadata) MarshalJSON() 
 // GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadataIndividualAutoLabelSt
 // atus: The status of individual documents in the auto-labeling process.
 type GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadataIndividualAutoLabelStatus struct {
-	// DocumentId: The document id of the auto-labeled document. This will replace
+	// DocumentId: The document ID of the auto-labeled document. This will replace
 	// the gcs_uri.
 	DocumentId *GoogleCloudDocumentaiUiv1beta3DocumentId `json:"documentId,omitempty"`
 	// Status: The status of the document auto-labeling.
@@ -710,7 +710,7 @@ func (s GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata) MarshalJSON(
 // teStatus: The status of each individual document in the batch delete
 // process.
 type GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadataIndividualBatchDeleteStatus struct {
-	// DocumentId: The document id of the document.
+	// DocumentId: The document ID of the document.
 	DocumentId *GoogleCloudDocumentaiUiv1beta3DocumentId `json:"documentId,omitempty"`
 	// Status: The status of deleting the document in storage.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
@@ -779,7 +779,7 @@ func (s GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata) MarshalJSON() 
 // GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatchMoveSt
 // atus: The status of each individual document in the batch move process.
 type GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatchMoveStatus struct {
-	// DocumentId: The document id of the document.
+	// DocumentId: The document ID of the document.
 	DocumentId *GoogleCloudDocumentaiUiv1beta3DocumentId `json:"documentId,omitempty"`
 	// Status: The status of moving the document.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
@@ -834,7 +834,7 @@ func (s GoogleCloudDocumentaiUiv1beta3BatchUpdateDocumentsMetadata) MarshalJSON(
 // teStatus: The status of each individual document in the batch update
 // process.
 type GoogleCloudDocumentaiUiv1beta3BatchUpdateDocumentsMetadataIndividualBatchUpdateStatus struct {
-	// DocumentId: The document id of the document.
+	// DocumentId: The document ID of the document.
 	DocumentId *GoogleCloudDocumentaiUiv1beta3DocumentId `json:"documentId,omitempty"`
 	// Status: The status of updating the document in storage.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
@@ -1052,11 +1052,11 @@ type GoogleCloudDocumentaiUiv1beta3DisableProcessorResponse struct {
 
 // GoogleCloudDocumentaiUiv1beta3DocumentId: Document Identifier.
 type GoogleCloudDocumentaiUiv1beta3DocumentId struct {
-	// GcsManagedDocId: A document id within user-managed Cloud Storage.
+	// GcsManagedDocId: A document ID within user-managed Cloud Storage.
 	GcsManagedDocId *GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId `json:"gcsManagedDocId,omitempty"`
 	// RevisionRef: Points to a specific revision of the document if set.
 	RevisionRef *GoogleCloudDocumentaiUiv1beta3RevisionRef `json:"revisionRef,omitempty"`
-	// UnmanagedDocId: A document id within unmanaged dataset.
+	// UnmanagedDocId: A document ID within unmanaged dataset.
 	UnmanagedDocId *GoogleCloudDocumentaiUiv1beta3DocumentIdUnmanagedDocumentId `json:"unmanagedDocId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GcsManagedDocId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1080,7 +1080,7 @@ func (s GoogleCloudDocumentaiUiv1beta3DocumentId) MarshalJSON() ([]byte, error) 
 // document uniquely within the scope of a dataset in the user-managed Cloud
 // Storage option.
 type GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId struct {
-	// CwDocId: Id of the document (indexed) managed by Content Warehouse.
+	// CwDocId: ID of the document (indexed) managed by Content Warehouse.
 	CwDocId string `json:"cwDocId,omitempty"`
 	// GcsUri: Required. The Cloud Storage URI where the actual document is stored.
 	GcsUri string `json:"gcsUri,omitempty"`
@@ -1105,7 +1105,7 @@ func (s GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId) MarshalJSO
 // GoogleCloudDocumentaiUiv1beta3DocumentIdUnmanagedDocumentId: Identifies a
 // document uniquely within the scope of a dataset in unmanaged option.
 type GoogleCloudDocumentaiUiv1beta3DocumentIdUnmanagedDocumentId struct {
-	// DocId: Required. The id of the document.
+	// DocId: Required. The ID of the document.
 	DocId string `json:"docId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DocId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1132,7 +1132,7 @@ type GoogleCloudDocumentaiUiv1beta3DocumentSchema struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: Display name to show users.
 	DisplayName string `json:"displayName,omitempty"`
-	// DocumentPrompt: Optional. Document level prompt provided by the user. This
+	// DocumentPrompt: Optional. Document-level prompt provided by the user. This
 	// custom text is injected into the AI model's prompt to provide extra,
 	// document-wide guidance for processing.
 	DocumentPrompt string `json:"documentPrompt,omitempty"`
@@ -1184,8 +1184,9 @@ type GoogleCloudDocumentaiUiv1beta3DocumentSchemaEntityType struct {
 	// - Must start with a letter. - Allowed characters: ASCII letters
 	// `[a-z0-9_-]`. (For backward compatibility, internal infrastructure and
 	// tooling can handle any ASCII character.) - The `/` is sometimes used to
-	// denote a property of a type. For example `line_item/amount`. This convention
-	// is deprecated, but will still be honored for backward compatibility.
+	// denote a property of a type. For example, `line_item/amount`. This
+	// convention is deprecated, but will still be honored for backward
+	// compatibility.
 	Name string `json:"name,omitempty"`
 	// Properties: Description the nested structure, or composition of an entity.
 	Properties []*GoogleCloudDocumentaiUiv1beta3DocumentSchemaEntityTypeProperty `json:"properties,omitempty"`
@@ -1868,7 +1869,7 @@ func (s GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataImportConfigValidat
 type GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatus struct {
 	// InputGcsSource: The source Cloud Storage URI of the document.
 	InputGcsSource string `json:"inputGcsSource,omitempty"`
-	// OutputDocumentId: The document id of imported document if it was successful,
+	// OutputDocumentId: The document ID of imported document if it was successful,
 	// otherwise empty.
 	OutputDocumentId *GoogleCloudDocumentaiUiv1beta3DocumentId `json:"outputDocumentId,omitempty"`
 	// OutputGcsDestination: The output_gcs_destination of the processed document
@@ -1952,7 +1953,7 @@ type GoogleCloudDocumentaiUiv1beta3Processor struct {
 	// ActiveSchemaVersion: Optional. SchemaVersion used by the Processor. It is
 	// the same as Processor's DatasetSchema.schema_version Format is
 	// `projects/{project}/locations/{location}/schemas/{schema}/schemaVersions/{sch
-	// ema_version}
+	// ema_version}.
 	ActiveSchemaVersion string `json:"activeSchemaVersion,omitempty"`
 	// CreateTime: Output only. The time the processor was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -3578,7 +3579,7 @@ func (s GoogleCloudDocumentaiV1beta3BatchDeleteDocumentsMetadata) MarshalJSON() 
 // GoogleCloudDocumentaiV1beta3BatchDeleteDocumentsMetadataIndividualBatchDelete
 // Status: The status of each individual document in the batch delete process.
 type GoogleCloudDocumentaiV1beta3BatchDeleteDocumentsMetadataIndividualBatchDeleteStatus struct {
-	// DocumentId: The document id of the document.
+	// DocumentId: The document ID of the document.
 	DocumentId *GoogleCloudDocumentaiV1beta3DocumentId `json:"documentId,omitempty"`
 	// Status: The status of deleting the document in storage.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
@@ -4156,7 +4157,7 @@ type GoogleCloudDocumentaiV1beta3Document struct {
 	// BlobAssets: Optional. The blob assets in this document. This is used to
 	// store the content of the inline blobs in this document, for example, image
 	// bytes, such that it can be referenced by other fields in the document via
-	// asset id.
+	// asset ID.
 	BlobAssets []*GoogleCloudDocumentaiV1beta3DocumentBlobAsset `json:"blobAssets,omitempty"`
 	// ChunkedDocument: Document chunked based on chunking config.
 	ChunkedDocument *GoogleCloudDocumentaiV1beta3DocumentChunkedDocument `json:"chunkedDocument,omitempty"`
@@ -4173,9 +4174,9 @@ type GoogleCloudDocumentaiV1beta3Document struct {
 	// entities in this list may cross shard boundaries.
 	Entities []*GoogleCloudDocumentaiV1beta3DocumentEntity `json:"entities,omitempty"`
 	// EntitiesRevisionId: The entity revision ID that `document.entities` field is
-	// based on. If this field is set and `entities_revisions` is not empty, the
-	// entities in `document.entities` field are the entities in the entity
-	// revision with this id and `document.entity_validation_output` field is the
+	// based on. If this field and `entities_revisions` are set, the entities in
+	// `document.entities` are the entities in the entity revision with this ID.
+	// The `document.entity_validation_output` field is the
 	// `entity_validation_output` field in this entity revision.
 	EntitiesRevisionId string `json:"entitiesRevisionId,omitempty"`
 	// EntitiesRevisions: A list of entity revisions. The entity revisions are
@@ -4260,7 +4261,7 @@ func (s GoogleCloudDocumentaiV1beta3DocumentAnnotations) MarshalJSON() ([]byte, 
 // image bytes, such that it can be referenced by other fields in the document
 // via asset ID.
 type GoogleCloudDocumentaiV1beta3DocumentBlobAsset struct {
-	// AssetId: Optional. The id of the blob asset.
+	// AssetId: Optional. The ID of the blob asset.
 	AssetId string `json:"assetId,omitempty"`
 	// Content: Optional. The content of the blob asset, for example, image bytes.
 	Content string `json:"content,omitempty"`
@@ -4450,14 +4451,14 @@ func (s GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkChunkPageSpan) M
 type GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkImageChunkField struct {
 	// Annotations: Annotation of the image chunk field.
 	Annotations *GoogleCloudDocumentaiV1beta3DocumentAnnotations `json:"annotations,omitempty"`
-	// BlobAssetId: Optional. Asset id of the inline image. If set, find the image
+	// BlobAssetId: Optional. Asset ID of the inline image. If set, find the image
 	// content in the blob_assets field.
 	BlobAssetId string `json:"blobAssetId,omitempty"`
-	// DataUri: Optional. Data uri of the image. It is composed of four parts: a
+	// DataUri: Optional. Data URI of the image. It is composed of four parts: a
 	// prefix (data:), a MIME type indicating the type of data, an optional base64
 	// token if non-textual, and the data itself: data:,
 	DataUri string `json:"dataUri,omitempty"`
-	// GcsUri: Optional. Google Cloud Storage uri of the image.
+	// GcsUri: Optional. Google Cloud Storage URI of the image.
 	GcsUri string `json:"gcsUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4565,14 +4566,14 @@ func (s GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlock) M
 type GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutImageBlock struct {
 	// Annotations: Annotation of the image block.
 	Annotations *GoogleCloudDocumentaiV1beta3DocumentAnnotations `json:"annotations,omitempty"`
-	// BlobAssetId: Optional. Asset id of the inline image. If set, find the image
+	// BlobAssetId: Optional. Asset ID of the inline image. If set, find the image
 	// content in the blob_assets field.
 	BlobAssetId string `json:"blobAssetId,omitempty"`
-	// DataUri: Optional. Data uri of the image. It is composed of four parts: a
+	// DataUri: Optional. Data URI of the image. It is composed of four parts: a
 	// prefix (data:), a MIME type indicating the type of data, an optional base64
 	// token if non-textual, and the data itself: data:,
 	DataUri string `json:"dataUri,omitempty"`
-	// GcsUri: Optional. Google Cloud Storage uri of the image.
+	// GcsUri: Optional. Google Cloud Storage URI of the image.
 	GcsUri string `json:"gcsUri,omitempty"`
 	// ImageText: Text extracted from the image using OCR or alt text describing
 	// the image.
@@ -4912,8 +4913,8 @@ type GoogleCloudDocumentaiV1beta3DocumentEntityNormalizedValue struct {
 	// MoneyValue: Money value. See also:
 	// https://github.com/googleapis/googleapis/blob/master/google/type/money.proto
 	MoneyValue *GoogleTypeMoney `json:"moneyValue,omitempty"`
-	// SignatureValue: A signature - a graphical representation of a person's name,
-	// often used to sign a document.
+	// SignatureValue: A signature, which is a graphical representation of a
+	// person's name, often used to sign a document.
 	SignatureValue bool `json:"signatureValue,omitempty"`
 	// Text: Optional. An optional field to store a normalized string. For some
 	// entity types, one of respective `structured_value` fields may also be
@@ -5053,11 +5054,11 @@ func (s GoogleCloudDocumentaiV1beta3DocumentEntityValidationOutputValidationResu
 
 // GoogleCloudDocumentaiV1beta3DocumentId: Document Identifier.
 type GoogleCloudDocumentaiV1beta3DocumentId struct {
-	// GcsManagedDocId: A document id within user-managed Cloud Storage.
+	// GcsManagedDocId: A document ID within user-managed Cloud Storage.
 	GcsManagedDocId *GoogleCloudDocumentaiV1beta3DocumentIdGCSManagedDocumentId `json:"gcsManagedDocId,omitempty"`
 	// RevisionRef: Points to a specific revision of the document if set.
 	RevisionRef *GoogleCloudDocumentaiV1beta3RevisionRef `json:"revisionRef,omitempty"`
-	// UnmanagedDocId: A document id within unmanaged dataset.
+	// UnmanagedDocId: A document ID within unmanaged dataset.
 	UnmanagedDocId *GoogleCloudDocumentaiV1beta3DocumentIdUnmanagedDocumentId `json:"unmanagedDocId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GcsManagedDocId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5081,7 +5082,7 @@ func (s GoogleCloudDocumentaiV1beta3DocumentId) MarshalJSON() ([]byte, error) {
 // document uniquely within the scope of a dataset in the user-managed Cloud
 // Storage option.
 type GoogleCloudDocumentaiV1beta3DocumentIdGCSManagedDocumentId struct {
-	// CwDocId: Id of the document (indexed) managed by Content Warehouse.
+	// CwDocId: ID of the document (indexed) managed by Content Warehouse.
 	CwDocId string `json:"cwDocId,omitempty"`
 	// GcsUri: Required. The Cloud Storage URI where the actual document is stored.
 	GcsUri string `json:"gcsUri,omitempty"`
@@ -5106,7 +5107,7 @@ func (s GoogleCloudDocumentaiV1beta3DocumentIdGCSManagedDocumentId) MarshalJSON(
 // GoogleCloudDocumentaiV1beta3DocumentIdUnmanagedDocumentId: Identifies a
 // document uniquely within the scope of a dataset in unmanaged option.
 type GoogleCloudDocumentaiV1beta3DocumentIdUnmanagedDocumentId struct {
-	// DocId: Required. The id of the document.
+	// DocId: Required. The ID of the document.
 	DocId string `json:"docId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DocId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6104,7 +6105,7 @@ func (s GoogleCloudDocumentaiV1beta3DocumentPageVisualElement) MarshalJSON() ([]
 // GoogleCloudDocumentaiV1beta3DocumentProvenance: Structure to identify
 // provenance relationships between annotations in different revisions.
 type GoogleCloudDocumentaiV1beta3DocumentProvenance struct {
-	// Id: The Id of this operation. Needs to be unique within the scope of the
+	// Id: The ID of this operation. Needs to be unique within the scope of the
 	// revision.
 	Id int64 `json:"id,omitempty"`
 	// Parents: References to the original elements that are replaced.
@@ -6151,7 +6152,7 @@ func (s GoogleCloudDocumentaiV1beta3DocumentProvenance) MarshalJSON() ([]byte, e
 // current element is based on. Used for referencing/aligning, removal and
 // replacement operations.
 type GoogleCloudDocumentaiV1beta3DocumentProvenanceParent struct {
-	// Id: The id of the parent provenance.
+	// Id: The ID of the parent provenance.
 	Id int64 `json:"id,omitempty"`
 	// Index: The index of the parent item in the corresponding item list (eg. list
 	// of entities, properties within entities, etc.) in the parent revision.
@@ -6179,7 +6180,7 @@ func (s GoogleCloudDocumentaiV1beta3DocumentProvenanceParent) MarshalJSON() ([]b
 // GoogleCloudDocumentaiV1beta3DocumentRevision: Contains past or forward
 // revisions of this document.
 type GoogleCloudDocumentaiV1beta3DocumentRevision struct {
-	// Agent: If the change was made by a person specify the name or id of that
+	// Agent: If the change was made by a person specify the name or ID of that
 	// person.
 	Agent string `json:"agent,omitempty"`
 	// CreateTime: The time that the revision was created, internally generated by
@@ -6187,7 +6188,7 @@ type GoogleCloudDocumentaiV1beta3DocumentRevision struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// HumanReview: Human Review information of this revision.
 	HumanReview *GoogleCloudDocumentaiV1beta3DocumentRevisionHumanReview `json:"humanReview,omitempty"`
-	// Id: Id of the revision, internally generated by doc proto storage. Unique
+	// Id: ID of the revision, internally generated by doc proto storage. Unique
 	// within the context of the document.
 	Id string `json:"id,omitempty"`
 	// Parent: The revisions that this revision is based on. This can include one
@@ -6253,7 +6254,7 @@ type GoogleCloudDocumentaiV1beta3DocumentSchema struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: Display name to show users.
 	DisplayName string `json:"displayName,omitempty"`
-	// DocumentPrompt: Optional. Document level prompt provided by the user. This
+	// DocumentPrompt: Optional. Document-level prompt provided by the user. This
 	// custom text is injected into the AI model's prompt to provide extra,
 	// document-wide guidance for processing.
 	DocumentPrompt string `json:"documentPrompt,omitempty"`
@@ -6305,8 +6306,9 @@ type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType struct {
 	// - Must start with a letter. - Allowed characters: ASCII letters
 	// `[a-z0-9_-]`. (For backward compatibility, internal infrastructure and
 	// tooling can handle any ASCII character.) - The `/` is sometimes used to
-	// denote a property of a type. For example `line_item/amount`. This convention
-	// is deprecated, but will still be honored for backward compatibility.
+	// denote a property of a type. For example, `line_item/amount`. This
+	// convention is deprecated, but will still be honored for backward
+	// compatibility.
 	Name string `json:"name,omitempty"`
 	// Properties: Description the nested structure, or composition of an entity.
 	Properties []*GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty `json:"properties,omitempty"`
@@ -7444,7 +7446,7 @@ func (s GoogleCloudDocumentaiV1beta3ImportDocumentsMetadataImportConfigValidatio
 type GoogleCloudDocumentaiV1beta3ImportDocumentsMetadataIndividualImportStatus struct {
 	// InputGcsSource: The source Cloud Storage URI of the document.
 	InputGcsSource string `json:"inputGcsSource,omitempty"`
-	// OutputDocumentId: The document id of imported document if it was successful,
+	// OutputDocumentId: The document ID of imported document if it was successful,
 	// otherwise empty.
 	OutputDocumentId *GoogleCloudDocumentaiV1beta3DocumentId `json:"outputDocumentId,omitempty"`
 	// Status: The status of the importing of the document.
@@ -8340,7 +8342,7 @@ type GoogleCloudDocumentaiV1beta3Processor struct {
 	// ActiveSchemaVersion: Optional. SchemaVersion used by the Processor. It is
 	// the same as Processor's DatasetSchema.schema_version Format is
 	// `projects/{project}/locations/{location}/schemas/{schema}/schemaVersions/{sch
-	// ema_version}
+	// ema_version}.
 	ActiveSchemaVersion string `json:"activeSchemaVersion,omitempty"`
 	// CreateTime: Output only. The time the processor was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -9269,7 +9271,7 @@ type GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestFoundationModelTuni
 	// recommended learning rate will be used.
 	LearningRateMultiplier float64 `json:"learningRateMultiplier,omitempty"`
 	// PreviousFineTunedProcessorVersionName: Optional. Resource name of a
-	// previously fine tuned version id to copy the overwritten configs from. The
+	// previously fine tuned version ID to copy the overwritten configs from. The
 	// base_processor_version should be newer than the base processor version used
 	// to fine tune this provided processor version. Format:
 	// `projects/{project}/locations/{location}/processors/{processor}/processorVers
@@ -12414,7 +12416,7 @@ func (r *ProjectsLocationsProcessorsDatasetService) GetDocument(dataset string) 
 }
 
 // DocumentIdGcsManagedDocIdCwDocId sets the optional parameter
-// "documentId.gcsManagedDocId.cwDocId": Id of the document (indexed) managed
+// "documentId.gcsManagedDocId.cwDocId": ID of the document (indexed) managed
 // by Content Warehouse.
 func (c *ProjectsLocationsProcessorsDatasetGetDocumentCall) DocumentIdGcsManagedDocIdCwDocId(documentIdGcsManagedDocIdCwDocId string) *ProjectsLocationsProcessorsDatasetGetDocumentCall {
 	c.urlParams_.Set("documentId.gcsManagedDocId.cwDocId", documentIdGcsManagedDocIdCwDocId)
@@ -12466,7 +12468,7 @@ func (c *ProjectsLocationsProcessorsDatasetGetDocumentCall) DocumentIdRevisionRe
 }
 
 // DocumentIdUnmanagedDocIdDocId sets the optional parameter
-// "documentId.unmanagedDocId.docId": Required. The id of the document.
+// "documentId.unmanagedDocId.docId": Required. The ID of the document.
 func (c *ProjectsLocationsProcessorsDatasetGetDocumentCall) DocumentIdUnmanagedDocIdDocId(documentIdUnmanagedDocIdDocId string) *ProjectsLocationsProcessorsDatasetGetDocumentCall {
 	c.urlParams_.Set("documentId.unmanagedDocId.docId", documentIdUnmanagedDocIdDocId)
 	return c

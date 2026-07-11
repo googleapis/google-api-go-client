@@ -211,12 +211,12 @@
                   ],
                   "parameters": {
                     "filter": {
-                      "description": "Optional. A [filter string](https://google.aip.dev/160). All fields need to be on the left hand side of each condition (for example: `partner_link_id = 123456789`). Fields must be specified using either all [camel case](https://en.wikipedia.org/wiki/Camel_case) or all [snake case](https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel case and snake case. Supported operations: - `AND` - `=` - `!=` Supported fields: - `partner_link_id` - `owning_account.account_type` - `owning_account.account_id` - `partner_account.account_type` - `partner_account.account_id` Example: `owning_account.account_type = \"GOOGLE_ADS\" AND partner_account.account_id = 987654321`",
+                      "description": "Optional. A [filter string](https://google.aip.dev/160). All fields need to be on the left hand side of each condition (for example: `partner_link_id = 123456789`). Fields must be specified using either all [camel case](https://en.wikipedia.org/wiki/Camel_case) or all [snake case](https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel case and snake case. Supported operations: - `AND` - `=` - `!=` Supported fields: - `partner_link_id` - `owning_account.account_type` - `owning_account.account_id` - `partner_account.account_type` - `partner_account.account_id` - `feature_set` For partner links with the FEATURE_SET_AD_EVENT_MANAGEMENT feature set, the following fields are also supported: - `partner_customer_account.account_id` Example: `owning_account.account_type = \"GOOGLE_ADS\" AND partner_account.account_id = 987654321`",
                       "location": "query",
                       "type": "string"
                     },
                     "pageSize": {
-                      "description": "The maximum number of partner links to return. The service may return fewer than this value. If unspecified, at most 10 partner links will be returned. The maximum value is 100; values above 100 will be coerced to 100.",
+                      "description": "The maximum number of partner links to return. The service may return fewer than this value. If unspecified, at most 50 partner links will be returned. The maximum value is 100; values above 100 will be coerced to 100.",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
@@ -310,7 +310,7 @@
                   ],
                   "parameters": {
                     "filter": {
-                      "description": "Optional. A [filter string](https://google.aip.dev/160) to apply to the list request. All fields need to be on the left hand side of each condition (for example: `user_list_id = 123`). Fields must be specified using either all [camel case](https://en.wikipedia.org/wiki/Camel_case) or all [snake case](https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel case and snake case. **Supported Operations:** - `AND` - `=` - `!=` - `\u003e` - `\u003e=` - `\u003c` - `\u003c=` **Unsupported Fields:** - `name` (use get method instead) - `historical_pricings` and all its subfields - `pricing.start_time` - `pricing.end_time`",
+                      "description": "Optional. A [filter string](https://google.aip.dev/160) to apply to the list request. All fields need to be on the left hand side of each condition (for example: `user_list_id = 123`). Fields must be specified using either all [camel case](https://en.wikipedia.org/wiki/Camel_case) or all [snake case](https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel case and snake case. **Supported Operations:** - `AND` - `=` - `!=` - `\u003e` - `\u003e=` - `\u003c` - `\u003c=` **Supported Functions:** - `IN(field, value1, value2, ...)`: returns true if the field matches any of the values. Example: `IN(user_list_id, 123, 456)` **Unsupported Fields:** - `name` (use get method instead) - `historical_pricings` and all its subfields - `pricing.start_time` - `pricing.end_time`",
                       "location": "query",
                       "type": "string"
                     },
@@ -442,7 +442,7 @@
                   ],
                   "parameters": {
                     "filter": {
-                      "description": "Optional. A [filter string](https://google.aip.dev/160) to apply to the list request. All fields need to be on the left hand side of each condition (for example: `user_list_id = 123`). Fields must be specified using either all [camel case](https://en.wikipedia.org/wiki/Camel_case) or all [snake case](https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel case and snake case. **Supported Operations:** - `AND` - `=` - `!=` - `\u003e` - `\u003e=` - `\u003c` - `\u003c=` **Unsupported Fields:** - `name` (use get method instead) - `historical_pricings` and all its subfields - `pricing.start_time` - `pricing.end_time`",
+                      "description": "Optional. A [filter string](https://google.aip.dev/160) to apply to the list request. All fields need to be on the left hand side of each condition (for example: `user_list_id = 123`). Fields must be specified using either all [camel case](https://en.wikipedia.org/wiki/Camel_case) or all [snake case](https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel case and snake case. **Supported Operations:** - `AND` - `=` - `!=` - `\u003e` - `\u003e=` - `\u003c` - `\u003c=` **Supported Functions:** - `IN(field, value1, value2, ...)`: returns true if the field matches any of the values. Example: `IN(user_list_id, 123, 456)` **Unsupported Fields:** - `name` (use get method instead) - `historical_pricings` and all its subfields - `pricing.start_time` - `pricing.end_time`",
                       "location": "query",
                       "type": "string"
                     },
@@ -521,7 +521,7 @@
                       ],
                       "parameters": {
                         "filter": {
-                          "description": "Optional. A [filter string](https://google.aip.dev/160) to apply to the list request. All fields need to be on the left hand side of each condition (for example: `user_list_id = 123`). Fields must be specified using either all [camel case](https://en.wikipedia.org/wiki/Camel_case) or all [snake case](https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel case and snake case. **Supported Operations:** - `AND` - `=` - `!=` - `\u003e` - `\u003e=` - `\u003c` - `\u003c=` **Unsupported Fields:** - `name` (use get method instead) - `historical_pricings` and all its subfields - `pricing.start_time` - `pricing.end_time`",
+                          "description": "Optional. A [filter string](https://google.aip.dev/160) to apply to the list request. All fields need to be on the left hand side of each condition (for example: `user_list_id = 123`). Fields must be specified using either all [camel case](https://en.wikipedia.org/wiki/Camel_case) or all [snake case](https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel case and snake case. **Supported Operations:** - `AND` - `=` - `!=` - `\u003e` - `\u003e=` - `\u003c` - `\u003c=` **Supported Functions:** - `IN(field, value1, value2, ...)`: returns true if the field matches any of the values. Example: `IN(user_list_id, 123, 456)` **Unsupported Fields:** - `name` (use get method instead) - `historical_pricings` and all its subfields - `pricing.start_time` - `pricing.end_time`",
                           "location": "query",
                           "type": "string"
                         },
@@ -656,7 +656,7 @@
                   ],
                   "parameters": {
                     "filter": {
-                      "description": "Optional. A [filter string](https://google.aip.dev/160). All fields need to be on the left hand side of each condition (for example: `display_name = \"list 1\"`). Fields must be specified using either all [camel case](https://en.wikipedia.org/wiki/Camel_case) or all [snake case](https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel case and snake case. Supported operations: - `AND` - `=` - `!=` - `\u003e` - `\u003e=` - `\u003c` - `\u003c=` - `:` (has) Supported fields: - `id` - `display_name` - `description` - `membership_status` - `integration_code` - `access_reason` - `ingested_user_list_info.upload_key_types`",
+                      "description": "Optional. A [filter string](https://google.aip.dev/160). All fields need to be on the left hand side of each condition (for example: `display_name = \"list 1\"`). Fields must be specified using either all [camel case](https://en.wikipedia.org/wiki/Camel_case) or all [snake case](https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel case and snake case. Supported operations: - `AND` - `=` - `!=` - `\u003e` - `\u003e=` - `\u003c` - `\u003c=` - `:` (has) **Supported Functions:** - `IN(field, value1, value2, ...)`: returns true if the field matches any of the values. Example: `IN(display_name, \"name1\", \"name2\")` Supported fields: - `id` - `display_name` - `description` - `membership_status` - `integration_code` - `access_reason` - `ingested_user_list_info.upload_key_types`",
                       "location": "query",
                       "type": "string"
                     },
@@ -842,7 +842,7 @@
       }
     }
   },
-  "revision": "20260605",
+  "revision": "20260708",
   "rootUrl": "https://datamanager.googleapis.com/",
   "schemas": {
     "AdEvent": {
@@ -1714,7 +1714,8 @@
             "PROCESSING_ERROR_REASON_TOO_RECENT_CLICK",
             "PROCESSING_ERROR_REASON_INVALID_CLICK",
             "PROCESSING_ERROR_REASON_INVALID_OPERATING_ACCOUNT_FOR_CLICK",
-            "PROCESSING_ERROR_REASON_CLICK_NOT_FOUND"
+            "PROCESSING_ERROR_REASON_CLICK_NOT_FOUND",
+            "PROCESSING_ERROR_REASON_EXTERNAL_ATTRIBUTION_DATA_MISSING"
           ],
           "enumDescriptions": [
             "The processing error reason is unknown.",
@@ -1760,7 +1761,8 @@
             "The click occurred too recently.",
             "The event can't be attributed to a click (GCLID). This may be because the click did not come from a Google Ads campaign, for example.",
             "The click from the event isn't associated with the `operating_account` of the destination.",
-            "A corresponding click can't be found that matches the provided attributes."
+            "A corresponding click can't be found that matches the provided attributes.",
+            "External attribution data is missing. Sending events to a destination for an external attribution conversion action isn't supported."
           ],
           "type": "string"
         },

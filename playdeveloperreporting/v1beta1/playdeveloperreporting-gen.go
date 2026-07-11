@@ -318,6 +318,72 @@ type VitalsStuckbackgroundwakelockrateService struct {
 	s *Service
 }
 
+// ApiservingMcpMcpToolVisibility: Profile describing the visibility
+// restriction of an MCP tool. Key:
+// "google.com/tool.profiles/visibility.restriction"
+type ApiservingMcpMcpToolVisibility struct {
+	// FieldVisibility: A list of field-level visibility restrictions.
+	FieldVisibility []*ApiservingMcpMcpToolVisibilityFieldVisibility `json:"fieldVisibility,omitempty"`
+	// VisibilityEnforcementStrategy: The strategy used to enforce visibility
+	// restrictions. DO NOT USE. This field is not yet implemented.
+	//
+	// Possible values:
+	//   "VISIBILITY_ENFORCEMENT_STRATEGY_UNSPECIFIED" - Default. Equivalent to
+	// COMBINE.
+	//   "COMBINE" - The principal must satisfy both API-level tool-level)
+	// visibility restrictions.
+	//   "OVERRIDE" - Bypasses the API-level visibility restrictions check; access
+	// is determined solely by the tool-level visibility restrictions.
+	VisibilityEnforcementStrategy string `json:"visibilityEnforcementStrategy,omitempty"`
+	// VisibilityRestriction: The visibility restriction labels for the tool itself
+	// (e.g., "PRODUCER_DEFINED_PREVIEW"). Multiple labels can be provided as a
+	// comma-separated string.
+	VisibilityRestriction string `json:"visibilityRestriction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldVisibility") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldVisibility") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ApiservingMcpMcpToolVisibility) MarshalJSON() ([]byte, error) {
+	type NoMethod ApiservingMcpMcpToolVisibility
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ApiservingMcpMcpToolVisibilityFieldVisibility: Visibility rules for
+// individual tool parameters (fields). This allows producers to hide specific
+// fields in tools/list and tools/call.
+type ApiservingMcpMcpToolVisibilityFieldVisibility struct {
+	// Restriction: The visibility restriction labels for this field
+	// (comma-separated).
+	Restriction string `json:"restriction,omitempty"`
+	// Selector: The name of the parameter in the input_schema or output_schema.
+	Selector string `json:"selector,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Restriction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Restriction") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ApiservingMcpMcpToolVisibilityFieldVisibility) MarshalJSON() ([]byte, error) {
+	type NoMethod ApiservingMcpMcpToolVisibilityFieldVisibility
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePlayDeveloperReportingV1beta1Anomaly: Represents an anomaly detected
 // in a dataset. Our anomaly detection systems flag datapoints in a time series
 // that fall outside of and expected range derived from historical data.

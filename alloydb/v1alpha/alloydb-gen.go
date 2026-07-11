@@ -1054,12 +1054,33 @@ type ConnectionPoolConfig struct {
 	// AuthproxyPoolerCount: Output only. The number of running AuthProxy poolers
 	// per instance.
 	AuthproxyPoolerCount int64 `json:"authproxyPoolerCount,omitempty"`
+	// AuthproxyPoolerScalingType: Optional. The scaling type of the AuthProxy
+	// pooler.
+	//
+	// Possible values:
+	//   "POOLER_SCALING_TYPE_UNSPECIFIED" - The scaling type is not specified.
+	//   "POOLER_NONE" - No pooler is enabled.
+	//   "POOLER_MACHINE_SIZED" - The number of poolers is automatically determined
+	// by the service based on the VM size.
+	//   "POOLER_MANUAL_OVERRIDE" - The number of poolers is kept unchanged no
+	// matter the machine size.
+	AuthproxyPoolerScalingType string `json:"authproxyPoolerScalingType,omitempty"`
 	// Enabled: Optional. Whether to enable Managed Connection Pool (MCP).
 	Enabled bool `json:"enabled,omitempty"`
 	// Flags: Optional. Connection Pool flags, as a list of "key": "value" pairs.
 	Flags map[string]string `json:"flags,omitempty"`
 	// PoolerCount: Output only. The number of running poolers per instance.
 	PoolerCount int64 `json:"poolerCount,omitempty"`
+	// PoolerScalingType: Optional. The scaling type of the regular pooler.
+	//
+	// Possible values:
+	//   "POOLER_SCALING_TYPE_UNSPECIFIED" - The scaling type is not specified.
+	//   "POOLER_NONE" - No pooler is enabled.
+	//   "POOLER_MACHINE_SIZED" - The number of poolers is automatically determined
+	// by the service based on the VM size.
+	//   "POOLER_MANUAL_OVERRIDE" - The number of poolers is kept unchanged no
+	// matter the machine size.
+	PoolerScalingType string `json:"poolerScalingType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthproxyPoolerCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3648,7 +3669,7 @@ type StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration struct {
 	// zone in a region (it is highly available).
 	//
 	// Possible values:
-	//   "AVAILABILITY_TYPE_UNSPECIFIED"
+	//   "AVAILABILITY_TYPE_UNSPECIFIED" - Unspecified availability type.
 	//   "ZONAL" - Zonal available instance.
 	//   "REGIONAL" - Regional available instance.
 	//   "MULTI_REGIONAL" - Multi regional instance
@@ -3779,7 +3800,7 @@ type StorageDatabasecenterPartnerapiV1mainBackupRun struct {
 	// Status: The status of this run. REQUIRED
 	//
 	// Possible values:
-	//   "STATUS_UNSPECIFIED"
+	//   "STATUS_UNSPECIFIED" - Unspecified status.
 	//   "SUCCESSFUL" - The backup was successful.
 	//   "FAILED" - The backup was unsuccessful.
 	Status string `json:"status,omitempty"`
@@ -3927,7 +3948,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
 	// FeedType: Required. Type feed to be ingested into condor
 	//
 	// Possible values:
-	//   "FEEDTYPE_UNSPECIFIED"
+	//   "FEEDTYPE_UNSPECIFIED" - Unspecified feed type. Not expected to be used.
 	//   "RESOURCE_METADATA" - Database resource metadata feed from control plane
 	//   "OBSERVABILITY_DATA" - Database resource monitoring data
 	//   "SECURITY_FINDING_DATA" - Database resource security health signal data
@@ -3936,13 +3957,17 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
 	//   "CONFIG_BASED_SIGNAL_DATA" - Database config based signal data
 	//   "BACKUPDR_METADATA" - Database resource metadata from BackupDR
 	//   "DATABASE_RESOURCE_SIGNAL_DATA" - Database resource signal data
-	FeedType                 string                                                                         `json:"feedType,omitempty"`
-	ObservabilityMetricData  *StorageDatabasecenterPartnerapiV1mainObservabilityMetricData                  `json:"observabilityMetricData,omitempty"`
+	FeedType string `json:"feedType,omitempty"`
+	// ObservabilityMetricData: Observability metric data.
+	ObservabilityMetricData *StorageDatabasecenterPartnerapiV1mainObservabilityMetricData `json:"observabilityMetricData,omitempty"`
+	// RecommendationSignalData: Database resource recommendation signal data.
 	RecommendationSignalData *StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalData `json:"recommendationSignalData,omitempty"`
-	ResourceHealthSignalData *StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData         `json:"resourceHealthSignalData,omitempty"`
+	// ResourceHealthSignalData: Database resource health signal data.
+	ResourceHealthSignalData *StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData `json:"resourceHealthSignalData,omitempty"`
 	// ResourceId: Primary key associated with the Resource. resource_id is
 	// available in individual feed level as well.
-	ResourceId       *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId       `json:"resourceId,omitempty"`
+	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
+	// ResourceMetadata: Database resource metadata.
 	ResourceMetadata *StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata `json:"resourceMetadata,omitempty"`
 	// SkipIngestion: Optional. If true, the feed won't be ingested by DB Center.
 	// This indicates that the feed is intentionally skipped. For example, BackupDR
@@ -3998,7 +4023,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// Provider: Cloud provider name. Ex: GCP/AWS/Azure/OnPrem/SelfManaged
 	//
 	// Possible values:
-	//   "PROVIDER_UNSPECIFIED"
+	//   "PROVIDER_UNSPECIFIED" - Unspecified provider.
 	//   "GCP" - Google cloud platform provider
 	//   "AWS" - Amazon web service
 	//   "AZURE" - Azure web service
@@ -4286,7 +4311,16 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	//   "SIGNAL_TYPE_PERFORMANCE_KPI_CHANGE" - Change in performance KPIs.
 	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Database version nearing end
 	// of life.
+	//   "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK" - Indicates a high risk of
+	// maintenance downtime.
+	//   "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME" - Indicates both a
+	// low cache hit rate and a risk of maintenance downtime.
+	//   "SIGNAL_TYPE_MISSING_ENHANCED_PROTECTION" - Indicates that the resource is
+	// missing enhanced protection.
 	SignalType string `json:"signalType,omitempty"`
+	// State: Required. The state of the signal, such as if it's ACTIVE or
+	// RESOLVED.
+	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
 	//   "ACTIVE" - The signal requires attention and has not been addressed yet.
@@ -4319,7 +4353,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceId struct {
 	// GCP/AWS/Azure/OnPrem/SelfManaged
 	//
 	// Possible values:
-	//   "PROVIDER_UNSPECIFIED"
+	//   "PROVIDER_UNSPECIFIED" - Unspecified provider.
 	//   "GCP" - Google cloud platform provider
 	//   "AWS" - Amazon web service
 	//   "AZURE" - Azure web service
@@ -4339,8 +4373,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceId struct {
 	// go/keep-sorted start alloydb.googleapis.com/Cluster,
 	// alloydb.googleapis.com/Instance, bigtableadmin.googleapis.com/Cluster,
 	// bigtableadmin.googleapis.com/Instance compute.googleapis.com/Instance
-	// firestore.googleapis.com/Database, redis.googleapis.com/Instance,
-	// redis.googleapis.com/Cluster,
+	// firestore.googleapis.com/Database, memorystore.googleapis.com/Instance,
+	// redis.googleapis.com/Instance, redis.googleapis.com/Cluster,
 	// oracledatabase.googleapis.com/CloudExadataInfrastructure
 	// oracledatabase.googleapis.com/CloudVmCluster
 	// oracledatabase.googleapis.com/AutonomousDatabase
@@ -4472,6 +4506,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	//   "MODE_NATIVE" - Native mode.
 	//   "MODE_MONGODB_COMPATIBLE" - MongoDB compatible mode.
 	//   "MODE_DATASTORE" - Datastore mode.
+	//   "MODE_CLUSTER_ENABLED" - Memorystore/ValKey: Cluster enabled mode.
+	//   "MODE_CLUSTER_DISABLED" - Memorystore/ValKey: Cluster disabled mode.
 	Modes []string `json:"modes,omitempty"`
 	// PrimaryResourceId: Identifier for this resource's immediate parent/primary
 	// resource if the current resource is a replica or derived form of another
@@ -4817,6 +4853,12 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalDa
 	//   "SIGNAL_TYPE_PERFORMANCE_KPI_CHANGE" - Change in performance KPIs.
 	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Database version nearing end
 	// of life.
+	//   "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK" - Indicates a high risk of
+	// maintenance downtime.
+	//   "SIGNAL_TYPE_LOW_CACHE_HIT_AND_MAINTENANCE_DOWNTIME" - Indicates both a
+	// low cache hit rate and a risk of maintenance downtime.
+	//   "SIGNAL_TYPE_MISSING_ENHANCED_PROTECTION" - Indicates that the resource is
+	// missing enhanced protection.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4983,9 +5025,10 @@ type StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata struct {
 	BackupRun *StorageDatabasecenterPartnerapiV1mainBackupRun `json:"backupRun,omitempty"`
 	// IsDeletionProtectionEnabled: Whether deletion protection is enabled for this
 	// internal resource.
-	IsDeletionProtectionEnabled bool                                                     `json:"isDeletionProtectionEnabled,omitempty"`
-	Product                     *StorageDatabasecenterProtoCommonProduct                 `json:"product,omitempty"`
-	ResourceId                  *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
+	IsDeletionProtectionEnabled bool `json:"isDeletionProtectionEnabled,omitempty"`
+	// Product: The product this resource represents.
+	Product    *StorageDatabasecenterProtoCommonProduct                 `json:"product,omitempty"`
+	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
 	// ResourceName: Required. internal resource name for spanner this will be
 	// database name
 	// e.g."spanner.googleapis.com/projects/123/abc/instances/inst1/databases/db1"
@@ -5349,7 +5392,8 @@ type StorageDatabasecenterPartnerapiV1mainRetentionSettings struct {
 	// DurationBasedRetention: Duration based retention period i.e. 172800 seconds
 	// (2 days)
 	DurationBasedRetention string `json:"durationBasedRetention,omitempty"`
-	QuantityBasedRetention int64  `json:"quantityBasedRetention,omitempty"`
+	// QuantityBasedRetention: Quantity based retention period i.e. 7 backups
+	QuantityBasedRetention int64 `json:"quantityBasedRetention,omitempty"`
 	// RetentionUnit: The unit that 'retained_backups' represents.
 	//
 	// Possible values:
@@ -5362,7 +5406,9 @@ type StorageDatabasecenterPartnerapiV1mainRetentionSettings struct {
 	//   "DURATION" - Retention will be by duration, eg. "retain the backups for
 	// 172800 seconds (2 days)".
 	//   "RETENTION_UNIT_OTHER" - For rest of the other category
-	RetentionUnit      string `json:"retentionUnit,omitempty"`
+	RetentionUnit string `json:"retentionUnit,omitempty"`
+	// TimeBasedRetention: Duration based retention period i.e. 172800 seconds (2
+	// days)
 	TimeBasedRetention string `json:"timeBasedRetention,omitempty"`
 	// TimestampBasedRetentionTime: Timestamp based retention period i.e.
 	// 2024-05-01T00:00:00Z
@@ -5512,7 +5558,7 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	//   "ENGINE_MEMORYSTORE_FOR_REDIS" - Memorystore with Redis dialect.
 	//   "ENGINE_MEMORYSTORE_FOR_REDIS_CLUSTER" - Memorystore with Redis cluster
 	// dialect.
-	//   "ENGINE_MEMORSTORE_FOR_VALKEY" - Memorystore with Valkey dialect.
+	//   "ENGINE_MEMORYSTORE_FOR_VALKEY" - Memorystore with Valkey.
 	//   "ENGINE_OTHER" - Other refers to rest of other database engine. This is to
 	// be when engine is known, but it is not present in this enum.
 	//   "ENGINE_FIRESTORE_WITH_NATIVE_MODE" - Firestore with native mode.
@@ -5995,6 +6041,11 @@ type User struct {
 	// password-based authentication.
 	//   "ALLOYDB_IAM_USER" - Database user that can authenticate via IAM-Based
 	// authentication.
+	//   "ALLOYDB_IAM_GROUP" - Database user that represents an IAM group whose
+	// members can authenticate via IAM group-based authentication.
+	//   "ALLOYDB_IAM_GROUP_USER" - Represents a user that belongs to an IAM group.
+	//   "ALLOYDB_IAM_GROUP_SERVICE_ACCOUNT" - Represents a service account that
+	// belongs to an IAM group.
 	UserType string `json:"userType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

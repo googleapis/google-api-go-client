@@ -188,6 +188,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Projects = NewProjectsService(s)
+	s.Shl = NewShlService(s)
 	s.Users = NewUsersService(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
@@ -214,6 +215,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Projects *ProjectsService
+
+	Shl *ShlService
 
 	Users *UsersService
 }
@@ -255,6 +258,39 @@ func NewProjectsSubscribersSubscriptionsService(s *Service) *ProjectsSubscribers
 }
 
 type ProjectsSubscribersSubscriptionsService struct {
+	s *Service
+}
+
+func NewShlService(s *Service) *ShlService {
+	rs := &ShlService{s: s}
+	rs.M = NewShlMService(s)
+	rs.R = NewShlRService(s)
+	return rs
+}
+
+type ShlService struct {
+	s *Service
+
+	M *ShlMService
+
+	R *ShlRService
+}
+
+func NewShlMService(s *Service) *ShlMService {
+	rs := &ShlMService{s: s}
+	return rs
+}
+
+type ShlMService struct {
+	s *Service
+}
+
+func NewShlRService(s *Service) *ShlRService {
+	rs := &ShlRService{s: s}
+	return rs
+}
+
+type ShlRService struct {
 	s *Service
 }
 
@@ -2346,9 +2382,10 @@ type Empty struct {
 // EndpointAuthorization: Authorization mechanism for a subscriber endpoint.
 // For all requests sent by the Webhooks service, the JSON payload is
 // cryptographically signed. The signature is delivered in the
-// `X-HEALTHAPI-SIGNATURE` HTTP header. This is an ECDSA (NIST P256) signature
-// of the JSON payload. Clients must verify this signature using Google Health
-// API's public key to confirm the payload was sent by the Health API.
+// `GOOGLE-HEALTH-API-SIGNATURE` HTTP header. This is an ECDSA (NIST P256)
+// signature of the JSON payload. Clients must verify this signature using
+// Google Health API's public key to confirm the payload was sent by the Health
+// API.
 type EndpointAuthorization struct {
 	// Secret: Required. Input only. Provides a client-provided secret that will be
 	// sent with each notification to the subscriber endpoint using the
@@ -2381,7 +2418,7 @@ func (s EndpointAuthorization) MarshalJSON() ([]byte, error) {
 
 // EnergyQuantity: Represents the energy quantity.
 type EnergyQuantity struct {
-	// Kcal: Required. Value representing the energy in kilocalories.
+	// Kcal: Required. The energy value in kilocalories.
 	Kcal float64 `json:"kcal,omitempty"`
 	// UserProvidedUnit: Optional. Value representing the user provided unit.
 	//
@@ -3375,6 +3412,53 @@ func (s Height) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// HttpBody: Message that represents an arbitrary HTTP body. It should only be
+// used for payload formats that can't be represented as JSON, such as raw
+// binary or an HTML page. This message can be used both in streaming and
+// non-streaming API methods in the request as well as the response. It can be
+// used as a top-level request field, which is convenient if one wants to
+// extract parameters from either the URL or HTTP template into the request
+// fields and also want access to the raw HTTP body. Example: message
+// GetResourceRequest { // A unique request id. string request_id = 1; // The
+// raw HTTP body is bound to this field. google.api.HttpBody http_body = 2; }
+// service ResourceService { rpc GetResource(GetResourceRequest) returns
+// (google.api.HttpBody); rpc UpdateResource(google.api.HttpBody) returns
+// (google.protobuf.Empty); } Example with streaming methods: service
+// CaldavService { rpc GetCalendar(stream google.api.HttpBody) returns (stream
+// google.api.HttpBody); rpc UpdateCalendar(stream google.api.HttpBody) returns
+// (stream google.api.HttpBody); } Use of this type only changes how the
+// request and response bodies are handled, all other features will continue to
+// work unchanged.
+type HttpBody struct {
+	// ContentType: The HTTP Content-Type header value specifying the content type
+	// of the body.
+	ContentType string `json:"contentType,omitempty"`
+	// Data: The HTTP request/response body as raw binary.
+	Data string `json:"data,omitempty"`
+	// Extensions: Application specific response metadata. Must be set in the first
+	// response for streaming APIs.
+	Extensions []googleapi.RawMessage `json:"extensions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ContentType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HttpBody) MarshalJSON() ([]byte, error) {
+	type NoMethod HttpBody
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // HttpHeader: Represents an HTTP header.
 type HttpHeader struct {
 	// Key: The HTTP header key. It is case insensitive.
@@ -3739,6 +3823,36 @@ func (s ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ManifestParams: Represents the POST body contained in a
+// GetShlManifestRequest This message is nested to represent that See
+// https://build.fhir.org/ig/HL7/smart-health-cards-and-links/links-specification.html#smart-health-link-manifest-request
+type ManifestParams struct {
+	// EmbeddedLengthMax: Optional. Integer upper bound on the length of embedded
+	// payloads
+	EmbeddedLengthMax int64 `json:"embeddedLengthMax,omitempty"`
+	// Passcode: Optional.
+	Passcode string `json:"passcode,omitempty"`
+	// Recipient: Required. A string describing the recipient (e.g.,the name of an
+	// organization or person) suitable for display to the Receiving User
+	Recipient string `json:"recipient,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EmbeddedLengthMax") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EmbeddedLengthMax") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ManifestParams) MarshalJSON() ([]byte, error) {
+	type NoMethod ManifestParams
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // MedicalDeviceInfo: Software as Medical Device (SaMD) metadata. Used to
 // construct the Unique Device Identifier (UDI).
 type MedicalDeviceInfo struct {
@@ -3906,7 +4020,7 @@ func (s *MobilityMetrics) UnmarshalJSON(data []byte) error {
 
 // NutrientQuantity: Represents the quantity of a nutrient.
 type NutrientQuantity struct {
-	// Nutrient: Required. Value representing the nutrient.
+	// Nutrient: Required. The nutrient type.
 	//
 	// Possible values:
 	//   "NUTRIENT_UNSPECIFIED" - Unspecified nutrient.
@@ -3950,7 +4064,7 @@ type NutrientQuantity struct {
 	//   "ZINC" - Value representing zinc nutrient.
 	//   "FOLATE" - Value representing folate nutrient.
 	Nutrient string `json:"nutrient,omitempty"`
-	// Quantity: Required. Value representing the quantity of the nutrient.
+	// Quantity: Required. The quantity of the nutrient, measured in grams.
 	Quantity *WeightQuantity `json:"quantity,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Nutrient") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4036,36 +4150,33 @@ func (s NutrientQuantityRollup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// NutritionLog: Holds information about a user logged food. There are two ways
-// of creating a nutrition log based on the food type: 1. Identified food:
+// NutritionLog: Holds information about food logged by a user. There are two
+// ways of creating a nutrition log based on the food type: 1. Identified food:
 // Using the food field, which is a reference to a Food resource. In this case
 // fields `nutrients`, `energy`, `energy_from_fat`, `total_carbohydrate`,
 // `total_fat`, `food_display_name` will be populated based on the referenced
 // food. 2. Anonymous food: Using the `food_display_name` field and setting the
 // `nutrients`, `energy`, `energy_from_fat`, `total_carbohydrate`, `total_fat`
 // fields manually. The identified food is preferred over the anonymous food.
-// Nutrition logs created from anonymous food are not be editable.
+// Nutrition logs created from anonymous food are not editable.
 type NutritionLog struct {
-	// Energy: Optional. Value representing the energy of the nutrition log. For
-	// nutrition logs created from an identified food, this field will be populated
-	// based on the referenced food. For anonymous food, this field will be
-	// populated manually.
+	// Energy: Optional. The total energy of the food, measured in kilocalories
+	// (`kcal`).
 	Energy *EnergyQuantity `json:"energy,omitempty"`
-	// EnergyFromFat: Optional. Value representing the energy from fat of the
-	// nutrition log. For nutrition logs created from an identified food, this
-	// field will be populated based on the referenced food. For anonymous food,
-	// this field will be populated manually.
+	// EnergyFromFat: Optional. The energy from fat, measured in kilocalories
+	// (`kcal`).
 	EnergyFromFat *EnergyQuantity `json:"energyFromFat,omitempty"`
-	// Food: Required. Represents the food ID.
+	// Food: Optional. The resource name of the Food item. Required when creating a
+	// nutrition log from an identified food. For anonymous food logs, use the
+	// `food_display_name` field instead.
 	Food string `json:"food,omitempty"`
-	// FoodDisplayName: Value representing the display name of the food. For
-	// nutrition logs created from an identified food, this field will be populated
-	// based on the referenced food. For anonymous food, this field will be
-	// populated manually.
+	// FoodDisplayName: The display name of the food. For identified food logs,
+	// this is populated automatically from the referenced food.
 	FoodDisplayName string `json:"foodDisplayName,omitempty"`
-	// Interval: Required. Observed interval.
+	// Interval: Required. The time window when the food was logged.
 	Interval *SessionTimeInterval `json:"interval,omitempty"`
-	// MealType: Optional. Value representing the meal type of the nutrition log.
+	// MealType: Optional. The meal category. One of `BREAKFAST`, `LUNCH`,
+	// `DINNER`, or `SNACK`.
 	//
 	// Possible values:
 	//   "MEAL_TYPE_UNSPECIFIED" - Unspecified meal type.
@@ -4080,19 +4191,15 @@ type NutritionLog struct {
 	// day.
 	//   "ANYTIME" - Value representing any time (legacy NA).
 	MealType string `json:"mealType,omitempty"`
-	// Nutrients: Optional. Value representing the nutrients of the nutrition log.
+	// Nutrients: Optional. An array of individual nutrient values for the
+	// nutrition log.
 	Nutrients []*NutrientQuantity `json:"nutrients,omitempty"`
-	// Serving: Optional. Value representing the nutrition log serving.
+	// Serving: Optional. The serving information for the logged food.
 	Serving *Serving `json:"serving,omitempty"`
-	// TotalCarbohydrate: Optional. Value representing the total carbohydrate of
-	// the nutrition log. For nutrition logs created from an identified food, this
-	// field will be populated based on the referenced food. For anonymous food,
-	// this field will be populated manually.
+	// TotalCarbohydrate: Optional. The total carbohydrate content, measured in
+	// grams.
 	TotalCarbohydrate *WeightQuantity `json:"totalCarbohydrate,omitempty"`
-	// TotalFat: Optional. Value representing the total fat of the nutrition log.
-	// For nutrition logs created from an identified food, this field will be
-	// populated based on the referenced food. For anonymous food, this field will
-	// be populated manually.
+	// TotalFat: Optional. The total fat content, measured in grams.
 	TotalFat *WeightQuantity `json:"totalFat,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Energy") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5070,7 +5177,7 @@ func (s SedentaryPeriodRollupValue) MarshalJSON() ([]byte, error) {
 // Serving: Represents different properties and information about the serving
 // of a specific food.
 type Serving struct {
-	// Amount: Optional. Amount of food consumed, fractional values are supported.
+	// Amount: Optional. The number of servings.
 	Amount float64 `json:"amount,omitempty"`
 	// FoodMeasurementUnit: Required. Food measurement unit
 	FoodMeasurementUnit string `json:"foodMeasurementUnit,omitempty"`
@@ -6247,7 +6354,7 @@ func (s *Weight) UnmarshalJSON(data []byte) error {
 
 // WeightQuantity: Represents the weight quantity.
 type WeightQuantity struct {
-	// Grams: Required. Value representing the weight in grams.
+	// Grams: Required. The weight value in grams.
 	Grams float64 `json:"grams,omitempty"`
 	// UserProvidedUnit: Optional. Value representing the user provided unit.
 	//
@@ -7404,6 +7511,227 @@ func (c *ProjectsSubscribersSubscriptionsPatchCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "health.projects.subscribers.subscriptions.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ShlMGetShlManifestCall struct {
+	s              *Service
+	externalShlId  string
+	manifestparams *ManifestParams
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// GetShlManifest: Forward a manifest request for a given SHL
+//
+//   - externalShlId: External ID mapping to a ShlSharedLinkCapabilityToken
+//     object See
+//     https://docs.google.com/document/d/1Pch20pxJHRbsaMxp0EYgs3ZU0Gu7QTUznk8LhvbQvfY/edit?tab=t.0#heading=h.17wg41voij6q.
+func (r *ShlMService) GetShlManifest(externalShlId string, manifestparams *ManifestParams) *ShlMGetShlManifestCall {
+	c := &ShlMGetShlManifestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.externalShlId = externalShlId
+	c.manifestparams = manifestparams
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ShlMGetShlManifestCall) Fields(s ...googleapi.Field) *ShlMGetShlManifestCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ShlMGetShlManifestCall) Context(ctx context.Context) *ShlMGetShlManifestCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ShlMGetShlManifestCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ShlMGetShlManifestCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.manifestparams)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/shl/m/{externalShlId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"externalShlId": c.externalShlId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "health.shl.m.getShlManifest", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "health.shl.m.getShlManifest" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ShlMGetShlManifestCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "health.shl.m.getShlManifest", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ShlRGetCall struct {
+	s             *Service
+	externalShlId string
+	resourceToken string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Get: Forward a resource request for a given SHL
+//
+//   - externalShlId: External ID mapping to a ShlSharedLinkCapabilityToken
+//     object See
+//     https://docs.google.com/document/d/1Pch20pxJHRbsaMxp0EYgs3ZU0Gu7QTUznk8LhvbQvfY/edit?tab=t.0#heading=h.17wg41voij6q.
+//   - resourceToken: Encoded, encrypted message containing resource access
+//     details.
+func (r *ShlRService) Get(externalShlId string, resourceToken string) *ShlRGetCall {
+	c := &ShlRGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.externalShlId = externalShlId
+	c.resourceToken = resourceToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ShlRGetCall) Fields(s ...googleapi.Field) *ShlRGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ShlRGetCall) IfNoneMatch(entityTag string) *ShlRGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ShlRGetCall) Context(ctx context.Context) *ShlRGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ShlRGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ShlRGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/shl/r/{externalShlId}/{resourceToken}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"externalShlId": c.externalShlId,
+		"resourceToken": c.resourceToken,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "health.shl.r.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "health.shl.r.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ShlRGetCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "health.shl.r.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

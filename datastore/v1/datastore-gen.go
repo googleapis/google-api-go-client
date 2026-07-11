@@ -337,6 +337,8 @@ type AllocateIdsRequest struct {
 	// Keys: Required. A list of keys with incomplete key paths for which to
 	// allocate IDs. No key may be reserved/read-only.
 	Keys []*Key `json:"keys,omitempty"`
+	// RequestOptions: Optional. The options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DatabaseId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -436,6 +438,8 @@ type BeginTransactionRequest struct {
 	// '(default)' is not allowed; please use empty string '' to refer the default
 	// database.
 	DatabaseId string `json:"databaseId,omitempty"`
+	// RequestOptions: Optional. The options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// TransactionOptions: Options for a new transaction.
 	TransactionOptions *TransactionOptions `json:"transactionOptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DatabaseId") to
@@ -504,6 +508,8 @@ type CommitRequest struct {
 	// `upsert` followed by `insert` - `delete` followed by `update` When mode is
 	// `NON_TRANSACTIONAL`, no two mutations may affect a single entity.
 	Mutations []*Mutation `json:"mutations,omitempty"`
+	// RequestOptions: Optional. The options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// SingleUseTransaction: Options for beginning a new transaction for this
 	// request. The transaction is committed when the request completes. If
 	// specified, TransactionOptions.mode must be TransactionOptions.ReadWrite.
@@ -1980,6 +1986,8 @@ type LookupRequest struct {
 	PropertyMask *PropertyMask `json:"propertyMask,omitempty"`
 	// ReadOptions: The options for this lookup request.
 	ReadOptions *ReadOptions `json:"readOptions,omitempty"`
+	// RequestOptions: Optional. The options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DatabaseId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2692,6 +2700,30 @@ func (s ReadWrite) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RequestOptions: Options for a request.
+type RequestOptions struct {
+	// RequestTags: Optional. The request tags for the request. The tags are
+	// processed as follows: - Truncated to 510 characters. - Filtered out if
+	// empty. - Deduplicated. - Limited to 50 tags.
+	RequestTags []string `json:"requestTags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequestTags") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequestTags") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RequestOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod RequestOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ReserveIdsRequest: The request for Datastore.ReserveIds.
 type ReserveIdsRequest struct {
 	// DatabaseId: The ID of the database against which to make the request.
@@ -2701,6 +2733,8 @@ type ReserveIdsRequest struct {
 	// Keys: Required. A list of keys with complete key paths whose numeric IDs
 	// should not be auto-allocated.
 	Keys []*Key `json:"keys,omitempty"`
+	// RequestOptions: Optional. The options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DatabaseId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2731,6 +2765,8 @@ type RollbackRequest struct {
 	// '(default)' is not allowed; please use empty string '' to refer the default
 	// database.
 	DatabaseId string `json:"databaseId,omitempty"`
+	// RequestOptions: Optional. The options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// Transaction: Required. The transaction identifier, returned by a call to
 	// Datastore.BeginTransaction.
 	Transaction string `json:"transaction,omitempty"`
@@ -2778,6 +2814,8 @@ type RunAggregationQueryRequest struct {
 	PartitionId *PartitionId `json:"partitionId,omitempty"`
 	// ReadOptions: The options for this query.
 	ReadOptions *ReadOptions `json:"readOptions,omitempty"`
+	// RequestOptions: Optional. The options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AggregationQuery") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2854,6 +2892,8 @@ type RunQueryRequest struct {
 	Query *Query `json:"query,omitempty"`
 	// ReadOptions: The options for this query.
 	ReadOptions *ReadOptions `json:"readOptions,omitempty"`
+	// RequestOptions: Optional. The options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DatabaseId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

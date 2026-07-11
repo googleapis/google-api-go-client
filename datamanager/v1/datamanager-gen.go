@@ -1185,6 +1185,9 @@ type ErrorCount struct {
 	// destination.
 	//   "PROCESSING_ERROR_REASON_CLICK_NOT_FOUND" - A corresponding click can't be
 	// found that matches the provided attributes.
+	//   "PROCESSING_ERROR_REASON_EXTERNAL_ATTRIBUTION_DATA_MISSING" - External
+	// attribution data is missing. Sending events to a destination for an external
+	// attribution conversion action isn't supported.
 	Reason string `json:"reason,omitempty"`
 	// RecordCount: The count of records that failed to upload for a given reason.
 	RecordCount int64 `json:"recordCount,omitempty,string"`
@@ -4400,8 +4403,11 @@ func (r *AccountTypesAccountsPartnerLinksService) Search(parent string) *Account
 // case and snake case. Supported operations: - `AND` - `=` - `!=` Supported
 // fields: - `partner_link_id` - `owning_account.account_type` -
 // `owning_account.account_id` - `partner_account.account_type` -
-// `partner_account.account_id` Example: `owning_account.account_type =
-// "GOOGLE_ADS" AND partner_account.account_id = 987654321`
+// `partner_account.account_id` - `feature_set` For partner links with the
+// FEATURE_SET_AD_EVENT_MANAGEMENT feature set, the following fields are also
+// supported: - `partner_customer_account.account_id` Example:
+// `owning_account.account_type = "GOOGLE_ADS" AND partner_account.account_id =
+// 987654321`
 func (c *AccountTypesAccountsPartnerLinksSearchCall) Filter(filter string) *AccountTypesAccountsPartnerLinksSearchCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4409,7 +4415,7 @@ func (c *AccountTypesAccountsPartnerLinksSearchCall) Filter(filter string) *Acco
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // partner links to return. The service may return fewer than this value. If
-// unspecified, at most 10 partner links will be returned. The maximum value is
+// unspecified, at most 50 partner links will be returned. The maximum value is
 // 100; values above 100 will be coerced to 100.
 func (c *AccountTypesAccountsPartnerLinksSearchCall) PageSize(pageSize int64) *AccountTypesAccountsPartnerLinksSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -4782,9 +4788,11 @@ func (r *AccountTypesAccountsUserListDirectLicensesService) List(parent string) 
 // (https://en.wikipedia.org/wiki/Camel_case) or all snake case
 // (https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel
 // case and snake case. **Supported Operations:** - `AND` - `=` - `!=` - `>` -
-// `>=` - `<` - `<=` **Unsupported Fields:** - `name` (use get method instead)
-// - `historical_pricings` and all its subfields - `pricing.start_time` -
-// `pricing.end_time`
+// `>=` - `<` - `<=` **Supported Functions:** - `IN(field, value1, value2,
+// ...)`: returns true if the field matches any of the values. Example:
+// `IN(user_list_id, 123, 456)` **Unsupported Fields:** - `name` (use get
+// method instead) - `historical_pricings` and all its subfields -
+// `pricing.start_time` - `pricing.end_time`
 func (c *AccountTypesAccountsUserListDirectLicensesListCall) Filter(filter string) *AccountTypesAccountsUserListDirectLicensesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5279,9 +5287,11 @@ func (r *AccountTypesAccountsUserListGlobalLicensesService) List(parent string) 
 // (https://en.wikipedia.org/wiki/Camel_case) or all snake case
 // (https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel
 // case and snake case. **Supported Operations:** - `AND` - `=` - `!=` - `>` -
-// `>=` - `<` - `<=` **Unsupported Fields:** - `name` (use get method instead)
-// - `historical_pricings` and all its subfields - `pricing.start_time` -
-// `pricing.end_time`
+// `>=` - `<` - `<=` **Supported Functions:** - `IN(field, value1, value2,
+// ...)`: returns true if the field matches any of the values. Example:
+// `IN(user_list_id, 123, 456)` **Unsupported Fields:** - `name` (use get
+// method instead) - `historical_pricings` and all its subfields -
+// `pricing.start_time` - `pricing.end_time`
 func (c *AccountTypesAccountsUserListGlobalLicensesListCall) Filter(filter string) *AccountTypesAccountsUserListGlobalLicensesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5564,9 +5574,11 @@ func (r *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomer
 // (https://en.wikipedia.org/wiki/Camel_case) or all snake case
 // (https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel
 // case and snake case. **Supported Operations:** - `AND` - `=` - `!=` - `>` -
-// `>=` - `<` - `<=` **Unsupported Fields:** - `name` (use get method instead)
-// - `historical_pricings` and all its subfields - `pricing.start_time` -
-// `pricing.end_time`
+// `>=` - `<` - `<=` **Supported Functions:** - `IN(field, value1, value2,
+// ...)`: returns true if the field matches any of the values. Example:
+// `IN(user_list_id, 123, 456)` **Unsupported Fields:** - `name` (use get
+// method instead) - `historical_pricings` and all its subfields -
+// `pricing.start_time` - `pricing.end_time`
 func (c *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall) Filter(filter string) *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6088,9 +6100,11 @@ func (r *AccountTypesAccountsUserListsService) List(parent string) *AccountTypes
 // (https://en.wikipedia.org/wiki/Camel_case) or all snake case
 // (https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel
 // case and snake case. Supported operations: - `AND` - `=` - `!=` - `>` - `>=`
-// - `<` - `<=` - `:` (has) Supported fields: - `id` - `display_name` -
-// `description` - `membership_status` - `integration_code` - `access_reason` -
-// `ingested_user_list_info.upload_key_types`
+// - `<` - `<=` - `:` (has) **Supported Functions:** - `IN(field, value1,
+// value2, ...)`: returns true if the field matches any of the values. Example:
+// `IN(display_name, "name1", "name2")` Supported fields: - `id` -
+// `display_name` - `description` - `membership_status` - `integration_code` -
+// `access_reason` - `ingested_user_list_info.upload_key_types`
 func (c *AccountTypesAccountsUserListsListCall) Filter(filter string) *AccountTypesAccountsUserListsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

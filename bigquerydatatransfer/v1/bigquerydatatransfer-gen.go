@@ -1532,9 +1532,6 @@ type TransferRun struct {
 	EndTime string `json:"endTime,omitempty"`
 	// ErrorStatus: Status of the transfer run.
 	ErrorStatus *Status `json:"errorStatus,omitempty"`
-	// MetadataDestination: Output only. The metadata destination of the transfer
-	// run.
-	MetadataDestination *MetadataDestination `json:"metadataDestination,omitempty"`
 	// Name: Identifier. The resource name of the transfer run. Transfer run names
 	// have the form
 	// `projects/{project_id}/locations/{location}/transferConfigs/{config_id}/runs/

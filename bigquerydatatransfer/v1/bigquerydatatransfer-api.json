@@ -1651,7 +1651,7 @@
       }
     }
   },
-  "revision": "20260601",
+  "revision": "20260703",
   "rootUrl": "https://bigquerydatatransfer.googleapis.com/",
   "schemas": {
     "CheckValidCredsRequest": {
@@ -2638,11 +2638,6 @@
         "errorStatus": {
           "$ref": "Status",
           "description": "Status of the transfer run."
-        },
-        "metadataDestination": {
-          "$ref": "MetadataDestination",
-          "description": "Output only. The metadata destination of the transfer run.",
-          "readOnly": true
         },
         "name": {
           "description": "Identifier. The resource name of the transfer run. Transfer run names have the form `projects/{project_id}/locations/{location}/transferConfigs/{config_id}/runs/{run_id}`. The name is ignored when creating a transfer run.",

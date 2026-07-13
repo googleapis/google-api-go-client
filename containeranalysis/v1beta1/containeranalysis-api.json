@@ -1771,7 +1771,7 @@
       }
     }
   },
-  "revision": "20260619",
+  "revision": "20260703",
   "rootUrl": "https://containeranalysis.googleapis.com/",
   "schemas": {
     "AISkillAnalysisNote": {
@@ -5291,13 +5291,15 @@
             "SCANNER_UNSPECIFIED",
             "STATIC",
             "LLM",
-            "WS_POLICY"
+            "WS_POLICY",
+            "GOOGLE_ANTIVIRUS"
           ],
           "enumDescriptions": [
             "Unspecified scanner.",
             "Static scanner.",
             "LLM scanner.",
-            "WS_POLICY scanner."
+            "WS_POLICY scanner.",
+            "Google AntiVirus Service scanner."
           ],
           "type": "string"
         },

@@ -410,6 +410,30 @@ func (s AccessSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AddRequestHeader: Adds a request header to the API.
+type AddRequestHeader struct {
+	// Key: HTTP header key.
+	Key string `json:"key,omitempty"`
+	// Value: HTTP header value.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AddRequestHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod AddRequestHeader
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ApiOperation: Identification for an API Operation.
 type ApiOperation struct {
 	// MethodSelectors: API methods or permissions to allow. Method or permission
@@ -1083,6 +1107,10 @@ type EgressSource struct {
 	// single `*` is specified for `access_level`, then all EgressSources will be
 	// allowed.
 	AccessLevel string `json:"accessLevel,omitempty"`
+	// PscEndpoint: A PrivateServiceConnectEndpoint that is allowed to access data
+	// outside the perimeter. The Private Service Connect endpoint may be in any
+	// organization, not just the organization that the perimeter is defined in.
+	PscEndpoint *PrivateServiceConnectEndpoint `json:"pscEndpoint,omitempty"`
 	// Resource: A Google Cloud resource from the service perimeter that you want
 	// to allow to access data outside the perimeter. This field supports only
 	// projects. The project format is `projects/{project_number}`. You can't use
@@ -1427,6 +1455,10 @@ type IngressSource struct {
 	// `accessPolicies/MY_POLICY/accessLevels/MY_LEVEL`. If a single `*` is
 	// specified for `access_level`, then all IngressSources will be allowed.
 	AccessLevel string `json:"accessLevel,omitempty"`
+	// PscEndpoint: A PrivateServiceConnectEndpoint that is allowed to access the
+	// perimeter. The Private Service Connect endpoint may be in any organization,
+	// not just the organization that the perimeter is defined in.
+	PscEndpoint *PrivateServiceConnectEndpoint `json:"pscEndpoint,omitempty"`
 	// Resource: A Google Cloud resource that is allowed to ingress the perimeter.
 	// Requests from these resources will be allowed to access perimeter data.
 	// Currently only projects and VPCs are allowed. Project format:
@@ -1750,6 +1782,28 @@ func (s MethodSelector) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Modifier: Modifier to apply to the API requests.
+type Modifier struct {
+	// AddRequestHeader: Adds additional HTTP request headers.
+	AddRequestHeader *AddRequestHeader `json:"addRequestHeader,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AddRequestHeader") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AddRequestHeader") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Modifier) MarshalJSON() ([]byte, error) {
+	type NoMethod Modifier
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is the
 // result of a network API call.
 type Operation struct {
@@ -1931,6 +1985,32 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PrivateServiceConnectEndpoint: Specifies the Private Service Connect
+// endpoint that an API call refers to.
+type PrivateServiceConnectEndpoint struct {
+	// ForwardingRule: The full resource name of the global forwarding rule that
+	// identifies a Private Service Connect endpoint. Forwarding rule format:
+	// `//compute.googleapis.com/projects/{PROJECT_ID}/global/forwardingRules/{FORWA
+	// RDING_RULE_ID}`.
+	ForwardingRule string `json:"forwardingRule,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ForwardingRule") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ForwardingRule") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PrivateServiceConnectEndpoint) MarshalJSON() ([]byte, error) {
+	type NoMethod PrivateServiceConnectEndpoint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ReplaceAccessLevelsRequest: A request to replace all existing Access Levels
 // in an Access Policy with the Access Levels provided. This is done
 // atomically.
@@ -2069,6 +2149,34 @@ type ScopedAccessSettings struct {
 
 func (s ScopedAccessSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ScopedAccessSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ServicePattern: Service patterns used to allow access.
+type ServicePattern struct {
+	// Modifiers: Modifiers to apply to the requests that match the URL pattern.
+	Modifiers []*Modifier `json:"modifiers,omitempty"`
+	// Pattern: URL pattern to allow. Only patterns of ".googleapis.com/*",
+	// "www.googleapis.com//*" and "*.appspot.com/* forms are supported, where
+	// should be alphanumerical name.
+	Pattern string `json:"pattern,omitempty"`
+	// Service: Supported service to allow.
+	Service string `json:"service,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Modifiers") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Modifiers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServicePattern) MarshalJSON() ([]byte, error) {
+	type NoMethod ServicePattern
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2463,6 +2571,9 @@ func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 // VpcAccessibleServices: Specifies how APIs are allowed to communicate within
 // the Service Perimeter.
 type VpcAccessibleServices struct {
+	// AllowedServicePatterns: Specifies which Google services are allowed to be
+	// accessed from VPC networks in the service perimeter.
+	AllowedServicePatterns []*ServicePattern `json:"allowedServicePatterns,omitempty"`
 	// AllowedServices: The list of APIs usable within the Service Perimeter. Must
 	// be empty unless 'enable_restriction' is True. You can specify a list of
 	// individual services, as well as include the 'RESTRICTED-SERVICES' value,
@@ -2471,15 +2582,26 @@ type VpcAccessibleServices struct {
 	// EnableRestriction: Whether to restrict API calls within the Service
 	// Perimeter to the list of APIs specified in 'allowed_services'.
 	EnableRestriction bool `json:"enableRestriction,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AllowedServices") to
+	// ServicePatternsEnforcementScopes: Defines the enforcement scopes of service
+	// patterns.
+	//
+	// Possible values:
+	//   "SERVICE_PATTERNS_ENFORCEMENT_SCOPE_UNSPECIFIED" - Default value. This can
+	// not be used.
+	//   "GOOGLE_APIS_VIA_PRIVATE_PATH" - Enables VPC Accessible Services
+	// enforcement for all APIs (including unsupported APIs) for Private Google
+	// Access configured with Private VIP and Private Service Connect Endpoint for
+	// Global Google APIs that uses 'all-apis' bundle.
+	ServicePatternsEnforcementScopes []string `json:"servicePatternsEnforcementScopes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowedServicePatterns") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AllowedServices") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AllowedServicePatterns") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

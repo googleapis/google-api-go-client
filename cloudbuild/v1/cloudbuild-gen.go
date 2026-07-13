@@ -682,8 +682,9 @@ func (s BatchCreateBitbucketServerConnectedRepositoriesResponseMetadata) Marshal
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BatchCreateGitLabConnectedRepositoriesRequest: RPC request object accepted
-// by BatchCreateGitLabConnectedRepositories RPC method.
+// BatchCreateGitLabConnectedRepositoriesRequest: Deprecated: CloudBuild GitLab
+// V1 integration is deprecated. RPC request object accepted by
+// BatchCreateGitLabConnectedRepositories RPC method.
 type BatchCreateGitLabConnectedRepositoriesRequest struct {
 	// Requests: Required. Requests to connect GitLab repositories.
 	Requests []*CreateGitLabConnectedRepositoryRequest `json:"requests,omitempty"`
@@ -705,7 +706,8 @@ func (s BatchCreateGitLabConnectedRepositoriesRequest) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BatchCreateGitLabConnectedRepositoriesResponse: Response of
+// BatchCreateGitLabConnectedRepositoriesResponse: Deprecated: CloudBuild
+// GitLab V1 integration is deprecated. Response of
 // BatchCreateGitLabConnectedRepositories RPC method.
 type BatchCreateGitLabConnectedRepositoriesResponse struct {
 	// GitlabConnectedRepositories: The GitLab connected repository requests'
@@ -729,7 +731,8 @@ func (s BatchCreateGitLabConnectedRepositoriesResponse) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BatchCreateGitLabConnectedRepositoriesResponseMetadata: Metadata for
+// BatchCreateGitLabConnectedRepositoriesResponseMetadata: Deprecated:
+// CloudBuild GitLab V1 integration is deprecated. Metadata for
 // `BatchCreateGitLabConnectedRepositories` operation.
 type BatchCreateGitLabConnectedRepositoriesResponseMetadata struct {
 	// CompleteTime: Time the operation was completed.
@@ -773,7 +776,7 @@ type BitbucketServerConfig struct {
 	// this field has been set, it cannot be changed. If you need to change it,
 	// please create another BitbucketServerConfig.
 	HostUri string `json:"hostUri,omitempty"`
-	// Name: The resource name for the config.
+	// Name: Identifier. The resource name for the config.
 	Name string `json:"name,omitempty"`
 	// PeeredNetwork: Optional. The network to be used when reaching out to the
 	// Bitbucket Server instance. The VPC network must be enabled for private
@@ -1520,9 +1523,9 @@ type BuildTrigger struct {
 	// creates a build whenever a GitHub event is received. Mutually exclusive with
 	// `trigger_template`.
 	Github *GitHubEventsConfig `json:"github,omitempty"`
-	// GitlabEnterpriseEventsConfig: GitLabEnterpriseEventsConfig describes the
-	// configuration of a trigger that creates a build whenever a GitLab Enterprise
-	// event is received.
+	// GitlabEnterpriseEventsConfig: Deprecated: CloudBuild GitLab V1 integration
+	// is deprecated. GitLabEnterpriseEventsConfig describes the configuration of a
+	// trigger that creates a build whenever a GitLab Enterprise event is received.
 	GitlabEnterpriseEventsConfig *GitLabEventsConfig `json:"gitlabEnterpriseEventsConfig,omitempty"`
 	// Id: Output only. Unique identifier of the trigger.
 	Id string `json:"id,omitempty"`
@@ -1802,8 +1805,8 @@ func (s CreateGitHubEnterpriseConfigOperationMetadata) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CreateGitLabConfigOperationMetadata: Metadata for `CreateGitLabConfig`
-// operation.
+// CreateGitLabConfigOperationMetadata: Deprecated: CloudBuild GitLab V1
+// integration is deprecated. Metadata for `CreateGitLabConfig` operation.
 type CreateGitLabConfigOperationMetadata struct {
 	// CompleteTime: Time the operation was completed.
 	CompleteTime string `json:"completeTime,omitempty"`
@@ -1830,8 +1833,9 @@ func (s CreateGitLabConfigOperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CreateGitLabConnectedRepositoryRequest: Request to connect a repository from
-// a connected GitLab host.
+// CreateGitLabConnectedRepositoryRequest: Deprecated: CloudBuild GitLab V1
+// integration is deprecated. Request to connect a repository from a connected
+// GitLab host.
 type CreateGitLabConnectedRepositoryRequest struct {
 	// GitlabConnectedRepository: Required. The GitLab repository to connect.
 	GitlabConnectedRepository *GitLabConnectedRepository `json:"gitlabConnectedRepository,omitempty"`
@@ -1977,8 +1981,8 @@ func (s DeleteGitHubEnterpriseConfigOperationMetadata) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DeleteGitLabConfigOperationMetadata: Metadata for `DeleteGitLabConfig`
-// operation.
+// DeleteGitLabConfigOperationMetadata: Deprecated: CloudBuild GitLab V1
+// integration is deprecated. Metadata for `DeleteGitLabConfig` operation.
 type DeleteGitLabConfigOperationMetadata struct {
 	// CompleteTime: Time the operation was completed.
 	CompleteTime string `json:"completeTime,omitempty"`
@@ -2347,7 +2351,8 @@ type GitHubEnterpriseConfig struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// HostUrl: The URL of the github enterprise host the configuration is for.
 	HostUrl string `json:"hostUrl,omitempty"`
-	// Name: The full resource name for the GitHubEnterpriseConfig For example:
+	// Name: Identifier. The full resource name for the GitHubEnterpriseConfig For
+	// example:
 	// "projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfigs/{$co
 	// nfig_id}"
 	Name string `json:"name,omitempty"`
@@ -2470,8 +2475,8 @@ func (s GitHubEventsConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GitLabConfig: GitLabConfig represents the configuration for a GitLab
-// integration.
+// GitLabConfig: Deprecated: CloudBuild GitLab V1 integration is deprecated.
+// GitLabConfig represents the configuration for a GitLab integration.
 type GitLabConfig struct {
 	// ConnectedRepositories: Connected GitLab.com or GitLabEnterprise repositories
 	// for this config.
@@ -2480,7 +2485,7 @@ type GitLabConfig struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// EnterpriseConfig: Optional. GitLabEnterprise config.
 	EnterpriseConfig *GitLabEnterpriseConfig `json:"enterpriseConfig,omitempty"`
-	// Name: The resource name for the config.
+	// Name: Identifier. The resource name for the config.
 	Name string `json:"name,omitempty"`
 	// Secrets: Required. Secret Manager secrets needed by the config.
 	Secrets *GitLabSecrets `json:"secrets,omitempty"`
@@ -2511,8 +2516,9 @@ func (s GitLabConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GitLabConnectedRepository: GitLabConnectedRepository represents a GitLab
-// connected repository request response.
+// GitLabConnectedRepository: Deprecated: CloudBuild GitLab V1 integration is
+// deprecated. GitLabConnectedRepository represents a GitLab connected
+// repository request response.
 type GitLabConnectedRepository struct {
 	// Parent: The name of the `GitLabConfig` that added connected repository.
 	// Format: `projects/{project}/locations/{location}/gitLabConfigs/{config}`
@@ -2539,8 +2545,9 @@ func (s GitLabConnectedRepository) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GitLabEnterpriseConfig: GitLabEnterpriseConfig represents the configuration
-// for a GitLabEnterprise integration.
+// GitLabEnterpriseConfig: Deprecated: CloudBuild GitLab V1 integration is
+// deprecated. GitLabEnterpriseConfig represents the configuration for a
+// GitLabEnterprise integration.
 type GitLabEnterpriseConfig struct {
 	// HostUri: Immutable. The URI of the GitlabEnterprise host.
 	HostUri string `json:"hostUri,omitempty"`
@@ -2568,8 +2575,9 @@ func (s GitLabEnterpriseConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GitLabEventsConfig: GitLabEventsConfig describes the configuration of a
-// trigger that creates a build whenever a GitLab event is received.
+// GitLabEventsConfig: Deprecated: CloudBuild GitLab V1 integration is
+// deprecated. GitLabEventsConfig describes the configuration of a trigger that
+// creates a build whenever a GitLab event is received.
 type GitLabEventsConfig struct {
 	// GitlabConfig: Output only. The GitLabConfig specified in the
 	// gitlab_config_resource field.
@@ -2601,7 +2609,8 @@ func (s GitLabEventsConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GitLabRepository: Proto Representing a GitLabRepository
+// GitLabRepository: Deprecated: CloudBuild GitLab V1 integration is
+// deprecated. Proto Representing a GitLabRepository
 type GitLabRepository struct {
 	// BrowseUri: Link to the browse repo page on the GitLab instance
 	BrowseUri string `json:"browseUri,omitempty"`
@@ -2659,8 +2668,9 @@ func (s GitLabRepositoryId) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GitLabSecrets: GitLabSecrets represents the secrets in Secret Manager for a
-// GitLab integration.
+// GitLabSecrets: Deprecated: CloudBuild GitLab V1 integration is deprecated.
+// GitLabSecrets represents the secrets in Secret Manager for a GitLab
+// integration.
 type GitLabSecrets struct {
 	// ApiAccessTokenVersion: Required. The resource name for the api access
 	// token’s secret version
@@ -3126,8 +3136,8 @@ func (s ListBuildsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListGitLabConfigsResponse: RPC response object returned by ListGitLabConfigs
-// RPC method.
+// ListGitLabConfigsResponse: Deprecated: CloudBuild GitLab V1 integration is
+// deprecated. RPC response object returned by ListGitLabConfigs RPC method.
 type ListGitLabConfigsResponse struct {
 	// GitlabConfigs: A list of GitLabConfigs
 	GitlabConfigs []*GitLabConfig `json:"gitlabConfigs,omitempty"`
@@ -3155,8 +3165,9 @@ func (s ListGitLabConfigsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListGitLabRepositoriesResponse: RPC response object returned by the
-// ListGitLabRepositories RPC method.
+// ListGitLabRepositoriesResponse: Deprecated: CloudBuild GitLab V1 integration
+// is deprecated. RPC response object returned by the ListGitLabRepositories
+// RPC method.
 type ListGitLabRepositoriesResponse struct {
 	// GitlabRepositories: List of GitLab repositories
 	GitlabRepositories []*GitLabRepository `json:"gitlabRepositories,omitempty"`
@@ -3782,7 +3793,8 @@ func (s RemoveBitbucketServerConnectedRepositoryRequest) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RemoveGitLabConnectedRepositoryRequest: RPC request object accepted by
+// RemoveGitLabConnectedRepositoryRequest: Deprecated: CloudBuild GitLab V1
+// integration is deprecated. RPC request object accepted by
 // RemoveGitLabConnectedRepository RPC method.
 type RemoveGitLabConnectedRepositoryRequest struct {
 	// ConnectedRepository: The connected repository to remove.
@@ -4088,7 +4100,8 @@ func (s Secrets) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ServiceDirectoryConfig: ServiceDirectoryConfig represents Service Directory
+// ServiceDirectoryConfig: Deprecated: CloudBuild GitLab V1 integration is
+// deprecated. ServiceDirectoryConfig represents Service Directory
 // configuration for a SCM host connection.
 type ServiceDirectoryConfig struct {
 	// Service: The Service Directory service name. Format:
@@ -4411,8 +4424,8 @@ func (s UpdateGitHubEnterpriseConfigOperationMetadata) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UpdateGitLabConfigOperationMetadata: Metadata for `UpdateGitLabConfig`
-// operation.
+// UpdateGitLabConfigOperationMetadata: Deprecated: CloudBuild GitLab V1
+// integration is deprecated. Metadata for `UpdateGitLabConfig` operation.
 type UpdateGitLabConfigOperationMetadata struct {
 	// CompleteTime: Time the operation was completed.
 	CompleteTime string `json:"completeTime,omitempty"`
@@ -5377,7 +5390,11 @@ type ProjectsBuildsCancelCall struct {
 	header_            http.Header
 }
 
-// Cancel: Cancels a build in progress.
+// Cancel: Cancels a build in progress. Note: This method only applies to
+// global (non-regional) builds when using the legacy resource path
+// `projects/{project_id}/builds/{id}:cancel`. To cancel regional builds, use
+// the regional resource path:
+// `projects/{project_id}/locations/{location}/builds/{id}:cancel`.
 //
 // - id: ID of the build.
 // - projectId: ID of the project.
@@ -5486,7 +5503,10 @@ type ProjectsBuildsCreateCall struct {
 // Create: Starts a build with the specified configuration. This method returns
 // a long-running `Operation`, which includes the build ID. Pass the build ID
 // to `GetBuild` to determine the build status (such as `SUCCESS` or
-// `FAILURE`).
+// `FAILURE`). Note: This method only creates global (non-regional) builds when
+// using the legacy resource path `projects/{project_id}/builds`. To create
+// regional builds, use the regional resource path:
+// `projects/{project_id}/locations/{location}/builds`.
 //
 // - projectId: ID of the project.
 func (r *ProjectsBuildsService) Create(projectId string, build *Build) *ProjectsBuildsCreateCall {
@@ -5599,7 +5619,11 @@ type ProjectsBuildsGetCall struct {
 
 // Get: Returns information about a previously requested build. The `Build`
 // that is returned includes its status (such as `SUCCESS`, `FAILURE`, or
-// `WORKING`), and timing information.
+// `WORKING`), and timing information. Note: This method only applies to global
+// (non-regional) builds when using the legacy resource path
+// `projects/{project_id}/builds/{id}`. To fetch regional builds, use the
+// regional resource path:
+// `projects/{project_id}/locations/{location}/builds/{id}`.
 //
 // - id: ID of the build.
 // - projectId: ID of the project.
@@ -5720,6 +5744,10 @@ type ProjectsBuildsListCall struct {
 
 // List: Lists previously requested builds. Previously requested builds may
 // still be in-progress, or may have finished successfully or unsuccessfully.
+// Note: This method only lists global (non-regional) builds when using the
+// legacy resource path `projects/{project_id}/builds`. To list regional
+// builds, use the regional resource path:
+// `projects/{project_id}/locations/{location}/builds`.
 //
 // - projectId: ID of the project.
 func (r *ProjectsBuildsService) List(projectId string) *ProjectsBuildsListCall {
@@ -5882,22 +5910,26 @@ type ProjectsBuildsRetryCall struct {
 	header_           http.Header
 }
 
-// Retry: Creates a new build based on the specified build. This method creates
-// a new build using the original build request, which may or may not result in
-// an identical build. For triggered builds: * Triggered builds resolve to a
-// precise revision; therefore a retry of a triggered build will result in a
-// build that uses the same revision. For non-triggered builds that specify
-// `RepoSource`: * If the original build built from the tip of a branch, the
-// retried build will build from the tip of that branch, which may not be the
-// same revision as the original build. * If the original build specified a
-// commit sha or revision ID, the retried build will use the identical source.
-// For builds that specify `StorageSource`: * If the original build pulled
-// source from Cloud Storage without specifying the generation of the object,
-// the new build will use the current object, which may be different from the
-// original build source. * If the original build pulled source from Cloud
-// Storage and specified the generation of the object, the new build will
-// attempt to use the same object, which may or may not be available depending
-// on the bucket's lifecycle management settings.
+// Retry: Creates a new build based on the specified build. Note: This method
+// only applies to global (non-regional) builds when using the legacy resource
+// path `projects/{project_id}/builds/{id}:retry`. To retry regional builds,
+// use the regional resource path:
+// `projects/{project_id}/locations/{location}/builds/{id}:retry`. This method
+// creates a new build using the original build request, which may or may not
+// result in an identical build. For triggered builds: * Triggered builds
+// resolve to a precise revision; therefore a retry of a triggered build will
+// result in a build that uses the same revision. For non-triggered builds that
+// specify `RepoSource`: * If the original build built from the tip of a
+// branch, the retried build will build from the tip of that branch, which may
+// not be the same revision as the original build. * If the original build
+// specified a commit sha or revision ID, the retried build will use the
+// identical source. For builds that specify `StorageSource`: * If the original
+// build pulled source from Cloud Storage without specifying the generation of
+// the object, the new build will use the current object, which may be
+// different from the original build source. * If the original build pulled
+// source from Cloud Storage and specified the generation of the object, the
+// new build will attempt to use the same object, which may or may not be
+// available depending on the bucket's lifecycle management settings.
 //
 // - id: Build ID of the original build.
 // - projectId: ID of the project.
@@ -6485,7 +6517,8 @@ type ProjectsGithubEnterpriseConfigsPatchCall struct {
 // Patch: Update an association between a GCP project and a GitHub Enterprise
 // server.
 //
-//   - name: The full resource name for the GitHubEnterpriseConfig For example:
+//   - name: Identifier. The full resource name for the GitHubEnterpriseConfig
+//     For example:
 //     "projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfigs/{$
 //     config_id}".
 func (r *ProjectsGithubEnterpriseConfigsService) Patch(name string, githubenterpriseconfig *GitHubEnterpriseConfig) *ProjectsGithubEnterpriseConfigsPatchCall {
@@ -7185,7 +7218,7 @@ type ProjectsLocationsBitbucketServerConfigsPatchCall struct {
 // Patch: Updates an existing `BitbucketServerConfig`. This API is
 // experimental.
 //
-// - name: The resource name for the config.
+// - name: Identifier. The resource name for the config.
 func (r *ProjectsLocationsBitbucketServerConfigsService) Patch(name string, bitbucketserverconfig *BitbucketServerConfig) *ProjectsLocationsBitbucketServerConfigsPatchCall {
 	c := &ProjectsLocationsBitbucketServerConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7763,7 +7796,11 @@ type ProjectsLocationsBuildsCancelCall struct {
 	header_            http.Header
 }
 
-// Cancel: Cancels a build in progress.
+// Cancel: Cancels a build in progress. Note: This method only applies to
+// global (non-regional) builds when using the legacy resource path
+// `projects/{project_id}/builds/{id}:cancel`. To cancel regional builds, use
+// the regional resource path:
+// `projects/{project_id}/locations/{location}/builds/{id}:cancel`.
 //
 //   - name: The name of the `Build` to cancel. Format:
 //     `projects/{project}/locations/{location}/builds/{build}`.
@@ -7870,7 +7907,10 @@ type ProjectsLocationsBuildsCreateCall struct {
 // Create: Starts a build with the specified configuration. This method returns
 // a long-running `Operation`, which includes the build ID. Pass the build ID
 // to `GetBuild` to determine the build status (such as `SUCCESS` or
-// `FAILURE`).
+// `FAILURE`). Note: This method only creates global (non-regional) builds when
+// using the legacy resource path `projects/{project_id}/builds`. To create
+// regional builds, use the regional resource path:
+// `projects/{project_id}/locations/{location}/builds`.
 //
 //   - parent: The parent resource where this build will be created. Format:
 //     `projects/{project}/locations/{location}`.
@@ -7983,7 +8023,11 @@ type ProjectsLocationsBuildsGetCall struct {
 
 // Get: Returns information about a previously requested build. The `Build`
 // that is returned includes its status (such as `SUCCESS`, `FAILURE`, or
-// `WORKING`), and timing information.
+// `WORKING`), and timing information. Note: This method only applies to global
+// (non-regional) builds when using the legacy resource path
+// `projects/{project_id}/builds/{id}`. To fetch regional builds, use the
+// regional resource path:
+// `projects/{project_id}/locations/{location}/builds/{id}`.
 //
 //   - name: The name of the `Build` to retrieve. Format:
 //     `projects/{project}/locations/{location}/builds/{build}`.
@@ -8108,6 +8152,10 @@ type ProjectsLocationsBuildsListCall struct {
 
 // List: Lists previously requested builds. Previously requested builds may
 // still be in-progress, or may have finished successfully or unsuccessfully.
+// Note: This method only lists global (non-regional) builds when using the
+// legacy resource path `projects/{project_id}/builds`. To list regional
+// builds, use the regional resource path:
+// `projects/{project_id}/locations/{location}/builds`.
 //
 //   - parent: The parent of the collection of `Builds`. Format:
 //     `projects/{project}/locations/{location}`.
@@ -8270,22 +8318,26 @@ type ProjectsLocationsBuildsRetryCall struct {
 	header_           http.Header
 }
 
-// Retry: Creates a new build based on the specified build. This method creates
-// a new build using the original build request, which may or may not result in
-// an identical build. For triggered builds: * Triggered builds resolve to a
-// precise revision; therefore a retry of a triggered build will result in a
-// build that uses the same revision. For non-triggered builds that specify
-// `RepoSource`: * If the original build built from the tip of a branch, the
-// retried build will build from the tip of that branch, which may not be the
-// same revision as the original build. * If the original build specified a
-// commit sha or revision ID, the retried build will use the identical source.
-// For builds that specify `StorageSource`: * If the original build pulled
-// source from Cloud Storage without specifying the generation of the object,
-// the new build will use the current object, which may be different from the
-// original build source. * If the original build pulled source from Cloud
-// Storage and specified the generation of the object, the new build will
-// attempt to use the same object, which may or may not be available depending
-// on the bucket's lifecycle management settings.
+// Retry: Creates a new build based on the specified build. Note: This method
+// only applies to global (non-regional) builds when using the legacy resource
+// path `projects/{project_id}/builds/{id}:retry`. To retry regional builds,
+// use the regional resource path:
+// `projects/{project_id}/locations/{location}/builds/{id}:retry`. This method
+// creates a new build using the original build request, which may or may not
+// result in an identical build. For triggered builds: * Triggered builds
+// resolve to a precise revision; therefore a retry of a triggered build will
+// result in a build that uses the same revision. For non-triggered builds that
+// specify `RepoSource`: * If the original build built from the tip of a
+// branch, the retried build will build from the tip of that branch, which may
+// not be the same revision as the original build. * If the original build
+// specified a commit sha or revision ID, the retried build will use the
+// identical source. For builds that specify `StorageSource`: * If the original
+// build pulled source from Cloud Storage without specifying the generation of
+// the object, the new build will use the current object, which may be
+// different from the original build source. * If the original build pulled
+// source from Cloud Storage and specified the generation of the object, the
+// new build will attempt to use the same object, which may or may not be
+// available depending on the bucket's lifecycle management settings.
 //
 //   - name: The name of the `Build` to retry. Format:
 //     `projects/{project}/locations/{location}/builds/{build}`.
@@ -8389,7 +8441,8 @@ type ProjectsLocationsGitLabConfigsCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Creates a new `GitLabConfig`. This API is experimental
+// Create: Deprecated: CloudBuild GitLab V1 integration is deprecated. Creates
+// a new `GitLabConfig`. This API is experimental
 //
 // - parent: Name of the parent resource.
 func (r *ProjectsLocationsGitLabConfigsService) Create(parent string, gitlabconfig *GitLabConfig) *ProjectsLocationsGitLabConfigsCreateCall {
@@ -8502,7 +8555,8 @@ type ProjectsLocationsGitLabConfigsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete a `GitLabConfig`. This API is experimental
+// Delete: Deprecated: CloudBuild GitLab V1 integration is deprecated. Delete a
+// `GitLabConfig`. This API is experimental
 //
 // - name: The config resource name.
 func (r *ProjectsLocationsGitLabConfigsService) Delete(name string) *ProjectsLocationsGitLabConfigsDeleteCall {
@@ -8600,7 +8654,8 @@ type ProjectsLocationsGitLabConfigsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a `GitLabConfig`. This API is experimental
+// Get: Deprecated: CloudBuild GitLab V1 integration is deprecated. Retrieves a
+// `GitLabConfig`. This API is experimental
 //
 // - name: The config resource name.
 func (r *ProjectsLocationsGitLabConfigsService) Get(name string) *ProjectsLocationsGitLabConfigsGetCall {
@@ -8709,7 +8764,8 @@ type ProjectsLocationsGitLabConfigsListCall struct {
 	header_      http.Header
 }
 
-// List: List all `GitLabConfigs` for a given project. This API is experimental
+// List: Deprecated: CloudBuild GitLab V1 integration is deprecated. List all
+// `GitLabConfigs` for a given project. This API is experimental
 //
 // - parent: Name of the parent resource.
 func (r *ProjectsLocationsGitLabConfigsService) List(parent string) *ProjectsLocationsGitLabConfigsListCall {
@@ -8859,9 +8915,10 @@ type ProjectsLocationsGitLabConfigsPatchCall struct {
 	header_      http.Header
 }
 
-// Patch: Updates an existing `GitLabConfig`. This API is experimental
+// Patch: Deprecated: CloudBuild GitLab V1 integration is deprecated. Updates
+// an existing `GitLabConfig`. This API is experimental
 //
-// - name: The resource name for the config.
+// - name: Identifier. The resource name for the config.
 func (r *ProjectsLocationsGitLabConfigsService) Patch(name string, gitlabconfig *GitLabConfig) *ProjectsLocationsGitLabConfigsPatchCall {
 	c := &ProjectsLocationsGitLabConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8971,7 +9028,8 @@ type ProjectsLocationsGitLabConfigsRemoveGitLabConnectedRepositoryCall struct {
 	header_                                http.Header
 }
 
-// RemoveGitLabConnectedRepository: Remove a GitLab repository from a given
+// RemoveGitLabConnectedRepository: Deprecated: CloudBuild GitLab V1
+// integration is deprecated. Remove a GitLab repository from a given
 // GitLabConfig's connected repositories. This API is experimental.
 //
 //   - config: The name of the `GitLabConfig` to remove a connected repository.
@@ -9076,8 +9134,9 @@ type ProjectsLocationsGitLabConfigsConnectedRepositoriesBatchCreateCall struct {
 	header_                                       http.Header
 }
 
-// BatchCreate: Batch connecting GitLab repositories to Cloud Build. This API
-// is experimental.
+// BatchCreate: Deprecated: CloudBuild GitLab V1 integration is deprecated.
+// Batch connecting GitLab repositories to Cloud Build. This API is
+// experimental.
 //
 //   - parent: The name of the `GitLabConfig` that adds connected repositories.
 //     Format: `projects/{project}/locations/{location}/gitLabConfigs/{config}`.
@@ -9181,8 +9240,8 @@ type ProjectsLocationsGitLabConfigsReposListCall struct {
 	header_      http.Header
 }
 
-// List: List all repositories for a given `GitLabConfig`. This API is
-// experimental
+// List: Deprecated: CloudBuild GitLab V1 integration is deprecated. List all
+// repositories for a given `GitLabConfig`. This API is experimental
 //
 // - parent: Name of the parent resource.
 func (r *ProjectsLocationsGitLabConfigsReposService) List(parent string) *ProjectsLocationsGitLabConfigsReposListCall {
@@ -9812,7 +9871,8 @@ type ProjectsLocationsGithubEnterpriseConfigsPatchCall struct {
 // Patch: Update an association between a GCP project and a GitHub Enterprise
 // server.
 //
-//   - name: The full resource name for the GitHubEnterpriseConfig For example:
+//   - name: Identifier. The full resource name for the GitHubEnterpriseConfig
+//     For example:
 //     "projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfigs/{$
 //     config_id}".
 func (r *ProjectsLocationsGithubEnterpriseConfigsService) Patch(name string, githubenterpriseconfig *GitHubEnterpriseConfig) *ProjectsLocationsGithubEnterpriseConfigsPatchCall {

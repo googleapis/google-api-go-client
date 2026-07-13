@@ -522,7 +522,7 @@
               ],
               "parameters": {
                 "connectorConfigId": {
-                  "description": "Optional. ID to use for the connector config, which becomes the final component of the connector config's resource name. If provided, the ID must be 1-63 characters long, and contain only lowercase letters, digits, and hyphens. It must start with a letter, and end with a letter or number. If not provided, the connector config will be assigned a random UUID.",
+                  "description": "Optional. ID to use for the connector config, which becomes the final component of the connector config's resource name. If provided, the ID must be 1-36 characters long, and contain only lowercase letters, digits, and hyphens. It must start with a letter, and end with a letter or number. If not provided, the connector config will be assigned a random UUID.",
                   "location": "query",
                   "type": "string"
                 },
@@ -2409,7 +2409,7 @@
       }
     }
   },
-  "revision": "20260611",
+  "revision": "20260709",
   "rootUrl": "https://chromemanagement.googleapis.com/",
   "schemas": {
     "GoogleChromeManagementV1AndroidAppInfo": {
@@ -4968,10 +4968,17 @@
             "RISK_ASSESSMENT_PROVIDER_LAYERX",
             "RISK_ASSESSMENT_PROVIDER_SPIN_AI_V2"
           ],
+          "enumDeprecated": [
+            false,
+            false,
+            true,
+            false,
+            false
+          ],
           "enumDescriptions": [
             "Default value when no provider is specified.",
             "CRXcavator.",
-            "Spin.Ai.",
+            "Deprecated: Please use RISK_ASSESSMENT_PROVIDER_SPIN_AI_V2 instead. Spin.Ai.",
             "LayerX Security.",
             "Spin.AI V2."
           ],

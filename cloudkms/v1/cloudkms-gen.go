@@ -722,9 +722,10 @@ type AutokeyConfig struct {
 	// or `DISABLED`.
 	//
 	// Possible values:
-	//   "KEY_PROJECT_RESOLUTION_MODE_UNSPECIFIED" - Default value.
-	// KeyProjectResolutionMode when not specified will act as
-	// `DEDICATED_KEY_PROJECT`.
+	//   "KEY_PROJECT_RESOLUTION_MODE_UNSPECIFIED" - Default value. When
+	// KeyProjectResolutionMode is set to KEY_PROJECT_RESOLUTION_MODE_UNSPECIFIED
+	// for a folder and that folder has a key_project set, the folder acts like its
+	// KeyProjectResolutionMode is DEDICATED_KEY_PROJECT.
 	//   "DEDICATED_KEY_PROJECT" - Keys are created in a dedicated project
 	// specified by `key_project`.
 	//   "RESOURCE_PROJECT" - Keys are created in the same project as the resource
@@ -1107,6 +1108,7 @@ type CryptoKey struct {
 	//   "MAC" - CryptoKeys with this purpose may be used with MacSign.
 	//   "KEY_ENCAPSULATION" - CryptoKeys with this purpose may be used with
 	// GetPublicKey and Decapsulate.
+	//   "AES_WRAPPING" - CryptoKeys with this purpose may be used for AES key
 	Purpose string `json:"purpose,omitempty"`
 	// RotationPeriod: next_rotation_time will be advanced by this period when the
 	// service automatically rotates a key. Must be at least 24 hours and at most
@@ -1231,6 +1233,8 @@ type CryptoKeyVersion struct {
 	//   "PQ_SIGN_ML_DSA_87_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
 	// Digital Signature Algorithm, at security level 5. Randomized version
 	// supporting externally-computed message representatives.
+	//   "AES_256_KWP" - AES key wrap with zero padding algorithm (RFC 5649). Can
+	// only be used by keys with purpose AES_WRAPPING.
 	Algorithm string `json:"algorithm,omitempty"`
 	// Attestation: Output only. Statement that was generated and signed by the HSM
 	// at key creation time. Use this statement to verify attributes of the key as
@@ -1261,6 +1265,10 @@ type CryptoKeyVersion struct {
 	// GenerationFailureReason: Output only. The root cause of the most recent
 	// generation failure. Only present if state is GENERATION_FAILED.
 	GenerationFailureReason string `json:"generationFailureReason,omitempty"`
+	// HsmTrusted: Output only. Field indicating that the key wrapping key is
+	// trusted. This field is only valid for key purpose AES_256_WRAPPING, and
+	// protection level HSM_SINGLE_TENANT.
+	HsmTrusted bool `json:"hsmTrusted,omitempty"`
 	// ImportFailureReason: Output only. The root cause of the most recent import
 	// failure. Only present if state is IMPORT_FAILED.
 	ImportFailureReason string `json:"importFailureReason,omitempty"`
@@ -1327,6 +1335,12 @@ type CryptoKeyVersion struct {
 	// destroyed. Additional details can be found in
 	// CryptoKeyVersion.external_destruction_failure_reason.
 	State string `json:"state,omitempty"`
+	// TrustedWrappingEnabled: Immutable. Field indicating that the key may be
+	// wrapped by a trusted key. This field can be set for all key purposes except
+	// ENCRYPT_DECRYPT, and is only valid for keys with protection level
+	// HSM_SINGLE_TENANT. This field can only be set at creation or import time via
+	// CreateCryptoKeyVersion, or ImportCryptoKeyVersion.
+	TrustedWrappingEnabled bool `json:"trustedWrappingEnabled,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1438,6 +1452,8 @@ type CryptoKeyVersionTemplate struct {
 	//   "PQ_SIGN_ML_DSA_87_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
 	// Digital Signature Algorithm, at security level 5. Randomized version
 	// supporting externally-computed message representatives.
+	//   "AES_256_KWP" - AES key wrap with zero padding algorithm (RFC 5649). Can
+	// only be used by keys with purpose AES_WRAPPING.
 	Algorithm string `json:"algorithm,omitempty"`
 	// ProtectionLevel: ProtectionLevel to use when creating a CryptoKeyVersion
 	// based on this template. Immutable. Defaults to SOFTWARE.
@@ -1972,6 +1988,46 @@ func (s EncryptResponse) MarshalJSON() ([]byte, error) {
 type ExecuteSingleTenantHsmInstanceProposalRequest struct {
 }
 
+// ExportTrustedKeyWrappedCryptoKeyVersionResponse: Response message for
+// KeyManagementService.ExportTrustedKeyWrappedCryptoKeyVersion.
+type ExportTrustedKeyWrappedCryptoKeyVersionResponse struct {
+	// WrappedKey: The wrapped key material.
+	WrappedKey string `json:"wrappedKey,omitempty"`
+	// WrappedKeyCrc32c: Integrity verification field. A CRC32C checksum of the
+	// returned ExportTrustedKeyWrappedCryptoKeyVersionResponse.wrapped_key. An
+	// integrity check of
+	// ExportTrustedKeyWrappedCryptoKeyVersionResponse.wrapped_key can be performed
+	// by computing the CRC32C checksum of
+	// ExportTrustedKeyWrappedCryptoKeyVersionResponse.wrapped_key and comparing
+	// your results to this field. Discard the response in case of non-matching
+	// checksum values, and perform a limited number of retries. A persistent
+	// mismatch may indicate an issue in your computation of the CRC32C checksum.
+	// Note: This field is defined as int64 for reasons of compatibility across
+	// different languages. However, it is a non-negative integer, which will never
+	// exceed 2^32-1, and can be safely downconverted to uint32 in languages that
+	// support this type.
+	WrappedKeyCrc32c int64 `json:"wrappedKeyCrc32c,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "WrappedKey") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "WrappedKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExportTrustedKeyWrappedCryptoKeyVersionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportTrustedKeyWrappedCryptoKeyVersionResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Expr: Represents a textual expression in the Common Expression Language
 // (CEL) syntax. CEL is a C-like expression language. The syntax and semantics
 // of CEL are documented at https://github.com/google/cel-spec. Example
@@ -2025,22 +2081,28 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 // specific to the EXTERNAL protection level and EXTERNAL_VPC protection
 // levels.
 type ExternalProtectionLevelOptions struct {
-	// EkmConnectionKeyPath: The path to the external key material on the EKM when
-	// using EkmConnection e.g., "v0/my/key". Set this field instead of
+	// EkmConnectionBackendOverride: Optional. The resource name of the backend
+	// environment where the key material of CryptoKeyVersions is associated with.
+	// Setting this field overrides the CryptoKeyBackend. This field may be set
+	// when CryptoKeyVersions is set to EXTERNAL_VPC. Format:
+	// `projects/*/locations/*/ekmConnections/*`.
+	EkmConnectionBackendOverride string `json:"ekmConnectionBackendOverride,omitempty"`
+	// EkmConnectionKeyPath: Optional. The path to the external key material on the
+	// EKM when using EkmConnection e.g., "v0/my/key". Set this field instead of
 	// external_key_uri when using an EkmConnection.
 	EkmConnectionKeyPath string `json:"ekmConnectionKeyPath,omitempty"`
-	// ExternalKeyUri: The URI for an external resource that this CryptoKeyVersion
-	// represents.
+	// ExternalKeyUri: Optional. The URI for an external resource that this
+	// CryptoKeyVersion represents.
 	ExternalKeyUri string `json:"externalKeyUri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EkmConnectionKeyPath") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "EkmConnectionBackendOverride") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EkmConnectionKeyPath") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "EkmConnectionBackendOverride") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2212,6 +2274,8 @@ type ImportCryptoKeyVersionRequest struct {
 	//   "PQ_SIGN_ML_DSA_87_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
 	// Digital Signature Algorithm, at security level 5. Randomized version
 	// supporting externally-computed message representatives.
+	//   "AES_256_KWP" - AES key wrap with zero padding algorithm (RFC 5649). Can
+	// only be used by keys with purpose AES_WRAPPING.
 	Algorithm string `json:"algorithm,omitempty"`
 	// CryptoKeyVersion: Optional. The optional name of an existing
 	// CryptoKeyVersion to target for an import operation. If this field is not
@@ -2231,6 +2295,11 @@ type ImportCryptoKeyVersionRequest struct {
 	// Prefer to use that field in new work. Either that field or this field (but
 	// not both) must be specified.
 	RsaAesWrappedKey string `json:"rsaAesWrappedKey,omitempty"`
+	// TrustedWrappingEnabled: Optional. Whether trusted wrapping will be enabled
+	// on the imported [CryptoKeyVersion]. This field is only supported for keys
+	// with CryptoKeyVersionTemplate.protection_level HSM_SINGLE_TENANT. This field
+	// is supported for all CryptoKeyPurposes besides ENCRYPT_DECRYPT.
+	TrustedWrappingEnabled bool `json:"trustedWrappingEnabled,omitempty"`
 	// WrappedKey: Optional. The wrapped key material to import. Before wrapping,
 	// key material must be formatted. If importing symmetric key material, the
 	// expected key material format is plain bytes. If importing asymmetric key
@@ -2446,6 +2515,132 @@ type ImportJob struct {
 
 func (s ImportJob) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportJob
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ImportTrustedKeyWrappedCryptoKeyVersionRequest: Request message for
+// KeyManagementService.ImportTrustedKeyWrappedCryptoKeyVersion.
+type ImportTrustedKeyWrappedCryptoKeyVersionRequest struct {
+	// Algorithm: Required. Required - The algorithm of the key being imported.
+	// This does not need to match the version_template of the CryptoKey this
+	// version imports into.
+	//
+	// Possible values:
+	//   "CRYPTO_KEY_VERSION_ALGORITHM_UNSPECIFIED" - Not specified.
+	//   "GOOGLE_SYMMETRIC_ENCRYPTION" - Creates symmetric encryption keys.
+	//   "AES_128_GCM" - AES-GCM (Galois Counter Mode) using 128-bit keys.
+	//   "AES_256_GCM" - AES-GCM (Galois Counter Mode) using 256-bit keys.
+	//   "AES_128_CBC" - AES-CBC (Cipher Block Chaining Mode) using 128-bit keys.
+	//   "AES_256_CBC" - AES-CBC (Cipher Block Chaining Mode) using 256-bit keys.
+	//   "AES_128_CTR" - AES-CTR (Counter Mode) using 128-bit keys.
+	//   "AES_256_CTR" - AES-CTR (Counter Mode) using 256-bit keys.
+	//   "RSA_SIGN_PSS_2048_SHA256" - RSASSA-PSS 2048 bit key with a SHA256 digest.
+	//   "RSA_SIGN_PSS_3072_SHA256" - RSASSA-PSS 3072 bit key with a SHA256 digest.
+	//   "RSA_SIGN_PSS_4096_SHA256" - RSASSA-PSS 4096 bit key with a SHA256 digest.
+	//   "RSA_SIGN_PSS_4096_SHA512" - RSASSA-PSS 4096 bit key with a SHA512 digest.
+	//   "RSA_SIGN_PKCS1_2048_SHA256" - RSASSA-PKCS1-v1_5 with a 2048 bit key and a
+	// SHA256 digest.
+	//   "RSA_SIGN_PKCS1_3072_SHA256" - RSASSA-PKCS1-v1_5 with a 3072 bit key and a
+	// SHA256 digest.
+	//   "RSA_SIGN_PKCS1_4096_SHA256" - RSASSA-PKCS1-v1_5 with a 4096 bit key and a
+	// SHA256 digest.
+	//   "RSA_SIGN_PKCS1_4096_SHA512" - RSASSA-PKCS1-v1_5 with a 4096 bit key and a
+	// SHA512 digest.
+	//   "RSA_SIGN_RAW_PKCS1_2048" - RSASSA-PKCS1-v1_5 signing without encoding,
+	// with a 2048 bit key.
+	//   "RSA_SIGN_RAW_PKCS1_3072" - RSASSA-PKCS1-v1_5 signing without encoding,
+	// with a 3072 bit key.
+	//   "RSA_SIGN_RAW_PKCS1_4096" - RSASSA-PKCS1-v1_5 signing without encoding,
+	// with a 4096 bit key.
+	//   "RSA_DECRYPT_OAEP_2048_SHA256" - RSAES-OAEP 2048 bit key with a SHA256
+	// digest.
+	//   "RSA_DECRYPT_OAEP_3072_SHA256" - RSAES-OAEP 3072 bit key with a SHA256
+	// digest.
+	//   "RSA_DECRYPT_OAEP_4096_SHA256" - RSAES-OAEP 4096 bit key with a SHA256
+	// digest.
+	//   "RSA_DECRYPT_OAEP_4096_SHA512" - RSAES-OAEP 4096 bit key with a SHA512
+	// digest.
+	//   "RSA_DECRYPT_OAEP_2048_SHA1" - RSAES-OAEP 2048 bit key with a SHA1 digest.
+	//   "RSA_DECRYPT_OAEP_3072_SHA1" - RSAES-OAEP 3072 bit key with a SHA1 digest.
+	//   "RSA_DECRYPT_OAEP_4096_SHA1" - RSAES-OAEP 4096 bit key with a SHA1 digest.
+	//   "EC_SIGN_P256_SHA256" - ECDSA on the NIST P-256 curve with a SHA256
+	// digest. Other hash functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
+	//   "EC_SIGN_P384_SHA384" - ECDSA on the NIST P-384 curve with a SHA384
+	// digest. Other hash functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
+	//   "EC_SIGN_SECP256K1_SHA256" - ECDSA on the non-NIST secp256k1 curve. This
+	// curve is only supported for HSM protection level. Other hash functions can
+	// also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
+	//   "EC_SIGN_ED25519" - EdDSA on the Curve25519 in pure mode (taking data as
+	// input).
+	//   "HMAC_SHA256" - HMAC-SHA256 signing with a 256 bit key.
+	//   "HMAC_SHA1" - HMAC-SHA1 signing with a 160 bit key.
+	//   "HMAC_SHA384" - HMAC-SHA384 signing with a 384 bit key.
+	//   "HMAC_SHA512" - HMAC-SHA512 signing with a 512 bit key.
+	//   "HMAC_SHA224" - HMAC-SHA224 signing with a 224 bit key.
+	//   "EXTERNAL_SYMMETRIC_ENCRYPTION" - Algorithm representing symmetric
+	// encryption by an external key manager.
+	//   "ML_KEM_768" - ML-KEM-768 (FIPS 203)
+	//   "ML_KEM_1024" - ML-KEM-1024 (FIPS 203)
+	//   "KEM_XWING" - X-Wing hybrid KEM combining ML-KEM-768 with X25519 following
+	// datatracker.ietf.org/doc/draft-connolly-cfrg-xwing-kem/.
+	//   "PQ_SIGN_ML_DSA_44" - The post-quantum Module-Lattice-Based Digital
+	// Signature Algorithm, at security level 1. Randomized version.
+	//   "PQ_SIGN_ML_DSA_65" - The post-quantum Module-Lattice-Based Digital
+	// Signature Algorithm, at security level 3. Randomized version.
+	//   "PQ_SIGN_ML_DSA_87" - The post-quantum Module-Lattice-Based Digital
+	// Signature Algorithm, at security level 5. Randomized version.
+	//   "PQ_SIGN_SLH_DSA_SHA2_128S" - The post-quantum stateless hash-based
+	// digital signature algorithm, at security level 1. Randomized version.
+	//   "PQ_SIGN_HASH_SLH_DSA_SHA2_128S_SHA256" - The post-quantum stateless
+	// hash-based digital signature algorithm, at security level 1. Randomized
+	// pre-hash version supporting SHA256 digests.
+	//   "PQ_SIGN_ML_DSA_44_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 1. Randomized version
+	// supporting externally-computed message representatives.
+	//   "PQ_SIGN_ML_DSA_65_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 3. Randomized version
+	// supporting externally-computed message representatives.
+	//   "PQ_SIGN_ML_DSA_87_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 5. Randomized version
+	// supporting externally-computed message representatives.
+	//   "AES_256_KWP" - AES key wrap with zero padding algorithm (RFC 5649). Can
+	// only be used by keys with purpose AES_WRAPPING.
+	Algorithm string `json:"algorithm,omitempty"`
+	// CryptoKeyVersion: Optional. The optional name of an existing
+	// CryptoKeyVersion to target for an import operation. If this field is not
+	// present, a new CryptoKeyVersion containing the supplied key material is
+	// created. If this field is present, the supplied key material is imported
+	// into the existing CryptoKeyVersion. To import into an existing
+	// CryptoKeyVersion, the CryptoKeyVersion must be a child of
+	// ImportTrustedKeyWrappedCryptoKeyVersionRequest.parent, have been previously
+	// created via ImportTrustedKeyWrappedCryptoKeyVersion, and be in DESTROYED or
+	// IMPORT_FAILED state. The key material and algorithm must match the previous
+	// CryptoKeyVersion exactly if the CryptoKeyVersion has ever contained key
+	// material
+	CryptoKeyVersion string `json:"cryptoKeyVersion,omitempty"`
+	// ImportingKey: Required. Required - the CKV of the trusted key used to
+	// import. This can be the name of a CryptoKeyVersion or a CryptoKey.
+	ImportingKey string `json:"importingKey,omitempty"`
+	// WrappedKey: Required. The target key pre-wrapped on premises.
+	WrappedKey string `json:"wrappedKey,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Algorithm") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Algorithm") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ImportTrustedKeyWrappedCryptoKeyVersionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportTrustedKeyWrappedCryptoKeyVersionRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3523,6 +3718,8 @@ type PublicKey struct {
 	//   "PQ_SIGN_ML_DSA_87_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
 	// Digital Signature Algorithm, at security level 5. Randomized version
 	// supporting externally-computed message representatives.
+	//   "AES_256_KWP" - AES key wrap with zero padding algorithm (RFC 5649). Can
+	// only be used by keys with purpose AES_WRAPPING.
 	Algorithm string `json:"algorithm,omitempty"`
 	// Name: The name of the CryptoKeyVersion public key. Provided here for
 	// verification. NOTE: This field is in Beta.
@@ -4266,9 +4463,32 @@ func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // ShowEffectiveAutokeyConfigResponse: Response message for
 // ShowEffectiveAutokeyConfig.
 type ShowEffectiveAutokeyConfigResponse struct {
-	// KeyProject: Name of the key project configured in the resource project's
-	// folder ancestry.
+	// KeyProject: Name of the key project configured in the ancestry of the
+	// project or folder.
 	KeyProject string `json:"keyProject,omitempty"`
+	// KeyProjectResolutionMode: The KeyProjectResolutionMode for the
+	// AutokeyConfig.
+	//
+	// Possible values:
+	//   "KEY_PROJECT_RESOLUTION_MODE_UNSPECIFIED" - Default value. When
+	// KeyProjectResolutionMode is set to KEY_PROJECT_RESOLUTION_MODE_UNSPECIFIED
+	// for a folder and that folder has a key_project set, the folder acts like its
+	// KeyProjectResolutionMode is DEDICATED_KEY_PROJECT.
+	//   "DEDICATED_KEY_PROJECT" - Keys are created in a dedicated project
+	// specified by `key_project`.
+	//   "RESOURCE_PROJECT" - Keys are created in the same project as the resource
+	// requesting the key. The `key_project` must not be set when this mode is
+	// used.
+	//   "DISABLED" - Disables the AutokeyConfig. When this mode is set, any
+	// AutokeyConfig from higher levels in the resource hierarchy are ignored for
+	// this resource and its descendants. This setting can be overridden by a more
+	// specific configuration at a lower level. For example, if Autokey is disabled
+	// on a folder, it can be re-enabled on a sub-folder or project within that
+	// folder by setting a different mode (e.g., DEDICATED_KEY_PROJECT or
+	// RESOURCE_PROJECT).
+	KeyProjectResolutionMode string `json:"keyProjectResolutionMode,omitempty"`
+	// Source: Source of the effective AutokeyConfig.
+	Source *Source `json:"source,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -4508,6 +4728,9 @@ type SingleTenantHsmInstanceProposal struct {
 	// Ttl: Input only. The TTL for the SingleTenantHsmInstanceProposal. Proposals
 	// will expire after this duration.
 	Ttl string `json:"ttl,omitempty"`
+	// UpgradeKeyTrust: Promotes a key with the AES_WRAPPING purpose to a trusted
+	// wrapping key. The key must be in the ACTIVE state to perform this operation.
+	UpgradeKeyTrust *UpgradeKeyTrust `json:"upgradeKeyTrust,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -4526,6 +4749,30 @@ type SingleTenantHsmInstanceProposal struct {
 
 func (s SingleTenantHsmInstanceProposal) MarshalJSON() ([]byte, error) {
 	type NoMethod SingleTenantHsmInstanceProposal
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Source: Source of the effective AutokeyConfig.
+type Source struct {
+	// Name: Contains the resource name of the AutokeyConfig that is effective, for
+	// example, `folders/{FOLDER_NUMBER}` or `projects/{PROJECT_NUMBER}` or
+	// `organizations/{ORGANIZATION_NUMBER}`.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Source) MarshalJSON() ([]byte, error) {
+	type NoMethod Source
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4636,6 +4883,32 @@ type UpdateCryptoKeyPrimaryVersionRequest struct {
 
 func (s UpdateCryptoKeyPrimaryVersionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateCryptoKeyPrimaryVersionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpgradeKeyTrust: Promotes a key with the AES_WRAPPING purpose to a trusted
+// wrapping key. The key must be in the ACTIVE state to perform this operation.
+type UpgradeKeyTrust struct {
+	// Name: Required. The name of the CryptoKeyVersion to promote.
+	Name string `json:"name,omitempty"`
+	// TwoFactorPublicKeyPem: Required. The public key associated with the 2FA key
+	// that will sign the login nonce for this operation.
+	TwoFactorPublicKeyPem string `json:"twoFactorPublicKeyPem,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpgradeKeyTrust) MarshalJSON() ([]byte, error) {
+	type NoMethod UpgradeKeyTrust
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4902,6 +5175,120 @@ func (c *FoldersGetKajPolicyConfigCall) Do(opts ...googleapi.CallOption) (*KeyAc
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.folders.getKajPolicyConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FoldersShowEffectiveAutokeyConfigCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ShowEffectiveAutokeyConfig: Returns the effective Cloud KMS Autokey
+// configuration for a given project or folder.
+//
+//   - parent: Name of the resource project or folder to show the effective Cloud
+//     KMS Autokey configuration for. This may be helpful for interrogating the
+//     effect of nested folder configurations on a given resource project.
+//     Format: * projects/{project} * folders/{folder}.
+func (r *FoldersService) ShowEffectiveAutokeyConfig(parent string) *FoldersShowEffectiveAutokeyConfigCall {
+	c := &FoldersShowEffectiveAutokeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersShowEffectiveAutokeyConfigCall) Fields(s ...googleapi.Field) *FoldersShowEffectiveAutokeyConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FoldersShowEffectiveAutokeyConfigCall) IfNoneMatch(entityTag string) *FoldersShowEffectiveAutokeyConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersShowEffectiveAutokeyConfigCall) Context(ctx context.Context) *FoldersShowEffectiveAutokeyConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersShowEffectiveAutokeyConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersShowEffectiveAutokeyConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:showEffectiveAutokeyConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.folders.showEffectiveAutokeyConfig", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.folders.showEffectiveAutokeyConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ShowEffectiveAutokeyConfigResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FoldersShowEffectiveAutokeyConfigCall) Do(opts ...googleapi.CallOption) (*ShowEffectiveAutokeyConfigResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ShowEffectiveAutokeyConfigResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.folders.showEffectiveAutokeyConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5597,11 +5984,12 @@ type ProjectsShowEffectiveAutokeyConfigCall struct {
 }
 
 // ShowEffectiveAutokeyConfig: Returns the effective Cloud KMS Autokey
-// configuration for a given project.
+// configuration for a given project or folder.
 //
-//   - parent: Name of the resource project to the show effective Cloud KMS
-//     Autokey configuration for. This may be helpful for interrogating the
+//   - parent: Name of the resource project or folder to show the effective Cloud
+//     KMS Autokey configuration for. This may be helpful for interrogating the
 //     effect of nested folder configurations on a given resource project.
+//     Format: * projects/{project} * folders/{folder}.
 func (r *ProjectsService) ShowEffectiveAutokeyConfig(parent string) *ProjectsShowEffectiveAutokeyConfigCall {
 	c := &ProjectsShowEffectiveAutokeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9230,6 +9618,16 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCreateCall) SkipInitialVersionCreati
 	return c
 }
 
+// TrustedWrappingEnabled sets the optional parameter "trustedWrappingEnabled":
+// Whether trusted wrapping will be enabled on the first CryptoKeyVersions
+// created for this CryptoKey. This field is only supported for keys with
+// CryptoKeyVersionTemplate.protection_level HSM_SINGLE_TENANT. This field is
+// supported for all CryptoKeyPurposes except ENCRYPT_DECRYPT.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCreateCall) TrustedWrappingEnabled(trustedWrappingEnabled bool) *ProjectsLocationsKeyRingsCryptoKeysCreateCall {
+	c.urlParams_.Set("trustedWrappingEnabled", fmt.Sprint(trustedWrappingEnabled))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -11119,6 +11517,128 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDestroyCall) Do(opt
 	return ret, nil
 }
 
+type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsExportTrustedKeyWrappedCryptoKeyVersionCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ExportTrustedKeyWrappedCryptoKeyVersion: Exports a CryptoKeyVersion with a
+// trusted key. The CryptoKeyVersion must have trusted_wrapping_enabled set to
+// true. The CryptoKeyVersion of the [wrapping_key] must have the AES_WRAPPING
+// purpose. The [wrapping_key] must have the AES_256_KWP algorithm.
+//
+//   - name: The name of the CryptoKeyVersion to export. The CryptoKeyVersion
+//     must have trusted_wrapping_enabled set to true.
+func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) ExportTrustedKeyWrappedCryptoKeyVersion(name string) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsExportTrustedKeyWrappedCryptoKeyVersionCall {
+	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsExportTrustedKeyWrappedCryptoKeyVersionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// WrappingKey sets the optional parameter "wrappingKey": Required. The name of
+// the CryptoKeyVersion to use as a wrapping key. The CryptoKeyVersion must
+// have hsm_trusted set to true.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsExportTrustedKeyWrappedCryptoKeyVersionCall) WrappingKey(wrappingKey string) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsExportTrustedKeyWrappedCryptoKeyVersionCall {
+	c.urlParams_.Set("wrappingKey", wrappingKey)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsExportTrustedKeyWrappedCryptoKeyVersionCall) Fields(s ...googleapi.Field) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsExportTrustedKeyWrappedCryptoKeyVersionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsExportTrustedKeyWrappedCryptoKeyVersionCall) IfNoneMatch(entityTag string) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsExportTrustedKeyWrappedCryptoKeyVersionCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsExportTrustedKeyWrappedCryptoKeyVersionCall) Context(ctx context.Context) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsExportTrustedKeyWrappedCryptoKeyVersionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsExportTrustedKeyWrappedCryptoKeyVersionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsExportTrustedKeyWrappedCryptoKeyVersionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:exportTrustedKeyWrappedCryptoKeyVersion")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.exportTrustedKeyWrappedCryptoKeyVersion", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.exportTrustedKeyWrappedCryptoKeyVersion" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ExportTrustedKeyWrappedCryptoKeyVersionResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsExportTrustedKeyWrappedCryptoKeyVersionCall) Do(opts ...googleapi.CallOption) (*ExportTrustedKeyWrappedCryptoKeyVersionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ExportTrustedKeyWrappedCryptoKeyVersionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.exportTrustedKeyWrappedCryptoKeyVersion", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetCall struct {
 	s            *Service
 	name         string
@@ -11486,6 +12006,115 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportCall) Do(opts
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.import", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportTrustedKeyWrappedCryptoKeyVersionCall struct {
+	s                                              *Service
+	parent                                         string
+	importtrustedkeywrappedcryptokeyversionrequest *ImportTrustedKeyWrappedCryptoKeyVersionRequest
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// ImportTrustedKeyWrappedCryptoKeyVersion: Import wrapped key material into a
+// CryptoKeyVersion with a trusted key. All requests must specify a CryptoKey.
+// If a CryptoKeyVersion is additionally specified in the request, key material
+// will be reimported into that version. Otherwise, a new version will be
+// created, and will be assigned the next sequential id within the CryptoKey.
+// The CryptoKeyVersion will have trusted_wrapping_enabled set to true.
+//
+// - parent: The name of the CryptoKey to be imported into.
+func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) ImportTrustedKeyWrappedCryptoKeyVersion(parent string, importtrustedkeywrappedcryptokeyversionrequest *ImportTrustedKeyWrappedCryptoKeyVersionRequest) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportTrustedKeyWrappedCryptoKeyVersionCall {
+	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportTrustedKeyWrappedCryptoKeyVersionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.importtrustedkeywrappedcryptokeyversionrequest = importtrustedkeywrappedcryptokeyversionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportTrustedKeyWrappedCryptoKeyVersionCall) Fields(s ...googleapi.Field) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportTrustedKeyWrappedCryptoKeyVersionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportTrustedKeyWrappedCryptoKeyVersionCall) Context(ctx context.Context) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportTrustedKeyWrappedCryptoKeyVersionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportTrustedKeyWrappedCryptoKeyVersionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportTrustedKeyWrappedCryptoKeyVersionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.importtrustedkeywrappedcryptokeyversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/cryptoKeyVersions:importTrustedKeyWrappedCryptoKeyVersion")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.importTrustedKeyWrappedCryptoKeyVersion", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.importTrustedKeyWrappedCryptoKeyVersion" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CryptoKeyVersion.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportTrustedKeyWrappedCryptoKeyVersionCall) Do(opts ...googleapi.CallOption) (*CryptoKeyVersion, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CryptoKeyVersion{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.importTrustedKeyWrappedCryptoKeyVersion", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

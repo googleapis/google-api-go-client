@@ -1391,8 +1391,9 @@ type GoogleIdentityAccesscontextmanagerV1EgressSource struct {
 	// single `*` is specified for `access_level`, then all EgressSources will be
 	// allowed.
 	AccessLevel string `json:"accessLevel,omitempty"`
-	// PscEndpoint: Requests from this PSC will be allowed from access perimeter
-	// data.
+	// PscEndpoint: A PrivateServiceConnectEndpoint that is allowed to access data
+	// outside the perimeter. The Private Service Connect endpoint may be in any
+	// organization, not just the organization that the perimeter is defined in.
 	PscEndpoint *GoogleIdentityAccesscontextmanagerV1PrivateServiceConnectEndpoint `json:"pscEndpoint,omitempty"`
 	// Resource: A Google Cloud resource from the service perimeter that you want
 	// to allow to access data outside the perimeter. This field supports only
@@ -1563,8 +1564,9 @@ type GoogleIdentityAccesscontextmanagerV1IngressSource struct {
 	// `accessPolicies/MY_POLICY/accessLevels/MY_LEVEL`. If a single `*` is
 	// specified for `access_level`, then all IngressSources will be allowed.
 	AccessLevel string `json:"accessLevel,omitempty"`
-	// PscEndpoint: Requests from this PSC will be allowed to access perimeter
-	// data.
+	// PscEndpoint: A PrivateServiceConnectEndpoint that is allowed to access the
+	// perimeter. The Private Service Connect endpoint may be in any organization,
+	// not just the organization that the perimeter is defined in.
 	PscEndpoint *GoogleIdentityAccesscontextmanagerV1PrivateServiceConnectEndpoint `json:"pscEndpoint,omitempty"`
 	// Resource: A Google Cloud resource that is allowed to ingress the perimeter.
 	// Requests from these resources will be allowed to access perimeter data.
@@ -1724,10 +1726,10 @@ func (s GoogleIdentityAccesscontextmanagerV1OsConstraint) MarshalJSON() ([]byte,
 }
 
 // GoogleIdentityAccesscontextmanagerV1PrivateServiceConnectEndpoint: Specifies
-// the PSC an API call refers to.
+// the Private Service Connect endpoint that an API call refers to.
 type GoogleIdentityAccesscontextmanagerV1PrivateServiceConnectEndpoint struct {
-	// ForwardingRule: The global forwarding rule identifier. Forwarding rule
-	// format:
+	// ForwardingRule: The full resource name of the global forwarding rule that
+	// identifies a Private Service Connect endpoint. Forwarding rule format:
 	// `//compute.googleapis.com/projects/{PROJECT_ID}/global/forwardingRules/{FORWA
 	// RDING_RULE_ID}`.
 	ForwardingRule string `json:"forwardingRule,omitempty"`

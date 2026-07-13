@@ -12097,8 +12097,9 @@ func (c *ProjectsInstancesTablesPatchCall) IgnoreWarnings(ignoreWarnings bool) *
 // the following fields: * `change_stream_config` *
 // `change_stream_config.retention_period` * `deletion_protection` *
 // `automated_backup_policy` * `automated_backup_policy.retention_period` *
-// `automated_backup_policy.frequency` * `row_key_schema` If `column_families`
-// is set in `update_mask`, it will return an UNIMPLEMENTED error.
+// `automated_backup_policy.frequency` * `automated_backup_policy.locations` *
+// `row_key_schema` If `column_families` is set in `update_mask`, it will
+// return an UNIMPLEMENTED error.
 func (c *ProjectsInstancesTablesPatchCall) UpdateMask(updateMask string) *ProjectsInstancesTablesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

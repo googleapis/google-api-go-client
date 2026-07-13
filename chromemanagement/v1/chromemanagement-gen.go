@@ -3097,7 +3097,8 @@ type GoogleChromeManagementV1RiskAssessmentEntry struct {
 	//   "RISK_ASSESSMENT_PROVIDER_UNSPECIFIED" - Default value when no provider is
 	// specified.
 	//   "RISK_ASSESSMENT_PROVIDER_CRXCAVATOR" - CRXcavator.
-	//   "RISK_ASSESSMENT_PROVIDER_SPIN_AI" - Spin.Ai.
+	//   "RISK_ASSESSMENT_PROVIDER_SPIN_AI" - Deprecated: Please use
+	// RISK_ASSESSMENT_PROVIDER_SPIN_AI_V2 instead. Spin.Ai.
 	//   "RISK_ASSESSMENT_PROVIDER_LAYERX" - LayerX Security.
 	//   "RISK_ASSESSMENT_PROVIDER_SPIN_AI_V2" - Spin.AI V2.
 	Provider string `json:"provider,omitempty"`
@@ -8199,7 +8200,7 @@ func (r *CustomersConnectorConfigsService) Create(parent string, googlechromeman
 
 // ConnectorConfigId sets the optional parameter "connectorConfigId": ID to use
 // for the connector config, which becomes the final component of the connector
-// config's resource name. If provided, the ID must be 1-63 characters long,
+// config's resource name. If provided, the ID must be 1-36 characters long,
 // and contain only lowercase letters, digits, and hyphens. It must start with
 // a letter, and end with a letter or number. If not provided, the connector
 // config will be assigned a random UUID.

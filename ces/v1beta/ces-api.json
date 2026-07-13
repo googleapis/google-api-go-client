@@ -1283,6 +1283,32 @@
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
+                    "getExtendedAgentCard": {
+                      "description": "Gets the extended agent card for the authenticated agent.",
+                      "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/apps/{appsId}/deployments/{deploymentsId}/extendedAgentCard",
+                      "httpMethod": "GET",
+                      "id": "ces.projects.locations.apps.deployments.getExtendedAgentCard",
+                      "parameterOrder": [
+                        "tenant"
+                      ],
+                      "parameters": {
+                        "tenant": {
+                          "description": "Optional. Tenant ID, provided as a path parameter.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/apps/[^/]+/deployments/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta/{+tenant}/extendedAgentCard",
+                      "response": {
+                        "$ref": "LfA2aV1AgentCard"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/ces",
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
                     "list": {
                       "description": "Lists deployments in the given app.",
                       "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/apps/{appsId}/deployments",
@@ -1359,6 +1385,41 @@
                         "https://www.googleapis.com/auth/ces",
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
+                    }
+                  },
+                  "resources": {
+                    "message": {
+                      "methods": {
+                        "send": {
+                          "description": "Sends a message to an agent.",
+                          "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/apps/{appsId}/deployments/{deploymentsId}/message:send",
+                          "httpMethod": "POST",
+                          "id": "ces.projects.locations.apps.deployments.message.send",
+                          "parameterOrder": [
+                            "tenant"
+                          ],
+                          "parameters": {
+                            "tenant": {
+                              "description": "Optional. Tenant ID, provided as a path parameter.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/apps/[^/]+/deployments/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1beta/{+tenant}/message:send",
+                          "request": {
+                            "$ref": "LfA2aV1SendMessageRequest"
+                          },
+                          "response": {
+                            "$ref": "LfA2aV1SendMessageResponse"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/ces",
+                            "https://www.googleapis.com/auth/cloud-platform"
+                          ]
+                        }
+                      }
                     }
                   }
                 },
@@ -3413,6 +3474,32 @@
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
+                    "getExtendedAgentCard": {
+                      "description": "Gets the extended agent card for the authenticated agent.",
+                      "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/apps/{appsId}/versions/{versionsId}/extendedAgentCard",
+                      "httpMethod": "GET",
+                      "id": "ces.projects.locations.apps.versions.getExtendedAgentCard",
+                      "parameterOrder": [
+                        "tenant"
+                      ],
+                      "parameters": {
+                        "tenant": {
+                          "description": "Optional. Tenant ID, provided as a path parameter.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/apps/[^/]+/versions/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta/{+tenant}/extendedAgentCard",
+                      "response": {
+                        "$ref": "LfA2aV1AgentCard"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/ces",
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
                     "list": {
                       "description": "Lists all app versions in the given app.",
                       "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/apps/{appsId}/versions",
@@ -3488,6 +3575,41 @@
                         "https://www.googleapis.com/auth/ces",
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
+                    }
+                  },
+                  "resources": {
+                    "message": {
+                      "methods": {
+                        "send": {
+                          "description": "Sends a message to an agent.",
+                          "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/apps/{appsId}/versions/{versionsId}/message:send",
+                          "httpMethod": "POST",
+                          "id": "ces.projects.locations.apps.versions.message.send",
+                          "parameterOrder": [
+                            "tenant"
+                          ],
+                          "parameters": {
+                            "tenant": {
+                              "description": "Optional. Tenant ID, provided as a path parameter.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/apps/[^/]+/versions/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1beta/{+tenant}/message:send",
+                          "request": {
+                            "$ref": "LfA2aV1SendMessageRequest"
+                          },
+                          "response": {
+                            "$ref": "LfA2aV1SendMessageResponse"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/ces",
+                            "https://www.googleapis.com/auth/cloud-platform"
+                          ]
+                        }
+                      }
                     }
                   }
                 }
@@ -3630,7 +3752,7 @@
       }
     }
   },
-  "revision": "20260617",
+  "revision": "20260708",
   "rootUrl": "https://ces.googleapis.com/",
   "schemas": {
     "Action": {
@@ -4891,6 +5013,7 @@
             "TWILIO",
             "GOOGLE_TELEPHONY_PLATFORM",
             "CONTACT_CENTER_AS_A_SERVICE",
+            "CONTACT_CENTER_AS_A_SERVICE_CHAT",
             "FIVE9",
             "CONTACT_CENTER_INTEGRATION",
             "WHATSAPP",
@@ -4903,6 +5026,7 @@
             "Twilio channel.",
             "Google Telephony Platform channel.",
             "Contact Center as a Service (CCaaS) channel.",
+            "Contact Center as a Service (CCaaS Chat) channel.",
             "Five9 channel.",
             "Third party contact center integration channel.",
             "WhatsApp channel.",
@@ -4949,8 +5073,23 @@
       "description": "Configuration specific to Instagram deployments.",
       "id": "ChannelProfileInstagramConfig",
       "properties": {
+        "description": {
+          "description": "Output only. The description of the Meta business page or profile.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Output only. The fetched Meta business page name.",
+          "readOnly": true,
+          "type": "string"
+        },
         "instagramAccountId": {
           "description": "Required. The Instagram Account ID.",
+          "type": "string"
+        },
+        "thumbnailUrl": {
+          "description": "Output only. The fetched Meta business profile thumbnail URL.",
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -5054,8 +5193,27 @@
       "description": "Configuration specific to WhatsApp deployments.",
       "id": "ChannelProfileWhatsAppConfig",
       "properties": {
+        "description": {
+          "description": "Output only. The description of the Meta business page or profile.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Output only. The fetched Meta business page name.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "phoneNumber": {
+          "description": "Optional. The phone number in E.164 format.",
+          "type": "string"
+        },
         "phoneNumberId": {
           "description": "Required. The Meta phone number ID.",
+          "type": "string"
+        },
+        "thumbnailUrl": {
+          "description": "Output only. The fetched Meta business profile thumbnail URL.",
+          "readOnly": true,
           "type": "string"
         },
         "wabaId": {
@@ -8286,10 +8444,10 @@
           ],
           "enumDescriptions": [
             "Unspecified state.",
-            "Pending state. Experiment is pending and not valid.",
+            "Deprecated: This state is no longer used.",
             "Running state. Experiment is running and valid.",
-            "Done state. Experiment is done and no longer valid.",
-            "Expired state. Experiment is expired and no longer valid."
+            "Deprecated: This state is no longer used.",
+            "Deprecated: This state is no longer used."
           ],
           "type": "string"
         },
@@ -8717,6 +8875,20 @@
       "description": "The configuration to be used for quality report generation.",
       "id": "GenerateAppResourceRequestQualityReportGenerationConfig",
       "properties": {
+        "algorithm": {
+          "description": "Optional. The loss attribution algorithm to use.",
+          "enum": [
+            "LOSS_ATTRIBUTION_ALGORITHM_UNSPECIFIED",
+            "APP_CENTRIC",
+            "AGENT_CENTRIC"
+          ],
+          "enumDescriptions": [
+            "Unspecified.",
+            "App-centric loss attribution. Treats the app as a single unit.",
+            "Agent-centric loss attribution. Attributes loss to individual agents."
+          ],
+          "type": "string"
+        },
         "evaluationRun": {
           "description": "Required. The evaluation run used to inform quality report analysis.",
           "type": "string"
@@ -8954,6 +9126,20 @@
       "description": "Request message for EvaluationService.GenerateEvaluation.",
       "id": "GenerateEvaluationRequest",
       "properties": {
+        "evaluationType": {
+          "description": "Optional. The type of evaluation to generate. Defaults to GOLDEN if unspecified.",
+          "enum": [
+            "EVALUATION_TYPE_UNSPECIFIED",
+            "GOLDEN",
+            "SCENARIO"
+          ],
+          "enumDescriptions": [
+            "Unspecified type. Defaults to GOLDEN.",
+            "Golden evaluation.",
+            "Scenario evaluation."
+          ],
+          "type": "string"
+        },
         "source": {
           "deprecated": true,
           "description": "Optional. Indicate the source of the conversation. If not set, all sources will be searched.",
@@ -9580,6 +9766,10 @@
       "properties": {
         "authCode": {
           "description": "Required. The Meta auth code provided by the embedded signup flow.",
+          "type": "string"
+        },
+        "conversationProfileId": {
+          "description": "Optional. The Conversation Profile ID to use for the deployment.",
           "type": "string"
         }
       },
@@ -12541,6 +12731,14 @@
       "description": "Configuration for how the agent response should be synthesized.",
       "id": "SynthesizeSpeechConfig",
       "properties": {
+        "instruction": {
+          "description": "Optional. The instruction used to synthesize speech when using a generative model.",
+          "type": "string"
+        },
+        "model": {
+          "description": "Optional. The model used to synthesize audio. Currently supported values: - \"gemini-3.1-flash-tts-preview\" If empty, Chirp3-HD is used.",
+          "type": "string"
+        },
         "speakingRate": {
           "description": "Optional. The speaking rate/speed in the range [0.25, 2.0]. 1.0 is the normal native speed supported by the specific voice. 2.0 is twice as fast, and 0.5 is half as fast. Values outside of the range [0.25, 2.0] will return an error.",
           "format": "double",
@@ -12548,6 +12746,10 @@
         },
         "voice": {
           "description": "Optional. The name of the voice. If not set, the service will choose a voice based on the other parameters such as language_code. For the list of available voices, please refer to [Supported voices and languages](https://cloud.google.com/text-to-speech/docs/voices) from Cloud Text-to-Speech.",
+          "type": "string"
+        },
+        "voiceSampleGcsUri": {
+          "description": "Optional. The Cloud Storage URI to the audio sample for voice cloning. The audio sample should be a mono-channel, 24kHz WAV file. Note: Please make sure the CES service agent `service-@gcp-sa-ces.iam.gserviceaccount.com` has `storage.objects.get` permission to the Cloud Storage object.",
           "type": "string"
         }
       },
@@ -12904,6 +13106,11 @@
           "$ref": "OpenApiToolset",
           "description": "Optional. A toolset that contains a list of tools that are defined by an OpenAPI schema."
         },
+        "timeout": {
+          "description": "Optional. The timeout for the toolset execution. If not set, the default timeout is 30 seconds for `SYNCHRONOUS` toolsets and 60 seconds for `ASYNCHRONOUS` toolsets.",
+          "format": "google-duration",
+          "type": "string"
+        },
         "toolFakeConfig": {
           "$ref": "ToolFakeConfig",
           "description": "Optional. Configuration for tools behavior in fake mode."
@@ -13138,12 +13345,20 @@
           "description": "Required. The Business Account ID to use for the phone number.",
           "type": "string"
         },
+        "conversationProfileId": {
+          "description": "Optional. The Conversation Profile ID to use for the deployment.",
+          "type": "string"
+        },
         "phoneNumber": {
           "description": "Required. The phone number to register with WhatsApp.",
           "type": "string"
         },
         "pin": {
           "description": "Required. The 6-digit PIN created by the user for two-step verification.",
+          "type": "string"
+        },
+        "wabaId": {
+          "description": "Required. The WhatsApp Business Account ID.",
           "type": "string"
         }
       },

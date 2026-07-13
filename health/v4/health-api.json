@@ -430,6 +430,70 @@
         }
       }
     },
+    "shl": {
+      "resources": {
+        "m": {
+          "methods": {
+            "getShlManifest": {
+              "description": "Forward a manifest request for a given SHL",
+              "flatPath": "v4/shl/m/{externalShlId}",
+              "httpMethod": "POST",
+              "id": "health.shl.m.getShlManifest",
+              "parameterOrder": [
+                "externalShlId"
+              ],
+              "parameters": {
+                "externalShlId": {
+                  "description": "Required. External ID mapping to a ShlSharedLinkCapabilityToken object See https://docs.google.com/document/d/1Pch20pxJHRbsaMxp0EYgs3ZU0Gu7QTUznk8LhvbQvfY/edit?tab=t.0#heading=h.17wg41voij6q",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v4/shl/m/{externalShlId}",
+              "request": {
+                "$ref": "ManifestParams"
+              },
+              "response": {
+                "$ref": "HttpBody"
+              }
+            }
+          }
+        },
+        "r": {
+          "methods": {
+            "get": {
+              "description": "Forward a resource request for a given SHL",
+              "flatPath": "v4/shl/r/{externalShlId}/{resourceToken}",
+              "httpMethod": "GET",
+              "id": "health.shl.r.get",
+              "parameterOrder": [
+                "externalShlId",
+                "resourceToken"
+              ],
+              "parameters": {
+                "externalShlId": {
+                  "description": "Required. External ID mapping to a ShlSharedLinkCapabilityToken object See https://docs.google.com/document/d/1Pch20pxJHRbsaMxp0EYgs3ZU0Gu7QTUznk8LhvbQvfY/edit?tab=t.0#heading=h.17wg41voij6q",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "resourceToken": {
+                  "description": "Required. Encoded, encrypted message containing resource access details",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v4/shl/r/{externalShlId}/{resourceToken}",
+              "response": {
+                "$ref": "HttpBody"
+              }
+            }
+          }
+        }
+      }
+    },
     "users": {
       "methods": {
         "getIdentity": {
@@ -996,7 +1060,7 @@
       }
     }
   },
-  "revision": "20260629",
+  "revision": "20260709",
   "rootUrl": "https://health.googleapis.com/",
   "schemas": {
     "ActiveEnergyBurned": {
@@ -2518,7 +2582,7 @@
       "type": "object"
     },
     "EndpointAuthorization": {
-      "description": "Authorization mechanism for a subscriber endpoint. For all requests sent by the Webhooks service, the JSON payload is cryptographically signed. The signature is delivered in the `X-HEALTHAPI-SIGNATURE` HTTP header. This is an ECDSA (NIST P256) signature of the JSON payload. Clients must verify this signature using Google Health API's public key to confirm the payload was sent by the Health API.",
+      "description": "Authorization mechanism for a subscriber endpoint. For all requests sent by the Webhooks service, the JSON payload is cryptographically signed. The signature is delivered in the `GOOGLE-HEALTH-API-SIGNATURE` HTTP header. This is an ECDSA (NIST P256) signature of the JSON payload. Clients must verify this signature using Google Health API's public key to confirm the payload was sent by the Health API.",
       "id": "EndpointAuthorization",
       "properties": {
         "secret": {
@@ -2538,7 +2602,7 @@
       "id": "EnergyQuantity",
       "properties": {
         "kcal": {
-          "description": "Required. Value representing the energy in kilocalories.",
+          "description": "Required. The energy value in kilocalories.",
           "format": "double",
           "type": "number"
         },
@@ -3515,6 +3579,33 @@
       },
       "type": "object"
     },
+    "HttpBody": {
+      "description": "Message that represents an arbitrary HTTP body. It should only be used for payload formats that can't be represented as JSON, such as raw binary or an HTML page. This message can be used both in streaming and non-streaming API methods in the request as well as the response. It can be used as a top-level request field, which is convenient if one wants to extract parameters from either the URL or HTTP template into the request fields and also want access to the raw HTTP body. Example: message GetResourceRequest { // A unique request id. string request_id = 1; // The raw HTTP body is bound to this field. google.api.HttpBody http_body = 2; } service ResourceService { rpc GetResource(GetResourceRequest) returns (google.api.HttpBody); rpc UpdateResource(google.api.HttpBody) returns (google.protobuf.Empty); } Example with streaming methods: service CaldavService { rpc GetCalendar(stream google.api.HttpBody) returns (stream google.api.HttpBody); rpc UpdateCalendar(stream google.api.HttpBody) returns (stream google.api.HttpBody); } Use of this type only changes how the request and response bodies are handled, all other features will continue to work unchanged.",
+      "id": "HttpBody",
+      "properties": {
+        "contentType": {
+          "description": "The HTTP Content-Type header value specifying the content type of the body.",
+          "type": "string"
+        },
+        "data": {
+          "description": "The HTTP request/response body as raw binary.",
+          "format": "byte",
+          "type": "string"
+        },
+        "extensions": {
+          "description": "Application specific response metadata. Must be set in the first response for streaming APIs.",
+          "items": {
+            "additionalProperties": {
+              "description": "Properties of the object. Contains field @type with type URL.",
+              "type": "any"
+            },
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "HttpHeader": {
       "description": "Represents an HTTP header.",
       "id": "HttpHeader",
@@ -3747,6 +3838,26 @@
       },
       "type": "object"
     },
+    "ManifestParams": {
+      "description": "Represents the POST body contained in a GetShlManifestRequest This message is nested to represent that See https://build.fhir.org/ig/HL7/smart-health-cards-and-links/links-specification.html#smart-health-link-manifest-request",
+      "id": "ManifestParams",
+      "properties": {
+        "embeddedLengthMax": {
+          "description": "Optional. Integer upper bound on the length of embedded payloads",
+          "format": "int32",
+          "type": "integer"
+        },
+        "passcode": {
+          "description": "Optional. ",
+          "type": "string"
+        },
+        "recipient": {
+          "description": "Required. A string describing the recipient (e.g.,the name of an organization or person) suitable for display to the Receiving User",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "MedicalDeviceInfo": {
       "description": "Software as Medical Device (SaMD) metadata. Used to construct the Unique Device Identifier (UDI).",
       "id": "MedicalDeviceInfo",
@@ -3881,7 +3992,7 @@
       "id": "NutrientQuantity",
       "properties": {
         "nutrient": {
-          "description": "Required. Value representing the nutrient.",
+          "description": "Required. The nutrient type.",
           "enum": [
             "NUTRIENT_UNSPECIFIED",
             "BIOTIN",
@@ -3970,7 +4081,7 @@
         },
         "quantity": {
           "$ref": "WeightQuantity",
-          "description": "Required. Value representing the quantity of the nutrient."
+          "description": "Required. The quantity of the nutrient, measured in grams."
         }
       },
       "type": "object"
@@ -4075,31 +4186,31 @@
       "type": "object"
     },
     "NutritionLog": {
-      "description": "Holds information about a user logged food. There are two ways of creating a nutrition log based on the food type: 1. Identified food: Using the food field, which is a reference to a Food resource. In this case fields `nutrients`, `energy`, `energy_from_fat`, `total_carbohydrate`, `total_fat`, `food_display_name` will be populated based on the referenced food. 2. Anonymous food: Using the `food_display_name` field and setting the `nutrients`, `energy`, `energy_from_fat`, `total_carbohydrate`, `total_fat` fields manually. The identified food is preferred over the anonymous food. Nutrition logs created from anonymous food are not be editable.",
+      "description": "Holds information about food logged by a user. There are two ways of creating a nutrition log based on the food type: 1. Identified food: Using the food field, which is a reference to a Food resource. In this case fields `nutrients`, `energy`, `energy_from_fat`, `total_carbohydrate`, `total_fat`, `food_display_name` will be populated based on the referenced food. 2. Anonymous food: Using the `food_display_name` field and setting the `nutrients`, `energy`, `energy_from_fat`, `total_carbohydrate`, `total_fat` fields manually. The identified food is preferred over the anonymous food. Nutrition logs created from anonymous food are not editable.",
       "id": "NutritionLog",
       "properties": {
         "energy": {
           "$ref": "EnergyQuantity",
-          "description": "Optional. Value representing the energy of the nutrition log. For nutrition logs created from an identified food, this field will be populated based on the referenced food. For anonymous food, this field will be populated manually."
+          "description": "Optional. The total energy of the food, measured in kilocalories (`kcal`)."
         },
         "energyFromFat": {
           "$ref": "EnergyQuantity",
-          "description": "Optional. Value representing the energy from fat of the nutrition log. For nutrition logs created from an identified food, this field will be populated based on the referenced food. For anonymous food, this field will be populated manually."
+          "description": "Optional. The energy from fat, measured in kilocalories (`kcal`)."
         },
         "food": {
-          "description": "Required. Represents the food ID.",
+          "description": "Optional. The resource name of the Food item. Required when creating a nutrition log from an identified food. For anonymous food logs, use the `food_display_name` field instead.",
           "type": "string"
         },
         "foodDisplayName": {
-          "description": "Value representing the display name of the food. For nutrition logs created from an identified food, this field will be populated based on the referenced food. For anonymous food, this field will be populated manually.",
+          "description": "The display name of the food. For identified food logs, this is populated automatically from the referenced food.",
           "type": "string"
         },
         "interval": {
           "$ref": "SessionTimeInterval",
-          "description": "Required. Observed interval."
+          "description": "Required. The time window when the food was logged."
         },
         "mealType": {
-          "description": "Optional. Value representing the meal type of the nutrition log.",
+          "description": "Optional. The meal category. One of `BREAKFAST`, `LUNCH`, `DINNER`, or `SNACK`.",
           "enum": [
             "MEAL_TYPE_UNSPECIFIED",
             "BEFORE_BREAKFAST",
@@ -4127,7 +4238,7 @@
           "type": "string"
         },
         "nutrients": {
-          "description": "Optional. Value representing the nutrients of the nutrition log.",
+          "description": "Optional. An array of individual nutrient values for the nutrition log.",
           "items": {
             "$ref": "NutrientQuantity"
           },
@@ -4135,15 +4246,15 @@
         },
         "serving": {
           "$ref": "Serving",
-          "description": "Optional. Value representing the nutrition log serving."
+          "description": "Optional. The serving information for the logged food."
         },
         "totalCarbohydrate": {
           "$ref": "WeightQuantity",
-          "description": "Optional. Value representing the total carbohydrate of the nutrition log. For nutrition logs created from an identified food, this field will be populated based on the referenced food. For anonymous food, this field will be populated manually."
+          "description": "Optional. The total carbohydrate content, measured in grams."
         },
         "totalFat": {
           "$ref": "WeightQuantity",
-          "description": "Optional. Value representing the total fat of the nutrition log. For nutrition logs created from an identified food, this field will be populated based on the referenced food. For anonymous food, this field will be populated manually."
+          "description": "Optional. The total fat content, measured in grams."
         }
       },
       "type": "object"
@@ -4864,7 +4975,7 @@
       "id": "Serving",
       "properties": {
         "amount": {
-          "description": "Optional. Amount of food consumed, fractional values are supported.",
+          "description": "Optional. The number of servings.",
           "format": "double",
           "type": "number"
         },
@@ -5911,7 +6022,7 @@
       "id": "WeightQuantity",
       "properties": {
         "grams": {
-          "description": "Required. Value representing the weight in grams.",
+          "description": "Required. The weight value in grams.",
           "format": "double",
           "type": "number"
         },

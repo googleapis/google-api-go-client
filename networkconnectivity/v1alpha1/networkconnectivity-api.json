@@ -1127,7 +1127,7 @@
       }
     }
   },
-  "revision": "20260529",
+  "revision": "20260701",
   "rootUrl": "https://networkconnectivity.googleapis.com/",
   "schemas": {
     "AllocationOptions": {
@@ -1514,12 +1514,16 @@
           "enum": [
             "RANGE_STATUS_UNSPECIFIED",
             "ACTIVE",
-            "OBSOLETE"
+            "OBSOLETE",
+            "CREATING",
+            "DELETING"
           ],
           "enumDescriptions": [
             "Unspecified status is the default value for an Internal Range.",
             "Ranges with ACTIVE status will reserve the CIDR block from the given VPC.",
-            "A range becomes OBSOLETE if its VPC network is deleted. An OBSOLETE range is inactive, doesn't reserve any CIDR blocks, and can only be deleted or have its labels and description updated."
+            "A range becomes OBSOLETE if its VPC network is deleted. An OBSOLETE range is inactive, doesn't reserve any CIDR blocks, and can only be deleted or have its labels and description updated.",
+            "Ranges with CREATING state are in the process of being created.",
+            "Ranges with DELETING state are in the process of being deleted."
           ],
           "readOnly": true,
           "type": "string"

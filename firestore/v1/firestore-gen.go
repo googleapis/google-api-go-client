@@ -425,6 +425,8 @@ type BatchGetDocumentsRequest struct {
 	// Point-in-Time Recovery is enabled, can additionally be a whole minute
 	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
+	// RequestOptions: Optional. The request options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// Transaction: Reads documents in a transaction.
 	Transaction string `json:"transaction,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Documents") to
@@ -487,6 +489,8 @@ func (s BatchGetDocumentsResponse) MarshalJSON() ([]byte, error) {
 type BatchWriteRequest struct {
 	// Labels: Labels associated with this batch write.
 	Labels map[string]string `json:"labels,omitempty"`
+	// RequestOptions: Optional. The request options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// Writes: The writes to apply. Method does not apply writes atomically and
 	// does not guarantee ordering. Each write succeeds or fails independently. You
 	// cannot write to the same document more than once per request.
@@ -543,6 +547,8 @@ type BeginTransactionRequest struct {
 	// Options: The options for the transaction. Defaults to a read-write
 	// transaction.
 	Options *TransactionOptions `json:"options,omitempty"`
+	// RequestOptions: Optional. The request options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Options") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -683,19 +689,21 @@ func (s CollectionSelector) MarshalJSON() ([]byte, error) {
 
 // CommitRequest: The request for Firestore.Commit.
 type CommitRequest struct {
+	// RequestOptions: Optional. The request options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// Transaction: If set, applies all writes in this transaction, and commits it.
 	Transaction string `json:"transaction,omitempty"`
 	// Writes: The writes to apply. Always executed atomically and in order.
 	Writes []*Write `json:"writes,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Transaction") to
+	// ForceSendFields is a list of field names (e.g. "RequestOptions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Transaction") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "RequestOptions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1068,6 +1076,8 @@ type ExecutePipelineRequest struct {
 	// if Point-in-Time Recovery is enabled, can additionally be a whole minute
 	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
+	// RequestOptions: Optional. The request options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// StructuredPipeline: A pipelined operation.
 	StructuredPipeline *StructuredPipeline `json:"structuredPipeline,omitempty"`
 	// Transaction: Run the query within an already active transaction. The value
@@ -3728,6 +3738,8 @@ type ListCollectionIdsRequest struct {
 	// Point-in-Time Recovery is enabled, can additionally be a whole minute
 	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
+	// RequestOptions: Optional. The request options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PageSize") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3837,6 +3849,8 @@ type ListenRequest struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// RemoveTarget: The ID of a target to remove from this stream.
 	RemoveTarget int64 `json:"removeTarget,omitempty"`
+	// RequestOptions: Optional. The request options for the request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AddTarget") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4014,6 +4028,8 @@ type PartitionQueryRequest struct {
 	// Point-in-Time Recovery is enabled, can additionally be a whole minute
 	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
+	// RequestOptions: Optional. The request options for the request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// StructuredQuery: A structured query. Query must specify collection with all
 	// descendants and be ordered by name ascending. Other filters, order bys,
 	// limits, offsets, and start/end cursors are not supported.
@@ -4259,19 +4275,43 @@ func (s ReadWrite) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RollbackRequest: The request for Firestore.Rollback.
-type RollbackRequest struct {
-	// Transaction: Required. The transaction to roll back.
-	Transaction string `json:"transaction,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Transaction") to
+// RequestOptions: Options for a server request.
+type RequestOptions struct {
+	// RequestTags: Optional. The request tags for the request.
+	RequestTags []string `json:"requestTags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequestTags") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Transaction") to include in API
+	// NullFields is a list of field names (e.g. "RequestTags") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RequestOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod RequestOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RollbackRequest: The request for Firestore.Rollback.
+type RollbackRequest struct {
+	// RequestOptions: Optional. The request options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
+	// Transaction: Required. The transaction to roll back.
+	Transaction string `json:"transaction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequestOptions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequestOptions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4296,6 +4336,8 @@ type RunAggregationQueryRequest struct {
 	// Point-in-Time Recovery is enabled, can additionally be a whole minute
 	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
+	// RequestOptions: Optional. The request options for the request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// StructuredAggregationQuery: An aggregation query.
 	StructuredAggregationQuery *StructuredAggregationQuery `json:"structuredAggregationQuery,omitempty"`
 	// Transaction: Run the aggregation within an already active transaction. The
@@ -4375,6 +4417,8 @@ type RunQueryRequest struct {
 	// Point-in-Time Recovery is enabled, can additionally be a whole minute
 	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
+	// RequestOptions: Optional. The request options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// StructuredQuery: A structured query.
 	StructuredQuery *StructuredQuery `json:"structuredQuery,omitempty"`
 	// Transaction: Run the query within an already active transaction. The value
@@ -4985,6 +5029,8 @@ func (s Write) MarshalJSON() ([]byte, error) {
 type WriteRequest struct {
 	// Labels: Labels associated with this write request.
 	Labels map[string]string `json:"labels,omitempty"`
+	// RequestOptions: Optional. The request options for the request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// StreamId: The ID of the write stream to resume. This may only be set in the
 	// first message. When left empty, a new write stream will be created.
 	StreamId string `json:"streamId,omitempty"`
@@ -8097,6 +8143,13 @@ func (c *ProjectsDatabasesDocumentsCreateDocumentCall) MaskFieldPaths(maskFieldP
 	return c
 }
 
+// RequestOptionsRequestTags sets the optional parameter
+// "requestOptions.requestTags": The request tags for the request.
+func (c *ProjectsDatabasesDocumentsCreateDocumentCall) RequestOptionsRequestTags(requestOptionsRequestTags ...string) *ProjectsDatabasesDocumentsCreateDocumentCall {
+	c.urlParams_.SetMulti("requestOptions.requestTags", append([]string{}, requestOptionsRequestTags...))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -8213,6 +8266,13 @@ func (c *ProjectsDatabasesDocumentsDeleteCall) CurrentDocumentExists(currentDocu
 // have been last updated at that time. Timestamp must be microsecond aligned.
 func (c *ProjectsDatabasesDocumentsDeleteCall) CurrentDocumentUpdateTime(currentDocumentUpdateTime string) *ProjectsDatabasesDocumentsDeleteCall {
 	c.urlParams_.Set("currentDocument.updateTime", currentDocumentUpdateTime)
+	return c
+}
+
+// RequestOptionsRequestTags sets the optional parameter
+// "requestOptions.requestTags": The request tags for the request.
+func (c *ProjectsDatabasesDocumentsDeleteCall) RequestOptionsRequestTags(requestOptionsRequestTags ...string) *ProjectsDatabasesDocumentsDeleteCall {
+	c.urlParams_.SetMulti("requestOptions.requestTags", append([]string{}, requestOptionsRequestTags...))
 	return c
 }
 
@@ -8437,6 +8497,13 @@ func (c *ProjectsDatabasesDocumentsGetCall) ReadTime(readTime string) *ProjectsD
 	return c
 }
 
+// RequestOptionsRequestTags sets the optional parameter
+// "requestOptions.requestTags": The request tags for the request.
+func (c *ProjectsDatabasesDocumentsGetCall) RequestOptionsRequestTags(requestOptionsRequestTags ...string) *ProjectsDatabasesDocumentsGetCall {
+	c.urlParams_.SetMulti("requestOptions.requestTags", append([]string{}, requestOptionsRequestTags...))
+	return c
+}
+
 // Transaction sets the optional parameter "transaction": Reads the document in
 // a transaction.
 func (c *ProjectsDatabasesDocumentsGetCall) Transaction(transaction string) *ProjectsDatabasesDocumentsGetCall {
@@ -8604,6 +8671,24 @@ func (c *ProjectsDatabasesDocumentsListCall) PageToken(pageToken string) *Projec
 // a whole minute timestamp within the past 7 days.
 func (c *ProjectsDatabasesDocumentsListCall) ReadTime(readTime string) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.Set("readTime", readTime)
+	return c
+}
+
+// Recursive sets the optional parameter "recursive": If the list should
+// recursively include all documents nested under the parent at any level. If
+// the request specifies a `collection_id`, then the list will include all
+// nested documents in the collection under the parent. This is optional, and
+// when not provided, Firestore will only list documents nested immediately
+// under the parent. Requests with `recursive` may not specify `show_missing`.
+func (c *ProjectsDatabasesDocumentsListCall) Recursive(recursive bool) *ProjectsDatabasesDocumentsListCall {
+	c.urlParams_.Set("recursive", fmt.Sprint(recursive))
+	return c
+}
+
+// RequestOptionsRequestTags sets the optional parameter
+// "requestOptions.requestTags": The request tags for the request.
+func (c *ProjectsDatabasesDocumentsListCall) RequestOptionsRequestTags(requestOptionsRequestTags ...string) *ProjectsDatabasesDocumentsListCall {
+	c.urlParams_.SetMulti("requestOptions.requestTags", append([]string{}, requestOptionsRequestTags...))
 	return c
 }
 
@@ -8938,6 +9023,24 @@ func (c *ProjectsDatabasesDocumentsListDocumentsCall) PageToken(pageToken string
 // a whole minute timestamp within the past 7 days.
 func (c *ProjectsDatabasesDocumentsListDocumentsCall) ReadTime(readTime string) *ProjectsDatabasesDocumentsListDocumentsCall {
 	c.urlParams_.Set("readTime", readTime)
+	return c
+}
+
+// Recursive sets the optional parameter "recursive": If the list should
+// recursively include all documents nested under the parent at any level. If
+// the request specifies a `collection_id`, then the list will include all
+// nested documents in the collection under the parent. This is optional, and
+// when not provided, Firestore will only list documents nested immediately
+// under the parent. Requests with `recursive` may not specify `show_missing`.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) Recursive(recursive bool) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.urlParams_.Set("recursive", fmt.Sprint(recursive))
+	return c
+}
+
+// RequestOptionsRequestTags sets the optional parameter
+// "requestOptions.requestTags": The request tags for the request.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) RequestOptionsRequestTags(requestOptionsRequestTags ...string) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.urlParams_.SetMulti("requestOptions.requestTags", append([]string{}, requestOptionsRequestTags...))
 	return c
 }
 
@@ -9350,6 +9453,13 @@ func (c *ProjectsDatabasesDocumentsPatchCall) CurrentDocumentUpdateTime(currentD
 // reference.
 func (c *ProjectsDatabasesDocumentsPatchCall) MaskFieldPaths(maskFieldPaths ...string) *ProjectsDatabasesDocumentsPatchCall {
 	c.urlParams_.SetMulti("mask.fieldPaths", append([]string{}, maskFieldPaths...))
+	return c
+}
+
+// RequestOptionsRequestTags sets the optional parameter
+// "requestOptions.requestTags": The request tags for the request.
+func (c *ProjectsDatabasesDocumentsPatchCall) RequestOptionsRequestTags(requestOptionsRequestTags ...string) *ProjectsDatabasesDocumentsPatchCall {
+	c.urlParams_.SetMulti("requestOptions.requestTags", append([]string{}, requestOptionsRequestTags...))
 	return c
 }
 

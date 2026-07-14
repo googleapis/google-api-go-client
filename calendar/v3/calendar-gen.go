@@ -364,6 +364,9 @@ type AclRule struct {
 	// - "freeBusyReader" - Provides read access to free/busy information.
 	// - "reader" - Provides read access to the calendar. Private events will
 	// appear to users with reader access, but event details will be hidden.
+	// - "writerWithoutPrivateAccess" - Provides read and write access to the
+	// calendar. Private events will appear to users with
+	// writerWithoutPrivateAccess access, but event details will be hidden.
 	// - "writer" - Provides read and write access to the calendar. Private events
 	// will appear to users with writer access, and event details will be visible.
 	// Provides read access to the calendar's ACLs.
@@ -520,6 +523,9 @@ type CalendarListEntry struct {
 	// - "freeBusyReader" - Provides read access to free/busy information.
 	// - "reader" - Provides read access to the calendar. Private events will
 	// appear to users with reader access, but event details will be hidden.
+	// - "writerWithoutPrivateAccess" - Provides read and write access to the
+	// calendar. Private events will appear to users with
+	// writerWithoutPrivateAccess access, but event details will be hidden.
 	// - "writer" - Provides read and write access to the calendar. Private events
 	// will appear to users with writer access, and event details will be visible.
 	//
@@ -1363,6 +1369,12 @@ type Event struct {
 	// details.
 	// - "confidential" - The event is private. This value is provided for
 	// compatibility reasons.
+	// Note on recurring events: Changing the visibility of a single instance of a
+	// recurring event can affect all instances of the series. If the new setting
+	// is more restrictive (e.g. from public to private), it is applied to all
+	// instances. If the new setting is less restrictive (e.g. from private to
+	// public), the change is ignored. To make a recurring event less restrictive,
+	// you must update the parent recurring event.
 	Visibility string `json:"visibility,omitempty"`
 	// WorkingLocationProperties: Working location event data.
 	WorkingLocationProperties *EventWorkingLocationProperties `json:"workingLocationProperties,omitempty"`
@@ -1965,6 +1977,9 @@ type Events struct {
 	// - "freeBusyReader" - The user has read access to free/busy information.
 	// - "reader" - The user has read access to the calendar. Private events will
 	// appear to users with reader access, but event details will be hidden.
+	// - "writerWithoutPrivateAccess" - The user has read and write access to the
+	// calendar. Private events will appear to users with
+	// writerWithoutPrivateAccess access, but event details will be hidden.
 	// - "writer" - The user has read and write access to the calendar. Private
 	// events will appear to users with writer access, and event details will be
 	// visible.
@@ -3487,6 +3502,15 @@ func (c *CalendarListListCall) ShowHidden(showHidden bool) *CalendarListListCall
 	return c
 }
 
+// ShowOwnOrganizationOnly sets the optional parameter
+// "showOwnOrganizationOnly": Whether to show only entries for calendars from
+// the organization. This parameter is only applicable to Google Workspace
+// users.  The default is False.
+func (c *CalendarListListCall) ShowOwnOrganizationOnly(showOwnOrganizationOnly bool) *CalendarListListCall {
+	c.urlParams_.Set("showOwnOrganizationOnly", fmt.Sprint(showOwnOrganizationOnly))
+	return c
+}
+
 // SyncToken sets the optional parameter "syncToken": Token obtained from the
 // nextSyncToken field returned on the last page of results from the previous
 // list request. It makes the result of this list request contain only entries
@@ -3495,8 +3519,8 @@ func (c *CalendarListListCall) ShowHidden(showHidden bool) *CalendarListListCall
 // deleted and hidden since the previous list request will always be in the
 // result set and it is not allowed to set showDeleted neither showHidden to
 // False.
-// To ensure client state consistency minAccessRole query parameter cannot be
-// specified together with nextSyncToken.
+// To ensure client state consistency minAccessRole and showOwnOrganizationOnly
+// query parameters cannot be specified together with nextSyncToken.
 // If the syncToken expires, the server will respond with a 410 GONE response
 // code and the client should clear its storage and perform a full
 // synchronization without any syncToken.
@@ -3911,6 +3935,15 @@ func (c *CalendarListWatchCall) ShowHidden(showHidden bool) *CalendarListWatchCa
 	return c
 }
 
+// ShowOwnOrganizationOnly sets the optional parameter
+// "showOwnOrganizationOnly": Whether to show only entries for calendars from
+// the organization. This parameter is only applicable to Google Workspace
+// users.  The default is False.
+func (c *CalendarListWatchCall) ShowOwnOrganizationOnly(showOwnOrganizationOnly bool) *CalendarListWatchCall {
+	c.urlParams_.Set("showOwnOrganizationOnly", fmt.Sprint(showOwnOrganizationOnly))
+	return c
+}
+
 // SyncToken sets the optional parameter "syncToken": Token obtained from the
 // nextSyncToken field returned on the last page of results from the previous
 // list request. It makes the result of this list request contain only entries
@@ -3919,8 +3952,8 @@ func (c *CalendarListWatchCall) ShowHidden(showHidden bool) *CalendarListWatchCa
 // deleted and hidden since the previous list request will always be in the
 // result set and it is not allowed to set showDeleted neither showHidden to
 // False.
-// To ensure client state consistency minAccessRole query parameter cannot be
-// specified together with nextSyncToken.
+// To ensure client state consistency minAccessRole and showOwnOrganizationOnly
+// query parameters cannot be specified together with nextSyncToken.
 // If the syncToken expires, the server will respond with a 410 GONE response
 // code and the client should clear its storage and perform a full
 // synchronization without any syncToken.

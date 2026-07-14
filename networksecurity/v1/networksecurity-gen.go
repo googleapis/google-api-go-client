@@ -932,8 +932,8 @@ type AuthzPolicyAuthzRuleFromRequestSource struct {
 	// with the rule. Limited to 50 principals per Authorization Policy for
 	// regional internal Application Load Balancers, regional external Application
 	// Load Balancers, cross-region internal Application Load Balancers, and Cloud
-	// Service Mesh. This field is not supported for global external Application
-	// Load Balancers.
+	// Service Mesh while 25 principals per Authorization Policy for global
+	// external Application Load Balancers.
 	Principals []*AuthzPolicyAuthzRulePrincipal `json:"principals,omitempty"`
 	// Resources: Optional. A list of resources to match against the resource of
 	// the source VM of a request. Limited to 10 resources per Authorization
@@ -1036,9 +1036,9 @@ type AuthzPolicyAuthzRulePrincipal struct {
 	// multiple common names in the client certificate will be rejected if
 	// CLIENT_CERT_COMMON_NAME is set as the principal selector. A match happens
 	// when there is an exact common name value match. This is only applicable for
-	// Application Load Balancers except for global external Application Load
-	// Balancer and classic Application Load Balancer. CLIENT_CERT_COMMON_NAME is
-	// not supported for INTERNAL_SELF_MANAGED load balancing scheme.
+	// Application Load Balancers and not for Classic Application Load Balancer.
+	// CLIENT_CERT_COMMON_NAME is not supported for INTERNAL_SELF_MANAGED load
+	// balancing scheme.
 	PrincipalSelector string `json:"principalSelector,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Principal") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4940,7 +4940,7 @@ type SecurityProfileGroup struct {
 	// CustomMirroring configuration.
 	CustomMirroringProfile string `json:"customMirroringProfile,omitempty"`
 	// DataPathId: Output only. Identifier used by the data-path. Unique within
-	// \{container, location\}.
+	// `{container, location}`.
 	DataPathId uint64 `json:"dataPathId,omitempty,string"`
 	// Description: Optional. An optional description of the profile group. Max
 	// length 2048 characters.

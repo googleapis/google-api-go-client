@@ -2624,9 +2624,9 @@ func (r *CustomersDevicesService) List(parent string) *CustomersDevicesListCall 
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Required. The maximum
-// number of devices to show in a page of results. Must be between 1 and 100
-// inclusive.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// devices to show in a page of results. If unset or 0, defaults to 1000. If a
+// value greater than 1000 is specified, it will be coerced to 1000.
 func (c *CustomersDevicesListCall) PageSize(pageSize int64) *CustomersDevicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

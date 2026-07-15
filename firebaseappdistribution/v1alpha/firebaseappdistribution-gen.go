@@ -344,6 +344,17 @@ func (s AndroidxCrawlerOutputRectangle) MarshalJSON() ([]byte, error) {
 
 // GoogleFirebaseAppdistroV1Release: A release of a Firebase app.
 type GoogleFirebaseAppdistroV1Release struct {
+	// AndroidPackageRegistrationState: Output only. Registration state of the
+	// Android package (BinaryType.APK).
+	//
+	// Possible values:
+	//   "ANDROID_PACKAGE_REGISTRATION_STATE_UNSPECIFIED" - Default value.
+	//   "REGISTERED" - Package is registered with the release binary's certificate
+	// fingerprint.
+	//   "NOT_REGISTERED" - Package is not registered with any public certificate.
+	//   "REGISTERED_WITH_ANOTHER_CERTIFICATE_FINGERPRINT" - Package is registered
+	// with another public certificate fingerprint.
+	AndroidPackageRegistrationState string `json:"androidPackageRegistrationState,omitempty"`
 	// BinaryDownloadUri: Output only. A signed link (which expires in one hour) to
 	// directly download the app binary (IPA/APK/AAB) file.
 	BinaryDownloadUri string `json:"binaryDownloadUri,omitempty"`
@@ -365,7 +376,7 @@ type GoogleFirebaseAppdistroV1Release struct {
 	// Name: The name of the release resource. Format:
 	// `projects/{project_number}/apps/{app}/releases/{release}`
 	Name string `json:"name,omitempty"`
-	// ReleaseNotes: Notes of the release.
+	// ReleaseNotes: Notes about the release.
 	ReleaseNotes *GoogleFirebaseAppdistroV1ReleaseNotes `json:"releaseNotes,omitempty"`
 	// TestingUri: Output only. A link to the release in the tester web clip or
 	// Android app that lets testers (which were granted access to the app) view
@@ -373,15 +384,16 @@ type GoogleFirebaseAppdistroV1Release struct {
 	TestingUri string `json:"testingUri,omitempty"`
 	// UpdateTime: Output only. The time the release was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BinaryDownloadUri") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "AndroidPackageRegistrationState") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BinaryDownloadUri") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AndroidPackageRegistrationState")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

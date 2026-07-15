@@ -485,7 +485,7 @@ type QuotaGroup struct {
 	QuotaMinuteLimit int64 `json:"quotaMinuteLimit,omitempty,string"`
 	// QuotaUsage: Output only. The current quota usage, meaning the number of
 	// calls already made on a given day to the methods in the group. The daily
-	// quota limits reset at at 12:00 PM midday UTC.
+	// quota limits reset at 12:00 PM midday UTC.
 	QuotaUsage int64 `json:"quotaUsage,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "MethodDetails") to
 	// unconditionally include in API requests. By default, fields with empty or

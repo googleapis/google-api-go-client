@@ -9524,7 +9524,7 @@
       }
     }
   },
-  "revision": "20260706",
+  "revision": "20260712",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiDistribution": {
@@ -12680,7 +12680,8 @@
             "SUBSCRIPTION_TIER_EDU_EMERGING",
             "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
             "SUBSCRIPTION_TIER_FRONTLINE_STARTER",
-            "SUBSCRIPTION_TIER_CONSUMPTION_ONLY"
+            "SUBSCRIPTION_TIER_CONSUMPTION_ONLY",
+            "SUBSCRIPTION_TIER_EDU_GOV_EMERGING"
           ],
           "enumDescriptions": [
             "Default value.",
@@ -12697,7 +12698,8 @@
             "Gemini Enterprise EDU tier for emerging market only.",
             "Gemini Enterprise EDU Pro tier for emerging market.",
             "Gemini Frontline Starter tier.",
-            "Represents the Gemini Enterprise Consumption-only tier: $0 subscription billed purely on usage (PAYG)."
+            "Represents the Gemini Enterprise Consumption-only tier: $0 subscription billed purely on usage (PAYG).",
+            "Gemini Enterprise EDU tier for government in emerging markets."
           ],
           "type": "string"
         },
@@ -13077,6 +13079,11 @@
           "readOnly": true,
           "type": "boolean"
         },
+        "lastUserUpdateTime": {
+          "description": "Optional. Timestamp of the most recent user-initiated update (seat count change or subscription term change). Unlike `update_time`, this field is only stamped when a customer explicitly updates the license (e.g. via the UI), and is not touched by system-driven writes (subscription pipeline, BALC propagation, etc.).",
+          "format": "google-datetime",
+          "type": "string"
+        },
         "licenseCount": {
           "description": "Required. Number of licenses purchased.",
           "format": "int64",
@@ -13146,7 +13153,8 @@
             "SUBSCRIPTION_TIER_EDU_EMERGING",
             "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
             "SUBSCRIPTION_TIER_FRONTLINE_STARTER",
-            "SUBSCRIPTION_TIER_CONSUMPTION_ONLY"
+            "SUBSCRIPTION_TIER_CONSUMPTION_ONLY",
+            "SUBSCRIPTION_TIER_EDU_GOV_EMERGING"
           ],
           "enumDescriptions": [
             "Default value.",
@@ -13163,7 +13171,8 @@
             "Gemini Enterprise EDU tier for emerging market only.",
             "Gemini Enterprise EDU Pro tier for emerging market.",
             "Gemini Frontline Starter tier.",
-            "Represents the Gemini Enterprise Consumption-only tier: $0 subscription billed purely on usage (PAYG)."
+            "Represents the Gemini Enterprise Consumption-only tier: $0 subscription billed purely on usage (PAYG).",
+            "Gemini Enterprise EDU tier for government in emerging markets."
           ],
           "type": "string"
         }
@@ -17700,6 +17709,11 @@
           "$ref": "GoogleCloudDiscoveryengineV1alphaHealthcareFhirConfig",
           "description": "Optional. Configuration for `HEALTHCARE_FHIR` vertical."
         },
+        "iconUri": {
+          "description": "Output only. Provides the icon URI of the data store's connector source, if this is a connector-backed data store. Empty for data stores without an associated connector source. In DataStoreService.ListDataStores and DataStoreService.GetDataStore, this is only populated when DataStoreView.DATA_STORE_VIEW_FULL is requested via ListDataStoresRequest.view or GetDataStoreRequest.view respectively.",
+          "readOnly": true,
+          "type": "string"
+        },
         "identityMappingStore": {
           "description": "Immutable. The fully qualified resource name of the associated IdentityMappingStore. This field can only be set for acl_enabled DataStores with `THIRD_PARTY` or `GSUITE` IdP. Format: `projects/{project}/locations/{location}/identityMappingStores/{identity_mapping_store}`.",
           "type": "string"
@@ -18937,7 +18951,8 @@
             "SUBSCRIPTION_TIER_EDU_EMERGING",
             "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
             "SUBSCRIPTION_TIER_FRONTLINE_STARTER",
-            "SUBSCRIPTION_TIER_CONSUMPTION_ONLY"
+            "SUBSCRIPTION_TIER_CONSUMPTION_ONLY",
+            "SUBSCRIPTION_TIER_EDU_GOV_EMERGING"
           ],
           "enumDescriptions": [
             "Default value.",
@@ -18954,7 +18969,8 @@
             "Gemini Enterprise EDU tier for emerging market only.",
             "Gemini Enterprise EDU Pro tier for emerging market.",
             "Gemini Frontline Starter tier.",
-            "Represents the Gemini Enterprise Consumption-only tier: $0 subscription billed purely on usage (PAYG)."
+            "Represents the Gemini Enterprise Consumption-only tier: $0 subscription billed purely on usage (PAYG).",
+            "Gemini Enterprise EDU tier for government in emerging markets."
           ],
           "type": "string"
         },
@@ -19799,6 +19815,11 @@
           "readOnly": true,
           "type": "boolean"
         },
+        "lastUserUpdateTime": {
+          "description": "Optional. Timestamp of the most recent user-initiated update (seat count change or subscription term change). Unlike `update_time`, this field is only stamped when a customer explicitly updates the license (e.g. via the UI), and is not touched by system-driven writes (subscription pipeline, BALC propagation, etc.).",
+          "format": "google-datetime",
+          "type": "string"
+        },
         "licenseCount": {
           "description": "Required. Number of licenses purchased.",
           "format": "int64",
@@ -19868,7 +19889,8 @@
             "SUBSCRIPTION_TIER_EDU_EMERGING",
             "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
             "SUBSCRIPTION_TIER_FRONTLINE_STARTER",
-            "SUBSCRIPTION_TIER_CONSUMPTION_ONLY"
+            "SUBSCRIPTION_TIER_CONSUMPTION_ONLY",
+            "SUBSCRIPTION_TIER_EDU_GOV_EMERGING"
           ],
           "enumDescriptions": [
             "Default value.",
@@ -19885,7 +19907,8 @@
             "Gemini Enterprise EDU tier for emerging market only.",
             "Gemini Enterprise EDU Pro tier for emerging market.",
             "Gemini Frontline Starter tier.",
-            "Represents the Gemini Enterprise Consumption-only tier: $0 subscription billed purely on usage (PAYG)."
+            "Represents the Gemini Enterprise Consumption-only tier: $0 subscription billed purely on usage (PAYG).",
+            "Gemini Enterprise EDU tier for government in emerging markets."
           ],
           "type": "string"
         }
@@ -28030,7 +28053,8 @@
             "SUBSCRIPTION_TIER_EDU_EMERGING",
             "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
             "SUBSCRIPTION_TIER_FRONTLINE_STARTER",
-            "SUBSCRIPTION_TIER_CONSUMPTION_ONLY"
+            "SUBSCRIPTION_TIER_CONSUMPTION_ONLY",
+            "SUBSCRIPTION_TIER_EDU_GOV_EMERGING"
           ],
           "enumDescriptions": [
             "Default value.",
@@ -28047,7 +28071,8 @@
             "Gemini Enterprise EDU tier for emerging market only.",
             "Gemini Enterprise EDU Pro tier for emerging market.",
             "Gemini Frontline Starter tier.",
-            "Represents the Gemini Enterprise Consumption-only tier: $0 subscription billed purely on usage (PAYG)."
+            "Represents the Gemini Enterprise Consumption-only tier: $0 subscription billed purely on usage (PAYG).",
+            "Gemini Enterprise EDU tier for government in emerging markets."
           ],
           "type": "string"
         },
@@ -29194,6 +29219,11 @@
           "readOnly": true,
           "type": "boolean"
         },
+        "lastUserUpdateTime": {
+          "description": "Optional. Timestamp of the most recent user-initiated update (seat count change or subscription term change). Unlike `update_time`, this field is only stamped when a customer explicitly updates the license (e.g. via the UI), and is not touched by system-driven writes (subscription pipeline, BALC propagation, etc.).",
+          "format": "google-datetime",
+          "type": "string"
+        },
         "licenseCount": {
           "description": "Required. Number of licenses purchased.",
           "format": "int64",
@@ -29263,7 +29293,8 @@
             "SUBSCRIPTION_TIER_EDU_EMERGING",
             "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
             "SUBSCRIPTION_TIER_FRONTLINE_STARTER",
-            "SUBSCRIPTION_TIER_CONSUMPTION_ONLY"
+            "SUBSCRIPTION_TIER_CONSUMPTION_ONLY",
+            "SUBSCRIPTION_TIER_EDU_GOV_EMERGING"
           ],
           "enumDescriptions": [
             "Default value.",
@@ -29280,7 +29311,8 @@
             "Gemini Enterprise EDU tier for emerging market only.",
             "Gemini Enterprise EDU Pro tier for emerging market.",
             "Gemini Frontline Starter tier.",
-            "Represents the Gemini Enterprise Consumption-only tier: $0 subscription billed purely on usage (PAYG)."
+            "Represents the Gemini Enterprise Consumption-only tier: $0 subscription billed purely on usage (PAYG).",
+            "Gemini Enterprise EDU tier for government in emerging markets."
           ],
           "type": "string"
         }

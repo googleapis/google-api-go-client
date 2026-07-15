@@ -1169,6 +1169,8 @@ type GoogleFirebaseAppdistroV1ListReleasesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Releases: The releases
 	Releases []*GoogleFirebaseAppdistroV1Release `json:"releases,omitempty"`
+	// TotalSize: The total number of releases.
+	TotalSize int64 `json:"totalSize,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1222,6 +1224,17 @@ func (s GoogleFirebaseAppdistroV1ListTestersResponse) MarshalJSON() ([]byte, err
 
 // GoogleFirebaseAppdistroV1Release: A release of a Firebase app.
 type GoogleFirebaseAppdistroV1Release struct {
+	// AndroidPackageRegistrationState: Output only. Registration state of the
+	// Android package (BinaryType.APK).
+	//
+	// Possible values:
+	//   "ANDROID_PACKAGE_REGISTRATION_STATE_UNSPECIFIED" - Default value.
+	//   "REGISTERED" - Package is registered with the release binary's certificate
+	// fingerprint.
+	//   "NOT_REGISTERED" - Package is not registered with any public certificate.
+	//   "REGISTERED_WITH_ANOTHER_CERTIFICATE_FINGERPRINT" - Package is registered
+	// with another public certificate fingerprint.
+	AndroidPackageRegistrationState string `json:"androidPackageRegistrationState,omitempty"`
 	// BinaryDownloadUri: Output only. A signed link (which expires in one hour) to
 	// directly download the app binary (IPA/APK/AAB) file.
 	BinaryDownloadUri string `json:"binaryDownloadUri,omitempty"`
@@ -1243,7 +1256,7 @@ type GoogleFirebaseAppdistroV1Release struct {
 	// Name: The name of the release resource. Format:
 	// `projects/{project_number}/apps/{app}/releases/{release}`
 	Name string `json:"name,omitempty"`
-	// ReleaseNotes: Notes of the release.
+	// ReleaseNotes: Notes about the release.
 	ReleaseNotes *GoogleFirebaseAppdistroV1ReleaseNotes `json:"releaseNotes,omitempty"`
 	// TestingUri: Output only. A link to the release in the tester web clip or
 	// Android app that lets testers (which were granted access to the app) view
@@ -1254,15 +1267,16 @@ type GoogleFirebaseAppdistroV1Release struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "BinaryDownloadUri") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "AndroidPackageRegistrationState") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BinaryDownloadUri") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AndroidPackageRegistrationState")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2202,23 +2216,31 @@ func (r *ProjectsAppsReleasesService) List(parent string) *ProjectsAppsReleasesL
 }
 
 // Filter sets the optional parameter "filter": The expression to filter
-// releases listed in the response. To learn more about filtering, refer to
-// Google's AIP-160 standard (http://aip.dev/160). Supported fields: -
-// `releaseNotes.text` supports `=` (can contain a wildcard character (`*`) at
-// the beginning or end of the string) - `createTime` supports `<`, `<=`, `>`
-// and `>=`, and expects an RFC-3339 formatted string Examples: - `createTime
-// <= "2021-09-08T00:00:00+04:00" - `releaseNotes.text="fixes" AND createTime
-// >= "2021-09-08T00:00:00.0Z" - `releaseNotes.text="*v1.0.0-rc*"
+// releases listed in the response. To learn more about filtering, refer to the
+// AIP-160 standard (http://aip.dev/160). Supported fields: - Time fields
+// supporting `<`, `<=`, `>` and `>=`; expecting an RFC-3339 formatted string:
+// - `create_time` (or `createTime`) - `update_time` (or `updateTime`) -
+// `expire_time` (or `expireTime`) - Text fields supporting `=`. The compared
+// text can contain a wildcard character (`*`) at the beginning and/or end of
+// the string which also enables case-insensitive matching: -
+// `release_notes.text` (or `releaseNotes.text`) - `display_version` (or
+// `displayVersion`) - `build_version` (or `buildVersion`). Examples: -
+// `createTime <= "2021-09-08T00:00:00+04:00" - `expire_time >
+// "2021-09-08T00:00:00+04:00" - `releaseNotes.text="fixes" AND createTime >=
+// "2021-09-08T00:00:00.0Z" - `releaseNotes.text="*v1.0.0-rc*" -
+// `(display_version = "v1.0.0-rc2" AND `build_version = "123") OR
+// release_notes = "*v1.0.0-rc2 (123)*"
 func (c *ProjectsAppsReleasesListCall) Filter(filter string) *ProjectsAppsReleasesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": The fields used to order
-// releases. Supported fields: - `createTime` To specify descending order for a
-// field, append a "desc" suffix, for example, `createTime desc`. If this
-// parameter is not set, releases are ordered by `createTime` in descending
-// order.
+// releases. Supported fields: - `create_time` (or `createTime`) -
+// `update_time` (or `updateTime`) - `expire_time` (or `expireTime`) To specify
+// descending order for a field, append a "desc" suffix, for example,
+// `createTime desc`. If this parameter is not set, releases are ordered by
+// `createTime` in descending order.
 func (c *ProjectsAppsReleasesListCall) OrderBy(orderBy string) *ProjectsAppsReleasesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c

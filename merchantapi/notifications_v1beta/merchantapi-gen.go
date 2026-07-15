@@ -226,7 +226,7 @@ type NotificationSubscription struct {
 	// CallBackUri: URL to be used to push the notification to the merchant.
 	CallBackUri string `json:"callBackUri,omitempty"`
 	// Name: Output only. The `name` of the notification configuration. Generated
-	// by the Content API upon creation of a new `NotificationSubscription`. The
+	// by the Merchant API upon creation of a new `NotificationSubscription`. The
 	// `account` represents the merchant ID of the merchant that owns the
 	// configuration. Format:
 	// `accounts/{account}/notificationsubscriptions/{notification_subscription}`
@@ -407,9 +407,9 @@ type AccountsNotificationsubscriptionsCreateCall struct {
 }
 
 // Create: Creates a notification subscription for a business. For standalone
-// or subaccounts accounts, the business can create a subscription for self.
-// For advanced accounts, the business can create a subscription for all
-// managed accounts or for a specific subaccount. See Decode notifications
+// or sub-accounts, the business can create a subscription for self. For
+// advanced accounts, the business can create a subscription for all managed
+// accounts or for a specific subaccount. See Decode notifications
 // (/merchant/api/guides/accounts/notifications#decode_notifications) for
 // information on how to decode the notification payload and how to interpret
 // its contents. We will allow the following types of notification
@@ -884,7 +884,7 @@ type AccountsNotificationsubscriptionsPatchCall struct {
 // Patch: Updates an existing notification subscription for a merchant.
 //
 //   - name: Output only. The `name` of the notification configuration. Generated
-//     by the Content API upon creation of a new `NotificationSubscription`. The
+//     by the Merchant API upon creation of a new `NotificationSubscription`. The
 //     `account` represents the merchant ID of the merchant that owns the
 //     configuration. Format:
 //     `accounts/{account}/notificationsubscriptions/{notification_subscription}`.

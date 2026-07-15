@@ -6113,7 +6113,12 @@ func (s TimeZone) MarshalJSON() ([]byte, error) {
 }
 
 // TotalCaloriesRollupValue: Represents the result of the rollup of the user's
-// total calories.
+// total calories. Note: Queries for the `total-calories` data type must
+// include a time interval filter (such as `total_calories.interval.start_time`
+// or `total_calories.interval.civil_start_time`). The maximum range is 14
+// days. Example filter query: `total_calories.interval.start_time >=
+// "2026-04-20T00:00:00Z" AND total_calories.interval.start_time <
+// "2026-04-21T00:00:00Z"
 type TotalCaloriesRollupValue struct {
 	// KcalSum: Sum of the total calories in kilocalories.
 	KcalSum float64 `json:"kcalSum,omitempty"`

@@ -6690,7 +6690,8 @@ type GoogleCloudRetailV2betaProduct struct {
 	// size type; "M" represents size value. In "GIRLS:27", size system is empty;
 	// "GIRLS" represents size type; "27" represents size value. In "32 inches",
 	// both size system and size type are empty, while size value is "32 inches". A
-	// maximum of 20 values are allowed per Product. Each value must be a UTF-8
+	// maximum of 20 values are allowed per Product by default. This limit can be
+	// increased using dynamic override configurations. Each value must be a UTF-8
 	// encoded string with a length limit of 128 characters. Otherwise, an
 	// INVALID_ARGUMENT error is returned. Corresponding properties: Google
 	// Merchant Center property size

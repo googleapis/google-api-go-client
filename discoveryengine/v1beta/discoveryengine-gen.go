@@ -5355,6 +5355,8 @@ type GoogleCloudDiscoveryengineV1EngineSearchEngineConfig struct {
 	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Gemini Frontline Starter tier.
 	//   "SUBSCRIPTION_TIER_CONSUMPTION_ONLY" - Represents the Gemini Enterprise
 	// Consumption-only tier: $0 subscription billed purely on usage (PAYG).
+	//   "SUBSCRIPTION_TIER_EDU_GOV_EMERGING" - Gemini Enterprise EDU tier for
+	// government in emerging markets.
 	RequiredSubscriptionTier string `json:"requiredSubscriptionTier,omitempty"`
 	// SearchAddOns: The add-on that this search engine enables.
 	//
@@ -5852,6 +5854,12 @@ type GoogleCloudDiscoveryengineV1LicenseConfig struct {
 	FreeTrial bool `json:"freeTrial,omitempty"`
 	// GeminiBundle: Output only. Whether the license config is for Gemini bundle.
 	GeminiBundle bool `json:"geminiBundle,omitempty"`
+	// LastUserUpdateTime: Optional. Timestamp of the most recent user-initiated
+	// update (seat count change or subscription term change). Unlike
+	// `update_time`, this field is only stamped when a customer explicitly updates
+	// the license (e.g. via the UI), and is not touched by system-driven writes
+	// (subscription pipeline, BALC propagation, etc.).
+	LastUserUpdateTime string `json:"lastUserUpdateTime,omitempty"`
 	// LicenseCount: Required. Number of licenses purchased.
 	LicenseCount int64 `json:"licenseCount,omitempty,string"`
 	// Name: Immutable. Identifier. The fully qualified resource name of the
@@ -5909,6 +5917,8 @@ type GoogleCloudDiscoveryengineV1LicenseConfig struct {
 	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Gemini Frontline Starter tier.
 	//   "SUBSCRIPTION_TIER_CONSUMPTION_ONLY" - Represents the Gemini Enterprise
 	// Consumption-only tier: $0 subscription billed purely on usage (PAYG).
+	//   "SUBSCRIPTION_TIER_EDU_GOV_EMERGING" - Gemini Enterprise EDU tier for
+	// government in emerging markets.
 	SubscriptionTier string `json:"subscriptionTier,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoRenew") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -11644,6 +11654,13 @@ type GoogleCloudDiscoveryengineV1alphaDataStore struct {
 	// HealthcareFhirConfig: Optional. Configuration for `HEALTHCARE_FHIR`
 	// vertical.
 	HealthcareFhirConfig *GoogleCloudDiscoveryengineV1alphaHealthcareFhirConfig `json:"healthcareFhirConfig,omitempty"`
+	// IconUri: Output only. Provides the icon URI of the data store's connector
+	// source, if this is a connector-backed data store. Empty for data stores
+	// without an associated connector source. In DataStoreService.ListDataStores
+	// and DataStoreService.GetDataStore, this is only populated when
+	// DataStoreView.DATA_STORE_VIEW_FULL is requested via
+	// ListDataStoresRequest.view or GetDataStoreRequest.view respectively.
+	IconUri string `json:"iconUri,omitempty"`
 	// IdentityMappingStore: Immutable. The fully qualified resource name of the
 	// associated IdentityMappingStore. This field can only be set for acl_enabled
 	// DataStores with `THIRD_PARTY` or `GSUITE` IdP. Format:
@@ -13328,6 +13345,8 @@ type GoogleCloudDiscoveryengineV1alphaEngineSearchEngineConfig struct {
 	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Gemini Frontline Starter tier.
 	//   "SUBSCRIPTION_TIER_CONSUMPTION_ONLY" - Represents the Gemini Enterprise
 	// Consumption-only tier: $0 subscription billed purely on usage (PAYG).
+	//   "SUBSCRIPTION_TIER_EDU_GOV_EMERGING" - Gemini Enterprise EDU tier for
+	// government in emerging markets.
 	RequiredSubscriptionTier string `json:"requiredSubscriptionTier,omitempty"`
 	// SearchAddOns: The add-on that this search engine enables.
 	//
@@ -14411,6 +14430,12 @@ type GoogleCloudDiscoveryengineV1alphaLicenseConfig struct {
 	FreeTrial bool `json:"freeTrial,omitempty"`
 	// GeminiBundle: Output only. Whether the license config is for Gemini bundle.
 	GeminiBundle bool `json:"geminiBundle,omitempty"`
+	// LastUserUpdateTime: Optional. Timestamp of the most recent user-initiated
+	// update (seat count change or subscription term change). Unlike
+	// `update_time`, this field is only stamped when a customer explicitly updates
+	// the license (e.g. via the UI), and is not touched by system-driven writes
+	// (subscription pipeline, BALC propagation, etc.).
+	LastUserUpdateTime string `json:"lastUserUpdateTime,omitempty"`
 	// LicenseCount: Required. Number of licenses purchased.
 	LicenseCount int64 `json:"licenseCount,omitempty,string"`
 	// Name: Immutable. Identifier. The fully qualified resource name of the
@@ -14468,6 +14493,8 @@ type GoogleCloudDiscoveryengineV1alphaLicenseConfig struct {
 	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Gemini Frontline Starter tier.
 	//   "SUBSCRIPTION_TIER_CONSUMPTION_ONLY" - Represents the Gemini Enterprise
 	// Consumption-only tier: $0 subscription billed purely on usage (PAYG).
+	//   "SUBSCRIPTION_TIER_EDU_GOV_EMERGING" - Gemini Enterprise EDU tier for
+	// government in emerging markets.
 	SubscriptionTier string `json:"subscriptionTier,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AlertPolicyResourceConfig")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -25707,6 +25734,8 @@ type GoogleCloudDiscoveryengineV1betaEngineSearchEngineConfig struct {
 	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Gemini Frontline Starter tier.
 	//   "SUBSCRIPTION_TIER_CONSUMPTION_ONLY" - Represents the Gemini Enterprise
 	// Consumption-only tier: $0 subscription billed purely on usage (PAYG).
+	//   "SUBSCRIPTION_TIER_EDU_GOV_EMERGING" - Gemini Enterprise EDU tier for
+	// government in emerging markets.
 	RequiredSubscriptionTier string `json:"requiredSubscriptionTier,omitempty"`
 	// SearchAddOns: The add-on that this search engine enables.
 	//
@@ -27245,6 +27274,12 @@ type GoogleCloudDiscoveryengineV1betaLicenseConfig struct {
 	FreeTrial bool `json:"freeTrial,omitempty"`
 	// GeminiBundle: Output only. Whether the license config is for Gemini bundle.
 	GeminiBundle bool `json:"geminiBundle,omitempty"`
+	// LastUserUpdateTime: Optional. Timestamp of the most recent user-initiated
+	// update (seat count change or subscription term change). Unlike
+	// `update_time`, this field is only stamped when a customer explicitly updates
+	// the license (e.g. via the UI), and is not touched by system-driven writes
+	// (subscription pipeline, BALC propagation, etc.).
+	LastUserUpdateTime string `json:"lastUserUpdateTime,omitempty"`
 	// LicenseCount: Required. Number of licenses purchased.
 	LicenseCount int64 `json:"licenseCount,omitempty,string"`
 	// Name: Immutable. Identifier. The fully qualified resource name of the
@@ -27302,6 +27337,8 @@ type GoogleCloudDiscoveryengineV1betaLicenseConfig struct {
 	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Gemini Frontline Starter tier.
 	//   "SUBSCRIPTION_TIER_CONSUMPTION_ONLY" - Represents the Gemini Enterprise
 	// Consumption-only tier: $0 subscription billed purely on usage (PAYG).
+	//   "SUBSCRIPTION_TIER_EDU_GOV_EMERGING" - Gemini Enterprise EDU tier for
+	// government in emerging markets.
 	SubscriptionTier string `json:"subscriptionTier,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

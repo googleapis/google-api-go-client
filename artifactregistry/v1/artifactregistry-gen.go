@@ -2474,6 +2474,11 @@ func (s MavenRepositoryConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// NoCacheFetching: The configuration for the no-cache fetching mode, which
+// acts as a non-caching proxy.
+type NoCacheFetching struct {
+}
+
 // NpmPackage: NpmPackage represents an npm artifact.
 type NpmPackage struct {
 	// CreateTime: Output only. Time the package was created.
@@ -3049,6 +3054,8 @@ type RemoteRepositoryConfig struct {
 	DockerRepository *DockerRepository `json:"dockerRepository,omitempty"`
 	// MavenRepository: Specific settings for a Maven remote repository.
 	MavenRepository *MavenRepository `json:"mavenRepository,omitempty"`
+	// NoCache: The remote repository will act as a non-caching proxy.
+	NoCache *NoCacheFetching `json:"noCache,omitempty"`
 	// NpmRepository: Specific settings for an Npm remote repository.
 	NpmRepository *NpmRepository `json:"npmRepository,omitempty"`
 	// PythonRepository: Specific settings for a Python remote repository.

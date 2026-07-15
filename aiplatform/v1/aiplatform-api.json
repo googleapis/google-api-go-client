@@ -16449,6 +16449,92 @@
               "resources": {
                 "memories": {
                   "methods": {
+                    "create": {
+                      "description": "Create a Memory.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/memoryBanks/{memoryBanksId}/memories",
+                      "httpMethod": "POST",
+                      "id": "aiplatform.projects.locations.memoryBanks.memories.create",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "memoryId": {
+                          "description": "Optional. The user defined ID to use for memory, which will become the final component of the memory resource name. If not provided, Vertex AI will generate a value for this ID. This value may be up to 63 characters, and valid characters are `[a-z0-9-]`. The first character must be a letter, and the last character must be a letter or number.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "Required. The resource name of the ReasoningEngine to create the Memory under. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}`",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/memoryBanks/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+parent}/memories",
+                      "request": {
+                        "$ref": "GoogleCloudAiplatformV1Memory"
+                      },
+                      "response": {
+                        "$ref": "GoogleLongrunningOperation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "delete": {
+                      "description": "Delete a Memory.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/memoryBanks/{memoryBanksId}/memories/{memoriesId}",
+                      "httpMethod": "DELETE",
+                      "id": "aiplatform.projects.locations.memoryBanks.memories.delete",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The resource name of the Memory to delete. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/memories/{memory}`",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/memoryBanks/[^/]+/memories/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}",
+                      "response": {
+                        "$ref": "GoogleLongrunningOperation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "generate": {
+                      "description": "Generate memories.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/memoryBanks/{memoryBanksId}/memories:generate",
+                      "httpMethod": "POST",
+                      "id": "aiplatform.projects.locations.memoryBanks.memories.generate",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "Required. The resource name of the ReasoningEngine to generate memories for. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}`",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/memoryBanks/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+parent}/memories:generate",
+                      "request": {
+                        "$ref": "GoogleCloudAiplatformV1GenerateMemoriesRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleLongrunningOperation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
                     "get": {
                       "description": "Get a Memory.",
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/memoryBanks/{memoryBanksId}/memories/{memoriesId}",
@@ -16469,6 +16555,170 @@
                       "path": "v1/{+name}",
                       "response": {
                         "$ref": "GoogleCloudAiplatformV1Memory"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "list": {
+                      "description": "List Memories.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/memoryBanks/{memoryBanksId}/memories",
+                      "httpMethod": "GET",
+                      "id": "aiplatform.projects.locations.memoryBanks.memories.list",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "filter": {
+                          "description": "Optional. The standard list filter. More detail in [AIP-160](https://google.aip.dev/160). Supported fields: * `scope` (as a JSON string with equality match only) * `topics` (i.e. `topics.custom_memory_topic_label: \"example topic\" OR topics.managed_memory_topic: USER_PREFERENCES`)",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "orderBy": {
+                          "description": "Optional. The standard list order by string. If not specified, the default order is `create_time desc`. If specified, the default sorting order of provided fields is ascending. More detail in [AIP-132](https://google.aip.dev/132). Supported fields: * `create_time` * `update_time`",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "pageSize": {
+                          "description": "Optional. The standard list page size.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "pageToken": {
+                          "description": "Optional. The standard list page token.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "Required. The resource name of the ReasoningEngine to list the Memories under. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}`",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/memoryBanks/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+parent}/memories",
+                      "response": {
+                        "$ref": "GoogleCloudAiplatformV1ListMemoriesResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "patch": {
+                      "description": "Update a Memory.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/memoryBanks/{memoryBanksId}/memories/{memoriesId}",
+                      "httpMethod": "PATCH",
+                      "id": "aiplatform.projects.locations.memoryBanks.memories.patch",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Identifier. Represents the resource name of the Memory. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/memories/{memory}`",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/memoryBanks/[^/]+/memories/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "updateMask": {
+                          "description": "Optional. Mask specifying which fields to update. The following fields are immutable: * `scope` * `memory_type`",
+                          "format": "google-fieldmask",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}",
+                      "request": {
+                        "$ref": "GoogleCloudAiplatformV1Memory"
+                      },
+                      "response": {
+                        "$ref": "GoogleLongrunningOperation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "purge": {
+                      "description": "Purge memories.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/memoryBanks/{memoryBanksId}/memories:purge",
+                      "httpMethod": "POST",
+                      "id": "aiplatform.projects.locations.memoryBanks.memories.purge",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "Required. The resource name of the ReasoningEngine to purge memories from. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}`",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/memoryBanks/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+parent}/memories:purge",
+                      "request": {
+                        "$ref": "GoogleCloudAiplatformV1PurgeMemoriesRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleLongrunningOperation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "retrieve": {
+                      "description": "Retrieve memories.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/memoryBanks/{memoryBanksId}/memories:retrieve",
+                      "httpMethod": "POST",
+                      "id": "aiplatform.projects.locations.memoryBanks.memories.retrieve",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "Required. The resource name of the ReasoningEngine to retrieve memories from. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}`",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/memoryBanks/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+parent}/memories:retrieve",
+                      "request": {
+                        "$ref": "GoogleCloudAiplatformV1RetrieveMemoriesRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudAiplatformV1RetrieveMemoriesResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "rollback": {
+                      "description": "Rollback Memory to a specific revision.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/memoryBanks/{memoryBanksId}/memories/{memoriesId}:rollback",
+                      "httpMethod": "POST",
+                      "id": "aiplatform.projects.locations.memoryBanks.memories.rollback",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The resource name of the Memory to rollback. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/memories/{memory}`",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/memoryBanks/[^/]+/memories/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}:rollback",
+                      "request": {
+                        "$ref": "GoogleCloudAiplatformV1RollbackMemoryRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleLongrunningOperation"
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform"
@@ -16625,6 +16875,76 @@
                           "path": "v1/{+name}:wait",
                           "response": {
                             "$ref": "GoogleLongrunningOperation"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform"
+                          ]
+                        }
+                      }
+                    },
+                    "revisions": {
+                      "methods": {
+                        "get": {
+                          "description": "Get a Memory Revision.",
+                          "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/memoryBanks/{memoryBanksId}/memories/{memoriesId}/revisions/{revisionsId}",
+                          "httpMethod": "GET",
+                          "id": "aiplatform.projects.locations.memoryBanks.memories.revisions.get",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "name": {
+                              "description": "Required. The resource name of the Memory Revision to retrieve. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/memories/{memory}/revisions/{revision}`",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/memoryBanks/[^/]+/memories/[^/]+/revisions/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1/{+name}",
+                          "response": {
+                            "$ref": "GoogleCloudAiplatformV1MemoryRevision"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform"
+                          ]
+                        },
+                        "list": {
+                          "description": "List Memory Revisions for a Memory.",
+                          "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/memoryBanks/{memoryBanksId}/memories/{memoriesId}/revisions",
+                          "httpMethod": "GET",
+                          "id": "aiplatform.projects.locations.memoryBanks.memories.revisions.list",
+                          "parameterOrder": [
+                            "parent"
+                          ],
+                          "parameters": {
+                            "filter": {
+                              "description": "Optional. The standard list filter. More detail in [AIP-160](https://google.aip.dev/160). Supported fields (equality match only): * `labels`",
+                              "location": "query",
+                              "type": "string"
+                            },
+                            "pageSize": {
+                              "description": "Optional. The standard list page size.",
+                              "format": "int32",
+                              "location": "query",
+                              "type": "integer"
+                            },
+                            "pageToken": {
+                              "description": "Optional. The standard list page token.",
+                              "location": "query",
+                              "type": "string"
+                            },
+                            "parent": {
+                              "description": "Required. The resource name of the Memory to list revisions for. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/memories/{memory}`",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/memoryBanks/[^/]+/memories/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1/{+parent}/revisions",
+                          "response": {
+                            "$ref": "GoogleCloudAiplatformV1ListMemoryRevisionsResponse"
                           },
                           "scopes": [
                             "https://www.googleapis.com/auth/cloud-platform"
@@ -34707,7 +35027,7 @@
       }
     }
   },
-  "revision": "20260703",
+  "revision": "20260704",
   "rootUrl": "https://aiplatform.googleapis.com/",
   "schemas": {
     "CloudAiLargeModelsVisionGenerateVideoExperiments": {
@@ -34717,6 +35037,11 @@
         "anchorLastFrame": {
           "description": "Optional. If true, anchors the last frame in video generation by generating a custom border mask.",
           "type": "boolean"
+        },
+        "cfgScale": {
+          "description": "CFG scale for video-transform, perf-generation, a2v, video-textures models.",
+          "format": "float",
+          "type": "number"
         },
         "codec": {
           "description": "Optional. Video codec to use for output.",
@@ -41823,6 +42148,10 @@
         "displayName": {
           "description": "Required. The user-friendly display name for the EvaluationMetric.",
           "type": "string"
+        },
+        "encryptionSpec": {
+          "$ref": "GoogleCloudAiplatformV1EncryptionSpec",
+          "description": "Optional. Customer-managed encryption key spec for this EvaluationMetric. If set, this EvaluationMetric will be secured by this key."
         },
         "gcsUri": {
           "description": "Optional. The Google Cloud Storage URI that stores the metric specification..",

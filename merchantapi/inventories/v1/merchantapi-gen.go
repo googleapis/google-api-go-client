@@ -198,6 +198,35 @@ type AccountsProductsRegionalInventoriesService struct {
 	s *Service
 }
 
+// CustomAttribute: A message that represents custom attributes. Exactly one of
+// `value` or `group_values` must not be empty.
+type CustomAttribute struct {
+	// GroupValues: Subattributes within this attribute group. If `group_values` is
+	// not empty, `value` must be empty.
+	GroupValues []*CustomAttribute `json:"groupValues,omitempty"`
+	// Name: The name of the attribute.
+	Name string `json:"name,omitempty"`
+	// Value: The value of the attribute. If `value` is not empty, `group_values`
+	// must be empty.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GroupValues") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GroupValues") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomAttribute) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomAttribute
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -434,6 +463,15 @@ type LocalInventoryAttributes struct {
 	//   "ON_DISPLAY_TO_ORDER" - Indicates that the product is on display to order.
 	//   "OUT_OF_STOCK" - Indicates that the product is out of stock.
 	Availability string `json:"availability,omitempty"`
+	// CustomAttributes: Optional. A list of custom (merchant-provided) attributes.
+	// It can also be used for submitting any attribute of the data specification
+	// in its generic form (for example, `{ "name": "size type", "value": "regular"
+	// }`). This is useful for submitting attributes not explicitly exposed by the
+	// API. Maximum allowed number of characters for each custom attribute is 10240
+	// (represents sum of characters for name and value). Maximum 2500 custom
+	// attributes can be set, with total size of 102.4kB. Underscores in custom
+	// attribute names are replaced by spaces upon insertion.
+	CustomAttributes []*CustomAttribute `json:"customAttributes,omitempty"`
 	// InstoreProductLocation: Optional. Location of the product inside the store.
 	// Maximum length is 20 bytes.
 	InstoreProductLocation string `json:"instoreProductLocation,omitempty"`

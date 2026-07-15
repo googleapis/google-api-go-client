@@ -5073,7 +5073,9 @@ type ManagedConfigurationTemplate struct {
 	// ConfigurationVariables: Optional, a map containing configuration variables
 	// defined for the configuration.
 	ConfigurationVariables map[string]string `json:"configurationVariables,omitempty"`
-	// TemplateId: The ID of the managed configurations template.
+	// TemplateId: The ID of the managed configurations template. This value must
+	// be a numeric string containing exactly one or more digits (for example,
+	// "123456").
 	TemplateId string `json:"templateId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConfigurationVariables") to
 	// unconditionally include in API requests. By default, fields with empty or

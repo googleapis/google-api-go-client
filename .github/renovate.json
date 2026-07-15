@@ -16,6 +16,11 @@
   ],
   "packageRules": [
     {
+      "description": "prevent go version upgrades",
+      "matchManagers": ["gomod"],
+      "constraintsFiltering": "strict"
+    },
+    {
       "matchPackagePatterns": [
         "^github.com/google/go-github/v",
         "^go.opentelemetry.io/contrib/instrumentation/"

@@ -382,6 +382,63 @@ func (s AffectedResources) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type Agent struct {
+	DisplayName string `json:"displayName,omitempty"`
+	Id          string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Agent) MarshalJSON() ([]byte, error) {
+	type NoMethod Agent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type AgentAnomaly struct {
+	ConfidenceScore      float64                `json:"confidenceScore,omitempty"`
+	DetectorReferences   []*DetectorReference   `json:"detectorReferences,omitempty"`
+	InvocationReferences []*InvocationReference `json:"invocationReferences,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConfidenceScore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConfidenceScore") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AgentAnomaly) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentAnomaly
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *AgentAnomaly) UnmarshalJSON(data []byte) error {
+	type NoMethod AgentAnomaly
+	var s1 struct {
+		ConfidenceScore gensupport.JSONFloat64 `json:"confidenceScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ConfidenceScore = float64(s1.ConfidenceScore)
+	return nil
+}
+
 type AgentDataAccessEvent struct {
 	EventId   string `json:"eventId,omitempty"`
 	EventTime string `json:"eventTime,omitempty"`
@@ -407,6 +464,26 @@ type AgentDataAccessEvent struct {
 
 func (s AgentDataAccessEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod AgentDataAccessEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type AgentSession struct {
+	SessionId string `json:"sessionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SessionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SessionId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AgentSession) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentSession
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1596,6 +1673,36 @@ func (s *Detection) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+type DetectorReference struct {
+	DetectorId     string `json:"detectorId,omitempty"`
+	DisplayName    string `json:"displayName,omitempty"`
+	Explanation    string `json:"explanation,omitempty"`
+	Recommendation string `json:"recommendation,omitempty"`
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED"
+	//   "CRITICAL"
+	//   "HIGH"
+	//   "MEDIUM"
+	//   "LOW"
+	Severity string `json:"severity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DetectorId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DetectorId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DetectorReference) MarshalJSON() ([]byte, error) {
+	type NoMethod DetectorReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type DiscoveredWorkload struct {
 	// Possible values:
 	//   "CONFIDENCE_UNSPECIFIED"
@@ -1908,7 +2015,10 @@ func (s FileOperation) MarshalJSON() ([]byte, error) {
 type Finding struct {
 	Access                      *Access                                              `json:"access,omitempty"`
 	AffectedResources           *AffectedResources                                   `json:"affectedResources,omitempty"`
+	Agent                       *Agent                                               `json:"agent,omitempty"`
+	AgentAnomaly                *AgentAnomaly                                        `json:"agentAnomaly,omitempty"`
 	AgentDataAccessEvents       []*AgentDataAccessEvent                              `json:"agentDataAccessEvents,omitempty"`
+	AgentSessions               []*AgentSession                                      `json:"agentSessions,omitempty"`
 	AiModel                     *AiModel                                             `json:"aiModel,omitempty"`
 	Application                 *Application                                         `json:"application,omitempty"`
 	ArtifactGuardPolicies       *ArtifactGuardPolicies                               `json:"artifactGuardPolicies,omitempty"`
@@ -3177,6 +3287,63 @@ func (s GoogleCloudSecuritycenterV2AffectedResources) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type GoogleCloudSecuritycenterV2Agent struct {
+	DisplayName string `json:"displayName,omitempty"`
+	Id          string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2Agent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2Agent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudSecuritycenterV2AgentAnomaly struct {
+	ConfidenceScore      float64                                           `json:"confidenceScore,omitempty"`
+	DetectorReferences   []*GoogleCloudSecuritycenterV2DetectorReference   `json:"detectorReferences,omitempty"`
+	InvocationReferences []*GoogleCloudSecuritycenterV2InvocationReference `json:"invocationReferences,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConfidenceScore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConfidenceScore") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2AgentAnomaly) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2AgentAnomaly
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudSecuritycenterV2AgentAnomaly) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudSecuritycenterV2AgentAnomaly
+	var s1 struct {
+		ConfidenceScore gensupport.JSONFloat64 `json:"confidenceScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ConfidenceScore = float64(s1.ConfidenceScore)
+	return nil
+}
+
 type GoogleCloudSecuritycenterV2AgentDataAccessEvent struct {
 	EventId   string `json:"eventId,omitempty"`
 	EventTime string `json:"eventTime,omitempty"`
@@ -3202,6 +3369,26 @@ type GoogleCloudSecuritycenterV2AgentDataAccessEvent struct {
 
 func (s GoogleCloudSecuritycenterV2AgentDataAccessEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2AgentDataAccessEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudSecuritycenterV2AgentSession struct {
+	SessionId string `json:"sessionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SessionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SessionId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2AgentSession) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2AgentSession
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4303,6 +4490,36 @@ func (s *GoogleCloudSecuritycenterV2Detection) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
+type GoogleCloudSecuritycenterV2DetectorReference struct {
+	DetectorId     string `json:"detectorId,omitempty"`
+	DisplayName    string `json:"displayName,omitempty"`
+	Explanation    string `json:"explanation,omitempty"`
+	Recommendation string `json:"recommendation,omitempty"`
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED"
+	//   "CRITICAL"
+	//   "HIGH"
+	//   "MEDIUM"
+	//   "LOW"
+	Severity string `json:"severity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DetectorId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DetectorId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2DetectorReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2DetectorReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudSecuritycenterV2DiscoveredWorkload struct {
 	// Possible values:
 	//   "CONFIDENCE_UNSPECIFIED"
@@ -4593,7 +4810,10 @@ func (s GoogleCloudSecuritycenterV2FileOperation) MarshalJSON() ([]byte, error) 
 type GoogleCloudSecuritycenterV2Finding struct {
 	Access                      *GoogleCloudSecuritycenterV2Access                       `json:"access,omitempty"`
 	AffectedResources           *GoogleCloudSecuritycenterV2AffectedResources            `json:"affectedResources,omitempty"`
+	Agent                       *GoogleCloudSecuritycenterV2Agent                        `json:"agent,omitempty"`
+	AgentAnomaly                *GoogleCloudSecuritycenterV2AgentAnomaly                 `json:"agentAnomaly,omitempty"`
 	AgentDataAccessEvents       []*GoogleCloudSecuritycenterV2AgentDataAccessEvent       `json:"agentDataAccessEvents,omitempty"`
+	AgentSessions               []*GoogleCloudSecuritycenterV2AgentSession               `json:"agentSessions,omitempty"`
 	AiModel                     *GoogleCloudSecuritycenterV2AiModel                      `json:"aiModel,omitempty"`
 	Application                 *GoogleCloudSecuritycenterV2Application                  `json:"application,omitempty"`
 	ArtifactGuardPolicies       *GoogleCloudSecuritycenterV2ArtifactGuardPolicies        `json:"artifactGuardPolicies,omitempty"`
@@ -4938,6 +5158,26 @@ type GoogleCloudSecuritycenterV2InfoType struct {
 
 func (s GoogleCloudSecuritycenterV2InfoType) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2InfoType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudSecuritycenterV2InvocationReference struct {
+	InvocationId string `json:"invocationId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InvocationId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InvocationId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2InvocationReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2InvocationReference
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7456,6 +7696,26 @@ type InfoType struct {
 
 func (s InfoType) MarshalJSON() ([]byte, error) {
 	type NoMethod InfoType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type InvocationReference struct {
+	InvocationId string `json:"invocationId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InvocationId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InvocationId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InvocationReference) MarshalJSON() ([]byte, error) {
+	type NoMethod InvocationReference
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

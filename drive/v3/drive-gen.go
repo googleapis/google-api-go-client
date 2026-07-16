@@ -753,6 +753,17 @@ type Approval struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// DueTime: The time that the approval is due.
 	DueTime string `json:"dueTime,omitempty"`
+	// FileContentChangeBehavior: Output only. The behavior of the approval when
+	// the file content changes.
+	//
+	// Possible values:
+	//   "FILE_CONTENT_CHANGE_BEHAVIOR_UNSPECIFIED" - The behavior is unspecified.
+	//   "RESET_APPROVAL" - Any ReviewerResponse with a Response of APPROVED will
+	// be reset to NO_DECISION when the file content changes while the approval has
+	// a Status of IN_PROGRESS. When the approval has a Status of APPROVED and
+	// RESET_APPROVAL is selected, the file is locked.
+	//   "NO_APPROVAL_ACTION" - No action is taken when the file content changes.
+	FileContentChangeBehavior string `json:"fileContentChangeBehavior,omitempty"`
 	// Initiator: The user that requested the approval.
 	Initiator *User `json:"initiator,omitempty"`
 	// Kind: This is always drive#approval.
@@ -3310,6 +3321,17 @@ func (s RevisionList) MarshalJSON() ([]byte, error) {
 type StartApprovalRequest struct {
 	// DueTime: Optional. The time that the approval is due.
 	DueTime string `json:"dueTime,omitempty"`
+	// FileContentChangeBehavior: Optional. The behavior of the approval when the
+	// file content changes.
+	//
+	// Possible values:
+	//   "FILE_CONTENT_CHANGE_BEHAVIOR_UNSPECIFIED" - The behavior is unspecified.
+	//   "RESET_APPROVAL" - Any ReviewerResponse with a Response of APPROVED will
+	// be reset to NO_DECISION when the file content changes while the approval has
+	// a Status of IN_PROGRESS. When the approval has a Status of APPROVED and
+	// RESET_APPROVAL is selected, the file is locked.
+	//   "NO_APPROVAL_ACTION" - No action is taken when the file content changes.
+	FileContentChangeBehavior string `json:"fileContentChangeBehavior,omitempty"`
 	// LockFile: Optional. Whether to lock the file when starting the approval.
 	LockFile bool `json:"lockFile,omitempty"`
 	// Message: Optional. A message to send to reviewers when notifying them of the
@@ -5546,7 +5568,9 @@ func (c *ChangesListCall) IncludeTeamDriveItems(includeTeamDriveItems bool) *Cha
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
-// changes to return per page.
+// changes to return. The service may return fewer than this value. If
+// unspecified, at most 100 changes will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
 func (c *ChangesListCall) PageSize(pageSize int64) *ChangesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -5757,7 +5781,9 @@ func (c *ChangesWatchCall) IncludeTeamDriveItems(includeTeamDriveItems bool) *Ch
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
-// changes to return per page.
+// changes to return. The service may return fewer than this value. If
+// unspecified, at most 100 changes will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
 func (c *ChangesWatchCall) PageSize(pageSize int64) *ChangesWatchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -6301,7 +6327,9 @@ func (c *CommentsListCall) IncludeDeleted(includeDeleted bool) *CommentsListCall
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
-// comments to return per page.
+// comments to return. The service may return fewer than this value. If
+// unspecified, at most 20 comments will be returned. The maximum value is 100;
+// values above 100 will be coerced to 100.
 func (c *CommentsListCall) PageSize(pageSize int64) *CommentsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -6982,8 +7010,10 @@ func (r *DrivesService) List() *DrivesListCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of shared
-// drives to return per page.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// shared drives to return. The service may return fewer than this value. If
+// unspecified, at most 10 shared drives will be returned. The maximum value is
+// 100; values above 100 will be coerced to 100.
 func (c *DrivesListCall) PageSize(pageSize int64) *DrivesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -8698,10 +8728,10 @@ func (c *FilesListCall) OrderBy(orderBy string) *FilesListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of files
-// to return per page. Pages may be partial or empty even before reaching the
-// end of the file list. If unspecified, at most 100 files are returned for
-// shared drives, and the entire list of files for non-shared drives. The
-// maximum value is 100; values above 100 are changed to 100.
+// to return. The service may return fewer than this value. If unspecified, at
+// most 100 files will be returned for shared drives, and the entire list of
+// files for non-shared drives. The maximum value is 1000; values above 1000
+// will be coerced to 1000.
 func (c *FilesListCall) PageSize(pageSize int64) *FilesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -10092,9 +10122,10 @@ func (c *PermissionsListCall) IncludePermissionsForView(includePermissionsForVie
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
-// permissions to return per page. When not set for files in a shared drive, at
-// most 100 results will be returned. When not set for files that are not in a
-// shared drive, the entire list will be returned.
+// permissions to return. The service may return fewer than this value. If
+// unspecified, at most 100 permissions will be returned for shared drives, and
+// the entire list of permissions for non-shared drives. The maximum value is
+// 100; values above 100 will be coerced to 100.
 func (c *PermissionsListCall) PageSize(pageSize int64) *PermissionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -10758,7 +10789,9 @@ func (c *RepliesListCall) IncludeDeleted(includeDeleted bool) *RepliesListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
-// replies to return per page.
+// replies to return. The service may return fewer than this value. If
+// unspecified, at most 20 replies will be returned. The maximum value is 100;
+// values above 100 will be coerced to 100.
 func (c *RepliesListCall) PageSize(pageSize int64) *RepliesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -11248,7 +11281,9 @@ func (r *RevisionsService) List(fileId string) *RevisionsListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
-// revisions to return per page.
+// revisions to return. The service may return fewer than this value. If
+// unspecified, at most 200 revisions will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
 func (c *RevisionsListCall) PageSize(pageSize int64) *RevisionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

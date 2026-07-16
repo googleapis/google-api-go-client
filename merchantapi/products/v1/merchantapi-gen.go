@@ -1908,6 +1908,9 @@ type ProductAttributes struct {
 	// see Return policy label
 	// (https://support.google.com/merchants/answer/9445425).
 	ReturnPolicyLabel string `json:"returnPolicyLabel,omitempty"`
+	// Returns: Optional. Return rules
+	// (https://support.google.com/merchants/answer/17081382) for the product.
+	Returns []*Returns `json:"returns,omitempty"`
 	// SalePrice: Advertised sale price of the item.
 	SalePrice *Price `json:"salePrice,omitempty"`
 	// SalePriceEffectiveDate: Date range during which the item is on sale, see
@@ -2833,6 +2836,99 @@ type RelatedProduct struct {
 func (s RelatedProduct) MarshalJSON() ([]byte, error) {
 	type NoMethod RelatedProduct
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Returns: The returns of the product.
+type Returns struct {
+	// Countries: The CLDR territory code
+	// (http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml) of the
+	// countries to which an item can be returned.
+	Countries []string `json:"countries,omitempty"`
+	// ItemConditions: The condition the item must be in to be accepted.
+	//
+	// Possible values:
+	//   "ITEM_CONDITION_UNSPECIFIED" - The item condition is unspecified.
+	//   "NEW" - New condition.
+	//   "LIKE_NEW" - Like new condition.
+	//   "USED" - Used condition.
+	//   "DEFECTIVE_ONLY" - Only defective items are accepted.
+	ItemConditions []string `json:"itemConditions,omitempty"`
+	// Methods: The physical methods by which the item can be returned.
+	//
+	// Possible values:
+	//   "RETURN_METHOD_UNSPECIFIED" - The return method is unspecified.
+	//   "BY_MAIL" - Customer returns the item by mail.
+	//   "IN_STORE" - Customer returns the item in a store.
+	//   "AT_A_KIOSK" - Customer drops off the item at a kiosk.
+	//   "DROP_OFF_LOCATION" - Customer drops off the item at a 3rd party partner
+	// location.
+	Methods []string `json:"methods,omitempty"`
+	// Outcomes: The financial outcomes available for a return.
+	//
+	// Possible values:
+	//   "RETURN_OUTCOME_UNSPECIFIED" - The return outcome is unspecified.
+	//   "REFUND" - Customer receives a refund.
+	//   "EXCHANGE" - Customer receives an exchange.
+	//   "STORE_CREDIT" - Customer receives store credit.
+	Outcomes []string `json:"outcomes,omitempty"`
+	// PolicyUrl: The URL of the return policy.
+	PolicyUrl string `json:"policyUrl,omitempty"`
+	// RestockingFee: A flat restocking fee penalty.
+	RestockingFee *Price `json:"restockingFee,omitempty"`
+	// RestockingPercentageFee: A percentage restocking fee penalty.
+	RestockingPercentageFee float64 `json:"restockingPercentageFee,omitempty"`
+	// ShippingFee: The fixed cost out-of-pocket for a customer to return an item.
+	ShippingFee *Price `json:"shippingFee,omitempty"`
+	// ShippingFeeType: The type of return shipping fee.
+	//
+	// Possible values:
+	//   "RETURN_SHIPPING_FEE_TYPE_UNSPECIFIED" - The return shipping fee type is
+	// unspecified.
+	//   "CUSTOMER_RESPONSIBILITY" - The customer is responsible for shipping
+	// costs.
+	//   "DEDUCTED_FROM_REFUND" - The shipping cost is deducted from the refund.
+	ShippingFeeType string `json:"shippingFeeType,omitempty"`
+	// WindowDays: The duration of the return window in days.
+	WindowDays int64 `json:"windowDays,omitempty,string"`
+	// WindowType: Special return window behavior.
+	//
+	// Possible values:
+	//   "RETURN_WINDOW_TYPE_UNSPECIFIED" - The return window type is unspecified.
+	//   "FINITE_RETURN_WINDOW" - Window with a fixed number of days. If this is
+	// set, the `window_days` field must be set.
+	//   "NO_RETURNS" - No returns accepted.
+	//   "LIFETIME" - Lifetime returns accepted.
+	WindowType string `json:"windowType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Countries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Countries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Returns) MarshalJSON() ([]byte, error) {
+	type NoMethod Returns
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *Returns) UnmarshalJSON(data []byte) error {
+	type NoMethod Returns
+	var s1 struct {
+		RestockingPercentageFee gensupport.JSONFloat64 `json:"restockingPercentageFee"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.RestockingPercentageFee = float64(s1.RestockingPercentageFee)
+	return nil
 }
 
 // Shipping: The Shipping of the product.

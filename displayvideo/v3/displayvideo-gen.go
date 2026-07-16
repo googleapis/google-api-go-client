@@ -1946,6 +1946,15 @@ type Advertiser struct {
 	CreativeConfig *AdvertiserCreativeConfig `json:"creativeConfig,omitempty"`
 	// DataAccessConfig: Settings that control how advertiser data may be accessed.
 	DataAccessConfig *AdvertiserDataAccessConfig `json:"dataAccessConfig,omitempty"`
+	// DefaultBusinessName: Optional. The default business name for the advertiser.
+	// This is the value used by YouTube and Demand Gen ads under this advertiser
+	// if a business name is not provided.
+	DefaultBusinessName string `json:"defaultBusinessName,omitempty"`
+	// DefaultLogoAssetId: Optional. The asset ID of the default logo image for the
+	// advertiser. This is the asset ID that will be used by YouTube and Demand ads
+	// under this advertiser if a logo asset is not provided. You must use
+	// advertisers.adAssets.upload to upload this asset using the API.
+	DefaultLogoAssetId int64 `json:"defaultLogoAssetId,omitempty,string"`
 	// DisplayName: Required. The display name of the advertiser. Must be UTF-8
 	// encoded with a maximum size of 240 bytes.
 	DisplayName string `json:"displayName,omitempty"`
@@ -7782,10 +7791,9 @@ func (s DemandGenBiddingStrategy) MarshalJSON() ([]byte, error) {
 
 // DemandGenCarouselAd: Details for a Demand Gen carousel ad.
 type DemandGenCarouselAd struct {
-	// BusinessName: Required. The business name shown on the ad. *Warning*:
-	// Starting **July 13, 2026**, this setting will no longer be required if a
-	// default value is set at the advertiser level. If left unset, the default
-	// value will be applied.
+	// BusinessName: Optional. The business name shown on the ad. This setting is
+	// required unless a default value is set at the advertiser level. If left
+	// unset, the default value will be applied.
 	BusinessName string `json:"businessName,omitempty"`
 	// Cards: Required. The list of cards shown on the ad.
 	Cards []*CarouselCard `json:"cards,omitempty"`
@@ -7801,10 +7809,9 @@ type DemandGenCarouselAd struct {
 	FinalUrlSuffix string `json:"finalUrlSuffix,omitempty"`
 	// Headline: Required. The headline of the ad.
 	Headline string `json:"headline,omitempty"`
-	// Logo: Required. The logo image used by this ad. *Warning*: Starting **July
-	// 13, 2026**, this setting will no longer be required if a default value is
-	// set at the advertiser level. If left unset, the default value will be
-	// applied.
+	// Logo: Optional. The logo image used by this ad. This setting is required
+	// unless a default value is set at the advertiser level. If left unset, the
+	// default value will be applied.
 	Logo *ImageAsset `json:"logo,omitempty"`
 	// TrackingUrl: Output only. The URL address loaded in the background for
 	// tracking purposes.
@@ -7832,10 +7839,9 @@ func (s DemandGenCarouselAd) MarshalJSON() ([]byte, error) {
 
 // DemandGenImageAd: Details for a Demand Gen image ad.
 type DemandGenImageAd struct {
-	// BusinessName: Required. The business name shown on the ad. *Warning*:
-	// Starting **July 13, 2026**, this setting will no longer be required if a
-	// default value is set at the advertiser level. If left unset, the default
-	// value will be applied.
+	// BusinessName: Optional. The business name shown on the ad. This setting is
+	// required unless a default value is set at the advertiser level. If left
+	// unset, the default value will be applied.
 	BusinessName string `json:"businessName,omitempty"`
 	// CallToAction: Required. The call-to-action button shown on the ad.
 	CallToAction string `json:"callToAction,omitempty"`
@@ -7854,10 +7860,9 @@ type DemandGenImageAd struct {
 	FinalUrlSuffix string `json:"finalUrlSuffix,omitempty"`
 	// Headlines: Required. The list of headlines shown on the ad.
 	Headlines []string `json:"headlines,omitempty"`
-	// LogoImages: The list of logo images shown on the ad. *Warning*: Starting
-	// **July 13, 2026**, this setting will no longer be required if a default
-	// value is set at the advertiser level. If left unset, the default value will
-	// be applied.
+	// LogoImages: The list of logo images shown on the ad. This setting is
+	// required unless a default value is set at the advertiser level. If left
+	// unset, the default value will be applied.
 	LogoImages []*ImageAsset `json:"logoImages,omitempty"`
 	// MarketingImages: The list of marketing images shown on the ad.
 	MarketingImages []*ImageAsset `json:"marketingImages,omitempty"`
@@ -7892,10 +7897,9 @@ func (s DemandGenImageAd) MarshalJSON() ([]byte, error) {
 
 // DemandGenProductAd: Details for a Demand Gen product ad.
 type DemandGenProductAd struct {
-	// BusinessName: Required. The business name shown on the ad. *Warning*:
-	// Starting **July 13, 2026**, this setting will no longer be required if a
-	// default value is set at the advertiser level. If left unset, the default
-	// value will be applied.
+	// BusinessName: Optional. The business name shown on the ad. This setting is
+	// required unless a default value is set at the advertiser level. If left
+	// unset, the default value will be applied.
 	BusinessName string `json:"businessName,omitempty"`
 	// CallToAction: Required. The call-to-action button shown on the ad. The
 	// supported values are: * `AUTOMATED` * `APPLY_NOW` * `BOOK_NOW` *
@@ -7941,10 +7945,9 @@ type DemandGenProductAd struct {
 	FinalUrlSuffix string `json:"finalUrlSuffix,omitempty"`
 	// Headline: Required. The headline of the ad.
 	Headline string `json:"headline,omitempty"`
-	// Logo: Required. The logo image used by this ad. *Warning*: Starting **July
-	// 13, 2026**, this setting will no longer be required if a default value is
-	// set at the advertiser level. If left unset, the default value will be
-	// applied.
+	// Logo: Optional. The logo image used by this ad. This setting is required
+	// unless a default value is set at the advertiser level. If left unset, the
+	// default value will be applied.
 	Logo *ImageAsset `json:"logo,omitempty"`
 	// TrackingUrl: Output only. The URL address loaded in the background for
 	// tracking purposes.
@@ -8003,10 +8006,9 @@ func (s DemandGenSettings) MarshalJSON() ([]byte, error) {
 
 // DemandGenVideoAd: Details for a Demand Gen video ad.
 type DemandGenVideoAd struct {
-	// BusinessName: Required. The business name shown on the ad. *Warning*:
-	// Starting **July 13, 2026**, this setting will no longer be required if a
-	// default value is set at the advertiser level. If left unset, the default
-	// value will be applied.
+	// BusinessName: Optional. The business name shown on the ad. This setting is
+	// required unless a default value is set at the advertiser level. If left
+	// unset, the default value will be applied.
 	BusinessName string `json:"businessName,omitempty"`
 	// CallToAction: Required. The call-to-action button shown on the ad. The
 	// supported values are: * `AUTOMATED` * `LEARN_MORE` * `GET_QUOTE` *
@@ -8058,10 +8060,9 @@ type DemandGenVideoAd struct {
 	FinalUrlSuffix string `json:"finalUrlSuffix,omitempty"`
 	// Headlines: Required. The list of headlines shown on the ad.
 	Headlines []string `json:"headlines,omitempty"`
-	// Logo: Required. The logo image used by this ad. *Warning*: Starting **July
-	// 13, 2026**, this setting will no longer be required if a default value is
-	// set at the advertiser level. If left unset, the default value will be
-	// applied.
+	// Logo: Optional. The logo image used by this ad. This setting is required
+	// unless a default value is set at the advertiser level. If left unset, the
+	// default value will be applied.
 	Logo *ImageAsset `json:"logo,omitempty"`
 	// LongHeadlines: Required. The list of long headlines shown on the ad.
 	LongHeadlines []string `json:"longHeadlines,omitempty"`
@@ -15496,9 +15497,7 @@ type ThirdPartyMeasurementConfigs struct {
 	// BrandLiftVendorConfigs: Optional. The third-party vendors measuring brand
 	// lift. The following third-party vendors are applicable: *
 	// `THIRD_PARTY_VENDOR_DYNATA` * `THIRD_PARTY_VENDOR_KANTAR` *
-	// `THIRD_PARTY_VENDOR_INTAGE` * `THIRD_PARTY_VENDOR_NIELSEN` *
-	// `THIRD_PARTY_VENDOR_MACROMILL` *Warning*: Starting **July 13, 2026**, this
-	// field will no longer support `THIRD_PARTY_VENDOR_NIELSEN`.
+	// `THIRD_PARTY_VENDOR_INTAGE` * `THIRD_PARTY_VENDOR_MACROMILL`
 	BrandLiftVendorConfigs []*ThirdPartyVendorConfig `json:"brandLiftVendorConfigs,omitempty"`
 	// BrandSafetyVendorConfigs: Optional. The third-party vendors measuring brand
 	// safety. The following third-party vendors are applicable: *

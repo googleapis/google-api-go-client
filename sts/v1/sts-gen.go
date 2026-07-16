@@ -646,6 +646,8 @@ func (s GoogleIdentityStsV1ExchangeTokenResponse) MarshalJSON() ([]byte, error) 
 // https://datatracker.ietf.org/doc/html/rfc7517 and
 // https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md#6-representation-in-the-spiffe-bundle
 type GoogleIdentityStsV1Jwk struct {
+	// Alg: Algorithm intended for use with the key. Currently "RS256".
+	Alg string `json:"alg,omitempty"`
 	// E: Exponent value for kty="RSA".
 	E string `json:"e,omitempty"`
 	// Kid: Key ID.
@@ -656,13 +658,13 @@ type GoogleIdentityStsV1Jwk struct {
 	N string `json:"n,omitempty"`
 	// Use: Public key use. Currently "jwt-svid".
 	Use string `json:"use,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "E") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Alg") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "E") to include in API requests
+	// NullFields is a list of field names (e.g. "Alg") to include in API requests
 	// with the JSON null value. By default, fields with empty values are omitted
 	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

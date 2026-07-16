@@ -875,6 +875,15 @@ type Advertiser struct {
 	CreativeConfig *AdvertiserCreativeConfig `json:"creativeConfig,omitempty"`
 	// DataAccessConfig: Settings that control how advertiser data may be accessed.
 	DataAccessConfig *AdvertiserDataAccessConfig `json:"dataAccessConfig,omitempty"`
+	// DefaultBusinessName: Optional. The default business name for the advertiser.
+	// This is the value used by YouTube and Demand Gen ads under this advertiser
+	// if a business name is not provided.
+	DefaultBusinessName string `json:"defaultBusinessName,omitempty"`
+	// DefaultLogoAssetId: Optional. The asset ID of the default logo image for the
+	// advertiser. This is the asset ID that will be used by YouTube and Demand ads
+	// under this advertiser if a logo asset is not provided. You must use
+	// advertisers.adAssets.upload to upload this asset using the API.
+	DefaultLogoAssetId int64 `json:"defaultLogoAssetId,omitempty,string"`
 	// DisplayName: Required. The display name of the advertiser. Must be UTF-8
 	// encoded with a maximum size of 240 bytes.
 	DisplayName string `json:"displayName,omitempty"`
@@ -12878,9 +12887,7 @@ type ThirdPartyMeasurementConfigs struct {
 	// BrandLiftVendorConfigs: Optional. The third-party vendors measuring brand
 	// lift. The following third-party vendors are applicable: *
 	// `THIRD_PARTY_VENDOR_DYNATA` * `THIRD_PARTY_VENDOR_KANTAR` *
-	// `THIRD_PARTY_VENDOR_INTAGE` * `THIRD_PARTY_VENDOR_NIELSEN` *
-	// `THIRD_PARTY_VENDOR_MACROMILL` *Warning*: Starting **July 13, 2026**, this
-	// field will no longer support `THIRD_PARTY_VENDOR_NIELSEN`.
+	// `THIRD_PARTY_VENDOR_INTAGE` * `THIRD_PARTY_VENDOR_MACROMILL`
 	BrandLiftVendorConfigs []*ThirdPartyVendorConfig `json:"brandLiftVendorConfigs,omitempty"`
 	// BrandSafetyVendorConfigs: Optional. The third-party vendors measuring brand
 	// safety. The following third-party vendors are applicable: *

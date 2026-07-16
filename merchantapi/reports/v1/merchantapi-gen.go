@@ -912,14 +912,14 @@ type NonProductPerformanceView struct {
 	// Clicks: Number of clicks on images and online store links leading to your
 	// non-product pages. Metric.
 	Clicks int64 `json:"clicks,omitempty,string"`
-	// Date: Date in the merchant timezone to which metrics apply. Segment.
-	// Condition on `date` is required in the `WHERE` clause.
+	// Date: Date in the Merchant Center account timezone to which metrics apply.
+	// Segment. Condition on `date` is required in the `WHERE` clause.
 	Date *Date `json:"date,omitempty"`
 	// Impressions: Number of times images and online store links leading to your
 	// non-product pages were shown. Metric.
 	Impressions int64 `json:"impressions,omitempty,string"`
-	// Week: First day of the week (Monday) of the metrics date in the merchant
-	// timezone. Segment.
+	// Week: First day of the week (Monday) of the metrics date in the Merchant
+	// Center account timezone. Segment.
 	Week *Date `json:"week,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClickThroughRate") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1299,8 +1299,8 @@ type ProductPerformanceView struct {
 	// the time of the event. Represented in the ISO 3166 format. Segment. If the
 	// customer country cannot be determined, a special 'ZZ' code is returned.
 	CustomerCountryCode string `json:"customerCountryCode,omitempty"`
-	// Date: Date in the merchant timezone to which metrics apply. Segment.
-	// Condition on `date` is required in the `WHERE` clause.
+	// Date: Date in the Merchant Center account timezone to which metrics apply.
+	// Segment. Condition on `date` is required in the `WHERE` clause.
 	Date *Date `json:"date,omitempty"`
 	// Impressions: Number of times merchant's products are shown. Metric.
 	Impressions int64 `json:"impressions,omitempty,string"`
@@ -1344,8 +1344,8 @@ type ProductPerformanceView struct {
 	StoreType string `json:"storeType,omitempty"`
 	// Title: Title of the product. Segment.
 	Title string `json:"title,omitempty"`
-	// Week: First day of the week (Monday) of the metrics date in the merchant
-	// timezone. Segment.
+	// Week: First day of the week (Monday) of the metrics date in the Merchant
+	// Center account timezone. Segment.
 	Week *Date `json:"week,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Brand") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

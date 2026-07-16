@@ -240,6 +240,18 @@
       "description": "Regional Endpoint",
       "endpointUrl": "https://datastream.us-west4.rep.googleapis.com/",
       "location": "us-west4"
+    },
+    {
+      "deprecated": true,
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://datastream.us-central2.rep.googleapis.com/",
+      "location": "us-central2"
+    },
+    {
+      "deprecated": true,
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://datastream.us-west8.rep.googleapis.com/",
+      "location": "us-west8"
     }
   ],
   "fullyEncodeReservedExpansion": true,
@@ -1462,7 +1474,7 @@
       }
     }
   },
-  "revision": "20260623",
+  "revision": "20260707",
   "rootUrl": "https://datastream.googleapis.com/",
   "schemas": {
     "AvroFileFormat": {

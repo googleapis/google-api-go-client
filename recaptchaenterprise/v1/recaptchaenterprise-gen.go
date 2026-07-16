@@ -235,7 +235,7 @@ type ProjectsRelatedaccountgroupsMembershipsService struct {
 	s *Service
 }
 
-// GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment: Account defender
+// GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment: Account defense
 // risk assessment.
 type GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment struct {
 	// AccountTakeoverVerdict: Output only. Account takeover risk assessment for
@@ -276,7 +276,7 @@ func (s GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment) MarshalJSON()
 }
 
 // GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountRiskReason:
-// Risk explainability reasons for account defender.
+// Risk explainability reasons for Account defense.
 type GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountRiskReason struct {
 	// Reason: Output only. A risk reason associated with this request.
 	//
@@ -360,7 +360,7 @@ func (s *GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountTakeove
 }
 
 // GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountTrustReason:
-// Trust explainability reasons for account defender.
+// Trust explainability reasons for Account defense.
 type GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountTrustReason struct {
 	// Reason: Output only. A trust reason associated with this request.
 	//
@@ -370,6 +370,10 @@ type GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessmentAccountTrustReason
 	// this account. Equivalent to `AccountDefenderLabel.PROFILE_MATCH`.
 	//   "ACCOUNT_HISTORY_REPUTABLE" - The account's historical activity is
 	// reputable. It is unlikely that the account has been compromised in the past.
+	//   "IDENTITY_GLOBAL_ACTIVITY_REPUTABLE" - The identity shows a global pattern
+	// of reputable activity based on `userInfo` and associated identifiers.
+	//   "IDENTITY_HISTORY_REPUTABLE" - The identity shows a long-standing history
+	// of reputable activity based on `userInfo` and associated identifiers.
 	Reason string `json:"reason,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Reason") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -644,8 +648,8 @@ func (s GoogleCloudRecaptchaenterpriseV1AppleDeveloperId) MarshalJSON() ([]byte,
 // GoogleCloudRecaptchaenterpriseV1Assessment: A reCAPTCHA Enterprise
 // assessment resource.
 type GoogleCloudRecaptchaenterpriseV1Assessment struct {
-	// AccountDefenderAssessment: Output only. Assessment returned by account
-	// defender when an account identifier is provided.
+	// AccountDefenderAssessment: Output only. Assessment returned by Account
+	// defense when an account identifier is provided.
 	AccountDefenderAssessment *GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment `json:"accountDefenderAssessment,omitempty"`
 	// AccountVerification: Optional. Account verification information for identity
 	// verification. The assessment event must include a token and site key to use
@@ -671,9 +675,12 @@ type GoogleCloudRecaptchaenterpriseV1Assessment struct {
 	// format `projects/{project}/assessments/{assessment}`.
 	Name string `json:"name,omitempty"`
 	// PhoneFraudAssessment: Output only. Assessment returned when a site key, a
-	// token, and a phone number as `user_id` are provided. Account defender and
-	// SMS toll fraud protection need to be enabled.
+	// token, and a phone number as `user_id` are provided. SMS defense needs to be
+	// enabled.
 	PhoneFraudAssessment *GoogleCloudRecaptchaenterpriseV1PhoneFraudAssessment `json:"phoneFraudAssessment,omitempty"`
+	// PolicyEvaluation: Output only. Provides information about the policy
+	// evaluation for this assessment.
+	PolicyEvaluation *GoogleCloudRecaptchaenterpriseV1PolicyEvaluation `json:"policyEvaluation,omitempty"`
 	// PrivatePasswordLeakVerification: Optional. The private password leak
 	// verification field contains the parameters that are used to to check for
 	// leaks privately without sharing user credentials.
@@ -807,6 +814,149 @@ func (s GoogleCloudRecaptchaenterpriseV1ChallengeMetrics) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRecaptchaenterpriseV1ChallengeRule: A rule to configure the
+// behavior of reCAPTCHA for conditionally presenting a challenge.
+type GoogleCloudRecaptchaenterpriseV1ChallengeRule struct {
+	// Challenge: Present a challenge to the user.
+	Challenge *GoogleCloudRecaptchaenterpriseV1ChallengeRuleChallengeOutcome `json:"challenge,omitempty"`
+	// Condition: Optional. A CEL condition that must be met for this rule to
+	// apply. The following fields can be referenced in the condition: * `score` *
+	// `user_ip_address` * `user_asn` * `user_agent` * `verified_bots.name` *
+	// `verified_bots.bot_type` Examples: * `score < 0.5` * `user_ip_address ==
+	// "123.45.67.89" * `user_agent.contains("Chrome")` * `score < 0.5 &&
+	// user_ip_address == "123.45.67.89"
+	Condition string `json:"condition,omitempty"`
+	// NoChallenge: Do not present a challenge to the user.
+	NoChallenge *GoogleCloudRecaptchaenterpriseV1ChallengeRuleNoChallengeOutcome `json:"noChallenge,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Challenge") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Challenge") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRecaptchaenterpriseV1ChallengeRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1ChallengeRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1ChallengeRuleChallengeOutcome: An outcome
+// that indicates that a challenge of a specified difficulty should be
+// presented to the user.
+type GoogleCloudRecaptchaenterpriseV1ChallengeRuleChallengeOutcome struct {
+	// Difficulty: Optional. The difficulty of the challenge to present to the
+	// user. If unspecified, `BALANCE` is used.
+	//
+	// Possible values:
+	//   "CHALLENGE_SECURITY_PREFERENCE_UNSPECIFIED" - Default type that indicates
+	// this enum hasn't been specified.
+	//   "USABILITY" - Key tends to show fewer and easier challenges.
+	//   "BALANCE" - Key tends to show balanced (in amount and difficulty)
+	// challenges.
+	//   "SECURITY" - Key tends to show more and harder challenges.
+	Difficulty string `json:"difficulty,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Difficulty") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Difficulty") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRecaptchaenterpriseV1ChallengeRuleChallengeOutcome) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1ChallengeRuleChallengeOutcome
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1ChallengeRuleEvaluation: Information about
+// the evaluation of a `ChallengeRule`.
+type GoogleCloudRecaptchaenterpriseV1ChallengeRuleEvaluation struct {
+}
+
+// GoogleCloudRecaptchaenterpriseV1ChallengeRuleGroup: A collection of
+// challenge rules that applies to one or more actions.
+type GoogleCloudRecaptchaenterpriseV1ChallengeRuleGroup struct {
+	// Actions: Required. Action name provided at token generation. The action name
+	// is not case-sensitive and can only contain alphanumeric characters, slashes,
+	// and underscores. If "*" is provided, the rule group applies to all actions.
+	// If multiple actions are provided, the rule group is applied to all of them.
+	// This field is required.
+	Actions []string `json:"actions,omitempty"`
+	// ChallengeRules: Required. A list of rules that configure when and how
+	// reCAPTCHA presents a challenge. reCAPTCHA evaluates these rules in order and
+	// applies the first one that matches.
+	ChallengeRules []*GoogleCloudRecaptchaenterpriseV1ChallengeRule `json:"challengeRules,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Actions") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Actions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRecaptchaenterpriseV1ChallengeRuleGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1ChallengeRuleGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1ChallengeRuleNoChallengeOutcome: An outcome
+// that indicates that no challenge should be presented to the user.
+type GoogleCloudRecaptchaenterpriseV1ChallengeRuleNoChallengeOutcome struct {
+}
+
+// GoogleCloudRecaptchaenterpriseV1ClientSettings: Configuration for clients to
+// protect with reCAPTCHA.
+type GoogleCloudRecaptchaenterpriseV1ClientSettings struct {
+	// AllowAllDomains: Optional. If set to true, it means allowed_domains are not
+	// enforced.
+	AllowAllDomains bool `json:"allowAllDomains,omitempty"`
+	// AllowedDomains: Optional. Domains or subdomains of websites allowed to use
+	// the policy. All subdomains of an allowed domain are automatically allowed. A
+	// valid domain requires a host and must not include any path, port, query or
+	// fragment. Examples: 'example.com' or 'subdomain.example.com' Each policy
+	// supports a maximum of 250 domains. To use a policy on more domains, set
+	// `allow_all_domains` to true. When this is set, you are responsible for
+	// validating the hostname by checking the `token_properties.hostname` field in
+	// each assessment response against your list of allowed domains.
+	AllowedDomains []string `json:"allowedDomains,omitempty"`
+	// ProtectedEndpointGroup: Optional. Configuration for all API endpoints to
+	// protect with reCAPTCHA. If this field is not set, reCAPTCHA will not
+	// automatically request tokens on any API endpoints.
+	ProtectedEndpointGroup *GoogleCloudRecaptchaenterpriseV1ProtectedEndpointGroup `json:"protectedEndpointGroup,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowAllDomains") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowAllDomains") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRecaptchaenterpriseV1ClientSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1ClientSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRecaptchaenterpriseV1EndpointVerificationInfo: Information about
 // a verification endpoint that can be used for 2FA.
 type GoogleCloudRecaptchaenterpriseV1EndpointVerificationInfo struct {
@@ -843,7 +993,8 @@ func (s GoogleCloudRecaptchaenterpriseV1EndpointVerificationInfo) MarshalJSON() 
 type GoogleCloudRecaptchaenterpriseV1Event struct {
 	// ExpectedAction: Optional. The expected action for this type of event. This
 	// should be the same action provided at token generation time on client-side
-	// platforms already integrated with recaptcha enterprise.
+	// platforms already integrated with recaptcha enterprise. Required for
+	// Universal keys.
 	ExpectedAction string `json:"expectedAction,omitempty"`
 	// Express: Optional. Flag for a reCAPTCHA express request for an assessment
 	// without a token. If enabled, `site_key` must reference an Express site key.
@@ -1525,6 +1676,9 @@ type GoogleCloudRecaptchaenterpriseV1Key struct {
 	Name string `json:"name,omitempty"`
 	// TestingOptions: Optional. Options for user acceptance testing.
 	TestingOptions *GoogleCloudRecaptchaenterpriseV1TestingOptions `json:"testingOptions,omitempty"`
+	// UniversalSettings: Settings for keys that are configured through their
+	// Policy.
+	UniversalSettings *GoogleCloudRecaptchaenterpriseV1UniversalKeySettings `json:"universalSettings,omitempty"`
 	// WafSettings: Optional. Settings for Web Application Firewall (WAF).
 	WafSettings *GoogleCloudRecaptchaenterpriseV1WafSettings `json:"wafSettings,omitempty"`
 	// WebSettings: Settings for keys that can be used by websites.
@@ -1812,6 +1966,67 @@ func (s GoogleCloudRecaptchaenterpriseV1PhoneFraudAssessment) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRecaptchaenterpriseV1Policy: A complete configuration set
+// containing multiple grouped rules defining the behavior of reCAPTCHA for
+// fraud detection and prevention.
+type GoogleCloudRecaptchaenterpriseV1Policy struct {
+	// ChallengeRuleGroups: Optional. Rules to configure the behavior of reCAPTCHA
+	// for showing a challenge. Rule groups are evaluated in order. Evaluation
+	// stops when the first matching rule group is found.
+	ChallengeRuleGroups []*GoogleCloudRecaptchaenterpriseV1ChallengeRuleGroup `json:"challengeRuleGroups,omitempty"`
+	// ClientSettings: Required. Configuration for clients protected by this
+	// policy.
+	ClientSettings *GoogleCloudRecaptchaenterpriseV1ClientSettings `json:"clientSettings,omitempty"`
+	// Name: Identifier. Resource name for this policy. Format:
+	// "projects/{project}/keys/{key}/policy" for a policy under a key.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ChallengeRuleGroups") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChallengeRuleGroups") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRecaptchaenterpriseV1Policy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1Policy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1PolicyEvaluation: Information about the
+// policy evaluation.
+type GoogleCloudRecaptchaenterpriseV1PolicyEvaluation struct {
+	// ChallengeRuleEvaluation: Output only. Populated if one or more Challenge
+	// rules were matched. Its presence in the assessment indicates that at least
+	// one challenge rule was matched and determined whether a challenge was
+	// presented to the user.
+	ChallengeRuleEvaluation *GoogleCloudRecaptchaenterpriseV1ChallengeRuleEvaluation `json:"challengeRuleEvaluation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChallengeRuleEvaluation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChallengeRuleEvaluation") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRecaptchaenterpriseV1PolicyEvaluation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1PolicyEvaluation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification: Private
 // password leak verification info.
 type GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification struct {
@@ -1847,6 +2062,69 @@ type GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification struct {
 
 func (s GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1ProtectedEndpoint: Configuration for an API
+// endpoint to protect with reCAPTCHA.
+type GoogleCloudRecaptchaenterpriseV1ProtectedEndpoint struct {
+	// Action: Required. Action name to be used for token generation for this
+	// endpoint. The action name is not case-sensitive and can only contain
+	// alphanumeric characters, slashes, and underscores.
+	Action string `json:"action,omitempty"`
+	// Path: Required. URI path of the API endpoint to protect. Must start with
+	// '/'. Supports glob characters '*' to match a single path segment and '**' to
+	// match multiple path segments. Standalone root catch-alls ('/*' and '/**')
+	// are invalid because it would hurt performance to trigger reCAPTCHA on every
+	// single request to your backend. Matching is evaluated against the URL path
+	// only (domain, scheme, and query parameters are ignored). Examples: -
+	// `/login` matches `/login`, `https://example.com/login`, and
+	// `/login?query=1`, but not `/login/step1`. - `/products/*` matches
+	// `/products/123`, but not `/products/123/456`. - `/content/**` matches
+	// `/content/articles/2024/01/01`.
+	Path string `json:"path,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRecaptchaenterpriseV1ProtectedEndpoint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1ProtectedEndpoint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1ProtectedEndpointGroup: Configuration for
+// API endpoints to protect with reCAPTCHA.
+type GoogleCloudRecaptchaenterpriseV1ProtectedEndpointGroup struct {
+	// ProtectedEndpoints: Optional. List of API endpoints to automatically protect
+	// with reCAPTCHA. If any of these endpoints is invoked from a page where a key
+	// bound to this policy is installed, a reCAPTCHA token is automatically
+	// generated and attached to the request. If multiple protected endpoints match
+	// a given API endpoint, the first one in the list is used.
+	ProtectedEndpoints []*GoogleCloudRecaptchaenterpriseV1ProtectedEndpoint `json:"protectedEndpoints,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProtectedEndpoints") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProtectedEndpoints") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRecaptchaenterpriseV1ProtectedEndpointGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1ProtectedEndpointGroup
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2005,8 +2283,8 @@ func (s GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse) Marshal
 // GoogleCloudRecaptchaenterpriseV1RiskAnalysis: Risk analysis result for an
 // event.
 type GoogleCloudRecaptchaenterpriseV1RiskAnalysis struct {
-	// Challenge: Output only. Challenge information for POLICY_BASED_CHALLENGE and
-	// INVISIBLE keys.
+	// Challenge: Output only. Challenge information for Universal,
+	// `POLICY_BASED_CHALLENGE` and `INVISIBLE` keys.
 	//
 	// Possible values:
 	//   "CHALLENGE_UNSPECIFIED" - Default unspecified type.
@@ -2020,6 +2298,15 @@ type GoogleCloudRecaptchaenterpriseV1RiskAnalysis struct {
 	// projects only. Contact sales for more information. The set of reasons is
 	// subject to change.
 	ExtendedVerdictReasons []string `json:"extendedVerdictReasons,omitempty"`
+	// LastChallengeType: Output only. Type of the last challenge presented to the
+	// user for Universal, `POLICY_BASED_CHALLENGE` and `INVISIBLE` keys. The field
+	// is only set when a challenge was presented to the user.
+	//
+	// Possible values:
+	//   "CHALLENGE_TYPE_UNSPECIFIED" - Default unspecified type.
+	//   "CHALLENGE_TYPE_VISUAL" - A visual challenge.
+	//   "CHALLENGE_TYPE_AUDIO" - An audio challenge.
+	LastChallengeType string `json:"lastChallengeType,omitempty"`
 	// Reasons: Output only. Reasons contributing to the risk analysis verdict.
 	//
 	// Possible values:
@@ -2554,8 +2841,8 @@ func (s *GoogleCloudRecaptchaenterpriseV1TransactionDataItem) UnmarshalJSON(data
 // account involved in the transaction.
 type GoogleCloudRecaptchaenterpriseV1TransactionDataUser struct {
 	// AccountId: Optional. Unique account identifier for this user. If using
-	// account defender, this should match the hashed_account_id field. Otherwise,
-	// a unique and persistent identifier for this account.
+	// Account defense, this should match the hashed_account_id field. Otherwise, a
+	// unique and persistent identifier for this account.
 	AccountId string `json:"accountId,omitempty"`
 	// CreationMs: Optional. The epoch milliseconds of the user's account creation.
 	CreationMs int64 `json:"creationMs,omitempty,string"`
@@ -2696,6 +2983,11 @@ func (s *GoogleCloudRecaptchaenterpriseV1TransactionEvent) UnmarshalJSON(data []
 	}
 	s.Value = float64(s1.Value)
 	return nil
+}
+
+// GoogleCloudRecaptchaenterpriseV1UniversalKeySettings: Settings for keys that
+// are configured through their Policy.
+type GoogleCloudRecaptchaenterpriseV1UniversalKeySettings struct {
 }
 
 // GoogleCloudRecaptchaenterpriseV1UserId: An identifier associated with a
@@ -4410,6 +4702,117 @@ func (c *ProjectsKeysGetMetricsCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	return ret, nil
 }
 
+type ProjectsKeysGetPolicyCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetPolicy: Get the policy for a key.
+//
+//   - name: The name of the policy to get, in the format
+//     `projects/{project}/keys/{key}/policy`.
+func (r *ProjectsKeysService) GetPolicy(name string) *ProjectsKeysGetPolicyCall {
+	c := &ProjectsKeysGetPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsKeysGetPolicyCall) Fields(s ...googleapi.Field) *ProjectsKeysGetPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsKeysGetPolicyCall) IfNoneMatch(entityTag string) *ProjectsKeysGetPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsKeysGetPolicyCall) Context(ctx context.Context) *ProjectsKeysGetPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsKeysGetPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsKeysGetPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.getPolicy", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recaptchaenterprise.projects.keys.getPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRecaptchaenterpriseV1Policy.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsKeysGetPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecaptchaenterpriseV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRecaptchaenterpriseV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.getPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsKeysListCall struct {
 	s            *Service
 	parent       string
@@ -5145,6 +5548,119 @@ func (c *ProjectsKeysRetrieveLegacySecretKeyCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.retrieveLegacySecretKey", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsKeysUpdatePolicyCall struct {
+	s                                      *Service
+	name                                   string
+	googlecloudrecaptchaenterprisev1policy *GoogleCloudRecaptchaenterpriseV1Policy
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// UpdatePolicy: Updates the policy for a key.
+//
+//   - name: Identifier. Resource name for this policy. Format:
+//     "projects/{project}/keys/{key}/policy" for a policy under a key.
+func (r *ProjectsKeysService) UpdatePolicy(name string, googlecloudrecaptchaenterprisev1policy *GoogleCloudRecaptchaenterpriseV1Policy) *ProjectsKeysUpdatePolicyCall {
+	c := &ProjectsKeysUpdatePolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudrecaptchaenterprisev1policy = googlecloudrecaptchaenterprisev1policy
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The mask to control
+// which fields of the policy get updated. If the mask is not present, all
+// fields are updated.
+func (c *ProjectsKeysUpdatePolicyCall) UpdateMask(updateMask string) *ProjectsKeysUpdatePolicyCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsKeysUpdatePolicyCall) Fields(s ...googleapi.Field) *ProjectsKeysUpdatePolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsKeysUpdatePolicyCall) Context(ctx context.Context) *ProjectsKeysUpdatePolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsKeysUpdatePolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsKeysUpdatePolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudrecaptchaenterprisev1policy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.updatePolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recaptchaenterprise.projects.keys.updatePolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRecaptchaenterpriseV1Policy.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsKeysUpdatePolicyCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecaptchaenterpriseV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRecaptchaenterpriseV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "recaptchaenterprise.projects.keys.updatePolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

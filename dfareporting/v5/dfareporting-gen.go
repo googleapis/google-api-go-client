@@ -183,6 +183,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Regions = NewRegionsService(s)
 	s.RemarketingListShares = NewRemarketingListSharesService(s)
 	s.RemarketingLists = NewRemarketingListsService(s)
+	s.ReportData = NewReportDataService(s)
 	s.Reports = NewReportsService(s)
 	s.Sites = NewSitesService(s)
 	s.Sizes = NewSizesService(s)
@@ -323,6 +324,8 @@ type Service struct {
 	RemarketingListShares *RemarketingListSharesService
 
 	RemarketingLists *RemarketingListsService
+
+	ReportData *ReportDataService
 
 	Reports *ReportsService
 
@@ -818,6 +821,15 @@ func NewRemarketingListsService(s *Service) *RemarketingListsService {
 }
 
 type RemarketingListsService struct {
+	s *Service
+}
+
+func NewReportDataService(s *Service) *ReportDataService {
+	rs := &ReportDataService{s: s}
+	return rs
+}
+
+type ReportDataService struct {
 	s *Service
 }
 
@@ -2901,6 +2913,35 @@ func (s ClickThroughUrlSuffixProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ColumnHeader: A column header in the report.
+type ColumnHeader struct {
+	// Name: Output only. The column name.
+	Name string `json:"name,omitempty"`
+	// Type: Output only. The column type.
+	//
+	// Possible values:
+	//   "COLUMN_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "DIMENSION" - Dimension.
+	//   "METRIC" - Metric.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ColumnHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod ColumnHeader
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CompanionClickThroughOverride: Companion Click-through override.
 type CompanionClickThroughOverride struct {
 	// ClickThroughUrl: Click-through URL of this companion click-through override.
@@ -3602,7 +3643,8 @@ type Country struct {
 	//
 	// Possible values:
 	//   "INVALID_TV_DATA_PROVIDER"
-	//   "INTAGE_JP"
+	//   "INTAGE_JP" - Allows populating multiple tvCampaignId filters and
+	// tvCampaignEndDate filter on the report.
 	//   "IBOPE_AR"
 	//   "IBOPE_BR"
 	//   "IBOPE_CL"
@@ -10953,6 +10995,107 @@ func (s ReportCompatibleFields) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ReportDataQueryRequest: The request body containing ad-hoc query parameters.
+type ReportDataQueryRequest struct {
+	// DateRange: Optional. The requested date range covering the report duration.
+	DateRange *DateRange `json:"dateRange,omitempty"`
+	// DimensionFilters: Optional. The list of dimension values on which report
+	// lines are filtered. Utilizes the existing legacy filter message
+	// `DimensionValue`.
+	DimensionFilters []*DimensionValue `json:"dimensionFilters,omitempty"`
+	// DimensionNames: Optional. The list of dimension names to group by.
+	DimensionNames []string `json:"dimensionNames,omitempty"`
+	// MaxResults: Optional. Maximum number of result rows to return per page. The
+	// default value is 100. The maximum allowed value is 1000. Values above 1000
+	// will be coerced (clamped) down to 1000. Negative values will be rejected.
+	MaxResults int64 `json:"maxResults,omitempty"`
+	// MetricNames: Required. The list of metric names to include.
+	MetricNames []string `json:"metricNames,omitempty"`
+	// PageToken: Optional. Continuation token for paginating results.
+	PageToken string `json:"pageToken,omitempty"`
+	// SortBys: Optional. Sort options across either requested dimensions or
+	// metrics.
+	SortBys []*SortBy `json:"sortBys,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DateRange") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DateRange") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReportDataQueryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ReportDataQueryRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReportDataResponse: Represents a response to report data request.
+type ReportDataResponse struct {
+	// ColumnHeaders: Output only. Ordered descriptors of the requested column
+	// fields.
+	ColumnHeaders []*ColumnHeader `json:"columnHeaders,omitempty"`
+	// NextPageToken: Output only. Token to retrieve the next page of rows, or
+	// empty if end of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Rows: Output only. The resulting set of matching data rows.
+	Rows []*ReportDataRow `json:"rows,omitempty"`
+	// TotalRow: Output only. Singular aggregate total row for the entire query
+	// matching the criteria. Column headers apply in the exact same order as data
+	// rows. In the total_row: - All dimension columns contain an empty string
+	// (""), as aggregation does not apply. - Non-summable metric columns (e.g.
+	// Reach metrics) contain an empty string (""), as grand total aggregation
+	// cannot be mathematically/logically computed for them.
+	TotalRow *ReportDataRow `json:"totalRow,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ColumnHeaders") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ColumnHeaders") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReportDataResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ReportDataResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReportDataRow: A row of report data.
+type ReportDataRow struct {
+	// Values: Output only. A single sequential list of all cell values matching
+	// column_headers indices exactly. - Metric cells that are suppressed due to
+	// Minimum Reporting Standard (MRS) privacy protection constraints return "-".
+	Values []string `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReportDataRow) MarshalJSON() ([]byte, error) {
+	type NoMethod ReportDataRow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ReportList: Represents the list of reports.
 type ReportList struct {
 	// Etag: The eTag of this response for caching purposes.
@@ -11544,6 +11687,34 @@ type SkippableSetting struct {
 
 func (s SkippableSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod SkippableSetting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SortBy: Specifies the sort configuration for a specific field in the report.
+type SortBy struct {
+	// Name: Required. The dimension or metric field name to sort on.
+	Name string `json:"name,omitempty"`
+	// SortOrder: Optional. The sort order of this column.
+	//
+	// Possible values:
+	//   "ASCENDING" - Ascending order.
+	//   "DESCENDING" - Descending order.
+	SortOrder string `json:"sortOrder,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SortBy) MarshalJSON() ([]byte, error) {
+	type NoMethod SortBy
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -34629,6 +34800,131 @@ func (c *RemarketingListsUpdateCall) Do(opts ...googleapi.CallOption) (*Remarket
 	return ret, nil
 }
 
+type ReportDataQueryCall struct {
+	s                      *Service
+	profileId              int64
+	reportdataqueryrequest *ReportDataQueryRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Query: Executes an ad-hoc query and returns structured JSON payload data.
+//
+// - profileId: The Campaign Manager 360 user profile ID.
+func (r *ReportDataService) Query(profileId int64, reportdataqueryrequest *ReportDataQueryRequest) *ReportDataQueryCall {
+	c := &ReportDataQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	c.reportdataqueryrequest = reportdataqueryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ReportDataQueryCall) Fields(s ...googleapi.Field) *ReportDataQueryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ReportDataQueryCall) Context(ctx context.Context) *ReportDataQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ReportDataQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ReportDataQueryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.reportdataqueryrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reportdata/query")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dfareporting.reportData.query", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.reportData.query" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ReportDataResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ReportDataQueryCall) Do(opts ...googleapi.CallOption) (*ReportDataResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ReportDataResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dfareporting.reportData.query", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ReportDataQueryCall) Pages(ctx context.Context, f func(*ReportDataResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.reportdataqueryrequest.PageToken = pt }(c.reportdataqueryrequest.PageToken)
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.reportdataqueryrequest.PageToken = x.NextPageToken
+	}
+}
+
 type ReportsDeleteCall struct {
 	s          *Service
 	profileId  int64
@@ -38806,7 +39102,10 @@ func (c *TvCampaignDetailsGetCall) CountryDartId(countryDartId int64) *TvCampaig
 // Possible values:
 //
 //	"INVALID_TV_DATA_PROVIDER"
-//	"INTAGE_JP"
+//	"INTAGE_JP" - Allows populating multiple tvCampaignId filters and
+//
+// tvCampaignEndDate filter on the report.
+//
 //	"IBOPE_AR"
 //	"IBOPE_BR"
 //	"IBOPE_CL"
@@ -38958,7 +39257,10 @@ func (c *TvCampaignSummariesListCall) Name(name string) *TvCampaignSummariesList
 // Possible values:
 //
 //	"INVALID_TV_DATA_PROVIDER"
-//	"INTAGE_JP"
+//	"INTAGE_JP" - Allows populating multiple tvCampaignId filters and
+//
+// tvCampaignEndDate filter on the report.
+//
 //	"IBOPE_AR"
 //	"IBOPE_BR"
 //	"IBOPE_CL"

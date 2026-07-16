@@ -311,7 +311,7 @@ type ProjectsLocationsRulesService struct {
 type ActiveDirectory struct {
 	// DnsAddress: Optional. DNS IP address.
 	DnsAddress string `json:"dnsAddress,omitempty"`
-	// Domain: Optional. Human readable form of a domain such as “google.com”.
+	// Domain: Optional. Human readable form of a domain such as `example.com`.
 	Domain string `json:"domain,omitempty"`
 	// DomainUsername: Optional. Domain username.
 	DomainUsername string `json:"domainUsername,omitempty"`

@@ -211,7 +211,6 @@ func NewProjectsAppsService(s *Service) *ProjectsAppsService {
 	rs.RecaptchaConfig = NewProjectsAppsRecaptchaConfigService(s)
 	rs.RecaptchaEnterpriseConfig = NewProjectsAppsRecaptchaEnterpriseConfigService(s)
 	rs.RecaptchaV3Config = NewProjectsAppsRecaptchaV3ConfigService(s)
-	rs.SafetyNetConfig = NewProjectsAppsSafetyNetConfigService(s)
 	return rs
 }
 
@@ -231,8 +230,6 @@ type ProjectsAppsService struct {
 	RecaptchaEnterpriseConfig *ProjectsAppsRecaptchaEnterpriseConfigService
 
 	RecaptchaV3Config *ProjectsAppsRecaptchaV3ConfigService
-
-	SafetyNetConfig *ProjectsAppsSafetyNetConfigService
 }
 
 func NewProjectsAppsAppAttestConfigService(s *Service) *ProjectsAppsAppAttestConfigService {
@@ -295,15 +292,6 @@ func NewProjectsAppsRecaptchaV3ConfigService(s *Service) *ProjectsAppsRecaptchaV
 }
 
 type ProjectsAppsRecaptchaV3ConfigService struct {
-	s *Service
-}
-
-func NewProjectsAppsSafetyNetConfigService(s *Service) *ProjectsAppsSafetyNetConfigService {
-	rs := &ProjectsAppsSafetyNetConfigService{s: s}
-	return rs
-}
-
-type ProjectsAppsSafetyNetConfigService struct {
 	s *Service
 }
 
@@ -599,32 +587,6 @@ func (s GoogleFirebaseAppcheckV1betaBatchGetRecaptchaV3ConfigsResponse) MarshalJ
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1betaBatchGetSafetyNetConfigsResponse: Response
-// message for the BatchGetSafetyNetConfigs method.
-type GoogleFirebaseAppcheckV1betaBatchGetSafetyNetConfigsResponse struct {
-	// Configs: SafetyNetConfigs retrieved.
-	Configs []*GoogleFirebaseAppcheckV1betaSafetyNetConfig `json:"configs,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Configs") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Configs") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleFirebaseAppcheckV1betaBatchGetSafetyNetConfigsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleFirebaseAppcheckV1betaBatchGetSafetyNetConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleFirebaseAppcheckV1betaBatchUpdateResourcePoliciesRequest: Request
 // message for the BatchUpdateResourcePolicies method.
 type GoogleFirebaseAppcheckV1betaBatchUpdateResourcePoliciesRequest struct {
@@ -757,7 +719,7 @@ type GoogleFirebaseAppcheckV1betaDebugToken struct {
 	Name string `json:"name,omitempty"`
 	// Token: Required. Input only. Immutable. The secret token itself. Must be
 	// provided during creation, and must be a UUID4, case insensitive. This field
-	// is immutable once set, and cannot be provided during an UpdateDebugToken
+	// is immutable once set, and cannot be provided during a UpdateDebugToken
 	// request. You can, however, delete this debug token using DeleteDebugToken to
 	// revoke it. For security reasons, this field will never be populated in any
 	// response.
@@ -953,10 +915,9 @@ type GoogleFirebaseAppcheckV1betaExchangeCustomTokenRequest struct {
 	// 500 bytes (inclusive) will be used in the returned App Check token. Leaving
 	// this field empty is only recommended if your custom attestation provider
 	// itself is not vulnerable to replay attacks. When `limited_use` is set to
-	// `false`, neither the presence nor the contents of the `jti` claim in the
-	// returned App Check token is specified. To ensure that the returned App Check
-	// token is eligible for limited use functionality, set `limited_use` to
-	// `true`.
+	// `false`, the presence and the contents of the `jti` claim in the returned
+	// App Check token are unspecified. To ensure that the returned App Check token
+	// is eligible for limited-use functionality, set `limited_use` to `true`.
 	Jti string `json:"jti,omitempty"`
 	// LimitedUse: Specifies whether this attestation is for use in a *limited use*
 	// (`true`) or *session based* (`false`) context. To enable this attestation to
@@ -1152,31 +1113,6 @@ type GoogleFirebaseAppcheckV1betaExchangeRecaptchaV3TokenRequest struct {
 
 func (s GoogleFirebaseAppcheckV1betaExchangeRecaptchaV3TokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1betaExchangeRecaptchaV3TokenRequest
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleFirebaseAppcheckV1betaExchangeSafetyNetTokenRequest: Request message
-// for the ExchangeSafetyNetToken method.
-type GoogleFirebaseAppcheckV1betaExchangeSafetyNetTokenRequest struct {
-	// SafetyNetToken: Required. The SafetyNet attestation response
-	// (https://developer.android.com/training/safetynet/attestation#request-attestation-step)
-	// issued to your app.
-	SafetyNetToken string `json:"safetyNetToken,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SafetyNetToken") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SafetyNetToken") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleFirebaseAppcheckV1betaExchangeSafetyNetTokenRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleFirebaseAppcheckV1betaExchangeSafetyNetTokenRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1869,44 +1805,48 @@ func (s *GoogleFirebaseAppcheckV1betaRecaptchaV3Config) UnmarshalJSON(data []byt
 // a specific resource of a Google service supported by App Check. Note that
 // this policy will override the service-level configuration.
 type GoogleFirebaseAppcheckV1betaResourcePolicy struct {
-	// EnforcementMode: Required. The App Check enforcement mode for this resource.
-	// This will override the EnforcementMode setting on the parent service.
+	// EnforcementMode: Required. The baseline protection EnforcementMode for this
+	// resource. This will override the service-level baseline protection
+	// EnforcementMode.
 	//
 	// Possible values:
-	//   "OFF" - The relevant App Check protection is not enforced for the service
-	// or resource, nor are App Check metrics collected. Though the relevant App
-	// Check protection is not applied, other applicable protections, such as user
-	// authorization, are still enforced. An unconfigured protection is in this
+	//   "OFF" - When a particular protection is set to this mode, that protection
+	// is not applied for the service or resource, nor are metrics related to that
+	// protection collected. Though the relevant App Check protection is not
+	// applied, other applicable protections outside of App Check, such as user
+	// authorization, are still applied. An unconfigured EnforcementMode is in this
 	// mode by default.
-	//   "UNENFORCED" - The relevant App Check protection is not enforced for the
-	// service or resource. App Check metrics are collected to help you decide when
-	// to turn on enforcement. These metrics will show the portion of traffic that
-	// is deemed invalid by the relevant App Check protection, but that traffic
-	// will not be rejected until you turn on enforcement. Though the relevant App
-	// Check protection is not enforced, other applicable protections, such as user
-	// authorization, are still enforced. Some services require certain conditions
-	// to be met before they will work with App Check, such as requiring you to
-	// upgrade to a specific service tier. Until those requirements are met for a
-	// service, this `UNENFORCED` setting will have no effect and App Check will
-	// not work with that service.
-	//   "ENFORCED" - The relevant App Check protection is enforced for the service
-	// or resource. The service or resource will reject any traffic not accompanied
-	// by an App Check token that is deemded valid by the relevant protection.
-	// There are some exceptions depending on the service; for example, some
-	// services will still allow requests bearing the developer's privileged
-	// service account credentials without an App Check token. App Check metrics
-	// continue to be collected to help you detect issues with your App Check
-	// integration and monitor the composition of your callers. While the service
-	// is protected by App Check, other applicable protections, such as user
-	// authorization, continue to be enforced at the same time. Use caution when
+	//   "UNENFORCED" - When a particular protection is set to this mode, that
+	// protection is not enforced for the service or resource. Metrics related to
+	// that protection are collected to help you decide when to turn on
+	// enforcement. These metrics will show the portion of traffic that is deemed
+	// invalid by that protection, but that traffic will not be rejected until you
+	// turn on enforcement. This `UNENFORCED` mode is also known as monitoring-only
+	// mode. Though the relevant App Check protection is not enforced, other
+	// applicable protections outside of App Check, such as user authorization, are
+	// still applied. Some services require certain conditions to be met before
+	// they will work with App Check, such as requiring you to upgrade to a
+	// specific service tier. Until those requirements are met for a service, this
+	// `UNENFORCED` setting will have no effect and App Check will not work with
+	// that service.
+	//   "ENFORCED" - When a particular protection is set to this mode, that
+	// protection is enforced for the service or resource. It will reject any
+	// traffic not accompanied by an App Check token that it deems valid. There are
+	// some exceptions depending on the service; for example, some services will
+	// still allow requests bearing the developer's privileged service account
+	// credentials without an App Check token. App Check metrics continue to be
+	// collected to help you detect issues with your App Check integration and
+	// monitor the composition of your callers. While the service is protected by
+	// App Check, other applicable protections outside of App check, such as user
+	// authorization, continue to be applied at the same time. Use caution when
 	// choosing to enforce App Check protections. If your users have not updated to
 	// a version of your app that meets the requirements of the relevant App Check
 	// protection, their app may stop working. App Check metrics can help you
-	// decide whether to enforce App Check on your services and resources. If your
-	// app has not launched yet, you should enable enforcement as soon as you
-	// verify that your App Check implementation is correct, since there are no
-	// outdated clients in use. Some services require certain conditions to be met
-	// before they will work with App Check, such as requiring you to upgrade to a
+	// decide when to enforce App Check on your services and resources. If your app
+	// has not launched yet, you should enable enforcement as soon as you verify
+	// that your App Check implementation is correct, since there are no outdated
+	// clients in use. Some services require certain conditions to be met before
+	// they will work with App Check, such as requiring you to upgrade to a
 	// specific service tier. Until those requirements are met for a service, this
 	// `ENFORCED` setting will have no effect and App Check will not work with that
 	// service.
@@ -1958,83 +1898,50 @@ func (s GoogleFirebaseAppcheckV1betaResourcePolicy) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1betaSafetyNetConfig: An app's SafetyNet
-// configuration object. This configuration controls certain properties of the
-// `AppCheckToken` returned by ExchangeSafetyNetToken, such as its ttl. Note
-// that your registered SHA-256 certificate fingerprints are used to validate
-// tokens issued by SafetyNet; please register them via the Firebase Console or
-// programmatically via the Firebase Management Service
-// (https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects.androidApps.sha/create).
-type GoogleFirebaseAppcheckV1betaSafetyNetConfig struct {
-	// Name: Required. The relative resource name of the SafetyNet configuration
-	// object, in the format: ```
-	// projects/{project_number}/apps/{app_id}/safetyNetConfig ```
-	Name string `json:"name,omitempty"`
-	// TokenTtl: Specifies the duration for which App Check tokens exchanged from
-	// SafetyNet tokens will be valid. If unset, a default value of 1 hour is
-	// assumed. Must be between 30 minutes and 7 days, inclusive.
-	TokenTtl string `json:"tokenTtl,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleFirebaseAppcheckV1betaSafetyNetConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleFirebaseAppcheckV1betaSafetyNetConfig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleFirebaseAppcheckV1betaService: The enforcement configuration for a
 // Firebase service supported by App Check.
 type GoogleFirebaseAppcheckV1betaService struct {
-	// EnforcementMode: Required. The App Check enforcement mode for this service.
+	// EnforcementMode: Required. The baseline protection EnforcementMode for this
+	// service.
 	//
 	// Possible values:
-	//   "OFF" - The relevant App Check protection is not enforced for the service
-	// or resource, nor are App Check metrics collected. Though the relevant App
-	// Check protection is not applied, other applicable protections, such as user
-	// authorization, are still enforced. An unconfigured protection is in this
+	//   "OFF" - When a particular protection is set to this mode, that protection
+	// is not applied for the service or resource, nor are metrics related to that
+	// protection collected. Though the relevant App Check protection is not
+	// applied, other applicable protections outside of App Check, such as user
+	// authorization, are still applied. An unconfigured EnforcementMode is in this
 	// mode by default.
-	//   "UNENFORCED" - The relevant App Check protection is not enforced for the
-	// service or resource. App Check metrics are collected to help you decide when
-	// to turn on enforcement. These metrics will show the portion of traffic that
-	// is deemed invalid by the relevant App Check protection, but that traffic
-	// will not be rejected until you turn on enforcement. Though the relevant App
-	// Check protection is not enforced, other applicable protections, such as user
-	// authorization, are still enforced. Some services require certain conditions
-	// to be met before they will work with App Check, such as requiring you to
-	// upgrade to a specific service tier. Until those requirements are met for a
-	// service, this `UNENFORCED` setting will have no effect and App Check will
-	// not work with that service.
-	//   "ENFORCED" - The relevant App Check protection is enforced for the service
-	// or resource. The service or resource will reject any traffic not accompanied
-	// by an App Check token that is deemded valid by the relevant protection.
-	// There are some exceptions depending on the service; for example, some
-	// services will still allow requests bearing the developer's privileged
-	// service account credentials without an App Check token. App Check metrics
-	// continue to be collected to help you detect issues with your App Check
-	// integration and monitor the composition of your callers. While the service
-	// is protected by App Check, other applicable protections, such as user
-	// authorization, continue to be enforced at the same time. Use caution when
+	//   "UNENFORCED" - When a particular protection is set to this mode, that
+	// protection is not enforced for the service or resource. Metrics related to
+	// that protection are collected to help you decide when to turn on
+	// enforcement. These metrics will show the portion of traffic that is deemed
+	// invalid by that protection, but that traffic will not be rejected until you
+	// turn on enforcement. This `UNENFORCED` mode is also known as monitoring-only
+	// mode. Though the relevant App Check protection is not enforced, other
+	// applicable protections outside of App Check, such as user authorization, are
+	// still applied. Some services require certain conditions to be met before
+	// they will work with App Check, such as requiring you to upgrade to a
+	// specific service tier. Until those requirements are met for a service, this
+	// `UNENFORCED` setting will have no effect and App Check will not work with
+	// that service.
+	//   "ENFORCED" - When a particular protection is set to this mode, that
+	// protection is enforced for the service or resource. It will reject any
+	// traffic not accompanied by an App Check token that it deems valid. There are
+	// some exceptions depending on the service; for example, some services will
+	// still allow requests bearing the developer's privileged service account
+	// credentials without an App Check token. App Check metrics continue to be
+	// collected to help you detect issues with your App Check integration and
+	// monitor the composition of your callers. While the service is protected by
+	// App Check, other applicable protections outside of App check, such as user
+	// authorization, continue to be applied at the same time. Use caution when
 	// choosing to enforce App Check protections. If your users have not updated to
 	// a version of your app that meets the requirements of the relevant App Check
 	// protection, their app may stop working. App Check metrics can help you
-	// decide whether to enforce App Check on your services and resources. If your
-	// app has not launched yet, you should enable enforcement as soon as you
-	// verify that your App Check implementation is correct, since there are no
-	// outdated clients in use. Some services require certain conditions to be met
-	// before they will work with App Check, such as requiring you to upgrade to a
+	// decide when to enforce App Check on your services and resources. If your app
+	// has not launched yet, you should enable enforcement as soon as you verify
+	// that your App Check implementation is correct, since there are no outdated
+	// clients in use. Some services require certain conditions to be met before
+	// they will work with App Check, such as requiring you to upgrade to a
 	// specific service tier. Until those requirements are met for a service, this
 	// `ENFORCED` setting will have no effect and App Check will not work with that
 	// service.
@@ -2047,59 +1954,67 @@ type GoogleFirebaseAppcheckV1betaService struct {
 	// Name: Required. The relative resource name of the service configuration
 	// object, in the format: ``` projects/{project_number}/services/{service_id}
 	// ``` Note that the `service_id` element must be a supported service ID.
-	// Currently, the following service IDs are supported: *
-	// `firebasestorage.googleapis.com` (Cloud Storage for Firebase) *
-	// `firebasedatabase.googleapis.com` (Firebase Realtime Database) *
+	// Currently, the following service IDs are supported. Firebase and Google
+	// Cloud services: * `identitytoolkit.googleapis.com` (Firebase Authentication)
+	// * `firebasedataconnect.googleapis.com` (Firebase SQL Connect) *
 	// `firestore.googleapis.com` (Cloud Firestore) *
-	// `identitytoolkit.googleapis.com` (Firebase Authentication with Identity
-	// Platform) * `oauth2.googleapis.com` (Google Identity for iOS)
+	// `firebasedatabase.googleapis.com` (Firebase Realtime Database) *
+	// `firebasestorage.googleapis.com` (Cloud Storage for Firebase) *
+	// `firebaseml.googleapis.com` (Firebase AI Logic) Google Maps Platform
+	// services: * `maps-backend.googleapis.com` (Maps JavaScript API) *
+	// `places.googleapis.com` (Places API (New)) Other supported Google services:
+	// * `oauth2.googleapis.com` (Google Identity for iOS)
 	Name string `json:"name,omitempty"`
-	// ReplayProtection: Optional. The replay protection enforcement mode for this
-	// service. Note that this field cannot be set to a level higher than the
-	// overall App Check enforcement mode. For example, if the overall App Check
-	// enforcement mode is set to `UNENFORCED`, this field cannot be set to
-	// `ENFORCED`. In order to enforce replay protection, you must first enforce
-	// App Check. An HTTP 400 error will be returned in this case. By default, this
-	// field is set to `OFF`. Setting this field to `UNENFORCED` or `ENFORCED` is
-	// considered opting into replay protection. Once opted in, requests to your
-	// protected services may experience higher latency. To opt out of replay
-	// protection after opting in, set this field to `OFF`.
+	// ReplayProtection: Optional. The replay protection EnforcementMode for this
+	// service. Note that this field cannot be set to a level higher than that of
+	// baseline protection. For example, if the enforcement mode for baseline
+	// protection is set to `UNENFORCED`, this field cannot be set to `ENFORCED`.
+	// In order to enforce replay protection, you must first enforce App Check's
+	// baseline protection. An HTTP 400 error will be returned in this case. By
+	// default, this field is set to `OFF`. Setting this field to `UNENFORCED` or
+	// `ENFORCED` is considered opting into replay protection. Opting in can impact
+	// your requests by adding some latency and sometimes cost (depending on your
+	// attestation provider). To opt out of replay protection after opting in, set
+	// this field to `OFF`.
 	//
 	// Possible values:
-	//   "OFF" - The relevant App Check protection is not enforced for the service
-	// or resource, nor are App Check metrics collected. Though the relevant App
-	// Check protection is not applied, other applicable protections, such as user
-	// authorization, are still enforced. An unconfigured protection is in this
+	//   "OFF" - When a particular protection is set to this mode, that protection
+	// is not applied for the service or resource, nor are metrics related to that
+	// protection collected. Though the relevant App Check protection is not
+	// applied, other applicable protections outside of App Check, such as user
+	// authorization, are still applied. An unconfigured EnforcementMode is in this
 	// mode by default.
-	//   "UNENFORCED" - The relevant App Check protection is not enforced for the
-	// service or resource. App Check metrics are collected to help you decide when
-	// to turn on enforcement. These metrics will show the portion of traffic that
-	// is deemed invalid by the relevant App Check protection, but that traffic
-	// will not be rejected until you turn on enforcement. Though the relevant App
-	// Check protection is not enforced, other applicable protections, such as user
-	// authorization, are still enforced. Some services require certain conditions
-	// to be met before they will work with App Check, such as requiring you to
-	// upgrade to a specific service tier. Until those requirements are met for a
-	// service, this `UNENFORCED` setting will have no effect and App Check will
-	// not work with that service.
-	//   "ENFORCED" - The relevant App Check protection is enforced for the service
-	// or resource. The service or resource will reject any traffic not accompanied
-	// by an App Check token that is deemded valid by the relevant protection.
-	// There are some exceptions depending on the service; for example, some
-	// services will still allow requests bearing the developer's privileged
-	// service account credentials without an App Check token. App Check metrics
-	// continue to be collected to help you detect issues with your App Check
-	// integration and monitor the composition of your callers. While the service
-	// is protected by App Check, other applicable protections, such as user
-	// authorization, continue to be enforced at the same time. Use caution when
+	//   "UNENFORCED" - When a particular protection is set to this mode, that
+	// protection is not enforced for the service or resource. Metrics related to
+	// that protection are collected to help you decide when to turn on
+	// enforcement. These metrics will show the portion of traffic that is deemed
+	// invalid by that protection, but that traffic will not be rejected until you
+	// turn on enforcement. This `UNENFORCED` mode is also known as monitoring-only
+	// mode. Though the relevant App Check protection is not enforced, other
+	// applicable protections outside of App Check, such as user authorization, are
+	// still applied. Some services require certain conditions to be met before
+	// they will work with App Check, such as requiring you to upgrade to a
+	// specific service tier. Until those requirements are met for a service, this
+	// `UNENFORCED` setting will have no effect and App Check will not work with
+	// that service.
+	//   "ENFORCED" - When a particular protection is set to this mode, that
+	// protection is enforced for the service or resource. It will reject any
+	// traffic not accompanied by an App Check token that it deems valid. There are
+	// some exceptions depending on the service; for example, some services will
+	// still allow requests bearing the developer's privileged service account
+	// credentials without an App Check token. App Check metrics continue to be
+	// collected to help you detect issues with your App Check integration and
+	// monitor the composition of your callers. While the service is protected by
+	// App Check, other applicable protections outside of App check, such as user
+	// authorization, continue to be applied at the same time. Use caution when
 	// choosing to enforce App Check protections. If your users have not updated to
 	// a version of your app that meets the requirements of the relevant App Check
 	// protection, their app may stop working. App Check metrics can help you
-	// decide whether to enforce App Check on your services and resources. If your
-	// app has not launched yet, you should enable enforcement as soon as you
-	// verify that your App Check implementation is correct, since there are no
-	// outdated clients in use. Some services require certain conditions to be met
-	// before they will work with App Check, such as requiring you to upgrade to a
+	// decide when to enforce App Check on your services and resources. If your app
+	// has not launched yet, you should enable enforcement as soon as you verify
+	// that your App Check implementation is correct, since there are no outdated
+	// clients in use. Some services require certain conditions to be met before
+	// they will work with App Check, such as requiring you to upgrade to a
 	// specific service tier. Until those requirements are met for a service, this
 	// `ENFORCED` setting will have no effect and App Check will not work with that
 	// service.
@@ -2137,8 +2052,8 @@ type GoogleFirebaseAppcheckV1betaUpdateResourcePolicyRequest struct {
 	// format: ```
 	// projects/{project_number}/services/{service_id}/resourcePolicies/{resource_po
 	// licy_id} ``` Note that the `service_id` element must be a supported service
-	// ID. Currently, the following service IDs are supported: *
-	// `oauth2.googleapis.com` (Google Identity for iOS)
+	// ID. Consult the ResourcePolicy.name field for a list of supported service
+	// IDs.
 	ResourcePolicy *GoogleFirebaseAppcheckV1betaResourcePolicy `json:"resourcePolicy,omitempty"`
 	// UpdateMask: Required. A comma-separated list of names of fields in the
 	// ResourcePolicy to update. Example: `enforcement_mode`.
@@ -2168,15 +2083,8 @@ type GoogleFirebaseAppcheckV1betaUpdateServiceRequest struct {
 	// Service: Required. The Service to update. The Service's `name` field is used
 	// to identify the Service to be updated, in the format: ```
 	// projects/{project_number}/services/{service_id} ``` Note that the
-	// `service_id` element must be a supported service ID. Currently, the
-	// following service IDs are supported: * `firebasestorage.googleapis.com`
-	// (Cloud Storage for Firebase) * `firebasedatabase.googleapis.com` (Firebase
-	// Realtime Database) * `firestore.googleapis.com` (Cloud Firestore) *
-	// `identitytoolkit.googleapis.com` (Firebase Authentication with Identity
-	// Platform) * `oauth2.googleapis.com` (Google Identity for iOS) For Firebase
-	// Authentication to work with App Check, you must first upgrade to Firebase
-	// Authentication with Identity Platform
-	// (https://firebase.google.com/docs/auth#identity-platform).
+	// `service_id` element must be a supported service ID. Consult the
+	// Service.name field for a list of supported service IDs.
 	Service *GoogleFirebaseAppcheckV1betaService `json:"service,omitempty"`
 	// UpdateMask: Required. A comma-separated list of names of fields in the
 	// Service to update. Example: `enforcement_mode`.
@@ -4003,116 +3911,6 @@ func (c *ProjectsAppsExchangeRecaptchaV3TokenCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangeRecaptchaV3Token", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsAppsExchangeSafetyNetTokenCall struct {
-	s                                                         *Service
-	appid                                                     string
-	googlefirebaseappcheckv1betaexchangesafetynettokenrequest *GoogleFirebaseAppcheckV1betaExchangeSafetyNetTokenRequest
-	urlParams_                                                gensupport.URLParams
-	ctx_                                                      context.Context
-	header_                                                   http.Header
-}
-
-// ExchangeSafetyNetToken: Validates a SafetyNet token
-// (https://developer.android.com/training/safetynet/attestation#request-attestation-step).
-// If valid, returns an AppCheckToken.
-//
-//   - app: The relative resource name of the Android app, in the format: ```
-//     projects/{project_number}/apps/{app_id} ``` If necessary, the
-//     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in Google's
-//     AIP 2510 (https://google.aip.dev/cloud/2510) standard.
-func (r *ProjectsAppsService) ExchangeSafetyNetToken(appid string, googlefirebaseappcheckv1betaexchangesafetynettokenrequest *GoogleFirebaseAppcheckV1betaExchangeSafetyNetTokenRequest) *ProjectsAppsExchangeSafetyNetTokenCall {
-	c := &ProjectsAppsExchangeSafetyNetTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.appid = appid
-	c.googlefirebaseappcheckv1betaexchangesafetynettokenrequest = googlefirebaseappcheckv1betaexchangesafetynettokenrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsAppsExchangeSafetyNetTokenCall) Fields(s ...googleapi.Field) *ProjectsAppsExchangeSafetyNetTokenCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsAppsExchangeSafetyNetTokenCall) Context(ctx context.Context) *ProjectsAppsExchangeSafetyNetTokenCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsAppsExchangeSafetyNetTokenCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsAppsExchangeSafetyNetTokenCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlefirebaseappcheckv1betaexchangesafetynettokenrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+app}:exchangeSafetyNetToken")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"app": c.appid,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangeSafetyNetToken", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "firebaseappcheck.projects.apps.exchangeSafetyNetToken" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleFirebaseAppcheckV1betaAppCheckToken.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsAppsExchangeSafetyNetTokenCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1betaAppCheckToken, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleFirebaseAppcheckV1betaAppCheckToken{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.exchangeSafetyNetToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6958,7 +6756,7 @@ type ProjectsAppsRecaptchaV3ConfigPatchCall struct {
 
 // Patch: Updates the RecaptchaV3Config for the specified app. While this
 // configuration is incomplete or invalid, the app will be unable to exchange
-// reCAPTCHA V3 tokens for App Check tokens. For security reasons, the
+// reCAPTCHA v3 tokens for App Check tokens. For security reasons, the
 // `site_secret` field is never populated in the response.
 //
 //   - name: The relative resource name of the reCAPTCHA v3 configuration object,
@@ -7061,356 +6859,6 @@ func (c *ProjectsAppsRecaptchaV3ConfigPatchCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.recaptchaV3Config.patch", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsAppsSafetyNetConfigBatchGetCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// BatchGet: Atomically gets the SafetyNetConfigs for the specified list of
-// apps.
-//
-//   - parent: The parent project name shared by all SafetyNetConfigs being
-//     retrieved, in the format ``` projects/{project_number} ``` The parent
-//     collection in the `name` field of any resource being retrieved must match
-//     this field, or the entire batch fails.
-func (r *ProjectsAppsSafetyNetConfigService) BatchGet(parent string) *ProjectsAppsSafetyNetConfigBatchGetCall {
-	c := &ProjectsAppsSafetyNetConfigBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Names sets the optional parameter "names": Required. The relative resource
-// names of the SafetyNetConfigs to retrieve, in the format ```
-// projects/{project_number}/apps/{app_id}/safetyNetConfig ``` A maximum of 100
-// objects can be retrieved in a batch.
-func (c *ProjectsAppsSafetyNetConfigBatchGetCall) Names(names ...string) *ProjectsAppsSafetyNetConfigBatchGetCall {
-	c.urlParams_.SetMulti("names", append([]string{}, names...))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsAppsSafetyNetConfigBatchGetCall) Fields(s ...googleapi.Field) *ProjectsAppsSafetyNetConfigBatchGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsAppsSafetyNetConfigBatchGetCall) IfNoneMatch(entityTag string) *ProjectsAppsSafetyNetConfigBatchGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsAppsSafetyNetConfigBatchGetCall) Context(ctx context.Context) *ProjectsAppsSafetyNetConfigBatchGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsAppsSafetyNetConfigBatchGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsAppsSafetyNetConfigBatchGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/apps/-/safetyNetConfig:batchGet")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.safetyNetConfig.batchGet", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "firebaseappcheck.projects.apps.safetyNetConfig.batchGet" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleFirebaseAppcheckV1betaBatchGetSafetyNetConfigsResponse.ServerResponse.
-// Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsAppsSafetyNetConfigBatchGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1betaBatchGetSafetyNetConfigsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleFirebaseAppcheckV1betaBatchGetSafetyNetConfigsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.safetyNetConfig.batchGet", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsAppsSafetyNetConfigGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets the SafetyNetConfig for the specified app.
-//
-//   - name: The relative resource name of the SafetyNetConfig, in the format:
-//     ``` projects/{project_number}/apps/{app_id}/safetyNetConfig ```.
-func (r *ProjectsAppsSafetyNetConfigService) Get(name string) *ProjectsAppsSafetyNetConfigGetCall {
-	c := &ProjectsAppsSafetyNetConfigGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsAppsSafetyNetConfigGetCall) Fields(s ...googleapi.Field) *ProjectsAppsSafetyNetConfigGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsAppsSafetyNetConfigGetCall) IfNoneMatch(entityTag string) *ProjectsAppsSafetyNetConfigGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsAppsSafetyNetConfigGetCall) Context(ctx context.Context) *ProjectsAppsSafetyNetConfigGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsAppsSafetyNetConfigGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsAppsSafetyNetConfigGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.safetyNetConfig.get", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "firebaseappcheck.projects.apps.safetyNetConfig.get" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleFirebaseAppcheckV1betaSafetyNetConfig.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsAppsSafetyNetConfigGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1betaSafetyNetConfig, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleFirebaseAppcheckV1betaSafetyNetConfig{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.safetyNetConfig.get", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsAppsSafetyNetConfigPatchCall struct {
-	s                                           *Service
-	name                                        string
-	googlefirebaseappcheckv1betasafetynetconfig *GoogleFirebaseAppcheckV1betaSafetyNetConfig
-	urlParams_                                  gensupport.URLParams
-	ctx_                                        context.Context
-	header_                                     http.Header
-}
-
-// Patch: Updates the SafetyNetConfig for the specified app. While this
-// configuration is incomplete or invalid, the app will be unable to exchange
-// SafetyNet tokens for App Check tokens.
-//
-//   - name: The relative resource name of the SafetyNet configuration object, in
-//     the format: ``` projects/{project_number}/apps/{app_id}/safetyNetConfig
-//     ```.
-func (r *ProjectsAppsSafetyNetConfigService) Patch(name string, googlefirebaseappcheckv1betasafetynetconfig *GoogleFirebaseAppcheckV1betaSafetyNetConfig) *ProjectsAppsSafetyNetConfigPatchCall {
-	c := &ProjectsAppsSafetyNetConfigPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googlefirebaseappcheckv1betasafetynetconfig = googlefirebaseappcheckv1betasafetynetconfig
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": Required. A
-// comma-separated list of names of fields in the SafetyNetConfig to update.
-// Example: `token_ttl`.
-func (c *ProjectsAppsSafetyNetConfigPatchCall) UpdateMask(updateMask string) *ProjectsAppsSafetyNetConfigPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsAppsSafetyNetConfigPatchCall) Fields(s ...googleapi.Field) *ProjectsAppsSafetyNetConfigPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsAppsSafetyNetConfigPatchCall) Context(ctx context.Context) *ProjectsAppsSafetyNetConfigPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsAppsSafetyNetConfigPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsAppsSafetyNetConfigPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlefirebaseappcheckv1betasafetynetconfig)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.safetyNetConfig.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "firebaseappcheck.projects.apps.safetyNetConfig.patch" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleFirebaseAppcheckV1betaSafetyNetConfig.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsAppsSafetyNetConfigPatchCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1betaSafetyNetConfig, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleFirebaseAppcheckV1betaSafetyNetConfig{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.safetyNetConfig.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7534,12 +6982,8 @@ type ProjectsServicesGetCall struct {
 //
 //   - name: The relative resource name of the Service to retrieve, in the
 //     format: ``` projects/{project_number}/services/{service_id} ``` Note that
-//     the `service_id` element must be a supported service ID. Currently, the
-//     following service IDs are supported: * `firebasestorage.googleapis.com`
-//     (Cloud Storage for Firebase) * `firebasedatabase.googleapis.com` (Firebase
-//     Realtime Database) * `firestore.googleapis.com` (Cloud Firestore) *
-//     `identitytoolkit.googleapis.com` (Firebase Authentication with Identity
-//     Platform) * `oauth2.googleapis.com` (Google Identity for iOS).
+//     the `service_id` element must be a supported service ID. Consult the
+//     Service.name field for a list of supported service IDs.
 func (r *ProjectsServicesService) Get(name string) *ProjectsServicesGetCall {
 	c := &ProjectsServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7807,12 +7251,16 @@ type ProjectsServicesPatchCall struct {
 //   - name: The relative resource name of the service configuration object, in
 //     the format: ``` projects/{project_number}/services/{service_id} ``` Note
 //     that the `service_id` element must be a supported service ID. Currently,
-//     the following service IDs are supported: *
-//     `firebasestorage.googleapis.com` (Cloud Storage for Firebase) *
-//     `firebasedatabase.googleapis.com` (Firebase Realtime Database) *
+//     the following service IDs are supported. Firebase and Google Cloud
+//     services: * `identitytoolkit.googleapis.com` (Firebase Authentication) *
+//     `firebasedataconnect.googleapis.com` (Firebase SQL Connect) *
 //     `firestore.googleapis.com` (Cloud Firestore) *
-//     `identitytoolkit.googleapis.com` (Firebase Authentication with Identity
-//     Platform) * `oauth2.googleapis.com` (Google Identity for iOS).
+//     `firebasedatabase.googleapis.com` (Firebase Realtime Database) *
+//     `firebasestorage.googleapis.com` (Cloud Storage for Firebase) *
+//     `firebaseml.googleapis.com` (Firebase AI Logic) Google Maps Platform
+//     services: * `maps-backend.googleapis.com` (Maps JavaScript API) *
+//     `places.googleapis.com` (Places API (New)) Other supported Google
+//     services: * `oauth2.googleapis.com` (Google Identity for iOS).
 func (r *ProjectsServicesService) Patch(name string, googlefirebaseappcheckv1betaservice *GoogleFirebaseAppcheckV1betaService) *ProjectsServicesPatchCall {
 	c := &ProjectsServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8034,9 +7482,8 @@ type ProjectsServicesResourcePoliciesCreateCall struct {
 //   - parent: The relative resource name of the parent Service in which the
 //     specified ResourcePolicy will be created, in the format: ```
 //     projects/{project_number}/services/{service_id} ``` Note that the
-//     `service_id` element must be a supported service ID. Currently, the
-//     following service IDs are supported: * `oauth2.googleapis.com` (Google
-//     Identity for iOS).
+//     `service_id` element must be a supported service ID. Consult the
+//     ResourcePolicy.name field for a list of supported service IDs.
 func (r *ProjectsServicesResourcePoliciesService) Create(parent string, googlefirebaseappcheckv1betaresourcepolicy *GoogleFirebaseAppcheckV1betaResourcePolicy) *ProjectsServicesResourcePoliciesCreateCall {
 	c := &ProjectsServicesResourcePoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8258,8 +7705,8 @@ type ProjectsServicesResourcePoliciesGetCall struct {
 //     format: ```
 //     projects/{project_number}/services/{service_id}/resourcePolicies/{resource_
 //     policy_id} ``` Note that the `service_id` element must be a supported
-//     service ID. Currently, the following service IDs are supported: *
-//     `oauth2.googleapis.com` (Google Identity for iOS).
+//     service ID. Consult the ResourcePolicy.name field for a list of supported
+//     service IDs.
 func (r *ProjectsServicesResourcePoliciesService) Get(name string) *ProjectsServicesResourcePoliciesGetCall {
 	c := &ProjectsServicesResourcePoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8373,9 +7820,8 @@ type ProjectsServicesResourcePoliciesListCall struct {
 //   - parent: The relative resource name of the parent Service for which to list
 //     each associated ResourcePolicy, in the format: ```
 //     projects/{project_number}/services/{service_id} ``` Note that the
-//     `service_id` element must be a supported service ID. Currently, the
-//     following service IDs are supported: * `oauth2.googleapis.com` (Google
-//     Identity for iOS).
+//     `service_id` element must be a supported service ID. Consult the
+//     ResourcePolicy.name field for a list of supported service IDs.
 func (r *ProjectsServicesResourcePoliciesService) List(parent string) *ProjectsServicesResourcePoliciesListCall {
 	c := &ProjectsServicesResourcePoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

@@ -9574,7 +9574,7 @@
       }
     }
   },
-  "revision": "20260708",
+  "revision": "20260714",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActiveViewVideoViewabilityMetricConfig": {
@@ -11125,6 +11125,15 @@
         "dataAccessConfig": {
           "$ref": "AdvertiserDataAccessConfig",
           "description": "Settings that control how advertiser data may be accessed."
+        },
+        "defaultBusinessName": {
+          "description": "Optional. The default business name for the advertiser. This is the value used by YouTube and Demand Gen ads under this advertiser if a business name is not provided.",
+          "type": "string"
+        },
+        "defaultLogoAssetId": {
+          "description": "Optional. The asset ID of the default logo image for the advertiser. This is the asset ID that will be used by YouTube and Demand ads under this advertiser if a logo asset is not provided. You must use advertisers.adAssets.upload to upload this asset using the API.",
+          "format": "int64",
+          "type": "string"
         },
         "displayName": {
           "description": "Required. The display name of the advertiser. Must be UTF-8 encoded with a maximum size of 240 bytes.",
@@ -16121,7 +16130,7 @@
       "id": "DemandGenCarouselAd",
       "properties": {
         "businessName": {
-          "description": "Required. The business name shown on the ad. *Warning*: Starting **July 13, 2026**, this setting will no longer be required if a default value is set at the advertiser level. If left unset, the default value will be applied.",
+          "description": "Optional. The business name shown on the ad. This setting is required unless a default value is set at the advertiser level. If left unset, the default value will be applied.",
           "type": "string"
         },
         "cards": {
@@ -16156,7 +16165,7 @@
         },
         "logo": {
           "$ref": "ImageAsset",
-          "description": "Required. The logo image used by this ad. *Warning*: Starting **July 13, 2026**, this setting will no longer be required if a default value is set at the advertiser level. If left unset, the default value will be applied."
+          "description": "Optional. The logo image used by this ad. This setting is required unless a default value is set at the advertiser level. If left unset, the default value will be applied."
         },
         "trackingUrl": {
           "description": "Output only. The URL address loaded in the background for tracking purposes.",
@@ -16175,7 +16184,7 @@
       "id": "DemandGenImageAd",
       "properties": {
         "businessName": {
-          "description": "Required. The business name shown on the ad. *Warning*: Starting **July 13, 2026**, this setting will no longer be required if a default value is set at the advertiser level. If left unset, the default value will be applied.",
+          "description": "Optional. The business name shown on the ad. This setting is required unless a default value is set at the advertiser level. If left unset, the default value will be applied.",
           "type": "string"
         },
         "callToAction": {
@@ -16216,7 +16225,7 @@
           "type": "array"
         },
         "logoImages": {
-          "description": "The list of logo images shown on the ad. *Warning*: Starting **July 13, 2026**, this setting will no longer be required if a default value is set at the advertiser level. If left unset, the default value will be applied.",
+          "description": "The list of logo images shown on the ad. This setting is required unless a default value is set at the advertiser level. If left unset, the default value will be applied.",
           "items": {
             "$ref": "ImageAsset"
           },
@@ -16260,7 +16269,7 @@
       "id": "DemandGenProductAd",
       "properties": {
         "businessName": {
-          "description": "Required. The business name shown on the ad. *Warning*: Starting **July 13, 2026**, this setting will no longer be required if a default value is set at the advertiser level. If left unset, the default value will be applied.",
+          "description": "Optional. The business name shown on the ad. This setting is required unless a default value is set at the advertiser level. If left unset, the default value will be applied.",
           "type": "string"
         },
         "callToAction": {
@@ -16342,7 +16351,7 @@
         },
         "logo": {
           "$ref": "ImageAsset",
-          "description": "Required. The logo image used by this ad. *Warning*: Starting **July 13, 2026**, this setting will no longer be required if a default value is set at the advertiser level. If left unset, the default value will be applied."
+          "description": "Optional. The logo image used by this ad. This setting is required unless a default value is set at the advertiser level. If left unset, the default value will be applied."
         },
         "trackingUrl": {
           "description": "Output only. The URL address loaded in the background for tracking purposes.",
@@ -16381,7 +16390,7 @@
       "id": "DemandGenVideoAd",
       "properties": {
         "businessName": {
-          "description": "Required. The business name shown on the ad. *Warning*: Starting **July 13, 2026**, this setting will no longer be required if a default value is set at the advertiser level. If left unset, the default value will be applied.",
+          "description": "Optional. The business name shown on the ad. This setting is required unless a default value is set at the advertiser level. If left unset, the default value will be applied.",
           "type": "string"
         },
         "callToAction": {
@@ -16477,7 +16486,7 @@
         },
         "logo": {
           "$ref": "ImageAsset",
-          "description": "Required. The logo image used by this ad. *Warning*: Starting **July 13, 2026**, this setting will no longer be required if a default value is set at the advertiser level. If left unset, the default value will be applied."
+          "description": "Optional. The logo image used by this ad. This setting is required unless a default value is set at the advertiser level. If left unset, the default value will be applied."
         },
         "longHeadlines": {
           "description": "Required. The list of long headlines shown on the ad.",
@@ -23117,22 +23126,25 @@
           "readOnly": true,
           "type": "array"
         },
-        "network": {
-          "description": "Output only. Targetable network for the ad product.",
-          "enum": [
-            "PLANNABLE_NETWORK_UNSPECIFIED",
-            "PLANNABLE_NETWORK_YOUTUBE",
-            "PLANNABLE_NETWORK_GOOGLE_VIDEO_PARTNERS",
-            "PLANNABLE_NETWORK_YOUTUBE_AND_GOOGLE_VIDEO_PARTNERS"
-          ],
-          "enumDescriptions": [
-            "Not specified.",
-            "YouTube.",
-            "Google Video Partners.",
-            "YouTube and Google Video Partners."
-          ],
+        "networks": {
+          "description": "Output only. Targetable networks for the ad product.",
+          "items": {
+            "enum": [
+              "PLANNABLE_NETWORK_UNSPECIFIED",
+              "PLANNABLE_NETWORK_YOUTUBE",
+              "PLANNABLE_NETWORK_GOOGLE_VIDEO_PARTNERS",
+              "PLANNABLE_NETWORK_YOUTUBE_AND_GOOGLE_VIDEO_PARTNERS"
+            ],
+            "enumDescriptions": [
+              "Not specified.",
+              "YouTube.",
+              "Google Video Partners.",
+              "YouTube and Google Video Partners."
+            ],
+            "type": "string"
+          },
           "readOnly": true,
-          "type": "string"
+          "type": "array"
         },
         "surfaceTargetingCombinations": {
           "$ref": "SurfaceTargetingCombinations",
@@ -24992,7 +25004,7 @@
       "id": "ThirdPartyMeasurementConfigs",
       "properties": {
         "brandLiftVendorConfigs": {
-          "description": "Optional. The third-party vendors measuring brand lift. The following third-party vendors are applicable: * `THIRD_PARTY_VENDOR_DYNATA` * `THIRD_PARTY_VENDOR_KANTAR` * `THIRD_PARTY_VENDOR_INTAGE` * `THIRD_PARTY_VENDOR_NIELSEN` * `THIRD_PARTY_VENDOR_MACROMILL` *Warning*: Starting **July 13, 2026**, this field will no longer support `THIRD_PARTY_VENDOR_NIELSEN`.",
+          "description": "Optional. The third-party vendors measuring brand lift. The following third-party vendors are applicable: * `THIRD_PARTY_VENDOR_DYNATA` * `THIRD_PARTY_VENDOR_KANTAR` * `THIRD_PARTY_VENDOR_INTAGE` * `THIRD_PARTY_VENDOR_MACROMILL`",
           "items": {
             "$ref": "ThirdPartyVendorConfig"
           },

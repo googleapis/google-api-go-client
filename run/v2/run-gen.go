@@ -567,6 +567,15 @@ type GoogleCloudRunV2Condition struct {
 	//   "DELETED" - The execution was deleted.
 	//   "DELAYED_START_PENDING" - A delayed execution is waiting for a start time.
 	ExecutionReason string `json:"executionReason,omitempty"`
+	// InstanceReason: Output only. A reason for the instance condition.
+	//
+	// Possible values:
+	//   "INSTANCE_REASON_UNSPECIFIED" - Default value.
+	//   "INSTANCE_DELETED" - Instance deleted.
+	//   "INSTANCE_STOPPED" - Instance stopped.
+	//   "INSTANCE_STOPPING" - Instance stopping.
+	//   "INSTANCE_NON_ZERO_EXIT_CODE" - Instance exited with a non-zero exit code.
+	InstanceReason string `json:"instanceReason,omitempty"`
 	// LastTransitionTime: Last time the condition transitioned from one status to
 	// another.
 	LastTransitionTime string `json:"lastTransitionTime,omitempty"`
@@ -2988,6 +2997,8 @@ type GoogleCloudRunV2Service struct {
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Scaling: Optional. Specifies service-level scaling settings
 	Scaling *GoogleCloudRunV2ServiceScaling `json:"scaling,omitempty"`
+	// SshEnabled: Optional. Enables SSH access to the Service.
+	SshEnabled bool `json:"sshEnabled,omitempty"`
 	// Template: Required. The template used to create revisions for this Service.
 	Template *GoogleCloudRunV2RevisionTemplate `json:"template,omitempty"`
 	// TerminalCondition: Output only. The Condition of this Service, containing

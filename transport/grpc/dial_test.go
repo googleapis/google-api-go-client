@@ -81,7 +81,7 @@ func TestDialPoolNewAuthDialOptions(t *testing.T) {
 	} {
 		t.Run(testcase.name, func(t *testing.T) {
 			wantNumOpts = testcase.wantNumOpts
-			universeDomain = testcase.ds.UniverseDomain
+			universeDomain = testcase.ds.GetUniverseDomain()
 			dialPoolNewAuth(context.Background(), false, 1, testcase.ds)
 		})
 	}

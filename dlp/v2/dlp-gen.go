@@ -1029,17 +1029,17 @@ func (s GooglePrivacyDlpV2AmazonS3BucketRegex) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails: Result of a risk analysis
 // operation request.
 type GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails struct {
-	// CategoricalStatsResult: Categorical stats result
+	// CategoricalStatsResult: Output only. Categorical stats result
 	CategoricalStatsResult *GooglePrivacyDlpV2CategoricalStatsResult `json:"categoricalStatsResult,omitempty"`
-	// DeltaPresenceEstimationResult: Delta-presence result
+	// DeltaPresenceEstimationResult: Output only. Delta-presence result
 	DeltaPresenceEstimationResult *GooglePrivacyDlpV2DeltaPresenceEstimationResult `json:"deltaPresenceEstimationResult,omitempty"`
-	// KAnonymityResult: K-anonymity result
+	// KAnonymityResult: Output only. K-anonymity result
 	KAnonymityResult *GooglePrivacyDlpV2KAnonymityResult `json:"kAnonymityResult,omitempty"`
-	// KMapEstimationResult: K-map result
+	// KMapEstimationResult: Output only. K-map result
 	KMapEstimationResult *GooglePrivacyDlpV2KMapEstimationResult `json:"kMapEstimationResult,omitempty"`
-	// LDiversityResult: L-divesity result
+	// LDiversityResult: Output only. L-divesity result
 	LDiversityResult *GooglePrivacyDlpV2LDiversityResult `json:"lDiversityResult,omitempty"`
-	// NumericalStatsResult: Numerical stats result
+	// NumericalStatsResult: Output only. Numerical stats result
 	NumericalStatsResult *GooglePrivacyDlpV2NumericalStatsResult `json:"numericalStatsResult,omitempty"`
 	// RequestedOptions: The configuration used for this job.
 	RequestedOptions *GooglePrivacyDlpV2RequestedRiskAnalysisOptions `json:"requestedOptions,omitempty"`
@@ -4891,8 +4891,8 @@ type GooglePrivacyDlpV2DiscoveryConfig struct {
 	// LastRunTime: Output only. The timestamp of the last time this config was
 	// executed.
 	LastRunTime string `json:"lastRunTime,omitempty"`
-	// Name: Unique resource name for the DiscoveryConfig, assigned by the service
-	// when the DiscoveryConfig is created, for example
+	// Name: Output only. Unique resource name for the DiscoveryConfig, assigned by
+	// the service when the DiscoveryConfig is created, for example
 	// `projects/dlp-test-project/locations/global/discoveryConfigs/53234423`.
 	Name string `json:"name,omitempty"`
 	// OrgConfig: Only set when the parent is an org.
@@ -5405,7 +5405,8 @@ func (s GooglePrivacyDlpV2DiscoveryVertexDatasetGenerationCadence) MarshalJSON()
 
 // GooglePrivacyDlpV2DlpJob: Combines all of the information about a DLP job.
 type GooglePrivacyDlpV2DlpJob struct {
-	// ActionDetails: Events that should occur after the job has completed.
+	// ActionDetails: Output only. Events that should occur after the job has
+	// completed.
 	ActionDetails []*GooglePrivacyDlpV2ActionDetails `json:"actionDetails,omitempty"`
 	// CreateTime: Output only. Time when the job was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -7141,6 +7142,10 @@ type GooglePrivacyDlpV2InfoTypeCondition struct {
 	AnyInfoType *GoogleProtobufEmpty `json:"anyInfoType,omitempty"`
 	// InfoTypes: match any of these info types.
 	InfoTypes *GooglePrivacyDlpV2InfoTypes `json:"infoTypes,omitempty"`
+	// MinCount: Optional. The minimum total number of findings of all matching
+	// info types required for this condition to evaluate to true. Defaults to 1 if
+	// unset.
+	MinCount int64 `json:"minCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "AnyInfoType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7560,7 +7565,7 @@ func (s GooglePrivacyDlpV2InspectContentResponse) MarshalJSON() ([]byte, error) 
 type GooglePrivacyDlpV2InspectDataSourceDetails struct {
 	// RequestedOptions: The configuration used for this job.
 	RequestedOptions *GooglePrivacyDlpV2RequestedOptions `json:"requestedOptions,omitempty"`
-	// Result: A summary of the outcome of this inspection job.
+	// Result: Output only. A summary of the outcome of this inspection job.
 	Result *GooglePrivacyDlpV2Result `json:"result,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RequestedOptions") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7772,8 +7777,8 @@ type GooglePrivacyDlpV2JobTrigger struct {
 	// LastRunTime: Output only. The timestamp of the last time this trigger
 	// executed.
 	LastRunTime string `json:"lastRunTime,omitempty"`
-	// Name: Unique resource name for the triggeredJob, assigned by the service
-	// when the triggeredJob is created, for example
+	// Name: Output only. Unique resource name for the triggeredJob, assigned by
+	// the service when the triggeredJob is created, for example
 	// `projects/dlp-test-project/jobTriggers/53234423`.
 	Name string `json:"name,omitempty"`
 	// Status: Required. A status for this trigger.
@@ -10588,8 +10593,8 @@ func (s GooglePrivacyDlpV2RequestedDeidentifyOptions) MarshalJSON() ([]byte, err
 type GooglePrivacyDlpV2RequestedOptions struct {
 	// JobConfig: Inspect config.
 	JobConfig *GooglePrivacyDlpV2InspectJobConfig `json:"jobConfig,omitempty"`
-	// SnapshotInspectTemplate: If run with an InspectTemplate, a snapshot of its
-	// state at the time of this run.
+	// SnapshotInspectTemplate: Output only. If run with an InspectTemplate, a
+	// snapshot of its state at the time of this run.
 	SnapshotInspectTemplate *GooglePrivacyDlpV2InspectTemplate `json:"snapshotInspectTemplate,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "JobConfig") to
 	// unconditionally include in API requests. By default, fields with empty or

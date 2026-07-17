@@ -2035,6 +2035,10 @@ type QueryDatabaseResourceGroupsRequest struct {
 	// SignalFilters: Optional. Filters based on signals. The list will be ORed
 	// together and then ANDed with the `filters` field above.
 	SignalFilters []*SignalFilter `json:"signalFilters,omitempty"`
+	// SignalProductsFilters: Optional. Filters based on signal and product. The
+	// filter list will be ORed across pairs and ANDed within a signal and products
+	// pair.
+	SignalProductsFilters []*SignalProductsFilters `json:"signalProductsFilters,omitempty"`
 	// SignalTypeGroups: Optional. Groups of signal types that are requested.
 	SignalTypeGroups []*SignalTypeGroup `json:"signalTypeGroups,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally

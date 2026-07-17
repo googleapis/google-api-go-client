@@ -2194,6 +2194,15 @@ type ExecuteSqlPayload struct {
 	// `partial_result` to true if the result exceeds 10 MB or if only a partial
 	// result can be retrieved due to error. Don't throw an error.
 	PartialResultMode string `json:"partialResultMode,omitempty"`
+	// PasswordSecretVersion: Optional. The resource name of the Secret Manager
+	// secret holding the password for the user to log into the database. The
+	// secret should be created using the regional endpoint (for API) or from the
+	// Regional Secrets page (for UI), and stored in the same region as the Cloud
+	// SQL instance. The expected resource name format is
+	// `projects/{project}/locations/{location}/secrets/{secret}/versions/{secret_ve
+	// rsion}`. This field is used together with the `user` field. The secret
+	// resource name will not be stored.
+	PasswordSecretVersion string `json:"passwordSecretVersion,omitempty"`
 	// RowLimit: Optional. The maximum number of rows returned per SQL statement.
 	RowLimit int64 `json:"rowLimit,omitempty,string"`
 	// SqlStatement: Required. SQL statements to run on the database. It can be a

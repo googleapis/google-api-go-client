@@ -395,6 +395,9 @@ type Argument struct {
 	// can be a struct or an array, but not a table.
 	//   "ANY_TYPE" - The argument is any type, including struct or array, but not
 	// a table.
+	//   "FIXED_TABLE" - The argument is a table with fully specified column names
+	// and types.
+	//   "ANY_TABLE" - The argument is any table type.
 	ArgumentKind string `json:"argumentKind,omitempty"`
 	// DataType: Set if argument_kind == FIXED_TYPE.
 	DataType *StandardSqlDataType `json:"dataType,omitempty"`
@@ -416,6 +419,8 @@ type Argument struct {
 	// Name: Optional. The name of this argument. Can be absent for function return
 	// argument.
 	Name string `json:"name,omitempty"`
+	// TableType: Optional. Set if argument_kind == FIXED_TABLE.
+	TableType *StandardSqlTableType `json:"tableType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ArgumentKind") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4976,7 +4981,10 @@ type JobConfiguration struct {
 	// a reservation to execute the job. If reservation is not set, reservation is
 	// determined based on the rules defined by the reservation assignments. The
 	// expected format is
-	// `projects/{project}/locations/{location}/reservations/{reservation}`.
+	// `projects/{project}/locations/{location}/reservations/{reservation}`. Forces
+	// the query to use on-demand billing when set to `none`, which requires the
+	// project or organization to have `reservation_override_mode` set to
+	// `ALLOW_ANY_OVERRIDE`.
 	Reservation string `json:"reservation,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Copy") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5819,10 +5827,15 @@ type JobStatistics struct {
 	// execution of the final attempt of this job, as BigQuery may internally
 	// re-attempt to execute the job.
 	FinalExecutionDurationMs int64 `json:"finalExecutionDurationMs,omitempty,string"`
+	// GlobalQueryRemoteRegions: Output only. Regions where the global query
+	// accesses data.
+	GlobalQueryRemoteRegions []string `json:"globalQueryRemoteRegions,omitempty"`
 	// Load: Output only. Statistics for a load job.
 	Load *JobStatistics3 `json:"load,omitempty"`
 	// NumChildJobs: Output only. Number of child jobs executed.
 	NumChildJobs int64 `json:"numChildJobs,omitempty,string"`
+	// ParentGlobalQueryJob: Output only. The global query that created this job.
+	ParentGlobalQueryJob *JobReference `json:"parentGlobalQueryJob,omitempty"`
 	// ParentJobId: Output only. If this is a child job, specifies the job ID of
 	// the parent.
 	ParentJobId string `json:"parentJobId,omitempty"`
@@ -6003,6 +6016,9 @@ type JobStatistics2 struct {
 	// NumDmlAffectedRows: Output only. The number of rows affected by a DML
 	// statement. Present only for DML statements INSERT, UPDATE or DELETE.
 	NumDmlAffectedRows int64 `json:"numDmlAffectedRows,omitempty,string"`
+	// ObjectStorageStats: Output only. Storage and caching statistics per cloud
+	// provider for queries over object storage.
+	ObjectStorageStats []*ObjectStorageStats `json:"objectStorageStats,omitempty"`
 	// PerformanceInsights: Output only. Performance insights.
 	PerformanceInsights *PerformanceInsights `json:"performanceInsights,omitempty"`
 	// QueryInfo: Output only. Query optimization information for a QUERY job.
@@ -6271,6 +6287,9 @@ type JobStatistics5 struct {
 	CopiedLogicalBytes int64 `json:"copiedLogicalBytes,omitempty,string"`
 	// CopiedRows: Output only. Number of rows copied to the destination table.
 	CopiedRows int64 `json:"copiedRows,omitempty,string"`
+	// RemoteDestinationRegion: Output only. Destination region for a cross-region
+	// copy job. Not set for in-region copy jobs.
+	RemoteDestinationRegion string `json:"remoteDestinationRegion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CopiedLogicalBytes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7144,6 +7163,40 @@ func (s MultiClassClassificationMetrics) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ObjectStorageStats: Storage and caching statistics for object storage.
+type ObjectStorageStats struct {
+	// CacheBytesRead: Total bytes read from the GCP Lakehouse-internal cache,
+	// avoiding an object storage read.
+	CacheBytesRead int64 `json:"cacheBytesRead,omitempty,string"`
+	// CloudProvider: The cloud provider for this block of statistics.
+	//
+	// Possible values:
+	//   "CLOUD_PROVIDER_UNSPECIFIED" - Unspecified cloud provider.
+	//   "GCP" - Google Cloud Platform.
+	//   "AWS" - Amazon Web Services.
+	//   "AZURE" - Microsoft Azure.
+	CloudProvider string `json:"cloudProvider,omitempty"`
+	// ObjectStorageBytesRead: Total bytes read directly from the cloud provider's
+	// storage.
+	ObjectStorageBytesRead int64 `json:"objectStorageBytesRead,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "CacheBytesRead") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CacheBytesRead") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ObjectStorageStats) MarshalJSON() ([]byte, error) {
+	type NoMethod ObjectStorageStats
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ParquetOptions: Parquet Options for load and make external tables.
 type ParquetOptions struct {
 	// EnableListInference: Optional. Indicates whether to use schema inference
@@ -7913,6 +7966,9 @@ type QueryRequest struct {
 	// Reservation: Optional. The reservation that jobs.query request would use.
 	// User can specify a reservation to execute the job.query. The expected format
 	// is `projects/{project}/locations/{location}/reservations/{reservation}`.
+	// Forces the query to use on-demand billing when set to `none`. This requires
+	// the project or organization to have `reservation_override_mode` set to
+	// `ALLOW_ANY_OVERRIDE`.
 	Reservation string `json:"reservation,omitempty"`
 	// TimeoutMs: Optional. Optional: Specifies the maximum amount of time, in
 	// milliseconds, that the client is willing to wait for the query to complete.

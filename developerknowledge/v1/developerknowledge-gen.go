@@ -120,6 +120,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Documents = NewDocumentsService(s)
+	s.V1 = NewV1Service(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -145,6 +146,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Documents *DocumentsService
+
+	V1 *V1Service
 }
 
 func (s *Service) userAgent() string {
@@ -161,6 +164,142 @@ func NewDocumentsService(s *Service) *DocumentsService {
 
 type DocumentsService struct {
 	s *Service
+}
+
+func NewV1Service(s *Service) *V1Service {
+	rs := &V1Service{s: s}
+	return rs
+}
+
+type V1Service struct {
+	s *Service
+}
+
+// Answer: An answer to a query.
+type Answer struct {
+	// AnswerText: Contains the text of the answer.
+	AnswerText string `json:"answerText,omitempty"`
+	// Citations: Output only. Contains citations for the answer.
+	Citations []*AnswerCitation `json:"citations,omitempty"`
+	// References: Output only. Contains references for the answer.
+	References []*AnswerReference `json:"references,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnswerText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnswerText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Answer) MarshalJSON() ([]byte, error) {
+	type NoMethod Answer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AnswerCitation: Citation info for a segment.
+type AnswerCitation struct {
+	// EndIndex: Output only. Indicates the end of the segment, measured in bytes
+	// (UTF-8 unicode), exclusive. If there are multi-byte characters, such as
+	// non-ASCII characters, the index measurement is longer than the string
+	// length.
+	EndIndex int64 `json:"endIndex,omitempty"`
+	// Sources: Output only. Contains citation sources for the attributed segment.
+	Sources []*CitationSource `json:"sources,omitempty"`
+	// StartIndex: Output only. Indicates the start of the segment, measured in
+	// bytes (UTF-8 unicode), inclusive. If there are multi-byte characters, such
+	// as non-ASCII characters, the index measurement is longer than the string
+	// length.
+	StartIndex int64 `json:"startIndex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndIndex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndIndex") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AnswerCitation) MarshalJSON() ([]byte, error) {
+	type NoMethod AnswerCitation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AnswerQueryRequest: Request message for DeveloperKnowledge.AnswerQuery.
+type AnswerQueryRequest struct {
+	// Query: Required. The query to answer.
+	Query string `json:"query,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Query") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Query") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AnswerQueryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AnswerQueryRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AnswerQueryResponse: Response message for DeveloperKnowledge.AnswerQuery.
+type AnswerQueryResponse struct {
+	// Answer: The answer to the query.
+	Answer *Answer `json:"answer,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Answer") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Answer") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AnswerQueryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AnswerQueryResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AnswerReference: Represents a reference to a source.
+type AnswerReference struct {
+	// DocumentReference: Output only. The reference document.
+	DocumentReference *DocumentReference `json:"documentReference,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DocumentReference") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DocumentReference") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AnswerReference) MarshalJSON() ([]byte, error) {
+	type NoMethod AnswerReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchGetDocumentsResponse: Response message for
@@ -186,6 +325,29 @@ type BatchGetDocumentsResponse struct {
 
 func (s BatchGetDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchGetDocumentsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CitationSource: Citation source.
+type CitationSource struct {
+	// ReferenceIndex: Output only. Contains the index of the
+	// Answer.AnswerReference in the `references` repeated field.
+	ReferenceIndex int64 `json:"referenceIndex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ReferenceIndex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ReferenceIndex") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CitationSource) MarshalJSON() ([]byte, error) {
+	type NoMethod CitationSource
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -287,6 +449,29 @@ type DocumentChunk struct {
 
 func (s DocumentChunk) MarshalJSON() ([]byte, error) {
 	type NoMethod DocumentChunk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DocumentReference: Represents a reference to a document.
+type DocumentReference struct {
+	// DocumentChunk: Output only. Contains the document chunk. The
+	// `document_chunk.id` field is not set and will be empty.
+	DocumentChunk *DocumentChunk `json:"documentChunk,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DocumentChunk") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DocumentChunk") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DocumentReference) MarshalJSON() ([]byte, error) {
+	type NoMethod DocumentReference
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -786,4 +971,101 @@ func (c *DocumentsSearchDocumentChunksCall) Pages(ctx context.Context, f func(*S
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type V1AnswerQueryCall struct {
+	s                  *Service
+	answerqueryrequest *AnswerQueryRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// AnswerQuery: Answers a query using grounded generation.
+func (r *V1Service) AnswerQuery(answerqueryrequest *AnswerQueryRequest) *V1AnswerQueryCall {
+	c := &V1AnswerQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.answerqueryrequest = answerqueryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *V1AnswerQueryCall) Fields(s ...googleapi.Field) *V1AnswerQueryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *V1AnswerQueryCall) Context(ctx context.Context) *V1AnswerQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *V1AnswerQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1AnswerQueryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.answerqueryrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1:answerQuery")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "developerknowledge.answerQuery", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "developerknowledge.answerQuery" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AnswerQueryResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *V1AnswerQueryCall) Do(opts ...googleapi.CallOption) (*AnswerQueryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AnswerQueryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "developerknowledge.answerQuery", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }

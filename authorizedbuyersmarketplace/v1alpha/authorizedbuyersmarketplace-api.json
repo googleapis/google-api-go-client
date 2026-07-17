@@ -1806,7 +1806,7 @@
       }
     }
   },
-  "revision": "20260708",
+  "revision": "20260716",
   "rootUrl": "https://authorizedbuyersmarketplace.googleapis.com/",
   "schemas": {
     "AcceptProposalRequest": {
@@ -2317,7 +2317,7 @@
       "type": "object"
     },
     "DataSegment": {
-      "description": "Defines an identifier for a segment of inventory that can be targeted by curators or media planners in the deals or auction packages UI. Curation of inventory is done by curators on external platforms.",
+      "description": "Defines an identifier for a segment of inventory that can be targeted by curators or media planners in the deals or auction packages UI. Curation of inventory is done by curators on external platforms. -- Next ID: 9 --",
       "id": "DataSegment",
       "properties": {
         "cpmFee": {
@@ -2344,12 +2344,14 @@
           "enum": [
             "STATE_UNSPECIFIED",
             "ACTIVE",
-            "INACTIVE"
+            "INACTIVE",
+            "SUSPENDED"
           ],
           "enumDescriptions": [
             "Default value.",
             "The data segment is active.",
-            "The data segment is inactive."
+            "The data segment is inactive.",
+            "The data segment is suspended and cannot be activated."
           ],
           "readOnly": true,
           "type": "string"

@@ -9472,7 +9472,8 @@ type CustomersEnterpriseSecurityInsightsQueryUrlVisitsCall struct {
 }
 
 // QueryUrlVisits: Returns a high-level summary of URL visits for a given
-// customer.
+// customer. Requires a Chrome Enterprise Premium subscription. If the customer
+// does not have this subscription, query results will be empty.
 //
 // - customer: The customer ID in the format "customers/{customer_id}".
 func (r *CustomersEnterpriseSecurityInsightsService) QueryUrlVisits(customer string) *CustomersEnterpriseSecurityInsightsQueryUrlVisitsCall {
@@ -9598,7 +9599,9 @@ type CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall struct {
 }
 
 // QueryUrlVisitsBreakdowns: Returns summaries of URL visits for a given metric
-// and breakdown dimension.
+// and breakdown dimension. Requires a Chrome Enterprise Premium subscription.
+// If the customer does not have this subscription, query results will be
+// empty.
 //
 // - customer: The customer ID in the format "customers/{customer_id}".
 func (r *CustomersEnterpriseSecurityInsightsService) QueryUrlVisitsBreakdowns(customer string) *CustomersEnterpriseSecurityInsightsQueryUrlVisitsBreakdownsCall {

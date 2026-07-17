@@ -226,11 +226,121 @@
           ]
         }
       }
+    },
+    "v1": {
+      "methods": {
+        "answerQuery": {
+          "description": "Answers a query using grounded generation.",
+          "flatPath": "v1:answerQuery",
+          "httpMethod": "POST",
+          "id": "developerknowledge.answerQuery",
+          "parameterOrder": [],
+          "parameters": {},
+          "path": "v1:answerQuery",
+          "request": {
+            "$ref": "AnswerQueryRequest"
+          },
+          "response": {
+            "$ref": "AnswerQueryResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        }
+      }
     }
   },
-  "revision": "20260705",
+  "revision": "20260712",
   "rootUrl": "https://developerknowledge.googleapis.com/",
   "schemas": {
+    "Answer": {
+      "description": "An answer to a query.",
+      "id": "Answer",
+      "properties": {
+        "answerText": {
+          "description": "Contains the text of the answer.",
+          "type": "string"
+        },
+        "citations": {
+          "description": "Output only. Contains citations for the answer.",
+          "items": {
+            "$ref": "AnswerCitation"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "references": {
+          "description": "Output only. Contains references for the answer.",
+          "items": {
+            "$ref": "AnswerReference"
+          },
+          "readOnly": true,
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "AnswerCitation": {
+      "description": "Citation info for a segment.",
+      "id": "AnswerCitation",
+      "properties": {
+        "endIndex": {
+          "description": "Output only. Indicates the end of the segment, measured in bytes (UTF-8 unicode), exclusive. If there are multi-byte characters, such as non-ASCII characters, the index measurement is longer than the string length.",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        },
+        "sources": {
+          "description": "Output only. Contains citation sources for the attributed segment.",
+          "items": {
+            "$ref": "CitationSource"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "startIndex": {
+          "description": "Output only. Indicates the start of the segment, measured in bytes (UTF-8 unicode), inclusive. If there are multi-byte characters, such as non-ASCII characters, the index measurement is longer than the string length.",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "AnswerQueryRequest": {
+      "description": "Request message for DeveloperKnowledge.AnswerQuery.",
+      "id": "AnswerQueryRequest",
+      "properties": {
+        "query": {
+          "description": "Required. The query to answer.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AnswerQueryResponse": {
+      "description": "Response message for DeveloperKnowledge.AnswerQuery.",
+      "id": "AnswerQueryResponse",
+      "properties": {
+        "answer": {
+          "$ref": "Answer",
+          "description": "The answer to the query."
+        }
+      },
+      "type": "object"
+    },
+    "AnswerReference": {
+      "description": "Represents a reference to a source.",
+      "id": "AnswerReference",
+      "properties": {
+        "documentReference": {
+          "$ref": "DocumentReference",
+          "description": "Output only. The reference document.",
+          "readOnly": true
+        }
+      },
+      "type": "object"
+    },
     "BatchGetDocumentsResponse": {
       "description": "Response message for DeveloperKnowledge.BatchGetDocuments.",
       "id": "BatchGetDocumentsResponse",
@@ -241,6 +351,19 @@
             "$ref": "Document"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "CitationSource": {
+      "description": "Citation source.",
+      "id": "CitationSource",
+      "properties": {
+        "referenceIndex": {
+          "description": "Output only. Contains the index of the Answer.AnswerReference in the `references` repeated field.",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
         }
       },
       "type": "object"
@@ -333,6 +456,18 @@
           "description": "Output only. Contains the resource name of the document this chunk is from. Format: `documents/{uri_without_scheme}` Example: `documents/docs.cloud.google.com/storage/docs/creating-buckets`",
           "readOnly": true,
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DocumentReference": {
+      "description": "Represents a reference to a document.",
+      "id": "DocumentReference",
+      "properties": {
+        "documentChunk": {
+          "$ref": "DocumentChunk",
+          "description": "Output only. Contains the document chunk. The `document_chunk.id` field is not set and will be empty.",
+          "readOnly": true
         }
       },
       "type": "object"

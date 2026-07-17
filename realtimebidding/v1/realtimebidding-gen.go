@@ -1973,9 +1973,10 @@ func (s PolicyTopicEvidence) MarshalJSON() ([]byte, error) {
 // applied at the pretargeting stage of the RTB funnel. These control which
 // inventory a bidder will receive bid requests for.
 type PretargetingConfig struct {
-	// AllowedUserTargetingModes: Targeting modes included by this config. A bid
-	// request must allow all the specified targeting modes. An unset value allows
-	// all bid requests to be sent, regardless of which targeting modes they allow.
+	// AllowedUserTargetingModes: Deprecated: The value of this field no longer has
+	// any effect. Targeting modes included by this config. A bid request must
+	// allow all the specified targeting modes. An unset value allows all bid
+	// requests to be sent, regardless of which targeting modes they allow.
 	//
 	// Possible values:
 	//   "USER_TARGETING_MODE_UNSPECIFIED" - Placeholder for undefined user

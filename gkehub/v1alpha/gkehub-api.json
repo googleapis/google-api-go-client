@@ -2740,7 +2740,7 @@
       }
     }
   },
-  "revision": "20260706",
+  "revision": "20260713",
   "rootUrl": "https://gkehub.googleapis.com/",
   "schemas": {
     "AppDevExperienceFeatureSpec": {
@@ -4204,7 +4204,7 @@
         },
         "management": {
           "deprecated": true,
-          "description": "Optional. Deprecated: From version 1.21.0, automatic Feature management is unavailable, and Config Sync only supports manual upgrades.",
+          "description": "Optional. Deprecated: In Preview, automatic Feature management is unavailable from version 1.21.0 onwards, and Config Sync only supports manual upgrades. If set to manual upgrades, clear this field instead, which is behaviorally equivalent.",
           "enum": [
             "MANAGEMENT_UNSPECIFIED",
             "MANAGEMENT_AUTOMATIC",

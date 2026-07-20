@@ -120,6 +120,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Applications = NewApplicationsService(s)
 	s.Apprecovery = NewApprecoveryService(s)
+	s.Appstoreappsreview = NewAppstoreappsreviewService(s)
 	s.Edits = NewEditsService(s)
 	s.Externaltransactions = NewExternaltransactionsService(s)
 	s.Generatedapks = NewGeneratedapksService(s)
@@ -159,6 +160,8 @@ type Service struct {
 	Applications *ApplicationsService
 
 	Apprecovery *ApprecoveryService
+
+	Appstoreappsreview *AppstoreappsreviewService
 
 	Edits *EditsService
 
@@ -243,6 +246,15 @@ func NewApprecoveryService(s *Service) *ApprecoveryService {
 }
 
 type ApprecoveryService struct {
+	s *Service
+}
+
+func NewAppstoreappsreviewService(s *Service) *AppstoreappsreviewService {
+	rs := &AppstoreappsreviewService{s: s}
+	return rs
+}
+
+type AppstoreappsreviewService struct {
 	s *Service
 }
 
@@ -1285,6 +1297,150 @@ type AppRecoveryAction struct {
 
 func (s AppRecoveryAction) MarshalJSON() ([]byte, error) {
 	type NoMethod AppRecoveryAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AppStoreAppActiveApkSet: An installable set of active APKs. A set of APKs
+// might only contain 1 APK if the app in question publishes using APKs. If the
+// app uses app bundles (or a similar technology), this set should contain all
+// APKs (even optional ones) that might be installed for this app. A set of
+// APKs should be installable together. If certain APKs are exclusive to one
+// another and cannot be installed together, then a separate
+// AppStoreAppActiveApkSet should be created.
+type AppStoreAppActiveApkSet struct {
+	// BaseApkId: Required. The ID for the main base application module. Example:
+	// base.apk or app.apk.
+	BaseApkId string `json:"baseApkId,omitempty"`
+	// SplitApkId: Optional. IDs for split modules that might be installed in
+	// combination with the base APK. Can be empty if app bundles (or a similar
+	// technology) are not used. Example: config.en.apk.
+	SplitApkId []string `json:"splitApkId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseApkId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseApkId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AppStoreAppActiveApkSet) MarshalJSON() ([]byte, error) {
+	type NoMethod AppStoreAppActiveApkSet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AppStoreAppActiveApks: Information about active APKs of an app store hosted
+// app.
+type AppStoreAppActiveApks struct {
+	// ActiveApkSets: Required. List specifying which APK sets are distributed
+	// together. This list should contain all APKs that you're distributing for
+	// this app. Add an entry for each individual installable set of APKs.
+	ActiveApkSets []*AppStoreAppActiveApkSet `json:"activeApkSets,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActiveApkSets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActiveApkSets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AppStoreAppActiveApks) MarshalJSON() ([]byte, error) {
+	type NoMethod AppStoreAppActiveApks
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AppStoreAppDetails: Details about the app.
+type AppStoreAppDetails struct {
+	// ContactEmail: Required. The app developer's contact email address.
+	ContactEmail string `json:"contactEmail,omitempty"`
+	// DeveloperName: Required. The app developer's name.
+	DeveloperName string `json:"developerName,omitempty"`
+	// DeveloperWebsite: Optional. Website link for the developer or app.
+	DeveloperWebsite string `json:"developerWebsite,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContactEmail") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContactEmail") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AppStoreAppDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AppStoreAppDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AppStoreAppPolicyDeclaration: A policy declaration with its responses.
+type AppStoreAppPolicyDeclaration struct {
+	// DeclarationId: Required. ID of the policy declaration.
+	DeclarationId string `json:"declarationId,omitempty"`
+	// Responses: Required. Responses provided for this declaration.
+	Responses []*PolicyResponse `json:"responses,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeclarationId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeclarationId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AppStoreAppPolicyDeclaration) MarshalJSON() ([]byte, error) {
+	type NoMethod AppStoreAppPolicyDeclaration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AppStoreAppStoreListing: A localized store listing. These are the details
+// about the app as shown in your app store.
+type AppStoreAppStoreListing struct {
+	// AppIconId: Required. Image ID generated from UploadImage for the main app
+	// icon.
+	AppIconId string `json:"appIconId,omitempty"`
+	// AppName: Required. The title of the app.
+	AppName string `json:"appName,omitempty"`
+	// FullDescription: Required. Comprehensive description text about the app.
+	FullDescription string `json:"fullDescription,omitempty"`
+	// LanguageCode: Required. Language code (e.g., "en-US") of the listing.
+	LanguageCode string `json:"languageCode,omitempty"`
+	// ScreenshotId: Required. Multiple image IDs for screenshot galleries.
+	ScreenshotId []string `json:"screenshotId,omitempty"`
+	// ShortDescription: Optional. Quick summary about the app.
+	ShortDescription string `json:"shortDescription,omitempty"`
+	// VideoLink: Optional. Link to a video about the app.
+	VideoLink string `json:"videoLink,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AppIconId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppIconId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AppStoreAppStoreListing) MarshalJSON() ([]byte, error) {
+	type NoMethod AppStoreAppStoreListing
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2844,6 +3000,36 @@ func (s CountryTargeting) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CreateAppStoreHostedAppRequest: Request to create a new app record for an
+// app store hosted app.
+type CreateAppStoreHostedAppRequest struct {
+	// PackageName: Required. Package name of the app.
+	PackageName string `json:"packageName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PackageName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PackageName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateAppStoreHostedAppRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateAppStoreHostedAppRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CreateAppStoreHostedAppResponse: Response for creating a new app record for
+// an app store hosted app.
+type CreateAppStoreHostedAppResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // CreateDraftAppRecoveryRequest: Request message for CreateDraftAppRecovery.
 type CreateDraftAppRecoveryRequest struct {
 	// RemoteInAppUpdate: Action type is remote in-app update. As a consequence of
@@ -2868,6 +3054,44 @@ type CreateDraftAppRecoveryRequest struct {
 
 func (s CreateDraftAppRecoveryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateDraftAppRecoveryRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Date: Represents a whole or partial calendar date, such as a birthday. The
+// time of day and time zone are either specified elsewhere or are
+// insignificant. The date is relative to the Gregorian Calendar. This can
+// represent one of the following: * A full date, with non-zero year, month,
+// and day values. * A month and day, with a zero year (for example, an
+// anniversary). * A year on its own, with a zero month and a zero day. * A
+// year and month, with a zero day (for example, a credit card expiration
+// date). Related types: * google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
+type Date struct {
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and month,
+	// or 0 to specify a year by itself or a year and month where the day isn't
+	// significant.
+	Day int64 `json:"day,omitempty"`
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year without
+	// a month and day.
+	Month int64 `json:"month,omitempty"`
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a date
+	// without a year.
+	Year int64 `json:"year,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Day") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Date) MarshalJSON() ([]byte, error) {
+	type NoMethod Date
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4451,6 +4675,28 @@ func (s Grant) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Group: A group of responses.
+type Group struct {
+	// Responses: Required. Responses within a group.
+	Responses []*NestedPolicyResponse `json:"responses,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Responses") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Responses") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Group) MarshalJSON() ([]byte, error) {
+	type NoMethod Group
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Image: An uploaded image. The resource for ImagesService.
 type Image struct {
 	// AiGeneratedState: Optional. Whether the image was generated by AI. Attested
@@ -5051,44 +5297,6 @@ func (s InternalAppSharingArtifact) MarshalJSON() ([]byte, error) {
 type IntroductoryPriceDetails struct {
 }
 
-// IntroductoryPriceInfo: Contains the introductory price information for a
-// subscription.
-type IntroductoryPriceInfo struct {
-	// IntroductoryPriceAmountMicros: Introductory price of the subscription, not
-	// including tax. The currency is the same as price_currency_code. Price is
-	// expressed in micro-units, where 1,000,000 micro-units represents one unit of
-	// the currency. For example, if the subscription price is €1.99,
-	// price_amount_micros is 1990000.
-	IntroductoryPriceAmountMicros int64 `json:"introductoryPriceAmountMicros,omitempty,string"`
-	// IntroductoryPriceCurrencyCode: ISO 4217 currency code for the introductory
-	// subscription price. For example, if the price is specified in British pounds
-	// sterling, price_currency_code is "GBP".
-	IntroductoryPriceCurrencyCode string `json:"introductoryPriceCurrencyCode,omitempty"`
-	// IntroductoryPriceCycles: The number of billing period to offer introductory
-	// pricing.
-	IntroductoryPriceCycles int64 `json:"introductoryPriceCycles,omitempty"`
-	// IntroductoryPricePeriod: Introductory price period, specified in ISO 8601
-	// format. Common values are (but not limited to) "P1W" (one week), "P1M" (one
-	// month), "P3M" (three months), "P6M" (six months), and "P1Y" (one year).
-	IntroductoryPricePeriod string `json:"introductoryPricePeriod,omitempty"`
-	// ForceSendFields is a list of field names (e.g.
-	// "IntroductoryPriceAmountMicros") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
-	// for more details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "IntroductoryPriceAmountMicros")
-	// to include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s IntroductoryPriceInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod IntroductoryPriceInfo
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // IntroductoryPriceOfferPhase: Details about introductory price offer phase.
 type IntroductoryPriceOfferPhase struct {
 }
@@ -5159,6 +5367,30 @@ type ItemReplacement struct {
 
 func (s ItemReplacement) MarshalJSON() ([]byte, error) {
 	type NoMethod ItemReplacement
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// KeyedGroup: A group of responses, with a key.
+type KeyedGroup struct {
+	// Key: Required. Key for this group.
+	Key string `json:"key,omitempty"`
+	// Responses: Required. Responses in this group.
+	Responses []*NestedPolicyResponse `json:"responses,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s KeyedGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod KeyedGroup
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5788,6 +6020,40 @@ type MultiAbiTargeting struct {
 
 func (s MultiAbiTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod MultiAbiTargeting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NestedPolicyResponse: An individual nested response to a policy question
+// about an app. Nested responses are like regular responses but without
+// groups.
+type NestedPolicyResponse struct {
+	// BooleanResponse: Optional. A boolean response.
+	BooleanResponse *PolicyBooleanResponse `json:"booleanResponse,omitempty"`
+	// DocumentResponse: Optional. A document response.
+	DocumentResponse *PolicyDocumentResponse `json:"documentResponse,omitempty"`
+	// MultipleChoiceResponse: Optional. A multiple choice response.
+	MultipleChoiceResponse *PolicyMultipleChoiceResponse `json:"multipleChoiceResponse,omitempty"`
+	// QuestionId: Required. ID of the question being answered.
+	QuestionId string `json:"questionId,omitempty"`
+	// SingleChoiceResponse: Optional. A single choice response.
+	SingleChoiceResponse *PolicySingleChoiceResponse `json:"singleChoiceResponse,omitempty"`
+	// StringResponse: Optional. A string response.
+	StringResponse *PolicyStringResponse `json:"stringResponse,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BooleanResponse") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BooleanResponse") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NestedPolicyResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod NestedPolicyResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7029,6 +7295,207 @@ type PointsDetails struct {
 
 func (s PointsDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod PointsDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyBooleanResponse: Responses that will only ever be a boolean.
+type PolicyBooleanResponse struct {
+	// Value: Required. Provided boolean value.
+	Value bool `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyBooleanResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyBooleanResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyDocumentResponse: An uploaded document. Must be a single logical
+// document (e.g. a financial license).
+type PolicyDocumentResponse struct {
+	// DocumentId: Required. ID of the uploaded document.
+	DocumentId string `json:"documentId,omitempty"`
+	// ExpiryDate: Optional. Expiry date for the document.
+	ExpiryDate *Date `json:"expiryDate,omitempty"`
+	// NonExpiring: Optional. True if confirmed that the document does not have an
+	// expiry date.
+	NonExpiring bool `json:"nonExpiring,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DocumentId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DocumentId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyDocumentResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyDocumentResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyGroupResponse: A repeated group of responses.
+type PolicyGroupResponse struct {
+	// Groups: Optional. Groups of responses to questions.
+	Groups []*Group `json:"groups,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Groups") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Groups") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyGroupResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyGroupResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyKeyedGroupResponse: A group of responses each identified by a distinct
+// key within an allowed set.
+type PolicyKeyedGroupResponse struct {
+	// Groups: Optional. Groups of responses to questions. Each KeyedGroup.key must
+	// be unique within this list.
+	Groups []*KeyedGroup `json:"groups,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Groups") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Groups") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyKeyedGroupResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyKeyedGroupResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyMultipleChoiceResponse: Any response where multiple options can be
+// chosen from several possibilities.
+type PolicyMultipleChoiceResponse struct {
+	// Values: Optional. Provided values.
+	Values []string `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyMultipleChoiceResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyMultipleChoiceResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyResponse: An individual response to a policy question about an app.
+type PolicyResponse struct {
+	// BooleanResponse: Optional. A boolean response.
+	BooleanResponse *PolicyBooleanResponse `json:"booleanResponse,omitempty"`
+	// DocumentResponse: Optional. A document response.
+	DocumentResponse *PolicyDocumentResponse `json:"documentResponse,omitempty"`
+	// GroupResponse: Optional. A group response.
+	GroupResponse *PolicyGroupResponse `json:"groupResponse,omitempty"`
+	// KeyedGroupResponse: Optional. A keyed group response.
+	KeyedGroupResponse *PolicyKeyedGroupResponse `json:"keyedGroupResponse,omitempty"`
+	// MultipleChoiceResponse: Optional. A multiple choice response.
+	MultipleChoiceResponse *PolicyMultipleChoiceResponse `json:"multipleChoiceResponse,omitempty"`
+	// QuestionId: Required. ID of the question being answered.
+	QuestionId string `json:"questionId,omitempty"`
+	// SingleChoiceResponse: Optional. A single choice response.
+	SingleChoiceResponse *PolicySingleChoiceResponse `json:"singleChoiceResponse,omitempty"`
+	// StringResponse: Optional. A string response.
+	StringResponse *PolicyStringResponse `json:"stringResponse,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BooleanResponse") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BooleanResponse") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicySingleChoiceResponse: Any response where a single option is chosen
+// from several possibilities.
+type PolicySingleChoiceResponse struct {
+	// Value: Required. Provided value.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicySingleChoiceResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicySingleChoiceResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyStringResponse: Any response best encoded as a string. Includes URLs
+// and multiline text fields.
+type PolicyStringResponse struct {
+	// Value: Required. Provided string value.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyStringResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyStringResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8822,34 +9289,6 @@ func (s Subscription) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SubscriptionCancelSurveyResult: Information provided by the user when they
-// complete the subscription cancellation flow (cancellation reason survey).
-type SubscriptionCancelSurveyResult struct {
-	// CancelSurveyReason: The cancellation reason the user chose in the survey.
-	// Possible values are: 0. Other 1. I don't use this service enough 2.
-	// Technical issues 3. Cost-related reasons 4. I found a better app
-	CancelSurveyReason int64 `json:"cancelSurveyReason,omitempty"`
-	// UserInputCancelReason: The customized input cancel reason from the user.
-	// Only present when cancelReason is 0.
-	UserInputCancelReason string `json:"userInputCancelReason,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CancelSurveyReason") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CancelSurveyReason") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s SubscriptionCancelSurveyResult) MarshalJSON() ([]byte, error) {
-	type NoMethod SubscriptionCancelSurveyResult
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // SubscriptionDeferralInfo: A SubscriptionDeferralInfo contains the data
 // needed to defer a subscription purchase to a future expiry time.
 type SubscriptionDeferralInfo struct {
@@ -9135,188 +9574,6 @@ func (s SubscriptionOfferTargeting) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SubscriptionPriceChange: Contains the price change information for a
-// subscription that can be used to control the user journey for the price
-// change in the app. This can be in the form of seeking confirmation from the
-// user or tailoring the experience for a successful conversion.
-type SubscriptionPriceChange struct {
-	// NewPrice: The new price the subscription will renew with if the price change
-	// is accepted by the user.
-	NewPrice *Price `json:"newPrice,omitempty"`
-	// State: The current state of the price change. Possible values are: 0.
-	// Outstanding: State for a pending price change waiting for the user to agree.
-	// In this state, you can optionally seek confirmation from the user using the
-	// In-App API. 1. Accepted: State for an accepted price change that the
-	// subscription will renew with unless it's canceled. The price change takes
-	// effect on a future date when the subscription renews. Note that the change
-	// might not occur when the subscription is renewed next.
-	State int64 `json:"state,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "NewPrice") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "NewPrice") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s SubscriptionPriceChange) MarshalJSON() ([]byte, error) {
-	type NoMethod SubscriptionPriceChange
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// SubscriptionPurchase: Deprecated: Use SubscriptionPurchaseV2 instead. A
-// SubscriptionPurchase resource indicates the status of a user's subscription
-// purchase.
-type SubscriptionPurchase struct {
-	// AcknowledgementState: The acknowledgement state of the subscription product.
-	// Possible values are: 0. Yet to be acknowledged 1. Acknowledged
-	AcknowledgementState int64 `json:"acknowledgementState,omitempty"`
-	// AutoRenewing: Whether the subscription will automatically be renewed when it
-	// reaches its current expiry time.
-	AutoRenewing bool `json:"autoRenewing,omitempty"`
-	// AutoResumeTimeMillis: Time at which the subscription will be automatically
-	// resumed, in milliseconds since the Epoch. Only present if the user has
-	// requested to pause the subscription.
-	AutoResumeTimeMillis int64 `json:"autoResumeTimeMillis,omitempty,string"`
-	// CancelReason: The reason why a subscription was canceled or is not
-	// auto-renewing. Possible values are: 0. User canceled the subscription 1.
-	// Subscription was canceled by the system, for example because of a billing
-	// problem 2. Subscription was replaced with a new subscription 3. Subscription
-	// was canceled by the developer
-	CancelReason int64 `json:"cancelReason,omitempty"`
-	// CancelSurveyResult: Information provided by the user when they complete the
-	// subscription cancellation flow (cancellation reason survey).
-	CancelSurveyResult *SubscriptionCancelSurveyResult `json:"cancelSurveyResult,omitempty"`
-	// CountryCode: ISO 3166-1 alpha-2 billing country/region code of the user at
-	// the time the subscription was granted.
-	CountryCode string `json:"countryCode,omitempty"`
-	// DeveloperPayload: A developer-specified string that contains supplemental
-	// information about an order.
-	DeveloperPayload string `json:"developerPayload,omitempty"`
-	// EmailAddress: The email address of the user when the subscription was
-	// purchased. Only present for purchases made with 'Subscribe with Google'.
-	EmailAddress string `json:"emailAddress,omitempty"`
-	// ExpiryTimeMillis: Time at which the subscription will expire, in
-	// milliseconds since the Epoch.
-	ExpiryTimeMillis int64 `json:"expiryTimeMillis,omitempty,string"`
-	// ExternalAccountId: User account identifier in the third-party service. Only
-	// present if account linking happened as part of the subscription purchase
-	// flow.
-	ExternalAccountId string `json:"externalAccountId,omitempty"`
-	// FamilyName: The family name of the user when the subscription was purchased.
-	// Only present for purchases made with 'Subscribe with Google'.
-	FamilyName string `json:"familyName,omitempty"`
-	// GivenName: The given name of the user when the subscription was purchased.
-	// Only present for purchases made with 'Subscribe with Google'.
-	GivenName string `json:"givenName,omitempty"`
-	// IntroductoryPriceInfo: Introductory price information of the subscription.
-	// This is only present when the subscription was purchased with an
-	// introductory price. This field does not indicate the subscription is
-	// currently in introductory price period.
-	IntroductoryPriceInfo *IntroductoryPriceInfo `json:"introductoryPriceInfo,omitempty"`
-	// Kind: This kind represents a subscriptionPurchase object in the
-	// androidpublisher service.
-	Kind string `json:"kind,omitempty"`
-	// LinkedPurchaseToken: The purchase token of the originating purchase if this
-	// subscription is one of the following: 0. Re-signup of a canceled but
-	// non-lapsed subscription 1. Upgrade/downgrade from a previous subscription
-	// For example, suppose a user originally signs up and you receive purchase
-	// token X, then the user cancels and goes through the resignup flow (before
-	// their subscription lapses) and you receive purchase token Y, and finally the
-	// user upgrades their subscription and you receive purchase token Z. If you
-	// call this API with purchase token Z, this field will be set to Y. If you
-	// call this API with purchase token Y, this field will be set to X. If you
-	// call this API with purchase token X, this field will not be set.
-	LinkedPurchaseToken string `json:"linkedPurchaseToken,omitempty"`
-	// ObfuscatedExternalAccountId: An obfuscated version of the id that is
-	// uniquely associated with the user's account in your app. Present for the
-	// following purchases: * If account linking happened as part of the
-	// subscription purchase flow. * It was specified using
-	// https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setobfuscatedaccountid
-	// when the purchase was made.
-	ObfuscatedExternalAccountId string `json:"obfuscatedExternalAccountId,omitempty"`
-	// ObfuscatedExternalProfileId: An obfuscated version of the id that is
-	// uniquely associated with the user's profile in your app. Only present if
-	// specified using
-	// https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setobfuscatedprofileid
-	// when the purchase was made.
-	ObfuscatedExternalProfileId string `json:"obfuscatedExternalProfileId,omitempty"`
-	// OrderId: The order id of the latest recurring order associated with the
-	// purchase of the subscription. If the subscription was canceled because
-	// payment was declined, this will be the order id from the payment declined
-	// order.
-	OrderId string `json:"orderId,omitempty"`
-	// PaymentState: The payment state of the subscription. Possible values are: 0.
-	// Payment pending 1. Payment received 2. Free trial 3. Pending deferred
-	// upgrade/downgrade Not present for canceled, expired subscriptions.
-	PaymentState *int64 `json:"paymentState,omitempty"`
-	// PriceAmountMicros: Price of the subscription, For tax exclusive countries,
-	// the price doesn't include tax. For tax inclusive countries, the price
-	// includes tax. Price is expressed in micro-units, where 1,000,000 micro-units
-	// represents one unit of the currency. For example, if the subscription price
-	// is €1.99, price_amount_micros is 1990000.
-	PriceAmountMicros int64 `json:"priceAmountMicros,omitempty,string"`
-	// PriceChange: The latest price change information available. This is present
-	// only when there is an upcoming price change for the subscription yet to be
-	// applied. Once the subscription renews with the new price or the subscription
-	// is canceled, no price change information will be returned.
-	PriceChange *SubscriptionPriceChange `json:"priceChange,omitempty"`
-	// PriceCurrencyCode: ISO 4217 currency code for the subscription price. For
-	// example, if the price is specified in British pounds sterling,
-	// price_currency_code is "GBP".
-	PriceCurrencyCode string `json:"priceCurrencyCode,omitempty"`
-	// ProfileId: The Google profile id of the user when the subscription was
-	// purchased. Only present for purchases made with 'Subscribe with Google'.
-	ProfileId string `json:"profileId,omitempty"`
-	// ProfileName: The profile name of the user when the subscription was
-	// purchased. Only present for purchases made with 'Subscribe with Google'.
-	ProfileName string `json:"profileName,omitempty"`
-	// PromotionCode: The promotion code applied on this purchase. This field is
-	// only set if a vanity code promotion is applied when the subscription was
-	// purchased.
-	PromotionCode string `json:"promotionCode,omitempty"`
-	// PromotionType: The type of promotion applied on this purchase. This field is
-	// only set if a promotion is applied when the subscription was purchased.
-	// Possible values are: 0. One time code 1. Vanity code
-	PromotionType int64 `json:"promotionType,omitempty"`
-	// PurchaseType: The type of purchase of the subscription. This field is only
-	// set if this purchase was not made using the standard in-app billing flow.
-	// Possible values are: 0. Test (i.e. purchased from a license testing account)
-	// 1. Promo (i.e. purchased using a promo code)
-	PurchaseType *int64 `json:"purchaseType,omitempty"`
-	// StartTimeMillis: Time at which the subscription was granted, in milliseconds
-	// since the Epoch.
-	StartTimeMillis int64 `json:"startTimeMillis,omitempty,string"`
-	// UserCancellationTimeMillis: The time at which the subscription was canceled
-	// by the user, in milliseconds since the epoch. Only present if cancelReason
-	// is 0.
-	UserCancellationTimeMillis int64 `json:"userCancellationTimeMillis,omitempty,string"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AcknowledgementState") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AcknowledgementState") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s SubscriptionPurchase) MarshalJSON() ([]byte, error) {
-	type NoMethod SubscriptionPurchase
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // SubscriptionPurchaseLineItem: Item-level info for a subscription purchase.
 type SubscriptionPurchaseLineItem struct {
 	// AutoRenewingPlan: The item is auto renewing.
@@ -9394,13 +9651,6 @@ type SubscriptionPurchaseV2 struct {
 	// Kind: This kind represents a SubscriptionPurchaseV2 object in the
 	// androidpublisher service.
 	Kind string `json:"kind,omitempty"`
-	// LatestOrderId: Deprecated: Use line_items.latest_successful_order_id
-	// instead. The order id of the latest order associated with the purchase of
-	// the subscription. For autoRenewing subscription, this is the order id of
-	// signup order if it is not renewed yet, or the last recurring order id
-	// (success, pending, or declined order). For prepaid subscription, this is the
-	// order id associated with the queried purchase token.
-	LatestOrderId string `json:"latestOrderId,omitempty"`
 	// LineItems: Item-level info for a subscription purchase. The items in the
 	// same purchase should be either all with AutoRenewingPlan or all with
 	// PrepaidPlan.
@@ -10258,6 +10508,85 @@ func (s TracksListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// UpdateAppStoreHostedAppPublishStatusRequest: Request to update the publish
+// status of an app store hosted app. The default state for any app with an
+// update is PUBLISHED. It is not necessary to call this RPC explicitly to set
+// an app to PUBLISHED.
+type UpdateAppStoreHostedAppPublishStatusRequest struct {
+	// PublishState: Required. The new publish state for the hosted app.
+	//
+	// Possible values:
+	//   "APP_STORE_APP_PUBLISH_STATE_UNSPECIFIED" - Unspecified publish state. Do
+	// not use.
+	//   "APP_STORE_APP_PUBLISH_STATE_PUBLISHED" - The app is published and
+	// available on the third-party app store.
+	//   "APP_STORE_APP_PUBLISH_STATE_UNPUBLISHED" - The app is unpublished and no
+	// longer available on the third-party app store.
+	PublishState string `json:"publishState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PublishState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PublishState") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateAppStoreHostedAppPublishStatusRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateAppStoreHostedAppPublishStatusRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpdateAppStoreHostedAppPublishStatusResponse: Response for updating the
+// publish status of an app store hosted app.
+type UpdateAppStoreHostedAppPublishStatusResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
+// UpdateAppStoreHostedAppRequest: Request to update an app record for an app
+// store hosted app.
+type UpdateAppStoreHostedAppRequest struct {
+	// ActiveApks: Required. Actively distributed APKs of the app.
+	ActiveApks *AppStoreAppActiveApks `json:"activeApks,omitempty"`
+	// ActiveLocalizedStoreListings: Required. Localized store listings details of
+	// the update.
+	ActiveLocalizedStoreListings []*AppStoreAppStoreListing `json:"activeLocalizedStoreListings,omitempty"`
+	// AppDetails: Required. General developer details for the app.
+	AppDetails *AppStoreAppDetails `json:"appDetails,omitempty"`
+	// PackageName: Required. Package name of the app.
+	PackageName string `json:"packageName,omitempty"`
+	// PolicyDeclarations: Required. Policy declarations provided for the app.
+	PolicyDeclarations []*AppStoreAppPolicyDeclaration `json:"policyDeclarations,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActiveApks") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActiveApks") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateAppStoreHostedAppRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateAppStoreHostedAppRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpdateAppStoreHostedAppResponse: Response for updating an app record for an
+// app store hosted app.
+type UpdateAppStoreHostedAppResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // UpdateBasePlanStateRequest: Request message to update the state of a
 // subscription base plan.
 type UpdateBasePlanStateRequest struct {
@@ -10585,6 +10914,118 @@ type UpgradeTargetingRule struct {
 
 func (s UpgradeTargetingRule) MarshalJSON() ([]byte, error) {
 	type NoMethod UpgradeTargetingRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UploadApkRequest: Request to upload an APK.
+type UploadApkRequest struct {
+}
+
+// UploadApkResponse: Response for uploading an APK.
+type UploadApkResponse struct {
+	// ApkId: The unique ID of the uploaded APK.
+	ApkId string `json:"apkId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ApkId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApkId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UploadApkResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod UploadApkResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UploadAppStoreAppPolicyDeclarationFileRequest: Request to upload a policy
+// declaration file.
+type UploadAppStoreAppPolicyDeclarationFileRequest struct {
+	// FileType: Required. Type of the policy declaration file.
+	//
+	// Possible values:
+	//   "DECLARATION_FILE_TYPE_UNSPECIFIED" - Unspecified file type.
+	//   "DECLARATION_FILE_TYPE_DOCUMENT" - File type for PDF, JPEG, and PNG
+	// documents.
+	FileType string `json:"fileType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FileType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UploadAppStoreAppPolicyDeclarationFileRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UploadAppStoreAppPolicyDeclarationFileRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UploadAppStoreAppPolicyDeclarationFileResponse: Response for uploading a
+// policy declaration file.
+type UploadAppStoreAppPolicyDeclarationFileResponse struct {
+	// FileId: The unique ID of the uploaded file.
+	FileId string `json:"fileId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "FileId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UploadAppStoreAppPolicyDeclarationFileResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod UploadAppStoreAppPolicyDeclarationFileResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UploadImageRequest: Request to upload an image.
+type UploadImageRequest struct {
+}
+
+// UploadImageResponse: Response for uploading an image.
+type UploadImageResponse struct {
+	// ImageId: The unique ID of the uploaded image.
+	ImageId string `json:"imageId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ImageId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ImageId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UploadImageResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod UploadImageResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12144,6 +12585,844 @@ func (c *ApprecoveryListCall) Do(opts ...googleapi.CallOption) (*ListAppRecoveri
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.apprecovery.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AppstoreappsreviewCreateappstorehostedappCall struct {
+	s                              *Service
+	appStorePackageName            string
+	createappstorehostedapprequest *CreateAppStoreHostedAppRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Createappstorehostedapp: Creates an app store hosted app. This must be
+// called before any other RPCs for this hosted app.
+//
+// - appStorePackageName: Package name of the third-party app store.
+func (r *AppstoreappsreviewService) Createappstorehostedapp(appStorePackageName string, createappstorehostedapprequest *CreateAppStoreHostedAppRequest) *AppstoreappsreviewCreateappstorehostedappCall {
+	c := &AppstoreappsreviewCreateappstorehostedappCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appStorePackageName = appStorePackageName
+	c.createappstorehostedapprequest = createappstorehostedapprequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AppstoreappsreviewCreateappstorehostedappCall) Fields(s ...googleapi.Field) *AppstoreappsreviewCreateappstorehostedappCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AppstoreappsreviewCreateappstorehostedappCall) Context(ctx context.Context) *AppstoreappsreviewCreateappstorehostedappCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AppstoreappsreviewCreateappstorehostedappCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AppstoreappsreviewCreateappstorehostedappCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.createappstorehostedapprequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/appstore/{appStorePackageName}/apps:create")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"appStorePackageName": c.appStorePackageName,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.appstoreappsreview.createappstorehostedapp", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.appstoreappsreview.createappstorehostedapp" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CreateAppStoreHostedAppResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AppstoreappsreviewCreateappstorehostedappCall) Do(opts ...googleapi.CallOption) (*CreateAppStoreHostedAppResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CreateAppStoreHostedAppResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.appstoreappsreview.createappstorehostedapp", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AppstoreappsreviewUpdateappstorehostedappCall struct {
+	s                              *Service
+	appStorePackageName            string
+	updateappstorehostedapprequest *UpdateAppStoreHostedAppRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Updateappstorehostedapp: Updates details for an app hosted on an app store.
+// Use this to provide details for a new app, or to update details for an
+// existing app. The update will be sent for review immediately after creation.
+//
+// - appStorePackageName: Package name of the third-party app store.
+func (r *AppstoreappsreviewService) Updateappstorehostedapp(appStorePackageName string, updateappstorehostedapprequest *UpdateAppStoreHostedAppRequest) *AppstoreappsreviewUpdateappstorehostedappCall {
+	c := &AppstoreappsreviewUpdateappstorehostedappCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appStorePackageName = appStorePackageName
+	c.updateappstorehostedapprequest = updateappstorehostedapprequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AppstoreappsreviewUpdateappstorehostedappCall) Fields(s ...googleapi.Field) *AppstoreappsreviewUpdateappstorehostedappCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AppstoreappsreviewUpdateappstorehostedappCall) Context(ctx context.Context) *AppstoreappsreviewUpdateappstorehostedappCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AppstoreappsreviewUpdateappstorehostedappCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AppstoreappsreviewUpdateappstorehostedappCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.updateappstorehostedapprequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/appstore/{appStorePackageName}/apps:update")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"appStorePackageName": c.appStorePackageName,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.appstoreappsreview.updateappstorehostedapp", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.appstoreappsreview.updateappstorehostedapp" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *UpdateAppStoreHostedAppResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AppstoreappsreviewUpdateappstorehostedappCall) Do(opts ...googleapi.CallOption) (*UpdateAppStoreHostedAppResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &UpdateAppStoreHostedAppResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.appstoreappsreview.updateappstorehostedapp", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AppstoreappsreviewUpdateappstorehostedapppublishstatusCall struct {
+	s                                           *Service
+	appStorePackageName                         string
+	packageName                                 string
+	updateappstorehostedapppublishstatusrequest *UpdateAppStoreHostedAppPublishStatusRequest
+	urlParams_                                  gensupport.URLParams
+	ctx_                                        context.Context
+	header_                                     http.Header
+}
+
+// Updateappstorehostedapppublishstatus: Updates the publish status of an app
+// store hosted app. The default state after calling UpdateAppStoreHostedApp is
+// PUBLISHED. It is not necessary to call this RPC explicitly to set an app to
+// PUBLISHED.
+//
+// - appStorePackageName: Package name of the third-party app store.
+// - packageName: Package name of the app.
+func (r *AppstoreappsreviewService) Updateappstorehostedapppublishstatus(appStorePackageName string, packageName string, updateappstorehostedapppublishstatusrequest *UpdateAppStoreHostedAppPublishStatusRequest) *AppstoreappsreviewUpdateappstorehostedapppublishstatusCall {
+	c := &AppstoreappsreviewUpdateappstorehostedapppublishstatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appStorePackageName = appStorePackageName
+	c.packageName = packageName
+	c.updateappstorehostedapppublishstatusrequest = updateappstorehostedapppublishstatusrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AppstoreappsreviewUpdateappstorehostedapppublishstatusCall) Fields(s ...googleapi.Field) *AppstoreappsreviewUpdateappstorehostedapppublishstatusCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AppstoreappsreviewUpdateappstorehostedapppublishstatusCall) Context(ctx context.Context) *AppstoreappsreviewUpdateappstorehostedapppublishstatusCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AppstoreappsreviewUpdateappstorehostedapppublishstatusCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AppstoreappsreviewUpdateappstorehostedapppublishstatusCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.updateappstorehostedapppublishstatusrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/appstore/{appStorePackageName}/apps/{packageName}:updateAppStoreHostedAppPublishStatus")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"appStorePackageName": c.appStorePackageName,
+		"packageName":         c.packageName,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.appstoreappsreview.updateappstorehostedapppublishstatus", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.appstoreappsreview.updateappstorehostedapppublishstatus" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *UpdateAppStoreHostedAppPublishStatusResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AppstoreappsreviewUpdateappstorehostedapppublishstatusCall) Do(opts ...googleapi.CallOption) (*UpdateAppStoreHostedAppPublishStatusResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &UpdateAppStoreHostedAppPublishStatusResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.appstoreappsreview.updateappstorehostedapppublishstatus", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AppstoreappsreviewUploadapkCall struct {
+	s                   *Service
+	appStorePackageName string
+	packageName         string
+	uploadapkrequest    *UploadApkRequest
+	urlParams_          gensupport.URLParams
+	mediaInfo_          *gensupport.MediaInfo
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Uploadapk: Upload an APK file for the hosted app. Returns an ID to track
+// this APK.
+//
+// - appStorePackageName: Package name of the third-party app store.
+// - packageName: Package name of the app.
+func (r *AppstoreappsreviewService) Uploadapk(appStorePackageName string, packageName string, uploadapkrequest *UploadApkRequest) *AppstoreappsreviewUploadapkCall {
+	c := &AppstoreappsreviewUploadapkCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appStorePackageName = appStorePackageName
+	c.packageName = packageName
+	c.uploadapkrequest = uploadapkrequest
+	return c
+}
+
+// Media specifies the media to upload in one or more chunks. The chunk size
+// may be controlled by supplying a MediaOption generated by
+// googleapi.ChunkSize. The chunk size defaults to
+// googleapi.DefaultUploadChunkSize.The Content-Type header used in the upload
+// request will be determined by sniffing the contents of r, unless a
+// MediaOption generated by googleapi.ContentType is supplied.
+// At most one of Media and ResumableMedia may be set.
+func (c *AppstoreappsreviewUploadapkCall) Media(r io.Reader, options ...googleapi.MediaOption) *AppstoreappsreviewUploadapkCall {
+	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
+	return c
+}
+
+// ResumableMedia specifies the media to upload in chunks and can be canceled
+// with ctx.
+//
+// Deprecated: use Media instead.
+//
+// At most one of Media and ResumableMedia may be set. mediaType identifies the
+// MIME media type of the upload, such as "image/png". If mediaType is "", it
+// will be auto-detected. The provided ctx will supersede any context
+// previously provided to the Context method.
+func (c *AppstoreappsreviewUploadapkCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *AppstoreappsreviewUploadapkCall {
+	c.ctx_ = ctx
+	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
+	return c
+}
+
+// ProgressUpdater provides a callback function that will be called after every
+// chunk. It should be a low-latency function in order to not slow down the
+// upload operation. This should only be called when using ResumableMedia (as
+// opposed to Media).
+func (c *AppstoreappsreviewUploadapkCall) ProgressUpdater(pu googleapi.ProgressUpdater) *AppstoreappsreviewUploadapkCall {
+	c.mediaInfo_.SetProgressUpdater(pu)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AppstoreappsreviewUploadapkCall) Fields(s ...googleapi.Field) *AppstoreappsreviewUploadapkCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// This context will supersede any context previously provided to the
+// ResumableMedia method.
+func (c *AppstoreappsreviewUploadapkCall) Context(ctx context.Context) *AppstoreappsreviewUploadapkCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AppstoreappsreviewUploadapkCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AppstoreappsreviewUploadapkCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.uploadapkrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/appstore/{appStorePackageName}/apps/{packageName}/apks:upload")
+	if c.mediaInfo_ != nil {
+		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/androidpublisher/v3/appstore/{appStorePackageName}/apps/{packageName}/apks:upload")
+		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
+	}
+	newBody, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)
+	defer cleanup()
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, newBody)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	req.GetBody = getBody
+	googleapi.Expand(req.URL, map[string]string{
+		"appStorePackageName": c.appStorePackageName,
+		"packageName":         c.packageName,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.appstoreappsreview.uploadapk", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.appstoreappsreview.uploadapk" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *UploadApkResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AppstoreappsreviewUploadapkCall) Do(opts ...googleapi.CallOption) (*UploadApkResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
+	if rx != nil {
+		rx.Client = c.s.client
+		rx.UserAgent = c.s.userAgent()
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.TODO()
+		}
+		res, err = rx.Upload(ctx)
+		if err != nil {
+			return nil, err
+		}
+		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, gensupport.WrapError(err)
+		}
+	}
+	ret := &UploadApkResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.appstoreappsreview.uploadapk", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AppstoreappsreviewUploadappstoreapppolicydeclarationfileCall struct {
+	s                                             *Service
+	appStorePackageName                           string
+	packageName                                   string
+	uploadappstoreapppolicydeclarationfilerequest *UploadAppStoreAppPolicyDeclarationFileRequest
+	urlParams_                                    gensupport.URLParams
+	mediaInfo_                                    *gensupport.MediaInfo
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// Uploadappstoreapppolicydeclarationfile: Upload a policy declaration file for
+// the hosted app. Returns an ID to track the file.
+//
+// - appStorePackageName: Package name of the third-party app store.
+// - packageName: Package name of the app.
+func (r *AppstoreappsreviewService) Uploadappstoreapppolicydeclarationfile(appStorePackageName string, packageName string, uploadappstoreapppolicydeclarationfilerequest *UploadAppStoreAppPolicyDeclarationFileRequest) *AppstoreappsreviewUploadappstoreapppolicydeclarationfileCall {
+	c := &AppstoreappsreviewUploadappstoreapppolicydeclarationfileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appStorePackageName = appStorePackageName
+	c.packageName = packageName
+	c.uploadappstoreapppolicydeclarationfilerequest = uploadappstoreapppolicydeclarationfilerequest
+	return c
+}
+
+// Media specifies the media to upload in one or more chunks. The chunk size
+// may be controlled by supplying a MediaOption generated by
+// googleapi.ChunkSize. The chunk size defaults to
+// googleapi.DefaultUploadChunkSize.The Content-Type header used in the upload
+// request will be determined by sniffing the contents of r, unless a
+// MediaOption generated by googleapi.ContentType is supplied.
+// At most one of Media and ResumableMedia may be set.
+func (c *AppstoreappsreviewUploadappstoreapppolicydeclarationfileCall) Media(r io.Reader, options ...googleapi.MediaOption) *AppstoreappsreviewUploadappstoreapppolicydeclarationfileCall {
+	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
+	return c
+}
+
+// ResumableMedia specifies the media to upload in chunks and can be canceled
+// with ctx.
+//
+// Deprecated: use Media instead.
+//
+// At most one of Media and ResumableMedia may be set. mediaType identifies the
+// MIME media type of the upload, such as "image/png". If mediaType is "", it
+// will be auto-detected. The provided ctx will supersede any context
+// previously provided to the Context method.
+func (c *AppstoreappsreviewUploadappstoreapppolicydeclarationfileCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *AppstoreappsreviewUploadappstoreapppolicydeclarationfileCall {
+	c.ctx_ = ctx
+	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
+	return c
+}
+
+// ProgressUpdater provides a callback function that will be called after every
+// chunk. It should be a low-latency function in order to not slow down the
+// upload operation. This should only be called when using ResumableMedia (as
+// opposed to Media).
+func (c *AppstoreappsreviewUploadappstoreapppolicydeclarationfileCall) ProgressUpdater(pu googleapi.ProgressUpdater) *AppstoreappsreviewUploadappstoreapppolicydeclarationfileCall {
+	c.mediaInfo_.SetProgressUpdater(pu)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AppstoreappsreviewUploadappstoreapppolicydeclarationfileCall) Fields(s ...googleapi.Field) *AppstoreappsreviewUploadappstoreapppolicydeclarationfileCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// This context will supersede any context previously provided to the
+// ResumableMedia method.
+func (c *AppstoreappsreviewUploadappstoreapppolicydeclarationfileCall) Context(ctx context.Context) *AppstoreappsreviewUploadappstoreapppolicydeclarationfileCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AppstoreappsreviewUploadappstoreapppolicydeclarationfileCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AppstoreappsreviewUploadappstoreapppolicydeclarationfileCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.uploadappstoreapppolicydeclarationfilerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/appstore/{appStorePackageName}/apps/{packageName}/policyDeclarationFiles:upload")
+	if c.mediaInfo_ != nil {
+		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/androidpublisher/v3/appstore/{appStorePackageName}/apps/{packageName}/policyDeclarationFiles:upload")
+		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
+	}
+	newBody, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)
+	defer cleanup()
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, newBody)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	req.GetBody = getBody
+	googleapi.Expand(req.URL, map[string]string{
+		"appStorePackageName": c.appStorePackageName,
+		"packageName":         c.packageName,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.appstoreappsreview.uploadappstoreapppolicydeclarationfile", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.appstoreappsreview.uploadappstoreapppolicydeclarationfile" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *UploadAppStoreAppPolicyDeclarationFileResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AppstoreappsreviewUploadappstoreapppolicydeclarationfileCall) Do(opts ...googleapi.CallOption) (*UploadAppStoreAppPolicyDeclarationFileResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
+	if rx != nil {
+		rx.Client = c.s.client
+		rx.UserAgent = c.s.userAgent()
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.TODO()
+		}
+		res, err = rx.Upload(ctx)
+		if err != nil {
+			return nil, err
+		}
+		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, gensupport.WrapError(err)
+		}
+	}
+	ret := &UploadAppStoreAppPolicyDeclarationFileResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.appstoreappsreview.uploadappstoreapppolicydeclarationfile", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AppstoreappsreviewUploadimageCall struct {
+	s                   *Service
+	appStorePackageName string
+	packageName         string
+	uploadimagerequest  *UploadImageRequest
+	urlParams_          gensupport.URLParams
+	mediaInfo_          *gensupport.MediaInfo
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Uploadimage: Upload a screenshot or app icon for the hosted app. Returns an
+// ID to track the image.
+//
+// - appStorePackageName: Package name of the third-party app store.
+// - packageName: Package name of the app.
+func (r *AppstoreappsreviewService) Uploadimage(appStorePackageName string, packageName string, uploadimagerequest *UploadImageRequest) *AppstoreappsreviewUploadimageCall {
+	c := &AppstoreappsreviewUploadimageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appStorePackageName = appStorePackageName
+	c.packageName = packageName
+	c.uploadimagerequest = uploadimagerequest
+	return c
+}
+
+// Media specifies the media to upload in one or more chunks. The chunk size
+// may be controlled by supplying a MediaOption generated by
+// googleapi.ChunkSize. The chunk size defaults to
+// googleapi.DefaultUploadChunkSize.The Content-Type header used in the upload
+// request will be determined by sniffing the contents of r, unless a
+// MediaOption generated by googleapi.ContentType is supplied.
+// At most one of Media and ResumableMedia may be set.
+func (c *AppstoreappsreviewUploadimageCall) Media(r io.Reader, options ...googleapi.MediaOption) *AppstoreappsreviewUploadimageCall {
+	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
+	return c
+}
+
+// ResumableMedia specifies the media to upload in chunks and can be canceled
+// with ctx.
+//
+// Deprecated: use Media instead.
+//
+// At most one of Media and ResumableMedia may be set. mediaType identifies the
+// MIME media type of the upload, such as "image/png". If mediaType is "", it
+// will be auto-detected. The provided ctx will supersede any context
+// previously provided to the Context method.
+func (c *AppstoreappsreviewUploadimageCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *AppstoreappsreviewUploadimageCall {
+	c.ctx_ = ctx
+	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
+	return c
+}
+
+// ProgressUpdater provides a callback function that will be called after every
+// chunk. It should be a low-latency function in order to not slow down the
+// upload operation. This should only be called when using ResumableMedia (as
+// opposed to Media).
+func (c *AppstoreappsreviewUploadimageCall) ProgressUpdater(pu googleapi.ProgressUpdater) *AppstoreappsreviewUploadimageCall {
+	c.mediaInfo_.SetProgressUpdater(pu)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AppstoreappsreviewUploadimageCall) Fields(s ...googleapi.Field) *AppstoreappsreviewUploadimageCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// This context will supersede any context previously provided to the
+// ResumableMedia method.
+func (c *AppstoreappsreviewUploadimageCall) Context(ctx context.Context) *AppstoreappsreviewUploadimageCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AppstoreappsreviewUploadimageCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AppstoreappsreviewUploadimageCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.uploadimagerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/appstore/{appStorePackageName}/apps/{packageName}/images:upload")
+	if c.mediaInfo_ != nil {
+		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/androidpublisher/v3/appstore/{appStorePackageName}/apps/{packageName}/images:upload")
+		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
+	}
+	newBody, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)
+	defer cleanup()
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, newBody)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	req.GetBody = getBody
+	googleapi.Expand(req.URL, map[string]string{
+		"appStorePackageName": c.appStorePackageName,
+		"packageName":         c.packageName,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.appstoreappsreview.uploadimage", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.appstoreappsreview.uploadimage" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *UploadImageResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AppstoreappsreviewUploadimageCall) Do(opts ...googleapi.CallOption) (*UploadImageResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
+	if rx != nil {
+		rx.Client = c.s.client
+		rx.UserAgent = c.s.userAgent()
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.TODO()
+		}
+		res, err = rx.Upload(ctx)
+		if err != nil {
+			return nil, err
+		}
+		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, gensupport.WrapError(err)
+		}
+	}
+	ret := &UploadImageResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.appstoreappsreview.uploadimage", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -24961,298 +26240,6 @@ func (c *PurchasesSubscriptionsDeferCall) Do(opts ...googleapi.CallOption) (*Sub
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptions.defer", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
-}
-
-type PurchasesSubscriptionsGetCall struct {
-	s              *Service
-	packageName    string
-	subscriptionId string
-	token          string
-	urlParams_     gensupport.URLParams
-	ifNoneMatch_   string
-	ctx_           context.Context
-	header_        http.Header
-}
-
-// Get: Deprecated: Use purchases.subscriptionsv2.get instead. Checks whether a
-// user's subscription purchase is valid and returns its expiry time.
-//
-//   - packageName: The package name of the application for which this
-//     subscription was purchased (for example, 'com.some.thing').
-//   - subscriptionId: The purchased subscription ID (for example, 'monthly001').
-//   - token: The token provided to the user's device when the subscription was
-//     purchased.
-func (r *PurchasesSubscriptionsService) Get(packageName string, subscriptionId string, token string) *PurchasesSubscriptionsGetCall {
-	c := &PurchasesSubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.packageName = packageName
-	c.subscriptionId = subscriptionId
-	c.token = token
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *PurchasesSubscriptionsGetCall) Fields(s ...googleapi.Field) *PurchasesSubscriptionsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *PurchasesSubscriptionsGetCall) IfNoneMatch(entityTag string) *PurchasesSubscriptionsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *PurchasesSubscriptionsGetCall) Context(ctx context.Context) *PurchasesSubscriptionsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *PurchasesSubscriptionsGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PurchasesSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/purchases/subscriptions/{subscriptionId}/tokens/{token}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"packageName":    c.packageName,
-		"subscriptionId": c.subscriptionId,
-		"token":          c.token,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptions.get", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "androidpublisher.purchases.subscriptions.get" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *SubscriptionPurchase.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *PurchasesSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*SubscriptionPurchase, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &SubscriptionPurchase{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptions.get", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type PurchasesSubscriptionsRefundCall struct {
-	s              *Service
-	packageName    string
-	subscriptionId string
-	token          string
-	urlParams_     gensupport.URLParams
-	ctx_           context.Context
-	header_        http.Header
-}
-
-// Refund: Deprecated: Use orders.refund instead. Refunds a user's subscription
-// purchase, but the subscription remains valid until its expiration time and
-// it will continue to recur.
-//
-//   - packageName: The package name of the application for which this
-//     subscription was purchased (for example, 'com.some.thing').
-//   - subscriptionId: "The purchased subscription ID (for example,
-//     'monthly001').
-//   - token: The token provided to the user's device when the subscription was
-//     purchased.
-func (r *PurchasesSubscriptionsService) Refund(packageName string, subscriptionId string, token string) *PurchasesSubscriptionsRefundCall {
-	c := &PurchasesSubscriptionsRefundCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.packageName = packageName
-	c.subscriptionId = subscriptionId
-	c.token = token
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *PurchasesSubscriptionsRefundCall) Fields(s ...googleapi.Field) *PurchasesSubscriptionsRefundCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *PurchasesSubscriptionsRefundCall) Context(ctx context.Context) *PurchasesSubscriptionsRefundCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *PurchasesSubscriptionsRefundCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PurchasesSubscriptionsRefundCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/purchases/subscriptions/{subscriptionId}/tokens/{token}:refund")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"packageName":    c.packageName,
-		"subscriptionId": c.subscriptionId,
-		"token":          c.token,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptions.refund", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "androidpublisher.purchases.subscriptions.refund" call.
-func (c *PurchasesSubscriptionsRefundCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return gensupport.WrapError(err)
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptions.refund", "response", internallog.HTTPResponse(res, nil))
-	return nil
-}
-
-type PurchasesSubscriptionsRevokeCall struct {
-	s              *Service
-	packageName    string
-	subscriptionId string
-	token          string
-	urlParams_     gensupport.URLParams
-	ctx_           context.Context
-	header_        http.Header
-}
-
-// Revoke: Deprecated: Use purchases.subscriptionsv2.revoke instead. Refunds
-// and immediately revokes a user's subscription purchase. Access to the
-// subscription will be terminated immediately and it will stop recurring.
-//
-//   - packageName: The package name of the application for which this
-//     subscription was purchased (for example, 'com.some.thing').
-//   - subscriptionId: The purchased subscription ID (for example, 'monthly001').
-//   - token: The token provided to the user's device when the subscription was
-//     purchased.
-func (r *PurchasesSubscriptionsService) Revoke(packageName string, subscriptionId string, token string) *PurchasesSubscriptionsRevokeCall {
-	c := &PurchasesSubscriptionsRevokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.packageName = packageName
-	c.subscriptionId = subscriptionId
-	c.token = token
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *PurchasesSubscriptionsRevokeCall) Fields(s ...googleapi.Field) *PurchasesSubscriptionsRevokeCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *PurchasesSubscriptionsRevokeCall) Context(ctx context.Context) *PurchasesSubscriptionsRevokeCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *PurchasesSubscriptionsRevokeCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PurchasesSubscriptionsRevokeCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/purchases/subscriptions/{subscriptionId}/tokens/{token}:revoke")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"packageName":    c.packageName,
-		"subscriptionId": c.subscriptionId,
-		"token":          c.token,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptions.revoke", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "androidpublisher.purchases.subscriptions.revoke" call.
-func (c *PurchasesSubscriptionsRevokeCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return gensupport.WrapError(err)
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptions.revoke", "response", internallog.HTTPResponse(res, nil))
-	return nil
 }
 
 type PurchasesSubscriptionsv2CancelCall struct {

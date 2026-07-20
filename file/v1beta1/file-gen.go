@@ -558,6 +558,13 @@ type FileShareConfig struct {
 	// NfsExportOptions: Nfs Export Options. There is a limit of 10 export options
 	// per file share.
 	NfsExportOptions []*NfsExportOptions `json:"nfsExportOptions,omitempty"`
+	// RestoreConfig: Optional. Input only. Specifies options for restoring from a
+	// backup source. Use this field to configure a partial restore, allowing
+	// recovery of specific files or directories instead of the entire backup. This
+	// field is only valid if the source oneof is set to `source_backup` or
+	// `source_backupdr_backup`. If this field is not provided, restoring from a
+	// backup will perform a full restore.
+	RestoreConfig *RestoreConfig `json:"restoreConfig,omitempty"`
 	// SourceBackup: The resource name of the backup, in the format
 	// `projects/{project_id}/locations/{location_id}/backups/{backup_id}`, that
 	// this file share has been restored from.
@@ -2024,6 +2031,31 @@ type Replication struct {
 
 func (s Replication) MarshalJSON() ([]byte, error) {
 	type NoMethod Replication
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RestoreConfig: Optional configuration for restore backup operations.
+type RestoreConfig struct {
+	// PathPatterns: Optional. Example: If you want to restore
+	// `/mnt/share/dir1/file.txt`, the path pattern must be `/dir1/file.txt`. If
+	// you want to restore `/mnt/share/dir1/`, the path pattern must be `/dir1`.
+	// Currently only single path is supported, Glob patterns are not supported.
+	PathPatterns []string `json:"pathPatterns,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PathPatterns") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PathPatterns") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RestoreConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RestoreConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -174,6 +174,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.MulticloudDataTransferConfigs = NewProjectsLocationsMulticloudDataTransferConfigsService(s)
 	rs.MulticloudDataTransferSupportedServices = NewProjectsLocationsMulticloudDataTransferSupportedServicesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.PscAuthorizationPolicies = NewProjectsLocationsPscAuthorizationPoliciesService(s)
 	rs.RegionalEndpoints = NewProjectsLocationsRegionalEndpointsService(s)
 	rs.RemoteTransportProfiles = NewProjectsLocationsRemoteTransportProfilesService(s)
 	rs.ServiceClasses = NewProjectsLocationsServiceClassesService(s)
@@ -199,6 +200,8 @@ type ProjectsLocationsService struct {
 	MulticloudDataTransferSupportedServices *ProjectsLocationsMulticloudDataTransferSupportedServicesService
 
 	Operations *ProjectsLocationsOperationsService
+
+	PscAuthorizationPolicies *ProjectsLocationsPscAuthorizationPoliciesService
 
 	RegionalEndpoints *ProjectsLocationsRegionalEndpointsService
 
@@ -340,6 +343,15 @@ func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperati
 }
 
 type ProjectsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsPscAuthorizationPoliciesService(s *Service) *ProjectsLocationsPscAuthorizationPoliciesService {
+	rs := &ProjectsLocationsPscAuthorizationPoliciesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsPscAuthorizationPoliciesService struct {
 	s *Service
 }
 
@@ -1701,7 +1713,7 @@ type GoogleRpcErrorInfo struct {
 	// "100"}`, if the client exceeds the number of instances that can be created
 	// in a single (batch) request.
 	Metadata map[string]string `json:"metadata,omitempty"`
-	// Reason: The reason of the error. This is a constant value that identifies
+	// Reason: The reason for the error. This is a constant value that identifies
 	// the proximate cause of the error. Error reasons are unique within a
 	// particular domain of errors. This should be at most 63 characters and match
 	// a regular expression of `A-Z+[A-Z0-9]`, which represents UPPER_SNAKE_CASE.
@@ -2706,6 +2718,37 @@ func (s ListPolicyBasedRoutesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListPscAuthorizationPoliciesResponse: Response for
+// ListPscAuthorizationPolicies.
+type ListPscAuthorizationPoliciesResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// PscAuthorizationPolicies: The list of PscAuthorizationPolicies.
+	PscAuthorizationPolicies []*PscAuthorizationPolicy `json:"pscAuthorizationPolicies,omitempty"`
+	// Unreachable: Unordered list. Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListPscAuthorizationPoliciesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPscAuthorizationPoliciesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListRegionalEndpointsResponse: Response for ListRegionalEndpoints.
 type ListRegionalEndpointsResponse struct {
 	// NextPageToken: The next pagination token in the List response. It should be
@@ -3580,6 +3623,65 @@ type ProducerPscConfig struct {
 
 func (s ProducerPscConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ProducerPscConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PscAuthorizationPolicy: Represents a PSC Authorization Policy.
+type PscAuthorizationPolicy struct {
+	// AuthorizationMode: Required. The authorization mode.
+	//
+	// Possible values:
+	//   "AUTHORIZATION_MODE_UNSPECIFIED" - Default value.
+	//   "AUTHORIZATION_MODE_TRANSITIVE_TO_SERVICE_ATTACHMENT" - In this mode,
+	// authorization is determined by the permissions on the underlying Service
+	// Attachment.
+	AuthorizationMode string `json:"authorizationMode,omitempty"`
+	// AuthorizedClientResources: Required. List of authorized consumer resources
+	// allowed to connect. Supported values are: 1. Project resource name (e.g.,
+	// `projects/{project_id}`) 2. Wildcard "*" (grants global ingress
+	// authorization to the target).
+	AuthorizedClientResources []string `json:"authorizedClientResources,omitempty"`
+	// CreateTime: Output only. The time when the PscAuthorizationPolicy was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. A description of this resource.
+	Description string `json:"description,omitempty"`
+	// Etag: Output only. The etag of the PscAuthorizationPolicy.
+	Etag string `json:"etag,omitempty"`
+	// Labels: Optional. User-defined labels.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. The name of the PscAuthorizationPolicy. Format:
+	// projects/{project}/locations/{location}/pscAuthorizationPolicies/{psc_authori
+	// zation_policy}
+	Name string `json:"name,omitempty"`
+	// TargetResourceUri: Required. The full absolute URI of the targeted resource
+	// governed by this policy. For example, for an AgentRegistry resource, the
+	// format is:
+	// `//agentregistry.googleapis.com/projects/{project}/locations/{location}`
+	TargetResourceUri string `json:"targetResourceUri,omitempty"`
+	// Uid: Output only. The unique identifier of the PscAuthorizationPolicy.
+	Uid string `json:"uid,omitempty"`
+	// UpdateTime: Output only. The time when the PscAuthorizationPolicy was
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AuthorizationMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthorizationMode") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PscAuthorizationPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod PscAuthorizationPolicy
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13074,6 +13176,509 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsPscAuthorizationPoliciesCreateCall struct {
+	s                      *Service
+	parent                 string
+	pscauthorizationpolicy *PscAuthorizationPolicy
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Create: Creates a new PscAuthorizationPolicy in a given project and
+// location.
+//
+// - parent: The parent resource's name of the PscAuthorizationPolicy.
+func (r *ProjectsLocationsPscAuthorizationPoliciesService) Create(parent string, pscauthorizationpolicy *PscAuthorizationPolicy) *ProjectsLocationsPscAuthorizationPoliciesCreateCall {
+	c := &ProjectsLocationsPscAuthorizationPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.pscauthorizationpolicy = pscauthorizationpolicy
+	return c
+}
+
+// PscAuthorizationPolicyId sets the optional parameter
+// "pscAuthorizationPolicyId": Required. Resource ID of the
+// PscAuthorizationPolicy.
+func (c *ProjectsLocationsPscAuthorizationPoliciesCreateCall) PscAuthorizationPolicyId(pscAuthorizationPolicyId string) *ProjectsLocationsPscAuthorizationPoliciesCreateCall {
+	c.urlParams_.Set("pscAuthorizationPolicyId", pscAuthorizationPolicyId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests.
+func (c *ProjectsLocationsPscAuthorizationPoliciesCreateCall) RequestId(requestId string) *ProjectsLocationsPscAuthorizationPoliciesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPscAuthorizationPoliciesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsPscAuthorizationPoliciesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPscAuthorizationPoliciesCreateCall) Context(ctx context.Context) *ProjectsLocationsPscAuthorizationPoliciesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPscAuthorizationPoliciesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPscAuthorizationPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.pscauthorizationpolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/pscAuthorizationPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.pscAuthorizationPolicies.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.pscAuthorizationPolicies.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPscAuthorizationPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.pscAuthorizationPolicies.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsPscAuthorizationPoliciesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single PscAuthorizationPolicy.
+//
+// - name: The name of the PscAuthorizationPolicy to delete.
+func (r *ProjectsLocationsPscAuthorizationPoliciesService) Delete(name string) *ProjectsLocationsPscAuthorizationPoliciesDeleteCall {
+	c := &ProjectsLocationsPscAuthorizationPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": The etag of the
+// PscAuthorizationPolicy to delete.
+func (c *ProjectsLocationsPscAuthorizationPoliciesDeleteCall) Etag(etag string) *ProjectsLocationsPscAuthorizationPoliciesDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests.
+func (c *ProjectsLocationsPscAuthorizationPoliciesDeleteCall) RequestId(requestId string) *ProjectsLocationsPscAuthorizationPoliciesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPscAuthorizationPoliciesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsPscAuthorizationPoliciesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPscAuthorizationPoliciesDeleteCall) Context(ctx context.Context) *ProjectsLocationsPscAuthorizationPoliciesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPscAuthorizationPoliciesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPscAuthorizationPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.pscAuthorizationPolicies.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.pscAuthorizationPolicies.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPscAuthorizationPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.pscAuthorizationPolicies.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsPscAuthorizationPoliciesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single PscAuthorizationPolicy.
+//
+// - name: Name of the PscAuthorizationPolicy to get.
+func (r *ProjectsLocationsPscAuthorizationPoliciesService) Get(name string) *ProjectsLocationsPscAuthorizationPoliciesGetCall {
+	c := &ProjectsLocationsPscAuthorizationPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPscAuthorizationPoliciesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsPscAuthorizationPoliciesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsPscAuthorizationPoliciesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsPscAuthorizationPoliciesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPscAuthorizationPoliciesGetCall) Context(ctx context.Context) *ProjectsLocationsPscAuthorizationPoliciesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPscAuthorizationPoliciesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPscAuthorizationPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.pscAuthorizationPolicies.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.pscAuthorizationPolicies.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *PscAuthorizationPolicy.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsPscAuthorizationPoliciesGetCall) Do(opts ...googleapi.CallOption) (*PscAuthorizationPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &PscAuthorizationPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.pscAuthorizationPolicies.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsPscAuthorizationPoliciesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists PscAuthorizationPolicies in a given project and location.
+//
+// - parent: The parent resource's name.
+func (r *ProjectsLocationsPscAuthorizationPoliciesService) List(parent string) *ProjectsLocationsPscAuthorizationPoliciesListCall {
+	c := &ProjectsLocationsPscAuthorizationPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression to restrict
+// the results.
+func (c *ProjectsLocationsPscAuthorizationPoliciesListCall) Filter(filter string) *ProjectsLocationsPscAuthorizationPoliciesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sort order of the results.
+func (c *ProjectsLocationsPscAuthorizationPoliciesListCall) OrderBy(orderBy string) *ProjectsLocationsPscAuthorizationPoliciesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// PscAuthorizationPolicies to return in a single page. The service may return
+// fewer than this value. If unspecified, at most 50 PscAuthorizationPolicies
+// will be returned. The maximum value is 1000; values above 1000 will be
+// coerced to 1000.
+func (c *ProjectsLocationsPscAuthorizationPoliciesListCall) PageSize(pageSize int64) *ProjectsLocationsPscAuthorizationPoliciesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListPscAuthorizationPolicies` call.
+func (c *ProjectsLocationsPscAuthorizationPoliciesListCall) PageToken(pageToken string) *ProjectsLocationsPscAuthorizationPoliciesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPscAuthorizationPoliciesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsPscAuthorizationPoliciesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsPscAuthorizationPoliciesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsPscAuthorizationPoliciesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPscAuthorizationPoliciesListCall) Context(ctx context.Context) *ProjectsLocationsPscAuthorizationPoliciesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPscAuthorizationPoliciesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPscAuthorizationPoliciesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/pscAuthorizationPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.pscAuthorizationPolicies.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.pscAuthorizationPolicies.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListPscAuthorizationPoliciesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPscAuthorizationPoliciesListCall) Do(opts ...googleapi.CallOption) (*ListPscAuthorizationPoliciesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListPscAuthorizationPoliciesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.pscAuthorizationPolicies.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsPscAuthorizationPoliciesListCall) Pages(ctx context.Context, f func(*ListPscAuthorizationPoliciesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

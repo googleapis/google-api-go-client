@@ -364,7 +364,8 @@ func (s CuratedPackage) MarshalJSON() ([]byte, error) {
 
 // DataSegment: Defines an identifier for a segment of inventory that can be
 // targeted by curators or media planners in the deals or auction packages UI.
-// Curation of inventory is done by curators on external platforms.
+// Curation of inventory is done by curators on external platforms. -- Next ID:
+// 9 --
 type DataSegment struct {
 	// CpmFee: Optional. A fixed fee charged per thousand impressions. Once set,
 	// the currency code cannot be changed.
@@ -386,6 +387,7 @@ type DataSegment struct {
 	//   "STATE_UNSPECIFIED" - Default value.
 	//   "ACTIVE" - The data segment is active.
 	//   "INACTIVE" - The data segment is inactive.
+	//   "SUSPENDED" - The data segment is suspended and cannot be activated.
 	State string `json:"state,omitempty"`
 	// UpdateTime: Output only. Time the data segment was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`

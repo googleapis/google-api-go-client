@@ -3915,6 +3915,12 @@ type TenantResource struct {
 	// cloud projects, it is in the form 'projects/{number}'. For example
 	// 'projects/123456'.
 	Resource string `json:"resource,omitempty"`
+	// SourceTenantProject: Output only. The resource name of the tenant project
+	// from which this active regional tenant project was migrated. This field is
+	// only set for active regional migrated mapping tenant projects. Format:
+	// `services//{collection_id}/{RESOURCE_ID}/locations/{LOCATION}/tenantProjects/
+	// {TENANT_ID}`.
+	SourceTenantProject string `json:"sourceTenantProject,omitempty"`
 	// Status: Status of tenant resource.
 	//
 	// Possible values:

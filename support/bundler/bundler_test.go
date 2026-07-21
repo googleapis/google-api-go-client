@@ -23,7 +23,7 @@ func TestBundlerCount1(t *testing.T) {
 	b.BundleCountThreshold = 1
 	b.DelayThreshold = time.Second
 
-	for i := 0; i < 3; i++ {
+	for i := range 3 {
 		if err := b.Add(i, 1); err != nil {
 			t.Fatal(err)
 		}
@@ -51,7 +51,7 @@ func TestBundlerCount3(t *testing.T) {
 	// Add 8 items.
 	// The first two bundles of 3 should both be handled quickly.
 	// The third bundle of 2 should not be handled for about DelayThreshold ms.
-	for i := 0; i < 8; i++ {
+	for i := range 8 {
 		if err := b.Add(i, 1); err != nil {
 			t.Fatal(err)
 		}
@@ -80,7 +80,7 @@ func TestBundlerCountSlowHandler(t *testing.T) {
 	b.BundleCountThreshold = 3
 	b.DelayThreshold = 500 * time.Millisecond
 	// Add 10 items.
-	for i := 0; i < 10; i++ {
+	for i := range 10 {
 		if err := b.Add(i, 1); err != nil {
 			t.Fatal(err)
 		}
@@ -114,7 +114,7 @@ func TestBundlerByteThreshold(t *testing.T) {
 	// HandlerLimit of 1, the 2nd and 3rd bundles may or may not be
 	// combined based on how long it takes to handle the 1st bundle.
 	b.HandlerLimit = 10
-	add := func(i interface{}, s int) {
+	add := func(i any, s int) {
 		if err := b.Add(i, s); err != nil {
 			t.Fatal(err)
 		}
@@ -153,7 +153,7 @@ func TestBundlerLimit(t *testing.T) {
 	b := NewBundler(int(0), handler.handleImmediate)
 	b.BundleCountThreshold = 10
 	b.BundleByteLimit = 3
-	add := func(i interface{}, s int) {
+	add := func(i any, s int) {
 		if err := b.Add(i, s); err != nil {
 			t.Fatal(err)
 		}
@@ -194,7 +194,7 @@ func TestAddWait(t *testing.T) {
 
 	handlec := make(chan int)
 	done := make(chan struct{})
-	b := NewBundler(int(0), func(interface{}) {
+	b := NewBundler(int(0), func(any) {
 		<-handlec
 		event("handle")
 	})
@@ -226,7 +226,7 @@ func TestAddWait(t *testing.T) {
 }
 
 func TestAddWaitCancel(t *testing.T) {
-	b := NewBundler(int(0), func(interface{}) {})
+	b := NewBundler(int(0), func(any) {})
 	b.BufferedByteLimit = 3
 	ctx, cancel := context.WithCancel(context.Background())
 	go func() {
@@ -242,7 +242,7 @@ func TestAddWaitCancel(t *testing.T) {
 func TestBundlerErrors(t *testing.T) {
 	// Use a handler that blocks forever, to force the bundler to run out of
 	// memory.
-	b := NewBundler(int(0), func(interface{}) { select {} })
+	b := NewBundler(int(0), func(any) { select {} })
 	b.BundleByteLimit = 3
 	b.BufferedByteLimit = 10
 
@@ -250,7 +250,7 @@ func TestBundlerErrors(t *testing.T) {
 		t.Fatalf("got %v, want %v", got, want)
 	}
 
-	for i := 0; i < 5; i++ {
+	for i := range 5 {
 		if err := b.Add(i, 2); err != nil {
 			t.Fatal(err)
 		}
@@ -262,7 +262,7 @@ func TestBundlerErrors(t *testing.T) {
 
 func TestModeError(t *testing.T) {
 	// Call Add then AddWait.
-	b := NewBundler(int(0), func(interface{}) {})
+	b := NewBundler(int(0), func(any) {})
 	b.BundleByteLimit = 4
 	b.BufferedByteLimit = 4
 	if err := b.Add(0, 2); err != nil {
@@ -272,7 +272,7 @@ func TestModeError(t *testing.T) {
 		t.Fatalf("got %v, want %v", got, want)
 	}
 	// Call AddWait then Add on new Bundler.
-	b1 := NewBundler(int(0), func(interface{}) {})
+	b1 := NewBundler(int(0), func(any) {})
 	b1.BundleByteLimit = 4
 	b1.BufferedByteLimit = 4
 	if err := b1.AddWait(context.Background(), 0, 2); err != nil {
@@ -291,7 +291,7 @@ func TestConcurrentHandlersMax(t *testing.T) {
 		active      int
 		maxHandlers int
 	)
-	b := NewBundler(int(0), func(s interface{}) {
+	b := NewBundler(int(0), func(s any) {
 		mu.Lock()
 		active++
 		if active > maxHandlers {
@@ -329,7 +329,7 @@ func TestConcurrentFlush(t *testing.T) {
 		mu    sync.Mutex
 		items = make(map[int]bool)
 	)
-	b := NewBundler(int(0), func(s interface{}) {
+	b := NewBundler(int(0), func(s any) {
 		mu.Lock()
 		for _, i := range s.([]int) {
 			items[i] = true
@@ -343,7 +343,7 @@ func TestConcurrentFlush(t *testing.T) {
 
 	var wg sync.WaitGroup
 	defer wg.Wait()
-	for i := 0; i < 50; i++ {
+	for i := range 50 {
 		b.Add(i, 1)
 		if i%100 == 0 {
 			i := i
@@ -368,8 +368,8 @@ func TestConcurrentFlush(t *testing.T) {
 // Test that time based flushes do not deadlock
 func TestBundlerTimeBasedFlushDeadlock(t *testing.T) {
 	const (
-		goroutines = 1e3
-		iterations = 1e3
+		goroutines int = 1e3
+		iterations int = 1e3
 
 		N = goroutines * iterations
 	)
@@ -377,10 +377,10 @@ func TestBundlerTimeBasedFlushDeadlock(t *testing.T) {
 	var wg sync.WaitGroup
 	wg.Add(N)
 
-	flush := func(i interface{}) {
+	flush := func(i any) {
 		time.Sleep(10 * time.Millisecond)
 		buf := i.([]int)
-		for i := 0; i < len(buf); i++ {
+		for range len(buf) {
 			wg.Done()
 		}
 	}
@@ -397,15 +397,16 @@ func TestBundlerTimeBasedFlushDeadlock(t *testing.T) {
 	time.AfterFunc(30*time.Second, cancel)
 
 	add := func(i int) {
-		for j := 0; j < iterations; j++ {
+		for range iterations {
 			if err := b.AddWait(ctx, i, 1); err != nil {
-				t.Fatalf("timed out: %v", err)
+				t.Errorf("AddWait(%d) timed out: %v", i, err)
+				return
 			}
 			runtime.Gosched()
 		}
 	}
 
-	for i := 0; i < goroutines; i++ {
+	for i := range goroutines {
 		go add(i)
 	}
 
@@ -432,7 +433,7 @@ func (t *testHandler) times() []time.Time {
 }
 
 // Handler takes no time beyond adding to a list
-func (t *testHandler) handleImmediate(b interface{}) {
+func (t *testHandler) handleImmediate(b any) {
 	t.mu.Lock()
 	defer t.mu.Unlock()
 	t.b = append(t.b, b.([]int))
@@ -440,7 +441,7 @@ func (t *testHandler) handleImmediate(b interface{}) {
 }
 
 // Handler takes 300 milliseconds
-func (t *testHandler) handleSlow(b interface{}) {
+func (t *testHandler) handleSlow(b any) {
 	t.mu.Lock()
 	defer t.mu.Unlock()
 	t.b = append(t.b, b.([]int))
@@ -449,7 +450,7 @@ func (t *testHandler) handleSlow(b interface{}) {
 }
 
 // Handler takes one millisecond
-func (t *testHandler) handleQuick(b interface{}) {
+func (t *testHandler) handleQuick(b any) {
 	t.mu.Lock()
 	defer t.mu.Unlock()
 	t.b = append(t.b, b.([]int))
@@ -502,7 +503,7 @@ func BenchmarkBundlerAdd(bench *testing.B) {
 	b.BundleCountThreshold = 1
 	b.DelayThreshold = time.Second
 
-	for i := 0; i < bench.N; i++ {
+	for i := range bench.N {
 		if err := b.Add(i, 1); err != nil {
 			bench.Fatal(err)
 		}
@@ -518,7 +519,7 @@ func BenchmarkBundlerAddAndFlush(bench *testing.B) {
 	b.BundleCountThreshold = 1
 	b.DelayThreshold = time.Second
 
-	for i := 0; i < bench.N; i++ {
+	for i := range bench.N {
 		if err := b.Add(i, 1); err != nil {
 			bench.Fatal(err)
 		}
@@ -535,7 +536,7 @@ func BenchmarkBundlerAddAndFlushSlow1(bench *testing.B) {
 	b.BundleCountThreshold = 1
 	b.DelayThreshold = time.Second
 
-	for i := 0; i < bench.N; i++ {
+	for i := range bench.N {
 		if err := b.Add(i, 1); err != nil {
 			bench.Fatal(err)
 		}
@@ -552,7 +553,7 @@ func BenchmarkBundlerAddAndFlushSlow25(bench *testing.B) {
 	b.BundleCountThreshold = 25
 	b.DelayThreshold = time.Second
 
-	for i := 0; i < bench.N; i++ {
+	for i := range bench.N {
 		if err := b.Add(i, 1); err != nil {
 			bench.Fatal(err)
 		}

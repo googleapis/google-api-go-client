@@ -5,6 +5,7 @@
 package internal
 
 import (
+	"context"
 	"encoding/json"
 	"log"
 	"sync"
@@ -78,7 +79,7 @@ func (cs *reuseMTLSConfigSource) Config() (*mtlsConfig, error) {
 type metadataMTLSAutoConfig struct{}
 
 var httpGetMetadataMTLSConfig = func() (string, error) {
-	return metadata.Get(configEndpointSuffix)
+	return metadata.GetWithContext(context.Background(), configEndpointSuffix)
 }
 
 func (cs *metadataMTLSAutoConfig) Config() (*mtlsConfig, error) {

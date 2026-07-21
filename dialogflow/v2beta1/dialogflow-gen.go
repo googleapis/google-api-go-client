@@ -14394,6 +14394,32 @@ func (s GoogleCloudDialogflowV2beta1PhoneNumberAllowedSipTrunks) MarshalJSON() (
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type GoogleCloudDialogflowV2beta1ProbeDetails struct {
+	InitTime       string `json:"initTime,omitempty"`
+	OptionsLatency string `json:"optionsLatency,omitempty"`
+	// Possible values:
+	//   "PROBE_STATUS_UNSPECIFIED"
+	//   "PROBE_STATUS_SUCCESS"
+	//   "PROBE_STATUS_FAILED"
+	ProbeStatus string `json:"probeStatus,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InitTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InitTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1ProbeDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1ProbeDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudDialogflowV2beta1QueryInput struct {
 	AudioConfig *GoogleCloudDialogflowV2beta1InputAudioConfig    `json:"audioConfig,omitempty"`
 	Dtmf        *GoogleCloudDialogflowV2beta1TelephonyDtmfEvents `json:"dtmf,omitempty"`
@@ -15353,11 +15379,79 @@ func (s GoogleCloudDialogflowV2beta1SipConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type GoogleCloudDialogflowV2beta1SipHostname struct {
+	// Possible values:
+	//   "CONNECTION_STATE_UNSPECIFIED"
+	//   "CONNECTED"
+	//   "DISCONNECTED"
+	//   "AUTHENTICATION_FAILED"
+	//   "KEEPALIVE"
+	ConnectionState   string                                                       `json:"connectionState,omitempty"`
+	EnabledSipPing    bool                                                         `json:"enabledSipPing,omitempty"`
+	ErrorDetails      *GoogleCloudDialogflowV2beta1SipHostnameHostnameErrorDetails `json:"errorDetails,omitempty"`
+	PeerHostname      string                                                       `json:"peerHostname,omitempty"`
+	PeerSocketAddress string                                                       `json:"peerSocketAddress,omitempty"`
+	PingInterval      string                                                       `json:"pingInterval,omitempty"`
+	ProbeDetails      *GoogleCloudDialogflowV2beta1ProbeDetails                    `json:"probeDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConnectionState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConnectionState") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1SipHostname) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1SipHostname
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudDialogflowV2beta1SipHostnameHostnameErrorDetails struct {
+	// Possible values:
+	//   "HOSTNAME_CERTIFICATE_STATE_UNSPECIFIED"
+	//   "VALID"
+	//   "INVALID"
+	//   "EXPIRED"
+	//   "HOSTNAME_NOT_FOUND"
+	//   "UNAUTHENTICATED"
+	//   "TRUST_STORE_NOT_FOUND"
+	//   "HOSTNAME_INVALID_FORMAT"
+	//   "QUOTA_EXCEEDED"
+	CertificateState string `json:"certificateState,omitempty"`
+	ErrorMessage     string `json:"errorMessage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CertificateState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CertificateState") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1SipHostnameHostnameErrorDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1SipHostnameHostnameErrorDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudDialogflowV2beta1SipTrunk struct {
 	Connections      []*GoogleCloudDialogflowV2beta1Connection `json:"connections,omitempty"`
 	DisplayName      string                                    `json:"displayName,omitempty"`
 	ExpectedHostname []string                                  `json:"expectedHostname,omitempty"`
-	Name             string                                    `json:"name,omitempty"`
+	// Possible values:
+	//   "CERT_FILE_UNSPECIFIED"
+	//   "EXTERNAL_PRIVATE_CA"
+	GoogleRootCertFile string                                     `json:"googleRootCertFile,omitempty"`
+	Name               string                                     `json:"name,omitempty"`
+	PeerHostnames      []*GoogleCloudDialogflowV2beta1SipHostname `json:"peerHostnames,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

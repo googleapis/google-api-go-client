@@ -265,8 +265,9 @@ func (s DataSource) MarshalJSON() ([]byte, error) {
 // DataSourceReference: Data source reference can be used to manage related
 // data sources within the data source service.
 type DataSourceReference struct {
-	// PrimaryDataSourceName: Optional. The name of the primary data source.
-	// Format: `accounts/{account}/dataSources/{datasource}`
+	// PrimaryDataSourceName: Optional. Deprecated: Use `self` instead to reference
+	// the primary data source. The name of the primary data source. Format:
+	// `accounts/{account}/dataSources/{datasource}`
 	PrimaryDataSourceName string `json:"primaryDataSourceName,omitempty"`
 	// Self: Self should be used to reference the primary data source itself.
 	Self bool `json:"self,omitempty"`

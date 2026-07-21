@@ -100,7 +100,7 @@ func TestAPIs(t *testing.T) {
 				t.Fatal(err)
 			}
 
-			wantStr := strings.Replace(string(want), "gdcl/00000000", fmt.Sprintf("gdcl/%s", internal.Version), -1)
+			wantStr := strings.ReplaceAll(string(want), "gdcl/00000000", fmt.Sprintf("gdcl/%s", internal.Version))
 			if !bytes.Equal([]byte(wantStr), clean) {
 				tf, _ := os.CreateTemp("", "api-"+name+"-got-json.")
 				if _, err := tf.Write(clean); err != nil {
@@ -119,7 +119,7 @@ func TestAPIs(t *testing.T) {
 func readOrUpdate(name, clean string) ([]byte, error) {
 	goldenFile := goldenFileName(name)
 	if *updateGolden {
-		clean := strings.Replace(string(clean), fmt.Sprintf("gdcl/%s", internal.Version), "gdcl/00000000", -1)
+		clean := strings.ReplaceAll(string(clean), fmt.Sprintf("gdcl/%s", internal.Version), "gdcl/00000000")
 		if err := os.WriteFile(goldenFile, []byte(clean), 0644); err != nil {
 			return nil, err
 		}

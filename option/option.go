@@ -9,6 +9,7 @@ import (
 	"crypto/tls"
 	"log/slog"
 	"net/http"
+	"time"
 
 	"cloud.google.com/go/auth"
 	"golang.org/x/oauth2"
@@ -520,6 +521,25 @@ type withUniverseDomain string
 
 func (w withUniverseDomain) Apply(o *internal.DialSettings) {
 	o.UniverseDomain = string(w)
+}
+
+// WithHTTP2ReadIdleTimeout returns a ClientOption that sets the amount of time
+// an HTTP/2 connection may sit idle before the transport sends a health-check
+// ping to determine whether the connection is still usable. If the timeout
+// elapses without a response, the connection is closed and no longer reused.
+//
+// This overrides the transport's default of 31 seconds. A value of 0 or less
+// leaves the default in place. This option only applies to the HTTP client
+// constructed by the library; it has no effect when a custom HTTP client is
+// supplied via WithHTTPClient.
+func WithHTTP2ReadIdleTimeout(timeout time.Duration) ClientOption {
+	return withHTTP2ReadIdleTimeout(timeout)
+}
+
+type withHTTP2ReadIdleTimeout time.Duration
+
+func (w withHTTP2ReadIdleTimeout) Apply(o *internal.DialSettings) {
+	o.HTTP2ReadIdleTimeout = time.Duration(w)
 }
 
 // WithLogger returns a ClientOption that sets the logger used throughout the

@@ -68,6 +68,12 @@ type DialSettings struct {
 	UniverseDomain                string
 	AllowHardBoundTokens          []string
 	Logger                        *slog.Logger
+	// HTTP2ReadIdleTimeout is the amount of time to wait before running a
+	// health check on an idle HTTP/2 connection. If a value is set, it
+	// overrides the default used by the transport. It has no effect when a
+	// custom HTTP client is supplied via WithHTTPClient.
+	HTTP2ReadIdleTimeout time.Duration
+
 	// Google API system parameters. For more information please read:
 	// https://cloud.google.com/apis/docs/system-parameters
 	QuotaProject  string

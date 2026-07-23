@@ -23386,6 +23386,44 @@
                       }
                     }
                   }
+                },
+                "v1": {
+                  "methods": {
+                    "responses": {
+                      "description": "Forwards arbitrary HTTP requests for both streaming and non-streaming cases. To use this method, invoke_route_prefix must be set to allow the paths that will be specified in the request.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/publishers/{publishersId}/v1/responses",
+                      "httpMethod": "POST",
+                      "id": "aiplatform.projects.locations.publishers.v1.responses",
+                      "parameterOrder": [
+                        "endpoint"
+                      ],
+                      "parameters": {
+                        "deployedModelId": {
+                          "description": "ID of the DeployedModel that serves the invoke request.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "endpoint": {
+                          "description": "Required. The name of the Endpoint requested to serve the prediction. Format: `projects/{project}/locations/{location}/endpoints/{endpoint}`",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/publishers/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+endpoint}/v1/responses",
+                      "request": {
+                        "$ref": "GoogleApiHttpBody"
+                      },
+                      "response": {
+                        "$ref": "GoogleApiHttpBody"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/cloud-platform.read-only"
+                      ]
+                    }
+                  }
                 }
               }
             },
@@ -35027,7 +35065,7 @@
       }
     }
   },
-  "revision": "20260704",
+  "revision": "20260715",
   "rootUrl": "https://aiplatform.googleapis.com/",
   "schemas": {
     "CloudAiLargeModelsVisionGenerateVideoExperiments": {
@@ -35058,6 +35096,10 @@
             ""
           ],
           "type": "string"
+        },
+        "colorAlignment": {
+          "$ref": "CloudAiLargeModelsVisionGenerateVideoExperimentsColorAlignmentConfig",
+          "description": "Optional. Color alignment configuration."
         },
         "conditioningFrames": {
           "description": "Conditioning frames for veo experimental models ONLY, not to be confused with keyframes (ID:31) in GenerateVideoRequest.",
@@ -35107,6 +35149,10 @@
           "$ref": "CloudAiLargeModelsVisionSeamless",
           "description": "Parameters for seamless (edge-continuous) video generation, enabling temporal looping and/or spatial tessellation."
         },
+        "spatialAlignment": {
+          "$ref": "CloudAiLargeModelsVisionGenerateVideoExperimentsSpatialAlignmentConfig",
+          "description": "Optional. Spatial alignment configuration."
+        },
         "truncateInputVideo": {
           "description": "If true (default), truncate input videos that exceed the model's maximum frame count by applying a frame_selection_config to __video_file__ inputs. Set to false to preserve the existing fail-fast behavior.",
           "type": "boolean"
@@ -35123,6 +35169,17 @@
       },
       "type": "object"
     },
+    "CloudAiLargeModelsVisionGenerateVideoExperimentsColorAlignmentConfig": {
+      "description": "Configuration for color alignment.",
+      "id": "CloudAiLargeModelsVisionGenerateVideoExperimentsColorAlignmentConfig",
+      "properties": {
+        "enable": {
+          "description": "Optional. If true, enable alignment.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "CloudAiLargeModelsVisionGenerateVideoExperimentsConditioningFrame": {
       "id": "CloudAiLargeModelsVisionGenerateVideoExperimentsConditioningFrame",
       "properties": {
@@ -35134,6 +35191,17 @@
         "image": {
           "$ref": "CloudAiLargeModelsVisionGenerateVideoRequestImage",
           "description": "The image data for this conditioning frame."
+        }
+      },
+      "type": "object"
+    },
+    "CloudAiLargeModelsVisionGenerateVideoExperimentsSpatialAlignmentConfig": {
+      "description": "Configuration for spatial alignment.",
+      "id": "CloudAiLargeModelsVisionGenerateVideoExperimentsSpatialAlignmentConfig",
+      "properties": {
+        "enable": {
+          "description": "Optional. If true, enable alignment.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -40682,7 +40750,12 @@
     "GoogleCloudAiplatformV1DeprovisionSemanticGovernancePolicyEngineRequest": {
       "description": "Request message for SemanticGovernancePolicyEngineService.DeprovisionSemanticGovernancePolicyEngine.",
       "id": "GoogleCloudAiplatformV1DeprovisionSemanticGovernancePolicyEngineRequest",
-      "properties": {},
+      "properties": {
+        "force": {
+          "description": "Optional. If true, the operation bypass checks on current state and force the deprovisioning operation.",
+          "type": "boolean"
+        }
+      },
       "type": "object"
     },
     "GoogleCloudAiplatformV1DestinationFeatureSetting": {
@@ -47486,6 +47559,13 @@
           "$ref": "GoogleCloudAiplatformV1RetrievalMetadata",
           "description": "Optional. Output only. Metadata related to the retrieval grounding source.",
           "readOnly": true
+        },
+        "retrievalQueries": {
+          "description": "Optional. The queries that were executed by the retrieval tools. This field is populated only when the grounding source is a retrieval tool, such as Vertex AI Search.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "searchEntryPoint": {
           "$ref": "GoogleCloudAiplatformV1SearchEntryPoint",

@@ -233,7 +233,7 @@ func (s Bucket) MarshalJSON() ([]byte, error) {
 type DefaultBucket struct {
 	// Bucket: Output only. Underlying bucket resource.
 	Bucket *Bucket `json:"bucket,omitempty"`
-	// Location: Immutable. Location of the default bucket.
+	// Location: Required. Immutable. Location of the default bucket.
 	Location string `json:"location,omitempty"`
 	// Name: Identifier. Resource name of the default bucket.
 	Name string `json:"name,omitempty"`

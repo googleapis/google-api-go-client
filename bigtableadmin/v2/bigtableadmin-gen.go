@@ -1608,6 +1608,9 @@ func (s CreateMaterializedViewMetadata) MarshalJSON() ([]byte, error) {
 // CreateMaterializedViewRequest: Request message for
 // BigtableInstanceAdmin.CreateMaterializedView.
 type CreateMaterializedViewRequest struct {
+	// IgnoreWarnings: Optional. If true, ignore optional safety checks when
+	// creating the materialized view.
+	IgnoreWarnings bool `json:"ignoreWarnings,omitempty"`
 	// MaterializedView: Required. The materialized view to create.
 	MaterializedView *MaterializedView `json:"materializedView,omitempty"`
 	// MaterializedViewId: Required. The ID to use for the materialized view, which
@@ -1616,13 +1619,13 @@ type CreateMaterializedViewRequest struct {
 	// Parent: Required. The parent instance where this materialized view will be
 	// created. Format: `projects/{project}/instances/{instance}`.
 	Parent string `json:"parent,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MaterializedView") to
+	// ForceSendFields is a list of field names (e.g. "IgnoreWarnings") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MaterializedView") to include in
+	// NullFields is a list of field names (e.g. "IgnoreWarnings") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -10040,6 +10043,13 @@ func (r *ProjectsInstancesMaterializedViewsService) Create(parent string, materi
 	c := &ProjectsInstancesMaterializedViewsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.materializedview = materializedview
+	return c
+}
+
+// IgnoreWarnings sets the optional parameter "ignoreWarnings": If true, ignore
+// optional safety checks when creating the materialized view.
+func (c *ProjectsInstancesMaterializedViewsCreateCall) IgnoreWarnings(ignoreWarnings bool) *ProjectsInstancesMaterializedViewsCreateCall {
+	c.urlParams_.Set("ignoreWarnings", fmt.Sprint(ignoreWarnings))
 	return c
 }
 

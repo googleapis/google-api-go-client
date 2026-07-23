@@ -70,6 +70,8 @@ import (
 	"strconv"
 	"strings"
 
+	"time"
+
 	"github.com/googleapis/gax-go/v2"
 	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
@@ -97,6 +99,7 @@ var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
 var _ = internallog.New
 var _ = gax.Version
+var _ = time.Second
 
 const apiId = "storage:v1"
 const apiName = "storage"
@@ -11101,6 +11104,16 @@ func (c *ObjectsInsertCall) WithRetry(bo *gax.Backoff, errorFunc func(err error)
 		Backoff:     bo,
 		ShouldRetry: errorFunc,
 	}
+	return c
+}
+
+// WithStallTimeout sets a per-attempt/request timeout. If a request attempt
+// takes longer than this duration, it is cancelled and retried if retryable.
+func (c *ObjectsInsertCall) WithStallTimeout(timeout time.Duration) *ObjectsInsertCall {
+	if c.retry == nil {
+		c.retry = &gensupport.RetryConfig{}
+	}
+	c.retry.RequestTimeout = timeout
 	return c
 }
 
